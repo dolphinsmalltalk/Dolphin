@@ -17,24 +17,24 @@ unsignedValue: anUnsigned
 	bytes uintPtrAtOffset: 0 put: anUnsigned!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes intPtrAtOffset: 0!
+	^bytes intPtrAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes intPtrAtOffset: 0 put: anObject! !
+	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
 !INT_PTR categoriesFor: #unsignedValue:!accessing!public! !
 !INT_PTR categoriesFor: #value!**compiled accessors**!public! !
 !INT_PTR categoriesFor: #value:!**compiled accessors**!public! !
 
 !INT_PTR class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^INT_PTRField! !
-!INT_PTR class categoriesFor: #fieldType!constants!development!private! !
+	self defineField: #value type: INT_PTRField new beOverride! !
+!INT_PTR class categoriesFor: #defineFields!initializing!public! !
 

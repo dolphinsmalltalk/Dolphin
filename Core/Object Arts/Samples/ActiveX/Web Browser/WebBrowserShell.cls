@@ -75,7 +75,7 @@ home
 homePage
 	"Private - Answer the home page to use for the receiver"
 
-	^SessionManager current objectArtsUrl!
+	^'http://www.object-arts.com'!
 
 initialize
 	"Private - Initialize the receiver's instance variables."

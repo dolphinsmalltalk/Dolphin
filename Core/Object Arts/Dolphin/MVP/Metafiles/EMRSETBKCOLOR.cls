@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETBKCOLOR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_crColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETBKCOLOR guid: (GUID fromString: '{22221f37-ae5e-4040-aa50-03d7ca9f82cb}')!
+EMRSETBKCOLOR addClassConstant: '_OffsetOf_crColor' value: 16r8!
 EMRSETBKCOLOR comment: '<EMRSETBKCOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETBKCOLOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSETBKCOLOR {
 !EMRSETBKCOLOR methodsFor!
 
 crColor
-	"Answer the receiver's crColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crColor)!
+	^bytes dwordAtOffset: _OffsetOf_crColor!
 
-crColor: anObject 
-	"Set the receiver's crColor field to the value of anObject."
+crColor: anInteger
+	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger! !
 !EMRSETBKCOLOR categoriesFor: #crColor!**compiled accessors**!public! !
 !EMRSETBKCOLOR categoriesFor: #crColor:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #crColor)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETBKCOLOR with: EMR_SETTEXTCOLOR! !
 !EMRSETBKCOLOR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETBKCOLOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETBKCOLOR class categoriesFor: #iTypes!constants!public! !
 

@@ -2,58 +2,63 @@
 
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
+PICTDESC addClassConstant: '_OffsetOf_dw1' value: 16rC!
+PICTDESC addClassConstant: '_OffsetOf_dw2' value: 16r10!
+PICTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+PICTDESC addClassConstant: '_OffsetOf_handle' value: 16r8!
+PICTDESC addClassConstant: '_OffsetOf_picType' value: 16r4!
 PICTDESC comment: ''!
 !PICTDESC categoriesForClass!Unclassified! !
 !PICTDESC methodsFor!
 
 dw1
-	"Answer the receiver's dw1 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dw1' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dw1!
 
-dw1: anObject
-	"Set the receiver's dw1 field to the value of anObject."
+dw1: anInteger
+	"Set the receiver's 'dw1' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dw1 put: anInteger!
 
 dw2
-	"Answer the receiver's dw2 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dw2' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dw2!
 
-dw2: anObject
-	"Set the receiver's dw2 field to the value of anObject."
+dw2: anInteger
+	"Set the receiver's 'dw2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dw2 put: anInteger!
 
-dwSize: anObject
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 handle
-	"Answer the receiver's handle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'handle' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_handle!
 
-handle: anObject
-	"Set the receiver's handle field to the value of anObject."
+handle: anInteger
+	"Set the receiver's 'handle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_handle put: anInteger!
 
 picType
-	"Answer the receiver's picType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'picType' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_picType!
 
-picType: anObject
-	"Set the receiver's picType field to the value of anObject."
+picType: anInteger
+	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
 !PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
 !PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
 !PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !
@@ -121,10 +126,14 @@ defineFields
 		defineField: #hemf type: HANDLEField new offset: 8
 "!
 
+getFieldNames
+	^#(#dwSize #picType #handle #dw1 #dw2)!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^OLEPicture icon! !
 !PICTDESC class categoriesFor: #defineFields!initializing!public! !
+!PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PICTDESC class categoriesFor: #icon!constants!public! !
 

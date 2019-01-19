@@ -2,84 +2,66 @@
 
 Win32Structure subclass: #WINDOWPOS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cx _OffsetOf_cy _OffsetOf_flags _OffsetOf_hwnd _OffsetOf_hwndInsertAfter _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WINDOWPOS guid: (GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
+WINDOWPOS addClassConstant: '_OffsetOf_cx' value: 16r10!
+WINDOWPOS addClassConstant: '_OffsetOf_cy' value: 16r14!
+WINDOWPOS addClassConstant: '_OffsetOf_flags' value: 16r18!
+WINDOWPOS addClassConstant: '_OffsetOf_hwnd' value: 16r0!
+WINDOWPOS addClassConstant: '_OffsetOf_hwndInsertAfter' value: 16r4!
+WINDOWPOS addClassConstant: '_OffsetOf_x' value: 16r8!
+WINDOWPOS addClassConstant: '_OffsetOf_y' value: 16rC!
 WINDOWPOS comment: ''!
 !WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
 !WINDOWPOS methodsFor!
 
 cx
-	"Answer the receiver's cx field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cx)!
+	^bytes sdwordAtOffset: _OffsetOf_cx!
 
-cx: anObject 
-	"Set the receiver's cx field to the value of anObject."
+cx: anInteger
+	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cx) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
 
 cy
-	"Answer the receiver's cy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
+	^bytes sdwordAtOffset: _OffsetOf_cy!
 
-cy: anObject 
-	"Set the receiver's cy field to the value of anObject."
+cy: anInteger
+	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cy put: anInteger!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 hwndInsertAfter
-	"Answer the receiver's hwndInsertAfter field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hwndInsertAfter' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hwndInsertAfter)!
+	^bytes dwordAtOffset: _OffsetOf_hwndInsertAfter!
 
 isRectangleChanged
 	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
-
-printOn: aStream 
-	"Append a textual representation of the receiver to aStream."
-
-	| flags first |
-	self isNull ifTrue: [^super printOn: aStream].
-	aStream
-		basicPrint: self;
-		nextPutAll: '(after ';
-		print: (View fromHandle: self hwndInsertAfter);
-		nextPutAll: ', '.
-	self isRectangleChanged 
-		ifTrue: 
-			[aStream
-				print: self rectangle;
-				nextPutAll: ', '].
-	flags := self flags.
-	first := true.
-	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection 
-		asArray) do: 
-				[:each | 
-				(flags allMask: (Win32Constants at: each)) 
-					ifTrue: 
-						[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-						aStream nextPutAll: each]]!
 
 rectangle
 	^self x @ self y extent: self cx @ self cy!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #x)!
+	^bytes sdwordAtOffset: _OffsetOf_x!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #y)! !
+	^bytes sdwordAtOffset: _OffsetOf_y! !
 !WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
@@ -87,7 +69,6 @@ y
 !WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
-!WINDOWPOS categoriesFor: #printOn:!development!printing!public! !
 !WINDOWPOS categoriesFor: #rectangle!accessing!public! !
 !WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
@@ -117,6 +98,10 @@ defineFields
 		defineField: #cx type: SDWORDField new;
 		defineField: #cy type: SDWORDField new;
 		defineField: #flags type: DWORDField readOnly
-! !
+!
+
+getFieldNames
+	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
 !WINDOWPOS class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

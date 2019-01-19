@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hInsertAfter _OffsetOf_hParent _OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TVINSERTSTRUCTW guid: (GUID fromString: '{87b4c618-026e-11d3-9fd7-00a0cc3e4a32}')!
+TVINSERTSTRUCTW addClassConstant: '_OffsetOf_hInsertAfter' value: 16r4!
+TVINSERTSTRUCTW addClassConstant: '_OffsetOf_hParent' value: 16r0!
+TVINSERTSTRUCTW addClassConstant: '_OffsetOf_item' value: 16r8!
 TVINSERTSTRUCTW comment: ''!
 !TVINSERTSTRUCTW categoriesForClass!External-Data-Structured-Win32! !
 !TVINSERTSTRUCTW methodsFor!
@@ -13,25 +16,25 @@ TVINSERTSTRUCTW comment: ''!
 hInsertAfter: anInteger
 	"Set the receiver's 'hInsertAfter' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hInsertAfter) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hInsertAfter put: anInteger!
 
 hParent: anInteger
 	"Set the receiver's 'hParent' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hParent put: anInteger!
 
 item
 	"Answer the <TVITEMEXW> value of the receiver's 'item' field."
 
-	^TVITEMEXW fromAddress: bytes yourAddress + ##(self offsetOf: #item)!
+	^TVITEMEXW fromAddress: bytes yourAddress + _OffsetOf_item!
 
 item: aTVITEMEXW
 	"Set the receiver's 'item' field to the value of the argument, aTVITEMEXW"
 
 	aTVITEMEXW
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #item) + 1)
-		to: ##((self offsetOf: #item) + TVITEMEXW basicByteSize)
+		from: ##(_OffsetOf_item + 1)
+		to: ##(_OffsetOf_item + TVITEMEXW basicByteSize)
 		startingAt: 1! !
 !TVINSERTSTRUCTW categoriesFor: #hInsertAfter:!**compiled accessors**!public! !
 !TVINSERTSTRUCTW categoriesFor: #hParent:!**compiled accessors**!public! !
@@ -42,12 +45,16 @@ item: aTVITEMEXW
 
 defineFields
 	"Define the layout of the Win32 TVINSERTSTRUCT structure.
-		TVINSERTSTRUCT compileDefinition
+		self compileDefinition
 	"
 
 	self
 		defineField: #hParent type: DWORDField writeOnly offset: 0;
 		defineField: #hInsertAfter type: DWORDField writeOnly offset: 4;
-		defineField: #item type: (StructureField type: TVITEMEXW) offset: 8 "read/write so can get pointer to embedded TVITEM"! !
+		defineField: #item type: (StructureField type: TVITEMEXW) offset: 8 "read/write so can get pointer to embedded TVITEM"!
+
+getFieldNames
+	^#(#hParent #hInsertAfter #item)! !
 !TVINSERTSTRUCTW class categoriesFor: #defineFields!initializing!public! !
+!TVINSERTSTRUCTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -30,12 +30,12 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\..\Registry\Dolphin Registry Access';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\..\Registry\Dolphin Registry Access').
 
 package!
 
@@ -48,7 +48,7 @@ Object subclass: #OneOffNoteBubble
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
 MessageBoxAbstract subclass: #MessageBubble

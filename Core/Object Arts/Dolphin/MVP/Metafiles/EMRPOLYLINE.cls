@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMRPOLYLINE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYLINE guid: (GUID fromString: '{d4e9a638-aade-4ece-a3f4-9e54a0929730}')!
+EMRPOLYLINE addClassConstant: '_OffsetOf_aptl' value: 16r1C!
+EMRPOLYLINE addClassConstant: '_OffsetOf_cptl' value: 16r18!
+EMRPOLYLINE addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYLINE comment: '<EMRPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,46 +29,47 @@ struct tagEMRPOLYLINE {
 !EMRPOLYLINE methodsFor!
 
 aptl
-	"Answer the receiver's aptl field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'aptl' field."
 
-	^StructureArray 
-		fromAddress: bytes yourAddress + ##(self offsetOf: #aptl)
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_aptl
 		length: self cptl
 		elementClass: POINTL!
 
-aptl: anObject 
-	"Set the receiver's aptl field to the value of anObject."
+aptl: aStructureArrayOfPOINTL
+	"Set the receiver's 'aptl' field to the value of the argument, aStructureArrayOfPOINTL"
 
 	| size |
-	size := anObject byteSize min: self cptl * ##(POINTL basicByteSize).
-	anObject 
+	size := aStructureArrayOfPOINTL byteSize.
+	aStructureArrayOfPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aptl) + 1)
-		to: ##(self offsetOf: #aptl) + size
-		startingAt: 1!
+		from: ##(_OffsetOf_aptl + 1)
+		to: _OffsetOf_aptl + size
+		startingAt: 1.
+	self cptl: aStructureArrayOfPOINTL size!
 
 cptl
-	"Answer the receiver's cptl field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cptl' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cptl)!
+	^bytes dwordAtOffset: _OffsetOf_cptl!
 
-cptl: anObject 
-	"Set the receiver's cptl field to the value of anObject."
+cptl: anInteger
+	"Set the receiver's 'cptl' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cptl) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cptl put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRPOLYLINE categoriesFor: #aptl!**compiled accessors**!public! !
 !EMRPOLYLINE categoriesFor: #aptl:!**compiled accessors**!public! !
@@ -103,6 +107,9 @@ defineFields
 			offset: 28.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #cptl #aptl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -113,5 +120,6 @@ iTypes
 		with: EMR_POLYBEZIERTO
 		with: EMR_POLYLINETO! !
 !EMRPOLYLINE class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYLINE class categoriesFor: #iTypes!constants!public! !
 

@@ -13,7 +13,7 @@ Instance Variables:
 	packagesPresenter		<listPresenter> showing the packages filtered by the selected folder
 
 '!
-!PackageSelector categoriesForClass!Development!MVP-Presenters!MVP-Resources-Misc! !
+!PackageSelector categoriesForClass!MVP-Presenters!MVP-Resources-Misc! !
 !PackageSelector methodsFor!
 
 aboutPackage

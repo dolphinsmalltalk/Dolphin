@@ -34,17 +34,16 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\System\Random\Dolphin Random Stream';
-	add: '..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
-	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
-	add: '..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons';
-	add: 'Midi';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
+	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
+	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
+	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
+	'Midi').
 
 package!
 

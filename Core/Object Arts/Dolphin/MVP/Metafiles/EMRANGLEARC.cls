@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRANGLEARC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_eStartAngle _OffsetOf_eSweepAngle _OffsetOf_nRadius _OffsetOf_ptlCenter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRANGLEARC guid: (GUID fromString: '{76825af3-ec74-45d6-8539-0c31f3e069b9}')!
+EMRANGLEARC addClassConstant: '_OffsetOf_eStartAngle' value: 16r14!
+EMRANGLEARC addClassConstant: '_OffsetOf_eSweepAngle' value: 16r18!
+EMRANGLEARC addClassConstant: '_OffsetOf_nRadius' value: 16r10!
+EMRANGLEARC addClassConstant: '_OffsetOf_ptlCenter' value: 16r8!
 EMRANGLEARC comment: '<EMRANGLEARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRANGLEARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,47 +31,47 @@ struct tagEMRANGLEARC {
 !EMRANGLEARC methodsFor!
 
 eStartAngle
-	"Answer the receiver's eStartAngle field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eStartAngle' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eStartAngle)!
+	^bytes floatAtOffset: _OffsetOf_eStartAngle!
 
-eStartAngle: anObject 
-	"Set the receiver's eStartAngle field to the value of anObject."
+eStartAngle: aFloat
+	"Set the receiver's 'eStartAngle' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eStartAngle) put: anObject!
+	bytes floatAtOffset: _OffsetOf_eStartAngle put: aFloat!
 
 eSweepAngle
-	"Answer the receiver's eSweepAngle field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eSweepAngle' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eSweepAngle)!
+	^bytes floatAtOffset: _OffsetOf_eSweepAngle!
 
-eSweepAngle: anObject 
-	"Set the receiver's eSweepAngle field to the value of anObject."
+eSweepAngle: aFloat
+	"Set the receiver's 'eSweepAngle' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eSweepAngle) put: anObject!
+	bytes floatAtOffset: _OffsetOf_eSweepAngle put: aFloat!
 
 nRadius
-	"Answer the receiver's nRadius field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nRadius' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nRadius)!
+	^bytes dwordAtOffset: _OffsetOf_nRadius!
 
-nRadius: anObject 
-	"Set the receiver's nRadius field to the value of anObject."
+nRadius: anInteger
+	"Set the receiver's 'nRadius' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nRadius) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nRadius put: anInteger!
 
 ptlCenter
-	"Answer the receiver's ptlCenter field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlCenter' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlCenter)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlCenter!
 
-ptlCenter: anObject 
-	"Set the receiver's ptlCenter field to the value of anObject."
+ptlCenter: aPOINTL
+	"Set the receiver's 'ptlCenter' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlCenter) + 1)
-		to: ##((self offsetOf: #ptlCenter) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlCenter + 1)
+		to: ##(_OffsetOf_ptlCenter + POINTL basicByteSize)
 		startingAt: 1! !
 !EMRANGLEARC categoriesFor: #eStartAngle!**compiled accessors**!public! !
 !EMRANGLEARC categoriesFor: #eStartAngle:!**compiled accessors**!public! !
@@ -103,10 +107,14 @@ defineFields
 		defineField: #eSweepAngle type: FLOATField new offset: 24.
 	self byteSize: 28!
 
+getFieldNames
+	^#(#iType #nSize #ptlCenter #nRadius #eStartAngle #eSweepAngle)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ANGLEARC! !
 !EMRANGLEARC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRANGLEARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRANGLEARC class categoriesFor: #iTypes!constants!public! !
 

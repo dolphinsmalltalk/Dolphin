@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ptlOrigin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETVIEWPORTORGEX guid: (GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
+EMRSETVIEWPORTORGEX addClassConstant: '_OffsetOf_ptlOrigin' value: 16r8!
 EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMRSETVIEWPORTORGEX {
 !EMRSETVIEWPORTORGEX methodsFor!
 
 ptlOrigin
-	"Answer the receiver's ptlOrigin field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlOrigin' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlOrigin)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlOrigin!
 
-ptlOrigin: anObject 
-	"Set the receiver's ptlOrigin field to the value of anObject."
+ptlOrigin: aPOINTL
+	"Set the receiver's 'ptlOrigin' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlOrigin) + 1)
-		to: ##((self offsetOf: #ptlOrigin) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlOrigin + 1)
+		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
 		startingAt: 1! !
 !EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin!**compiled accessors**!public! !
 !EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin:!**compiled accessors**!public! !
@@ -60,6 +61,9 @@ defineFields
 			offset: 8.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #ptlOrigin)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -68,5 +72,6 @@ iTypes
 		with: EMR_SETWINDOWORGEX
 		with: EMR_SETBRUSHORGEX! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
 

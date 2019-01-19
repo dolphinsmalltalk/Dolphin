@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
-	classVariableNames: 'RecordTypes'
+	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
 	classInstanceVariableNames: ''!
 ENHMETARECORD guid: (GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
+ENHMETARECORD addClassConstant: '_OffsetOf_iType' value: 16r0!
+ENHMETARECORD addClassConstant: '_OffsetOf_nSize' value: 16r4!
 ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
 !ENHMETARECORD categoriesForClass!Win32-Structs! !
 !ENHMETARECORD methodsFor!
@@ -21,24 +23,24 @@ getField: fieldNameString
 	^self perform: selector!
 
 iType
-	"Answer the receiver's iType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_iType!
 
-iType: anObject 
-	"Set the receiver's iType field to the value of anObject."
+iType: anInteger
+	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
 
 nSize
-	"Answer the receiver's nSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nSize)!
+	^bytes dwordAtOffset: _OffsetOf_nSize!
 
-nSize: anObject 
-	"Set the receiver's nSize field to the value of anObject."
+nSize: anInteger
+	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
 !ENHMETARECORD categoriesFor: #getField:!accessing!private! !
 !ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
 !ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
@@ -63,6 +65,9 @@ defineFields
 		defineField: #iType type: DWORDField new offset: 0;
 		defineField: #nSize type: DWORDField new offset: 4.
 	self byteSize: 8!
+
+getFieldNames
+	^#(#iType #nSize)!
 
 initialize
 	RecordTypes := Array new: EMR_MAX!
@@ -102,6 +107,7 @@ uninitializeBeforeRemove
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
 !ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ENHMETARECORD class categoriesFor: #initialize!public! !
 !ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
 !ENHMETARECORD class categoriesFor: #iTypes!constants!public! !

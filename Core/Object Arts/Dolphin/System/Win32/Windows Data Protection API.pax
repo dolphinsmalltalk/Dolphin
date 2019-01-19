@@ -26,9 +26,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Conformant Array Fields').
 
 package!
 
@@ -41,12 +41,12 @@ ExternalLibrary subclass: #Crypt32Library
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #CRYPTOAPI_BLOB
 	instanceVariableNames: 'localData'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_pbData'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwPromptFlags _OffsetOf_dwSize _OffsetOf_hwndApp _OffsetOf_szPrompt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

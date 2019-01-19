@@ -2,10 +2,28 @@
 
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STARTUPINFOW guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
+STARTUPINFOW addClassConstant: '_OffsetOf_cbReserved2' value: 16r32!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwFillAttribute' value: 16r28!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwFlags' value: 16r2C!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwX' value: 16r10!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwXCountChars' value: 16r20!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwXSize' value: 16r18!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwY' value: 16r14!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwYCountChars' value: 16r24!
+STARTUPINFOW addClassConstant: '_OffsetOf_dwYSize' value: 16r1C!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdError' value: 16r40!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdInput' value: 16r38!
+STARTUPINFOW addClassConstant: '_OffsetOf_hStdOutput' value: 16r3C!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpDesktop' value: 16r8!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r4!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved2' value: 16r34!
+STARTUPINFOW addClassConstant: '_OffsetOf_lpTitle' value: 16rC!
+STARTUPINFOW addClassConstant: '_OffsetOf_wShowWindow' value: 16r30!
 STARTUPINFOW comment: ''!
 !STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !STARTUPINFOW methodsFor!
@@ -20,87 +38,87 @@ desktop: aString
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwX
 	"Answer the <Integer> value of the receiver's 'dwX' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwX)!
+	^bytes dwordAtOffset: _OffsetOf_dwX!
 
 dwX: anInteger
 	"Set the receiver's 'dwX' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwX) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwX put: anInteger!
 
 dwXSize
 	"Answer the <Integer> value of the receiver's 'dwXSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwXSize)!
+	^bytes dwordAtOffset: _OffsetOf_dwXSize!
 
 dwXSize: anInteger
 	"Set the receiver's 'dwXSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwXSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwXSize put: anInteger!
 
 dwY
 	"Answer the <Integer> value of the receiver's 'dwY' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwY)!
+	^bytes dwordAtOffset: _OffsetOf_dwY!
 
 dwY: anInteger
 	"Set the receiver's 'dwY' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwY) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwY put: anInteger!
 
 dwYSize
 	"Answer the <Integer> value of the receiver's 'dwYSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwYSize)!
+	^bytes dwordAtOffset: _OffsetOf_dwYSize!
 
 dwYSize: anInteger
 	"Set the receiver's 'dwYSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwYSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwYSize put: anInteger!
 
 hStdError: anInteger
 	"Set the receiver's 'hStdError' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hStdError) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_hStdError put: anInteger!
 
 hStdInput: anInteger
 	"Set the receiver's 'hStdInput' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hStdInput) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_hStdInput put: anInteger!
 
 hStdOutput: anInteger
 	"Set the receiver's 'hStdOutput' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hStdOutput) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_hStdOutput put: anInteger!
 
 lpDesktop: anUtf16String
 	"Set the receiver's 'lpDesktop' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpDesktop) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpDesktop put: anUtf16String yourAddress!
 
 lpTitle
 	"Answer the <Utf16String> value of the receiver's 'lpTitle' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpTitle))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpTitle)!
 
 lpTitle: anUtf16String
 	"Set the receiver's 'lpTitle' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpTitle) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpTitle put: anUtf16String yourAddress!
 
 stderr: aFile
 	"Set the hStdError descriptor to aFile. We store down the File
@@ -133,12 +151,12 @@ title: aString
 wShowWindow
 	"Answer the <Integer> value of the receiver's 'wShowWindow' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wShowWindow)!
+	^bytes wordAtOffset: _OffsetOf_wShowWindow!
 
 wShowWindow: anInteger
 	"Set the receiver's 'wShowWindow' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wShowWindow) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_wShowWindow put: anInteger! !
 !STARTUPINFOW categoriesFor: #desktop:!accessing!public! !
 !STARTUPINFOW categoriesFor: #dwFlags!**compiled accessors**!public! !
 !STARTUPINFOW categoriesFor: #dwFlags:!**compiled accessors**!public! !
@@ -210,6 +228,10 @@ defineFields
 		defineField: #lpReserved2 type: LPVOIDField filler;
 		defineField: #hStdInput type: UINT_PTRField writeOnly;
 		defineField: #hStdOutput type: UINT_PTRField writeOnly;
-		defineField: #hStdError type: UINT_PTRField writeOnly! !
+		defineField: #hStdError type: UINT_PTRField writeOnly!
+
+getFieldNames
+	^#(#dwSize #lpDesktop #lpTitle #dwX #dwY #dwXSize #dwYSize #dwXCountChars #dwYCountChars #dwFillAttribute #dwFlags #wShowWindow #hStdInput #hStdOutput #hStdError)! !
 !STARTUPINFOW class categoriesFor: #defineFields!automatic generation!public! !
+!STARTUPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

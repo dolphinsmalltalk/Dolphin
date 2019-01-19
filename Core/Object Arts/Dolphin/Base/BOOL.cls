@@ -17,12 +17,12 @@ Possible values are:
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
-	^(bytes dwordAtOffset: 0) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_value) asBoolean!
 
 value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: 0 put: aBoolean asParameter! !
+	bytes dwordAtOffset: _OffsetOf_value put: aBoolean asParameter! !
 !BOOL categoriesFor: #value!**compiled accessors**!public! !
 !BOOL categoriesFor: #value:!**compiled accessors**!public! !
 
@@ -42,13 +42,6 @@ defineFields
 	self defineField: #value
 		type: ((BOOLField new)
 				beOverride;
-				yourself)!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^BOOLField! !
+				yourself)! !
 !BOOL class categoriesFor: #defineFields!initializing!public! !
-!BOOL class categoriesFor: #fieldType!constants!development!private! !
 

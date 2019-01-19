@@ -317,10 +317,10 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 		yourself! !
 !Grabber class categoriesFor: #cursors!accessing!private! !
 !Grabber class categoriesFor: #defaultExtent!constants!private! !
-!Grabber class categoriesFor: #initialize!development!initializing!private! !
+!Grabber class categoriesFor: #initialize!initializing!private! !
 !Grabber class categoriesFor: #new!instance creation!private! !
 !Grabber class categoriesFor: #onStartup!event handling!private! !
-!Grabber class categoriesFor: #publishedEventsOfInstances!development!events!private! !
+!Grabber class categoriesFor: #publishedEventsOfInstances!events!private! !
 !Grabber class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !Grabber class categoriesFor: #view:aspect:arena:grid:status:!instance creation!public! !
 !Grabber class categoriesFor: #view:aspect:composer:!instance creation!public! !

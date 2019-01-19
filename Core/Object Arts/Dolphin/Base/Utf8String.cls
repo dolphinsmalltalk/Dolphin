@@ -217,9 +217,6 @@ nextIndexOf: anElement from: start to: stop
 	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
 
 	^anElement class == Character
-		ifFalse: 
-			["Strings can only contain Characters"
-			0]
 		ifTrue: 
 			[anElement isAscii
 				ifTrue: 
@@ -230,7 +227,10 @@ nextIndexOf: anElement from: start to: stop
 				ifFalse: 
 					[| found |
 					found := self indexOfSubCollection: (self class with: anElement) startingAt: start.
-					found <= stop ifTrue: [found] ifFalse: [0]]]!
+					found <= stop ifTrue: [found] ifFalse: [0]]]
+		ifFalse: 
+			["Strings can only contain Characters"
+			0]!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order."

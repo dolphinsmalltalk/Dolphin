@@ -251,8 +251,8 @@ changePublicPrivate
 	| categories originalMethod publicCategory privateCategory originalCategory chosenCategory |
 
 	originalMethod := self method.
-	publicCategory := originalMethod methodClass methodCategoryClass public.
-	privateCategory := originalMethod methodClass methodCategoryClass private.
+	publicCategory := 'public' asMethodCategory.
+	privateCategory := 'private' asMethodCategory.
 	categories :=  self method categories.
 	(categories includes:  publicCategory)
 		ifTrue: [originalCategory := publicCategory. chosenCategory := privateCategory]
@@ -671,7 +671,7 @@ moveMethodToNewCategory
 	originalCategory := self category. 
 	originalCategory class == AllMethodsCategory 
 		ifTrue: [^MessageBox warning: 'Please first select a category for the method other than ''All'''].
-	categories := originalMethod methodClass methodCategoryClass allMethodCategories.
+	categories := MethodCategory allMethodCategories.
 	chosenCategory := (CategoryPrompter
 						on: originalCategory
 						list: categories

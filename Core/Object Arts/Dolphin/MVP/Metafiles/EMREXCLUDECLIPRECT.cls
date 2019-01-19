@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rclClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXCLUDECLIPRECT guid: (GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
+EMREXCLUDECLIPRECT addClassConstant: '_OffsetOf_rclClip' value: 16r8!
 EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMREXCLUDECLIPRECT {
 !EMREXCLUDECLIPRECT methodsFor!
 
 rclClip
-	"Answer the receiver's rclClip field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclClip' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclClip)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclClip!
 
-rclClip: anObject 
-	"Set the receiver's rclClip field to the value of anObject."
+rclClip: aRECT
+	"Set the receiver's 'rclClip' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclClip) + 1)
-		to: ##((self offsetOf: #rclClip) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclClip + 1)
+		to: ##(_OffsetOf_rclClip + RECT basicByteSize)
 		startingAt: 1! !
 !EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
 !EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !
@@ -58,10 +59,14 @@ defineFields
 		defineField: #rclClip type: (StructureField type: RECT) offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclClip)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXCLUDECLIPRECT with: EMR_INTERSECTCLIPRECT! !
 !EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
 

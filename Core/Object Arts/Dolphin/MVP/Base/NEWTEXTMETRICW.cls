@@ -2,10 +2,14 @@
 
 TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ntmAvgWidth _OffsetOf_ntmCellHeight _OffsetOf_ntmFlags _OffsetOf_ntmSizeEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NEWTEXTMETRICW guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
+NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmAvgWidth' value: 16r48!
+NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmCellHeight' value: 16r44!
+NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmFlags' value: 16r3C!
+NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmSizeEM' value: 16r40!
 NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:
@@ -23,24 +27,24 @@ struct tagNEWTEXTMETRIC {
 !NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
-	"Answer the receiver's ntmAvgWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmAvgWidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ntmAvgWidth)!
+	^bytes dwordAtOffset: _OffsetOf_ntmAvgWidth!
 
 ntmCellHeight
-	"Answer the receiver's ntmCellHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmCellHeight' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ntmCellHeight)!
+	^bytes dwordAtOffset: _OffsetOf_ntmCellHeight!
 
 ntmFlags
-	"Answer the receiver's ntmFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ntmFlags)!
+	^bytes dwordAtOffset: _OffsetOf_ntmFlags!
 
 ntmSizeEM
-	"Answer the receiver's ntmSizeEM field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ntmSizeEM)! !
+	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
 !NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
 !NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
 !NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
@@ -50,7 +54,7 @@ ntmSizeEM
 
 defineFields
 	"Define the fields of the NEWTEXTMETRIC structure.
-		NEWTEXTMETRIC compileDefinition
+		self compileDefinition
 	
 		typedef 
 		struct tagNEWTEXTMETRICW {
@@ -67,6 +71,10 @@ defineFields
 		defineField: #ntmFlags type: DWORDField readOnly;
 		defineField: #ntmSizeEM type: DWORDField readOnly;
 		defineField: #ntmCellHeight type: DWORDField readOnly;
-		defineField: #ntmAvgWidth type: DWORDField readOnly! !
+		defineField: #ntmAvgWidth type: DWORDField readOnly!
+
+getFieldNames
+	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
 !NEWTEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,11 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Type'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_BINDING_BASE guid: (GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
+HTTP_SERVICE_BINDING_BASE addClassConstant: '_OffsetOf_Type' value: 16r0!
 HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -26,12 +27,12 @@ struct tagHTTP_SERVICE_BINDING_BASE {
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
 !HTTP_SERVICE_BINDING_BASE categoriesFor: #Type!**compiled accessors**!public! !
 !HTTP_SERVICE_BINDING_BASE categoriesFor: #Type:!**compiled accessors**!public! !
 
@@ -60,7 +61,11 @@ fromAddress: anAddress
 		with: self
 		with: HTTP_SERVICE_BINDING_W
 		with: HTTP_SERVICE_BINDING_A) at: (ptr sdwordAtOffset: 0) + 1)
-		basicNew initializeAtAddress: ptr! !
+		basicNew initializeAtAddress: ptr!
+
+getFieldNames
+	^#(#Type)! !
 !HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
+!HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

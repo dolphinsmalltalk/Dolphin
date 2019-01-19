@@ -31,41 +31,6 @@ pointerClass: aClass
 
 	pointerClass := aClass!
 
-printAccessorExpression: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will read the value of this field from an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	aWriteStream
-		display: self pointerClass;
-		space;
-		display: #fromAddress:;
-		nextPutAll: ' (bytes ';
-		display: #intPtrAtOffset:;
-		space.
-	self printOffsetExpression: aSymbol on: aWriteStream.
-	aWriteStream nextPut: $)!
-
-printMutatorBody: aSymbol on: aWriteStream
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	| keywords |
-	keywords := #uintPtrAtOffset:put: keywords.
-	aWriteStream
-		nextPutAll: 'bytes ';
-		display: keywords first;
-		space.
-	self printOffsetExpression: aSymbol on: aWriteStream.
-	aWriteStream
-		space;
-		display: keywords second;
-		space;
-		nextPutAll: self valueParameterName;
-		space;
-		display: #yourAddress!
-
 readFrom: anExternalStructure
 	"Private - Answer a pointer object of the type pointed at by the receiver in the
 	<ExternalStructure> argument. WARNING: May be a copy or a reference depending on the
@@ -89,8 +54,6 @@ writeInto: anExternalStructure value: anObject
 !PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !PointerField categoriesFor: #pointerClass!accessing!private! !
 !PointerField categoriesFor: #pointerClass:!accessing!private! !
-!PointerField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
-!PointerField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !PointerField categoriesFor: #readFrom:!indirect accessing!private! !
 !PointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

@@ -2,10 +2,12 @@
 
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cBytes _OffsetOf_varDefaultValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PARAMDESCEX guid: (GUID fromString: '{c06f3b61-0868-11d3-93af-00a024ca708a}')!
+PARAMDESCEX addClassConstant: '_OffsetOf_cBytes' value: 16r0!
+PARAMDESCEX addClassConstant: '_OffsetOf_varDefaultValue' value: 16r8!
 PARAMDESCEX comment: 'PARAMDESCEX is an <ExternalStructure> to represent the AX Automation PARAMDESCEX structure.
 
 The PARAMDESCEX structure is used to hold the default value (in a variant) for a particular parameter.
@@ -18,9 +20,9 @@ Fields:
 !PARAMDESCEX methodsFor!
 
 varDefaultValue
-	"Answer the receiver's varDefaultValue field as a Smalltalk object."
+	"Answer the <VARIANT> value of the receiver's 'varDefaultValue' field."
 
-	^VARIANT fromAddress: bytes yourAddress + ##(self offsetOf: #varDefaultValue)! !
+	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varDefaultValue! !
 !PARAMDESCEX categoriesFor: #varDefaultValue!**compiled accessors**!public! !
 
 !PARAMDESCEX class methodsFor!
@@ -41,6 +43,10 @@ defineFields
 	self
 		defineField: #cBytes			type: DWORDField filler;
 		defineField: #varDefaultValue	type: (StructureField type: VARIANT) beReadOnly
-! !
+!
+
+getFieldNames
+	^#(#varDefaultValue)! !
 !PARAMDESCEX class categoriesFor: #defineFields!initializing!public! !
+!PARAMDESCEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

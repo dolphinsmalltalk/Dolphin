@@ -2,10 +2,30 @@
 
 Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tmAscent _OffsetOf_tmAveCharWidth _OffsetOf_tmBreakChar _OffsetOf_tmCharSet _OffsetOf_tmDefaultChar _OffsetOf_tmDescent _OffsetOf_tmDigitizedAspectX _OffsetOf_tmDigitizedAspectY _OffsetOf_tmExternalLeading _OffsetOf_tmFirstChar _OffsetOf_tmHeight _OffsetOf_tmInternalLeading _OffsetOf_tmItalic _OffsetOf_tmLastChar _OffsetOf_tmMaxCharWidth _OffsetOf_tmOverhang _OffsetOf_tmPitchAndFamily _OffsetOf_tmStruckOut _OffsetOf_tmUnderlined _OffsetOf_tmWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TEXTMETRICW guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmAscent' value: 16r4!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmAveCharWidth' value: 16r14!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmBreakChar' value: 16r32!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmCharSet' value: 16r38!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmDefaultChar' value: 16r30!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmDescent' value: 16r8!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmDigitizedAspectX' value: 16r24!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmDigitizedAspectY' value: 16r28!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmExternalLeading' value: 16r10!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmFirstChar' value: 16r2C!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmHeight' value: 16r0!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmInternalLeading' value: 16rC!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmItalic' value: 16r34!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmLastChar' value: 16r2E!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmMaxCharWidth' value: 16r18!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmOverhang' value: 16r20!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmPitchAndFamily' value: 16r37!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmStruckOut' value: 16r36!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmUnderlined' value: 16r35!
+TEXTMETRICW addClassConstant: '_OffsetOf_tmWeight' value: 16r1C!
 TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -44,102 +64,102 @@ struct tagTEXTMETRIC {
 tmAscent
 	"Answer the <Integer> value of the receiver's 'tmAscent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmAscent)!
+	^bytes sdwordAtOffset: _OffsetOf_tmAscent!
 
 tmAveCharWidth
 	"Answer the <Integer> value of the receiver's 'tmAveCharWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmAveCharWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_tmAveCharWidth!
 
 tmBreakChar
 	"Answer the <Character> value of the receiver's 'tmBreakChar' field."
 
-	^(bytes wordAtOffset: ##(self offsetOf: #tmBreakChar)) asCharacter!
+	^(bytes wordAtOffset: _OffsetOf_tmBreakChar) asCharacter!
 
 tmCharSet
 	"Answer the <Integer> value of the receiver's 'tmCharSet' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #tmCharSet)!
+	^bytes byteAtOffset: _OffsetOf_tmCharSet!
 
 tmDefaultChar
 	"Answer the <Character> value of the receiver's 'tmDefaultChar' field."
 
-	^(bytes wordAtOffset: ##(self offsetOf: #tmDefaultChar)) asCharacter!
+	^(bytes wordAtOffset: _OffsetOf_tmDefaultChar) asCharacter!
 
 tmDescent
 	"Answer the <Integer> value of the receiver's 'tmDescent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmDescent)!
+	^bytes sdwordAtOffset: _OffsetOf_tmDescent!
 
 tmDigitizedAspectX
 	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectX' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmDigitizedAspectX)!
+	^bytes sdwordAtOffset: _OffsetOf_tmDigitizedAspectX!
 
 tmDigitizedAspectY
 	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectY' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmDigitizedAspectY)!
+	^bytes sdwordAtOffset: _OffsetOf_tmDigitizedAspectY!
 
 tmExternalLeading
 	"Answer the <Integer> value of the receiver's 'tmExternalLeading' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmExternalLeading)!
+	^bytes sdwordAtOffset: _OffsetOf_tmExternalLeading!
 
 tmFirstChar
 	"Answer the <Character> value of the receiver's 'tmFirstChar' field."
 
-	^(bytes wordAtOffset: ##(self offsetOf: #tmFirstChar)) asCharacter!
+	^(bytes wordAtOffset: _OffsetOf_tmFirstChar) asCharacter!
 
 tmHeight
 	"Answer the <Integer> value of the receiver's 'tmHeight' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_tmHeight!
 
 tmInternalLeading
 	"Answer the <Integer> value of the receiver's 'tmInternalLeading' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmInternalLeading)!
+	^bytes sdwordAtOffset: _OffsetOf_tmInternalLeading!
 
 tmItalic
 	"Answer the <Integer> value of the receiver's 'tmItalic' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #tmItalic)!
+	^bytes byteAtOffset: _OffsetOf_tmItalic!
 
 tmLastChar
 	"Answer the <Character> value of the receiver's 'tmLastChar' field."
 
-	^(bytes wordAtOffset: ##(self offsetOf: #tmLastChar)) asCharacter!
+	^(bytes wordAtOffset: _OffsetOf_tmLastChar) asCharacter!
 
 tmMaxCharWidth
 	"Answer the <Integer> value of the receiver's 'tmMaxCharWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmMaxCharWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_tmMaxCharWidth!
 
 tmOverhang
 	"Answer the <Integer> value of the receiver's 'tmOverhang' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmOverhang)!
+	^bytes sdwordAtOffset: _OffsetOf_tmOverhang!
 
 tmPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'tmPitchAndFamily' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #tmPitchAndFamily)!
+	^bytes byteAtOffset: _OffsetOf_tmPitchAndFamily!
 
 tmStruckOut
 	"Answer the <Integer> value of the receiver's 'tmStruckOut' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #tmStruckOut)!
+	^bytes byteAtOffset: _OffsetOf_tmStruckOut!
 
 tmUnderlined
 	"Answer the <Integer> value of the receiver's 'tmUnderlined' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #tmUnderlined)!
+	^bytes byteAtOffset: _OffsetOf_tmUnderlined!
 
 tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #tmWeight)! !
+	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
 !TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
 !TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
 !TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
@@ -214,10 +234,14 @@ defineFields
 		defineField: #tmPitchAndFamily type: BYTEField readOnly;
 		defineField: #tmCharSet type: BYTEField readOnly!
 
+getFieldNames
+	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet)!
+
 packing
 	"Uses non-standard packing"
 
 	^4! !
 !TEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TEXTMETRICW class categoriesFor: #packing!constants!public! !
 

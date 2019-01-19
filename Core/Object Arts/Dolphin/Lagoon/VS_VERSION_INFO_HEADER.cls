@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VS_VERSION_INFO_HEADER guid: (GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wLength' value: 16r0!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wType' value: 16r4!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wValueLength' value: 16r2!
 VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!
@@ -24,17 +27,6 @@ key
 	key isNil ifTrue: [
 		key := self szKey].
 	^key!
-
-printOn: target
-	target
-		basicPrint: self;
-		nextPut: $(;
-		nextPutAll: self key;
-		nextPutAll: ', wLength = '; print: self wLength;
-		nextPutAll: ', wValueLength='; print: self wValueLength;
-		nextPutAll: ', wType='; print: self wType;
-		nextPut: $)
-	!
 
 szKey
 	^Utf16String fromAddress: self yourAddress asInteger + 6!
@@ -71,22 +63,21 @@ valueString
 		ifFalse: [Utf16String fromAddress: self yourAddress asInteger + self valueOffset length: words - 1]!
 
 wLength
-	"Answer the receiver's wLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wLength' field."
 
-	^(bytes wordAtOffset: 0)!
+	^bytes wordAtOffset: _OffsetOf_wLength!
 
 wType
-	"Answer the receiver's wType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wType' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: _OffsetOf_wType!
 
 wValueLength
-	"Answer the receiver's wValueLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
-	^(bytes wordAtOffset: 2)! !
+	^bytes wordAtOffset: _OffsetOf_wValueLength! !
 !VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !
 !VS_VERSION_INFO_HEADER categoriesFor: #valueBytes!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #valueDWORDs!accessing!public! !
@@ -108,6 +99,10 @@ defineFields
 		defineField: #wLength type: WORDField readOnly;
 		defineField: #wValueLength type: WORDField readOnly;
 		defineField: #wType type: WORDField readOnly
-		"All other fields are of variable length"! !
+		"All other fields are of variable length"!
+
+getFieldNames
+	^#(#wLength #wValueLength #wType)! !
 !VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!initializing!private! !
+!VS_VERSION_INFO_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

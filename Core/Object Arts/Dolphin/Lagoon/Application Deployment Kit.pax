@@ -18,10 +18,52 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #BasicImageStripper -> #getEvents;
+	add: #BasicImageStripper -> #postCopy;
+	add: #BasicImageStripper -> #setEvents:;
+	add: #ImageStripper -> #canDeploy;
+	add: #ImageStripper -> #compileExternalStructures:;
 	add: #ImageStripper -> #defaultSessionManagerClass;
+	add: #ImageStripper -> #deploy;
 	add: #ImageStripper -> #editCustomOptions;
+	add: #ImageStripper -> #executableName:;
+	add: #ImageStripper -> #ignoreViewReferences:;
+	add: #ImageStripper -> #includeManifestResource:;
+	add: #ImageStripper -> #initialize;
+	add: #ImageStripper -> #isToGo:;
+	add: #ImageStripper -> #isUnattended:;
+	add: #ImageStripper -> #logReferencesToClasses:;
+	add: #ImageStripper -> #preserveAspectSetters:;
+	add: #ImageStripper -> #preStripScript:;
+	add: #ImageStripper -> #queryCommand:;
+	add: #ImageStripper -> #retainInstVarNames:;
+	add: #ImageStripper -> #rootPackage:;
+	add: #ImageStripper -> #runtimeSessionManagerClass:;
+	add: #ImageStripper -> #snapshotType:;
+	add: #ImageStripper -> #stripClassBuilder:;
+	add: #ImageStripper -> #stripClassGuids:;
+	add: #ImageStripper -> #stripClassInfo:;
+	add: #ImageStripper -> #stripDeprecatedMethods:;
+	add: #ImageStripper -> #stripDuplicateBytecodes:;
+	add: #ImageStripper -> #stripDuplicateStrings:;
+	add: #ImageStripper -> #stripRedundantClasses:;
+	add: #ImageStripper -> #stripRedundantMethods:;
+	add: #ImageStripper -> #stripRedundantPackages:;
+	add: #ImageStripper -> #stripRedundantResources:;
+	add: #ImageStripper -> #stripShouldNotImplement:;
+	add: #ImageStripper -> #stripSubclassResponsibility:;
+	add: #ImageStripper -> #stubFilePath:;
+	add: #ImageStripper -> #versionResource:;
+	add: #ImageStripper -> #writeLogFile:;
+	add: #Package -> #hasImageStripper;
+	add: #Package -> #imageStripper;
+	add: #Package -> #rehydrateImageStripper:;
 	add: #PackageSelector -> #deploy;
+	add: #VS_VERSION_INFO_HEADER -> #printOn:;
+	add: 'ImageStripper class' -> #for:;
 	add: 'ImageStripper class' -> #publishedAspectsOfInstances;
+	add: 'ImageStripper class' -> #stbConvertFrom:;
+	add: 'ImageStripper class' -> #stbVersion;
 	add: 'VersionResource class' -> #publishedAspectsOfInstances;
 	yourself.
 
@@ -31,28 +73,28 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System';
-	add: '..\Base\Dolphin';
-	add: '..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\MVP\Presenters\Image\Dolphin Image Presenter';
-	add: '..\MVP\Models\List\Dolphin List Models';
-	add: '..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: '..\IDE\Professional\Dolphin Professional Tools';
-	add: '..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\MVP\Models\Value\Dolphin Value Models';
-	add: 'Lagoon Image Stripper';
-	add: '..\ActiveX\Components\Picture\OLE Picture';
-	yourself).
+package setPrerequisites: #(
+	'..\IDE\Base\Development System'
+	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin Basic Geometry'
+	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\MVP\Models\List\Dolphin List Models'
+	'..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\Base\Dolphin Message Box'
+	'..\MVP\Base\Dolphin MVP Base'
+	'..\IDE\Professional\Dolphin Professional Tools'
+	'..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\MVP\Type Converters\Dolphin Type Converters'
+	'..\MVP\Models\Value\Dolphin Value Models'
+	'Lagoon Image Stripper'
+	'..\ActiveX\Components\Picture\OLE Picture').
 
 package!
 
@@ -69,7 +111,41 @@ ValueDialog subclass: #ApplicationDeploymentWizard
 
 "Loose Methods"!
 
+!BasicImageStripper methodsFor!
+
+getEvents
+	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
+	has no events registered for it"
+
+	^events!
+
+postCopy
+	"Apply any final flourish to the copy that may be required in order to ensure that the copy
+	does not share any state with the original. Answer the receiver."
+
+	events := nil.
+	^self!
+
+setEvents: anEventsCollectionOrNil
+	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
+	Answer the receiver."
+
+	events := anEventsCollectionOrNil! !
+!BasicImageStripper categoriesFor: #getEvents!events!private! !
+!BasicImageStripper categoriesFor: #postCopy!copying!public! !
+!BasicImageStripper categoriesFor: #setEvents:!events!private! !
+
 !ImageStripper methodsFor!
+
+canDeploy
+	"Answer true if the receiver is currently in a state where it can be deployed."
+
+	^(self executableName ifNil: [false] ifNotNil: [:name | name notEmpty]) and: [true]!
+
+compileExternalStructures: aBoolean
+	"Set the compile ExternalStructures option of the stripping process to aBoolean"
+
+	flags := flags mask: CompileStructsMask set: aBoolean!
 
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
@@ -77,16 +153,253 @@ defaultSessionManagerClass
 
 	^RuntimeSessionManager!
 
+deploy
+	self canDeploy ifFalse: [self error: 'Deployment configuration incomplete'].
+	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #stripAndSaveWithProgress) !
+
 editCustomOptions
 	"Open a <PublishedAspectInspector> on the version resource."
 
 	| inspector |
 	inspector := (Smalltalk at: #PublishedAspectInspector) shellOn: self.
-	inspector topShell caption: self class name , ' Properties'! !
-!ImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!ImageStripper categoriesFor: #editCustomOptions!commands!public! !
+	inspector topShell caption: self class name , ' Properties'!
+
+executableName: aString
+	"Set the executable name to which the resultant stripped image will
+	be saved"
+
+	executableName := FileLocator imageRelative relativePathTo: aString.
+	executableName notEmpty ifTrue: [
+		"Default the file extension and save the path relative to the installation directory"
+		executableName := File default: executableName extension: self exeFileExtension ].
+!
+
+ignoreViewReferences: aBoolean
+	"Set whether view resources should NOT be scanned for references to other
+	view resources."
+
+	flags := flags mask: IgnoreViewReferencesMask set: aBoolean!
+
+includeManifestResource: aBoolean 
+	"Set whether the resulting executable will include a Windows XP application manifest
+	resource."
+
+	flags := flags mask: NoXPManifestMask set: aBoolean not!
+
+initialize
+	"Private - Initialize the receiver"
+
+	self 
+		executableName: '';
+		runtimeSessionManagerClass: self defaultSessionManagerClass.
+	flags := self class defaultOptions.
+	
+	!
+
+isToGo: aBoolean 
+	"Set whether the resulting executable is to be deployed standalone (that is without
+	a separate VM DLL)."
+
+	"Ensure path nilled if using default"
+
+	self stubFilePath: self stubFilePath.
+	flags := flags mask: ToGoMask set: aBoolean!
+
+isUnattended: aBoolean 
+	"Controls whether or not any prompts for user input will be displayed during the deployment,
+	e.g. the final success message box. By default this is disabled (i.e. attended deploiyment)."
+
+	flags := flags mask: UnattendedMask set: aBoolean!
+
+logReferencesToClasses: aBoolean
+	"Set whether the remaining classes log should include references to those classes for	
+	debugging purposes."
+
+	flags := flags mask: LogReferencesMask set: aBoolean
+!
+
+preserveAspectSetters: aBoolean
+	"Sets the preserve aspect setters option of the receiver to aBoolean.
+	See comment in #preserveAspectSetters"
+
+	flags := flags mask: PreserveAspectsMask set: aBoolean!
+
+preStripScript: aString 
+	"Set the pre-image stripping script which allows for custom image stripping actions."
+
+	preStripScript := aString notEmpty ifTrue: [aString]!
+
+queryCommand: query 
+	"Private - Enter details about a potential command for the receiver 
+	into the <CommandQuery>, query."
+
+	(query canPerformAgainst: self) ifTrue: [query isEnabled: true].
+	^false	"There was no specific enablement of the command at this level"!
+
+retainInstVarNames: aBoolean
+	"Set the retain Retain Instance Variable Names option of the stripping process to aBoolean"
+
+	flags := flags mask: RetainInstVarNamesMask set: aBoolean!
+
+rootPackage: aPackageOrNil 
+	"Sets the root package associated with the receiver."
+
+	| sessionManager |
+	rootPackageName := aPackageOrNil notNil ifTrue: [aPackageOrNil name].
+	aPackageOrNil notNil ifFalse: [^self].
+	sessionManager := aPackageOrNil classes 
+				detect: [:each | each includesBehavior: SessionManager]
+				ifNone: [].
+	sessionManager notNil ifTrue: [self runtimeSessionManagerClass: sessionManager]!
+
+runtimeSessionManagerClass: aSessionManagerClass 
+	"Set the class of runtime session manager that the receiver will install into a stripped image"
+
+	aSessionManagerClass asSessionManagerClass isRuntime 
+		ifFalse: [^self error: aSessionManagerClass name , ' is not a runtime session manager'].
+	runtimeSessionManagerClass := aSessionManagerClass!
+
+snapshotType: anInteger
+	(anInteger between: -1 and: 9) 
+		ifFalse: [self error: 'snapshotType out of range (-1..9)'].
+	snapshotType := anInteger!
+
+stripClassBuilder: aBoolean
+	"Set the strip class builder option of the stripping process to aBoolean."
+
+	flags := flags mask: StripClassBuilderMask set: aBoolean!
+
+stripClassGuids: aBoolean
+	"Set whether the class GUIDs should be nulled at the end of the stripping process.
+	This is appropriate unless the application makes use of these to uniquely identify classes.
+	Note that guids of COMInterface's subclasses will not be nulled, as these are in fact the
+	IIDs of the corresponding interfaces."
+
+	flags := flags mask: ClearGuidsMask set: aBoolean!
+
+stripClassInfo: aBoolean
+	"Set the strip class info option of the stripping process to aBoolean"
+
+	flags := flags mask: StripClassInfoMask set: aBoolean!
+
+stripDeprecatedMethods: aBoolean
+	"Sets the option to remove deprecated methods during the 
+	receiver's stripping process."
+
+	flags := flags mask: StripDeprecatedMask set: aBoolean
+!
+
+stripDuplicateBytecodes: aBoolean
+	"Set the bytecode folding option of the stripping process to aBoolean."
+
+	flags := flags mask: FoldBytecodesMask set: aBoolean!
+
+stripDuplicateStrings: aBoolean
+	"Set the fold duplicate strings option of the stripping process to aBoolean"
+
+	flags := flags mask: FoldStringsMask set: aBoolean!
+
+stripRedundantClasses: aBoolean
+	"Sets the option to remove redundant classes during the receiver's stripping process
+	to aBoolean. Note that setting this to true will significantly increase the time take to 
+	strip an image"
+
+	flags := flags mask: StripClassesMask set: aBoolean!
+
+stripRedundantMethods: aBoolean
+	"Sets the option to remove redundant methods during the receiver's stripping process
+	to aBoolean. Note that setting this to true significantly increases the time take to 
+	strip an image"
+
+	flags := flags mask: StripMethodsMask set: aBoolean!
+
+stripRedundantPackages: aBoolean
+	"Sets the option to remove redundant packages during the receiver's stripping process
+	to aBoolean."
+
+	flags := flags mask: StripPackagesMask set: aBoolean
+!
+
+stripRedundantResources: aBoolean
+	"Sets the option to remove redundant resources during the receiver's stripping process
+	to aBoolean."
+
+	flags := flags mask: StripResourcesMask set: aBoolean
+!
+
+stripShouldNotImplement: aBoolean
+	"Sets the option to remove 'self shouldNotImplement' methods during the 
+	receiver's stripping process."
+
+	flags := flags mask: StripShouldNotImplMask set: aBoolean
+!
+
+stripSubclassResponsibility: aBoolean 
+	"Set/reset the option to remove those methods which consist of a 'self
+	subclassResponsibility' error report, depending on the <Boolean> argument. It should be safe
+	to remove such methods in a properly tested application, since they are intended as an
+	indication of a logic error for the developer."
+
+	flags := flags mask: RetainSubclassRespMask set: aBoolean not!
+
+stubFilePath: aString
+	"Set the path of a custom stub file."
+
+	stubFilePath := (aString isNil or: [aString sameAs: self defaultStubFilePath]) 
+				ifFalse: [FileLocator imageRelative relativePathTo: aString]!
+
+versionResource: aVersionResource
+	"Set the <VersionResource> describing the version resource to be built into	
+	the deployed application/dll."
+
+	versionResource := aVersionResource!
+
+writeLogFile: aBoolean
+	"Sets the option to write a log file during the receiver's stripping process
+	to aBoolean."
+
+	flags := flags mask: WriteLogMask set: aBoolean! !
+!ImageStripper categoriesFor: #canDeploy!public!testing! !
+!ImageStripper categoriesFor: #compileExternalStructures:!accessing!public! !
+!ImageStripper categoriesFor: #defaultSessionManagerClass!accessing!public! !
+!ImageStripper categoriesFor: #deploy!operations!public! !
+!ImageStripper categoriesFor: #editCustomOptions!accessing!public! !
+!ImageStripper categoriesFor: #executableName:!accessing!public! !
+!ImageStripper categoriesFor: #ignoreViewReferences:!accessing!public! !
+!ImageStripper categoriesFor: #includeManifestResource:!accessing!public! !
+!ImageStripper categoriesFor: #initialize!initializing!private! !
+!ImageStripper categoriesFor: #isToGo:!accessing!public! !
+!ImageStripper categoriesFor: #isUnattended:!accessing!public! !
+!ImageStripper categoriesFor: #logReferencesToClasses:!accessing!public! !
+!ImageStripper categoriesFor: #preserveAspectSetters:!accessing!public! !
+!ImageStripper categoriesFor: #preStripScript:!accessing!public! !
+!ImageStripper categoriesFor: #queryCommand:!commands!private! !
+!ImageStripper categoriesFor: #retainInstVarNames:!accessing!public! !
+!ImageStripper categoriesFor: #rootPackage:!accessing!public! !
+!ImageStripper categoriesFor: #runtimeSessionManagerClass:!accessing!public! !
+!ImageStripper categoriesFor: #snapshotType:!accessing!public! !
+!ImageStripper categoriesFor: #stripClassBuilder:!accessing!public! !
+!ImageStripper categoriesFor: #stripClassGuids:!accessing!public! !
+!ImageStripper categoriesFor: #stripClassInfo:!accessing!public! !
+!ImageStripper categoriesFor: #stripDeprecatedMethods:!accessing!public! !
+!ImageStripper categoriesFor: #stripDuplicateBytecodes:!accessing!public! !
+!ImageStripper categoriesFor: #stripDuplicateStrings:!accessing!public! !
+!ImageStripper categoriesFor: #stripRedundantClasses:!accessing!public! !
+!ImageStripper categoriesFor: #stripRedundantMethods:!accessing!public! !
+!ImageStripper categoriesFor: #stripRedundantPackages:!accessing!public! !
+!ImageStripper categoriesFor: #stripRedundantResources:!accessing!public! !
+!ImageStripper categoriesFor: #stripShouldNotImplement:!accessing!public! !
+!ImageStripper categoriesFor: #stripSubclassResponsibility:!accessing!public! !
+!ImageStripper categoriesFor: #stubFilePath:!accessing!public! !
+!ImageStripper categoriesFor: #versionResource:!accessing!private! !
+!ImageStripper categoriesFor: #writeLogFile:!accessing!public! !
 
 !ImageStripper class methodsFor!
+
+for: aPackage
+	"Answers an instance of the receiver suitable for stripping aPackage"
+
+	^self new rootPackage: aPackage!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -105,8 +418,88 @@ publishedAspectsOfInstances
 		add: (Aspect name: #versionResource);
 		add: (Aspect fileOpen: #stubFilePath);
 		yourself.
-	^aspects! !
-!ImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
+	^aspects!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version. 
+		Version 1: Added a retainPachydermInfo instance var (removed in v3).
+		Version 2: Added a rootClasses instance var and the events instance var in model.
+		Version 3: Consolidates all flags into one integer flags variable.
+		Version 4:  isToGo flag added (the default)
+		Version 5: supersentMessages and spare inst vars added"
+
+	^
+	[:data | 
+	| newInstance ver |
+	newInstance := self basicNew.
+	ver := anSTBClassFormat version.
+	ver < 2 
+		ifTrue: [1 to: data size do: [:i | newInstance instVarAt: i + 1 put: (data at: i)]]
+		ifFalse: [1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)]].
+	ver < 3 
+		ifTrue: 
+			["Former stripRedundantClasses boolean slot now used for flags variable to hold all booleans"
+			| stripClasses base var flags |
+			var := ImageStripper indexOfInstVar: 'flags'.
+			stripClasses := newInstance instVarAt: var.
+
+			"Initialize flags"
+			flags := self defaultOptions | StripPackagesMask.
+			stripClasses ifTrue: [flags := flags | StripClassesMask].
+			newInstance instVarAt: var put: flags.
+
+			"Convert former boolean vars to individual bits in the flags variable."
+			base := self superclass instSize.
+			#(5 6 7 8 9 10 13) 
+				with: #(#stripRedundantMethods: #preserveAspectSetters: #stripDuplicateStrings: #compileExternalStructures: #writeLogFile: #stripClassInfo: #retainInstVarNames:)
+				do: 
+					[:i :setter | 
+					newInstance perform: setter with: (newInstance instVarAt: i + base).
+					newInstance instVarAt: i + base put: nil]].
+	ver < 4 
+		ifTrue: 
+			["Default is now 'To Go' deployment"
+			newInstance isToGo: true].
+	newInstance]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^5! !
+!ImageStripper class categoriesFor: #for:!instance creation!public! !
+!ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!ImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
+
+!Package methodsFor!
+
+hasImageStripper
+	^imageStripperBytes notNil and: [self imageStripper notNil]!
+
+imageStripper
+	"Answer an image stripper for the receiver, or nil ImageStripper class is not present.
+	Since we have to be able to load the receiver into images that do no necessarily have the 
+	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
+	We reconstitute this here."
+
+	^self rehydrateImageStripper: ImageStripper!
+
+rehydrateImageStripper: stripperClass 
+	| stripper |
+	stripper := imageStripperBytes notNil ifTrue: [Object fromBinaryStoreBytes: imageStripperBytes].
+	stripper isNil 
+		ifTrue: 
+			[stripper := (stripperClass new)
+						rootPackage: self;
+						stripRedundantClasses: true;
+						yourself]
+		ifFalse: 
+			["If the package has been renamed the STB'd image stripper might lose its root package"
+			stripper rootPackage isNil ifTrue: [stripper rootPackage: self]].
+	^stripper! !
+!Package categoriesFor: #hasImageStripper!private!testing! !
+!Package categoriesFor: #imageStripper!accessing!public! !
+!Package categoriesFor: #rehydrateImageStripper:!accessing!private! !
 
 !PackageSelector methodsFor!
 
@@ -129,6 +522,20 @@ publishedAspectsOfInstances
 		add: (Aspect name: #translations);
 		yourself! !
 !VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!VS_VERSION_INFO_HEADER methodsFor!
+
+printOn: target
+	target
+		basicPrint: self;
+		nextPut: $(;
+		nextPutAll: self key;
+		nextPutAll: ', wLength = '; print: self wLength;
+		nextPutAll: ', wValueLength='; print: self wValueLength;
+		nextPutAll: ', wType='; print: self wType;
+		nextPut: $)
+	! !
+!VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
 
 "End of package definition"!
 

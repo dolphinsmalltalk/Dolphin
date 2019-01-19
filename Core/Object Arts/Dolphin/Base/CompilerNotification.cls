@@ -94,27 +94,6 @@ offset: anInteger
 
 	offset := anInteger!
 
-okToContinue
-	"Throw up an OK/Cancel message box with the receiver's compilation error/warning
-	message, answering true if the user pressed OK to contine the compilation."
-
-	| mb severity |
-	severity := self severityClass.
-	mb := (MessageBox new)
-				caption: 'Compilation ' , self severityName;
-				text: ('line <1d>: <2s>' expandMacrosWith: self line with: self errorMessage);
-				iconStyleFlag: severity mbIconId;
-				yourself.
-	^severity == Error 
-		ifTrue: 
-			[mb
-				ok;
-				open.
-			false]
-		ifFalse: 
-			[mb buttonStyle: #okCancel.
-			mb open == #ok]!
-
 position
 	^position!
 
@@ -164,7 +143,6 @@ source
 !CompilerNotification categoriesFor: #methodClass!accessing!public! !
 !CompilerNotification categoriesFor: #offset!private! !
 !CompilerNotification categoriesFor: #offset:!private! !
-!CompilerNotification categoriesFor: #okToContinue!public!testing! !
 !CompilerNotification categoriesFor: #position!accessing!public! !
 !CompilerNotification categoriesFor: #range!accessing!public! !
 !CompilerNotification categoriesFor: #ranges!accessing!public! !
@@ -334,6 +312,6 @@ severity
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!CompilerNotification class categoriesFor: #initialize!initializing!public! !
+!CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
 !CompilerNotification class categoriesFor: #severity!constants!public! !
 

@@ -11,6 +11,7 @@ package basicPackageVersion: '6.2'.
 
 package classNames
 	add: #ComparisonPolicy;
+	add: #Msimg32Library;
 	add: #MultipleSelectionListBox;
 	add: #MultipleSelectionListView;
 	yourself.
@@ -122,27 +123,32 @@ package globalAliases: (Set new
 	add: #StaticViewAbstract;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\Views\Common Controls\Dolphin Common Controls';
-	add: '..\Models\List\Dolphin List Models';
-	add: '..\Presenters\List\Dolphin List Presenter';
-	add: '..\Views\MoenTree\Dolphin MoenTree View';
-	add: '..\Base\Dolphin MVP Base';
-	add: '..\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\Views\Scrollbars\Dolphin Scrollbars';
-	add: '..\Views\Slider\Dolphin Slider Control';
-	add: '..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\Base\Dolphin Text Tile Icons';
-	add: '..\Type Converters\Dolphin Type Converters';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Presenters\Choice\Dolphin Choice Presenter'
+	'..\Views\Common Controls\Dolphin Common Controls'
+	'..\Models\List\Dolphin List Models'
+	'..\Presenters\List\Dolphin List Presenter'
+	'..\Views\MoenTree\Dolphin MoenTree View'
+	'..\Base\Dolphin MVP Base'
+	'..\Views\Scintilla\Dolphin Scintilla View'
+	'..\Views\Scrollbars\Dolphin Scrollbars'
+	'..\Views\Slider\Dolphin Slider Control'
+	'..\Presenters\Text\Dolphin Text Presenter'
+	'..\Icons\Dolphin Text Tile Icons'
+	'..\Type Converters\Dolphin Type Converters').
 
 package!
 
 "Class Definitions"!
 
 Object subclass: #ComparisonPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -919,15 +919,15 @@ selection: anObject ifAbsent: exceptionHandler
 	nodeHandle := (self handleFromObject: anObject)
 				ifNil: 
 					["Maybe the object does not exist in the model, so lets check"
-					(self model includes: anObject) ifFalse: [^exceptionHandler value].
+					(self model includes: anObject) ifFalse: [^exceptionHandler cull: anObject].
 					"The object is not yet expanded in the tree"
 					(self model allParentsOf: anObject) do: [:each | self expand: each].
 					(self handleFromObject: anObject)
 						ifNil: 
 							["This may occur if, for example, #= not correctly implemented on objects."
-							^exceptionHandler value]].
+							^exceptionHandler cull: anObject]].
 	^(self selectionByIndex: nodeHandle ifAbsent: [])
-		ifNil: [exceptionHandler value]
+		ifNil: [exceptionHandler cull: anObject]
 		ifNotNil: [anObject]!
 
 selectionByIndex: itemHandle ifAbsent: exceptionHandler

@@ -2,10 +2,14 @@
 
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
-	classVariableNames: 'VTIndirections'
+	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+TYPEDESC addClassConstant: '_OffsetOf_hreftype' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_lpadesc' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_lptdesc' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_vt' value: 16r4!
 TYPEDESC addClassConstant: 'VTIndirections' value: #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]!
 TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
@@ -74,9 +78,9 @@ getRefType
 	^self analyzer getRefType: self hreftype!
 
 hreftype
-	"Answer the receiver's hreftype field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hreftype' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_hreftype!
 
 isAnonymous
 	"Answer whether the type described by the receiver is an anonymous (i.e. unnamed)
@@ -100,34 +104,20 @@ isUserDefined
 	^self vt = VT_USERDEFINED!
 
 lpadesc
-	"Answer the receiver's lpadesc field as a Smalltalk object."
+	"Answer the <ARRAYDESC> value of the receiver's 'lpadesc' field."
 
-	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: 0)!
+	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpadesc)!
 
 lptdesc
-	"Answer the receiver's lptdesc field as a Smalltalk object."
+	"Answer the <TYPEDESC> value of the receiver's 'lptdesc' field."
 
-	^TYPEDESC fromAddress: (bytes intPtrAtOffset: 0)!
+	^TYPEDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lptdesc)!
 
 owner: struct
 	"Private - Set the value of the receiver's 'owner' instance variable to the <AXTypeInfoStructure> 
 	argument, struct. Answer the receiver."
 
 	owner := struct!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isAnonymous
-		ifTrue: 
-			[aStream
-				nextPutAll: 'Anon: ';
-				print: self typeInfo name]
-		ifFalse: [aStream print: self typeName].
-	aStream nextPut: $)!
 
 realTypeInfo
 	"Answer an <AXTypeInfoAnalyzer> on the underlying type described by the receiver."
@@ -191,9 +181,9 @@ vartype
 	^vt!
 
 vt
-	"Answer the receiver's vt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #vt)!
+	^bytes wordAtOffset: _OffsetOf_vt!
 
 vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
@@ -212,7 +202,6 @@ vtName
 !TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #owner:!accessing!private! !
-!TYPEDESC categoriesFor: #printOn:!development!printing!public! !
 !TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
 !TYPEDESC categoriesFor: #tdesc!accessing!public! !
 !TYPEDESC categoriesFor: #tdescArray!accessing!public! !
@@ -255,6 +244,9 @@ defineFields
 			type: DWORDField readOnly
 			offset: 0!
 
+getFieldNames
+	^#(#hreftype #lpadesc #lptdesc #vt)!
+
 initialize
 	"
 		self initialize
@@ -267,5 +259,6 @@ initialize
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
+!TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
 

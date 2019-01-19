@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #SECURITY_ATTRIBUTES
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bInheritHandle _OffsetOf_dwSize _OffsetOf_lpSecurityDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SECURITY_ATTRIBUTES guid: (GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_bInheritHandle' value: 16r8!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_lpSecurityDescriptor' value: 16r4!
 SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -26,29 +29,29 @@ struct tagSECURITY_ATTRIBUTES {
 !SECURITY_ATTRIBUTES methodsFor!
 
 bInheritHandle
-	"Answer the receiver's bInheritHandle field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'bInheritHandle' field."
 
-	^(bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle)) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_bInheritHandle) asBoolean!
 
-bInheritHandle: anObject
-	"Set the receiver's bInheritHandle field to the value of anObject."
+bInheritHandle: aBoolean
+	"Set the receiver's 'bInheritHandle' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle) put: anObject asParameter!
+	bytes dwordAtOffset: _OffsetOf_bInheritHandle put: aBoolean asParameter!
 
-dwSize: anObject
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 lpSecurityDescriptor
-	"Answer the receiver's lpSecurityDescriptor field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'lpSecurityDescriptor' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor) asExternalAddress!
 
-lpSecurityDescriptor: anObject
-	"Set the receiver's lpSecurityDescriptor field to the value of anObject."
+lpSecurityDescriptor: anExternalAddress
+	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor) put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -73,6 +76,10 @@ defineFields
 	self
 		defineField: #dwSize type: DWORDField new beWriteOnly;
 		defineField: #lpSecurityDescriptor type: LPVOIDField new;
-		defineField: #bInheritHandle type: BOOLField new! !
+		defineField: #bInheritHandle type: BOOLField new!
+
+getFieldNames
+	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
 !SECURITY_ATTRIBUTES class categoriesFor: #defineFields!initializing!public! !
+!SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

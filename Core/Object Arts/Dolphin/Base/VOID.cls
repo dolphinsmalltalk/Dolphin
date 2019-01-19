@@ -12,11 +12,15 @@ VOID is only useful in pointer form, and mainly intended to provided a unified t
 !VOID categoriesForClass!External-Data-Unstructured! !
 !VOID class methodsFor!
 
+getFieldNames
+	^#()!
+
 new
 	"Answer a new instance of the receiver.
 	Implementation Note: VOID and its are intended to represent pointers
 	thus a reference is always required."
 
 	^self newPointer! !
+!VOID class categoriesFor: #getFieldNames!constants!private! !
 !VOID class categoriesFor: #new!instance creation!public! !
 

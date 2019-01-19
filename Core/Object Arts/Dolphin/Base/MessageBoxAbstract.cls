@@ -215,7 +215,7 @@ warning: warningString caption: titleString
 !MessageBoxAbstract class categoriesFor: #defaultCaption:!constants!private! !
 !MessageBoxAbstract class categoriesFor: #errorMsg:!instance creation!public! !
 !MessageBoxAbstract class categoriesFor: #errorMsg:caption:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #initialize!initializing!public! !
+!MessageBoxAbstract class categoriesFor: #initialize!development!initializing!public! !
 !MessageBoxAbstract class categoriesFor: #new!instance creation!public! !
 !MessageBoxAbstract class categoriesFor: #notify:!instance creation!public! !
 !MessageBoxAbstract class categoriesFor: #notify:caption:!instance creation!public! !

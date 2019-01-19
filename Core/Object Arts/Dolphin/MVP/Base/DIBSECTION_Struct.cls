@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #DIBSECTION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dsBitfields _OffsetOf_dsBm _OffsetOf_dsBmih _OffsetOf_dshSection _OffsetOf_dsOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DIBSECTION guid: (GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+DIBSECTION addClassConstant: '_OffsetOf_dsBitfields' value: 16r40!
+DIBSECTION addClassConstant: '_OffsetOf_dsBm' value: 16r0!
+DIBSECTION addClassConstant: '_OffsetOf_dsBmih' value: 16r18!
+DIBSECTION addClassConstant: '_OffsetOf_dshSection' value: 16r4C!
+DIBSECTION addClassConstant: '_OffsetOf_dsOffset' value: 16r50!
 DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -27,57 +32,57 @@ struct tagDIBSECTION {
 !DIBSECTION methodsFor!
 
 dsBitfields
-	"Answer the receiver's dsBitfields field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'dsBitfields' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #dsBitfields) length: 3!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_dsBitfields length: 3!
 
 dsBm
-	"Answer the receiver's dsBm field as a Smalltalk object."
+	"Answer the <BITMAP> value of the receiver's 'dsBm' field."
 
 	^BITMAP fromAddress: bytes yourAddress!
 
-dsBm: anObject 
-	"Set the receiver's dsBm field to the value of anObject."
+dsBm: aBITMAP
+	"Set the receiver's 'dsBm' field to the value of the argument, aBITMAP"
 
-	anObject 
+	aBITMAP
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(BITMAP basicByteSize)
+		from: ##(_OffsetOf_dsBm + 1)
+		to: ##(_OffsetOf_dsBm + BITMAP basicByteSize)
 		startingAt: 1!
 
 dsBmih
-	"Answer the receiver's dsBmih field as a Smalltalk object."
+	"Answer the <BITMAPINFOHEADER> value of the receiver's 'dsBmih' field."
 
-	^BITMAPINFOHEADER fromAddress: bytes yourAddress + ##(self offsetOf: #dsBmih)!
+	^BITMAPINFOHEADER fromAddress: bytes yourAddress + _OffsetOf_dsBmih!
 
-dsBmih: anObject 
-	"Set the receiver's dsBmih field to the value of anObject."
+dsBmih: aBITMAPINFOHEADER
+	"Set the receiver's 'dsBmih' field to the value of the argument, aBITMAPINFOHEADER"
 
-	anObject 
+	aBITMAPINFOHEADER
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #dsBmih) + 1)
-		to: ##((self offsetOf: #dsBmih) + BITMAPINFOHEADER basicByteSize)
+		from: ##(_OffsetOf_dsBmih + 1)
+		to: ##(_OffsetOf_dsBmih + BITMAPINFOHEADER basicByteSize)
 		startingAt: 1!
 
 dshSection
-	"Answer the receiver's dshSection field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'dshSection' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #dshSection)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_dshSection) asExternalHandle!
 
-dshSection: anObject 
-	"Set the receiver's dshSection field to the value of anObject."
+dshSection: anExternalHandle
+	"Set the receiver's 'dshSection' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #dshSection) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_dshSection put: anExternalHandle!
 
 dsOffset
-	"Answer the receiver's dsOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dsOffset' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dsOffset)!
+	^bytes dwordAtOffset: _OffsetOf_dsOffset!
 
-dsOffset: anObject 
-	"Set the receiver's dsOffset field to the value of anObject."
+dsOffset: anInteger
+	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dsOffset) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
 !DIBSECTION categoriesFor: #dsBitfields!**compiled accessors**!public! !
 !DIBSECTION categoriesFor: #dsBm!**compiled accessors**!public! !
 !DIBSECTION categoriesFor: #dsBm:!**compiled accessors**!public! !
@@ -114,7 +119,11 @@ defineFields
 fileOutStem
 	"Private - Answer standard file name for the class to file out on."
 
-	^'DIBSECTION_Struct'! !
+	^'DIBSECTION_Struct'!
+
+getFieldNames
+	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
 !DIBSECTION class categoriesFor: #defineFields!initializing!public! !
 !DIBSECTION class categoriesFor: #fileOutStem!private!source filing! !
+!DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

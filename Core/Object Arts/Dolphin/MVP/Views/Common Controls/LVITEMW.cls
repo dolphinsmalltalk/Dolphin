@@ -2,10 +2,24 @@
 
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
-	classVariableNames: 'CallbackPrototype'
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cColumns _OffsetOf_dwState _OffsetOf_iGroup _OffsetOf_iGroupId _OffsetOf_iImage _OffsetOf_iIndent _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_piColFmt _OffsetOf_pszText _OffsetOf_puColumns _OffsetOf_stateMask CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 LVITEMW guid: (GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
+LVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r18!
+LVITEMW addClassConstant: '_OffsetOf_cColumns' value: 16r2C!
+LVITEMW addClassConstant: '_OffsetOf_dwState' value: 16rC!
+LVITEMW addClassConstant: '_OffsetOf_iGroup' value: 16r38!
+LVITEMW addClassConstant: '_OffsetOf_iGroupId' value: 16r28!
+LVITEMW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
+LVITEMW addClassConstant: '_OffsetOf_iIndent' value: 16r24!
+LVITEMW addClassConstant: '_OffsetOf_iItem' value: 16r4!
+LVITEMW addClassConstant: '_OffsetOf_iSubItem' value: 16r8!
+LVITEMW addClassConstant: '_OffsetOf_lParam' value: 16r20!
+LVITEMW addClassConstant: '_OffsetOf_piColFmt' value: 16r34!
+LVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r14!
+LVITEMW addClassConstant: '_OffsetOf_puColumns' value: 16r30!
+LVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16r10!
 LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEMW is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.
@@ -34,32 +48,32 @@ struct tagLVITEMW {
 
 allCallbacks
 	bytes
-		sdwordAtOffset: ##(self offsetOf: #iImage) put: I_IMAGECALLBACK;
-		dwordAtOffset: ##(self offsetOf: #pszText) put: LPSTR_TEXTCALLBACK.
+		sdwordAtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
+		dwordAtOffset: _OffsetOf_pszText put: LPSTR_TEXTCALLBACK.
 	self maskIn: ##(LVIF_TEXT | LVIF_IMAGE)!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax)!
+	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
 
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cchTextMaxOffset
-	^##(self offsetOf: #cchTextMax)!
+	^_OffsetOf_cchTextMax!
 
 cColumns
 	"Answer the <Integer> value of the receiver's 'cColumns' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cColumns)!
+	^bytes dwordAtOffset: _OffsetOf_cColumns!
 
 cColumns: anInteger
 	"Set the receiver's 'cColumns' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cColumns) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cColumns put: anInteger!
 
 column: colInteger 
 	self iSubItem: colInteger - 1!
@@ -67,12 +81,12 @@ column: colInteger
 dwState
 	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwState)!
+	^bytes dwordAtOffset: _OffsetOf_dwState!
 
 dwState: anInteger
 	"Set the receiver's 'dwState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwState) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwState put: anInteger!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -82,47 +96,47 @@ handle
 iGroup
 	"Answer the <Integer> value of the receiver's 'iGroup' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iGroup)!
+	^bytes sdwordAtOffset: _OffsetOf_iGroup!
 
 iGroupId
 	"Answer the <Integer> value of the receiver's 'iGroupId' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iGroupId)!
+	^bytes sdwordAtOffset: _OffsetOf_iGroupId!
 
 iGroupId: anInteger
 	"Set the receiver's 'iGroupId' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iGroupId) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iGroupId put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iImage)!
+	^bytes sdwordAtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iImage) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
 
 iIndent
 	"Answer the <Integer> value of the receiver's 'iIndent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iIndent)!
+	^bytes sdwordAtOffset: _OffsetOf_iIndent!
 
 iIndent: anInteger
 	"Set the receiver's 'iIndent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iIndent) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iIndent put: anInteger!
 
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iItem!
 
 iItem: anInteger
 	"Set the receiver's 'iItem' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iItem) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iItem put: anInteger!
 
 indent: widths
 	"Set the number of image widths to indent the item text."
@@ -133,53 +147,53 @@ indent: widths
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
 
 iSubItem: anInteger
 	"Set the receiver's 'iSubItem' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iSubItem) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iSubItem put: anInteger!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes intPtrAtOffset: _OffsetOf_lParam!
 
 lParam: anInteger
 	"Set the receiver's 'lParam' field to the value of the argument, anInteger"
 
-	bytes intPtrAtOffset: ##(self offsetOf: #lParam) put: anInteger!
+	bytes intPtrAtOffset: _OffsetOf_lParam put: anInteger!
 
 piColFmt
 	"Answer the <SDWORDArray> value of the receiver's 'piColFmt' field."
 
-	^SDWORDArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #piColFmt)) length: self cColumns!
+	^SDWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_piColFmt) length: self cColumns!
 
 piColFmt: aSDWORDArray
 	"Set the receiver's 'piColFmt' field to the value of the argument, aSDWORDArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #piColFmt) put: aSDWORDArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_piColFmt put: aSDWORDArray yourAddress.
 	self cColumns: aSDWORDArray size!
 
 pszText
 	"Answer the <Utf16String> value of the receiver's 'pszText' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszText)!
 
 pszText: anUtf16String
 	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
 puColumns
 	"Answer the <DWORDArray> value of the receiver's 'puColumns' field."
 
-	^DWORDArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #puColumns)) length: self cColumns!
+	^DWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_puColumns) length: self cColumns!
 
 puColumns: aDWORDArray
 	"Set the receiver's 'puColumns' field to the value of the argument, aDWORDArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #puColumns) put: aDWORDArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_puColumns put: aDWORDArray yourAddress.
 	self cColumns: aDWORDArray size!
 
 row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
@@ -216,17 +230,17 @@ stateImageIndex: anInteger
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #stateMask)!
+	^bytes dwordAtOffset: _OffsetOf_stateMask!
 
 stateMask: anInteger
 	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #stateMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
-	^##(self offsetOf: #pszText)! !
+	^_OffsetOf_pszText! !
 !LVITEMW categoriesFor: #allCallbacks!accessing!public! !
 !LVITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
@@ -296,25 +310,59 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem type: SDWORDField new offset: 4;
-		defineField: #iSubItem type: SDWORDField new offset: 8;
-		defineField: #dwState type: DWORDField new offset: 12;
-		defineField: #stateMask type: DWORDField new offset: 16;
-		defineField: #pszText type: (PointerField type: Utf16String) offset: 20;
-		defineField: #cchTextMax type: SDWORDField new offset: 24;
-		defineField: #iImage type: SDWORDField new offset: 28; 
-		defineField: #lParam type: INT_PTRField new offset: 32;
-		defineField: #iIndent type: SDWORDField new offset: 36;
-		defineField: #iGroupId type: SDWORDField new offset: 40;
-		defineField: #cColumns type: DWORDField new offset: 44;
-		defineField: #puColumns type: (ArrayPointerField type: DWORDArray lengthField: #cColumns) offset: 48;
-		defineField: #piColFmt type: (ArrayPointerField type: SDWORDArray lengthField: #cColumns) offset: 52;
-		defineField: #iGroup type: SDWORDField new beReadOnly offset: 56.
+		defineField: #iItem
+			type: SDWORDField new
+			offset: 4;
+		defineField: #iSubItem
+			type: SDWORDField new
+			offset: 8;
+		defineField: #dwState
+			type: DWORDField new
+			offset: 12;
+		defineField: #stateMask
+			type: DWORDField new
+			offset: 16;
+		defineField: #pszText
+			type: (PointerField type: Utf16String)
+			offset: 20;
+		defineField: #cchTextMax
+			type: SDWORDField new
+			offset: 24;
+		defineField: #iImage
+			type: SDWORDField new
+			offset: 28;
+		defineField: #lParam
+			type: INT_PTRField new
+			offset: 32;
+		defineField: #iIndent
+			type: SDWORDField new
+			offset: 36;
+		defineField: #iGroupId
+			type: SDWORDField new
+			offset: 40;
+		defineField: #cColumns
+			type: DWORDField new
+			offset: 44;
+		defineField: #puColumns
+			type: (ArrayPointerField type: DWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
+			offset: 48;
+		defineField: #piColFmt
+			type: (ArrayPointerField type: SDWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
+			offset: 52;
+		defineField: #iGroup
+			type: SDWORDField new beReadOnly
+			offset: 56.
 	self byteSize: 60!
+
+getFieldNames
+	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
 
 initialize
 	CallbackPrototype := self new allCallbacks; bytes! !
 !LVITEMW class categoriesFor: #allCallbacks!public! !
 !LVITEMW class categoriesFor: #defineFields!initializing!public! !
+!LVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LVITEMW class categoriesFor: #initialize!development!public! !
 

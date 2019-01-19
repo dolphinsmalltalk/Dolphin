@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ptlOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMROFFSETCLIPRGN guid: (GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
+EMROFFSETCLIPRGN addClassConstant: '_OffsetOf_ptlOffset' value: 16r8!
 EMROFFSETCLIPRGN comment: '<EMROFFSETCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMROFFSETCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMROFFSETCLIPRGN {
 !EMROFFSETCLIPRGN methodsFor!
 
 ptlOffset
-	"Answer the receiver's ptlOffset field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlOffset' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlOffset)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlOffset!
 
-ptlOffset: anObject 
-	"Set the receiver's ptlOffset field to the value of anObject."
+ptlOffset: aPOINTL
+	"Set the receiver's 'ptlOffset' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlOffset) + 1)
-		to: ##((self offsetOf: #ptlOffset) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlOffset + 1)
+		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
 		startingAt: 1! !
 !EMROFFSETCLIPRGN categoriesFor: #ptlOffset!**compiled accessors**!public! !
 !EMROFFSETCLIPRGN categoriesFor: #ptlOffset:!**compiled accessors**!public! !
@@ -60,10 +61,14 @@ defineFields
 			offset: 8.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #ptlOffset)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_OFFSETCLIPRGN! !
 !EMROFFSETCLIPRGN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMROFFSETCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMROFFSETCLIPRGN class categoriesFor: #iTypes!constants!public! !
 

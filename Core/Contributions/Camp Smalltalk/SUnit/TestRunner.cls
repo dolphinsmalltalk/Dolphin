@@ -228,17 +228,7 @@ toolDescription
 	^self displayString!
 
 toolsFolderHelpId
-	^10632!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	^10632! !
 !TestRunner class categoriesFor: #defaultView!public!views! !
 !TestRunner class categoriesFor: #icon!constants!public! !
 !TestRunner class categoriesFor: #initialize!initializing!must strip!private! !
@@ -246,5 +236,4 @@ uninitialize
 !TestRunner class categoriesFor: #resource_SUnit_Runner_30!public!resources-views! !
 !TestRunner class categoriesFor: #toolDescription!constants!public! !
 !TestRunner class categoriesFor: #toolsFolderHelpId!public! !
-!TestRunner class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

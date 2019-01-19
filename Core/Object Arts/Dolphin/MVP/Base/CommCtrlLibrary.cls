@@ -366,5 +366,5 @@ initFlags: anInteger
 !CommCtrlLibrary class categoriesFor: #defaultInitFlags!accessing!private! !
 !CommCtrlLibrary class categoriesFor: #fileName!constants!public! !
 !CommCtrlLibrary class categoriesFor: #initFlags!accessing!public! !
-!CommCtrlLibrary class categoriesFor: #initFlags:!accessing!public! !
+!CommCtrlLibrary class categoriesFor: #initFlags:!accessing!not an aspect!public! !
 

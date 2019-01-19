@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwAction _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCOLORMATCHTOTARGET guid: (GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbData' value: 16r14!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbName' value: 16r10!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_Data' value: 16r18!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwAction' value: 16r8!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwFlags' value: 16rC!
 EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,39 +33,39 @@ struct tagCOLORMATCHTOTARGET {
 !EMRCOLORMATCHTOTARGET methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 cbName
-	"Answer the receiver's cbName field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbName)!
+	^bytes dwordAtOffset: _OffsetOf_cbName!
 
-cbName: anObject 
-	"Set the receiver's cbName field to the value of anObject."
+cbName: anInteger
+	"Set the receiver's 'cbName' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbName) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbName put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self dataLength!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self dataLength!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self dataLength * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1!
 
 dataLength
@@ -69,24 +74,24 @@ dataLength
 	^self cbName + self cbData!
 
 dwAction
-	"Answer the receiver's dwAction field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAction' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwAction)!
+	^bytes dwordAtOffset: _OffsetOf_dwAction!
 
-dwAction: anObject 
-	"Set the receiver's dwAction field to the value of anObject."
+dwAction: anInteger
+	"Set the receiver's 'dwAction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwAction) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwAction put: anInteger!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbData:!**compiled accessors**!public! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbName!**compiled accessors**!public! !
@@ -136,10 +141,14 @@ defineFields
 			offset: 24.
 	self byteSize: 28!
 
+getFieldNames
+	^#(#iType #nSize #dwAction #dwFlags #cbName #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORMATCHTOTARGETW! !
 !EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!initializing!public! !
+!EMRCOLORMATCHTOTARGET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCOLORMATCHTOTARGET class categoriesFor: #iTypes!constants!public! !
 

@@ -79,27 +79,26 @@ package globalAliases: (Set new
 	add: #ScintillaIndicatorDefinition;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\..\Base\Dolphin Additional Sort Algorithms';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\Presenters\Collection\Dolphin Collection Presenters';
-	add: '..\..\Presenters\Color\Dolphin Color Presenter';
-	add: '..\Common Controls\Dolphin Common Controls';
-	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Control Bars\Dolphin Control Bars';
-	add: '..\..\Presenters\Date Time\Dolphin Date Time Presenters';
-	add: '..\..\Models\List\Dolphin List Models';
-	add: '..\..\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Number\Dolphin Number Presenter';
-	add: '..\SpinButton\Dolphin SpinButton Control';
-	add: '..\..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Additional Sort Algorithms'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\Presenters\Collection\Dolphin Collection Presenters'
+	'..\..\Presenters\Color\Dolphin Color Presenter'
+	'..\Common Controls\Dolphin Common Controls'
+	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Control Bars\Dolphin Control Bars'
+	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\Models\List\Dolphin List Models'
+	'..\..\Presenters\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\SpinButton\Dolphin SpinButton Control'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -157,7 +156,7 @@ ExternalLibrary subclass: #ScintillaLibrary
 	classInstanceVariableNames: ''!
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: 'ModificationTypeOffset'
+	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #ScintillaTextStylesDialog

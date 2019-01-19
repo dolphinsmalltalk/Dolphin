@@ -14,6 +14,8 @@ StdIn
 StdOut
 StdErr
 IsUserBreakRequested
+AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
+UnicodeDefaultChar=?m_unicodeReplacementChar@Interpreter@@2_WA
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24
@@ -32,7 +34,6 @@ uncompress
 	_control87
 	_dup
 	_dup2
-	_eof
 	_errno
 	_fdopen
 	_filelengthi64
@@ -43,21 +44,16 @@ uncompress
 	_isatty
 	_makepath_s
 	_open_osfhandle
-	_rotl
-	_rotr
 	_setmode
 	_spawnvp
 	_splitpath_s
 	_statusfp
-	strcat_s
 	_stricmp
-	_stricoll
 	_strnicmp
 	_strrev
 	_wfopen_s
 	_wgetcwd
 	atoi
-	chmod
 	fclose
 	feof
 	fflush
@@ -76,14 +72,13 @@ uncompress
 	iswgraph
 	iswprint
 	iswpunct
-	iswspace
 	memcmp
 	memcpy_s
 	memset
 	rand
-	rewind
 	setlocale
 	srand
+	strcat_s
 	strcmp
 	strcspn
 	strerror_s

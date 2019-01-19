@@ -2380,7 +2380,7 @@ find: aString range: anInterval flags: anInteger
 	findText := FINDTEXTEX 
 				from: start
 				to: stop
-				text: (self stringClass fromString: aString).
+				text: (self stringClass coerceString: aString).
 	self sciFindText: anInteger ft: findText.
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
@@ -9219,7 +9219,7 @@ scnModified: pSCNotification
 	overloaded notification."
 
 	| eventMask |
-	eventMask := pSCNotification sdwordAtOffset: SCNotification.ModificationTypeOffset.
+	eventMask := pSCNotification sdwordAtOffset: SCNotification._OffsetOf_modificationType.
 	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"
@@ -9611,7 +9611,7 @@ selectionPlainText: aString
 	SCI_REPLACESEL does not return a useful value."
 
 	| text |
-	text := self stringClass fromString: aString.
+	text := self stringClass coerceString: aString.
 	self modifyText: [self sciReplaceSel: text]!
 
 selectionRange
@@ -9950,7 +9950,7 @@ setText: aString
 	"Private - Set up the receiver to be displaying the new text in the <String> argument."
 
 	| text |
-	text := self stringClass fromString: aString.
+	text := self stringClass coerceString: aString.
 	"We use SCI_APPENDTEXT because SCI_SETTEXT assumes the string is null terminated and will
 	therefore stop on the first of any embedded nulls."
 	self

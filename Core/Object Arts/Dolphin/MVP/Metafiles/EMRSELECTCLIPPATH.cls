@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSELECTCLIPPATH
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSELECTCLIPPATH guid: (GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
+EMRSELECTCLIPPATH addClassConstant: '_OffsetOf_iMode' value: 16r8!
 EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSELECTCLIPPATH {
 !EMRSELECTCLIPPATH methodsFor!
 
 iMode
-	"Answer the receiver's iMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
+	^bytes dwordAtOffset: _OffsetOf_iMode!
 
-iMode: anObject 
-	"Set the receiver's iMode field to the value of anObject."
+iMode: anInteger
+	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
 !EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
 !EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
 
@@ -56,6 +57,9 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #iMode)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -70,5 +74,6 @@ iTypes
 					with: EMR_SETICMMODE
 					with: EMR_SETTEXTALIGN)! !
 !EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
 

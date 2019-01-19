@@ -223,7 +223,7 @@ wait: timeout ret: returnValueHolder
 !Semaphore categoriesFor: #critical:!process synchronisation!public! !
 !Semaphore categoriesFor: #critical:atPriority:!process synchronisation!public! !
 !Semaphore categoriesFor: #excessSignals!accessing!private! !
-!Semaphore categoriesFor: #excessSignals:!accessing!private! !
+!Semaphore categoriesFor: #excessSignals:!initializing!private! !
 !Semaphore categoriesFor: #hash!comparing!public! !
 !Semaphore categoriesFor: #initialize!initializing!private! !
 !Semaphore categoriesFor: #primSetSignals:!private!process synchronisation! !

@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRSETICMPROFILE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETICMPROFILE guid: (GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
+EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbData' value: 16r10!
+EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbName' value: 16rC!
+EMRSETICMPROFILE addClassConstant: '_OffsetOf_Data' value: 16r14!
+EMRSETICMPROFILE addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
 EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,53 +31,53 @@ struct tagEMRSETICMPROFILE {
 !EMRSETICMPROFILE methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 cbName
-	"Answer the receiver's cbName field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbName)!
+	^bytes dwordAtOffset: _OffsetOf_cbName!
 
-cbName: anObject 
-	"Set the receiver's cbName field to the value of anObject."
+cbName: anInteger
+	"Set the receiver's 'cbName' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbName) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbName put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self dataLength!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self dataLength!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self dataLength * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1!
 
 dataLength
 	^self cbName + self cbData!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
 !EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
 !EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
@@ -117,10 +121,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #dwFlags #cbName #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETICMPROFILEA with: EMR_SETICMPROFILEW! !
 !EMRSETICMPROFILE class categoriesFor: #defineFields!initializing!public! !
+!EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
 

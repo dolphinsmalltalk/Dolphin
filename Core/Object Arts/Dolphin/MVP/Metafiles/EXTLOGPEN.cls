@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #EXTLOGPEN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_elpBrushStyle _OffsetOf_elpColor _OffsetOf_elpHatch _OffsetOf_elpNumEntries _OffsetOf_elpPenStyle _OffsetOf_elpStyleEntry _OffsetOf_elpWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EXTLOGPEN guid: (GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpBrushStyle' value: 16r8!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpColor' value: 16rC!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpHatch' value: 16r10!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpNumEntries' value: 16r14!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpPenStyle' value: 16r0!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpStyleEntry' value: 16r18!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpWidth' value: 16r4!
 EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,81 +36,81 @@ struct tagEXTLOGPEN {
 !EXTLOGPEN methodsFor!
 
 elpBrushStyle
-	"Answer the receiver's elpBrushStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpBrushStyle' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpBrushStyle)!
+	^bytes dwordAtOffset: _OffsetOf_elpBrushStyle!
 
-elpBrushStyle: anObject 
-	"Set the receiver's elpBrushStyle field to the value of anObject."
+elpBrushStyle: anInteger
+	"Set the receiver's 'elpBrushStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpBrushStyle) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_elpBrushStyle put: anInteger!
 
 elpColor
-	"Answer the receiver's elpColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpColor)!
+	^bytes dwordAtOffset: _OffsetOf_elpColor!
 
-elpColor: anObject 
-	"Set the receiver's elpColor field to the value of anObject."
+elpColor: anInteger
+	"Set the receiver's 'elpColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpColor) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_elpColor put: anInteger!
 
 elpHatch
-	"Answer the receiver's elpHatch field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpHatch' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #elpHatch)!
+	^bytes sdwordAtOffset: _OffsetOf_elpHatch!
 
-elpHatch: anObject 
-	"Set the receiver's elpHatch field to the value of anObject."
+elpHatch: anInteger
+	"Set the receiver's 'elpHatch' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #elpHatch) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_elpHatch put: anInteger!
 
 elpNumEntries
-	"Answer the receiver's elpNumEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpNumEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpNumEntries)!
+	^bytes dwordAtOffset: _OffsetOf_elpNumEntries!
 
-elpNumEntries: anObject 
-	"Set the receiver's elpNumEntries field to the value of anObject."
+elpNumEntries: anInteger
+	"Set the receiver's 'elpNumEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpNumEntries) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_elpNumEntries put: anInteger!
 
 elpPenStyle
-	"Answer the receiver's elpPenStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpPenStyle' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_elpPenStyle!
 
-elpPenStyle: anObject 
-	"Set the receiver's elpPenStyle field to the value of anObject."
+elpPenStyle: anInteger
+	"Set the receiver's 'elpPenStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_elpPenStyle put: anInteger!
 
 elpStyleEntry
-	"Answer the receiver's elpStyleEntry field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'elpStyleEntry' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #elpStyleEntry)
-		length: self elpNumEntries!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_elpStyleEntry length: self elpNumEntries!
 
-elpStyleEntry: anObject 
-	"Set the receiver's elpStyleEntry field to the value of anObject."
+elpStyleEntry: aDWORDArray
+	"Set the receiver's 'elpStyleEntry' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: self elpNumEntries * ##(DWORDArray elementSize).
-	anObject 
+	size := aDWORDArray byteSize.
+	aDWORDArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #elpStyleEntry) + 1)
-		to: ##(self offsetOf: #elpStyleEntry) + size
-		startingAt: 1!
+		from: ##(_OffsetOf_elpStyleEntry + 1)
+		to: _OffsetOf_elpStyleEntry + size
+		startingAt: 1.
+	self elpNumEntries: aDWORDArray size!
 
 elpWidth
-	"Answer the receiver's elpWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'elpWidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpWidth)!
+	^bytes dwordAtOffset: _OffsetOf_elpWidth!
 
-elpWidth: anObject 
-	"Set the receiver's elpWidth field to the value of anObject."
+elpWidth: anInteger
+	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpWidth) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
 !EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
 !EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
 !EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !
@@ -158,7 +165,12 @@ defineFields
 			type: DWORDField new
 			offset: 20;
 		defineField: #elpStyleEntry
-			type: (ArrayField type: DWORDArray lengthField: #elpNumEntries)
-			offset: 24! !
+			type: (ArrayField type: DWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #elpNumEntries))
+			offset: 24!
+
+getFieldNames
+	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
 !EXTLOGPEN class categoriesFor: #defineFields!initializing!public! !
+!EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

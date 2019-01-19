@@ -12,7 +12,7 @@ Instance Variables:
 	title	<IntermediateCategory> the root of the tree.
 
 '!
-!CategoryTreeModel categoriesForClass!Development!MVP-Models! !
+!CategoryTreeModel categoriesForClass!MVP-Models! !
 !CategoryTreeModel methodsFor!
 
 addCategory: aCategory

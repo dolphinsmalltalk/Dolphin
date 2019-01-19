@@ -2,10 +2,22 @@
 
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FUNCDESC guid: (GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
+FUNCDESC addClassConstant: '_OffsetOf_callconv' value: 16r14!
+FUNCDESC addClassConstant: '_OffsetOf_cParams' value: 16r18!
+FUNCDESC addClassConstant: '_OffsetOf_cParamsOpt' value: 16r1A!
+FUNCDESC addClassConstant: '_OffsetOf_cScodes' value: 16r1E!
+FUNCDESC addClassConstant: '_OffsetOf_elemdescFunc' value: 16r20!
+FUNCDESC addClassConstant: '_OffsetOf_funckind' value: 16rC!
+FUNCDESC addClassConstant: '_OffsetOf_invkind' value: 16r10!
+FUNCDESC addClassConstant: '_OffsetOf_lprgelemdescParam' value: 16r8!
+FUNCDESC addClassConstant: '_OffsetOf_lprgscode' value: 16r4!
+FUNCDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
+FUNCDESC addClassConstant: '_OffsetOf_oVft' value: 16r1C!
+FUNCDESC addClassConstant: '_OffsetOf_wFuncFlags' value: 16r30!
 FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.
@@ -89,7 +101,7 @@ basicIdlAttributes
 callconv
 	"Answer the <Integer> value of the receiver's 'callconv' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #callconv)!
+	^bytes sdwordAtOffset: _OffsetOf_callconv!
 
 callingConvention
 	"Answer the Dolphin external calling convention for the receiver."
@@ -106,17 +118,17 @@ clearMethodName
 cParams
 	"Private - Answer the <Integer> value of the receiver's 'cParams' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #cParams)!
+	^bytes swordAtOffset: _OffsetOf_cParams!
 
 cParamsOpt
 	"Answer the <Integer> value of the receiver's 'cParamsOpt' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #cParamsOpt)!
+	^bytes swordAtOffset: _OffsetOf_cParamsOpt!
 
 cScodes
 	"Private - Answer the <Integer> value of the receiver's 'cScodes' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #cScodes)!
+	^bytes swordAtOffset: _OffsetOf_cScodes!
 
 elemDesc
 	"Answer an <ELEMDESC> describing the receiver's actual return or property type (as opposed to the normal
@@ -127,7 +139,7 @@ elemDesc
 elemdescFunc
 	"Answer the <ELEMDESC> value of the receiver's 'elemdescFunc' field."
 
-	^ELEMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #elemdescFunc)!
+	^ELEMDESC fromAddress: bytes yourAddress + _OffsetOf_elemdescFunc!
 
 elemDescFunc
 	^(self elemdescFunc)
@@ -140,7 +152,7 @@ flags
 funckind
 	"Answer the <Integer> value of the receiver's 'funckind' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #funckind)!
+	^bytes sdwordAtOffset: _OffsetOf_funckind!
 
 getAllCustData
 	^analyzer tlbInterface getAllFuncCustData: index!
@@ -162,7 +174,7 @@ idlCallingConvention
 invkind
 	"Answer the <Integer> value of the receiver's 'invkind' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #invkind)!
+	^bytes sdwordAtOffset: _OffsetOf_invkind!
 
 isDispatchable
 	"Answer whether the receiver is only invokable via IDispatch"
@@ -226,7 +238,7 @@ lprgelemdescParam
 	"Answer the <StructureArray> value of the receiver's 'lprgelemdescParam' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lprgelemdescParam))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_lprgelemdescParam)
 		length: self cParams
 		elementClass: ELEMDESC!
 
@@ -234,14 +246,14 @@ lprgscode
 	"Answer the <StructureArray> value of the receiver's 'lprgscode' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lprgscode))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_lprgscode)
 		length: self cScodes
 		elementClass: HRESULT!
 
 memid
 	"Answer the <Integer> value of the receiver's 'memid' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_memid!
 
 name
 	"Answer the name of the function described by the receiver."
@@ -283,7 +295,7 @@ outputIndices
 oVft
 	"Answer the <Integer> value of the receiver's 'oVft' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #oVft)!
+	^bytes swordAtOffset: _OffsetOf_oVft!
 
 retTypeName
 	"Answer a Dolphin external type name for the receiver's actual return type
@@ -359,7 +371,7 @@ vfnIndex
 wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wFuncFlags)! !
+	^bytes wordAtOffset: _OffsetOf_wFuncFlags! !
 !FUNCDESC categoriesFor: #argumentNameFor:!helpers!private! !
 !FUNCDESC categoriesFor: #argumentNames!accessing!public! !
 !FUNCDESC categoriesFor: #arguments!accessing!public! !
@@ -432,18 +444,23 @@ defineFields
 	self
 		defineField: #memid type: SDWORDField readOnly;
 		defineField: #lprgscode
-			type: (StructureArrayPointerField type: HRESULT lengthField: #cScodes) beReadOnly;
+			type: (StructureArrayPointerField type: HRESULT
+					arrayLength: (ConformantArrayFieldLength lengthField: #cScodes)) beReadOnly;
 		defineField: #lprgelemdescParam
-			type: (StructureArrayPointerField type: ELEMDESC lengthField: #cParams) beReadOnly;
+			type: (StructureArrayPointerField type: ELEMDESC
+					arrayLength: (ConformantArrayFieldLength lengthField: #cParams)) beReadOnly;
 		defineField: #funckind type: SDWORDField readOnly;
 		defineField: #invkind type: SDWORDField readOnly;
 		defineField: #callconv type: SDWORDField readOnly;
 		defineField: #cParams type: SWORDField readOnly beNonBrowsable;
 		defineField: #cParamsOpt type: SWORDField readOnly;
 		defineField: #oVft type: SWORDField readOnly;
-		defineField: #cScodes type: SWORDField readOnly beNonBrowsable ;
+		defineField: #cScodes type: SWORDField readOnly beNonBrowsable;
 		defineField: #elemdescFunc type: (StructureField type: ELEMDESC) beReadOnly;
 		defineField: #wFuncFlags type: WORDField readOnly!
+
+getFieldNames
+	^#(#memid #lprgscode #lprgelemdescParam #funckind #invkind #callconv #cParams #cParamsOpt #oVft #cScodes #elemdescFunc #wFuncFlags)!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 FUNCDESC.
@@ -460,6 +477,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !FUNCDESC class categoriesFor: #defineFields!initializing!public! !
+!FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !
 

@@ -9,7 +9,7 @@ PropertyInspector guid: (GUID fromString: '{35bdcf77-b398-4b3b-bd3a-9675f82870d6
 PropertyInspector comment: 'A new version of the Published Aspect Inspector that uses a more traditional hierarchical list pane to edit properties (published aspects) in situ. Doesn''t provide the PAI functionality of rendering separate displays of the aspect being aspected. Should be plug-compatible with retro uses of the PAI.
 
 '!
-!PropertyInspector categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!PropertyInspector categoriesForClass!MVP-Resources-IDE Tools! !
 !PropertyInspector methodsFor!
 
 createComponents

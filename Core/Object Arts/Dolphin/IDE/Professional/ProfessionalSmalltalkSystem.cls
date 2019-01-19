@@ -7,7 +7,7 @@ CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	classInstanceVariableNames: ''!
 ProfessionalSmalltalkSystem guid: (GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
 ProfessionalSmalltalkSystem comment: ''!
-!ProfessionalSmalltalkSystem categoriesForClass!Development! !
+!ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
 !ProfessionalSmalltalkSystem methodsFor!
 
 browseDeployedPackage: aPackage
@@ -21,9 +21,6 @@ browseEnvironment: aBrowserEnvironment
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
 
 	^EnvironmentBrowserShell onEnvironment: aBrowserEnvironment!
-
-browserEnvFromDeployedPackage: aPackage 
-	^self browserEnvFromDom: (self openDeploymentLog: aPackage)!
 
 browserEnvFromDeploymentLog: aString
 	^self browserEnvFromDom: (self openDeploymentLog: aString)!
@@ -72,10 +69,10 @@ ideaSpaceClass: toolClass
 newIdeaSpace
 	^self ideaSpaceClass show!
 
-openDeploymentLog: fileName
+openDeploymentLog: aString
 	| dom |
 	dom := IXMLDOMDocument new.
-	dom loadURL: 'file://' , fileName.
+	dom loadURL: 'file://' , aString.
 	^dom!
 
 packagedResourceIdentifierDialogClass
@@ -132,7 +129,6 @@ systemBrowserClass: toolClass
 !ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeployedPackage:!helpers!private! !
 !ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
@@ -186,7 +182,7 @@ uninstallCurrent
 				become: Current]! !
 !ProfessionalSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
 !ProfessionalSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!public! !
 !ProfessionalSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !ProfessionalSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
 

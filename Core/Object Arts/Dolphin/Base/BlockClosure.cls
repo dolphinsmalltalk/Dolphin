@@ -195,13 +195,16 @@ critical
 	oldState := Processor enableAsyncEvents: false.
 	[self value] ensure: [Processor enableAsyncEvents: oldState]!
 
-cull: arg1 
-	^self argumentCount = 0 ifTrue: [self value] ifFalse: [self value: arg1]!
+cull: arg1
+	<primitive: 81>
+	^self argumentCount == 0 ifTrue: [self value] ifFalse: [self value: arg1]!
 
-cull: arg1 cull: arg2 
+cull: arg1 cull: arg2
+	<primitive: 81>
 	^self argumentCount < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
 
 cull: arg1 cull: arg2 cull: arg3 
+	<primitive: 81>
 	^self argumentCount < 3 
 		ifTrue: [self cull: arg1 cull: arg2]
 		ifFalse: 
@@ -211,6 +214,7 @@ cull: arg1 cull: arg2 cull: arg3
 				value: arg3]!
 
 cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	<primitive: 81>
 	^self argumentCount < 4 
 		ifTrue: 
 			[self 
@@ -828,30 +832,29 @@ BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors
 
 !BlockClosure class methodsFor!
 
-attemptToRecompile: aBlockClosure 
+attemptToRecompile: aBlockClosure
 	| oldMethod result newBlock newMethod receiver |
 	oldMethod := aBlockClosure method.
-	Notification signal: 'Recompilng block: ' , aBlockClosure printString.
-	oldMethod class ~~ CompiledExpression 
+	Notification signal: 'Recompiling block: ' , aBlockClosure printString.
+	oldMethod class ~~ CompiledExpression
 		ifTrue: 
 			[Notification signal: 'Unable to recompile block because it was created by a method '.
 			^aBlockClosure].
 	receiver := aBlockClosure receiver.
-	result := Compiler 
+	result := Compiler
 				compileForEvaluation: oldMethod getSource
 				in: (receiver isNil ifTrue: [UndefinedObject] ifFalse: [oldMethod methodClass])
 				evaluationPools: oldMethod evaluationPools
-				logged: false
 				flags: 0.
 	newMethod := result method.
-	newMethod isNil 
+	newMethod isNil
 		ifTrue: 
 			[Notification signal: 'Error recompiling block'.
 			^aBlockClosure].
 	newBlock := [newMethod value: receiver withArguments: #()] on: Error
 				do: 
-					[:ex | 
-					Notification signal: 'Error creating block: ', ex printString.
+					[:ex |
+					Notification signal: 'Error creating block: ' , ex printString.
 					nil].
 	^newBlock ?? aBlockClosure!
 
@@ -870,30 +873,6 @@ attemptToUpgradeBlock: aBlockClosure data: data
 				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
 	^recompiledBlock!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from earlier binary filed versions."
-
-	"Note: It is assumed that all blocks will be upgraded before application deployment, so this
-	conversion is deliberately placed in the 'development' category, and will not be available
-	at runtime."
-
-	| ver upgrading |
-	ver := anSTBClassFormat version.
-	upgrading := anSTBClassFormat isUpgrading.
-	^
-	[:data | 
-	| newBlock |
-	ver < 1 
-		ifTrue: [newBlock := self convertBlockToClosure: data]
-		ifFalse: 
-			[ver < 2 
-				ifTrue: [self error: 'Unable to convert interim block format']
-				ifFalse: 
-					[newBlock := self basicNew: data size - self instSize.
-					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
-	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
-	newBlock]!
-
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
 		0 	- Original Smalltalk-80 style blocks (pre Dolphin 6.0)
@@ -904,6 +883,5 @@ stbVersion
 	^3! !
 !BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
 !BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
 

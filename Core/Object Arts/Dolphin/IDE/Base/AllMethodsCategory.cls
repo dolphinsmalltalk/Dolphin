@@ -13,7 +13,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!AllMethodsCategory categoriesForClass!Development! !
+!AllMethodsCategory categoriesForClass!System-Support! !
 !AllMethodsCategory methodsFor!
 
 includesMethod: aCompiledMethod 

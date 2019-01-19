@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lbColor _OffsetOf_lbHatch _OffsetOf_lbStyle'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGBRUSH guid: (GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
+LOGBRUSH addClassConstant: '_OffsetOf_lbColor' value: 16r4!
+LOGBRUSH addClassConstant: '_OffsetOf_lbHatch' value: 16r8!
+LOGBRUSH addClassConstant: '_OffsetOf_lbStyle' value: 16r0!
 LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The LOGBRUSH structure defines the style, color, and pattern of a physical brush. It is used by the CreateBrushIndirect and ExtCreatePen functions."
@@ -39,45 +42,34 @@ hatch: aBitmapOrInteger
 	self lbHatch: aBitmapOrInteger asParameter!
 
 lbColor
-	"Answer the receiver's lbColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lbColor)!
+	^bytes dwordAtOffset: _OffsetOf_lbColor!
 
-lbColor: anObject 
-	"Set the receiver's lbColor field to the value of anObject."
+lbColor: anInteger
+	"Set the receiver's 'lbColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lbColor) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_lbColor put: anInteger!
 
 lbHatch
-	"Answer the receiver's lbHatch field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbHatch' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lbHatch)!
+	^bytes uintPtrAtOffset: _OffsetOf_lbHatch!
 
-lbHatch: anObject 
-	"Set the receiver's lbHatch field to the value of anObject."
+lbHatch: anInteger
+	"Set the receiver's 'lbHatch' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lbHatch) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_lbHatch put: anInteger!
 
 lbStyle
-	"Answer the receiver's lbStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbStyle' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lbStyle!
 
-lbStyle: anObject 
-	"Set the receiver's lbStyle field to the value of anObject."
+lbStyle: anInteger
+	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
-
-printFieldsOn: aStream limit: anInteger 
-	aStream
-		display: 'style=';
-		print: self style;
-		space;
-		display: 'color=';
-		print: self color;
-		space;
-		display: 'hatch=';
-		print: self hatch!
+	bytes dwordAtOffset: _OffsetOf_lbStyle put: anInteger!
 
 style
 	^self lbStyle!
@@ -94,7 +86,6 @@ style: anInteger
 !LOGBRUSH categoriesFor: #lbHatch:!**compiled accessors**!public! !
 !LOGBRUSH categoriesFor: #lbStyle!**compiled accessors**!public! !
 !LOGBRUSH categoriesFor: #lbStyle:!**compiled accessors**!public! !
-!LOGBRUSH categoriesFor: #printFieldsOn:limit:!printing!private! !
 !LOGBRUSH categoriesFor: #style!accessing!public! !
 !LOGBRUSH categoriesFor: #style:!accessing!public! !
 
@@ -118,6 +109,9 @@ defineFields
 		defineField: #lbColor type: DWORDField new;
 		defineField: #lbHatch type: UINT_PTRField new!
 
+getFieldNames
+	^#(#lbStyle #lbColor #lbHatch)!
+
 stbConvertFrom: anSTBClassFormat 
 	"Version 1 adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052)."
 
@@ -131,6 +125,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !LOGBRUSH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
 

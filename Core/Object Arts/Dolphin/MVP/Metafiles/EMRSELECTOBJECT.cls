@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSELECTOBJECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihObject'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSELECTOBJECT guid: (GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
+EMRSELECTOBJECT addClassConstant: '_OffsetOf_ihObject' value: 16r8!
 EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSELECTOBJECT {
 !EMRSELECTOBJECT methodsFor!
 
 ihObject
-	"Answer the receiver's ihObject field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihObject' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihObject)!
+	^bytes dwordAtOffset: _OffsetOf_ihObject!
 
-ihObject: anObject 
-	"Set the receiver's ihObject field to the value of anObject."
+ihObject: anInteger
+	"Set the receiver's 'ihObject' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihObject) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_ihObject put: anInteger! !
 !EMRSELECTOBJECT categoriesFor: #ihObject!**compiled accessors**!public! !
 !EMRSELECTOBJECT categoriesFor: #ihObject:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihObject)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SELECTOBJECT with: EMR_DELETEOBJECT! !
 !EMRSELECTOBJECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTOBJECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTOBJECT class categoriesFor: #iTypes!constants!public! !
 

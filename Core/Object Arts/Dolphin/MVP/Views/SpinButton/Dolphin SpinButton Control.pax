@@ -33,16 +33,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Presenters\Prompters\Dolphin Integer Prompter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -50,12 +49,12 @@ package!
 
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nInc _OffsetOf_nSec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iDelta _OffsetOf_iPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #SpinButton

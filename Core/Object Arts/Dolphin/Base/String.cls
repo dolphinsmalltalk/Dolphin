@@ -103,28 +103,29 @@ _sameAsString: aString
 
 	^self == aString or: [(aString _collate: self) == 0]!
 
-_separateSubStringsIn: aReadableString 
+_separateSubStringsIn: aReadableString
 	"Private - Answer an Array containing the substrings in aReadableString separated
 	by the receiver."
 
 	| start size answer subSize |
-	(subSize := self size) == 0 
+	(subSize := self size) == 0
 		ifTrue: [^self error: 'separator must consist of at least one character'].
 	subSize == 1 ifTrue: [^(self at: 1) _separateSubStringsIn: aReadableString].
 	start := 1.
 	size := aReadableString size.
-	answer := OrderedCollection new: 10.
+	answer := Array writeStream: 10.
 	
 	[| stop |
 	stop := aReadableString findString: self startingAt: start.
-	stop == 0 
+	stop == 0
 		ifTrue: 
-			[answer addLast: (aReadableString copyFrom: start to: size).
-			^answer asArray].
-	answer addLast: (aReadableString copyFrom: start to: stop - 1).
-	(start := stop + subSize) > size] 
+			[^answer
+				nextPut: (aReadableString copyFrom: start to: size);
+				contents].
+	answer nextPut: (aReadableString copyFrom: start to: stop - 1).
+	(start := stop + subSize) > size]
 			whileFalse.
-	^answer asArray!
+	^answer contents!
 
 < comparand
 	"Answer whether the receiver is lexically less than the <readableString>, comparand,
@@ -214,6 +215,9 @@ asLowercase
 	to lowercase."
 
 	^self subclassResponsibility!
+
+asMethodCategory
+	^MethodCategory name: self!
 
 asNumber
 	"Answer a Number constructed by interpreting the receiver's characters as the
@@ -1170,6 +1174,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asAnsiString!converting!public! !
 !String categoriesFor: #asByteArray!converting!public! !
 !String categoriesFor: #asLowercase!converting!public! !
+!String categoriesFor: #asMethodCategory!converting!public! !
 !String categoriesFor: #asNumber!converting!public! !
 !String categoriesFor: #asPhrase!converting!public! !
 !String categoriesFor: #asResourceId!converting!public! !
@@ -1282,10 +1287,15 @@ codePage
 
 	^Character.AnsiCodePage!
 
+coerceString: aString
+	"Answer a sub-instance of the receiver equivalent to (i.e. containing the same characters as) the <String> argument, aString."
+
+	^aString asUtf8String!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
-	^1!
+	^self subclassResponsibility!
 
 empty
 	"Answer an empty String instance. It is shared and should not be modified.
@@ -1355,7 +1365,7 @@ fromAddress: anAddress length: anInteger
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
 
-	^self fromString: (Utf16String fromAtomId: anInteger)!
+	^self coerceString: (Utf16String fromAtomId: anInteger)!
 
 fromByteArray: aByteArray
 	^self
@@ -1431,7 +1441,7 @@ fromId: resourceId in: anExternalLibraryOrHandle
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the argument, aString."
 
-	^aString asUtf8String!
+	^self coerceString: aString!
 
 fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified
@@ -1633,6 +1643,7 @@ withAll: newElements
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #codePage!constants!public! !
+!String class categoriesFor: #coerceString:!instance creation!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #encoding!constants!public! !

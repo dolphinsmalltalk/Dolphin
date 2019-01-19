@@ -128,18 +128,18 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\System\Trace\Debug Trace Stream';
-	add: '..\IDE\Base\Development System';
-	add: 'Dolphin';
-	add: 'Dolphin Additional Sort Algorithms';
-	add: 'Dolphin Command-line Parser';
-	add: '..\System\Random\Dolphin CRT Random Stream';
-	add: '..\System\Random\Dolphin Random Stream';
-	add: '..\System\Compiler\Smalltalk Parser';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\System\Trace\Debug Trace Stream'
+	'..\IDE\Base\Development System'
+	'Dolphin'
+	'Dolphin Additional Sort Algorithms'
+	'Dolphin Command-line Parser'
+	'..\System\Random\Dolphin CRT Random Stream'
+	'Dolphin Message Box'
+	'..\System\Random\Dolphin Random Stream'
+	'..\System\Compiler\Smalltalk Parser'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
 

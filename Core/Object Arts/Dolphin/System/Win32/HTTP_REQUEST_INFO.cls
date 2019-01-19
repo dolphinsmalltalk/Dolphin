@@ -2,10 +2,13 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_InfoLength _OffsetOf_InfoType _OffsetOf_pInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_INFO guid: (GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
+HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoLength' value: 16r4!
+HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoType' value: 16r0!
+HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
 HTTP_REQUEST_INFO comment: '<HTTP_REQUEST_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -34,38 +37,37 @@ info
 		with: HTTP_REQUEST_CHANNEL_BIND_STATUS
 		with: HTTP_SSL_PROTOCOL_INFO
 		with: HTTP_REQUEST_TOKEN_BINDING_INFO) at: type + 1)
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pInfo))!
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo)!
 
 InfoLength
 	"Private - Answer the <Integer> value of the receiver's 'InfoLength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #InfoLength)!
+	^bytes dwordAtOffset: _OffsetOf_InfoLength!
 
 InfoLength: anInteger
 	"Set the receiver's 'InfoLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #InfoLength) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_InfoLength put: anInteger!
 
 InfoType
 	"Private - Answer the <Integer> value of the receiver's 'InfoType' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_InfoType!
 
 InfoType: anInteger
 	"Set the receiver's 'InfoType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_InfoType put: anInteger!
 
 pInfo
 	"Private - Answer the <ExternalArray> value of the receiver's 'pInfo' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pInfo))
-		length: self InfoLength!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo) length: self InfoLength!
 
 pInfo: anExternalArray
 	"Set the receiver's 'pInfo' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pInfo) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pInfo put: anExternalArray yourAddress.
 	self InfoLength: anExternalArray size!
 
 printFields: aCollection on: aStream limit: anInteger
@@ -98,6 +100,10 @@ defineFields
 		defineField: #InfoType type: SDWORDField new beNonBrowsable offset: 0;
 		defineField: #InfoLength type: DWORDField new beNonBrowsable offset: 4;
 		defineField: #pInfo type: (ArrayPointerField type: ExternalArray lengthField: #InfoLength) beNonBrowsable offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#InfoType #InfoLength #pInfo)! !
 !HTTP_REQUEST_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

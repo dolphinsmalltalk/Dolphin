@@ -2,10 +2,11 @@
 
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cy'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 CURRENCY guid: (GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+CURRENCY addClassConstant: '_OffsetOf_cy' value: 16r0!
 CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
 
 CURRENCY is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type VT_CY.
@@ -23,23 +24,14 @@ asVariant
 		yourself!
 
 cy
-	"Answer the receiver's cy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sqwordAtOffset: 0!
+	^bytes sqwordAtOffset: _OffsetOf_cy!
 
-cy: anObject 
-	"Set the receiver's cy field to the value of anObject."
+cy: anInteger
+	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: 0 put: anObject!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
-		nextPut: $)!
+	bytes sqwordAtOffset: _OffsetOf_cy put: anInteger!
 
 value
 	"Answer the receiver's value as a Smalltalk <ScaledDecimal>."
@@ -54,7 +46,6 @@ value: newValue
 !CURRENCY categoriesFor: #asVariant!converting!public! !
 !CURRENCY categoriesFor: #cy!**compiled accessors**!public! !
 !CURRENCY categoriesFor: #cy:!**compiled accessors**!public! !
-!CURRENCY categoriesFor: #printOn:!printing!public! !
 !CURRENCY categoriesFor: #value!accessing!public! !
 !CURRENCY categoriesFor: #value:!accessing!public! !
 
@@ -77,6 +68,9 @@ epsilon
 
 	^0.0001
 !
+
+getFieldNames
+	^#(#cy)!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -103,6 +97,7 @@ vt
 	^VT_CY! !
 !CURRENCY class categoriesFor: #defineFields!initializing!public! !
 !CURRENCY class categoriesFor: #epsilon!constants!public! !
+!CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !CURRENCY class categoriesFor: #initialize!development!initializing!private! !
 !CURRENCY class categoriesFor: #maximum!constants!public! !
 !CURRENCY class categoriesFor: #minimum!constants!public! !

@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihPalette _OffsetOf_nFirstEntry _OffsetOf_nPalEntries _OffsetOf_nReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCOLORCORRECTPALETTE guid: (GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_ihPalette' value: 16r8!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nFirstEntry' value: 16rC!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nPalEntries' value: 16r10!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nReserved' value: 16r14!
 EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,44 +31,44 @@ struct tagCOLORCORRECTPALETTE {
 !EMRCOLORCORRECTPALETTE methodsFor!
 
 ihPalette
-	"Answer the receiver's ihPalette field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPalette' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPalette)!
+	^bytes dwordAtOffset: _OffsetOf_ihPalette!
 
-ihPalette: anObject 
-	"Set the receiver's ihPalette field to the value of anObject."
+ihPalette: anInteger
+	"Set the receiver's 'ihPalette' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPalette) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_ihPalette put: anInteger!
 
 nFirstEntry
-	"Answer the receiver's nFirstEntry field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nFirstEntry' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry)!
+	^bytes dwordAtOffset: _OffsetOf_nFirstEntry!
 
-nFirstEntry: anObject 
-	"Set the receiver's nFirstEntry field to the value of anObject."
+nFirstEntry: anInteger
+	"Set the receiver's 'nFirstEntry' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nFirstEntry put: anInteger!
 
 nPalEntries
-	"Answer the receiver's nPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
 
-nPalEntries: anObject 
-	"Set the receiver's nPalEntries field to the value of anObject."
+nPalEntries: anInteger
+	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nReserved
-	"Answer the receiver's nReserved field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nReserved' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nReserved)!
+	^bytes dwordAtOffset: _OffsetOf_nReserved!
 
-nReserved: anObject 
-	"Set the receiver's nReserved field to the value of anObject."
+nReserved: anInteger
+	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nReserved) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
@@ -107,10 +111,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #ihPalette #nFirstEntry #nPalEntries #nReserved)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORCORRECTPALETTE! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

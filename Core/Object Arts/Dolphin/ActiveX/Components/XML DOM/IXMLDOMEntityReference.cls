@@ -10,9 +10,3 @@ IXMLDOMEntityReference comment: '<IXMLDOMEntityReference> is a wrapper class for
 
 This is a specialized DOM node to represent entity references.'!
 !IXMLDOMEntityReference categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMEntityReference methodsFor!
-
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptEntityReference: self! !
-!IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
-

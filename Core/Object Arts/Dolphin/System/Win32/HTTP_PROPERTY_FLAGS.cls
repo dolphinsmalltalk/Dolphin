@@ -2,11 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Present'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_PROPERTY_FLAGS guid: (GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
 HTTP_PROPERTY_FLAGS isAbstract: true!
+HTTP_PROPERTY_FLAGS addClassConstant: '_OffsetOf_Present' value: 16r0!
 HTTP_PROPERTY_FLAGS comment: '<HTTP_PROPERTY_FLAGS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,12 +28,12 @@ struct tagHTTP_PROPERTY_FLAGS {
 Present
 	"Private - Answer the <Boolean> value of the receiver's 'Present' field."
 
-	^(bytes dwordAtOffset: 0) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_Present) asBoolean!
 
 Present: aBoolean
 	"Set the receiver's 'Present' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: 0 put: aBoolean asParameter!
+	bytes dwordAtOffset: _OffsetOf_Present put: aBoolean asParameter!
 
 printFields: aCollection on: aStream limit: anInteger
 	| sep template getField |

@@ -14,7 +14,7 @@ Instance Variables:
 	packagesPresenter		<PackageSelector>
 
 '!
-!PackagedClassSelector categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!PackagedClassSelector categoriesForClass!MVP-Resources-IDE Tools! !
 !PackagedClassSelector methodsFor!
 
 autoSelectPackages

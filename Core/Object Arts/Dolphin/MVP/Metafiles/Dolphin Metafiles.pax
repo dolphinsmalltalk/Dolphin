@@ -41,10 +41,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\Base\Dolphin MVP Base';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Base\Dolphin MVP Base').
 
 package!
 
@@ -52,12 +52,12 @@ package!
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
-	classVariableNames: 'RecordTypes'
+	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
 	classInstanceVariableNames: ''!
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Image subclass: #Metafile

@@ -2,10 +2,19 @@
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
 EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
+EXCEPINFO addClassConstant: '_OffsetOf_dwHelpContext' value: 16r10!
+EXCEPINFO addClassConstant: '_OffsetOf_pfnDeferredFillIn' value: 16r18!
+EXCEPINFO addClassConstant: '_OffsetOf_pvReserved' value: 16r14!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszDescription' value: 16r8!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszHelpFile' value: 16rC!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszSource' value: 16r4!
+EXCEPINFO addClassConstant: '_OffsetOf_scode' value: 16r1C!
+EXCEPINFO addClassConstant: '_OffsetOf_wCode' value: 16r0!
+EXCEPINFO addClassConstant: '_OffsetOf_wReserved' value: 16r2!
 EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
 !EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
 !EXCEPINFO methodsFor!
@@ -76,14 +85,14 @@ description: errorDescription
 	self bstrDescription: bstr detach.!
 
 dwHelpContext
-	"Answer the receiver's dwHelpContext field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwHelpContext' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext)!
+	^bytes dwordAtOffset: _OffsetOf_dwHelpContext!
 
-dwHelpContext: anObject 
-	"Set the receiver's dwHelpContext field to the value of anObject."
+dwHelpContext: anInteger
+	"Set the receiver's 'dwHelpContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwHelpContext put: anInteger!
 
 helpFile
 	"Answer the receiver's bstrHelpFile field as a <readableString> Smalltalk object."
@@ -111,49 +120,49 @@ hresult
 			[wCode >= 16rFE00 ifTrue: [WCODE_HRESULT_LAST] ifFalse: [WCODE_HRESULT_FIRST + wCode]]!
 
 pfnDeferredFillIn
-	"Answer the receiver's pfnDeferredFillIn field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pfnDeferredFillIn' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pfnDeferredFillIn)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pfnDeferredFillIn) asExternalAddress!
 
 pwszDescription
-	"Answer the receiver's pwszDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszDescription' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszDescription!
 
-pwszDescription: anObject 
-	"Set the receiver's pwszDescription field to the value of anObject."
+pwszDescription: anInteger
+	"Set the receiver's 'pwszDescription' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_pwszDescription put: anInteger!
 
 pwszHelpFile
-	"Answer the receiver's pwszHelpFile field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszHelpFile' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszHelpFile!
 
-pwszHelpFile: anObject 
-	"Set the receiver's pwszHelpFile field to the value of anObject."
+pwszHelpFile: anInteger
+	"Set the receiver's 'pwszHelpFile' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_pwszHelpFile put: anInteger!
 
 pwszSource
-	"Answer the receiver's pwszSource field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszSource' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszSource!
 
-pwszSource: anObject 
-	"Set the receiver's pwszSource field to the value of anObject."
+pwszSource: anInteger
+	"Set the receiver's 'pwszSource' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_pwszSource put: anInteger!
 
 scode
-	"Answer the receiver's scode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'scode' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #scode)!
+	^bytes sdwordAtOffset: _OffsetOf_scode!
 
-scode: anObject 
-	"Set the receiver's scode field to the value of anObject."
+scode: anInteger
+	"Set the receiver's 'scode' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #scode) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_scode put: anInteger!
 
 source
 	"Answer a <readableString> description of the source of the error.
@@ -172,14 +181,14 @@ source: errorSourceString
 	self bstrSource: bstr detach.!
 
 wCode
-	"Answer the receiver's wCode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wCode' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_wCode!
 
-wCode: anObject 
-	"Set the receiver's wCode field to the value of anObject."
+wCode: anInteger
+	"Set the receiver's 'wCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: _OffsetOf_wCode put: anInteger!
 
 wstrDescription
 	"Answer the receiver's bstrDescription field as a <Utf16String>."
@@ -266,7 +275,11 @@ defineFields
 		defineField: #dwHelpContext type: DWORDField new;
 		defineField: #pvReserved type: LPVOIDField filler;
 		defineField: #pfnDeferredFillIn type: LPVOIDField readOnly;
-		defineField: #scode type: SDWORDField new! !
+		defineField: #scode type: SDWORDField new!
+
+getFieldNames
+	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
 !EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
 !EXCEPINFO class categoriesFor: #defineFields!initializing!public! !
+!EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

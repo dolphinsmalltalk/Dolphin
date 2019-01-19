@@ -122,11 +122,6 @@ localFileSpecFor: aStringFilename
 	^super localFileSpecFor: filename
 !
 
-localFileSpecForPackage
-	"Private - Answer a local filespec based on the fullPackageKey."
-
-	^self localFileSpecFor: self binaryPackageFilename!
-
 locateClass
 	"Answer the class referred to by the receiver."
 
@@ -173,7 +168,6 @@ printOn: aStream
 !ClassLocator categoriesFor: #key!accessing!public! !
 !ClassLocator categoriesFor: #key:!initializing!private! !
 !ClassLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!ClassLocator categoriesFor: #localFileSpecForPackage!helpers!private! !
 !ClassLocator categoriesFor: #locateClass!operations!public! !
 !ClassLocator categoriesFor: #packageName!accessing!public! !
 !ClassLocator categoriesFor: #packageName:!initializing!private! !

@@ -77,20 +77,15 @@ isSafeToEncryptWithProductProtection
 
 	^false!
 
-resourceManager
-	^SessionManager current resourceManager!
-
 systemModel
 	^Smalltalk developmentSystem!
 
 uninitialize
 	self clearCache.
-	self resourceManager removeEventsTriggeredFor: self.
 	self systemModel removeEventsTriggeredFor: self! !
 !SmalllintCachingContext class categoriesFor: #clearCache!operations!private! !
 !SmalllintCachingContext class categoriesFor: #initialize!class initialization!private! !
 !SmalllintCachingContext class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!SmalllintCachingContext class categoriesFor: #resourceManager!accessing!private! !
 !SmalllintCachingContext class categoriesFor: #systemModel!accessing!private! !
 !SmalllintCachingContext class categoriesFor: #uninitialize!class initialization!private! !
 

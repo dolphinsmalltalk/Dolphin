@@ -98,13 +98,6 @@ instanceVariableNames: aString
 				instanceVariableString: classInstVars;
 				modifyExistingClass]!
 
-isChanged: aBoolean
-	"Flag the receiver as changed or not changed, according to the value 
-	of the <Boolean> argument.
-	Implementation Note: The change flags are held on the instance side."
-
-	self instanceClass isChanged: aBoolean!
-
 isMeta
 	"Answer whether the receiver is a <Metaclass>."
 
@@ -125,6 +118,9 @@ new
 	instanceClass notNil 
 		ifTrue: [self error: 'There can be only one (instance of a metaclass)'].
 	^instanceClass := super new!
+
+owningPackage
+	^self instanceClass owningPackage!
 
 printDefinitionOn: target
 	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
@@ -163,12 +159,12 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #comment:!accessing!public! !
 !Metaclass categoriesFor: #instanceClass!accessing!public! !
 !Metaclass categoriesFor: #instanceClass:!accessing!private! !
-!Metaclass categoriesFor: #instanceVariableNames:!instance variables!public! !
-!Metaclass categoriesFor: #isChanged:!development!public!source filing! !
+!Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
 !Metaclass categoriesFor: #isMeta!public!testing! !
 !Metaclass categoriesFor: #name!accessing!public! !
 !Metaclass categoriesFor: #new!instance creation!public! !
-!Metaclass categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
+!Metaclass categoriesFor: #owningPackage!accessing!development!public! !
+!Metaclass categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
 !Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !

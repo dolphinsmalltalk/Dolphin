@@ -133,21 +133,6 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 			LPCSTR pszPath);"
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
-	^self invalidCall!
-
-shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefault: iDefault pszRegVal: pszRegVal
-	"Invoke the SHMessageBoxCheck() function of the module wrapped by the receiver.
-	Helpstring: Displays a message box that gives the user the option of suppressing further occurrences
-
-		int __stdcall SHMessageBoxCheck(
-			[in]HWND HWND,
-			[in]LPCWSTR pszText,
-			[in]LPCWSTR pszTitle,
-			[in]UINT uType,
-			[in]int iDefault,
-			[in]LPCWSTR pszRegVal);"
-
-	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall! !
 !ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
@@ -160,7 +145,6 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 !ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
 
 !ShlwapiLibrary class methodsFor!
 

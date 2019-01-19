@@ -2,10 +2,12 @@
 
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tdescElem'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
+AbstractELEMDESC isAbstract: true!
+AbstractELEMDESC addClassConstant: '_OffsetOf_tdescElem' value: 16r0!
 AbstractELEMDESC comment: ''!
 !AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !AbstractELEMDESC methodsFor!
@@ -49,16 +51,6 @@ owner: struct
 
 	owner := struct!
 
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifFalse: 
-			[aStream
-				display: #tdescElem;
-				nextPutAll: '=';
-				print: self tdesc;
-				space].
-	^super printFieldsOn: aStream limit: anInteger!
-
 tdesc
 	"Answer a <TYPEDESC> which is the type of the elmement described by the receiver.
 	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
@@ -73,7 +65,7 @@ tdesc
 	^tdesc!
 
 tdescElem
-	"Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
+	"Private - Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
 
 	^TYPEDESC fromAddress: bytes yourAddress!
 
@@ -88,9 +80,8 @@ typeName
 !AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
 !AbstractELEMDESC categoriesFor: #owner!accessing!private! !
 !AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
-!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!public! !
+!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
 !AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
 
 !AbstractELEMDESC class methodsFor!

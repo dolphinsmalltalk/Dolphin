@@ -33,15 +33,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Shell\Dolphin Document Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Shell\Dolphin Document Presenter'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -49,12 +49,12 @@ package!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrgText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractDocumentShell subclass: #TextDocument

@@ -7,7 +7,7 @@ BasicInspector subclass: #StructureInspector
 	classInstanceVariableNames: ''!
 StructureInspector guid: (GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
-!StructureInspector categoriesForClass!Development!MVP-Presenters! !
+!StructureInspector categoriesForClass!MVP-Presenters! !
 !StructureInspector methodsFor!
 
 fields
@@ -29,7 +29,7 @@ getFieldList
 	of the InspectorShell. Numeric indices for the elements of the 
 	OrderedCollection are answered"
 
-	^self selfField class allInstVarNames , self selfField getValidFields!
+	^self selfField class allInstVarNames , self selfField getFieldNames!
 
 setField: anInteger to: anObject
 	"Private - Determine the field of the receiver's object which has the key at index

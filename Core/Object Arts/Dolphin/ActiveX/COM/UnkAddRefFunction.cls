@@ -52,5 +52,5 @@ uninitialize
 
 	Descriptor := nil! !
 !UnkAddRefFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkAddRefFunction class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
+!UnkAddRefFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

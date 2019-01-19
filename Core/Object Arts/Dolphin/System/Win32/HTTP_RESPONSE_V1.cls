@@ -2,10 +2,18 @@
 
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: 'contentType content'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pReason _OffsetOf_ReasonLength _OffsetOf_StatusCode _OffsetOf_Version'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_V1 guid: (GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_EntityChunkCount' value: 16r110!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Flags' value: 16r0!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Headers' value: 16r10!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_pEntityChunks' value: 16r114!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_pReason' value: 16rC!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_ReasonLength' value: 16rA!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_StatusCode' value: 16r8!
+HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Version' value: 16r4!
 HTTP_RESPONSE_V1 comment: '<HTTP_RESPONSE_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -32,7 +40,7 @@ struct tagHTTP_RESPONSE_V1 {
 
 content: aByteObject
 	content := HTTP_DATA_CHUNK data: aByteObject.
-	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: content yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pEntityChunks put: content yourAddress.
 	self EntityChunkCount: 1!
 
 contentType: aString
@@ -42,97 +50,97 @@ contentType: aString
 EntityChunkCount
 	"Private - Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount)!
+	^bytes wordAtOffset: _OffsetOf_EntityChunkCount!
 
 EntityChunkCount: anInteger
 	"Set the receiver's 'EntityChunkCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_EntityChunkCount put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
 
 Headers
 	"Answer the <HTTP_RESPONSE_HEADERS> value of the receiver's 'Headers' field."
 
-	^HTTP_RESPONSE_HEADERS fromAddress: bytes yourAddress + ##(self offsetOf: #Headers)!
+	^HTTP_RESPONSE_HEADERS fromAddress: bytes yourAddress + _OffsetOf_Headers!
 
 Headers: aHTTP_RESPONSE_HEADERS
 	"Set the receiver's 'Headers' field to the value of the argument, aHTTP_RESPONSE_HEADERS"
 
 	aHTTP_RESPONSE_HEADERS
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Headers) + 1)
-		to: ##((self offsetOf: #Headers) + HTTP_RESPONSE_HEADERS basicByteSize)
+		from: ##(_OffsetOf_Headers + 1)
+		to: ##(_OffsetOf_Headers + HTTP_RESPONSE_HEADERS basicByteSize)
 		startingAt: 1!
 
 initialize
-	bytes dwordAtOffset: ##(self offsetOf: #Version) put: 16r10001!
+	bytes dwordAtOffset: _OffsetOf_Version put: 16r10001!
 
 pEntityChunks
 	"Answer the <StructureArray> value of the receiver's 'pEntityChunks' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pEntityChunks))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pEntityChunks)
 		length: self EntityChunkCount
 		elementClass: HTTP_DATA_CHUNK!
 
 pEntityChunks: aStructureArray
 	"Set the receiver's 'pEntityChunks' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pEntityChunks put: aStructureArray yourAddress.
 	self EntityChunkCount: aStructureArray size!
 
 pReason
 	"Answer the <String> value of the receiver's 'pReason' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pReason)) length: self ReasonLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pReason) length: self ReasonLength!
 
 pReason: aString
 	"Set the receiver's 'pReason' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pReason) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pReason put: aString yourAddress.
 	self ReasonLength: aString size!
 
 ReasonLength
 	"Private - Answer the <Integer> value of the receiver's 'ReasonLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #ReasonLength)!
+	^bytes wordAtOffset: _OffsetOf_ReasonLength!
 
 ReasonLength: anInteger
 	"Set the receiver's 'ReasonLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ReasonLength) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_ReasonLength put: anInteger!
 
 StatusCode
 	"Answer the <Integer> value of the receiver's 'StatusCode' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #StatusCode)!
+	^bytes wordAtOffset: _OffsetOf_StatusCode!
 
 StatusCode: anInteger
 	"Set the receiver's 'StatusCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #StatusCode) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_StatusCode put: anInteger!
 
 Version
 	"Answer the <HTTP_VERSION> value of the receiver's 'Version' field."
 
-	^HTTP_VERSION fromAddress: bytes yourAddress + ##(self offsetOf: #Version)!
+	^HTTP_VERSION fromAddress: bytes yourAddress + _OffsetOf_Version!
 
 Version: aHTTP_VERSION
 	"Set the receiver's 'Version' field to the value of the argument, aHTTP_VERSION"
 
 	aHTTP_VERSION
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Version) + 1)
-		to: ##((self offsetOf: #Version) + HTTP_VERSION basicByteSize)
+		from: ##(_OffsetOf_Version + 1)
+		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
 !HTTP_RESPONSE_V1 categoriesFor: #content:!accessing!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
@@ -183,6 +191,10 @@ defineFields
 		defineField: #Headers type: (StructureField type: HTTP_RESPONSE_HEADERS) offset: 16;
 		defineField: #EntityChunkCount type: WORDField new beNonBrowsable offset: 272;
 		defineField: #pEntityChunks type: (StructureArrayPointerField type: HTTP_DATA_CHUNK lengthField: #EntityChunkCount) offset: 276.
-	self byteSize: 280! !
+	self byteSize: 280!
+
+getFieldNames
+	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
 !HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

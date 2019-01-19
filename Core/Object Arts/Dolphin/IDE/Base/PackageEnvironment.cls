@@ -10,7 +10,7 @@ PackageEnvironment comment: 'PackageEnvironment is a Dolphin specific BrowserEnv
 
 Instance Variables:
 	packages		<Array> of <Package>'!
-!PackageEnvironment categoriesForClass!Development! !
+!PackageEnvironment categoriesForClass!Refactoring-Environment! !
 !PackageEnvironment methodsFor!
 
 classesDo: aBlock 

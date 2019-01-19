@@ -131,11 +131,11 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 	owner := dataOwner! !
 !AXRecord categoriesFor: #basicFree!private!realizing/unrealizing! !
 !AXRecord categoriesFor: #byteSize!accessing!public! !
-!AXRecord categoriesFor: #displayOn:!public! !
+!AXRecord categoriesFor: #displayOn:!displaying!public! !
 !AXRecord categoriesFor: #doesNotUnderstand:!exceptions!public! !
 !AXRecord categoriesFor: #getField:!accessing!public! !
 !AXRecord categoriesFor: #getField:ifAbsent:!accessing!public! !
-!AXRecord categoriesFor: #getValidFields!public! !
+!AXRecord categoriesFor: #getValidFields!accessing!private! !
 !AXRecord categoriesFor: #initialize!initializing!private! !
 !AXRecord categoriesFor: #initialize:!initializing!private! !
 !AXRecord categoriesFor: #initializePointer!initializing!private! !

@@ -2,10 +2,16 @@
 
 ExternalStructure subclass: #CPINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_codepage _OffsetOf_CodePageName _OffsetOf_DefaultChar _OffsetOf_LeadByte _OffsetOf_MaxCharSize _OffsetOf_UnicodeDefaultChar'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CPINFOEXW guid: (GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
+CPINFOEXW addClassConstant: '_OffsetOf_codepage' value: 16r14!
+CPINFOEXW addClassConstant: '_OffsetOf_CodePageName' value: 16r18!
+CPINFOEXW addClassConstant: '_OffsetOf_DefaultChar' value: 16r4!
+CPINFOEXW addClassConstant: '_OffsetOf_LeadByte' value: 16r6!
+CPINFOEXW addClassConstant: '_OffsetOf_MaxCharSize' value: 16r0!
+CPINFOEXW addClassConstant: '_OffsetOf_UnicodeDefaultChar' value: 16r12!
 CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,17 +37,17 @@ struct tagCPINFOEXW {
 codepage
 	"Answer the <Integer> value of the receiver's 'codepage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #codepage)!
+	^bytes dwordAtOffset: _OffsetOf_codepage!
 
 CodePageName
 	"Answer the <Utf16String> value of the receiver's 'CodePageName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #CodePageName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_CodePageName!
 
 DefaultChar
 	"Answer the <ExternalArray> value of the receiver's 'DefaultChar' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #DefaultChar) length: 2!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_DefaultChar length: 2!
 
 defaultCharacter
 	"The character used for code points that cannot be represented on the code page described by the receiver."
@@ -51,7 +57,7 @@ defaultCharacter
 	(KernelLibrary default
 		multiByteToWideChar: self codepage
 		dwFlags: 0
-		lpMultiByteStr: bytes yourAddress + ##(self offsetOf: #DefaultChar)
+		lpMultiByteStr: bytes yourAddress + _OffsetOf_DefaultChar
 		cchMultiByte: 2
 		lpWideCharStr: utf16
 		cchWideChar: 2) == 0
@@ -61,12 +67,12 @@ defaultCharacter
 LeadByte
 	"Answer the <ExternalArray> value of the receiver's 'LeadByte' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #LeadByte) length: 12!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_LeadByte length: 12!
 
 MaxCharSize
 	"Answer the <Integer> value of the receiver's 'MaxCharSize' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_MaxCharSize!
 
 unicodeDefaultChar
 	"Answer the default Unicode character for the described code page."
@@ -76,7 +82,7 @@ unicodeDefaultChar
 UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #UnicodeDefaultChar)! !
+	^bytes wordAtOffset: _OffsetOf_UnicodeDefaultChar! !
 !CPINFOEXW categoriesFor: #codepage!**compiled accessors**!public! !
 !CPINFOEXW categoriesFor: #CodePageName!**compiled accessors**!public! !
 !CPINFOEXW categoriesFor: #DefaultChar!**compiled accessors**!public! !
@@ -120,7 +126,11 @@ defineFields
 		defineField: #UnicodeDefaultChar type: WORDField new beReadOnly offset: 18;
 		defineField: #codepage type: DWORDField new beReadOnly offset: 20;
 		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
-	self byteSize: 544! !
+	self byteSize: 544!
+
+getFieldNames
+	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
 !CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
 !CPINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

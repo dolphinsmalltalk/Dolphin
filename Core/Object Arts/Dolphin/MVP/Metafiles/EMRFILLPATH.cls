@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRFILLPATH
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRFILLPATH guid: (GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
+EMRFILLPATH addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMRFILLPATH {
 !EMRFILLPATH methodsFor!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRFILLPATH categoriesFor: #rclBounds!**compiled accessors**!public! !
 !EMRFILLPATH categoriesFor: #rclBounds:!**compiled accessors**!public! !
@@ -60,6 +61,9 @@ defineFields
 			offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -68,5 +72,6 @@ iTypes
 		with: EMR_STROKEANDFILLPATH
 		with: EMR_STROKEPATH! !
 !EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
 

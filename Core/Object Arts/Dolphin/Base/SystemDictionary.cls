@@ -196,7 +196,7 @@ removeKey: key ifAbsent: exceptionHandler
 				ifTrue: 
 					[self trigger: #globalRemoved: with: element.
 					"Uninitialize any global which is not a class name alias"
-					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global uninitialize]].
+					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global perform: #uninitialize]].
 			global]!
 
 renameGlobal: oldName to: newName
@@ -240,7 +240,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
 !SystemDictionary categoriesFor: #lookup:!accessing!public! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
-!SystemDictionary categoriesFor: #removeClass:!private!removing! !
+!SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
 !SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !

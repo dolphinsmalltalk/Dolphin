@@ -9,7 +9,7 @@ AXInspector guid: (GUID fromString: '{c06f3b62-0868-11d3-93af-00a024ca708a}')!
 AXInspector comment: 'AXInspector is a <compositePresenter> that implements a specialised inspect facility onto a <IDispatch>. This attempts to display the IDispatch properties.
 
 '!
-!AXInspector categoriesForClass!Development!MVP-Presenters! !
+!AXInspector categoriesForClass!MVP-Presenters! !
 !AXInspector methodsFor!
 
 count

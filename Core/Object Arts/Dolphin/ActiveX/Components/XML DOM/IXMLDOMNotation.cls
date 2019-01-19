@@ -13,9 +13,6 @@ This is a specialized DOM node to represent notations declared in the DTD or sch
 !IXMLDOMNotation categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMNotation methodsFor!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptNotation: self!
-
 childNodes
 	"Answer the a <sequencedReadableCollection> on the <IXMLDOMNodeList> 
 	value of the 'childNodes' property of the receiver."
@@ -100,7 +97,6 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMNotation categoriesFor: #childNodes!properties!public! !
 !IXMLDOMNotation categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !
 !IXMLDOMNotation categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMNotation!private! !

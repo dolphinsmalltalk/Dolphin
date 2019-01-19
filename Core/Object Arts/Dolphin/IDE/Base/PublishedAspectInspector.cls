@@ -23,7 +23,7 @@ Instance Variables:
 	aspectPresenter	<presenter> used to display the selected aspect in its recommended format.
 	workspacePresenter	<presenter> used to display the selected aspect in a <ValueWorkspace>
 '!
-!PublishedAspectInspector categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!PublishedAspectInspector categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !PublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 

@@ -2,61 +2,66 @@
 
 Win32Structure subclass: #RGNDATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iType _OffsetOf_nCount _OffsetOf_nRgnSize _OffsetOf_rcBound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RGNDATA guid: (GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
+RGNDATA addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+RGNDATA addClassConstant: '_OffsetOf_iType' value: 16r4!
+RGNDATA addClassConstant: '_OffsetOf_nCount' value: 16r8!
+RGNDATA addClassConstant: '_OffsetOf_nRgnSize' value: 16rC!
+RGNDATA addClassConstant: '_OffsetOf_rcBound' value: 16r10!
 RGNDATA comment: ''!
 !RGNDATA categoriesForClass!External-Data-Structured-Win32! !
 !RGNDATA methodsFor!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 iType
-	"Answer the receiver's iType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iType)!
+	^bytes dwordAtOffset: _OffsetOf_iType!
 
-iType: anObject 
-	"Set the receiver's iType field to the value of anObject."
+iType: anInteger
+	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iType) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
 
 nCount
-	"Answer the receiver's nCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nCount' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nCount)!
+	^bytes dwordAtOffset: _OffsetOf_nCount!
 
-nCount: anObject 
-	"Set the receiver's nCount field to the value of anObject."
+nCount: anInteger
+	"Set the receiver's 'nCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nCount) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nCount put: anInteger!
 
 nRgnSize
-	"Answer the receiver's nRgnSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nRgnSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nRgnSize)!
+	^bytes dwordAtOffset: _OffsetOf_nRgnSize!
 
-nRgnSize: anObject 
-	"Set the receiver's nRgnSize field to the value of anObject."
+nRgnSize: anInteger
+	"Set the receiver's 'nRgnSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nRgnSize) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nRgnSize put: anInteger!
 
 rcBound
-	"Answer the receiver's rcBound field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcBound' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcBound)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcBound!
 
-rcBound: anObject 
-	"Set the receiver's rcBound field to the value of anObject."
+rcBound: aRECT
+	"Set the receiver's 'rcBound' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rcBound) + 1)
-		to: ##((self offsetOf: #rcBound) + RECT basicByteSize)
+		from: ##(_OffsetOf_rcBound + 1)
+		to: ##(_OffsetOf_rcBound + RECT basicByteSize)
 		startingAt: 1! !
 !RGNDATA categoriesFor: #dwSize:!**compiled accessors**!public! !
 !RGNDATA categoriesFor: #iType!**compiled accessors**!public! !
@@ -99,6 +104,10 @@ defineFields
 		defineField: #nCount	type: DWORDField new;
 		defineField: #nRgnSize	type: DWORDField new;
 		defineField: #rcBound	type: (StructureField type: RECT)
-! !
+!
+
+getFieldNames
+	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
 !RGNDATA class categoriesFor: #defineFields!initializing!public! !
+!RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

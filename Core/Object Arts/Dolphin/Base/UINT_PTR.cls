@@ -7,7 +7,7 @@ ExternalInteger subclass: #UINT_PTR
 	classInstanceVariableNames: ''!
 UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 UINT_PTR comment: ''!
-!UINT_PTR categoriesForClass!External-Data-Structured! !
+!UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
 !UINT_PTR methodsFor!
 
 asSignedInteger
@@ -56,14 +56,14 @@ lowPartSigned
 	^VMConstants.IsWin64 ifTrue: [bytes sdwordAtOffset: 0] ifFalse: [bytes swordAtOffset: 0]!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes uintPtrAtOffset: 0!
+	^bytes uintPtrAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
 !UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #highPart!accessing!public! !
@@ -77,10 +77,10 @@ value: anObject
 
 !UINT_PTR class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^UINT_PTRField! !
-!UINT_PTR class categoriesFor: #fieldType!constants!development!private! !
+	self defineField: #value type: UINT_PTRField new beOverride! !
+!UINT_PTR class categoriesFor: #defineFields!initializing!public! !
 

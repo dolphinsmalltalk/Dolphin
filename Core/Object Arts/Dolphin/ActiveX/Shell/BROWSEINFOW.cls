@@ -2,10 +2,18 @@
 
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BROWSEINFOW guid: (GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+BROWSEINFOW addClassConstant: '_OffsetOf_flags' value: 16r10!
+BROWSEINFOW addClassConstant: '_OffsetOf_hwndOwner' value: 16r0!
+BROWSEINFOW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
+BROWSEINFOW addClassConstant: '_OffsetOf_lParam' value: 16r18!
+BROWSEINFOW addClassConstant: '_OffsetOf_lpfnHook' value: 16r14!
+BROWSEINFOW addClassConstant: '_OffsetOf_lpszTitle' value: 16rC!
+BROWSEINFOW addClassConstant: '_OffsetOf_pidlRoot' value: 16r4!
+BROWSEINFOW addClassConstant: '_OffsetOf_pszDisplayName' value: 16r8!
 BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!
@@ -20,12 +28,12 @@ displayName
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
 hookFlag
 	^0!
@@ -33,7 +41,7 @@ hookFlag
 hwndOwner: anInteger
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hwndOwner put: anInteger!
 
 initialize: anInteger
 	"Private - Initialize the state of the receiver."
@@ -45,12 +53,12 @@ initialize: anInteger
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpfnHook) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
 
 lpszTitle: anUtf16String
 	"Set the receiver's 'lpszTitle' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszTitle) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszTitle put: anUtf16String yourAddress!
 
 ownerView: aView
 	"Set the owning window of the dialog to aView."
@@ -62,17 +70,17 @@ ownerView: aView
 pidlRoot
 	"Answer the <Integer> value of the receiver's 'pidlRoot' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #pidlRoot)!
+	^bytes dwordAtOffset: _OffsetOf_pidlRoot!
 
 pidlRoot: anInteger
 	"Set the receiver's 'pidlRoot' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #pidlRoot) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_pidlRoot put: anInteger!
 
 pszDisplayName: anUtf16String
 	"Set the receiver's 'pszDisplayName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszDisplayName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pszDisplayName put: anUtf16String yourAddress!
 
 title: text
 	"Set the caption/prompt to be displayed in the receiver's dialog to the <String>, text.
@@ -119,6 +127,10 @@ defineFields
 		defineField: #flags type: DWORDField new beOverride;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lParam type: INT_PTRField filler;
-		defineField: #iImage type: DWORDField filler! !
+		defineField: #iImage type: DWORDField filler!
+
+getFieldNames
+	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
 !BROWSEINFOW class categoriesFor: #defineFields!initializing!public! !
+!BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihCS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETCOLORSPACE guid: (GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
+EMRSETCOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
 EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSETCOLORSPACE {
 !EMRSETCOLORSPACE methodsFor!
 
 ihCS
-	"Answer the receiver's ihCS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
+	^bytes dwordAtOffset: _OffsetOf_ihCS!
 
-ihCS: anObject 
-	"Set the receiver's ihCS field to the value of anObject."
+ihCS: anInteger
+	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihCS)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORSPACE with: EMR_DELETECOLORSPACE! !
 !EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
 

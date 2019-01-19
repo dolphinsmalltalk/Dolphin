@@ -2,33 +2,37 @@
 
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iFrom _OffsetOf_iTo _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMLVODSTATECHANGE guid: (GUID fromString: '{f44c9148-2b3f-11d3-8368-7a8b5a000000}')!
+NMLVODSTATECHANGE addClassConstant: '_OffsetOf_iFrom' value: 16rC!
+NMLVODSTATECHANGE addClassConstant: '_OffsetOf_iTo' value: 16r10!
+NMLVODSTATECHANGE addClassConstant: '_OffsetOf_uNewState' value: 16r14!
+NMLVODSTATECHANGE addClassConstant: '_OffsetOf_uOldState' value: 16r18!
 NMLVODSTATECHANGE comment: ''!
 !NMLVODSTATECHANGE categoriesForClass!External-Data-Structured-Win32! !
 !NMLVODSTATECHANGE methodsFor!
 
 iFrom
-	"Answer the receiver's iFrom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iFrom' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iFrom)!
+	^bytes sdwordAtOffset: _OffsetOf_iFrom!
 
 iTo
-	"Answer the receiver's iTo field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iTo' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iTo)!
+	^bytes sdwordAtOffset: _OffsetOf_iTo!
 
 uNewState
-	"Answer the receiver's uNewState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uNewState)!
+	^bytes dwordAtOffset: _OffsetOf_uNewState!
 
 uOldState
-	"Answer the receiver's uOldState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uOldState)! !
+	^bytes dwordAtOffset: _OffsetOf_uOldState! !
 !NMLVODSTATECHANGE categoriesFor: #iFrom!**compiled accessors**!public! !
 !NMLVODSTATECHANGE categoriesFor: #iTo!**compiled accessors**!public! !
 !NMLVODSTATECHANGE categoriesFor: #uNewState!**compiled accessors**!public! !
@@ -46,6 +50,10 @@ defineFields
 		defineField: #iFrom type: SDWORDField readOnly;
 		defineField: #iTo type: SDWORDField readOnly;
 		defineField: #uNewState type: DWORDField readOnly;
-		defineField: #uOldState type: DWORDField readOnly! !
+		defineField: #uOldState type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
 !NMLVODSTATECHANGE class categoriesFor: #defineFields!initializing!public! !
+!NMLVODSTATECHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

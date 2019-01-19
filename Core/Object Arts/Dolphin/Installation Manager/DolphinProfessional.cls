@@ -7,7 +7,7 @@ DolphinBaseProduct subclass: #DolphinProfessional
 	classInstanceVariableNames: ''!
 DolphinProfessional guid: (GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
 DolphinProfessional comment: ''!
-!DolphinProfessional categoriesForClass!Development! !
+!DolphinProfessional categoriesForClass!System-Support! !
 !DolphinProfessional methodsFor!
 
 contents
@@ -100,7 +100,7 @@ developmentClasses
 	"Answer a <collection> containing all development classes."
 
 	| classes |
-	classes := (ClassCategory name: 'Development') contents asSet.
+	classes := (ClassCategory name: 'Development') classes asSet.
 
 	"Should already all be there, but just in case"
 	#('Development System' 'Dolphin Community Edition Tools' 'Dolphin Professional Tools' 'Dolphin Refactoring Browser') 

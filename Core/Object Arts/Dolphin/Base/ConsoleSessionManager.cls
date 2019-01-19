@@ -25,6 +25,11 @@ allocConsole
 
 	"We already have one"!
 
+attachFd: anInteger stream: anExternalHandle
+	^((CRTLibrary default _isatty: anInteger)
+		ifTrue: [self consoleStreamClass]
+		ifFalse: [self fileStreamClass]) fromHandle: anExternalHandle!
+
 basicTertiaryStartup
 	"Perform fundamental tertiary system startup operations."
 
@@ -67,20 +72,20 @@ onCloseConsole
 
 	self quit: -1!
 
-openConsoleStreams
-	"Private - Open the standard console I/O streams.
-	In this case we attach to pre-existing C run-time library stdio streams, as they
-	will have been correctly set up by CRT library initialization."
+openStdErr
+	^StdioUtf8FileStream fromHandle: VMLibrary default stderr!
 
-	| vm crt |
-	stdioStreams isNil ifFalse: [^self].
-	"Note that all the stdio streams should be in text/translating mode"
-	vm := VMLibrary default.
-	crt := CRTLibrary default.
-	stdioStreams := {0 -> vm stdin. 1 -> vm stdout. 2 -> vm stderr} collect: 
-					[:each |
-					((crt _isatty: each key) ifTrue: [self consoleStreamClass] ifFalse: [self fileStreamClass])
-						fromHandle: each value]!
+openStdIn
+	^self attachFd: 0 stream: VMLibrary default stdin!
+
+openStdOut
+	^self attachFd: 1 stream: VMLibrary default stdout!
+
+quit: anInteger
+	"Private - Force a close down of the session with the specified exit code."
+
+	self onExit == true ifTrue: [self primQuit: anInteger].
+	^false	"cancelled"!
 
 registerConsoleCtrlHandler
 	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main 	thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.
@@ -114,11 +119,15 @@ unhandledException: anException
 		self quit: -1].
 	^anException! !
 !ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
+!ConsoleSessionManager categoriesFor: #attachFd:stream:!helpers!private! !
 !ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
 !ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
-!ConsoleSessionManager categoriesFor: #openConsoleStreams!operations!public! !
+!ConsoleSessionManager categoriesFor: #openStdErr!helpers!private! !
+!ConsoleSessionManager categoriesFor: #openStdIn!helpers!private! !
+!ConsoleSessionManager categoriesFor: #openStdOut!helpers!private! !
+!ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
 !ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
 !ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
 !ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !

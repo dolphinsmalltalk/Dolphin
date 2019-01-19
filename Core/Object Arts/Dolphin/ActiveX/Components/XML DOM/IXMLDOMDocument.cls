@@ -21,9 +21,6 @@ Abort
 	<virtual stdcall: hresult 65>
 	^self invalidCall!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptDocument: self!
-
 async
 	"Answer the <varbool> value of the 'async' property of the receiver.
 	Helpstring: flag for asynchronous download"
@@ -712,7 +709,6 @@ validateOnParse: isValidating
 	self put_validateOnParse: isValidating
 ! !
 !IXMLDOMDocument categoriesFor: #Abort!**auto generated**!COM Interfaces-IXMLDOMDocument!public! !
-!IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMDocument categoriesFor: #async!**auto generated**!properties!public! !
 !IXMLDOMDocument categoriesFor: #async:!**auto generated**!properties!public! !
 !IXMLDOMDocument categoriesFor: #createAttribute:!**auto generated**!methods!public! !

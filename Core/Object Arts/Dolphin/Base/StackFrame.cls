@@ -161,28 +161,28 @@ callstackDo: aMonadicValuable depth: anInteger
 debugPrintString
 	^self basicPrintString!
 
-displayOn: aStream 
+displayOn: aStream
 	"Append a short textual description of the receiver to aStream appropriate
 	for displaying in a stack trace."
 
 	"Display processing will fail if this stack frame is dead"
 
 	| method class mClass selector |
-	self isDead 
+	self isDead
 		ifTrue: 
-			[aStream nextPutAll: self debugPrintString.
+			[aStream nextPutAll: self basicPrintString.
 			^self].
 	method := self method.
 	mClass := method methodClass.
-	self receiver 
+	self receiver
 		ifNil: 
 			["Assume a block which has no receiver refs"
 			aStream display: mClass]
 		ifNotNil: 
-			[:receiver | 
+			[:receiver |
 			class := receiver basicClass.	"Use basic class to avoid deref'ing proxies"
 			aStream nextPutAll: class name.
-			mClass == class 
+			mClass == class
 				ifFalse: 
 					[aStream
 						nextPut: $(;
@@ -190,7 +190,7 @@ displayOn: aStream
 						nextPut: $)]].
 	aStream nextPutAll: '>>'.
 	selector := method selector.
-	method isUnbound 
+	method isUnbound
 		ifTrue: 
 			["Method is unbound if it is either not in the class' method dictionary, or it doesn't have the same
 			source as that currently in the dictionary"

@@ -11,7 +11,7 @@ SingleUnarySendMethodCategory comment: 'SingleUnarySendMethodCategory is the cla
 	blah
 		^self subclassResponsibility
 '!
-!SingleUnarySendMethodCategory categoriesForClass!Development! !
+!SingleUnarySendMethodCategory categoriesForClass!System-Support! !
 !SingleUnarySendMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod

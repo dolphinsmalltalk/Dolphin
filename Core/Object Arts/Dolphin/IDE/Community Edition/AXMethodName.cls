@@ -91,6 +91,6 @@ keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCo
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
-!AXMethodName class categoriesFor: #icon!constants!development!public! !
+!AXMethodName class categoriesFor: #icon!constants!public! !
 !AXMethodName class categoriesFor: #keywords:argumentNames:indices:!instance creation!public! !
 

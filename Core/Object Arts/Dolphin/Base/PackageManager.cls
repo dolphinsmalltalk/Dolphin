@@ -214,7 +214,7 @@ allGlobalAliases
 !
 
 allPackagedClasses
-	"Private - Answer a <collection> of all the packaged classes in the system."
+	"Answer a <collection> of all the packaged classes in the system."
 
 	| answer |
 	answer := OrderedCollection new: 2000.
@@ -258,6 +258,7 @@ basicRemovePackage: aPackage
 
 	self packages removeKey: aPackage name.
 	defaultPackage == aPackage ifTrue: [defaultPackage := nil].
+	aPackage removeEventsTriggeredFor: self.
 	^aPackage!
 
 basicUninstall: aPackage
@@ -265,11 +266,9 @@ basicUninstall: aPackage
 	All the packages owned objects are removed from the system.
 	Answer aPackage."
 
-	self beNotProcessingEvents.
-	[	
-		aPackage removeEventsTriggeredFor: self.
-		[aPackage privateUninstall]	 ensure: [self basicRemovePackage: aPackage]
-	] ensure: [self beProcessingEvents]!
+	self noEventsDo: 
+			[aPackage removeEventsTriggeredFor: self.
+			[aPackage privateUninstall] ensure: [self basicRemovePackage: aPackage]]!
 
 beNotProcessingEvents
 	"Private - Temporarily suspend the processing of system events or
@@ -324,9 +323,10 @@ changeProcessEventsBy: countChange
 	processing."
 
 	processEvents := processEvents + countChange.
-	processEvents < 0 ifTrue: [
-		Notification signal: 'PackageManager processEvents became corrupt and has been reset.'.
-		processEvents := 0].
+	processEvents < 0
+		ifTrue: 
+			[Notification signal: 'PackageManager processEvents became corrupt and has been reset.'.
+			processEvents := 0].
 	^processEvents!
 
 classRepackaged: aClass from: source to: destination
@@ -641,8 +641,7 @@ looseMethods
 	material since the cache is then bypassed and is regenerated when event processing is again
 	enabled."
 
-	looseMethods isNil ifTrue: [looseMethods := self getLooseMethods].
-	^looseMethods!
+	^looseMethods ifNil: [looseMethods := self getLooseMethods]!
 
 looseMethodUpdated: aCompilationResult 
 	"There is nothing to do because the loose method cache now holds method 'names' which are
@@ -735,6 +734,10 @@ newPackage: aString
 	self addManagedPackage: pkg.
 	self loadedChanged.
 	^pkg!
+
+noEventsDo: aNiladicBlock
+	self beNotProcessingEvents.
+	aNiladicBlock ensure: [self beProcessingEvents]!
 
 observePackage: aPackage 
 	"Private - Subscribe to certain events from the specified managed <Package>."
@@ -976,13 +979,13 @@ packageNames
 
 	^self packages keys!
 
-packageOfClass: aBehavior 
-	"Answer the package held by the receiver which owns aBehavior or the special 'Uncommitted' package if the class has no other assignment."
+packageOfClass: aBehavior
+	"Answer the Package held by the receiver which owns aBehavior, or nil if the class is unpackaged."
 
-	^packagedGlobals at: aBehavior instanceClass name
-		ifAbsentPut: 
+	^(packagedGlobals lookup: aBehavior instanceClass name)
+		ifNil: 
 			["Fall back on enumerating the packages."
-			self packages detect: [:p | p includesClass: aBehavior] ifNone: [^nil	"Package uncommitted"]]!
+			self packages detect: [:p | p includesClass: aBehavior] ifNone: []]!
 
 packageOfGlobalNamed: globalName 
 	"Answer the package held by the receiver which owns globalName (excluding
@@ -1166,20 +1169,13 @@ youShouldBeProcessingEvents
 	should expect to be responding to events as otherwise change flags, and pre-requisites, etc
 	will not be operating correctly."
 
-	| mb |
 	self isProcessingEvents ifTrue: [^self].
-	mb := MessageBox new.
-	mb
-		buttonStyle: #yesNo;
-		beTaskModal.
-	(mb 
-		warning: 'The package system is not currently monitoring change events. This means that changes may not be detected and flagged, caches are not maintained, and pre-requisites may be incorrect. Change monitoring should normally only be suppressed during lengthy install/uninstall operations. A previous error or debugging session may have left the package manager in an inconsistent state. 
+	Warning
+		signal: 'The package system is not currently monitoring change events. This means that changes may not be detected and flagged, caches are not maintained, and pre-requisites may be incorrect. Change monitoring should normally only be suppressed during lengthy install/uninstall operations. A previous error or debugging session may have left the package manager in an inconsistent state. 
 
-Would you like to re-enable change monitoring (recommended)?') 
-			== #yes 
-			ifTrue: 
-				[[self isProcessingEvents] whileFalse: [self beProcessingEvents].
-				self clearCachedInformation]! !
+	Change monitoring will be enabled if you ignore this warning (recommended)'.
+	[self isProcessingEvents] whileFalse: [self beProcessingEvents].
+	self clearCachedInformation! !
 !PackageManager categoriesFor: #addClass:to:!adding!public! !
 !PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
 !PackageManager categoriesFor: #addLooseMethod:to:!helpers!private! !
@@ -1190,7 +1186,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #addResourceIdentifier:to:!adding!public! !
 !PackageManager categoriesFor: #allDependentPackagesOf:visited:!accessing!private! !
 !PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
-!PackageManager categoriesFor: #allPackagedClasses!accessing!private! !
+!PackageManager categoriesFor: #allPackagedClasses!accessing!public! !
 !PackageManager categoriesFor: #allPackagedGlobalNames!accessing!private! !
 !PackageManager categoriesFor: #allSourceObjects!public!source filing! !
 !PackageManager categoriesFor: #basePackages!accessing!public! !
@@ -1244,6 +1240,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #moveLooseMethod:from:to:!helpers!private! !
 !PackageManager categoriesFor: #moveMethod:from:to:!helpers!private! !
 !PackageManager categoriesFor: #newPackage:!adding!private! !
+!PackageManager categoriesFor: #noEventsDo:!helpers!private! !
 !PackageManager categoriesFor: #observePackage:!private!updating! !
 !PackageManager categoriesFor: #onClassAdded:!event handling!private! !
 !PackageManager categoriesFor: #onClassRemoved:!event handling!private! !
@@ -1327,6 +1324,7 @@ newSystemPackage
 	N.B. This should only ever be used during the boot process."
 
 	| dolphin globalNames all inst |
+	Notification signal: 'Creating new system package'.
 	inst := self current.
 	self assert: [inst packages isEmpty].
 	(dolphin := Package name: self systemPackageName)
@@ -1339,6 +1337,9 @@ Copyright (c) Object Arts Ltd. 1997-2016';
 	globalNames removeAll: (all collect: [:aClass | aClass name]).
 	globalNames do: [:globalName | inst addGlobalNamed: globalName to: dolphin].
 	dolphin untracedGlobals: {#Transcript}.
+	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
+				ifNil: [0]
+				ifNotNil: [:filetime | filetime asInteger]).
 	dolphin isChanged: false.
 	^dolphin!
 
@@ -1352,9 +1353,7 @@ reset
 systemPackage
 	"Answer the Package which contains all the base objects of the system."
 
-	SystemPackage isNil ifTrue: [
-		SystemPackage := self newSystemPackage.
-		SystemPackage updateTimestamp].
+	SystemPackage isNil ifTrue: [SystemPackage := self newSystemPackage].
 	^SystemPackage!
 
 systemPackageName

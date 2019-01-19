@@ -8,7 +8,7 @@ AspectInspector subclass: #AbstractPublishedAspectInspector
 AbstractPublishedAspectInspector guid: (GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
 AbstractPublishedAspectInspector isAbstract: true!
 AbstractPublishedAspectInspector comment: ''!
-!AbstractPublishedAspectInspector categoriesForClass!Development! !
+!AbstractPublishedAspectInspector categoriesForClass!MVP-Presenters! !
 !AbstractPublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 
@@ -432,7 +432,7 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
 !AbstractPublishedAspectInspector class categoriesFor: #resource_Vertical_view!public!resources-views! !
 !AbstractPublishedAspectInspector class categoriesFor: #shellOn:!instance creation!public! !
 

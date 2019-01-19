@@ -7,7 +7,7 @@ ListPresenter subclass: #ResourceToolboxPresenter
 	classInstanceVariableNames: ''!
 ResourceToolboxPresenter guid: (GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
 ResourceToolboxPresenter comment: ''!
-!ResourceToolboxPresenter categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!ResourceToolboxPresenter categoriesForClass!MVP-Resources-IDE Tools! !
 !ResourceToolboxPresenter methodsFor!
 
 add: aResourceIdentifier toCategory: aString 

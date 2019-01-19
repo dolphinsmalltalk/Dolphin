@@ -194,11 +194,6 @@ openBlock: aDyadicValuable
 
 	openBlock := aDyadicValuable!
 
-openItem: item
-	"Private - Open the specified item in the context of the receiver."
-
-	^item openIn: self!
-
 queryCommand: query
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>, query."
@@ -257,7 +252,6 @@ viewModel
 !FolderPresenter categoriesFor: #onTreeChanged:!event handling!private! !
 !FolderPresenter categoriesFor: #openBlock!accessing!public! !
 !FolderPresenter categoriesFor: #openBlock:!accessing!public! !
-!FolderPresenter categoriesFor: #openItem:!accessing!private! !
 !FolderPresenter categoriesFor: #queryCommand:!commands!private! !
 !FolderPresenter categoriesFor: #up!commands!public! !
 !FolderPresenter categoriesFor: #viewModel!accessing!private! !

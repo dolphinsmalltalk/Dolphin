@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #TIME_ZONE_INFORMATION
 	instanceVariableNames: 'zoneId'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bias _OffsetOf_daylightBias _OffsetOf_daylightDate _OffsetOf_daylightName _OffsetOf_standardBias _OffsetOf_standardDate _OffsetOf_standardName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TIME_ZONE_INFORMATION guid: (GUID fromString: '{ceb846ce-f4db-48fe-9fec-02e637cbc4b4}')!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_bias' value: 16r0!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightBias' value: 16rA8!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightDate' value: 16r98!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightName' value: 16r58!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardBias' value: 16r54!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardDate' value: 16r44!
+TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardName' value: 16r4!
 TIME_ZONE_INFORMATION comment: '<TIME_ZONE_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.TIME_ZONE_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +38,7 @@ struct tagTIME_ZONE_INFORMATION {
 bias
 	"Answer the <Integer> value of the receiver's 'bias' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_bias!
 
 currentBias
 	"Answer the <Integer> bias current for the time zone when the information was queried from Windows. This accounts for daylight saving, etc."
@@ -43,17 +50,17 @@ currentBias
 daylightBias
 	"Answer the <Integer> value of the receiver's 'daylightBias' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #daylightBias)!
+	^bytes sdwordAtOffset: _OffsetOf_daylightBias!
 
 daylightDate
 	"Answer the <SYSTEMTIME> value of the receiver's 'daylightDate' field."
 
-	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #daylightDate)!
+	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_daylightDate!
 
 daylightName
 	"Answer the <Utf16String> value of the receiver's 'daylightName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #daylightName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_daylightName!
 
 printableFields
 	| printable |
@@ -64,17 +71,17 @@ printableFields
 standardBias
 	"Answer the <Integer> value of the receiver's 'standardBias' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #standardBias)!
+	^bytes sdwordAtOffset: _OffsetOf_standardBias!
 
 standardDate
 	"Answer the <SYSTEMTIME> value of the receiver's 'standardDate' field."
 
-	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #standardDate)!
+	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_standardDate!
 
 standardName
 	"Answer the <Utf16String> value of the receiver's 'standardName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #standardName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_standardName!
 
 zoneId
 	"Answer the TIME_ZONE_ID_XXX value that was current when the information was retrieved."
@@ -84,7 +91,7 @@ zoneId
 zoneId: anInteger
 	zoneId := anInteger! !
 !TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #currentBias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #currentBias!accessing!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
@@ -122,6 +129,10 @@ defineFields
 		defineField: #daylightName type: (StringField type: Utf16String length: 32) beReadOnly offset: 88;
 		defineField: #daylightDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 152;
 		defineField: #daylightBias type: SDWORDField new beReadOnly offset: 168.
-	self byteSize: 172! !
+	self byteSize: 172!
+
+getFieldNames
+	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
 !TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!TIME_ZONE_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

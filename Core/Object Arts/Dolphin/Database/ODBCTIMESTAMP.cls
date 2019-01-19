@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_month _OffsetOf_second _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ODBCTIMESTAMP guid: (GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_day' value: 16r4!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_fraction' value: 16rC!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_hour' value: 16r6!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_minute' value: 16r8!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_month' value: 16r2!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_second' value: 16rA!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_year' value: 16r0!
 ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!
@@ -28,34 +35,34 @@ asTimeStamp
 !
 
 day
-	"Answer the receiver's day field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: _OffsetOf_day!
 
-day: anObject
-	"Set the receiver's day field to the value of anObject."
+day: anInteger
+	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject!
+	bytes wordAtOffset: _OffsetOf_day put: anInteger!
 
 fraction
-	"Answer the receiver's fraction field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fraction' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_fraction!
 
-fraction: anObject
-	"Set the receiver's fraction field to the value of anObject."
+fraction: anInteger
+	"Set the receiver's 'fraction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_fraction put: anInteger!
 
 hour
-	"Answer the receiver's hour field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^(bytes wordAtOffset: 6)!
+	^bytes wordAtOffset: _OffsetOf_hour!
 
-hour: anObject
-	"Set the receiver's hour field to the value of anObject."
+hour: anInteger
+	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 6 put: anObject!
+	bytes wordAtOffset: _OffsetOf_hour put: anInteger!
 
 milliseconds
 	"Answer the number of whole milliseconds in the fraction part of
@@ -64,44 +71,44 @@ milliseconds
 	^self fraction // 1000000!
 
 minute
-	"Answer the receiver's minute field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^(bytes wordAtOffset: 8)!
+	^bytes wordAtOffset: _OffsetOf_minute!
 
-minute: anObject
-	"Set the receiver's minute field to the value of anObject."
+minute: anInteger
+	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 8 put: anObject!
+	bytes wordAtOffset: _OffsetOf_minute put: anInteger!
 
 month
-	"Answer the receiver's month field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^(bytes wordAtOffset: 2)!
+	^bytes wordAtOffset: _OffsetOf_month!
 
-month: anObject
-	"Set the receiver's month field to the value of anObject."
+month: anInteger
+	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject!
+	bytes wordAtOffset: _OffsetOf_month put: anInteger!
 
 second
-	"Answer the receiver's second field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^(bytes wordAtOffset: 10)!
+	^bytes wordAtOffset: _OffsetOf_second!
 
-second: anObject
-	"Set the receiver's second field to the value of anObject."
+second: anInteger
+	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 10 put: anObject!
+	bytes wordAtOffset: _OffsetOf_second put: anInteger!
 
 year
-	"Answer the receiver's year field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^(bytes swordAtOffset: 0)!
+	^bytes swordAtOffset: _OffsetOf_year!
 
-year: anObject
-	"Set the receiver's year field to the value of anObject."
+year: anInteger
+	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject! !
+	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
 !ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
 !ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
@@ -161,7 +168,11 @@ fromTimeStamp: aTimeStamp
 		second: time seconds;
 		fraction: (time asMilliseconds \\ 1000) * 1000000;
 		yourself
-! !
+!
+
+getFieldNames
+	^#(#year #month #day #hour #minute #second #fraction)! !
 !ODBCTIMESTAMP class categoriesFor: #defineFields!initializing!public! !
 !ODBCTIMESTAMP class categoriesFor: #fromTimeStamp:!instance creation!public! !
+!ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

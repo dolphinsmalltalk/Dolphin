@@ -2,10 +2,11 @@
 
 AbstractLOGFONT subclass: #LOGFONT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGFONT guid: (GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
+LOGFONT addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
 LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
 
 LOGFONT has been replaced by LOGFONTW, but is retained due to references from pre-existing view resources (which contain Font instances that reference LOGFONT instances). It will be deprecated in a future release.'!
@@ -32,21 +33,21 @@ getData: hFont
 		lpvObject: self!
 
 lfFaceName
-	"Answer the receiver's lfFaceName field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'lfFaceName' field."
 
-	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #lfFaceName)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_lfFaceName!
 
-lfFaceName: anObject 
-	"Set the receiver's lfFaceName field to the value of anObject."
+lfFaceName: anAnsiString
+	"Set the receiver's 'lfFaceName' field to the value of the argument, anAnsiString"
 
 	| size |
-	size := anObject byteSize - 1 min: 31.
-	anObject 
+	size := anAnsiString byteSize - 1 min: 31.
+	anAnsiString
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lfFaceName) + 1)
-		to: ##(self offsetOf: #lfFaceName) + size
+		from: ##(_OffsetOf_lfFaceName + 1)
+		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
-	bytes byteAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
+	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
 !LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !LOGFONT categoriesFor: #faceName!accessing!public! !
 !LOGFONT categoriesFor: #faceName:!accessing!public! !

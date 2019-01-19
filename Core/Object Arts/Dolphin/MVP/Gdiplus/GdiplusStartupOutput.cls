@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #GdiplusStartupOutput
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_NotificationHook _OffsetOf_NotificationUnhook'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusStartupOutput guid: (GUID fromString: '{40bb7e65-cd3b-49aa-b850-f404c6d944fc}')!
+GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationHook' value: 16r0!
+GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationUnhook' value: 16r4!
 GdiplusStartupOutput comment: '<GdiplusStartupOutput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupOutput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,24 +25,24 @@ struct tagGdiplusStartupOutput {
 !GdiplusStartupOutput methodsFor!
 
 NotificationHook
-	"Answer the receiver's NotificationHook field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'NotificationHook' field."
 
-	^(bytes dwordAtOffset: 0) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_NotificationHook) asExternalAddress!
 
-NotificationHook: anObject
-	"Set the receiver's NotificationHook field to the value of anObject."
+NotificationHook: anExternalAddress
+	"Set the receiver's 'NotificationHook' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_NotificationHook put: anExternalAddress!
 
 NotificationUnhook
-	"Answer the receiver's NotificationUnhook field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'NotificationUnhook' field."
 
-	^(bytes dwordAtOffset: 4) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook) asExternalAddress!
 
-NotificationUnhook: anObject
-	"Set the receiver's NotificationUnhook field to the value of anObject."
+NotificationUnhook: anExternalAddress
+	"Set the receiver's 'NotificationUnhook' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 4 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook put: anExternalAddress! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook:!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationUnhook!**compiled accessors**!public! !
@@ -62,6 +64,10 @@ defineFields
 	self
 		defineField: #NotificationHook type: LPVOIDField new offset: 0;
 		defineField: #NotificationUnhook type: LPVOIDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#NotificationHook #NotificationUnhook)! !
 !GdiplusStartupOutput class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GdiplusStartupOutput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

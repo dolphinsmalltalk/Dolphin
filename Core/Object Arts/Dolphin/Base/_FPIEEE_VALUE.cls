@@ -2,18 +2,21 @@
 
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_filler _OffsetOf_flags _OffsetOf_value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 _FPIEEE_VALUE guid: (GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
+_FPIEEE_VALUE addClassConstant: '_OffsetOf_filler' value: 16r14!
+_FPIEEE_VALUE addClassConstant: '_OffsetOf_flags' value: 16r10!
+_FPIEEE_VALUE addClassConstant: '_OffsetOf_value' value: 16r0!
 _FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
 !_FPIEEE_VALUE categoriesForClass!Unclassified! !
 !_FPIEEE_VALUE methodsFor!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 format
 	"Answer an <integer> which identifies the type of value stored in the receiver."
@@ -24,24 +27,10 @@ formatName
 	"Answer the symbolic name of the operation being attemped when the exception
 	occurred. See fpieee.h in the MS Win32 SDK for further information."
 
-	^self class formatCodes at: self valueType + 1 ifAbsent: [#Unknown]!
+	^self class formatCodes at: self format + 1 ifAbsent: [#Unknown]!
 
 isValid
 	^(self flags allMask: 1)!
-
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifTrue: 
-			[aStream nextPutAll: 'NULL'.
-			^self].
-	self isValid
-		ifTrue: 
-			[aStream
-				display: #format;
-				nextPut: $=;
-				print: self formatName
-			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
-		ifFalse: [aStream nextPutAll: '<invalid>']!
 
 value
 	"Answer the <Number> value stored in the receiver, of nil if the receiver is not a valid value
@@ -69,7 +58,6 @@ value
 !_FPIEEE_VALUE categoriesFor: #format!accessing!public! !
 !_FPIEEE_VALUE categoriesFor: #formatName!accessing!public! !
 !_FPIEEE_VALUE categoriesFor: #isValid!public!testing! !
-!_FPIEEE_VALUE categoriesFor: #printFieldsOn:limit:!printing!private! !
 !_FPIEEE_VALUE categoriesFor: #value!accessing!public! !
 
 !_FPIEEE_VALUE class methodsFor!
@@ -86,7 +74,11 @@ defineFields
 		defineField: #filler type: DWORDField filler!
 
 formatCodes
-	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)! !
+	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)!
+
+getFieldNames
+	^#(#flags)! !
 !_FPIEEE_VALUE class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
+!_FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

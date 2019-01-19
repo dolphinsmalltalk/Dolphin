@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hIcon _OffsetOf_hWnd _OffsetOf_szTip _OffsetOf_uCallbackMessage _OffsetOf_uFlags _OffsetOf_uID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NOTIFYICONDATAW guid: (GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_hIcon' value: 16r14!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_hWnd' value: 16r4!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_szTip' value: 16r18!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_uCallbackMessage' value: 16r10!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_uFlags' value: 16rC!
+NOTIFYICONDATAW addClassConstant: '_OffsetOf_uID' value: 16r8!
 NOTIFYICONDATAW comment: ''!
 !NOTIFYICONDATAW categoriesForClass!No category! !
 !NOTIFYICONDATAW methodsFor!
@@ -13,17 +20,17 @@ NOTIFYICONDATAW comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 hIcon: anExternalHandle
 	"Set the receiver's 'hIcon' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hIcon) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hIcon put: anExternalHandle!
 
 hWnd: anExternalHandle
 	"Set the receiver's 'hWnd' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hWnd) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hWnd put: anExternalHandle!
 
 icon: anIconOrHandle
 	"Set the receiver's hIcon field."
@@ -41,7 +48,7 @@ message: anIntegerMessageNumber
 szTip
 	"Answer the <Utf16String> value of the receiver's 'szTip' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szTip)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szTip!
 
 szTip: anUtf16String
 	"Set the receiver's 'szTip' field to the value of the argument, anUtf16String"
@@ -50,10 +57,10 @@ szTip: anUtf16String
 	size := anUtf16String byteSize - 2 min: ##(63 * 2).
 	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szTip) + 1)
-		to: ##(self offsetOf: #szTip) + size
+		from: ##(_OffsetOf_szTip + 1)
+		to: _OffsetOf_szTip + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #szTip) + size put: 0!
+	bytes wordAtOffset: _OffsetOf_szTip + size put: 0!
 
 tipText: aString
 	"Set the receiver's szTip (tip text) field."
@@ -64,22 +71,22 @@ tipText: aString
 uCallbackMessage: anInteger
 	"Set the receiver's 'uCallbackMessage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #uCallbackMessage) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_uCallbackMessage put: anInteger!
 
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uFlags)!
+	^bytes dwordAtOffset: _OffsetOf_uFlags!
 
 uFlags: anInteger
 	"Set the receiver's 'uFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #uFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_uFlags put: anInteger!
 
 uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #uID) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
 !NOTIFYICONDATAW categoriesFor: #dwSize:!**compiled accessors**!public! !
 !NOTIFYICONDATAW categoriesFor: #hIcon:!**compiled accessors**!public! !
 !NOTIFYICONDATAW categoriesFor: #hWnd:!**compiled accessors**!public! !
@@ -117,6 +124,10 @@ defineFields
 		defineField: #uFlags type: DWORDField new;
 		defineField: #uCallbackMessage type: DWORDField writeOnly;
 		defineField: #hIcon type: HANDLEField writeOnly;
-		defineField: #szTip type: (StringField type: Utf16String length: 64)! !
+		defineField: #szTip type: (StringField type: Utf16String length: 64)!
+
+getFieldNames
+	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
 !NOTIFYICONDATAW class categoriesFor: #defineFields!initializing!public! !
+!NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwHoverTime _OffsetOf_dwSize _OffsetOf_hwndTrack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TRACKMOUSEEVENT guid: (GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwHoverTime' value: 16rC!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_hwndTrack' value: 16r8!
 TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -25,39 +29,39 @@ struct tagTRACKMOUSEEVENT {
 !TRACKMOUSEEVENT methodsFor!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwHoverTime
-	"Answer the receiver's dwHoverTime field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwHoverTime' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwHoverTime)!
+	^bytes dwordAtOffset: _OffsetOf_dwHoverTime!
 
-dwHoverTime: anObject 
-	"Set the receiver's dwHoverTime field to the value of anObject."
+dwHoverTime: anInteger
+	"Set the receiver's 'dwHoverTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwHoverTime) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwHoverTime put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwndTrack
-	"Answer the receiver's hwndTrack field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hwndTrack' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hwndTrack)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hwndTrack) asExternalHandle!
 
-hwndTrack: anObject 
-	"Set the receiver's hwndTrack field to the value of anObject."
+hwndTrack: anExternalHandle
+	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndTrack) put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
 !TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
 !TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
 !TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !
@@ -85,6 +89,10 @@ defineFields
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #dwFlags type: DWORDField new;
 		defineField: #hwndTrack type: HANDLEField new;
-		defineField: #dwHoverTime type: DWORDField new! !
+		defineField: #dwHoverTime type: DWORDField new!
+
+getFieldNames
+	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
 !TRACKMOUSEEVENT class categoriesFor: #defineFields!initializing!public! !
+!TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

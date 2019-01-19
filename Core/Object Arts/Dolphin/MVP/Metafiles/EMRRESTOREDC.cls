@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRRESTOREDC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iRelative'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRRESTOREDC guid: (GUID fromString: '{77f6595f-287e-4df2-be4c-dfd546be3718}')!
+EMRRESTOREDC addClassConstant: '_OffsetOf_iRelative' value: 16r8!
 EMRRESTOREDC comment: '<EMRRESTOREDC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESTOREDC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRRESTOREDC {
 !EMRRESTOREDC methodsFor!
 
 iRelative
-	"Answer the receiver's iRelative field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iRelative' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iRelative)!
+	^bytes sdwordAtOffset: _OffsetOf_iRelative!
 
-iRelative: anObject 
-	"Set the receiver's iRelative field to the value of anObject."
+iRelative: anInteger
+	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iRelative) put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
 !EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
 !EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #iRelative)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESTOREDC! !
 !EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
 

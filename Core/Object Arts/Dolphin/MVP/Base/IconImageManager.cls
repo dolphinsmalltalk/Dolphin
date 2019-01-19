@@ -59,7 +59,7 @@ onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any
 	lazily initialized variables held by the receiver."
 
-	Current := nil!
+	Current ifNotNil: [Current purge]!
 
 reset
 	"Reset the receiver. Kill off the current singleton instance"
@@ -77,7 +77,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	Current := nil.! !
+	Current := nil! !
 !IconImageManager class categoriesFor: #current!instance creation!public! !
 !IconImageManager class categoriesFor: #new!instance creation!private! !
 !IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !

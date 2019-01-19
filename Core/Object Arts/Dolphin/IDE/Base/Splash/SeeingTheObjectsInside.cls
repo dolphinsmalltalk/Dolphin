@@ -445,7 +445,7 @@ canDisplay
 		and: [SystemMetrics current supportsAlphaBlending]!
 
 splashPlayTheGame
-	^splashPlayTheGame ifNil: [splashPlayTheGame := true]!
+	^splashPlayTheGame ifNil: [splashPlayTheGame := false]!
 
 splashPlayTheGame: aBoolean 
 	splashPlayTheGame := aBoolean! !

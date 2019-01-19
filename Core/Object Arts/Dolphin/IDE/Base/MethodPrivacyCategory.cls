@@ -17,7 +17,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!MethodPrivacyCategory categoriesForClass!Development! !
+!MethodPrivacyCategory categoriesForClass!System-Support! !
 !MethodPrivacyCategory methodsFor!
 
 acceptsAdditions
@@ -77,7 +77,7 @@ initialize
 
 	| hermits cave |
 	cave := self private.
-	hermits := cave contents.
+	hermits := cave methods.
 	self removeCategory: 'private'; removeCategory: 'public'.
 	Private:= (self newNamed: 'private') privacy: true; yourself.
 	Public := (self newNamed: 'public') privacy: false; yourself.

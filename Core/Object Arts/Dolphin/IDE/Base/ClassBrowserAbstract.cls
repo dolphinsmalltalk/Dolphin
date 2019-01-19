@@ -37,7 +37,7 @@ Class Instance Variables:
 	DefaultShowInheritedMethods	<boolean>
 	DefaultFilterObjectMethods		<boolean>
 '!
-!ClassBrowserAbstract categoriesForClass!Development!MVP-Presenters! !
+!ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
 !ClassBrowserAbstract methodsFor!
 
 accept
@@ -126,10 +126,9 @@ addMethod: method toCategory: target
 addMethodCategory
 	"Private - Add a new method category to the receiver's category pane."
 
-	| actualClass newCategory catman |
+	| actualClass newCategory |
 	actualClass := self actualClass.
-	catman := actualClass methodCategoryClass.
-	newCategory := (CategoryPrompter choices: catman allMethodCategories
+	newCategory := (CategoryPrompter choices: MethodCategory allMethodCategories
 				caption: 'Add Method Category ...') showModal.
 	newCategory notNil ifFalse: [^self].
 	categoriesPresenter model addCategory: newCategory.
@@ -2034,16 +2033,14 @@ removeMethodsInCategory
 	drastic the user will be prompted."
 
 	| classEnvironment categoryEnvironment |
-	classEnvironment := self searchEnvironment forClasses: (Array with: self actualClass).
+	classEnvironment := self searchEnvironment forClasses: {self actualClass}.
 	categoryEnvironment := classEnvironment forMethodCategories: self categories.
-	categoryEnvironment 
-		label: ('methods of <1d> in the ''<2d>'' category and its subcategories' 
+	categoryEnvironment label: ('methods of <1d> in the ''<2d>'' category and its subcategories'
 				expandMacrosWith: classEnvironment
 				with: self category).
-	[self systemModel removeMethodsIn: categoryEnvironment within: self searchEnvironment] 
+	[self systemModel removeMethodsIn: categoryEnvironment within: self searchEnvironment]
 		on: OperationAborted
-		do: [:ex | self statusModel value: ex]
-	!
+		do: [:ex | self statusModel value: ex]!
 
 removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.
@@ -2087,34 +2084,34 @@ renameItCommand
 renameMethodCategory
 	"Private - Prompter for a new name for the current category, and rename it."
 
-	| originalCategory newName |
+	| originalCategory newName actualClass |
 	originalCategory := self category.
+	actualClass := self actualClass.
 	newName := (CategoryPrompter createOn: originalCategory asValue)
-				list: self actualClass methodCategoryClass allMethodCategories;
-				caption: ('Rename  ''<1d>'' within <2p>' expandMacrosWith: originalCategory with: self actualClass);
+				list: MethodCategory allMethodCategories;
+				caption: ('Rename  ''<1d>'' within <2p>' expandMacrosWith: originalCategory with: actualClass);
 				allowIntermediates: originalCategory isIntermediate;
 				showModal.
 	self renameMethodCategory: originalCategory to: newName!
 
-renameMethodCategory: aMethodCategory to: aString 
+renameMethodCategory: aMethodCategory to: aString
 	"Private - Rename the specified <MethodCategory>. This is complicated by the pseudo category hierarchy which
 	is built up - if a branch category is renamed, then we need to rename all its sub-categories."
 
-	| rootSubNames originalSubNames catClass actualClass |
+	| rootSubNames originalSubNames actualClass |
 	(aString notNil and: [aString ~= aMethodCategory]) ifFalse: [^self].
 	originalSubNames := aMethodCategory subNames.
 	actualClass := self actualClass.
-	catClass := actualClass methodCategoryClass.
 	rootSubNames := aString subNames.
 	self categories do: 
-			[:category | 
+			[:category |
 			| methods subNames newSubNames name newCategory |
 			subNames := category subNames.
 			newSubNames := rootSubNames copy , (subNames copyFrom: originalSubNames size + 1).
 			name := String new.
 			newSubNames do: [:subName | name := name , subName]
-				separatedBy: [name := name copyWith: catClass separator].
-			newCategory := catClass name: name.
+				separatedBy: [name := name copyWith: MethodCategory separator].
+			newCategory := MethodCategory name: name.
 
 			"Ensure it is in the category tree"
 			categoriesPresenter model addCategory: newCategory.
@@ -2946,7 +2943,7 @@ wordWrapSource: aBoolean
 !ClassBrowserAbstract class categoriesFor: #looseMethodColor:!accessing!options!public! !
 !ClassBrowserAbstract class categoriesFor: #plugins!accessing!public!wine fix! !
 !ClassBrowserAbstract class categoriesFor: #plugins:!accessing!public! !
-!ClassBrowserAbstract class categoriesFor: #publishedAspects!development!public! !
+!ClassBrowserAbstract class categoriesFor: #publishedAspects!public! !
 !ClassBrowserAbstract class categoriesFor: #removePlugin:!initializing!private! !
 !ClassBrowserAbstract class categoriesFor: #wordWrapDefinition!accessing!options!public! !
 !ClassBrowserAbstract class categoriesFor: #wordWrapDefinition:!accessing!options!public! !

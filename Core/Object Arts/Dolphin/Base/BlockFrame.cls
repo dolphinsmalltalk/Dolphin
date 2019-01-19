@@ -31,16 +31,6 @@ displayOn: aStream
 isBlockFrame
 	^true!
 
-mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod 
-	| map debugMap i ip |
-	map := aCompiledMethod debugInfo textMap.
-	debugMap := debugCompiledMethod debugInfo textMap.
-	self assert: [map size == debugMap size].
-	ip := self block initialIP.
-	i := self findIP: ip inTextMap: map.
-	self assert: [(map at: i) key = ip].
-	^(debugMap at: i) key!
-
 method: aCompiledMethod
 	"Private - Set the method of the stack frame."
 
@@ -64,6 +54,5 @@ method: aCompiledMethod
 !BlockFrame categoriesFor: #block!accessing!private! !
 !BlockFrame categoriesFor: #displayOn:!printing!public! !
 !BlockFrame categoriesFor: #isBlockFrame!private!testing! !
-!BlockFrame categoriesFor: #mapInitialIpFrom:to:!private! !
 !BlockFrame categoriesFor: #method:!accessing!private! !
 

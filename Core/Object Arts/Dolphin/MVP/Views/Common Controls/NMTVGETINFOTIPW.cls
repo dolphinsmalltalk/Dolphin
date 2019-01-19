@@ -2,10 +2,14 @@
 
 NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_hItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMTVGETINFOTIPW guid: (GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
+NMTVGETINFOTIPW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
+NMTVGETINFOTIPW addClassConstant: '_OffsetOf_hItem' value: 16r14!
+NMTVGETINFOTIPW addClassConstant: '_OffsetOf_lParam' value: 16r18!
+NMTVGETINFOTIPW addClassConstant: '_OffsetOf_pszText' value: 16rC!
 NMTVGETINFOTIPW comment: ''!
 !NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
 !NMTVGETINFOTIPW methodsFor!
@@ -13,12 +17,12 @@ NMTVGETINFOTIPW comment: ''!
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax)!
+	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
 
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #hItem)!
+	^bytes uintPtrAtOffset: _OffsetOf_hItem!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."
@@ -28,12 +32,12 @@ itemHandle
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress! !
+	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
 !NMTVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !NMTVGETINFOTIPW categoriesFor: #hItem!**compiled accessors**!public! !
 !NMTVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
@@ -52,6 +56,10 @@ defineFields
 		defineField: #pszText type: LPVOIDField readOnly;
 		defineField: #cchTextMax type: SDWORDField readOnly;
 		defineField: #hItem type: UINT_PTRField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly! !
+		defineField: #lParam type: UINT_PTRField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
 !NMTVGETINFOTIPW class categoriesFor: #defineFields!initializing!public! !
+!NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

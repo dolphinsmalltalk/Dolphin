@@ -2,14 +2,16 @@
 
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_highPart _OffsetOf_lowPart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QWORD guid: (GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
+QWORD addClassConstant: '_OffsetOf_highPart' value: 16r4!
+QWORD addClassConstant: '_OffsetOf_lowPart' value: 16r0!
 QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format 2''s complement).'!
-!QWORD categoriesForClass!External-Data-Structured-Win32! !
+!QWORD categoriesForClass!External-Data-Unstructured! !
 !QWORD methodsFor!
 
 asSignedInteger
@@ -29,32 +31,34 @@ displayOn: aStream
 	aStream nextPutAll: self asString!
 
 highPart
-	"Answer the receiver's highPart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'highPart' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #highPart)!
+	^bytes dwordAtOffset: _OffsetOf_highPart!
 
-highPart: anObject 
-	"Set the receiver's highPart field to the value of anObject."
+highPart: anInteger
+	"Set the receiver's 'highPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #highPart) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_highPart put: anInteger!
 
 lowPart
-	"Answer the receiver's lowPart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lowPart' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lowPart!
 
-lowPart: anObject 
-	"Set the receiver's lowPart field to the value of anObject."
+lowPart: anInteger
+	"Set the receiver's 'lowPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_lowPart put: anInteger!
 
-printOn: aStream
-	"Append a debug text representation of the receiver to aStream."
+value
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	aStream
-		basicPrint: self;
-		nextPut: $(; display: self; nextPut: $)
-! !
+	^bytes qwordAtOffset: _OffsetOf_value!
+
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
+
+	bytes qwordAtOffset: _OffsetOf_value put: anInteger! !
 !QWORD categoriesFor: #asSignedInteger!converting!public! !
 !QWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !QWORD categoriesFor: #displayOn:!displaying!public! !
@@ -62,7 +66,8 @@ printOn: aStream
 !QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #printOn:!printing!public! !
+!QWORD categoriesFor: #value!**compiled accessors**!public! !
+!QWORD categoriesFor: #value:!**compiled accessors**!public! !
 
 !QWORD class methodsFor!
 
@@ -77,8 +82,10 @@ defineFields
 		QWORD compileDefinition
 	"
 
-	super defineFields.
 	self
+		defineField: #value
+			type: QWORDField new beOverride
+			offset: 0;
 		defineField: #lowPart
 			type: DWORDField new
 			offset: 0;
@@ -93,14 +100,7 @@ defineTemplate
 	"
 
 	super defineTemplate.
-	self assert: [self alignment = 8]!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^QWORDField! !
+	self assert: [self alignment = 8]! !
 !QWORD class categoriesFor: #defineFields!initializing!public! !
 !QWORD class categoriesFor: #defineTemplate!development!initializing!public! !
-!QWORD class categoriesFor: #fieldType!constants!development!private! !
 

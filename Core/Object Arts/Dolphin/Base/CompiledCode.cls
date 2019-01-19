@@ -161,7 +161,7 @@ byteCodes: anObject
 	byteCodes := codes!
 
 byteCodeSegments
-	^self byteCodeDispatcher byteCodeSegments!
+	^self byteCodeDispatcher segments!
 
 clear
 	"Private - Clear down temporary information cached in the receiver.
@@ -543,6 +543,18 @@ stackTempCount: anInteger
 	header := (header bitAnd: ##((255 << 7) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 255) bitShift: 7)!
 
+storeCategories
+	"Private - Record the categories of the receiver."
+
+	"Ignored unless dev system is loaded"
+!
+
+storeSourceString: aString
+	"Private - Record aString as the source for the receiver."
+
+	self sourceDescriptor: aString
+!
+
 superMessages
 	"Answer a <Set> of all the message selectors super-sent by this method."
 
@@ -596,13 +608,13 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #accessesInstVar:!development!public!testing! !
 !CompiledCode categoriesFor: #accessesInstVar:at:!development!public!testing! !
 !CompiledCode categoriesFor: #allLiteralsDo:!enumerating!private! !
-!CompiledCode categoriesFor: #allSymbolLiterals!development!enumerating!private! !
+!CompiledCode categoriesFor: #allSymbolLiterals!enumerating!private! !
 !CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
 !CompiledCode categoriesFor: #argumentCount!method header!public! !
 !CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
 !CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
-!CompiledCode categoriesFor: #byteCodeDispatcher!development!private!testing! !
-!CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!development!private! !
+!CompiledCode categoriesFor: #byteCodeDispatcher!private!testing! !
+!CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!private! !
 !CompiledCode categoriesFor: #byteCodes!accessing!private! !
 !CompiledCode categoriesFor: #byteCodes:!accessing!private! !
 !CompiledCode categoriesFor: #byteCodeSegments!accessing!private! !
@@ -659,6 +671,8 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #specialMessages!development!enumerating!private! !
 !CompiledCode categoriesFor: #stackTempCount!method header!private! !
 !CompiledCode categoriesFor: #stackTempCount:!accessing!development!method header!private! !
+!CompiledCode categoriesFor: #storeCategories!categories!private!source filing-methods! !
+!CompiledCode categoriesFor: #storeSourceString:!private!source filing-methods! !
 !CompiledCode categoriesFor: #superMessages!accessing!development!public! !
 !CompiledCode categoriesFor: #tempCount!method header!private! !
 !CompiledCode categoriesFor: #tempsMap!accessing!development!private! !

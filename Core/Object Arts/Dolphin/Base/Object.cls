@@ -607,25 +607,22 @@ errorAt: index
 	"An at: operation on the receiver failed. Determine the cause of the error, and 
 	raise an appropriate error."
 
-	^self isIndexable 
-		ifTrue: [ 
-			index isInteger
-				ifTrue: [self errorSubscriptBounds: index]
-				ifFalse: [Error nonIntegerIndex: index]]
-		ifFalse: [Error notIndexable: self]
-!
+	^self class isVariable
+		ifTrue: 
+			[index isInteger ifTrue: [self errorSubscriptBounds: index] ifFalse: [Error nonIntegerIndex: index]]
+		ifFalse: [Error notIndexable: self]!
 
 errorAt: index put: value
 	"An at:put: operation on the receiver failed. Determine the cause of the error, and 
 	raise an appropriate error."
 
-	^self isIndexable
+	^self class isVariable
 		ifTrue: 
-			[index isInteger 
+			[index isInteger
 				ifTrue: 
-					[(index between: 1 and: self size) 
+					[(index between: 1 and: self size)
 						ifTrue: 
-							[self isImmutable 
+							[self isImmutable
 								ifTrue: [Processor constWriteSignal signalWith: self]
 								ifFalse: [self errorCantHold: value]]
 						ifFalse: [self errorSubscriptBounds: index]]
@@ -994,8 +991,9 @@ perform: selector
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {}!
 
 perform: selector with: argument1
@@ -1008,8 +1006,9 @@ perform: selector with: argument1
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1}!
 
 perform: selector with: argument1 with: argument2
@@ -1022,8 +1021,9 @@ perform: selector with: argument1 with: argument2
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2}!
 
 perform: selector with: argument1 with: argument2 with: argument3
@@ -1036,8 +1036,9 @@ perform: selector with: argument1 with: argument2 with: argument3
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2. argument3}!
 
 perform: selector with: argument1 with: argument2 with: argument3 with: argument4
@@ -1050,8 +1051,9 @@ perform: selector with: argument1 with: argument2 with: argument3 with: argument
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2. argument3. argument4}!
 
 perform: selector withArguments: arguments
@@ -1063,8 +1065,12 @@ perform: selector withArguments: arguments
 		0 -	The number of arguments expected with the selector is not the number supplied.
 		1 -	arguments is not an <Array>."
 
-	<primitive: 84> 
-	^Error perform: selector failedFor: self withArgs: arguments!
+	<primitive: 84>
+	^Error
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
+		withArgs: arguments!
 
 perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor 
 	"Private - Send message with selector, aSymbol, to anObject,

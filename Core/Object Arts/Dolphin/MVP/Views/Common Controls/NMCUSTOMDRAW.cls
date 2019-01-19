@@ -2,13 +2,19 @@
 
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
-NMCUSTOMDRAW comment: 'NMCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwDrawStage' value: 16rC!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwItemSpec' value: 16r24!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_hdc' value: 16r10!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_lParam' value: 16r2C!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_rc' value: 16r14!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_uItemState' value: 16r28!
+NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
-NMCUSTOMDRAW structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the <ListView> and <TreeView> to request custom draw information for individual items (and optionally sub-items).
+`NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
 
 All the fields in this structure are read-only. Specialized sub-structures provide fields which can be written to in order to pass custom draw settings back to the control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.
 
@@ -20,14 +26,15 @@ applyFont
 	"Private - Apply the new font (if changed) to the custom draw DC and answer whether
 	a new font was indeed selected."
 
-	^font notNil and: [
-		(font basicHandle ~= self canvas font basicHandle) and: [
-			#todo "It's definitely not a good idea to delete old font here (the default font will
+	^(font notNil and: [font basicHandle ~= self canvas fontHandle])
+		ifTrue: 
+			[#todo.	"It's definitely not a good idea to delete old font here (the default font will
 			 probably get deleted, but we rely on the fact that finalization happens in
 			 the background so that the font we supply in place is not deleted until
-			 after the drawing cycle is complete. This seems dangerous.".
+			 after the drawing cycle is complete. This seems dangerous."
 			self canvas font: font.
-			true]]!
+			CDRF_NEWFONT]
+		ifFalse: [CDRF_DODEFAULT]!
 
 backcolor
 	"Answer the background <Color>."
@@ -53,32 +60,25 @@ canvas
 	^canvas!
 
 dwDrawStage
-	"Answer the receiver's dwDrawStage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDrawStage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwDrawStage)!
+	^bytes dwordAtOffset: _OffsetOf_dwDrawStage!
 
 dwItemSpec
-	"Answer the receiver's dwItemSpec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwItemSpec)!
+	^bytes dwordAtOffset: _OffsetOf_dwItemSpec!
 
 evaluateDrawBlock: customDrawBlock
 	"Private - Evaluate the <monadicValuable>, customDrawBlock, and answer the appropriate instruction
 	 for a common control to complete the draw operation (or skip it if total control is taken)."
 
-	^(customDrawBlock value: self) == true 
-		ifTrue: [CDRF_SKIPDEFAULT]
-		ifFalse: [
-			self applyFont
-				ifTrue: [CDRF_NEWFONT]
-				ifFalse: [CDRF_DODEFAULT]]
-!
+	^(customDrawBlock value: self) == true ifTrue: [CDRF_SKIPDEFAULT] ifFalse: [self applyFont]!
 
 font
 	"Answer the character font."
-	
-	font isNil ifTrue: [font := self canvas font].
-	^font!
+
+	^font ifNil: [font := self canvas font]!
 
 font: aFont
 	"Set the character font.
@@ -102,9 +102,9 @@ hasFocus
 	^self uItemState allMask: CDIS_FOCUS!
 
 hdc
-	"Answer the receiver's hdc field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hdc' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hdc)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hdc) asExternalHandle!
 
 isChecked
 	"Answer whether the item being draw is 'checked' (i.e. in a list with checkboxes it is ticked)."
@@ -164,19 +164,19 @@ itemHandle
 	^self dwItemSpec!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 rc
-	"Answer the receiver's rc field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rc' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rc)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rc!
 
 uItemState
-	"Answer the receiver's uItemState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uItemState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uItemState)!
+	^bytes dwordAtOffset: _OffsetOf_uItemState!
 
 view
 	"Answer the sub-instance of <IconListAbstract> for which this is a <customDrawContext>."
@@ -233,6 +233,10 @@ defineFields
 		defineField: #rc type: (StructureField type: RECT) beReadOnly;
 		defineField: #dwItemSpec type: DWORDField readOnly;
 		defineField: #uItemState type: DWORDField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly! !
+		defineField: #lParam type: UINT_PTRField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
 !NMCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -80,10 +80,6 @@ _dup2: anInteger handle2: anInteger2
 	<cdecl: sdword _dup2 sdword sdword>
 	^self invalidCall!
 
-_eof: handleInteger
-	<cdecl: sdword _eof sdword>
-	^self invalidCall!
-
 _errno
 	"Answer a pointer to the errno variable."
 
@@ -135,18 +131,6 @@ _open_osfhandle: osfhandle flags: flags
 	<cdecl: sdword _open_osfhandle handle sdword>
 	^self invalidCall!
 
-_rotl: anUnsignedlInteger shift: anInteger
-	"Answer anUnsignedInteger bit rotated left by anInteger bits."
-
-	<cdecl: dword _rotl dword sdword>
-	^self invalidCall!
-
-_rotr: anUnsignedlInteger shift: anInteger
-	"Answer anUnsignedInteger bit rotated right by anInteger bits."
-
-	<cdecl: dword _rotr dword sdword>
-	^self invalidCall!
-
 _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
 	^self invalidCall!
@@ -181,14 +165,6 @@ _stricmp: string1 string2: string2
 	equal to, or greater than string2."
 
 	<cdecl: sdword _stricmp lpstr lpstr>
-	^self invalidCall!
-
-_stricoll: string1 string2: string2
-	"Answer the result of a case insensitive string comparison between string1 and string2,
-	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
-	equal to, or greater than string2."
-
-	<cdecl: sdword _stricoll lpstr lpstr>
 	^self invalidCall!
 
 _strnicmp: string1 string2: string2 count: count 
@@ -226,10 +202,6 @@ atoi: aString
 		int atoi( const char *string );"
 
 	<cdecl: sdword atoi lpstr>
-	^self invalidCall!
-
-chmod: aFilenameString pmode: aModeInteger
-	<cdecl: sdword _chmod lpstr sdword>
 	^self invalidCall!
 
 close
@@ -335,14 +307,6 @@ iswpunct: aCharacter
 		int iswpunct( wint_t c )"
 
 	<cdecl: bool iswpunct char>
-	^self invalidCall
-!
-
-iswspace: aCharacter
-	"Answer whether the argument is a white space character.
-		int iswspace( wint_t c )"
-
-	<cdecl: bool iswspace char>
 	^self invalidCall
 !
 
@@ -469,7 +433,6 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #_control87:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_filelengthi64:!CRT functions-file handling!public! !
@@ -480,20 +443,16 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
-!CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_statusfp!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #fclose:!CRT functions-stream I/O!public! !
@@ -515,7 +474,6 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memcpy_s:destSize:src:count:!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !

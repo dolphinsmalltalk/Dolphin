@@ -24,7 +24,6 @@ package basicPackageVersion: '6.1'.
 package classNames
 	add: #ClassHierarchyDiagram;
 	add: #CommunityEditionSmalltalkSystem;
-	add: #DolphinSerialNumber;
 	add: #PoolDictionariesShell;
 	add: #ProtocolBrowserShell;
 	add: #SourceBrowser;
@@ -33,7 +32,6 @@ package classNames
 
 package methodNames
 	add: #ClassBrowserAbstract -> #browseMethodProtocol;
-	add: #DolphinProduct -> #serialNumberClass;
 	add: #SmalltalkSystem -> #inspectPoolDictionaries;
 	add: #SmalltalkSystem -> #inspectSystemOptions;
 	add: 'ITEMIDLIST class' -> #publishedAspectsOfInstances;
@@ -46,33 +44,30 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter';
-	add: '..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Installation Manager\Dolphin Products';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\DolphinSure\DolphinSure';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\Lagoon\Product Protection Base';
-	add: '..\..\ActiveX\Shell\Windows Shell';
-	add: '..\..\ActiveX\Shell\Windows Shell Namespace';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\ActiveX\Shell\Windows Shell'
+	'..\..\ActiveX\Shell\Windows Shell Namespace').
 
 package!
 
@@ -108,11 +103,6 @@ SmalltalkToolShell subclass: #UserPreferencesShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectedProductSerialNumber subclass: #DolphinSerialNumber
-	instanceVariableNames: ''
-	classVariableNames: 'CompromisedSerialNumbersTrusted UpgradeLevelsMap UpgradeLevelsNamesMap VariationMasksMap'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
@@ -129,14 +119,6 @@ browseMethodProtocol
 		actualClass: self actualClass! !
 !ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
 
-!DolphinProduct methodsFor!
-
-serialNumberClass
-	"Answer the class of <ProtectedProductSerialNumber> to use for the receiver"
-
-	^DolphinSerialNumber! !
-!DolphinProduct categoriesFor: #serialNumberClass!constants!public! !
-
 !ITEMIDLIST class methodsFor!
 
 publishedAspectsOfInstances
@@ -146,7 +128,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #getSize);
 		add: (Aspect boolean: #isSingle);
 		yourself! !
-!ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!development!must strip!public! !
+!ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
 
 !SmalltalkSystem methodsFor!
 

@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRRESIZEPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cEntries _OffsetOf_ihPal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRRESIZEPALETTE guid: (GUID fromString: '{7a0359ce-039f-4128-a1ed-09dc1fb5e2e5}')!
+EMRRESIZEPALETTE addClassConstant: '_OffsetOf_cEntries' value: 16rC!
+EMRRESIZEPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
 EMRRESIZEPALETTE comment: '<EMRRESIZEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESIZEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,24 +27,24 @@ struct tagEMRRESIZEPALETTE {
 !EMRRESIZEPALETTE methodsFor!
 
 cEntries
-	"Answer the receiver's cEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cEntries)!
+	^bytes dwordAtOffset: _OffsetOf_cEntries!
 
-cEntries: anObject 
-	"Set the receiver's cEntries field to the value of anObject."
+cEntries: anInteger
+	"Set the receiver's 'cEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cEntries) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cEntries put: anInteger!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
+	^bytes dwordAtOffset: _OffsetOf_ihPal!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
 !EMRRESIZEPALETTE categoriesFor: #cEntries!**compiled accessors**!public! !
 !EMRRESIZEPALETTE categoriesFor: #cEntries:!**compiled accessors**!public! !
 !EMRRESIZEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
@@ -73,10 +75,14 @@ defineFields
 			offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #ihPal #cEntries)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESIZEPALETTE! !
 !EMRRESIZEPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRRESIZEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRRESIZEPALETTE class categoriesFor: #iTypes!constants!public! !
 

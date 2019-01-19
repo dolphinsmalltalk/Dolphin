@@ -103,7 +103,7 @@ classNames
 
 classNamesFor: aCategoryName
 	#rbFix. "Dolphin class category system not compatible"
-	^((ClassCategory name: aCategoryName) contents select: [:class |
+	^((ClassCategory name: aCategoryName) classes select: [:class |
 			class notNil and: [(self includesClass: class)
 					or: [self includesClass: class class]]]) collect: [:e | e name]
 
@@ -335,7 +335,7 @@ selectorsDo: aMonadicValuable
 selectorsFor: aProtocol in: aClass
 	#rbFix. "Category system incompatible. aProtocol can be a <String> or <MethodCategory>"
 	"^(aClass organization listAtCategoryNamed: aProtocol)"
-	^((aClass methodCategoryClass name: aProtocol asString) methodsInBehavior: aClass)
+	^(aProtocol asMethodCategory methodsInBehavior: aClass)
 		select: [:each | self includesSelector: each selector in: aClass] thenCollect: [:each | each selector]!
 
 selectorsForClass: aClass

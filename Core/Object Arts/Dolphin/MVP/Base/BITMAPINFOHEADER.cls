@@ -2,10 +2,21 @@
 
 Win32Structure subclass: #BITMAPINFOHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_biBitCount _OffsetOf_biClrImportant _OffsetOf_biClrUsed _OffsetOf_biCompression _OffsetOf_biHeight _OffsetOf_biPlanes _OffsetOf_biSizeImage _OffsetOf_biWidth _OffsetOf_biXPelsPerMeter _OffsetOf_biYPelsPerMeter _OffsetOf_dwSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BITMAPINFOHEADER guid: (GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biBitCount' value: 16rE!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biClrImportant' value: 16r24!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biClrUsed' value: 16r20!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biCompression' value: 16r10!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biHeight' value: 16r8!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biPlanes' value: 16rC!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biSizeImage' value: 16r14!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biWidth' value: 16r4!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biXPelsPerMeter' value: 16r18!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_biYPelsPerMeter' value: 16r1C!
+BITMAPINFOHEADER addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFOHEADER structure is used for header information describing device-independent bitmaps.'!
@@ -13,114 +24,114 @@ The BITMAPINFOHEADER structure is used for header information describing device-
 !BITMAPINFOHEADER methodsFor!
 
 biBitCount
-	"Answer the receiver's biBitCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biBitCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #biBitCount)!
+	^bytes wordAtOffset: _OffsetOf_biBitCount!
 
-biBitCount: anObject 
-	"Set the receiver's biBitCount field to the value of anObject."
+biBitCount: anInteger
+	"Set the receiver's 'biBitCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #biBitCount) put: anObject!
+	bytes wordAtOffset: _OffsetOf_biBitCount put: anInteger!
 
 biClrImportant
-	"Answer the receiver's biClrImportant field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biClrImportant' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #biClrImportant)!
+	^bytes dwordAtOffset: _OffsetOf_biClrImportant!
 
-biClrImportant: anObject 
-	"Set the receiver's biClrImportant field to the value of anObject."
+biClrImportant: anInteger
+	"Set the receiver's 'biClrImportant' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #biClrImportant) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_biClrImportant put: anInteger!
 
 biClrUsed
-	"Answer the receiver's biClrUsed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biClrUsed' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #biClrUsed)!
+	^bytes dwordAtOffset: _OffsetOf_biClrUsed!
 
-biClrUsed: anObject 
-	"Set the receiver's biClrUsed field to the value of anObject."
+biClrUsed: anInteger
+	"Set the receiver's 'biClrUsed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #biClrUsed) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_biClrUsed put: anInteger!
 
 biCompression
-	"Answer the receiver's biCompression field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biCompression' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #biCompression)!
+	^bytes dwordAtOffset: _OffsetOf_biCompression!
 
-biCompression: anObject 
-	"Set the receiver's biCompression field to the value of anObject."
+biCompression: anInteger
+	"Set the receiver's 'biCompression' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #biCompression) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_biCompression put: anInteger!
 
 biHeight
-	"Answer the receiver's biHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #biHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_biHeight!
 
-biHeight: anObject 
-	"Set the receiver's biHeight field to the value of anObject."
+biHeight: anInteger
+	"Set the receiver's 'biHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #biHeight) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_biHeight put: anInteger!
 
 biPlanes
-	"Answer the receiver's biPlanes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biPlanes' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #biPlanes)!
+	^bytes wordAtOffset: _OffsetOf_biPlanes!
 
-biPlanes: anObject 
-	"Set the receiver's biPlanes field to the value of anObject."
+biPlanes: anInteger
+	"Set the receiver's 'biPlanes' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #biPlanes) put: anObject!
+	bytes wordAtOffset: _OffsetOf_biPlanes put: anInteger!
 
 biSizeImage
-	"Answer the receiver's biSizeImage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biSizeImage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #biSizeImage)!
+	^bytes dwordAtOffset: _OffsetOf_biSizeImage!
 
-biSizeImage: anObject 
-	"Set the receiver's biSizeImage field to the value of anObject."
+biSizeImage: anInteger
+	"Set the receiver's 'biSizeImage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #biSizeImage) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_biSizeImage put: anInteger!
 
 biWidth
-	"Answer the receiver's biWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #biWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_biWidth!
 
-biWidth: anObject 
-	"Set the receiver's biWidth field to the value of anObject."
+biWidth: anInteger
+	"Set the receiver's 'biWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #biWidth) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_biWidth put: anInteger!
 
 biXPelsPerMeter
-	"Answer the receiver's biXPelsPerMeter field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biXPelsPerMeter' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #biXPelsPerMeter)!
+	^bytes sdwordAtOffset: _OffsetOf_biXPelsPerMeter!
 
-biXPelsPerMeter: anObject 
-	"Set the receiver's biXPelsPerMeter field to the value of anObject."
+biXPelsPerMeter: anInteger
+	"Set the receiver's 'biXPelsPerMeter' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #biXPelsPerMeter) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_biXPelsPerMeter put: anInteger!
 
 biYPelsPerMeter
-	"Answer the receiver's biYPelsPerMeter field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'biYPelsPerMeter' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #biYPelsPerMeter)!
+	^bytes sdwordAtOffset: _OffsetOf_biYPelsPerMeter!
 
-biYPelsPerMeter: anObject 
-	"Set the receiver's biYPelsPerMeter field to the value of anObject."
+biYPelsPerMeter: anInteger
+	"Set the receiver's 'biYPelsPerMeter' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #biYPelsPerMeter) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_biYPelsPerMeter put: anInteger!
 
 depth
 	"Answer the colour depth of the bitmap described by the receiver."
 
 	^self biBitCount!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 extent
 	"Answer the width and height (in pels) of the the bitmap described by the receiver."
@@ -186,6 +197,10 @@ defineFields
 		defineField: #biYPelsPerMeter type: SDWORDField new;
 		defineField: #biClrUsed type: DWORDField new;
 		defineField: #biClrImportant type: DWORDField new
-! !
+!
+
+getFieldNames
+	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
 !BITMAPINFOHEADER class categoriesFor: #defineFields!initializing!public! !
+!BITMAPINFOHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,12 @@
 
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pRequestInfo _OffsetOf_RequestInfoCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_V2 guid: (GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
+HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_pRequestInfo' value: 16r1D4!
+HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_RequestInfoCount' value: 16r1D0!
 HTTP_REQUEST_V2 comment: '<HTTP_REQUEST_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,14 +31,14 @@ pRequestInfo
 	"Answer the <StructureArray> value of the receiver's 'pRequestInfo' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRequestInfo))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRequestInfo)
 		length: self RequestInfoCount
 		elementClass: HTTP_REQUEST_INFO!
 
 pRequestInfo: aStructureArray
 	"Set the receiver's 'pRequestInfo' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pRequestInfo) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pRequestInfo put: aStructureArray yourAddress.
 	self RequestInfoCount: aStructureArray size!
 
 printableFields
@@ -48,12 +50,12 @@ printableFields
 RequestInfoCount
 	"Private - Answer the <Integer> value of the receiver's 'RequestInfoCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #RequestInfoCount)!
+	^bytes wordAtOffset: _OffsetOf_RequestInfoCount!
 
 RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #RequestInfoCount) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
 !HTTP_REQUEST_V2 categoriesFor: #pRequestInfo!**compiled accessors**!public! !
 !HTTP_REQUEST_V2 categoriesFor: #pRequestInfo:!**compiled accessors**!public! !
 !HTTP_REQUEST_V2 categoriesFor: #printableFields!development!printing!private! !
@@ -79,6 +81,10 @@ defineFields
 	self
 		defineField: #RequestInfoCount type: WORDField new beNonBrowsable offset: 464;
 		defineField: #pRequestInfo type: (StructureArrayPointerField type: HTTP_REQUEST_INFO lengthField: #RequestInfoCount) offset: 468.
-	self byteSize: 472! !
+	self byteSize: 472!
+
+getFieldNames
+	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
 !HTTP_REQUEST_V2 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

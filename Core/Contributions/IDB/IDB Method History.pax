@@ -45,6 +45,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';

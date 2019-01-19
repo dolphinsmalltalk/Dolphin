@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRGLSBOUNDEDRECORD guid: (GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_cbData' value: 16r18!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_Data' value: 16r1C!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,43 +29,44 @@ struct tagEMRGLSBOUNDEDRECORD {
 !EMRGLSBOUNDEDRECORD methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self cbData * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
-		startingAt: 1!
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
+		startingAt: 1.
+	self cbData: anExternalArray size!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRGLSBOUNDEDRECORD categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRGLSBOUNDEDRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
@@ -100,10 +104,14 @@ defineFields
 			offset: 28.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSBOUNDEDRECORD! !
 !EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!initializing!public! !
+!EMRGLSBOUNDEDRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGLSBOUNDEDRECORD class categoriesFor: #iTypes!constants!public! !
 

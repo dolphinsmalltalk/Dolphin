@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #GpCharacterRange
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_First _OffsetOf_length'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpCharacterRange guid: (GUID fromString: '{01079d38-5861-45b6-8de5-d2165b5de26b}')!
+GpCharacterRange addClassConstant: '_OffsetOf_First' value: 16r0!
+GpCharacterRange addClassConstant: '_OffsetOf_length' value: 16r4!
 GpCharacterRange comment: '<GpCharacterRange> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpCharacterRange'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -24,24 +26,24 @@ struct tagGpCharacterRange {
 !GpCharacterRange methodsFor!
 
 First
-	"Answer the receiver's First field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'First' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: _OffsetOf_First!
 
-First: anObject
-	"Set the receiver's First field to the value of anObject."
+First: anInteger
+	"Set the receiver's 'First' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_First put: anInteger!
 
 length
-	"Answer the receiver's length field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^(bytes sdwordAtOffset: 4)!
+	^bytes sdwordAtOffset: _OffsetOf_length!
 
-length: anObject
-	"Set the receiver's length field to the value of anObject."
+length: anInteger
+	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 4 put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_length put: anInteger! !
 !GpCharacterRange categoriesFor: #First!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #First:!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #length!**compiled accessors**!public! !
@@ -63,6 +65,10 @@ defineFields
 	self
 		defineField: #First type: SDWORDField new offset: 0;
 		defineField: #length type: SDWORDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#First #length)! !
 !GpCharacterRange class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpCharacterRange class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

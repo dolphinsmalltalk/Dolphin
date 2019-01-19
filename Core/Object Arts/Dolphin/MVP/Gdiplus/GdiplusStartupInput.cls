@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #GdiplusStartupInput
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_DebugEventCallback _OffsetOf_GdiplusVersion _OffsetOf_SuppressBackgroundThread _OffsetOf_SuppressExternalCodecs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusStartupInput guid: (GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
+GdiplusStartupInput addClassConstant: '_OffsetOf_DebugEventCallback' value: 16r4!
+GdiplusStartupInput addClassConstant: '_OffsetOf_GdiplusVersion' value: 16r0!
+GdiplusStartupInput addClassConstant: '_OffsetOf_SuppressBackgroundThread' value: 16r8!
+GdiplusStartupInput addClassConstant: '_OffsetOf_SuppressExternalCodecs' value: 16rC!
 GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -25,10 +29,10 @@ struct tagGdiplusStartupInput {
 !GdiplusStartupInput categoriesForClass!Unclassified! !
 !GdiplusStartupInput methodsFor!
 
-GdiplusVersion: anObject
-	"Set the receiver's GdiplusVersion field to the value of anObject."
+GdiplusVersion: anInteger
+	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
 !GdiplusStartupInput categoriesFor: #GdiplusVersion:!**compiled accessors**!public! !
 
 !GdiplusStartupInput class methodsFor!
@@ -51,6 +55,10 @@ defineFields
 		defineField: #DebugEventCallback type: LPVOIDField filler offset: 4;
 		defineField: #SuppressBackgroundThread type: BOOLField filler offset: 8;
 		defineField: #SuppressExternalCodecs type: BOOLField filler offset: 12.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#GdiplusVersion)! !
 !GdiplusStartupInput class categoriesFor: #defineFields!initializing!public! !
+!GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,19 @@
 
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CHOOSECOLORW guid: (GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!
+CHOOSECOLORW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+CHOOSECOLORW addClassConstant: '_OffsetOf_flags' value: 16r14!
+CHOOSECOLORW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
+CHOOSECOLORW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
+CHOOSECOLORW addClassConstant: '_OffsetOf_lCustData' value: 16r18!
+CHOOSECOLORW addClassConstant: '_OffsetOf_lpCustColors' value: 16r10!
+CHOOSECOLORW addClassConstant: '_OffsetOf_lpfnHook' value: 16r1C!
+CHOOSECOLORW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r20!
+CHOOSECOLORW addClassConstant: '_OffsetOf_rgbResult' value: 16rC!
 CHOOSECOLORW comment: '<CHOOSECOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.CHOOSECOLOR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,22 +48,22 @@ color
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
 hInstance: anExternalHandle
 	"Set the receiver's 'hInstance' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hInstance) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hInstance put: anExternalHandle!
 
 hookFlag
 	^CC_ENABLEHOOK!
@@ -62,22 +71,22 @@ hookFlag
 hwndOwner: anExternalHandle
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndOwner) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 lpCustColors
 	"Answer the <DWORDArray> value of the receiver's 'lpCustColors' field."
 
-	^DWORDArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpCustColors)) length: 16!
+	^DWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCustColors) length: 16!
 
 lpCustColors: aDWORDArray
 	"Set the receiver's 'lpCustColors' field to the value of the argument, aDWORDArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpCustColors) put: aDWORDArray yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpCustColors put: aDWORDArray yourAddress!
 
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpfnHook) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
 
 ownerView: aView
 	"Set the parent window for the dialog to aView."
@@ -89,12 +98,12 @@ ownerView: aView
 rgbResult
 	"Answer the <Integer> value of the receiver's 'rgbResult' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #rgbResult)!
+	^bytes dwordAtOffset: _OffsetOf_rgbResult!
 
 rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #rgbResult) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
 !CHOOSECOLORW categoriesFor: #color!accessing!public! !
 !CHOOSECOLORW categoriesFor: #dwSize:!**compiled accessors**!public! !
 !CHOOSECOLORW categoriesFor: #flags!**compiled accessors**!public! !
@@ -114,7 +123,7 @@ rgbResult: anInteger
 defineFields
 	"Define the fields of the CHOOSECOLOR structure.
 
-	CHOOSECOLOR compileDefinition
+	self compileDefinition
 
 		typedef [uuid(87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32), helpstring('CHOOSECOLOR is used in conjunction with <ColorDialog> to pop a common file dialog to select a colour.')]
 		struct tagCHOOSECOLOR {
@@ -140,6 +149,10 @@ defineFields
 		defineField: #lCustData type: INT_PTRField new beFiller offset: 24;
 		defineField: #lpfnHook type: LPVOIDField new beWriteOnly offset: 28;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller offset: 32.
-	self byteSize: 36! !
+	self byteSize: 36!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
 !CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CHOOSECOLORW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

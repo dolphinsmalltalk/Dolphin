@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSELECTPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihPal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSELECTPALETTE guid: (GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
+EMRSELECTPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
 EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSELECTPALETTE {
 !EMRSELECTPALETTE methodsFor!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
+	^bytes dwordAtOffset: _OffsetOf_ihPal!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
 !EMRSELECTPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
 !EMRSELECTPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihPal)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SELECTPALETTE! !
 !EMRSELECTPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

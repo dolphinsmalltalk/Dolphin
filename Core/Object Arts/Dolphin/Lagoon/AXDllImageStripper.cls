@@ -18,13 +18,6 @@ defaultSessionManagerClass
 
 	^AXDllSessionManager!
 
-keepImageFile
-	"Answer whether the raw image file (which has the same name as the deployed exe/dll but with
-	no extension) should be retained. By default it is deleted, but it can be useful for debugging
-	purposes, or (if a plug-in image) for use with IMAGE tag."
-
-	^true!
-
 prepareToStrip
 	"Perform pre-image stripping actions, such as opening the log file.
 	This is invoked before even the development tools have been closed.
@@ -95,7 +88,6 @@ updateTypelibResource: anExternalHandle
 		cbData: resourceBytes size)
 			ifFalse: [KernelLibrary default systemError]! !
 !AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!AXDllImageStripper categoriesFor: #keepImageFile!public!testing! !
 !AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
 !AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
 !AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
@@ -105,6 +97,11 @@ updateTypelibResource: anExternalHandle
 !AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
 
 !AXDllImageStripper class methodsFor!
+
+defaultOptions
+	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
+
+	^super defaultOptions | KeepImageMask!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -116,5 +113,6 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
+!AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
 !AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
 

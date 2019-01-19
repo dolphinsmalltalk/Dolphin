@@ -8,13 +8,36 @@ XmlPad is a simple XML text editor. It is intended to demonstrate the DocumentSh
 
 Try me out with:
 
+```
 XmlPad show
+```
 
-Note that if deploying this sample as a .exe that the "Retain instance variable names" option should be checked on page 5 of the wizard.'.
+## Deployment:
 
-package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAABgAAAFhtbFBhZBIBAAAKAAAAWG1s
-UGFkLmV4ZZoAAACwAQAAUgAAABQAAABYbWxQYWRTZXNzaW9uTWFuYWdlcve/JwAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+Note that if deploying this sample as a .exe that the "Retain instance variable names" option should be checked on page 5 of the wizard. Aspect setters must also be preserved because of the text styles dialog, etc.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: XmlPad owningPackage;
+	executableName: ''XmlPad.exe'';
+	preserveAspectSetters: true;
+	retainInstVarNames: true;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''XmlPad.xml''.
+"Or view the log"
+XmlPad openOn: ''XmlPad.xml''
+```'.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem 
+	addSamplesFolderIconFor: XmlPad
+	helpId: 10625'.
 
 package classNames
 	add: #XmlFormatter;
@@ -23,6 +46,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #IXMLDOMComment -> #formatAsText;
 	add: #IXMLDOMEntityReference -> #formatAsText;
 	add: #IXMLDOMNode -> #formatAsText;
 	yourself.
@@ -33,21 +57,22 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\Registry\Dolphin Registry Access';
-	add: '..\..\..\Dolphin\Registry\Dolphin Registry Serialisation';
-	add: '..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions';
-	add: '..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
+	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
+	'..\..\..\Dolphin\Registry\Dolphin Registry Serialisation'
+	'..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions'
+	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM'
+	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor').
 
 package setManualPrerequisites: #(
 	'Dolphin Registry Serialisation'
@@ -77,6 +102,12 @@ XmlDomVisitor subclass: #XmlFormatter
 
 
 "Loose Methods"!
+
+!IXMLDOMComment methodsFor!
+
+formatAsText
+	^false! !
+!IXMLDOMComment categoriesFor: #formatAsText!public! !
 
 !IXMLDOMEntityReference methodsFor!
 

@@ -2,10 +2,16 @@
 
 ExternalStructure subclass: #GpBitmapData
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Height _OffsetOf_PixelFormat _OffsetOf_Reserved _OffsetOf_Scan0 _OffsetOf_Stride _OffsetOf_Width'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpBitmapData guid: (GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
+GpBitmapData addClassConstant: '_OffsetOf_Height' value: 16r4!
+GpBitmapData addClassConstant: '_OffsetOf_PixelFormat' value: 16rC!
+GpBitmapData addClassConstant: '_OffsetOf_Reserved' value: 16r14!
+GpBitmapData addClassConstant: '_OffsetOf_Scan0' value: 16r10!
+GpBitmapData addClassConstant: '_OffsetOf_Stride' value: 16r8!
+GpBitmapData addClassConstant: '_OffsetOf_Width' value: 16r0!
 GpBitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -28,54 +34,54 @@ struct tagGpBitmapData {
 !GpBitmapData methodsFor!
 
 Height
-	"Answer the receiver's Height field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Height' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_Height!
 
-Height: anObject
-	"Set the receiver's Height field to the value of anObject."
+Height: anInteger
+	"Set the receiver's 'Height' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_Height put: anInteger!
 
 PixelFormat
-	"Answer the receiver's PixelFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'PixelFormat' field."
 
-	^(bytes sdwordAtOffset: 12)!
+	^bytes sdwordAtOffset: _OffsetOf_PixelFormat!
 
-PixelFormat: anObject
-	"Set the receiver's PixelFormat field to the value of anObject."
+PixelFormat: anInteger
+	"Set the receiver's 'PixelFormat' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 12 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_PixelFormat put: anInteger!
 
 Scan0
-	"Answer the receiver's Scan0 field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'Scan0' field."
 
-	^(bytes dwordAtOffset: 16) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_Scan0) asExternalAddress!
 
-Scan0: anObject
-	"Set the receiver's Scan0 field to the value of anObject."
+Scan0: anExternalAddress
+	"Set the receiver's 'Scan0' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_Scan0 put: anExternalAddress!
 
 Stride
-	"Answer the receiver's Stride field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Stride' field."
 
-	^(bytes sdwordAtOffset: 8)!
+	^bytes sdwordAtOffset: _OffsetOf_Stride!
 
-Stride: anObject
-	"Set the receiver's Stride field to the value of anObject."
+Stride: anInteger
+	"Set the receiver's 'Stride' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 8 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_Stride put: anInteger!
 
 Width
-	"Answer the receiver's Width field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Width' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_Width!
 
-Width: anObject
-	"Set the receiver's Width field to the value of anObject."
+Width: anInteger
+	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
 !GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
 !GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
 !GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
@@ -111,6 +117,10 @@ defineFields
 		defineField: #PixelFormat type: SDWORDField new offset: 12;
 		defineField: #Scan0 type: LPVOIDField new offset: 16;
 		defineField: #Reserved type: DWORDField filler offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
 !GpBitmapData class categoriesFor: #defineFields!initializing!public! !
+!GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #GpEncoderParameter
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Guid _OffsetOf_NumberOfValues _OffsetOf_Type _OffsetOf_Value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpEncoderParameter guid: (GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
+GpEncoderParameter addClassConstant: '_OffsetOf_Guid' value: 16r0!
+GpEncoderParameter addClassConstant: '_OffsetOf_NumberOfValues' value: 16r10!
+GpEncoderParameter addClassConstant: '_OffsetOf_Type' value: 16r14!
+GpEncoderParameter addClassConstant: '_OffsetOf_Value' value: 16r18!
 GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,44 +30,48 @@ struct tagGpEncoderParameter {
 !GpEncoderParameter methodsFor!
 
 Guid
-	"Answer the receiver's Guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'Guid' field."
 
-	^GUID fromAddress: (bytes yourAddress)!
+	^GUID fromAddress: bytes yourAddress!
 
-Guid: anObject
-	"Set the receiver's Guid field to the value of anObject."
+Guid: aGUID
+	"Set the receiver's 'Guid' field to the value of the argument, aGUID"
 
-	anObject replaceBytesOf: bytes from: 1 to: 16 startingAt: 1!
+	aGUID
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_Guid + 1)
+		to: ##(_OffsetOf_Guid + GUID basicByteSize)
+		startingAt: 1!
 
 NumberOfValues
-	"Answer the receiver's NumberOfValues field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'NumberOfValues' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_NumberOfValues!
 
-NumberOfValues: anObject
-	"Set the receiver's NumberOfValues field to the value of anObject."
+NumberOfValues: anInteger
+	"Set the receiver's 'NumberOfValues' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_NumberOfValues put: anInteger!
 
 Type
-	"Answer the receiver's Type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: _OffsetOf_Type!
 
-Type: anObject
-	"Set the receiver's Type field to the value of anObject."
+Type: anInteger
+	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 20 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_Type put: anInteger!
 
 Value
-	"Answer the receiver's Value field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'Value' field."
 
-	^(bytes dwordAtOffset: 24) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_Value) asExternalAddress!
 
-Value: anObject
-	"Set the receiver's Value field to the value of anObject."
+Value: anExternalAddress
+	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 24 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
 !GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
@@ -93,6 +101,10 @@ defineFields
 		defineField: #NumberOfValues type: DWORDField new offset: 16;
 		defineField: #Type type: DWORDField new offset: 20;
 		defineField: #Value type: LPVOIDField new offset: 24.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#Guid #NumberOfValues #Type #Value)! !
 !GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

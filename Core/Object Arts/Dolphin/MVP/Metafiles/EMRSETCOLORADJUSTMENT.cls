@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_COLORADJUSTMENT'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETCOLORADJUSTMENT guid: (GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
+EMRSETCOLORADJUSTMENT addClassConstant: '_OffsetOf_COLORADJUSTMENT' value: 16r8!
 EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMRSETCOLORADJUSTMENT {
 !EMRSETCOLORADJUSTMENT methodsFor!
 
 COLORADJUSTMENT
-	"Answer the receiver's COLORADJUSTMENT field as a Smalltalk object."
+	"Answer the <COLORADJUSTMENT> value of the receiver's 'COLORADJUSTMENT' field."
 
-	^COLORADJUSTMENT fromAddress: bytes yourAddress + ##(self offsetOf: #COLORADJUSTMENT)!
+	^COLORADJUSTMENT fromAddress: bytes yourAddress + _OffsetOf_COLORADJUSTMENT!
 
-COLORADJUSTMENT: anObject 
-	"Set the receiver's COLORADJUSTMENT field to the value of anObject."
+COLORADJUSTMENT: aCOLORADJUSTMENT
+	"Set the receiver's 'COLORADJUSTMENT' field to the value of the argument, aCOLORADJUSTMENT"
 
-	anObject 
+	aCOLORADJUSTMENT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #COLORADJUSTMENT) + 1)
-		to: ##((self offsetOf: #COLORADJUSTMENT) + COLORADJUSTMENT basicByteSize)
+		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
+		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT basicByteSize)
 		startingAt: 1! !
 !EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT!**compiled accessors**!public! !
 !EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT:!**compiled accessors**!public! !
@@ -60,10 +61,14 @@ defineFields
 			offset: 8.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #COLORADJUSTMENT)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORADJUSTMENT! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
 

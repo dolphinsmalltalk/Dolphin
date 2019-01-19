@@ -42,12 +42,6 @@ icon
 
 !
 
-initialize
-	"
-	self initialize.
-	"
-	Smalltalk developmentSystem addSamplesFolderIconFor: self description: 'Better Hello World'!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -66,14 +60,9 @@ resource_Editable_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Editable_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 170 192 34 2 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916353 1 544 nil nil nil 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 86 101 114 100 97 110 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 544 196934 1 ##(Smalltalk.RGB) 8454655 8 1915280032 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 690 191 151 690 801 151 544 866 #setMarginWidths: 34 1 8 #(10 10) 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 75 0 0 0 239 1 0 0 150 0 0 0] 8 #() 690 193 193 nil 27 8 'textToDisplay' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 802 138 144 34 2 866 #createAt:extent: 34 2 690 469 469 690 1201 801 416 866 #updateMenuBar 8 #() 416 994 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 234 0 0 0 234 0 0 0 66 3 0 0 122 2 0 0] 34 1 544 1056 nil 27 )!
-
-uninitialize
-	Smalltalk developmentSystem removeSystemFolderIconNamed: 'Better Hello World'! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 170 192 34 2 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916353 1 544 nil nil nil 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[224 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 86 101 114 100 97 110 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 544 196934 1 ##(Smalltalk.RGB) 8454655 8 1915280032 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 690 191 151 690 801 151 544 866 #setMarginWidths: 34 1 8 #(10 10) 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 75 0 0 0 239 1 0 0 150 0 0 0] 8 #() 690 193 193 nil 27 8 'textToDisplay' nil nil nil nil nil 1 nil nil nil nil 1 nil nil 802 138 144 34 2 866 #createAt:extent: 34 2 690 469 469 690 1201 801 416 866 #updateMenuBar 8 #() 416 994 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 234 0 0 0 234 0 0 0 66 3 0 0 122 2 0 0] 34 1 544 1056 nil 27 )! !
 !BetterHelloWorld class categoriesFor: #defaultModel!public! !
 !BetterHelloWorld class categoriesFor: #icon!constants!public! !
-!BetterHelloWorld class categoriesFor: #initialize!public! !
 !BetterHelloWorld class categoriesFor: #resource_Default_view!public!resources-views! !
 !BetterHelloWorld class categoriesFor: #resource_Editable_view!public!resources-views! !
-!BetterHelloWorld class categoriesFor: #uninitialize!public! !
 

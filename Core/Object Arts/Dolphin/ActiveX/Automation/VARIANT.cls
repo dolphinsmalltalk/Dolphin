@@ -2,10 +2,15 @@
 
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
-	classVariableNames: 'Unspecified VTClasses VTNames'
+	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
 VARIANT guid: (GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
+VARIANT addClassConstant: '_OffsetOf_dblVal' value: 16r8!
+VARIANT addClassConstant: '_OffsetOf_vt' value: 16r0!
+VARIANT addClassConstant: '_OffsetOf_wReserved1' value: 16r2!
+VARIANT addClassConstant: '_OffsetOf_wReserved2' value: 16r4!
+VARIANT addClassConstant: '_OffsetOf_wReserved3' value: 16r6!
 VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 
 A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
@@ -222,14 +227,14 @@ date: newValue
 	self vt: VT_DATE!
 
 dblVal
-	"Answer the receiver's dblVal field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'dblVal' field."
 
-	^bytes doubleAtOffset: ##(self offsetOf: #dblVal)!
+	^bytes doubleAtOffset: _OffsetOf_dblVal!
 
-dblVal: anObject 
-	"Set the receiver's dblVal field to the value of anObject."
+dblVal: aFloat
+	"Set the receiver's 'dblVal' field to the value of the argument, aFloat"
 
-	bytes doubleAtOffset: ##(self offsetOf: #dblVal) put: anObject!
+	bytes doubleAtOffset: _OffsetOf_dblVal put: aFloat!
 
 decimal
 	"Answer a <ScaledDecimal> which is the Variant Decimal value 
@@ -441,26 +446,6 @@ null: newValue
 
 	self ulVal: 0.
 	self vt: VT_NULL!
-
-printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
-	the same as those which would result from sending a #printString
-	message to the receiver.
-	N.B. This is really intended for development use. #displayOn: and #displayString
-	are complementary methods for generating strings for presentation to an
-	end-user."
-
-	target
-		basicPrint: self;
-		nextPut: $(.
-	self isNull 
-		ifTrue: [target nextPutAll: 'NULL']
-		ifFalse: [
-			target 
-				nextPutAll: self typeName;
-				nextPutAll: ': ';
-				print: self value].
-	target nextPut: $)!
 
 qword
 	"Answer the unsigned 64-bit integer value from the receiver.
@@ -693,14 +678,14 @@ void
 		ifTrue: [VOID fromAddress: self refAddress]!
 
 vt
-	"Answer the receiver's vt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_vt!
 
-vt: anObject 
-	"Set the receiver's vt field to the value of anObject."
+vt: anInteger
+	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: _OffsetOf_vt put: anInteger!
 
 word
 	"Answer the unsigned 16-bit <integer> value from the receiver.
@@ -770,7 +755,6 @@ word: newValue
 !VARIANT categoriesFor: #nil:!accessing!public! !
 !VARIANT categoriesFor: #null!accessing!public! !
 !VARIANT categoriesFor: #null:!accessing!public! !
-!VARIANT categoriesFor: #printOn:!development!printing!public! !
 !VARIANT categoriesFor: #qword!accessing!public! !
 !VARIANT categoriesFor: #qword:!accessing!public! !
 !VARIANT categoriesFor: #recordInfo!accessing!private! !
@@ -827,7 +811,6 @@ defineFields
 	to simplify the common case of accessing the first 32-bits of data stored in a VARIANT.
 
 		VARIANT compileDefinition.
-VARIANT alignment
 
 		struct  tagVARIANT
 		{
@@ -992,6 +975,9 @@ fromUnknown: piUnk
 		unknown: piUnk;
 		yourself
 		!
+
+getFieldNames
+	^#(#vt #dblVal)!
 
 init: buffer
 	"Initialize a buffer (or buffer at the specified address) to hold an instance of the record type
@@ -1177,6 +1163,7 @@ vt
 !VARIANT class categoriesFor: #fromSmallInteger:!instance creation!public! !
 !VARIANT class categoriesFor: #fromString:!instance creation!public! !
 !VARIANT class categoriesFor: #fromUnknown:!instance creation!public! !
+!VARIANT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !VARIANT class categoriesFor: #init:!initializing!public! !
 !VARIANT class categoriesFor: #initialize!development!initializing!private! !
 !VARIANT class categoriesFor: #initializeVTClasses!initializing!must not strip!private! !
@@ -1184,7 +1171,7 @@ vt
 !VARIANT class categoriesFor: #nameOfVT:!enquiries!public! !
 !VARIANT class categoriesFor: #null!instance creation!public! !
 !VARIANT class categoriesFor: #typeName!constants!private! !
-!VARIANT class categoriesFor: #uninitialize!initializing!private! !
+!VARIANT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !VARIANT class categoriesFor: #unspecified!instance creation!public! !
 !VARIANT class categoriesFor: #vt!constants!public! !
 

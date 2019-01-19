@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aPolyCounts _OffsetOf_aptl _OffsetOf_cptl _OffsetOf_nPolys _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYPOLYLINE guid: (GUID fromString: '{b8dbb77d-883a-49cc-ba50-d75d9d773cdb}')!
+EMRPOLYPOLYLINE addClassConstant: '_OffsetOf_aPolyCounts' value: 16r20!
+EMRPOLYPOLYLINE addClassConstant: '_OffsetOf_aptl' value: 16r24!
+EMRPOLYPOLYLINE addClassConstant: '_OffsetOf_cptl' value: 16r1C!
+EMRPOLYPOLYLINE addClassConstant: '_OffsetOf_nPolys' value: 16r18!
+EMRPOLYPOLYLINE addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYPOLYLINE comment: '<EMRPOLYPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,20 +33,21 @@ struct tagEMRPOLYPOLYLINE {
 !EMRPOLYPOLYLINE methodsFor!
 
 aPolyCounts
-	"Answer the receiver's aPolyCounts field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'aPolyCounts' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #aPolyCounts) length: self nPolys!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_aPolyCounts length: self nPolys!
 
-aPolyCounts: anObject 
-	"Set the receiver's aPolyCounts field to the value of anObject."
+aPolyCounts: aDWORDArray
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: self nPolys * ##(DWORDArray elementSize).
-	anObject 
+	size := aDWORDArray byteSize.
+	aDWORDArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aPolyCounts) + 1)
-		to: ##(self offsetOf: #aPolyCounts) + size
-		startingAt: 1!
+		from: ##(_OffsetOf_aPolyCounts + 1)
+		to: _OffsetOf_aPolyCounts + size
+		startingAt: 1.
+	self nPolys: aDWORDArray size!
 
 aptl
 	"Answer the receiver's aptl field as a Smalltalk object."
@@ -68,40 +74,40 @@ aptl: anObject
 		startingAt: 1!
 
 aptlOffset
-	^##(self offsetOf: #aPolyCounts) + (4 * self nPolys)!
+	^_OffsetOf_aPolyCounts + (4 * self nPolys)!
 
 cptl
-	"Answer the receiver's cptl field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cptl' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cptl)!
+	^bytes dwordAtOffset: _OffsetOf_cptl!
 
-cptl: anObject 
-	"Set the receiver's cptl field to the value of anObject."
+cptl: anInteger
+	"Set the receiver's 'cptl' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cptl) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cptl put: anInteger!
 
 nPolys
-	"Answer the receiver's nPolys field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPolys' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPolys)!
+	^bytes dwordAtOffset: _OffsetOf_nPolys!
 
-nPolys: anObject 
-	"Set the receiver's nPolys field to the value of anObject."
+nPolys: anInteger
+	"Set the receiver's 'nPolys' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPolys) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nPolys put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRPOLYPOLYLINE categoriesFor: #aPolyCounts!**compiled accessors**!public! !
 !EMRPOLYPOLYLINE categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
@@ -150,10 +156,14 @@ defineFields
 		defineField: #aptl type: (StructureArrayField type: POINTL lengthField: #cptl).
 	self byteSize: 40!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #nPolys #cptl #aPolyCounts #aptl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYPOLYLINE with: EMR_POLYPOLYGON! !
 !EMRPOLYPOLYLINE class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
 

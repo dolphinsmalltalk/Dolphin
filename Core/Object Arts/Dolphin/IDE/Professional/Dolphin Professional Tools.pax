@@ -46,11 +46,12 @@ package methodNames
 	add: #PackageSelector -> #browseSources;
 	add: #Process -> #priorityName;
 	add: #ProcessorScheduler -> #nameOfPriority:;
-	add: #SmalltalkSystem -> #openDeploymentLog:;
 	add: #SmalltalkSystem -> #openIdeaSpace;
 	add: #SmalltalkToolShell -> #addToNewIdeaSpace;
 	add: #SmalltalkToolShell -> #browseSystem;
+	add: #SmalltalkToolShell -> #destroy;
 	add: #SmalltalkToolShell -> #dragToolToIdeaSpace;
+	add: #SmalltalkToolShell -> #exit;
 	add: #SmalltalkWorkspaceDocument -> #addToNewIdeaSpace;
 	add: #SmalltalkWorkspaceDocument -> #browseSources;
 	add: #SmalltalkWorkspaceDocument -> #dragToolToIdeaSpace;
@@ -72,39 +73,39 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\ActiveX\Connection Points\ActiveX Connection Points';
-	add: '..\..\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Community Edition\Dolphin Community Edition Tools';
-	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\MVP\Presenters\Image\Dolphin Image Presenter';
-	add: '..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Presenters\Radio\Dolphin Radio Buttons';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
-	add: '..\..\MVP\Views\Styled Views\Dolphin Styled Views';
-	add: '..\..\MVP\Views\SysLink\Dolphin SysLink Control';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\ActiveX\COM\OLE COM';
-	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\..\ActiveX\Shell\Windows Shell';
-	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\ActiveX\Automation\ActiveX Automation'
+	'..\..\ActiveX\Connection Points\ActiveX Connection Points'
+	'..\..\ActiveX\OCX\ActiveX Control Hosting'
+	'..\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Community Edition\Dolphin Community Edition Tools'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
+	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\ActiveX\COM\OLE COM'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\ActiveX\Shell\Windows Shell'
+	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
 
@@ -212,7 +213,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #commandDescription) beReadOnly;
 		yourself.
 	^answer! !
-!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !PackageSelector methodsFor!
 
@@ -252,7 +253,7 @@ priorityName
 
 	^Processor nameOfPriority: self priority
 ! !
-!Process categoriesFor: #priorityName!accessing!development!public! !
+!Process categoriesFor: #priorityName!accessing!public! !
 
 !ProcessorScheduler methodsFor!
 
@@ -271,7 +272,7 @@ nameOfPriority: anInteger
 		highIOPriority
 		timingPriority)
 			at: anInteger ifAbsent: [#unknownPriority]! !
-!ProcessorScheduler categoriesFor: #nameOfPriority:!development!enquiries!public! !
+!ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
 
 !SlideyInneyOuteyThing class methodsFor!
 
@@ -306,21 +307,14 @@ publishedAspectsOfInstances
 	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
 !SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
-!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !SmalltalkSystem methodsFor!
-
-openDeploymentLog: aPackage 
-	| dom |
-	dom := IXMLDOMDocument new.
-	dom loadURL: 'file://' , aPackage imageStripper logFileName.
-	^dom!
 
 openIdeaSpace
 	"Create a new IdeaSpace by opening a template file"
 
 	^IdeaSpaceShell open! !
-!SmalltalkSystem categoriesFor: #openDeploymentLog:!helpers!private! !
 !SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
 
 !SmalltalkToolShell methodsFor!
@@ -333,11 +327,25 @@ browseSystem
 
 	^self systemModel browseSystem!
 
+destroy
+	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
+	^super destroy!
+
 dragToolToIdeaSpace
-	^self class dragToolToIdeaSpace: self! !
+	^self class dragToolToIdeaSpace: self!
+
+exit
+	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
+	^super exit! !
 !SmalltalkToolShell categoriesFor: #addToNewIdeaSpace!public! !
 !SmalltalkToolShell categoriesFor: #browseSystem!commands!public! !
+!SmalltalkToolShell categoriesFor: #destroy!commands!public! !
 !SmalltalkToolShell categoriesFor: #dragToolToIdeaSpace!public! !
+!SmalltalkToolShell categoriesFor: #exit!commands!public! !
 
 !SmalltalkToolShell class methodsFor!
 
@@ -404,7 +412,7 @@ publishedAspectsOfInstances
 					isNullable: false;
 					yourself).
 	^aspects! !
-!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !SysLinkView class methodsFor!
 
@@ -423,7 +431,7 @@ publishedEventsOfInstances
     		add: #linkClicked:;
     		yourself.
     ! !
-!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 !SysLinkView class categoriesFor: #publishedEventsOfInstances!events!public! !
 
 !TestCase class methodsFor!

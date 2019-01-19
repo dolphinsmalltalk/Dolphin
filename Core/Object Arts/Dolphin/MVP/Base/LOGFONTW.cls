@@ -2,10 +2,11 @@
 
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGFONTW guid: (GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
+LOGFONTW addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
 LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -59,7 +60,7 @@ getData: hFont
 lfFaceName
 	"Answer the <Utf16String> value of the receiver's 'lfFaceName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #lfFaceName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_lfFaceName!
 
 lfFaceName: anUtf16String
 	"Set the receiver's 'lfFaceName' field to the value of the argument, anUtf16String"
@@ -68,10 +69,10 @@ lfFaceName: anUtf16String
 	size := anUtf16String byteSize - 2 min: ##(31 * 2).
 	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lfFaceName) + 1)
-		to: ##(self offsetOf: #lfFaceName) + size
+		from: ##(_OffsetOf_lfFaceName + 1)
+		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
+	bytes wordAtOffset: _OffsetOf_lfFaceName + size put: 0! !
 !LOGFONTW categoriesFor: #createFont!private!realizing/unrealizing! !
 !LOGFONTW categoriesFor: #faceName!accessing!public! !
 !LOGFONTW categoriesFor: #faceName:!accessing!public! !

@@ -2,10 +2,20 @@
 
 Win32Structure subclass: #WNDCLASS
 	instanceVariableNames: 'menuName className'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbClsExtra _OffsetOf_cbWndExtra _OffsetOf_hbrBackground _OffsetOf_hCursor _OffsetOf_hIcon _OffsetOf_hInstance _OffsetOf_lpfnWndProc _OffsetOf_lpszClassName _OffsetOf_lpszMenuName _OffsetOf_style'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WNDCLASS guid: (GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
+WNDCLASS addClassConstant: '_OffsetOf_cbClsExtra' value: 16r8!
+WNDCLASS addClassConstant: '_OffsetOf_cbWndExtra' value: 16rC!
+WNDCLASS addClassConstant: '_OffsetOf_hbrBackground' value: 16r1C!
+WNDCLASS addClassConstant: '_OffsetOf_hCursor' value: 16r18!
+WNDCLASS addClassConstant: '_OffsetOf_hIcon' value: 16r14!
+WNDCLASS addClassConstant: '_OffsetOf_hInstance' value: 16r10!
+WNDCLASS addClassConstant: '_OffsetOf_lpfnWndProc' value: 16r4!
+WNDCLASS addClassConstant: '_OffsetOf_lpszClassName' value: 16r24!
+WNDCLASS addClassConstant: '_OffsetOf_lpszMenuName' value: 16r20!
+WNDCLASS addClassConstant: '_OffsetOf_style' value: 16r0!
 WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
 '!
 !WNDCLASS categoriesForClass!External-Data-Structured-Win32! !
@@ -22,47 +32,47 @@ className: aString
 hbrBackground: anInteger
 	"Set the receiver's 'hbrBackground' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hbrBackground) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hbrBackground put: anInteger!
 
 hCursor: anInteger
 	"Set the receiver's 'hCursor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hCursor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hCursor put: anInteger!
 
 hIcon: anInteger
 	"Set the receiver's 'hIcon' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hIcon) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hIcon put: anInteger!
 
 hInstance: anInteger
 	"Set the receiver's 'hInstance' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hInstance) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hInstance put: anInteger!
 
 lpfnWndProc: anInteger
 	"Set the receiver's 'lpfnWndProc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lpfnWndProc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lpfnWndProc put: anInteger!
 
 lpszClassName
 	"Answer the <Utf16String> value of the receiver's 'lpszClassName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszClassName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpszClassName)!
 
 lpszClassName: anUtf16String
 	"Set the receiver's 'lpszClassName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszClassName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszClassName put: anUtf16String yourAddress!
 
 lpszMenuName
 	"Answer the <Utf16String> value of the receiver's 'lpszMenuName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszMenuName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpszMenuName)!
 
 lpszMenuName: anUtf16String
 	"Set the receiver's 'lpszMenuName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszMenuName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszMenuName put: anUtf16String yourAddress!
 
 menuName: aString
 	"Set the receiver's menuName and lpszMenuName fields to aString.
@@ -75,7 +85,7 @@ menuName: aString
 style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
 !WNDCLASS categoriesFor: #className:!accessing!public! !
 !WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
@@ -122,6 +132,10 @@ defineFields
 		defineField: #hCursor type: DWORDField writeOnly;
 		defineField: #hbrBackground type: DWORDField writeOnly;
 		defineField: #lpszMenuName type: (PointerField type: Utf16String);
-		defineField: #lpszClassName type: (PointerField type: Utf16String)! !
+		defineField: #lpszClassName type: (PointerField type: Utf16String)!
+
+getFieldNames
+	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
 !WNDCLASS class categoriesFor: #defineFields!initializing!public! !
+!WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -734,7 +734,7 @@ topFrame
 !Process categoriesFor: #primitiveFailureCode!accessing!private! !
 !Process categoriesFor: #primitiveFailureData!accessing!private! !
 !Process categoriesFor: #primTerminate!private!states-changing! !
-!Process categoriesFor: #printOn:!development!printing!public! !
+!Process categoriesFor: #printOn:!printing!public! !
 !Process categoriesFor: #priority!accessing!public! !
 !Process categoriesFor: #priority:!accessing!public! !
 !Process categoriesFor: #queueInterrupt:!interrupts!public! !

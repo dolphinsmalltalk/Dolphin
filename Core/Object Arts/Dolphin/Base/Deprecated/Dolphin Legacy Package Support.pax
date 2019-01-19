@@ -8,12 +8,13 @@ The loose methods here are only required when loading packages saved from these 
 
 package basicPackageVersion: '6.1.1'.
 
+package basicScriptAt: #postinstall put: 'Package binaryPacLoader: [:package :stream | package loadLegacyPAC: stream]'.
+package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 
 package methodNames
 	add: #Package -> #basicLoadVersion4:filer:;
 	add: #Package -> #errorUnknownFileVersion:;
 	add: #Package -> #fileInClassDefinitions:;
-	add: #Package -> #initializeLegacyResources;
 	add: #Package -> #loadGlobalsFromFiler:;
 	add: #Package -> #loadLegacyPAC:;
 	add: #Package -> #loadLegacyResources;
@@ -36,9 +37,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\Dolphin').
 
 package!
 
@@ -86,17 +86,6 @@ fileInClassDefinitions: aFileStream
 	aFileStream skipSeparators.
 	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
 	aFileStream beBinary!
-
-initializeLegacyResources
-	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
-	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
-	we are only concerned with loose resources"
-
-	self allResourceNames do: 
-			[:each | 
-			| rid |
-			rid := ResourceIdentifier class: (self environment at: each key) name: each value.
-			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
 
 loadGlobalsFromFiler: binaryFiler
 	"Private - File in binary definitions of all the globals held by
@@ -249,7 +238,6 @@ versionLookup
 !Package categoriesFor: #basicLoadVersion4:filer:!binary filing!private! !
 !Package categoriesFor: #errorUnknownFileVersion:!binary filing!exceptions!private! !
 !Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
-!Package categoriesFor: #initializeLegacyResources!helpers!private! !
 !Package categoriesFor: #loadGlobalsFromFiler:!binary filing!private! !
 !Package categoriesFor: #loadLegacyPAC:!binary filing!private! !
 !Package categoriesFor: #loadLegacyResources!binary filing!private! !

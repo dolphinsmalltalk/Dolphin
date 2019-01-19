@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
 LITEM guid: (GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
+LITEM addClassConstant: '_OffsetOf_iLink' value: 16r4!
+LITEM addClassConstant: '_OffsetOf_mask' value: 16r0!
+LITEM addClassConstant: '_OffsetOf_state' value: 16r8!
+LITEM addClassConstant: '_OffsetOf_stateMask' value: 16rC!
+LITEM addClassConstant: '_OffsetOf_szID' value: 16r10!
+LITEM addClassConstant: '_OffsetOf_szURL' value: 16r70!
 LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.
@@ -42,14 +48,14 @@ id: aString
 		szID: text!
 
 iLink
-	"Answer the receiver's iLink field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iLink' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iLink)!
+	^bytes sdwordAtOffset: _OffsetOf_iLink!
 
-iLink: anObject 
-	"Set the receiver's iLink field to the value of anObject."
+iLink: anInteger
+	"Set the receiver's 'iLink' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iLink) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_iLink put: anInteger!
 
 isEnabled
 	^self state allMask: LIS_ENABLED!
@@ -76,14 +82,14 @@ itemIndex: anInteger
 		iLink: anInteger - 1!
 
 mask
-	"Answer the receiver's mask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mask' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_mask!
 
-mask: anObject 
-	"Set the receiver's mask field to the value of anObject."
+mask: anInteger
+	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger"
@@ -91,58 +97,58 @@ maskIn: anInteger
 	self mask: (self mask bitOr: anInteger)!
 
 state
-	"Answer the receiver's state field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'state' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #state)!
+	^bytes dwordAtOffset: _OffsetOf_state!
 
-state: anObject 
-	"Set the receiver's state field to the value of anObject."
+state: anInteger
+	"Set the receiver's 'state' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #state) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_state put: anInteger!
 
 stateMask
-	"Answer the receiver's stateMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #stateMask)!
+	^bytes dwordAtOffset: _OffsetOf_stateMask!
 
-stateMask: anObject 
-	"Set the receiver's stateMask field to the value of anObject."
+stateMask: anInteger
+	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #stateMask) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
 
 szID
-	"Answer the receiver's szID field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'szID' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szID)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szID!
 
-szID: anObject 
-	"Set the receiver's szID field to the value of anObject."
+szID: anUtf16String
+	"Set the receiver's 'szID' field to the value of the argument, anUtf16String"
 
 	| size |
-	size := anObject byteSize - 2 min: ##(47 * 2).
-	anObject 
+	size := anUtf16String byteSize - 2 min: ##(47 * 2).
+	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szID) + 1)
-		to: ##(self offsetOf: #szID) + size
+		from: ##(_OffsetOf_szID + 1)
+		to: _OffsetOf_szID + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #szID) + size put: 0!
+	bytes wordAtOffset: _OffsetOf_szID + size put: 0!
 
 szURL
-	"Answer the receiver's szURL field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'szURL' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szURL)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szURL!
 
-szURL: anObject 
-	"Set the receiver's szURL field to the value of anObject."
+szURL: anUtf16String
+	"Set the receiver's 'szURL' field to the value of the argument, anUtf16String"
 
 	| size |
-	size := anObject byteSize - 2 min: ##(2083 * 2).
-	anObject 
+	size := anUtf16String byteSize - 2 min: ##(2083 * 2).
+	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szURL) + 1)
-		to: ##(self offsetOf: #szURL) + size
+		from: ##(_OffsetOf_szURL + 1)
+		to: _OffsetOf_szURL + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #szURL) + size put: 0!
+	bytes wordAtOffset: _OffsetOf_szURL + size put: 0!
 
 url
 	"Answer the <readableString> URL held in the receiver."
@@ -196,6 +202,10 @@ defineFields
 		defineField: #state type: DWORDField new;
 		defineField: #stateMask type: DWORDField new;
 		defineField: #szID type: (StringField type: Utf16String length: MAX_LINKID_TEXT);
-		defineField: #szURL type: (StringField type: Utf16String length: L_MAX_URL_LENGTH)! !
+		defineField: #szURL type: (StringField type: Utf16String length: L_MAX_URL_LENGTH)!
+
+getFieldNames
+	^#(#mask #iLink #state #stateMask #szID #szURL)! !
 !LITEM class categoriesFor: #defineFields!initializing!public! !
+!LITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

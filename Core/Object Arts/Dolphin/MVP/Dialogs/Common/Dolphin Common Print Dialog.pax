@@ -32,12 +32,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: 'Dolphin Common Dialogs';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\..\ActiveX\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'Dolphin Common Dialogs'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\..\ActiveX\COM\OLE COM').
 
 package!
 
@@ -45,17 +44,17 @@ package!
 
 Win32Structure subclass: #PRINTPAGERANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nFromPage _OffsetOf_nToPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwResultAction _OffsetOf_ExclusionFlags _OffsetOf_flags _OffsetOf_Flags2 _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpCallback _OffsetOf_lphPropertyPages _OffsetOf_lpPageRanges _OffsetOf_lpPrintTemplateName _OffsetOf_lStructSize _OffsetOf_nCopies _OffsetOf_nMaxPage _OffsetOf_nMaxPageRanges _OffsetOf_nMinPage _OffsetOf_nPageRanges _OffsetOf_nPropertyPages _OffsetOf_nStartPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #PRINTDLGW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hPrintTemplate _OffsetOf_hSetupTemplate _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpfnSetupHook _OffsetOf_lpPrintTemplateName _OffsetOf_lpSetupTemplateName _OffsetOf_nCopies _OffsetOf_nFromPage _OffsetOf_nMaxPage _OffsetOf_nMinPage _OffsetOf_nToPage'
 	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialog subclass: #PrintDialog

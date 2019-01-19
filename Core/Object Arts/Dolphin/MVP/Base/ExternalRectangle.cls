@@ -87,18 +87,6 @@ origin
 	^self topLeft
 !
 
-printOn: aStream
-	"Append a short textual description of the receiver to aStream."
-
-	self isNull ifTrue: [^super printOn: aStream].
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		print: self topLeft;
-		nextPutAll: ', ';
-		print: self bottomRight;
-		nextPut: $)!
-
 right
 	^self subclassResponsibility!
 
@@ -135,7 +123,6 @@ width
 !ExternalRectangle categoriesFor: #left!accessing!public! !
 !ExternalRectangle categoriesFor: #left:!accessing!public! !
 !ExternalRectangle categoriesFor: #origin!accessing!public! !
-!ExternalRectangle categoriesFor: #printOn:!printing!public! !
 !ExternalRectangle categoriesFor: #right!accessing!public! !
 !ExternalRectangle categoriesFor: #right:!accessing!public! !
 !ExternalRectangle categoriesFor: #top!accessing!public! !

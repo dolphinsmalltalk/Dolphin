@@ -84,7 +84,7 @@ value
 	^modified ifTrue: [super value] ifFalse: [subject value]! !
 !ValueBuffer categoriesFor: #apply!accessing!commands!public! !
 !ValueBuffer categoriesFor: #gate!accessing!public! !
-!ValueBuffer categoriesFor: #gate:!accessing!public! !
+!ValueBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
 !ValueBuffer categoriesFor: #isModified!public!testing! !
 !ValueBuffer categoriesFor: #isValid!public!testing! !
 !ValueBuffer categoriesFor: #onGateChanged!event handling!private! !

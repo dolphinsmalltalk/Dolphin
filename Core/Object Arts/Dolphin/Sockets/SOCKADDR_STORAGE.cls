@@ -2,10 +2,14 @@
 
 SOCKADDR subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf___ss_align _OffsetOf___ss_pad1 _OffsetOf___ss_pad2 _OffsetOf_ss_family'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SOCKADDR_STORAGE guid: (GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
+SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_align' value: 16r8!
+SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_pad1' value: 16r2!
+SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_pad2' value: 16r10!
+SOCKADDR_STORAGE addClassConstant: '_OffsetOf_ss_family' value: 16r0!
 SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -45,6 +49,10 @@ defineFields
 		defineField: #__ss_pad1 type: (ArrayField type: ExternalArray length: 6) beFiller offset: 2;
 		defineField: #__ss_align type: SQWORDField new beFiller offset: 8;
 		defineField: #__ss_pad2 type: (ArrayField type: ExternalArray length: 112) beFiller offset: 16.
-	self byteSize: 128! !
+	self byteSize: 128!
+
+getFieldNames
+	^#()! !
 !SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

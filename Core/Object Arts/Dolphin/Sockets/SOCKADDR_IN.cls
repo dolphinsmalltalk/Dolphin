@@ -2,10 +2,14 @@
 
 SOCKADDR subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_sin_addr _OffsetOf_sin_family _OffsetOf_sin_port _OffsetOf_sin_zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SOCKADDR_IN guid: (GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
+SOCKADDR_IN addClassConstant: '_OffsetOf_sin_addr' value: 16r4!
+SOCKADDR_IN addClassConstant: '_OffsetOf_sin_family' value: 16r0!
+SOCKADDR_IN addClassConstant: '_OffsetOf_sin_port' value: 16r2!
+SOCKADDR_IN addClassConstant: '_OffsetOf_sin_zero' value: 16r8!
 SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,36 +43,36 @@ port: anInteger
 sin_addr
 	"Answer the <IN_ADDR> value of the receiver's 'sin_addr' field."
 
-	^IN_ADDR fromAddress: bytes yourAddress + ##(self offsetOf: #sin_addr)!
+	^IN_ADDR fromAddress: bytes yourAddress + _OffsetOf_sin_addr!
 
 sin_addr: anIN_ADDR
 	"Set the receiver's 'sin_addr' field to the value of the argument, anIN_ADDR"
 
 	anIN_ADDR
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #sin_addr) + 1)
-		to: ##((self offsetOf: #sin_addr) + IN_ADDR basicByteSize)
+		from: ##(_OffsetOf_sin_addr + 1)
+		to: ##(_OffsetOf_sin_addr + IN_ADDR basicByteSize)
 		startingAt: 1!
 
 sin_family
 	"Answer the <Integer> value of the receiver's 'sin_family' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_sin_family!
 
 sin_family: anInteger
 	"Set the receiver's 'sin_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_sin_family put: anInteger!
 
 sin_port
 	"Answer the <Integer> value of the receiver's 'sin_port' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #sin_port)!
+	^bytes wordAtOffset: _OffsetOf_sin_port!
 
 sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #sin_port) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
 !SOCKADDR_IN categoriesFor: #port!accessing!public! !
 !SOCKADDR_IN categoriesFor: #port:!accessing!public! !
 !SOCKADDR_IN categoriesFor: #sin_addr!**compiled accessors**!public! !
@@ -99,6 +103,10 @@ defineFields
 		defineField: #sin_port type: WORDField new offset: 2;
 		defineField: #sin_addr type: (StructureField type: IN_ADDR) offset: 4;
 		defineField: #sin_zero type: (ArrayField type: ExternalArray length: 8) beFiller offset: 8.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#sin_family #sin_port #sin_addr)! !
 !SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

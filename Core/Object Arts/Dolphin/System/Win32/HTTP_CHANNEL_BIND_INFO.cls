@@ -2,10 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Flags _OffsetOf_Hardening _OffsetOf_NumberOfServiceNames _OffsetOf_ServiceNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CHANNEL_BIND_INFO guid: (GUID fromString: '{84ea1900-0bc6-4ac8-9025-7f74436d5dc9}')!
+HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Flags' value: 16r4!
+HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Hardening' value: 16r0!
+HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_NumberOfServiceNames' value: 16rC!
+HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_ServiceNames' value: 16r8!
 HTTP_CHANNEL_BIND_INFO comment: '<HTTP_CHANNEL_BIND_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CHANNEL_BIND_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,45 +33,45 @@ struct tagHTTP_CHANNEL_BIND_INFO {
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
 
 Hardening
 	"Answer the <Integer> value of the receiver's 'Hardening' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_Hardening!
 
 Hardening: anInteger
 	"Set the receiver's 'Hardening' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_Hardening put: anInteger!
 
 NumberOfServiceNames
 	"Private - Answer the <Integer> value of the receiver's 'NumberOfServiceNames' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #NumberOfServiceNames)!
+	^bytes dwordAtOffset: _OffsetOf_NumberOfServiceNames!
 
 NumberOfServiceNames: anInteger
 	"Set the receiver's 'NumberOfServiceNames' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #NumberOfServiceNames) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_NumberOfServiceNames put: anInteger!
 
 ServiceNames
 	"Answer the <StructureArray> value of the receiver's 'ServiceNames' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ServiceNames))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServiceNames)
 		length: self NumberOfServiceNames
 		elementClass: HTTP_SERVICE_BINDING_BASE!
 
 ServiceNames: aStructureArray
 	"Set the receiver's 'ServiceNames' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ServiceNames) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_ServiceNames put: aStructureArray yourAddress.
 	self NumberOfServiceNames: aStructureArray size! !
 !HTTP_CHANNEL_BIND_INFO categoriesFor: #Flags!**compiled accessors**!public! !
 !HTTP_CHANNEL_BIND_INFO categoriesFor: #Flags:!**compiled accessors**!public! !
@@ -99,6 +103,10 @@ defineFields
 		defineField: #Flags type: DWORDField new offset: 4;
 		defineField: #ServiceNames type: (StructureArrayPointerField type: HTTP_SERVICE_BINDING_BASE lengthField: #NumberOfServiceNames) offset: 8;
 		defineField: #NumberOfServiceNames type: DWORDField new beNonBrowsable offset: 12.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#Hardening #Flags #ServiceNames #NumberOfServiceNames)! !
 !HTTP_CHANNEL_BIND_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CHANNEL_BIND_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETMITERLIMIT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_eMiterLimit'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETMITERLIMIT guid: (GUID fromString: '{bc8dabd4-f8b4-4f42-895c-1b712c75fc43}')!
+EMRSETMITERLIMIT addClassConstant: '_OffsetOf_eMiterLimit' value: 16r8!
 EMRSETMITERLIMIT comment: '<EMRSETMITERLIMIT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMITERLIMIT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,14 +25,14 @@ struct tagEMRSETMITERLIMIT {
 !EMRSETMITERLIMIT methodsFor!
 
 eMiterLimit
-	"Answer the receiver's eMiterLimit field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eMiterLimit' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eMiterLimit)!
+	^bytes floatAtOffset: _OffsetOf_eMiterLimit!
 
-eMiterLimit: anObject 
-	"Set the receiver's eMiterLimit field to the value of anObject."
+eMiterLimit: aFloat
+	"Set the receiver's 'eMiterLimit' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eMiterLimit) put: anObject! !
+	bytes floatAtOffset: _OffsetOf_eMiterLimit put: aFloat! !
 !EMRSETMITERLIMIT categoriesFor: #eMiterLimit!**compiled accessors**!public! !
 !EMRSETMITERLIMIT categoriesFor: #eMiterLimit:!**compiled accessors**!public! !
 
@@ -56,10 +57,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #eMiterLimit)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMITERLIMIT! !
 !EMRSETMITERLIMIT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETMITERLIMIT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETMITERLIMIT class categoriesFor: #iTypes!constants!public! !
 

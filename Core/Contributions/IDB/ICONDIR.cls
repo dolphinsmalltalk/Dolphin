@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICONDIR guid: (GUID fromString: '{b5be1f5b-e245-4cdf-b274-b6609ab85b23}')!
+ICONDIR addClassConstant: '_OffsetOf_idCount' value: 16r4!
+ICONDIR addClassConstant: '_OffsetOf_idEntries' value: 16r6!
+ICONDIR addClassConstant: '_OffsetOf_idReserved' value: 16r0!
+ICONDIR addClassConstant: '_OffsetOf_idType' value: 16r2!
 ICONDIR comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
@@ -15,48 +19,49 @@ Public Domain Freeware'!
 !ICONDIR methodsFor!
 
 idCount
-	"Answer the receiver's idCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idCount' field."
 
-	^bytes wordAtOffset: 4!
+	^bytes wordAtOffset: _OffsetOf_idCount!
 
-idCount: anObject
-	"Set the receiver's idCount field to the value of anObject."
+idCount: anInteger
+	"Set the receiver's 'idCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject!
+	bytes wordAtOffset: _OffsetOf_idCount put: anInteger!
 
 idEntries
-	"Answer the receiver's idEntries field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'idEntries' field."
 
-	^StructureArray 
-		fromAddress: bytes yourAddress + 6
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_idEntries
 		length: self idCount
 		elementClass: ICONDIRENTRY!
 
-idEntries: anObject
-	"Set the receiver's idEntries field to the value of anObject."
+idEntries: aStructureArrayOfICONDIRENTRY
+	"Set the receiver's 'idEntries' field to the value of the argument, aStructureArrayOfICONDIRENTRY"
 
 	| size |
-	size := anObject byteSize min: self idCount * 0.
-	anObject 
+	size := aStructureArrayOfICONDIRENTRY byteSize.
+	aStructureArrayOfICONDIRENTRY
 		replaceBytesOf: bytes
-		from: 7
-		to: 6 + size
-		startingAt: 1!
+		from: ##(_OffsetOf_idEntries + 1)
+		to: _OffsetOf_idEntries + size
+		startingAt: 1.
+	self idCount: aStructureArrayOfICONDIRENTRY size!
 
 idReserved
-	"Answer the receiver's idReserved field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idReserved' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_idReserved!
 
 idType
-	"Answer the receiver's idType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idType' field."
 
-	^bytes wordAtOffset: 2!
+	^bytes wordAtOffset: _OffsetOf_idType!
 
-idType: anObject
-	"Set the receiver's idType field to the value of anObject."
+idType: anInteger
+	"Set the receiver's 'idType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject! !
+	bytes wordAtOffset: _OffsetOf_idType put: anInteger! !
 !ICONDIR categoriesFor: #idCount!**compiled accessors**!public! !
 !ICONDIR categoriesFor: #idCount:!**compiled accessors**!public! !
 !ICONDIR categoriesFor: #idEntries!**compiled accessors**!public! !
@@ -75,7 +80,9 @@ defineFields
 		defineField: #idReserved type: WORDField readOnly;
 		defineField: #idType type: WORDField new;
 		defineField: #idCount type: WORDField new;
-		defineField: #idEntries type: (StructureArrayField type: ICONDIRENTRY lengthField: #idCount)!
+		defineField: #idEntries
+			type: (StructureArrayField type: ICONDIRENTRY
+					arrayLength: (ConformantArrayFieldLength lengthField: #idCount))!
 
 for: anInteger
 	"Create an ICONDIR using this method and not new as we need to know
@@ -83,9 +90,13 @@ for: anInteger
 
 	^self new: self byteSize + ((anInteger - 1) * ICONDIRENTRY byteSize)!
 
+getFieldNames
+	^#(#idReserved #idType #idCount #idEntries)!
+
 packing
 	^1! !
 !ICONDIR class categoriesFor: #defineFields!initializing!public! !
 !ICONDIR class categoriesFor: #for:!instance creation!public! !
+!ICONDIR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ICONDIR class categoriesFor: #packing!constants!public! !
 

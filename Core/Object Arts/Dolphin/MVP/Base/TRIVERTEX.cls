@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_alpha _OffsetOf_blue _OffsetOf_green _OffsetOf_red _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TRIVERTEX guid: (GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
+TRIVERTEX addClassConstant: '_OffsetOf_alpha' value: 16rE!
+TRIVERTEX addClassConstant: '_OffsetOf_blue' value: 16rC!
+TRIVERTEX addClassConstant: '_OffsetOf_green' value: 16rA!
+TRIVERTEX addClassConstant: '_OffsetOf_red' value: 16r8!
+TRIVERTEX addClassConstant: '_OffsetOf_x' value: 16r0!
+TRIVERTEX addClassConstant: '_OffsetOf_y' value: 16r4!
 TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,24 +35,24 @@ struct tagTRIVERTEX {
 !TRIVERTEX methodsFor!
 
 alpha
-	"Answer the receiver's alpha field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'alpha' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #alpha)!
+	^bytes wordAtOffset: _OffsetOf_alpha!
 
-alpha: anObject 
-	"Set the receiver's alpha field to the value of anObject."
+alpha: anInteger
+	"Set the receiver's 'alpha' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #alpha) put: anObject!
+	bytes wordAtOffset: _OffsetOf_alpha put: anInteger!
 
 blue
-	"Answer the receiver's blue field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'blue' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #blue)!
+	^bytes wordAtOffset: _OffsetOf_blue!
 
-blue: anObject 
-	"Set the receiver's blue field to the value of anObject."
+blue: anInteger
+	"Set the receiver's 'blue' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #blue) put: anObject!
+	bytes wordAtOffset: _OffsetOf_blue put: anInteger!
 
 color: aColor 
 	self
@@ -56,14 +62,14 @@ color: aColor
 		blue: aColor blue << 8!
 
 green
-	"Answer the receiver's green field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'green' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #green)!
+	^bytes wordAtOffset: _OffsetOf_green!
 
-green: anObject 
-	"Set the receiver's green field to the value of anObject."
+green: anInteger
+	"Set the receiver's 'green' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #green) put: anObject!
+	bytes wordAtOffset: _OffsetOf_green put: anInteger!
 
 position: aPoint 
 	self
@@ -71,34 +77,34 @@ position: aPoint
 		y: aPoint y!
 
 red
-	"Answer the receiver's red field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'red' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #red)!
+	^bytes wordAtOffset: _OffsetOf_red!
 
-red: anObject 
-	"Set the receiver's red field to the value of anObject."
+red: anInteger
+	"Set the receiver's 'red' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #red) put: anObject!
+	bytes wordAtOffset: _OffsetOf_red put: anInteger!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_x!
 
-x: anObject 
-	"Set the receiver's x field to the value of anObject."
+x: anInteger
+	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #y)!
+	^bytes sdwordAtOffset: _OffsetOf_y!
 
-y: anObject 
-	"Set the receiver's y field to the value of anObject."
+y: anInteger
+	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
 !TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
 !TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
 !TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !
@@ -138,6 +144,10 @@ defineFields
 		defineField: #red type: WORDField new;
 		defineField: #green type: WORDField new;
 		defineField: #blue type: WORDField new;
-		defineField: #alpha type: WORDField new! !
+		defineField: #alpha type: WORDField new!
+
+getFieldNames
+	^#(#x #y #red #green #blue #alpha)! !
 !TRIVERTEX class categoriesFor: #defineFields!initializing!public! !
+!TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

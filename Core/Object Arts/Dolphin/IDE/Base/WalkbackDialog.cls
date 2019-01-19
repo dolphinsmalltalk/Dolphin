@@ -6,6 +6,8 @@ DialogView subclass: #WalkbackDialog
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WalkbackDialog guid: (GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
+WalkbackDialog addClassConstant: 'CallStackId' value: 16r3E9!
+WalkbackDialog addClassConstant: 'IconId' value: 16r3F1!
 WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.
@@ -21,7 +23,7 @@ Class Variables:
 	KillId		<integer> ID of the "kill" button.
 
 '!
-!WalkbackDialog categoriesForClass!Development!MVP-Views! !
+!WalkbackDialog categoriesForClass!MVP-Views! !
 !WalkbackDialog methodsFor!
 
 actualBackcolor
@@ -184,14 +186,16 @@ initialize
 		self initialize
 	"
 
-	Commands := LookupTable new.
-	Commands
-		at: IDCANCEL put: #terminate;
-		at: IDOK put: #debug;
-		at: 3 put: #resume;
-		at: 4 put: #copy.
-
-	CallStackId := 1001.
-	IconId := 1009! !
+	self addClassConstant: 'Commands'
+		value: (LookupTable new
+				at: IDCANCEL put: #terminate;
+				at: IDOK put: #debug;
+				at: 3 put: #resume;
+				at: 4 put: #copy;
+				shrink;
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'CallStackId' value: 1001.
+	self addClassConstant: 'IconId' value: 1009! !
 !WalkbackDialog class categoriesFor: #initialize!initializing!private! !
 

@@ -7,7 +7,7 @@ Folder subclass: #PackageFolder
 	classInstanceVariableNames: ''!
 PackageFolder guid: (GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
 PackageFolder comment: ''!
-!PackageFolder categoriesForClass!Development! !
+!PackageFolder categoriesForClass!MVP-Models! !
 !PackageFolder methodsFor!
 
 icon

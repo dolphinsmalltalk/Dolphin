@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #LOGPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_palNumEntries _OffsetOf_palPalEntry _OffsetOf_palVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGPALETTE guid: (GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+LOGPALETTE addClassConstant: '_OffsetOf_palNumEntries' value: 16r2!
+LOGPALETTE addClassConstant: '_OffsetOf_palPalEntry' value: 16r4!
+LOGPALETTE addClassConstant: '_OffsetOf_palVersion' value: 16r0!
 LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,30 +31,30 @@ struct tagLOGPALETTE {
 palNumEntries
 	"Answer the <Integer> value of the receiver's 'palNumEntries' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #palNumEntries)!
+	^bytes wordAtOffset: _OffsetOf_palNumEntries!
 
 palNumEntries: anInteger
 	"Set the receiver's 'palNumEntries' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #palNumEntries) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_palNumEntries put: anInteger!
 
 palPalEntry
 	"Answer the <StructureArray> value of the receiver's 'palPalEntry' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #palPalEntry)
+		fromAddress: bytes yourAddress + _OffsetOf_palPalEntry
 		length: self palNumEntries
 		elementClass: PALETTEENTRY!
 
 palVersion
 	"Answer the <Integer> value of the receiver's 'palVersion' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_palVersion!
 
 palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
 !LOGPALETTE categoriesFor: #palNumEntries!**compiled accessors**!public! !
 !LOGPALETTE categoriesFor: #palNumEntries:!**compiled accessors**!public! !
 !LOGPALETTE categoriesFor: #palPalEntry!**compiled accessors**!public! !
@@ -74,10 +77,20 @@ defineFields
 "
 
 	self
-		defineField: #palVersion type: WORDField new offset: 0;
-		defineField: #palNumEntries type: WORDField new offset: 2;
-		defineField: #palPalEntry type: (StructureArrayField type: PALETTEENTRY lengthField: #palNumEntries) beReadOnly offset: 4.
+		defineField: #palVersion
+			type: WORDField new
+			offset: 0;
+		defineField: #palNumEntries
+			type: WORDField new
+			offset: 2;
+		defineField: #palPalEntry
+			type: (StructureArrayField type: PALETTEENTRY
+					arrayLength: (ConformantArrayFieldLength lengthField: #palNumEntries)) beReadOnly
+			offset: 4.
 	self byteSize: 1028!
+
+getFieldNames
+	^#(#palVersion #palNumEntries #palPalEntry)!
 
 new
 	"Answer an instance of the receiver of sufficient size to hold 256 palette entries."
@@ -86,5 +99,6 @@ new
 		palNumEntries: 256;
 		yourself! !
 !LOGPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGPALETTE class categoriesFor: #new!instance creation!public! !
 

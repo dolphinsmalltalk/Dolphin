@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRCREATEPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihPal _OffsetOf_lgpl'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATEPALETTE guid: (GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
+EMRCREATEPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
+EMRCREATEPALETTE addClassConstant: '_OffsetOf_lgpl' value: 16rC!
 EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,27 +27,27 @@ struct tagEMRCREATEPALETTE {
 !EMRCREATEPALETTE methodsFor!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
+	^bytes dwordAtOffset: _OffsetOf_ihPal!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger!
 
 lgpl
-	"Answer the receiver's lgpl field as a Smalltalk object."
+	"Answer the <LOGPALETTE> value of the receiver's 'lgpl' field."
 
-	^LOGPALETTE fromAddress: bytes yourAddress + ##(self offsetOf: #lgpl)!
+	^LOGPALETTE fromAddress: bytes yourAddress + _OffsetOf_lgpl!
 
-lgpl: anObject 
-	"Set the receiver's lgpl field to the value of anObject."
+lgpl: aLOGPALETTE
+	"Set the receiver's 'lgpl' field to the value of the argument, aLOGPALETTE"
 
-	anObject 
+	aLOGPALETTE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lgpl) + 1)
-		to: ##((self offsetOf: #lgpl) + LOGPALETTE basicByteSize)
+		from: ##(_OffsetOf_lgpl + 1)
+		to: ##(_OffsetOf_lgpl + LOGPALETTE basicByteSize)
 		startingAt: 1! !
 !EMRCREATEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
 !EMRCREATEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
@@ -77,10 +79,14 @@ defineFields
 			offset: 12.
 	self byteSize: 20!
 
+getFieldNames
+	^#(#iType #nSize #ihPal #lgpl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPALETTE! !
 !EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
 

@@ -430,12 +430,14 @@ sniffEncoding
 	count := self
 				reset;
 				read: buf.
-	ituResult := DWORDBytes fromInteger: -1.
+	ituResult := (ByteArray newFixed: 4)
+				sdwordAtOffset: 0 put: -1;
+				yourself.
 	^((AdvApiLibrary default
 		isTextUnicode: buf
 		iSize: count
 		lpiResult: ituResult) and: 
-				[ituResult := ituResult value.
+				[ituResult := ituResult dwordAtOffset: 0.
 				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
 					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
@@ -581,6 +583,7 @@ commonPrefixOf: pathString1 and: pathString2
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: nil.
+	len == 0 ifTrue: [^''].
 	prefix := Utf16String newFixed: len.
 	ShlwapiLibrary default
 		pathCommonPrefix: path1

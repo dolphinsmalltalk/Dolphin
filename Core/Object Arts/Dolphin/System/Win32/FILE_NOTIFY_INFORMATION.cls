@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FILE_NOTIFY_INFORMATION guid: (GUID fromString: '{59c5b86e-902b-4194-ab8b-ef10d1cf539d}')!
+FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_Action' value: 16r4!
+FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_FileName' value: 16rC!
+FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_FileNameLength' value: 16r8!
+FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_NextEntryOffset' value: 16r0!
 FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,23 +33,22 @@ struct tagFILE_NOTIFY_INFORMATION {
 Action
 	"Answer the <Integer> value of the receiver's 'Action' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Action)!
+	^bytes dwordAtOffset: _OffsetOf_Action!
 
 FileName
 	"Answer the <Utf16String> value of the receiver's 'FileName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #FileName)
-		length: self FileNameLength >> 1!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_FileName length: self FileNameLength >> 1!
 
 FileNameLength
 	"Answer the <Integer> value of the receiver's 'FileNameLength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #FileNameLength)!
+	^bytes dwordAtOffset: _OffsetOf_FileNameLength!
 
 NextEntryOffset
 	"Answer the <Integer> value of the receiver's 'NextEntryOffset' field."
 
-	^bytes dwordAtOffset: 0! !
+	^bytes dwordAtOffset: _OffsetOf_NextEntryOffset! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #Action!**compiled accessors**!public! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #FileName!**compiled accessors**!public! !
 !FILE_NOTIFY_INFORMATION categoriesFor: #FileNameLength!**compiled accessors**!public! !
@@ -74,8 +77,12 @@ defineFields
 		defineField: #FileName type: (StringField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'FileNameLength >> 1')) beReadOnly offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#NextEntryOffset #Action #FileNameLength #FileName)!
+
 new
-	^self new: ##((self offsetOf: #FileName) + ((CRTConstants._MAX_PATH + 1) * 2))! !
+	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!FILE_NOTIFY_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
 

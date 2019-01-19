@@ -11,7 +11,7 @@ CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
-	^(MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary)
+	^((MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary) select: [:each | each isKindOf: ExternalMethod])
 		collect: [:each | each functionName]!
 
 minimumVmVersion

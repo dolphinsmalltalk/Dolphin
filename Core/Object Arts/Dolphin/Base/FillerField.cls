@@ -36,20 +36,6 @@ initialize
 	super initialize.
 	self beInaccessible!
 
-printAccessorExpression: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will read the value of this field from an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	^self shouldNotImplement!
-
-printMutatorBody: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an isntance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	^self shouldNotImplement!
-
 readFrom: anExternalStructure
 	"Private - Answer an object of the the type the receiver represents at the receiver's
 	offset in the <ExternalStructure> argument."
@@ -66,8 +52,6 @@ writeInto: anExternal value: anObject
 !FillerField categoriesFor: #byteSize:!accessing!private! !
 !FillerField categoriesFor: #canGenerateAccessors!private!testing! !
 !FillerField categoriesFor: #initialize!initializing!private! !
-!FillerField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
-!FillerField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !FillerField categoriesFor: #readFrom:!indirect accessing!private! !
 !FillerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

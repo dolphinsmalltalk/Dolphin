@@ -12,7 +12,7 @@ WORD is used to represent unsigned 16-bit integers in conjunction with Win32 API
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**16)-1'!
-!WORD categoriesForClass!External-Data-Structured! !
+!WORD categoriesForClass!External-Data-Unstructured! !
 !WORD methodsFor!
 
 asSignedInteger
@@ -32,14 +32,14 @@ unsignedValue: anInteger
 	bytes wordAtOffset: 0 put: anInteger!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject! !
+	bytes wordAtOffset: _OffsetOf_value put: anInteger! !
 !WORD categoriesFor: #asSignedInteger!converting!public! !
 !WORD categoriesFor: #asUnsignedInteger!converting!public! !
 !WORD categoriesFor: #unsignedValue:!accessing!public! !
@@ -48,11 +48,11 @@ value: anObject
 
 !WORD class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^WORDField!
+	self defineField: #value type: WORDField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -65,7 +65,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!WORD class categoriesFor: #fieldType!constants!development!private! !
+!WORD class categoriesFor: #defineFields!initializing!public! !
 !WORD class categoriesFor: #initialize!development!initializing!private! !
 !WORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

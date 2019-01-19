@@ -2,10 +2,30 @@
 
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bAnimation _OffsetOf_bCharSet _OffsetOf_bPitchAndFamily _OffsetOf_bRevAuthor _OffsetOf_bUnderlineColor _OffsetOf_bUnderlyineType _OffsetOf_crBackColor _OffsetOf_crTextColor _OffsetOf_dwCookie _OffsetOf_dwEffects _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_lcid _OffsetOf_sSpacing _OffsetOf_sStyle _OffsetOf_szFaceName _OffsetOf_wKerning _OffsetOf_wWeight _OffsetOf_yHeight _OffsetOf_yOffset'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 CHARFORMAT2W guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bAnimation' value: 16r71!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bCharSet' value: 16r18!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bPitchAndFamily' value: 16r19!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bRevAuthor' value: 16r72!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bUnderlineColor' value: 16r73!
+CHARFORMAT2W addClassConstant: '_OffsetOf_bUnderlyineType' value: 16r70!
+CHARFORMAT2W addClassConstant: '_OffsetOf_crBackColor' value: 16r60!
+CHARFORMAT2W addClassConstant: '_OffsetOf_crTextColor' value: 16r14!
+CHARFORMAT2W addClassConstant: '_OffsetOf_dwCookie' value: 16r68!
+CHARFORMAT2W addClassConstant: '_OffsetOf_dwEffects' value: 16r8!
+CHARFORMAT2W addClassConstant: '_OffsetOf_dwMask' value: 16r4!
+CHARFORMAT2W addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+CHARFORMAT2W addClassConstant: '_OffsetOf_lcid' value: 16r64!
+CHARFORMAT2W addClassConstant: '_OffsetOf_sSpacing' value: 16r5C!
+CHARFORMAT2W addClassConstant: '_OffsetOf_sStyle' value: 16r6C!
+CHARFORMAT2W addClassConstant: '_OffsetOf_szFaceName' value: 16r1A!
+CHARFORMAT2W addClassConstant: '_OffsetOf_wKerning' value: 16r6E!
+CHARFORMAT2W addClassConstant: '_OffsetOf_wWeight' value: 16r5A!
+CHARFORMAT2W addClassConstant: '_OffsetOf_yHeight' value: 16rC!
+CHARFORMAT2W addClassConstant: '_OffsetOf_yOffset' value: 16r10!
 CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
@@ -15,22 +35,22 @@ The CHARFORMAT2W structure contains information about character formatting in a 
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bAnimation)!
+	^bytes byteAtOffset: _OffsetOf_bAnimation!
 
 bAnimation: anInteger
 	"Set the receiver's 'bAnimation' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bAnimation) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bAnimation put: anInteger!
 
 bCharSet
 	"Answer the <Integer> value of the receiver's 'bCharSet' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bCharSet)!
+	^bytes byteAtOffset: _OffsetOf_bCharSet!
 
 bCharSet: anInteger
 	"Set the receiver's 'bCharSet' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bCharSet) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bCharSet put: anInteger!
 
 beBold
 	"Set the character bold effect on."
@@ -71,42 +91,42 @@ beUnderlined
 bPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'bPitchAndFamily' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bPitchAndFamily)!
+	^bytes byteAtOffset: _OffsetOf_bPitchAndFamily!
 
 bPitchAndFamily: anInteger
 	"Set the receiver's 'bPitchAndFamily' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bPitchAndFamily) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bPitchAndFamily put: anInteger!
 
 bRevAuthor
 	"Answer the <Integer> value of the receiver's 'bRevAuthor' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bRevAuthor)!
+	^bytes byteAtOffset: _OffsetOf_bRevAuthor!
 
 bRevAuthor: anInteger
 	"Set the receiver's 'bRevAuthor' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bRevAuthor) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bRevAuthor put: anInteger!
 
 bUnderlineColor
 	"Answer the <Integer> value of the receiver's 'bUnderlineColor' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bUnderlineColor)!
+	^bytes byteAtOffset: _OffsetOf_bUnderlineColor!
 
 bUnderlineColor: anInteger
 	"Set the receiver's 'bUnderlineColor' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bUnderlineColor) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bUnderlineColor put: anInteger!
 
 bUnderlyineType
 	"Answer the <Integer> value of the receiver's 'bUnderlyineType' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bUnderlyineType)!
+	^bytes byteAtOffset: _OffsetOf_bUnderlyineType!
 
 bUnderlyineType: anInteger
 	"Set the receiver's 'bUnderlyineType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bUnderlyineType) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bUnderlyineType put: anInteger!
 
 characterSet
 	^(self maskAny: CFM_CHARSET) ifTrue: [self bCharSet]!
@@ -131,47 +151,47 @@ color: aColor
 crBackColor
 	"Answer the <Integer> value of the receiver's 'crBackColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crBackColor)!
+	^bytes dwordAtOffset: _OffsetOf_crBackColor!
 
 crBackColor: anInteger
 	"Set the receiver's 'crBackColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crBackColor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_crBackColor put: anInteger!
 
 crTextColor
 	"Answer the <Integer> value of the receiver's 'crTextColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crTextColor)!
+	^bytes dwordAtOffset: _OffsetOf_crTextColor!
 
 crTextColor: anInteger
 	"Set the receiver's 'crTextColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crTextColor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_crTextColor put: anInteger!
 
 dwEffects
 	"Answer the <Integer> value of the receiver's 'dwEffects' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwEffects)!
+	^bytes dwordAtOffset: _OffsetOf_dwEffects!
 
 dwEffects: anInteger
 	"Set the receiver's 'dwEffects' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwEffects) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwEffects put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMask)!
+	^bytes dwordAtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 effectsAny: anInteger
 	"Private - Answer true if the effects member contains the bit flags represented by anInteger."
@@ -259,12 +279,12 @@ isUnderlined: aBoolean
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
+	^bytes dwordAtOffset: _OffsetOf_lcid!
 
 lcid: anInteger
 	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcid) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcid put: anInteger!
 
 logFont
 	"Answer a <LOGFONTW> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
@@ -365,27 +385,27 @@ size: twips
 sSpacing
 	"Answer the <Integer> value of the receiver's 'sSpacing' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #sSpacing)!
+	^bytes swordAtOffset: _OffsetOf_sSpacing!
 
 sSpacing: anInteger
 	"Set the receiver's 'sSpacing' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sSpacing) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_sSpacing put: anInteger!
 
 sStyle
 	"Answer the <Integer> value of the receiver's 'sStyle' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #sStyle)!
+	^bytes swordAtOffset: _OffsetOf_sStyle!
 
 sStyle: anInteger
 	"Set the receiver's 'sStyle' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sStyle) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_sStyle put: anInteger!
 
 szFaceName
 	"Answer the <Utf16String> value of the receiver's 'szFaceName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szFaceName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szFaceName!
 
 szFaceName: anUtf16String
 	"Set the receiver's 'szFaceName' field to the value of the argument, anUtf16String"
@@ -394,40 +414,40 @@ szFaceName: anUtf16String
 	size := anUtf16String byteSize - 2 min: ##(31 * 2).
 	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szFaceName) + 1)
-		to: ##(self offsetOf: #szFaceName) + size
+		from: ##(_OffsetOf_szFaceName + 1)
+		to: _OffsetOf_szFaceName + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #szFaceName) + size put: 0!
+	bytes wordAtOffset: _OffsetOf_szFaceName + size put: 0!
 
 wKerning
 	"Answer the <Integer> value of the receiver's 'wKerning' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wKerning)!
+	^bytes wordAtOffset: _OffsetOf_wKerning!
 
 wKerning: anInteger
 	"Set the receiver's 'wKerning' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wKerning) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wKerning put: anInteger!
 
 wWeight
 	"Answer the <Integer> value of the receiver's 'wWeight' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wWeight)!
+	^bytes wordAtOffset: _OffsetOf_wWeight!
 
 wWeight: anInteger
 	"Set the receiver's 'wWeight' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wWeight) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wWeight put: anInteger!
 
 yHeight
 	"Answer the <Integer> value of the receiver's 'yHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_yHeight!
 
 yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yHeight) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_yHeight put: anInteger! !
 !CHARFORMAT2W categoriesFor: #bAnimation!**compiled accessors**!public! !
 !CHARFORMAT2W categoriesFor: #bAnimation:!**compiled accessors**!public! !
 !CHARFORMAT2W categoriesFor: #bCharSet!**compiled accessors**!public! !
@@ -529,7 +549,11 @@ defineFields
 fromChooseFont: aCHOOSEFRONT 
 	^(self new)
 		populateFromChooseFont: aCHOOSEFRONT;
-		yourself! !
+		yourself!
+
+getFieldNames
+	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
 !CHARFORMAT2W class categoriesFor: #defineFields!initializing!public! !
 !CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
+!CHARFORMAT2W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

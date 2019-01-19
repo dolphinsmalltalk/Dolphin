@@ -12,7 +12,7 @@ BYTE is used to represent unsigned 8-bit integers in conjunction with Win32 APIs
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**8)-1	(i.e. 0 to: 255).'!
-!BYTE categoriesForClass!External-Data-Structured! !
+!BYTE categoriesForClass!External-Data-Unstructured! !
 !BYTE methodsFor!
 
 asSignedInteger
@@ -33,12 +33,12 @@ unsignedValue: anInteger
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger! !
+	bytes byteAtOffset: _OffsetOf_value put: anInteger! !
 !BYTE categoriesFor: #asSignedInteger!converting!public! !
 !BYTE categoriesFor: #asUnsignedInteger!converting!public! !
 !BYTE categoriesFor: #unsignedValue:!accessing!public! !
@@ -47,11 +47,11 @@ value: anInteger
 
 !BYTE class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
-	structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^BYTEField!
+	self defineField: #value type: BYTEField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -64,7 +64,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!BYTE class categoriesFor: #fieldType!constants!development!private! !
+!BYTE class categoriesFor: #defineFields!initializing!public! !
 !BYTE class categoriesFor: #initialize!development!initializing!private! !
 !BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

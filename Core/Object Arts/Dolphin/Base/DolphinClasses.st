@@ -162,9 +162,9 @@ Object variableByteSubclass: #GUID
 	classInstanceVariableNames: ''!
 Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
+	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: 'maxIdleSleep'!
+	classInstanceVariableNames: ''!
 Object subclass: #InstructionInterpreter
 	instanceVariableNames: 'dispatcher'
 	classVariableNames: ''
@@ -200,11 +200,6 @@ Object subclass: #Message
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Object subclass: #MessageBoxAbstract
-	instanceVariableNames: 'text caption owner'
-	classVariableNames: 'DefaultCaptions IconStyles'
-	poolDictionaries: 'MessageBoxConstants'
-	classInstanceVariableNames: ''!
 Object subclass: #MessageSequenceAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -236,8 +231,8 @@ Object subclass: #ObjectRegistry
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Package
-	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
-	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
+	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
+	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #PackageManager
@@ -342,11 +337,6 @@ Object subclass: #UndefinedObject
 	classInstanceVariableNames: ''!
 Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArrayFieldLength subclass: #ConformantArrayFieldLength
-	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -975,11 +965,6 @@ CompilerNotification subclass: #CompilerWarningNotification
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Warning subclass: #ConfirmationRequiredWarning
-	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExceptionHandlerAbstract subclass: #ExceptionHandler
 	instanceVariableNames: 'selector handler'
 	classVariableNames: ''
@@ -1072,22 +1057,17 @@ CRTLibrary subclass: #CRTLibraryNonBlocking
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cause _OffsetOf_enable _OffsetOf_flags _OffsetOf_operand1 _OffsetOf_operand2 _OffsetOf_result _OffsetOf_status'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_filler _OffsetOf_flags _OffsetOf_value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #CPINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #DOUBLE
-	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_codepage _OffsetOf_CodePageName _OffsetOf_DefaultChar _OffsetOf_LeadByte _OffsetOf_MaxCharSize _OffsetOf_UnicodeDefaultChar'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #ExternalArray
@@ -1095,19 +1075,9 @@ ExternalStructure subclass: #ExternalArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #ExternalInteger
+ExternalStructure subclass: #ExternalScalar
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #FLOAT
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #LPVOID
-	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #StructurePointer
@@ -1190,6 +1160,26 @@ UINT_PTRArray subclass: #PointerArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalScalar subclass: #DOUBLE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalScalar subclass: #ExternalInteger
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalScalar subclass: #FLOAT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalScalar subclass: #LPVOID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalInteger subclass: #BYTE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1207,7 +1197,7 @@ ExternalInteger subclass: #HRESULT
 	classInstanceVariableNames: ''!
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_highPart _OffsetOf_lowPart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalInteger subclass: #UINT_PTR
@@ -1277,52 +1267,52 @@ LPVOID subclass: #LPWSTR
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #EXCEPTION_RECORD
 	instanceVariableNames: 'info'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ExceptionAddress _OffsetOf_ExceptionCode _OffsetOf_ExceptionFlags _OffsetOf_ExceptionInformation _OffsetOf_ExceptionRecord _OffsetOf_NumberParameters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #FILETIME
 	instanceVariableNames: ''
-	classVariableNames: 'UnixEpoch'
+	classVariableNames: '_OffsetOf_dwHighDateTime _OffsetOf_dwLowDateTime UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #MSG
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_message _OffsetOf_time _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #MSGBOXPARAMSW
 	instanceVariableNames: 'text caption'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwContextHelpId _OffsetOf_dwLanguageId _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpfnMsgBoxCallback _OffsetOf_lpszCaption _OffsetOf_lpszIcon _OffsetOf_lpszText'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwBuildNumber _OffsetOf_dwMajorVersion _OffsetOf_dwMinorVersion _OffsetOf_dwPlatformId _OffsetOf_dwSize _OffsetOf_szCSDVersion _OffsetOf_wProductType _OffsetOf_wReserved _OffsetOf_wServicePackMajor _OffsetOf_wServicePackMinor _OffsetOf_wSuiteMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #SECURITY_ATTRIBUTES
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bInheritHandle _OffsetOf_dwSize _OffsetOf_lpSecurityDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #SYSTEMTIME
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_wDay _OffsetOf_wDayOfWeek _OffsetOf_wHour _OffsetOf_wMilliseconds _OffsetOf_wMinute _OffsetOf_wMonth _OffsetOf_wSecond _OffsetOf_wYear'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TIME_ZONE_INFORMATION
 	instanceVariableNames: 'zoneId'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bias _OffsetOf_daylightBias _OffsetOf_daylightDate _OffsetOf_daylightName _OffsetOf_standardBias _OffsetOf_standardDate _OffsetOf_standardName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #VS_FIXEDFILEINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFileDateLS _OffsetOf_dwFileDateMS _OffsetOf_dwFileFlags _OffsetOf_dwFileFlagsMask _OffsetOf_dwFileOS _OffsetOf_dwFileSubtype _OffsetOf_dwFileType _OffsetOf_dwFileVersionLS _OffsetOf_dwFileVersionMS _OffsetOf_dwProductVersionLS _OffsetOf_dwProductVersionMS _OffsetOf_dwSignature _OffsetOf_dwStrucVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cAlternateFileName _OffsetOf_cFileName _OffsetOf_dwFileAttributes _OffsetOf_dwReserved0 _OffsetOf_dwReserved1 _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 FILETIME subclass: #LocalFILETIME
@@ -1363,11 +1353,6 @@ RelativeFileLocator subclass: #ImageRelativeFileLocator
 RelativeFileLocator subclass: #InstallRelativeFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-RelativeFileLocator subclass: #PackageRelativeFileLocator
-	instanceVariableNames: 'packageName'
-	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 InstructionInterpreter subclass: #MessageSendCollector
@@ -1464,11 +1449,6 @@ MessageSendAbstract subclass: #MessageSend
 	instanceVariableNames: 'receiver'
 	classVariableNames: 'EmptySend'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MessageBoxAbstract subclass: #MessageBox
-	instanceVariableNames: 'button uniqueId flags icon styleFlags'
-	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
-	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MessageSequenceAbstract subclass: #EventMessageSequence
 	instanceVariableNames: 'receivers messages tally'

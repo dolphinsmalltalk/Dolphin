@@ -605,8 +605,6 @@ setClassVariablesOf: aClass
 	"Private - Set class variables of aClass to those described by
 	the receiver's classVariables inst var."
 
-	| oldClassVars |
-	oldClassVars := aClass classVarNames.
 	(classVariables notNil and: [aClass setClassVarNames: self classVariables])
 		ifTrue: [self recompilationRequired: true]!
 
@@ -635,8 +633,7 @@ setSharedPoolsOf: aClass
 	newPoolNames := self sharedPools.
 	(newPoolNames noDifference: oldPoolNames)
 		ifFalse: 
-			[| s |
-			aClass setSharedPoolNames: newPoolNames.
+			[aClass setSharedPoolNames: newPoolNames.
 			self recompilationRequired: true]!
 
 sharedPools
@@ -1222,25 +1219,21 @@ renameClass: aClass to: aString
 		rename
 !
 
-validateClassVarName: aString using: aCollection 
+validateClassVarName: aString using: aCollection
 	"Private - Ensure that the proposed class variable name is not a
 	reserved word and does not duplicate a name defined in aCollecton."
 
-	(self isValidIdentifier: aString) 
-		ifFalse: [self error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
-	(aCollection includes: aString) 
+	| first |
+	(self isValidIdentifier: aString)
+		ifFalse: 
+			[self
+				error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+	(aCollection includes: aString)
 		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
-	aString first isUppercase ifTrue: [^self].
-	aString first == $_ 
-		ifTrue: 
-			[^Smalltalk at: #SmalltalkSystem
-				ifPresent: 
-					[:c | 
-					c current isOAD 
-						ifFalse: 
-							[Warning signal: ('Identifiers beginning with an underscore, such as <1p>, are reserved for system use' expandMacrosWith: aString)]]].
-	Warning 
-		signal: ('Proposed class variable <1p> should start with an uppercase letter.' expandMacrosWith: aString)!
+	first := aString first.
+	(first isUppercase or: [first == $_]) ifTrue: [^self].
+	Warning signal: ('Proposed class variable <1p> should start with an uppercase letter.'
+				expandMacrosWith: aString)!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not

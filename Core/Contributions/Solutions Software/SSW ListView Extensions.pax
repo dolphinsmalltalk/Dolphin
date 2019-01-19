@@ -45,12 +45,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base').
 
 package!
 
@@ -63,7 +62,7 @@ Object subclass: #ColumnHeader
 	classInstanceVariableNames: ''!
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ControlView subclass: #HeaderView

@@ -2,10 +2,11 @@
 
 HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_MaxBandwidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BANDWIDTH_LIMIT_INFO guid: (GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
+HTTP_BANDWIDTH_LIMIT_INFO addClassConstant: '_OffsetOf_MaxBandwidth' value: 16r4!
 HTTP_BANDWIDTH_LIMIT_INFO comment: '<HTTP_BANDWIDTH_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,12 +28,12 @@ struct tagHTTP_BANDWIDTH_LIMIT_INFO {
 MaxBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxBandwidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #MaxBandwidth)!
+	^bytes dwordAtOffset: _OffsetOf_MaxBandwidth!
 
 MaxBandwidth: anInteger
 	"Set the receiver's 'MaxBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #MaxBandwidth) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_MaxBandwidth put: anInteger!
 
 value
 	^self Present ifTrue: [self MaxBandwidth]!
@@ -71,12 +72,16 @@ defineFields
 		defineField: #MaxBandwidth type: DWORDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Present #MaxBandwidth)!
+
 maxBandwidth: anInteger
 	^self new value: anInteger!
 
 qosType
 	^HttpQosSettingTypeBandwidth! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #maxBandwidth:!public! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
 

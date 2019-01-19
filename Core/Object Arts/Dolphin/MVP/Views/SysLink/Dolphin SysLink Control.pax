@@ -37,14 +37,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -52,17 +51,17 @@ package!
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommandButton subclass: #LinkButton

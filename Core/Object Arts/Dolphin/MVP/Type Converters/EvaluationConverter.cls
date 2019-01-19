@@ -14,7 +14,7 @@ Right to left: Converts from an object to its #storeString, which is often (but 
 leftToRight: aStringOrNil 
 	"Answer the result of evaluating aStringOrNil with the compiler"
 
-	^aStringOrNil notNil ifTrue: [Compiler evaluate: aStringOrNil logged: false]!
+	^aStringOrNil notNil ifTrue: [Compiler evaluate: aStringOrNil]!
 
 rightToLeft: anObject 
 	"Private - Answers the #storeString of anObject, which can often be converted back to an equal object by evaluating it."

@@ -23,7 +23,7 @@ nextLink: aLink
 
 	^nextLink := aLink! !
 !Link categoriesFor: #nextLink!accessing!public! !
-!Link categoriesFor: #nextLink:!accessing!public! !
+!Link categoriesFor: #nextLink:!accessing!not an aspect!public! !
 
 !Link class methodsFor!
 

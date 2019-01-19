@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #DOUBLE
+ExternalScalar subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -15,23 +15,16 @@ asFloat
 
 	^(bytes doubleAtOffset: 0)!
 
-displayOn: target
-	"Append a textual representation of the receiver onto the <puttableStream> argument,
-	target, in the format that an end-user might want to see it."
-
-	target display: (self isNull ifFalse: [self value])!
-
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'value' field."
 
-	^bytes doubleAtOffset: 0!
+	^bytes doubleAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: aFloat
+	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
-	bytes doubleAtOffset: 0 put: anObject! !
+	bytes doubleAtOffset: _OffsetOf_value put: aFloat! !
 !DOUBLE categoriesFor: #asFloat!converting!public! !
-!DOUBLE categoriesFor: #displayOn:!printing!private! !
 !DOUBLE categoriesFor: #value!**compiled accessors**!public! !
 !DOUBLE categoriesFor: #value:!**compiled accessors**!public! !
 
@@ -43,7 +36,7 @@ defineFields
 		DOUBLE compileDefinition
 	"
 
-	self defineField: #value type: DOUBLEField new!
+	self defineField: #value type: DOUBLEField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.

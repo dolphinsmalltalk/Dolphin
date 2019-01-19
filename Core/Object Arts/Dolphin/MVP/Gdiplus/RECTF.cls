@@ -2,10 +2,14 @@
 
 ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RECTF guid: (GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
+RECTF addClassConstant: '_OffsetOf_height' value: 16rC!
+RECTF addClassConstant: '_OffsetOf_width' value: 16r8!
+RECTF addClassConstant: '_OffsetOf_x' value: 16r0!
+RECTF addClassConstant: '_OffsetOf_y' value: 16r4!
 RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -29,14 +33,14 @@ asRectangle
 	^self x @ self y extent: self width @ self height!
 
 height
-	"Answer the receiver's height field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'height' field."
 
-	^(bytes floatAtOffset: 12)!
+	^bytes floatAtOffset: _OffsetOf_height!
 
-height: anObject
-	"Set the receiver's height field to the value of anObject."
+height: aFloat
+	"Set the receiver's 'height' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 12 put: anObject!
+	bytes floatAtOffset: _OffsetOf_height put: aFloat!
 
 left
 	^self x!
@@ -45,34 +49,34 @@ top
 	^self y!
 
 width
-	"Answer the receiver's width field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'width' field."
 
-	^(bytes floatAtOffset: 8)!
+	^bytes floatAtOffset: _OffsetOf_width!
 
-width: anObject
-	"Set the receiver's width field to the value of anObject."
+width: aFloat
+	"Set the receiver's 'width' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 8 put: anObject!
+	bytes floatAtOffset: _OffsetOf_width put: aFloat!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'x' field."
 
-	^(bytes floatAtOffset: 0)!
+	^bytes floatAtOffset: _OffsetOf_x!
 
-x: anObject
-	"Set the receiver's x field to the value of anObject."
+x: aFloat
+	"Set the receiver's 'x' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: anObject!
+	bytes floatAtOffset: _OffsetOf_x put: aFloat!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'y' field."
 
-	^(bytes floatAtOffset: 4)!
+	^bytes floatAtOffset: _OffsetOf_y!
 
-y: anObject
-	"Set the receiver's y field to the value of anObject."
+y: aFloat
+	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 4 put: anObject! !
+	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 !RECTF categoriesFor: #asRectangle!converting!public! !
 !RECTF categoriesFor: #height!**compiled accessors**!public! !
 !RECTF categoriesFor: #height:!**compiled accessors**!public! !
@@ -115,6 +119,9 @@ fromRectangle: aRect
 		height: aRect height;
 		yourself!
 
+getFieldNames
+	^#(#x #y #width #height)!
+
 left: left top: top right: right bottom: bottom
 	"Answer a new instance of the receiver with the specified position corner positions."
 
@@ -135,20 +142,11 @@ left: left top: top width: width height: height
 				yourself)!
 
 newBuffer
-	^self basicNew bytes: (ByteArray newFixed: 16)!
-
-origin: newOrigin extent: newExtent
-	"Answer a new instance of the receiver with the specified origin and extent"
-
-	^self
-		left: newOrigin x
-		top: newOrigin y
-		width: newExtent x
-		height: newExtent y! !
+	^self basicNew bytes: (ByteArray newFixed: 16)! !
 !RECTF class categoriesFor: #defineFields!initializing!public! !
 !RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
+!RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
 !RECTF class categoriesFor: #newBuffer!instance creation!public! !
-!RECTF class categoriesFor: #origin:extent:!instance creation!public! !
 

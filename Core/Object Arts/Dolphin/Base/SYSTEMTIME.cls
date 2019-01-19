@@ -2,10 +2,18 @@
 
 Win32Structure subclass: #SYSTEMTIME
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_wDay _OffsetOf_wDayOfWeek _OffsetOf_wHour _OffsetOf_wMilliseconds _OffsetOf_wMinute _OffsetOf_wMonth _OffsetOf_wSecond _OffsetOf_wYear'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SYSTEMTIME guid: (GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
+SYSTEMTIME addClassConstant: '_OffsetOf_wDay' value: 16r6!
+SYSTEMTIME addClassConstant: '_OffsetOf_wDayOfWeek' value: 16r4!
+SYSTEMTIME addClassConstant: '_OffsetOf_wHour' value: 16r8!
+SYSTEMTIME addClassConstant: '_OffsetOf_wMilliseconds' value: 16rE!
+SYSTEMTIME addClassConstant: '_OffsetOf_wMinute' value: 16rA!
+SYSTEMTIME addClassConstant: '_OffsetOf_wMonth' value: 16r2!
+SYSTEMTIME addClassConstant: '_OffsetOf_wSecond' value: 16rC!
+SYSTEMTIME addClassConstant: '_OffsetOf_wYear' value: 16r0!
 SYSTEMTIME comment: ''!
 !SYSTEMTIME categoriesForClass!Win32-Structs! !
 !SYSTEMTIME methodsFor!
@@ -33,99 +41,88 @@ displayOn: aStream
 		nextPutAll: (lc printTime: self format: nil flags: 0)
 !
 
-printOn: aStream
-	"Append a debugging representation of the receiver to aStream."
-
-	aStream 
-		basicPrint: self;
-		nextPut: $(; 
-		display: self; 
-		nextPut: $)
-!
-
 wDay
-	"Answer the receiver's wDay field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wDay' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wDay)!
+	^bytes wordAtOffset: _OffsetOf_wDay!
 
-wDay: anObject 
-	"Set the receiver's wDay field to the value of anObject."
+wDay: anInteger
+	"Set the receiver's 'wDay' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wDay) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wDay put: anInteger!
 
 wDayOfWeek
-	"Answer the receiver's wDayOfWeek field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wDayOfWeek' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wDayOfWeek)!
+	^bytes wordAtOffset: _OffsetOf_wDayOfWeek!
 
-wDayOfWeek: anObject 
-	"Set the receiver's wDayOfWeek field to the value of anObject."
+wDayOfWeek: anInteger
+	"Set the receiver's 'wDayOfWeek' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wDayOfWeek) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wDayOfWeek put: anInteger!
 
 wHour
-	"Answer the receiver's wHour field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wHour' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wHour)!
+	^bytes wordAtOffset: _OffsetOf_wHour!
 
-wHour: anObject 
-	"Set the receiver's wHour field to the value of anObject."
+wHour: anInteger
+	"Set the receiver's 'wHour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wHour) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wHour put: anInteger!
 
 wMilliseconds
-	"Answer the receiver's wMilliseconds field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMilliseconds' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMilliseconds)!
+	^bytes wordAtOffset: _OffsetOf_wMilliseconds!
 
-wMilliseconds: anObject 
-	"Set the receiver's wMilliseconds field to the value of anObject."
+wMilliseconds: anInteger
+	"Set the receiver's 'wMilliseconds' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wMilliseconds) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wMilliseconds put: anInteger!
 
 wMinute
-	"Answer the receiver's wMinute field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMinute' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMinute)!
+	^bytes wordAtOffset: _OffsetOf_wMinute!
 
-wMinute: anObject 
-	"Set the receiver's wMinute field to the value of anObject."
+wMinute: anInteger
+	"Set the receiver's 'wMinute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wMinute) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wMinute put: anInteger!
 
 wMonth
-	"Answer the receiver's wMonth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMonth' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMonth)!
+	^bytes wordAtOffset: _OffsetOf_wMonth!
 
-wMonth: anObject 
-	"Set the receiver's wMonth field to the value of anObject."
+wMonth: anInteger
+	"Set the receiver's 'wMonth' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wMonth) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wMonth put: anInteger!
 
 wSecond
-	"Answer the receiver's wSecond field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wSecond' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wSecond)!
+	^bytes wordAtOffset: _OffsetOf_wSecond!
 
-wSecond: anObject 
-	"Set the receiver's wSecond field to the value of anObject."
+wSecond: anInteger
+	"Set the receiver's 'wSecond' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wSecond) put: anObject!
+	bytes wordAtOffset: _OffsetOf_wSecond put: anInteger!
 
 wYear
-	"Answer the receiver's wYear field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wYear' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_wYear!
 
-wYear: anObject 
-	"Set the receiver's wYear field to the value of anObject."
+wYear: anInteger
+	"Set the receiver's 'wYear' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject! !
+	bytes wordAtOffset: _OffsetOf_wYear put: anInteger! !
 !SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
 !SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
 !SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
-!SYSTEMTIME categoriesFor: #printOn:!development!printing!public! !
 !SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
@@ -173,6 +170,9 @@ fromFILETIME: aFILETIME
 
 	^aFILETIME asSYSTEMTIME!
 
+getFieldNames
+	^#(#wYear #wMonth #wDayOfWeek #wDay #wHour #wMinute #wSecond #wMilliseconds)!
+
 now
 	"Private - Answer the current Windows local time"
 	
@@ -191,6 +191,7 @@ nowUTC
 !SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
 !SYSTEMTIME class categoriesFor: #defineFields!initializing!public! !
 !SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
+!SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SYSTEMTIME class categoriesFor: #now!instance creation!private! !
 !SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
 

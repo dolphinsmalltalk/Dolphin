@@ -59,9 +59,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin').
 
 package!
 
@@ -204,17 +203,17 @@ ExternalLibrary subclass: #ODBCLibrary
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #ODBCDATE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_day _OffsetOf_month _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #ODBCTIME
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hour _OffsetOf_minute _OffsetOf_second'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_month _OffsetOf_second _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

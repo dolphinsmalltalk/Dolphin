@@ -12,7 +12,7 @@ Instance Variables:
 	selectionIndex		<integer> holding the index of the currently selected menu item.
 	painter			<menuPainter> responsible for rendering the emulated menu being composed.
 '!
-!MenuComposerView categoriesForClass!Development!MVP-Views! !
+!MenuComposerView categoriesForClass!MVP-Views! !
 !MenuComposerView methodsFor!
 
 arena
@@ -202,5 +202,5 @@ publishedEventsOfInstances
 		yourself.
 ! !
 !MenuComposerView class categoriesFor: #icon!constants!public! !
-!MenuComposerView class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!MenuComposerView class categoriesFor: #publishedEventsOfInstances!events!public! !
 

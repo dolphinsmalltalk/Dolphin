@@ -28,7 +28,6 @@ parseExpression: aString in: aClass
 		compileForEvaluation: aString
 		in: aClass
 		evaluationPools: #()
-		logged: false
 		flags: self defaultCompileFlags!
 
 parseMethod: aString in: aClass 
@@ -90,7 +89,6 @@ testErrorsBadPools
 				compileForEvaluation: source
 				in: UndefinedObject
 				evaluationPools: 'Bad pools'
-				logged: false
 				flags: self defaultCompileFlags]
 		raise: self compilationErrorClass
 		matching: 

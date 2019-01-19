@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRGLSRECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRGLSRECORD guid: (GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
+EMRGLSRECORD addClassConstant: '_OffsetOf_cbData' value: 16r8!
+EMRGLSRECORD addClassConstant: '_OffsetOf_Data' value: 16rC!
 EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,30 +27,31 @@ struct tagEMRGLSRECORD {
 !EMRGLSRECORD methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self cbData * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
-		startingAt: 1! !
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
+		startingAt: 1.
+	self cbData: anExternalArray size! !
 !EMRGLSRECORD categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRGLSRECORD categoriesFor: #cbData:!**compiled accessors**!public! !
 !EMRGLSRECORD categoriesFor: #Data!**compiled accessors**!public! !
@@ -79,10 +82,14 @@ defineFields
 			offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSRECORD! !
 !EMRGLSRECORD class categoriesFor: #defineFields!initializing!public! !
+!EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
 

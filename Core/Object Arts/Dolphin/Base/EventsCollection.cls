@@ -55,7 +55,7 @@ shrink
 
 	mutex critical: 
 			[| empty |
-			empty := IdentitySet new.
+			empty := OrderedCollection new.
 			self 
 				keysAndValuesDo: [:eachKey :eachValue | (eachValue isNil or: [eachValue isEmpty]) ifTrue: [empty add: eachKey]].
 			self removeAllKeys: empty]!

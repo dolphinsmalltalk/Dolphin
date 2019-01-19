@@ -2,10 +2,23 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AccessToken _OffsetOf_AuthStatus _OffsetOf_AuthType _OffsetOf_ContextAttributes _OffsetOf_Flags _OffsetOf_MutualAuthDataLength _OffsetOf_PackageNameLength _OffsetOf_PackedContext _OffsetOf_PackedContextLength _OffsetOf_PackedContextType _OffsetOf_pMutualAuthData _OffsetOf_pPackageName _OffsetOf_SecStatus'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_AUTH_INFO guid: (GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AccessToken' value: 16r10!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthStatus' value: 16r0!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthType' value: 16rC!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_ContextAttributes' value: 16r14!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_Flags' value: 16r8!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_MutualAuthDataLength' value: 16r24!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackageNameLength' value: 16r2C!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContext' value: 16r20!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextLength' value: 16r18!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextType' value: 16r1C!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pMutualAuthData' value: 16r28!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pPackageName' value: 16r30!
+HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_SecStatus' value: 16r4!
 HTTP_REQUEST_AUTH_INFO comment: '<HTTP_REQUEST_AUTH_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -38,138 +51,138 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 AccessToken
 	"Answer the <ExternalHandle> value of the receiver's 'AccessToken' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #AccessToken)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_AccessToken) asExternalHandle!
 
 AccessToken: anExternalHandle
 	"Set the receiver's 'AccessToken' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #AccessToken) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_AccessToken put: anExternalHandle!
 
 AuthStatus
 	"Answer the <Integer> value of the receiver's 'AuthStatus' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_AuthStatus!
 
 AuthStatus: anInteger
 	"Set the receiver's 'AuthStatus' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_AuthStatus put: anInteger!
 
 AuthType
 	"Answer the <Integer> value of the receiver's 'AuthType' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #AuthType)!
+	^bytes sdwordAtOffset: _OffsetOf_AuthType!
 
 AuthType: anInteger
 	"Set the receiver's 'AuthType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #AuthType) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_AuthType put: anInteger!
 
 ContextAttributes
 	"Answer the <Integer> value of the receiver's 'ContextAttributes' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ContextAttributes)!
+	^bytes dwordAtOffset: _OffsetOf_ContextAttributes!
 
 ContextAttributes: anInteger
 	"Set the receiver's 'ContextAttributes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ContextAttributes) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ContextAttributes put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
 
 MutualAuthDataLength
 	"Private - Answer the <Integer> value of the receiver's 'MutualAuthDataLength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #MutualAuthDataLength)!
+	^bytes dwordAtOffset: _OffsetOf_MutualAuthDataLength!
 
 MutualAuthDataLength: anInteger
 	"Set the receiver's 'MutualAuthDataLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #MutualAuthDataLength) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_MutualAuthDataLength put: anInteger!
 
 PackageNameLength
 	"Private - Answer the <Integer> value of the receiver's 'PackageNameLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #PackageNameLength)!
+	^bytes wordAtOffset: _OffsetOf_PackageNameLength!
 
 PackageNameLength: anInteger
 	"Set the receiver's 'PackageNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #PackageNameLength) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_PackageNameLength put: anInteger!
 
 PackedContext
 	"Answer the <ExternalArray> value of the receiver's 'PackedContext' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #PackedContext))
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_PackedContext)
 		length: self PackedContextLength!
 
 PackedContext: anExternalArray
 	"Set the receiver's 'PackedContext' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #PackedContext) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_PackedContext put: anExternalArray yourAddress.
 	self PackedContextLength: anExternalArray size!
 
 PackedContextLength
 	"Private - Answer the <Integer> value of the receiver's 'PackedContextLength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #PackedContextLength)!
+	^bytes dwordAtOffset: _OffsetOf_PackedContextLength!
 
 PackedContextLength: anInteger
 	"Set the receiver's 'PackedContextLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #PackedContextLength) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_PackedContextLength put: anInteger!
 
 PackedContextType
 	"Answer the <Integer> value of the receiver's 'PackedContextType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #PackedContextType)!
+	^bytes dwordAtOffset: _OffsetOf_PackedContextType!
 
 PackedContextType: anInteger
 	"Set the receiver's 'PackedContextType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #PackedContextType) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_PackedContextType put: anInteger!
 
 pMutualAuthData
 	"Answer the <String> value of the receiver's 'pMutualAuthData' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pMutualAuthData))
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pMutualAuthData)
 		length: self MutualAuthDataLength!
 
 pMutualAuthData: aString
 	"Set the receiver's 'pMutualAuthData' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pMutualAuthData) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pMutualAuthData put: aString yourAddress.
 	self MutualAuthDataLength: aString size!
 
 pPackageName
 	"Answer the <Utf16String> value of the receiver's 'pPackageName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pPackageName))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pPackageName)
 		length: self PackageNameLength >> 1!
 
 pPackageName: anUtf16String
 	"Set the receiver's 'pPackageName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pPackageName) put: anUtf16String yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pPackageName put: anUtf16String yourAddress.
 	self PackageNameLength: anUtf16String size << 1!
 
 SecStatus
 	"Answer the <Integer> value of the receiver's 'SecStatus' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #SecStatus)!
+	^bytes sdwordAtOffset: _OffsetOf_SecStatus!
 
 SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #SecStatus) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_SecStatus put: anInteger! !
 !HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken!**compiled accessors**!public! !
 !HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken:!**compiled accessors**!public! !
 !HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus!**compiled accessors**!public! !
@@ -236,6 +249,10 @@ defineFields
 		defineField: #pMutualAuthData type: (ArrayPointerField type: String lengthField: #MutualAuthDataLength) offset: 40;
 		defineField: #PackageNameLength type: WORDField new beNonBrowsable offset: 44;
 		defineField: #pPackageName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'PackageNameLength >> 1')) offset: 48.
-	self byteSize: 52! !
+	self byteSize: 52!
+
+getFieldNames
+	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
 !HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_AUTH_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

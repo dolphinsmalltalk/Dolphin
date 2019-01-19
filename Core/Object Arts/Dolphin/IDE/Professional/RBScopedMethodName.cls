@@ -16,7 +16,7 @@ Instance Variables:
 	scopes				<LookupTable> mapping <String> name to <BrowserEnvironment>. Possible rename scopes.
 
 '!
-!RBScopedMethodName categoriesForClass!Development! !
+!RBScopedMethodName categoriesForClass!Refactory-Support! !
 !RBScopedMethodName methodsFor!
 
 addScope: aBrowserEnvironment 

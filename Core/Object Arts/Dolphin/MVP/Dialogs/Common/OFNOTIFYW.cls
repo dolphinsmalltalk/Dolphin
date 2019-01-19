@@ -2,10 +2,12 @@
 
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OFNOTIFYW guid: (GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
+OFNOTIFYW addClassConstant: '_OffsetOf_lpOFN' value: 16rC!
+OFNOTIFYW addClassConstant: '_OffsetOf_pszFile' value: 16r10!
 OFNOTIFYW comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,12 +29,12 @@ struct tagOFNOTIFY {
 lpOFN
 	"Answer the <OPENFILENAMEW> value of the receiver's 'lpOFN' field."
 
-	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
+	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpOFN)!
 
 pszFile
 	"Answer the <Utf16String> value of the receiver's 'pszFile' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszFile))! !
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszFile)! !
 !OFNOTIFYW categoriesFor: #lpOFN!**compiled accessors**!public! !
 !OFNOTIFYW categoriesFor: #pszFile!**compiled accessors**!public! !
 
@@ -54,6 +56,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #lpOFN type: (PointerField type: OPENFILENAMEW) beReadOnly;
-		defineField: #pszFile type: (PointerField type: Utf16String) beReadOnly! !
+		defineField: #pszFile type: (PointerField type: Utf16String) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
 !OFNOTIFYW class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

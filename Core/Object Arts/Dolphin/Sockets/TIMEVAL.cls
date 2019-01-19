@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tv_sec _OffsetOf_tv_usec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TIMEVAL guid: (GUID fromString: '{c4066d09-c93b-488e-b9b9-585ddddb41ea}')!
+TIMEVAL addClassConstant: '_OffsetOf_tv_sec' value: 16r0!
+TIMEVAL addClassConstant: '_OffsetOf_tv_usec' value: 16r4!
 TIMEVAL comment: '<Timeval> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.timeval'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -23,24 +25,24 @@ typedef struct tagtimeval {
 !TIMEVAL methodsFor!
 
 tv_sec
-	"Answer the receiver's tv_sec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tv_sec' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: _OffsetOf_tv_sec!
 
-tv_sec: anObject
-	"Set the receiver's tv_sec field to the value of anObject."
+tv_sec: anInteger
+	"Set the receiver's 'tv_sec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_tv_sec put: anInteger!
 
 tv_usec
-	"Answer the receiver's tv_usec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tv_usec' field."
 
-	^(bytes sdwordAtOffset: 4)!
+	^bytes sdwordAtOffset: _OffsetOf_tv_usec!
 
-tv_usec: anObject
-	"Set the receiver's tv_usec field to the value of anObject."
+tv_usec: anInteger
+	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 4 put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_tv_usec put: anInteger! !
 !TIMEVAL categoriesFor: #tv_sec!**compiled accessors**!public! !
 !TIMEVAL categoriesFor: #tv_sec:!**compiled accessors**!public! !
 !TIMEVAL categoriesFor: #tv_usec!**compiled accessors**!public! !
@@ -60,6 +62,10 @@ defineFields
 
 	self
 		defineField: #tv_sec type: SDWORDField new;
-		defineField: #tv_usec type: SDWORDField new! !
+		defineField: #tv_usec type: SDWORDField new!
+
+getFieldNames
+	^#(#tv_sec #tv_usec)! !
 !TIMEVAL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -122,10 +122,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Registry\Dolphin Registry Access';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\Registry\Dolphin Registry Access').
 
 package!
 
@@ -213,7 +213,7 @@ ExternalLibrary subclass: #OLELibrary
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
-	classVariableNames: 'InterfaceClasses'
+	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
 ExternalStructure subclass: #OLEStructure
@@ -278,7 +278,7 @@ IEnumXXXX subclass: #IEnumUnknown
 	classInstanceVariableNames: ''!
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cElems _OffsetOf_pElems'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLECountedArray subclass: #CADWORD
@@ -293,22 +293,22 @@ OLECountedArray subclass: #CALPOLESTR
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Domain _OffsetOf_DomainLength _OffsetOf_Flags _OffsetOf_Password _OffsetOf_PasswordLength _OffsetOf_User _OffsetOf_UserLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwAuthnLevel _OffsetOf_dwAuthnSvc _OffsetOf_dwAuthzSvc _OffsetOf_dwCapabilities _OffsetOf_dwImpersonationLevel _OffsetOf_pAuthIdentityData _OffsetOf_pwszServerPrincName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fLicVerified _OffsetOf_fRuntimeKeyAvail'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #OLEFinalizableStructure
@@ -318,12 +318,12 @@ OLEStructure subclass: #OLEFinalizableStructure
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GUID variableByteSubclass: #CLSID

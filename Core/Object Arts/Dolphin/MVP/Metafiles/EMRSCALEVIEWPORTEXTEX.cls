@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_xDenom _OffsetOf_xNum _OffsetOf_yDenom _OffsetOf_yNum'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSCALEVIEWPORTEXTEX guid: (GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xDenom' value: 16rC!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xNum' value: 16r8!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yDenom' value: 16r14!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yNum' value: 16r10!
 EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,44 +31,44 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 !EMRSCALEVIEWPORTEXTEX methodsFor!
 
 xDenom
-	"Answer the receiver's xDenom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xDenom' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xDenom)!
+	^bytes sdwordAtOffset: _OffsetOf_xDenom!
 
-xDenom: anObject 
-	"Set the receiver's xDenom field to the value of anObject."
+xDenom: anInteger
+	"Set the receiver's 'xDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDenom) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_xDenom put: anInteger!
 
 xNum
-	"Answer the receiver's xNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xNum' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xNum)!
+	^bytes sdwordAtOffset: _OffsetOf_xNum!
 
-xNum: anObject 
-	"Set the receiver's xNum field to the value of anObject."
+xNum: anInteger
+	"Set the receiver's 'xNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xNum) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_xNum put: anInteger!
 
 yDenom
-	"Answer the receiver's yDenom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yDenom' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yDenom)!
+	^bytes sdwordAtOffset: _OffsetOf_yDenom!
 
-yDenom: anObject 
-	"Set the receiver's yDenom field to the value of anObject."
+yDenom: anInteger
+	"Set the receiver's 'yDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDenom) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_yDenom put: anInteger!
 
 yNum
-	"Answer the receiver's yNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yNum' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yNum)!
+	^bytes sdwordAtOffset: _OffsetOf_yNum!
 
-yNum: anObject 
-	"Set the receiver's yNum field to the value of anObject."
+yNum: anInteger
+	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yNum) put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
@@ -107,10 +111,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #xNum #xDenom #yNum #yDenom)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SCALEVIEWPORTEXTEX with: EMR_SCALEWINDOWEXTEX! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
 

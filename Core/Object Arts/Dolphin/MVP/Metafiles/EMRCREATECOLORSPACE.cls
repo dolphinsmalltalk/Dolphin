@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATECOLORSPACE guid: (GUID fromString: '{20d38d2a-27f0-4a74-ad30-adb4de0f37c1}')!
+EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
+EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_lcs' value: 16rC!
 EMRCREATECOLORSPACE comment: '<EMRCREATECOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,27 +27,27 @@ struct tagEMRCREATECOLORSPACE {
 !EMRCREATECOLORSPACE methodsFor!
 
 ihCS
-	"Answer the receiver's ihCS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
+	^bytes dwordAtOffset: _OffsetOf_ihCS!
 
-ihCS: anObject 
-	"Set the receiver's ihCS field to the value of anObject."
+ihCS: anInteger
+	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger!
 
 lcs
-	"Answer the receiver's lcs field as a Smalltalk object."
+	"Answer the <LOGCOLORSPACE> value of the receiver's 'lcs' field."
 
-	^LOGCOLORSPACE fromAddress: bytes yourAddress + ##(self offsetOf: #lcs)!
+	^LOGCOLORSPACE fromAddress: bytes yourAddress + _OffsetOf_lcs!
 
-lcs: anObject 
-	"Set the receiver's lcs field to the value of anObject."
+lcs: aLOGCOLORSPACE
+	"Set the receiver's 'lcs' field to the value of the argument, aLOGCOLORSPACE"
 
-	anObject 
+	aLOGCOLORSPACE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lcs) + 1)
-		to: ##((self offsetOf: #lcs) + LOGCOLORSPACE basicByteSize)
+		from: ##(_OffsetOf_lcs + 1)
+		to: ##(_OffsetOf_lcs + LOGCOLORSPACE basicByteSize)
 		startingAt: 1! !
 !EMRCREATECOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
 !EMRCREATECOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
@@ -73,10 +75,14 @@ defineFields
 		defineField: #lcs type: (StructureField type: LOGCOLORSPACE) offset: 12.
 	self byteSize: 340!
 
+getFieldNames
+	^#(#iType #nSize #ihCS #lcs)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACE! !
 !EMRCREATECOLORSPACE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATECOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATECOLORSPACE class categoriesFor: #iTypes!constants!public! !
 

@@ -24,7 +24,7 @@ Class Variables:
 	StandardUnaryReturnTypes		<LookupTable>. Return types of common unary messages.
 
 '!
-!MethodWorkspace categoriesForClass!Development! !
+!MethodWorkspace categoriesForClass!MVP-Presenters! !
 !MethodWorkspace methodsFor!
 
 accept

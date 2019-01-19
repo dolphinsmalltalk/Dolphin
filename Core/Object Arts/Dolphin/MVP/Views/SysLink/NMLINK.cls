@@ -2,10 +2,11 @@
 
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMLINK guid: (GUID fromString: '{7caa2dd6-a6d4-493f-bdd4-39ef71f66221}')!
+NMLINK addClassConstant: '_OffsetOf_item' value: 16rC!
 NMLINK comment: 'NMLINK is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMLINK accompanies link click notifications that are sent by the SysLink control, wrapped in Dolphin by <SysLinkView>.
@@ -19,9 +20,9 @@ NMLINK accompanies link click notifications that are sent by the SysLink control
 !NMLINK methodsFor!
 
 item
-	"Answer the receiver's item field as a Smalltalk object."
+	"Answer the <LITEM> value of the receiver's 'item' field."
 
-	^LITEM fromAddress: bytes yourAddress + ##(self offsetOf: #item)! !
+	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item! !
 !NMLINK categoriesFor: #item!**compiled accessors**!public! !
 
 !NMLINK class methodsFor!
@@ -34,8 +35,12 @@ defineFields
 	super defineFields.	"NMHDR fields"
 	self defineField: #item type: (StructureField type: LITEM) beReadOnly!
 
+getFieldNames
+	^#(#hwndFrom #idFrom #code #item)!
+
 itemFromNMHDR: anExternalAddress
-	^LITEM fromAddress: anExternalAddress yourAddress + ##(self offsetOf: #item)! !
+	^LITEM fromAddress: anExternalAddress yourAddress + _OffsetOf_item! !
 !NMLINK class categoriesFor: #defineFields!initializing!public! !
+!NMLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !NMLINK class categoriesFor: #itemFromNMHDR:!public! !
 

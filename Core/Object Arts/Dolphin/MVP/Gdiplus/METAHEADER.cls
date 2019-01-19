@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 METAHEADER guid: (GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
+METAHEADER addClassConstant: '_OffsetOf_mtHeaderSize' value: 16r2!
+METAHEADER addClassConstant: '_OffsetOf_mtMaxRecord' value: 16r10!
+METAHEADER addClassConstant: '_OffsetOf_mtNoObjects' value: 16rC!
+METAHEADER addClassConstant: '_OffsetOf_mtNoParameters' value: 16r14!
+METAHEADER addClassConstant: '_OffsetOf_mtSize' value: 16r8!
+METAHEADER addClassConstant: '_OffsetOf_mtType' value: 16r0!
+METAHEADER addClassConstant: '_OffsetOf_mtVersion' value: 16r4!
 METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -29,74 +36,74 @@ struct tagMETAHEADER {
 !METAHEADER methodsFor!
 
 mtHeaderSize
-	"Answer the receiver's mtHeaderSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtHeaderSize' field."
 
-	^(bytes wordAtOffset: 2)!
+	^bytes wordAtOffset: _OffsetOf_mtHeaderSize!
 
-mtHeaderSize: anObject
-	"Set the receiver's mtHeaderSize field to the value of anObject."
+mtHeaderSize: anInteger
+	"Set the receiver's 'mtHeaderSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject!
+	bytes wordAtOffset: _OffsetOf_mtHeaderSize put: anInteger!
 
 mtMaxRecord
-	"Answer the receiver's mtMaxRecord field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtMaxRecord' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_mtMaxRecord!
 
-mtMaxRecord: anObject
-	"Set the receiver's mtMaxRecord field to the value of anObject."
+mtMaxRecord: anInteger
+	"Set the receiver's 'mtMaxRecord' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_mtMaxRecord put: anInteger!
 
 mtNoObjects
-	"Answer the receiver's mtNoObjects field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtNoObjects' field."
 
-	^(bytes wordAtOffset: 12)!
+	^bytes wordAtOffset: _OffsetOf_mtNoObjects!
 
-mtNoObjects: anObject
-	"Set the receiver's mtNoObjects field to the value of anObject."
+mtNoObjects: anInteger
+	"Set the receiver's 'mtNoObjects' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 12 put: anObject!
+	bytes wordAtOffset: _OffsetOf_mtNoObjects put: anInteger!
 
 mtNoParameters
-	"Answer the receiver's mtNoParameters field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtNoParameters' field."
 
-	^(bytes wordAtOffset: 20)!
+	^bytes wordAtOffset: _OffsetOf_mtNoParameters!
 
-mtNoParameters: anObject
-	"Set the receiver's mtNoParameters field to the value of anObject."
+mtNoParameters: anInteger
+	"Set the receiver's 'mtNoParameters' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 20 put: anObject!
+	bytes wordAtOffset: _OffsetOf_mtNoParameters put: anInteger!
 
 mtSize
-	"Answer the receiver's mtSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtSize' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_mtSize!
 
-mtSize: anObject
-	"Set the receiver's mtSize field to the value of anObject."
+mtSize: anInteger
+	"Set the receiver's 'mtSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_mtSize put: anInteger!
 
 mtType
-	"Answer the receiver's mtType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtType' field."
 
-	^(bytes wordAtOffset: 0)!
+	^bytes wordAtOffset: _OffsetOf_mtType!
 
-mtType: anObject
-	"Set the receiver's mtType field to the value of anObject."
+mtType: anInteger
+	"Set the receiver's 'mtType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: _OffsetOf_mtType put: anInteger!
 
 mtVersion
-	"Answer the receiver's mtVersion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtVersion' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: _OffsetOf_mtVersion!
 
-mtVersion: anObject
-	"Set the receiver's mtVersion field to the value of anObject."
+mtVersion: anInteger
+	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject! !
+	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
 !METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !
@@ -138,6 +145,10 @@ defineFields
 		defineField: #mtNoObjects type: WORDField new offset: 12;
 		defineField: #mtMaxRecord type: DWORDField new offset: 16;
 		defineField: #mtNoParameters type: WORDField new offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
 !METAHEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

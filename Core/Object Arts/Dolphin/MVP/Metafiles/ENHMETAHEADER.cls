@@ -2,10 +2,27 @@
 
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ENHMETAHEADER guid: (GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
+ENHMETAHEADER addClassConstant: '_OffsetOf_bOpenGL' value: 16r60!
+ENHMETAHEADER addClassConstant: '_OffsetOf_cbPixelFormat' value: 16r58!
+ENHMETAHEADER addClassConstant: '_OffsetOf_dSignature' value: 16r28!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nBytes' value: 16r30!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nDescription' value: 16r3C!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nHandles' value: 16r38!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nPalEntries' value: 16r44!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nRecords' value: 16r34!
+ENHMETAHEADER addClassConstant: '_OffsetOf_nVersion' value: 16r2C!
+ENHMETAHEADER addClassConstant: '_OffsetOf_offDescription' value: 16r40!
+ENHMETAHEADER addClassConstant: '_OffsetOf_offPixelFormat' value: 16r5C!
+ENHMETAHEADER addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+ENHMETAHEADER addClassConstant: '_OffsetOf_rclFrame' value: 16r18!
+ENHMETAHEADER addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
+ENHMETAHEADER addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
+ENHMETAHEADER addClassConstant: '_OffsetOf_szlMicrometers' value: 16r64!
+ENHMETAHEADER addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
 ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 
 The type library contains no documentation for this struct
@@ -41,183 +58,183 @@ IDL definition follows:
 !ENHMETAHEADER methodsFor!
 
 bOpenGL
-	"Answer the receiver's bOpenGL field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bOpenGL' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #bOpenGL)!
+	^bytes dwordAtOffset: _OffsetOf_bOpenGL!
 
-bOpenGL: anObject 
-	"Set the receiver's bOpenGL field to the value of anObject."
+bOpenGL: anInteger
+	"Set the receiver's 'bOpenGL' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bOpenGL) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_bOpenGL put: anInteger!
 
 cbPixelFormat
-	"Answer the receiver's cbPixelFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbPixelFormat' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbPixelFormat)!
+	^bytes dwordAtOffset: _OffsetOf_cbPixelFormat!
 
-cbPixelFormat: anObject 
-	"Set the receiver's cbPixelFormat field to the value of anObject."
+cbPixelFormat: anInteger
+	"Set the receiver's 'cbPixelFormat' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbPixelFormat) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbPixelFormat put: anInteger!
 
 dSignature
-	"Answer the receiver's dSignature field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dSignature' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dSignature)!
+	^bytes dwordAtOffset: _OffsetOf_dSignature!
 
-dSignature: anObject 
-	"Set the receiver's dSignature field to the value of anObject."
+dSignature: anInteger
+	"Set the receiver's 'dSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dSignature) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dSignature put: anInteger!
 
 nBytes
-	"Answer the receiver's nBytes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nBytes' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nBytes)!
+	^bytes dwordAtOffset: _OffsetOf_nBytes!
 
-nBytes: anObject 
-	"Set the receiver's nBytes field to the value of anObject."
+nBytes: anInteger
+	"Set the receiver's 'nBytes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nBytes) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nBytes put: anInteger!
 
 nDescription
-	"Answer the receiver's nDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nDescription' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nDescription)!
+	^bytes dwordAtOffset: _OffsetOf_nDescription!
 
-nDescription: anObject 
-	"Set the receiver's nDescription field to the value of anObject."
+nDescription: anInteger
+	"Set the receiver's 'nDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nDescription) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nDescription put: anInteger!
 
 nHandles
-	"Answer the receiver's nHandles field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nHandles' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #nHandles)!
+	^bytes wordAtOffset: _OffsetOf_nHandles!
 
-nHandles: anObject 
-	"Set the receiver's nHandles field to the value of anObject."
+nHandles: anInteger
+	"Set the receiver's 'nHandles' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #nHandles) put: anObject!
+	bytes wordAtOffset: _OffsetOf_nHandles put: anInteger!
 
 nPalEntries
-	"Answer the receiver's nPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
 
-nPalEntries: anObject 
-	"Set the receiver's nPalEntries field to the value of anObject."
+nPalEntries: anInteger
+	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nRecords
-	"Answer the receiver's nRecords field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nRecords' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nRecords)!
+	^bytes dwordAtOffset: _OffsetOf_nRecords!
 
-nRecords: anObject 
-	"Set the receiver's nRecords field to the value of anObject."
+nRecords: anInteger
+	"Set the receiver's 'nRecords' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nRecords) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nRecords put: anInteger!
 
 nVersion
-	"Answer the receiver's nVersion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nVersion)!
+	^bytes dwordAtOffset: _OffsetOf_nVersion!
 
-nVersion: anObject 
-	"Set the receiver's nVersion field to the value of anObject."
+nVersion: anInteger
+	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nVersion) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nVersion put: anInteger!
 
 offDescription
-	"Answer the receiver's offDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offDescription' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offDescription)!
+	^bytes dwordAtOffset: _OffsetOf_offDescription!
 
-offDescription: anObject 
-	"Set the receiver's offDescription field to the value of anObject."
+offDescription: anInteger
+	"Set the receiver's 'offDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offDescription) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_offDescription put: anInteger!
 
 offPixelFormat
-	"Answer the receiver's offPixelFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offPixelFormat' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offPixelFormat)!
+	^bytes dwordAtOffset: _OffsetOf_offPixelFormat!
 
-offPixelFormat: anObject 
-	"Set the receiver's offPixelFormat field to the value of anObject."
+offPixelFormat: anInteger
+	"Set the receiver's 'offPixelFormat' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offPixelFormat) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_offPixelFormat put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 rclFrame
-	"Answer the receiver's rclFrame field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclFrame' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclFrame)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
-rclFrame: anObject 
-	"Set the receiver's rclFrame field to the value of anObject."
+rclFrame: aRECT
+	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclFrame) + 1)
-		to: ##((self offsetOf: #rclFrame) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclFrame + 1)
+		to: ##(_OffsetOf_rclFrame + RECT basicByteSize)
 		startingAt: 1!
 
 szlDevice
-	"Answer the receiver's szlDevice field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlDevice)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
-szlDevice: anObject 
-	"Set the receiver's szlDevice field to the value of anObject."
+szlDevice: aSIZE
+	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
 
-	anObject 
+	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlDevice) + 1)
-		to: ##((self offsetOf: #szlDevice) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlDevice + 1)
+		to: ##(_OffsetOf_szlDevice + SIZE basicByteSize)
 		startingAt: 1!
 
 szlMicrometers
-	"Answer the receiver's szlMicrometers field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlMicrometers' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlMicrometers)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMicrometers!
 
-szlMicrometers: anObject 
-	"Set the receiver's szlMicrometers field to the value of anObject."
+szlMicrometers: aSIZE
+	"Set the receiver's 'szlMicrometers' field to the value of the argument, aSIZE"
 
-	anObject 
+	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlMicrometers) + 1)
-		to: ##((self offsetOf: #szlMicrometers) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlMicrometers + 1)
+		to: ##(_OffsetOf_szlMicrometers + SIZE basicByteSize)
 		startingAt: 1!
 
 szlMillimeters
-	"Answer the receiver's szlMillimeters field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlMillimeters)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
-szlMillimeters: anObject 
-	"Set the receiver's szlMillimeters field to the value of anObject."
+szlMillimeters: aSIZE
+	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
 
-	anObject 
+	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlMillimeters) + 1)
-		to: ##((self offsetOf: #szlMillimeters) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlMillimeters + 1)
+		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
 !ENHMETAHEADER categoriesFor: #bOpenGL!**compiled accessors**!public! !
 !ENHMETAHEADER categoriesFor: #bOpenGL:!**compiled accessors**!public! !
@@ -304,10 +321,14 @@ defineFields
 		defineField: #szlMicrometers type: (StructureField type: SIZE) offset: 100.
 	self byteSize: 108!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters #cbPixelFormat #offPixelFormat #bOpenGL #szlMicrometers)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_HEADER! !
 !ENHMETAHEADER class categoriesFor: #defineFields!initializing!public! !
+!ENHMETAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ENHMETAHEADER class categoriesFor: #iTypes!constants!public! !
 

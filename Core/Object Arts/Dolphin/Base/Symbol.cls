@@ -228,6 +228,11 @@ allInstancesDo: aMonadicValuable
 
 	Table do: [:eachBucket | eachBucket notNil ifTrue: [eachBucket nonCorpsesDo: aMonadicValuable]]!
 
+coerceString: aString
+	"Answer a unique instance of the receiver whose contents are copied from aString."
+
+	^self intern: aString!
+
 findInterned: aString
 	"Answer the unique <Symbol> for aString if already defined, else nil.	
 	N.B. This method previously had the selector #symbolAt:, and was private,
@@ -247,11 +252,6 @@ findInterned: aString
 
 fromAddress: anInteger length: anInteger2
 	^self intern: (String fromAddress: anInteger length: anInteger2)!
-
-fromString: aString
-	"Answer a unique instance of the receiver whose contents are copied from aString."
-
-	^self intern: aString!
 
 initialize
 	"Initialize class variables of the receiver.
@@ -433,9 +433,9 @@ withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
 !Symbol class categoriesFor: #addUnique:!accessing!private! !
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
+!Symbol class categoriesFor: #coerceString:!instance creation!public! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
 !Symbol class categoriesFor: #fromAddress:length:!public! !
-!Symbol class categoriesFor: #fromString:!instance creation!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
 !Symbol class categoriesFor: #intern:!instance creation!public! !
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !

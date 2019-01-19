@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMREXTSELECTCLIPRGN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_iMode _OffsetOf_RGNDATA'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTSELECTCLIPRGN guid: (GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
+EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r8!
+EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_iMode' value: 16rC!
+EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r10!
 EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,40 +29,41 @@ struct tagEMREXTSELECTCLIPRGN {
 !EMREXTSELECTCLIPRGN methodsFor!
 
 cbRgnData
-	"Answer the receiver's cbRgnData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbRgnData)!
+	^bytes dwordAtOffset: _OffsetOf_cbRgnData!
 
-cbRgnData: anObject 
-	"Set the receiver's cbRgnData field to the value of anObject."
+cbRgnData: anInteger
+	"Set the receiver's 'cbRgnData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbRgnData) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbRgnData put: anInteger!
 
 iMode
-	"Answer the receiver's iMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
+	^bytes dwordAtOffset: _OffsetOf_iMode!
 
-iMode: anObject 
-	"Set the receiver's iMode field to the value of anObject."
+iMode: anInteger
+	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger!
 
 RGNDATA
-	"Answer the receiver's RGNDATA field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'RGNDATA' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #RGNDATA) length: self cbRgnData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_RGNDATA length: self cbRgnData!
 
-RGNDATA: anObject 
-	"Set the receiver's RGNDATA field to the value of anObject."
+RGNDATA: anExternalArray
+	"Set the receiver's 'RGNDATA' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self cbRgnData * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #RGNDATA) + 1)
-		to: ##(self offsetOf: #RGNDATA) + size
-		startingAt: 1! !
+		from: ##(_OffsetOf_RGNDATA + 1)
+		to: _OffsetOf_RGNDATA + size
+		startingAt: 1.
+	self cbRgnData: anExternalArray size! !
 !EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
 !EMREXTSELECTCLIPRGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
 !EMREXTSELECTCLIPRGN categoriesFor: #iMode!**compiled accessors**!public! !
@@ -95,10 +99,14 @@ defineFields
 			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)
 			offset: 16!
 
+getFieldNames
+	^#(#iType #nSize #cbRgnData #iMode #RGNDATA)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTSELECTCLIPRGN! !
 !EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!initializing!public! !
+!EMREXTSELECTCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTSELECTCLIPRGN class categoriesFor: #iTypes!constants!public! !
 

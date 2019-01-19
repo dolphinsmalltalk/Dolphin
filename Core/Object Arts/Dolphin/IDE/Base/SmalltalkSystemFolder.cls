@@ -7,7 +7,7 @@ SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	classInstanceVariableNames: ''!
 SmalltalkSystemFolder guid: (GUID fromString: '{87b4c6df-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkSystemFolder comment: ''!
-!SmalltalkSystemFolder categoriesForClass!Development! !
+!SmalltalkSystemFolder categoriesForClass!MVP-Models! !
 !SmalltalkSystemFolder methodsFor!
 
 isFolder

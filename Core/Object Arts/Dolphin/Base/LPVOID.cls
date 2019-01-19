@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #LPVOID
+ExternalScalar subclass: #LPVOID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -13,7 +13,7 @@ LPVOID is useful, for example, where references to pointers (i.e. VOID**) are re
 It is important to realise that LPVOID (and subclasses) are unlike other ExternalStructures in that they are already pointers, and therefore they already incorporate one level of indirection. Thus:
 1) #value answers the pointed at address in the case of doubly-indirect (reference) instances, or the address itself for internal buffer instances.
 2) The class method #fromAddress: will answer a pointer to a pointer, i.e. a double-indirection. This means that, for example, the subclass LPWSTR is useful as an element class for a <StructureArray> of LPWSTR pointers (as expected), but that ''LPWSTR fromAdddress: aUnicodeString yourAddress'' is not valid.'!
-!LPVOID categoriesForClass!External-Data-Structured! !
+!LPVOID categoriesForClass!External-Data-Unstructured! !
 !LPVOID methodsFor!
 
 asExternalAddress
@@ -22,14 +22,14 @@ asExternalAddress
 	^self value!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'value' field."
 
-	^(bytes uintPtrAtOffset: 0) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_value) asExternalAddress!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anExternalAddress
+	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
 !LPVOID categoriesFor: #asExternalAddress!converting!public! !
 !LPVOID categoriesFor: #value!**compiled accessors**!public! !
 !LPVOID categoriesFor: #value:!**compiled accessors**!public! !
@@ -41,7 +41,7 @@ defineFields
 		LPVOID compileDefinition
 	"
 
-	self defineField: #value type: LPVOIDField new!
+	self defineField: #value type: LPVOIDField new beOverride!
 
 new
 	"Answer a new instance of the receiver.

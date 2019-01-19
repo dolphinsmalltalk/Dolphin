@@ -1,16 +1,33 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 OLEStructure subclass: #CATEGORYINFO
-	instanceVariableNames: 'wszDescription'
-	classVariableNames: ''
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CATEGORYINFO guid: (GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
+CATEGORYINFO addClassConstant: '_OffsetOf_catid' value: 16r0!
+CATEGORYINFO addClassConstant: '_OffsetOf_lcid' value: 16r10!
+CATEGORYINFO addClassConstant: '_OffsetOf_szDescription' value: 16r14!
 CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 
 CATEGORYINFO is used in conjunction with ICatInformation>>EnumCategories() to enumerate details of the categories registered on the host machine.'!
 !CATEGORYINFO categoriesForClass!COM Category Manager! !
 !CATEGORYINFO methodsFor!
+
+catid
+	"Answer the <GUID> value of the receiver's 'catid' field."
+
+	^GUID fromAddress: bytes yourAddress!
+
+catid: aGUID
+	"Set the receiver's 'catid' field to the value of the argument, aGUID"
+
+	aGUID
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_catid + 1)
+		to: ##(_OffsetOf_catid + GUID basicByteSize)
+		startingAt: 1!
 
 description
 	"Answer the receiver's szDescription field as a <readableString>."
@@ -21,22 +38,49 @@ description: desc
 	"Set the receiver's szDescription field to <Utf16String> representation
 	of the <readableString> argument, desc."
 
-	self szDescription: (wszDescription := desc asUtf16String)!
+	self szDescription: desc asUtf16String!
 
-lcid: anObject 
-	"Set the receiver's lcid field to the value of anObject."
+lcid
+	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcid) put: anObject!
+	^bytes dwordAtOffset: _OffsetOf_lcid!
+
+lcid: anInteger
+	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: _OffsetOf_lcid put: anInteger!
 
 locale: locale
 	"Set the receiver's lcid field to <integer> LCID of the <Locale>
 	argument, locale."
 
-	self lcid: locale asParameter! !
+	self lcid: locale asParameter!
+
+szDescription
+	"Answer the <Utf16String> value of the receiver's 'szDescription' field."
+
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDescription!
+
+szDescription: anUtf16String
+	"Set the receiver's 'szDescription' field to the value of the argument, anUtf16String"
+
+	| size |
+	size := anUtf16String byteSize - 2 min: ##(127 * 2).
+	anUtf16String
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_szDescription + 1)
+		to: _OffsetOf_szDescription + size
+		startingAt: 1.
+	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
+!CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
+!CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
 !CATEGORYINFO categoriesFor: #description!accessing!public! !
 !CATEGORYINFO categoriesFor: #description:!accessing!public! !
+!CATEGORYINFO categoriesFor: #lcid!**compiled accessors**!public! !
 !CATEGORYINFO categoriesFor: #lcid:!**compiled accessors**!public! !
 !CATEGORYINFO categoriesFor: #locale:!accessing!public! !
+!CATEGORYINFO categoriesFor: #szDescription!**compiled accessors**!public! !
+!CATEGORYINFO categoriesFor: #szDescription:!**compiled accessors**!public! !
 
 !CATEGORYINFO class methodsFor!
 
@@ -58,6 +102,10 @@ defineFields
 	self
 		defineField: #catid type: (StructureField type: GUID);
 		defineField: #lcid type: DWORDField new;
-		defineField: #szDescription type: (StringField type: Utf16String length: 128)! !
+		defineField: #szDescription type: (StringField type: Utf16String length: 128)!
+
+getFieldNames
+	^#(#catid #lcid #szDescription)! !
 !CATEGORYINFO class categoriesFor: #defineFields!initializing!public! !
+!CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

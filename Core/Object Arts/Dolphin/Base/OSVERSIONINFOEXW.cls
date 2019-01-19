@@ -2,10 +2,21 @@
 
 Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwBuildNumber _OffsetOf_dwMajorVersion _OffsetOf_dwMinorVersion _OffsetOf_dwPlatformId _OffsetOf_dwSize _OffsetOf_szCSDVersion _OffsetOf_wProductType _OffsetOf_wReserved _OffsetOf_wServicePackMajor _OffsetOf_wServicePackMinor _OffsetOf_wSuiteMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OSVERSIONINFOEXW guid: (GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwBuildNumber' value: 16rC!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwMajorVersion' value: 16r4!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwMinorVersion' value: 16r8!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwPlatformId' value: 16r10!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_szCSDVersion' value: 16r14!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wProductType' value: 16r11A!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wReserved' value: 16r11B!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wServicePackMajor' value: 16r114!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wServicePackMinor' value: 16r116!
+OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wSuiteMask' value: 16r118!
 OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -35,92 +46,92 @@ struct tagOSVERSIONINFOEXW {
 dwBuildNumber
 	"Answer the <Integer> value of the receiver's 'dwBuildNumber' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwBuildNumber)!
+	^bytes dwordAtOffset: _OffsetOf_dwBuildNumber!
 
 dwBuildNumber: anInteger
 	"Set the receiver's 'dwBuildNumber' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwBuildNumber) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwBuildNumber put: anInteger!
 
 dwMajorVersion
 	"Answer the <Integer> value of the receiver's 'dwMajorVersion' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMajorVersion)!
+	^bytes dwordAtOffset: _OffsetOf_dwMajorVersion!
 
 dwMajorVersion: anInteger
 	"Set the receiver's 'dwMajorVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwMajorVersion) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwMajorVersion put: anInteger!
 
 dwMinorVersion
 	"Answer the <Integer> value of the receiver's 'dwMinorVersion' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMinorVersion)!
+	^bytes dwordAtOffset: _OffsetOf_dwMinorVersion!
 
 dwMinorVersion: anInteger
 	"Set the receiver's 'dwMinorVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwMinorVersion) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwMinorVersion put: anInteger!
 
 dwPlatformId
 	"Answer the <Integer> value of the receiver's 'dwPlatformId' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwPlatformId)!
+	^bytes dwordAtOffset: _OffsetOf_dwPlatformId!
 
 dwPlatformId: anInteger
 	"Set the receiver's 'dwPlatformId' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwPlatformId) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwPlatformId put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 szCSDVersion
 	"Answer the <Utf16String> value of the receiver's 'szCSDVersion' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szCSDVersion)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szCSDVersion!
 
 wProductType
 	"Answer the <Integer> value of the receiver's 'wProductType' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #wProductType)!
+	^bytes byteAtOffset: _OffsetOf_wProductType!
 
 wProductType: anInteger
 	"Set the receiver's 'wProductType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #wProductType) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_wProductType put: anInteger!
 
 wServicePackMajor
 	"Answer the <Integer> value of the receiver's 'wServicePackMajor' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMajor)!
+	^bytes wordAtOffset: _OffsetOf_wServicePackMajor!
 
 wServicePackMajor: anInteger
 	"Set the receiver's 'wServicePackMajor' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wServicePackMajor) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wServicePackMajor put: anInteger!
 
 wServicePackMinor
 	"Answer the <Integer> value of the receiver's 'wServicePackMinor' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMinor)!
+	^bytes wordAtOffset: _OffsetOf_wServicePackMinor!
 
 wServicePackMinor: anInteger
 	"Set the receiver's 'wServicePackMinor' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wServicePackMinor) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wServicePackMinor put: anInteger!
 
 wSuiteMask
 	"Answer the <Integer> value of the receiver's 'wSuiteMask' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wSuiteMask)!
+	^bytes wordAtOffset: _OffsetOf_wSuiteMask!
 
 wSuiteMask: anInteger
 	"Set the receiver's 'wSuiteMask' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wSuiteMask) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_wSuiteMask put: anInteger! !
 !OSVERSIONINFOEXW categoriesFor: #dwBuildNumber!**compiled accessors**!public! !
 !OSVERSIONINFOEXW categoriesFor: #dwBuildNumber:!**compiled accessors**!public! !
 !OSVERSIONINFOEXW categoriesFor: #dwMajorVersion!**compiled accessors**!public! !
@@ -145,7 +156,7 @@ wSuiteMask: anInteger
 defineFields
 	"Define the fields of the OSVERSIONINFOEXW structure.
 
-	OSVERSIONINFOEX compileDefinition
+	OSVERSIONINFOEXW compileDefinition
 
 		typedef [uuid(1c5e8929-8791-4aa9-b7ea-152ef36b23dd)]
 		struct tagOSVERSIONINFOEXW {
@@ -175,6 +186,10 @@ defineFields
 		defineField: #wSuiteMask type: WORDField new offset: 280;
 		defineField: #wProductType type: BYTEField new offset: 282;
 		defineField: #wReserved type: BYTEField new beFiller offset: 283.
-	self byteSize: 284! !
+	self byteSize: 284!
+
+getFieldNames
+	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
 !OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

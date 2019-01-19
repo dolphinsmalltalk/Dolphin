@@ -118,12 +118,6 @@ bindingFor: aString
 	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
 
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
 categories
 	"Answer a <Array> of <ClassCategory>s in which the receiver is included.
 	This will always contains at least one entry ('Unclassified' if there are no others)."
@@ -172,15 +166,6 @@ category: category
 
 	self categories: {self classCategoryClass name: category asString}!
 
-changeIndex
-	^self propertyAt: #changeIndex ifAbsent: []!
-
-changeIndexValue: aBlock 
-	self propertyManager 
-		propertyOf: self
-		at: #changeIndex
-		ifAbsentPut: aBlock!
-
 classBinding
 	^self environment associationAt: self name!
 
@@ -227,25 +212,11 @@ comment: blahBlah
 	"No need to clear the class caches in this case"
 	self environment trigger: #classCommented: with: self!
 
-definitionChunk
-	"Answer a chunk string for the definition of the receiver"
-
-	| stream |
-	stream := String writeStream: 256.
-	(self sourceManager sourceFilerOn: stream) fileOutDefinitionOfClass: self.
-	^stream contents!
-
 fileIn
 	"File in the receiver's definition from a class file in the receiver's
 	package directory."
 
 	self sourceManager fileInPackagedClass: self!
-
-fileOut
-	"File out the receiver's definition to a class file in the receiver's
-	package directory."
-
-	self sourceManager fileOutPackagedClass: self!
 
 fileOutName
 	"Private - Answer the default file name for the class to file out on."
@@ -255,9 +226,6 @@ fileOutName
 	package := self owningPackage.
 	package notNil ifTrue: [path := File replacePath: path with: package path].
 	^path!
-
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutClass: self!
 
 fileOutStem
 	"Private - Answer the default file name stem for the class to file out on."
@@ -284,14 +252,6 @@ includeInCategory: category
 	set of categories."
 
 	self categories: (self categories asSet add: (self classCategoryClass name: category asString); yourself)!
-
-initializeAfterBinaryLoad
-	"Private - Perform any post-binary load initialisation for the class. Ensure all the
-	methods are marked as having no source."
-
-	self initializeAfterLoad.
-	"self methodDictionary do: [:each | each loseSource].
-	self class methodDictionary do: [:each | each loseSource]"!
 
 initializeAfterLoad
 	"Perform any post-load initialisation for the class. This includes any specific #initialize
@@ -327,41 +287,11 @@ isAtomic
 
 	^true!
 
-isChanged
-	"Answer true if the receiver or any of it's contents have been changed since
-	their changed flag was last reset."
-
-	^self changeIndex notNil!
-
-isChanged: aBoolean 
-	"Flag the receiver as changed or not changed, according to the value 
-	of the <Boolean> argument. If the receiver is marked as changed, then
-	its owning package (if any) is also so marked."
-
-	self propertyManager isNil ifTrue: [^self].
-	"Note that we don't test the existing value of the change flag here, because
-	 we want to inform the package regardless (in case it isn't currently changed
-	 for some reason)"
-	aBoolean 
-		ifTrue: 
-			[self changeIndexValue: [self sourceManager changesFileSize].
-			self notifyPackageOfChange]
-		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: []]!
-
 isLiteral
 	"Private - Answer whether or not the receiver has a literal representation (probably its
 	printString) which is directly recognised by the Compiler"
 
 	^true!
-
-methodChanged: aCompiledMethod 
-	"Private - Flag the receiver as changed or not changed, according to the value 
-	of the <Boolean> argument. If the receiver is marked as changed, then
-	its owning package (if any) is also so marked."
-
-	self propertyManager isNil ifTrue: [^self].
-	self changeIndexValue: [aCompiledMethod changePosition].
-	self notifyPackageOfChange!
 
 name
 	"Answer a <readableString> that is the name of the receiver
@@ -378,15 +308,6 @@ newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariable
 		sharedPoolString: poolDictString;
 		yourself!
 
-noClassCategoryName
-	"Answer the String name of the ClassCategory used to mark that no
-	category has been set for a Class."
-
-	^self classCategoryClass unclassifiedName!
-
-notifyPackageOfChange
-	self owningPackage ifNotNil: [:package | package isChanged: true]!
-
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned
 	by any package."
@@ -395,7 +316,8 @@ owningPackage
 	this development class in a runtime image. The answer should always be nil
 	in a runtime application."
 
-	^(self environment lookup: #Package) ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
+	^(self environment lookup: #PackageManager)
+		ifNotNil: [:pkgClass | pkgClass current packageOfClass: self]!
 
 owningPackage: aPackageOrNil
 	"Set the receiver's <Package> to be the argument. Any current package association is lost.
@@ -502,18 +424,6 @@ rename: aString in: aSystemDictionary
 	self addToSuper.
 	"Note how the event is delayed until the class is correctly wired in"
 	self environment triggerGlobalRenamed: binding from: oldName!
-
-renameClassVar: oldString to: newString
-	"Private - Rename the class variable of the receiver named by the <readableString>, oldString, to be
-	named by the <readableString>, newString. The variable must be one of the receiver's own class 
-	variables , not of one of its superclass'.
-	Note: This is a low-level operation that does not recompile any methods, however since the methods
-	access class variables via the binding (Association) they will remain valid until recompiled. It is the 
-	caller's responsibility to rewrite and recompile methods that reference the variable."
-
-	self classPool changeKey: oldString to: newString.
-	self logDefinition.
-	self environment classUpdated: self!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -760,7 +670,7 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
-!Class categoriesFor: #addClassConstant:value:!class variables!public! !
+!Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
 !Class categoriesFor: #addClassVariable:value:!class variables!public! !
 !Class categoriesFor: #addClassVarNamed:!class variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
@@ -768,14 +678,11 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #basicClassPool:!class variables!private! !
 !Class categoriesFor: #basicSharedPools:!accessing!private! !
 !Class categoriesFor: #bindingFor:!compiling!public! !
-!Class categoriesFor: #canFileOut!development!public!source filing! !
 !Class categoriesFor: #categories!categories-accessing!public! !
-!Class categoriesFor: #categories:!categories-accessing!development!public! !
+!Class categoriesFor: #categories:!categories-accessing!public! !
 !Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
 !Class categoriesFor: #category!categories-accessing!public! !
 !Class categoriesFor: #category:!categories-accessing!public! !
-!Class categoriesFor: #changeIndex!accessing!development!private! !
-!Class categoriesFor: #changeIndexValue:!accessing!development!private! !
 !Class categoriesFor: #classBinding!compiling!public! !
 !Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
 !Class categoriesFor: #classCategories:!categories-accessing!private! !
@@ -784,38 +691,28 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #clearGuid!accessing!private! !
 !Class categoriesFor: #comment!accessing!development!public! !
 !Class categoriesFor: #comment:!accessing!development!public! !
-!Class categoriesFor: #definitionChunk!development!public!source filing-class definition! !
 !Class categoriesFor: #fileIn!development!public!source filing! !
-!Class categoriesFor: #fileOut!development!public!source filing! !
 !Class categoriesFor: #fileOutName!development!private!source filing! !
-!Class categoriesFor: #fileOutOn:!development!public! !
 !Class categoriesFor: #fileOutStem!development!private!source filing! !
 !Class categoriesFor: #guid!constants!public! !
-!Class categoriesFor: #guid:!accessing!private! !
-!Class categoriesFor: #includeInCategory:!categories-adding!development!public! !
-!Class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
+!Class categoriesFor: #guid:!class hierarchy-adding!private! !
+!Class categoriesFor: #includeInCategory:!categories-adding!public! !
 !Class categoriesFor: #initializeAfterLoad!initializing!public! !
 !Class categoriesFor: #instanceClass!accessing!public! !
 !Class categoriesFor: #isAbstract:!instance specification-accessing!public! !
 !Class categoriesFor: #isAtomic!public!testing! !
-!Class categoriesFor: #isChanged!development!public!source filing!testing! !
-!Class categoriesFor: #isChanged:!accessing!development!public! !
 !Class categoriesFor: #isLiteral!public!testing! !
-!Class categoriesFor: #methodChanged:!development!helpers!private! !
 !Class categoriesFor: #name!accessing!public! !
 !Class categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
-!Class categoriesFor: #noClassCategoryName!constants!development!public! !
-!Class categoriesFor: #notifyPackageOfChange!development!helpers!private! !
-!Class categoriesFor: #owningPackage!public!source filing! !
+!Class categoriesFor: #owningPackage!development!public!source filing! !
 !Class categoriesFor: #owningPackage:!accessing!development!public! !
-!Class categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
+!Class categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
 !Class categoriesFor: #removeClassVarName:!class variables!public! !
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Class categoriesFor: #rename:!class hierarchy-accessing!development!private! !
-!Class categoriesFor: #rename:in:!class hierarchy-accessing!private! !
-!Class categoriesFor: #renameClassVar:to:!class variables!private! !
+!Class categoriesFor: #rename:!class hierarchy-mutating!private! !
+!Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
 !Class categoriesFor: #requiresInstallation!public!testing! !
 !Class categoriesFor: #setClassVarNames:!class variables!private! !
 !Class categoriesFor: #setGuid:!accessing!private! !
@@ -832,17 +729,14 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #uninitialize!development!initializing!private! !
-!Class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
+!Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
+!Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-
-Class methodProtocol: #exportableSource attributes: #(#readOnly) selectors: #(#fileOut #fileOutName #isChanged #isChanged:)!
-Class methodProtocol: #sourceObject attributes: #() selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage)!
 
 !Class class methodsFor!
 
@@ -895,12 +789,14 @@ allRoots
 	The answered collection will include only global classes. We do a bit of shuffling to ensure that
 	Object will be the first class."
 
-	| roots |
-	roots := (self basicAllRoots select: [:each | (self environment lookup: each name) == each]) asSet.
-	roots remove: Object.
-	^(roots asOrderedCollection)
-		addFirst: Object;
-		yourself!
+	| roots i |
+	roots := self basicAllRoots select: [:each | (self environment lookup: each name) == each].
+	i := roots identityIndexOf: Object.
+	^i == 1
+		ifTrue: [roots]
+		ifFalse: 
+			[roots at: i put: (roots at: 1).
+			roots at: 1 put: Object]!
 
 basicAllRoots
 	"Private - Answer a Collection of all root classes - ie. those that are subclasses of nil."

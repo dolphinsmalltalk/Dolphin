@@ -11,7 +11,7 @@ LPWSTR comment: 'LPWSTR is a class to represent pointers to Unicode strings. It 
 LPWSTR implicitly converts to the referenced Unicode string when asked for its value, rather than answering the pointer value itself.
 
 '!
-!LPWSTR categoriesForClass!External-Data-Structured! !
+!LPWSTR categoriesForClass!External-Data-Unstructured! !
 !LPWSTR methodsFor!
 
 asString

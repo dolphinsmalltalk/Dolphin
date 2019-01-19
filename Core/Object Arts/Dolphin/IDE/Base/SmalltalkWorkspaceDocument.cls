@@ -15,7 +15,7 @@ Class Variables:
 	ReuseIfOpen	`<boolean>` indicating whether an open workspace should be re-used in preference to opening a new one.
 
 '!
-!SmalltalkWorkspaceDocument categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!SmalltalkWorkspaceDocument categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkWorkspaceDocument methodsFor!
 
 aboutDolphin
@@ -626,16 +626,6 @@ toolsFolderIcon
 		description: self displayString
 		helpId: self toolsFolderHelpId!
 
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self displayString;
-		unregisterTool: self!
-
 variableTips
 	^VariableTips!
 
@@ -682,7 +672,7 @@ workspaceClass
 !SmalltalkWorkspaceDocument class categoriesFor: #initialize!initializing!private! !
 !SmalltalkWorkspaceDocument class categoriesFor: #isRichTextFile:!helpers!private! !
 !SmalltalkWorkspaceDocument class categoriesFor: #openIcon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #publishedAspects!development!public! !
+!SmalltalkWorkspaceDocument class categoriesFor: #publishedAspects!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #resource_Default_view!public!resources-views! !
 !SmalltalkWorkspaceDocument class categoriesFor: #reuseIfOpen!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #reuseIfOpen:!accessing!public! !
@@ -691,7 +681,6 @@ workspaceClass
 !SmalltalkWorkspaceDocument class categoriesFor: #textStyles:!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderHelpId!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderIcon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #uninitialize!initializing!private! !
 !SmalltalkWorkspaceDocument class categoriesFor: #variableTips!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #variableTips:!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #wordWrap!accessing!options!public! !

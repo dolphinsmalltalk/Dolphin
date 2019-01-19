@@ -2,10 +2,15 @@
 
 HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_CertDeniedByMapper _OffsetOf_CertEncodedSize _OffsetOf_CertFlags _OffsetOf_pCertEncoded _OffsetOf_Token'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SSL_CLIENT_CERT_INFO guid: (GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
+HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertDeniedByMapper' value: 16r10!
+HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertEncodedSize' value: 16r4!
+HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertFlags' value: 16r0!
+HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_pCertEncoded' value: 16r8!
+HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_Token' value: 16rC!
 HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -30,44 +35,44 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 CertEncodedSize
 	"Private - Answer the <Integer> value of the receiver's 'CertEncodedSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #CertEncodedSize)!
+	^bytes dwordAtOffset: _OffsetOf_CertEncodedSize!
 
 CertEncodedSize: anInteger
 	"Set the receiver's 'CertEncodedSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #CertEncodedSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_CertEncodedSize put: anInteger!
 
 CertFlags
 	"Answer the <Integer> value of the receiver's 'CertFlags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_CertFlags!
 
 CertFlags: anInteger
 	"Set the receiver's 'CertFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_CertFlags put: anInteger!
 
 pCertEncoded
 	"Answer the <ExternalArray> value of the receiver's 'pCertEncoded' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pCertEncoded))
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pCertEncoded)
 		length: self CertEncodedSize!
 
 pCertEncoded: anExternalArray
 	"Set the receiver's 'pCertEncoded' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pCertEncoded) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pCertEncoded put: anExternalArray yourAddress.
 	self CertEncodedSize: anExternalArray size!
 
 Token
 	"Answer the <ExternalHandle> value of the receiver's 'Token' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #Token)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_Token) asExternalHandle!
 
 Token: anExternalHandle
 	"Set the receiver's 'Token' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Token) put: anExternalHandle! !
+	bytes uintPtrAtOffset: _OffsetOf_Token put: anExternalHandle! !
 !HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize!**compiled accessors**!private! !
 !HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize:!**compiled accessors**!private! !
 !HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags!**compiled accessors**!public! !
@@ -100,6 +105,10 @@ defineFields
 		defineField: #pCertEncoded type: (ArrayPointerField type: ExternalArray lengthField: #CertEncodedSize) offset: 8;
 		defineField: #Token type: HANDLEField new offset: 12;
 		defineField: #CertDeniedByMapper type: BOOLEANField new beFiller offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+getFieldNames
+	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
 !HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

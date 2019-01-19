@@ -12,9 +12,6 @@ This is a specialized DOM node to represent text nodes. Text nodes represent the
 !IXMLDOMText categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMText methodsFor!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptText: self!
-
 splitText: offset
 	"Answer the <IXMLDOMText> result of invoking the splitText() method of the COM object.
 	Helpstring: split the text node into two text nodes at the position specified"
@@ -37,7 +34,6 @@ SplitText: offset rightHandTextNode: rightHandTextNode
 
 	<virtual stdcall: hresult 52 sdword IXMLDOMText**>
 	^self invalidCall! !
-!IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMText categoriesFor: #splitText:!**auto generated**!methods!public! !
 !IXMLDOMText categoriesFor: #SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
 

@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #CRYPTOAPI_BLOB
 	instanceVariableNames: 'localData'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_pbData'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CRYPTOAPI_BLOB guid: (GUID fromString: '{e93356a1-821e-4719-8038-f2813b7615d2}')!
+CRYPTOAPI_BLOB addClassConstant: '_OffsetOf_cbData' value: 16r0!
+CRYPTOAPI_BLOB addClassConstant: '_OffsetOf_pbData' value: 16r4!
 CRYPTOAPI_BLOB comment: '<CRYPTOAPI_BLOB> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTOAPI_BLOB'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -30,17 +32,17 @@ basicFree
 	KernelLibrary default localFree: self basicPbData!
 
 basicPbData
-	^bytes intPtrAtOffset: ##(self offsetOf: #pbData)!
+	^bytes intPtrAtOffset:_OffsetOf_pbData!
 
 cbData
 	"Private - Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 data
 	^localData ifNil: [
@@ -70,12 +72,12 @@ needsFree
 pbData
 	"Answer the <ExternalArray> value of the receiver's 'pbData' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pbData)) length: self cbData!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pbData) length: self cbData!
 
 pbData: anExternalArray
 	"Set the receiver's 'pbData' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pbData) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pbData put: anExternalArray yourAddress.
 	self cbData: anExternalArray size! !
 !CRYPTOAPI_BLOB categoriesFor: #basicFree!private!realizing/unrealizing! !
 !CRYPTOAPI_BLOB categoriesFor: #basicPbData!private!realizing/unrealizing! !
@@ -103,12 +105,21 @@ defineFields
 "
 
 	self
-		defineField: #cbData type: DWORDField new beNonBrowsable offset: 0;
-		defineField: #pbData type: (ArrayPointerField type: ExternalArray lengthField: #cbData) offset: 4.
+		defineField: #cbData
+			type: DWORDField new beNonBrowsable
+			offset: 0;
+		defineField: #pbData
+			type: (ArrayPointerField type: ExternalArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cbData))
+			offset: 4.
 	self byteSize: 8!
 
 fromBytes: aByteObject
-	^self new data: aByteObject! !
+	^self new data: aByteObject!
+
+getFieldNames
+	^#(#cbData #pbData)! !
 !CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !CRYPTOAPI_BLOB class categoriesFor: #fromBytes:!public! !
+!CRYPTOAPI_BLOB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

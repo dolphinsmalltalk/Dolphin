@@ -850,7 +850,7 @@ primesUpTo: aNumber
 	| limit flags prime primes |
 	limit := aNumber asInteger - 1.
 	flags := ByteArray new: limit withAll: 1.
-	primes := OrderedCollection new.
+	primes := Array writeStream.
 	1 to: limit
 		do: 
 			[:i | 
@@ -862,8 +862,8 @@ primesUpTo: aNumber
 					[k <= limit] whileTrue: 
 							[flags at: k put: 0.
 							k := k + prime].
-					primes addLast: prime]].
-	^primes!
+					primes nextPut: prime]].
+	^primes contents!
 
 readFrom: aStream
 	"Instantiate a new subinstance of the receiver from aStream and answer it.

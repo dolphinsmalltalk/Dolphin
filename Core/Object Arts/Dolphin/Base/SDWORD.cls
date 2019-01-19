@@ -25,12 +25,12 @@ unsignedValue: anUnsigned
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
 !SDWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SDWORD categoriesFor: #value!**compiled accessors**!public! !
 !SDWORD categoriesFor: #value:!**compiled accessors**!public! !
@@ -46,12 +46,6 @@ defineFields
 		type: ((SDWORDField new)
 				beOverride;
 				yourself)!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SDWORDField!
 
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
@@ -70,7 +64,6 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !SDWORD class categoriesFor: #defineFields!initializing!public! !
-!SDWORD class categoriesFor: #fieldType!constants!development!private! !
 !SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !SDWORD class categoriesFor: #initialize!development!initializing!private! !
 !SDWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

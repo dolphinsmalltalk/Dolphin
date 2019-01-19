@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #FILETIME
 	instanceVariableNames: ''
-	classVariableNames: 'UnixEpoch'
+	classVariableNames: '_OffsetOf_dwHighDateTime _OffsetOf_dwLowDateTime UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FILETIME guid: (GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+FILETIME addClassConstant: '_OffsetOf_dwHighDateTime' value: 16r4!
+FILETIME addClassConstant: '_OffsetOf_dwLowDateTime' value: 16r0!
 FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 
 A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).
@@ -72,16 +74,7 @@ integerValue: anInteger
 	"Set the number of 100-nanosecond intervals the receiver represents since the
 	FILETIME epoch."
 
-	bytes qwordAtOffset: 0 put: anInteger!
-
-printOn: aStream 
-	"Append a debug representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: self;
-		nextPut: $)! !
+	bytes qwordAtOffset: 0 put: anInteger! !
 !FILETIME categoriesFor: #asFILETIME!converting!public! !
 !FILETIME categoriesFor: #asInteger!converting!public! !
 !FILETIME categoriesFor: #asLocalTime!converting!public! !
@@ -90,7 +83,6 @@ printOn: aStream
 !FILETIME categoriesFor: #basicAsSYSTEMTIME!converting!public! !
 !FILETIME categoriesFor: #displayOn:!printing!public! !
 !FILETIME categoriesFor: #integerValue:!accessing!public! !
-!FILETIME categoriesFor: #printOn:!development!printing!public! !
 
 !FILETIME class methodsFor!
 
@@ -137,6 +129,9 @@ fromUnixTime: time_t
 
 	^self fromInteger: UnixEpoch + (time_t * 10000000)!
 
+getFieldNames
+	^#()!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		FILETIME initialize
@@ -162,6 +157,7 @@ now
 !FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
 !FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
 !FILETIME class categoriesFor: #fromUnixTime:!instance creation!public! !
+!FILETIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FILETIME class categoriesFor: #initialize!development!initializing!private! !
 !FILETIME class categoriesFor: #now!instance creation!public! !
 

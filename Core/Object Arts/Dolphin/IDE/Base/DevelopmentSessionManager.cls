@@ -7,7 +7,7 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	classInstanceVariableNames: ''!
 DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
 DevelopmentSessionManager comment: ''!
-!DevelopmentSessionManager categoriesForClass!Development!System-Support! !
+!DevelopmentSessionManager categoriesForClass!System-Support! !
 !DevelopmentSessionManager methodsFor!
 
 advanceImageVersionMinor
@@ -89,38 +89,32 @@ commandLineParser
 	-x - immediately exit
 	"
 
-	| startupGUID |
-	startupGUID := self sessionId.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
+	| startupSession |
+	startupSession := self sessionId.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
 	^super commandLineParser
 		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
 				[:rebasePath |
 				self inputState queueDeferredAction: 
-						[startupGUID == self sessionId
+						[startupSession == self sessionId
 							ifTrue: 
 								[Package manager rebaseBasePackagesTo: rebasePath ?? '.'.
 								self saveImage]]];
 		addOptionRequiringArgument: $f
 			whenPresentDo: 
 				[:fileInFile |
-				self inputState
-					queueDeferredAction: [startupGUID == self sessionId ifTrue: [SourceManager default fileIn: fileInFile]]];
+				self inputState queueDeferredAction: 
+						[startupSession == self sessionId ifTrue: [SourceManager default fileIn: fileInFile]]];
 		addOptionAllowingArgument: $i
 			whenPresentDo: 
 				[:newImageFile |
 				self inputState queueDeferredAction: 
-						[startupGUID == self sessionId ifTrue: [self saveImage: newImageFile ?? 'Dolphin']]];
+						[startupSession == self sessionId ifTrue: [self saveImage: newImageFile ?? 'Dolphin']]];
 		addOption: $x
 			whenPresentDo: 
-				[self inputState queueDeferredAction: [startupGUID = self sessionId ifTrue: [self quit]]];
+				[self inputState queueDeferredAction: [startupSession == self sessionId ifTrue: [self quit]]];
 		yourself!
-
-dolphinNewsgroupUrl
-	^'http://groups.google.com/group/comp.lang.smalltalk.dolphin'!
-
-dolphinWikiUrl
-	^'https://github.com/dolphinsmalltalk/Dolphin/wiki'!
 
 free
 	"Free any artifacts of the current session.
@@ -143,24 +137,6 @@ getInstallationDirectory
 
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
-
-helpContentsTopic
-	^'Welcome_to_Dolphin'!
-
-helpFirstSplashTopic
-	^'First_Splash'!
-
-helpGuidedTourTopic
-	^'Guided_Tour'!
-
-helpRootUrl
-	^FileLocator installRelative localFileSpecFor: 'EducationCentre7.chm::/'!
-
-helpTutorialsTopic
-	^'Tutorials'!
-
-helpWhatsNewTopic
-	^'Whats_New'!
 
 imageStamp
 	"Answer the TimeStamp at which the image was saved."
@@ -301,11 +277,6 @@ mainShellClass
 myDolphinUrl
 	^'http://www.object-arts.com/content/mydolphin/mydolphin?serialNumberOnly=<1d>' 
 		expandMacrosWith: self registeredSerialNumber!
-
-objectArtsUrl
-	"Private - Answer the URL of the Object Arts home page"
-
-	^'http://www.object-arts.com'!
 
 onExit
 	"Perform pre-termination actions."
@@ -541,7 +512,7 @@ resetPatchLevel
 !
 
 resourcesLocatorForClass: aClass 
-	^PackageRelativeFileLocator package: aClass owningPackage !
+	^aClass owningPackage fileLocator!
 
 retire
 	"This SessionManager instance is stepping down in favour of a new boy. Perform any
@@ -746,16 +717,8 @@ versionString
 !DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
 !DevelopmentSessionManager categoriesFor: #commandLineParser!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
-!DevelopmentSessionManager categoriesFor: #dolphinWikiUrl!public! !
 !DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #helpContentsTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpFirstSplashTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpGuidedTourTopic!public! !
-!DevelopmentSessionManager categoriesFor: #helpRootUrl!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpTutorialsTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpWhatsNewTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
@@ -773,7 +736,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
 !DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
-!DevelopmentSessionManager categoriesFor: #objectArtsUrl!constants!private! !
 !DevelopmentSessionManager categoriesFor: #onExit!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !

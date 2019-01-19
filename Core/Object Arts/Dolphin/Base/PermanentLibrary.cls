@@ -23,9 +23,9 @@ close
 !PermanentLibrary class methodsFor!
 
 clear
-	"Private - Clear down cached external function addresses from previous runs." 
+	"Private - Clear down cached external function addresses from previous runs."
 
-	self clearMethodDictionary: self methodDictionary.!
+	self methodDictionary do: [:m | m clear]!
 
 closeDefault
 	"Private - Close the default instance of the receiver (if there is one).

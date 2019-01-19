@@ -2,10 +2,12 @@
 
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 LVHITTESTINFO guid: (GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!
+LVHITTESTINFO addClassConstant: '_OffsetOf_iItem' value: 16rC!
+LVHITTESTINFO addClassConstant: '_OffsetOf_iSubItem' value: 16r10!
 LVHITTESTINFO comment: 'LVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 LVHISTTESTINFO is used for hit-testing with Enhanced List View controls. For example usage see ListView>>itemFromPoint:
@@ -21,14 +23,14 @@ handle
 	^self iItem + 1!
 
 iItem
-	"Answer the receiver's iItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iItem!
 
 iSubItem
-	"Answer the receiver's iSubItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)! !
+	^bytes sdwordAtOffset: _OffsetOf_iSubItem! !
 !LVHITTESTINFO categoriesFor: #handle!accessing!private! !
 !LVHITTESTINFO categoriesFor: #iItem!**compiled accessors**!public! !
 !LVHITTESTINFO categoriesFor: #iSubItem!**compiled accessors**!public! !
@@ -51,6 +53,10 @@ defineFields
 	self
 		defineField: #iItem type: SDWORDField readOnly;
 		defineField: #iSubItem type: SDWORDField readOnly
-! !
+!
+
+getFieldNames
+	^#(#pt #flags #iItem #iSubItem)! !
 !LVHITTESTINFO class categoriesFor: #defineFields!development!public! !
+!LVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

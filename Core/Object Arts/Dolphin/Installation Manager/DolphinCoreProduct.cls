@@ -7,7 +7,7 @@ DolphinProduct subclass: #DolphinCoreProduct
 	classInstanceVariableNames: ''!
 DolphinCoreProduct guid: (GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
 DolphinCoreProduct comment: ''!
-!DolphinCoreProduct categoriesForClass!Development! !
+!DolphinCoreProduct categoriesForClass!System-Support! !
 !DolphinCoreProduct methodsFor!
 
 contents
@@ -88,7 +88,8 @@ contents
 
 	"Active-X components"
 	contents
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #diskBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 

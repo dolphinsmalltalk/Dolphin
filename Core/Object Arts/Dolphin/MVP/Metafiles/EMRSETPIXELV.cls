@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRSETPIXELV
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_crColor _OffsetOf_ptlPixel'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETPIXELV guid: (GUID fromString: '{a1dc1f6e-41ae-4ffa-90d8-778106a60b0b}')!
+EMRSETPIXELV addClassConstant: '_OffsetOf_crColor' value: 16r10!
+EMRSETPIXELV addClassConstant: '_OffsetOf_ptlPixel' value: 16r8!
 EMRSETPIXELV comment: '<EMRSETPIXELV> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPIXELV'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,27 +27,27 @@ struct tagEMRSETPIXELV {
 !EMRSETPIXELV methodsFor!
 
 crColor
-	"Answer the receiver's crColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crColor)!
+	^bytes dwordAtOffset: _OffsetOf_crColor!
 
-crColor: anObject 
-	"Set the receiver's crColor field to the value of anObject."
+crColor: anInteger
+	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger!
 
 ptlPixel
-	"Answer the receiver's ptlPixel field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlPixel' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlPixel)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlPixel!
 
-ptlPixel: anObject 
-	"Set the receiver's ptlPixel field to the value of anObject."
+ptlPixel: aPOINTL
+	"Set the receiver's 'ptlPixel' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlPixel) + 1)
-		to: ##((self offsetOf: #ptlPixel) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlPixel + 1)
+		to: ##(_OffsetOf_ptlPixel + POINTL basicByteSize)
 		startingAt: 1! !
 !EMRSETPIXELV categoriesFor: #crColor!**compiled accessors**!public! !
 !EMRSETPIXELV categoriesFor: #crColor:!**compiled accessors**!public! !
@@ -77,10 +79,14 @@ defineFields
 			offset: 16.
 	self byteSize: 20!
 
+getFieldNames
+	^#(#iType #nSize #ptlPixel #crColor)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPIXELV! !
 !EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
 

@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #EXCEPTION_RECORD
 	instanceVariableNames: 'info'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ExceptionAddress _OffsetOf_ExceptionCode _OffsetOf_ExceptionFlags _OffsetOf_ExceptionInformation _OffsetOf_ExceptionRecord _OffsetOf_NumberParameters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EXCEPTION_RECORD guid: (GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionAddress' value: 16rC!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionCode' value: 16r0!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionFlags' value: 16r4!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionInformation' value: 16r14!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionRecord' value: 16r8!
+EXCEPTION_RECORD addClassConstant: '_OffsetOf_NumberParameters' value: 16r10!
 EXCEPTION_RECORD comment: '<EXCEPTION_RECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EXCEPTION_RECORD'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,38 +37,37 @@ struct tagEXCEPTION_RECORD {
 ExceptionAddress
 	"Answer the <ExternalAddress> value of the receiver's 'ExceptionAddress' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #ExceptionAddress)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_ExceptionAddress) asExternalAddress!
 
 ExceptionCode
 	"Answer the <Integer> value of the receiver's 'ExceptionCode' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_ExceptionCode!
 
 ExceptionFlags
 	"Answer the <Integer> value of the receiver's 'ExceptionFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ExceptionFlags)!
+	^bytes dwordAtOffset: _OffsetOf_ExceptionFlags!
 
 ExceptionRecord
 	"Answer the <EXCEPTION_RECORD> value of the receiver's 'ExceptionRecord' field."
 
-	^EXCEPTION_RECORD fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ExceptionRecord))!
+	^EXCEPTION_RECORD fromAddress: (bytes intPtrAtOffset: _OffsetOf_ExceptionRecord)!
 
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
 
 	info isNil
 		ifTrue: 
-			["Open coded to avoid a base system dependency on UINT_PTR and associated array type"
-			| count |
+			[| count |
+			"Open coded to avoid a base system dependency on UINT_PTR and associated array type"
 			count := self NumberParameters.
 			info := Array new: count.
 			1 to: count
 				do: 
 					[:i |
 					info at: i
-						put: (bytes
-								uintPtrAtOffset: ##(self offsetOf: #ExceptionInformation) + ((i - 1) * VMConstants.IntPtrSize))]].
+						put: (bytes uintPtrAtOffset: _OffsetOf_ExceptionInformation + ((i - 1) * VMConstants.IntPtrSize))]].
 	^info!
 
 moduleFileName
@@ -81,7 +86,7 @@ moduleFileName
 NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #NumberParameters)! !
+	^bytes dwordAtOffset: _OffsetOf_NumberParameters! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionAddress!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionCode!**compiled accessors**!public! !
 !EXCEPTION_RECORD categoriesFor: #ExceptionFlags!**compiled accessors**!public! !
@@ -115,6 +120,10 @@ defineFields
 		defineField: #ExceptionAddress type: LPVOIDField new beReadOnly offset: 12;
 		defineField: #NumberParameters type: DWORDField new beReadOnly offset: 16;
 		defineField: #ExceptionInformation type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller offset: 20.
-	self byteSize: 80! !
+	self byteSize: 80!
+
+getFieldNames
+	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
 !EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

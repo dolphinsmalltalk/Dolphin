@@ -12,7 +12,7 @@ DWORD is used to represent unsigned 32-bit integers in conjunction with Win32 AP
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**32)-1'!
-!DWORD categoriesForClass!External-Data-Structured! !
+!DWORD categoriesForClass!External-Data-Unstructured! !
 !DWORD methodsFor!
 
 asSignedInteger
@@ -76,12 +76,12 @@ lowWord: anInteger
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
 !DWORD categoriesFor: #asSignedInteger!converting!public! !
 !DWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !DWORD categoriesFor: #highSWord!accessing!public! !
@@ -97,11 +97,11 @@ value: anInteger
 
 !DWORD class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^DWORDField!
+	self defineField: #value type: DWORDField new beOverride!
 
 fromPoint: aPoint
 	"Private - Answer a new instance of the receiver with high and low
@@ -125,7 +125,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DWORD class categoriesFor: #fieldType!constants!development!private! !
+!DWORD class categoriesFor: #defineFields!initializing!public! !
 !DWORD class categoriesFor: #fromPoint:!instance creation!private! !
 !DWORD class categoriesFor: #initialize!development!initializing!private! !
 !DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -6,8 +6,8 @@ StSemanticScope subclass: #StLexicalScope
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
-StLexicalScope addClassConstant: 'FarReturnMask' value: 2!
-StLexicalScope addClassConstant: 'NeedsSelfMask' value: 1!
+StLexicalScope addClassConstant: 'FarReturnMask' value: 16r2!
+StLexicalScope addClassConstant: 'NeedsSelfMask' value: 16r1!
 StLexicalScope comment: ''!
 !StLexicalScope categoriesForClass!Kernel-Objects! !
 !StLexicalScope methodsFor!
@@ -161,5 +161,5 @@ unreferencedArguments
 initialize
 	self addClassConstant: 'NeedsSelfMask' value: 16r1.
 	self addClassConstant: 'FarReturnMask' value: 16r2! !
-!StLexicalScope class categoriesFor: #initialize!class initialization!public! !
+!StLexicalScope class categoriesFor: #initialize!class initialization!development!public! !
 

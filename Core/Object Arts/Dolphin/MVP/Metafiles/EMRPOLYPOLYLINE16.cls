@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE16
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aPolyCounts _OffsetOf_apts _OffsetOf_cpts _OffsetOf_nPolys _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYPOLYLINE16 guid: (GUID fromString: '{2a9bb18a-1223-4e8d-a462-82c531b52df3}')!
+EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_aPolyCounts' value: 16r20!
+EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_apts' value: 16r24!
+EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_cpts' value: 16r1C!
+EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_nPolys' value: 16r18!
+EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYPOLYLINE16 comment: '<EMRPOLYPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE16''.
 
 The type library contains no documentation for this struct
@@ -34,16 +39,17 @@ aPolyCounts
 
 	^DWORDArray fromAddress: (bytes yourAddress + 32) length: self nPolys!
 
-aPolyCounts: anObject 
-	"Set the receiver's aPolyCounts field to the value of anObject."
+aPolyCounts: aDWORDArray
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: self nPolys * ##(DWORDArray elementSize).
-	anObject 
+	size := aDWORDArray byteSize.
+	aDWORDArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aPolyCounts) + 1)
-		to: ##(self offsetOf: #aPolyCounts) + size
-		startingAt: 1!
+		from: ##(_OffsetOf_aPolyCounts + 1)
+		to: _OffsetOf_aPolyCounts + size
+		startingAt: 1.
+	self nPolys: aDWORDArray size!
 
 apts
 	"Answer the receiver's apts field as a Smalltalk object."
@@ -70,40 +76,40 @@ apts: anObject
 		startingAt: 1!
 
 aptsOffset
-	^##(self offsetOf: #aPolyCounts) + (4 * self nPolys)!
+	^_OffsetOf_aPolyCounts + (4 * self nPolys)!
 
 cpts
-	"Answer the receiver's cpts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cpts' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cpts)!
+	^bytes dwordAtOffset: _OffsetOf_cpts!
 
-cpts: anObject 
-	"Set the receiver's cpts field to the value of anObject."
+cpts: anInteger
+	"Set the receiver's 'cpts' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cpts) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
 
 nPolys
-	"Answer the receiver's nPolys field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPolys' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPolys)!
+	^bytes dwordAtOffset: _OffsetOf_nPolys!
 
-nPolys: anObject 
-	"Set the receiver's nPolys field to the value of anObject."
+nPolys: anInteger
+	"Set the receiver's 'nPolys' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPolys) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nPolys put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRPOLYPOLYLINE16 categoriesFor: #aPolyCounts!public! !
 !EMRPOLYPOLYLINE16 categoriesFor: #aPolyCounts:!**compiled accessors**!public! !
@@ -151,10 +157,14 @@ defineFields
 			offset: 32;
 		defineField: #apts type: (StructureArrayField type: POINTS lengthField: #cpts)!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #nPolys #cpts #aPolyCounts #apts)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYPOLYLINE16 with: EMR_POLYPOLYGON16! !
 !EMRPOLYPOLYLINE16 class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
 

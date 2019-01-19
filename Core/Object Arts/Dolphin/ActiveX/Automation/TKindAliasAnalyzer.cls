@@ -56,14 +56,16 @@ vt
 
 !TKindAliasAnalyzer class methodsFor!
 
+basicTypes
+	^{UINT_PTR. INT_PTR. LARGE_INTEGER. ULARGE_INTEGER. BOOLEAN. GUID}!
+
 initialize
 	"
 	self initialize
 	"
 
 	BaseTypes := LookupTable new.
-	#(#UINT_PTR #INT_PTR #LARGE_INTEGER #ULARGE_INTEGER #BOOLEAN #GUID)
-		do: [:each | BaseTypes at: each asString put: (Smalltalk at: each)].
+	self basicTypes do: [:each | BaseTypes at: each name asString put: each].
 	BaseTypes
 		at: 'guid' put: GUID;
 		at: 'ULONG_PTR' put: UINT_PTR;
@@ -81,6 +83,7 @@ typekind
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !
+!TKindAliasAnalyzer class categoriesFor: #basicTypes!constants!must not strip!public! !
 !TKindAliasAnalyzer class categoriesFor: #initialize!class initialization!development!public! !
 !TKindAliasAnalyzer class categoriesFor: #typekind!constants!private! !
 !TKindAliasAnalyzer class categoriesFor: #wireHandleNames!constants!private! !

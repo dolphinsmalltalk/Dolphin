@@ -2,10 +2,13 @@
 
 HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Length _OffsetOf_pInfo _OffsetOf_Type'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_INFO guid: (GUID fromString: '{cdf58c2c-140f-4611-b847-12837ce3155f}')!
+HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Length' value: 16r4!
+HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
+HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Type' value: 16r0!
 HTTP_RESPONSE_INFO comment: '<HTTP_RESPONSE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -36,27 +39,27 @@ info
 		with: nil
 		with: HTTP_QOS_SETTING_INFO
 		with: HTTP_CHANNEL_BIND_INFO) at: type + 1)
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pInfo))	""!
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo)	""!
 
 Length
 	"Private - Answer the <Integer> value of the receiver's 'Length' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Length)!
+	^bytes dwordAtOffset: _OffsetOf_Length!
 
 Length: anInteger
 	"Set the receiver's 'Length' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Length) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Length put: anInteger!
 
 pInfo
 	"Private - Answer the <ExternalArray> value of the receiver's 'pInfo' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pInfo)) length: self Length!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo) length: self Length!
 
 pInfo: anExternalArray
 	"Set the receiver's 'pInfo' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pInfo) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pInfo put: anExternalArray yourAddress.
 	self Length: anExternalArray size!
 
 printFields: aCollection on: aStream limit: anInteger
@@ -65,12 +68,12 @@ printFields: aCollection on: aStream limit: anInteger
 Type
 	"Private - Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
 !HTTP_RESPONSE_INFO categoriesFor: #info!accessing!public! !
 !HTTP_RESPONSE_INFO categoriesFor: #Length!**compiled accessors**!private! !
 !HTTP_RESPONSE_INFO categoriesFor: #Length:!**compiled accessors**!private! !
@@ -99,6 +102,10 @@ defineFields
 		defineField: #Type type: SDWORDField new beNonBrowsable offset: 0;
 		defineField: #Length type: DWORDField new beNonBrowsable offset: 4;
 		defineField: #pInfo type: (ArrayPointerField type: ExternalArray lengthField: #Length) beNonBrowsable offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#Type #Length #pInfo)! !
 !HTTP_RESPONSE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

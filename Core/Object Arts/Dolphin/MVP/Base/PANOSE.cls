@@ -2,64 +2,74 @@
 
 Win32Structure subclass: #PANOSE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bArmStyle _OffsetOf_bContrast _OffsetOf_bFamilyType _OffsetOf_bLetterform _OffsetOf_bMidline _OffsetOf_bProportion _OffsetOf_bSerifStyle _OffsetOf_bStrokeVariation _OffsetOf_bWeight _OffsetOf_bXHeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PANOSE guid: (GUID fromString: '{ab0b82a7-5304-49c0-9937-e7474bc1a82f}')!
+PANOSE addClassConstant: '_OffsetOf_bArmStyle' value: 16r6!
+PANOSE addClassConstant: '_OffsetOf_bContrast' value: 16r4!
+PANOSE addClassConstant: '_OffsetOf_bFamilyType' value: 16r0!
+PANOSE addClassConstant: '_OffsetOf_bLetterform' value: 16r7!
+PANOSE addClassConstant: '_OffsetOf_bMidline' value: 16r8!
+PANOSE addClassConstant: '_OffsetOf_bProportion' value: 16r3!
+PANOSE addClassConstant: '_OffsetOf_bSerifStyle' value: 16r1!
+PANOSE addClassConstant: '_OffsetOf_bStrokeVariation' value: 16r5!
+PANOSE addClassConstant: '_OffsetOf_bWeight' value: 16r2!
+PANOSE addClassConstant: '_OffsetOf_bXHeight' value: 16r9!
 PANOSE comment: '<PANOSE> is an <ExternalStructure> class to wrap the struct ''Win.PANOSE'' from type information in the ''Windows API (ANSI)'' library.
 '!
 !PANOSE categoriesForClass!Win-Structs! !
 !PANOSE methodsFor!
 
 bArmStyle
-	"Answer the receiver's bArmStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bArmStyle' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bArmStyle)!
+	^bytes byteAtOffset: _OffsetOf_bArmStyle!
 
 bContrast
-	"Answer the receiver's bContrast field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bContrast' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bContrast)!
+	^bytes byteAtOffset: _OffsetOf_bContrast!
 
 bFamilyType
-	"Answer the receiver's bFamilyType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bFamilyType' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_bFamilyType!
 
 bLetterform
-	"Answer the receiver's bLetterform field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bLetterform' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bLetterform)!
+	^bytes byteAtOffset: _OffsetOf_bLetterform!
 
 bMidline
-	"Answer the receiver's bMidline field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bMidline' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bMidline)!
+	^bytes byteAtOffset: _OffsetOf_bMidline!
 
 bProportion
-	"Answer the receiver's bProportion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bProportion' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bProportion)!
+	^bytes byteAtOffset: _OffsetOf_bProportion!
 
 bSerifStyle
-	"Answer the receiver's bSerifStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bSerifStyle' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bSerifStyle)!
+	^bytes byteAtOffset: _OffsetOf_bSerifStyle!
 
 bStrokeVariation
-	"Answer the receiver's bStrokeVariation field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bStrokeVariation' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bStrokeVariation)!
+	^bytes byteAtOffset: _OffsetOf_bStrokeVariation!
 
 bWeight
-	"Answer the receiver's bWeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bWeight' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bWeight)!
+	^bytes byteAtOffset: _OffsetOf_bWeight!
 
 bXHeight
-	"Answer the receiver's bXHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bXHeight)! !
+	^bytes byteAtOffset: _OffsetOf_bXHeight! !
 !PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
 !PANOSE categoriesFor: #bContrast!**compiled accessors**!public! !
 !PANOSE categoriesFor: #bFamilyType!**compiled accessors**!public! !
@@ -102,6 +112,10 @@ defineFields
 		defineField: #bArmStyle type: BYTEField readOnly;
 		defineField: #bLetterform type: BYTEField readOnly;
 		defineField: #bMidline type: BYTEField readOnly;
-		defineField: #bXHeight type: BYTEField readOnly! !
+		defineField: #bXHeight type: BYTEField readOnly!
+
+getFieldNames
+	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
 !PANOSE class categoriesFor: #defineFields!initializing!public! !
+!PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

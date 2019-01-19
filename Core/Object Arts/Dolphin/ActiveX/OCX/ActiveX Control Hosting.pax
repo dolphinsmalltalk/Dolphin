@@ -80,20 +80,21 @@ package globalAliases: (Set new
 	add: #IAxWinHostWindow;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Automation\ActiveX Automation';
-	add: '..\Categories\ActiveX Categories';
-	add: '..\Connection Points\ActiveX Connection Points';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\COM\OLE COM';
-	add: '..\Components\Font\OLE Font';
-	add: '..\Persist\OLE Persistence Base';
-	add: '..\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\Automation\ActiveX Automation'
+	'..\Categories\ActiveX Categories'
+	'..\Connection Points\ActiveX Connection Points'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\COM\OLE COM'
+	'..\Components\Font\OLE Font'
+	'..\Persist\OLE Persistence Base'
+	'..\Structured Storage\OLE Structured Storage').
 
 package!
 
@@ -141,7 +142,7 @@ IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ControlView subclass: #AXControlSite

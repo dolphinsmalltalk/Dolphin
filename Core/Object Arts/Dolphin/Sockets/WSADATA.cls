@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iMaxSockets _OffsetOf_iMaxUdpDg _OffsetOf_lpVendorInfo _OffsetOf_szDescription _OffsetOf_szSystemStatus _OffsetOf_wHighVersion _OffsetOf_wVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WSADATA guid: (GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
+WSADATA addClassConstant: '_OffsetOf_iMaxSockets' value: 16r186!
+WSADATA addClassConstant: '_OffsetOf_iMaxUdpDg' value: 16r188!
+WSADATA addClassConstant: '_OffsetOf_lpVendorInfo' value: 16r18C!
+WSADATA addClassConstant: '_OffsetOf_szDescription' value: 16r4!
+WSADATA addClassConstant: '_OffsetOf_szSystemStatus' value: 16r105!
+WSADATA addClassConstant: '_OffsetOf_wHighVersion' value: 16r2!
+WSADATA addClassConstant: '_OffsetOf_wVersion' value: 16r0!
 WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -31,37 +38,37 @@ struct tagWSADATA {
 iMaxSockets
 	"Answer the <Integer> value of the receiver's 'iMaxSockets' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #iMaxSockets)!
+	^bytes wordAtOffset: _OffsetOf_iMaxSockets!
 
 iMaxUdpDg
 	"Answer the <Integer> value of the receiver's 'iMaxUdpDg' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #iMaxUdpDg)!
+	^bytes wordAtOffset: _OffsetOf_iMaxUdpDg!
 
 lpVendorInfo
 	"Answer the <ExternalAddress> value of the receiver's 'lpVendorInfo' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #lpVendorInfo)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_lpVendorInfo) asExternalAddress!
 
 szDescription
 	"Answer the <AnsiString> value of the receiver's 'szDescription' field."
 
-	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #szDescription)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_szDescription!
 
 szSystemStatus
 	"Answer the <AnsiString> value of the receiver's 'szSystemStatus' field."
 
-	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #szSystemStatus)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_szSystemStatus!
 
 wHighVersion
 	"Answer the <Integer> value of the receiver's 'wHighVersion' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wHighVersion)!
+	^bytes wordAtOffset: _OffsetOf_wHighVersion!
 
 wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
-	^bytes wordAtOffset: 0! !
+	^bytes wordAtOffset: _OffsetOf_wVersion! !
 !WSADATA categoriesFor: #iMaxSockets!**compiled accessors**!public! !
 !WSADATA categoriesFor: #iMaxUdpDg!**compiled accessors**!public! !
 !WSADATA categoriesFor: #lpVendorInfo!**compiled accessors**!public! !
@@ -97,6 +104,10 @@ defineFields
 		defineField: #iMaxSockets type: WORDField new beReadOnly offset: 390;
 		defineField: #iMaxUdpDg type: WORDField new beReadOnly offset: 392;
 		defineField: #lpVendorInfo type: LPVOIDField new beReadOnly offset: 396.
-	self byteSize: 400! !
+	self byteSize: 400!
+
+getFieldNames
+	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
 !WSADATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

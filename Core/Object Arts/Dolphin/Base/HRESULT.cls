@@ -7,7 +7,7 @@ ExternalInteger subclass: #HRESULT
 	classInstanceVariableNames: ''!
 HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULT comment: ''!
-!HRESULT categoriesForClass!External-Data-Structured! !
+!HRESULT categoriesForClass!External-Data-Unstructured! !
 !HRESULT methodsFor!
 
 asSignedInteger
@@ -110,14 +110,14 @@ unsignedValue: anUnsigned
 	bytes dwordAtOffset: 0 put: anUnsigned!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_value!
 
-value: anObject
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
 !HRESULT categoriesFor: #asSignedInteger!converting!public! !
 !HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
 !HRESULT categoriesFor: #displayOn:!displaying!public! !
@@ -136,16 +136,16 @@ value: anObject
 
 !HRESULT class methodsFor!
 
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
+
+	self defineField: #value type: SDWORDField new beOverride!
+
 fail
 	"Answer the generic failure HRESULT."
 
 	^Fail!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SDWORDField!
 
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
@@ -204,8 +204,8 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
+!HRESULT class categoriesFor: #defineFields!initializing!public! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
-!HRESULT class categoriesFor: #fieldType!constants!development!private! !
 !HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !
 !HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !

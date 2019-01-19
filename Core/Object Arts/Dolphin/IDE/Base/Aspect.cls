@@ -21,7 +21,7 @@ Instance Variables:
 	presenterBlock	<dyadicValuable> to be evaluated to bring up a presenter on the aspect
 	editBlock		<monadicValue> to be evaluated to edit the aspect
 	isMutable		<Boolean> specifying whether the aspect can be modified in-place'!
-!Aspect categoriesForClass!Development! !
+!Aspect categoriesForClass!Attribute-Definition! !
 !Aspect methodsFor!
 
 <= anAspect
@@ -502,7 +502,7 @@ collection: aSymbol presenterClass: collectionPresenterClass addEvaluationFrom: 
 					choice := anArrayOfStrings size > 1 
 								ifTrue: [ChoicePrompter choices: anArrayOfStrings caption: 'Add an Evaluation']
 								ifFalse: [anArrayOfStrings first].
-					choice notNil ifTrue: [Compiler evaluate: choice logged: false]]]
+					choice notNil ifTrue: [Compiler evaluate: choice]]]
 		editBlock: self defaultCollectionEditBlock!
 
 collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass addFrom: anArray 
@@ -726,7 +726,7 @@ name: aSymbol chooseFrom: anArrayOEvaluableStrings
 			[:p | 
 			| choice |
 			choice := ChoicePrompter choices: anArrayOEvaluableStrings caption: 'Set ' , aSymbol , ' to:'.
-			choice notNil ifTrue: [p value: (Compiler evaluate: choice logged: false)]]!
+			choice notNil ifTrue: [p value: (Compiler evaluate: choice)]]!
 
 name: aSymbol editBlock: aOneArgEditBlock 
 	"Answer an instance of the receiver for anAspectSymbol.
@@ -876,7 +876,7 @@ time: aSymbol
 	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]! !
 !Aspect class categoriesFor: #autostring:!instance creation!public! !
 !Aspect class categoriesFor: #bitmap:!instance creation!public! !
-!Aspect class categoriesFor: #block:!development!instance creation!public! !
+!Aspect class categoriesFor: #block:!instance creation!public! !
 !Aspect class categoriesFor: #boolean:!instance creation!public! !
 !Aspect class categoriesFor: #choice:choiceBlock:!instance creation!public! !
 !Aspect class categoriesFor: #choice:evaluationFrom:!instance creation!public! !
@@ -892,7 +892,7 @@ time: aSymbol
 !Aspect class categoriesFor: #color:!instance creation!public! !
 !Aspect class categoriesFor: #date:!instance creation!public! !
 !Aspect class categoriesFor: #defaultCollectionEditBlock!constants!private! !
-!Aspect class categoriesFor: #defaultPresenterBlock!constants!development!private! !
+!Aspect class categoriesFor: #defaultPresenterBlock!constants!private! !
 !Aspect class categoriesFor: #dictionary:!instance creation!public! !
 !Aspect class categoriesFor: #extent:!instance creation!public! !
 !Aspect class categoriesFor: #fileOpen:!instance creation!public! !
@@ -913,9 +913,9 @@ time: aSymbol
 !Aspect class categoriesFor: #menu:!instance creation!must strip!public! !
 !Aspect class categoriesFor: #menuBar:!instance creation!must strip!public! !
 !Aspect class categoriesFor: #multilineString:!instance creation!public! !
-!Aspect class categoriesFor: #name:!development!instance creation!public! !
-!Aspect class categoriesFor: #name:chooseFrom:!development!instance creation!public! !
-!Aspect class categoriesFor: #name:editBlock:!development!instance creation!public! !
+!Aspect class categoriesFor: #name:!instance creation!public! !
+!Aspect class categoriesFor: #name:chooseFrom:!instance creation!public! !
+!Aspect class categoriesFor: #name:editBlock:!instance creation!public! !
 !Aspect class categoriesFor: #name:presenterBlock:!instance creation!public! !
 !Aspect class categoriesFor: #name:presenterBlock:editBlock:!instance creation!public! !
 !Aspect class categoriesFor: #new!instance creation!private! !

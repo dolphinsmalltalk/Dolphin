@@ -13,7 +13,7 @@ Instance Variables:
 	menuViews		<OrderedCollection> of <MenuComposerView>''s representing the menu(s) being edited.
 	conflictingAccelerators	<Set> of <integer> conflicting accelerator codes.
 '!
-!MenuComposer categoriesForClass!Development!MVP-Presenters! !
+!MenuComposer categoriesForClass!MVP-Presenters! !
 !MenuComposer methodsFor!
 
 addCommand

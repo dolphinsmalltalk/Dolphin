@@ -193,7 +193,7 @@ text
 !MenuItem categoriesFor: #queryAlong:!operations!public! !
 !MenuItem categoriesFor: #registerAcceleratorKeyIn:!menus!public! !
 !MenuItem categoriesFor: #styleFlags!accessing!private! !
-!MenuItem categoriesFor: #styleFlags:!accessing!private! !
+!MenuItem categoriesFor: #styleFlags:!accessing!not an aspect!private! !
 !MenuItem categoriesFor: #text!accessing!public! !
 
 MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!

@@ -27,7 +27,7 @@ Class Variables:
 	InfoTips				<boolean> indicating whether method info tips (showing category information) should be displayed. If nil then configured by view.
 
 '!
-!MethodBrowser categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !MethodBrowser methodsFor!
 
 addMethods: aCollectionOfMethods toCategory: aMethodCategory 
@@ -414,25 +414,16 @@ customDrawMethodClass: anNMLVCUSTOMDRAW
 
 	| class |
 	class := anNMLVCUSTOMDRAW item methodClass.
-	anNMLVCUSTOMDRAW font
-		isStruckThrough: class isDeprecated;
-		isItalic: class isNonInstantiable!
-
-customDrawPackage: anNMLVCUSTOMDRAW
-	"Private - Custom drawing to implement the emphasis in a method browser's package column."
-
-	anNMLVCUSTOMDRAW font
-		isStruckThrough: false;
-		isItalic: false!
+	class isDeprecated ifTrue: [anNMLVCUSTOMDRAW font isStruckThrough: true].
+	class isNonInstantiable ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 
 customDrawSelector: anNMLVCUSTOMDRAW
 	"Private - Custom drawing to implement the emphasis in a method browser's selector column."
 
 	| method |
 	method := anNMLVCUSTOMDRAW item.
-	anNMLVCUSTOMDRAW font
-		isStruckThrough: method isDeprecated;
-		isItalic: method isAbstract!
+	method isDeprecated ifTrue: [anNMLVCUSTOMDRAW font isStruckThrough: true].
+	method isAbstract ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 
 deleteItCommand
 	methodsPresenter hasFocus ifTrue: [^#removeMethod].
@@ -832,57 +823,57 @@ promptToSaveChanges
 				oldSelection: method;
 				yourself)!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery> argument."
 
 	| selector method methods |
 	selector := aCommandQuery commandSymbol.
 	#browseIt == selector ifTrue: [selector := self browseItCommand].
-	#clearSelection == selector 
+	#clearSelection == selector
 		ifTrue: 
 			[selector := self deleteItCommand.
-			selector isNil 
+			selector isNil
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	#newMethod == selector 
+	#newMethod == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: false.
 			^false].	"Can't add new methods as don't know class"
-	(#(#definitionsMenu #referencesMenu) identityIncludes: selector) 
+	(#(#definitionsMenu #referencesMenu) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
 	methods := self selections.
 	method := methods size = 1 ifTrue: [methods first].
-	#browseMethodInheritanceChain == selector 
+	#browseMethodInheritanceChain == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (method notNil and: [method isOverride]).
 			^true].
-	(#(#inspectIt #browsePackages) identityIncludes: selector) 
+	(#(#inspectIt #browsePackages) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: methods notEmpty.
 			^true].
-	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages) 
-		identityIncludes: selector) 
+	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: method notNil.
 				^true].
-	#browseSystem == selector 
+	#browseSystem == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: method notNil.
 			^true].
-	(#(#addCategoryMenu #removeCategoryMenu #categorizeMethods #methodPackage #removeMethod) 
-		identityIncludes: selector) 
+	(#(#addCategoryMenu #removeCategoryMenu #categorizeMethods #methodPackage #removeMethod)
+		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (methods notEmpty 
+				[aCommandQuery isEnabled: (methods notEmpty
 							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]).
 				^true].
-	#browseMethodClasses == selector 
+	#browseMethodClasses == selector
 		ifTrue: 
 			[| text |
-			text := method isNil 
+			text := method isNil
 						ifTrue: 
 							[aCommandQuery isEnabled: methods notEmpty.
 							'Classes']
@@ -891,27 +882,28 @@ queryCommand: aCommandQuery
 							method methodClass name].
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: text).
 			^true].
-	#browseMethodPackages == selector 
+	#browseMethodPackages == selector
 		ifTrue: 
-			[| name packages |
+			[| packages |
 			packages := (methods collect: [:each | each owningPackage]) asSet.
-			name := packages size = 1 ifTrue: [packages anyOne name printString] ifFalse: ['Packages'].
 			aCommandQuery isEnabled: packages notEmpty.
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: name).
+			aCommandQuery text: (packages size = 1
+						ifTrue: [aCommandQuery commandDescription menuText expandMacrosWith: packages anyOne name printString]
+						ifFalse: ['Packages']).
 			^true].
 	"We want find next to work, even when the source pane does not have focus"
-	#findNext == selector 
+	#findNext == selector
 		ifTrue: 
-			[(method notNil and: [sourcePresenter findDetails notNil]) 
+			[(method notNil and: [sourcePresenter findDetails notNil])
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
 						receiver: sourcePresenter view.
 					^true]].
-	#togglePrivate == selector 
+	#togglePrivate == selector
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: (methods notEmpty 
+				isEnabled: (methods notEmpty
 							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]);
 				isChecked: (methods notEmpty and: [methods allSatisfy: [:each | each isPrivate]]).
 			^true].
@@ -1122,7 +1114,6 @@ versionModel
 !MethodBrowser categoriesFor: #createComponents!initializing!public! !
 !MethodBrowser categoriesFor: #createSchematicWiring!initializing!public! !
 !MethodBrowser categoriesFor: #customDrawMethodClass:!helpers!private! !
-!MethodBrowser categoriesFor: #customDrawPackage:!helpers!private! !
 !MethodBrowser categoriesFor: #customDrawSelector:!helpers!private! !
 !MethodBrowser categoriesFor: #deleteItCommand!helpers!private! !
 !MethodBrowser categoriesFor: #enableSource:!modes!private! !
@@ -1198,7 +1189,7 @@ versionModel
 !MethodBrowser categoriesFor: #sortBlock!accessing!private! !
 !MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
 !MethodBrowser categoriesFor: #source!accessing!public! !
-!MethodBrowser categoriesFor: #sourceControl!constants!development!public! !
+!MethodBrowser categoriesFor: #sourceControl!constants!public! !
 !MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
 !MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
 !MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
@@ -1274,12 +1265,12 @@ resource_Class_browser_method_list
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Class_browser_method_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 30 nil nil 34 2 8 1409355849 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 29 265030 4 ##(Smalltalk.Menu) nil true 34 15 626 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 626 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 626 nil true 34 13 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseReferencesToGlobal 8 'References to Global...' 1 1 nil nil nil 802 1 834 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 802 1 834 #browseMethodCategory 8 'Cate&gory...' 1 1 930 nil true 976 8 'Category.ico' 1024 nil nil 802 1 834 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 802 1 834 #browseMethodPackages 8 'Package <s>' 1 1 930 nil true 976 8 'Package.ico' 1024 nil nil 802 1 834 #browseMethodClasses 8 'Class <s>' 1 1 nil nil nil 1186 4097 802 1 834 #browseMethodHistory 8 '&Change History' 1 1 930 nil true 976 8 'MethodHistory.ico' 1024 nil nil 802 1 834 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 1186 4097 802 1 834 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 802 1 834 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1186 4097 802 1 834 #newMethod 8 '&New' 1 1 930 nil true 976 8 'NewMethod.ico' 1024 nil nil 802 1 834 #removeMethod 8 '&Delete' 1 1 930 nil true 976 8 'EditClear.ico' 1024 nil nil 626 nil true 34 17 802 1 834 #renameMethod 8 'Re&name' 1 1 930 nil true 976 8 'Rename.ico' 1024 nil nil 802 1 834 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 802 1 834 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1186 4097 802 1 834 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 626 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1186 4097 626 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1186 4097 802 1 834 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 802 1 834 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 802 1 834 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 802 1 834 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 802 1 834 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 930 nil true 976 8 'Refactoring.ico' 1024 nil nil nil nil 1186 4097 802 1 834 #methodPackage 8 '&Package...' 1 1 930 nil true 976 8 'Package.ico' 1024 nil nil 626 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 802 1 834 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 1186 4097 802 1 834 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 802 1 834 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1915211424 459270 ##(Smalltalk.Message) #selector 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil 3010 #infoTip 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 4 1 3120 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 3136 7 257 nil nil nil nil 138 144 34 3 920646 5 ##(Smalltalk.ListViewColumn) 8 'Methods' 431 #left ##(Smalltalk.BasicListAbstract) ##(Smalltalk.SortedCollection) 3010 #selector 8 #() nil 416 nil 3 nil 3136 3266 8 '' 33 #center 721670 ##(Smalltalk.MessageSend) #empty 8 #() 16 3122 0 nil 3154 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | 
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 30 nil nil 34 2 8 1409355849 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 29 265030 4 ##(Smalltalk.Menu) nil true 34 15 626 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 626 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 626 nil true 34 13 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseReferencesToGlobal 8 'References to Global...' 1 1 nil nil nil 802 1 834 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 802 1 834 #browseMethodCategory 8 'Cate&gory...' 1 1 930 nil true 976 8 'Category.ico' 1024 nil nil 802 1 834 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 802 1 834 #browseMethodPackages 8 'Package <s>' 1 1 930 nil true 976 8 'Package.ico' 1024 nil nil 802 1 834 #browseMethodClasses 8 'Class <s>' 1 1 nil nil nil 1186 4097 802 1 834 #browseMethodHistory 8 '&Change History' 1 1 930 nil true 976 8 'MethodHistory.ico' 1024 nil nil 802 1 834 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 1186 4097 802 1 834 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 802 1 834 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1186 4097 802 1 834 #newMethod 8 '&New' 1 1 930 nil true 976 8 'NewMethod.ico' 1024 nil nil 802 1 834 #removeMethod 8 '&Delete' 1 1 930 nil true 976 8 'EditClear.ico' 1024 nil nil 626 nil true 34 17 802 1 834 #renameMethod 8 'Re&name' 1 1 930 nil true 976 8 'Rename.ico' 1024 nil nil 802 1 834 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 802 1 834 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1186 4097 802 1 834 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 626 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1186 4097 626 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1186 4097 802 1 834 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 802 1 834 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 802 1 834 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 802 1 834 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 802 1 834 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 930 nil true 976 8 'Refactoring.ico' 1024 nil nil nil nil 1186 4097 802 1 834 #methodPackage 8 '&Package...' 1 1 930 nil true 976 8 'Package.ico' 1024 nil nil 626 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 626 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 802 1 834 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 1186 4097 802 1 834 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 802 1 834 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1915211424 459270 ##(Smalltalk.Message) #selector 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil 3010 #infoTip 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 4 1 3120 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 3136 7 257 nil nil nil nil 138 144 34 3 920646 5 ##(Smalltalk.ListViewColumn) 8 'Methods' 431 #left ##(Smalltalk.BasicListAbstract) 3010 #<= 8 #() 3010 #selector 8 #() nil 416 nil 3 nil 3136 3266 8 '' 33 #center 721670 ##(Smalltalk.MessageSend) #empty 8 #() 16 3122 0 nil 3154 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | 
 m1 isOverride = m2 isOverride 
 	ifTrue: [m1 selector <= m2 selector]
-	ifFalse: [m1 isOverride]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isOverride #selector 3424 7 513 nil nil nil 416 3122 0 nil 3154 7 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:each | 
+	ifFalse: [m1 isOverride]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isOverride #selector 3456 7 513 nil nil nil 416 3122 0 nil 3154 7 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:each | 
 (each isOverride ifTrue: [CompiledMethod overriddenIcon] ifFalse: [Icon blank]) 
-	imageIndex]' 8 #[35 105 17 158 120 46 160 111 48 162 163 106] #isOverride 721414 ##(Smalltalk.Association) #CompiledMethod ##(Smalltalk.CompiledMethod) #overriddenIcon 3586 #Icon 928 #blank #imageIndex 3504 7 257 nil 1 nil nil 3266 8 '' 33 #center nil 3122 0 nil 3154 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3664 7 513 nil nil nil 416 ##(Smalltalk.IconicListAbstract) 1 nil nil #report 528 nil 133221 nil 34 4 nil nil 328198 ##(Smalltalk.Point) 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 4 3378 #createAt:extent: 34 2 3762 3839 21 3762 503 233 416 3378 #contextMenu: 34 1 640 416 3378 #text: 34 1 8 'Methods' 416 3378 #columnOrder: 34 1 8 #(2 3 1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 122 8 0 0 126 0 0 0] 8 #() 3762 193 193 nil 27 )!
+	imageIndex]' 8 #[35 105 17 158 120 46 160 111 48 162 163 106] #isOverride 721414 ##(Smalltalk.Association) #CompiledMethod ##(Smalltalk.CompiledMethod) #overriddenIcon 3618 #Icon 928 #blank #imageIndex 3536 7 257 nil 1 nil nil 3266 8 '' 33 #center nil 3122 0 nil 3154 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3696 7 513 nil nil nil 416 ##(Smalltalk.IconicListAbstract) 1 nil nil #report 528 nil 133221 nil 34 4 nil nil 328198 ##(Smalltalk.Point) 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 4 3410 #createAt:extent: 34 2 3794 3839 21 3794 503 233 416 3410 #contextMenu: 34 1 640 416 3410 #text: 34 1 8 'Methods' 416 3410 #columnOrder: 34 1 8 #(2 3 1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 122 8 0 0 126 0 0 0] 8 #() 3794 193 193 nil 27 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1299,8 +1290,8 @@ resource_Method_browser_method_list
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Method_browser_method_list)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WizardCardContainer) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 11 482 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseReferencesToGlobal 8 'R&eferences to Global...' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory...' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 832 8 'PackageBrowserShell.ico' 880 nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 832 8 'ClassBrowserShell.ico' 880 nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 832 8 'MethodHistory.ico' 880 nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 '&Delete' 1 1 786 nil true 832 8 'EditClear.ico' 880 nil nil 482 nil true 34 17 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 658 1 690 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 786 nil true 832 8 'Refactoring.ico' 880 nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package...' 1 1 786 nil true 832 8 'Package.ico' 880 nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 655878 ##(Smalltalk.CardLayout) 138 144 34 2 721414 ##(Smalltalk.Association) 3 410 ##(Smalltalk.ListView) 34 30 nil 416 34 2 8 1140920393 1 2608 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 13 nil nil nil 2608 nil 8 1915211424 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.ListView) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 4 920646 5 ##(Smalltalk.ListViewColumn) 8 'Selector' 335 #left 2834 #selector 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3040 7 513 nil nil nil 2608 nil 1 2834 #infoTip 8 #() 3026 0 nil 3058 4 1 3024 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3168 7 257 nil 2946 8 'Class' 333 #left 2834 #name 8 #() 2834 #<= 8 #() 2834 #methodClass 8 #() nil 2608 ##(Smalltalk.IconicListAbstract) 1 nil 3026 0 nil 3058 4 1 3024 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3376 7 257 nil 2946 8 'Package' 253 #left 2834 #name 8 #() 3026 0 nil 3058 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3520 7 513 nil 2834 #owningPackage 8 #() nil 2608 nil 3 nil 3026 0 nil 3058 4 1 3024 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawPackage: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawPackage: 3632 7 257 nil 2946 8 '' 33 #center nil 3026 0 nil 3058 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3744 7 513 nil nil nil 2608 ##(Smalltalk.IconicListAbstract) 1 nil nil #report 2720 nil 133221 nil 34 4 nil nil 328198 ##(Smalltalk.Point) 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 3842 1 1 3842 951 421 2608 3938 #text: 34 1 8 'Selector' 2608 3938 #columnOrder: 34 1 8 #(4 1 2 3) 2608 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 219 1 0 0 210 0 0 0] 8 #() 3842 193 193 nil 27 2578 5 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850945 1 4208 nil 721158 ##(Smalltalk.SystemColor) 11 nil 5 nil nil nil 4208 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 3874 138 144 34 3 3938 #createAt:extent: 34 2 3842 1 1 3842 951 421 4208 3938 #isEnabled: 8 #(false) 4208 3938 #text: 34 1 8 '
-There are no methods to browse' 4208 4114 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 219 1 0 0 210 0 0 0] 8 #() 4176 nil 27 2608 170 192 34 4 4208 8 'noMethodsText' 2608 8 'methods' nil 3874 138 144 34 2 3938 #createAt:extent: 34 2 3842 3839 21 3842 951 421 416 3938 #contextMenu: 34 1 496 416 4114 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 220 0 0 0] 34 2 2608 4208 4176 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WizardCardContainer) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 11 482 nil true 8 #() 8 'De&finitions of' #definitionsMenu 1 nil nil nil nil nil 482 nil true 8 #() 8 '&References to' #referencesMenu 1 nil nil nil nil nil 482 nil true 34 10 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseReferencesToGlobal 8 'R&eferences to Global...' 1 1 nil nil nil 658 1 690 #browseContainingText 8 'C&ontaining Text...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'SearchText.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 658 1 690 #browseMethodCategory 8 'Cate&gory...' 1 1 nil nil nil 658 1 690 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 658 1 690 #browseMethodPackages 8 '&Package <s>' 1 1 786 nil true 832 8 'PackageBrowserShell.ico' 880 nil nil 658 1 690 #browseMethodClasses 8 '&Class <s>' 1 1 786 nil true 832 8 'ClassBrowserShell.ico' 880 nil nil 1010 4097 658 1 690 #browseMethodHistory 8 'Change &History' 1 1 786 nil true 832 8 'MethodHistory.ico' 880 nil nil 658 1 690 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 1010 4097 658 1 690 #removeMethod 8 '&Delete' 1 1 786 nil true 832 8 'EditClear.ico' 880 nil nil 482 nil true 34 17 658 1 690 #renameMethod 8 'Re&name' 1 1 nil nil nil 658 1 690 #renameMethodReferences 8 'Rename Re&ferences...' 1 1 nil nil nil 658 1 690 #safeRemoveMethods 8 'Rem&ove' 1 1 nil nil nil 1010 4097 658 1 690 #addParameter 8 'Add &Parameter...' 1 1 nil nil nil 482 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 1010 4097 482 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 1010 4097 658 1 690 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 658 1 690 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 658 1 690 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 658 1 690 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 658 1 690 #moveMethod 8 'Move to &Component...' 1 1 nil nil nil 8 'Refactorin&gs' #methodRefactoringsMenu 134217729 786 nil true 832 8 'Refactoring.ico' 880 nil nil nil nil 1010 4097 658 1 690 #methodPackage 8 '&Package...' 1 1 786 nil true 832 8 'Package.ico' 880 nil nil 482 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 482 nil true 8 #() 8 'Re&move from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 658 1 690 #togglePrivate 8 'Pri&vate' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 416 655878 ##(Smalltalk.CardLayout) 138 144 34 2 721414 ##(Smalltalk.Association) 3 410 ##(Smalltalk.ListView) 34 30 nil 416 34 2 8 1140920393 1 2608 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 13 nil nil nil 2608 nil 8 1915211424 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.ListView) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 4 920646 5 ##(Smalltalk.ListViewColumn) 8 'Selector' 335 #left 2834 #selector 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 3040 7 513 nil nil nil 2608 nil 1 2834 #infoTip 8 #() 3026 0 nil 3058 4 1 3024 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 3168 7 257 nil 2946 8 'Class' 333 #left 2834 #name 8 #() 2834 #<= 8 #() 2834 #methodClass 8 #() nil 2608 ##(Smalltalk.IconicListAbstract) 1 nil 3026 0 nil 3058 4 1 3024 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3376 7 257 nil 2946 8 'Package' 253 #left 2834 #name 8 #() 3026 0 nil 3058 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3520 7 513 nil 2834 #owningPackage 8 #() nil 2608 nil 3 nil nil 2946 8 '' 33 #center nil 3026 0 nil 3058 3 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3664 7 513 nil nil nil 2608 ##(Smalltalk.IconicListAbstract) 1 nil nil #report 2720 nil 133221 nil 34 4 nil nil 328198 ##(Smalltalk.Point) 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 3762 1 1 3762 951 421 2608 3858 #text: 34 1 8 'Selector' 2608 3858 #columnOrder: 34 1 8 #(4 1 2 3) 2608 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 219 1 0 0 210 0 0 0] 8 #() 3762 193 193 nil 27 2578 5 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850945 1 4128 nil 721158 ##(Smalltalk.SystemColor) 11 nil 5 nil nil nil 4128 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 3794 138 144 34 3 3858 #createAt:extent: 34 2 3762 1 1 3762 951 421 4128 3858 #isEnabled: 8 #(false) 4128 3858 #text: 34 1 8 '
+There are no methods to browse' 4128 4034 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 219 1 0 0 210 0 0 0] 8 #() 4096 nil 27 2608 170 192 34 4 4128 8 'noMethodsText' 2608 8 'methods' nil 3794 138 144 34 2 3858 #createAt:extent: 34 2 3762 3839 21 3762 951 421 416 3858 #contextMenu: 34 1 496 416 4034 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 220 0 0 0] 34 2 2608 4128 4096 nil 27 )!
 
 setAdditionalAccelerators: anArray 
 	AdditionalAccelerators := anArray!
@@ -1326,8 +1317,8 @@ wordWrap: aBoolean
 !MethodBrowser class categoriesFor: #hasInfoTips:!accessing!options!public! !
 !MethodBrowser class categoriesFor: #icon!constants!public! !
 !MethodBrowser class categoriesFor: #initialize!initializing!private! !
-!MethodBrowser class categoriesFor: #publishedAspects!development!public! !
-!MethodBrowser class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!MethodBrowser class categoriesFor: #publishedAspects!public! !
+!MethodBrowser class categoriesFor: #publishedEventsOfInstances!events!public! !
 !MethodBrowser class categoriesFor: #resource_Class_browser_method_list!public!resources-views! !
 !MethodBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !MethodBrowser class categoriesFor: #resource_Method_browser_method_list!public!resources-views! !

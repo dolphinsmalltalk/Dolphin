@@ -2,31 +2,33 @@
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LHITTESTINFO guid: (GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
+LHITTESTINFO addClassConstant: '_OffsetOf_item' value: 16r8!
+LHITTESTINFO addClassConstant: '_OffsetOf_pt' value: 16r0!
 LHITTESTINFO comment: ''!
 !LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !LHITTESTINFO methodsFor!
 
 item
-	"Answer the receiver's item field as a Smalltalk object."
+	"Answer the <LITEM> value of the receiver's 'item' field."
 
-	^LITEM fromAddress: bytes yourAddress + ##(self offsetOf: #item)!
+	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item!
 
 pt
-	"Answer the receiver's pt field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress!
 
-pt: anObject 
-	"Set the receiver's pt field to the value of anObject."
+pt: aPOINTL
+	"Set the receiver's 'pt' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(POINTL basicByteSize)
+		from: ##(_OffsetOf_pt + 1)
+		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
 !LHITTESTINFO categoriesFor: #item!**compiled accessors**!public! !
 !LHITTESTINFO categoriesFor: #pt!**compiled accessors**!public! !
@@ -42,6 +44,10 @@ defineFields
 
 	self
 		defineField: #pt type: (StructureField type:  POINTL);
-		defineField: #item type: (StructureField type: LITEM) beReadOnly! !
+		defineField: #item type: (StructureField type: LITEM) beReadOnly!
+
+getFieldNames
+	^#(#pt #item)! !
 !LHITTESTINFO class categoriesFor: #defineFields!initializing!public! !
+!LHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -535,7 +535,7 @@ runningColor: aColor
 !UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #publishedAspects!development!private! !
+!UnitTestPlugin class categoriesFor: #publishedAspects!private! !
 !UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
 !UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !

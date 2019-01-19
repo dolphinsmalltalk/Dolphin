@@ -13,7 +13,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!PluggableVirtualMethodCategory categoriesForClass!Development! !
+!PluggableVirtualMethodCategory categoriesForClass!System-Support! !
 !PluggableVirtualMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod 

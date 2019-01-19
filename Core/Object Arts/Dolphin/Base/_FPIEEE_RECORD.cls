@@ -2,18 +2,25 @@
 
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cause _OffsetOf_enable _OffsetOf_flags _OffsetOf_operand1 _OffsetOf_operand2 _OffsetOf_result _OffsetOf_status'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 _FPIEEE_RECORD guid: (GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_cause' value: 16r4!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_enable' value: 16r8!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_flags' value: 16r0!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand1' value: 16r10!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand2' value: 16r28!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_result' value: 16r40!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_status' value: 16rC!
 _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
 !_FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
 !_FPIEEE_RECORD methodsFor!
 
 cause
-	"Answer the receiver's cause field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cause' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cause)!
+	^bytes dwordAtOffset: _OffsetOf_cause!
 
 causeDescription
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
@@ -31,10 +38,15 @@ causeNames
 	self class exceptionFlags: self cause do: [:each | stream nextPut: each].
 	^stream contents!
 
-flags
-	"Answer the receiver's flags field as a Smalltalk object."
+enable
+	"Answer the <Integer> value of the receiver's 'enable' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_enable!
+
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
+
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 isDivide
 	"Answer whether a division operation was being attemped when the exception occurred."
@@ -66,14 +78,14 @@ isZeroDivide
 	^(self cause isBitSet: 4) or: [self isDivide and: [self operand1 value isZero]]!
 
 operand1
-	"Answer the receiver's operand1 field as a Smalltalk object."
+	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand1' field."
 
-	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand1)!
+	^_FPIEEE_VALUE fromAddress: bytes yourAddress + _OffsetOf_operand1!
 
 operand2
-	"Answer the receiver's operand2 field as a Smalltalk object."
+	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand2' field."
 
-	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand2)!
+	^_FPIEEE_VALUE fromAddress: bytes yourAddress + _OffsetOf_operand2!
 
 operation
 	"Answer an <integer> which identifies the type of operation being attemped when the exception
@@ -97,43 +109,6 @@ precisionName
 
 	^self class precisionModes at: self precision + 1 ifAbsent: [#Unknown]!
 
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifTrue: 
-			[aStream nextPutAll: 'NULL'.
-			^self].
-	aStream
-		display: #roundingMode;
-		nextPut: $=;
-		print: self roundingModeName;
-		space;
-		display: #precision;
-		nextPut: $=;
-		print: self precisionName;
-		space;
-		display: #operation;
-		nextPut: $=;
-		print: self operationName;
-		space.
-	#(#cause #enable #status) do: 
-			[:each |
-			aStream
-				space;
-				display: each;
-				nextPut: $=.
-			self class printFlags: (self getField: each) on: aStream].
-	#(#operand1 #operand2) do: 
-			[:each |
-			| value |
-			value := self getField: each.
-			value isValid
-				ifTrue: 
-					[aStream
-						space;
-						display: each;
-						nextPut: $=;
-						print: value]]!
-
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
 
@@ -146,6 +121,7 @@ roundingModeName
 !_FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
+!_FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
 !_FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
@@ -157,7 +133,6 @@ roundingModeName
 !_FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #printFieldsOn:limit:!printing!private! !
 !_FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
 
@@ -195,6 +170,9 @@ exceptionFlags: anInteger do: aMonadicValuable
 					(anInteger anyMask: mask) ifTrue: [aMonadicValuable value: each].
 					mask << 1]]!
 
+getFieldNames
+	^#(#flags #cause #enable #status #operand1 #operand2)!
+
 operationCodes
 	^#(#Add #Subtract #Multiply #Divide #SquareRoot #Remainder #Compare #Convert #Round #Truncate #Floor #Ceil #Acos #Asin #Atan #Atan2 #Cabs #Cos #Cosh #Exp #Fabs #Fmod #Frexp #Hypot #Ldexp #Log #Log10 #Modf #Pow #Sin #Sinh #Tan #Tanh #Y0 #Y1 #Yn #Logb #Nextafter #Negate #Fmin #Fmax #ConvertTrunc #Addps #Addss #Subps #Subss #Mulps #Mulss #Divps #Divss #Sqrtps #Sqrtss #Maxps #Maxss #Minps #Minss #Cmpps #Cmpss #Comiss #UComiss #Cvtpi2ps #Cvtsi2ss #Cvtps2pi #Cvtss2si #Cvttps2pi #Cvttss2si #Addsubps #Haddps #Hsubps #Roundps #Roundss #Dpps #Addpd #Addsd #Subpd #Subsd #Mulpd #Mulsd #Divpd #Divsd #Sqrtpd #Sqrtsd #Maxpd #Maxsd #Minpd #Minsd #Cmppd #Cmpsd #Comisd #UComisd #Cvtpd2pi #Cvtsd2si #Cvttpd2pi #Cvttsd2si #Cvtps2pd #Cvtss2sd #Cvtpd2ps #Cvtsd2ss #Cvtdq2ps #Cvttps2dq #Cvtps2dq #Cvttpd2dq #Cvtpd2dq #Addsubpd #Haddpd #Hsubpd #Roundpd #Roundsd #Dppd #Fma #FmaSingle #FmaDouble #Fms #FmsSingle #FmsDouble #Fnma #FnmaSingle #FnmaDouble #Famin #Famax)!
 
@@ -219,6 +197,7 @@ roundingModes
 !_FPIEEE_RECORD class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
+!_FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !

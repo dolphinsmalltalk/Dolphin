@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
-	classVariableNames: 'NoCache UserInvalidates'
+	classVariableNames: '_OffsetOf_Policy _OffsetOf_SecondsToLive NoCache UserInvalidates'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CACHE_POLICY guid: (GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
+HTTP_CACHE_POLICY addClassConstant: '_OffsetOf_Policy' value: 16r0!
+HTTP_CACHE_POLICY addClassConstant: '_OffsetOf_SecondsToLive' value: 16r4!
 HTTP_CACHE_POLICY comment: '<HTTP_CACHE_POLICY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CACHE_POLICY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -30,12 +32,12 @@ policy
 Policy
 	"Answer the <Integer> value of the receiver's 'Policy' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_Policy!
 
 Policy: anInteger
 	"Set the receiver's 'Policy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_Policy put: anInteger!
 
 printFields: aCollection on: aStream limit: anInteger
 	| policy |
@@ -50,12 +52,12 @@ printFields: aCollection on: aStream limit: anInteger
 SecondsToLive
 	"Answer the <Integer> value of the receiver's 'SecondsToLive' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #SecondsToLive)!
+	^bytes dwordAtOffset: _OffsetOf_SecondsToLive!
 
 SecondsToLive: anInteger
 	"Set the receiver's 'SecondsToLive' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #SecondsToLive) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_SecondsToLive put: anInteger! !
 !HTTP_CACHE_POLICY categoriesFor: #policy!accessing!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy!**compiled accessors**!public! !
 !HTTP_CACHE_POLICY categoriesFor: #Policy:!**compiled accessors**!public! !
@@ -82,6 +84,9 @@ defineFields
 		defineField: #SecondsToLive type: DWORDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Policy #SecondsToLive)!
+
 initialize
 	self
 		addClassConstant: 'NoCache'
@@ -105,6 +110,7 @@ timeToLive: anInteger
 userInvalidates
 	^UserInvalidates! !
 !HTTP_CACHE_POLICY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_CACHE_POLICY class categoriesFor: #initialize!public! !
 !HTTP_CACHE_POLICY class categoriesFor: #noCache!instance creation!public! !
 !HTTP_CACHE_POLICY class categoriesFor: #timeToLive:!instance creation!public! !

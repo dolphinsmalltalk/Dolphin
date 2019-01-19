@@ -308,27 +308,6 @@ notEmpty
 
 	^self isEmpty not!
 
-printOn: aStream
-	"Print a string representation of self on aStream."
-
-	| tooMany |
-	tooMany := aStream position + #() maxPrint.
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isNull 
-		ifTrue: [aStream nextPutAll: 'NULL']
-		ifFalse: 
-			[self do: 
-					[:each | 
-					aStream position > tooMany 
-						ifTrue: 
-							[aStream nextPutAll: '... etc ...'.
-							^self].
-					each printOn: aStream]
-				separatedBy: [aStream space]].
-	aStream nextPut: $)!
-
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:"
@@ -436,7 +415,6 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #length:!accessing!public! !
 !ExternalArray categoriesFor: #lookup:!accessing!public! !
 !ExternalArray categoriesFor: #notEmpty!public!testing! !
-!ExternalArray categoriesFor: #printOn:!development!printing!public! !
 !ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !ExternalArray categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !ExternalArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
@@ -484,6 +462,9 @@ fromAddress: anAddress length: anInteger
 				initializeAtAddress: anAddress;
 				basicLength: anInteger]!
 
+getFieldNames
+	^#()!
+
 length: count elementSize: bytes
 	"Private - Answer a new instance of the receiver allocated 
 	with space for count elements of bytes size."
@@ -519,6 +500,7 @@ withAll: newElements
 !ExternalArray class categoriesFor: #elementSize!instance creation!private! !
 !ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
+!ExternalArray class categoriesFor: #getFieldNames!constants!private! !
 !ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
 !ExternalArray class categoriesFor: #new:!instance creation!public! !
 !ExternalArray class categoriesFor: #with:!instance creation!public! !

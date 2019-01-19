@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwThreadId _OffsetOf_hProcess _OffsetOf_hThread'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PROCESS_INFORMATION guid: (GUID fromString: '{f44c9144-2b3f-11d3-8368-7a8b5a000000}')!
+PROCESS_INFORMATION addClassConstant: '_OffsetOf_dwProcessId' value: 16r8!
+PROCESS_INFORMATION addClassConstant: '_OffsetOf_dwThreadId' value: 16rC!
+PROCESS_INFORMATION addClassConstant: '_OffsetOf_hProcess' value: 16r0!
+PROCESS_INFORMATION addClassConstant: '_OffsetOf_hThread' value: 16r4!
 PROCESS_INFORMATION comment: ''!
 !PROCESS_INFORMATION categoriesForClass!External-Data-Structured-Win32! !
 !PROCESS_INFORMATION methodsFor!
@@ -13,22 +17,22 @@ PROCESS_INFORMATION comment: ''!
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwProcessId)!
+	^bytes dwordAtOffset: _OffsetOf_dwProcessId!
 
 dwThreadId
 	"Answer the <Integer> value of the receiver's 'dwThreadId' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwThreadId)!
+	^bytes dwordAtOffset: _OffsetOf_dwThreadId!
 
 hProcess
 	"Answer the <Integer> value of the receiver's 'hProcess' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_hProcess!
 
 hThread
 	"Answer the <Integer> value of the receiver's 'hThread' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hThread)! !
+	^bytes dwordAtOffset: _OffsetOf_hThread! !
 !PROCESS_INFORMATION categoriesFor: #dwProcessId!**compiled accessors**!public! !
 !PROCESS_INFORMATION categoriesFor: #dwThreadId!**compiled accessors**!public! !
 !PROCESS_INFORMATION categoriesFor: #hProcess!**compiled accessors**!public! !
@@ -52,6 +56,10 @@ defineFields
 		defineField: #hProcess type: DWORDField readOnly;
 		defineField: #hThread type: DWORDField readOnly;
 		defineField: #dwProcessId type: DWORDField readOnly;
-		defineField: #dwThreadId type: DWORDField readOnly! !
+		defineField: #dwThreadId type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hProcess #hThread #dwProcessId #dwThreadId)! !
 !PROCESS_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!PROCESS_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

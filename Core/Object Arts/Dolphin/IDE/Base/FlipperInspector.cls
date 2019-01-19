@@ -7,7 +7,7 @@ SmalltalkToolShell subclass: #FlipperInspector
 	classInstanceVariableNames: ''!
 FlipperInspector guid: (GUID fromString: '{8dc9ca40-c164-11d5-9849-0800460222f0}')!
 FlipperInspector comment: ''!
-!FlipperInspector categoriesForClass!Development! !
+!FlipperInspector categoriesForClass!MVP-Presenters! !
 !FlipperInspector methodsFor!
 
 addToCommandRoute: route
@@ -202,27 +202,16 @@ shellOn: anObject
 		yourself!
 
 toolsFolderHelpId
-	^10600!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	(Smalltalk developmentSystem)
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	^10600! !
 !FlipperInspector class categoriesFor: #defaultModel!models!public! !
 !FlipperInspector class categoriesFor: #defaultRenderers!constants!private! !
 !FlipperInspector class categoriesFor: #displayOn:!displaying!public! !
 !FlipperInspector class categoriesFor: #icon!constants!public! !
 !FlipperInspector class categoriesFor: #initialize!initializing!private! !
-!FlipperInspector class categoriesFor: #publishedAspects!development!public! !
+!FlipperInspector class categoriesFor: #publishedAspects!public! !
 !FlipperInspector class categoriesFor: #renderers!accessing!public! !
 !FlipperInspector class categoriesFor: #renderers:!accessing!public! !
 !FlipperInspector class categoriesFor: #resource_Default_view!public!resources-views! !
 !FlipperInspector class categoriesFor: #shellOn:!instance creation!public! !
 !FlipperInspector class categoriesFor: #toolsFolderHelpId!public! !
-!FlipperInspector class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

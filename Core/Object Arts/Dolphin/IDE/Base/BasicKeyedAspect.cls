@@ -7,7 +7,7 @@ AnonymousKeyedAspect subclass: #BasicKeyedAspect
 	classInstanceVariableNames: ''!
 BasicKeyedAspect guid: (GUID fromString: '{493bbe17-de57-4c11-8d61-e0494b76a1f6}')!
 BasicKeyedAspect comment: 'Part of the PublishedAspectorInspector framework. BasicKeyedAspect instances are used to describe the published aspects of an object that can be accessed via #basicAt: and #basicAt:put: messages as governed by the BasicKeyedAspectAccessor class'!
-!BasicKeyedAspect categoriesForClass!Development! !
+!BasicKeyedAspect categoriesForClass!Attribute-Definition! !
 !BasicKeyedAspect methodsFor!
 
 getSelector

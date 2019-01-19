@@ -385,6 +385,61 @@ frameRgn: hdc hRgn: hRgn hBr: hBr nWidth: nWidth nHeight: nHeight
 	<stdcall: bool FrameRgn handle handle handle dword dword>
 	^self invalidCall!
 
+gdiAlphaBlend: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc ftn: blend
+	"Invoke the GdiAlphaBlend() function of the module wrapped by the receiver.
+	Helpstring: Displays bitmaps that have transparent or semitransparent pixels
+
+		BOOL __stdcall GdiAlphaBlend(
+			[in]HDC hdcDest,
+			[in]int xoriginDest,
+			[in]int yoriginDest,
+			[in]int wDest,
+			[in]int hDest,
+			[in]HDC hdcSrc,
+			[in]int xoriginSrc,
+			[in]int yoriginSrc,
+			[in]int wSrc,
+			[in]int hSrc,
+			[in]BLENDFUNCTION ftn);"
+
+	<stdcall: bool GdiAlphaBlend handle sdword sdword sdword sdword handle sdword sdword sdword sdword BLENDFUNCTION>
+	^self invalidCall!
+
+gdiGradientFill: hdc pVertex: pVertex nVertex: dwNumVertex pMesh: pMesh nCount: dwNumMesh ulMode: dwMode
+	"Invoke the GdiGradientFill() function of the module wrapped by the receiver.
+	Helpstring: Gradient fills rectangle and triangle structures
+
+		BOOL __stdcall GdiGradientFill(
+			[in]HDC HDC,
+			[in]TRIVERTEX* pVertex,
+			[in]ULONG nVertex,
+			[in]void* pMesh,
+			[in]ULONG nCount,
+			[in]ULONG ulMode);"
+
+	<stdcall: bool GdiGradientFill handle TRIVERTEX* dword void* dword dword>
+	^self invalidCall!
+
+gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc crTransparent: crTransparent
+	"Invoke the GdiTransparentBlt() function of the module wrapped by the receiver.
+	Helpstring: Performs a bit-block transfer of the color data corresponding to a rectangle of pixels from the specified source device context into a destination device context.
+
+		BOOL __stdcall GdiTransparentBlt(
+			[in]HDC hdcDest,
+			[in]int xoriginDest,
+			[in]int yoriginDest,
+			[in]int wDest,
+			[in]int hDest,
+			[in]HDC hdcSrc,
+			[in]int xoriginSrc,
+			[in]int yoriginSrc,
+			[in]int wSrc,
+			[in]int hSrc,
+			[in]UINT crTransparent);"
+
+	<stdcall: bool GdiTransparentBlt handle sdword sdword sdword sdword handle sdword sdword sdword sdword dword>
+	^self invalidCall!
+
 getBkColor: hdc
 	"Invoke the GetBkColor() function of the module wrapped by the receiver.
 	Helpstring: Get the background color of a DC
@@ -1200,6 +1255,9 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #extTextOut:x:y:fuOptions:lprc:lpString:cbCount:lpDx:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #fillRgn:hRgn:hBr:!public!win32 functions-region! !
 !GDILibrary categoriesFor: #frameRgn:hRgn:hBr:nWidth:nHeight:!public!win32 functions-region! !
+!GDILibrary categoriesFor: #gdiAlphaBlend:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:ftn:!**auto generated**!public!win32 functions-bitmap! !
+!GDILibrary categoriesFor: #gdiGradientFill:pVertex:nVertex:pMesh:nCount:ulMode:!**auto generated**!public! !
+!GDILibrary categoriesFor: #gdiTransparentBlt:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginSrc:wSrc:hSrc:crTransparent:!**auto generated**!public! !
 !GDILibrary categoriesFor: #getBkColor:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getBkMode:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getClipBox:lprc:!**auto generated**!public!win32 functions-clipping! !

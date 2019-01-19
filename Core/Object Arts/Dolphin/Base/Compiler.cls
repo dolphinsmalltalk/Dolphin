@@ -67,15 +67,14 @@ compile: aString in: aClass flags: anInteger
 		rawTextMap: results second
 		rawTempsMap: results third!
 
-compileDebugExpression: aString in: aClass evaluationPools: anArray 
+compileDebugExpression: aString in: aClass evaluationPools: anArray
 	"Compile the source text, aString, as if it were method of aClass inserting additional
 	breakpoint bytecodes, etc, to make a debuggable method."
 
-	^(self 
+	^(self
 		compileForEvaluation: aString
 		in: aClass
 		evaluationPools: anArray
-		logged: false
 		flags: DebugMethod) method!
 
 compileDebugMethod: aString in: aClass 
@@ -93,15 +92,14 @@ compileExpression: aString in: aClass
 		in: aClass
 		flags: aClass defaultCompilationFlags!
 
-compileExpression: aString in: aClass flags: anInteger 
-	^self 
+compileExpression: aString in: aClass flags: anInteger
+	^self
 		compileForEvaluation: aString
 		in: aClass
 		evaluationPools: nil
-		logged: false
 		flags: anInteger!
 
-compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBoolean flags: anInteger
+compileForEvaluation: aString in: aBehavior evaluationPools: anArray flags: anInteger
 	"Private - Compile the expression source, aString, in the context of the class, aBehavior,
 	parameterized by the flags, anInteger, notifying, notifier, of any errors or warnings 
 	which are detected. Additional shared variables are looked up in the <Array> of <PoolDictionary>,
@@ -154,9 +152,7 @@ compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBo
 		ifTrue: 
 			[expression
 				methodClass: aBehavior;
-				storeSourceString: source
-					evaluationPools: anArray
-					logged: aBoolean;
+				storeSourceString: source evaluationPools: anArray;
 				isImmutable: true].
 	^results!
 
@@ -178,15 +174,14 @@ debugInfoFor: aString in: aClass debug: aBoolean
 		in: aClass
 		flags: aClass defaultCompilationFlags | (self debugInfoFlags: aBoolean)!
 
-debugInfoForExpression: aString in: aClass evaluationPools: pools debug: aBoolean 
+debugInfoForExpression: aString in: aClass evaluationPools: pools debug: aBoolean
 	"Answers a CompilationResult with all the information necessary for debugging a method
 	in aClass whose sources is aString."
 
-	^self 
+	^self
 		compileForEvaluation: aString
 		in: aClass
 		evaluationPools: pools
-		logged: false
 		flags: (self debugInfoFlags: aBoolean)!
 
 defaultFlags
@@ -215,7 +210,9 @@ evaluate: aString
 	If the compilation fails, signal a CompilerNotification and answer nil. 
 	The expression is not written to the change log."
 
-	^self evaluate: aString logged: false!
+	^self
+		evaluate: aString
+		for: nil!
 
 evaluate: aString for: anObject
 	"Compile and evaluate the expression, aString, with anObject as the receiver. If the
@@ -225,8 +222,15 @@ evaluate: aString for: anObject
 	^self
 		evaluate: aString
 		for: anObject
-		evaluationPools: nil
-		logged: false!
+		evaluationPools: nil!
+
+evaluate: aString for: anObject evaluationPools: anArray
+	^(self
+		compileForEvaluation: aString
+		in: anObject class
+		evaluationPools: anArray
+		flags: 0) method
+		ifNotNil: [:expr | expr value: anObject withArguments: #()]!
 
 evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean 
 	"Compile and evaluate the expression, aString, with anObject as the 
@@ -242,24 +246,23 @@ evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean
 		logged: aBoolean
 		ifFail: []!
 
-evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean ifFail: failBlock 
+evaluate: aString for: anObject evaluationPools: anArray logged: aBoolean ifFail: failBlock
 	"Compile and evaluate the expression, aString, with anObject as the 
 	receiver.  If the expression compiles, answer the result of evaluating 
 	the expression. If the compilation fails, signal a CompilerNotification
 	and answer nil. Log the expression to the change log as requested by 
 	the argument aBoolean."
 
-	| results expr |
-	results := self 
-				compileForEvaluation: aString
-				in: anObject class
-				evaluationPools: anArray
-				logged: aBoolean
-				flags: 0.
-	expr := results method.
-	^expr notNil 
-		ifTrue: [expr value: anObject withArguments: #()]
-		ifFalse: [failBlock value]!
+	^(self
+		compileForEvaluation: aString
+		in: anObject class
+		evaluationPools: anArray
+		flags: 0) method
+		ifNotNil: 
+			[:expr |
+			aBoolean ifTrue: [self sourceManager logEvaluate: aString].
+			expr value: anObject withArguments: #()]
+		ifNil: [failBlock value]!
 
 evaluate: aString for: anObject logged: aBoolean
 	"Compile and evaluate the expression, aString, with anObject as the 
@@ -413,7 +416,7 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor:)
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass
@@ -424,7 +427,7 @@ warningClass
 !Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
 !Compiler class categoriesFor: #compileExpression:in:!compiling!public! !
 !Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
-!Compiler class categoriesFor: #compileForEvaluation:in:evaluationPools:logged:flags:!compiling!private! !
+!Compiler class categoriesFor: #compileForEvaluation:in:evaluationPools:flags:!compiling!private! !
 !Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
 !Compiler class categoriesFor: #debugInfoFlags:!development!public! !
 !Compiler class categoriesFor: #debugInfoFor:in:debug:!development!public! !
@@ -436,6 +439,7 @@ warningClass
 !Compiler class categoriesFor: #errorClass!public! !
 !Compiler class categoriesFor: #evaluate:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
+!Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !

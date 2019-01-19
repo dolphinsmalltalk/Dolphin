@@ -90,22 +90,23 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\Camp Smalltalk\SUnit\SUnit';
-	add: 'SUnitBrowserModelApp';
-	add: '..\..\Camp Smalltalk\SUnit\SUnitUI';
-	add: '..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\Camp Smalltalk\SUnit\SUnit'
+	'SUnitBrowserModelApp'
+	'..\..\Camp Smalltalk\SUnit\SUnitUI'
+	'..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 
@@ -222,7 +223,7 @@ resource_SUnitBrowser_Resource_browser_toolbar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_SUnitBrowser_Resource_browser_toolbar)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 519 nil nil nil 416 482 512 8 1909124416 nil 170 192 34 12 37093 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #startAll 8 'Run All' 1 1 nil 37093 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 51 37095 594 416 1 626 #startSelected 8 'Run Selected' 1 1 nil 37095 688 83 37097 594 416 1 626 #stopAll 8 'Stop All' 1 1 nil 37097 688 53 37099 594 416 1 626 #stopSelected 8 'Stop' 1 1 nil 37099 688 65 37101 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 626 #delete 8 'Delete' 1 1 nil 37101 1 11 37103 978 416 1 626 #reset 8 'Reset' 1 1 nil 37103 1 9 34 9 608 832 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 880 928 1106 416 1 992 1106 416 1 1040 170 176 34 4 688 1 1 117 nil 1 nil 802 33 33 802 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 802 3839 21 802 701 51 416 1298 #updateSizePosted 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 35 0 0 0] 8 #() 802 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 519 nil nil nil 416 496 8 1915204752 nil 170 192 34 12 48055 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #startAll 8 'Run All' 1 1 nil 48055 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 51 48057 578 416 1 610 #startSelected 8 'Run Selected' 1 1 nil 48057 672 83 48059 578 416 1 610 #stopAll 8 'Stop All' 1 1 nil 48059 672 53 48061 578 416 1 610 #stopSelected 8 'Stop' 1 1 nil 48061 672 65 48063 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 610 #delete 8 'Delete' 1 1 nil 48063 1 11 48065 962 416 1 610 #reset 8 'Reset' 1 1 nil 48065 1 9 34 9 592 816 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 864 912 1090 416 1 976 1090 416 1 1024 nil nil 1 nil 786 33 33 786 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 786 3839 21 786 701 51 416 1250 #updateSizePosted 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )!
 
 resource_SUnitBrowser_toolbar
 	"Answer the literal data from which the 'SUnitBrowser toolbar' resource can be reconstituted.
@@ -232,7 +233,7 @@ resource_SUnitBrowser_toolbar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_SUnitBrowser_toolbar)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 519 nil nil nil 416 482 512 8 1889398128 nil 170 192 34 14 40041 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #inspectSelected 8 'Inspect' 1 1 nil 40041 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 59 40043 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 626 #delete 8 'Delete' 1 1 nil 40043 1 11 40045 834 416 1 626 #reset 8 'Reset' 1 1 nil 40045 1 9 40033 594 416 1 626 #runAll 8 'Run All' 1 1 nil 40033 688 51 40035 594 416 1 626 #runSelected 8 'Run Selected' 1 1 nil 40035 688 83 40037 594 416 1 626 #debug 8 'Debug' 1 1 nil 40037 688 15 40039 594 416 1 626 #step 8 'Step' 1 1 nil 40039 688 43 34 11 944 992 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1040 1088 1154 416 1 608 1154 416 1 848 1154 416 1 896 nil nil 1 nil 802 33 33 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 802 3839 21 802 387 51 416 1314 #updateSizePosted 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 64 8 0 0 35 0 0 0] 8 #() 802 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853580 131137 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 519 nil nil nil 416 496 8 1915204752 nil 170 192 34 14 48071 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #debug 8 'Debug' 1 1 nil 48071 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 15 48073 578 416 1 610 #step 8 'Step' 1 1 nil 48073 672 43 48075 578 416 1 610 #inspectSelected 8 'Inspect' 1 1 nil 48075 672 59 48077 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 610 #delete 8 'Delete' 1 1 nil 48077 1 11 48079 914 416 1 610 #reset 8 'Reset' 1 1 nil 48079 1 9 48067 578 416 1 610 #runAll 8 'Run All' 1 1 nil 48067 672 51 48069 578 416 1 610 #runSelected 8 'Run Selected' 1 1 nil 48069 672 83 34 11 1024 1072 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 592 816 1138 416 1 864 1138 416 1 928 1138 416 1 976 nil nil 1 nil 786 33 33 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 786 3839 21 786 387 51 416 1298 #updateSizePosted 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 64 8 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #resource_SUnitBrowser_Resource_browser_toolbar!public!resources-views! !
 !Toolbar class categoriesFor: #resource_SUnitBrowser_toolbar!public!resources-views! !
 

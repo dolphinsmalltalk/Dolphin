@@ -2,10 +2,21 @@
 
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrFindWhat _OffsetOf_lpstrReplaceWith _OffsetOf_lpTemplateName _OffsetOf_wFindWhatLen _OffsetOf_wReplaceWithLen'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 FINDREPLACEW guid: (GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+FINDREPLACEW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+FINDREPLACEW addClassConstant: '_OffsetOf_flags' value: 16rC!
+FINDREPLACEW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
+FINDREPLACEW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
+FINDREPLACEW addClassConstant: '_OffsetOf_lCustData' value: 16r1C!
+FINDREPLACEW addClassConstant: '_OffsetOf_lpfnHook' value: 16r20!
+FINDREPLACEW addClassConstant: '_OffsetOf_lpstrFindWhat' value: 16r10!
+FINDREPLACEW addClassConstant: '_OffsetOf_lpstrReplaceWith' value: 16r14!
+FINDREPLACEW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r24!
+FINDREPLACEW addClassConstant: '_OffsetOf_wFindWhatLen' value: 16r18!
+FINDREPLACEW addClassConstant: '_OffsetOf_wReplaceWithLen' value: 16r1A!
 FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!
 !FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
@@ -14,7 +25,7 @@ FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the W
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 findDetails
 	^(FindDetails new)
@@ -36,12 +47,12 @@ findWhat
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
 hookFlag
 	^FR_ENABLEHOOK!
@@ -49,7 +60,7 @@ hookFlag
 hwndOwner: anExternalHandle
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndOwner) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 isCaseSensitive
 	"Answer true if this is a case sensitive match operation"
@@ -84,27 +95,27 @@ isWholeWord
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpfnHook) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
 
 lpstrFindWhat
 	"Answer the <Utf16String> value of the receiver's 'lpstrFindWhat' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpstrFindWhat))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpstrFindWhat)!
 
 lpstrFindWhat: anUtf16String
 	"Set the receiver's 'lpstrFindWhat' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrFindWhat) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpstrFindWhat put: anUtf16String yourAddress!
 
 lpstrReplaceWith
 	"Answer the <Utf16String> value of the receiver's 'lpstrReplaceWith' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpstrReplaceWith))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpstrReplaceWith)!
 
 lpstrReplaceWith: anUtf16String
 	"Set the receiver's 'lpstrReplaceWith' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrReplaceWith) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpstrReplaceWith put: anUtf16String yourAddress!
 
 ownerView: aView
 	"Set the parent window for the dialog to aView."
@@ -123,12 +134,12 @@ replaceWith
 wFindWhatLen: anInteger
 	"Set the receiver's 'wFindWhatLen' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wFindWhatLen) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wFindWhatLen put: anInteger!
 
 wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wReplaceWithLen) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
 !FINDREPLACEW categoriesFor: #dwSize:!**compiled accessors**!public! !
 !FINDREPLACEW categoriesFor: #findDetails!event handling!public! !
 !FINDREPLACEW categoriesFor: #findWhat!accessing!public! !
@@ -157,7 +168,7 @@ wReplaceWithLen: anInteger
 defineFields
 	"Define the fields of the Win32 FINDREPLACE structure.
 
-		FINDREPLACE compileDefinition
+		self compileDefinition
 
 		typedef struct {// fr  
 			DWORD		lStructSize;
@@ -184,6 +195,10 @@ defineFields
 		defineField: #wReplaceWithLen type: WORDField writeOnly;
 		defineField: #lCustData type: INT_PTRField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
-		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller! !
+		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
 !FINDREPLACEW class categoriesFor: #defineFields!initializing!public! !
+!FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

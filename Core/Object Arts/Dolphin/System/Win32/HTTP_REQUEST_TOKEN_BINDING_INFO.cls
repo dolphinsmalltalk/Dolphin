@@ -2,10 +2,15 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KeyType _OffsetOf_TlsUnique _OffsetOf_TlsUniqueSize _OffsetOf_TokenBinding _OffsetOf_TokenBindingSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_TOKEN_BINDING_INFO guid: (GUID fromString: '{9a86eb3d-22ee-4cc3-980d-f3427eecdb0c}')!
+HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_KeyType' value: 16r10!
+HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TlsUnique' value: 16r8!
+HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TlsUniqueSize' value: 16rC!
+HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TokenBinding' value: 16r0!
+HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TokenBindingSize' value: 16r4!
 HTTP_REQUEST_TOKEN_BINDING_INFO comment: '<HTTP_REQUEST_TOKEN_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -29,52 +34,52 @@ struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
 KeyType
 	"Answer the <Utf16String> value of the receiver's 'KeyType' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyType))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_KeyType)!
 
 KeyType: anUtf16String
 	"Set the receiver's 'KeyType' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #KeyType) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_KeyType put: anUtf16String yourAddress!
 
 TlsUnique
 	"Answer the <BYTE> value of the receiver's 'TlsUnique' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #TlsUnique))!
+	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_TlsUnique)!
 
 TlsUnique: aBYTE
 	"Set the receiver's 'TlsUnique' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #TlsUnique) put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_TlsUnique put: aBYTE yourAddress!
 
 TlsUniqueSize
 	"Answer the <Integer> value of the receiver's 'TlsUniqueSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #TlsUniqueSize)!
+	^bytes dwordAtOffset: _OffsetOf_TlsUniqueSize!
 
 TlsUniqueSize: anInteger
 	"Set the receiver's 'TlsUniqueSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #TlsUniqueSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_TlsUniqueSize put: anInteger!
 
 TokenBinding
 	"Answer the <BYTE> value of the receiver's 'TokenBinding' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: 0)!
+	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_TokenBinding)!
 
 TokenBinding: aBYTE
 	"Set the receiver's 'TokenBinding' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: 0 put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_TokenBinding put: aBYTE yourAddress!
 
 TokenBindingSize
 	"Answer the <Integer> value of the receiver's 'TokenBindingSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #TokenBindingSize)!
+	^bytes dwordAtOffset: _OffsetOf_TokenBindingSize!
 
 TokenBindingSize: anInteger
 	"Set the receiver's 'TokenBindingSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #TokenBindingSize) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_TokenBindingSize put: anInteger! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType!**compiled accessors**!public! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #KeyType:!**compiled accessors**!public! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesFor: #TlsUnique!**compiled accessors**!public! !
@@ -109,6 +114,10 @@ defineFields
 		defineField: #TlsUnique type: (PointerField type: BYTE) offset: 8;
 		defineField: #TlsUniqueSize type: DWORDField new offset: 12;
 		defineField: #KeyType type: (PointerField type: Utf16String) offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+getFieldNames
+	^#(#TokenBinding #TokenBindingSize #TlsUnique #TlsUniqueSize #KeyType)! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,58 +2,65 @@
 
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MENUINFO guid: (GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
+MENUINFO addClassConstant: '_OffsetOf_cyMax' value: 16rC!
+MENUINFO addClassConstant: '_OffsetOf_dwContextHelpID' value: 16r14!
+MENUINFO addClassConstant: '_OffsetOf_dwMenuData' value: 16r18!
+MENUINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+MENUINFO addClassConstant: '_OffsetOf_dwStyle' value: 16r8!
+MENUINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
+MENUINFO addClassConstant: '_OffsetOf_hbrBack' value: 16r10!
 MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
 !MENUINFO categoriesForClass!External-Data-Structured-Win32! !
 !MENUINFO methodsFor!
 
 cyMax
-	"Answer the receiver's cyMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cyMax' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cyMax)!
+	^bytes dwordAtOffset: _OffsetOf_cyMax!
 
-cyMax: anObject 
-	"Set the receiver's cyMax field to the value of anObject."
+cyMax: anInteger
+	"Set the receiver's 'cyMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cyMax) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cyMax put: anInteger!
 
 dwContextHelpID
-	"Answer the receiver's dwContextHelpID field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwContextHelpID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID)!
+	^bytes dwordAtOffset: _OffsetOf_dwContextHelpID!
 
-dwContextHelpID: anObject 
-	"Set the receiver's dwContextHelpID field to the value of anObject."
+dwContextHelpID: anInteger
+	"Set the receiver's 'dwContextHelpID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwContextHelpID put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle
-	"Answer the receiver's dwStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwStyle' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwStyle)!
+	^bytes dwordAtOffset: _OffsetOf_dwStyle!
 
-dwStyle: anObject 
-	"Set the receiver's dwStyle field to the value of anObject."
+dwStyle: anInteger
+	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwStyle) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger!
 
 fMask
-	"Answer the receiver's fMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
+	^bytes dwordAtOffset: _OffsetOf_fMask!
 
-fMask: anObject 
-	"Set the receiver's fMask field to the value of anObject."
+fMask: anInteger
+	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger 
 	self fMask: (self fMask bitOr: anInteger)!
@@ -99,6 +106,10 @@ defineFields
 		defineField: #cyMax type: DWORDField new;
 		defineField: #hbrBack type: HANDLEField filler;
 		defineField: #dwContextHelpID type: DWORDField new;
-		defineField: #dwMenuData type: UINT_PTRField filler! !
+		defineField: #dwMenuData type: UINT_PTRField filler!
+
+getFieldNames
+	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
 !MENUINFO class categoriesFor: #defineFields!initializing!public! !
+!MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

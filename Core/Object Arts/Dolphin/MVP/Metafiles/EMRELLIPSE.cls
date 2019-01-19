@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRELLIPSE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRELLIPSE guid: (GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
+EMRELLIPSE addClassConstant: '_OffsetOf_rclBox' value: 16r8!
 EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMRELLIPSE {
 !EMRELLIPSE methodsFor!
 
 rclBox
-	"Answer the receiver's rclBox field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
-rclBox: anObject 
-	"Set the receiver's rclBox field to the value of anObject."
+rclBox: aRECT
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBox) + 1)
-		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBox + 1)
+		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
 !EMRELLIPSE categoriesFor: #rclBox!**compiled accessors**!public! !
 !EMRELLIPSE categoriesFor: #rclBox:!**compiled accessors**!public! !
@@ -58,10 +59,14 @@ defineFields
 		defineField: #rclBox type: (StructureField type: RECT) offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclBox)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ELLIPSE with: EMR_RECTANGLE! !
 !EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
 

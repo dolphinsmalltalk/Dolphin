@@ -2,10 +2,27 @@
 
 ENHMETARECORD subclass: #EMRSTRETCHBLT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSTRETCHBLT guid: (GUID fromString: '{04e7165e-c2d6-4a3d-8a28-d197f35d85a3}')!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cxDest' value: 16r20!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cxSrc' value: 16r64!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cyDest' value: 16r24!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_cySrc' value: 16r68!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_dwRop' value: 16r28!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_iUsageSrc' value: 16r50!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_offBitsSrc' value: 16r5C!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_offBmiSrc' value: 16r54!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_xDest' value: 16r18!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_yDest' value: 16r1C!
+EMRSTRETCHBLT addClassConstant: '_OffsetOf_ySrc' value: 16r30!
 EMRSTRETCHBLT comment: '<EMRSTRETCHBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -40,182 +57,182 @@ struct tagEMRSTRETCHBLT {
 !EMRSTRETCHBLT methodsFor!
 
 cbBitsSrc
-	"Answer the receiver's cbBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBitsSrc!
 
-cbBitsSrc: anObject 
-	"Set the receiver's cbBitsSrc field to the value of anObject."
+cbBitsSrc: anInteger
+	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbBitsSrc put: anInteger!
 
 cbBmiSrc
-	"Answer the receiver's cbBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBmiSrc!
 
-cbBmiSrc: anObject 
-	"Set the receiver's cbBmiSrc field to the value of anObject."
+cbBmiSrc: anInteger
+	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbBmiSrc put: anInteger!
 
 crBkColorSrc
-	"Answer the receiver's crBkColorSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crBkColorSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc)!
+	^bytes dwordAtOffset: _OffsetOf_crBkColorSrc!
 
-crBkColorSrc: anObject 
-	"Set the receiver's crBkColorSrc field to the value of anObject."
+crBkColorSrc: anInteger
+	"Set the receiver's 'crBkColorSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_crBkColorSrc put: anInteger!
 
 cxDest
-	"Answer the receiver's cxDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cxDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxDest)!
+	^bytes sdwordAtOffset: _OffsetOf_cxDest!
 
-cxDest: anObject 
-	"Set the receiver's cxDest field to the value of anObject."
+cxDest: anInteger
+	"Set the receiver's 'cxDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxDest) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cxDest put: anInteger!
 
 cxSrc
-	"Answer the receiver's cxSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cxSrc!
 
-cxSrc: anObject 
-	"Set the receiver's cxSrc field to the value of anObject."
+cxSrc: anInteger
+	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cxSrc put: anInteger!
 
 cyDest
-	"Answer the receiver's cyDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cyDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cyDest)!
+	^bytes sdwordAtOffset: _OffsetOf_cyDest!
 
-cyDest: anObject 
-	"Set the receiver's cyDest field to the value of anObject."
+cyDest: anInteger
+	"Set the receiver's 'cyDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cyDest) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cyDest put: anInteger!
 
 cySrc
-	"Answer the receiver's cySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cySrc!
 
-cySrc: anObject 
-	"Set the receiver's cySrc field to the value of anObject."
+cySrc: anInteger
+	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cySrc put: anInteger!
 
 dwRop
-	"Answer the receiver's dwRop field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRop' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwRop)!
+	^bytes dwordAtOffset: _OffsetOf_dwRop!
 
-dwRop: anObject 
-	"Set the receiver's dwRop field to the value of anObject."
+dwRop: anInteger
+	"Set the receiver's 'dwRop' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwRop) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwRop put: anInteger!
 
 iUsageSrc
-	"Answer the receiver's iUsageSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc)!
+	^bytes dwordAtOffset: _OffsetOf_iUsageSrc!
 
-iUsageSrc: anObject 
-	"Set the receiver's iUsageSrc field to the value of anObject."
+iUsageSrc: anInteger
+	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_iUsageSrc put: anInteger!
 
 offBitsSrc
-	"Answer the receiver's offBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBitsSrc!
 
-offBitsSrc: anObject 
-	"Set the receiver's offBitsSrc field to the value of anObject."
+offBitsSrc: anInteger
+	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_offBitsSrc put: anInteger!
 
 offBmiSrc
-	"Answer the receiver's offBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBmiSrc!
 
-offBmiSrc: anObject 
-	"Set the receiver's offBmiSrc field to the value of anObject."
+offBmiSrc: anInteger
+	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 xDest
-	"Answer the receiver's xDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xDest)!
+	^bytes sdwordAtOffset: _OffsetOf_xDest!
 
-xDest: anObject 
-	"Set the receiver's xDest field to the value of anObject."
+xDest: anInteger
+	"Set the receiver's 'xDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDest) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_xDest put: anInteger!
 
 xformSrc
-	"Answer the receiver's xformSrc field as a Smalltalk object."
+	"Answer the <XFORM> value of the receiver's 'xformSrc' field."
 
-	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #xformSrc)!
+	^XFORM fromAddress: bytes yourAddress + _OffsetOf_xformSrc!
 
-xformSrc: anObject 
-	"Set the receiver's xformSrc field to the value of anObject."
+xformSrc: aXFORM
+	"Set the receiver's 'xformSrc' field to the value of the argument, aXFORM"
 
-	anObject 
+	aXFORM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #xformSrc) + 1)
-		to: ##((self offsetOf: #xformSrc) + XFORM basicByteSize)
+		from: ##(_OffsetOf_xformSrc + 1)
+		to: ##(_OffsetOf_xformSrc + XFORM basicByteSize)
 		startingAt: 1!
 
 xSrc
-	"Answer the receiver's xSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_xSrc!
 
-xSrc: anObject 
-	"Set the receiver's xSrc field to the value of anObject."
+xSrc: anInteger
+	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_xSrc put: anInteger!
 
 yDest
-	"Answer the receiver's yDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yDest)!
+	^bytes sdwordAtOffset: _OffsetOf_yDest!
 
-yDest: anObject 
-	"Set the receiver's yDest field to the value of anObject."
+yDest: anInteger
+	"Set the receiver's 'yDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDest) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_yDest put: anInteger!
 
 ySrc
-	"Answer the receiver's ySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_ySrc!
 
-ySrc: anObject 
-	"Set the receiver's ySrc field to the value of anObject."
+ySrc: anInteger
+	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
 !EMRSTRETCHBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
 !EMRSTRETCHBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
 !EMRSTRETCHBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
@@ -336,10 +353,14 @@ defineFields
 			offset: 104.
 	self byteSize: 108!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #xDest #yDest #cxDest #cyDest #dwRop #xSrc #ySrc #xformSrc #crBkColorSrc #iUsageSrc #offBmiSrc #cbBmiSrc #offBitsSrc #cbBitsSrc #cxSrc #cySrc)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_STRETCHBLT! !
 !EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSTRETCHBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSTRETCHBLT class categoriesFor: #iTypes!constants!public! !
 

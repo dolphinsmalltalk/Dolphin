@@ -20,7 +20,7 @@ Class Instance Variables:
 	defaultExtent		<Point> specifying the default size of new views, nil if none set.
 	additionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
 '!
-!SmalltalkToolShell categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkToolShell methodsFor!
 
 applyOptions
@@ -59,7 +59,6 @@ configureFromSavedStateString: aSavedStateString
 				compileForEvaluation: aSavedStateString
 				in: UndefinedObject
 				evaluationPools: #()
-				logged: false
 				flags: 0.
 	self view noRedrawDo: [(result method value: nil) value: self]!
 
@@ -84,20 +83,8 @@ createSchematicWiring
 		withArguments: (Array with: nil with: self).
 !
 
-destroy
-	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
-
-	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
-	^super destroy!
-
 displayOn: aStream
 	aStream display: self shortCaption!
-
-exit
-	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
-
-	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
-	^super exit!
 
 fontSize
 	^self view actualFont pointSize!
@@ -358,9 +345,7 @@ workspaceClass
 !SmalltalkToolShell categoriesFor: #configureFromSavedStateString:!public! !
 !SmalltalkToolShell categoriesFor: #createComponents!initializing!private! !
 !SmalltalkToolShell categoriesFor: #createSchematicWiring!initializing!private! !
-!SmalltalkToolShell categoriesFor: #destroy!commands!public! !
 !SmalltalkToolShell categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkToolShell categoriesFor: #exit!commands!public! !
 !SmalltalkToolShell categoriesFor: #fontSize!public! !
 !SmalltalkToolShell categoriesFor: #fontSize:!public! !
 !SmalltalkToolShell categoriesFor: #forgetSize!commands!public! !
@@ -447,6 +432,11 @@ defaultAdditionalAccelerators
 
 	^#(#(#inspectIt 'Shift+Ctrl+I'))!
 
+defaultDefaultView
+	"The default view to use if no other default view is configured."
+
+	^View defaultView!
+
 defaultExtent
 	"Answer a <Point> which is the user's chosen default extent for new instances
 	of the receiver, or nil if left up to Windows."
@@ -495,7 +485,7 @@ defaultView
 	to use simple class browser view if using a portable machine with limited screen 
 	real estate."
 
-	defaultView isNil ifTrue: [defaultView := super defaultView].
+	defaultView isNil ifTrue: [defaultView := self defaultDefaultView].
 	^defaultView!
 
 defaultView: aString
@@ -668,6 +658,7 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #canUseIdeaSpace!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #canUseIdeaSpace:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
+!SmalltalkToolShell class categoriesFor: #defaultDefaultView!constants!public! !
 !SmalltalkToolShell class categoriesFor: #defaultExtent!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultExtent:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultHistoryDwellTime!constants!public! !
@@ -676,7 +667,7 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #defaultSearchFieldFlashes!public! !
 !SmalltalkToolShell class categoriesFor: #defaultSlideyPinsMap!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultSlideyPinsMap:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultView!constants!public! !
+!SmalltalkToolShell class categoriesFor: #defaultView!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultView:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #getAdditionalAccelerators!accessing!private! !
 !SmalltalkToolShell class categoriesFor: #getCommandQueryHandlers!accessing!private! !
@@ -688,7 +679,7 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #initializeOptionFlags!initializing!private! !
 !SmalltalkToolShell class categoriesFor: #notificationGetImageBlock!constants!private! !
 !SmalltalkToolShell class categoriesFor: #notificationGetTextBlock!constants!private! !
-!SmalltalkToolShell class categoriesFor: #publishedAspects!development!public! !
+!SmalltalkToolShell class categoriesFor: #publishedAspects!public! !
 !SmalltalkToolShell class categoriesFor: #reuseIfOpen!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #reuseIfOpen:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #searchFieldFlashes!public! !

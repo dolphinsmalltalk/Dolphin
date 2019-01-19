@@ -29,7 +29,7 @@ Class Variables
 	ANSIMask	<integer> Masks ANSI flag from flags instance variable
 
 '!
-!MethodProtocol categoriesForClass!Development! !
+!MethodProtocol categoriesForClass!System-Support! !
 !MethodProtocol methodsFor!
 
 <= comperand

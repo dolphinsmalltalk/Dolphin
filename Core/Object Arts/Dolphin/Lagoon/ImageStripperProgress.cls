@@ -115,12 +115,14 @@ forecolorChanged
 forkProgressMonitor
 	"Private - Start a background process to monitor the progress"
 
-	self monitorProgress.
-	progressProcess := [[
-		Processor sleep: self monitorProgressPeriod.
-		self monitorProgress] repeat ] forkAt: Processor userInterruptPriority.
-
-!
+	| pollingInterval |
+	self progress: self currentProgress.
+	pollingInterval := self monitorProgressPeriod.
+	progressProcess := 
+			[
+			[Processor sleep: pollingInterval.
+			self progress: self currentProgress] repeat]
+					forkAt: Processor userInterruptPriority!
 
 getItemHandle: anInteger ifAbsent: exceptionHandler 
 	"Private - Answer the handle of the receiver's sub view with the specified ID, 
@@ -167,11 +169,6 @@ isWindowVisible
 
 	^UserLibrary default isWindowVisible: handle
 !
-
-monitorProgress
-	"Private - Update the progress bar with the current progress amount"
-
-	self progress: self currentProgress!
 
 monitorProgressPeriod
 	"Private - Answer the number of milliseconds to wait between progress monitoring updates"
@@ -346,11 +343,11 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	| bkcolor |
 	cursor := UserLibrary default loadCursor: 0 lpCursorName: IDC_WAIT.
-	self setItem: CaptionId text: 'Image Stripping in Progress'.
+	self setItem: CaptionId text: 'Application Deployment in Progress'.
 	self setItem: ExplanationId
-		text: 'The stripping process may take several minutes depending on the ImageStripper configuration. 
+		text: 'The deployment process may take up to a minute depending on the deployment options. 
 
-This progress dialog will disappear some seconds before the stripping is complete. A message box will appear informing you when the procedure is finished and, once confirmed,  the  development image will exit.'.
+This progress dialog will disappear some seconds before deployment is complete. A message box will appear informing you when the procedure is finished and, once confirmed, the development image will exit.'.
 	progress := self getItemHandle: ProgressId ifAbsent: [].
 	bkcolor := UserLibrary default getSysColor: COLOR_WINDOW.
 	UserLibrary default 
@@ -402,14 +399,13 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #isPersistentView!public!testing! !
 !ImageStripperProgress categoriesFor: #isView!public!testing! !
 !ImageStripperProgress categoriesFor: #isWindowVisible!public!testing! !
-!ImageStripperProgress categoriesFor: #monitorProgress!operations!private! !
 !ImageStripperProgress categoriesFor: #monitorProgressPeriod!constants!private! !
 !ImageStripperProgress categoriesFor: #onStartup!event handling!public! !
 !ImageStripperProgress categoriesFor: #parentPresenter!presenter!public! !
 !ImageStripperProgress categoriesFor: #presenter!accessing!public! !
 !ImageStripperProgress categoriesFor: #preTranslateMessage:!dispatching!public! !
 !ImageStripperProgress categoriesFor: #primHookWindowCreate:!helpers!private! !
-!ImageStripperProgress categoriesFor: #progress:!accessing!private! !
+!ImageStripperProgress categoriesFor: #progress:!accessing!must not strip!private! !
 !ImageStripperProgress categoriesFor: #progressRange!operations!private! !
 !ImageStripperProgress categoriesFor: #resourceLib!constants!public! !
 !ImageStripperProgress categoriesFor: #setItem:font:!accessing!private! !
@@ -417,7 +413,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #show!operations!public! !
 !ImageStripperProgress categoriesFor: #status:!accessing!public! !
 !ImageStripperProgress categoriesFor: #stopProcess!helpers!private! !
-!ImageStripperProgress categoriesFor: #subclassWindow:!accessing!private! !
+!ImageStripperProgress categoriesFor: #subclassWindow:!operations!private! !
 !ImageStripperProgress categoriesFor: #template!constants!public! !
 !ImageStripperProgress categoriesFor: #update!drawing!public! !
 !ImageStripperProgress categoriesFor: #validateUserInterface!operations!public! !
@@ -441,30 +437,29 @@ initialize
 	ProgressId := 1015.
 	ExplanationId := 1018.
 	StatusId := 1016.
-
 	MessageMap := LookupTable new.
 	MessageMap
-		at: WM_CREATE					put: #wmCreate:wParam:lParam:;
-"		at: WM_PAINT					put: #wmPaint:wParam:lParam:;"
-		at: WM_CLOSE					put: #wmClose:wParam:lParam:;
-"		at: WM_ERASEBKGND			put: #wmEraseBkGnd:wParam:lParam:;"
-		at: WM_NCDESTROY			put: #wmNcDestroy:wParam:lParam:;
-		at: WM_NOTIFY					put: #wmNotify:wParam:lParam:;
-		at: WM_PARENTNOTIFY			put: #wmParentNotify:wParam:lParam:;
-		at: WM_INITDIALOG				put: #wmInitDialog:wParam:lParam:;
-		at: WM_SETCURSOR				put: #wmSetCursor:wParam:lParam:;
-		at: WM_CTLCOLORMSGBOX	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLOREDIT			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORLISTBOX	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORBTN			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORDLG			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSCROLLBAR	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSTATIC	put: #wmCtlColor:wParam:lParam:;
-		at: WM_GETDLGCODE			put: #wmGetDlgCode:wParam:lParam:
-!
+		at: WM_CREATE put: #wmCreate:wParam:lParam:;
+		at: WM_CLOSE put: #wmClose:wParam:lParam:;
+		at: WM_NCDESTROY put: #wmNcDestroy:wParam:lParam:;
+		at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:;
+		at: WM_SETCURSOR put: #wmSetCursor:wParam:lParam:;
+		at: WM_CTLCOLORMSGBOX put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLOREDIT put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORLISTBOX put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORBTN put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORDLG put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSCROLLBAR put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSTATIC put: #wmCtlColor:wParam:lParam:!
+
+onPreStripImage
+	self
+		removeSelectors: #(#forkProgressMonitor #primHookWindowCreate: #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
+	self class removeSelectors: self selectors!
 
 show
 	^self new show! !
-!ImageStripperProgress class categoriesFor: #initialize!initializing!public! !
+!ImageStripperProgress class categoriesFor: #initialize!initializing!must not strip!public! !
+!ImageStripperProgress class categoriesFor: #onPreStripImage!private! !
 !ImageStripperProgress class categoriesFor: #show!operations!public! !
 

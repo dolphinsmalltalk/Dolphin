@@ -2,10 +2,17 @@
 
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VARDESC guid: (GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
+VARDESC addClassConstant: '_OffsetOf_elemdesc' value: 16rC!
+VARDESC addClassConstant: '_OffsetOf_lpstrSchema' value: 16r4!
+VARDESC addClassConstant: '_OffsetOf_lpvarValue' value: 16r8!
+VARDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
+VARDESC addClassConstant: '_OffsetOf_oInst' value: 16r8!
+VARDESC addClassConstant: '_OffsetOf_varkind' value: 16r20!
+VARDESC addClassConstant: '_OffsetOf_wVarFlags' value: 16r1C!
 VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.
@@ -50,7 +57,7 @@ basicIdlAttributes
 elemdesc
 	"Answer the <ELEMDESC> value of the receiver's 'elemdesc' field."
 
-	^ELEMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #elemdesc)!
+	^ELEMDESC fromAddress: bytes yourAddress + _OffsetOf_elemdesc!
 
 elemDesc
 	"Answer an <ELEMDESC> describing the receiver's type."
@@ -64,14 +71,13 @@ getAllCustData
 	^analyzer tlbInterface getAllVarCustData: index!
 
 getValidFields
-	"Private - Answer a <sequencedReadableCollection> of the fields defined 
-	in the receiver's template, sorted in ascending order of offset from the start of the
+	"Private - Answer a <sequencedReadableCollection> of <Symbol>, being the fields defined in
+	the receiver's template, sorted in ascending order of offset from the start of the
 	structure, that are valid in this particular instance."
 
 	| fields |
-	fields := super getValidFields.
-	self isSymbolicConstant ifFalse: [fields remove: #lpvarValue].
-	^fields!
+	fields := self class getFieldNames.
+	^self isSymbolicConstant ifTrue: [fields] ifFalse: [fields copyWithout: #lpvarValue]!
 
 isAnonymous
 	"Answer whether the variable described by the receiver is anonymous (i.e. unnamed). This is
@@ -131,27 +137,27 @@ isUnion
 lpvarValue
 	"Answer the <VARIANT> value of the receiver's 'lpvarValue' field."
 
-	^VARIANT fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpvarValue))!
+	^VARIANT fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpvarValue)!
 
 memid
 	"Answer the <Integer> value of the receiver's 'memid' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_memid!
 
 oInst
 	"Answer the <Integer> value of the receiver's 'oInst' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #oInst)!
+	^bytes dwordAtOffset: _OffsetOf_oInst!
 
 varkind
 	"Answer the <Integer> value of the receiver's 'varkind' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #varkind)!
+	^bytes sdwordAtOffset: _OffsetOf_varkind!
 
 wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wVarFlags)! !
+	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
 !VARDESC categoriesFor: #arguments!accessing!public! !
 !VARDESC categoriesFor: #basicFree!private!realizing/unrealizing! !
 !VARDESC categoriesFor: #basicIdlAttributes!printing-IDL!private! !
@@ -213,6 +219,10 @@ defineFields
 	self
 		defineField: #oInst
 		type: DWORDField readOnly
-		offset: (self offsetOf: #lpvarValue)! !
+		offset: (self offsetOf: #lpvarValue)!
+
+getFieldNames
+	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
 !VARDESC class categoriesFor: #defineFields!initializing!public! !
+!VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

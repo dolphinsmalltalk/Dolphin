@@ -32,11 +32,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Dolphin Overlapped IO';
-	add: '..\..\Base\Dolphin SizeIs Fields';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Overlapped IO'
+	'..\..\Base\Dolphin SizeIs Fields').
 
 package!
 
@@ -54,7 +53,7 @@ Object subclass: #FileSystemChangeReader
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileSystemChangeReader subclass: #FileSystemChangeStream

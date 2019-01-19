@@ -150,7 +150,7 @@ viewModel
 !ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
 !ChoicePresenter categoriesFor: #model:!accessing!public! !
 !ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice:!accessing!public! !
+!ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
 !ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
 !ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
 !ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !
@@ -200,7 +200,7 @@ resource_Enhanced_list_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Enhanced_list_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 30 nil nil 34 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915211424 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 642 #displayString 672 ##(Smalltalk.SortedCollection) nil nil 416 nil 1 nil nil #report 528 nil 131169 nil 8 #(nil) 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 946 491 311 416 898 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 108 6 0 0 165 0 0 0] 8 #() 946 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 30 nil nil 34 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915211424 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 642 #displayString 672 642 #<= 8 #() nil nil 416 nil 1 nil nil #report 528 nil 131169 nil 34 4 nil nil 328198 ##(Smalltalk.Point) 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 866 3839 21 866 491 311 416 962 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 116 8 0 0 165 0 0 0] 8 #() 866 193 193 nil 27 )! !
 !ChoicePresenter class categoriesFor: #defaultModel!models!public! !
 !ChoicePresenter class categoriesFor: #icon!constants!public! !
 !ChoicePresenter class categoriesFor: #resource_Default_view!public!resources-views! !

@@ -18,8 +18,8 @@ Instance Variables:
 categories: aCollection
 	categories := aCollection!
 
-categoryNames: aCollection 
-	categories := aCollection collect: [:each | MethodCategory name: aCollection]!
+categoryNames: aCollection
+	categories := aCollection collect: [:each | each asMethodCategory]!
 
 classesAndSelectorsDo: aBlock 
 	categories do: 
@@ -92,7 +92,7 @@ storeOn: aStream
 
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
-		categories: aCollection;
+		categoryNames: aCollection;
 		yourself!
 
 referencesTo: aLiteral in: anEnvironment 
@@ -101,9 +101,9 @@ referencesTo: aLiteral in: anEnvironment
 				displayString.
 	label := 'References to: ' , literalName.
 	refs := ReferencesCategory newNamed: label literal: aLiteral.
-	^(self onEnvironment: anEnvironment categories: (Array with: refs))
+	^(self onEnvironment: anEnvironment categories: {refs})
 		label: label;
-		searchStrings: (Array with: literalName);
+		searchStrings: {literalName};
 		yourself! !
 !MethodCategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
 !MethodCategoryEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !

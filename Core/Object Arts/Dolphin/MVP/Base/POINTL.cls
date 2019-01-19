@@ -2,10 +2,12 @@
 
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 POINTL guid: (GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
+POINTL addClassConstant: '_OffsetOf_x' value: 16r0!
+POINTL addClassConstant: '_OffsetOf_y' value: 16r4!
 POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
 '!
 !POINTL categoriesForClass!Win32-Structs! !
@@ -20,24 +22,24 @@ asUIntPtr
 	^VMConstants.IsWin64 ifTrue: [bytes uintPtrAtOffset: 0] ifFalse: [self asPoint asUIntPtr]!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_x!
 
-x: anObject 
-	"Set the receiver's x field to the value of anObject."
+x: anInteger
+	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #y)!
+	^bytes sdwordAtOffset: _OffsetOf_y!
 
-y: anObject 
-	"Set the receiver's y field to the value of anObject."
+y: anInteger
+	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
 !POINTL categoriesFor: #asUIntPtr!converting!public! !
 !POINTL categoriesFor: #x!**compiled accessors**!public! !
 !POINTL categoriesFor: #x:!**compiled accessors**!public! !
@@ -74,8 +76,8 @@ x: x y: y
 
 	^self basicNew 
 		bytes: ((ByteArray newFixed: 8)
-				sdwordAtOffset: 0 put: x;
-				sdwordAtOffset: 4 put: y;
+				sdwordAtOffset: _OffsetOf_x put: x;
+				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)
 ! !
 !POINTL class categoriesFor: #defineFields!**auto generated**!initializing!public! !

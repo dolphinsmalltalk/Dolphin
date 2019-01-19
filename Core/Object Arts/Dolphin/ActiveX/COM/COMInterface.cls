@@ -2,11 +2,15 @@
 
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
-	classVariableNames: 'InterfaceClasses'
+	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
 COMInterface guid: (IID fromString: '{87B4C591-026E-11D3-9FD7-00A0CC3E4A32}')!
 COMInterface isAbstract: true!
+COMInterface addClassConstant: '_OffsetOf_argSizes' value: 16r4!
+COMInterface addClassConstant: '_OffsetOf_interfaceCookie' value: 16rC!
+COMInterface addClassConstant: '_OffsetOf_objectCookie' value: 16r8!
+COMInterface addClassConstant: '_OffsetOf_vtbl' value: 16r0!
 COMInterface comment: ''!
 !COMInterface categoriesForClass!External-Data-Structured-COM! !
 !COMInterface methodsFor!
@@ -33,10 +37,10 @@ AddRef
 
 	^self subclassResponsibility!
 
-argSizes: anObject 
-	"Set the receiver's argSizes field to the value of anObject."
+argSizes: anExternalAddress
+	"Set the receiver's 'argSizes' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #argSizes) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_argSizes put: anExternalAddress!
 
 asParameter
 	"Answer the receiver in a form suitable for passing
@@ -179,20 +183,20 @@ initializeAtAddress: anAddress
 	self beFinalizable.
 	self _addRef!
 
-interfaceCookie: anObject 
-	"Set the receiver's interfaceCookie field to the value of anObject."
+interfaceCookie: anInteger
+	"Set the receiver's 'interfaceCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #interfaceCookie) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_interfaceCookie put: anInteger!
 
 isSameCOMObject: aCOMInterface
 	"Answer true if aCOMInterface has the same underlying COMObject as the receiver."
 
 	^self identity = aCOMInterface identity!
 
-objectCookie: anObject 
-	"Set the receiver's objectCookie field to the value of anObject."
+objectCookie: anInteger
+	"Set the receiver's 'objectCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #objectCookie) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_objectCookie put: anInteger!
 
 onExit
 	"Clean up the external interface pointer on image exit to free external resources"
@@ -309,10 +313,10 @@ supportsInterface: anInterfaceClass
 
 	^self class == anInterfaceClass "isKindOf: anInterfaceClass"!
 
-vtbl: anObject 
-	"Set the receiver's vtbl field to the value of anObject."
+vtbl: anExternalAddress
+	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
 !COMInterface categoriesFor: #_addRef!methods!private! !
 !COMInterface categoriesFor: #=!comparing!public! !
 !COMInterface categoriesFor: #AddRef!methods!public! !
@@ -499,7 +503,7 @@ compileFunctions
 	superclass functions size+1 to: functions size do: [:i | self compileFunction: i].
 	self subclasses do: [:s | s compileFunctions]!
 
-compileFunctionsIntoImplementor: aClass 
+compileFunctionsIntoImplementor: aClass
 	"Helper to compile a set of method templates for the receiver's interface
 	into the implementing class, aClass. These methods are of the form:
 
@@ -518,20 +522,20 @@ compileFunctionsIntoImplementor: aClass
 	| aStream cat |
 	cat := self generatedFunctionCategories first.
 	((aClass includesCategory: cat) and: 
-			[(MessageBox 
+			[(MessageBox
 				confirm: ('<1p> already includes the method category ''<2s>''
 The generated template methods may overwrite existing methods in the class.
-Are you sure you want to proceed?' 
+Are you sure you want to proceed?'
 						expandMacrosWith: aClass
-						with: cat asString)) 
-					not]) 
+						with: cat))
+					not])
 		ifTrue: [^self].
 	aStream := (Utf8String new: 256) writeStream.
-	functions 
+	functions
 		from: superclass functions size + 1
 		to: functions size
 		do: 
-			[:fn | 
+			[:fn |
 			aStream
 				nextPutAll: fn messageSelectorAndArgumentNames;
 				cr;
@@ -692,15 +696,14 @@ functions
 	^functions!
 
 generatedFunctionCategories
-	"Answer the base category into which COMInterface functions are compiled
+	"Answer the categories into which COMInterface functions are compiled
 	during the autogeneration process.
 	N.B. It is important that the main category appears first in the list."
 
-	| catClass |
-	catClass := self methodCategoryClass.
-	^Array 
-		with: (catClass name: 'COM Interfaces', '-', self name)
-		with: catClass public!
+	^{'COM Interfaces', '-', self name. 'public'}!
+
+getFieldNames
+	^#()!
 
 getObject: aString
 	"Answer an instance or subinstance of the receiver on an instance of the COM component 
@@ -1005,7 +1008,7 @@ registerSubclasses
 removeCompiledFunctions
 	"Remove the functions generated automatically from the receiver's function table."
 
-	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e|e notify]!
+	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e | e notify]!
 
 setGuid: id
 	"Private - Set the value of the receiver's 'guid' instance variable to the 
@@ -1063,7 +1066,7 @@ unregister
 !COMInterface class categoriesFor: #clsid!accessing!public! !
 !COMInterface class categoriesFor: #comObjectClass!constants!public! !
 !COMInterface class categoriesFor: #compileFunction:!automatic generation!development!private! !
-!COMInterface class categoriesFor: #compileFunctions!automatic generation!public! !
+!COMInterface class categoriesFor: #compileFunctions!automatic generation!development!public! !
 !COMInterface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
 !COMInterface class categoriesFor: #createContextFlags!constants!public! !
 !COMInterface class categoriesFor: #createObject:!instance creation!public! !
@@ -1080,6 +1083,7 @@ unregister
 !COMInterface class categoriesFor: #elementSize!accessing!public! !
 !COMInterface class categoriesFor: #functions!initializing!private! !
 !COMInterface class categoriesFor: #generatedFunctionCategories!constants!public! !
+!COMInterface class categoriesFor: #getFieldNames!constants!private! !
 !COMInterface class categoriesFor: #getObject:!instance creation!public! !
 !COMInterface class categoriesFor: #icon!constants!public! !
 !COMInterface class categoriesFor: #iid!accessing!public! !
@@ -1113,7 +1117,7 @@ unregister
 !COMInterface class categoriesFor: #stdMethodCallType!constants!private! !
 !COMInterface class categoriesFor: #stdMethodReturnType!constants!private! !
 !COMInterface class categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface class categoriesFor: #uninitialize!initializing!private! !
+!COMInterface class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !COMInterface class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !COMInterface class categoriesFor: #unregister!public!removing! !
 

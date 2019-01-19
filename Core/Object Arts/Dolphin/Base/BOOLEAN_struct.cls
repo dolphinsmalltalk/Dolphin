@@ -13,25 +13,25 @@ BOOLEAN comment: ''!
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
-	^(bytes byteAtOffset: 0) asBoolean!
+	^(bytes byteAtOffset: _OffsetOf_value) asBoolean!
 
 value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: 0 put: aBoolean asParameter! !
+	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
 !BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
 !BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
 
 !BOOLEAN class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
-	structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^BOOLEANField!
+	self defineField: #value type: BOOLEANField new beOverride!
 
 fileOutStem
 	^super fileOutStem , '_struct'! !
-!BOOLEAN class categoriesFor: #fieldType!constants!development!private! !
+!BOOLEAN class categoriesFor: #defineFields!initializing!public! !
 !BOOLEAN class categoriesFor: #fileOutStem!development!private!source filing! !
 

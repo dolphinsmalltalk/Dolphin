@@ -2,10 +2,16 @@
 
 ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATEMONOBRUSH guid: (GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBits' value: 16r1C!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBmi' value: 16r14!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_iUsage' value: 16rC!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBits' value: 16r18!
+EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBmi' value: 16r10!
 EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,64 +35,64 @@ struct tagEMRCREATEMONOBRUSH {
 !EMRCREATEMONOBRUSH methodsFor!
 
 cbBits
-	"Answer the receiver's cbBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBits' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBits)!
+	^bytes dwordAtOffset: _OffsetOf_cbBits!
 
-cbBits: anObject 
-	"Set the receiver's cbBits field to the value of anObject."
+cbBits: anInteger
+	"Set the receiver's 'cbBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBits) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbBits put: anInteger!
 
 cbBmi
-	"Answer the receiver's cbBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmi' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBmi)!
+	^bytes dwordAtOffset: _OffsetOf_cbBmi!
 
-cbBmi: anObject 
-	"Set the receiver's cbBmi field to the value of anObject."
+cbBmi: anInteger
+	"Set the receiver's 'cbBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmi) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cbBmi put: anInteger!
 
 ihBrush
-	"Answer the receiver's ihBrush field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihBrush)!
+	^bytes dwordAtOffset: _OffsetOf_ihBrush!
 
-ihBrush: anObject 
-	"Set the receiver's ihBrush field to the value of anObject."
+ihBrush: anInteger
+	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
 
 iUsage
-	"Answer the receiver's iUsage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iUsage)!
+	^bytes dwordAtOffset: _OffsetOf_iUsage!
 
-iUsage: anObject 
-	"Set the receiver's iUsage field to the value of anObject."
+iUsage: anInteger
+	"Set the receiver's 'iUsage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsage) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_iUsage put: anInteger!
 
 offBits
-	"Answer the receiver's offBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBits' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBits)!
+	^bytes dwordAtOffset: _OffsetOf_offBits!
 
-offBits: anObject 
-	"Set the receiver's offBits field to the value of anObject."
+offBits: anInteger
+	"Set the receiver's 'offBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBits) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_offBits put: anInteger!
 
 offBmi
-	"Answer the receiver's offBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmi' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBmi)!
+	^bytes dwordAtOffset: _OffsetOf_offBmi!
 
-offBmi: anObject 
-	"Set the receiver's offBmi field to the value of anObject."
+offBmi: anInteger
+	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmi) put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
 !EMRCREATEMONOBRUSH categoriesFor: #cbBits!**compiled accessors**!public! !
 !EMRCREATEMONOBRUSH categoriesFor: #cbBits:!**compiled accessors**!public! !
 !EMRCREATEMONOBRUSH categoriesFor: #cbBmi!**compiled accessors**!public! !
@@ -129,10 +135,14 @@ defineFields
 		defineField: #cbBits type: DWORDField new offset: 28.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #ihBrush #iUsage #offBmi #cbBmi #offBits #cbBits)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEMONOBRUSH! !
 !EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
 

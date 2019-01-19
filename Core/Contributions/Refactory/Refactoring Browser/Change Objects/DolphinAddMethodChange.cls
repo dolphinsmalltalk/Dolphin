@@ -11,7 +11,7 @@ DolphinAddMethodChange comment: 'DolphinAddMethodChange is a specialised AddMeth
 !DolphinAddMethodChange methodsFor!
 
 categories
-	^protocols collect: [:each | MethodCategory name: each]!
+	^protocols collect: [:each | each asMethodCategory]!
 
 changeString
 	^'<1s> <2s>>><3s>' 

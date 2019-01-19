@@ -16,24 +16,24 @@ The range of integer values that can be represented by instances of this class i
 !SWORD methodsFor!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject! !
+	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
 !SWORD categoriesFor: #value!**compiled accessors**!public! !
 !SWORD categoriesFor: #value:!**compiled accessors**!public! !
 
 !SWORD class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^SWORDField!
+	self defineField: #value type: SWORDField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -46,7 +46,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SWORD class categoriesFor: #fieldType!constants!development!private! !
+!SWORD class categoriesFor: #defineFields!initializing!public! !
 !SWORD class categoriesFor: #initialize!development!initializing!private! !
 !SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

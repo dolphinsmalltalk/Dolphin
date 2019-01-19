@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #DTBGOPTS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DTBGOPTS guid: (GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
+DTBGOPTS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
+DTBGOPTS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+DTBGOPTS addClassConstant: '_OffsetOf_rcClip' value: 16r8!
 DTBGOPTS comment: '<DTBGOPTS> is an <ExternalStructure> class to wrap the struct ''Win32.DTBGOPTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -26,37 +29,37 @@ struct tagDTBGOPTS {
 !DTBGOPTS methodsFor!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize
-	"Answer the receiver's dwSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwSize' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_dwSize!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcClip
-	"Answer the receiver's rcClip field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcClip' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcClip)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcClip!
 
-rcClip: anObject 
-	"Set the receiver's rcClip field to the value of anObject."
+rcClip: aRECT
+	"Set the receiver's 'rcClip' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rcClip) + 1)
-		to: ##((self offsetOf: #rcClip) + RECT basicByteSize)
+		from: ##(_OffsetOf_rcClip + 1)
+		to: ##(_OffsetOf_rcClip + RECT basicByteSize)
 		startingAt: 1! !
 !DTBGOPTS categoriesFor: #dwFlags!**compiled accessors**!public! !
 !DTBGOPTS categoriesFor: #dwFlags:!**compiled accessors**!public! !
@@ -82,6 +85,10 @@ defineFields
 	self
 		defineField: #dwSize type: DWORDField new;
 		defineField: #dwFlags type: DWORDField new;
-		defineField: #rcClip type: (StructureField type: RECT)! !
+		defineField: #rcClip type: (StructureField type: RECT)!
+
+getFieldNames
+	^#(#dwSize #dwFlags #rcClip)! !
 !DTBGOPTS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

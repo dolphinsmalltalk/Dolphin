@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #PRINTPAGERANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nFromPage _OffsetOf_nToPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PRINTPAGERANGE guid: (GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
+PRINTPAGERANGE addClassConstant: '_OffsetOf_nFromPage' value: 16r0!
+PRINTPAGERANGE addClassConstant: '_OffsetOf_nToPage' value: 16r4!
 PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,24 +26,24 @@ struct tagPRINTPAGERANGE {
 !PRINTPAGERANGE methodsFor!
 
 nFromPage
-	"Answer the receiver's nFromPage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nFromPage' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_nFromPage!
 
-nFromPage: anObject
-	"Set the receiver's nFromPage field to the value of anObject."
+nFromPage: anInteger
+	"Set the receiver's 'nFromPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_nFromPage put: anInteger!
 
 nToPage
-	"Answer the receiver's nToPage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nToPage' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_nToPage!
 
-nToPage: anObject
-	"Set the receiver's nToPage field to the value of anObject."
+nToPage: anInteger
+	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject! !
+	bytes dwordAtOffset: _OffsetOf_nToPage put: anInteger! !
 !PRINTPAGERANGE categoriesFor: #nFromPage!**compiled accessors**!public! !
 !PRINTPAGERANGE categoriesFor: #nFromPage:!**compiled accessors**!public! !
 !PRINTPAGERANGE categoriesFor: #nToPage!**compiled accessors**!public! !
@@ -63,6 +65,10 @@ defineFields
 
 	self
 		defineField: #nFromPage type: DWORDField new;
-		defineField: #nToPage type: DWORDField new! !
+		defineField: #nToPage type: DWORDField new!
+
+getFieldNames
+	^#(#nFromPage #nToPage)! !
 !PRINTPAGERANGE class categoriesFor: #defineFields!initializing!public! !
+!PRINTPAGERANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_XFORM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETWORLDTRANSFORM guid: (GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
+EMRSETWORLDTRANSFORM addClassConstant: '_OffsetOf_XFORM' value: 16r8!
 EMRSETWORLDTRANSFORM comment: '<EMRSETWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,17 +25,17 @@ struct tagEMRSETWORLDTRANSFORM {
 !EMRSETWORLDTRANSFORM methodsFor!
 
 XFORM
-	"Answer the receiver's XFORM field as a Smalltalk object."
+	"Answer the <XFORM> value of the receiver's 'XFORM' field."
 
-	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #XFORM)!
+	^XFORM fromAddress: bytes yourAddress + _OffsetOf_XFORM!
 
-XFORM: anObject 
-	"Set the receiver's XFORM field to the value of anObject."
+XFORM: aXFORM
+	"Set the receiver's 'XFORM' field to the value of the argument, aXFORM"
 
-	anObject 
+	aXFORM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #XFORM) + 1)
-		to: ##((self offsetOf: #XFORM) + XFORM basicByteSize)
+		from: ##(_OffsetOf_XFORM + 1)
+		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
 !EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
 !EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !
@@ -60,10 +61,14 @@ defineFields
 			offset: 8.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #XFORM)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETWORLDTRANSFORM! !
 !EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
 

@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	instanceVariableNames: 'address'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AddrLength _OffsetOf_pAddress'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
+HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_AddrLength' value: 16r0!
+HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_pAddress' value: 16r4!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -36,22 +38,22 @@ address: aSOCKADDR
 AddrLength
 	"Private - Answer the <Integer> value of the receiver's 'AddrLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_AddrLength!
 
 AddrLength: anInteger
 	"Set the receiver's 'AddrLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_AddrLength put: anInteger!
 
 pAddress
 	"Answer the <SOCKADDR> value of the receiver's 'pAddress' field."
 
-	^SOCKADDR fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAddress))!
+	^SOCKADDR fromAddress: (bytes intPtrAtOffset: _OffsetOf_pAddress)!
 
 pAddress: aSOCKADDR
 	"Set the receiver's 'pAddress' field to the value of the argument, aSOCKADDR"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pAddress) put: aSOCKADDR yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_pAddress put: aSOCKADDR yourAddress! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address!accessing!public! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #address:!accessing!public! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesFor: #AddrLength!**compiled accessors**!private! !
@@ -76,6 +78,10 @@ defineFields
 	self
 		defineField: #AddrLength type: WORDField new beNonBrowsable offset: 0;
 		defineField: #pAddress type: (PointerField type: SOCKADDR) offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#AddrLength #pAddress)! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

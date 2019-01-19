@@ -14,7 +14,7 @@ Instance Variables:
 	versionString	<String>
 
 '!
-!AXTypeLibRegistration categoriesForClass!Development! !
+!AXTypeLibRegistration categoriesForClass!Unclassified! !
 !AXTypeLibRegistration methodsFor!
 
 < operand
@@ -107,6 +107,12 @@ description: dString guidString: gString versionString: vString
 
 	^self new
 		description: dString guidString: gString versionString: vString
-! !
+!
+
+icon
+	"Answers an <Icon> that can be used to represent this class"
+
+	^AXTypeLibraryAnalyzer icon! !
 !AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
+!AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
 

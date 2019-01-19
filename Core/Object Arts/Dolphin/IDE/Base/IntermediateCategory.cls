@@ -7,7 +7,7 @@ Category subclass: #IntermediateCategory
 	classInstanceVariableNames: ''!
 IntermediateCategory guid: (GUID fromString: '{87b4c501-026e-11d3-9fd7-00a0cc3e4a32}')!
 IntermediateCategory comment: ''!
-!IntermediateCategory categoriesForClass!Development! !
+!IntermediateCategory categoriesForClass!System-Support! !
 !IntermediateCategory methodsFor!
 
 acceptsAdditions
@@ -33,9 +33,7 @@ addMethodSilently: method
 	As this is a pseudo category with calculated membership, we just ignore the request."!
 
 contents
-	"Answer all the objects held by the receiver (in this case none - this is a branch
-	category used as a temporary placeholder in a category tree)."
-
+	Notification deprecated.
 	^#()!
 
 includesMethod: method
@@ -44,6 +42,11 @@ includesMethod: method
 	never include any methods."
 
 	^false!
+
+isEmpty
+	"Answer whether the receiver is an empty category (with no members)"
+
+	^true!
 
 isIntermediate
 	"Private - Answer whether the receiver is a temporary category used only as a 
@@ -67,6 +70,7 @@ removeClass: class
 !IntermediateCategory categoriesFor: #addMethodSilently:!adding!private! !
 !IntermediateCategory categoriesFor: #contents!enumerating!public! !
 !IntermediateCategory categoriesFor: #includesMethod:!public!testing! !
+!IntermediateCategory categoriesFor: #isEmpty!public!testing! !
 !IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
 !IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !IntermediateCategory categoriesFor: #removeClass:!public!removing! !

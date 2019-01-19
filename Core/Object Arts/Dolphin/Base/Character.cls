@@ -398,13 +398,13 @@ printEscapedOn: aStream
 	| codePoint |
 	aStream nextPutAll: '$\'.
 	(EscapeChars lookup: (codePoint := self codePoint) + 1)
-		ifNotNil: [:char | aStream nextPut: char]
 		ifNil: 
 			[aStream nextPut: $x.
 			codePoint
 				printOn: aStream
 				base: 16
-				showRadix: false]!
+				showRadix: false]
+		ifNotNil: [:char | aStream nextPut: char]!
 
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
@@ -576,7 +576,7 @@ initialize
 				yourself).
 	self addClassConstant: 'Utf8Mask' value: String.EncodingUtf8 << 24.
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
-	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf16 << 24.
+	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
 	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
 	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
 
@@ -632,7 +632,9 @@ onStartup
 	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
 	AnsiCharacters := ansiCharacters.
-	Utf8Default := (CPINFOEXW codePage: Win32Constants.CP_UTF8) unicodeDefaultChar!
+	Utf8Default := Character
+				codePoint: ((VMLibrary default getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]])
+						wordAtOffset: 0)!
 
 replacement
 	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and

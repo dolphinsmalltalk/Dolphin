@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRCREATEPEN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihPen _OffsetOf_lopn'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATEPEN guid: (GUID fromString: '{f7e241d3-4c87-4409-a235-94cd95523c94}')!
+EMRCREATEPEN addClassConstant: '_OffsetOf_ihPen' value: 16r8!
+EMRCREATEPEN addClassConstant: '_OffsetOf_lopn' value: 16rC!
 EMRCREATEPEN comment: '<EMRCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,27 +27,27 @@ struct tagEMRCREATEPEN {
 !EMRCREATEPEN methodsFor!
 
 ihPen
-	"Answer the receiver's ihPen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPen' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPen)!
+	^bytes dwordAtOffset: _OffsetOf_ihPen!
 
-ihPen: anObject 
-	"Set the receiver's ihPen field to the value of anObject."
+ihPen: anInteger
+	"Set the receiver's 'ihPen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPen) put: anObject!
+	bytes dwordAtOffset: _OffsetOf_ihPen put: anInteger!
 
 lopn
-	"Answer the receiver's lopn field as a Smalltalk object."
+	"Answer the <LOGPEN> value of the receiver's 'lopn' field."
 
-	^LOGPEN fromAddress: bytes yourAddress + ##(self offsetOf: #lopn)!
+	^LOGPEN fromAddress: bytes yourAddress + _OffsetOf_lopn!
 
-lopn: anObject 
-	"Set the receiver's lopn field to the value of anObject."
+lopn: aLOGPEN
+	"Set the receiver's 'lopn' field to the value of the argument, aLOGPEN"
 
-	anObject 
+	aLOGPEN
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lopn) + 1)
-		to: ##((self offsetOf: #lopn) + LOGPEN basicByteSize)
+		from: ##(_OffsetOf_lopn + 1)
+		to: ##(_OffsetOf_lopn + LOGPEN basicByteSize)
 		startingAt: 1! !
 !EMRCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
 !EMRCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
@@ -73,10 +75,14 @@ defineFields
 		defineField: #lopn type: (StructureField type: LOGPEN) offset: 12.
 	self byteSize: 28!
 
+getFieldNames
+	^#(#iType #nSize #ihPen #lopn)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPEN! !
 !EMRCREATEPEN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEPEN class categoriesFor: #iTypes!constants!public! !
 

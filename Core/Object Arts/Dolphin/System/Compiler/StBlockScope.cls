@@ -6,8 +6,8 @@ StLexicalScope subclass: #StBlockScope
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StBlockScope guid: (GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
-StBlockScope addClassConstant: 'EmptyBlockMask' value: 512!
-StBlockScope addClassConstant: 'NeedsOuterMask' value: 256!
+StBlockScope addClassConstant: 'EmptyBlockMask' value: 16r200!
+StBlockScope addClassConstant: 'NeedsOuterMask' value: 16r100!
 StBlockScope comment: ''!
 !StBlockScope categoriesForClass!Kernel-Objects! !
 !StBlockScope methodsFor!
@@ -47,5 +47,5 @@ initialize
 	self addClassConstant: 'NeedsOuterMask' value: 16r100.
 	self addClassConstant: 'EmptyBlockMask' value: 16r200! !
 !StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
-!StBlockScope class categoriesFor: #initialize!class initialization!public! !
+!StBlockScope class categoriesFor: #initialize!class initialization!development!public! !
 

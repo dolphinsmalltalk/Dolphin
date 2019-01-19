@@ -135,7 +135,7 @@ basicPrimaryStartup
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
-	sessionId := GUID newUnique	"Allow deferred tasks to know if they passed a startup boundary"!
+	sessionId := Object new	"Allow deferred tasks to know if they passed a startup boundary"!
 
 basicSecondaryStartup
 	"Perform secondary startup operations which initialize non-critical
@@ -347,7 +347,7 @@ hasActiveServers
 	"Private - Answer whether there are any servers still registered in this
 	session."
 
-	^self servers notEmpty!
+	^servers notNil and: [servers notEmpty]!
 
 imageBase
 	"Answer the base directory in which the image resides"
@@ -425,7 +425,8 @@ inputState: anInputState
 	"Private - Set the receiver's InputState.
 	WARNING: Do this very carefully, or the system will crash."
 
-	inputState := anInputState!
+	inputState := anInputState.
+	inputState becomeA: self inputStateClass!
 
 inputStateClass
 	^InputState!
@@ -733,24 +734,8 @@ openConsole
 openConsoleStreams
 	"Private - Open the standard console I/O streams. This sets up the actual C-runtime library stdin/stdout/stderr streams correctly so that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
 
-	| kernel crt |
 	stdioStreams isNil ifFalse: [^self].
-	kernel := KernelLibrary default.
-	crt := CRTLibrary default.
-	stdioStreams := (0 to: 2) collect: 
-					[:fd |
-					| mode |
-					mode := fd == 0 ifTrue: [#read] ifFalse: [#append].
-					(crt _get_osfhandle: fd) asSignedInteger < 0
-						ifTrue: 
-							["stdio file descriptor is not currently established, attach to the console handle"
-							self consoleStreamClass
-								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
-								toFd: fd
-								mode: mode]
-						ifFalse: 
-							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
-							self fileStreamClass openFd: fd mode: mode]]!
+	stdioStreams := {self openStdIn. self openStdOut. self openStdErr}!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
@@ -759,11 +744,32 @@ openEventLog
 	eventLogHandle := VMLibrary default registerEventSource: self eventLogSource.
 	^eventLogHandle!
 
+openFd: anInteger mode: aSymbol
+	^(CRTLibrary default _get_osfhandle: anInteger) asSignedInteger < 0
+		ifTrue: 
+			["stdio file descriptor is not currently established, attach to the console handle"
+			self consoleStreamClass
+				attach: (KernelLibrary default getStdHandle: STD_INPUT_HANDLE - anInteger)
+				toFd: anInteger
+				mode: aSymbol]
+		ifFalse: 
+			["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
+			self fileStreamClass openFd: anInteger mode: aSymbol]!
+
 openLibraries
 	"Private - Open the base set of external libraries (ExternalLibrary>>onStartup must
 	open the PermanentLibraries)."
 
 	ExternalLibrary onStartup!
+
+openStdErr
+	^self openFd: 2 mode: #append!
+
+openStdIn
+	^self openFd: 0 mode: #read!
+
+openStdOut
+	^self openFd: 1 mode: #append!
 
 outer
 	"Answer the 'outer' value which was passed by the .EXE which started up the image.
@@ -932,11 +938,10 @@ serverShutdown
 	it should shut down."
 
 	Notification signal: 'Server shutdown request'.
-	(self isHeadless and: [self servers isEmpty])
-		ifTrue: [self exit]!
+	(self isHeadless and: [self hasActiveServers not]) ifTrue: [self exit]!
 
 sessionId
-	"A unique GUID reset at startup; used initially in DevelopmentSessionManager>>commandLineParser to avoid executing deferred actions on a restart"
+	"A unique <Object> reset at startup; used initially in DevelopmentSessionManager>>commandLineParser to avoid executing deferred actions on a restart"
 
 	^sessionId!
 
@@ -1192,7 +1197,11 @@ windowsDirectory
 !SessionManager categoriesFor: #openConsole!operations!public! !
 !SessionManager categoriesFor: #openConsoleStreams!operations!private! !
 !SessionManager categoriesFor: #openEventLog!operations-logging!private! !
+!SessionManager categoriesFor: #openFd:mode:!operations!private! !
 !SessionManager categoriesFor: #openLibraries!operations-startup!private! !
+!SessionManager categoriesFor: #openStdErr!helpers!private! !
+!SessionManager categoriesFor: #openStdIn!helpers!private! !
+!SessionManager categoriesFor: #openStdOut!helpers!private! !
 !SessionManager categoriesFor: #outer!accessing!public! !
 !SessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !SessionManager categoriesFor: #popupHelpFile!constants!public! !

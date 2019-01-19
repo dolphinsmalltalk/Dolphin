@@ -2,10 +2,16 @@
 
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_guid _OffsetOf_lcid _OffsetOf_syskind _OffsetOf_wLibFlags _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 TLIBATTR guid: (GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
+TLIBATTR addClassConstant: '_OffsetOf_guid' value: 16r0!
+TLIBATTR addClassConstant: '_OffsetOf_lcid' value: 16r10!
+TLIBATTR addClassConstant: '_OffsetOf_syskind' value: 16r14!
+TLIBATTR addClassConstant: '_OffsetOf_wLibFlags' value: 16r1C!
+TLIBATTR addClassConstant: '_OffsetOf_wMajorVerNum' value: 16r18!
+TLIBATTR addClassConstant: '_OffsetOf_wMinorVerNum' value: 16r1A!
 TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 
 TLIBATTR is a simple structure containing basic descriptive details about a type library, namely:
@@ -28,7 +34,7 @@ comparisonSize
 	^28!
 
 guid
-	"Answer the receiver's guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'guid' field."
 
 	^GUID fromAddress: bytes yourAddress!
 
@@ -58,9 +64,9 @@ isRestricted
 	^self wLibFlags anyMask: LIBFLAG_FRESTRICTED!
 
 lcid
-	"Answer the receiver's lcid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
+	^bytes dwordAtOffset: _OffsetOf_lcid!
 
 version
 	"Answer an N.N version string for the receiver."
@@ -68,19 +74,19 @@ version
 	^self wMajorVerNum displayString, '.', self wMinorVerNum displayString!
 
 wLibFlags
-	"Answer the receiver's wLibFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wLibFlags' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wLibFlags)!
+	^bytes wordAtOffset: _OffsetOf_wLibFlags!
 
 wMajorVerNum
-	"Answer the receiver's wMajorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMajorVerNum)!
+	^bytes wordAtOffset: _OffsetOf_wMajorVerNum!
 
 wMinorVerNum
-	"Answer the receiver's wMinorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMinorVerNum)! !
+	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
 !TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
 !TLIBATTR categoriesFor: #guid!**compiled accessors**!public! !
 !TLIBATTR categoriesFor: #hasDiskImage!public!testing! !
@@ -131,6 +137,10 @@ defineFields
 		defineField: #syskind			type: SDWORDField filler;		"Always Win32"
 		defineField: #wMajorVerNum	type: WORDField readOnly;
 		defineField: #wMinorVerNum	type: WORDField readOnly;
-		defineField: #wLibFlags		type: WORDField readOnly! !
+		defineField: #wLibFlags		type: WORDField readOnly!
+
+getFieldNames
+	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
 !TLIBATTR class categoriesFor: #defineFields!initializing!public! !
+!TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

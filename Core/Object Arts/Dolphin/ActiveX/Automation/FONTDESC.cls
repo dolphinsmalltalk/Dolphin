@@ -2,10 +2,18 @@
 
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cySize _OffsetOf_dwSize _OffsetOf_fItalic _OffsetOf_fStrikethrough _OffsetOf_fUnderline _OffsetOf_lpstrName _OffsetOf_sCharset _OffsetOf_sWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FONTDESC guid: (GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
+FONTDESC addClassConstant: '_OffsetOf_cySize' value: 16r8!
+FONTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+FONTDESC addClassConstant: '_OffsetOf_fItalic' value: 16r14!
+FONTDESC addClassConstant: '_OffsetOf_fStrikethrough' value: 16r1C!
+FONTDESC addClassConstant: '_OffsetOf_fUnderline' value: 16r18!
+FONTDESC addClassConstant: '_OffsetOf_lpstrName' value: 16r4!
+FONTDESC addClassConstant: '_OffsetOf_sCharset' value: 16r12!
+FONTDESC addClassConstant: '_OffsetOf_sWeight' value: 16r10!
 FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 
 FONTDESC is similar to a LOGFONT in that it represents a logical description of a Font, although in this case an OLE Font object (see IFont and IFontDisp). FONTDESC is simpler than LOGFONT, however.'!
@@ -15,17 +23,17 @@ FONTDESC is similar to a LOGFONT in that it represents a logical description of 
 cySize
 	"Answer the <Integer> value of the receiver's 'cySize' field."
 
-	^bytes sqwordAtOffset: ##(self offsetOf: #cySize)!
+	^bytes sqwordAtOffset: _OffsetOf_cySize!
 
 cySize: anInteger
 	"Set the receiver's 'cySize' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: ##(self offsetOf: #cySize) put: anInteger!
+	bytes sqwordAtOffset: _OffsetOf_cySize put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the font name."
@@ -41,42 +49,42 @@ faceName: fontName
 fItalic
 	"Answer the <Boolean> value of the receiver's 'fItalic' field."
 
-	^(bytes dwordAtOffset: ##(self offsetOf: #fItalic)) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_fItalic) asBoolean!
 
 fItalic: aBoolean
 	"Set the receiver's 'fItalic' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fItalic) put: aBoolean asParameter!
+	bytes dwordAtOffset: _OffsetOf_fItalic put: aBoolean asParameter!
 
 fStrikethrough
 	"Answer the <Boolean> value of the receiver's 'fStrikethrough' field."
 
-	^(bytes dwordAtOffset: ##(self offsetOf: #fStrikethrough)) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_fStrikethrough) asBoolean!
 
 fStrikethrough: aBoolean
 	"Set the receiver's 'fStrikethrough' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fStrikethrough) put: aBoolean asParameter!
+	bytes dwordAtOffset: _OffsetOf_fStrikethrough put: aBoolean asParameter!
 
 fUnderline
 	"Answer the <Boolean> value of the receiver's 'fUnderline' field."
 
-	^(bytes dwordAtOffset: ##(self offsetOf: #fUnderline)) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_fUnderline) asBoolean!
 
 fUnderline: aBoolean
 	"Set the receiver's 'fUnderline' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fUnderline) put: aBoolean asParameter!
+	bytes dwordAtOffset: _OffsetOf_fUnderline put: aBoolean asParameter!
 
 lpstrName
 	"Answer the <Utf16String> value of the receiver's 'lpstrName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpstrName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpstrName)!
 
 lpstrName: anUtf16String
 	"Set the receiver's 'lpstrName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpstrName put: anUtf16String yourAddress!
 
 pointSize
 	"Answer the point size of the font described by the receiver."
@@ -91,22 +99,22 @@ pointSize: points
 sCharset
 	"Answer the <Integer> value of the receiver's 'sCharset' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #sCharset)!
+	^bytes swordAtOffset: _OffsetOf_sCharset!
 
 sCharset: anInteger
 	"Set the receiver's 'sCharset' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sCharset) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_sCharset put: anInteger!
 
 sWeight
 	"Answer the <Integer> value of the receiver's 'sWeight' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #sWeight)!
+	^bytes swordAtOffset: _OffsetOf_sWeight!
 
 sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sWeight) put: anInteger! !
+	bytes swordAtOffset: _OffsetOf_sWeight put: anInteger! !
 !FONTDESC categoriesFor: #cySize!**compiled accessors**!public! !
 !FONTDESC categoriesFor: #cySize:!**compiled accessors**!public! !
 !FONTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -171,7 +179,11 @@ fromFont: font
 	fd fUnderline: lf lfUnderline.
 	fd fStrikethrough: lf lfStrikeOut.
 	fd pointSize: font pointSize.
-	^fd! !
+	^fd!
+
+getFieldNames
+	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
 !FONTDESC class categoriesFor: #defineFields!initializing!public! !
 !FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
+!FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

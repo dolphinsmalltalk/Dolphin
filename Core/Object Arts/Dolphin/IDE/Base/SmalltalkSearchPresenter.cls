@@ -7,7 +7,7 @@ Presenter subclass: #SmalltalkSearchPresenter
 	classInstanceVariableNames: ''!
 SmalltalkSearchPresenter guid: (GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
 SmalltalkSearchPresenter comment: ''!
-!SmalltalkSearchPresenter categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
 !SmalltalkSearchPresenter methodsFor!
 
 applyOptions

@@ -39,9 +39,8 @@ package globalAliases: (Set new
 	add: #RECTL;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
 
 package!
 
@@ -64,12 +63,12 @@ ExternalStructure subclass: #ExternalRectangle
 	classInstanceVariableNames: ''!
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Point

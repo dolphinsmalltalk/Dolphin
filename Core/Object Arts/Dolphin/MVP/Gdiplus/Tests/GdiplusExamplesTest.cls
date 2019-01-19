@@ -598,12 +598,12 @@ buildTestCase
 	"
 
 	| autoCategory |
-	autoCategory := MethodCategory name: '**auto generated**'.
+	autoCategory := '**auto generated**'.
 
 	"Only remove test methods in the auto generated category to avoid removing any tests 
 		that are extended"
 	self removeCategory: autoCategory.
-	((MethodCategory name: 'sunit') contents 
+	(('sunit' asMethodCategory) contents 
 		select: [:each | each methodClass allSuperclasses includes: GdiplusBase class]) do: 
 				[:each | 
 				| testSel |

@@ -2,10 +2,12 @@
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_QUERY guid: (GUID fromString: '{d0a38bb4-ba56-4dc6-9079-ac7694ef98ac}')!
+HTTP_SERVICE_CONFIG_SSL_QUERY addClassConstant: '_OffsetOf_dwToken' value: 16r8!
+HTTP_SERVICE_CONFIG_SSL_QUERY addClassConstant: '_OffsetOf_KeyDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_SSL_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,22 +30,22 @@ struct tagHTTP_SERVICE_CONFIG_SSL_QUERY {
 dwToken
 	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwToken)!
+	^bytes dwordAtOffset: _OffsetOf_dwToken!
 
 dwToken: anInteger
 	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwToken put: anInteger!
 
 KeyDesc
 	"Answer the <SOCKADDR> value of the receiver's 'KeyDesc' field."
 
-	^SOCKADDR fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyDesc))!
+	^SOCKADDR fromAddress: (bytes intPtrAtOffset: _OffsetOf_KeyDesc)!
 
 KeyDesc: aSOCKADDR
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #KeyDesc) put: aSOCKADDR yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: aSOCKADDR yourAddress! !
 !HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
@@ -68,6 +70,10 @@ defineFields
 	self
 		defineField: #KeyDesc type: (PointerField type: SOCKADDR) offset: 4;
 		defineField: #dwToken type: DWORDField new offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#QueryDesc #KeyDesc #dwToken)! !
 !HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
