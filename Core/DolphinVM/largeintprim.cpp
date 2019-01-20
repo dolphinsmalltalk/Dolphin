@@ -58,17 +58,10 @@ inline static int signBitOf(int32_t signedInt)
 	return signedInt < 0 ? -1 : 0;
 }
 
-__declspec(naked) unsigned __fastcall highBit(uint32_t )
+inline static uint32_t highBit(uint32_t value)
 {
-	_asm {
-		bsr	eax, ecx		// Get high bit index into eax, zero flag set if no bits
-		jz	noBitsSet
-		inc	eax
-		ret
-	noBitsSet:
-		xor eax, eax
-		ret
-	}
+	unsigned long index;
+	return _BitScanReverse(&index, value) ? index + 1 : 0;
 }
 
 /******************************************************************************
