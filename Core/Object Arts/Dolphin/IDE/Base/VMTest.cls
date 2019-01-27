@@ -1065,6 +1065,32 @@ testOverlappedCallTermination
 	"2) Call is terminated before completion, but is allowed to start"
 	1 to: 5 do: [:i | self earlyTermination: true]!
 
+testPrimitiveAdd
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #+ setsFailCode: false.
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts small and large integer arguments, and fails for everything else"
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	{
+		{16r3FFFFFFF. 0. 16r3FFFFFFF}.
+		{16r3FFFFFFF. -1. 16r3FFFFFFE}.
+		{16r3FFFFFFF. 1. 16r40000000}.
+		{16r3FFFFFFF. 16r40000000. 16r7FFFFFFF}.
+		{16r3FFFFFFF. 16r7FFFFFFF. 16rBFFFFFFE}.
+		{0. 16r3FFFFFFF. 16r3FFFFFFF}.
+		{-1. 16r3FFFFFFF. 16r3FFFFFFE}.
+		{1. 16r3FFFFFFF. 16r40000000}.
+		{1. 16r7FFFFFFF. 16r80000000}.
+		{16r3FFFFFFF. 16r3FFFFFFF. 16r7FFFFFFE}.
+		{-16r40000000. 1.  -16r3FFFFFFF}.
+		{1. -16r40000000. -16r3FFFFFFF}.
+		{-16r40000000. -1.  -16r40000001}.
+		{-1. -16r40000000. -16r40000001}.
+		{-16r40000000. -16r40000000. -16r80000000}.
+		{-1. 16r40000000. 16r3FFFFFFF}.
+}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
 testPrimitiveAllInstances
 	| actual |
 	"There are few things we can rely on having a fixed number of instances"
@@ -2654,6 +2680,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
