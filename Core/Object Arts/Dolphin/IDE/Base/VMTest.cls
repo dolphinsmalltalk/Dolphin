@@ -1292,8 +1292,6 @@ testPrimitiveEqual
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #= setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
 	{#(0 1 false).
 		#(1 0 false).
 		#(1 1 true).
@@ -1302,9 +1300,11 @@ testPrimitiveEqual
 		#(-1 -1 true).
 		#(-1 -2 false).
 		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum - 1. false}.
 		{SmallInteger minimum. SmallInteger minimum. true}.
 		{SmallInteger minimum. SmallInteger maximum. false}.
 		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger maximum + 1. false}.
 		{SmallInteger maximum. SmallInteger minimum. false}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
