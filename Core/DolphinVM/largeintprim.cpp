@@ -49,9 +49,6 @@
 #define /*uint32_t*/ HighULimb(/*int64_t*/ op) (((ULARGE_INTEGER*)&op)->HighPart)
 #define /*uint32_t*/ LowLimb(/*int64_t*/ op) (static_cast<uint32_t>(MASK_DWORD(op)))
 
-// Forward references
-Oop __fastcall liNormalize(LargeIntegerOTE* oteLI);
-
 // Answer the sign bit of the argument
 inline static int signBitOf(int32_t signedInt)
 {
@@ -78,14 +75,18 @@ template <class Op, class OpSingle> __forceinline static Oop* primitiveLargeInte
 {
 	Oop oopArg = *sp;
 	const LargeIntegerOTE* oteReceiver = reinterpret_cast<const LargeIntegerOTE*>(*(sp - 1));
-	Oop result;
 
 	if (ObjectMemoryIsIntegerObject(oopArg))
 	{
 		SMALLINTEGER arg = ObjectMemoryIntegerValueOf(oopArg);
 		if (arg != 0)
 		{
-			result = opSingle(oteReceiver, arg);
+			auto result = opSingle(oteReceiver, arg);
+			// Normalize and return
+			Oop oopResult = LargeInteger::NormalizeIntermediateResult(result);
+			*(sp - 1) = oopResult;
+			ObjectMemory::AddToZct(oopResult);
+			return sp - 1;
 		}
 		else
 		{
@@ -98,18 +99,16 @@ template <class Op, class OpSingle> __forceinline static Oop* primitiveLargeInte
 		const LargeIntegerOTE* oteArg = reinterpret_cast<const LargeIntegerOTE*>(oopArg);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			result = op(oteReceiver, oteArg);
+			auto result = op(oteReceiver, oteArg);
+			// Normalize and return
+			Oop oopResult = LargeInteger::NormalizeIntermediateResult(result);
+			*(sp - 1) = oopResult;
+			ObjectMemory::AddToZct(oopResult);
+			return sp - 1;
 		}
 		else
 			return nullptr;
 	}
-
-	// Normalize and return
-	result = normalizeIntermediateResult(result);
-	*(sp - 1) = result;
-	ObjectMemory::AddToZct(result);
-
-	return sp - 1;
 }
 
 // Template for operations where the result is zero if the argument is SmallInteger zero
@@ -239,22 +238,10 @@ Oop __stdcall Integer::NewSigned64(int64_t value)
 	return oopAnswer;
 }
 
-inline void deallocateIntermediateResult(LargeIntegerOTE* liOte)
-{
-	POTE ote = reinterpret_cast<POTE>(liOte);
-
-	HARDASSERT(ote->m_count == 0);
-	HARDASSERT(!ote->isFree());
-	// If its in the Zct, then it must be on the stack.
-	HARDASSERT(!ObjectMemory::IsInZct(ote));
-
-	ObjectMemory::deallocateByteObject(ote);
-}
-
 inline void deallocateIntermediateResult(Oop oopResult)
 {
 	if (!ObjectMemoryIsIntegerObject(oopResult))
-		deallocateIntermediateResult(reinterpret_cast<LargeIntegerOTE*>(oopResult));
+		LargeInteger::DeallocateIntermediateResult(reinterpret_cast<LargeIntegerOTE*>(oopResult));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -268,7 +255,7 @@ inline void deallocateIntermediateResult(Oop oopResult)
 // comes from trying to do the least possible work (in particular not reallocating
 // the object unless necessary).
 //
-Oop __fastcall liNormalize(LargeIntegerOTE* oteLI)
+Oop __fastcall LargeInteger::Normalize(LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 
@@ -329,25 +316,6 @@ Oop __fastcall liNormalize(LargeIntegerOTE* oteLI)
 
 	oteLI->beImmutable();
 	return Oop(oteLI);		// No reduction was possible, or we shrunk it
-}
-
-static Oop normalizeIntermediateResult(LargeIntegerOTE* oteLI)
-{
-	HARDASSERT(!ObjectMemory::IsInZct(reinterpret_cast<OTE*>(oteLI)));
-	Oop oopNormalized = liNormalize(oteLI);
-	if (reinterpret_cast<Oop>(oteLI) != oopNormalized)
-		deallocateIntermediateResult(oteLI);
-	return oopNormalized;
-}
-
-Oop __forceinline normalizeIntermediateResult(Oop integerPointer)
-{
-	Oop oopNormalized;
-	if (ObjectMemoryIsIntegerObject(integerPointer))
-		oopNormalized = integerPointer;
-	else
-		oopNormalized = normalizeIntermediateResult(reinterpret_cast<LargeIntegerOTE*>(integerPointer));
-	return oopNormalized;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -464,7 +432,7 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 //	single case where this occurs, for 16r40000000).
 //  Note also that the answer will have a zero reference count.
 
-static LargeIntegerOTE* __stdcall liNegatePriv(LargeIntegerOTE* oteLI)
+static LargeIntegerOTE* __stdcall liNegatePriv(const LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 
@@ -507,7 +475,7 @@ static LargeIntegerOTE* __stdcall liNegatePriv(LargeIntegerOTE* oteLI)
 	return oteNegated;
 }
 
-Oop __stdcall liNegate(LargeIntegerOTE* oteLI)
+Oop LargeInteger::Negate(const LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 	const int size = oteLI->getWordSize();
@@ -517,7 +485,7 @@ Oop __stdcall liNegate(LargeIntegerOTE* oteLI)
 		return ObjectMemoryIntegerObjectOf(-0x40000000);
 	}
 	else
-		return normalizeIntermediateResult(liNegatePriv(oteLI));
+		return NormalizeIntermediateResult(liNegatePriv(oteLI));
 }
 
 Oop __stdcall negateIntermediateResult(Oop oopInteger)
@@ -530,9 +498,9 @@ Oop __stdcall negateIntermediateResult(Oop oopInteger)
 	else
 	{
 		LargeIntegerOTE* oteInteger = reinterpret_cast<LargeIntegerOTE*>(oopInteger);
-		Oop oopNegated = liNegate(oteInteger);
+		Oop oopNegated = LargeInteger::Negate(oteInteger);
 		ASSERT(oopNegated != oopInteger);
-		deallocateIntermediateResult(oteInteger);
+		LargeInteger::DeallocateIntermediateResult(oteInteger);
 		return oopNegated;
 	}
 }
@@ -547,7 +515,7 @@ Oop __stdcall negateIntermediateResult(Oop oopInteger)
 // liAddSingle - LargeInteger Single-precision Add
 //	Add a 32-bit Integer to a multi-limbed integer
 //
-Oop liAddSingle(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand)
+LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand)
 {
 	ASSERT(operand != 0);
 
@@ -579,7 +547,7 @@ Oop liAddSingle(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand)
 		sumDigits[numLimbs] = requiredSign;
 	}
 
-	return Oop(oteSum);
+	return oteSum;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -587,7 +555,7 @@ Oop liAddSingle(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand)
 //
 //	Add a multi-precision Integer to another multi-precision integer.
 
-Oop liAdd(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2)
+LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2)
 {
 	MWORD size1 = oteOp1->getWordSize();
 	MWORD size2 = oteOp2->getWordSize();
@@ -643,24 +611,24 @@ Oop liAdd(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2)
 		sumDigits[size1] = requiredSign;
 	}
 
-	return Oop(oteSum);
+	return oteSum;
 }
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerAdd(Oop* const sp, unsigned)
 {
 	struct AddSmallInteger
 	{
-		Oop operator()(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand) const
 		{
-			return liAddSingle(oteLI, operand);
+			return LargeInteger::Add(oteLI, operand);
 		}
 	};
 
 	struct Add
 	{
-		Oop operator()(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2) const
 		{
-			return liAdd(oteOp1, oteOp2);
+			return LargeInteger::Add(oteOp1, oteOp2);
 		}
 	};
 
@@ -674,7 +642,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerAdd(Oop* const sp, unsigned)
 //	This is easy and fast (a ripple carry with special treatment for the sign digit)
 //
 
-Oop liSubSingle(const LargeIntegerOTE* oteLI, SMALLINTEGER operand)
+LargeIntegerOTE* liSubSingle(const LargeIntegerOTE* oteLI, SMALLINTEGER operand)
 {
 	const uint32_t* const digits = oteLI->m_location->m_digits;
 	const MWORD differenceSize = oteLI->getWordSize();
@@ -712,10 +680,10 @@ Oop liSubSingle(const LargeIntegerOTE* oteLI, SMALLINTEGER operand)
 	}
 
 	// Made immutable by normalize
-	return Oop(oteDifference);
+	return oteDifference;
 }
 
-Oop liSub(const LargeIntegerOTE* oteLI, const LargeIntegerOTE* oteOperand)
+LargeIntegerOTE* liSub(const LargeIntegerOTE* oteLI, const LargeIntegerOTE* oteOperand)
 {
 	const uint32_t* digits1 = oteLI->m_location->m_digits;
 	const uint32_t* digits2 = oteOperand->m_location->m_digits;
@@ -761,14 +729,14 @@ Oop liSub(const LargeIntegerOTE* oteLI, const LargeIntegerOTE* oteOperand)
 	}
 
 	// Made immutable by normalize
-	return Oop(oteDifference);
+	return oteDifference;
 }
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerSub(Oop* const sp, unsigned)
 {
 	struct SubSmallInteger
 	{
-		Oop operator()(const LargeIntegerOTE* oteLI, SMALLINTEGER operand) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, SMALLINTEGER operand) const
 		{
 			return liSubSingle(oteLI, operand);
 		}
@@ -776,7 +744,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerSub(Oop* const sp, unsigned)
 
 	struct Sub
 	{
-		Oop operator()(const LargeIntegerOTE* oteLI, const LargeIntegerOTE* oteOperand) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, const LargeIntegerOTE* oteOperand) const
 		{
 			return liSub(oteLI, oteOperand);
 		}
@@ -902,10 +870,6 @@ Oop liMul(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner)
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerMul(Oop* const sp, unsigned)
 {
-	///////////////////////////////////////////////////////////////////////////////
-	// liMul - Multiply one LargeInteger by another
-	//	Private - Answer the result of multiplying the receiver by the argument, anInteger
-	//
 	struct Mul
 	{
 		Oop operator()(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner) const
@@ -1070,7 +1034,7 @@ liDiv_t __stdcall liDivSingleUnsigned(LargeIntegerOTE* oteLI, SMALLUNSIGNED v)
 		// 64-bit division is done using a rather slow CRT function, but
 		// this is still much faster than doing it byte-by-byte because IDIV is
 		// a very slow instruction anyway.
-		// Its a shame the divide function doesn't also calculate the remainder!
+		// The CRT divide function does at least now also calculate the remainder
 		q[i] = static_cast<uint32_t>(ui / v);
 		rem = static_cast<uint32_t>(ui % v);
 	}
@@ -1092,7 +1056,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 	// Division by -1 can result in overflow, so just pass off to negate
 	if (v == -1)
 	{
-		Oop oopQuo = liNegate(oteU);
+		Oop oopQuo = LargeInteger::Negate(oteU);
 		ASSERT(oopQuo != (Oop)oteU);
 		quoAndRem.quo = oopQuo;
 		quoAndRem.rem = ZeroPointer;
@@ -1175,7 +1139,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 			}
 
 			// We no longer need the absolute value of the numerator
-			deallocateIntermediateResult(absU);
+			LargeInteger::DeallocateIntermediateResult(absU);
 		}
 		else
 		{
@@ -1517,7 +1481,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	}
 
 	// Don't need shifted divisor any more
-	deallocateIntermediateResult(oteV);
+	LargeInteger::DeallocateIntermediateResult(oteV);
 
 	// Reverse the normalizing shift...
 	TODO("Zero high digits above?")
@@ -1528,7 +1492,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	{
 		oopRem = liRightShift(oteU, d);
 		ASSERT(oopRem != (Oop)oteU);
-		deallocateIntermediateResult(oteU);
+		LargeInteger::DeallocateIntermediateResult(oteU);
 	}
 
 	// Should be normalized later
@@ -1572,7 +1536,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 			// numerator -ve, denominator -ve, quo +ve, rem -ve
 			LargeIntegerOTE* absV = liNegatePriv(oteV);
 			quoAndRem = liDivUnsigned(absU, absV);
-			deallocateIntermediateResult(absV);
+			LargeInteger::DeallocateIntermediateResult(absV);
 		}
 		else
 		{
@@ -1587,7 +1551,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 		// We no longer need the absolute value of the numerator, however it might already have been
 		// freed above if denominator was larger and the remainder was therefore that value
 		if (!absU->isFree())
-			deallocateIntermediateResult(absU);
+			LargeInteger::DeallocateIntermediateResult(absU);
 	}
 	else
 	{
@@ -1598,7 +1562,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 			// numerator +ve, denominator -ve, quo -ve, rem +ve.
 			LargeIntegerOTE* absV = liNegatePriv(oteV);
 			quoAndRem = liDivUnsigned(oteU, absV);
-			deallocateIntermediateResult(absV);
+			LargeInteger::DeallocateIntermediateResult(absV);
 
 			quoAndRem.quo = negateIntermediateResult(quoAndRem.quo);
 		}
@@ -1621,7 +1585,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerNormalize(Oop* const sp, unsigned)
 {
-	Oop oopNormalized = liNormalize(reinterpret_cast<LargeIntegerOTE*>(*sp));
+	Oop oopNormalized = LargeInteger::Normalize(reinterpret_cast<LargeIntegerOTE*>(*sp));
 	*sp = oopNormalized;
 	ObjectMemory::AddToZct(oopNormalized);
 	return sp;
@@ -1656,7 +1620,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitInvert(Oop* const sp, unsig
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerNegate(Oop* const sp, unsigned)
 {
-	Oop oopNegated = liNegate(reinterpret_cast<LargeIntegerOTE*>(*sp));
+	Oop oopNegated = LargeInteger::Negate(reinterpret_cast<LargeIntegerOTE*>(*sp));
 	*sp = oopNegated;
 	ObjectMemory::AddToZct(oopNegated);
 	return sp;
@@ -2135,7 +2099,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitAnd(Oop* const sp, unsigned
 //
 //	Again easy (and fast) to do, because we are using two's complement notation.
 //
-Oop liBitOr(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
+LargeIntegerOTE* liBitOr(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
 {
 	MWORD aSize = oteA->getWordSize();
 	MWORD bSize = oteB->getWordSize();
@@ -2193,14 +2157,14 @@ Oop liBitOr(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
 
 	// Made immutable when normalized late
 	//oteR->beImmutable();
-	return Oop(oteR);
+	return oteR;
 }
 
 
 // Optimized version for common case of multi-precision receiver and single-precision
 // mask.
 
-Oop liBitOrSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
+LargeIntegerOTE* liBitOrSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
 {
 	const uint32_t* digitsA = oteA->m_location->m_digits;
 	const MWORD aSize = oteA->getWordSize();
@@ -2238,14 +2202,14 @@ Oop liBitOrSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
 
 	// Made immutable when normalized late
 	//oteR->beImmutable();
-	return Oop(oteR);
+	return oteR;
 }
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerBitOr(Oop* const sp, unsigned)
 {
 	struct BitOr
 	{
-		Oop operator() (const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB) const
+		LargeIntegerOTE* operator() (const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB) const
 		{
 			return liBitOr(oteA, oteB);
 		}
@@ -2256,7 +2220,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitOr(Oop* const sp, unsigned)
 	// mask.
 	struct BitOrSmallInteger
 	{
-		Oop operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
 		{
 			return liBitOrSingle(oteA, mask);
 		}
@@ -2270,7 +2234,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitOr(Oop* const sp, unsigned)
 // LargeInteger #bitXor:
 //
 
-Oop liBitXor(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
+LargeIntegerOTE* liBitXor(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
 {
 	MWORD aSize = oteA->getWordSize();
 	MWORD bSize = oteB->getWordSize();
@@ -2325,12 +2289,12 @@ Oop liBitXor(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
 #endif
 
 	// Made immutable when normalized later
-	return Oop(oteR);
+	return oteR;
 }
 
 // Optimized version for common case of multi-precision receiver and single-precision
 // mask.
-Oop liBitXorSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
+LargeIntegerOTE* liBitXorSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
 {
 	const uint32_t* digitsA = oteA->m_location->m_digits;
 	const MWORD aSize = oteA->getWordSize();
@@ -2365,7 +2329,7 @@ Oop liBitXorSingle(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
 #endif
 
 	// Made immutable when normalized later
-	return Oop(oteR);
+	return oteR;
 }
 
 
@@ -2373,7 +2337,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitXor(Oop* const sp, unsigned
 {
 	struct BitXor
 	{
-		Oop operator()(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB) const
 		{
 			return liBitXor(oteA, oteB);
 		}
@@ -2383,7 +2347,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitXor(Oop* const sp, unsigned
 	// mask.
 	struct BitXorSmallInteger
 	{
-		Oop operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
+		LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
 		{
 			return liBitXorSingle(oteA, mask);
 
@@ -2419,7 +2383,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsign
 			{
 				// Left shift - can't possibly answer SmallInteger
 				LargeIntegerOTE* oteShifted = liLeftShift(oteReceiver, shift);
-				Oop result = normalizeIntermediateResult(oteShifted);
+				Oop result = LargeInteger::NormalizeIntermediateResult(oteShifted);
 				*(sp-1) = result;
 				ObjectMemory::AddToZct(result);
 			}

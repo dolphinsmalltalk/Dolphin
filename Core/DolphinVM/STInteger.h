@@ -53,6 +53,15 @@ namespace ST
 		static LargeIntegerOTE* __fastcall liNewUnsigned(uint32_t value);
 		// Answer a 32-bit LargeInteger from the signed 32-bit argument
 		static LargeIntegerOTE* __fastcall liNewSigned(int32_t value);
+
+		static Oop __fastcall Normalize(LargeIntegerOTE* oteLI);
+		static void DeallocateIntermediateResult(LargeIntegerOTE* liOte);
+		static Oop NormalizeIntermediateResult(LargeIntegerOTE* oteLI);
+
+		static Oop Negate(const LargeIntegerOTE* oteLI);
+
+		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER operand);
+		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
 	};
 
 
@@ -128,6 +137,37 @@ namespace ST
 #else
 		return NewSigned32(static_cast<int32_t>(value));
 #endif
+	}
+
+	inline void LargeInteger::DeallocateIntermediateResult(LargeIntegerOTE* liOte)
+	{
+		OTE* ote = reinterpret_cast<OTE*>(liOte);
+
+		HARDASSERT(ote->m_count == 0);
+		HARDASSERT(!ote->isFree());
+		// If its in the Zct, then it must be on the stack.
+		HARDASSERT(!ObjectMemory::IsInZct(ote));
+
+		ObjectMemory::deallocateByteObject(ote);
+	}
+
+	inline Oop LargeInteger::NormalizeIntermediateResult(LargeIntegerOTE* oteLI)
+	{
+		HARDASSERT(!ObjectMemory::IsInZct(reinterpret_cast<OTE*>(oteLI)));
+		Oop oopNormalized = LargeInteger::Normalize(oteLI);
+		if (reinterpret_cast<Oop>(oteLI) != oopNormalized)
+			DeallocateIntermediateResult(oteLI);
+		return oopNormalized;
+	}
+
+	Oop __forceinline normalizeIntermediateResult(Oop integerPointer)
+	{
+		Oop oopNormalized;
+		if (ObjectMemoryIsIntegerObject(integerPointer))
+			oopNormalized = integerPointer;
+		else
+			oopNormalized = LargeInteger::NormalizeIntermediateResult(reinterpret_cast<LargeIntegerOTE*>(integerPointer));
+		return oopNormalized;
 	}
 }
 

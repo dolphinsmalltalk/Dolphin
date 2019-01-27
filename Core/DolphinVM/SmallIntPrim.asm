@@ -44,46 +44,6 @@ extern LINEWARRAY2:near32
 ;;	For this reason, all these primitives test first that the receiver
 ;;	is a SmallInteger, and subsequently that the argument is a SmallInteger.
 
-; _declspec(naked) BOOL __fastcall Interpreter::primitiveAdd()
-;
-; Send Arithmetic Selector+ is the most commonly occuring instruction, so performance
-; very critical here.
-; Note that the receiver and arguments do not need to be shifted (though one SmallInteger
-; flag bit must be reset).
-; No reference counting is necessary because a stack item is only overwritten with a
-; SmallInteger, and this can only happen if that item is a SmallInteger.
-;
-BEGINPRIMITIVE primitiveAdd
-	mov		ecx, [_SP-OOPSIZE]				; Access receiver underneath argument
-	mov		eax, [_SP]						; Load argument from stack
-	test	al, 1							; Argument is a SmallInteger?
-	jz		localPrimitiveFailure0			; No, primitive failure
-
-	xor		ecx, 1							; Clear bottom bit of receiver (arithmetic can then be done without shifting)
-	add		ecx, eax						; Perform the actual addition
-	jo		overflow						; If overflowed SmallInteger bits then create a large integer
-
-	;; Normal, and fastest, case; SmallInteger + SmallInteger yields SmallInteger
-	mov		[_SP-OOPSIZE], ecx				; Replace stack top integer
-
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-overflow:
-	rcr		ecx, 1							; Create non-shifted value
-	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-localPrimitiveFailure0:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveAdd
-
-
 ;_declspec(naked) int __fastcall Interpreter::primitiveSubtract()
 ;
 ; N.B. Neither SmallInteger needs to be right shifted
