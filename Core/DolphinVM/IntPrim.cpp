@@ -47,7 +47,24 @@ Oop* __fastcall Interpreter::primitiveGreaterOrEqual(Oop* const sp, unsigned)
 
 Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 {
-	return primitiveIntegerCompare(sp, std::equal_to<SMALLINTEGER>());
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		OTE* oteArg = reinterpret_cast<OTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// LargeIntegers and Integers are never equal
+			*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+
+	Oop receiver = *(sp - 1);
+	// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+	*(sp - 1) = reinterpret_cast<Oop>(receiver == arg ? Pointers.True : Pointers.False);
+	return sp - 1;
 }
 
 Oop* __fastcall Interpreter::primitiveNotEqual(Oop* const sp, unsigned)
