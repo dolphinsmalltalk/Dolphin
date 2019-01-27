@@ -263,7 +263,7 @@ freeDC
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
 
-	^text hash + tilecolor hash + fontName hash!
+	^(text hash bitXor: tilecolor hash) bitXor: fontName hash!
 
 hotspot
 	^Point zero!
