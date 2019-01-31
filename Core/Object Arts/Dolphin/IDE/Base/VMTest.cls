@@ -1097,6 +1097,74 @@ testPrimitiveAllInstances
 	actual := Processor class primAllInstances.
 	self assert: actual equals: {Processor}!
 
+testPrimitiveAllMask
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #allMask: setsFailCode: false.
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts small and large integer arguments, and fails for everything else"
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	{{1. -2. false}.
+		"Anything allMask: 0 is always true"
+		{16r3FFFFFFF. 0. true}.
+		{16r3FFFFFFF. -1. false}.
+		{16r3FFFFFFF. 1. true}.
+		{16r3FFFFFFF. 16r40000000. false}.
+		{16r3FFFFFFF. 16r7FFFFFFF. false}.
+		{0. 16r3FFFFFFF. false}.
+		{1. 16r7FFFFFFF. false}.
+		{1. 16r80000000. false}.
+		{1. 16r7FFFFFFF00000000. false}.
+		{-1. 16r3FFFFFFF. true}.
+		{-1. 16r40000000. true}.
+		{-1. 16r7FFFFFFF. true}.
+		{-1. 16r80000000. true}.
+		{-1. 16r7FFFFFFF00000000. true}.
+		{16r3FFFFFFF. 16r3FFFFFFF. true}.
+		{-16r40000000. 1. false}.
+		{-16r40000000. -1. false}.
+		{1. -16r40000000. false}.
+		{-1. -16r40000000. true}.
+		{-1. 16r40000000. true}.
+		{-2. -16r100000002. true}.
+		{-2. -16r100000001. false}.
+		{-16r40000000. 16r40000000. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
+testPrimitiveAnyMask
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #anyMask: setsFailCode: false.
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts small and large integer arguments, and fails for everything else"
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+
+	{{1. -2. false}.
+		{16r3FFFFFFF. 0. false}.
+		{16r3FFFFFFF. -1. true}.
+		{16r3FFFFFFF. 1. true}.
+		{16r3FFFFFFF. 16r40000000. false}.
+		{16r3FFFFFFF. 16r40000001. true}.
+		{16r3FFFFFFF. 16r7FFFFFFF. true}.
+		{0. 16r3FFFFFFF. false}.
+		{-1. 16r3FFFFFFF. true}.
+		{-1. 0. false}.
+		{16r3FFFFFFF. 16r3FFFFFFF. true}.
+		{-16r40000000. 1. false}.
+		{-16r40000000. -1. true}.
+		{1. 16r40000000. false}.
+		{1. 16r40000001. true}.
+		{1. 16r7FFFFFFE. false}.
+		{1. 16r7FFFFFFF. true}.
+		{-1. -16r40000000. true}.
+		{-1. 16r40000000. true}.
+		{-1. 16r7FFFFFFFF. true}.
+		{-1. 16r100000000. true}.
+		{-1. 16r8000000000000000. true}.
+		{-1. 16r10000000000000000. true}.
+		{-2. -16r100000002. true}.
+		{-2. -16r100000001. true}.
+		{-16r40000000. 16r40000000. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
 testPrimitiveAt
 	self verifyPrimitiveAt: [:a :i | a at: i] performBlock: [:a :i | a perform: #at: with: i]!
 
@@ -1292,7 +1360,8 @@ testPrimitiveEqual
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #= setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	{#(0 1 false).
+	{#(0 0 true).
+		#(0 1 false).
 		#(1 0 false).
 		#(1 1 true).
 		#(-1 0 false).
@@ -1305,7 +1374,19 @@ testPrimitiveEqual
 		{SmallInteger minimum. SmallInteger maximum. false}.
 		{SmallInteger maximum. SmallInteger maximum. true}.
 		{SmallInteger maximum. SmallInteger maximum + 1. false}.
-		{SmallInteger maximum. SmallInteger minimum. false}}
+		{SmallInteger maximum. SmallInteger minimum. false}.
+		{SmallInteger maximum. 16r7FFFFFFF. false}.
+		{1. 16r80000000. false}.
+		{1. 16r100000000. false}.
+		{1. 16r7FFFFFFF00000000. false}.
+		{1. 16r8000000000000000. false}.
+		{1. 16r10000000000000000. false}.
+		{-1. -16r80000000. false}.
+		{-1. -16r80000001. false}.
+		{-1. -16r100000000. false}.
+		{-1. -16r8000000000000000. false}.
+		{-1. -16r8000000000000001. false}.
+		{-1. -16r10000000000000000. false}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveExtraInstanceSpec
@@ -1354,9 +1435,8 @@ testPrimitiveGreaterOrEqual
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #>= setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
-	{#(0 1 false).
+	{#(0 0 true).
+		#(0 1 false).
 		#(1 0 true).
 		#(1 1 true).
 		#(-1 0 false).
@@ -1367,16 +1447,34 @@ testPrimitiveGreaterOrEqual
 		{SmallInteger minimum. SmallInteger minimum. true}.
 		{SmallInteger minimum. SmallInteger maximum. false}.
 		{SmallInteger maximum. SmallInteger maximum. true}.
-		{SmallInteger maximum. SmallInteger minimum. true}}
+		{SmallInteger maximum. SmallInteger maximum - 1. true}.
+		{SmallInteger maximum. SmallInteger minimum. true}.
+		{0. SmallInteger maximum + 1. false}.
+		{SmallInteger maximum. SmallInteger maximum + 1. false}.
+		{SmallInteger minimum. SmallInteger maximum + 1. false}.
+		{0. SmallInteger minimum - 1. true}.
+		{SmallInteger maximum. SmallInteger minimum - 1. true}.
+		{SmallInteger minimum. SmallInteger minimum - 1. true}.
+		{SmallInteger maximum. 16r7FFFFFFF. false}.
+		{SmallInteger maximum. 16r80000000. false}.
+		{SmallInteger maximum. 16r100000000. false}.
+		{SmallInteger maximum. 16r7FFFFFFF00000000. false}.
+		{SmallInteger maximum. 16r8000000000000000. false}.
+		{SmallInteger maximum. 16r10000000000000000. false}.
+		{SmallInteger minimum. -16r80000000. true}.
+		{SmallInteger minimum. -16r80000001. true}.
+		{SmallInteger minimum. -16r100000000. true}.
+		{SmallInteger minimum. -16r8000000000000000. true}.
+		{SmallInteger minimum. -16r8000000000000001. true}.
+		{SmallInteger minimum. -16r10000000000000000. true}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveGreaterThan
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #> setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
-	{#(0 1 false).
+	{#(0 0 false).
+		#(0 1 false).
 		#(1 0 true).
 		#(1 1 false).
 		#(-1 0 false).
@@ -1387,7 +1485,26 @@ testPrimitiveGreaterThan
 		{SmallInteger minimum. SmallInteger minimum. false}.
 		{SmallInteger minimum. SmallInteger maximum. false}.
 		{SmallInteger maximum. SmallInteger maximum. false}.
-		{SmallInteger maximum. SmallInteger minimum. true}}
+		{SmallInteger maximum. SmallInteger maximum - 1. true}.
+		{SmallInteger maximum. SmallInteger minimum. true}.
+		{0. SmallInteger maximum + 1. false}.
+		{SmallInteger maximum. SmallInteger maximum + 1. false}.
+		{SmallInteger minimum. SmallInteger maximum + 1. false}.
+		{0. SmallInteger minimum - 1. true}.
+		{SmallInteger maximum. SmallInteger minimum - 1. true}.
+		{SmallInteger minimum. SmallInteger minimum - 1. true}.
+		{SmallInteger maximum. 16r7FFFFFFF. false}.
+		{SmallInteger maximum. 16r80000000. false}.
+		{SmallInteger maximum. 16r100000000. false}.
+		{SmallInteger maximum. 16r7FFFFFFF00000000. false}.
+		{SmallInteger maximum. 16r8000000000000000. false}.
+		{SmallInteger maximum. 16r10000000000000000. false}.
+		{SmallInteger minimum. -16r80000000. true}.
+		{SmallInteger minimum. -16r80000001. true}.
+		{SmallInteger minimum. -16r100000000. true}.
+		{SmallInteger minimum. -16r8000000000000000. true}.
+		{SmallInteger minimum. -16r8000000000000001. true}.
+		{SmallInteger minimum. -16r10000000000000000. true}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveHashBytes
@@ -1667,13 +1784,12 @@ testPrimitiveIsNullBytes
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
 
-testPrimitiveLessOrEqualThan
+testPrimitiveLessOrEqual
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #<= setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
-	{#(0 1 true).
+	{#(0 0 true).
+		#(0 1 true).
 		#(1 0 false).
 		#(1 1 true).
 		#(-1 0 true).
@@ -1684,16 +1800,34 @@ testPrimitiveLessOrEqualThan
 		{SmallInteger minimum. SmallInteger minimum. true}.
 		{SmallInteger minimum. SmallInteger maximum. true}.
 		{SmallInteger maximum. SmallInteger maximum. true}.
-		{SmallInteger maximum. SmallInteger minimum. false}}
+		{SmallInteger maximum. SmallInteger maximum - 1. false}.
+		{SmallInteger maximum. SmallInteger minimum. false}.
+		{0. SmallInteger maximum + 1. true}.
+		{SmallInteger maximum. SmallInteger maximum + 1. true}.
+		{SmallInteger minimum. SmallInteger maximum + 1. true}.
+		{0. SmallInteger minimum - 1. false}.
+		{SmallInteger maximum. SmallInteger minimum - 1. false}.
+		{SmallInteger minimum. SmallInteger minimum - 1. false}.
+		{SmallInteger maximum. 16r7FFFFFFF. true}.
+		{SmallInteger maximum. 16r80000000. true}.
+		{SmallInteger maximum. 16r100000000. true}.
+		{SmallInteger maximum. 16r7FFFFFFF00000000. true}.
+		{SmallInteger maximum. 16r8000000000000000. true}.
+		{SmallInteger maximum. 16r10000000000000000. true}.
+		{SmallInteger minimum. -16r80000000. false}.
+		{SmallInteger minimum. -16r80000001. false}.
+		{SmallInteger minimum. -16r100000000. false}.
+		{SmallInteger minimum. -16r8000000000000000. false}.
+		{SmallInteger minimum. -16r8000000000000001. false}.
+		{SmallInteger minimum. -16r10000000000000000. false}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveLessThan
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #< setsFailCode: false.
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
-	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
-	{#(0 1 true).
+	{#(0 0 false).
+		#(0 1 true).
 		#(1 0 false).
 		#(1 1 false).
 		#(-1 0 true).
@@ -1704,7 +1838,26 @@ testPrimitiveLessThan
 		{SmallInteger minimum. SmallInteger minimum. false}.
 		{SmallInteger minimum. SmallInteger maximum. true}.
 		{SmallInteger maximum. SmallInteger maximum. false}.
-		{SmallInteger maximum. SmallInteger minimum. false}}
+		{SmallInteger maximum. SmallInteger maximum - 1. false}.
+		{SmallInteger maximum. SmallInteger minimum. false}.
+		{0. SmallInteger maximum + 1. true}.
+		{SmallInteger maximum. SmallInteger maximum + 1. true}.
+		{SmallInteger minimum. SmallInteger maximum + 1. true}.
+		{0. SmallInteger minimum - 1. false}.
+		{SmallInteger maximum. SmallInteger minimum - 1. false}.
+		{SmallInteger minimum. SmallInteger minimum - 1. false}.
+		{SmallInteger maximum. 16r7FFFFFFF. true}.
+		{SmallInteger maximum. 16r80000000. true}.
+		{SmallInteger maximum. 16r100000000. true}.
+		{SmallInteger maximum. 16r7FFFFFFF00000000. true}.
+		{SmallInteger maximum. 16r8000000000000000. true}.
+		{SmallInteger maximum. 16r10000000000000000. true}.
+		{SmallInteger minimum. -16r80000000. false}.
+		{SmallInteger minimum. -16r80000001. false}.
+		{SmallInteger minimum. -16r100000000. false}.
+		{SmallInteger minimum. -16r8000000000000000. false}.
+		{SmallInteger minimum. -16r8000000000000001. false}.
+		{SmallInteger minimum. -16r10000000000000000. false}}
 			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveLookupMethod
@@ -2682,6 +2835,8 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveAllMask!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveAnyMask!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
@@ -2704,7 +2859,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLessOrEqualThan!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLessOrEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
