@@ -507,7 +507,6 @@ private:
 
 	// SmallInteger relational ops
 	static Oop* __fastcall primitiveEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveNotEqual(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLessThan(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLessOrEqual(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveGreaterThan(Oop* const sp, unsigned argCount);

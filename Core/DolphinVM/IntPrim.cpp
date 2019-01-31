@@ -9,7 +9,7 @@
 #include "Interprt.h"
 #include "InterprtPrim.inl"
 
-template <class P> __forceinline static Oop* primitiveIntegerCompare(Oop* const sp, const P &pred)
+Oop* __fastcall Interpreter::primitiveLessThan(Oop* const sp, unsigned)
 {
 	// Normally it is better to jump on the failure case as the static prediction is that forward
 	// jumps are not taken, but these primitives are normally only invoked when the special bytecode 
@@ -17,32 +17,107 @@ template <class P> __forceinline static Oop* primitiveIntegerCompare(Oop* const 
 	// SmallInteger, so the 99% case is that the primitive should fail
 	Oop arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))
-		return nullptr;
-
-	Oop receiver = *(sp - 1);
-	// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
-	*(sp - 1) = reinterpret_cast<Oop>(pred(receiver, arg) ? Pointers.True : Pointers.False);
-	return sp - 1;
-}
-
-Oop* __fastcall Interpreter::primitiveLessThan(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCompare(sp, std::less<SMALLINTEGER>());
-}
-
-Oop* __fastcall Interpreter::primitiveGreaterThan(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCompare(sp, std::greater<SMALLINTEGER>());
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// Whether a SmallIntegers is greater than a LargeInteger depends on the sign of the LI
+			// - All normalized negative LIs are less than all SmallIntegers
+			// - All normalized positive LIs are greater than all SmallIntegers
+			// So if sign bit of LI is not set, receiver is < arg
+			*(sp - 1) = reinterpret_cast<Oop>(!oteArg->m_location->signBit(oteArg) ? Pointers.True : Pointers.False);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		Oop receiver = *(sp - 1);
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>(static_cast<SMALLINTEGER>(receiver) < static_cast<SMALLINTEGER>(arg) ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveLessOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveIntegerCompare(sp, std::less_equal<SMALLINTEGER>());
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// Whether a SmallIntegers is greater than a LargeInteger depends on the sign of the LI
+			// - All normalized negative LIs are less than all SmallIntegers
+			// - All normalized positive LIs are greater than all SmallIntegers
+			// So if sign bit of LI is not set, receiver is <= arg
+			*(sp - 1) = reinterpret_cast<Oop>(!oteArg->m_location->signBit(oteArg) ? Pointers.True : Pointers.False);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		Oop receiver = *(sp - 1);
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>(static_cast<SMALLINTEGER>(receiver) <= static_cast<SMALLINTEGER>(arg) ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
 }
 
+Oop* __fastcall Interpreter::primitiveGreaterThan(Oop* const sp, unsigned)
+{
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// Whether a SmallIntegers is greater than a LargeInteger depends on the sign of the LI
+			// - All normalized negative LIs are less than all SmallIntegers
+			// - All normalized positive LIs are greater than all SmallIntegers
+			// So if sign bit of LI is set, receiver is > arg
+			*(sp - 1) = reinterpret_cast<Oop>(oteArg->m_location->signBit(oteArg) ? Pointers.True : Pointers.False);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		Oop receiver = *(sp - 1);
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>(static_cast<SMALLINTEGER>(receiver) > static_cast<SMALLINTEGER>(arg) ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
+}
 Oop* __fastcall Interpreter::primitiveGreaterOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveIntegerCompare(sp, std::greater_equal<SMALLINTEGER>());
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// Whether a SmallIntegers is greater than a LargeInteger depends on the sign of the LI
+			// - All normalized negative LIs are less than all SmallIntegers
+			// - All normalized positive LIs are greater than all SmallIntegers
+			// So if sign bit of LI is set, receiver is >= arg
+			*(sp - 1) = reinterpret_cast<Oop>(oteArg->m_location->signBit(oteArg) ? Pointers.True : Pointers.False);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		Oop receiver = *(sp - 1);
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>(static_cast<SMALLINTEGER>(receiver) >= static_cast<SMALLINTEGER>(arg) ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
@@ -60,16 +135,13 @@ Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 		else
 			return nullptr;
 	}
-
-	Oop receiver = *(sp - 1);
-	// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
-	*(sp - 1) = reinterpret_cast<Oop>(receiver == arg ? Pointers.True : Pointers.False);
-	return sp - 1;
-}
-
-Oop* __fastcall Interpreter::primitiveNotEqual(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCompare(sp, std::not_equal_to<SMALLINTEGER>());
+	else
+	{
+		Oop receiver = *(sp - 1);
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>(receiver == arg ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////;
@@ -109,24 +181,77 @@ Oop* __fastcall Interpreter::primitiveBitXor(Oop* const sp, unsigned)
 
 Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, unsigned)
 {
-	struct any_mask {
-		bool operator() (const Oop& receiver, const Oop& arg) const {
-			return (receiver & arg) != 1;
-		}
-	};
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (ObjectMemoryIsIntegerObject(arg))
+	{
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>((receiver & arg) != ZeroPointer ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
+	else
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// If receiver -ve allMask could be true, depending on comparison with bottom limb
+			// If receiver +ve, can never be true
+			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			uint32_t* digits = oteArg->m_location->m_digits;
+			if ((r & digits[0]) != 0)
+			{
+				// One or more bits are set in the first limb of the LI and in the SmallInteger
+				*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+				return sp - 1;
+			}
+			else
+			{
+				if (r < 0)
+				{
+					for (MWORD i = oteArg->getWordSize()-1; i > 0; i--)
+					{
+						if (digits[i] != 0)
+						{
+							*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+							return sp - 1;
+						}
+					}
+				}
 
-	return primitiveIntegerCompare(sp, any_mask());
+				*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+				return sp - 1;
+			}
+		}
+		else
+			return nullptr;
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, unsigned)
 {
-	struct all_mask {
-		bool operator() (const Oop& receiver, const Oop& arg) const {
-			return (receiver & arg) == arg;
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (ObjectMemoryIsIntegerObject(arg))
+	{
+		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
+		*(sp - 1) = reinterpret_cast<Oop>((receiver & arg) == arg ? Pointers.True : Pointers.False);
+		return sp - 1;
+	}
+	else
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// If receiver -ve allMask could be true, depending on comparison with bottom limb
+			// If receiver +ve, can never be true
+			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			uint32_t argLow = oteArg->m_location->m_digits[0];
+			*(sp - 1) = reinterpret_cast<Oop>(r < 0 && ((static_cast<uint32_t>(r) & argLow) == argLow) ? Pointers.True : Pointers.False);
+			return sp - 1;
 		}
-	};
-
-	return primitiveIntegerCompare(sp, all_mask());
+		else
+			return nullptr;
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
