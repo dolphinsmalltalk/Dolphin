@@ -239,3 +239,39 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
 		}
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			Oop oopResult = LargeInteger::Mul(oteArg, ObjectMemoryIntegerValueOf(receiver));
+			// Normalize and return
+			*(sp - 1) = normalizeIntermediateResult(oopResult);
+			ObjectMemory::AddToZct(oopResult);
+
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
+		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>*
+		// Usually SmallInteger multiplication is performed inline in the bytecode interpreter
+
+		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		int64_t result = __emul(r, a);
+
+		Oop oopResult = Integer::NewSigned64(result);
+		*(sp - 1) = oopResult;
+		ObjectMemory::AddToZct(oopResult);
+		return sp - 1;
+	}
+}
