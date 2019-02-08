@@ -62,6 +62,8 @@ namespace ST
 
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER operand);
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
+		static Oop Mul(const LargeIntegerOTE* oteOp1, SMALLINTEGER operand);
+		static Oop Mul(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
 	};
 
 

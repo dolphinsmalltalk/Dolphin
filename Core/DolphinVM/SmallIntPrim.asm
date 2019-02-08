@@ -78,32 +78,6 @@ localPrimitiveFailure0:
 ENDPRIMITIVE primitiveSubtract
 
 
-;  int __fastcall Interpreter::primitiveMultiply()
-;
-; N.B. Only the argument need be right shifted
-;
-BEGINPRIMITIVE primitiveMultiply
-	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-	mov		edx, [_SP]						; Load argument from stack
-	sar		edx, 1							; Extract integer value of arg
-	jnc		localPrimitiveFailure0			; Arg not a SmallInteger
-	xor		eax, 1							; Clear SmallInteger flag of receiver
-	imul	edx
-	jo		localPrimitiveFailure1			; If overflowed SmallInteger bits then primitive failure
-
-	or		eax, 1							; Replace SmallInteger flag bit
-	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-localPrimitiveFailure0:
-localPrimitiveFailure1:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveMultiply
-
-
 ;  int __fastcall Interpreter::primitiveDivide()
 ;
 ; Divide fails if the receiver or arg non-SmallInteger, if arg is 0,

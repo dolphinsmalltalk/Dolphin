@@ -228,8 +228,7 @@ Oop __stdcall Integer::NewSigned64(int64_t value)
 		// Full 64-bits needed
 		LargeIntegerOTE* oteLarge = LargeInteger::NewWithLimbs(2);
 		LargeInteger* large = oteLarge->m_location;
-		large->m_digits[0] = lowPart;
-		large->m_digits[1] = highPart;
+		*reinterpret_cast<int64_t*>(large->m_digits) = value;
 		oteLarge->beImmutable();
 
 		oopAnswer = reinterpret_cast<Oop>(oteLarge);
@@ -237,6 +236,7 @@ Oop __stdcall Integer::NewSigned64(int64_t value)
 
 	return oopAnswer;
 }
+
 
 inline void deallocateIntermediateResult(Oop oopResult)
 {
@@ -764,7 +764,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerSub(Oop* const sp, unsigned)
 //
 // Multiply a LargeInteger by a SmallInteger. Optimized for this most common case
 
-Oop liMulSingle(const LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit)
+Oop LargeInteger::Mul(const LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit)
 {
 	ASSERT(outerDigit != 0);
 
@@ -855,7 +855,7 @@ static Oop liMul(const LargeInteger* liOuter, const MWORD outerSize, const Large
 	return Oop(productPointer);
 }
 
-Oop liMul(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner) 
+Oop LargeInteger::Mul(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner) 
 {
 	const LargeInteger* liOuter = oteOuter->m_location;
 	MWORD outerSize = oteOuter->getWordSize();
@@ -874,7 +874,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerMul(Oop* const sp, unsigned)
 	{
 		Oop operator()(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner) const
 		{
-			return liMul(oteOuter, oteInner);
+			return LargeInteger::Mul(oteOuter, oteInner);
 		}
 	};
 
@@ -882,7 +882,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerMul(Oop* const sp, unsigned)
 	{
 		Oop operator()(const LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit) const
 		{
-			return liMulSingle(oteInner, outerDigit);
+			return LargeInteger::Mul(oteInner, outerDigit);
 		}
 	};
 
