@@ -434,11 +434,11 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 
 static LargeIntegerOTE* __stdcall liNegatePriv(const LargeIntegerOTE* oteLI)
 {
-	LargeInteger* li = oteLI->m_location;
+	uint32_t* digits = oteLI->m_location->m_digits;
 
 	const MWORD size = oteLI->getWordSize();
 
-	int32_t highDigit = static_cast<int32_t>(li->m_digits[size-1]);
+	int32_t highDigit = static_cast<int32_t>(digits[size-1]);
 	MWORD negatedSize = size;
 
 	// Handle boundary conditions to avoid the need to allocate extra digits and/or
@@ -449,27 +449,15 @@ static LargeIntegerOTE* __stdcall liNegatePriv(const LargeIntegerOTE* oteLI)
 		// Will (probably) need extra zero digit to represent as positive value
 		negatedSize++;
 	}
-/*	
-	This doesn't work for, e.g., 16r8000000000000001.
 
-	else if (size > 1 && highDigit == 0)
-	{
-		if (li->m_digits[size-2] == 0x80000000)
-			// Can remove extra zero digit for this when converted to large negative
-			negatedSize = --size;
-	}
-*/
 	LargeIntegerOTE* oteNegated = LargeInteger::NewWithLimbs(negatedSize);
-	LargeInteger* liNegated = oteNegated->m_location;
-	// TODO: Since we are only adding one, only one bit of carry is possible - would be much faster in assembler as simple 32-bit add with carry loop
-	int32_t carry = 1;
+	uint32_t* negated = oteNegated->m_location->m_digits;
+	uint8_t carry = 1;
 	
 	for (MWORD i=0;i<size;i++)
 	{
-		// Must cast at least one operand to 64-bits so that 64-bit (signed) addition performed
-		int64_t accum = static_cast<int64_t>(~li->m_digits[i]) + carry;
-		liNegated->m_digits[i] = LowLimb(accum);
-		carry = HighSLimb(accum);
+		// There is (theoretically) a minor pipelining advantage in use of ADD vs ADC, so pass the carry as the 2nd operand
+		carry = _addcarry_u32(0, ~digits[i], carry, negated + i);
 	}
 
 	return oteNegated;
