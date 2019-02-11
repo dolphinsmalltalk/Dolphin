@@ -127,6 +127,15 @@ testLargeSmallComparisons
 testLcm
 	self assert: (6 lcm: 10) identicalTo: 30!
 
+testLowBit
+	0 to: 30 do: [:each | 
+		| i |
+		i := 1 << each.
+		self assert: i lowBit equals: each+1.
+		self assert: i negated lowBit equals: each + 1].
+	#(#(0 0) #(3 1) #(16r30000000 29) #(-3 1) #(-16r40000000 31))
+		do: [:each | self assert: each first lowBit equals: each second]!
+
 testMaxVal
 	self should: [SmallInteger maximum = ((1 bitShift: VMConstants.IntPtrBits - 2) - 1)]!
 
@@ -302,6 +311,7 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testLargeSmallComparisons!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testLcm!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testLowBit!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testMaxVal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testMinMax!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testMinVal!public!unit tests! !

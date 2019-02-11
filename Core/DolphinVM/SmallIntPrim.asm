@@ -438,39 +438,4 @@ LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveSmallIntegerAt
 
-
-; Only reason for having a primitive to do this is that there is a single assembler
-; instruction to do the job, and its a short easy routine to write.
-BEGINPRIMITIVE primitiveHighBit
-	mov		ecx, [_SP]
-	test	ecx, ecx
-	js		localPrimitiveFailure0				; If negative then fail it
-	bsr		eax, ecx						; Actually quite handy that shifted left one, as we'll get 1-based index!
-	lea		eax, [eax+eax+1]
-
-	mov		[_SP], eax
-	
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-
-localPrimitiveFailure0:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveHighBit
-
-; Ditto
-BEGINPRIMITIVE primitiveLowBit
-	mov		ecx, [_SP]
-	xor		eax, eax						; Must clear in case value is zero
-	xor		ecx, 1							; Remove flag bit (as otherwise would always find that)
-	bsf		eax, ecx						; Actually quite handy that shifted left one, as we'll get 1-based index!
-	lea		eax, [eax+eax+1]
-	mov		[_SP], eax
-
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-
-ENDPRIMITIVE primitiveLowBit
-
 END

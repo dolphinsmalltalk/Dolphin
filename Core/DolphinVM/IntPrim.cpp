@@ -275,3 +275,26 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
 		return sp - 1;
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, unsigned)
+{
+	SMALLINTEGER value = *(sp) ^ 1;
+	unsigned long index;
+	_BitScanForward(&index, value);
+	*sp = ObjectMemoryIntegerObjectOf(index);
+	return sp;
+}
+
+Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
+{
+	SMALLINTEGER value = *(sp);
+	if (value >= 0)
+	{
+		unsigned long index;
+		_BitScanReverse(&index, value);
+		*sp = ObjectMemoryIntegerObjectOf(index);
+		return sp;
+	}
+	else
+		return nullptr;
+}
