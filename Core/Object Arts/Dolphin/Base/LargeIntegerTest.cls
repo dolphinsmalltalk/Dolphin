@@ -1028,6 +1028,11 @@ testLessThan
 			self deny: pair last < pair first].
 	self should: [SmallInteger maximum + 1 < nil] raise: MessageNotUnderstood!
 
+testLowBit
+	#(#(16r40000000 31) #(16r80000000 32) #(16r70000000 29) #(16r10000000000000000 65))
+		do: [:each | self assert: each first lowBit equals: each second.
+	self assert: each first negated lowBit equals: each second]!
+
 testMod
 	| b mod expected result |
 	b := 16r10000000000000000.
@@ -1388,6 +1393,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testImmutable!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testLessThan!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testLowBit!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMod!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
