@@ -194,88 +194,6 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, unsigned)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
-{
-	Oop receiver = *(sp - 1);
-	Oop arg = *sp;
-	if (!ObjectMemoryIsIntegerObject(arg))
-	{
-		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
-		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
-		{
-			LargeIntegerOTE* oteResult = LargeInteger::Add(oteArg, ObjectMemoryIntegerValueOf(receiver));
-			// Normalize and return
-			Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
-			*(sp - 1) = oopResult;
-			ObjectMemory::AddToZct(oopResult);
-
-			return sp - 1;
-		}
-		else
-			return nullptr;
-	}
-	else
-	{
-		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
-		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>+
-		// Usually SmallInteger addition is performed inline in the bytecode interpreter
-
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
-		SMALLINTEGER result = r + a;
-
-		if (ObjectMemoryIsIntegerValue(result))
-		{
-			*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
-			return sp - 1;
-		}
-		else
-		{
-			// Overflowed
-			LargeIntegerOTE* oteResult = LargeInteger::liNewSigned(result);
-			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
-			return sp - 1;
-		}
-	}
-}
-
-Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
-{
-	Oop receiver = *(sp - 1);
-	Oop arg = *sp;
-	if (!ObjectMemoryIsIntegerObject(arg))
-	{
-		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
-		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
-		{
-			Oop oopResult = LargeInteger::Mul(oteArg, ObjectMemoryIntegerValueOf(receiver));
-			// Normalize and return
-			*(sp - 1) = normalizeIntermediateResult(oopResult);
-			ObjectMemory::AddToZct(oopResult);
-
-			return sp - 1;
-		}
-		else
-			return nullptr;
-	}
-	else
-	{
-		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
-		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>*
-		// Usually SmallInteger multiplication is performed inline in the bytecode interpreter
-
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
-		int64_t result = __emul(r, a);
-
-		Oop oopResult = Integer::NewSigned64(result);
-		*(sp - 1) = oopResult;
-		ObjectMemory::AddToZct(oopResult);
-		return sp - 1;
-	}
-}
-
 Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, unsigned)
 {
 	SMALLINTEGER value = *(sp) ^ 1;
@@ -328,4 +246,214 @@ Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
 			// Negative, undefined
 			return nullptr;
 	}
+}
+
+Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			LargeIntegerOTE* oteResult = LargeInteger::Add(oteArg, ObjectMemoryIntegerValueOf(receiver));
+			// Normalize and return
+			Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
+			*(sp - 1) = oopResult;
+			ObjectMemory::AddToZct(oopResult);
+
+			return sp - 1;
+		}
+		else if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			double floatA = reinterpret_cast<FloatOTE*>(oteArg)->m_location->m_fValue;
+			double floatR = ObjectMemoryIntegerValueOf(receiver);
+			FloatOTE* oteResult = Float::New(floatR + floatA);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
+		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>+
+		// Usually SmallInteger addition is performed inline in the bytecode interpreter
+
+		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SMALLINTEGER result = r + a;
+
+		if (ObjectMemoryIsIntegerValue(result))
+		{
+			*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
+			return sp - 1;
+		}
+		else
+		{
+			// Overflowed
+			LargeIntegerOTE* oteResult = LargeInteger::liNewSigned(result);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		OTE* oteArg = reinterpret_cast<OTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			Oop oopNegatedArg = LargeInteger::Negate(reinterpret_cast<LargeIntegerOTE*>(oteArg));
+			if (ObjectMemoryIsIntegerObject(oopNegatedArg))
+			{
+				SMALLINTEGER a = ObjectMemoryIntegerValueOf(oopNegatedArg);
+				SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+				SMALLINTEGER result = a + r;
+
+				if (ObjectMemoryIsIntegerValue(result))
+				{
+					*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
+					return sp - 1;
+				}
+				else
+				{
+					// Overflowed
+					LargeIntegerOTE* oteResult = LargeInteger::liNewSigned(result);
+					*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+					return sp - 1;
+				}
+			}
+			else
+			{
+				LargeIntegerOTE* oteNegatedArg = reinterpret_cast<LargeIntegerOTE*>(oopNegatedArg);
+				LargeIntegerOTE* oteResult = LargeInteger::Add(oteNegatedArg, ObjectMemoryIntegerValueOf(receiver));
+				LargeInteger::DeallocateIntermediateResult(oteNegatedArg);
+				// Normalize and return
+				Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
+				*(sp - 1) = oopResult;
+				ObjectMemory::AddToZct(oopResult);
+				return sp - 1;
+			}
+		}
+		else if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			double floatA = reinterpret_cast<FloatOTE*>(oteArg)->m_location->m_fValue;
+			double floatR = ObjectMemoryIntegerValueOf(receiver);
+			FloatOTE* oteResult = Float::New(floatR - floatA);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
+		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>+
+		// Usually SmallInteger addition is performed inline in the bytecode interpreter
+
+		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SMALLINTEGER result = r - a;
+
+		if (ObjectMemoryIsIntegerValue(result))
+		{
+			*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
+			return sp - 1;
+		}
+		else
+		{
+			// Overflowed
+			LargeIntegerOTE* oteResult = LargeInteger::liNewSigned(result);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			if (r != 0)
+			{
+				Oop oopResult = LargeInteger::Mul(oteArg, r);
+				// Normalize and return
+				*(sp - 1) = normalizeIntermediateResult(oopResult);
+				ObjectMemory::AddToZct(oopResult);
+				return sp - 1;
+			}
+			else
+			{
+				*(sp - 1) = ZeroPointer;
+				return sp - 1;
+			}
+		}
+		else if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			double floatA = reinterpret_cast<FloatOTE*>(oteArg)->m_location->m_fValue;
+			double floatR = ObjectMemoryIntegerValueOf(receiver);
+			FloatOTE* oteResult = Float::New(floatR * floatA);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
+		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>*
+		// Usually SmallInteger multiplication is performed inline in the bytecode interpreter
+
+		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		int64_t result = __emul(r, a);
+
+		Oop oopResult = Integer::NewSigned64(result);
+		*(sp - 1) = oopResult;
+		ObjectMemory::AddToZct(oopResult);
+		return sp - 1;
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
+{
+	Oop integerPointer = *sp;
+
+#ifdef _WIN64
+	char buffer[32];
+	errno_t err = _i64toa_s(ObjectMemoryIntegerValueOf(integerPointer), buffer, sizeof(buffer), 10);
+#else
+	char buffer[16];
+	errno_t err = _itoa_s(ObjectMemoryIntegerValueOf(integerPointer), buffer, sizeof(buffer), 10);
+#endif
+	if (err == 0)
+	{
+		auto oteResult = AnsiString::New(buffer);
+		*sp = reinterpret_cast<Oop>(oteResult);
+		ObjectMemory::AddToZct((OTE*)oteResult);
+		return sp;
+	}
+	else
+		return primitiveFailure(0);
 }

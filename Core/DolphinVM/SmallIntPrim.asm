@@ -44,39 +44,6 @@ extern LINEWARRAY2:near32
 ;;	For this reason, all these primitives test first that the receiver
 ;;	is a SmallInteger, and subsequently that the argument is a SmallInteger.
 
-;_declspec(naked) int __fastcall Interpreter::primitiveSubtract()
-;
-; N.B. Neither SmallInteger needs to be right shifted
-;
-BEGINPRIMITIVE primitiveSubtract
-	mov		ecx, [_SP-OOPSIZE]				; Load receiver
-	mov		eax, [_SP]						; Load argument
-	test	al, 1							; Argument is SmallInteger
-	jz		localPrimitiveFailure0
-
-	xor		eax, 1							; Clear args SmallInteger bit
-	sub		ecx, eax						; Perform the actual subtraction
-	jo		underflow						; If underflowed SmallInteger bits then create a large integer
-
-	mov		[_SP-OOPSIZE], ecx				; Replace stack top integer
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret										; Succeed (non-zero eax)
-
-underflow:
-	cmc
-	rcr		ecx, 1							; Revert to non-shifted value
-	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-localPrimitiveFailure0:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveSubtract
-
 
 ;  int __fastcall Interpreter::primitiveDivide()
 ;
