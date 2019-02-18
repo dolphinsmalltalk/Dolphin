@@ -547,6 +547,16 @@ ASSERT MACRO condition
 	ENDIF
 ENDM
 
+IACA_START MACRO
+	mov ebx, 111
+	db 64h, 67h, 90h
+ENDM
+
+IACA_END MACRO
+	mov ebx, 222
+	db 64h, 67h, 90h
+ENDM
+
 ;; Increase the reference count of a known non-SmallInteger
 CountUpObjectIn MACRO oopRegLetter	;;, countRegLetter
 	LOCAL	fini

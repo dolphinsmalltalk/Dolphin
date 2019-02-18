@@ -38,33 +38,7 @@ Oop* __fastcall Interpreter::unusedPrimitive(Oop* const, unsigned)
 	TRACESTREAM << L"Unused primitive " << primitiveIndex << " in " << m_registers.m_oopNewMethod << std::endl;
 #endif
 
-	return 0;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-//	SmallInteger Primitives - See IntPrim.cpp (OR primasm.asm for IX86)
-///////////////////////////////////////////////////////////////////////////////
-
-Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
-{
-	Oop integerPointer = *sp;
-
-#ifdef _WIN64
-	char buffer[32];
-	errno_t err = _i64toa_s(ObjectMemoryIntegerValueOf(integerPointer), buffer, sizeof(buffer), 10);
-#else
-	char buffer[16];
-	errno_t err = _itoa_s(ObjectMemoryIntegerValueOf(integerPointer), buffer, sizeof(buffer), 10);
-#endif
-	if (err == 0)
-	{
-		auto oteResult = AnsiString::New(buffer);
-		*sp = reinterpret_cast<Oop>(oteResult);
-		ObjectMemory::AddToZct((OTE*)oteResult);
-		return sp;
-	}
-	else
-		return primitiveFailure(0);
+	return nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1069,27 +1069,16 @@ testPrimitiveAdd
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #+ setsFailCode: false.
 	"The primitive assumes that the receiver is a SmallInteger; it does not check.
-	It accepts small and large integer arguments, and fails for everything else"
+	It accepts small integer, large integer and Float arguments, and fails for everything else"
 	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
-	{
-		{16r3FFFFFFF. 0. 16r3FFFFFFF}.
-		{16r3FFFFFFF. -1. 16r3FFFFFFE}.
-		{16r3FFFFFFF. 1. 16r40000000}.
-		{16r3FFFFFFF. 16r40000000. 16r7FFFFFFF}.
-		{16r3FFFFFFF. 16r7FFFFFFF. 16rBFFFFFFE}.
-		{0. 16r3FFFFFFF. 16r3FFFFFFF}.
-		{-1. 16r3FFFFFFF. 16r3FFFFFFE}.
-		{1. 16r3FFFFFFF. 16r40000000}.
-		{1. 16r7FFFFFFF. 16r80000000}.
-		{16r3FFFFFFF. 16r3FFFFFFF. 16r7FFFFFFE}.
-		{-16r40000000. 1.  -16r3FFFFFFF}.
-		{1. -16r40000000. -16r3FFFFFFF}.
-		{-16r40000000. -1.  -16r40000001}.
-		{-1. -16r40000000. -16r40000001}.
-		{-16r40000000. -16r40000000. -16r80000000}.
-		{-1. 16r40000000. 16r3FFFFFFF}.
-}
-			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+	self assert: (method value: 1 withArguments: {1 / 2}) equals: 'failed'.
+	self verifyBinaryPrimitive: method
+		forCases: #(#(16r3FFFFFFF 0 16r3FFFFFFF) #(16r3FFFFFFF -1 16r3FFFFFFE) #(16r3FFFFFFF 1 16r40000000) #(16r3FFFFFFF 16r40000000 16r7FFFFFFF) #(16r3FFFFFFF 16r7FFFFFFF 16rBFFFFFFE) #(0 16r3FFFFFFF 16r3FFFFFFF) #(-1 16r3FFFFFFF 16r3FFFFFFE) #(1 16r3FFFFFFF 16r40000000) #(1 16r7FFFFFFF 16r80000000) #(16r3FFFFFFF 16r3FFFFFFF 16r7FFFFFFE) #(-16r40000000 1 -16r3FFFFFFF) #(1 -16r40000000 -16r3FFFFFFF) #(-16r40000000 -1 -16r40000001) #(-1 -16r40000000 -16r40000001) #(-16r40000000 -16r40000000 -16r80000000) #(-1 16r40000000 16r3FFFFFFF) #(0 0.0 0.0) #(0 1.0675 1.0675) #(-1 1.0 0.0) #(16r3FFFFFFF 1.125 1073741824.125) #(-16r40000000 -1073741824.675 -2147483648.675))
+				, {{-16r40000000. Float fmax. Float fmax}.
+						{-16r40000000. Float fmax negated. Float fmax negated}.
+						{16r3FFFFFFF. Float fmax. Float fmax}.
+						{0. Float fmin. Float fmin}.
+						{0. Float fmin negated. Float fmin negated}}!
 
 testPrimitiveAllInstances
 	| actual |
@@ -1925,6 +1914,23 @@ testPrimitiveMakePoint
 			result := method value: Context withArguments: (1 to: i) asArray.
 			1 to: expected size do: [:j | self assert: (result instVarAt: j) equals: (expected at: j)]]!
 
+testPrimitiveMultiply
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #* setsFailCode: false.
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts small integer, large integer and Float arguments, and fails for everything else"
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {1 / 2}) equals: 'failed'.
+	self verifyBinaryPrimitive: method
+		forCases: #(#(16r3FFFFFFF 0 0) #(16r3FFFFFFF -1 -16r3FFFFFFF) #(16r3FFFFFFF 1 16r3FFFFFFF) #(-16r40000000 -1 16r40000000) #(16r3FFFFFFF 16r3FFFFFFF 16rFFFFFFF80000001) #(16r3FFFFFFF 16r40000000 16rFFFFFFFC0000000) #(
+16r3FFFFFFF 16r7FFFFFFF 16r1FFFFFFF40000001) #(0 16r3FFFFFFF 0) #(-1 16r3FFFFFFF -16r3FFFFFFF) #(-1 16r40000000 -16r40000000) #(1 16r3FFFFFFF 16r3FFFFFFF) #(1 16r7FFFFFFF 16r7FFFFFFF) #(16r3FFFFFFF 16r7FFFFFFF 16r1FFFFFFF40000001) #(
+16r3FFFFFFF 16r7FFFFFFFFFFFFFFF 16r1FFFFFFF7FFFFFFFC0000001 ) #(-16r40000000 1 -16r40000000) #(-16r40000000 -16r40000000 16r1000000000000000) #(0 0.0 0.0) #(0 1.0675 0.0) #(-1 1.0 -1.0) #(16r3FFFFFFF 1.125 1207959550.875) #(-16r40000000 -2.0 2147483648.0))
+				, {{-16r40000000. Float fmax. Float negativeInfinity }.
+						{-16r40000000. Float fmax negated. Float infinity}.
+						{16r3FFFFFFF. Float fmax. Float infinity}.
+						{1. Float fmin. Float fmin}.
+						{-1. Float fmin. Float fmin negated}}!
+
 testPrimitiveNewColonFailure
 	| method |
 	method := self createPrimitiveMethodLike: Behavior >> #new: setsFailCode: true.
@@ -2410,18 +2416,15 @@ testPrimitiveSubtract
 
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #- setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	"The primitive works for SmallIntegers, LargeIntegers, and Floats, but not Fractions"
+	self assert: (method value: 1 withArguments: {1 / 2}) equals: 'failed'.
 	"Note that we don't test that the primitive fails for a non-SmallInteger receiver - in general primitives assume they are only used in methods of suitable receiver classes."
-	#(#(3 2 1) #(-1 -1 0) #(-1 16r3FFFFFFF -16r40000000) #(-2 16r3FFFFFFF -16r40000001) #(-16r40000000 1 -16r40000001) #(-16r40000000 -16r40000000 0) #(-16r40000000 16r3FFFFFFF -16r7FFFFFFF) #(16r3FFFFFFF -16r40000000 16r7FFFFFFF) #(1 'a' 'failed') #(1 16r40000000 'failed'))
-		do: 
-			[:each |
-			| subject result operand expected |
-			subject := each first.
-			self assert: subject class identicalTo: SmallInteger.
-			operand := each second.
-			expected := each third.
-			result := method value: subject withArguments: {operand}.
-			self assert: result class identicalTo: expected class.
-			self assert: result equals: expected]!
+	self verifyBinaryPrimitive: method
+		forCases: #(#(3 2 1) #(-1 -1 0) #(-1 16r3FFFFFFF -16r40000000) #(-2 16r3FFFFFFF -16r40000001) #(-16r40000000 1 -16r40000001) #(-16r40000000 -16r40000000 0) #(-16r40000000 16r3FFFFFFF -16r7FFFFFFF) #(16r3FFFFFFF -16r40000000 16r7FFFFFFF) #(1 'a' 'failed') #(1 16r40000000 -16r3FFFFFFF) #(0 16r40000000 -16r40000000) #(16r3FFFFFFF 1073741823.0 0.0) #(-16r40000000 1073741823.0 -2147483647.0))
+				, {{-16r40000000. Float fmax. Float fmax negated}.
+						{16r3FFFFFFF. Float fmax negated. Float fmax}.
+						{0. Float fmin. Float fmin negated}}!
 
 testPrimitiveYourAddress
 	| method |
@@ -2633,6 +2636,19 @@ testWeakMournerNotifications
 	self assert: (losses at: id1) equals: 2.
 	"Garbage but finalizable weak array should have been notified of loss of obj2"
 	self assert: (losses at: id2) equals: 3!
+
+verifyBinaryPrimitive: method forCases: aCollectionOfTriples
+	| result |
+	aCollectionOfTriples do: 
+			[:each |
+			| subject operand expected |
+			subject := each first.
+			self assert: subject class identicalTo: SmallInteger.
+			operand := each second.
+			expected := each third.
+			result := method value: subject withArguments: {operand}.
+			self assert: result class identicalTo: expected class.
+			self assert: result equals: expected]!
 
 verifyPrimitiveAt: opAt performBlock: performAt
 	| array outOfBounds |
@@ -2863,6 +2879,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveMultiply!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
@@ -2887,6 +2904,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
+!VMTest categoriesFor: #verifyBinaryPrimitive:forCases:!public!unit tests! !
 !VMTest categoriesFor: #verifyPrimitiveAt:performBlock:!helpers!private! !
 !VMTest categoriesFor: #verifyPrimitiveAtPut:performBlock:!helpers!private! !
 !VMTest categoriesFor: #vmRespectsNonInstantiable!private!testing! !
