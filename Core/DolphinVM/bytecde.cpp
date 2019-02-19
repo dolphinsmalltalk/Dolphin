@@ -32,6 +32,47 @@
 	#include "STClassDesc.h"
 #endif
 
+Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
+{
+	return !m_bStepping ? sp - argCount : nullptr;
+}
+
+Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCount)
+{
+	if (!m_bStepping)
+	{
+		Oop* newSp = sp - argCount;
+		*newSp = reinterpret_cast<Oop>(Pointers.True);
+		return newSp;
+	}
+	else
+		return nullptr;
+}
+
+Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCount)
+{
+	if (!m_bStepping)
+	{
+		Oop* newSp = sp - argCount;
+		*newSp = reinterpret_cast<Oop>(Pointers.False);
+		return newSp;
+	}
+	else
+		return nullptr;
+}
+
+Oop* __fastcall Interpreter::primitiveReturnNil(Oop* const sp, unsigned argCount)
+{
+	if (!m_bStepping)
+	{
+		Oop* newSp = sp - argCount;
+		*newSp = reinterpret_cast<Oop>(Pointers.Nil);
+		return newSp;
+	}
+	else
+		return nullptr;
+}
+
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
 // is in separate routines that will not get inlined. This can make a significant difference to the
 // performance of the system (as we've discovered).
