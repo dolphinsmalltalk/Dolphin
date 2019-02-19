@@ -4306,49 +4306,6 @@ ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-QuickReturnSpecial MACRO specialValue
-	ASSUME	edx:SDWORD						;; EDX is the argument count
-
-	mov		eax, [STEPPING]
-	neg		edx
-	test	eax, eax						;; Stepping?
-	mov		ecx, specialValue				;; Load pointer of appropriate object
-	jnz		stepping
-	lea		eax, [_SP+edx*OOPSIZE]			;; primitiveSuccess(argumentCount)
-	mov		[_SP+edx*OOPSIZE], ecx			;; Replace receiver at stack top with special object (NOT ref counted)
-	ret
-stepping:
-	xor		eax, eax						;; If stepping, fail the primitive to activate the full method
-	ret
-ENDM
-
-; The fastest methods in the whole system are ones which simply say '^self'!
-; or which are empty!
-BEGINPRIMITIVE primitiveReturnSelf
-	mov		eax, [STEPPING]
-	neg		edx
-	test	eax, eax
-	jnz		stepping						; If stepping then fail the primitive
-	lea		eax, [_SP+edx*OOPSIZE]			; primitiveSuccess(argumentCount)
-	ret
-stepping:
-	xor		eax, eax						; If stepping, fail the primitive to activate the full method
-	ret
-ENDPRIMITIVE primitiveReturnSelf
-
-BEGINPRIMITIVE primitiveReturnTrue
-	QuickReturnSpecial <oteTrue>
-ENDPRIMITIVE primitiveReturnTrue
-
-BEGINPRIMITIVE primitiveReturnFalse
-	QuickReturnSpecial <oteFalse>
-ENDPRIMITIVE primitiveReturnFalse
-
-;; None of the special return values are ref. counted
-BEGINPRIMITIVE primitiveReturnNil
-	QuickReturnSpecial <oteNil>
-ENDPRIMITIVE primitiveReturnNil
-
 BEGINPRIMITIVE primitiveReturnLiteralZero
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
