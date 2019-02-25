@@ -58,6 +58,12 @@ column: aListViewColumn
 	"Private -"
 	column := aListViewColumn!
 
+font
+	"Answer the character font."
+
+	"We assume the font is being accessed in order to be modified, so use a copy"
+	^font ifNil: [font := self canvas font copy]!
+
 forecolor
 	"Answer the foreground text colour."
 
@@ -83,9 +89,7 @@ itemHandle
 reset
 	"Reset the canvas to default settings."
 
-	self font
-		isItalic: false;
-		isStruckThrough: false.
+	self canvas font: self view actualFont.
 	self forecolor: (self view forecolor ifNil: [Color windowText])!
 
 subItem
@@ -101,6 +105,7 @@ subItem
 !NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
 !NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
+!NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
