@@ -120,6 +120,20 @@ testBuildAnonymous
 	self assert: instance x equals: 2
 !
 
+testBuildAnonymousRoot
+	"Be very careful in creating root classes - the class is missing most required behaviour and it is very easy to crash the VM after creating instances of an insufficiently defined root class."
+
+	| anon instance |
+	anon := AnonymousClassBuilder new createNewClass.
+	self deny: (Class allRoots includes: anon).
+	self assert: anon name equals: 'a subclass of nil'.
+	self assertIsNil: anon superclass.
+	anon compile: 'printString ^''anon'''.
+	instance := anon new.
+	self assert: instance printString equals: 'anon'
+
+!
+
 testMoveClassToSuperclassWithInstVars
 	| newClass |
 	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
@@ -342,6 +356,7 @@ testReshapeSubClass
 !ClassBuilderTests categoriesFor: #tearDown!public!Running! !
 !ClassBuilderTests categoriesFor: #testAddRemovePools!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testBuildAnonymous!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testBuildAnonymousRoot!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveVariable!public!unit tests! !
