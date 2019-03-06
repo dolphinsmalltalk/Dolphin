@@ -11,7 +11,11 @@ ClassBuilderTests comment: ''!
 !ClassBuilderTests methodsFor!
 
 classBuilderTestClass
-	^ClassBuilderTestClasses current testClass!
+	| tc |
+	tc := ClassBuilderTestClasses current testClass.
+	"Sanity check that the test class is correctly packaged so will be uninstalled on tear down of the resource"
+	self assert: tc owningPackage identicalTo: tc owningPackage.
+	^tc!
 
 classBuilderTestSubclass1
 	^ClassBuilderTestClasses current testSubclass1!
@@ -20,27 +24,9 @@ classBuilderTestSubclass2
 	^ClassBuilderTestClasses current testSubclass2!
 
 makeCleanClasses
-	Object
-		subclass: #ClassBuilderTestClass
-		instanceVariableNames: 'var1 var2'
-		classVariableNames: ''
-		poolDictionaries: 'ClassBuilderTestPool1'
-		category: 'Tests-Kernel-Classes'.
-	self classBuilderTestClass
-		subclass: #ClassBuilderTestSubClass
-		instanceVariableNames: 'var3 var4'
-		classVariableNames: ''
-		poolDictionaries: 'ClassBuilderTestPool2'
-		category: 'Tests-Kernel-Classes'.
-	self classBuilderTestClass
-		subclass: #ClassBuilderTestSubClass2
-		instanceVariableNames: 'var3 var4'
-		classVariableNames: ''
-		poolDictionaries: 'ClassBuilderTestPool3 ClassBuilderTestPool2'
-		category: 'Tests-Kernel-Classes'!
+	ClassBuilderTestClasses isAvailable ifTrue: [ClassBuilderTestClasses current createClasses]!
 
 setUp
-	self makeCleanClasses.
 	wasOAD := SmalltalkSystem current isOAD.
 	SmalltalkSystem current isOAD: false!
 
@@ -117,6 +103,23 @@ testAddRemovePools
 		equals: 'ClassBuilderTestPool1.PoolVar3'.
 	self assert: (self classBuilderTestSubclass1 bindingFor: 'PoolVar4') equals: nil!
 
+testBuildAnonymous
+	| anon base instance |
+	base := self classBuilderTestClass.
+	anon := base newAnonymousSubclass.
+	self assert: anon name equals: 'a subclass of ClassBuilderTestClass'.
+	self assert: anon superclass identicalTo: base.
+	self deny: (base subclasses includes: anon).
+	self assert: anon class superclass identicalTo: base class.
+	self deny: (base class subclasses includes: anon).
+	base compile: 'x ^1'.
+	anon compile: 'x ^2'.
+	instance := anon new.
+	self assert: instance isKindOf: base.
+	self assert: instance class identicalTo: anon.
+	self assert: instance x equals: 2
+!
+
 testMoveClassToSuperclassWithInstVars
 	| newClass |
 	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
@@ -141,6 +144,7 @@ testMoveClassToSuperclassWithNoInstVars
 testMoveVariable
 	"test moving an iVar up, sideways and down"
 
+	self makeCleanClasses.
 	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'var2').
 	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
 	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4').
@@ -157,6 +161,7 @@ testMoveVariable
 testPoolVariablePrecedence
 	"Base class has only pool1"
 
+	self makeCleanClasses.
 	self assert: self classBuilderTestClass allSharedPoolNames
 		equals: #(#ClassBuilderTestPool1) , Object sharedPoolNames.
 	self assert: (self classBuilderTestClass bindingFor: 'PoolVar1') value
@@ -239,6 +244,7 @@ testReshapeClass
 				classVariableNames: ''
 				poolDictionaries: ''
 				category: 'Tests-Kernel-Classes'.
+	self assert: newClass owningPackage identicalTo: ClassBuilderTestClasses current package.
 	newMeta := newClass class.
 
 	"test transparency of mapping"
@@ -294,6 +300,7 @@ testReshapeSubClass
 	"see if reshaping a class updates the instances of its subclass correctly"
 
 	| testInstance testClass testMeta |
+	self makeCleanClasses.
 	testClass := self classBuilderTestSubclass1.
 	testMeta := testClass class.
 	testInstance := testClass new.
@@ -333,15 +340,16 @@ testReshapeSubClass
 !ClassBuilderTests categoriesFor: #makeCleanClasses!private!Running! !
 !ClassBuilderTests categoriesFor: #setUp!public!Running! !
 !ClassBuilderTests categoriesFor: #tearDown!public!Running! !
-!ClassBuilderTests categoriesFor: #testAddRemovePools!public!Running! !
-!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!Running! !
-!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!Running! !
-!ClassBuilderTests categoriesFor: #testMoveVariable!public!Running! !
-!ClassBuilderTests categoriesFor: #testPoolVariablePrecedence!public!Running! !
-!ClassBuilderTests categoriesFor: #testReparentSubClassWithSameAllInstVars!public!Running! !
-!ClassBuilderTests categoriesFor: #testReshapeClass!public!Running! !
-!ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!Running! !
-!ClassBuilderTests categoriesFor: #testReshapeSubClass!public!Running! !
+!ClassBuilderTests categoriesFor: #testAddRemovePools!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testBuildAnonymous!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testMoveVariable!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testPoolVariablePrecedence!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testReparentSubClassWithSameAllInstVars!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testReshapeClass!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testReshapeSubClass!public!unit tests! !
 
 !ClassBuilderTests class methodsFor!
 

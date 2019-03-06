@@ -365,7 +365,7 @@ indexOfInstVar: aString ifAbsent: aNiladicValuable
 	evaluating the <niladicValuable>, aNiladicValuable."
 
 	| index |
-	index := self instVarNames indexOf: aString.
+	index := self instVarNames indexOf: aString asString.
 	^index == 0
 		ifTrue: 
 			[superclass
@@ -502,7 +502,7 @@ methodsFor
 name
 	"Answer a <readableString> that is the name of the receiver."
 
-	^self subclassResponsibility!
+	^'a subclass of ', self superclass name!
 
 owningPackage
 	^nil!

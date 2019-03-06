@@ -133,6 +133,7 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'Dolphin'
 	'Dolphin Additional Sort Algorithms'
+	'Dolphin Anonymous Classes'
 	'Dolphin Command-line Parser'
 	'..\System\Random\Dolphin CRT Random Stream'
 	'Dolphin Message Box'
@@ -140,6 +141,9 @@ package setPrerequisites: #(
 	'..\System\Compiler\Smalltalk Parser'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM').
+
+package setManualPrerequisites: #(
+	'Dolphin Anonymous Classes').
 
 package!
 
