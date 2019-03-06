@@ -118,7 +118,7 @@ name
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(ClassBuilder new)
-		className: aClassSymbol asString;
+		className: aClassSymbol;
 		instanceVariableString: instVarString;
 		classVariableString: classVarString;
 		sharedPoolString: poolDictString;

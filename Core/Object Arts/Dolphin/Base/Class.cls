@@ -297,12 +297,12 @@ name
 	"Answer a <readableString> that is the name of the receiver
 	Implementation Note: For compatibility reasons, the answer is actually a Symbol."
 
-	^name!
+	^name ifNil: [super name]!
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(ClassBuilder new)
 		superclass: self;
-		className: aClassSymbol asString;
+		className: aClassSymbol;
 		instanceVariableString: instVarString;
 		classVariableString: classVarString;
 		sharedPoolString: poolDictString;

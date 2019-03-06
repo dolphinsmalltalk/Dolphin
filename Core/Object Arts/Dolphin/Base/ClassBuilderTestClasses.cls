@@ -10,25 +10,27 @@ ClassBuilderTestClasses comment: ''!
 !ClassBuilderTestClasses categoriesForClass!Unclassified! !
 !ClassBuilderTestClasses methodsFor!
 
+compileMethods
+	self compileAccessorsFor: testClass.
+	self compileAccessorsFor: testSubclass1.
+	self compileAccessorsFor: testSubclass2!
+
 createClasses
 	testClass := self
 				createClass: #ClassBuilderTestClass
 				superclass: Object
 				instVars: 'var1 var2'
 				pools: 'ClassBuilderTestPool1'.
-	self compileAccessorsFor: testClass.
 	testSubclass1 := self
 				createClass: #ClassBuilderTestSubClass
 				superclass: testClass
 				instVars: 'var3 var4'
 				pools: 'ClassBuilderTestPool2'.
-	self compileAccessorsFor: testSubclass1.
 	testSubclass2 := self
 				createClass: #ClassBuilderTestSubClass2
 				superclass: testClass
 				instVars: 'var3 var4'
-				pools: 'ClassBuilderTestPool3 ClassBuilderTestPool2'.
-	self compileAccessorsFor: testSubclass2!
+				pools: 'ClassBuilderTestPool3 ClassBuilderTestPool2'!
 
 createPools
 	testPool1 := self createPool: #ClassBuilderTestPool1.
@@ -62,7 +64,8 @@ testSubclass1
 
 testSubclass2
 	^testSubclass2! !
-!ClassBuilderTestClasses categoriesFor: #createClasses!public!unit tests! !
+!ClassBuilderTestClasses categoriesFor: #compileMethods!public!unit tests! !
+!ClassBuilderTestClasses categoriesFor: #createClasses!private!unit tests! !
 !ClassBuilderTestClasses categoriesFor: #createPools!Init / Release!private! !
 !ClassBuilderTestClasses categoriesFor: #isAvailable!public!Testing! !
 !ClassBuilderTestClasses categoriesFor: #tearDown!public!Running! !

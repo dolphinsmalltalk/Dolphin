@@ -10,6 +10,9 @@ CompilerTestClasses comment: ''!
 !CompilerTestClasses categoriesForClass!Unclassified! !
 !CompilerTestClasses methodsFor!
 
+compileMethods
+	self compileAccessorsFor: testClass!
+
 createClasses
 	| ivs |
 	ivs := String writeStream.
@@ -24,8 +27,7 @@ createClasses
 				createClass: #CompilerTestClass
 				superclass: Object
 				instVars: ivs contents
-				pools: ''.
-	self compileAccessorsFor: testClass!
+				pools: ''!
 
 tearDown
 	super tearDown.
@@ -33,7 +35,8 @@ tearDown
 
 testClass
 	^testClass! !
-!CompilerTestClasses categoriesFor: #createClasses!public!unit tests! !
+!CompilerTestClasses categoriesFor: #compileMethods!private!Running! !
+!CompilerTestClasses categoriesFor: #createClasses!private!Running! !
 !CompilerTestClasses categoriesFor: #tearDown!public!Running! !
-!CompilerTestClasses categoriesFor: #testClass!public!unit tests! !
+!CompilerTestClasses categoriesFor: #testClass!public!Running! !
 

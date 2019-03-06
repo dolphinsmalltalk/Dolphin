@@ -17,6 +17,9 @@ compileAccessorsFor: aClass
 			aClass compile: each , ' ^' , each.
 			aClass compile: each , ': x ' , each , ' := x']!
 
+compileMethods
+	"To be implemented by subclasses as required"!
+
 createClass: className superclass: superClass instVars: instanceVariables pools: aString
 	| class |
 	class := superClass
@@ -46,10 +49,13 @@ createPools
 	!
 
 destroyPackage
-	package notNil 
-		ifTrue: 
-			[package uninstall.
-			package := nil]!
+	package
+		ifNil: [(Package manager packageNamed: self class name ifNone: []) ifNotNil: [:p | p uninstall]]
+		ifNotNil: [package uninstall].
+	package := nil!
+
+package
+	^package!
 
 packageName
 	^'Core\Object Arts\Dolphin\Tests\' , self class name!
@@ -58,18 +64,21 @@ setUp
 	super setUp.
 	self createPackage.
 	self createPools.
-	self createClasses!
+	self createClasses.
+	self compileMethods!
 
 tearDown
 	super tearDown.
 	self destroyPackage! !
 !DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #compileMethods!accessing!public! !
 !DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPools!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #destroyPackage!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #package!public! !
 !DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
 !DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
 !DolphinTestClassResource categoriesFor: #tearDown!public!Running! !
