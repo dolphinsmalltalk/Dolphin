@@ -1087,12 +1087,12 @@ testSpecialLiteralsAsUnarySelectors
 			self denyIsNil: method]!
 
 testSymbolScanning
-	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--') do: 
+	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--' '#''£''' '#''你好''' '#''🐬''') do: 
 			[:each |
 			| sym bracketed chars |
 			sym := self evaluateExpression: each.
 			self denyIsNil: sym.
-			chars := each copyFrom: 2.
+			chars := (each copyFrom: 2) copyWithout: $'.
 			self assert: (sym equals: chars).
 			bracketed := '(' , each , ')'.
 			sym := self evaluateExpression: bracketed.
