@@ -403,7 +403,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	//
 
 	pushObject((OTE*)Pointers.ClassSymbol);
-	pushNewObject((OTE*)AnsiString::New(name));
+	pushNewObject((OTE*)Utf8String::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
