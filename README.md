@@ -8,7 +8,7 @@ This repository contains:
 * A VS2017 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
 * The necessary Smalltalk packages to build the [Dolphin Smalltalk](https://object-arts.com) Core Images from a pre-built boot image.
 
-Note: if you are just looking to install Dolphin and get going as quickly as possible you may prefer to start with the release build and [Setup Installer](http://object-arts.com/downloads.html) and follow the directions [here](http://object-arts.com/gettingstarted.html). However, if you’d really like to know how Dolphin is put together then the complete sources are available here on GitHub in this repository. 
+Note: if you are just looking to install Dolphin and get going as quickly as possible you may prefer to start with the release build and [Setup Installer](https://object-arts.com/downloads.html) and follow the directions [here](https://object-arts.com/gettingstarted.html). However, if you’d really like to know how Dolphin is put together then the complete sources are available here on GitHub in this repository. 
 
 
 ## Building the Virtual Machine
