@@ -36,21 +36,20 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Radio\Dolphin Radio Buttons';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: 'SSW ListView Extensions';
-	add: 'SSW Widget Enhancements';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'SSW ListView Extensions'
+	'SSW Widget Enhancements').
 
 package setManualPrerequisites: #(
 	'SSW ListView Extensions').

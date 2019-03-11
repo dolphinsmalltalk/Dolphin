@@ -77,16 +77,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters').
 
 package!
 
@@ -127,12 +126,11 @@ TextEdit subclass: #FormattedTextEdit
 
 clipTo: aRectangle during: aBlock
 
-	| oldClipRegion |
+	| oldDC |
 
-	oldClipRegion := Region empty.
-	GDILibrary default getClipRgn: self asParameter hrgn: oldClipRegion asParameter.
+	oldDC := self save.
 	[self intersectClipRectangle: aRectangle.
-	aBlock value] ensure: [self selectClipRegion: oldClipRegion]!
+	aBlock value] ensure: [self restore: oldDC]!
 
 erase: aRectangle
 	"Erase the receiver to the current background colour"
