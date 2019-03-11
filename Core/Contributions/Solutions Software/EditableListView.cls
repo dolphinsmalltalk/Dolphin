@@ -16,27 +16,21 @@ activateEditorAt: aPoint cause: aSymbol tabbed: aBoolean
 	if aBoolean is true, act as if tabbed into the field
 	Return the editor activated, or nil if none"
 
-	| itemIndex item column columnRectangle |
+	| itemIndex item column columnRectangle editor |
 
 	self hideToolTipWindow.
 
 	"requestDeactivateEditor should already have been sent and approved"
-	self hasActiveEditor ifTrue: [self deactivateEditor].
-
-	"From hereon, disableRedraw is in effect so any early return must enableRedraw"
+	self hasActiveEditor ifTrue: [self hideActiveEditor].
 
 	itemIndex := aPoint x.
-	(self ensureIndexSelected: itemIndex cause: aSymbol) ifFalse: 
-		["Selection suppressed"
-		self enableRedraw. 
-		^nil].
+	(self ensureIndexSelected: itemIndex cause: aSymbol) ifFalse: ["Selection suppressed" ^nil].
 
 	item := self list at: itemIndex.
 	column := self columnAtIndex: aPoint y.
 
 	(column isEditableWith: item) ifFalse: 
 		[column isEditable ifTrue: [Sound beep: MessageBoxConstants.MB_ICONWARNING]. "Bell if the column is disabled for the current item only"
-		self enableRedraw. 
 		^nil].
 
 	"Ensure the editor is visibile"
@@ -44,25 +38,23 @@ activateEditorAt: aPoint cause: aSymbol tabbed: aBoolean
 	(columnRectangle left < 0 or: [columnRectangle right > self width]) ifTrue: [self horzScrollBy: columnRectangle left].
 
 	self activeEditorCoords: aPoint.
+	self activeColumn setEditorValueFrom: item.
 	
-	[| editor |
 	editor := self activeEditor.
 
 	self activeEditorNeedsHighlight
 		ifTrue: [editor backcolor: self activeEditorHighlightColor]
 		ifFalse: [editor backcolor: Color window].
 
-	self activeColumn setEditorValueFrom: item.
+	editor showIn: self activeEditorCellRect.	
 
 	"If the cause is a mouse click, focus will be set by that. Otherwise set manually"
 	aSymbol = #keyboard ifTrue: 
-		[[aBoolean 
+		[aBoolean 
 			ifTrue: [editor tabFocus] 
-			ifFalse: [editor setFocus]] postToInputQueue].
+			ifFalse: [editor setFocus]].
 
-	editor showIn: self activeEditorCellRect] ensure: [self enableRedraw].
-
-	^self activeEditor!
+	^editor!
 
 activateEditorForColumn: anEditableListViewColumn
 
@@ -202,14 +194,6 @@ columnUnderPoint: aPoint
 	itemStruct := self fullItemFromPoint: aPoint.
 
 	^self allColumns at: (itemStruct iSubItem + 1)!
-
-deactivateEditor
-
-	"Private - Note that redraw is turned off to prevent flickering if the receiver gets focus.
-	Clients of this method should ensure redraw is later reactivated"
-
-	self disableRedraw.
-	self hideActiveEditor!
 
 defaultOffsetForEditor: aColumnEditor
 
@@ -611,27 +595,22 @@ onLeftButtonPressed: aMouseEvent
 
 	self hasActiveEditor ifTrue: 
 		[self requestDeactivateEditor ifFalse: [^0].
-		self deactivateEditor].
+		self hideActiveEditor].
 
 	"Special handling only needed for single select"
-	(self isMultiSelect and: [aMouseEvent isShiftDown or: [aMouseEvent isCtrlDown]]) ifTrue: 
-		[self enableRedraw. 
-		^super onLeftButtonPressed: aMouseEvent].
+	(self isMultiSelect and: [aMouseEvent isShiftDown or: [aMouseEvent isCtrlDown]]) ifTrue: [^super onLeftButtonPressed: aMouseEvent].
 
 	point := aMouseEvent position.
 	itemStruct := self fullItemFromPoint: point.
 
 	"Not interested in clicks not on list items"
-	itemStruct iItem negative ifTrue: 
-		[self enableRedraw.
-		^super onLeftButtonPressed: aMouseEvent].
+	itemStruct iItem negative ifTrue: [^super onLeftButtonPressed: aMouseEvent].
 
 	itemCoords := (itemStruct iItem @ itemStruct iSubItem) + (1@1).
 
 	"If clicked the icon, then select only"
 	((self columnAtIndex: itemCoords y) hasColumnImage and: [(self lvmGetSubItemRect: itemStruct iItem subitem: itemStruct iSubItem bounding: LVIR_ICON) containsPoint: point]) ifTrue: 
-		[self enableRedraw. 
-		^super onLeftButtonPressed: aMouseEvent].
+		[^super onLeftButtonPressed: aMouseEvent].
 
 	self hasFocus ifFalse: [self setFocus].
 
@@ -724,10 +703,10 @@ preTranslateKeyboardInput: aMSG
 
 	key := aMSG wParam.
 
-	aMSG message = WM_KEYDOWN ifTrue:
+	(self activeColumn isNil and: [aMSG message = WM_KEYDOWN]) ifTrue:
 		[(key = VK_RIGHT and: [self itemCount > 0]) ifTrue:
 			[self hasSelection 
-				ifTrue: [(self activeColumn isNil and: [self activateFirstEditor notNil]) ifTrue: [^true]]
+				ifTrue: [self activateFirstEditor notNil ifTrue: [^true]]
 				ifFalse: [self selectionByIndex: 1. ^true]].
 
 		(key =VK_TAB and: [self hasEditableColumn]) ifTrue:
@@ -953,7 +932,6 @@ wmVScroll: message wParam: wParam lParam: lParam
 !EditableListView categoriesFor: #columnNamed:!accessing!public! !
 !EditableListView categoriesFor: #columnNamed:ifNone:!accessing!public! !
 !EditableListView categoriesFor: #columnUnderPoint:!accessing!public! !
-!EditableListView categoriesFor: #deactivateEditor!operations!private! !
 !EditableListView categoriesFor: #defaultOffsetForEditor:!accessing!public! !
 !EditableListView categoriesFor: #disconnectFromModel!operations!private! !
 !EditableListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!drawing!private! !
