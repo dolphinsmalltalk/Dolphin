@@ -548,6 +548,7 @@ private:
 	static Oop* __fastcall primitiveLargeIntegerBitOr(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLargeIntegerBitXor(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLargeIntegerBitShift(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveLargeIntegerHighBit(Oop* const sp, unsigned argCount);
 
 	// LargeInteger miscellaneous
 	static Oop* __fastcall primitiveLargeIntegerNormalize(Oop* const sp, unsigned argCount);
