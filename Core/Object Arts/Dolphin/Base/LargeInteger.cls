@@ -303,6 +303,13 @@ hash
 		ifTrue: [(highBits bitShift: -1) bitXor: (shiftDistance - 1) abs]
 		ifFalse: [highBits bitXor: shiftDistance abs]!
 
+highBit
+	"Answer the <integer> index of the most significant non-zero bit of the binary representation of the receiver.
+	N.B. This operation is not defined for negative integers."
+
+	<primitive: 49>
+	^super highBit!
+
 intPtrAtOffset: anInteger put: anObject 
 	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must 
 	be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize
@@ -482,6 +489,7 @@ subtractFromInteger: anInteger
 !LargeInteger categoriesFor: #generality!coercing!private! !
 !LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
 !LargeInteger categoriesFor: #hash!comparing!public! !
+!LargeInteger categoriesFor: #highBit!bit manipulation!public! !
 !LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
 !LargeInteger categoriesFor: #isZero!public!testing! !
 !LargeInteger categoriesFor: #limbSize!accessing!private! !
