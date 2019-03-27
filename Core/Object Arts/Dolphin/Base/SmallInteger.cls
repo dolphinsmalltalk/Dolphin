@@ -296,22 +296,6 @@ hash
 
 	^self!
 
-highBit
-	"Answer the index (1 based) of the high order bit of the positive 2's complement 
-	representation of the receiver. e.g.
-
-		SmallInteger maximum highBit
-
-	Implementation Note: Although this can be implemented relatively efficiently
-	in Smalltalk by using a series of conditional tests and a table lookup,
-	it can be implemented in a single instruction in x86 assembler, hence the
-	(very fast) primitive.
-
-	The primitive fails only if the receiver is negative, so does not set the failure code."
-
-	<primitive: 54>
-	^self primitiveFailed!
-
 identityHash
 	"Answer the <integer> identity hash value for the receiver (itself)."
 
@@ -486,7 +470,6 @@ yourAddress
 !SmallInteger categoriesFor: #deepCopy!copying!public! !
 !SmallInteger categoriesFor: #generality!coercing!private! !
 !SmallInteger categoriesFor: #hash!comparing!public! !
-!SmallInteger categoriesFor: #highBit!bit manipulation!public! !
 !SmallInteger categoriesFor: #identityHash!comparing!public! !
 !SmallInteger categoriesFor: #instVarAt:!accessing!private! !
 !SmallInteger categoriesFor: #instVarAt:put:!accessing!private! !

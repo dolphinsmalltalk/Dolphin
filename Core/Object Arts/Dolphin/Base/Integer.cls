@@ -486,10 +486,11 @@ hex
 
 highBit
 	"Answer the <integer> index of the most significant non-zero bit of the binary 
-	representation of the receiver.
-	N.B. This operation is not defined for negative integers."
+	representation of the receiver."
 
 	| digits |
+	<primitive: 54>
+	self < 0 ifTrue: [self error: 'high bit is infinite for negative integer'].
 	digits := self digitLength.
 	^(self byteAt: digits) highBit + (digits - 1 bitShift: 3)!
 

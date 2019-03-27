@@ -287,14 +287,45 @@ Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, unsigned)
 
 Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
 {
-	SMALLINTEGER value = *(sp);
-	if (value >= 0)
+	Oop oopInteger = *sp;
+	if (ObjectMemoryIsIntegerObject(oopInteger))
 	{
-		unsigned long index;
-		_BitScanReverse(&index, value);
-		*sp = ObjectMemoryIntegerObjectOf(index);
-		return sp;
+		SMALLINTEGER value = static_cast<SMALLINTEGER>(oopInteger);
+		if (value >= 0)
+		{
+			unsigned long index;
+			_BitScanReverse(&index, value);
+			*sp = ObjectMemoryIntegerObjectOf(index);
+			return sp;
+		}
+		else
+			return nullptr;
 	}
 	else
-		return nullptr;
+	{
+		// Note that Integers are always normalized. This means that zero cannot be a LargeInteger, i.e.
+		// the bottom limb can never be zero, and the result of this primitive cannot be zero. 
+		// Also there can be at most one leading zero limb (e.g. for 2**63)
+
+		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
+		LargeInteger* liReceiver = oteReceiver->m_location;
+		MWORD i = oteReceiver->getWordSize() - 1;
+		uint32_t digit = liReceiver->m_digits[i];
+		if (static_cast<int32_t>(digit) >= 0)
+		{
+			if (digit == 0)
+			{
+				digit = liReceiver->m_digits[--i];
+			}
+
+			unsigned long index;
+			_BitScanReverse(&index, digit);
+			index = i * 32 + index + 1;
+			*sp = ObjectMemoryIntegerObjectOf(index);
+			return sp;
+		}
+		else
+			// Negative, undefined
+			return nullptr;
+	}
 }
