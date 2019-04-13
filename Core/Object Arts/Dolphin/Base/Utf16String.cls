@@ -125,7 +125,7 @@ encodedAt: anInteger put: aCharacter
 	Answer the <integer> index of the last code unit updated."
 
 	| codePoint |
-	codePoint := aCharacter asInteger.
+	codePoint := aCharacter codePoint.
 	^codePoint <= 16rFFFF
 		ifTrue: 
 			[self basicAt: anInteger put: codePoint.
@@ -475,7 +475,7 @@ with: aCharacter
 				yourself]
 		ifFalse: 
 			[(self new: 2)
-				encodedAt: 1 put: cp;
+				encodedAt: 1 put: aCharacter;
 				yourself]! !
 !Utf16String class categoriesFor: #codePage!constants!public! !
 !Utf16String class categoriesFor: #coerceString:!instance creation!public! !

@@ -103,7 +103,10 @@ includes: aCharacter
 
 	"Implementation Note: Ansi strings can only contain the base character set, all instances of which are unique."
 
-	^self identityIncludes: aCharacter!
+	^(self
+		nextIdentityIndexOf: aCharacter
+		from: 1
+		to: self size) ~~ 0!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
