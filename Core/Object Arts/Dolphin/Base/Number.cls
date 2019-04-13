@@ -80,6 +80,21 @@ asScaledDecimal: scale
 		scale: scale
 !
 
+asTrueFraction
+	"Answer a <rational> that precisely represents the same value as the receiver."
+
+	^self asFraction!
+
+closeTo: aNumber 
+	"Pharo compatibility"
+
+	^ self closeTo: aNumber precision: 0.0001!
+
+closeTo: aNumber precision: precisionFloat
+	| max |
+	^(max := self abs max: aNumber abs) <= precisionFloat
+		or: [(self - aNumber) abs < (precisionFloat * max)]!
+
 copy
 	"Answer a copy of the receiver (by default a copy which shares the receiver's 
 	instance variables). Numbers are immutable, so we answer the receiver itself."
@@ -257,6 +272,9 @@ to: stop do: operation
 !Number categoriesFor: #asFraction!converting!public! !
 !Number categoriesFor: #asInteger!converting!public! !
 !Number categoriesFor: #asScaledDecimal:!converting!public! !
+!Number categoriesFor: #asTrueFraction!converting!public! !
+!Number categoriesFor: #closeTo:!public! !
+!Number categoriesFor: #closeTo:precision:!comparing!public! !
 !Number categoriesFor: #copy!copying!public! !
 !Number categoriesFor: #cos!mathematical!public! !
 !Number categoriesFor: #degreesToRadians!converting!public! !
