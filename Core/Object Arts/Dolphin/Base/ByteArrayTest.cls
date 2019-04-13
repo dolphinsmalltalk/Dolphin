@@ -66,7 +66,9 @@ testFromHexString
 	expected := expected contents.
 	self assert: (ByteArray fromHexString: hex) equals: expected.
 	self assert: (ByteArray fromHexString: '') equals: #[].
-	#(' 0' '1 ' 'ff' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+	"We allow lower case chars too."
+	self assert: (ByteArray fromHexString: 'fe') equals: #[254].
+	#(' 0' '1 ' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
@@ -82,12 +84,10 @@ testMixedConcatenation
 					self deny: eachArray identicalTo: result.
 					self assert: result equals: eachArray]].
 	{'a'.
-		'a' asUtf16String.
 		#(255).
 		OrderedCollection with: 123.
 		100 to: 100.
 		'ab'.
-		'ab' asUtf16String.
 		#(1 255).
 		OrderedCollection with: 123 with: 255.
 		100 to: 101} do: 
@@ -97,7 +97,10 @@ testMixedConcatenation
 						| result |
 						result := self verifyConcatenation: each with: eachArray.
 						self deny: eachArray identicalTo: result.
-						self assert: result class identicalTo: self collectionClass]]!
+						self assert: result class identicalTo: self collectionClass]].
+	"It doesn't really make sense to catenate strings onto ByteArrays, but for historical reasons this can be done for AnsiStrings. However it doesn't work for UTF-encoded strings (by design)."
+	self should: [#[] , Character dolphin asUtf8String] raise: Error.
+	self should: [#[] , Character dolphin asUtf16String] raise: Error!
 
 testSbyteAtOffset
 	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each].
