@@ -58,6 +58,22 @@ asByteArray
 
 	^self!
 
+asHexString
+	"Answer a hexadecimal representation of the receiver"
+
+	| string j |
+	string := AnsiString new: self size * 2.
+	j := 0.
+	1 to: self size
+		do: 
+			[:i |
+			| each |
+			each := self at: i.
+			string
+				at: (j := j + 1) put: ('0123456789abcdef' at: (each bitShift: -4) + 1);
+				at: (j := j + 1) put: ('0123456789abcdef' at: (each bitAnd: 16rF) + 1)].
+	^string!
+
 asString
 	"Assuming that the receiver contains the bytes of an ANSI string, return that string."
 
@@ -251,7 +267,7 @@ encodedAt: anInteger put: anObject
 	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
 	the <integer> index of the last element updated."
 
-	self at: anInteger put: anObject asInteger.
+	self at: anInteger put: anObject.
 	^anInteger!
 
 encoding
@@ -393,10 +409,14 @@ notNull
 printHexOn: aStream
 	"Append a hex string representation of the receiver to the <puttableStream> argument."
 
-	self do: [:byte |
-		aStream 
-			nextPut: (Character digitValue: (byte // 16));
-			nextPut: (Character digitValue: (byte \\ 16))]!
+	1 to: self size
+		do: 
+			[:i |
+			| each |
+			each := self at: i.
+			aStream
+				nextPut: ('0123456789abcdef' at: (each bitShift: -4) + 1);
+				nextPut: ('0123456789abcdef' at: (each bitAnd: 15) + 1)]!
 
 printHexString
 	"Answer a hex string representation of the receiver. N.B. For reasons of backwards
@@ -598,10 +618,16 @@ storeOn: puttableStream
 	argument."
 
 	self printPrefixOn: puttableStream.
-	1 to: self size do: [:i | 
-		(self at: i) printDigitsOn: puttableStream base: 10.
-		puttableStream nextPut: $\x20].
-	self printSuffixOn: puttableStream.!
+	1 to: self size
+		do: 
+			[:i |
+			(self at: i)
+				printOn: puttableStream
+				base: 10.
+			puttableStream nextPut: $\x20].
+	self printSuffixOn: puttableStream
+
+!
 
 swordAtOffset: anInteger
 	"Answer the signed 2 byte integer at offset (i.e. zero relative) anInteger
@@ -708,6 +734,7 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #addressAtOffset:!accessing!public! !
 !ByteArray categoriesFor: #asAnsiString!public! !
 !ByteArray categoriesFor: #asByteArray!converting!public! !
+!ByteArray categoriesFor: #asHexString!converting!public! !
 !ByteArray categoriesFor: #asString!converting!public! !
 !ByteArray categoriesFor: #basicDwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #basicDwordAtOffset:put:!accessing!primitives!private! !
@@ -807,7 +834,7 @@ fromHexString: aString
 	size := aString size / 2.
 	size isInteger ifFalse: [self error: 'Invalid hex string (odd length)'].
 	answer := self new: size.
-	digits := #[0 1 2 3 4 5 6 7 8 9 0 0 0 0 0 0 0 10 11 12 13 14 15].
+	digits := #(0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15).
 	1 to: size
 		do: 
 			[:i |

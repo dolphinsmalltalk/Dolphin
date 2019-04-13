@@ -125,7 +125,7 @@ encodedAt: anInteger put: aCharacter
 	Answer the <integer> index of the last code unit updated."
 
 	| codePoint |
-	codePoint := aCharacter asInteger.
+	codePoint := aCharacter codePoint.
 	^codePoint < 16r80
 		ifTrue: 
 			[self basicAt: anInteger put: codePoint.

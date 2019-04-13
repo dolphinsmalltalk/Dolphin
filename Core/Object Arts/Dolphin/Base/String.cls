@@ -1486,6 +1486,9 @@ installedCodePages
 
 	^self systemCodePages: Win32Constants.CP_INSTALLED!
 
+lf
+	^AnsiString with: $\n!
+
 lineDelimiter
 	"Answer an immutable instance of the receiver containing the host system 
 	end-of-line character sequence (a Cr/Lf pair).
@@ -1667,6 +1670,7 @@ withAll: newElements
 !String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !String class categoriesFor: #initialize!class initialization!development!public! !
 !String class categoriesFor: #installedCodePages!enquiries!public! !
+!String class categoriesFor: #lf!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
 !String class categoriesFor: #new:!instance creation!public! !
 !String class categoriesFor: #newFixed:!instance creation!public! !
