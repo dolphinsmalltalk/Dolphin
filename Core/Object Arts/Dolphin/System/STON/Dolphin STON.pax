@@ -1,0 +1,110 @@
+﻿| package |
+package := Package name: 'Dolphin STON'.
+package paxVersion: 1;
+	basicComment: 'Dolphin STON support
+Copyright (c) Object Arts Ltd, 2019'.
+
+
+package classNames
+	add: #DolphinSTONReader;
+	add: #DolphinSTONWriter;
+	yourself.
+
+package methodNames
+	add: #ProcessorScheduler -> #stonOn:;
+	add: #STONCStyleCommentsSkipStream -> #skipSeparators;
+	add: #SystemDictionary -> #globals;
+	add: #SystemDictionary -> #stonOn:;
+	add: 'ProcessorScheduler class' -> #fromSton:;
+	add: 'STONReader class' -> #new;
+	add: 'STONWriter class' -> #new;
+	add: 'SystemDictionary class' -> #fromSton:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\..\..\Contributions\svenc\STON\STON-Core').
+
+package!
+
+"Class Definitions"!
+
+STONReader subclass: #DolphinSTONReader
+	instanceVariableNames: 'classInstVarMaps'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriter subclass: #DolphinSTONWriter
+	instanceVariableNames: ''
+	classVariableNames: 'ExtendedCharacters'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ProcessorScheduler methodsFor!
+
+stonOn: aSTONWriter 
+	aSTONWriter 
+		writeObject: self 
+		do: []! !
+!ProcessorScheduler categoriesFor: #stonOn:!public! !
+
+!ProcessorScheduler class methodsFor!
+
+fromSton: stonReader
+	^Processor! !
+!ProcessorScheduler class categoriesFor: #fromSton:!public!ston! !
+
+!STONCStyleCommentsSkipStream methodsFor!
+
+skipSeparators
+	^stream skipSeparators! !
+!STONCStyleCommentsSkipStream categoriesFor: #skipSeparators!public! !
+
+!STONReader class methodsFor!
+
+new
+	^DolphinSTONReader basicNew initialize! !
+!STONReader class categoriesFor: #new!public! !
+
+!STONWriter class methodsFor!
+
+new
+	^DolphinSTONWriter basicNew initialize! !
+!STONWriter class categoriesFor: #new!public! !
+
+!SystemDictionary methodsFor!
+
+globals
+	"For Pharo compatibility"
+
+	^self!
+
+stonOn: aSTONWriter 
+	aSTONWriter 
+		writeObject: self 
+		listSingleton: #Smalltalk! !
+!SystemDictionary categoriesFor: #globals!public! !
+!SystemDictionary categoriesFor: #stonOn:!public! !
+
+!SystemDictionary class methodsFor!
+
+fromSton: stonReader
+	| globalName theClass |
+	globalName := stonReader parseListSingleton.
+	theClass := self environment at: globalName.
+	^theClass! !
+!SystemDictionary class categoriesFor: #fromSton:!public! !
+
+"End of package definition"!
+

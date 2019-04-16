@@ -1292,6 +1292,9 @@ coerceString: aString
 
 	^aString asUtf8String!
 
+cr
+	^LineDelimiter!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -1647,6 +1650,7 @@ withAll: newElements
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #coerceString:!instance creation!public! !
+!String class categoriesFor: #cr!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #encoding!constants!public! !

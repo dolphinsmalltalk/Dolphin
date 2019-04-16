@@ -19,6 +19,12 @@ Instance Variables:
 !TranscriptShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !TranscriptShell methodsFor!
 
+<< anObject
+	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
+
+	anObject appendToStream: self.
+	^self!
+
 addToCommandRoute: route
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
 	held by the <CommandPolicy>, route. Answer self to have the command policy decide where
@@ -313,6 +319,7 @@ updateWindow
 		caretPosition: length + 1;
 		replaceSelection: newText.
 	^buffer reset! !
+!TranscriptShell categoriesFor: #<<!public! !
 !TranscriptShell categoriesFor: #addToCommandRoute:!commands!public! !
 !TranscriptShell categoriesFor: #alertUser!operations!private! !
 !TranscriptShell categoriesFor: #basicPrint:!printing!private! !
