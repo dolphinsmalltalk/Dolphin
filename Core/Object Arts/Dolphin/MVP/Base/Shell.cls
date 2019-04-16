@@ -119,6 +119,9 @@ onIdleEntered
 onSettingChanged: aWindowEvent 
 	^self view onSettingChanged: aWindowEvent!
 
+onTimeChanged: aWindowEvent 
+	^self view onTimeChanged: aWindowEvent!
+
 onViewActivated: anEvent
 	"Default handler for activation. Pass on the the view"
 
@@ -315,6 +318,7 @@ view: aShellView
 !Shell categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
 !Shell categoriesFor: #onIdleEntered!event handling!public! !
 !Shell categoriesFor: #onSettingChanged:!event handling-win32!public! !
+!Shell categoriesFor: #onTimeChanged:!event handling-win32!public! !
 !Shell categoriesFor: #onViewActivated:!event handling!public! !
 !Shell categoriesFor: #onViewDeactivated:!event handling!public! !
 !Shell categoriesFor: #onViewDestroyed!event handling!public! !

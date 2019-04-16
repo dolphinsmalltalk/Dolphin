@@ -11,11 +11,10 @@ DATE comment: ''!
 !DATE methodsFor!
 
 asDate
-	^self asTimeStamp date!
+	^(SYSTEMTIME fromDATE: self) asDate!
 
-asTimeStamp
-	"Answer a <TimeStamp> converted from the receiver's Active-X
-	Automation date (an 8-byte floating point day number and fraction of a day)."
+asDateAndTime
+	"Answer a <DateAndTime> converted from the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day), which is assumed to in the local time."
 
 	^self value!
 
@@ -23,9 +22,9 @@ value
 	"Answer a <TimeStamp> converted from the receiver's Active-X
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
-	^TimeStamp fromDATE: super value! !
+	^DateAndTime fromDATE: super value! !
 !DATE categoriesFor: #asDate!converting!public! !
-!DATE categoriesFor: #asTimeStamp!accessing!public! !
+!DATE categoriesFor: #asDateAndTime!accessing!public! !
 !DATE categoriesFor: #value!accessing!public! !
 
 !DATE class methodsFor!

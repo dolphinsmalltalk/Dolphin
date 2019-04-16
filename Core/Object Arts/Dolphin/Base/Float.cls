@@ -169,7 +169,11 @@ absPrintExactlyOn: aStream base: base
 	(fixedFormat := baseExpEstimate between: -3 and: 6)
 		ifTrue: 
 			[decPointCount := baseExpEstimate.
-			baseExpEstimate <= 0 ifTrue: [aStream nextPutAll: ('0.000000' truncateTo: 2 - baseExpEstimate)]]
+			baseExpEstimate <= 0
+				ifTrue: 
+					[aStream
+						nextPutAll: '0.';
+						next: baseExpEstimate negated put: $0]]
 		ifFalse: [decPointCount := 1].
 	slowbit := 1 - s lowBit.
 	shead := s bitShift: slowbit.
@@ -192,8 +196,9 @@ absPrintExactlyOn: aStream base: base
 			aStream nextPutAll: '.0'].
 	fixedFormat
 		ifFalse: 
-			[aStream nextPut: $e.
-			aStream nextPutAll: (baseExpEstimate - 1) printString]!
+			[aStream
+				nextPut: $e;
+				print: baseExpEstimate - 1]!
 
 absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingFractionalZeros: showtrailingZeros
 	"Private - Print the receiver's value on a stream in the given base with fixed number of digits after floating point.
@@ -297,9 +302,9 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 			[(showtrailingZeros and: [placesDesired + decPointCount > 1])
 				ifTrue: [aStream nextPutAll: (String new: placesDesired + decPointCount - 1 withAll: $0)]]!
 
-absPrintOn: aStream base: base digitCount: digitCount
-	"Private - Print me in the given base, using digitCount significant figures.
-	Note that it is assumed the receiver is strictly positive."
+absPrintOn: aStream base: base digitCount: digitCount decimalExponents: anInterval
+	"Private - Print me in the given base, using digitCount significant figures. Scientific notation is used if the exponent falls outside the specified <Interval>.
+	Note that it is assumed the receiver is strictly positive. "
 
 	| fuzz x exp q fBase scale logScale xi |
 	fBase := base asFloat.
@@ -318,11 +323,15 @@ absPrintOn: aStream base: base digitCount: digitCount
 			["check if rounding has unnormalized x"
 			x := x / fBase.
 			exp := exp + 1].
-	(exp < 6 and: [exp > -4])
+	(exp >= anInterval start and: [exp <= anInterval stop])
 		ifTrue: 
 			["decimal notation"
 			q := 0.
-			exp < 0 ifTrue: [1 to: 1 - exp do: [:i | aStream nextPut: ('0.0000' at: i)]]]
+			exp < 0
+				ifTrue: 
+					[aStream
+						nextPutAll: '0.';
+						next: -1 - exp put: $0]]
 		ifFalse: 
 			["scientific notation"
 			q := exp.
@@ -511,6 +520,13 @@ cos
 	<primitive: 195>
 	^self primitiveFailed!
 
+displayOn: aStream
+	"Append, to aStream, a String whose characters are a representation of the receiver as a user would want to see it."
+
+	#todo. "Should be using Locale>>displayFloat:on:, but work is needed to be able to parse from the locale specific formats."
+	"Locale default displayFloat: self on: aStream"
+	self printOn: aStream!
+
 divideIntoFloat: aFloat
 	"Private - Answer the result of dividing the receiver by the known Float, aFloat. 
 	If we get here, then the floating point division must have failed due to a floating
@@ -546,10 +562,7 @@ equals: aNumber
 	"Answer whether the receiver is numerically equivalent to aNumber, within the
 	default numerical precision."
 
-	| max |
-	^(max := self abs max: aNumber abs) <= SignificantDifference
-		or:  [(self - aNumber) abs < (SignificantDifference * max)]
-!
+	^self closeTo: aNumber precision: SignificantDifference!
 
 exp
 	"Answer the exponential of the receiver. The primitive should not fail."
@@ -735,105 +748,106 @@ printOn: aPuttableStream
 	self printOn: aPuttableStream base: 10!
 
 printOn: aStream base: anInteger
-	"Print the receiver with the minimal number of digits that describes it unambiguously in the
-	specified base. This way, every two different Float will have a different printed
-	representation. More over, every Float can be reconstructed from its printed representation
-	with #readFrom:."
+	"Print the receiver with the minimal number of digits that describes it unambiguously in the specified base. This way, every two different Float will have a different printed representation. More over, every Float can be reconstructed from its printed representation with #readFrom:."
 
 	| classification |
 	classification := self fpClass.
 	(classification anyMask: FpClassNaN)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: 'NaN'.
+			[aStream nextPutAll: Locale smalltalk nan.
 			^self].
 	(classification anyMask: FpClassInfinite)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: ((classification anyMask: FpClassNegative)
-							ifTrue: ['NegativeInfinity']
-							ifFalse: ['Infinity']).
+			[aStream nextPutAll: ((classification anyMask: FpClassNegative)
+						ifTrue: [Locale smalltalk negativeInfinity]
+						ifFalse: [Locale smalltalk infinity]).
 			^self].
-	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
 	(classification anyMask: FpClassZero)
-		ifTrue: [aStream nextPutAll: '0.0']
-		ifFalse: [self absPrintExactlyOn: aStream base: anInteger]!
+		ifTrue: 
+			[(classification anyMask: FpClassNegative)
+				ifTrue: [aStream nextPutAll: '-0.0']
+				ifFalse: [aStream nextPutAll: '0.0'].
+			^self].
+	((classification anyMask: FpClassNegative)
+		ifTrue: 
+			[aStream nextPut: $-.
+			self abs]
+		ifFalse: [self]) absPrintExactlyOn: aStream base: anInteger!
 
-printOn: aStream decimalPlaces: anInteger
-	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded
-	to the <integer> number of decimal places, anInteger."
+printOn: aStream base: baseInteger decimalPlaces: placesInteger
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, rounded to the <integer> number of decimal places, placeInteger."
 
 	| classification |
 	classification := self fpClass.
 	(classification anyMask: FpClassNaN)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: 'NaN'.
+			[aStream nextPutAll: Locale smalltalk nan.
 			^self].
 	(classification anyMask: FpClassInfinite)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: ((classification anyMask: FpClassNegative)
-							ifTrue: ['NegativeInfinity']
-							ifFalse: ['Infinity']).
+			[aStream nextPutAll: ((classification anyMask: FpClassNegative)
+						ifTrue: [Locale smalltalk negativeInfinity]
+						ifFalse: [Locale smalltalk infinity]).
 			^self].
-	(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
 	(classification anyMask: FpClassZero)
 		ifTrue: 
-			[aStream nextPut: $0.
-			anInteger > 0
+			[(classification anyMask: FpClassNegative) ifTrue: [aStream nextPut: $-].
+			aStream nextPut: $0.
+			placesInteger > 0
 				ifTrue: 
 					[aStream nextPut: $..
-					aStream next: anInteger put: $0]]
-		ifFalse: 
-			[self
-				absPrintExactlyOn: aStream
-				base: 10
-				decimalPlaces: anInteger
-				showTrailingFractionalZeros: true]!
+					aStream next: placesInteger put: $0].
+			^self].
+	((classification anyMask: FpClassNegative)
+		ifTrue: 
+			[aStream nextPut: $-.
+			self abs]
+		ifFalse: [self])
+			absPrintExactlyOn: aStream
+			base: baseInteger
+			decimalPlaces: placesInteger
+			showTrailingFractionalZeros: true!
 
-printOn: aStream significantFigures: anInteger
-	"Append the printed representation of the receiver to aStream with anInteger significant
-	figures. Ensure that there is always a digit following the decimal point, even if zero."
+printOn: aStream base: baseInteger significantFigures: digitsInteger
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, in <integer> base, baseInteger, with <integer>, digitsInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
 
-	| classification abs |
+	| classification |
 	classification := self fpClass.
 	(classification anyMask: FpClassNaN)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: 'NaN'.
+			[aStream nextPutAll: Locale smalltalk nan.
 			^self].
 	(classification anyMask: FpClassInfinite)
 		ifTrue: 
-			[aStream
-				display: self class;
-				nextPut: $.;
-				nextPutAll: ((classification anyMask: FpClassNegative)
-							ifTrue: ['NegativeInfinity']
-							ifFalse: ['Infinity']).
+			[aStream nextPutAll: ((classification anyMask: FpClassNegative)
+						ifTrue: [Locale smalltalk negativeInfinity]
+						ifFalse: [Locale smalltalk infinity]).
 			^self].
-	abs := (classification anyMask: FpClassNegative)
-				ifTrue: 
-					[aStream nextPut: $-.
-					self negated]
-				ifFalse: [self].
 	(classification anyMask: FpClassZero)
-		ifTrue: [aStream nextPutAll: '0.0']
-		ifFalse: 
-			[abs
-				absPrintOn: aStream
-				base: 10
-				digitCount: anInteger]!
+		ifTrue: 
+			[(classification anyMask: FpClassNegative)
+				ifTrue: [aStream nextPutAll: '-0.0']
+				ifFalse: [aStream nextPutAll: '0.0'].
+			^self].
+	((classification anyMask: FpClassNegative)
+		ifTrue: 
+			[aStream nextPut: $-.
+			self abs]
+		ifFalse: [self])
+			absPrintOn: aStream
+			base: baseInteger
+			digitCount: digitsInteger
+			decimalExponents: ##(-3 to: 5)!
+
+printOn: aStream decimalPlaces: anInteger
+	"Append the printed representation of the receiver to the <puttableStream>, aStream, rounded to the <integer> number of decimal places, anInteger."
+
+	self printOn: aStream base: 10 decimalPlaces: anInteger!
+
+printOn: aStream significantFigures: anInteger
+	"Append the printed representation of the receiver in base 10 to the <puttableStream>, aStream, with <integer>, anInteger, significant figures. Note that there is always a digit following the decimal point, even if zero."
+
+	self printOn: aStream base: 10 significantFigures: anInteger!
 
 qwordAtOffset: anInteger
 	<primitive: 191>
@@ -962,7 +976,7 @@ truncated
 !Float categoriesFor: #abs!mathematical!public! !
 !Float categoriesFor: #absPrintExactlyOn:base:!printing!private! !
 !Float categoriesFor: #absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros:!printing!private! !
-!Float categoriesFor: #absPrintOn:base:digitCount:!printing!private! !
+!Float categoriesFor: #absPrintOn:base:digitCount:decimalExponents:!printing!private! !
 !Float categoriesFor: #addToFloat:!double dispatch!private! !
 !Float categoriesFor: #addToFraction:!double dispatch!private! !
 !Float categoriesFor: #addToInteger:!double dispatch!private! !
@@ -978,6 +992,7 @@ truncated
 !Float categoriesFor: #ceiling!public!truncation and round off! !
 !Float categoriesFor: #coerce:!coercing!private! !
 !Float categoriesFor: #cos!mathematical!public! !
+!Float categoriesFor: #displayOn:!printing!public! !
 !Float categoriesFor: #divideIntoFloat:!double dispatch!private! !
 !Float categoriesFor: #divideIntoFraction:!double dispatch!private! !
 !Float categoriesFor: #divideIntoInteger:!double dispatch!private! !
@@ -1006,10 +1021,12 @@ truncated
 !Float categoriesFor: #multiplyByFloat:!double dispatch!private! !
 !Float categoriesFor: #multiplyByFraction:!double dispatch!private! !
 !Float categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!Float categoriesFor: #negated!public! !
+!Float categoriesFor: #negated!arithmetic!public! !
 !Float categoriesFor: #negative!public!testing! !
 !Float categoriesFor: #printOn:!printing!public! !
 !Float categoriesFor: #printOn:base:!printing!public! !
+!Float categoriesFor: #printOn:base:decimalPlaces:!printing!public! !
+!Float categoriesFor: #printOn:base:significantFigures:!printing!public! !
 !Float categoriesFor: #printOn:decimalPlaces:!printing!public! !
 !Float categoriesFor: #printOn:significantFigures:!printing!public! !
 !Float categoriesFor: #qwordAtOffset:!accessing!private! !
@@ -1267,19 +1284,19 @@ zero
 !Float class categoriesFor: #emax!constants!public! !
 !Float class categoriesFor: #emin!constants!public! !
 !Float class categoriesFor: #epsilon!constants!public! !
-!Float class categoriesFor: #exceptionMask!public! !
-!Float class categoriesFor: #exceptionMask:!public! !
+!Float class categoriesFor: #exceptionMask!accessing!public! !
+!Float class categoriesFor: #exceptionMask:!accessing!public! !
 !Float class categoriesFor: #fmax!constants!public! !
 !Float class categoriesFor: #fmin!constants!public! !
 !Float class categoriesFor: #fminDenormalized!constants!public! !
 !Float class categoriesFor: #fminNormalized!constants!public! !
-!Float class categoriesFor: #infinity!public! !
+!Float class categoriesFor: #infinity!constants!public! !
 !Float class categoriesFor: #initialize!development!initializing!private! !
 !Float class categoriesFor: #maxExponent!constants!private! !
 !Float class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
-!Float class categoriesFor: #nan!public! !
-!Float class categoriesFor: #negativeInfinity!public! !
-!Float class categoriesFor: #negativeZero!public! !
+!Float class categoriesFor: #nan!constants!public! !
+!Float class categoriesFor: #negativeInfinity!constants!public! !
+!Float class categoriesFor: #negativeZero!constants!public! !
 !Float class categoriesFor: #new!instance creation!public! !
 !Float class categoriesFor: #one!instance creation!public! !
 !Float class categoriesFor: #onStartup!event handling!private! !
@@ -1288,7 +1305,7 @@ zero
 !Float class categoriesFor: #radix!constants!public! !
 !Float class categoriesFor: #readFrom:!instance creation!public! !
 !Float class categoriesFor: #reset!initializing!public! !
-!Float class categoriesFor: #statusFlags!public! !
+!Float class categoriesFor: #statusFlags!accessing!public! !
 !Float class categoriesFor: #zero!instance creation!public! !
 
 Float class methodProtocol: #floatCharacterization attributes: #(#ansi #readOnly) selectors: #(#denormalized #e #emax #emin #epsilon #fmax #fmin #fminDenormalized #fminNormalized #pi #precision #radix)!

@@ -48,8 +48,8 @@ testAsSeconds
 testCurrentUTC
 	| bias current |
 	current := self currentTimeStamp.
-	bias := Locale default timeZoneInformation currentBias * 60.
-	self assert: (current addSeconds: bias) time hours equals: TimeStamp currentUTC time hours!
+	bias := Locale timeZoneInformation currentBias * 60.
+	self assert: (current addSeconds: bias) time hour equals: TimeStamp currentUTC time hour!
 
 testFromMilliseconds
 	| current |
@@ -70,12 +70,12 @@ testFromSYSTEMTIME
 	sysTime := SYSTEMTIME now.
 	ts := TimeStamp fromSYSTEMTIME: sysTime.
 	self assert: ts date dayOfMonth equals: sysTime wDay.
-	self assert: ts date monthIndex equals: sysTime wMonth.
+	self assert: ts date month equals: sysTime wMonth.
 	self assert: ts date year equals: sysTime wYear.
-	self assert: ts time hours equals: sysTime wHour.
-	self assert: ts time minutes equals: sysTime wMinute.
-	self assert: ts time seconds equals: sysTime wSecond.
-	self assert: ts time milliseconds equals: sysTime wMilliseconds! !
+	self assert: ts time hour equals: sysTime wHour.
+	self assert: ts time minute equals: sysTime wMinute.
+	self assert: ts time second truncated equals: sysTime wSecond.
+	self assert: ts time millisecond equals: sysTime wMilliseconds! !
 !TimeStampTest categoriesFor: #currentTimeStamp!helpers!private! !
 !TimeStampTest categoriesFor: #testAddSeconds!public! !
 !TimeStampTest categoriesFor: #testAsMilliseconds!public! !

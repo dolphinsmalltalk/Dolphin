@@ -94,6 +94,8 @@ package methodNames
 	add: #COMInterface -> #typeInfoIfNone:;
 	add: #Date -> #asFloat;
 	add: #Date -> #asVariant;
+	add: #DateAndTime -> #asFloat;
+	add: #DateAndTime -> #asVariant;
 	add: #ExternalArray -> #asSAFEARRAY;
 	add: #ExternalArray -> #asVariant;
 	add: #ExternalScalar -> #asVariant;
@@ -150,8 +152,6 @@ package methodNames
 	add: #String -> #asVariant;
 	add: #SYSTEMTIME -> #asFloat;
 	add: #SYSTEMTIME -> #asVariant;
-	add: #TimeStamp -> #asFloat;
-	add: #TimeStamp -> #asVariant;
 	add: #UndefinedObject -> #asVariant;
 	add: 'BOOL class' -> #typeName;
 	add: 'BOOLEAN class' -> #typeName;
@@ -172,6 +172,7 @@ package methodNames
 	add: 'COMInterface class' -> #registerDispinterface:;
 	add: 'COMInterface class' -> #typeInfoIfNone:;
 	add: 'COMInterface class' -> #typeLib;
+	add: 'DateAndTime class' -> #fromDATE:;
 	add: 'DOUBLE class' -> #typeName;
 	add: 'DOUBLE class' -> #vt;
 	add: 'DWORD class' -> #typeName;
@@ -241,7 +242,7 @@ package methodNames
 	add: 'String class' -> #vt;
 	add: 'SWORD class' -> #typeName;
 	add: 'SWORD class' -> #vt;
-	add: 'TimeStamp class' -> #fromDATE:;
+	add: 'SYSTEMTIME class' -> #fromDATE:;
 	add: 'UINT_PTR class' -> #typeName;
 	add: 'UINT_PTR class' -> #vt;
 	add: 'ULARGE_INTEGER class' -> #typeName;
@@ -828,6 +829,26 @@ asVariant
 	^self asParameter asVariant! !
 !Date categoriesFor: #asFloat!converting!public! !
 !Date categoriesFor: #asVariant!converting!public! !
+
+!DateAndTime methodsFor!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	^self asParameter asFloat!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
+
+	^self asParameter asVariant! !
+!DateAndTime categoriesFor: #asFloat!converting!public! !
+!DateAndTime categoriesFor: #asVariant!converting!public! !
+
+!DateAndTime class methodsFor!
+
+fromDATE: aFloat
+	^self fromSYSTEMTIME: (SYSTEMTIME fromDATE: aFloat) offset: self localOffset! !
+!DateAndTime class categoriesFor: #fromDATE:!instance creation!public! !
 
 !DOUBLE class methodsFor!
 
@@ -2183,31 +2204,14 @@ asVariant
 !SYSTEMTIME categoriesFor: #asFloat!converting!public! !
 !SYSTEMTIME categoriesFor: #asVariant!converting!public! !
 
-!TimeStamp methodsFor!
+!SYSTEMTIME class methodsFor!
 
-asFloat
-	"Answer the OLEDATE representation of the receiver."
-
-	^self asParameter asFloat!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
-
-	^self asParameter asVariant! !
-!TimeStamp categoriesFor: #asFloat!converting!public! !
-!TimeStamp categoriesFor: #asVariant!converting!public! !
-
-!TimeStamp class methodsFor!
-
-fromDATE: date
-	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, date, which
-	is assumed to be an AX Automation format Date."
-	
+fromDATE: aFloat 
 	| systime |
-	systime := SYSTEMTIME new.
-	OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
-	^self fromSYSTEMTIME: systime! !
-!TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
+	systime := self new.
+	OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
+	^systime! !
+!SYSTEMTIME class categoriesFor: #fromDATE:!public! !
 
 !UINT_PTR class methodsFor!
 

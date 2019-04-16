@@ -21,13 +21,13 @@ comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expect
 	self assert: output equals: expected!
 
 hoursShould: expectedHours for: seconds
-	self assert: (Time fromSeconds: seconds) hours equals: expectedHours!
+	self assert: (Time fromSeconds: seconds) hour equals: expectedHours!
 
 millisecondsShould: expectedMs for: mS
 	self assert: (Time fromMilliseconds: mS) milliseconds equals: expectedMs!
 
 minutesShould: expectedMinutes for: seconds
-	self assert: (Time fromSeconds: seconds) minutes equals: expectedMinutes!
+	self assert: (Time fromSeconds: seconds) minute equals: expectedMinutes!
 
 secondsShould: expectedSeconds for: seconds
 	self assert: (Time fromSeconds: seconds) seconds equals: expectedSeconds!
@@ -178,6 +178,19 @@ testPrintNegativeTime
 		showSeconds: true
 		expected: '21:00.00'!
 
+testPrintOnFormat
+	| locale |
+	locale := Locale userDefault.
+	
+	[Locale userDefault: Locale invariant.
+	#(#(45000 'h:mm tt' '12:30 PM')) do: 
+			[:each |
+			| time actual |
+			time := Time fromSeconds: each first.
+			actual := String streamContents: [:s | time printOn: s format: each second].
+			self assert: actual equals: each last]]
+			ensure: [Locale userDefault: locale]!
+
 testPrintPositiveTime
 	| time1 |
 	time1 := Time fromSeconds: 1 * 3600 + (0 * 60) + 0.
@@ -221,6 +234,7 @@ testSeconds
 !TimeTest categoriesFor: #testMilliseconds!public!testing! !
 !TimeTest categoriesFor: #testMinutes!public!testing! !
 !TimeTest categoriesFor: #testPrintNegativeTime!public!testing! !
+!TimeTest categoriesFor: #testPrintOnFormat!public!unit tests! !
 !TimeTest categoriesFor: #testPrintPositiveTime!public!testing! !
 !TimeTest categoriesFor: #testSeconds!public!testing! !
 

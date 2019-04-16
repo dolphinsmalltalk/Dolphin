@@ -273,14 +273,24 @@ fromAddress: ptr
 	the  GUID pointed at by ptr"
 
 	^ptr asExternalAddress
-		replaceBytesOf: self new
+		replaceBytesOf: self newNull
 		from: 1 to: 16 startingAt: 1!
 
 fromBytes: guidBytes
 	"Answer a new instance of the receiver which is a copy of the specified bytes."
 
-	^guidBytes replaceBytesOf: self new from: 1 to: self byteSize startingAt: 1
+	^guidBytes replaceBytesOf: self newNull from: 1 to: self byteSize startingAt: 1
 !
+
+fromIdlString: aString
+	"Answer a new instance of the receiver instantiated from the argument, aString,
+	which is in IDL format."
+
+	| answer status |
+	answer := self newNull.
+	(status := RPCLibrary default uuidFromString: aString uuid: answer) == 0
+		ifFalse: [RPCError signalWith: status].
+	^answer!
 
 fromString: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
@@ -320,14 +330,14 @@ newBuffer
 newNull
 	"Answer a new, null, instance of the receiver."
 
-	^self new!
+	^self new: self byteSize!
 
 newUnique
 	"Answer a new instance of the receiver generated using the standard
 	algorithm (i.e. the answer should be unique)."
 
 	| answer |
-	answer := self new.
+	answer := self newNull.
 	RPCLibrary default uuidCreate: answer.
 	^answer!
 
@@ -356,6 +366,7 @@ uninitialize
 !GUID class categoriesFor: #elementSize!accessing!private! !
 !GUID class categoriesFor: #fromAddress:!instance creation!public! !
 !GUID class categoriesFor: #fromBytes:!instance creation!public! !
+!GUID class categoriesFor: #fromIdlString:!instance creation!public! !
 !GUID class categoriesFor: #fromString:!instance creation!public! !
 !GUID class categoriesFor: #init:!initializing!public! !
 !GUID class categoriesFor: #initialize!development!initializing!private! !

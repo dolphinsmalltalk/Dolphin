@@ -122,7 +122,7 @@ printOn: aStream
 	handle isNull
 		ifFalse: 
 			[aStream nextPutAll: 'Flags: '.
-			self flags printOn: aStream base: 16.
+			self flags printOn: aStream base: 16 showRadix: true.
 			aStream
 				nextPutAll: ', Alignment: ';
 				print: (alignments at: self alignment + 1);

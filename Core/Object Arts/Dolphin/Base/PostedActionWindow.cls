@@ -56,6 +56,9 @@ isView
 
 	^false!
 
+killTimer: anInteger 
+	^UserLibrary default killTimer: handle uIDEvent: anInteger!
+
 onStartup
 	"Private - Ensure that the handle of the receiver is set to nil at startup."
 
@@ -73,14 +76,32 @@ postAction: aNiladicValuable
 		wParam: 0
 		lParam: 0!
 
-preTranslateMessage: aMSG 
+preTranslateMessage: aMSG
 	"Private - Dispatch any posted action requests on the message loop side - we don't want to
 	do this inside a callback. Also the window belongs to the VM, and messages are not
 	dispatched into the image anyway."
 
-	^aMSG message == WM_USER and: 
+	| msg |
+	msg := aMSG message.
+	msg == WM_USER
+		ifTrue: 
 			[self evaluateNextAction.
-			true]! !
+			^true].
+	msg == WM_TIMER
+		ifTrue: 
+			[ | timerId |
+			timerId := aMSG wParam.
+			self killTimer: timerId.
+			SessionManager current onTimer: timerId.
+			^true].
+	^false!
+
+setTimer: idInteger interval: intervalInteger
+	^UserLibrary default
+		setTimer: handle
+		nIDEvent: idInteger
+		uElapse: intervalInteger
+		lpTimerFunc: nil! !
 !PostedActionWindow categoriesFor: #asParameter!converting!public! !
 !PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
 !PostedActionWindow categoriesFor: #evaluateNextAction!helpers!private! !
@@ -88,7 +109,9 @@ preTranslateMessage: aMSG
 !PostedActionWindow categoriesFor: #handle:!accessing!private! !
 !PostedActionWindow categoriesFor: #isPersistentView!private!testing! !
 !PostedActionWindow categoriesFor: #isView!accessing!private!testing! !
+!PostedActionWindow categoriesFor: #killTimer:!private!timers! !
 !PostedActionWindow categoriesFor: #onStartup!event handling!private! !
 !PostedActionWindow categoriesFor: #postAction:!operations!private! !
 !PostedActionWindow categoriesFor: #preTranslateMessage:!dispatching!private! !
+!PostedActionWindow categoriesFor: #setTimer:interval:!private!timers! !
 

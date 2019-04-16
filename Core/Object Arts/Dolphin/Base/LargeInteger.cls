@@ -353,34 +353,60 @@ normalize
 	<primitive: 28>
 	^self primitiveFailed!
 
-printDecimalDigitsOn: aStream 
-	"Private - Append the ASCII representation (radix 10) of the receiver to aStream. At least
-	twice as fast as #basicPrintDigitsOn:base: for base 10."
+printOn: aWriteStream base: anInteger
+	"Print the receiver in <integer> base anInteger to the <puttableStream>, aWriteStream.
+	The base must be between 2 and 36."
 
-	| quotient digits index |
-	digits := ByteArray new: self basicSize * 3.
-	index := 1.
-	quotient := self.
-	[quotient isImmediate] whileFalse: 
-			[| quoAndRem |
-			quoAndRem := quotient quoAndRem: 100.
-			digits at: index put: (quoAndRem at: 2).
-			index := index + 1.
-			quotient := quoAndRem at: 1].
-	quotient printOn: aStream.
-	[(index := index - 1) > 0] whileTrue: 
-			["Note that the compiler will fold the strings into a single literal"
-			aStream
-				nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: (digits at: index) // 10 + 1);
-				nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: (digits at: index) \\ 10 + 1)]!
+	| halfDigits halfPower head tail nDigitsUnderestimate |
+	self < 0
+		ifTrue: 
+			[aWriteStream nextPut: $-.
+			self negated printOn: aWriteStream base: anInteger.
+			^self].
+	nDigitsUnderestimate := anInteger == 10
+				ifTrue: 
+					[((self highBit - 1) * 1233 bitShift: -12) + 1	"This is because (2 log)/(10 log)*4096 is slightly greater than 1233"]
+				ifFalse: [self highBit quo: anInteger highBit].
 
-printDigitsOn: aStream base: anInteger 
-	"Private - Recursively print the digits of the receiver in base anInteger to aStream.
-	N.B. The receiver MUST be positive for this to work correctly."
+	"splitting digits with a whole power of two is more efficient"
+	halfDigits := 1 bitShift: nDigitsUnderestimate highBit - 2.
 
-	anInteger == 10 
-		ifTrue: [self printDecimalDigitsOn: aStream]
-		ifFalse: [self basicPrintDigitsOn: aStream base: anInteger]!
+	"Separate in two halves, head and tail"
+	halfPower := anInteger raisedToInteger: halfDigits.
+	head := self quo: halfPower.
+	tail := self - (head * halfPower).
+
+	"print head"
+	head printOn: aWriteStream base: anInteger.
+
+	"print tail without the overhead to count the digits"
+	tail
+		printOn: aWriteStream
+		base: anInteger
+		nDigits: halfDigits!
+
+printOn: aWriteStream base: baseInteger nDigits: digitsInteger
+	"Append a textual representation of the receiver in <integer> base, baseInteger, to the <puttableStream>, aWriteStream, using at least <integer> digits, digitsInteger.
+	Behavior is undefined unless it holds that 0 <= self < (baseInteger raisedToInteger: digitsInteger)."
+
+	| halfPower half head tail |
+	digitsInteger <= 1
+		ifTrue: 
+			[digitsInteger <= 0 ifTrue: [self error: 'Number of digits must be > 0'].
+			^aWriteStream nextPut: (Character digitValue: self)].
+	"In order to reduce cost of LargeInteger arithmetic, use a divide and conquer algorithm."
+	halfPower := digitsInteger bitShift: -1.
+	half := baseInteger raisedToInteger: halfPower.
+	head := self quo: half.
+	tail := self - (head * half).
+	head
+		printOn: aWriteStream
+		base: baseInteger
+		nDigits: digitsInteger - halfPower.
+	tail
+		printOn: aWriteStream
+		base: baseInteger
+		nDigits: halfPower!
 
 quoAndRem: aNumber
 	"Private- Answer a two element array containing the integer quotient of 
@@ -488,8 +514,8 @@ subtractFromInteger: anInteger
 !LargeInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
 !LargeInteger categoriesFor: #negated!arithmetic!public! !
 !LargeInteger categoriesFor: #normalize!converting!private! !
-!LargeInteger categoriesFor: #printDecimalDigitsOn:!printing!private! !
-!LargeInteger categoriesFor: #printDigitsOn:base:!printing!private! !
+!LargeInteger categoriesFor: #printOn:base:!printing!private! !
+!LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
 !LargeInteger categoriesFor: #quoAndRem:!arithmetic!public! !
 !LargeInteger categoriesFor: #quoAndRemFromInteger:!double dispatch!private! !
 !LargeInteger categoriesFor: #rem:!arithmetic!public! !

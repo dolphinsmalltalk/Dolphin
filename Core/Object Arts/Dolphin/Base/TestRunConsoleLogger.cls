@@ -14,7 +14,7 @@ finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in '.
-	aTestCaseResult printDurationOn: stream.
+	Locale smalltalk displayDuration: aTestCaseResult duration on: stream.
 	stream cr!
 
 finishedRun: aTestResult knownSlowTests: aCollection
@@ -79,7 +79,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
-	Locale userDefault printDuration: anInteger on: stream.
+	Locale smalltalk displayDuration: anInteger on: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
 		print: aCollection size;
@@ -88,7 +88,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	newLaggards do: 
 			[:each |
 			stream tab.
-			each printDurationOn: stream.
+			Locale smalltalk displayDuration: each duration on: stream.
 			stream
 				tab;
 				print: each case;

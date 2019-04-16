@@ -343,6 +343,9 @@ millisecondClockValue
 	<primitive: 174>
 	^self primitiveFailed!
 
+msgWindow
+	^msgWindow!
+
 onExit
 	"Private - The system is closing down, release system resources."
 
@@ -655,6 +658,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #main:!initializing!private! !
 !InputState categoriesFor: #mainLoop!message dispatching!private! !
 !InputState categoriesFor: #millisecondClockValue!enquiries!private! !
+!InputState categoriesFor: #msgWindow!accessing!private! !
 !InputState categoriesFor: #onExit!event handling!private! !
 !InputState categoriesFor: #postAction:!message dispatching!public! !
 !InputState categoriesFor: #postQuit:!operations-shutdown!private! !

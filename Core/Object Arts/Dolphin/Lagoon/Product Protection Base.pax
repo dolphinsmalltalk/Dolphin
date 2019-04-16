@@ -21,10 +21,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\DolphinSure\DolphinSure';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\DolphinSure\DolphinSure').
 
 package!
 

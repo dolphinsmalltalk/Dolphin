@@ -40,6 +40,18 @@ testInvalidDateFormat
 		raise: InvalidFormat.
 	self assertIsNil: edit model value!
 
+testInvalidDurationFormat
+	edit typeconverter: DurationToText new.
+	edit value: 42.123456789 days.
+	self assert: edit text equals: '42:02:57:46.667'.
+	self shouldnt: 
+			[edit
+				text: 'abcd';
+				isTextModified: true;
+				updateModel]
+		raise: InvalidFormat.
+	self assertIsNil: edit model value!
+
 testInvalidNumberFormat
 	edit typeconverter: NumberToText new.
 	edit value: 100.
@@ -84,6 +96,7 @@ testLeftNullValue
 !TypeConverterTest categoriesFor: #tearDown!public!unit tests! !
 !TypeConverterTest categoriesFor: #testInvalidBooleanFormat!public!unit tests! !
 !TypeConverterTest categoriesFor: #testInvalidDateFormat!public!unit tests! !
+!TypeConverterTest categoriesFor: #testInvalidDurationFormat!public!unit tests! !
 !TypeConverterTest categoriesFor: #testInvalidNumberFormat!public!unit tests! !
 !TypeConverterTest categoriesFor: #testInvalidTimeFormat!public!unit tests! !
 !TypeConverterTest categoriesFor: #testLeftNullValue!public!unit tests! !

@@ -139,14 +139,14 @@ getInstallationDirectory
 	^File appendPathDelimiter: folder!
 
 imageStamp
-	"Answer the TimeStamp at which the image was saved."
+	"Answer the <DateAndTime> at which the image was last saved."
 
 	^imageStamp!
 
-imageStamp: aTimeStamp
-	"Private - Set the TimeStamp marking the date and time of the image."
+imageStamp: aDateAndTime
+	"Private - Set the <DateAndTime> marking the date and time of the image."
 
-	imageStamp := aTimeStamp!
+	imageStamp := aDateAndTime!
 
 imageVersionMinor: anInteger
 	"Private - Set the minor component of the image's version Integer."
@@ -252,7 +252,7 @@ logError: anException
 	[| f |
 	f := FileStream write: self errorLogName mode: #append type: #utf8.
 	f
-		print: TimeStamp current;
+		print: DateAndTime now;
 		nextPutAll: ': Unhandled exception - '.
 	anException printTraceOn: f.
 	f
@@ -585,7 +585,7 @@ saveSessionState
 	preserved by a normal image save. Examples would be externally managed resources
 	such as Windows."
 
-	self imageStamp: TimeStamp current.
+	self imageStamp: DateAndTime now.
 	super saveSessionState.!
 
 sentinelName

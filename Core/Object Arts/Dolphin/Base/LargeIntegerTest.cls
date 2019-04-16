@@ -1182,6 +1182,18 @@ testPrintLargeBase2
 	l2 := Integer readFrom: binary readStream.
 	self assert: l equals: l2!
 
+testPrintStringBase
+	
+	2 to: 32 do: [:b |
+		1 to: 1000//b do: [:n |
+			| bRaisedToN |
+			bRaisedToN := b raisedTo: n.
+			self assert: (bRaisedToN - 1 printStringBase: b) equals: (String new: n withAll: (Character digitValue: b-1)).
+			self assert: (bRaisedToN printStringBase: b) equals: ('1' , (String new: n withAll: $0)).
+			
+			self assert: (bRaisedToN negated + 1 printStringBase: b) equals: ('-' , (String new: n withAll: (Character digitValue: b-1))).
+			self assert: (bRaisedToN negated printStringBase: b) equals: ('-1' , (String new: n withAll: $0))]].!
+
 testQuo
 	| u v |
 	u := 1490632608.
@@ -1366,7 +1378,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testAddDoubleToTriplePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToDoubleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToDoublePos!public!unit tests! !
-!LargeIntegerTest categoriesFor: #testAddSingleToSingleNeg!public! !
+!LargeIntegerTest categoriesFor: #testAddSingleToSingleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToSinglePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToTripleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSmall!public!unit tests! !
@@ -1399,11 +1411,12 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testNegate!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testPrintLargeBase2!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testPrintStringBase!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem2!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
-!LargeIntegerTest categoriesFor: #testRaisedToInteger!public! !
+!LargeIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubFromQuad!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubFromQuadNeg!public!unit tests! !

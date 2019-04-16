@@ -22,8 +22,6 @@ package methodNames
 	add: #MessageSendAbstract -> #announcementSubscriber;
 	add: #Symbol -> #asAnnouncement;
 	add: #Symbol -> #handlesAnnouncement:;
-	add: 'SequenceableCollection class' -> #new:streamContents:;
-	add: 'SequenceableCollection class' -> #streamContents:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -32,9 +30,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
 
 package!
 
@@ -112,20 +109,6 @@ asWeakMessageSend
 announcementSubscriber
 	^self receiver! !
 !MessageSendAbstract categoriesFor: #announcementSubscriber!public! !
-
-!SequenceableCollection class methodsFor!
-
-new: newSize streamContents: blockWithArg 
-	| stream |
-	stream := self writeStream: newSize.
-	blockWithArg value: stream.
-	^stream contents!
-
-streamContents: monadicBlock
-
-	^ self new: 100 streamContents: monadicBlock! !
-!SequenceableCollection class categoriesFor: #new:streamContents:!public! !
-!SequenceableCollection class categoriesFor: #streamContents:!public! !
 
 !Symbol methodsFor!
 

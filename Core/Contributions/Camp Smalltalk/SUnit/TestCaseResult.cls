@@ -16,8 +16,7 @@ case
 	^case!
 
 duration
-	"Answer the time the test took to run, in microseconds. If the test didn't pass, the value
-	is undefined."
+	"Answer the <Duration> of the test execution. If the test didn't pass, the value is undefined."
 
 	^duration!
 
@@ -26,20 +25,17 @@ outcome
 
 	^outcome!
 
-printDurationOn: aPuttableStream
-	Locale userDefault printDuration: duration on: aPuttableStream!
-
-setCase: aTestCase duration: anInteger
+setCase: aTestCase duration: aDuration
 	case := aTestCase.
 	outcome := #passed.
-	duration := anInteger!
+	duration := aDuration!
 
 setCase: aTestCase outcome: aSymbol signal: anException
 	case := aTestCase.
 	outcome := aSymbol.
 	signal := anException.
 	stacktrace := anException stackTrace: -1.
-	duration := 0!
+	duration := 0 seconds!
 
 signal
 	"Answer the <Exception> signalled if the test failed or threw an error, or nil if the test
@@ -54,7 +50,6 @@ stacktrace
 !TestCaseResult categoriesFor: #case!accessing!public! !
 !TestCaseResult categoriesFor: #duration!accessing!public! !
 !TestCaseResult categoriesFor: #outcome!accessing!public! !
-!TestCaseResult categoriesFor: #printDurationOn:!printing!public! !
 !TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
 !TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
 !TestCaseResult categoriesFor: #signal!accessing!public! !

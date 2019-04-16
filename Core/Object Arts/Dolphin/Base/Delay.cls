@@ -7,31 +7,35 @@ Object subclass: #Delay
 	classInstanceVariableNames: ''!
 Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
 Delay addClassConstant: 'DefaultResolution' value: 16r3D09!
-Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMicroseconds:, #forMilliseconds:, and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
+Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
-Delays are "one-shot" in that once they have expired further attempts to #wait on them will return immediately. This applies even if the Delay was originally constructed to wait for a time interval rather than an absolute time. Therefore if one wishes to delay a process in a loop, new Delay instances should be created as required inside the loop. It is often more convenient to use the ProcessorScheduler>>sleep: message, which wraps up the creation and wait operations inside a convenience message.
+`Delay`s constructed to wait for an absolute time are "one-shot", in that once they have expired further attempts to `#wait` on them will return immediately. Conversely, `Delay`s scheduled to wait for a time interval can be waited on again to delay for the same interval.
 
-Delays are not hard real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (which is accurate to at best 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting Process in relation to other Processes. There is also some context switching and other processing overhead that will increase the average minimum Delay to a period greater than 1mS, though (depending on machine speed) it should be quite close. 
+`Delay`s are not hard (or even soft) real time, in that the requested delay is the minimum time period that will elapse before the process is restarted. The VM will make a best effort to reschedule the process after the desired delay by using the high-resolution multimedia clock (which is accurate to at best 1 millisecond) and high priority threads, but there may still be an arbitrary additional delay before the Process actually restarts depending on the load on the host machine and the relative priority of the Dolphin thread in relation to other OS threads, and the waiting pocess in relation to other processes. There is also some context switching and other processing overhead that will increase the average minimum delay to a period greater than 1mS, though (depending on machine speed) it should be reasonably close. 
 
 Example usage:
-	5 timesRepeat: [(Delay forMilliseconds: 500) wait. Sound bell]
+```
+	d := Delay forMilliseconds: 500. 5 timesRepeat: [d wait. Sound bell]
+```
 
-Instance Variables:
-	duration			<integer> number of microseconds to delay when #wait is sent
-	resumptionTime	<integer> value of VM microsecond clock at which to resume
-	waitSemaphore		<Semaphore> on which to wait
+## Instance Variables:
+  `duration`			`<integer>` number of microseconds to delay when #wait is sent (or nil for an absolute delay)
+  `resumptionTime`		`<integer>` value of VM microsecond clock at which to resume
+  `waitSemaphore`		`Semaphore` on which to wait
 
-Class Variables:
-	AccessProtect		<Semaphore>; protects the class variables in critical regions.
-	Current			<Delay>; the next scheduled Delay (or nil if none).
-	DefaultResolution	The default resolution of Delays; <integer> number of microseconds.
-	HighestResolution	The highest requestable resolution for Delays; <integer> number of microseconds.
-	ImageClock		The <integer> microsecond clock value on last image save - used to rebase pending Delays on image restart.
-	LowestResolution	The lowest requestable resolution for Delays; <integer> number of microseconds.
-	Pending			<SortedCollection> of waiting <Delay>s in ascending order of resumptionTime.
-	Resolution			The current <integer> resolution of Delays specified in microseconds.
-	TimingProcess		<Process> responsible for waking up delayed processes on expiry of Delays.
-	TimingSemaphore	<Semaphore> signalled by the VM at requested times, governing the operation of the TimingProcess.'!
+## Class Variables:
+  `AccessProtect`	`Semaphore`; protects the class variables in critical regions.
+  `Current`			`Delay` the next scheduled Delay (or nil if none).
+  `DefaultResolution`	The default resolution of Delays; `<integer>` number of microseconds.
+  `ImageClock`		The `<integer>` microsecond clock value on last image save - used to rebase pending Delays on image restart.
+  `Pending`			`<SortedCollection>` of waiting `<Delay>`s in ascending order of resumption time.
+  `TimingProcess`	`Process` responsible for waking up delayed processes on expiry of Delays.
+  `TimingSemaphore`	`Semaphore` signalled by the VM at requested times, governing the operation of the TimingProcess.
+  `HighestResolution`	`<integer>`; highest available clock resolution (most precise), in microseconds
+  `LowestResolution`	`<integer>`; lowest available clock resolution (least precise), in microseconds
+  `Resolution`		`<integer>`; current clock resolution, in microseconds.
+
+'!
 !Delay categoriesForClass!Kernel-Processes! !
 !Delay methodsFor!
 
@@ -181,14 +185,7 @@ terminateProcess
 	self cancel!
 
 wait
-	"Delay the active Process until the receiver's resumption time. The processes priority 
-	is temporarily raised to prevent it holding up the timing process when its critical 
-	section - if we did not do this and the current active process has a low priority, then 
-	it might be preempted in its critical section, which will prevent the TimingProcess
-	from operating correctly. The resumption time is calculated outside the critical section 
-	so that it is based, as near as possible, on the millisecondClockValue at the time the 
-	#wait message is sent. If it were calculated inside, then it would incorrectly include 
-	the time taken to acquire the AccessProtect Semaphore."
+	"Delay the active Process until the receiver's resumption time. The processes priority is temporarily raised to prevent it holding up the timing process when its critical  section - if we did not do this and the current active process has a low priority, then it might be preempted in its critical section, which will prevent the TimingProcess from operating correctly. The resumption time is calculated outside the critical section so that it is based, as near as possible, on the millisecondClockValue at the time the #wait message is sent. If it were calculated inside, then it would incorrectly include the time taken to acquire the AccessProtect Semaphore."
 
 	| resumingAt |
 	resumingAt := self calcResumptionTime.
@@ -208,6 +205,7 @@ wait
 wakeup
 	"Private - The receiver has fired, resume the Process suspended on the receiver (if any)."
 
+	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
 !Delay categoriesFor: #<=!comparing!public! !
 !Delay categoriesFor: #calcResumptionTime!accessing!private! !
@@ -248,6 +246,9 @@ clampResolution: anInteger
 	setting a resolution higher than we can achieve."
 
 	^anInteger max: 1000!
+
+forDuration: aDuration 
+	^self forMicroseconds: aDuration asMicroseconds truncated!
 
 forkTimingProcess
 	"Private - Start the timing process which manages instances of the receiver. The timing 
@@ -308,10 +309,9 @@ forSeconds: anInteger
 	^self forMilliseconds: anInteger * 1000!
 
 highestResolution
-	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
-	one could theoretically request a Delay on the current host."
+	"Answer a <Duration> which is the maximum resolution of Delays, i.e. the shortest period for which one could theoretically request a Delay on the current host."
 
-	^HighestResolution!
+	^HighestResolution microseconds!
 
 initialize
 	"Initialize the Class Variables of the receiver:
@@ -410,20 +410,19 @@ reschedule
 			self scheduleNext]!
 
 resolution
-	"Answer the resolution of Delays in microseconds. This is the underlying resolution of the
-	OS timer. Dolphin will try to service delays of this period, but it may not be possible."
+	"Answer a <Duration> which is current resolution of Delays. This is the underlying resolution of the OS timer. Dolphin will try to service delays of this period, but it may not be possible. The resolution can be increased temporarily by using the #resolution:do: message, or permanently (not recommended) with #resolution:set:"
 
-	^Resolution!
+	^Resolution microseconds!
 
-resolution: anInteger do: aNiladicValuable
+resolution: aDuration do: aNiladicValuable
 	"Evaluate the <monadicValuable> argument with the system timer resolution set to the number
 	of 100nS intervals specified by the <integer> argument. The actual timer resolution is
 	passed as the argument to the <monadicValuable>."
 
-	self resolution: anInteger set: true.
-	[aNiladicValuable value] ensure: [self resolution: anInteger set: false]!
+	self resolution: aDuration set: true.
+	[aNiladicValuable value] ensure: [self resolution: aDuration set: false]!
 
-resolution: anInteger set: aBoolean
+resolution: aDuration set: aBoolean
 	"Attempt to set or relinquish a timer resolution specified by the <integer> argument, which
 	represents the desired number of microseconds between each timer tick. If the <boolean>
 	argument is true, then the timer resolution is requested. If the <boolean> argument is
@@ -435,7 +434,7 @@ resolution: anInteger set: aBoolean
 	| actualResolution |
 	actualResolution := DWORDBytes new.
 	NTLibrary default
-		setTimerResolution: anInteger * 10
+		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.
 	Resolution := actualResolution value // 10.
@@ -475,6 +474,7 @@ untilMilliseconds: millisecondTime
 !Delay class categoriesFor: #aboutToIdle!event handling!private! !
 !Delay class categoriesFor: #cancelTimer!operations!private! !
 !Delay class categoriesFor: #clampResolution:!helpers!private! !
+!Delay class categoriesFor: #forDuration:!instance creation!public! !
 !Delay class categoriesFor: #forkTimingProcess!initializing!private! !
 !Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
 !Delay class categoriesFor: #forMilliseconds:!instance creation!public! !

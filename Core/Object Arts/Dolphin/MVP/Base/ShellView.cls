@@ -675,7 +675,7 @@ onPreSaveImage
 
 	self isTopView ifTrue: [self propertyAt: #state put: self state]!
 
-onSettingChanged: aWindowsEvent 
+onSettingChanged: aWindowsEvent
 	SessionManager current onSettingChanged: aWindowsEvent.
 	self presenter trigger: #settingChanged: with: aWindowsEvent.
 	(aWindowsEvent wParam = SPI_SETICONTITLELOGFONT and: [font isNil]) ifTrue: [self fontChanged].
@@ -685,6 +685,11 @@ onSubViewRemoved: aView
 	(self lastFocus notNil and: [self lastFocus allParents includes: aView]) 
 		ifTrue: [self lastFocus: self].
 	super onSubViewRemoved: aView!
+
+onTimeChanged: aWindowsEvent
+	SessionManager current onTimeChanged: aWindowsEvent.
+	self presenter trigger: #timeChanged: with: aWindowsEvent.
+	^aWindowsEvent lResult!
 
 onViewActivated: anEvent 
 	"Default handler for window activation. Reset focus to the last view
@@ -1167,6 +1172,15 @@ wmSize: message wParam: wParam lParam: lParam
 					^self presenter onViewRestored: event]].
 	^nil!
 
+wmTimeChange: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_TIMECHANGE message."
+
+	^self presenter onTimeChanged: (WindowsEvent 
+				window: self
+				message: message
+				wParam: wParam
+				lParam: lParam)!
+
 wmWindowPosChanged: message wParam: wParam lParam: lParam
 	"Private - The position of the receiver is about to change in some manner.
 	The superclass doesn't invoke default window processing in order to suppress
@@ -1264,6 +1278,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #onPreSaveImage!event handling!public! !
 !ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
+!ShellView categoriesFor: #onTimeChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onViewActivated:!event handling!public! !
 !ShellView categoriesFor: #onViewCreated!event handling!public! !
 !ShellView categoriesFor: #onViewDeactivated:!event handling!public! !
@@ -1308,6 +1323,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmSettingChange:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmSize:wParam:lParam:!event handling!event handling-win32!private! !
+!ShellView categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
 
 ShellView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!

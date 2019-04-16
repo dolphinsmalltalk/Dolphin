@@ -75,7 +75,7 @@ printOn: aStream
 	aStream
 		print: self window;
 		space.
-	msg isNil ifTrue: [self message printOn: aStream base: 16] ifFalse: [aStream nextPutAll: msg].
+	msg isNil ifTrue: [self message printOn: aStream base: 16 showRadix: true] ifFalse: [aStream nextPutAll: msg].
 	aStream
 		space;
 		print: self wParam;

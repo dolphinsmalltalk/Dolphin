@@ -101,60 +101,69 @@ shaAlgorithmHandle
 	This handle is never freed, because re-creating it is expensive."
 
 	| status |
-
-	( shaAlgorithmHandle isNil or: [ shaAlgorithmHandle value = 0 ] ) ifTrue: [
-		shaAlgorithmHandle := ExternalHandle new.
-
-		status := self openAlgorithmProvider: shaAlgorithmHandle id: BCRYPT_SHA1_ALGORITHM implementation: nil flags: 0.
-		( self statusFailed: status ) ifTrue: [ 
-			self error: 'BCrypt>>openAlgorithmProvider failed: ', ( status printStringRadix: 16 showRadix: false ) ] ].
-
-	^ shaAlgorithmHandle.!
+	(shaAlgorithmHandle isNil or: [shaAlgorithmHandle value = 0])
+		ifTrue: 
+			[shaAlgorithmHandle := ExternalHandle new.
+			status := self
+						openAlgorithmProvider: shaAlgorithmHandle
+						id: BCRYPT_SHA1_ALGORITHM
+						implementation: nil
+						flags: 0.
+			(self statusFailed: status)
+				ifTrue: [self error: 'BCrypt>>openAlgorithmProvider failed: ' , (status printStringBase: 16)]].
+	^shaAlgorithmHandle!
 
 shaCreate
 	"Creates a SHA context. In BCrypt terms, the context is the hash handle."
 
 	| hashHandle status |
-
 	hashHandle := ExternalHandle new.
-	status := self createHash: self shaAlgorithmHandle hashHandle: hashHandle hashObject: nil hashObjectSize: 0 secret: 0 secretSize: 0 flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>createHash: failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-
-	^ hashHandle.!
+	status := self
+				createHash: self shaAlgorithmHandle
+				hashHandle: hashHandle
+				hashObject: nil
+				hashObjectSize: 0
+				secret: 0
+				secretSize: 0
+				flags: 0.
+	(self statusFailed: status)
+		ifTrue: [self error: 'BCrypt>>createHash: failed: ' , (status printStringBase: 16)].
+	^hashHandle!
 
 shaDestroy: aHashHandle
 	"Destroys the argument SHA handle (context)."
 
-	| status | 
-
+	| status |
 	status := self destroyHash: aHashHandle.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>destroyHash failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-!
+	(self statusFailed: status)
+		ifTrue: [self error: 'BCrypt>>destroyHash failed: ' , (status printStringBase: 16)]!
 
 shaGetHash: aHashHandle
 	"Answer the computed hash for the argument SHA handle.
 	 The answer will be a ByteArray of 20 bytes for SHA1"
 
 	| hash status |
-
 	hash := ByteArray new: 20.
-	status := self finishHash: aHashHandle output: hash outputSize: hash size flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>finishHash failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-
-	^ hash.!
+	status := self
+				finishHash: aHashHandle
+				output: hash
+				outputSize: hash size
+				flags: 0.
+	(self statusFailed: status)
+		ifTrue: [self error: 'BCrypt>>finishHash failed: ' , (status printStringBase: 16)].
+	^hash!
 
 shaHashBuffer: aHashHandle buffer: buffer
 	"Hash the contents in of ByteArray buffer in the currently open hash context."
 
-	| status | 
-
-	status := self hashData: aHashHandle input: buffer inputSize: buffer size flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>hashData failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-!
+	| status |
+	status := self
+				hashData: aHashHandle
+				input: buffer
+				inputSize: buffer size
+				flags: 0.
+	(self statusFailed: status)
+		ifTrue: [self error: 'BCrypt>>hashData failed: ' , (status printStringBase: 16)]!
 
 statusFailed: aStatus
 	"Answer true if the argument NTSTATUS indicates a fail value."

@@ -7,12 +7,12 @@ ValueConvertingControlView subclass: #DateTimeCommonControl
 	classInstanceVariableNames: ''!
 DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 DateTimeCommonControl isAbstract: true!
-DateTimeCommonControl comment: 'DateTimeCommonControl is the abstract class of <valueView>s implementing the Windows date/time common controls. 
+DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 
 
-The <valueModel> associated with a DateTimeCommonControl must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter. A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
+The `<valueModel>` associated with a `DateTimeCommonControl` must always yield a value that can be converted to a `SYSTEMTIME` using `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
 
-Class Instance Variables:
-	notificationMap		<Array> or <Symbol>, mapping normalized notification codes to selectors.
+
+
 '!
 !DateTimeCommonControl categoriesForClass!MVP-Views! !
 !DateTimeCommonControl methodsFor!
@@ -27,8 +27,7 @@ displayValue: aDateOrTimeOrNil
 	"Private - Set the displayed contents of the receiver from the argument."
 
 	self displayValue = aDateOrTimeOrNil ifTrue: [^self].
-	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asTimeStamp]) 
-				asParameter!
+	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter])!
 
 dtNotificationMap
 	^self subclassResponsibility!

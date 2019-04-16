@@ -6,9 +6,8 @@ Magnitude subclass: #TimeStamp
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TimeStamp guid: (GUID fromString: '{87b4c656-026e-11d3-9fd7-00a0cc3e4a32}')!
-TimeStamp comment: 'TimeStamp is the class whose instances represent times of a particular day (i.e. a combination of a Date and Time).
-This class is likely to be replaced by the forthcoming ANSI compliant DateAndTime class.'!
-!TimeStamp categoriesForClass!Magnitude-General! !
+TimeStamp comment: '*This class is deprecated as it has been replaced by the ANSI compliant DateAndTime class, which is time zone offset aware.*'!
+!TimeStamp categoriesForClass!Deprecated! !
 !TimeStamp methodsFor!
 
 < aTimeStamp
@@ -27,6 +26,9 @@ addSeconds: anInteger
 	"Answer a new TimeStamp, anInteger seconds after the receiver."
 
 	^self class fromSeconds: self asSeconds + anInteger!
+
+asDateAndTime
+	^DateAndTime fromDate: date time: time!
 
 asMilliseconds
 	"Answer the number of milliseconds between January 1, 1901, and the time and date
@@ -60,60 +62,92 @@ asTimeStamp
 	^self!
 
 date
-	"Answer the Date of the receiver."
+	"Answer the <Date> of the receiver."
 
 	^date
 !
 
 date: aDate
-	"Set the Date of the receiver. Answer the receiver."
+	"Timestamps are immutable and should be initialized at creation time."
 
+	Notification deprecated.
+	self isImmutable: false.
 	date := aDate
 !
 
 dateAndTime
 	"Answer a two element Array containing the date and time."
 
+	Notification deprecated.
 	^{self date. self time}!
+
+dayOfMonth
+	"Answer an <integer> between 1 and 31, inclusive, representing the day of the month of the date of the receiver."
+
+	^date dayOfMonth!
+
+dayOfWeek
+	^date dayOfWeek!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
 	^(self date hash bitShift: 2) bitXor: self time hash!
 
+hour
+	"Answer an <integer> between 0 and 23, inclusive, representing the hour of the day on the 24-hour clock of time of the receiver."
+
+	^time hour!
+
+hour12
+	"Answer an <integer> between 1 and 12, inclusive, representing the hour of the day on the 12-hour clock of time of the receiver."
+
+	^time hour12!
+
+hour24
+	"Answer an <integer> between 0 and 23, inclusive, representing the hour of the day on the 24-hour clock of time of the receiver."
+
+	^time hour24!
+
+minute
+	"Answer an <integer> between 0 and 59, inclusive, representing the minute of the hour of the time of the receiver."
+
+	^time minute!
+
+month
+	"Answer the one-based <integer> index of the month represented by the receiver; 1 for January, 2 for February, and so on."
+
+	^date month!
+
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
-	aStream
-		print: self time;
-		nextPutAll: ', ';
-		print: self date!
+	"Maintain the format that Dolphin has historically used for displaying TimeStamps because Ian's Chunk Browser relies on this to identify image saves, e.g. 11:06:39, 03 April 2002"
+	Locale smalltalk printDateTime: self on: aStream format: 'HH:mm:ss, dd MMMM yyyy'!
 
-printOn: aStream locale: aLocale flags: anInteger timeFormat: timeString dateFormat: dateString
-	aStream
-		nextPutAll: (aLocale 
-					printTime: self time
-					format: timeString
-					flags: anInteger);
-		space;
-		nextPutAll: (aLocale 
-					printDate: self date
-					format: dateString
-					flags: anInteger)!
+printOn: aStream format: aString
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>dateFormat and Locale>>timeFormat methods. If the format argument is nil then the receiver is printed to the stream in the currently configured default date and time formats of the host OS."
 
-printOn: aStream timeFormat: timeString dateFormat: dateString
-	"Append a short textual description of the receiver to the <puttableStream> argument,
-	aStream. The format is defined by the <readableString> argument, aString, the format 
-	characters of which are as described in the Control Panel help for Windows 	Regional 
-	Options/Time & Date settings. If the format argument is nil then the receiver is printed 
-	to the stream in the currently configured default date and time formats of the host OS."
+	Locale default printDateTime: self on: aStream format: aString
+!
 
-	self 
-		printOn: aStream
-		locale: Locale default
-		flags: 0
-		timeFormat: timeString
-		dateFormat: dateString!
+printStringFormat: aString 
+	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the comments of the Locale>>#dateFormat and Locale>>#timeFormat methods. Settings from the default locale are used."
+
+	| stream |
+	stream := String writeStream: aString size.
+	self printOn: stream format: aString.
+	^stream contents!
+
+second
+	^time second!
+
+setDate: aDate time: aTime
+	date := aDate.
+	time := aTime.
+	self isImmutable: true.
+	^self
+!
 
 storeOn: aStream 
 	aStream
@@ -122,19 +156,25 @@ storeOn: aStream
 	self displayString printOn: aStream!
 
 time
-	"Answer the Time of the receiver."
+	"Answer the <Time> of the receiver."
 
 	^time
 !
 
 time: aTime
-	"Set the Time of the receiver. Answer the receiver."
+	"Timestamps are immutable and should be initialized at creation time."
 
+	Notification deprecated.
+	self isImmutable: false.
 	time := aTime
-! !
+!
+
+year
+	^date year! !
 !TimeStamp categoriesFor: #<!comparing!public! !
 !TimeStamp categoriesFor: #=!comparing!public! !
 !TimeStamp categoriesFor: #addSeconds:!arithmetic!comparing!public! !
+!TimeStamp categoriesFor: #asDateAndTime!public! !
 !TimeStamp categoriesFor: #asMilliseconds!converting!public! !
 !TimeStamp categoriesFor: #asParameter!converting!public! !
 !TimeStamp categoriesFor: #asSeconds!converting!public! !
@@ -142,24 +182,35 @@ time: aTime
 !TimeStamp categoriesFor: #date!accessing!public! !
 !TimeStamp categoriesFor: #date:!accessing!public! !
 !TimeStamp categoriesFor: #dateAndTime!accessing!public! !
+!TimeStamp categoriesFor: #dayOfMonth!accessing!public! !
+!TimeStamp categoriesFor: #dayOfWeek!public! !
 !TimeStamp categoriesFor: #hash!comparing!public! !
+!TimeStamp categoriesFor: #hour!accessing!public! !
+!TimeStamp categoriesFor: #hour12!accessing!public! !
+!TimeStamp categoriesFor: #hour24!accessing!public! !
+!TimeStamp categoriesFor: #minute!accessing!public! !
+!TimeStamp categoriesFor: #month!accessing!public! !
 !TimeStamp categoriesFor: #printOn:!printing!public! !
-!TimeStamp categoriesFor: #printOn:locale:flags:timeFormat:dateFormat:!printing!private! !
-!TimeStamp categoriesFor: #printOn:timeFormat:dateFormat:!printing!public! !
+!TimeStamp categoriesFor: #printOn:format:!printing!public! !
+!TimeStamp categoriesFor: #printStringFormat:!printing!public! !
+!TimeStamp categoriesFor: #second!accessing!public! !
+!TimeStamp categoriesFor: #setDate:time:!accessing!initializing!private! !
 !TimeStamp categoriesFor: #storeOn:!printing!public! !
 !TimeStamp categoriesFor: #time!accessing!public! !
 !TimeStamp categoriesFor: #time:!accessing!public! !
+!TimeStamp categoriesFor: #year!accessing!public! !
 
 !TimeStamp class methodsFor!
 
 current
-	"Answer a new instance of the receiver representing the current
-	date and time"
+	"Answer a new instance of the receiver representing the current date and time."
+
+	"Note that the clock precision is currently limited to milliseconds because of the use of SYSTEMTIMEs."
 
 	^self fromSYSTEMTIME: SYSTEMTIME now!
 
 currentUTC
-	"Answer a new instance of the receiver representing the current UTC date and time"
+	"Answer a new instance of the receiver representing the current UTC date and time."
 
 	^self fromSYSTEMTIME: SYSTEMTIME nowUTC!
 
@@ -172,10 +223,12 @@ date: aDate time: aTime
 	"Answer a new instance of the receiver based on aDate and aTime"
 
 	<primitive: 157>
-	^super new
-		date: aDate;
-		time: aTime;
-		yourself!
+	^super new setDate: aDate time: aTime!
+
+fromDateAndTime: aDateAndTime
+	"Answer a new instance of the receiver representing the same date and time as the local time of the <DateAndTime> argument."
+
+	^self date: aDateAndTime asDate time: aDateAndTime asTime!
 
 fromMilliseconds: anInteger 
 	| date msInDay |
@@ -206,7 +259,7 @@ fromString: aString
 				date := Date readFrom: stream.
 				stream next.
 				time := Time readFrom: stream].
-	^TimeStamp date: date time: time!
+	^self date: date time: time!
 
 fromSYSTEMTIME: aSYSTEMTIME
 	"Answer a new instance of the receiver representing the current
@@ -229,6 +282,7 @@ time: aTime
 !TimeStamp class categoriesFor: #currentUTC!instance creation!public! !
 !TimeStamp class categoriesFor: #date:!instance creation!public! !
 !TimeStamp class categoriesFor: #date:time:!instance creation!public! !
+!TimeStamp class categoriesFor: #fromDateAndTime:!instance creation!public! !
 !TimeStamp class categoriesFor: #fromMilliseconds:!public! !
 !TimeStamp class categoriesFor: #fromSeconds:!instance creation!public! !
 !TimeStamp class categoriesFor: #fromString:!public! !

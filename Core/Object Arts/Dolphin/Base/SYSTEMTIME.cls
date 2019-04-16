@@ -18,28 +18,51 @@ SYSTEMTIME comment: ''!
 !SYSTEMTIME categoriesForClass!Win32-Structs! !
 !SYSTEMTIME methodsFor!
 
+asDate
+	"Answer a <Date> corresponding to the receiver's date."
+
+	^Date fromSYSTEMTIME: self!
+
+asDateAndTime
+	"Answer a <DateAndTime> corresponding to the receiver."
+
+	^DateAndTime fromSYSTEMTIME: self offset: DateAndTime localOffset!
+
 asFILETIME
 	"Answer a FILETIME corresponding to the receiver."
 
 	^FILETIME fromSYSTEMTIME: self!
 
-asTimeStamp
-	"Answer a TimeStamp corresponding to the receiver."
+dayOfMonth
+	^self wDay!
 
-	^TimeStamp fromSYSTEMTIME: self!
+dayOfWeek
+	^self wDayOfWeek + 1!
 
 displayOn: aStream
-	"Append a displayable representation of the receiver to aStream.
-	Use the same display format as the system does, e.g. in Explorer, which is
-	date followed by time separated by a space."
+	"Append a displayable representation of the receiver to aStream."
 
-	| lc |
-	lc := Locale default.
-	aStream 
-		nextPutAll: (lc printSysDate: self format: nil flags: 0);
-		space;
-		nextPutAll: (lc printTime: self format: nil flags: 0)
-!
+	Locale default displayDateTime: self on: aStream!
+
+hour
+	^self wHour!
+
+hour12
+	"Answer an <integer> between 1 and 12, inclusive, representing the hour of the day in the 12-hour clock of the local time of the receiver."
+
+	^self wHour - 1 \\ 12 + 1!
+
+hour24
+	^self wHour!
+
+minute
+	^self wMinute!
+
+month
+	^self wMonth!
+
+second
+	^self wSecond + (self wMilliseconds / 1000)!
 
 wDay
 	"Answer the <Integer> value of the receiver's 'wDay' field."
@@ -119,10 +142,22 @@ wYear
 wYear: anInteger
 	"Set the receiver's 'wYear' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_wYear put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_wYear put: anInteger!
+
+year
+	^self wYear! !
+!SYSTEMTIME categoriesFor: #asDate!converting!public! !
+!SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
 !SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
-!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
+!SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
+!SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
 !SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
+!SYSTEMTIME categoriesFor: #hour!accessing!public! !
+!SYSTEMTIME categoriesFor: #hour12!accessing!public! !
+!SYSTEMTIME categoriesFor: #hour24!accessing!public! !
+!SYSTEMTIME categoriesFor: #minute!accessing!public! !
+!SYSTEMTIME categoriesFor: #month!accessing!public! !
+!SYSTEMTIME categoriesFor: #second!accessing!public! !
 !SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !
@@ -139,6 +174,7 @@ wYear: anInteger
 !SYSTEMTIME categoriesFor: #wSecond:!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wYear!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wYear:!**compiled accessors**!public! !
+!SYSTEMTIME categoriesFor: #year!accessing!public! !
 
 !SYSTEMTIME class methodsFor!
 

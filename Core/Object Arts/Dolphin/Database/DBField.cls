@@ -53,6 +53,21 @@ asDate
 		bytes: buffer;
 		asDate!
 
+asDateAndTime
+	"Private - Answer an instance of <DateAndTime> representing the buffer of the receiver."
+
+	| year month day hour minute second fraction |
+	year := buffer wordAtOffset: 0.
+	month := buffer wordAtOffset: 2.
+	day := buffer wordAtOffset: 4.
+
+	hour := buffer wordAtOffset: 6.
+	minute := buffer wordAtOffset: 8.
+	second := buffer wordAtOffset: 10.
+	fraction := buffer dwordAtOffset: 12.
+	
+	^DateAndTime year: year month: month day: day hour: hour minute: minute second: (second + (fraction / 1e9))!
+
 asDouble
 	"Private - Answer the receiver's buffer as a <Float>."
 
@@ -100,33 +115,6 @@ asTime
 	^ODBCTIME new
 		bytes: buffer;
 		asTime!
-
-asTimeStamp
-	"Private - Answer an instance of <TimeStamp> representing the buffer of the receiver."
-
-	| date time year month day hour minute second fraction |
-	year := buffer wordAtOffset: 0.
-	month := buffer wordAtOffset: 2.
-	day := buffer wordAtOffset: 4.
-
-	date := Date
-		newDay: day
-		monthIndex: month
-		year: year.
-
-	hour := buffer wordAtOffset: 6.
-	minute := buffer wordAtOffset: 8.
-	second := buffer wordAtOffset: 10.
-	fraction := buffer dwordAtOffset: 12.
-	time := Time fromMilliseconds: ((hour * 60 + minute) * 60 + second) * 1000
-							+ (fraction // 1000000).
-
-	^TimeStamp date: date time: time
-	
-	"Use the services of the <ODBCTIMESTAMP> structure to split the buffer.
-
-	^(ODBCTIMESTAMP fromAddress: buffer yourAddress)
-		asTimeStamp"!
 
 beNull
 	"Set the receiver to be a null valued field."
@@ -205,6 +193,15 @@ fromDate: aDate
 			self length: byteArray size]
 !
 
+fromDateAndTime: aDateAndTime
+	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aDateAndTime."
+
+	(self shouldTranslate: aDateAndTime class: DateAndTime) ifTrue: [ 	| byteArray |
+		byteArray := (ODBCTIMESTAMP fromDateAndTime: aDateAndTime) bytes.
+		buffer replaceFrom: 1 to: byteArray size with: byteArray.
+		self length: byteArray size]
+!
+
 fromDouble: aNumber
 	"Private - Set the receiver's double buffer with <Float> value of the 
 	<Number> argument."
@@ -257,15 +254,6 @@ fromTime: aTime
 
 	(self shouldTranslate: aTime class: Time) ifTrue: [ 	| byteArray |
 		byteArray := (ODBCTIME fromTime: aTime) bytes.
-		buffer replaceFrom: 1 to: byteArray size with: byteArray.
-		self length: byteArray size]
-!
-
-fromTimeStamp: aTimeStamp
-	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aTimeStamp."
-
-	(self shouldTranslate: aTimeStamp class: TimeStamp) ifTrue: [ 	| byteArray |
-		byteArray := (ODBCTIMESTAMP fromTimeStamp: aTimeStamp) bytes.
 		buffer replaceFrom: 1 to: byteArray size with: byteArray.
 		self length: byteArray size]
 !
@@ -399,6 +387,7 @@ value: anObject
 !DBField categoriesFor: #asByte!converting!private! !
 !DBField categoriesFor: #asByteArray!converting!private! !
 !DBField categoriesFor: #asDate!converting!private! !
+!DBField categoriesFor: #asDateAndTime!converting!private! !
 !DBField categoriesFor: #asDouble!converting!private! !
 !DBField categoriesFor: #asFloat!converting!private! !
 !DBField categoriesFor: #asGUID!converting!private! !
@@ -407,7 +396,6 @@ value: anObject
 !DBField categoriesFor: #asShort!converting!private! !
 !DBField categoriesFor: #asString!converting!private! !
 !DBField categoriesFor: #asTime!converting!private! !
-!DBField categoriesFor: #asTimeStamp!converting!private! !
 !DBField categoriesFor: #beNull!accessing!public! !
 !DBField categoriesFor: #column!accessing!private! !
 !DBField categoriesFor: #fieldBuf!accessing!private! !
@@ -418,6 +406,7 @@ value: anObject
 !DBField categoriesFor: #fromByte:!converting!private! !
 !DBField categoriesFor: #fromByteArray:!converting!private! !
 !DBField categoriesFor: #fromDate:!converting!private! !
+!DBField categoriesFor: #fromDateAndTime:!converting!private! !
 !DBField categoriesFor: #fromDouble:!converting!private! !
 !DBField categoriesFor: #fromFloat:!converting!private! !
 !DBField categoriesFor: #fromInt64:!converting!private! !
@@ -425,7 +414,6 @@ value: anObject
 !DBField categoriesFor: #fromShort:!converting!private! !
 !DBField categoriesFor: #fromString:!converting!private! !
 !DBField categoriesFor: #fromTime:!converting!private! !
-!DBField categoriesFor: #fromTimeStamp:!converting!private! !
 !DBField categoriesFor: #getData:!accessing!private! !
 !DBField categoriesFor: #hash!comparing!public! !
 !DBField categoriesFor: #initializeForColumn:!accessing!private! !
@@ -474,7 +462,7 @@ initialize
 				at: SQL_DOUBLE + TypeOffset put: #asDouble;
 				at: SQL_DATE + TypeOffset put: #asDate;
 				at: SQL_TIME + TypeOffset put: #asTime;
-				at: SQL_TIMESTAMP + TypeOffset put: #asTimeStamp;
+				at: SQL_TIMESTAMP + TypeOffset put: #asDateAndTime;
 				at: SQL_VARCHAR + TypeOffset put: #asString;
 				yourself.
 	SetSelectors := (Array new: SQL_NUM_TYPES)
@@ -488,7 +476,7 @@ initialize
 				at: SQL_DOUBLE + TypeOffset put: #fromDouble:;
 				at: SQL_DATE + TypeOffset put: #fromDate:;
 				at: SQL_TIME + TypeOffset put: #fromTime:;
-				at: SQL_TIMESTAMP + TypeOffset put: #fromTimeStamp:;
+				at: SQL_TIMESTAMP + TypeOffset put: #fromDateAndTime:;
 				at: SQL_VARCHAR + TypeOffset put: #fromString:;
 				at: SQL_LONGVARCHAR + TypeOffset put: #fromString:;
 				at: SQL_BINARY + TypeOffset put: #fromByteArray:;

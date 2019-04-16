@@ -1,13 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole'
-	classVariableNames: 'Current EmbeddingMask PreStartFile'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged'
+	classVariableNames: 'Current EmbeddingMask PreStartFile SettingsChangeTimerId'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
 SessionManager isAbstract: true!
 SessionManager addClassConstant: 'EmbeddingMask' value: 16r1!
+SessionManager addClassConstant: 'SettingsChangeTimerId' value: 16r2!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.
@@ -404,6 +405,7 @@ initialize
 	state := 6.
 	servers := nil.
 	imagePath := '.\Dolphin'.
+	settingsChanged := Set new.
 	^self!
 
 initializeFromSessionManager: oldSessionManager
@@ -645,6 +647,14 @@ onQuit: anInteger
 	self trigger: #quitSessionRequested.
 	self queryEndSession ifTrue: [self quit: anInteger]!
 
+onSettingChanged: aWindowsEvent
+	"Private - A system setting has been changed. This could be any of a wide range of things from a theme change,
+	regional settings, even policy. The notifications come in thick and fast because they are sent to every top-level
+	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
+
+	settingsChanged add: {Utf16String fromAddress: aWindowsEvent lParam. aWindowsEvent wParam}.
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
 onStartup: args
 	"Initialize the receiver immediately following system startup.
 	This is the main system initialization routine, and is responsible
@@ -690,6 +700,17 @@ onStartup: args
 	off when the image was saved and running onExit processing, or whatever it would have
 	done next. We also kill it to prevent any invalid termination running."
 	Processor activeProcess kill!
+
+onTimeChanged: aWindowsEvent
+	"Private - The system time has been changed. The notifications come in thick and fast because they are sent to every top-level
+	window. We consolidate them by queuing them up for coalescing any that arrive within a 1-second window."
+
+	settingsChanged add: #('Time' 0).
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
+onTimer: anInteger
+	anInteger == SettingsChangeTimerId
+		ifTrue: [self triggerSettingsChanged]!
 
 onUnhandledError: anError
 	"The unhandled Error, anError, occurred in the active Process.
@@ -1056,6 +1077,12 @@ traceStream
 
 	^Smalltalk at: #Trace ifAbsent: [DeafObject current]!
 
+triggerSettingsChanged
+	| pending |
+	pending := settingsChanged.
+	settingsChanged := Set new.
+	pending do: [:each | self trigger: #settingChanged: with: each]!
+
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
 	Depending on the user response and the resumability of the exception, either 
@@ -1164,7 +1191,7 @@ windowsDirectory
 !SessionManager categoriesFor: #installationDirectory!constants!private! !
 !SessionManager categoriesFor: #isBinaryLooseMethodInstallationAllowed!private!testing! !
 !SessionManager categoriesFor: #isConsoleApplication!public!testing! !
-!SessionManager categoriesFor: #isDebug!public! !
+!SessionManager categoriesFor: #isDebug!public!testing! !
 !SessionManager categoriesFor: #isDLL!private!testing! !
 !SessionManager categoriesFor: #isEmbedded!public!testing! !
 !SessionManager categoriesFor: #isEmbedding!public!testing! !
@@ -1189,7 +1216,10 @@ windowsDirectory
 !SessionManager categoriesFor: #onPreSaveImage!event handling!private! !
 !SessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !
 !SessionManager categoriesFor: #onQuit:!event handling!public! !
+!SessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !SessionManager categoriesFor: #onStartup:!event handling!public! !
+!SessionManager categoriesFor: #onTimeChanged:!event handling!private! !
+!SessionManager categoriesFor: #onTimer:!event handling!private! !
 !SessionManager categoriesFor: #onUnhandledError:!event handling!public! !
 !SessionManager categoriesFor: #onUnhandledNotification:!event handling!public! !
 !SessionManager categoriesFor: #onUnhandledWarning:!event handling!public! !
@@ -1215,7 +1245,7 @@ windowsDirectory
 !SessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
 !SessionManager categoriesFor: #registerRunning!operations-startup!private! !
 !SessionManager categoriesFor: #registerServer:!accessing!public! !
-!SessionManager categoriesFor: #resourcesLocatorForClass:!private! !
+!SessionManager categoriesFor: #resourcesLocatorForClass:!helpers!private! !
 !SessionManager categoriesFor: #retire!public!uninitializing! !
 !SessionManager categoriesFor: #saveImage!operations-saving!public! !
 !SessionManager categoriesFor: #saveImage:!operations-saving!public! !
@@ -1244,6 +1274,7 @@ windowsDirectory
 !SessionManager categoriesFor: #trace:!operations-logging!public! !
 !SessionManager categoriesFor: #traceLine:!operations-logging!public! !
 !SessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
+!SessionManager categoriesFor: #triggerSettingsChanged!event handling!private! !
 !SessionManager categoriesFor: #unhandledException:!exceptions!private! !
 !SessionManager categoriesFor: #unregisterConsoleCtrlHandler!operations!private! !
 !SessionManager categoriesFor: #unregisterServer:!accessing!public! !

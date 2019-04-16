@@ -45,9 +45,13 @@ package methodNames
 	add: #DBConnection -> #txnCapable;
 	add: #DBConnection -> #txnIsolationOptions;
 	add: #DBConnection -> #uniqueIndexOf:;
+	add: #DBField -> #asTimeStamp;
+	add: #DBField -> #fromTimeStamp:;
 	add: #DBResultSet -> #invalidate;
 	add: #DBResultSet -> #prev;
+	add: #ODBCTIMESTAMP -> #asTimeStamp;
 	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
+	add: 'ODBCTIMESTAMP class' -> #fromTimeStamp:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -56,9 +60,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Database Connection Base';
-	yourself).
+package setPrerequisites: #(
+	'Database Connection Base'
+	'..\Base\Dolphin'
+	'..\Base\Deprecated\Dolphin Base (Deprecated)').
 
 package!
 
@@ -290,6 +295,23 @@ interpretTxnIsolationMask: mask
 		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]! !
 !DBConnection class categoriesFor: #interpretTxnIsolationMask:!operations!private! !
 
+!DBField methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp!
+
+fromTimeStamp: aTimeStamp
+	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aTimeStamp."
+
+	(self shouldTranslate: aTimeStamp class: TimeStamp) ifTrue: [ 	| byteArray |
+		byteArray := (ODBCTIMESTAMP fromTimeStamp: aTimeStamp) bytes.
+		buffer replaceFrom: 1 to: byteArray size with: byteArray.
+		self length: byteArray size]
+! !
+!DBField categoriesFor: #asTimeStamp!converting!private! !
+!DBField categoriesFor: #fromTimeStamp:!converting!private! !
+
 !DBResultSet methodsFor!
 
 invalidate
@@ -301,6 +323,20 @@ prev
 	^self previous! !
 !DBResultSet categoriesFor: #invalidate!operations!public! !
 !DBResultSet categoriesFor: #prev!accessing!public! !
+
+!ODBCTIMESTAMP methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp! !
+!ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
+
+!ODBCTIMESTAMP class methodsFor!
+
+fromTimeStamp: aTimeStamp
+	Notification deprecated.
+	^self fromTimeStamp: aTimeStamp asDateAndTime! !
+!ODBCTIMESTAMP class categoriesFor: #fromTimeStamp:!instance creation!public! !
 
 "End of package definition"!
 

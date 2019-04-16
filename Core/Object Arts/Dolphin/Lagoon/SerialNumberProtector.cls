@@ -115,21 +115,17 @@ readableStringFromInteger: aLargeInteger
 	This is the inverse of #bytesFromReadableString: "
 
 	| raw stream |
-
-	raw := aLargeInteger
-			printStringRadix: 34	"base 34 since two letters are not used"
-			showRadix: false.
-
+	raw := aLargeInteger printStringBase: 34.	"base 34 since two letters are not used"
 	stream := String writeStream.
-	raw do:
-		[:ch || code |
-		code := ch codePoint.
-		ch >= $I ifTrue: [code := code + 1].
-		ch >= $N ifTrue: [code := code + 1].		"since N is mapped to O by the previous line"
-		(stream position \\ 6) = 5 ifTrue: [stream nextPut: $-].
-		stream nextPut: (Character codePoint: code)].
-
-	^ stream contents.!
+	raw do: 
+			[:ch |
+			| code |
+			code := ch codePoint.
+			ch >= $I ifTrue: [code := code + 1].
+			ch >= $N ifTrue: [code := code + 1].	"since N is mapped to O by the previous line"
+			stream position \\ 6 = 5 ifTrue: [stream nextPut: $-].
+			stream nextPut: (Character codePoint: code)].
+	^stream contents!
 
 withKey: anInteger
 	"Answer a new instance that is configured to en/decrypt serial number using the given key."

@@ -53,7 +53,10 @@ leftToRight: aDate
 
 	| stream |
 	stream := String writeStream: 32.
-	aDate printOn: stream locale: self actualLocale format: self actualFormat.
+	self actualLocale
+		printDate: aDate
+		on: stream
+		format: self actualFormat.
 	^stream contents!
 
 locale

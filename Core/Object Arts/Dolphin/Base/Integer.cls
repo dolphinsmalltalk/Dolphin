@@ -200,26 +200,6 @@ at: anInteger
 
 	^self shouldNotImplement!
 
-basicPrintDigitsOn: aStream base: anInteger 
-	"Private - Print the digits of the receiver in base anInteger to aStream. N.B. The receiver
-	MUST be positive for this to work correctly."
-
-	| quotient digits index |
-	quotient := self.
-	index := self digitLength * 8.
-	digits := Utf8String new: index.
-	[quotient < anInteger] whileFalse: 
-			[| quoRem |
-			quoRem := quotient quoAndRem: anInteger.
-			digits at: index put: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: (quoRem at: 2) + 1).
-			index := index - 1.
-			quotient := quoRem at: 1].
-	digits at: index put: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: quotient + 1).
-	aStream 
-		next: digits size - index + 1
-		putAll: digits
-		startingAt: index!
-
 bitAnd: operand
 	"Answer an <integer> whose bits are the logical AND of the
 	receiver's bits and those of the <integer> argument, operand."
@@ -303,6 +283,11 @@ coerce: anArithmeticValue
 	"Private - Answer the Integer representation of anArithmeticValue."
 
 	^anArithmeticValue asInteger!
+
+decimalDigitLength
+	"Private - Answer the number of digits (only) necessary to print this number in base 10. The receiver must be positive."
+
+	^self numberOfDigitsInBase: 10!
 
 digitAt: anInteger 
 	"Answer the index'th byte of 2's complement representation of the receiver. e.g. 1 at: 1 =
@@ -482,11 +467,11 @@ hex
 	"Answer a <readableString> whose characters are a description of 
 	the receiver in the hexadecimal."
 
-	^self printStringRadix: 16 showRadix: true!
+	^self printStringRadix: 16!
 
 highBit
-	"Answer the <integer> index of the most significant non-zero bit of the binary 
-	representation of the receiver."
+	"Answer the <integer> index of the most significant non-zero bit of the binary representation of the receiver.
+	N.B. This operation is not defined for negative integers."
 
 	| digits |
 	<primitive: 54>
@@ -639,53 +624,92 @@ notNull
 
 	^self ~~ 0!
 
-printDigitsOn: aStream base: anInteger 
-	"Private - Recursively print the digits of the receiver in base anInteger to aStream.
-	N.B. The receiver MUST be positive for this to work correctly."
+numberOfDigitsInBase: anInteger
+	"Private - Answer the number of digits required to print this number in <integer> base, anInteger."
 
-	self basicPrintDigitsOn: aStream base: anInteger!
+	| nDigits q total |
+	self < 0 ifTrue: [^self negated numberOfDigitsInBase: anInteger].
+	self < anInteger ifTrue: [^1].
+	(anInteger bitAnd: anInteger - 1) == 0
+		ifTrue: [^self highBit + anInteger highBit - 2 quo: anInteger highBit - 1].
+	q := self.
+	total := 0.
+	
+	["Make an initial nDigits guess that is less than or equal to required number of digits"
+	nDigits := anInteger == 10
+				ifTrue: 
+					[((q highBit - 1) * 1233 bitShift: -12) + 1	"This is because (2 log)/(10 log)*4096 is slightly greater than 1233"]
+				ifFalse: [q highBit quo: anInteger highBit].
+	total := total + nDigits.
+
+	"See how many digits remains above these first nDigits guess"
+	(q := q quo: (anInteger raisedToInteger: nDigits)) < anInteger]
+			whileFalse.
+	^q == 0 ifTrue: [total] ifFalse: [total + 1]!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream.
-	Although not strictly part of the ANSI protocol <number>, this method is the
-	means by which Integer complies with that protocol in order to produce
-	a literal representation of the receiver."
+	Although not strictly part of the ANSI protocol <number>, this method is the means by which Integer implements printString in a compliant manner that produces a literal representation of the receiver."
 
-	self printOn: aStream base: 10 showRadix: false!
+	self printOn: aStream base: 10!
 
-printOn: output base: base
-	"Append a text representation of the receiver on the <puttableStream>, output,
-	in the specified <integer> base with a radix prefix."
+printOn: aWriteStream base: anInteger
+	"Append a text representation of the digits of the receiver on the <puttableStream>, aWriteStream, in the <integer> base, baseInteger."
 
-	self printOn: output base: base showRadix: true!
+	self subclassResponsibility!
 
-printOn: output base: base showRadix: flag
-	"Append a text representation of the receiver on the <puttableStream>, output,
-	in the specified <integer> base, showing a radix prefix if requested."
+printOn: aWriteStream base: baseInteger nDigits: digitsInteger
+	"Append a textual representation of the receiver in <integer> base, baseInteger, to the <puttableStream>, aWriteStream, using at least <integer> digits, digitsInteger.
+	Behavior is undefined unless it holds that 0 <= self < (baseInteger raisedToInteger: digitsInteger)."
 
-	self negative
-		ifTrue: [ 
-			output nextPut: $-.
-			self negated printOn: output base: base showRadix: flag]
-		ifFalse: [
-			flag ifTrue: [base printOn: output. output nextPut: $r].
-			self printDigitsOn: output base: base]!
+	self subclassResponsibility!
 
-printStringRadix: base
-	"Answer a <readableString> whose characters are a description of 
-	the receiver in the specified <integer> radix."
+printOn: aWriteStream base: anInteger showRadix: aBoolean
+	"Append a text representation of the receiver on the <puttableStream>, aWriteStream, in the <integer> base, anInteger, showing a radix prefix if the <boolean> argument, aBoolean, is true."
 
-	^self printStringRadix: base showRadix: true!
+	self < 0
+		ifTrue: 
+			[aWriteStream nextPut: $-.
+			self negated
+				printOn: aWriteStream
+				base: anInteger
+				showRadix: aBoolean]
+		ifFalse: 
+			[aBoolean
+				ifTrue: 
+					[anInteger printOn: aWriteStream.
+					aWriteStream nextPut: $r].
+			self printOn: aWriteStream base: anInteger]!
 
-printStringRadix: base showRadix: flag
-	"Answer a String which represents the receiver in the radix, base (an Integer).
-	The radix prefix is included if the boolean flag is true."
+printStringBase: anInteger
+	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix, without a radix prefix."
 
 	| aStream |
 	aStream := String writeStream: 16.
-	self printOn: aStream base: base showRadix: flag.
-	^aStream contents
-!
+	self
+		printOn: aStream
+		base: anInteger.
+	^aStream contents!
+
+printStringBase: baseInteger nDigits: lengthInteger
+	"Answer the <readableString> representation of the receiver in base, anInteger, where 0 < anInteger <= 36, padded/truncated to exactly, lengthInteger, digits.
+	Behavior is undefined unless it holds that 0 <= self < (baseInteger raisedToInteger: digitsInteger)."
+
+	| answer |
+	answer := String new: lengthInteger.
+	self printOn: answer writeStream base: baseInteger nDigits: lengthInteger.
+	^answer!
+
+printStringRadix: anInteger
+	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix."
+
+	| aStream |
+	aStream := String writeStream: 16.
+	self
+		printOn: aStream
+		base: anInteger
+		showRadix: true.
+	^aStream contents!
 
 quo: aNumber
 	"Answer the integer quotient of the receiver divided by aNumber with 
@@ -769,7 +793,6 @@ truncated
 !Integer categoriesFor: #asStackPointer!converting!private! !
 !Integer categoriesFor: #asUIntPtr!converting!public! !
 !Integer categoriesFor: #at:!accessing!public! !
-!Integer categoriesFor: #basicPrintDigitsOn:base:!printing!private! !
 !Integer categoriesFor: #bitAnd:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:put:!bit manipulation!public! !
@@ -782,6 +805,7 @@ truncated
 !Integer categoriesFor: #ceiling!public!truncation and round off! !
 !Integer categoriesFor: #clearBit:!bit manipulation!public! !
 !Integer categoriesFor: #coerce:!coercing!private! !
+!Integer categoriesFor: #decimalDigitLength!enquiries!private! !
 !Integer categoriesFor: #digitAt:!accessing!public! !
 !Integer categoriesFor: #digitLength!enquiries!public! !
 !Integer categoriesFor: #displayString!printing!public! !
@@ -826,12 +850,14 @@ truncated
 !Integer categoriesFor: #noMask:!bit manipulation!public! !
 !Integer categoriesFor: #normalize!converting!private! !
 !Integer categoriesFor: #notNull!public!testing! !
-!Integer categoriesFor: #printDigitsOn:base:!printing!private! !
+!Integer categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
 !Integer categoriesFor: #printOn:!printing!public! !
 !Integer categoriesFor: #printOn:base:!printing!public! !
+!Integer categoriesFor: #printOn:base:nDigits:!printing!public! !
 !Integer categoriesFor: #printOn:base:showRadix:!printing!public! !
+!Integer categoriesFor: #printStringBase:!accessing!public! !
+!Integer categoriesFor: #printStringBase:nDigits:!printing!public! !
 !Integer categoriesFor: #printStringRadix:!printing!public! !
-!Integer categoriesFor: #printStringRadix:showRadix:!printing!public! !
 !Integer categoriesFor: #quo:!arithmetic!public! !
 !Integer categoriesFor: #rounded!public!truncation and round off! !
 !Integer categoriesFor: #setBit:!bit manipulation!public! !

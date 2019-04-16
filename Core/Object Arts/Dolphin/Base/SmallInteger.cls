@@ -277,6 +277,37 @@ coerce: anArithmeticValue
 	^anArithmeticValue truncated
 !
 
+decimalDigitLength
+	"Private - Answer the number of digits (only) necessary to print this number in base 10. The receiver must be positive."
+
+	self < 10000
+		ifTrue: 
+			[^self < 100
+				ifTrue: [self < 10 ifTrue: [1] ifFalse: [2]]
+				ifFalse: [self < 1000 ifTrue: [3] ifFalse: [4]]].
+	self < 100000000
+		ifTrue: 
+			[^self < 1000000
+				ifTrue: [self < 100000 ifTrue: [5] ifFalse: [6]]
+				ifFalse: [self < 10000000 ifTrue: [7] ifFalse: [8]]].
+	self < 1000000000 ifTrue: [^9] 
+		ifFalse: [
+			"Special case while still 32-bit"
+			self <= 16r3FFFFFFF ifTrue: [^10]].
+	"Allow for future 64-bit SmallIntegers. Can't get here at present"
+	self < 10000000000000
+		ifTrue:
+			[^self < 100000000000
+					ifTrue: [self < 10000000000 ifTrue: [10] ifFalse: [11]]
+					ifFalse: [self < 1000000000000 ifTrue: [12] ifFalse: [13]]].
+	self < 100000000000000000 
+			ifTrue: [
+				^self < 1000000000000000 printString 
+					ifTrue: [self < 100000000000000 ifTrue: [14] ifFalse: [15]]
+					ifFalse: [self < 10000000000000000 ifTrue: [16] ifFalse: [17]]].
+	^self < 1000000000000000000 printString size ifTrue: [18] ifFalse: [19]
+!
+
 deepCopy
 	"SmallIntegers have an immediate representation - i.e. they have only
 	one representation for a particular value - and are immutable."
@@ -369,6 +400,67 @@ multiplyByInteger: anInteger
 
 	^(LargeInteger fromSmallInteger: self) * anInteger!
 
+numberOfDigitsInBase: anInteger
+	"Private - Answer the number of digits required to print this number in <integer> base, anInteger."
+
+	anInteger == 10 ifFalse: [^super numberOfDigitsInBase: anInteger].
+	self < 0 ifTrue: [^self negated numberOfDigitsInBase: anInteger].
+	^self decimalDigitLength!
+
+printOn: aWriteStream base: baseInteger
+	"Append a text representation of the digits of the receiver on the <puttableStream>, aWriteStream,
+	in the <integer> base, baseInteger."
+
+	| n divisor |
+	n := self < 0
+				ifTrue: 
+					[aWriteStream nextPut: $-.
+					0 - self]
+				ifFalse: [self].
+	divisor := baseInteger == 10
+				ifTrue: 
+					["Allow for 64-bit SmallIntegers in future"
+					#(1 10 100 1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000 100000000000 1000000000000 10000000000000 100000000000000 1000000000000000 10000000000000000 100000000000000000 1000000000000000000)
+						at: n decimalDigitLength]
+				ifFalse: [baseInteger raisedToInteger: (n numberOfDigitsInBase: baseInteger) - 1].
+	[divisor > 1] whileTrue: 
+			[| digit |
+			digit := n // divisor.
+			aWriteStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: digit + 1).
+			n := n - (digit * divisor).
+			divisor := divisor // baseInteger].
+	aWriteStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: n + 1)!
+
+printOn: aWriteStream base: baseInteger nDigits: digitsInteger
+	"Append a base, baseInteger, representation of the receiver to the <puttableStream>, aWriteStream, using a minimum of, digitsInteger, digits.
+	Note that if the receiver is negative, the sign is counted as one of the digits. The output does not have a radix prefix."
+
+	| n numberOfDigits hasSign divisor |
+	n := self < 0
+				ifTrue: 
+					[aWriteStream nextPut: $-.
+					hasSign := 1.
+					0 - self]
+				ifFalse: 
+					[hasSign := 0.
+					self].
+	divisor := baseInteger == 10
+				ifTrue: 
+					[numberOfDigits := n decimalDigitLength.
+					#(1 10 100 1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000 100000000000 1000000000000 10000000000000 100000000000000 1000000000000000 10000000000000000 100000000000000000 1000000000000000000)
+						at: numberOfDigits]
+				ifFalse: 
+					[numberOfDigits := n numberOfDigitsInBase: baseInteger.
+					baseInteger raisedToInteger: numberOfDigits - 1].
+	aWriteStream next: digitsInteger - (hasSign + numberOfDigits) put: $0.
+	[divisor > 1] whileTrue: 
+			[| digit |
+			digit := n // divisor.
+			aWriteStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: digit + 1).
+			n := n - (digit * divisor).
+			divisor := divisor // baseInteger].
+	aWriteStream nextPut: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: n + 1)!
+
 printString
 	"Answer the <readableString> representation of the receiver in base 10."
 
@@ -387,6 +479,29 @@ printString
 			value := value // 10].
 	aString at: i put: (Character digitValue: value \\ 10).
 	^aString copyFrom: i to: aString size!
+
+printStringBase: anInteger
+	"Answer the <readableString> representation of the receiver in base, anInteger, where 0 < anInteger <= 36."
+
+	self < 0 ifTrue: [^'-' , (self negated printStringBase: anInteger)].
+	self < anInteger ifTrue: [^String with: (Character digitValue: self)].
+	^self printStringBase: anInteger nDigits: (self numberOfDigitsInBase: anInteger)!
+
+printStringBase: baseInteger nDigits: lengthInteger
+	"Answer the <readableString> representation of the receiver in base, anInteger, where 0 < anInteger <= 36, padded/truncated to exactly, lengthInteger, digits.
+	The receiver should not be negative, and should be less than (baseInteger ** lengthInteger)."
+
+	| integer next digits |
+	digits := String new: lengthInteger.
+	integer := self.
+	lengthInteger to: 1
+		by: -1
+		do: 
+			[:i |
+			next := integer // baseInteger.
+			digits at: i put: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: integer - (next * baseInteger) + 1).
+			integer := next].
+	^digits!
 
 quo: aNumber
 	"Answer the integer quotient defined by division with truncation toward zero.
@@ -467,6 +582,7 @@ yourAddress
 !SmallInteger categoriesFor: #byteAt:!accessing!private! !
 !SmallInteger categoriesFor: #byteSize!accessing!private! !
 !SmallInteger categoriesFor: #coerce:!coercing!private! !
+!SmallInteger categoriesFor: #decimalDigitLength!enquiries!private! !
 !SmallInteger categoriesFor: #deepCopy!copying!public! !
 !SmallInteger categoriesFor: #generality!coercing!private! !
 !SmallInteger categoriesFor: #hash!comparing!public! !
@@ -478,7 +594,12 @@ yourAddress
 !SmallInteger categoriesFor: #isZero!public!testing! !
 !SmallInteger categoriesFor: #lowBit!bit manipulation!public! !
 !SmallInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
+!SmallInteger categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
+!SmallInteger categoriesFor: #printOn:base:!printing!public! !
+!SmallInteger categoriesFor: #printOn:base:nDigits:!printing!public! !
 !SmallInteger categoriesFor: #printString!printing!public! !
+!SmallInteger categoriesFor: #printStringBase:!printing!public! !
+!SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
 !SmallInteger categoriesFor: #quo:!arithmetic!public! !
 !SmallInteger categoriesFor: #quoAndRem:!arithmetic!public! !
 !SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
