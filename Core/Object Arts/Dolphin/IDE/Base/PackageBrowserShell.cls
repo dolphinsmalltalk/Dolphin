@@ -873,7 +873,7 @@ openWorkspace
 	^((FileOpenDialog new)
 		fileTypes: workspaceClass fileTypes;
 		defaultExtension: workspaceClass defaultFileExtension;
-		initialDirectory: packagesPresenter selectedFolder;
+		initialDirectory: (packagesPresenter selectedFolder ifNil: [SessionManager current imageBase]);
 		showModal) 
 			ifNotNil: 
 				[:path | 
