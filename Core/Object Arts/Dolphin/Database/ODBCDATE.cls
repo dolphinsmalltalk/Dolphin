@@ -77,12 +77,13 @@ defineFields
 fromDate: aDate
 	"Answer an instance of the receiver with the details of aDate."
 
-	^self new
-		day: aDate dayOfMonth;
-		month: aDate monthIndex;
-		year: aDate year;
-		yourself
-!
+	^aDate dayMonthYearDo: 
+			[:d :m :y |
+			self new
+				day: d;
+				month: m;
+				year: y;
+				yourself]!
 
 getFieldNames
 	^#(#year #month #day)! !

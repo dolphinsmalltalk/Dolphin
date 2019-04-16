@@ -335,7 +335,7 @@ testPrintString
 	(1 to: 6) , (14 to: 32) do: 
 			[:i |
 			self assert: (Character codePoint: i) printString
-				equals: '$\x' , (i printStringRadix: 16 showRadix: false)].
+				equals: '$\x' , (i printStringBase: 16)].
 	(33 to: 126) do: [:i | self deny: ((Character codePoint: i) printString beginsWith: '$\x')].
 	self assert: (Character codePoint: 0) printString equals: '$\0'.
 	self assert: (Character codePoint: 7) printString equals: '$\a'.

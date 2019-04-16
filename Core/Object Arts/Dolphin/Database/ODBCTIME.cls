@@ -75,9 +75,9 @@ fromTime: aTime
 	"Answer an instance of the receiver with the details of aTime."
 
 	^self new
-		hour: aTime hours;
-		minute: aTime minutes;
-		second: aTime seconds;
+		hour: aTime hour;
+		minute: aTime minute;
+		second: aTime second;
 		yourself
 !
 

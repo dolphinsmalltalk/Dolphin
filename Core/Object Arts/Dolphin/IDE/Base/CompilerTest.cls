@@ -236,7 +236,7 @@ testCharacterScanning
 			ch := Character value: i.
 			result := self evaluateExpression: ch printString.
 			self assert: result identicalTo: ch.
-			result := self evaluateExpression: '$\x' , (i printStringRadix: 16 showRadix: false).
+			result := self evaluateExpression: '$\x' , (i printStringBase: 16).
 			self assert: result identicalTo: ch].
 	128 to: 255
 		do: 
@@ -245,7 +245,7 @@ testCharacterScanning
 			ch := Character value: i.
 			result := self evaluateExpression: ch printString.
 			self assert: result equals: ch.
-			result := self evaluateExpression: '$\x' , (i printStringRadix: 16 showRadix: false).
+			result := self evaluateExpression: '$\x' , (i printStringBase: 16).
 			self assert: result equals: ch].
 	result := self evaluateExpression: '$\x4E2D'.
 	self assert: result isKindOf: Character.

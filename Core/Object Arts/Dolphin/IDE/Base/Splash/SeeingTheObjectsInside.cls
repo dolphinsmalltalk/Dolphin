@@ -106,7 +106,7 @@ drawInfoTextOn: graphics
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
 
-	^TimeStamp current asMilliseconds - startTime asMilliseconds!
+	^Time millisecondClockValue - startTime!
 
 fill
 	| dolphinPt graphics min max pts |
@@ -352,7 +352,7 @@ showHintBubble
 
 startStepProcess
 	self stopStepProcess.
-	startTime := TimeStamp current.
+	startTime := Time millisecondClockValue.
 	stepProcess := 
 			[
 			[[self step] on: Error do: [:ex | ex toTrace].

@@ -181,8 +181,8 @@ Object subclass: #Link
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Locale
-	instanceVariableNames: 'lcid dateSeparator decimalSeparator listSeparator timeSeparator currencySymbol amDesignator pmDesignator dayNames monthNames'
-	classVariableNames: 'SystemDefault UserDefault'
+	instanceVariableNames: 'numberFormat'
+	classVariableNames: 'DateFormatters Invariant SystemDefault TimeFormatters TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Magnitude
@@ -266,8 +266,8 @@ Object subclass: #SearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole'
-	classVariableNames: 'Current EmbeddingMask PreStartFile'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged'
+	classVariableNames: 'Current EmbeddingMask PreStartFile SettingsChangeTimerId'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 Object subclass: #SharedQueue
@@ -845,6 +845,11 @@ Error subclass: #HRESULTError
 	classVariableNames: 'FacilityClasses'
 	poolDictionaries: 'FacilityCodes'
 	classInstanceVariableNames: ''!
+Error subclass: #InvalidArgumentError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Error subclass: #InvalidExternalCall
 	instanceVariableNames: 'argument type'
 	classVariableNames: ''
@@ -1285,6 +1290,11 @@ Win32Structure subclass: #MSGBOXPARAMSW
 	classVariableNames: '_OffsetOf_dwContextHelpId _OffsetOf_dwLanguageId _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpfnMsgBoxCallback _OffsetOf_lpszCaption _OffsetOf_lpszIcon _OffsetOf_lpszText'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+Win32Structure subclass: #NUMBERFMTW
+	instanceVariableNames: 'decimalSeparator numberGrouping thousandSeparator'
+	classVariableNames: '_OffsetOf_Grouping _OffsetOf_LeadingZero _OffsetOf_lpDecimalSep _OffsetOf_lpThousandSep _OffsetOf_NegativeOrder _OffsetOf_NumDigits'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwBuildNumber _OffsetOf_dwMajorVersion _OffsetOf_dwMinorVersion _OffsetOf_dwPlatformId _OffsetOf_dwSize _OffsetOf_szCSDVersion _OffsetOf_wProductType _OffsetOf_wReserved _OffsetOf_wServicePackMajor _OffsetOf_wServicePackMinor _OffsetOf_wSuiteMask'
@@ -1301,7 +1311,7 @@ Win32Structure subclass: #SYSTEMTIME
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TIME_ZONE_INFORMATION
-	instanceVariableNames: 'zoneId'
+	instanceVariableNames: 'zoneId offset'
 	classVariableNames: '_OffsetOf_bias _OffsetOf_daylightBias _OffsetOf_daylightDate _OffsetOf_daylightName _OffsetOf_standardBias _OffsetOf_standardDate _OffsetOf_standardName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1365,6 +1375,16 @@ Link variableSubclass: #Process
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Locale subclass: #SmalltalkLocale
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Locale subclass: #WindowsLocale
+	instanceVariableNames: 'lcid info'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Magnitude subclass: #ArithmeticValue
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1385,13 +1405,18 @@ Magnitude subclass: #Date
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Magnitude subclass: #Time
-	instanceVariableNames: 'milliseconds'
-	classVariableNames: ''
+Magnitude subclass: #DateAndTime
+	instanceVariableNames: 'rataDie seconds offset'
+	classVariableNames: 'FiletimeEpochSeconds JulianDayOffset LilianDayOffset SmalltalkEpochRD UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Magnitude subclass: #TimeStamp
-	instanceVariableNames: 'date time'
+Magnitude subclass: #Duration
+	instanceVariableNames: 'seconds'
+	classVariableNames: 'SecondsPerDay SecondsPerHour Zero'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Magnitude subclass: #Time
+	instanceVariableNames: 'milliseconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

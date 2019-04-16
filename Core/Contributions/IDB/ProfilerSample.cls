@@ -21,6 +21,9 @@ classInformation
 
 	^leaf allClasses -> leaf object methodClass!
 
+duration
+	^self elapsedTime microseconds!
+
 elapsedTime
 	"Answer the value of the receiver's instance variable elapsedTime.
 	This method was automatically generated, but may be modified."
@@ -56,6 +59,7 @@ setRoot: rootNode leaf: leafNode elapsedTime: anInteger
 	elapsedTime := anInteger.
 	^self! !
 !ProfilerSample categoriesFor: #classInformation!accessing!public! !
+!ProfilerSample categoriesFor: #duration!accessing!public! !
 !ProfilerSample categoriesFor: #elapsedTime!accessing!public! !
 !ProfilerSample categoriesFor: #frames!accessing!public! !
 !ProfilerSample categoriesFor: #isChildOfFrameFor:!public!testing! !

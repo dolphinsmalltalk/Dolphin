@@ -2144,11 +2144,6 @@ resetForFoundClass: class
 
 	self resetFor: class!
 
-resetVisitTimer
-	(self view)
-		killTimer: 1;
-		setTimer: 1 interval: 150!
-
 saveDefinition
 	"Private - Save the class definition currently in the definition window"
 
@@ -2733,7 +2728,6 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #renameMethodProtocol!commands!private! !
 !ClassBrowserAbstract categoriesFor: #resetFor:!commands!private! !
 !ClassBrowserAbstract categoriesFor: #resetForFoundClass:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #resetVisitTimer!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #saveDefinition!operations!private! !
 !ClassBrowserAbstract categoriesFor: #saveNewMethod:!operations!private! !
 !ClassBrowserAbstract categoriesFor: #saveStateOn:!private!saved state! !

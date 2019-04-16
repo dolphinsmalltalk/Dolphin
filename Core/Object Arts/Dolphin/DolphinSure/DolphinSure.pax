@@ -50,11 +50,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\System\Random\Dolphin Random Stream';
-	add: '..\Registry\Dolphin Registry Access';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\System\Random\Dolphin Random Stream'
+	'..\Registry\Dolphin Registry Access').
 
 package!
 

@@ -42,7 +42,18 @@ testFromSeconds
 	self assert: date asDays equals: -3.
 	today := Date today.
 	date := Date fromSeconds: today asSeconds.
-	self assert: today equals: date! !
+	self assert: today equals: date!
+
+testYyyymmdd
+	| subject |
+	subject := Date newDay: 1 monthIndex: 2 year: 3.
+	self assert: subject yyyymmdd equals: '0003-02-01'.
+	subject := Date year: -5 month: 2 day: 28.
+	self assert: subject yyyymmdd equals: '-0005-02-28'.
+
+
+	! !
 !DateTest categoriesFor: #testFromDays!public!unit tests! !
 !DateTest categoriesFor: #testFromSeconds!public!unit tests! !
+!DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
 

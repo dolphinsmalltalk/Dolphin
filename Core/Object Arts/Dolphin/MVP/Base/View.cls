@@ -4348,6 +4348,12 @@ wmThemeChanged: message wParam: wParam lParam: lParam
 	"Let the control see the theme change event too, otherwise it will not change style"
 	^nil!
 
+wmTimeChange: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_TIMECHANGE message."
+
+	"Should only be received by top-level windows."
+	^nil!
+
 wmTimer: message wParam: wParam lParam: lParam
 	"Private - A timer event, identified by the <integer> id, wParam, has fired."
 
@@ -4983,6 +4989,7 @@ zOrderTop
 !View categoriesFor: #wmSysKeyDown:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
+!View categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmTimer:wParam:lParam:!event handling-win32!private!timers! !
 !View categoriesFor: #wmVScroll:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
@@ -5113,6 +5120,7 @@ buildMessageMap
 		at: WM_PRINTCLIENT + 1 put: #wmPrintClient:wParam:lParam:;
 		at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
 		at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
+		at: WM_TIMECHANGE + 1 put: #wmTimeChange:wParam:lParam:;
 		yourself!
 
 capture

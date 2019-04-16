@@ -528,6 +528,21 @@ getAtomName: id lpBuffer: aString nSize: anInteger
 	^self invalidCall
 !
 
+getCalendarInfo: locale calendar: calendar calType: calType lpCalData: lpCalData cchData: cchData lpValue: lpValue
+	"Invoke the GetCalendarInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves information about a calendar for a locale specified by identifier.
+
+		int __stdcall GetCalendarInfo(
+			[in]unsigned long Locale,
+			[in]DWORD Calendar,
+			[in]DWORD CalType,
+			[out]LPWSTR lpCalData,
+			[in]int cchData,
+			[out]unsigned long* lpValue);"
+
+	<stdcall: sdword GetCalendarInfoW dword dword dword lpwstr sdword dword*>
+	^self invalidCall!
+
 getCommandLine
 	"Answer a pointer to the command-line string.
 
@@ -601,25 +616,6 @@ getCurrentThreadId
 	<stdcall: dword GetCurrentThreadId>
 	^self invalidCall
  !
-
-getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
-	"Format a date as a date string for a specified locale. If formatString is null then the current locale 
-	is used. If aWinSYSTEMTIME is null then the current local date is used.
-
-		int GetDateFormat(
-			LCID  Locale,	// locale for which date is to be formatted 
-			DWORD  dwFlags,	// flags specifying function options 
-			CONST SYSTEMTIME *  lpDate,	// date to be formatted 
-			LPCWSTR  lpFormat,	// date format string 
-			LPWSTR  lpDateStr,	// buffer for storing formatted string 
-			int  cchDate 	// size of buffer 
-		);"
-
-	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
-	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
-	^self invalidCall
-
-!
 
 getDiskFreeSpace: lpRootPathName
 	lpSectorsPerCluster: lpSectorsPerCluster
@@ -734,7 +730,7 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 			int  cchData 		// size of buffer 
 		);"
 
-	<stdcall: sdword GetLocaleInfoW dword dword lpwstr sdword>
+	<stdcall: sdword GetLocaleInfoW dword dword lpvoid sdword>
 	^self invalidCall!
 
 getLocalTime: aWinSYSTEMTIME
@@ -768,6 +764,20 @@ getModuleHandle: aString
 
 
 !
+
+getNumberFormat: locale dwFlags: dwFlags lpValue: lpValue lpFormat: lpFormat lpNumberStr: lpNumberStr cchNumber: cchNumber
+	"Invoke the GetNumberFormat() function of the module wrapped by the receiver.
+
+		int __stdcall GetNumberFormat(
+			unsigned long Locale,
+			DWORD dwFlags,
+			LPWSTR lpValue,
+			NUMBERFMT* lpFormat,
+			LPWSTR lpNumberStr,
+			int cchNumber);"
+
+	<stdcall: sdword GetNumberFormatW dword dword lpwstr void* lpwstr sdword>
+	^self invalidCall!
 
 getProcAddress: aHandle lpProcName: aStringOrOrdinal
 	"Answer the address of an exported function with name, aString, in the
@@ -844,6 +854,27 @@ getSystemTime: lpSystemTime
 	<stdcall: void GetSystemTime SYSTEMTIME*>
 	^self invalidCall!
 
+getSystemTimeAsFileTime: lpSystemTimeAsFileTime
+	"Invoke the GetSystemTimeAsFileTime() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current system date and time. The information is in Coordinated Universal Time (UTC) format.
+
+		void __stdcall GetSystemTimeAsFileTime(
+			FILETIME* lpSystemTimeAsFileTime);"
+
+	<stdcall: void GetSystemTimeAsFileTime FILETIME*>
+	^self invalidCall!
+
+getSystemTimePreciseAsFileTime: lpSystemTimeAsFileTime
+	"Invoke the GetSystemTimeAsFileTime() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current system date and time. The information is in Coordinated Universal Time (UTC) format.
+
+		void __stdcall GetSystemTimeAsFileTime(
+			FILETIME* lpSystemTimeAsFileTime);"
+
+	<stdcall: void GetSystemTimePreciseAsFileTime FILETIME*>
+	"Introduced in Windows 8. Windows 7 support will end in January 2020, but until then fall back on GetSystemTimeAsFileTime"
+	^self getSystemTimeAsFileTime: lpSystemTimeAsFileTime!
+
 getSystemWindowsDirectory: lpBuffer uSize: uSize 
 	"	UINT GetSystemWindowsDirectory(
 			LPTSTR lpBuffer, 
@@ -911,25 +942,6 @@ https://msdn.microsoft.com/en-us/library/windows/desktop/ms724408(v=vs.85).aspx"
 
 	<stdcall: dword GetTickCount>
 	^self invalidCall!
-
-getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
-	"Format a time as a date string for a specified locale. If formatString is null then the current locale 
-	is used. If aWinSYSTEMTIME is null then the current local time is used.
-
-		int GetTimeFormat(
-			LCID  Locale,					// locale for which time is to be formatted 
-			DWORD  dwFlags,				// flags specifying function options 
-			CONST SYSTEMTIME *  lpTime,	// time to be formatted 
-			LPCWSTR  lpFormat,				// time format string 
-			LPWSTR  lpTimeStr,				// buffer for storing formatted string 
-			int  cchTime					// size of buffer 
-		);"
-
-	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
-	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
-	^self invalidCall
-
-!
 
 getTimeZoneInformation: lpTimeZoneInformation
 	"Populate the fields of lpTimeZoneInformation with the current
@@ -1706,6 +1718,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
+!KernelLibrary categoriesFor: #getCalendarInfo:calendar:calType:lpCalData:cchData:lpValue:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
@@ -1713,7 +1726,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
@@ -1727,6 +1739,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
+!KernelLibrary categoriesFor: #getNumberFormat:dwFlags:lpValue:lpFormat:lpNumberStr:cchNumber:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
@@ -1735,12 +1748,13 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getSystemTime:!**auto generated**!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #getSystemTimeAsFileTime:!**auto generated**!public!win32 functions-date and time! !
+!KernelLibrary categoriesFor: #getSystemTimePreciseAsFileTime:!**auto generated**!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !

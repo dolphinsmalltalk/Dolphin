@@ -3202,7 +3202,7 @@ printFields: aCollection on: aStream limit: anInteger
 					[sep value.
 					aStream
 						display: each;
-						nextPutAll: '=';
+						nextPut: $=;
 						print: (self getField: each)]]!
 
 printFieldsOn: aStream limit: anInteger
@@ -4170,7 +4170,7 @@ publishedAspectsOfInstances
 	days := (1 to: 7) collect: 
 					[:each | 
 					| day |
-					day := Locale default nameOfDay: each abbrev: false.
+					day := Locale default dayOfWeekName: (each + 1) \\ 7.
 					dayMap at: day put: each.
 					day].
 	^(super publishedAspectsOfInstances)
@@ -4192,19 +4192,16 @@ publishedAspectsOfInstances
 
 !MSG methodsFor!
 
-printOn: aStream 
+printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
 	| msg |
 	self basicPrintOn: aStream.
 	msg := View selectorForMessage: self message.
-	aStream
-		nextPut: $(;
-		nextPutAll: (self hwnd printStringRadix: 16);
-		space.
-	msg isNil 
-		ifTrue: [self message printOn: aStream base: 16]
-		ifFalse: [aStream nextPutAll: msg].
+	aStream nextPut: $(.
+	self hwnd printOn: aStream base: 16 showRadix: true.
+	aStream space.
+	msg isNil ifTrue: [self message printOn: aStream base: 16 showRadix: true] ifFalse: [aStream nextPutAll: msg].
 	aStream
 		space;
 		print: self wParam;
@@ -6654,7 +6651,7 @@ resource_Debugger_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Debugger_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1915204752 170 192 8 #() 170 192 34 12 47903 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #showNextStatement 8 'Show Next Statement' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ShowNextStatement.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 47903 47905 610 416 1 642 #stepInto 8 'Step Into' 1 1 690 nil true 736 8 'StepInto.ico' 784 47905 47907 610 416 1 642 #stepOver 8 'Step Over' 1 1 690 nil true 736 8 'StepOver.ico' 784 47907 47909 610 416 1 642 #stepOut 8 'Step Out' 1 1 690 nil true 736 8 'StepOut.ico' 784 47909 47911 610 416 1 642 #runToCursor 8 'Run to Cursor' 1 1 690 nil true 736 8 'RunToCursor.ico' 784 47911 47913 610 416 1 642 #resumeProcess 8 'Go' 1 1 690 nil true 736 8 'Run.ico' 784 47913 34 7 624 816 896 976 1056 1136 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1378 293 51 416 1330 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 17 8 0 0 35 0 0 0] 8 #() 1378 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1912255920 170 192 8 #() 170 192 34 16 12929 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #returnFromMessage 8 'Retur&n ...' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x23CE 8 'Cambria' nil nil nil 1 1 nil nil 12929 12893 610 416 1 642 #restartFrame 8 'R&estart' 13545 1 690 $\x2B6E 8 'Cambria' nil nil nil nil 1 nil nil 12893 12577 610 416 1 642 #showNextStatement 8 'Show Next Statement' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ShowNextStatement.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 12577 12579 610 416 1 642 #stepInto 8 'Step Into' 1 1 866 nil true 912 8 'StepInto.ico' 960 12579 12581 610 416 1 642 #stepOver 8 'Step Over' 1 1 866 nil true 912 8 'StepOver.ico' 960 12581 12583 610 416 1 642 #stepOut 8 'Step Out' 1 1 866 nil true 912 8 'StepOut.ico' 960 12583 12585 610 416 1 642 #runToCursor 8 'Run to Cursor' 1 1 866 nil true 912 8 'RunToCursor.ico' 960 12585 12587 610 416 1 642 #resumeProcess 8 'Go' 1 1 866 nil true 912 8 'Run.ico' 960 12587 34 9 816 992 1072 1152 1232 1312 736 624 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1554 381 51 416 1506 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 61 8 0 0 35 0 0 0] 8 #() 1554 193 193 nil 27 )!
 
 resource_Image_tools
 	"Answer the literal data from which the 'Image tools' resource can be reconstituted.

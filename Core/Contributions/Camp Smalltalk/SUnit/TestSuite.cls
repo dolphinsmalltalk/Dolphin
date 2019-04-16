@@ -60,7 +60,7 @@ run: aResult
 			[:each |
 			self changed: each.
 			each run: aResult]]
-		ensure: [aResult duration: Time microsecondClockValue - start]!
+		ensure: [aResult duration: (Time microsecondClockValue - start) microseconds]!
 
 signalResourceErrorFor: res
 	^res signalInitializationError!

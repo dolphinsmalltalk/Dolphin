@@ -146,12 +146,14 @@ initialize
 
 now
 	"Answer the current FILETIME. 
-	Use the OLELibrary function if it is available.
-
 		FILETIME now
 	"
 
-	^(Smalltalk lookup: #OLELibrary) ifNil: [LocalFILETIME now asUTC] ifNotNil: [:lib | lib default now]! !
+	| answer |
+	answer := self new.
+	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
+	KernelLibrary default getSystemTimeAsFileTime: answer.
+	^answer! !
 !FILETIME class categoriesFor: #defineFields!initializing!public! !
 !FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
 !FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !

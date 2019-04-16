@@ -64,7 +64,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPutAll: '(uFlags='.
 	flags := self uFlags.
-	flags printOn: aStream base: 16.
+	flags printOn: aStream base: 16 showRadix: true.
 	aStream
 		nextPutAll: ', hwnd=';
 		print: (View fromHandle: self hwnd);

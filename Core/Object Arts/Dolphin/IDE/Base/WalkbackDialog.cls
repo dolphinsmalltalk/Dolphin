@@ -48,7 +48,7 @@ copyWalkbackToClipboard
 	although a VM 'crash' dump is typically better."
 
 	(String writeStream 
-		display: TimeStamp current; 
+		display: DateAndTime now; 
 		nextPutAll: ': '; 
 		print: caption; cr; 
 		nextPutAll: callStack; 

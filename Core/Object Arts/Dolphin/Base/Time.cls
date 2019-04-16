@@ -6,7 +6,7 @@ Magnitude subclass: #Time
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Time guid: (GUID fromString: '{87b4c655-026e-11d3-9fd7-00a0cc3e4a32}')!
-Time comment: 'Time is the class whose instances represent a time of day as the number of seconds since midnight.'!
+Time comment: '`Time` is the class whose instances represent a time of day as the number of seconds since midnight with millisecond precision.'!
 !Time categoriesForClass!Magnitude-General! !
 !Time methodsFor!
 
@@ -25,6 +25,11 @@ addTime: aTimeOrDate
 
 	^self class fromMilliseconds: self asMilliseconds + aTimeOrDate asMilliseconds!
 
+asDateAndTime
+	"Answer a new <DateAndTime> representing the the same local time as the receiver on the current day."
+	
+	^DateAndTime fromDate: Date today time: self!
+
 asMilliseconds
 	"Answer the number of milliseconds since midnight represented by the receiver."
 
@@ -34,9 +39,9 @@ asParameter
 	"Answer the host system representation of the receiver."
 
 	^SYSTEMTIME new
-		wHour: self hours; 
-		wMinute: self minutes; 
-		wSecond: self seconds;
+		wHour: self hour24;
+		wMinute: self minute;
+		wSecond: self second;
 		yourself!
 
 asSeconds
@@ -45,72 +50,97 @@ asSeconds
 	^milliseconds // 1000
 !
 
-asTimeStamp
-	"Answer the receiver as TimeStamp"
+displayOn: aStream
+	"Append to the <puttableStream> argument, aStream, a String whose characters are a representation of this<Time> that a user in the current<Locale> might expect to see."
 
-	^TimeStamp time: self!
+	Locale default displayTime: self on: aStream!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
 	^self asMilliseconds hash!
 
-hours
+hour
+	"Answer the hour of the day represented by the receiver (24 hour clock)"
+
+	^self hour24
+!
+
+hour12
+	"Answer the hour of the day represented by the receiver (12 hour clock)"
+
+	^self hour24 - 1 \\ 12 + 1
+!
+
+hour24
 	"Answer the hour of the day represented by the receiver (24 hour clock)"
 
 	^(milliseconds // ##(60*60*1000)) \\ 24
 !
 
-milliseconds
+hours
+	"Answer the hour of the day represented by the receiver (24 hour clock)"
+
+	^self hour24!
+
+millisecond
 	"Answer the millisecond of the second of the minute of the hour of the day represented by
 	the receiver."
 
 	^milliseconds \\ 1000!
 
-minutes
+milliseconds
+	"Answer the millisecond of the second of the minute of the hour of the day represented by
+	the receiver."
+
+	^self millisecond!
+
+minute
 	"Answer the minute of the hour of the day represented by the receiver."
 
 	^(milliseconds // ##(60*1000)) \\ 60
 !
 
-printOn: aStream
-	"Append a short textual description of the receiver to aStream. The format is
-	defined by the default User locale (i.e. it can be reconfigured using the
-	Windows control panel)."
+minutes
+	"Answer the minute of the hour of the day represented by the receiver."
 
-	self printOn: aStream locale: Locale default flags: 0 format: nil!
+	^self minute!
+
+printOn: aStream
+	"Append, to the <puttableStream>, aStream, a string whose characters are those that a developer might expect to see for this <Time>" 
+
+	Locale smalltalk displayTime: self on: aStream!
 
 printOn: aStream format: aString
-	"Append a short textual description of the receiver to the <puttableStream> argument,
-	aStream. The format is defined by the <readableString> argument, aString, the format 
-	characters of which are as described in the Control Panel help for Windows	Regional 
-	Options/Time settings (e.g. hh:mm tt, formats to, for example, 10:15 pm). If the format 
-	argument is nil then the receiver is printed to the stream in the currently configured default 
-	format of the host OS."
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. 
+	The format is defined by the <readableString> argument, aString, the format characters of which are as described in Locale>>#timeFormat method.
+	If the format argument is nil then the receiver is printed to the stream in the currently configured default format of the host OS."
 
-	self 
-		printOn: aStream
-		locale: Locale default
-		flags: 0
+	Locale default 
+		printTime: self
+		on: aStream
 		format: aString!
 
-printOn: aStream locale: locale flags: dwFlags format: aStringOrNil
-	"Private - Append a locale specific string representation of the receiver to
-	aStream, using the specified format String (the default is used if it is nil).
-	The format is as described in the Control Panel help for Windows Regional 
-	Options/Time settings (e.g. hh:mm tt, formats to, for example, 10:15 pm)."
+printStringFormat: aString 
+	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>#timeFormat method comment.
+	Settings from the default locale are used."
 
-	aStream nextPutAll: (locale printTime: self format: aStringOrNil flags: dwFlags)
+	| stream |
+	stream := String writeStream: aString size.
+	self printOn: stream format: aString.
+	^stream contents!
 
+second
+	"Answer the <rational> second of the minute of the hour of the day represented by the receiver.
+	Note that this is quite likely to be a <Fraction>."
 
+	^(milliseconds / 1000) \\ 60
 !
 
 seconds
-	"Answer the second of the minute of the hour of the day represented by 
-	the receiver."
+	"Answer the second of the minute of the hour of the day represented by the receiver."
 
-	^(milliseconds // 1000) \\ 60
-!
+	^self second!
 
 setMilliseconds: anInteger
 	"Private - Set the number of milliseconds since midnight represented by the receiver."
@@ -131,17 +161,24 @@ subtractTime: aTimeOrDate
 !Time categoriesFor: #<!comparing!public! !
 !Time categoriesFor: #=!comparing!public! !
 !Time categoriesFor: #addTime:!arithmetic!public! !
+!Time categoriesFor: #asDateAndTime!converting!public! !
 !Time categoriesFor: #asMilliseconds!converting!public! !
 !Time categoriesFor: #asParameter!converting!public! !
 !Time categoriesFor: #asSeconds!converting!public! !
-!Time categoriesFor: #asTimeStamp!converting!public! !
+!Time categoriesFor: #displayOn:!printing!public! !
 !Time categoriesFor: #hash!comparing!public! !
+!Time categoriesFor: #hour!accessing!public! !
+!Time categoriesFor: #hour12!accessing!public! !
+!Time categoriesFor: #hour24!accessing!public! !
 !Time categoriesFor: #hours!accessing!public! !
+!Time categoriesFor: #millisecond!accessing!public! !
 !Time categoriesFor: #milliseconds!accessing!public! !
+!Time categoriesFor: #minute!accessing!public! !
 !Time categoriesFor: #minutes!accessing!public! !
 !Time categoriesFor: #printOn:!printing!public! !
 !Time categoriesFor: #printOn:format:!printing!public! !
-!Time categoriesFor: #printOn:locale:flags:format:!printing!private! !
+!Time categoriesFor: #printStringFormat:!printing!public! !
+!Time categoriesFor: #second!accessing!public! !
 !Time categoriesFor: #seconds!accessing!public! !
 !Time categoriesFor: #setMilliseconds:!accessing!private! !
 !Time categoriesFor: #storeOn:!printing!public! !
@@ -177,6 +214,17 @@ formats
 	"Private - Answer a collection of the time formats for the default user locale."
 
 	^Locale default timeFormats!
+
+fromDuration: aDuration 
+	"Answer an instance of Time initialized from aDuration.  
+	NB: 
+		Any day value in aDuration is ignored
+		Negative values for aDuration produce backward Times i.e.
+			Time fromDuration: (Duration days: 0 hours: -1 minutes: -2 seconds: -3) answers 22:57:57"
+
+	^self 
+		fromMilliseconds: (((aDuration hours * 60 + aDuration minutes) * 60 + aDuration seconds) * 1000) 
+				rounded!
 
 fromMilliseconds: anInteger 
 	"Answer a new instance of the receiver anInteger milliseconds since midnight."
@@ -270,40 +318,42 @@ readFrom: aStream
 	"Answers a new instance of the receiver read from aStream according to
 	aFormatStringOrNil"
 
-	| hours minutes seconds milliseconds separator am rounded |
+	| hours minutes seconds separator am |
 	minutes := 0.
 	seconds := 0.
-	milliseconds := 0.
 	hours := Integer readFrom: aStream radix: 10.
+	(hours between: 0 and: 23) ifFalse: [^self errorInvalidFormat].
 	separator := aStream peek.
-	rounded := 0.
 	(separator isNil or: [separator isLetter])
 		ifFalse: 
 			[aStream next.
 			minutes := Integer readFrom: aStream radix: 10.
+			(minutes between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
 			(aStream peekFor: separator)
 				ifTrue: 
 					[seconds := Integer readFrom: aStream radix: 10.
+					(seconds between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
+					"Historically we have allowed a separate fourth component to specify milliseconds, so for backwards compat continue to read this, although the preferred format is fractional seconds"
 					(aStream peekFor: separator)
-						ifTrue: [milliseconds := Integer readFrom: aStream radix: 10]
+						ifTrue: 
+							[| milliseconds |
+							milliseconds := Integer readFrom: aStream radix: 10.
+							(milliseconds between: 0 and: 999) ifFalse: [^self errorInvalidFormat].
+							seconds := seconds + (milliseconds / 1000)]
 						ifFalse: 
-							[(aStream peekFor: $.)
+							["We read the fraction part of the seconds separately as an Integer in order to avoid an rounding error that might arise should we read the whole as a Float."
+							(aStream peekFor: $.)
 								ifTrue: 
-									[| start |
-									start := aStream position.
-									milliseconds := Integer readFrom: aStream radix: 10.
-									milliseconds isNil
-										ifTrue: 
-											["Actually just seconds with a trailing full stop"
-											milliseconds := 0.
-											aStream pop]
-										ifFalse: 
-											[| precision |
-											precision := aStream position - start - 3.
-											milliseconds == 0
-												ifFalse: 
-													[milliseconds := (milliseconds / precision exp10) asInteger.
-													rounded := 1]]]]]].
+									[| ff digits ch |
+									ff := 0.
+									digits := 0.
+									
+									[ch := aStream nextAvailable.
+									ch notNil and: [ch isDigit]] whileTrue: 
+												[ff := ff * 10 + ch digitValue.
+												digits := digits + 1].
+									(digits between: 1 and: 9) ifFalse: [^self errorInvalidFormat].
+									seconds := seconds + (ff / digits exp10)]]]].
 	aStream skipWhile: [:c | c == $\x20].
 	am := self amMarker.
 	(am notEmpty and: [am skipOver: aStream ignoreCase: true])
@@ -315,14 +365,9 @@ readFrom: aStream
 			pm := self pmMarker.
 			(pm notEmpty and: [pm skipOver: aStream ignoreCase: true])
 				ifTrue: 
-					[((0 to: 12) includes: hours) ifFalse: [^self errorInvalidFormat].
+					[(hours between: 0 and: 12) ifFalse: [^self errorInvalidFormat].
 					hours < 12 ifTrue: [hours := hours + 12]]].
-	((0 to: 23) includes: hours) ifFalse: [^self errorInvalidFormat].
-	((0 to: 59) includes: minutes) ifFalse: [^self errorInvalidFormat].
-	((0 to: 59) includes: seconds) ifFalse: [^self errorInvalidFormat].
-	"Note that milliseconds may legitimately be rounded up to 1000, so to avoid having to carry this through we treat it as valid"
-	((0 to: 999 + rounded) includes: milliseconds) ifFalse: [^self errorInvalidFormat].
-	^Time fromMilliseconds: (60 * (60 * hours + minutes) + seconds) * 1000 + milliseconds!
+	^Time fromMilliseconds: ((60 * (60 * hours + minutes) + seconds) * 1000) rounded!
 
 secondClock
 	"Private - Answer the current value of the second clock (seconds since midnight)."
@@ -352,6 +397,7 @@ totalSeconds
 !Time class categoriesFor: #defaultFormat!enquiries!private! !
 !Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
 !Time class categoriesFor: #formats!enquiries!private! !
+!Time class categoriesFor: #fromDuration:!instance creation!public! !
 !Time class categoriesFor: #fromMilliseconds:!instance creation!public! !
 !Time class categoriesFor: #fromSeconds:!instance creation!public! !
 !Time class categoriesFor: #fromString:!instance creation!public! !

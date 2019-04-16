@@ -43,7 +43,7 @@ setName: aString parent: aFileBrowserFolderOrNil
 	data := (File find: self path) first.
 	size := data fileSize.
 	type := File splitExtensionFrom: data fileName.
-	timeStamp := TimeStamp fromSYSTEMTIME: data ftLastWriteTime asSYSTEMTIME.
+	timeStamp := DateAndTime fromSYSTEMTIME: data ftLastWriteTime asSYSTEMTIME.
 	^self!
 
 size

@@ -107,7 +107,7 @@ testTwoComplementRightShift
 !IntegerTest categoriesFor: #testFactorial!public!unit tests! !
 !IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
 !IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
-!IntegerTest categoriesFor: #testIsPowerOfTwo!public! !
+!IntegerTest categoriesFor: #testIsPowerOfTwo!public!unit tests! !
 !IntegerTest categoriesFor: #testNew!public!unit tests! !
 !IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
 !IntegerTest categoriesFor: #testSetBit!public!unit tests! !

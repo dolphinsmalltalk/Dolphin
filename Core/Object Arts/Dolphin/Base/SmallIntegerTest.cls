@@ -52,6 +52,16 @@ testBitShift
 	self assert: (1073741823 bitShift: -32) identicalTo: 0.
 	self assert: (3640 bitShift: 1) identicalTo: 7280!
 
+testDecimalDigitLength
+	2 to: 10 do: [:i | | subject |
+		subject := 10 raisedToInteger: i-1.
+		self assert: subject decimalDigitLength equals: i.
+		self assert: (subject - 1) decimalDigitLength equals: i-1.
+		self assert: (subject + 1) decimalDigitLength equals: i].
+	self assert: 0 decimalDigitLength equals: 1.
+	self assert: 1 decimalDigitLength equals: 1.
+	self assert: 16r3FFFFFFF decimalDigitLength equals: 10!
+
 testDigitLength
 	"Note that the digitLength is the number of bytes required to represent the positive magnitude,
 	not the 2's complement value."
@@ -184,6 +194,15 @@ testNoMask
 
 	self assert: (29127 noMask: 3640).!
 
+testNumberOfDigitsInBase
+	(1 to: 30) do: 
+			[:each |
+			self assert: ((2 raisedToInteger: each) - 1 numberOfDigitsInBase: 2) equals: each.
+			self assert: ((2 raisedToInteger: each) numberOfDigitsInBase: 16) equals: each // 4 + 1].
+	self assert: (-2 numberOfDigitsInBase: 2) equals: 2.
+	self assert: (16r3FFFFFFF numberOfDigitsInBase: 16) equals: 8.
+	self assert: (16r3FFFFFFF numberOfDigitsInBase: 3) equals: 19!
+
 testOverflow
 	"Test overflow of SmallInteger arithmetic prims"
 
@@ -242,7 +261,14 @@ testPrintString
 
 testPrintStringRadix
 	self assert: (32767 printStringRadix: 2) equals: '2r111111111111111'.
-	self assert: (30167 printStringRadix: 2) equals: '2r111010111010111'!
+	self assert: (30167 printStringRadix: 2) equals: '2r111010111010111'.
+	self assert: (0 printStringRadix: 2) equals: '2r0'.
+	self assert: (-1 printStringRadix: 2) equals: '-2r1'.
+	self assert: (1295 printStringRadix: 36) equals: '36rZZ'.
+	self assert: (SmallInteger maximum printStringRadix: 36) equals: '36rHRA0HR'.
+	self assert: (SmallInteger minimum printStringRadix: 36) equals: '-36rHRA0HS'.
+	self should: [1 printStringRadix: 1] raise: Error.
+	self should: [36 printStringRadix: 37] raise: Error!
 
 testQuo
 	self assert: (6 quo: 2) identicalTo: 3.
@@ -302,10 +328,11 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testBitOr!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testBitShift!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testDecimalDigitLength!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testDivide!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testEven!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testExp10!public! !
+!SmallIntegerTest categoriesFor: #testExp10!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testGcd!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testHighBit!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
@@ -318,12 +345,13 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testNew!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testNoMask!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testNumberOfDigitsInBase!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testOverflow!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testPrintString!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testPrintStringRadix!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testRaisedToInteger!public! !
+!SmallIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !

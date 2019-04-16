@@ -509,7 +509,6 @@ saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters
 	"Add aGdiplusImage to the receiver and save it as a frame in the receiver's disk file."
 
 	| status |
-	Processor sleep: 10.
 	(status := GdiplusLibrary default 
 				gdipSaveAddImage: self asParameter
 				newImage: aGdiplusImage asParameter

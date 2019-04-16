@@ -34,7 +34,8 @@ initializeBootPackages
 	STBPrefix initialize.
 	Delay initializeTimingSemaphore.
 	CompilerNotification initialize.
-	(Smalltalk at: #Utf8String) initialize!
+	(Smalltalk at: #Utf8String) initialize.
+	(Smalltalk at: #SmalltalkLocale) initialize!
 
 keepAlive
 	"We stay alive until explicitly terminated."

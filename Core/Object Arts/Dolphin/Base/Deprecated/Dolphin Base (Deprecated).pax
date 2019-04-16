@@ -19,6 +19,7 @@ package classNames
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
+	add: #TimeStamp;
 	yourself.
 
 package methodNames
@@ -84,17 +85,29 @@ package methodNames
 	add: #CRTLibrary -> #tan:;
 	add: #CRTLibrary -> #thread_chmod:pmode:;
 	add: #CRTLibrary -> #thread_errno;
+	add: #Date -> #asTimeStamp;
+	add: #Date -> #evaluateYYMMDD:;
+	add: #Date -> #monthIndex;
+	add: #Date -> #monthName;
+	add: #Date -> #weekday;
+	add: #Date -> #weekdayIndex;
+	add: #DateAndTime -> #asTimeStamp;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
+	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #KernelLibrary -> #getVersionEx:;
 	add: #KernelLibrary -> #lstrcmp:lpString2:;
 	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
+	add: #Locale -> #dateOrder;
+	add: #Locale -> #dateSeparator;
+	add: #Locale -> #isMonthBeforeDay;
 	add: #MessageBox -> #abortRetryIgnore;
 	add: #MessageBox -> #error;
 	add: #MessageBox -> #fatalError;
@@ -113,8 +126,14 @@ package methodNames
 	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
+	add: #SYSTEMTIME -> #asTimeStamp;
+	add: #Time -> #asTimeStamp;
+	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
+	add: 'Date class' -> #dayOfWeek:;
+	add: 'Date class' -> #nameOfDay:;
+	add: 'Date class' -> #nameOfMonth:;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -186,6 +205,11 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Magnitude subclass: #TimeStamp
+	instanceVariableNames: 'date time'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBProxy subclass: #STBSymbolProxy
@@ -599,6 +623,70 @@ thread_errno
 !CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 
+!Date methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp
+!
+
+evaluateYYMMDD: aTriadicValuable
+	Notification deprecated.
+	^self dayMonthYearDo: [:d :m :y | aTriadicValuable value: y value: m value: d]!
+
+monthIndex
+	Notification deprecated.
+	^self month!
+
+monthName
+	Notification deprecated.
+	^Locale default monthName: self month!
+
+weekday
+	Notification deprecated.
+	^Locale default dayOfWeekName: self dayOfWeek!
+
+weekdayIndex
+	Notification deprecated.
+	^(self asDays + 1) \\ 7 + 1! !
+!Date categoriesFor: #asTimeStamp!converting!public! !
+!Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
+!Date categoriesFor: #monthIndex!accessing!public! !
+!Date categoriesFor: #monthName!accessing!public! !
+!Date categoriesFor: #weekday!accessing!public! !
+!Date categoriesFor: #weekdayIndex!accessing!public! !
+
+!Date class methodsFor!
+
+dayOfWeek: dayName
+	Notification deprecated.
+	^Locale default dayOfWeek: dayName!
+
+nameOfDay: dayIndex
+	"Use Locale>>dayOfWeekName:, but note that it expects Sunday as the first day of the week."
+	
+	Notification deprecated.
+	^Locale default dayOfWeekName: (dayIndex + 1) \\ 7!
+
+nameOfMonth: monthIndex
+	"Use Locale>>monthName:"
+
+	Notification deprecated.
+	^Locale default monthName: monthIndex! !
+!Date class categoriesFor: #dayOfWeek:!mapping!public! !
+!Date class categoriesFor: #nameOfDay:!mapping!public! !
+!Date class categoriesFor: #nameOfMonth:!mapping!public! !
+
+!DateAndTime methodsFor!
+
+asTimeStamp
+	"Answer a <TimeStamp> representing the local date and time of the receiver. The <TimeStamp> will be that at the receiver's offset, so:
+		- if a date/time in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asTimeStamp`)
+		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
+	Notification deprecated.
+	^TimeStamp date: self asDate time: self asTime! !
+!DateAndTime categoriesFor: #asTimeStamp!converting!public! !
+
 !ExternalCallback class methodsFor!
 
 receiver: anObject prototype: anExternalMethod
@@ -703,10 +791,24 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
+getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
+	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
+	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
+	^self invalidCall
+
+!
+
 getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
 	<stdcall: dword GetFileSize handle dword*>
 	#deprecated. "Use #getFileSizeEx:lpFileSize:"
 	^self invalidCall!
+
+getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
+	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
+	#deprecated. "Deprecated by Microsoft - use GetTimeFormatEx instead"
+	^self invalidCall
+
+!
 
 getVersionEx: anOSVERSIONINFO 
 	"Populate the argument with extended OS version information. Answers whether the request succeeded.
@@ -732,7 +834,9 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall! !
+!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
@@ -748,6 +852,33 @@ clear
 	OSVERSIONINFO clear
 ! !
 !KernelLibrary class categoriesFor: #clear!initializing!private! !
+
+!Locale methodsFor!
+
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated. "Use dateFormat"
+	^self getIntegerInfo: LOCALE_IDATE
+!
+
+dateSeparator
+	"Answer the character used in the receiver locale to separate date components."
+
+	Notification deprecated. "Use dateFormat"
+	^self getStringInfo: LOCALE_SDATE!
+
+isMonthBeforeDay
+	"Answer true if the format for the receiver is expecting a month before a day"
+
+	Notification deprecated. "Use dateFormat"
+	^self dateOrder ~= 1! !
+!Locale categoriesFor: #dateOrder!constants!public! !
+!Locale categoriesFor: #dateSeparator!constants!public! !
+!Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
 
 !MessageBox methodsFor!
 
@@ -906,6 +1037,29 @@ unicodeClass
 	^self utf16Class! !
 !String class categoriesFor: #fromUnicodeString:!instance creation!public! !
 !String class categoriesFor: #unicodeClass!constants!public! !
+
+!SYSTEMTIME methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTime! !
+!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
+
+!Time methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp! !
+!Time categoriesFor: #asTimeStamp!converting!public! !
+
+!WindowsLocale methodsFor!
+
+timeSeparator
+	"Answer the character used in the receiver locale to separate time components."
+
+	Notification deprecated. "Use timeFormat"
+	^self getStringInfo: LOCALE_STIME! !
+!WindowsLocale categoriesFor: #timeSeparator!constants!public! !
 
 !WinMMLibrary methodsFor!
 

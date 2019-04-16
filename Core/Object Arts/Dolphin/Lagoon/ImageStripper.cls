@@ -676,24 +676,15 @@ logComment: aString
 		flush!
 
 logConfiguration: aString
-	| stamp |
 	self startElement: 'Configuration' attributes: #().
 	self
 		logElement: 'ImagePath'
 		attributes: #()
 		value: SessionManager current imagePath.
-	stamp := TimeStamp currentUTC.
 	self
 		logElement: 'TimeStamp'
 		attributes: #()
-		value: (Locale userDefault
-				printDate: stamp date
-				format: 'yyyy-MM-dd'
-				flags: 0) , 'T'
-				, (Locale userDefault
-						printTime: stamp time
-						format: 'HH:mm:ss'
-						flags: 0) , 'Z'.
+		value: DateAndTime now printString.
 	self
 		logElement: 'Target'
 		attributes: #()
