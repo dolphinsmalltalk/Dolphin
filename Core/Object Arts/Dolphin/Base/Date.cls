@@ -198,6 +198,11 @@ month
 	dayOfYear := self class day: self asDays inYear: year.
 	^self class monthIndexOfDay: dayOfYear inYear: year!
 
+monthName
+	"Answer a <readableString>, which is the locale specific name of the month of this date."
+
+	^Locale default monthName: self month!
+
 monthsSince: aDate
 	"Answer the number of elapsed months Since the receiver and aDate.
 	This methods adjusts correctly (for all cases I've tried) for part years
@@ -340,6 +345,7 @@ yyyymmdd
 !Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
 !Date categoriesFor: #hash!comparing!public! !
 !Date categoriesFor: #month!accessing!public! !
+!Date categoriesFor: #monthName!accessing!public! !
 !Date categoriesFor: #monthsSince:!arithmetic!public! !
 !Date categoriesFor: #printOn:!printing!public! !
 !Date categoriesFor: #printOn:format:!printing!public! !
@@ -354,12 +360,6 @@ yyyymmdd
 !Date categoriesFor: #yyyymmdd!accessing!public! !
 
 !Date class methodsFor!
-
-dateAndTimeNow 
-	"Answer an Array whose first element is the current local Date and whose
-	second element is the current local Time."
-
-	^Time dateAndTimeNow!
 
 dateOrderFromFormat: aFormatString
 	"Private - Answers a String giving the component order in aFormatString (e.g. 'DMY' or 'MDY')"
@@ -502,6 +502,12 @@ longFormats
 
 	^Locale default longDateFormats!
 
+monthAbbreviation: monthIndex
+	"Answer a localised abbreviated String name for the month whose index is the argument, monthIndex, where January 
+	is month 1, and December is month 12."
+
+	^Locale default monthAbbreviation: monthIndex!
+
 monthIndexOfDay: dayInteger inYear: yearInteger 
 	"Private - Answer the index of the month of the specified julian day number in the specified year."
 
@@ -597,7 +603,7 @@ readMonthFrom: aStream
 		do: 
 			[:mm | 
 			| shortName |
-			shortName := (self shortNameOfMonth: mm) copyWithout: $..
+			shortName := (self monthAbbreviation: mm) copyWithout: $..
 			(shortName skipOver: aStream ignoreCase: true) 
 				ifTrue: 
 					[aStream skipWhile: [:c | c isLetter].
@@ -626,18 +632,6 @@ shortFormats
 	"Private - Answer a collection of the short date formats for the user locale."
 
 	^Locale default shortDateFormats!
-
-shortNameOfDay: dayIndex
-	"Use Locale>>dayOfWeekAbbreviation:, but note that it expects Sunday as the first day of the week."
-	
-	Notification deprecated.
-	^Locale default dayOfWeekAbbreviation: (dayIndex + 1) \\ 7!
-
-shortNameOfMonth: monthIndex
-	"Answer a localised abbreviated String name for the month whose index is the argument, monthIndex, where January 
-	is month 1, and December is month 12."
-
-	^Locale default shortNameOfMonth: monthIndex!
 
 today
 	"Answer an instance of the receiver representing the current system date."
@@ -678,7 +672,6 @@ yearPivot: anInteger
 
 yesterday
 	^self today subtractDays: 1! !
-!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
 !Date class categoriesFor: #dateOrderFromFormat:!helpers!private! !
 !Date class categoriesFor: #day:inYear:!enquiries!private! !
 !Date class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
@@ -695,11 +688,12 @@ yesterday
 !Date class categoriesFor: #fromString:!instance creation!public! !
 !Date class categoriesFor: #fromString:format:!instance creation!public! !
 !Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Date class categoriesFor: #indexOfMonth:!mapping!public! !
+!Date class categoriesFor: #indexOfMonth:!enquiries!public! !
 !Date class categoriesFor: #initialize!development!initializing!private! !
 !Date class categoriesFor: #leapYear:!operations!public! !
 !Date class categoriesFor: #longFormats!enquiries!public! !
-!Date class categoriesFor: #monthIndexOfDay:inYear:!mapping!private! !
+!Date class categoriesFor: #monthAbbreviation:!enquiries!public! !
+!Date class categoriesFor: #monthIndexOfDay:inYear:!enquiries!private! !
 !Date class categoriesFor: #new!instance creation!public! !
 !Date class categoriesFor: #newDay:month:year:!instance creation!public! !
 !Date class categoriesFor: #newDay:monthIndex:year:!instance creation!public! !
@@ -711,8 +705,6 @@ yesterday
 !Date class categoriesFor: #readMonthFrom:!helpers!private! !
 !Date class categoriesFor: #readYearFrom:!helpers!private! !
 !Date class categoriesFor: #shortFormats!enquiries!private! !
-!Date class categoriesFor: #shortNameOfDay:!mapping!public! !
-!Date class categoriesFor: #shortNameOfMonth:!mapping!public! !
 !Date class categoriesFor: #today!instance creation!public! !
 !Date class categoriesFor: #tomorrow!instance creation!public! !
 !Date class categoriesFor: #year:month:day:!instance creation!public! !

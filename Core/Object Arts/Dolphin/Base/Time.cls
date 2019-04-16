@@ -191,14 +191,6 @@ amMarker
 
 	^Locale default amDesignator!
 
-dateAndTimeNow
-	"Answer an Array whose first element is the current local Date and whose
-	second element is the current local Time."
-
-	| localTime |
-	localTime := SYSTEMTIME now.
-	^{Date fromSYSTEMTIME: localTime. self fromSYSTEMTIME: localTime}!
-
 defaultFormat
 	"Private - Answer a collection of the time formats for the default user locale."
 
@@ -389,11 +381,8 @@ ticksToRun: timedBlock
 totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
 	
-	| dateAndTime |
-	dateAndTime := self dateAndTimeNow.
-	^(dateAndTime at: 1) asSeconds + (dateAndTime at: 2) asSeconds! !
+	^DateAndTime now localSeconds truncated! !
 !Time class categoriesFor: #amMarker!accessing!public! !
-!Time class categoriesFor: #dateAndTimeNow!accessing!public! !
 !Time class categoriesFor: #defaultFormat!enquiries!private! !
 !Time class categoriesFor: #errorInvalidFormat!exceptions!private! !
 !Time class categoriesFor: #formats!enquiries!private! !

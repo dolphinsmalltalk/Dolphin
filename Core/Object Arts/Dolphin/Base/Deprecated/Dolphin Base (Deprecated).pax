@@ -88,7 +88,6 @@ package methodNames
 	add: #Date -> #asTimeStamp;
 	add: #Date -> #evaluateYYMMDD:;
 	add: #Date -> #monthIndex;
-	add: #Date -> #monthName;
 	add: #Date -> #weekday;
 	add: #Date -> #weekdayIndex;
 	add: #DateAndTime -> #asTimeStamp;
@@ -131,9 +130,12 @@ package methodNames
 	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
+	add: 'Date class' -> #dateAndTimeNow;
 	add: 'Date class' -> #dayOfWeek:;
 	add: 'Date class' -> #nameOfDay:;
 	add: 'Date class' -> #nameOfMonth:;
+	add: 'Date class' -> #shortNameOfDay:;
+	add: 'Date class' -> #shortNameOfMonth:;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -150,6 +152,7 @@ package methodNames
 	add: 'STBSingletonProxy class' -> #for:using:;
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
+	add: 'Time class' -> #dateAndTimeNow;
 	yourself.
 
 package globalNames
@@ -638,10 +641,6 @@ monthIndex
 	Notification deprecated.
 	^self month!
 
-monthName
-	Notification deprecated.
-	^Locale default monthName: self month!
-
 weekday
 	Notification deprecated.
 	^Locale default dayOfWeekName: self dayOfWeek!
@@ -652,11 +651,18 @@ weekdayIndex
 !Date categoriesFor: #asTimeStamp!converting!public! !
 !Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
 !Date categoriesFor: #monthIndex!accessing!public! !
-!Date categoriesFor: #monthName!accessing!public! !
 !Date categoriesFor: #weekday!accessing!public! !
 !Date categoriesFor: #weekdayIndex!accessing!public! !
 
 !Date class methodsFor!
+
+dateAndTimeNow 
+	"Answer an Array whose first element is the current local Date and whose
+	second element is the current local Time."
+
+	"Use DateAndTime now"
+	Notification deprecated. 
+	^Time dateAndTimeNow!
 
 dayOfWeek: dayName
 	Notification deprecated.
@@ -672,10 +678,23 @@ nameOfMonth: monthIndex
 	"Use Locale>>monthName:"
 
 	Notification deprecated.
-	^Locale default monthName: monthIndex! !
-!Date class categoriesFor: #dayOfWeek:!mapping!public! !
-!Date class categoriesFor: #nameOfDay:!mapping!public! !
-!Date class categoriesFor: #nameOfMonth:!mapping!public! !
+	^Locale default monthName: monthIndex!
+
+shortNameOfDay: dayIndex
+	"Use Locale>>dayOfWeekAbbreviation:, but note that it expects Sunday as the first day of the week."
+	
+	Notification deprecated.
+	^Locale default dayOfWeekAbbreviation: (dayIndex + 1) \\ 7!
+
+shortNameOfMonth: monthIndex
+	Notification deprecated.
+	^self monthAbbreviation: monthIndex! !
+!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
+!Date class categoriesFor: #dayOfWeek:!enquiries!public! !
+!Date class categoriesFor: #nameOfDay:!enquiries!public! !
+!Date class categoriesFor: #nameOfMonth:!enquiries!public! !
+!Date class categoriesFor: #shortNameOfDay:!enquiries!public! !
+!Date class categoriesFor: #shortNameOfMonth:!enquiries!public! !
 
 !DateAndTime methodsFor!
 
@@ -1051,6 +1070,19 @@ asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
 !Time categoriesFor: #asTimeStamp!converting!public! !
+
+!Time class methodsFor!
+
+dateAndTimeNow
+	"Answer an Array whose first element is the current local Date and whose
+	second element is the current local Time."
+
+	| now |
+	"Use DateAndTime now"
+	Notification deprecated.
+	now := DateAndTime now.
+	^{now asDate. now asTime}! !
+!Time class categoriesFor: #dateAndTimeNow!accessing!public! !
 
 !WindowsLocale methodsFor!
 
