@@ -76,7 +76,7 @@ displayDuration: aDuration on: aPuttableStream
 					aDuration asSeconds negated]
 				ifFalse: [aDuration asSeconds].
 	#(#(86400 'day' 2 ##(1 / 100)) #(3600 'hour' 2 ##(1 / 100)) #(60 'minute' 2 ##(1 / 100)) #(1 's' 1 ##(1
-		/ 100)) #(0.001 'ms' 1 ##(1 / 10)) #(1.0e-6 'µs' 10 1) #(1.0e-9 'ns' 1 1)) detect: 
+		/ 100)) #(0.001 'ms' 1 ##(1 / 10)) #(1.0e-6 'µs' 1 ##(1/10)) #(1.0e-9 'ns' 1 1)) detect: 
 				[:each |
 				| value |
 				value := seconds / each first.
