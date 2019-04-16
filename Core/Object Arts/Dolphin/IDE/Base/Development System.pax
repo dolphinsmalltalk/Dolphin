@@ -2671,7 +2671,7 @@ publishedAspectsOfInstances
 	| applicableLayoutManagers choices categories |
 	applicableLayoutManagers := Set new.
 	categories := self applicableLayoutManagerCategories.
-	categories do: [:each | applicableLayoutManagers addAll: each contents].
+	categories do: [:each | applicableLayoutManagers addAll: each classes].
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection do: [:each | choices addLast: each name , ' new'].
 	^(super publishedAspectsOfInstances)
@@ -6991,7 +6991,7 @@ publishedAspectsOfInstances
 	| applicableTypeConverters |
 	applicableTypeConverters := Set new.
 	self applicableTypeConverterCategories 
-		do: [:each | applicableTypeConverters addAll: each contents].
+		do: [:each | applicableTypeConverters addAll: each classes].
 	applicableTypeConverters := applicableTypeConverters asSortedCollection asArray 
 				collect: [:each | each name , ' new'].
 	^(super publishedAspectsOfInstances)

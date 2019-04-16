@@ -24,10 +24,10 @@ specialAssert: aBoolean
 
 testCompilationFailures
 	| failed |
-	failed := '*-compilation failures' asMethodCategory contents.
+	failed := '*-compilation failures' asMethodCategory methods.
 	self assert: failed isEmpty! !
 !ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
 !ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
 !ProductReleaseTest categoriesFor: #specialAssert:!private!unit tests! !
-!ProductReleaseTest categoriesFor: #testCompilationFailures!private!unit tests! !
+!ProductReleaseTest categoriesFor: #testCompilationFailures!public!unit tests! !
 
