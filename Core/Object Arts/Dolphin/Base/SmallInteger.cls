@@ -465,20 +465,23 @@ printString
 	"Answer the <readableString> representation of the receiver in base 10."
 
 	"Implementation Note: Although this method is strictly not necessary
-	(SmallInteger>>printOn:base:showRadix: makes it redundant), printing SmallIntegers is such a
+	(SmallInteger>>printOn:base: makes it redundant), printing SmallIntegers is such a
 	common operation that it is worth providing an optimised version generating a String."
 
-	| value aString i |
+	| integer answer digits |
 	<primitive: 44>
-	(value := self) < 0 ifTrue: [^'-' , self negated printString].
-	i := ##(VMConstants.SmallIntegerMax log truncated + 1).
-	aString := Utf8String new: i.
-	[value < 10] whileFalse: 
-			[aString at: i put: (Character digitValue: value \\ 10).
-			i := i - 1.
-			value := value // 10].
-	aString at: i put: (Character digitValue: value \\ 10).
-	^aString copyFrom: i to: aString size!
+	self < 0 ifTrue: [^'-' , self negated printString].
+	answer := String new: (digits := self decimalDigitLength).
+	integer := self.
+	digits to: 1
+		by: -1
+		do: 
+			[:i |
+			| n |
+			n := integer // 10.
+			answer basicAt: i put: ##($0 codePoint) + (integer - (n * 10)).
+			integer := n].
+	^answer!
 
 printStringBase: anInteger
 	"Answer the <readableString> representation of the receiver in base, anInteger, where 0 < anInteger <= 36."

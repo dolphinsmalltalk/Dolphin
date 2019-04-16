@@ -88,13 +88,6 @@ ansiValue
 
 	^code <= 16rFF ifTrue: [code] ifFalse: [self error: 'Non-ansi code point']!
 
-appendToStream: puttableStream
-	"Private - Append the receiver's elements to the argument, puttableStream.
-	Answer the receiver.
-	Implementation note: Double dispatched from streams."
-
-	puttableStream nextPut: self!
-
 asAnsiString
 	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
 	the receiver's code point cannot be represented in ANSI encoding."
@@ -422,14 +415,18 @@ setCode: anInteger
 shallowCopy
 	"Answer the receiver, as Characters are immutable."
 
-	^self! !
+	^self!
+
+to: aCharacter
+	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
+
+	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
 !Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Character categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Character categoriesFor: #<!comparing!public! !
 !Character categoriesFor: #=!comparing!public! !
 !Character categoriesFor: #>!comparing!public! !
 !Character categoriesFor: #ansiValue!accessing!public! !
-!Character categoriesFor: #appendToStream:!double dispatch!private! !
 !Character categoriesFor: #asAnsiString!converting!public! !
 !Character categoriesFor: #asciiValue!accessing!public! !
 !Character categoriesFor: #asInteger!converting!public! !
@@ -482,6 +479,7 @@ shallowCopy
 !Character categoriesFor: #printOn:!printing!public! !
 !Character categoriesFor: #setCode:!accessing!initializing!private! !
 !Character categoriesFor: #shallowCopy!copying!public! !
+!Character categoriesFor: #to:!converting!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
 

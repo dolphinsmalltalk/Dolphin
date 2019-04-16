@@ -158,6 +158,13 @@ allReferences: aBoolean
 	<primitive: 153>
 	^self primitiveFailed!
 
+appendToStream: puttableStream
+	"Private - Append the receiver's elements to the argument, puttableStream.
+	Answer the receiver.
+	Implementation note: Double dispatched from streams."
+
+	puttableStream nextPut: self!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function
 	primitive method (see ExternalLibrary and subclasses). The default is self."
@@ -1551,6 +1558,7 @@ yourself
 !Object categoriesFor: #addDependent:!dependency!public! !
 !Object categoriesFor: #allReferences!enumerating!public! !
 !Object categoriesFor: #allReferences:!enumerating!public! !
+!Object categoriesFor: #appendToStream:!double dispatch!private! !
 !Object categoriesFor: #asParameter!converting!public! !
 !Object categoriesFor: #assert:!public!testing! !
 !Object categoriesFor: #asUIntPtr!converting!public! !

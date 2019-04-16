@@ -17,6 +17,12 @@ Class Variables:
 !DebugTraceStream categoriesForClass!Collections-Streams! !
 !DebugTraceStream methodsFor!
 
+<< anObject
+	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
+
+	anObject appendToStream: self.
+	^self!
+
 atEnd
 	"Answer whether the receiver cannot access any more objects"
 
@@ -125,6 +131,7 @@ tab: tabCount
 
 	self next: tabCount put: $\t
 ! !
+!DebugTraceStream categoriesFor: #<<!accessing!public! !
 !DebugTraceStream categoriesFor: #atEnd!public!testing! !
 !DebugTraceStream categoriesFor: #basicPrint:!printing!private! !
 !DebugTraceStream categoriesFor: #close!operations!public! !

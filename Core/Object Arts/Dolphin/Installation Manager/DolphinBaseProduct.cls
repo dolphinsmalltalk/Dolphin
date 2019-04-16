@@ -143,6 +143,12 @@ contents
 		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
 		yourself.
 		
+	"STON"
+	contents
+		add: #('Core\Contributions\svenc\STON\STON-Core.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON.pax' #plain #imageBased);
+		yourself.
+
 	^contents!
 
 fullName
