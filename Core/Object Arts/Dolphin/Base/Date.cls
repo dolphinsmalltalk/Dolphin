@@ -153,11 +153,7 @@ dayMonthYearDo: aTriadicValuable
 dayOfMonth
 	"Answer the day of the month represented by the receiver."
 
-	| year dayOfYear monthIndex |
-	year := self year.
-	dayOfYear := self dayOfYear.
-	monthIndex := self class monthIndexOfDay: dayOfYear inYear: year.
-	^dayOfYear - (self class daysUntilMonth: monthIndex inYear: year)!
+	^self dayMonthYearDo: [:d :m :y | d]!
 
 dayOfWeek
 	"Answer the day of the year represented by the receiver."
@@ -174,21 +170,19 @@ firstDayOfMonth
 
 	^self firstDayOfMonthIndex: self month!
 
-firstDayOfMonthIndex: monthIndex 
+firstDayOfMonthIndex: monthIndex
 	"Private - Answer the julian day number of the first day of the given month at
 	monthIndex in the receiver's year."
 
-	^(DaysUntilMonth at: monthIndex)
-		+ (monthIndex > 2
-				ifTrue: [self class leapYear: self year]
-				ifFalse: [0])
-		+ 1
-!
+	^(DaysUntilMonth at: monthIndex) + (monthIndex > 2 ifTrue: [self isLeapYear] ifFalse: [0]) + 1!
 
 hash
 	"Answer the SmallInteger hash value for the receiver"
 
 	^self asDays hash!
+
+isLeapYear
+	^self class leapYear: self year!
 
 month
 	"Answer the one-based index of the month represented by the receiver; 1 for January, 2 for February, and so on."
@@ -344,6 +338,7 @@ yyyymmdd
 !Date categoriesFor: #firstDayOfMonth!operations!public! !
 !Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
 !Date categoriesFor: #hash!comparing!public! !
+!Date categoriesFor: #isLeapYear!public!testing! !
 !Date categoriesFor: #month!accessing!public! !
 !Date categoriesFor: #monthName!accessing!public! !
 !Date categoriesFor: #monthsSince:!arithmetic!public! !
