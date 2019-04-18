@@ -20,6 +20,17 @@ canonicalInstance
 		second: 59+(666666666/1000000000)
 		offset: -12.5 hours!
 
+julianEpoch
+	"Noon, November 24, 4714 BC"
+	^DateAndTime
+		year: -4713
+		month: 11
+		day: 24
+		hour: 12
+		minute: 0
+		second: 0
+		offset: 0 hours!
+
 testAddSeconds
 	| subject epochSeconds |
 	subject := DateAndTime.UnixEpoch.
@@ -115,7 +126,12 @@ testFromString
 	fromStringNoOffset := DateAndTime fromString: '-1199-01-05T20:33:14.321'.
 	self assert: fromStringNoOffset offset equals: DateAndTime localOffset.
 	self assert: (DateAndTime fromString: self canonicalInstance printString)
-		equals: self canonicalInstance!
+		equals: self canonicalInstance.
+
+	"We also allow the ISO 8601 'Z' offset format, for UTC"
+	fromString := DateAndTime fromString: '-1199-01-05T20:33:14.321Z'.
+	self assert: fromString printString equals: '-1199-01-05T20:33:14.321+00:00'
+	!
 
 testFromSYSTEMTIME
 	| ts sysTime |
@@ -183,6 +199,10 @@ testHour24
 
 testIsLeapYear
 	self assert: self canonicalInstance isLeapYear.
+	self assert: (DateAndTime
+				year: 0
+				month: 1
+				day: 1) isLeapYear.
 	self deny: (DateAndTime
 				year: 2001
 				month: 1
@@ -196,16 +216,41 @@ testIsLeapYear
 				month: 1
 				day: 1) isLeapYear!
 
+testJulianDate
+	"see https://en.wikipedia.org/wiki/Julian_day."
+
+	| subject |
+	self assert: self julianEpoch julianDate equals: 0.
+	subject := (DateAndTime
+				year: 2013
+				month: 1
+				day: 1
+				hour: 00
+				minute: 30
+				second: 0
+				offset: 0 hours) julianDate
+				roundTo: 1e-6.
+	self assert: subject equals: 2456293.520833!
+
 testJulianDayNumber
 	"see https://en.wikipedia.org/wiki/Julian_day."
 
 	| subject |
-	"On the day this page was written, the wikipedia page example was for 00:34, Friday, April 12, 2019 (UTC)"
+	subject := self julianEpoch.
+	self assert: subject julianDayNumber equals: 0.
+
+	"On the day this test was written, the wikipedia page example was for 00:34, Friday, April 12, 2019 (UTC)"
 	subject := DateAndTime fromString: '2019-04-12T00:34:00+00:00'.
 	self assert: subject julianDayNumber equals: 2458585.
 
 	"Julian days start at noon, so verify the correct pivot is used"
-	subject := (DateAndTime year: 2000 day: 1 hour: 12 minute: 0 second: 0 offset: Duration zero).
+	subject := DateAndTime
+				year: 2000
+				day: 1
+				hour: 12
+				minute: 0
+				second: 0
+				offset: Duration zero.
 	self assert: subject julianDayNumber equals: 2451545.
 	self assert: (subject - 1 nanoseconds) julianDayNumber equals: 2451544.
 	self assert: (subject + 12 hours) julianDayNumber equals: 2451545.
@@ -213,8 +258,12 @@ testJulianDayNumber
 	self assert: (subject + 24 hours - 1 nanoseconds) julianDayNumber equals: 2451545.
 
 	"Noon on the Unix epoch is JDN 2440588"
-	self assert: (DateAndTime.UnixEpoch + 12 hours) julianDayNumber equals: 2440588
-!
+	self assert: (DateAndTime.UnixEpoch + 12 hours) julianDayNumber equals: 2440588.
+
+	"An example at 2pm local time at UTC+2"
+	subject := DateAndTime year: 2011 month: 7 day: 29 hour: 14 minute: 0 second: 0 offset: 2 hours.
+	self assert: subject julianDayNumber equals: 2455772.
+	self assert: (subject - 1 nanoseconds) julianDayNumber equals: 2455771!
 
 testLilianDayNumber
 	"see https://en.wikipedia.org/wiki/Lilian_date."
@@ -301,6 +350,14 @@ testPrintOn
 	self assert: subject printString equals: ' 2001-01-01T00:00:00+00:00'.
 !
 
+testRataDie
+	self assert: (DateAndTime year: 1 month: 1 day: 1) rataDie equals: 1.
+	"ISO year 0 is actually year 1 BC"
+	self assert: (DateAndTime year: 0 month: 1 day: 1) rataDie equals: -365.
+	self assert: (DateAndTime year: 0 month: 12 day: 31) rataDie equals: 0.
+	"A routine example in a leap year, but before the end of feb"
+	self assert: (DateAndTime year: 2010 month: 2 day: 25) rataDie equals: 733828.!
+
 testSecond
 	self assert: self canonicalInstance second equals: 59 + (666666666/1000000000)!
 
@@ -317,7 +374,7 @@ testToday
 	self assert: subject offset equals: DateAndTime localOffset!
 
 testYearMonthDay
-	| subject tzi expected |
+	| subject offset expected suffix |
 	self should: 
 			[DateAndTime
 				year: 2004
@@ -330,15 +387,25 @@ testYearMonthDay
 				month: 2
 				day: 30]
 		raise: InvalidArgumentError.
-	subject := DateAndTime
-				year: 2004
+	"1900 was not a leap year (divisible by 4, but not by 100, and not by 400)"
+	self should: 
+			[DateAndTime
+				year: 1900
 				month: 2
-				day: 29.
-	tzi := Locale timeZoneInformation.
-	self assert: subject offset equals: tzi offset.
-	expected := ' 2004-02-29T00:00:00' , (tzi offset printStringFormat: '+hh:mm').
-	
-	self assert: subject printString equals: expected!
+				day: 29]
+		raise: InvalidArgumentError.
+	offset := Locale timeZoneInformation offset.
+	suffix := offset printStringFormat: '+hh:mm'.
+	#(1904 2000 2004 2400) do: 
+			[:each |
+			subject := DateAndTime
+						year: each
+						month: 2
+						day: 29.
+			self assert: subject isLeapYear.
+			self assert: subject offset equals: offset.
+			expected := ' ' , each printString , '-02-29T00:00:00' , suffix.
+			self assert: subject printString equals: expected]!
 
 testYearMonthDayHourMinuteSecondOffset
 	| subject1 subject2 |
@@ -416,6 +483,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	self deny: subject1 equals: subject2.
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
 !DateAndTimeTest categoriesFor: #canonicalInstance!constants!private! !
+!DateAndTimeTest categoriesFor: #julianEpoch!constants!private! !
 !DateAndTimeTest categoriesFor: #testAddSeconds!public! !
 !DateAndTimeTest categoriesFor: #testAsDate!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testAsSeconds!public!unit tests! !
@@ -433,6 +501,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testHour12!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testHour24!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testIsLeapYear!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testJulianDate!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testJulianDayNumber!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testLilianDayNumber!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testMeridianAbbreviation!public!unit tests! !
@@ -444,6 +513,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testOffset!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testOffsetBy!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !

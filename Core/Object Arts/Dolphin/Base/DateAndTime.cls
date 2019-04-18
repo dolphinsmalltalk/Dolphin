@@ -121,15 +121,15 @@ day
 	^self dayOfMonth!
 
 dayMonthYearDo: aBlock
-	|  z h a b year c month day |
+	| z h a b year c month day |
 	z := rataDie + 306.
 	h := 100 * z - 25.
-	a := (h / 3652425) floor.
-	b := a - (a / 4) floor.
-	year := ((100 * b + h) / 36525) floor.
-	c := b + z - (365 * year) - (year / 4) floor.
-	month := ((5 * c + 456) / 153) truncated.
-	day := c - ((153 * month - 457) / 5) truncated.
+	a := h // 3652425.
+	b := a - (a // 4).
+	year := (100 * b + h) // 36525.
+	c := b + z - (365 * year) - (year // 4).
+	month := 5 * c + 456 quo: 153.
+	day := c - (153 * month - 457 quo: 5).
 	month > 12
 		ifTrue: 
 			[year := year + 1.
@@ -198,12 +198,19 @@ isLeapYear
 
 	^self class isLeapYear: self year!
 
+julianDate
+	"Answer the receiver's Julian Date (see https://en.wikipedia.org/wiki/Julian_day).
+		String streamContents: [:s | DateAndTime nowUTC julianDate asFloat printOn: s decimalPlaces: 5]
+	"
+
+	| jd |
+	jd := (self asUTC + JulianDayOffset).
+	^jd rataDie + (jd seconds / Duration.SecondsPerDay)!
+
 julianDayNumber
-	"Answer the receiver's Julian Day Number (see https://en.wikipedia.org/wiki/Julian_day)."
+	"Answer the receiver's Julian Day Number, Note that this is the JDN, not the CJDN, so rotates at noon UTC, or in other words 'The Julian Day Number (JDN) is the integer assigned to a whole solar day in the Julian day count starting from noon Universal time' (see https://en.wikipedia.org/wiki/Julian_day)."
 
-	"We must convert from Rata Die - see https://en.wikipedia.org/wiki/Rata_Die"
-
-	^(self + JulianDayOffset) rataDie!
+	^(self asUTC + JulianDayOffset) rataDie!
 
 lilianDayNumber
 	"Answer the receiver's Lilian Day Number (see https://en.wikipedia.org/wiki/Lilian_date)."
@@ -309,7 +316,15 @@ printOn: aWriteStream withLeadingSpace: aBoolean
 			on: aWriteStream
 			format: offsetFormat!
 
+printStringFormat: aString
+	"Answer a short textual description of the receiver in a format is defined by the <readableString> argument, aString, the format characters of which are as described Locale>>#dateFormat and Locale>>#timeFormat methods. If the format argument is nil then the receiver is printed in the currently configured default date and time formats of the host OS."
+
+	^String streamContents: [:s | Locale default printDateTime: self on: s format: aString]
+!
+
 rataDie
+	"Answer the Rata Die day number, which is a count of days where 1 represents 1st Jan 1 (AD) 00:00h."
+
 	^rataDie!
 
 second
@@ -390,6 +405,7 @@ year
 !DateAndTime categoriesFor: #hour12!accessing!public! !
 !DateAndTime categoriesFor: #hour24!accessing!public! !
 !DateAndTime categoriesFor: #isLeapYear!public!testing! !
+!DateAndTime categoriesFor: #julianDate!accessing!public! !
 !DateAndTime categoriesFor: #julianDayNumber!accessing!public! !
 !DateAndTime categoriesFor: #lilianDayNumber!accessing!public! !
 !DateAndTime categoriesFor: #localSeconds!converting!public! !
@@ -405,6 +421,7 @@ year
 !DateAndTime categoriesFor: #printOn:!printing!public! !
 !DateAndTime categoriesFor: #printOn:format:!printing!public! !
 !DateAndTime categoriesFor: #printOn:withLeadingSpace:!printing!public! !
+!DateAndTime categoriesFor: #printStringFormat:!printing!public! !
 !DateAndTime categoriesFor: #rataDie!accessing!public! !
 !DateAndTime categoriesFor: #second!accessing!public! !
 !DateAndTime categoriesFor: #seconds!accessing!public! !
@@ -617,6 +634,7 @@ readFrom: aStream
 readOffsetFrom: aStream
 	| ch |
 	ch := aStream peek.
+	ch = $Z ifTrue: [^Duration.Zero].
 	ch = $+ ifTrue: [aStream next] ifFalse: [ch = $- ifFalse: [^self localOffset]].
 	^Duration readFrom: aStream withDays: false!
 
