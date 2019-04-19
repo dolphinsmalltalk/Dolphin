@@ -406,9 +406,6 @@ isEmpty
 	^self size == 0
 !
 
-max
-	^ self inject: self anyOne into: [:max :each | max max: each]!
-
 maxPrint
 	"Private - Answer the maximum number of characters to be printed onto a stream as 
 	the string representation of the receiver."
@@ -636,7 +633,6 @@ union: comperand
 !Collection categoriesFor: #inject:into:!enumerating!public! !
 !Collection categoriesFor: #intersection:!public!set operations! !
 !Collection categoriesFor: #isEmpty!public!testing! !
-!Collection categoriesFor: #max!public!searching! !
 !Collection categoriesFor: #maxPrint!constants!private! !
 !Collection categoriesFor: #newSelection!enumerating!private! !
 !Collection categoriesFor: #noDifference:!public!set operations! !
