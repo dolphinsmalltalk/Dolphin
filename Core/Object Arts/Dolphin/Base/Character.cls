@@ -558,6 +558,11 @@ esc
 
 	^$\x1B!
 
+euro
+	"Answer a <Character> representing the Euro currency symbol, €"
+
+	^$\x20AC!
+
 initialize
 	self addClassConstant: 'CharacterSet'
 		value: ((AnsiString fromByteArray: (0 to: 255) asByteArray)
@@ -718,6 +723,7 @@ value: anInteger
 !Character class categoriesFor: #dolphin!constants!public! !
 !Character class categoriesFor: #eof!constants!public! !
 !Character class categoriesFor: #esc!constants!public! !
+!Character class categoriesFor: #euro!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
 !Character class categoriesFor: #isValidCodePoint:!enquiries!public! !
 !Character class categoriesFor: #lf!constants!public! !

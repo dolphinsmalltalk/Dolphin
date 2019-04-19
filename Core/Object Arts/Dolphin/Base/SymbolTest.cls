@@ -28,6 +28,16 @@ newCopy: aCollection
 newEmptyCollection: anInteger
 	^Symbol intern: (String new: anInteger)!
 
+testAsString
+	#('abc ' '£' '€' '🐬' '你好') do: 
+			[:each |
+			| symbol actual |
+			symbol := each asSymbol.
+			actual := symbol asString.
+			self deny: actual identicalTo: symbol.
+			self deny: actual isImmutable.
+			self assert: actual equals: each]!
+
 testAtPut
 	| literal |
 	literal := #abc.
@@ -113,6 +123,7 @@ testResize
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
 !SymbolTest categoriesFor: #newEmptyCollection:!public! !
+!SymbolTest categoriesFor: #testAsString!helpers!public! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testEquals!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
