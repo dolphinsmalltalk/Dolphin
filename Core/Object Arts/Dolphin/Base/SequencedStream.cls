@@ -149,12 +149,14 @@ skipSeparators
 	"Implementation Note: Implementable in terms of #skipWhile:, but this is called so
 	frequently that we open code to avoid instantiating a block."
 
-	| next |
-	[(next := self nextAvailable) isNil] whileFalse: 
-			[next isSeparator
-				ifFalse: 
-					[self position: self position - 1.
-					^true]].
+	| next pos |
+	
+	[pos := self position.
+	(next := self nextAvailable) isNil] whileFalse: 
+				[next isSeparator
+					ifFalse: 
+						[self position: pos.
+						^true]].
 	^false!
 
 skipToAll: aCollection 
