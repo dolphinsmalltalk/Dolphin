@@ -415,6 +415,38 @@ testReverseContents
 	self assert: stream reverseContents equals: '!!aloH¡'.
 	self closeTempStream: stream!
 
+testSkipSeparators
+	| chars stream |
+	
+	chars := '1 2 	3
+4 €£🐬' copyWith: $\f.
+
+	stream := self streamOn: chars.
+
+	stream reset.
+	self assert: stream skipSeparators.
+	self assert: stream peek equals: $1.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $1.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $2.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $3.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $4.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $€.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $£.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: Character dolphin.
+	self deny: stream atEnd.
+	self deny: stream skipSeparators.
+	self assert: stream atEnd.
+	self deny: stream skipSeparators.
+
+	self closeTempStream: stream!
+
 testSkipToAllColon
 	| chars stream |
 	chars := 'aababcabcdabcde'.
@@ -714,6 +746,7 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testSkipSeparators!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
