@@ -594,34 +594,42 @@ readFrom: aStream
 	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
 		[- ]YYYY-MM-DDThh:mm:ss(.ss*)?[-+]ZZ:zz(:zz*)?."
 
-	| sign yyyy month dd offset hh mm ss |
+	| sign yyyy month dd offset hh mm ss ch |
 	aStream skipWhile: [:c | c isWhitespace].
 	sign := (aStream peekFor: $-) ifTrue: [-1] ifFalse: [1].
 	aStream peek isDigit ifFalse: [^self errorInvalidFormat].
 	yyyy := Integer readFrom: aStream radix: 10.
-	((yyyy between: 0 and: 9999) and: [(aStream peekFor: $-) and: [aStream peek isDigit]]) ifFalse: [^self errorInvalidFormat].
+	((yyyy between: 0 and: 9999) and: [(aStream peekFor: $-) and: [aStream peek isDigit]])
+		ifFalse: [^self errorInvalidFormat].
 	month := Integer readFrom: aStream radix: 10.
-	((month between: 1 and: 12) and: [(aStream peekFor: $-) and: [aStream peek isDigit]]) ifFalse: [^self errorInvalidFormat].
+	((month between: 1 and: 12) and: [(aStream peekFor: $-) and: [aStream peek isDigit]])
+		ifFalse: [^self errorInvalidFormat].
 	dd := Integer readFrom: aStream radix: 10.
-	((dd between: 1 and: 31) and: [(aStream peekFor: $T) and: [aStream peek isDigit]]) ifFalse: [^self errorInvalidFormat].
+	((dd between: 1 and: 31) and: [(aStream peekFor: $T) and: [aStream peek isDigit]])
+		ifFalse: [^self errorInvalidFormat].
 	hh := Integer readFrom: aStream radix: 10.
-	((hh between: 0 and: 23) and: [(aStream peekFor: $:) and: [aStream peek isDigit]]) ifFalse: [^self errorInvalidFormat].
+	((hh between: 0 and: 23) and: [(aStream peekFor: $:) and: [aStream peek isDigit]])
+		ifFalse: [^self errorInvalidFormat].
 	mm := Integer readFrom: aStream radix: 10.
-	((mm between: 0 and: 59) and: [(aStream peekFor: $:) and: [aStream peek isDigit]]) ifFalse: [^self errorInvalidFormat].
+	((mm between: 0 and: 59) and: [(aStream peekFor: $:) and: [aStream peek isDigit]])
+		ifFalse: [^self errorInvalidFormat].
 	ss := Integer readFrom: aStream radix: 10.
 	(ss between: 0 and: 59) ifFalse: [^self errorInvalidFormat].
-	(aStream peekFor: $.)
+	ch := aStream next.
+	ch == $.
 		ifTrue: 
-			[| ff |
+			[| ff digits |
 			aStream peek isDigit ifFalse: [^self errorInvalidFormat].
-			ff := Integer readFrom: aStream radix: 10.
-			ff == 0
-				ifFalse: 
-					[| scale |
-					ff > 999999999 ifTrue: [^self errorInvalidFormat].
-					scale := ff decimalDigitLength exp10.
-					ss := ss + (ff / scale)]].
-	offset := self readOffsetFrom: aStream.
+			ff := 0.
+			digits := 0.
+			
+			[ch := aStream nextAvailable.
+			ch notNil and: [ch isDigit]] whileTrue: 
+						[ff := ff * 10 + ch digitValue.
+						digits := digits + 1].
+			(digits between: 1 and: 9) ifFalse: [^self errorInvalidFormat].
+			ss := ss + (ff / digits exp10)].
+	offset := self readOffsetFrom: aStream sign: ch.
 	^self
 		year: yyyy * sign
 		month: month
@@ -631,12 +639,18 @@ readFrom: aStream
 		second: ss
 		offset: offset!
 
-readOffsetFrom: aStream
-	| ch |
-	ch := aStream peek.
-	ch = $Z ifTrue: [^Duration.Zero].
-	ch = $+ ifTrue: [aStream next] ifFalse: [ch = $- ifFalse: [^self localOffset]].
-	^Duration readFrom: aStream withDays: false!
+readOffsetFrom: aStream sign: aCharacter
+	| sign |
+	aCharacter = $Z ifTrue: [^Duration.Zero].
+	sign := aCharacter = $+
+				ifTrue: 
+					[aStream next.
+					1]
+				ifFalse: [aCharacter = $- ifTrue: [-1] ifFalse: [^self localOffset]].
+	^Duration
+		readFrom: aStream
+		sign: sign
+		withDays: false!
 
 today
 	"Answer a new <DateAndTime> representing midnight local time at the beginning of the current day."
@@ -810,7 +824,7 @@ yesterday
 !DateAndTime class categoriesFor: #now!instance creation!public! !
 !DateAndTime class categoriesFor: #nowUTC!instance creation!public! !
 !DateAndTime class categoriesFor: #readFrom:!instance creation!public! !
-!DateAndTime class categoriesFor: #readOffsetFrom:!helpers!private! !
+!DateAndTime class categoriesFor: #readOffsetFrom:sign:!helpers!private! !
 !DateAndTime class categoriesFor: #today!instance creation!public! !
 !DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
 !DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
