@@ -415,6 +415,7 @@ testForkedBlockHomeFrame
 
 testLargeAddress
 	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
+	self skipIfCiBuild.
 	blocks := OrderedCollection new: 3000.
 	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
 	
@@ -435,8 +436,7 @@ testLargeAddress
 	sem2 := Semaphore new.
 	value := {nil}.
 	proc := 
-			[
-			sem1 wait.
+			[sem1 wait.
 			"Deliberately assign to an outer temp to ensure there is a Context to copy"
 			result := 200 factorial.
 			value at: 1 put: result.
