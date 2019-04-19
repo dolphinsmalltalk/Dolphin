@@ -130,8 +130,11 @@ testFromString
 
 	"We also allow the ISO 8601 'Z' offset format, for UTC"
 	fromString := DateAndTime fromString: '-1199-01-05T20:33:14.321Z'.
-	self assert: fromString printString equals: '-1199-01-05T20:33:14.321+00:00'
-	!
+	self assert: fromString printString equals: '-1199-01-05T20:33:14.321+00:00'.
+	
+	"Fractional seconds down to nanoseconds"
+	fromString := DateAndTime fromString: '2019-04-19T15:33:37.067259812+01:00'.
+	self assert: fromString equals: (DateAndTime year: 2019 month: 4 day: 19 hour: 15 minute: 33 second: 37 + (067259812/1e9) offset: 1 hour)!
 
 testFromSYSTEMTIME
 	| ts sysTime |

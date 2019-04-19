@@ -425,7 +425,7 @@ pmDesignator
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
 	| ch formatStream tokenStream |
-	tokenStream := AnsiString writeStream: 9.
+	tokenStream := formatString class writeStream: 9.
 	formatStream := formatString readStream.
 	ch := formatStream nextAvailable.
 	[ch isNil] whileFalse: 

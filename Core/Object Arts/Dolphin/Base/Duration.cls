@@ -309,12 +309,16 @@ nanoseconds: aNumber
 readFrom: aStream
 	"Answers a new instance of the receiver read from the <readableStream> argument, which is assumed to contain a duration expressed in the printString format of the receiver's instances."
 
-	^self readFrom: aStream withDays: true!
-
-readFrom: aStream withDays: aBoolean
-	| sign days hh mm ss |
+	| sign |
 	aStream skipSeparators.
 	sign := (aStream peekFor: $-) ifTrue: [-1] ifFalse: [1].
+	^self
+		readFrom: aStream
+		sign: sign
+		withDays: true!
+
+readFrom: aStream sign: sign withDays: aBoolean
+	| mm hh ss days |
 	aStream peek isDigit ifFalse: [^self errorInvalidFormat].
 	aBoolean
 		ifTrue: 
@@ -373,7 +377,7 @@ zero
 !Duration class categoriesFor: #minutes:!instance creation!public! !
 !Duration class categoriesFor: #nanoseconds:!instance creation!public! !
 !Duration class categoriesFor: #readFrom:!instance creation!public! !
-!Duration class categoriesFor: #readFrom:withDays:!instance creation!private! !
+!Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
 !Duration class categoriesFor: #seconds:!instance creation!public! !
 !Duration class categoriesFor: #zero!instance creation!public! !
 
