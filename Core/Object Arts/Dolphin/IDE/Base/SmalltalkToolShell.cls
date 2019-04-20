@@ -256,7 +256,7 @@ saveStateString
 	receiver's class as it's parameter"
 
 	| stream |
-	stream := String writeStream.
+	stream := String writeStream: 512.
 	self saveStateOn: stream.
 	^stream contents!
 

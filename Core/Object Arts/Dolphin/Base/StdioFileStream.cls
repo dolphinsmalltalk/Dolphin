@@ -164,7 +164,7 @@ basicUpTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	| newStream elem |
-	newStream := self contentsSpecies writeStream.
+	newStream := self contentsSpecies writeStream: 32.
 	[(elem := self nextAvailable) isNil or: [elem = anObject]] whileFalse: [newStream nextPut: elem].
 	^newStream contents!
 

@@ -22,13 +22,16 @@ NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@VO
 extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
-NewAnsiStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PBDI@Z
+
+NewAnsiStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PBDI@Z
 extern NewAnsiStringWithLen:near32
-NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PB_W@Z
+
+NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PB_W@Z
 extern NewAnsiStringFromUtf16:near32
-NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
+
+NewUtf16String EQU ?New@Utf16String@ST@@SIPAVUtf16StringOTE@@PB_W@Z
 extern NewUtf16String:near32
-NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
+NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAVUtf16StringOTE@@PAV?$TOTE@VObject@ST@@@@@Z
 extern NewUtf16StringFromString:near32
 
 NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z

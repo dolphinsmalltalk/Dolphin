@@ -727,8 +727,6 @@ Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, unsigned)
 	return primitiveFailure(0);
 }
 
-#define ENCODINGPAIR(e1, e2) (static_cast<int>(e1) <<2 | static_cast<int>(e2))
-
 template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnyStringCompare(const OTE* oteReceiver, const OTE* oteArg)
 {
 	switch (ENCODINGPAIR(ST::String::GetEncoding(oteReceiver), ST::String::GetEncoding(oteArg)))
@@ -1141,7 +1139,7 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 
 Utf16StringOTE * ST::Utf16String::New(size_t cwch)
 {
-	return ObjectMemory::newUninitializedNullTermObject<Utf16String>(cwch * sizeof(WCHAR));
+	return reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf16String>(cwch * sizeof(Utf16String::CU)));
 }
 
 Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp, unsigned)
@@ -1391,7 +1389,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 				auto oteAnswer = Utf16String::New(cwchPrefix + cwchSuffix);
 				Utf16String::CU* pwsz = oteAnswer->m_location->m_characters;
 				memcpy(pwsz, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
-				::MultiByteToWideChar(CP_ACP, 0, pszArg, cchArg + 1, (LPWSTR)pwsz + cwchPrefix, cwchSuffix + 1);
+				::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg + 1, (LPWSTR)pwsz + cwchPrefix, cwchSuffix + 1);
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
@@ -1421,7 +1419,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 				// UTF-16, UTF-16 => UTF-16
 				MWORD cbPrefix = oteReceiver->getSize();
 				MWORD cbSuffix = oteArg->getSize();
-				Utf16StringOTE* oteAnswer = ObjectMemory::newUninitializedNullTermObject<Utf16String>(cbPrefix + cbSuffix);
+				Utf16StringOTE* oteAnswer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf16String>(cbPrefix + cbSuffix));
 				auto pbAnswer = reinterpret_cast<BYTE*>(oteAnswer->m_location->m_characters);
 				memcpy(pbAnswer, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
 				memcpy(pbAnswer+cbPrefix, reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(WCHAR));

@@ -1126,7 +1126,7 @@ updateCaption
 	| pkgs count text |
 	pkgs := self packages.
 	count := pkgs size.
-	text := String writeStream.
+	text := String writeStream: 64.
 	count == 0
 		ifTrue: [text display: self class]
 		ifFalse: 

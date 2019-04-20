@@ -2113,7 +2113,7 @@ setModified
 
 shortCaption
 	| stream |
-	stream := String writeStream.
+	stream := String writeStream: 32.
 	self printShortCaptionOn: stream.
 	^stream contents!
 

@@ -56,7 +56,7 @@ clearAll
 	| newBuffer |
 	self flush.
 	self hasOutputWindow ifTrue: [outputWindow clear].
-	newBuffer := Utf16String writeStream.
+	newBuffer := String writeStream.
 	bufferProtect critical: [buffer := newBuffer]!
 
 close
@@ -147,7 +147,7 @@ initialize
 	"Private - Initialize the receiver."
 
 	super initialize.
-	buffer := Utf8String writeStream.
+	buffer := String writeStream: 128.
 	bufferProtect := Mutex new.!
 
 isEmpty

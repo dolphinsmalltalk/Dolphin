@@ -11,7 +11,6 @@
 ******************************************************************************/
 #pragma once
 
-#include "VMPointers.h"
 #include "STCollection.h"
 
 // Turn off warning about zero length arrays
@@ -28,11 +27,31 @@ namespace ST
 	class Utf8String;
 };
 typedef TOTE<ST::String> StringOTE;
-typedef TOTE<ST::AnsiString> AnsiStringOTE;
-typedef TOTE<ST::Utf8String> Utf8StringOTE;
-typedef TOTE<ST::Utf16String> Utf16StringOTE;
-typedef TOTE<ST::Utf32String> Utf32StringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
+
+class AnsiStringOTE : public TOTE<ST::AnsiString>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+};
+
+class Utf8StringOTE : public TOTE<ST::Utf8String>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+};
+
+class Utf16StringOTE : public TOTE<ST::Utf16String>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size) / static_cast<int>(sizeof(char16_t)); }
+};
+
+class Utf32StringOTE : public TOTE<ST::Utf32String>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size) / static_cast<int>(sizeof(char32_t)); }
+};
 
 namespace ST
 {
@@ -194,7 +213,7 @@ namespace ST
 	};
 }
 
-
 std::wostream& operator<<(std::wostream& st, const AnsiStringOTE*);
 std::wostream& operator<<(std::wostream& st, const SymbolOTE*);
+#define ENCODINGPAIR(e1, e2) (static_cast<int>(e1) <<2 | static_cast<int>(e2))
 

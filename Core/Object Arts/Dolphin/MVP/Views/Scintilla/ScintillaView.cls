@@ -815,7 +815,7 @@ buildDefaultStyle
 
 buildItemList: aCollection withIcons: aBoolean
 	| itemList sep typesep |
-	itemList := self stringClass writeStream.
+	itemList := self stringClass writeStream: 256.
 	sep := self autoCompletionSeparator.
 	typesep := self autoCompletionImageIdSeparator.
 	aCollection do: 

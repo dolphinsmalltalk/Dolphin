@@ -58,15 +58,14 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\Gdiplus';
-	add: '..\..\..\ActiveX\Structured Storage\OLE Structured Storage';
-	add: '..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\..\..\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin MVP Base'
+	'..\Gdiplus'
+	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\ActiveX\Shell\Windows Shell').
 
 package!
 

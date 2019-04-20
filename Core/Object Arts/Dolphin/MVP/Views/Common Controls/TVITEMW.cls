@@ -99,7 +99,7 @@ getValidFields
 
 	| mask fields |
 	mask := self mask.
-	fields := Array writeStream.
+	fields := Array writeStream: 8.
 	fields nextPutAll: #(#mask #hItem).
 	#(#pszText #iImage #lParam #dwState #hItem #iSelectedImage #cChildren) inject: 1
 		into: 
