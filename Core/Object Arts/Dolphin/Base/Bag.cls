@@ -121,6 +121,11 @@ remove: oldElement ifAbsent: exceptionHandler
 		ifFalse: [contents at: oldElement put: count - 1].
 	^oldElement!
 
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	contents := contents copyEmpty!
+
 removeAllOccurrencesOf: target ifAbsent: exceptionHandler
 	"Remove all the occurrences of the <Object> target from the receiver. 
 	If target is not an element of the receiver, answer the result of evaluating 
@@ -155,6 +160,7 @@ valuesAndCountsDo: aBlock
 !Bag categoriesFor: #occurrencesOf:!public!searching! !
 !Bag categoriesFor: #postCopy!copying!public! !
 !Bag categoriesFor: #remove:ifAbsent:!public!removing! !
+!Bag categoriesFor: #removeAll!public! !
 !Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
 !Bag categoriesFor: #size!accessing!public! !
 !Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !
