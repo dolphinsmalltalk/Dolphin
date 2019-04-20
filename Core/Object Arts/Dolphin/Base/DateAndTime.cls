@@ -103,7 +103,7 @@ asTime
 		- if a time in the local timezone is needed and the DateAndTime, send #asLocal first (i.e. `dateAndTime asLocal asTime`)
 		- if a UTC time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTime`)."
 
-	^Time fromMilliseconds: (((self hour24 * 60 + self minute) * 60 + self second) * 1000) rounded!
+	^Time fromSeconds: seconds!
 
 asUnixTime
 	"Answer the a <rational> representing the number of seconds past 00:00h, 01-Jan-1970 (the Unix epoch)."

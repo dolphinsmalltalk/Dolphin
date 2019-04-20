@@ -1403,7 +1403,7 @@ Magnitude subclass: #Character
 Magnitude subclass: #Date
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
@@ -1416,7 +1416,7 @@ Magnitude subclass: #Duration
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Time
-	instanceVariableNames: 'milliseconds'
+	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

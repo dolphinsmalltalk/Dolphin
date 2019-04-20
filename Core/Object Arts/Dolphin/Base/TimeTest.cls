@@ -30,7 +30,7 @@ minutesShould: expectedMinutes for: seconds
 	self assert: (Time fromSeconds: seconds) minute equals: expectedMinutes!
 
 secondsShould: expectedSeconds for: seconds
-	self assert: (Time fromSeconds: seconds) seconds equals: expectedSeconds!
+	self assert: (Time fromSeconds: seconds) second equals: expectedSeconds!
 
 testClassReadFrom
 	self assert: (Time readFrom: '00' readStream) asSeconds equals: 0.
@@ -66,14 +66,14 @@ testClassReadFrom
 	self assert: (Time fromString: '00:00:00.1') asMilliseconds equals: 100.
 	self assert: (Time fromString: '00:00:00.0') asMilliseconds equals: 0.
 	self assert: (Time fromString: '00:00:00.999') asMilliseconds equals: 999.
-	self assert: (Time fromString: '00:00:00.9994') asMilliseconds equals: 999.
-	self assert: (Time fromString: '00:00:00.9995') asMilliseconds equals: 1000.
+	self assert: (Time fromString: '00:00:00.9994') asMilliseconds equals: 9994/10.
+	self assert: (Time fromString: '00:00:00.9995') asMilliseconds equals: 9995/10.
 	self assert: (Time fromString: '00:00:00.01') asMilliseconds equals: 10.
 	self assert: (Time fromString: '00:00:00.001') asMilliseconds equals: 1.
-	self assert: (Time fromString: '00:00:00.0014') asMilliseconds equals: 1.
-	self assert: (Time fromString: '00:00:00.00049') asMilliseconds equals: 0.
-	self assert: (Time fromString: '00:00:00.0005') asMilliseconds equals: 1.
-	self assert: (Time fromString: '00:00:00.0015') asMilliseconds equals: 2.
+	self assert: (Time fromString: '00:00:00.0014') asMilliseconds equals: 14/10.
+	self assert: (Time fromString: '00:00:00.00049') asMilliseconds equals: 49/100.
+	self assert: (Time fromString: '00:00:00.0005') asMilliseconds equals: 5/10.
+	self assert: (Time fromString: '00:00:00.0015') asMilliseconds equals: 15/10.
 	self assert: (Time readFrom: '11:59:59:999' readStream) asMilliseconds
 		equals: 60 * 60 * 12 * 1000 - 1.
 	self assert: (Time readFrom: '23:59:59:999' readStream) asMilliseconds
@@ -93,6 +93,27 @@ testClassReadFrom
 	self should: [Time readFrom: '23:59:-1:999' readStream] raise: Error.
 	self should: [Time readFrom: '23:59:59:-1' readStream] raise: Error.
 	self should: [Time fromString: '00:00:00.-1'] raise: Error!
+
+testFromDuration
+	self assert: (Time fromDuration: (Duration
+						days: -10
+						hours: -1
+						minutes: -2
+						seconds: -3))
+		equals: (Time
+				hour: 22
+				minute: 57
+				second: 57).
+	self assert: (Time fromDuration: 0 hours) equals: (Time fromSeconds: 0).
+	self assert: (Time fromDuration: (Duration
+						days: 25
+						hours: 12
+						minutes: 15
+						seconds: 35))
+		equals: (Time
+				hour: 12
+				minute: 15
+				second: 35)!
 
 testHours
 	self hoursShould: 0 for: 0.
@@ -137,42 +158,29 @@ testMinutes
 	self minutesShould: 59 for: -3601!
 
 testPrintNegativeTime
-	"UnitTest for [BUG] Printing Time
-
-	Description:
-
-	I'm not sure if this is a bug or 'as designed', but when you do any 
-	arithmetic with time objects (especially subtraction) and the seconds 
-	go negative (before midnight), when you print out the time you either 
-	always get 12 am or something interesting if you are printing 24-hour 
-	time.
-
-	A simple fix in the method print24:showSeconds:on: would be to 
-	instead of initializing the local variable h to self hours, 
-	initialize h to self hours \\ 24."
-
 	| time1 time2 timeDiff |
 	time1 := Time fromSeconds: 1 * 3600 + (0 * 60) + 0.
 	time2 := Time fromSeconds: 4 * 3600 + (0 * 60) + 0.
+	"In Dolphin Time's don't go negative now"
 	timeDiff := time1 subtractTime: time2.
 
 	"time 01:00:00 - 04:00:00 should return 21:00:00 or 09:00:00 pm"
-	self 
+	self
 		comparePrintStreamFor: timeDiff
 		hr24: false
 		showSeconds: false
 		expected: '9:00 PM'.
-	self 
+	self
 		comparePrintStreamFor: timeDiff
 		hr24: false
 		showSeconds: true
 		expected: '9:00.00 PM'.
-	self 
+	self
 		comparePrintStreamFor: timeDiff
 		hr24: true
 		showSeconds: false
 		expected: '21:00'.
-	self 
+	self
 		comparePrintStreamFor: timeDiff
 		hr24: true
 		showSeconds: true
@@ -223,13 +231,31 @@ testSeconds
 	self secondsShould: 59 for: -1.	"23:59"
 	self secondsShould: 1 for: -59.
 	self secondsShould: 0 for: -60.
-	self secondsShould: 59 for: -61! !
+	self secondsShould: 59 for: -61!
+
+testStb
+	| oldStb rehydrated subject stb |
+	oldStb := {#'!!STL'. 4. 262406. Time. 117671221}.
+	rehydrated := Time fromLiteralStoreArray: oldStb.
+	self assert: rehydrated asMilliseconds equals: 58835610.
+	subject := Time now.
+	stb := subject binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: stb.
+	self assert: rehydrated equals: subject!
+
+testStoreOn
+	| subject stored array |
+	subject := Time now.
+	array := Array with: subject with: (Time hour: 23 minute: 59 second: 58).
+	stored := array storeString.
+	self assert: (Compiler evaluate: stored) equals: array! !
 !TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
 !TimeTest categoriesFor: #hoursShould:for:!comparing!private! !
 !TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
 !TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
 !TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
 !TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
+!TimeTest categoriesFor: #testFromDuration!public!testing! !
 !TimeTest categoriesFor: #testHours!public!testing! !
 !TimeTest categoriesFor: #testMilliseconds!public!testing! !
 !TimeTest categoriesFor: #testMinutes!public!testing! !
@@ -237,4 +263,6 @@ testSeconds
 !TimeTest categoriesFor: #testPrintOnFormat!public!unit tests! !
 !TimeTest categoriesFor: #testPrintPositiveTime!public!testing! !
 !TimeTest categoriesFor: #testSeconds!public!testing! !
+!TimeTest categoriesFor: #testStb!public!testing! !
+!TimeTest categoriesFor: #testStoreOn!public!testing! !
 

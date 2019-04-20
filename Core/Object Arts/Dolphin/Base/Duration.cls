@@ -279,6 +279,13 @@ hours: hoursNumber minutes: minutesNumber
 
 	^self seconds: (hoursNumber * 3600) + minutesNumber * 60!
 
+hours: hoursNumber minutes: minutesNumber seconds: secondsNumber
+	"Answer a <Duration> of the specified <number>s of hours, minutes, and seconds. 
+	If any of the operands are negative, the result is smaller by that number of days, hours, minutes, or seconds as appropriate.
+	The answer may be less than <Duration factory>#zero."
+
+	^self seconds: (hoursNumber * 60 + minutesNumber) * 60 + secondsNumber!
+
 initialize
 	self addClassConstant: 'Zero' value: 0 seconds!
 
@@ -371,6 +378,7 @@ zero
 !Duration class categoriesFor: #fromString:!instance creation!public! !
 !Duration class categoriesFor: #hours:!instance creation!public! !
 !Duration class categoriesFor: #hours:minutes:!instance creation!public! !
+!Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
 !Duration class categoriesFor: #initialize!class initialization!public! !
 !Duration class categoriesFor: #microseconds:!instance creation!public! !
 !Duration class categoriesFor: #milliseconds:!instance creation!public! !

@@ -19,7 +19,7 @@ testFromDays
 	self assert: today equals: date!
 
 testFromSeconds
-	| date today |
+	| date today dtNow now |
 	date := Date fromSeconds: 0.
 	self assert: date asDays equals: 0.
 	date := Date fromSeconds: 1.
@@ -42,7 +42,12 @@ testFromSeconds
 	self assert: date asDays equals: -3.
 	today := Date today.
 	date := Date fromSeconds: today asSeconds.
-	self assert: today equals: date!
+	self assert: today equals: date.
+	dtNow := DateAndTime now.
+	now := Date fromSeconds: dtNow asSeconds.
+	self assert: now year equals: dtNow year.
+	self assert: now month equals: dtNow month.
+	self assert: now dayOfMonth equals: dtNow dayOfMonth!
 
 testYyyymmdd
 	| subject |
