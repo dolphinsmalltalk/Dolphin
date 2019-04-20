@@ -165,6 +165,11 @@ nextIndexOf: anElement from: start to: stop
 	start to: stop do: [:i | (self at: i) = anElement ifTrue: [^i]].
 	^0!
 
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	self shouldNotImplement!
+
 replaceIdentity: anObject with: newElement
 	"If the receiver contains an identity match for anObject replace the first with newElement, 
 	otherwise increase the size of the receiver, and append newElement. Answer the index.
@@ -224,6 +229,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #lookup:!accessing!public! !
 !ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!ArrayedCollection categoriesFor: #removeAll!public! !
 !ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
 !ArrayedCollection categoriesFor: #resize:!mutating!public! !
 !ArrayedCollection categoriesFor: #size!accessing!public! !

@@ -997,6 +997,22 @@ remove: oldElement ifAbsent: exceptionHandler
 
 	^self shouldNotImplement!
 
+replaceAll: oldObject with: newObject
+	"Replace all occurences of oldObject with newObject"
+
+	| index last |
+	last := self size.
+	index := self
+				nextIndexOf: oldObject
+				from: 1
+				to: last.
+	[index == 0] whileFalse: 
+			[self at: index put: newObject.
+			index := self
+						nextIndexOf: oldObject
+						from: index + 1
+						to: last]!
+
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one sequence of bytes (or characters)
 	to another, normally double dispatched from #replaceFrom:to:with:startingAt:
@@ -1321,6 +1337,7 @@ writeStream
 !SequenceableCollection categoriesFor: #randomizeUsing:!operations!public! !
 !SequenceableCollection categoriesFor: #readStream!public!streaming! !
 !SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
+!SequenceableCollection categoriesFor: #replaceAll:with:!public! !
 !SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 !SequenceableCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !SequenceableCollection categoriesFor: #replaceFrom:to:with:!public!replacing! !

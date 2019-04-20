@@ -326,6 +326,16 @@ remove: anObject ifAbsent: aBlock
 			self removeIndex: index.
 			element]!
 
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	| newMe |
+	newMe := self copyEmpty.
+	self preResize: newMe.
+	self become: newMe.
+	"newMe is now the old me!!"
+	self postResize: newMe!
+
 removeIndex: anInteger
 	"Private - Remove the element at index, anInteger, in the receiver. Does not
 	check that the element is empty."
@@ -412,6 +422,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #privateAt:put:!accessing!private! !
 !Set categoriesFor: #rehash!operations!public! !
 !Set categoriesFor: #remove:ifAbsent:!public!removing! !
+!Set categoriesFor: #removeAll!public! !
 !Set categoriesFor: #removeIndex:!private!removing! !
 !Set categoriesFor: #resize:!mutating!private! !
 !Set categoriesFor: #shrink!mutating!public! !

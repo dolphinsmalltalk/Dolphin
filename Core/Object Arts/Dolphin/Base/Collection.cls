@@ -516,6 +516,11 @@ remove: oldElement ifAbsent: exceptionHandler
 
 	^self subclassResponsibility!
 
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	self do: [:each | self remove: each]!
+
 removeAll: oldElements
 	"Remove each element of the <collection>, oldElements, from the receiver, raising
 	an Exception if any are not elements of the receiver. Answer oldElements."
@@ -646,6 +651,7 @@ union: comperand
 !Collection categoriesFor: #reject:!enumerating!public! !
 !Collection categoriesFor: #remove:!public!removing! !
 !Collection categoriesFor: #remove:ifAbsent:!public!removing! !
+!Collection categoriesFor: #removeAll!public! !
 !Collection categoriesFor: #removeAll:!public!removing! !
 !Collection categoriesFor: #removeAllSuchThat:!public!removing! !
 !Collection categoriesFor: #select:!enumerating!public! !
