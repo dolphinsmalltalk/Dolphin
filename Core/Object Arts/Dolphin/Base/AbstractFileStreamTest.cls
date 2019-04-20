@@ -120,7 +120,6 @@ tempWriteStream: aSymbol
 
 test1065
 	| r |
-	self skipUnless: [false].
 	r := Random new.
 	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
 			[:i |
