@@ -129,12 +129,12 @@ public:
 	static void HeapCompact();
 
 	// Used by Interpreter and Compiler to update any Oops they hold following a compact
-	template <class T> static void compactOop(TOTE<T>*& ote)
+	template <class T> static void compactOop(T*& ote)
 	{
 		// If OTE is marked as free, then it must have been moved during compaction. Otherwise we can leave alone
 		if (ote->isFree())
 		{
-			ote = (TOTE<T>*)(ote->m_location);
+			ote = (T*)(ote->m_location);
 			HARDASSERT(!ote->isFree());
 			HARDASSERT((char*)ote >= (char*)m_pOT && (char*)ote < (char*)m_pFreePointerList);
 		}

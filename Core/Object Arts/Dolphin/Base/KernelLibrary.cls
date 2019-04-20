@@ -449,16 +449,18 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
-	| ptr len msg args wideStrings |
+	| ptr len msg args wideStrings argc |
 	ptr := ExternalAddress new.
-	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
-	wideStrings := Array writeStream.
+	argc := arguments size.
+	args := ByteArray new: argc * VMConstants.IntPtrSize.
+	wideStrings := Array writeStream: argc.
 	arguments keysAndValuesDo: 
 			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger
 						ifTrue: [a]
-						ifFalse: [a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
+						ifFalse: 
+							[a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
 				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))

@@ -1431,7 +1431,7 @@ stylerClass: aScintillaStylerClass
 
 symbolsStartingWith: aString maxItems: anInteger 
 	| stream ignoreCase |
-	stream := Array writeStream.
+	stream := Array writeStream: (anInteger bitShift: -1).
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	Symbol allInstancesDo: 
 			[:each | 

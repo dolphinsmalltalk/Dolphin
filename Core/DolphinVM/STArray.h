@@ -17,7 +17,12 @@
 #pragma warning ( disable : 4200)
 
 namespace ST { class Array; }
-typedef TOTE<ST::Array> ArrayOTE;
+
+class ArrayOTE : public TOTE<ST::Array>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size) / static_cast<int>(sizeof(MWORD)); }
+};
 
 namespace ST
 {

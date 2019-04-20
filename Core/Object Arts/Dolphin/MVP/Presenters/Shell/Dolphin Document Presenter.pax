@@ -15,11 +15,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Base\Dolphin MVP Base';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\Base\Dolphin MVP Base').
 
 package!
 

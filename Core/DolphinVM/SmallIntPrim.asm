@@ -28,7 +28,7 @@ ASSUME	_SP:PTR Oop				; Interpreters SP (stack pointer)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Imports
 
-LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@ST@@@@II@Z
+LINEWARRAY2 EQU ?liNewArray2@@YIPAVArrayOTE@@II@Z
 extern LINEWARRAY2:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

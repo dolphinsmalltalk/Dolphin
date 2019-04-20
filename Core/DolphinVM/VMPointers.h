@@ -24,9 +24,12 @@
 #include "bytecdes.h"
 
 #if defined(VM)
+
+#include "STString.h"
+#include "STArray.h"
+
 namespace ST
 {
-	class AnsiString;
 	class Symbol;
 	class Semaphore;
 	class ProcessorScheduler;
@@ -37,11 +40,9 @@ namespace ST
 	class MemoryManager;
 	class VariableBinding;
 }
-typedef TOTE<ST::AnsiString> AnsiStringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
 typedef TOTE<ST::Semaphore> SemaphoreOTE;
 typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
-typedef TOTE<ST::Array> ArrayOTE;
 typedef TOTE<ST::BlockClosure> BlockOTE;
 typedef TOTE<ST::ExternalHandle> HandleOTE;
 typedef TOTE<ST::Behavior> BehaviorOTE;
@@ -59,6 +60,7 @@ typedef OTE HandleOTE;
 typedef OTE BehaviorOTE;
 typedef OTE MemManOTE;
 typedef OTE VariableBindingOTE;
+typedef OTE ArrayOTE;
 #endif
 
 // Should ideally be sized to a multiple of 16 bytes, accounting for object header size (currently 0)

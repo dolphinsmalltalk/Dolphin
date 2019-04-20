@@ -463,7 +463,7 @@ selections
 	If there is no selection, then the collection will be empty."
 
 	| answer |
-	answer := Array writeStream.
+	answer := Array writeStream: 8.
 	"There is a window of opportunity for the list content to change between retrieving the selections and looking up the objects"
 	self selectionsByIndex
 		do: [:each | (self objectFromHandle: each ifAbsent: []) ifNotNil: [:object | answer nextPut: object]].

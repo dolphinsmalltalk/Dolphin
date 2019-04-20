@@ -3281,12 +3281,12 @@ pafWinXP32x32ico
 	^self fileLocator localFileSpecFor: 'winXP32x32.ico'!
 
 rgb0000FF_100x100bmpBytes
-	| hexStream |
-	hexStream := AnsiString writeStream.
-	hexStream 
-		nextPutAll: '424D667500000000000036000000280000006400000064000000010018000000000030750000130B0000130B00000000000000000000'.
-	10000 timesRepeat: [hexStream nextPutAll: 'FF0000'].
-	^ByteArray fromHexString: hexStream contents!
+	| byteStream |
+	byteStream := ByteArray writeStream: 54 + (10000 * 3).
+	byteStream nextPutAll: ##(ByteArray
+				fromHexString: '424D667500000000000036000000280000006400000064000000010018000000000030750000130B0000130B00000000000000000000').
+	10000 timesRepeat: [byteStream nextPutAll: ##(ByteArray fromHexString: 'FF0000')].
+	^byteStream contents!
 
 seattleNightJpgBytes
 	^ByteArray 

@@ -59,7 +59,7 @@ public:
 	void ScanExponentInteger();
 	void ScanIdentifierOrKeyword();
 	void ScanName();
-	void ScanQualifiedRef();
+	void ScanQualifiedName();
 	void ScanLiteral();
 	void ScanLiteralCharacter();
 	void ScanSymbol();

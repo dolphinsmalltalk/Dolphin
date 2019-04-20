@@ -26,7 +26,7 @@ causeDescription
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
 
 	| stream |
-	stream := String writeStream.
+	stream := String writeStream: 16.
 	self class printFlags: self cause on: stream.
 	^stream contents!
 
@@ -34,7 +34,7 @@ causeNames
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
 
 	| stream |
-	stream := Array writeStream.
+	stream := Array writeStream: 4.
 	self class exceptionFlags: self cause do: [:each | stream nextPut: each].
 	^stream contents!
 

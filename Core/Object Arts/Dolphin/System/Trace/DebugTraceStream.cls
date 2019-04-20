@@ -58,13 +58,14 @@ flush
 	buffer position == 0 
 		ifFalse: 
 			[bufferProtect critical: 
-					[KernelLibrary default outputDebugString: buffer contents.
+					[KernelLibrary default outputDebugString: buffer contents asUtf16String.
 					buffer reset]]!
 
 initialize
 	"Private - Initialize the receiver."
 
-	buffer := String writeStream.
+	"On the assumption that we print to the buffer stream more often than we flush to the Windows API, it is better to buffer in UTF-8"
+	buffer := String writeStream: 128.
 	bufferProtect := Mutex new.!
 
 isEmpty
@@ -101,7 +102,7 @@ nextPut: newElem
 nextPutAll: insertString
 	"Append the <readableString>, insertString, to the text of the receiver."
 
-	bufferProtect critical: [buffer nextPutAll: insertString asUtf8String].
+	bufferProtect critical: [buffer nextPutAll: insertString].
 	^insertString!
 
 print: anObject
