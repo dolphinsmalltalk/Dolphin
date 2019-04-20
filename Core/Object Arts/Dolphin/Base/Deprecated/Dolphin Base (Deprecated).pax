@@ -127,6 +127,9 @@ package methodNames
 	add: #String -> #asUnicodeString;
 	add: #SYSTEMTIME -> #asTimeStamp;
 	add: #Time -> #asTimeStamp;
+	add: #Time -> #hours;
+	add: #Time -> #milliseconds;
+	add: #Time -> #minutes;
 	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
@@ -1068,8 +1071,23 @@ asTimeStamp
 
 asTimeStamp
 	Notification deprecated.
-	^self asDateAndTime asTimeStamp! !
+	^self asDateAndTime asTimeStamp!
+
+hours
+	Notification deprecated.
+	^self hour24!
+
+milliseconds
+	Notification deprecated.
+	^self millisecond!
+
+minutes
+	Notification deprecated.
+	^self minute! !
 !Time categoriesFor: #asTimeStamp!converting!public! !
+!Time categoriesFor: #hours!accessing!public! !
+!Time categoriesFor: #milliseconds!accessing!public! !
+!Time categoriesFor: #minutes!accessing!public! !
 
 !Time class methodsFor!
 

@@ -71,7 +71,8 @@ testAsSeconds
 testAsTime
 	"Offset is ignored - the date is not adjusted to local time"
 
-	self assert: self canonicalInstance asTime equals: (Time fromMilliseconds: 46799667)!
+	self assert: self canonicalInstance asTime
+		equals: (Time fromSeconds: (12 * 60 + 59) * 60 + 59 + (666666666 / 1000000000))!
 
 testAsUnixTime
 	| subject |
