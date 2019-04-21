@@ -22,7 +22,7 @@ value
 	"Answer a <TimeStamp> converted from the receiver's Active-X
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
-	^DateAndTime fromDATE: super value! !
+	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
 !DATE categoriesFor: #asDate!converting!public! !
 !DATE categoriesFor: #asDateAndTime!accessing!public! !
 !DATE categoriesFor: #value!accessing!public! !

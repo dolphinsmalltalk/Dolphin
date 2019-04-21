@@ -172,7 +172,6 @@ package methodNames
 	add: 'COMInterface class' -> #registerDispinterface:;
 	add: 'COMInterface class' -> #typeInfoIfNone:;
 	add: 'COMInterface class' -> #typeLib;
-	add: 'DateAndTime class' -> #fromDATE:;
 	add: 'DOUBLE class' -> #typeName;
 	add: 'DOUBLE class' -> #vt;
 	add: 'DWORD class' -> #typeName;
@@ -843,12 +842,6 @@ asVariant
 	^self asParameter asVariant! !
 !DateAndTime categoriesFor: #asFloat!converting!public! !
 !DateAndTime categoriesFor: #asVariant!converting!public! !
-
-!DateAndTime class methodsFor!
-
-fromDATE: aFloat
-	^self fromSYSTEMTIME: (SYSTEMTIME fromDATE: aFloat) offset: self localOffset! !
-!DateAndTime class categoriesFor: #fromDATE:!instance creation!public! !
 
 !DOUBLE class methodsFor!
 
