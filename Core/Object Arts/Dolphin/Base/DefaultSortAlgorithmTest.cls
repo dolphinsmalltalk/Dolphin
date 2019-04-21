@@ -10,22 +10,21 @@ DefaultSortAlgorithmTest comment: ''!
 !DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
 !DefaultSortAlgorithmTest methodsFor!
 
-add: aCollection sortBlock: block 
-	| ms sorted collection |
+add: aCollection sortBlock: block
+	| duration sorted collection |
 	collection := aCollection asArray.
-	sorted := block == SortedCollection defaultSortBlock 
+	sorted := block == SortedCollection defaultSortBlock
 				ifTrue: [SortedCollection new]
 				ifFalse: [SortedCollection sortBlock: block].
-	ms := Time 
-				millisecondsToRun: [1 to: (collection size min: 5000) do: [:i | sorted add: (collection at: i)]].
-	collection size > 500 
+	duration := [1 to: (collection size min: 5000) do: [:i | sorted add: (collection at: i)]] timeToRun.
+	collection size > 500
 		ifTrue: 
 			[Transcript
 				nextPutAll: 'Added ';
 				print: sorted size;
-				nextPutAll: ' objects to a SortedCollection taking ';
-				print: ms;
-				nextPutAll: ' mS';
+				nextPutAll: ' objects to a SortedCollection taking '.
+			duration printHumanReadableOn: Transcript.
+			Transcript
 				cr;
 				flush].
 	self assertSorted: sorted!
@@ -33,20 +32,21 @@ add: aCollection sortBlock: block
 algorithmToTest
 	^DefaultSortAlgorithm!
 
-sort: aCollection sortBlock: block 
-	| ms sorted |
-	ms := Time millisecondsToRun: 
-					[sorted := block == SortedCollection defaultSortBlock 
-								ifTrue: [aCollection asSortedCollection]
-								ifFalse: [aCollection asSortedCollection: block]].
-	aCollection size > 500 
+sort: aCollection sortBlock: block
+	| duration sorted |
+	duration := 
+			[sorted := block == SortedCollection defaultSortBlock
+						ifTrue: [aCollection asSortedCollection]
+						ifFalse: [aCollection asSortedCollection: block]]
+					timeToRun.
+	aCollection size > 500
 		ifTrue: 
 			[Transcript
 				nextPutAll: 'Sorted collection of ';
 				print: aCollection size;
-				nextPutAll: ' objects taking ';
-				print: ms;
-				nextPutAll: ' mS';
+				nextPutAll: ' objects taking '.
+			duration printHumanReadableOn: Transcript.
+			Transcript
 				cr;
 				flush].
 	self assertSorted: sorted.

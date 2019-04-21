@@ -10,6 +10,7 @@ package basicPackageVersion: '6.0'.
 
 package methodNames
 	add: #BSTR -> #asUnicodeString;
+	add: #DATE -> #asDate;
 	add: #DATE -> #asTimeStamp;
 	add: #LPBSTR -> #asUnicodeString;
 	add: #TimeStamp -> #asFloat;
@@ -50,9 +51,14 @@ asUnicodeString
 
 !DATE methodsFor!
 
+asDate
+	Notification deprecated.
+	^(SYSTEMTIME fromDATE: self) asDate!
+
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
+!DATE categoriesFor: #asDate!converting!public! !
 !DATE categoriesFor: #asTimeStamp!accessing!public! !
 
 !DATE class methodsFor!

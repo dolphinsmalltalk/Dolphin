@@ -52,6 +52,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\Base\Dolphin Legacy Date & Time'
 	'..\System\Random\Dolphin Random Stream'
 	'..\Registry\Dolphin Registry Access').
 

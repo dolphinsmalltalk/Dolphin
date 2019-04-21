@@ -60,7 +60,8 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Legacy Date & Time').
 
 package!
 

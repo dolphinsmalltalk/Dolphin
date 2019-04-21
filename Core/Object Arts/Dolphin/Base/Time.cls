@@ -40,18 +40,23 @@ asMilliseconds
 asParameter
 	"Answer the host system representation of the receiver."
 
-	^SYSTEMTIME new
-		wHour: self hour24;
-		wMinute: self minute;
-		wSecond: self second truncated;
-		wMilliseconds: self millisecond rounded;
-		yourself!
+	^self asSYSTEMTIME!
 
 asSeconds
 	"Answer the <number> of seconds since midnight represented by the receiver."
 
 	^seconds
 !
+
+asSYSTEMTIME
+	"Answer a <SYSTEMTIME> representing the same time as the receiver on the current date."
+
+	^Date today asSYSTEMTIME
+		wHour: self hour24;
+		wMinute: self minute;
+		wSecond: self second truncated;
+		wMilliseconds: self millisecond rounded;
+		yourself!
 
 displayOn: aStream
 	"Append to the <puttableStream> argument, aStream, a String whose characters are a representation of this<Time> that a user in the current<Locale> might expect to see."
@@ -143,6 +148,7 @@ subtractTime: aTimeOrDate
 !Time categoriesFor: #asMilliseconds!converting!public! !
 !Time categoriesFor: #asParameter!converting!public! !
 !Time categoriesFor: #asSeconds!converting!public! !
+!Time categoriesFor: #asSYSTEMTIME!converting!public! !
 !Time categoriesFor: #displayOn:!printing!public! !
 !Time categoriesFor: #hash!comparing!public! !
 !Time categoriesFor: #hour!accessing!public! !
@@ -230,37 +236,18 @@ hours: hoursInteger minutes: minutesInteger seconds: secondsInteger
 microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
-	<primitive: 189>
-	^self primitiveFailed!
-
-microsecondsToRun: timedBlock 
-	"Answer the number of microseconds consumed by the evaluation of timedBlock
-	(including the overhead)."
-
-	| freq |
-	freq := LargeInteger new64.
-	(KernelLibrary default queryPerformanceFrequency: freq yourAddress) 
-		ifFalse: [self error: 'performance counter not available'].
-	^((self ticksToRun: timedBlock) - (self ticksToRun: [self])) * 1000000 // freq normalize!
+	^Delay microsecondClockValue!
 
 millisecondClockValue
 	"Answer the current value of the system millisecond clock."
 
-	"Implementation Note: Primitive 174 is actually just a call to the QueryPerformanceCounter
-	API which should be accurate sub-1mS (unlike GetTickCount() which is only accurate to 10mS),
-	and which also does not suffer the problem of wrapping after ~49 days of uptime."
-
-	<primitive: 174>
-	^self primitiveFailed!
+	^Delay millisecondClockValue!
 
 millisecondsToRun: timedBlock
 	"Answer the number of milliseconds consumed by the evaluation of timedBlock
 	(including the overhead)."
 
-	| startTime|
-	startTime := self millisecondClockValue.
-	timedBlock value.
-	^self millisecondClockValue - startTime
+	^timedBlock timeToRun asMilliseconds asInteger
 !
 
 new
@@ -271,7 +258,7 @@ new
 now
 	"Answer a new instance of the receiver representing the current local time."
 
-	^DateAndTime now asTime!
+	^self fromSeconds: DateAndTime now seconds!
 
 pmMarker
 	"Answer the marker used to signify PM when using 12 hour format"
@@ -349,18 +336,6 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1!
 
-ticksToRun: timedBlock 
-	"Answer the number of performance counter ticks consumed by the evaluation of timedBlock
-	(including the overhead)."
-
-	| startTime endTime |
-	startTime := LargeInteger new64.
-	endTime := LargeInteger new64.
-	KernelLibrary default queryPerformanceCounter: startTime yourAddress.
-	timedBlock value.
-	KernelLibrary default queryPerformanceCounter: endTime yourAddress.
-	^endTime normalize - startTime normalize!
-
 totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
 	
@@ -376,7 +351,6 @@ totalSeconds
 !Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
 !Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
 !Time class categoriesFor: #microsecondClockValue!enquiries!public! !
-!Time class categoriesFor: #microsecondsToRun:!operations!public! !
 !Time class categoriesFor: #millisecondClockValue!accessing!public! !
 !Time class categoriesFor: #millisecondsToRun:!operations!public! !
 !Time class categoriesFor: #new!instance creation!public! !
@@ -386,6 +360,5 @@ totalSeconds
 !Time class categoriesFor: #secondClock!accessing!private! !
 !Time class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !Time class categoriesFor: #stbVersion!binary filing!public! !
-!Time class categoriesFor: #ticksToRun:!operations!public! !
 !Time class categoriesFor: #totalSeconds!accessing!public! !
 

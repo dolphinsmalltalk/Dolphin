@@ -138,7 +138,7 @@ timeSinceLastPassAsString
 	^String streamContents: 
 			[:s |
 			s nextPutAll: ', '.
-			Locale smalltalk displayDuration: DateAndTime now - lastPass on: s.
+			DateAndTime now - lastPass printHumanReadableOn: s.
 			s nextPutAll: ' since last Pass']!
 
 update: anObject 

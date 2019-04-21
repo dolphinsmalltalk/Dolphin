@@ -27,7 +27,7 @@ displayValue: aDateOrTimeOrNil
 	"Private - Set the displayed contents of the receiver from the argument."
 
 	self displayValue = aDateOrTimeOrNil ifTrue: [^self].
-	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter])!
+	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME])!
 
 dtNotificationMap
 	^self subclassResponsibility!
@@ -44,13 +44,13 @@ maximum
 
 	^self range last ifNotNil: [:max | self modelClass fromSYSTEMTIME: max]!
 
-maximum: aDateOrTimeOrNil 
+maximum: aDateOrTimeOrNil
 	"Set the maximum date/time allowed by the receiver to aDateOrTimeOrNil.
 	If nil then no maximum is imposed"
 
 	| range |
 	range := self range.
-	range at: 2 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter]).
+	range at: 2 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME]).
 	self range: range!
 
 minimum
@@ -65,8 +65,8 @@ minimum: aDateOrTimeOrNil
 
 	| range |
 	range := self range.
-	range at: 1 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter ]).
-	self range: range !
+	range at: 1 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME]).
+	self range: range!
 
 modelClass
 	"Private - Answer the expected class of model."
@@ -107,11 +107,11 @@ range: interval
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
 	interval first notNil 
 		ifTrue: 
-			[array at: 1 put: interval first asParameter.
+			[array at: 1 put: interval first asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MIN].
 	interval last notNil 
 		ifTrue: 
-			[array at: 2 put: interval last asParameter.
+			[array at: 2 put: interval last asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MAX].
 	(self 
 		sendMessage: self setRangeMessage

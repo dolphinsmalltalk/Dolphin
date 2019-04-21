@@ -236,15 +236,7 @@ resetAndValidateStream
 						with: self class signature)]!
 
 setRefOffset: anInteger
-	readMap setSize: anInteger!
-
-timedNext
-	"Answer the next object from the receiver's stream."
-
-	| nextObject |
-	Notification signal: (Time millisecondsToRun: [nextObject := self basicNext]) displayString.
-	self evaluateDeferredActions.
-	^nextObject! !
+	readMap setSize: anInteger! !
 !STBInFiler categoriesFor: #basicNext!accessing!private! !
 !STBInFiler categoriesFor: #classAt:!accessing!private! !
 !STBInFiler categoriesFor: #classLocator!accessing!public! !
@@ -271,7 +263,6 @@ timedNext
 !STBInFiler categoriesFor: #reset!initializing!private! !
 !STBInFiler categoriesFor: #resetAndValidateStream!initializing!private! !
 !STBInFiler categoriesFor: #setRefOffset:!accessing!private! !
-!STBInFiler categoriesFor: #timedNext!development!public! !
 
 !STBInFiler class methodsFor!
 

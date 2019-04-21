@@ -271,6 +271,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM').
 
 package!
@@ -825,7 +826,7 @@ asFloat
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)."
 
-	^self asParameter asVariant! !
+	^self asSYSTEMTIME asVariant! !
 !Date categoriesFor: #asFloat!converting!public! !
 !Date categoriesFor: #asVariant!converting!public! !
 
@@ -839,7 +840,7 @@ asFloat
 asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
-	^self asParameter asVariant! !
+	^self asSYSTEMTIME asVariant! !
 !DateAndTime categoriesFor: #asFloat!converting!public! !
 !DateAndTime categoriesFor: #asVariant!converting!public! !
 

@@ -32,6 +32,19 @@ minutesShould: expectedMinutes for: seconds
 secondsShould: expectedSeconds for: seconds
 	self assert: (Time fromSeconds: seconds) second equals: expectedSeconds!
 
+testAsSYSTEMTIME
+	| today now actual |
+	today := Date today.
+	now := Time now.
+	actual := now asSYSTEMTIME.
+	self assert: actual wYear equals: today year.
+	self assert: actual wMonth equals: today month.
+	self assert: actual wDay equals: today dayOfMonth.
+	self assert: actual wHour equals: now hour24.
+	self assert: actual wMinute equals: now minute.
+	self assert: actual wSecond equals: now second truncated.
+	self assert: actual wMilliseconds equals: (now second fractionPart * 1000) rounded!
+
 testClassReadFrom
 	self assert: (Time readFrom: '00' readStream) asSeconds equals: 0.
 	self assert: (Time readFrom: '00am' readStream) asSeconds equals: 0.
@@ -254,6 +267,7 @@ testStoreOn
 !TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
 !TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
 !TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
+!TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
 !TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
 !TimeTest categoriesFor: #testFromDuration!public!testing! !
 !TimeTest categoriesFor: #testHours!public!testing! !

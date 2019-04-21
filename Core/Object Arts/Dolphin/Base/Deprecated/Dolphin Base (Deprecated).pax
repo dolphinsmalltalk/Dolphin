@@ -156,6 +156,7 @@ package methodNames
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
 	add: 'Time class' -> #dateAndTimeNow;
+	add: 'Time class' -> #microsecondsToRun:;
 	yourself.
 
 package globalNames
@@ -172,6 +173,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
+	'..\Dolphin Legacy Date & Time'
 	'..\Dolphin Message Box').
 
 package!
@@ -1099,8 +1101,15 @@ dateAndTimeNow
 	"Use DateAndTime now"
 	Notification deprecated.
 	now := DateAndTime now.
-	^{now asDate. now asTime}! !
+	^{now asDate. now asTime}!
+
+microsecondsToRun: timedBlock
+	"Answer the number of microseconds consumed by the evaluation of timedBlock
+	(including the overhead)."
+
+	^timedBlock timeToRun asMicroseconds asInteger! !
 !Time class categoriesFor: #dateAndTimeNow!accessing!public! !
+!Time class categoriesFor: #microsecondsToRun:!operations!public! !
 
 !WindowsLocale methodsFor!
 

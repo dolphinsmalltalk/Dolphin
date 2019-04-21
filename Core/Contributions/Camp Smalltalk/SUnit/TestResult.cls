@@ -55,7 +55,7 @@ displayOn: aStream
 	aStream
 		print: runCount;
 		nextPutAll: ' run in '.
-	Locale smalltalk displayDuration: duration on: aStream.
+	duration printHumanReadableOn: aStream.
 	passedCount := self passedCount.
 	passedCount = runCount
 		ifFalse: 
@@ -135,9 +135,9 @@ results
 runCase: aTestCase
 	
 	[| start stop |
-	start := Time microsecondClockValue.
+	start := Delay microsecondClockValue.
 	aTestCase runCase.
-	stop := Time microsecondClockValue.
+	stop := Delay microsecondClockValue.
 	self addPass: aTestCase duration: (stop - start) microseconds]
 			on: self class failure
 			do: 

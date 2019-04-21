@@ -36,11 +36,11 @@ getDocumentData
 	^self isRichText ifTrue: [self model value rtf] ifFalse: [self model value asString]!
 
 insertDateAndTime
-	| stream |
+	| stream now locale |
 	stream := String writeStream.
-	Time now printOn: stream format: 'HH:mm'.
-	stream space.
-	Date today printOn: stream longPicture: false.
+	now := DateAndTime now.
+	locale := Locale default.
+	now printOn: stream format: locale shortTimeFormat, ' ', locale shortDateFormat.
 	documentPresenter replaceSelection: stream contents!
 
 isRichText

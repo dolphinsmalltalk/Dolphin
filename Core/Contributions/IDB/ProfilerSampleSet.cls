@@ -141,10 +141,7 @@ samplesElapsedTime
 	^samplesElapsedTime!
 
 samplesElapsedTimeString
-	| s |
-	s := String writeStream.
-	Locale smalltalk displayDuration: self duration on: s.
-	^s contents!
+	^self duration humanReadablePrintString!
 
 samplesSelectors
 	"Answer the methods used by this set. They are cached so check first"
@@ -171,10 +168,7 @@ samplingInterval
 	^(count == 0 ifTrue: [0] ifFalse: [self samplesElapsedTime // count]) microseconds!
 
 samplingIntervalString
-	| s |
-	s := String writeStream.
-	Locale smalltalk displayDuration: self samplingInterval on: s.
-	^s contents!
+	^self samplingInterval humanReadablePrintString!
 
 samplingTimeStamp
 	"Answer the value of the receiver's instance variable samplingTimeStamp.

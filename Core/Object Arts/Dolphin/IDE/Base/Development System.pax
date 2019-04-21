@@ -152,6 +152,7 @@ package methodNames
 	add: #Behavior -> #whichMethodsOnlySelfSend:;
 	add: #Behavior -> #whichMethodsReferTo:;
 	add: #Behavior -> #whichSelectorsReferTo:;
+	add: #BlockClosure -> #cpuCyclesToRun;
 	add: #BlockFrame -> #debugIpFor:;
 	add: #BlockFrame -> #isRestartable;
 	add: #BlockFrame -> #makeDebug;
@@ -600,7 +601,6 @@ package methodNames
 	add: 'TextEdit class' -> #publishedAspectsOfInstances;
 	add: 'TextEdit class' -> #publishedEventsOfInstances;
 	add: 'TextTileIcon class' -> #newInstanceAspect:class:;
-	add: 'Time class' -> #cpuCyclesToRun:;
 	add: 'Time class' -> #newInstanceAspect:class:;
 	add: 'TimeToText class' -> #publishedAspectsOfInstances;
 	add: 'Toolbar class' -> #publishedAspectsOfInstances;
@@ -682,6 +682,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
@@ -1671,6 +1672,26 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^aspectClass bitmap: aSymbol! !
 !Bitmap class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+
+!BlockClosure methodsFor!
+
+cpuCyclesToRun
+	| sem start stop lib hThread |
+	lib := KernelLibrary default.
+	hThread := lib getCurrentThread.
+	start := ULARGE_INTEGER new.
+	stop := ULARGE_INTEGER new.
+	sem := Semaphore new.
+	
+	[
+	[lib queryThreadCycleTime: hThread cycleTime: start.
+	self value.
+	lib queryThreadCycleTime: hThread cycleTime: stop]
+			ensure: [sem signal]]
+			forkAt: Processor userInterruptPriority.
+	sem wait.
+	^stop value - start value! !
+!BlockClosure categoriesFor: #cpuCyclesToRun!operations!public! !
 
 !BlockClosure class methodsFor!
 
@@ -6560,33 +6581,11 @@ newInstanceAspect: aSymbol class: aspectClass
 
 !Time class methodsFor!
 
-cpuCyclesToRun: timedBlock
-	"Answer the number of CPU cycles consumed during the evaluation of timedBlock. This can be
-	used to compare the efficiency of small code sequences, but you should expect some variation
-	depending on GC activity, and the number is only useful for relative comparisons."
-
-	| lib start stop hThread sem |
-	lib := KernelLibrary default.
-	hThread := lib getCurrentThread.
-	start := ULARGE_INTEGER new.
-	stop := ULARGE_INTEGER new.
-	sem := Semaphore new.
-	
-	[
-	[lib queryThreadCycleTime: hThread cycleTime: start.
-	timedBlock value.
-	lib queryThreadCycleTime: hThread cycleTime: stop]
-			ensure: [sem signal]]
-			forkAt: Processor userInterruptPriority.
-	sem wait.
-	^stop value - start value!
-
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass time: aSymbol! !
-!Time class categoriesFor: #cpuCyclesToRun:!operations!public! !
 !Time class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 
 !TimeToText class methodsFor!

@@ -29,6 +29,7 @@ A `Duration` represents a length of time, at any resolution, and is independent 
 ## Class Variables:
   `SecondsPerDay`		`<integer>` number of seconds in one day
   `SecondsPerHour`		`<integer>` number of seconds in one hour
+  `Zero`				Constant for <Duration factory> zero
 
 '!
 !Duration categoriesForClass!Kernel-Chronology! !
@@ -107,7 +108,7 @@ displayOn: aWriteStream
 	"Append,to the <puttableStream> argument, a <String> whose characters are a representation of the receiver as a user would want to see it.
 	The format used is that defined by Windows for the current user locale."
 
-	^Locale default displayDuration: self on: aWriteStream!
+	Locale default displayDuration: self on: aWriteStream!
 
 divideIntoDuration: aDuration 
 	"Private - Part of a double dispatch for <Duration> division.  Answers a <number>"
@@ -123,6 +124,11 @@ hours
 	"Answer an <integer> in the range [-23, 23], inclusive, which is the number of whole hours represented by the receiver after complete days have been removed."
 
 	^(seconds rem: SecondsPerDay) quo: SecondsPerHour!
+
+humanReadablePrintString
+	"Answer an <readableString> English language description of the receiver. This is for compatibility with Pharo, although the actual printed form is different."
+
+	^String streamContents: [:strm | self printHumanReadableOn: strm]!
 
 isZero
 	"Answer whether the receiver represents an empty interval of time."
@@ -163,6 +169,11 @@ positive
 	"Answer whether the receiver is positive or zero."
 
 	^seconds >= 0!
+
+printHumanReadableOn: aWriteStream
+	"Append a short English language description of the receiver to the <puttableStream>, aWriteStream. This is for compatibility with Pharo, although the actual printed form is different."
+
+	Locale smalltalk displayDuration: self on: aWriteStream!
 
 printOn: aStream
 	"Append a default string representation of the receiver to the <puttableStream>, aStream.
@@ -209,7 +220,7 @@ subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
 	<DateAndTime> representing the receiver subtracted from the argument"
 
-	^DateAndTime utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offset! !
+	^aDateAndTime class utcSeconds: aDateAndTime asSeconds - seconds offset: aDateAndTime offsetSeconds! !
 !Duration categoriesFor: #-!arithmetic!public! !
 !Duration categoriesFor: #*!arithmetic!public! !
 !Duration categoriesFor: #/!arithmetic!public! !
@@ -226,6 +237,7 @@ subtractFromDateAndTime: aDateAndTime
 !Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
 !Duration categoriesFor: #hash!comparing!public! !
 !Duration categoriesFor: #hours!accessing!public! !
+!Duration categoriesFor: #humanReadablePrintString!printing!public! !
 !Duration categoriesFor: #isZero!public!testing! !
 !Duration categoriesFor: #microseconds!accessing!public! !
 !Duration categoriesFor: #milliseconds!accessing!public! !
@@ -234,6 +246,7 @@ subtractFromDateAndTime: aDateAndTime
 !Duration categoriesFor: #negated!arithmetic!public! !
 !Duration categoriesFor: #negative!public!testing! !
 !Duration categoriesFor: #positive!public!testing! !
+!Duration categoriesFor: #printHumanReadableOn:!printing!public! !
 !Duration categoriesFor: #printOn:!printing!public! !
 !Duration categoriesFor: #printOn:format:!printing!public! !
 !Duration categoriesFor: #printStringFormat:!printing!public! !
@@ -286,9 +299,6 @@ hours: hoursNumber minutes: minutesNumber seconds: secondsNumber
 
 	^self seconds: (hoursNumber * 60 + minutesNumber) * 60 + secondsNumber!
 
-initialize
-	self addClassConstant: 'Zero' value: 0 seconds!
-
 microseconds: aNumber
 	"Answer a <Duration> representing the specified <number> of microseconds.
 	If the argument is negative then the answer will be less than <Duration factory>#zero."
@@ -312,6 +322,12 @@ nanoseconds: aNumber
 	If the argument is negative then the answer will be less than <Duration factory>#zero."
 
 	^self seconds: aNumber / 1e9!
+
+onPreStripImage
+	"Private - The image is about to be stripped, clear lazily initialize class variables to assist
+	the stripping process."
+
+	Zero := nil!
 
 readFrom: aStream
 	"Answers a new instance of the receiver read from the <readableStream> argument, which is assumed to contain a duration expressed in the printString format of the receiver's instances."
@@ -357,7 +373,7 @@ readFrom: aStream sign: sign withDays: aBoolean
 					(digits between: 1 and: 9) ifFalse: [^self errorInvalidFormat].
 					ss := ss + (ff / digits exp10)]]
 		ifFalse: [ss := 0].
-	^Duration seconds: (((days * 24 + hh) * 60 + mm) * 60 + ss) * sign!
+	^self seconds: (((days * 24 + hh) * 60 + mm) * 60 + ss) * sign!
 
 seconds: aNumber
 	"Answer a <Duration> which is the specified <number> of seconds in length. 
@@ -371,7 +387,7 @@ seconds: aNumber
 zero
 	"Answer a <Duration> representing an empty interval of time."
 
-	^Zero! !
+	^Zero ifNil: [Zero := self seconds: 0]! !
 !Duration class categoriesFor: #days:!instance creation!public! !
 !Duration class categoriesFor: #days:hours:minutes:seconds:!instance creation!public! !
 !Duration class categoriesFor: #errorInvalidFormat!exceptions!private! !
@@ -379,11 +395,11 @@ zero
 !Duration class categoriesFor: #hours:!instance creation!public! !
 !Duration class categoriesFor: #hours:minutes:!instance creation!public! !
 !Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Duration class categoriesFor: #initialize!class initialization!public! !
 !Duration class categoriesFor: #microseconds:!instance creation!public! !
 !Duration class categoriesFor: #milliseconds:!instance creation!public! !
 !Duration class categoriesFor: #minutes:!instance creation!public! !
 !Duration class categoriesFor: #nanoseconds:!instance creation!public! !
+!Duration class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !Duration class categoriesFor: #readFrom:!instance creation!public! !
 !Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
 !Duration class categoriesFor: #seconds:!instance creation!public! !
