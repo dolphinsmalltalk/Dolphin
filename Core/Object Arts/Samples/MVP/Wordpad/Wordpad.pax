@@ -52,21 +52,21 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
 
 package!
 

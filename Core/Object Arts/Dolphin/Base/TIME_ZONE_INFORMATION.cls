@@ -69,7 +69,10 @@ daylightName
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_daylightName!
 
 offset
-	^offset ifNil: [offset := self currentBias negated minutes]!
+	^self offsetSeconds seconds!
+
+offsetSeconds
+	^offset ifNil: [offset := self currentBias negated * 60]!
 
 printableFields
 	^super printableFields copyWithoutAll: #(#standardDate #daylightDate)!
@@ -103,6 +106,7 @@ zoneId: anInteger
 !TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #offset!enquiries!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #offsetSeconds!enquiries!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #printableFields!development!printing!private! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardDate!**compiled accessors**!public! !

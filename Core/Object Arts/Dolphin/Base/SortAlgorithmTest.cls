@@ -11,26 +11,25 @@ SortAlgorithmTest comment: ''!
 !SortAlgorithmTest categoriesForClass!Unclassified! !
 !SortAlgorithmTest methodsFor!
 
-add: aCollection sortBlock: block 
-	| ms sorted comp collection |
+add: aCollection sortBlock: block
+	| duration sorted comp collection |
 	collection := aCollection asArray.
 	comp := 0.
-	sorted := SortedCollection 
+	sorted := SortedCollection
 				sortAlgorithm: (self algorithmToTest newSortBlock: 
-							[:a :b | 
+							[:a :b |
 							comp := comp + 1.
 							block value: a value: b]).
-	ms := Time 
-				millisecondsToRun: [1 to: (collection size min: 5000) do: [:i | sorted add: (collection at: i)]].
-	collection size > 500 
+	duration := [1 to: (collection size min: 5000) do: [:i | sorted add: (collection at: i)]] timeToRun.
+	collection size > 500
 		ifTrue: 
 			[Transcript
 				print: comp;
 				nextPutAll: ' comparisons required to add ';
 				print: sorted size;
-				nextPutAll: ' objects to a SortedCollection taking ';
-				print: ms;
-				nextPutAll: ' mS';
+				nextPutAll: ' objects to a SortedCollection taking '.
+			duration printHumanReadableOn: Transcript.
+			Transcript
 				cr;
 				flush].
 	self assertSorted: sorted!

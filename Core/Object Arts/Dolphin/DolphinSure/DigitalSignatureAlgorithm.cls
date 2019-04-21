@@ -271,7 +271,7 @@ initRandomFromUser
 
 	| s k srcIndex |
 
-	s :=  (Time microsecondClockValue bitOr: 1) displayString.
+	s :=  (Delay microsecondClockValue bitOr: 1) displayString.
 	k := LargeInteger new: (s size min: 64)//4.
 	srcIndex := 0.
 	k byteSize to: 1 by: -1 do: [:i |
@@ -541,8 +541,8 @@ example
 	msg := 'This is a test...'.
 	keys := self testKeySet512.
 	sig := self sign: msg privateKey: keys first.
-	^Time millisecondsToRun: [(self verify: sig isSignatureOf: msg publicKey: keys last)	ifFalse: [
-		self error: 'ERROR!! Signature verification failed' ]].
+	^[(self verify: sig isSignatureOf: msg publicKey: keys last)	ifFalse: [
+		self error: 'ERROR!! Signature verification failed' ]] timeToRun.
 !
 
 generateFullKeySet

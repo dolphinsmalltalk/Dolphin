@@ -8,7 +8,7 @@ DateTimeCommonControl subclass: #MonthCalendarView
 MonthCalendarView guid: (GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
 MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 
-The `<valueModel>` associated with a `MonthCalendarView` must always yield a value that can be converted to a `SYSTEMTIME` using `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`), although any time portion is ignored. A `MonthCalendarView` will normally be used in conjunction with a `DatePresenter`.
+The `<valueModel>` associated with a `MonthCalendarView` must always yield a value that can be converted to a `SYSTEMTIME` using `#asSYSTEMTIME` after mapping through the installed type converter (e.g. a `DateAndTime`), although any time portion is ignored. A `MonthCalendarView` will normally be used in conjunction with a `DatePresenter`.
 '!
 !MonthCalendarView categoriesForClass!MVP-Views! !
 !MonthCalendarView methodsFor!

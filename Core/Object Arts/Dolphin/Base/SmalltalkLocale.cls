@@ -18,10 +18,7 @@ amDesignator
 code
 	"Answer the RFC4646 locale code (aka tag) for this locale."
 
-	^self getStringInfo: LOCALE_SNAME!
-
-dateFormat
-	^'yyyy-MM-dd'!
+	^''!
 
 dayOfWeek: aString
 	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
@@ -175,9 +172,14 @@ listSeparator
 	^','!
 
 longDateFormat
-	"Answer the default long date format for the receiver locale."
+	"Answer the long date format for the receiver locale. See #dateFormat for a description of the format tokens."
 
 	^'dddd, dd MMMM yyyy'!
+
+longTimeFormat
+	"Answer the long time format for the receiver locale. See #timeFormat for a description of the format tokens."
+
+	^'HH:mm:ss'!
 
 monthAbbreviation: anInteger
 	"Answer a <String> that is the localised short name of the month whose index is the <integer> argument, anInteger, where January is 1 and December is 12."
@@ -289,10 +291,20 @@ shortAmDesignator
 
 	^'a'!
 
+shortDateFormat
+	"Answer the short date format for the receiver locale. See #dateFormat for a description of the format tokens."
+
+	^'yyyy-MM-dd'!
+
 shortPmDesignator
 	"Answer the short <String> used in the receiver locale to designate PM (afternoon)."
 
 	^'p'!
+
+shortTimeFormat
+	"Answer the short time format for the receiver locale. See #timeFormat for a description of the format tokens."
+
+	^'HH:mm'!
 
 tag
 	"Answer the RFC4646 language tag for this locale."
@@ -304,18 +316,12 @@ thousandSeparator
 
 	^''!
 
-timeFormat
-	"Answer the default time format for the receiver locale."
-
-	^'HH:mm:ss'!
-
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
 !SmalltalkLocale categoriesFor: #amDesignator!constants!public! !
 !SmalltalkLocale categoriesFor: #code!constants!public! !
-!SmalltalkLocale categoriesFor: #dateFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #dayOfWeek:!mapping!public! !
 !SmalltalkLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
 !SmalltalkLocale categoriesFor: #dayOfWeekName:!constants!public! !
@@ -335,6 +341,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #lcid!accessing!public! !
 !SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
 !SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
+!SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
 !SmalltalkLocale categoriesFor: #monthName:!enquiries!public! !
 !SmalltalkLocale categoriesFor: #monthNames!constants!public! !
@@ -350,10 +357,11 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
 !SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
 !SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
+!SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !
+!SmalltalkLocale categoriesFor: #shortTimeFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #tag!constants!public! !
 !SmalltalkLocale categoriesFor: #thousandSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #timeFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #yearMonthFormat!constants!public! !
 
 !SmalltalkLocale class methodsFor!

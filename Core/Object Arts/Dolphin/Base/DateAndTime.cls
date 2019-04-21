@@ -2,11 +2,12 @@
 
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
-	classVariableNames: 'FiletimeEpochSeconds JulianDayOffset LilianDayOffset SmalltalkEpochRD UnixEpoch'
+	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DateAndTime guid: (GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
 DateAndTime addClassConstant: 'FiletimeEpochSeconds' value: -16r234474600!
+DateAndTime addClassConstant: 'JulianDateOffset' value: 16r22A11020C0!
 DateAndTime addClassConstant: 'LilianDayOffset' value: -16r8D0C7!
 DateAndTime addClassConstant: 'SmalltalkEpochRD' value: 16rA96C9!
 DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
@@ -24,7 +25,7 @@ DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk p
 ## Instance Variables:
   `rataDie`			`<integer>` count of days based on an epoch of 1st Jan 0001 (Rata Die).
   `seconds`		`<rational>` number of seconds since beginning of the day in local time (i.e. at the time zone `offset`)
-  `offset`			`<Duration>` that is the offset from UTC of the local time of the `DateAndTime`
+  `offset`			`<integer>` that is the seconds offset from UTC of the local time of the `DateAndTime`
 
 ## Class Variables
 
@@ -42,7 +43,7 @@ DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk p
 + operand
 	"Answer the result of adding the <Duration> argument, operand to the receiver. More specifically: Answer a <DateAndTime> that represents the UTC time that is the <Duration> argument, operand, after the receiver, and whose local time is the same as the receiver's. If the argument is a negative <Duration>, then the result is a <DateAndTime> prior to the receiver."
 
-	^self class utcSeconds: self asSeconds + operand asSeconds offset: self offset!
+	^self class utcSeconds: self asSeconds + operand asSeconds offset: offset!
 
 < operand 
 	"Answer whether the receiver is less than the <DateAndTime> argument, operand, i.e. answer whether the receiver is prior to UTC time represented by the argument."
@@ -54,26 +55,24 @@ DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk p
 
 	^self species == comparand species and: [self asSeconds = comparand asSeconds]!
 
-asDate
-	"Answer a <Date> representing the date of the receiver. The <Date> will be that at the receiver's offset, so:
-		- if a date in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asDate`)
-		- if a UTC date is needed, send #asUTC first (i.e. `dateAndTime asUTC asDate`)."
-
-	^self dayMonthYearDo: 
-			[:d :m :y |
-			Date
-				newDay: d
-				monthIndex: m
-				year: y]!
-
 asLocal
 	"Answer a <DateAndTime> that represents the same UTC time as the receiver, but in the local time of the host OS."
 
-	^self offset: self class localOffset!
+	^self offsetSeconds: Locale timeZoneInformation offsetSeconds!
 
-asParameter
-	"Answer the receiver in a form suitable for passing to a Windows API, in this case a <SYSTEMTIME>.
-	Note that <SYSTEMTIME> can represent only a limited range of possible <DateAndTime>s, and the offset is ignored, so convert to the desired timezone first."
+asSeconds
+	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00).
+	Note that this is a UTC value, and is likely to be a <LargeInteger>, or a <Fraction> with <LargeInteger> numerator (and possibly denominator)."
+
+	"In the original IDB DateAndTime, this method returned local-time seconds since the Rata Die epoch, but for compatibility with the traditional Smalltalk Date/Time classes (and Squeak/Pharo) this has been changed to return UTC seconds past the traditional Smalltalk epoch (01/01/1901)."
+
+	^self localSeconds - offset!
+
+asSYSTEMTIME
+	"Answer a <SYSTEMTIME> representing the same point in time as the receiver. This is a lossy conversion:
+		- Not all <DateAndTime>s can be represented as <SYSTEMTIME>; the earliest SYSTEMTIME is 1/1/1601 can represent only a limited range of possible <DateAndTime>s. If the DateAndTime is outside the SYSTEMTIME range, the structure returned may not be valid for passing to a Windows API.
+		- The receiver's offset is ignored; <SYSTEMTIME> has no timezone offset, so may be a local time or a UTC time. Convert to the desired timezone first.
+		- The may be loss of precision: <SYSTEMTIME> has millisecond precision, whereas <DateAndTime>s have essentially infinite precision, although in practice the precision is likely to be 100nS ticks."
 
 	| secs |
 	secs := self second.
@@ -90,21 +89,6 @@ asParameter
 				wMilliseconds: (secs fractionPart * 1000) rounded;
 				yourself]!
 
-asSeconds
-	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00).
-	Note that this is a UTC value, and is likely to be a <LargeInteger>, or a <Fraction> with <LargeInteger> numerator (and possibly denominator)."
-
-	"In the original IDB DateAndTime, this method returned local-time seconds since the Rata Die epoch, but for compatibility with the traditional Smalltalk Date/Time classes (and Squeak/Pharo) this has been changed to return UTC seconds past the traditional Smalltalk epoch (01/01/1901)."
-
-	^self localSeconds - offset asSeconds!
-
-asTime
-	"Answer a <Time> representing the local time of the receiver. The <Time> will be that at the receiver's offset, so:
-		- if a time in the local timezone is needed and the DateAndTime, send #asLocal first (i.e. `dateAndTime asLocal asTime`)
-		- if a UTC time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTime`)."
-
-	^Time fromSeconds: seconds!
-
 asUnixTime
 	"Answer the a <rational> representing the number of seconds past 00:00h, 01-Jan-1970 (the Unix epoch)."
 
@@ -113,14 +97,16 @@ asUnixTime
 asUTC
 	"Answer a <DateAndTime> that represents the same absolute time as the receiver but in Co-ordinated Universal Time (UTC)."
 
-	^self offset: Duration.Zero!
+	^self offsetSeconds: 0!
 
 day
 	"For compatibility - equivalent to #dayOfMonth"
 
 	^self dayOfMonth!
 
-dayMonthYearDo: aBlock
+dayMonthYearDo: aTriadicValuable
+	"Evaluate the the triadic valuable argument passing it the day, month, and year of the date represented by the receiver, answering the result."
+
 	| z h a b year c month day |
 	z := rataDie + 306.
 	h := 100 * z - 25.
@@ -134,7 +120,7 @@ dayMonthYearDo: aBlock
 		ifTrue: 
 			[year := year + 1.
 			month := month - 12].
-	^aBlock
+	^aTriadicValuable
 		value: day
 		value: month
 		value: year!
@@ -203,14 +189,17 @@ julianDate
 		String streamContents: [:s | DateAndTime nowUTC julianDate asFloat printOn: s decimalPlaces: 5]
 	"
 
-	| jd |
-	jd := (self asUTC + JulianDayOffset).
+	| utc jd |
+	utc := self asUTC.
+	jd := self class utcSeconds: utc asSeconds + JulianDateOffset offset: utc offsetSeconds.
 	^jd rataDie + (jd seconds / Duration.SecondsPerDay)!
 
 julianDayNumber
 	"Answer the receiver's Julian Day Number, Note that this is the JDN, not the CJDN, so rotates at noon UTC, or in other words 'The Julian Day Number (JDN) is the integer assigned to a whole solar day in the Julian day count starting from noon Universal time' (see https://en.wikipedia.org/wiki/Julian_day)."
 
-	^(self asUTC + JulianDayOffset) rataDie!
+	| utc |
+	utc := self asUTC.
+	^(self class utcSeconds: utc asSeconds + JulianDateOffset offset: 0) rataDie!
 
 lilianDayNumber
 	"Answer the receiver's Lilian Day Number (see https://en.wikipedia.org/wiki/Lilian_date)."
@@ -239,7 +228,7 @@ midnight
 				year: y
 				month: m
 				day: d
-				offset: offset]!
+				offset: self offset]!
 
 minute
 	"Answer an <integer> in the range [0,60), representing the minute of the hour in the local time of the receiver."
@@ -269,16 +258,24 @@ nanosecond
 offset
 	"Answer a <Duration> which is the difference between the local time of the receiver and UTC, at the time of the receiver."
 
-	^offset!
+	^offset seconds!
 
 offset: aDuration
 	"Answer a <DateAndTime> equivalent to the receiver, but with its local time offset from UTC by the <Duration>, offset."
 
-	^aDuration asSeconds == offset asSeconds
+	^self offsetSeconds: aDuration asSeconds!
+
+offsetSeconds
+	"Private - Answer the receiver's <integer> timezone offset in seconds."
+
+	^offset!
+
+offsetSeconds: offsetSeconds
+	^offsetSeconds = offset
 		ifTrue: [self]
 		ifFalse: 
-			[self class validateOffset: aDuration.
-			DateAndTime utcSeconds: self asSeconds offset: aDuration]!
+			[self class validateOffset: offsetSeconds.
+			self class utcSeconds: self asSeconds offset: offsetSeconds]!
 
 printOn: aStream
 	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. This will be in the format as defined in ANSI Smalltalk for the DateAndTime>>printString message (5.8.1.24). See #printOn:withLeadingSpace: for a description of this format."
@@ -303,16 +300,17 @@ printOn: aWriteStream withLeadingSpace: aBoolean
 		(DateAndTime fromString: '-1199-01-05T20:33:14.321-05:00')
 	"
 
-	| offsetFormat |
+	| offsetFormat tzo |
 	(aBoolean and: [rataDie >= 0]) ifTrue: [aWriteStream space].
 	offsetFormat := '+hh:mm'.
 	"It doesn't really make sense to have TZ offsets with seconds components, but the ANSI spec allows this and expects the printed format to include seconds and even fractions of a second."
-	offset seconds = 0 ifFalse: [offsetFormat := offsetFormat, ':sfffffffff'].
+	tzo := self offset.
+	tzo seconds = 0 ifFalse: [offsetFormat := offsetFormat, ':sfffffffff'].
 	Locale invariant
 		printDateTime: self
 			on: aWriteStream
 			format: 'yyyy\-MM\-dd\THH:mm:ssfffffffff';
-		printDuration: offset
+		printDuration: tzo
 			on: aWriteStream
 			format: offsetFormat!
 
@@ -337,10 +335,10 @@ seconds
 
 	^seconds!
 
-setRataDie: anInteger seconds: aNumber offset: aDuration
+setRataDie: anInteger seconds: aNumber offset: secondsInteger
 	rataDie := anInteger.
 	seconds := aNumber.
-	offset := aDuration.
+	offset := secondsInteger.
 	^self!
 
 subtractFromDateAndTime: aDateAndTime 
@@ -385,15 +383,13 @@ year
 !DateAndTime categoriesFor: #+!arithmetic!public! !
 !DateAndTime categoriesFor: #<!comparing!public! !
 !DateAndTime categoriesFor: #=!comparing!public! !
-!DateAndTime categoriesFor: #asDate!converting!public! !
 !DateAndTime categoriesFor: #asLocal!comparing!public! !
-!DateAndTime categoriesFor: #asParameter!converting!public! !
 !DateAndTime categoriesFor: #asSeconds!converting!public! !
-!DateAndTime categoriesFor: #asTime!converting!public! !
+!DateAndTime categoriesFor: #asSYSTEMTIME!converting!public! !
 !DateAndTime categoriesFor: #asUnixTime!converting!public! !
 !DateAndTime categoriesFor: #asUTC!converting!public! !
 !DateAndTime categoriesFor: #day!accessing!public! !
-!DateAndTime categoriesFor: #dayMonthYearDo:!helpers!private! !
+!DateAndTime categoriesFor: #dayMonthYearDo:!accessing!public! !
 !DateAndTime categoriesFor: #dayOfMonth!accessing!public! !
 !DateAndTime categoriesFor: #dayOfWeek!accessing!public! !
 !DateAndTime categoriesFor: #dayOfWeekAbbreviation!accessing!public! !
@@ -418,6 +414,8 @@ year
 !DateAndTime categoriesFor: #nanosecond!accessing!public! !
 !DateAndTime categoriesFor: #offset!accessing!public! !
 !DateAndTime categoriesFor: #offset:!converting!public! !
+!DateAndTime categoriesFor: #offsetSeconds!accessing!private! !
+!DateAndTime categoriesFor: #offsetSeconds:!converting!private! !
 !DateAndTime categoriesFor: #printOn:!printing!public! !
 !DateAndTime categoriesFor: #printOn:format:!printing!public! !
 !DateAndTime categoriesFor: #printOn:withLeadingSpace:!printing!public! !
@@ -505,8 +503,8 @@ fromString: aString
 
 	^self readFrom: aString readStream!
 
-fromSYSTEMTIME: aSYSTEMTIME 
-	^self fromSYSTEMTIME: aSYSTEMTIME offset: self localOffset!
+fromSYSTEMTIME: aSYSTEMTIME
+	^self fromSYSTEMTIME: aSYSTEMTIME offset: Locale timeZoneInformation offset!
 
 fromSYSTEMTIME: aSYSTEMTIME offset: offset 
 	"Answer a <DateAndTime> from SYSTEMTIME in local time."
@@ -527,12 +525,7 @@ initialize
 				year: 1901
 				day: 1
 				offset: 0 hours) rataDie.
-	self addClassConstant: 'UnixEpoch'
-		value: (DateAndTime
-				year: 1970
-				day: 1
-				offset: 0 hours).
-	self addClassConstant: 'JulianDayOffset' value: 1721424 days + 12 hours.
+	self addClassConstant: 'JulianDateOffset' value: (1721424 days + 12 hours) asSeconds.
 	self addClassConstant: 'FiletimeEpochSeconds'
 		value: (DateAndTime
 				year: 1601
@@ -554,11 +547,6 @@ isLeapYear: anInteger
 
 	^anInteger \\ 400 = 0 or: [anInteger \\ 4 = 0 and: [anInteger \\ 100 ~= 0]]!
 
-localOffset
-	"Answer the current local time offset (TimeZone) from the host OS."
-
-	^Locale timeZoneInformation offset!
-
 midnight
 	^self now midnight!
 
@@ -567,16 +555,12 @@ now
 		self now
 	"
 
-	| lib utcFileTime localFileTime offset |
-	lib := KernelLibrary default.
-	utcFileTime := LargeInteger newFixed: 8.
-	lib getSystemTimePreciseAsFileTime: utcFileTime yourAddress.
-	localFileTime := LargeInteger newFixed: 8.
-	(lib fileTimeToLocalTime: utcFileTime yourAddress lpLocalFileTime: localFileTime yourAddress)
-		ifFalse: [lib systemError].
-	offset := self localOffset.
-	^self utcSeconds: FiletimeEpochSeconds + (localFileTime / ##(1e9 / 100) - offset asSeconds)
-		offset: offset!
+	| filetime |
+	filetime := LargeInteger new64.
+	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
+	KernelLibrary default getSystemTimePreciseAsFileTime: filetime yourAddress.
+	^self utcSeconds: FiletimeEpochSeconds + (filetime / ##(1e9 / 100))
+		offset: Locale timeZoneInformation offsetSeconds!
 
 nowUTC
 	"Answer the current <DateAndTime> in UTC.
@@ -585,10 +569,10 @@ nowUTC
 
 	| filetime |
 	"Strictly speaking a FILETIME is unsigned, and so could require up to a 12-byte LargeInteger, but we'll be Ok with 8-bytes until about 4pm on 15th May 30600."
-	filetime := LargeInteger newFixed: 8.
+	filetime := LargeInteger new64.
 	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
 	KernelLibrary default getSystemTimePreciseAsFileTime: filetime yourAddress.
-	^self utcSeconds: FiletimeEpochSeconds + (filetime / ##(1e9 / 100)) offset: Duration.Zero!
+	^self utcSeconds: FiletimeEpochSeconds + (filetime / ##(1e9 / 100)) offset: 0!
 
 readFrom: aStream
 	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
@@ -641,12 +625,12 @@ readFrom: aStream
 
 readOffsetFrom: aStream sign: aCharacter
 	| sign |
-	aCharacter = $Z ifTrue: [^Duration.Zero].
+	aCharacter = $Z ifTrue: [^Duration zero].
 	sign := aCharacter = $+
 				ifTrue: 
 					[aStream next.
 					1]
-				ifFalse: [aCharacter = $- ifTrue: [-1] ifFalse: [^self localOffset]].
+				ifFalse: [aCharacter = $- ifTrue: [-1] ifFalse: [^Locale timeZoneInformation offset]].
 	^Duration
 		readFrom: aStream
 		sign: sign
@@ -662,26 +646,32 @@ tomorrow
 
 	^self today + 1 days!
 
-utcSeconds: aNumber offset: aDuration
-	"Private - Answer a new <DateAndTime> representing aNumber of (UTC) seconds since 1/1/1901 (UTC), but at the time zone offset specified by the <Duration>, aDuration. 
+utcSeconds: aNumber offset: anInteger
+	"Private - Answer a new <DateAndTime> representing aNumber of (UTC) seconds since 1/1/1901 (UTC), but at the time zone offset specified by <integer> number of seconds, anInteger. 
 	aNumber may be negative in which case the answer will be a <DateAndTime> prior to 1/1/1901."
 
 	| localSeconds daysSinceEpoch |
-	localSeconds := aNumber + aDuration asSeconds.
+	localSeconds := aNumber + anInteger.
 	daysSinceEpoch := localSeconds // Duration.SecondsPerDay.
 	^self new
 		setRataDie: daysSinceEpoch + SmalltalkEpochRD
 		seconds: localSeconds - (daysSinceEpoch * Duration.SecondsPerDay)
-		offset: aDuration!
+		offset: anInteger!
 
-validateOffset: aDuration
-	"In reality there are only a certain number of discrete time zone offsets that are actually valid, however the ANSI standard does not specify any constraints so we limit our validation to checking that the offset is with +1 or -1 days."
+validateHour: hour minute: minute second: second
+	(hour >= 0 and: [hour < 24])
+		ifFalse: [InvalidArgumentError signal: hour printString , ' is outside [0, 24)' with: 'hour'].
+	(minute >= 0 and: [minute < 60])
+		ifFalse: [InvalidArgumentError signal: minute printString , ' is outside [0, 60)' with: 'minute'].
+	(second >= 0 and: [second < 60])
+		ifFalse: [InvalidArgumentError signal: second printString , ' is outside [0, 60)' with: 'second']!
 
-	| offsetSeconds |
-	offsetSeconds := aDuration asSeconds.
-	(offsetSeconds > (0 - Duration.SecondsPerDay) and: [offsetSeconds < Duration.SecondsPerDay])
+validateOffset: anInteger
+	"Private - In reality there are only a certain number of discrete time zone offsets that are actually valid, however the ANSI standard does not specify any constraints so we limit our validation to checking that the offset is with +1 or -1 days."
+
+	(anInteger > (0 - Duration.SecondsPerDay) and: [anInteger < Duration.SecondsPerDay])
 		ifFalse: 
-			[InvalidArgumentError signal: aDuration printString , ' is not a valid time zone offset'
+			[InvalidArgumentError signal: anInteger seconds printString , ' is not a valid time zone offset'
 				with: 'offset']!
 
 year: yearInteger day: ordinalDateInteger
@@ -694,20 +684,20 @@ year: yearInteger day: ordinalDateInteger
 		minute: 0
 		second: 0!
 
-year: year day: dayOfYear hour: hour minute: minute second: second 
+year: year day: dayOfYear hour: hour minute: minute second: second
 	"Answer a <DateAndTime> which is the <number> second, of the <integer> minute, of the <integer> hour, of the <integer> day of the year, dayOfYear, of the <integer> year, of the astronomical Gregorian calendar in implementation defined 
 	local time, where
 		0 <= second < 60, 0 <= minute <= 59, 0 <= hour <= 23, 1 <= day <= 366,
 		and year can be any <integer>. 
 	If the specified time does not exist in the local time defined by the implementation the result is the least <DateAndTime> that conforms to the given parameters."
 
-	^self 
+	^self
 		year: year
 		day: dayOfYear
 		hour: hour
 		minute: minute
 		second: second
-		offset: self localOffset!
+		offsetSeconds: Locale timeZoneInformation offsetSeconds!
 
 year: year day: dayOfYear hour: hour minute: minute second: second offset: offset
 	"Answer a <DateAndTime> which is the <number> second, of the <integer> minute, of the <integer> hour, of the <integer> day of the year, dayOfYear, of the <integer> year, of the astronomical Gregorian calendar offset from UTC by the
@@ -716,16 +706,23 @@ year: year day: dayOfYear hour: hour minute: minute second: second offset: offse
 		and year can be any <integer>. 
 	If the specified time does not exist in the local time defined by the implementation the result is the least <DateAndTime> that conforms to the given parameters."
 
-	self assert: [dayOfYear >= 1 & (dayOfYear <= 366)].
-	self assert: [hour >= 0 & (hour <= 23)].
-	self assert: [minute >= 0 & (minute <= 59)].
-	self assert: [second >= 0 & (second < 60)].
+	^self year: year day: dayOfYear hour: hour minute: minute second: second offsetSeconds: offset asSeconds!
+
+year: year day: dayOfYear hour: hour minute: minute second: second offsetSeconds: offset
+	(dayOfYear >= 1 and: [dayOfYear <= 366])
+		ifFalse: 
+			[InvalidArgumentError signal: dayOfYear printString , ' is outside [1, 366]' with: 'dayOfYear'].
+	self
+		validateHour: hour
+		minute: minute
+		second: second.
+	self validateOffset: offset.
 	^self new
-		setRataDie: ((self
+		setRataDie: (self
 				encodeRataDieYear: year
 				month: 1
-				day: 1) + dayOfYear - 1)
-		seconds: 	((hour * 60) + minute) * 60 + second asTrueFraction
+				day: 1) + dayOfYear - 1
+		seconds: (hour * 60 + minute) * 60 + second asTrueFraction
 		offset: offset!
 
 year: yearInteger day: ordinalDateInteger offset: aDuration
@@ -736,21 +733,21 @@ year: yearInteger month: monthInteger day: dayInteger
 
 	^self year: yearInteger month: monthInteger day: dayInteger hour: 0 minute: 0 second: 0!
 
-year: year month: month day: dayOfMonth hour: hour minute: minute second: second 
+year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 	"Answer a <DateAndTime> which is the <number> second, of the <integer> minute, of the <integer> hour, of the <integer> day, dayOfMonth, of the
 	<integer> month, of the <integer> year, of the astronomical Gregorian calendar in local time, where 
 		0 <= second < 60, 0 <= minute <= 59, 0 <= hour <= 23, 1 <= day <= 31,
 		1 <= month <= 12, and year can be any <integer>. 
 	If the specified time does not exist in the local time defined by the implementation the result is the least <DateAndTime> that conforms to the given parameters."
 
-	^self 
+	^self
 		year: year
 		month: month
 		day: dayOfMonth
 		hour: hour
 		minute: minute
 		second: second
-		offset: self localOffset!
+		offsetSeconds: Locale timeZoneInformation offsetSeconds!
 
 year: year month: month day: dayOfMonth hour: hour minute: minute second: second offset: offset
 	"Answer a <DateAndTime> which is the <number> second, of the <integer> minute, of the <integer> hour, of the <integer> day, dayOfMonth, of the <integer> month, of the <integer> year, of the astronomical Gregorian calendar offset from UTC by the <Duration> offset, where:
@@ -763,28 +760,36 @@ year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 		-12 hours <= aDuration <= 14 hours.
 	If the specified time does not exist in the local time defined by the implementation the result is the least <DateAndTime> that conforms to the given parameters."
 
+	^self
+		year: year
+		month: month
+		day: dayOfMonth
+		hour: hour
+		minute: minute
+		second: second
+		offsetSeconds: offset asSeconds!
+
+year: year month: month day: dayOfMonth hour: hour minute: minute second: second offsetSeconds: offset
 	| daysInMonth |
 	(month >= 1 and: [month <= 12])
-		ifFalse: [^InvalidArgumentError signal: month printString , ' is outside [1, 12]' with: 'month'].
+		ifFalse: [InvalidArgumentError signal: month printString , ' is outside [1, 12]' with: 'month'].
 	daysInMonth := self daysInMonth: month forYear: year.
 	(dayOfMonth >= 1 and: [dayOfMonth <= daysInMonth])
 		ifFalse: 
-			[^InvalidArgumentError
+			[InvalidArgumentError
 				signal: dayOfMonth printString , ' is outside [1, ' , daysInMonth printString , ']'
 				with: 'dayOfMonth'].
-	(hour >= 0 and: [hour < 24])
-		ifFalse: [^InvalidArgumentError signal: hour printString , ' is outside [0, 24)' with: 'hour'].
-	(minute >= 0 and: [minute < 60])
-		ifFalse: [^InvalidArgumentError signal: minute printString , ' is outside [0, 60)' with: 'minute'].
-	(second >= 0 and: [second < 60])
-		ifFalse: [^InvalidArgumentError signal: second printString , ' is outside [0, 60)' with: 'second'].
+	self
+		validateHour: hour
+		minute: minute
+		second: second.
 	self validateOffset: offset.
 	^self new
 		setRataDie: (self
 				encodeRataDieYear: year
 				month: month
 				day: dayOfMonth)
-		seconds: ((hour	* 60) + minute) * 60 + second asTrueFraction
+		seconds: (hour * 60 + minute) * 60 + second asTrueFraction
 		offset: offset!
 
 year: yearInteger month: monthInteger day: dayInteger offset: aDuration
@@ -819,7 +824,6 @@ yesterday
 !DateAndTime class categoriesFor: #fromSYSTEMTIME:offset:!instance creation!public! !
 !DateAndTime class categoriesFor: #initialize!class initialization!public! !
 !DateAndTime class categoriesFor: #isLeapYear:!public!testing! !
-!DateAndTime class categoriesFor: #localOffset!enquiries!public! !
 !DateAndTime class categoriesFor: #midnight!instance creation!public! !
 !DateAndTime class categoriesFor: #now!instance creation!public! !
 !DateAndTime class categoriesFor: #nowUTC!instance creation!public! !
@@ -828,14 +832,17 @@ yesterday
 !DateAndTime class categoriesFor: #today!instance creation!public! !
 !DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
 !DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
+!DateAndTime class categoriesFor: #validateHour:minute:second:!instance creation!private! !
 !DateAndTime class categoriesFor: #validateOffset:!helpers!private! !
 !DateAndTime class categoriesFor: #year:day:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:day:hour:minute:second:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:day:hour:minute:second:offset:!instance creation!public! !
+!DateAndTime class categoriesFor: #year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
 !DateAndTime class categoriesFor: #year:day:offset:!accessing!public! !
 !DateAndTime class categoriesFor: #year:month:day:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:month:day:hour:minute:second:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offset:!instance creation!public! !
+!DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offsetSeconds:!instance creation!private! !
 !DateAndTime class categoriesFor: #year:month:day:offset:!instance creation!public! !
 !DateAndTime class categoriesFor: #yesterday!instance creation!public! !
 

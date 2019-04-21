@@ -142,6 +142,7 @@ package setPrerequisites: #(
 	'Deprecated\Dolphin Base (Deprecated)'
 	'Dolphin Command-line Parser'
 	'..\System\Random\Dolphin CRT Random Stream'
+	'Dolphin Legacy Date & Time'
 	'Dolphin Message Box'
 	'..\System\Random\Dolphin Random Stream'
 	'..\System\Compiler\Smalltalk Parser'

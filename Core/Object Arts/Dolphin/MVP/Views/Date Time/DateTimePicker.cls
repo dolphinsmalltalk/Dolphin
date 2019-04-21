@@ -10,6 +10,20 @@ DateTimePicker comment: '`DateTimePicker` is a `<valueView>` implementing the Wi
 
 The `<valueModel>` associated with a `DateTimePicker` must always yield a value that can be converted to a `SYSTEMTIME` by sending it `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A `DateTimePicker` will normally be used in conjunction with a `DatePresenter` or a `TimePresenter`, and indeed when the class'' package is installed a `DateTimePicker` is used as the default views for both presenters.
 
+## Example Usage:
+
+```
+	t := Time now asValue.
+	p := TimePresenter showOn: t.
+	t value.
+```
+Or:
+```
+	d := Date today asValue.
+	p := DatePresenter showOn: d.
+	d value
+```
+
 ## Instance Variables:
   `displayFormat`		`String` or nil
 
@@ -161,16 +175,15 @@ setRangeMessage
 	^DTM_SETRANGE!
 
 setSystemTime: aSYSTEMTIMEOrNil 
-	"Private - Set the control's current date/time to the <SYSTEMTIME> arugment,
-	or set it to none if the argument is nil."
+	"Private - Set the control's current date/time to the <SYSTEMTIME> argument, or 'none' if the argument is nil."
 
 	| gd st |
 	gd := GDT_VALID.
 	st := aSYSTEMTIMEOrNil.
 	aSYSTEMTIMEOrNil isNil 
 		ifTrue: 
-			[self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asParameter]].
-	self dtmSetSystemTime: gd lpSysTime: st asParameter! !
+			[self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asSYSTEMTIME]].
+	self dtmSetSystemTime: gd lpSysTime: st! !
 !DateTimePicker categoriesFor: #canShowNone!accessing-styles!public! !
 !DateTimePicker categoriesFor: #canShowNone:!accessing-styles!public! !
 !DateTimePicker categoriesFor: #defaultExtent!constants!private! !

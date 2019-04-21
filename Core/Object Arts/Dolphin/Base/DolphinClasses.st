@@ -102,7 +102,7 @@ Object subclass: #DeferredValue
 	classInstanceVariableNames: ''!
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #DiskVolumeInformation
@@ -182,7 +182,7 @@ Object subclass: #Link
 	classInstanceVariableNames: ''!
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
-	classVariableNames: 'DateFormatters Invariant SystemDefault TimeFormatters TimeZoneInfo UserDefault'
+	classVariableNames: 'Invariant SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Magnitude
@@ -1400,24 +1400,14 @@ Magnitude subclass: #Character
 	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Magnitude subclass: #Date
-	instanceVariableNames: 'days'
-	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
-	classVariableNames: 'FiletimeEpochSeconds JulianDayOffset LilianDayOffset SmalltalkEpochRD UnixEpoch'
+	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Duration
 	instanceVariableNames: 'seconds'
 	classVariableNames: 'SecondsPerDay SecondsPerHour Zero'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Magnitude subclass: #Time
-	instanceVariableNames: 'seconds'
-	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Number

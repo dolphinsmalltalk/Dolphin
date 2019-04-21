@@ -62,11 +62,6 @@ currency
 
 	^self getStringInfo: LOCALE_SCURRENCY!
 
-dateFormat
-	"Answer the default date format for the receiver locale."
-
-	^self getStringInfo: LOCALE_SSHORTDATE!
-
 dayOfWeek: aString
 	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
 	Note that Monday is always 1, and Sunday always 7 (but see #firstDayOfWeek)"
@@ -268,7 +263,7 @@ listSeparator
 	^self getStringInfo: LOCALE_SLIST!
 
 longDateFormat
-	"Answer the default long date format for the receiver locale."
+	"Answer the long date format for the receiver locale."
 
 	^self getStringInfo: LOCALE_SLONGDATE!
 
@@ -276,6 +271,11 @@ longDateFormats
 	"Answer a collection of the long date formats for the receiver locale."
 
 	^info at: #longDateFormats ifAbsentPut: [self getDateFormats: true]!
+
+longTimeFormat
+	"Answer the long time format for the receiver locale."
+
+	^self getStringInfo: LOCALE_STIMEFORMAT!
 
 monthAbbreviation: anInteger
 	"Answer a String that is the localised short name of the month whose index is the argument, anInteger, where January is 1 and December is 12."
@@ -365,6 +365,11 @@ shortAmDesignator
 					["Might be a wide character"
 					self amDesignator readStream next: 1]]!
 
+shortDateFormat
+	"Answer the short date format for the receiver locale."
+
+	^self getStringInfo: LOCALE_SSHORTDATE!
+
 shortDateFormats
 	"Answer a collection of the short date formats for this locale."
 
@@ -381,6 +386,11 @@ shortPmDesignator
 					["Might be a wide character"
 					self pmDesignator readStream next: 1]]!
 
+shortTimeFormat
+	"Answer the short time format for the receiver locale."
+
+	^self getStringInfo: LOCALE_SSHORTTIME!
+
 tag
 	"Answer the RFC4646 language aka tag for this locale."
 
@@ -390,11 +400,6 @@ thousandSeparator
 	"Answer the thousands separator String used in the receiver locale."
 
 	^self getStringInfo: LOCALE_STHOUSAND!
-
-timeFormat
-	"Answer the default time format for the receiver locale."
-
-	^self getStringInfo: LOCALE_STIMEFORMAT!
 
 timeFormats
 	"Answer a collection of the time formats for the specified locale."
@@ -412,7 +417,6 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #calendarId!constants!public! !
 !WindowsLocale categoriesFor: #code!constants!public! !
 !WindowsLocale categoriesFor: #currency!constants!public! !
-!WindowsLocale categoriesFor: #dateFormat!constants!public! !
 !WindowsLocale categoriesFor: #dayOfWeek:!mapping!public! !
 !WindowsLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
 !WindowsLocale categoriesFor: #dayOfWeekName:!constants!public! !
@@ -441,6 +445,7 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #listSeparator!constants!public! !
 !WindowsLocale categoriesFor: #longDateFormat!constants!public! !
 !WindowsLocale categoriesFor: #longDateFormats!constants!public! !
+!WindowsLocale categoriesFor: #longTimeFormat!constants!public! !
 !WindowsLocale categoriesFor: #monthAbbreviation:!constants!public! !
 !WindowsLocale categoriesFor: #monthName:!enquiries!public! !
 !WindowsLocale categoriesFor: #name!constants!public! !
@@ -456,11 +461,12 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #pmDesignator!constants!public! !
 !WindowsLocale categoriesFor: #printOn:!development!printing!public! !
 !WindowsLocale categoriesFor: #shortAmDesignator!constants!public! !
+!WindowsLocale categoriesFor: #shortDateFormat!constants!public! !
 !WindowsLocale categoriesFor: #shortDateFormats!constants!public! !
 !WindowsLocale categoriesFor: #shortPmDesignator!constants!public! !
+!WindowsLocale categoriesFor: #shortTimeFormat!constants!public! !
 !WindowsLocale categoriesFor: #tag!constants!public! !
 !WindowsLocale categoriesFor: #thousandSeparator!constants!public! !
-!WindowsLocale categoriesFor: #timeFormat!constants!public! !
 !WindowsLocale categoriesFor: #timeFormats!constants!public! !
 !WindowsLocale categoriesFor: #yearMonthFormat!constants!public! !
 

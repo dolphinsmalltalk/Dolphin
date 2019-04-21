@@ -114,15 +114,7 @@ asMilliseconds
 asParameter
 	"Answer the receiver in external system representation for passing to an external function call."
 
-	| struct |
-	struct := SYSTEMTIME new.
-	self dayMonthYearDo: 
-			[:dd :mm :yy | 
-			struct
-				wYear: yy;
-				wMonth: mm;
-				wDay: dd].
-	^struct!
+	^self asSYSTEMTIME!
 
 asSeconds
 	"Answer the number of seconds between a Time on January 1, 1901, and the same time in the receiver's
@@ -131,6 +123,19 @@ asSeconds
 
 	^self asDays * Duration.SecondsPerDay
 !
+
+asSYSTEMTIME
+	"Answer a <SYSTEMTIME > representing midnight at the start of the same date as the receiver."
+
+	| struct |
+	struct := SYSTEMTIME new.
+	self dayMonthYearDo: 
+			[:dd :mm :yy |
+			struct
+				wYear: yy;
+				wMonth: mm;
+				wDay: dd].
+	^struct!
 
 day
 	"Answer the day of the year represented by the receiver."
@@ -336,6 +341,7 @@ yyyymmdd
 !Date categoriesFor: #asMilliseconds!converting!public! !
 !Date categoriesFor: #asParameter!converting!public! !
 !Date categoriesFor: #asSeconds!converting!public! !
+!Date categoriesFor: #asSYSTEMTIME!converting!public! !
 !Date categoriesFor: #day!accessing!public! !
 !Date categoriesFor: #dayMonthYearDo:!accessing!public! !
 !Date categoriesFor: #dayOfMonth!accessing!public! !
@@ -634,7 +640,12 @@ shortFormats
 today
 	"Answer an instance of the receiver representing the current system date."
 
-	^DateAndTime now asDate!
+	^DateAndTime now dayMonthYearDo: 
+			[:d :m :y |
+			self
+				newDay: d
+				monthIndex: m
+				year: y]!
 
 tomorrow
 	^self today addDays: 1!

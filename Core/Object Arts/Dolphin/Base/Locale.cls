@@ -2,7 +2,7 @@
 
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
-	classVariableNames: 'DateFormatters Invariant SystemDefault TimeFormatters TimeZoneInfo UserDefault'
+	classVariableNames: 'Invariant SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -142,7 +142,7 @@ dateFormat
 	If the formatted date is BC, then the year formats will output a leading negative sign (typically '-').
 	"
 
-	^self subclassResponsibility!
+	^self shortDateFormat!
 
 dayOfWeek: aString
 	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
@@ -351,7 +351,12 @@ listSeparator
 	^self subclassResponsibility!
 
 longDateFormat
-	"Answer the default long date format for the receiver locale."
+	"Answer the long date format for the receiver locale. See #dateFormat for a description of the available format tokens."
+
+	^self subclassResponsibility!
+
+longTimeFormat
+	"Answer the long time format for the receiver locale. See #timeFormat for a description of the available format tokens."
 
 	^self subclassResponsibility!
 
@@ -475,7 +480,7 @@ printDateTime: aDateTime on: aWriteStream format: aString
 		format: (aString ifNil: [
 			"Use the same display format as the system does, e.g. in Explorer, which is date followed by time separated by a space."
 			self dateFormat , ' ' , self timeFormat])
-		alphabet: 'yMdghHmstf'
+		alphabet: 'yMdghHmstfF'
 		formatters: self dateAndTimeFormatters!
 
 printDuration: aDuration on: aWriteStream format: aString
@@ -579,8 +584,18 @@ shortAmDesignator
 
 	^self subclassResponsibility!
 
+shortDateFormat
+	"Answer the short date format for the receiver locale. See #dateFormat for a description of the available format tokens."
+
+	^self subclassResponsibility!
+
 shortPmDesignator
 	"Answer the short <String> used in the receiver locale to designate PM (afternoon)."
+
+	^self subclassResponsibility!
+
+shortTimeFormat
+	"Answer the short time format for the receiver locale. See #timeFormat for a description of the available format tokens."
 
 	^self subclassResponsibility!
 
@@ -607,7 +622,7 @@ timeFormat
 		ss	- Whole seconds(excluding whole days, hours and minutes), with a leading zero if < 10
 		f+	- Fractions of a seconds remaining excluding all larger measures. Can be up to nine (fffffffff) for a value in nanoseconds"
 
-	^self subclassResponsibility!
+	^self longTimeFormat!
 
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
@@ -640,6 +655,7 @@ yearMonthFormat
 !Locale categoriesFor: #lcid!accessing!public! !
 !Locale categoriesFor: #listSeparator!constants!public! !
 !Locale categoriesFor: #longDateFormat!constants!public! !
+!Locale categoriesFor: #longTimeFormat!constants!public! !
 !Locale categoriesFor: #monthAbbreviation:!enquiries!public! !
 !Locale categoriesFor: #monthName:!enquiries!public! !
 !Locale categoriesFor: #name!constants!public! !
@@ -661,7 +677,9 @@ yearMonthFormat
 !Locale categoriesFor: #printFractionPart2:on:places:!printing!private! !
 !Locale categoriesFor: #printTime:on:format:!printing!public! !
 !Locale categoriesFor: #shortAmDesignator!constants!public! !
+!Locale categoriesFor: #shortDateFormat!constants!public! !
 !Locale categoriesFor: #shortPmDesignator!constants!public! !
+!Locale categoriesFor: #shortTimeFormat!constants!public! !
 !Locale categoriesFor: #tag!constants!public! !
 !Locale categoriesFor: #thousandSeparator!constants!public! !
 !Locale categoriesFor: #timeFormat!constants!public! !
@@ -723,10 +741,9 @@ makeLcId: langIdWord sortId: sortIdBits
 		bitOr: (langIdWord bitAnd: 16rFFFF)!
 
 onPreStripImage
-	"Private -  Assist in the image stripping process by clearning down any
-	lazily initialized variables held by the receiver."
+	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
 
-	UserDefault := nil!
+	TimeZoneInfo := Invariant := SystemDefault := UserDefault := nil!
 
 onSettingChanged: anArray
 	"Private - A system setting has been changed. If it is anything to do with localisation, then clear the cached values."

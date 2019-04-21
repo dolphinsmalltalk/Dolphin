@@ -98,8 +98,10 @@ onTimerTick: timerId
 	"The receiver's refresh timer has fired, so refresh the list. "
 
 	| refreshTime |
-	refreshTime := Time millisecondsToRun: [self refresh].
+	refreshTime := [self refresh] timeToRun.
 	refreshTime > updateInterval ifTrue: [
+		self view killTimer: 1.
+		self halt.
 		self updateInterval: refreshTime]!
 
 onViewDestroyed
@@ -214,7 +216,7 @@ setTimer
 	"Private - (Re)Set the receiver's refresh timer."
 
 	self pause.
-	updateInterval isNil ifFalse: [self view setTimer: 1 interval: updateInterval]!
+	updateInterval isNil ifFalse: [self view setTimer: 1 interval: updateInterval asMilliseconds asInteger]!
 
 terminateProcess
 	"Prompt the user for confirmation to terminate the currently selected process,
@@ -225,15 +227,12 @@ terminateProcess
 	(MessageBox confirm: 'Are you sure you want to terminate the process?') ifTrue: [proc terminate]!
 
 updateInterval
-	"Private - Answer the value of the receiver's ''updateInterval'' instance variable."
-
 	^updateInterval!
 
-updateInterval: milliseconds
-	"Private - Set the interval between updates to the number of milliseconds
-	specified by the <integer> argument."
+updateInterval: aDuration
+	"Private - Set the interval between updates to the specified <Duration>."
 
-	updateInterval := milliseconds.
+	updateInterval := aDuration.
 	self setTimer! !
 !ProcessMonitor categoriesFor: #createComponents!initializing!public! !
 !ProcessMonitor categoriesFor: #createSchematicWiring!initializing!public! !
@@ -268,11 +267,10 @@ defaultUpdateInterval
 
 	^UpdateIntervals at: #default!
 
-defaultUpdateInterval: milliseconds
-	"Set the default number of milliseconds between the refreshes in instances
-	of the receiver (not less than 200mS)."
+defaultUpdateInterval: aDuration
+	"Set the default Duration between the refreshes in instances of the receiver (not less than 200mS)."
 
-	UpdateIntervals at: #default put: (milliseconds max: 200)!
+	UpdateIntervals at: #default put: (aDuration max: 200 milliseconds)!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -292,9 +290,9 @@ initialize
 
 	UpdateIntervals := 
 		IdentityDictionary new
-			at: #low put: 5000;
-			at: #default put: 2000;
-			at: #high put: 500;
+			at: #low put: 5000 milliseconds;
+			at: #default put: 2000 milliseconds;
+			at: #high put: 500 milliseconds;
 			at: #pause put: nil;
 			shrink.
 	optionFlags := 0.

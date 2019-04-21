@@ -33,9 +33,9 @@ profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger
 			delay := Delay forDuration: samplingInterval.
 			
 			[| started |
-			started := Time microsecondClockValue.
+			started := Delay microsecondClockValue.
 			delay wait.
-			elapsed := Time microsecondClockValue - started.
+			elapsed := Delay microsecondClockValue - started.
 			aProfilerSampleSet isActive]
 					whileTrue: 
 						[isSampling

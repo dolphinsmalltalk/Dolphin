@@ -128,7 +128,7 @@ divideByZero
 divideIntoDuration: aDuration 
 	"Private - Answer a new <Duration> which represents the the value in seconds of aDuration divided by the receiver."
 
-	^Duration seconds: aDuration asSeconds / self!
+	^aDuration class seconds: aDuration asSeconds / self!
 
 even
 	"Answer whether the receiver is an even number. Zero is considered even"

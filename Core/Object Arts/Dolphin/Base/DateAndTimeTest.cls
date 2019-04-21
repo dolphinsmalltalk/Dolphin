@@ -31,18 +31,56 @@ julianEpoch
 		second: 0
 		offset: 0 hours!
 
-testAddSeconds
+testAddDuration
 	| subject epochSeconds |
-	subject := DateAndTime.UnixEpoch.
+	subject := DateAndTime
+				year: 1970
+				day: 1
+				offset: 0 hours.
 	epochSeconds := subject asSeconds.
 	"Sanity check"
 	self assert: epochSeconds equals: 2177452800.
 	self assert: subject + 60 seconds
-		equals: (DateAndTime utcSeconds: epochSeconds + 60 offset: Duration zero).
+		equals: (DateAndTime
+				year: 1970
+				day: 1
+				hour: 0
+				minute: 1
+				second: 0
+				offset: 0 hours).
 	self assert: subject + -43 seconds
-		equals: (DateAndTime utcSeconds: epochSeconds - 43 offset: Duration zero).
-	self assert: subject + (24 * 60 * 60) seconds equals: subject + 1 days.
-	self assert: subject + (-24 * 60 * 60) seconds equals: subject - 1 days!
+		equals: (DateAndTime
+				year: 1969
+				month: 12
+				day: 31
+				hour: 23
+				minute: 59
+				second: 17
+				offset: 0 hours).
+	self assert: (DateAndTime
+				year: 2000
+				month: 2
+				day: 28) + 1 days
+		equals: (DateAndTime
+				year: 2000
+				month: 2
+				day: 29).
+	self assert: (DateAndTime
+				year: 2000
+				month: 2
+				day: 28) + 2 days
+		equals: (DateAndTime
+				year: 2000
+				month: 3
+				day: 1).
+	self assert: (DateAndTime
+				year: 2000
+				month: 3
+				day: 1) + -1 days
+		equals: (DateAndTime
+				year: 2000
+				month: 2
+				day: 29)!
 
 testAsDate
 	| subject |
@@ -65,8 +103,21 @@ testAsSeconds
 	date := Date year: 2019 month: 04 day: 13.
 	self assert: (subject asSeconds truncated - date asSeconds) equals: subject seconds truncated.
 
-	self assert: DateAndTime.UnixEpoch asSeconds equals:  2177452800
+	self assert: (DateAndTime year: 1970 day: 1 offset: 0 hours) asSeconds equals:  2177452800
 !
+
+testAsSYSTEMTIME
+	| subject actual |
+	subject := self canonicalInstance.
+	actual := subject asSYSTEMTIME.
+	self assert: actual wYear equals: 2000.
+	self assert: actual wMonth equals: 2.
+	self assert: actual wDay equals: 29.
+	self assert: actual wDayOfWeek equals: 3-1.
+	self assert: actual wHour equals: 12.
+	self assert: actual wMinute equals: 59.
+	self assert: actual wSecond equals: 59.
+	self assert: actual wMilliseconds equals: 667!
 
 testAsTime
 	"Offset is ignored - the date is not adjusted to local time"
@@ -125,17 +176,25 @@ testFromString
 
 	"if no offset is provided, the local offset should be used"
 	fromStringNoOffset := DateAndTime fromString: '-1199-01-05T20:33:14.321'.
-	self assert: fromStringNoOffset offset equals: DateAndTime localOffset.
+	self assert: fromStringNoOffset offset equals: Locale timeZoneInformation offset.
 	self assert: (DateAndTime fromString: self canonicalInstance printString)
 		equals: self canonicalInstance.
 
 	"We also allow the ISO 8601 'Z' offset format, for UTC"
 	fromString := DateAndTime fromString: '-1199-01-05T20:33:14.321Z'.
 	self assert: fromString printString equals: '-1199-01-05T20:33:14.321+00:00'.
-	
+
 	"Fractional seconds down to nanoseconds"
 	fromString := DateAndTime fromString: '2019-04-19T15:33:37.067259812+01:00'.
-	self assert: fromString equals: (DateAndTime year: 2019 month: 4 day: 19 hour: 15 minute: 33 second: 37 + (067259812/1e9) offset: 1 hour)!
+	self assert: fromString
+		equals: (DateAndTime
+				year: 2019
+				month: 4
+				day: 19
+				hour: 15
+				minute: 33
+				second: 37 + (067259812 / 1e9)
+				offset: 1 hour)!
 
 testFromSYSTEMTIME
 	| ts sysTime |
@@ -262,7 +321,7 @@ testJulianDayNumber
 	self assert: (subject + 24 hours - 1 nanoseconds) julianDayNumber equals: 2451545.
 
 	"Noon on the Unix epoch is JDN 2440588"
-	self assert: (DateAndTime.UnixEpoch + 12 hours) julianDayNumber equals: 2440588.
+	self assert: ((DateAndTime year: 1970 day: 1 offset: 0 hours) + 12 hours) julianDayNumber equals: 2440588.
 
 	"An example at 2pm local time at UTC+2"
 	subject := DateAndTime year: 2011 month: 7 day: 29 hour: 14 minute: 0 second: 0 offset: 2 hours.
@@ -309,6 +368,13 @@ testMonthAbbreviation
 
 testMonthName
 	self assert: self canonicalInstance monthName equals: (Locale default monthName: 2)!
+
+testNowUtc
+	| now nowUtc |
+	now := DateAndTime now.
+	nowUtc := DateAndTime nowUTC.
+	self assert: nowUtc offset equals: 0 hours.
+	self assert: (nowUtc - now) seconds abs < 1!
 
 testOffset
 	self assert: self canonicalInstance offset equals: (12 * 60 + 30) minutes negated!
@@ -375,7 +441,7 @@ testToday
 	self assert: subject hour equals: 0.
 	self assert: subject minute equals: 0.
 	self assert: subject second equals: 0.
-	self assert: subject offset equals: DateAndTime localOffset!
+	self assert: subject offset equals: Locale timeZoneInformation offset!
 
 testYearMonthDay
 	| subject offset expected suffix |
@@ -488,9 +554,10 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
 !DateAndTimeTest categoriesFor: #canonicalInstance!constants!private! !
 !DateAndTimeTest categoriesFor: #julianEpoch!constants!private! !
-!DateAndTimeTest categoriesFor: #testAddSeconds!public! !
+!DateAndTimeTest categoriesFor: #testAddDuration!public! !
 !DateAndTimeTest categoriesFor: #testAsDate!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testAsSeconds!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testAsTime!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testAsUnixTime!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testAsUTC!public!unit tests! !
@@ -514,6 +581,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testMonth!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testMonthAbbreviation!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testMonthName!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testNowUtc!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testOffset!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testOffsetBy!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !

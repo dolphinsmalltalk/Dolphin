@@ -18,15 +18,10 @@ SYSTEMTIME comment: ''!
 !SYSTEMTIME categoriesForClass!Win32-Structs! !
 !SYSTEMTIME methodsFor!
 
-asDate
-	"Answer a <Date> corresponding to the receiver's date."
-
-	^Date fromSYSTEMTIME: self!
-
 asDateAndTime
 	"Answer a <DateAndTime> corresponding to the receiver."
 
-	^DateAndTime fromSYSTEMTIME: self offset: DateAndTime localOffset!
+	^DateAndTime fromSYSTEMTIME: self!
 
 asFILETIME
 	"Answer a FILETIME corresponding to the receiver."
@@ -146,7 +141,6 @@ wYear: anInteger
 
 year
 	^self wYear! !
-!SYSTEMTIME categoriesFor: #asDate!converting!public! !
 !SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
 !SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
 !SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !

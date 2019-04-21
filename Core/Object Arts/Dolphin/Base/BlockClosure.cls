@@ -392,11 +392,6 @@ method: aCompiledMethod
 
 	method := aCompiledMethod!
 
-millisecondsToRepeat: anInteger
-	"Answer the time taken to execute the receiver anInteger times"
-
-	^Time millisecondsToRun: [ anInteger timesRepeat: [self value]]!
-
 newProcess
 	"Answer a new, suspended, <Process> which will evaluate the receiver, and terminate when and
 	if the code in the receiver returns. The default 'name' given to the process is the home
@@ -585,6 +580,23 @@ tempCount
 	(shared) temps used by the receiver."
 
 	^self localCount + self envTempCount!
+
+ticksToRun
+	"Private - Answer the number of performance counter ticks consumed by the evaluation of the receiver (including the overhead). The length of a counter tick is system dependent, but usually it is 100nS."
+
+	| startTime endTime lib |
+	startTime := LargeInteger new64.
+	endTime := LargeInteger new64.
+	lib := KernelLibrary default.
+	lib queryPerformanceCounter: startTime yourAddress.
+	self value.
+	lib queryPerformanceCounter: endTime yourAddress.
+	^endTime normalize - startTime normalize!
+
+timeToRun
+	"Evaluate the receiver and answer a <Duration> measuring the time taken to do so."
+
+	^((self ticksToRun - [self] ticksToRun) * Delay.TicksToNanos) nanoseconds!
 
 value
 	"Answer the result of evaluating the receiver. Fail if the receiver is not 
@@ -789,7 +801,6 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #localCount!accessing!private! !
 !BlockClosure categoriesFor: #method!accessing!private! !
 !BlockClosure categoriesFor: #method:!accessing!private! !
-!BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
 !BlockClosure categoriesFor: #newProcess!public!scheduling! !
 !BlockClosure categoriesFor: #newProcess:!public!scheduling! !
 !BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
@@ -812,6 +823,8 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #stackTempCount!accessing!private! !
 !BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #tempCount!accessing!public! !
+!BlockClosure categoriesFor: #ticksToRun!operations!private! !
+!BlockClosure categoriesFor: #timeToRun!evaluating!public! !
 !BlockClosure categoriesFor: #value!evaluating!public! !
 !BlockClosure categoriesFor: #value:!evaluating!public! !
 !BlockClosure categoriesFor: #value:value:!evaluating!public! !

@@ -90,7 +90,6 @@ package setPrerequisites: #(
 	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Control Bars\Dolphin Control Bars'
-	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'

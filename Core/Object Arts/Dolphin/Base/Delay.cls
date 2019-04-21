@@ -2,7 +2,7 @@
 
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -308,6 +308,13 @@ forSeconds: anInteger
 
 	^self forMilliseconds: anInteger * 1000!
 
+getTicksToNanos
+	| freq |
+	freq := LargeInteger new64.
+	(KernelLibrary default queryPerformanceFrequency: freq yourAddress)
+		ifFalse: [self error: 'performance counter not available'].
+	^1e9 / freq normalize!
+
 highestResolution
 	"Answer a <Duration> which is the maximum resolution of Delays, i.e. the shortest period for which one could theoretically request a Delay on the current host."
 
@@ -324,6 +331,7 @@ initialize
 	AccessProtect critical: 
 			[Pending := SortedCollection new.
 			Current := nil].
+	TicksToNanos := 100.
 	self initializeTimingSemaphore!
 
 initializeTimingSemaphore
@@ -347,9 +355,19 @@ lowestResolution
 	^LowestResolution!
 
 microsecondClockValue
-	"Private - Answer the current value of the microsecond clock."
+	"Answer the current value of the microsecond clock."
 
 	<primitive: 189>
+	^self primitiveFailed!
+
+millisecondClockValue
+	"Answer the current value of the system millisecond clock."
+
+	"Implementation Note: Primitive 174 is actually just a call to the QueryPerformanceCounter
+	API which should be accurate sub-1mS (unlike GetTickCount() which is only accurate to 10mS),
+	and which also does not suffer the problem of wrapping after ~49 days of uptime."
+
+	<primitive: 174>
 	^self primitiveFailed!
 
 new
@@ -373,6 +391,7 @@ onStartup
 	"The system has just started. Initialize the timing system."
 
 	self queryOsTimerResolution.
+	TicksToNanos := self getTicksToNanos.
 	self keepAlive.
 	self reschedule!
 
@@ -479,12 +498,14 @@ untilMilliseconds: millisecondTime
 !Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
 !Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
 !Delay class categoriesFor: #forSeconds:!instance creation!public! !
+!Delay class categoriesFor: #getTicksToNanos!helpers!private! !
 !Delay class categoriesFor: #highestResolution!constants!public! !
 !Delay class categoriesFor: #initialize!development!initializing!public! !
 !Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
 !Delay class categoriesFor: #keepAlive!helpers!private! !
 !Delay class categoriesFor: #lowestResolution!constants!public! !
-!Delay class categoriesFor: #microsecondClockValue!initializing!private! !
+!Delay class categoriesFor: #microsecondClockValue!initializing!public! !
+!Delay class categoriesFor: #millisecondClockValue!accessing!public! !
 !Delay class categoriesFor: #new!instance creation!public! !
 !Delay class categoriesFor: #onExit!event handling!public! !
 !Delay class categoriesFor: #onPreSaveImage!event handling!private! !
