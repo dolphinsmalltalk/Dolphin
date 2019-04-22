@@ -42,23 +42,23 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models').
 
 package!
 
