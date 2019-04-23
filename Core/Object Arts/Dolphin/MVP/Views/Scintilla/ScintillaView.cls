@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags codePage keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags codePage keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles _unused50'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -1267,6 +1267,11 @@ columnFromPosition: anInteger
 
 	^(self sciGetColumn: anInteger) + 1!
 
+command: anInteger id: id
+	"Private - Change events via WM_COMMAND should be disabled as of Scintilla 4.1.5. We handle change of focus, etc, through SCN_XXX notifications."
+
+	self shouldNotImplement!
+
 controlCharacter
 	"Answer the character used to display control characters in the document, or nil if the
 	control characters are drawn (the default)."
@@ -1538,6 +1543,41 @@ defaultBraceChars
 		at: #normal put: '()[]{}<>';
 		yourself)!
 
+defaultFoldTextTag
+	"Get the default fold display text."
+
+	| len |
+	len := this
+				ifNil: [0]
+				ifNotNil: 
+					[ScintillaLibrary default
+						directFunction: this
+						msg: SCI_GETDEFAULTFOLDDISPLAYTEXT
+						wParam: 0
+						lpParam: nil].
+	^len = 0
+		ifTrue: [self stringClass empty]
+		ifFalse: 
+			[| result |
+			result := self stringClass newFixed: len.
+			ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETDEFAULTFOLDDISPLAYTEXT
+				wParam: 0
+				lpParam: result.
+			result]!
+
+defaultFoldTextTag: textString
+	"Set the default fold display text."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETDEFAULTFOLDDISPLAYTEXT
+				wParam: 0
+				lpParam: textString]!
+
 defaultKeyBindings
 	^DefaultKeyBindings collect: [:each | each copy]!
 
@@ -1793,17 +1833,6 @@ emptyUndoBuffer
 				wParam: 0
 				lParam: 0]!
 
-enChange
-	"Private - The receiver's text (not styles or other visuals) has been updated, and the change has 
-	been displayed."
-
-	"Implementation Note: Ignore EN_CHANGE from Scintilla since it sends it for all sorts of
-	events that haven't changed the text. We detect text changes in #scnModified: instead.
-	Return 0 to suppress propagation of WM_COMMAND to the parent view's default window
-	procedure."
-
-	^0!
-
 endOfLineMode
 	"Answer a <Symbol> naming the receiver's current end-of-line mode, one of #cr, #lf, #crlf.
 	This controls the character, or characters in the case of #crlf, inserted into the text when
@@ -1829,20 +1858,6 @@ endUndoGroup
 				msg: SCI_ENDUNDOACTION
 				wParam: 0
 				lParam: 0]!
-
-enKillFocus
-	"Private - The receiver is actually gaining focus (the defintions of
-	SCEN_KILLFOCUS and SCEN_SETFOCUS are inverted with 
-	respect to EN_KILLFOCUS and EN_SETFOCUS)."
-
-	^super enSetFocus!
-
-enSetFocus
-	"Private - The receiver is actually losing focus (the defintions of
-	SCEN_KILLFOCUS and SCEN_SETFOCUS are inverted with 
-	respect to EN_KILLFOCUS and EN_SETFOCUS)."
-
-	^super enKillFocus!
 
 ensureCaretVisible
 	"Ensure the caret is visible. Note that this will show the caret even if currently hidden inside a fold."
@@ -2523,18 +2538,20 @@ foldMarkerStyle: aSymbol
 
 foldTextTagStyle
 	"Answer the symbolic name of the current fold text tag style:
-		nil		- unspecified (uses current Scintilla default, i.e. #hidden)
 		#hidden	- text tags are not displayed
 		#standard	- text tags are displayed
 		#boxed	- text tags are displayed with a box drawn around them"
 
-	^foldTextTagStyle!
+	^self class foldTextTagStyles at: self sciFoldDisplayTextGetStyle + 1!
 
 foldTextTagStyle: aSymbolOrNil
 	"Set the appearance of fold text tags - see #foldTextTagStyle for more details."
 
-	foldTextTagStyle := aSymbolOrNil.
-	self setFoldTextTagStyle!
+	| style |
+	style := aSymbolOrNil
+				ifNil: [0]
+				ifNotNil: [(self class foldTextTagStyles identityIndexOf: aSymbolOrNil) - 1].
+	self sciFoldDisplayTextSetStyle: style!
 
 fontQuality
 	"Retrieve the quality level for text."
@@ -3066,8 +3083,7 @@ initializeControl
 	foldMarginColor ifNotNil: [self setFoldMarginColor].
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
 	foldFlags ifNotNil: [self setFoldFlags].
-	keyBindings ifNotNil: [self updateKeyBindings].
-	foldTextTagStyle ifNotNil: [self setFoldTextTagStyle]!
+	keyBindings ifNotNil: [self updateKeyBindings]!
 
 initializeRegisteredImages
 	registeredImages := LookupTable new!
@@ -4525,6 +4541,8 @@ onViewCreated
 	preserved in instance variables."
 
 	self getDirectPointer.
+	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
+	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
 	super onViewCreated.
 	self initializeControl!
 
@@ -5029,6 +5047,17 @@ sciAllocateExtendedStyles: numberStylesInteger
 				directFunction: this
 				msg: SCI_ALLOCATEEXTENDEDSTYLES
 				wParam: numberStylesInteger
+				lParam: 0]!
+
+sciAllocateLineCharacterIndex: lineCharacterIndexInteger
+	"Private - Request line character index be created or its use count increased."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_ALLOCATELINECHARACTERINDEX
+				wParam: lineCharacterIndexInteger
 				lParam: 0]!
 
 sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
@@ -5602,6 +5631,18 @@ sciCountCharacters: startInteger end: endInteger
 				wParam: startInteger - 1
 				lParam: endInteger - 1]!
 
+sciCountCodeUnits: startInteger end: endInteger
+	"Private - Count code units between two positions."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_COUNTCODEUNITS
+				wParam: startInteger - 1
+				lParam: endInteger - 1]!
+
 sciCreateDocument: bytesInteger documentOptions: documentOptionsInteger
 	"Private - Create a new document object. Starts with reference count of 1 and not selected
 	into editor."
@@ -5850,8 +5891,20 @@ sciFoldChildren: lineInteger action: actionInteger
 				wParam: lineInteger
 				lParam: actionInteger]!
 
+sciFoldDisplayTextGetStyle
+	"Private - Get the style of fold display text."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_FOLDDISPLAYTEXTGETSTYLE
+				wParam: 0
+				lParam: 0]!
+
 sciFoldDisplayTextSetStyle: styleInteger
-	"Private - Set the style of fold display text"
+	"Private - Set the style of fold display text."
 
 	this isNil
 		ifFalse: 
@@ -5965,6 +6018,18 @@ sciGetCaretStyle
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETSTYLE
+				wParam: 0
+				lParam: 0]!
+
+sciGetCharacterCategoryOptimization
+	"Private - Get the number of characters to have directly indexed categories"
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETCHARACTERCATEGORYOPTIMIZATION
 				wParam: 0
 				lParam: 0]!
 
@@ -6244,6 +6309,18 @@ sciGetLine: lineInteger
 				wParam: lineInteger
 				lpParam: result.
 			result]!
+
+sciGetLineCharacterIndex
+	"Private - Retrieve line character index state."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETLINECHARACTERINDEX
+				wParam: 0
+				lParam: 0]!
 
 sciGetLineEndPosition: lineInteger
 	"Private - Get the position after the last visible characters on a line."
@@ -7047,6 +7124,18 @@ sciHideLines: lineStartInteger lineEnd: lineEndInteger
 				wParam: lineStartInteger
 				lParam: lineEndInteger]!
 
+sciIndexPositionFromLine: lineInteger lineCharacterIndex: lineCharacterIndexInteger
+	"Private - Retrieve the position measured in index units at the start of a document line."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_INDEXPOSITIONFROMLINE
+				wParam: lineInteger
+				lParam: lineCharacterIndexInteger) + 1]!
+
 sciIndicatorClearRange: startInteger lengthClear: lengthClearInteger
 	"Private - Turn a indicator off over a range."
 
@@ -7127,6 +7216,18 @@ sciIsRangeWord: startInteger end: endInteger
 				msg: SCI_ISRANGEWORD
 				wParam: startInteger - 1
 				lParam: endInteger - 1) asBoolean]!
+
+sciLineFromIndexPosition: posInteger lineCharacterIndex: lineCharacterIndexInteger
+	"Private - Retrieve the document line containing a position measured in index units."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_LINEFROMINDEXPOSITION
+				wParam: posInteger - 1
+				lParam: lineCharacterIndexInteger]!
 
 sciLineScroll: columnsInteger lines: linesInteger
 	"Private - Scroll horizontally and vertically."
@@ -7530,6 +7631,20 @@ sciPositionRelative: posInteger relative: relativeInteger
 				wParam: posInteger - 1
 				lParam: relativeInteger) + 1]!
 
+sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
+	"Private - Given a valid document position, return a position that differs in a number of
+	UTF-16 code units. Returned value is always between 0 and last position in document. The
+	result may point half way (2 bytes) inside a non-BMP character."
+
+	^this isNil
+		ifTrue: [0]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_POSITIONRELATIVECODEUNITS
+				wParam: posInteger - 1
+				lParam: relativeInteger) + 1]!
+
 sciPrivateLexerCall: operationInteger pointer: pointerInteger
 	"Private - For private communication between an application and a known lexer."
 
@@ -7623,6 +7738,17 @@ sciReleaseDocument: docInteger
 				msg: SCI_RELEASEDOCUMENT
 				wParam: 0
 				lParam: docInteger]!
+
+sciReleaseLineCharacterIndex: lineCharacterIndexInteger
+	"Private - Decrease use count of line character index and remove if 0."
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_RELEASELINECHARACTERINDEX
+				wParam: lineCharacterIndexInteger
+				lParam: 0]!
 
 sciReplaceSel: textString
 	"Private - Replace the selected text with the argument text."
@@ -7904,6 +8030,17 @@ sciSetCaretWidth: pixelWidthInteger
 				directFunction: this
 				msg: SCI_SETCARETWIDTH
 				wParam: pixelWidthInteger
+				lParam: 0]!
+
+sciSetCharacterCategoryOptimization: countCharactersInteger
+	"Private - Set the number of characters to have directly indexed categories"
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETCHARACTERCATEGORYOPTIMIZATION
+				wParam: countCharactersInteger
 				lParam: 0]!
 
 sciSetCharsDefault
@@ -9087,18 +9224,14 @@ scnDwellStart: pSCNotification
 	^0!
 
 scnFocusIn: pSCNotification
-	"Private - Default handler for an SCN_FOCUSIN event.
-	The following fields of the notification structure are set:
-		"
+	"Private - This view is receiving keyboard focus."
 
-	^nil!
+	^self enSetFocus!
 
 scnFocusOut: pSCNotification
-	"Private - Default handler for an SCN_FOCUSOUT event.
-	The following fields of the notification structure are set:
-		"
+	"Private - This view is losing keyboard focus."
 
-	^nil!
+	^self enKillFocus!
 
 scnHotSpotClick: pSCNotification
 	"Private - Default handler for an SCN_HOTSPOTCLICK event.
@@ -9807,13 +9940,6 @@ setFoldProperty: aBoolean
 			#todo.	"The properties may vary by lexer and should be user configurable too."
 			#('fold' 'fold.html') do: [:each | self sciSetProperty: each value: propValue]]!
 
-setFoldTextTagStyle
-	| style |
-	style := foldTextTagStyle
-				ifNil: [0]
-				ifNotNil: [(self class foldTextTagStyles identityIndexOf: foldTextTagStyle) - 1].
-	self sciFoldDisplayTextSetStyle: style!
-
 setFont: aFont 
 	"Private - Apply the specified font to the receiver's associated Windows control"
 
@@ -10082,7 +10208,7 @@ state
 		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
 		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
 		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)))
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag ''))
 			do: 
 				[:each |
 				| attrib |
@@ -10986,6 +11112,7 @@ zoomOut
 !ScintillaView categoriesFor: #codePage!other settings!public! !
 !ScintillaView categoriesFor: #codePage:!other settings!public! !
 !ScintillaView categoriesFor: #columnFromPosition:!enquiries!public! !
+!ScintillaView categoriesFor: #command:id:!commands!private! !
 !ScintillaView categoriesFor: #controlCharacter!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #controlCharacter:!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #convertToLowercase!**auto generated**!commands!public!scintilla interface! !
@@ -11009,6 +11136,8 @@ zoomOut
 !ScintillaView categoriesFor: #cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #decodeStyledText:!private!text retrieval & modification! !
 !ScintillaView categoriesFor: #defaultBraceChars!brace highlighting!constants!private! !
+!ScintillaView categoriesFor: #defaultFoldTextTag!**auto generated**!public!scintilla interface! !
+!ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #defaultKeyBindings!helpers!key bindings!private! !
 !ScintillaView categoriesFor: #defaultMarkerDefinitions!constants!markers!private! !
 !ScintillaView categoriesFor: #defaultModEventMask!constants!private! !
@@ -11036,12 +11165,9 @@ zoomOut
 !ScintillaView categoriesFor: #edgeMode:!long lines!public! !
 !ScintillaView categoriesFor: #editStyles!commands!public! !
 !ScintillaView categoriesFor: #emptyUndoBuffer!**auto generated**!public!scintilla interface!undo & redo! !
-!ScintillaView categoriesFor: #enChange!event handling-win32!private! !
 !ScintillaView categoriesFor: #endOfLineMode!line endings!public! !
 !ScintillaView categoriesFor: #endOfLineMode:!line endings!public! !
 !ScintillaView categoriesFor: #endUndoGroup!**auto generated**!public!scintilla interface!undo & redo! !
-!ScintillaView categoriesFor: #enKillFocus!event handling-win32!private! !
-!ScintillaView categoriesFor: #enSetFocus!event handling-win32!private! !
 !ScintillaView categoriesFor: #ensureCaretVisible!caret!public! !
 !ScintillaView categoriesFor: #ensureHasAnnotationStyles!annotations!helpers!initializing!private! !
 !ScintillaView categoriesFor: #ensureLineVisible:!public!scrolling! !
@@ -11364,6 +11490,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciAddUndoAction:flags:!**auto generated**!private!scintilla interface!undo & redo! !
 !ScintillaView categoriesFor: #sciAllocate:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciAllocateExtendedStyles:!**auto generated**!private!scintilla interface!style definition! !
+!ScintillaView categoriesFor: #sciAllocateLineCharacterIndex:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAllocateSubStyles:numberStyles:!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciAnnotationGetLines:!**auto generated**!annotations!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciAnnotationGetStyles:!**auto generated**!private!scintilla interface! !
@@ -11411,6 +11538,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciConvertEOLs:!**auto generated**!line endings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCopyRange:end:!**auto generated**!clipboard operations!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCountCharacters:end:!**auto generated**!enquiries!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciCountCodeUnits:end:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciCreateDocument:documentOptions:!**auto generated**!multiple views!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciDeleteRange:lengthDelete:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciDescribeProperty:!**auto generated**!lexer!private!scintilla interface! !
@@ -11429,6 +11557,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciFindText:ft:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciFoldAll:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldChildren:action:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciFoldDisplayTextGetStyle!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldDisplayTextSetStyle:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFoldLine:action:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
@@ -11439,6 +11568,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetBidirectional!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCaretStyle!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciGetCharacterCategoryOptimization!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCharAt:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCodePage!**auto generated**!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetColumn:!**auto generated**!enquiries!private!scintilla interface! !
@@ -11461,6 +11591,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetLayoutCache!**auto generated**!line wrapping!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetLexer!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetLine:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #sciGetLineCharacterIndex!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetLineEndPosition:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetLineEndTypesActive!**auto generated**!line endings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetLineEndTypesAllowed!**auto generated**!line endings!private!scintilla interface! !
@@ -11519,6 +11650,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciGetWrapVisualFlagsLocation!**auto generated**!line wrapping!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGotoLine:!**auto generated**!caret!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciHideLines:lineEnd:!**auto generated**!folding!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciIndexPositionFromLine:lineCharacterIndex:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciIndicatorClearRange:lengthClear:!**auto generated**!indicators!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciIndicatorEnd:pos:!**auto generated**!indicators!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciIndicatorFillRange:lengthFill:!**auto generated**!indicators!private!scintilla interface! !
@@ -11526,6 +11658,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciIndicatorValueAt:pos:!**auto generated**!indicators!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciInsertText:text:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciIsRangeWord:end:!**auto generated**!enquiries!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciLineFromIndexPosition:lineCharacterIndex:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciLineScroll:lines:!**auto generated**!private!scintilla interface!scrolling! !
 !ScintillaView categoriesFor: #sciLoadLexerLibrary:!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciMarginGetStyle:!**auto generated**!margins!private!scintilla interface! !
@@ -11557,6 +11690,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciPositionFromPoint:y:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPositionFromPointClose:y:!**auto generated**!enquiries!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPositionRelative:relative:!**auto generated**!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciPositionRelativeCodeUnits:relative:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPrivateLexerCall:pointer:!**auto generated**!lexer!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPropertyNames!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciPropertyType:!**auto generated**!enquiries!private!scintilla interface! !
@@ -11564,6 +11698,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciRegisterRGBAImage:pixels:!**auto generated**!autocompletion!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciReleaseAllExtendedStyles!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciReleaseDocument:!**auto generated**!multiple views!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciReleaseLineCharacterIndex:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciReplaceSel:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #sciReplaceTarget:text:!**auto generated**!private!scintilla interface!searching & replacing! !
 !ScintillaView categoriesFor: #sciReplaceTargetRE:text:!**auto generated**!private!scintilla interface!searching & replacing! !
@@ -11588,6 +11723,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetCaretSticky:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetCaretStyle:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetCaretWidth:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetCharacterCategoryOptimization:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetCharsDefault!**auto generated**!character classes!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetCodePage:!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetControlCharSymbol:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
@@ -11690,8 +11826,8 @@ zoomOut
 !ScintillaView categoriesFor: #scnDoubleClick:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnDwellEnd:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnDwellStart:!event handling-scintilla!notifications!private! !
-!ScintillaView categoriesFor: #scnFocusIn:!**auto generated**!event handling-scintilla!private! !
-!ScintillaView categoriesFor: #scnFocusOut:!**auto generated**!event handling-scintilla!private! !
+!ScintillaView categoriesFor: #scnFocusIn:!event handling-scintilla!private! !
+!ScintillaView categoriesFor: #scnFocusOut:!event handling-scintilla!private! !
 !ScintillaView categoriesFor: #scnHotSpotClick:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnHotSpotDoubleClick:!event handling-scintilla!notifications!private! !
 !ScintillaView categoriesFor: #scnHotSpotReleaseClick:!**auto generated**!event handling-scintilla!private! !
@@ -11754,7 +11890,6 @@ zoomOut
 !ScintillaView categoriesFor: #setFoldMarginColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldMarginHiColor!folding!margins!private! !
 !ScintillaView categoriesFor: #setFoldProperty:!folding!private! !
-!ScintillaView categoriesFor: #setFoldTextTagStyle!accessing!folding!private! !
 !ScintillaView categoriesFor: #setFont:!helpers!private!style definition! !
 !ScintillaView categoriesFor: #setIndicator:from:length:!indicators!public! !
 !ScintillaView categoriesFor: #setIndicator:range:!indicators!public! !
@@ -12114,7 +12249,7 @@ lexerLanguages
 	are not languages as such: #automatic is an instruction to Scintilla to choose a lexer, and #container
 	sends colourization requests back to the control's container (i.e. into our Smalltalk wrapper)."
 
-	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json #edifact #indent #maxima nil nil #automatic)!
+	^#(#container #text #python #cpp #hypertext #xml #perl #sql #vb #props #errorlist #makefile #batch nil #latex #lua #diff #conf #pascal #ave #ada #lisp #ruby #eiffel #eiffelkw #tcl #nncrontab #bullant #vbscript nil nil #baan #matlab #scriptol #asm #cppnocase #fortran #f77 #css #pov #lout #escript #ps #nsis #mmixal #clarion #clarionnocase #lot #yaml #tex #metapost #powerbasic #forth #erlang #octave #mssql #verilog #kix #gui4cli #specman #au3 #apdl #bash #asn1 #vhdl #caml #blitzbasic #purebasic #haskell #phpscript #tads3 #rebol #smalltalk #flagship #csound #freebasic #inno #opal #spice #d #cmake #gap #'PL/M' #abl #abaqus #asy #r #magiksf #powershell #mysql #po #TAL #COBOL #TACL #sorcins #powerpro #nimrod #SML #markdown #txt2tags #a68k #modula #coffeescript #tcmd #avs #ecl #oscript #visualprolog #literatehaskell #fcST #kvirc #rust #DMAP #as #DMIS #registry #bib #srec #ihex #tehex #json #edifact #indent #maxima #stata #sas #nim #cil nil #automatic)!
 
 lineEndings
 	"Answer the symbolic names of the end-of-line modes supported by Scintilla. These correspond

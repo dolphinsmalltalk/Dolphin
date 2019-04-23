@@ -660,7 +660,7 @@ renamedFunctions
 		at: 'SCI_SCROLLTOEND' put: #scrollToEnd;
 		at: 'SCI_LINEREVERSE' put: #reverseSelectedLines;
 		yourself.
-	
+
 	"Brace highlighting"
 	renamedMessages
 		at: 'SCI_BRACEBADLIGHT' put: #highlightMismatchedBrace:;
@@ -714,9 +714,177 @@ renamedFunctions
 		at: 'SCI_GETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured;
 		at: 'SCI_SETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured:;
 		yourself.
+
+	"4.1.5"
+	renamedMessages
+		at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag;
+		at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag:;
+		yourself.
 	renamedMessages
 		shrink;
 		yourself)
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
 	"Indicators"
 
 	"Zooming"
