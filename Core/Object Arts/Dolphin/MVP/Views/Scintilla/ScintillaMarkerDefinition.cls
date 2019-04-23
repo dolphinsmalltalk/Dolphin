@@ -399,9 +399,8 @@ glyphNames
 	names := names , #(#underline).
 	"RGBA image - not fully supported"
 	names := names , #(#rgbaImage).
-	names := names , #(#bookmark).
-	names)
-!
+	names := names , #(#bookmark #verticalBookmark).
+	names)!
 
 initialize
 	"

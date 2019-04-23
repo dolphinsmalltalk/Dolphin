@@ -10,8 +10,11 @@ ScintillaConstants at: 'CARET_JUMPS' put: 16r10!
 ScintillaConstants at: 'CARET_SLOP' put: 16r1!
 ScintillaConstants at: 'CARET_STRICT' put: 16r4!
 ScintillaConstants at: 'CARETSTYLE_BLOCK' put: 16r2!
+ScintillaConstants at: 'CARETSTYLE_INS_MASK' put: 16rF!
 ScintillaConstants at: 'CARETSTYLE_INVISIBLE' put: 16r0!
 ScintillaConstants at: 'CARETSTYLE_LINE' put: 16r1!
+ScintillaConstants at: 'CARETSTYLE_OVERSTRIKE_BAR' put: 16r0!
+ScintillaConstants at: 'CARETSTYLE_OVERSTRIKE_BLOCK' put: 16r10!
 ScintillaConstants at: 'EDGE_BACKGROUND' put: 16r2!
 ScintillaConstants at: 'EDGE_LINE' put: 16r1!
 ScintillaConstants at: 'EDGE_MULTILINE' put: 16r3!
@@ -149,6 +152,9 @@ ScintillaConstants at: 'SC_IV_REAL' put: 16r1!
 ScintillaConstants at: 'SC_LASTSTEPINUNDOREDO' put: 16r100!
 ScintillaConstants at: 'SC_LINE_END_TYPE_DEFAULT' put: 16r0!
 ScintillaConstants at: 'SC_LINE_END_TYPE_UNICODE' put: 16r1!
+ScintillaConstants at: 'SC_LINECHARACTERINDEX_NONE' put: 16r0!
+ScintillaConstants at: 'SC_LINECHARACTERINDEX_UTF16' put: 16r2!
+ScintillaConstants at: 'SC_LINECHARACTERINDEX_UTF32' put: 16r1!
 ScintillaConstants at: 'SC_MARGIN_BACK' put: 16r2!
 ScintillaConstants at: 'SC_MARGIN_COLOUR' put: 16r6!
 ScintillaConstants at: 'SC_MARGIN_FORE' put: 16r3!
@@ -190,6 +196,7 @@ ScintillaConstants at: 'SC_MARK_SMALLRECT' put: 16r3!
 ScintillaConstants at: 'SC_MARK_TCORNER' put: 16rB!
 ScintillaConstants at: 'SC_MARK_TCORNERCURVE' put: 16r11!
 ScintillaConstants at: 'SC_MARK_UNDERLINE' put: 16r1D!
+ScintillaConstants at: 'SC_MARK_VERTICALBOOKMARK' put: 16r20!
 ScintillaConstants at: 'SC_MARK_VLINE' put: 16r9!
 ScintillaConstants at: 'SC_MARKNUM_FOLDER' put: 16r1E!
 ScintillaConstants at: 'SC_MARKNUM_FOLDEREND' put: 16r19!
@@ -297,6 +304,7 @@ ScintillaConstants at: 'SCI_ADDTEXT' put: 16r7D1!
 ScintillaConstants at: 'SCI_ADDUNDOACTION' put: 16rA00!
 ScintillaConstants at: 'SCI_ALLOCATE' put: 16r98E!
 ScintillaConstants at: 'SCI_ALLOCATEEXTENDEDSTYLES' put: 16r9F9!
+ScintillaConstants at: 'SCI_ALLOCATELINECHARACTERINDEX' put: 16rA97!
 ScintillaConstants at: 'SCI_ALLOCATESUBSTYLES' put: 16rFB4!
 ScintillaConstants at: 'SCI_ANNOTATIONCLEARALL' put: 16r9F3!
 ScintillaConstants at: 'SCI_ANNOTATIONGETLINES' put: 16r9F2!
@@ -396,6 +404,7 @@ ScintillaConstants at: 'SCI_COPYALLOWLINE' put: 16r9D7!
 ScintillaConstants at: 'SCI_COPYRANGE' put: 16r973!
 ScintillaConstants at: 'SCI_COPYTEXT' put: 16r974!
 ScintillaConstants at: 'SCI_COUNTCHARACTERS' put: 16rA49!
+ScintillaConstants at: 'SCI_COUNTCODEUNITS' put: 16rA9B!
 ScintillaConstants at: 'SCI_CREATEDOCUMENT' put: 16r947!
 ScintillaConstants at: 'SCI_CREATELOADER' put: 16rA48!
 ScintillaConstants at: 'SCI_CUT' put: 16r881!
@@ -431,6 +440,7 @@ ScintillaConstants at: 'SCI_FINDINDICATORSHOW' put: 16rA50!
 ScintillaConstants at: 'SCI_FINDTEXT' put: 16r866!
 ScintillaConstants at: 'SCI_FOLDALL' put: 16rA66!
 ScintillaConstants at: 'SCI_FOLDCHILDREN' put: 16r8BE!
+ScintillaConstants at: 'SCI_FOLDDISPLAYTEXTGETSTYLE' put: 16rA93!
 ScintillaConstants at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 16rA8D!
 ScintillaConstants at: 'SCI_FOLDLINE' put: 16r8BD!
 ScintillaConstants at: 'SCI_FORMATRANGE' put: 16r867!
@@ -458,14 +468,17 @@ ScintillaConstants at: 'SCI_GETCARETPERIOD' put: 16r81B!
 ScintillaConstants at: 'SCI_GETCARETSTICKY' put: 16r999!
 ScintillaConstants at: 'SCI_GETCARETSTYLE' put: 16r9D1!
 ScintillaConstants at: 'SCI_GETCARETWIDTH' put: 16r88D!
+ScintillaConstants at: 'SCI_GETCHARACTERCATEGORYOPTIMIZATION' put: 16rAA1!
 ScintillaConstants at: 'SCI_GETCHARACTERPOINTER' put: 16r9D8!
 ScintillaConstants at: 'SCI_GETCHARAT' put: 16r7D7!
 ScintillaConstants at: 'SCI_GETCODEPAGE' put: 16r859!
 ScintillaConstants at: 'SCI_GETCOLUMN' put: 16r851!
+ScintillaConstants at: 'SCI_GETCOMMANDEVENTS' put: 16rA9E!
 ScintillaConstants at: 'SCI_GETCONTROLCHARSYMBOL' put: 16r955!
 ScintillaConstants at: 'SCI_GETCURLINE' put: 16r7EB!
 ScintillaConstants at: 'SCI_GETCURRENTPOS' put: 16r7D8!
 ScintillaConstants at: 'SCI_GETCURSOR' put: 16r953!
+ScintillaConstants at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: 16rAA3!
 ScintillaConstants at: 'SCI_GETDIRECTFUNCTION' put: 16r888!
 ScintillaConstants at: 'SCI_GETDIRECTPOINTER' put: 16r889!
 ScintillaConstants at: 'SCI_GETDOCPOINTER' put: 16r935!
@@ -505,6 +518,7 @@ ScintillaConstants at: 'SCI_GETLENGTH' put: 16r7D6!
 ScintillaConstants at: 'SCI_GETLEXER' put: 16rFA2!
 ScintillaConstants at: 'SCI_GETLEXERLANGUAGE' put: 16rFAC!
 ScintillaConstants at: 'SCI_GETLINE' put: 16r869!
+ScintillaConstants at: 'SCI_GETLINECHARACTERINDEX' put: 16rA96!
 ScintillaConstants at: 'SCI_GETLINECOUNT' put: 16r86A!
 ScintillaConstants at: 'SCI_GETLINEENDPOSITION' put: 16r858!
 ScintillaConstants at: 'SCI_GETLINEENDTYPESACTIVE' put: 16rA62!
@@ -625,6 +639,7 @@ ScintillaConstants at: 'SCI_HOMEEXTEND' put: 16r909!
 ScintillaConstants at: 'SCI_HOMERECTEXTEND' put: 16r97E!
 ScintillaConstants at: 'SCI_HOMEWRAP' put: 16r92D!
 ScintillaConstants at: 'SCI_HOMEWRAPEXTEND' put: 16r992!
+ScintillaConstants at: 'SCI_INDEXPOSITIONFROMLINE' put: 16rA9A!
 ScintillaConstants at: 'SCI_INDICATORALLONFOR' put: 16r9CA!
 ScintillaConstants at: 'SCI_INDICATORCLEARRANGE' put: 16r9C9!
 ScintillaConstants at: 'SCI_INDICATOREND' put: 16r9CD!
@@ -664,6 +679,7 @@ ScintillaConstants at: 'SCI_LINEENDEXTEND' put: 16r90B!
 ScintillaConstants at: 'SCI_LINEENDRECTEXTEND' put: 16r980!
 ScintillaConstants at: 'SCI_LINEENDWRAP' put: 16r993!
 ScintillaConstants at: 'SCI_LINEENDWRAPEXTEND' put: 16r994!
+ScintillaConstants at: 'SCI_LINEFROMINDEXPOSITION' put: 16rA99!
 ScintillaConstants at: 'SCI_LINEFROMPOSITION' put: 16r876!
 ScintillaConstants at: 'SCI_LINELENGTH' put: 16r92E!
 ScintillaConstants at: 'SCI_LINEREVERSE' put: 16r932!
@@ -736,6 +752,7 @@ ScintillaConstants at: 'SCI_POSITIONFROMLINE' put: 16r877!
 ScintillaConstants at: 'SCI_POSITIONFROMPOINT' put: 16r7E6!
 ScintillaConstants at: 'SCI_POSITIONFROMPOINTCLOSE' put: 16r7E7!
 ScintillaConstants at: 'SCI_POSITIONRELATIVE' put: 16rA6E!
+ScintillaConstants at: 'SCI_POSITIONRELATIVECODEUNITS' put: 16rA9C!
 ScintillaConstants at: 'SCI_PRIVATELEXERCALL' put: 16rFAD!
 ScintillaConstants at: 'SCI_PROPERTYNAMES' put: 16rFAE!
 ScintillaConstants at: 'SCI_PROPERTYTYPE' put: 16rFAF!
@@ -744,6 +761,7 @@ ScintillaConstants at: 'SCI_REGISTERIMAGE' put: 16r965!
 ScintillaConstants at: 'SCI_REGISTERRGBAIMAGE' put: 16rA43!
 ScintillaConstants at: 'SCI_RELEASEALLEXTENDEDSTYLES' put: 16r9F8!
 ScintillaConstants at: 'SCI_RELEASEDOCUMENT' put: 16r949!
+ScintillaConstants at: 'SCI_RELEASELINECHARACTERINDEX' put: 16rA98!
 ScintillaConstants at: 'SCI_REPLACESEL' put: 16r87A!
 ScintillaConstants at: 'SCI_REPLACETARGET' put: 16r892!
 ScintillaConstants at: 'SCI_REPLACETARGETRE' put: 16r893!
@@ -785,11 +803,14 @@ ScintillaConstants at: 'SCI_SETCARETPERIOD' put: 16r81C!
 ScintillaConstants at: 'SCI_SETCARETSTICKY' put: 16r99A!
 ScintillaConstants at: 'SCI_SETCARETSTYLE' put: 16r9D0!
 ScintillaConstants at: 'SCI_SETCARETWIDTH' put: 16r88C!
+ScintillaConstants at: 'SCI_SETCHARACTERCATEGORYOPTIMIZATION' put: 16rAA0!
 ScintillaConstants at: 'SCI_SETCHARSDEFAULT' put: 16r98C!
 ScintillaConstants at: 'SCI_SETCODEPAGE' put: 16r7F5!
+ScintillaConstants at: 'SCI_SETCOMMANDEVENTS' put: 16rA9D!
 ScintillaConstants at: 'SCI_SETCONTROLCHARSYMBOL' put: 16r954!
 ScintillaConstants at: 'SCI_SETCURRENTPOS' put: 16r85D!
 ScintillaConstants at: 'SCI_SETCURSOR' put: 16r952!
+ScintillaConstants at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: 16rAA2!
 ScintillaConstants at: 'SCI_SETDOCPOINTER' put: 16r936!
 ScintillaConstants at: 'SCI_SETEDGECOLOUR' put: 16r93D!
 ScintillaConstants at: 'SCI_SETEDGECOLUMN' put: 16r939!
@@ -1038,6 +1059,7 @@ ScintillaConstants at: 'SCLEX_BIBTEX' put: 16r74!
 ScintillaConstants at: 'SCLEX_BLITZBASIC' put: 16r42!
 ScintillaConstants at: 'SCLEX_BULLANT' put: 16r1B!
 ScintillaConstants at: 'SCLEX_CAML' put: 16r41!
+ScintillaConstants at: 'SCLEX_CIL' put: 16r7F!
 ScintillaConstants at: 'SCLEX_CLW' put: 16r2D!
 ScintillaConstants at: 'SCLEX_CLWNOCASE' put: 16r2E!
 ScintillaConstants at: 'SCLEX_CMAKE' put: 16r50!
@@ -1091,6 +1113,7 @@ ScintillaConstants at: 'SCLEX_MMIXAL' put: 16r2C!
 ScintillaConstants at: 'SCLEX_MODULA' put: 16r65!
 ScintillaConstants at: 'SCLEX_MSSQL' put: 16r37!
 ScintillaConstants at: 'SCLEX_MYSQL' put: 16r59!
+ScintillaConstants at: 'SCLEX_NIM' put: 16r7E!
 ScintillaConstants at: 'SCLEX_NIMROD' put: 16r60!
 ScintillaConstants at: 'SCLEX_NNCRONTAB' put: 16r1A!
 ScintillaConstants at: 'SCLEX_NSIS' put: 16r2B!
@@ -1117,6 +1140,7 @@ ScintillaConstants at: 'SCLEX_REBOL' put: 16r47!
 ScintillaConstants at: 'SCLEX_REGISTRY' put: 16r73!
 ScintillaConstants at: 'SCLEX_RUBY' put: 16r16!
 ScintillaConstants at: 'SCLEX_RUST' put: 16r6F!
+ScintillaConstants at: 'SCLEX_SAS' put: 16r7D!
 ScintillaConstants at: 'SCLEX_SCRIPTOL' put: 16r21!
 ScintillaConstants at: 'SCLEX_SMALLTALK' put: 16r48!
 ScintillaConstants at: 'SCLEX_SML' put: 16r61!
@@ -1125,6 +1149,7 @@ ScintillaConstants at: 'SCLEX_SPECMAN' put: 16r3B!
 ScintillaConstants at: 'SCLEX_SPICE' put: 16r4E!
 ScintillaConstants at: 'SCLEX_SQL' put: 16r7!
 ScintillaConstants at: 'SCLEX_SREC' put: 16r75!
+ScintillaConstants at: 'SCLEX_STATA' put: 16r7C!
 ScintillaConstants at: 'SCLEX_STTXT' put: 16r6D!
 ScintillaConstants at: 'SCLEX_TACL' put: 16r5D!
 ScintillaConstants at: 'SCLEX_TADS3' put: 16r46!
