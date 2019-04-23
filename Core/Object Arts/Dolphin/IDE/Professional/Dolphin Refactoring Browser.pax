@@ -217,45 +217,45 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Contributions\Camp Smalltalk\Refactoring Browser\Refactorings\CSRefactorings';
-	add: '..\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\MVP\Presenters\Collection\Dolphin Collection Presenters';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin In-place Text Editor';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter';
-	add: '..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: 'Dolphin Professional Tools';
-	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\ActiveX\Components\SHDocVw\Internet Explorer';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
-	add: '..\..\System\Compiler\Smalltalk Parser';
-	add: '..\..\ActiveX\Shell\Windows Shell';
-	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Contributions\Camp Smalltalk\Refactoring Browser\Refactorings\CSRefactorings'
+	'..\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\MVP\Presenters\Collection\Dolphin Collection Presenters'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Presenters\Difference\Dolphin Differences Presenter'
+	'..\..\MVP\Presenters\Prompters\Dolphin In-place Text Editor'
+	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
+	'Dolphin Professional Tools'
+	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\ActiveX\Shell\Windows Shell'
+	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
 
