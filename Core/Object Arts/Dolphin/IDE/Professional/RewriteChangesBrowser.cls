@@ -118,6 +118,13 @@ onMethodRemoved: aCompiledMethod
 onMethodUpdated: aCompilationResult 
 	self methodChanged: aCompilationResult method!
 
+onViewAvailable
+	super onViewAvailable.
+	differencesPresenter
+		textFont: SmalltalkWorkspace actualFont;
+		styler: SmalltalkMethodStyler new;
+		textStyles: SmalltalkWorkspace textStyles!
+
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>."
@@ -186,6 +193,7 @@ updateCaption
 !RewriteChangesBrowser categoriesFor: #onMethodAdded:!event handling!public! !
 !RewriteChangesBrowser categoriesFor: #onMethodRemoved:!event handling!public! !
 !RewriteChangesBrowser categoriesFor: #onMethodUpdated:!event handling!public! !
+!RewriteChangesBrowser categoriesFor: #onViewAvailable!event handling!public! !
 !RewriteChangesBrowser categoriesFor: #queryCommand:!commands!private! !
 !RewriteChangesBrowser categoriesFor: #removeChanges!commands!public! !
 !RewriteChangesBrowser categoriesFor: #removeChanges:!helpers!private! !
