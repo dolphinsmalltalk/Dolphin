@@ -64,7 +64,7 @@ basicForeAlpha: anIntegerOrNil
 	foreAlpha := anIntegerOrNil!
 
 basicForecolor
-	^forecolor!
+	^forecolor ifNotNil: [forecolor asRGB]!
 
 basicForecolor: aColorOrNil 
 	forecolor := aColorOrNil!
@@ -114,10 +114,10 @@ foreAlpha: anInteger
 	self updateViewProperty: #foreAlpha!
 
 forecolor
-	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
+	^forecolor!
 
 forecolor: aColorOrNil
-	self basicForecolor: (aColorOrNil isNil ifFalse: [aColorOrNil asParameter]).
+	self basicForecolor: aColorOrNil.
 	self updateViewProperty: #forecolor.
 	self hoverForecolor isNil ifFalse: [self updateViewProperty: #hoverForecolor]!
 
@@ -323,10 +323,11 @@ stbConvertFrom: anSTBClassFormat
 	| instance |
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
+	instance basicForecolor: (Color fromInteger: instance forecolor).
 	instance]!
 
 stbVersion
-	^2!
+	^3!
 
 styleNames
 	^#(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #container #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter #gradient #gradientCentre)! !
