@@ -2680,6 +2680,29 @@ hangingIndent: indentInteger
 				wParam: indentInteger
 				lParam: 0]!
 
+hasAdditionalSelectionTyping
+	"Whether typing can be performed into multiple selections"
+
+	^this isNil
+		ifTrue: [false]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETADDITIONALSELECTIONTYPING
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+hasAdditionalSelectionTyping: additionalSelectionTypingBoolean
+	"Set whether typing can be performed into multiple selections"
+
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETADDITIONALSELECTIONTYPING
+				wParam: additionalSelectionTypingBoolean asParameter
+				lParam: 0]!
+
 hasBlinkingSecondaryCarets
 	"Whether additional carets will blink"
 
@@ -5960,18 +5983,6 @@ sciGetAccessibility
 				wParam: 0
 				lParam: 0]!
 
-sciGetAdditionalSelectionTyping
-	"Private - Whether typing can be performed into multiple selections"
-
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
-			[(ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETADDITIONALSELECTIONTYPING
-				wParam: 0
-				lParam: 0) asBoolean]!
-
 sciGetAutomaticFold
 	"Private - Get automatic folding behaviours."
 
@@ -7930,17 +7941,6 @@ sciSetAdditionalSelBack: backRGB
 				directFunction: this
 				msg: SCI_SETADDITIONALSELBACK
 				wParam: backRGB asParameter
-				lParam: 0]!
-
-sciSetAdditionalSelectionTyping: additionalSelectionTypingBoolean
-	"Private - Set whether typing can be performed into multiple selections"
-
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETADDITIONALSELECTIONTYPING
-				wParam: additionalSelectionTypingBoolean asParameter
 				lParam: 0]!
 
 sciSetAdditionalSelFore: foreRGB
@@ -10208,7 +10208,7 @@ state
 		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
 		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
 		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag ''))
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false))
 			do: 
 				[:each |
 				| attrib |
@@ -11250,6 +11250,8 @@ zoomOut
 !ScintillaView categoriesFor: #handle:!accessing!private! !
 !ScintillaView categoriesFor: #hangingIndent!**auto generated**!line wrapping!public!scintilla interface! !
 !ScintillaView categoriesFor: #hangingIndent:!**auto generated**!line wrapping!public!scintilla interface! !
+!ScintillaView categoriesFor: #hasAdditionalSelectionTyping!**auto generated**!public!scintilla interface! !
+!ScintillaView categoriesFor: #hasAdditionalSelectionTyping:!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #hasBlinkingSecondaryCarets!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #hasBlinkingSecondaryCarets:!**auto generated**!caret, selection, and hotspot styles!public!scintilla interface! !
 !ScintillaView categoriesFor: #hasFoldMargin!folding!margins!public!testing! !
@@ -11563,7 +11565,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciFormatRange:fr:!**auto generated**!printing!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciFreeSubStyles!**auto generated**!private!scintilla interface!style definition! !
 !ScintillaView categoriesFor: #sciGetAccessibility!**auto generated**!accessibility!private!scintilla interface! !
-!ScintillaView categoriesFor: #sciGetAdditionalSelectionTyping!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciGetAutomaticFold!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetBidirectional!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciGetCaretSticky!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
@@ -11714,7 +11715,6 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetAccessibility:!**auto generated**!accessibility!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetAdditionalCaretFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetAdditionalSelBack:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #sciSetAdditionalSelectionTyping:!**auto generated**!multiple selection and virtual space!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetAdditionalSelFore:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sciSetAutomaticFold:!**auto generated**!folding!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetBidirectional:!**auto generated**!private!scintilla interface! !

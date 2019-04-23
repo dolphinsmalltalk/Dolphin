@@ -431,6 +431,8 @@ renamedFunctions
 		at: 'SCI_TARGETWHOLEDOCUMENT' put: #targetAll;
 		at: 'SCI_CLEAR' put: #basicClearSelection;
 		at: 'SCI_GETTEXTLENGTH' put: #textLength;
+		at: 'SCI_GETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping;
+		at: 'SCI_SETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping:;
 		yourself.
 	"Text retrieval and modification"
 	renamedMessages
