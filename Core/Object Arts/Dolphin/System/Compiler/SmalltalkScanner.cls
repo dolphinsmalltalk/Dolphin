@@ -867,9 +867,8 @@ isVariable: aString
 	scanner := self basicNew.
 	scanner on: (ReadStream on: aString asString).
 	scanner step.
-	token := scanner scanIdentifierOrKeyword.
-	token isKeyword ifTrue: [^false].
-	^scanner atEnd!
+	token := scanner next.
+	^token isIdentifier and: [token stop = aString size]!
 
 on: aStream 
 	| scanner |
