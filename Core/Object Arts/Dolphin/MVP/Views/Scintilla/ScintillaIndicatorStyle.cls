@@ -321,9 +321,9 @@ stbConvertFrom: anSTBClassFormat
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
 	instance forecolor
-		ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromInteger: instance forecolor])].
+		ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromInteger: int])].
 	instance hoverForecolor
-		ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromInteger: instance forecolor])].
+		ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromInteger: int])].
 	instance]!
 
 stbVersion
