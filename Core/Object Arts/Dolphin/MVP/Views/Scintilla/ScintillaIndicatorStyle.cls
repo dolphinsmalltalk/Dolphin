@@ -323,7 +323,7 @@ stbConvertFrom: anSTBClassFormat
 	| instance |
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
-	instance basicForecolor: (Color fromInteger: instance forecolor).
+	instance basicForecolor: (instance forecolor ifNotNil: [:integer | Color fromInteger: integer]).
 	instance]!
 
 stbVersion
