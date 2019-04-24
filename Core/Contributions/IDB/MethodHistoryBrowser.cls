@@ -73,6 +73,9 @@ currentMethod
 
 diff
 	(DiffBrowser show)
+		textFont: SmalltalkWorkspace actualFont;
+		styler: SmalltalkMethodStyler new;
+		textStyles: SmalltalkWorkspace textStyles;
 		caption: class name , '>>' , selector;
 		compare: ((history at: selection) at: 3)
 			id: 'Version #' , selection printString

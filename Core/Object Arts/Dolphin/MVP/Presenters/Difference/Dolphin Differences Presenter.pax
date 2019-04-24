@@ -10,7 +10,6 @@ package basicPackageVersion: '6.1'.
 
 package classNames
 	add: #DifferencesPresenter;
-	add: #DiffsScintillaStyler;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -19,16 +18,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Diff Algorithm';
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'Diff Algorithm'
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Views\Scintilla\Dolphin Scintilla View'
+	'..\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package setManualPrerequisites: #(
 	'Diff Algorithm').
@@ -40,11 +38,6 @@ package!
 Presenter subclass: #DifferencesPresenter
 	instanceVariableNames: 'beforePresenter afterPresenter beforeTitlePresenter afterTitlePresenter comparisonMode wordSeparators'
 	classVariableNames: 'WordSeparators'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScintillaStyler subclass: #DiffsScintillaStyler
-	instanceVariableNames: 'diffs'
-	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
