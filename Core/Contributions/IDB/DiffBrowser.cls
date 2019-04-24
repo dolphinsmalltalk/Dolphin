@@ -132,12 +132,12 @@ compare: aString1 with: aString2
 		compare: aString1 id: 'A' and: aString2 id: 'B';
 		yourself!
 
-compareSmalltalkExpression: aSmalltalkMethod1 with: aSmalltalkMethod2
+compareSmalltalkExpression: aSmalltalkExpression1 with: aSmalltalkExpression2
 
 	^self show
 		styler: SmalltalkExpressionStyler new;
 		textStyles: SmalltalkWorkspace textStyles;
-		compare: aSmalltalkMethod1 id: 'A' and: aSmalltalkMethod2 id: 'B';
+		compare: aSmalltalkExpression1 id: 'A' and: aSmalltalkExpression2 id: 'B';
 		yourself!
 
 compareSmalltalkMethod: aSmalltalkMethod1 with: aSmalltalkMethod2
