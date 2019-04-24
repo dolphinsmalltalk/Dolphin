@@ -5344,12 +5344,11 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect color: #forecolor);
 		add: (Aspect color: #hoverForecolor);
-		add: (Aspect choice: #styleName from: self styleNames);
-		add: (Aspect choice: #hoverStyleName from: self styleNames);
-		add: (Aspect boolean: #isUnderText);
+		add: (Aspect choice: #style from: IndicatorStyles);
+		add: (Aspect choice: #hoverStyle from: IndicatorStyles);
 		add: (Aspect name: #name);
 		add: (Aspect integer: #alpha);
 		add: (Aspect integer: #foreAlpha);
