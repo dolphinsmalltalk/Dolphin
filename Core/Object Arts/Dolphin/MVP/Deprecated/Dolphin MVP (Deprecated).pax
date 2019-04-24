@@ -48,13 +48,14 @@ package methodNames
 	add: #ScintillaIndicator -> #type;
 	add: #ScintillaIndicatorStyle -> #alphaPercent;
 	add: #ScintillaIndicatorStyle -> #alphaPercent:;
+	add: #ScintillaIndicatorStyle -> #hoverStyleName;
+	add: #ScintillaIndicatorStyle -> #hoverStyleName:;
+	add: #ScintillaIndicatorStyle -> #styleName;
+	add: #ScintillaIndicatorStyle -> #styleName:;
 	add: #ScintillaView -> #highlightRange:withIndicator:;
 	add: #ScintillaView -> #indicatorDefinitions:;
-	add: #ScintillaView -> #isDrawingTwoPhase;
-	add: #ScintillaView -> #isDrawingTwoPhase:;
 	add: #ScintillaView -> #isKeyboardInputUnicode;
 	add: #ScintillaView -> #isKeyboardInputUnicode:;
-	add: #ScintillaView -> #styleBits;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
 	add: #ShellView -> #hasThickFrame;
@@ -97,6 +98,7 @@ package methodNames
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'PositionEvent class' -> #handle:message:wParam:lParam:;
 	add: 'RGB class' -> #stdColor:;
+	add: 'ScintillaIndicatorStyle class' -> #styleNames;
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
@@ -473,9 +475,37 @@ alphaPercent: anInteger
 	the #roundBox indicator style."
 
 	#deprecated.
-	self alpha: SC_ALPHA_OPAQUE * anInteger // 100! !
+	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
+
+hoverStyleName
+	Notification deprecated.
+	^self hoverStyle!
+
+hoverStyleName: aSymbol
+	Notification deprecated.
+	self hoverStyle: aSymbol!
+
+styleName
+	Notification deprecated.
+	^self style!
+
+styleName: aSymbol
+	Notification deprecated.
+	self style: aSymbol
+! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyleName!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #hoverStyleName:!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #styleName!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #styleName:!accessing!public! !
+
+!ScintillaIndicatorStyle class methodsFor!
+
+styleNames
+	Notification deprecated.
+	^IndicatorStyles! !
+!ScintillaIndicatorStyle class categoriesFor: #styleNames!initializing!public! !
 
 !ScintillaView methodsFor!
 
@@ -490,39 +520,13 @@ indicatorDefinitions: aSequenceableCollection
 	#deprecated.
 	self indicatorStyles: aSequenceableCollection!
 
-isDrawingTwoPhase
-	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
-
-	#deprecated.
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
-			[(ScintillaLibrary default
-				directFunction: this
-				msg: SCI_GETTWOPHASEDRAW
-				wParam: 0
-				lParam: 0) asBoolean]!
-
-isDrawingTwoPhase: twoPhaseBoolean
-	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
-	foreground. This avoids chopping off characters that overlap the next run."
-
-	#deprecated.
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETTWOPHASEDRAW
-				wParam: twoPhaseBoolean asParameter
-				lParam: 0]!
-
 isKeyboardInputUnicode
 	"Are keys always interpreted as Unicode?"
 
 	#deprecated.
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETKEYSUNICODE
@@ -533,26 +537,17 @@ isKeyboardInputUnicode: keysUnicodeBoolean
 	"Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
 
 	#deprecated.
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETKEYSUNICODE
 				wParam: keysUnicodeBoolean asParameter
-				lParam: 0]!
-
-styleBits
-	"Answer the number of bits available for text styles. This is now always 8."
-
-	#deprecated.
-	^8! !
+				lParam: 0]! !
 !ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
 !ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
-!ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!other settings!public!scintilla interface!testing! !
-!ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!other settings!public!scintilla interface! !
 !ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
-!ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 
 !ScrollingDecorator methodsFor!
 

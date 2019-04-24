@@ -12,39 +12,39 @@ ScintillaView addClassConstant: 'BraceHilightingMask' value: 16r1!
 ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 16r20!
 ScintillaView addClassConstant: 'FoldingMask' value: 16r2!
 ScintillaView addClassConstant: 'MarginStylesOffset' value: 16r100!
-ScintillaView comment: 'ScintillaView is a <valueView> class that wraps the "Scintilla" programmers'' edit control. 
+ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 
-Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the documentation at http://www.scintilla.org/ScintillaDoc.html if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
+Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
 
-This class provides at least a basic interface to all of Scintilla''s extensive functionality; almost every SCI_XXX message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file (Scintilla.iface), and are either of the form #sciXXX:etc, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the SCN_XXX notification messages has a corresponding #scnXXX event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition ScintillaView implements higher-level functionality to allow it to be used as a drop-in replacement for a <MultilineTextEdit>, and which also simplifies the use of most of its additional capabilities. 
+This class provides at least a basic interface to all of Scintilla''s extensive functionality; almost every `SCI_XXX` message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file (Scintilla.iface), and are either of the form `#sciXXX:etc`, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the `SCN_XXX` notification messages has a corresponding `#scnXXX` event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition ScintillaView implements higher-level functionality to allow it to be used as a drop-in replacement for a `MultilineTextEdit`, and which also simplifies the use of most of its additional capabilities. 
 
 ScintillaView provides high-level object-oriented wrappings for the following Scintilla features:
-	Text retrieval and modification	(though not get/set of styled text, and based around the standard <textView> protocol)
-	Searching and replacing 		(TextEdit implementation is inherited, but does not include RegExp replace)
+	Text retrieval and modification	(though not get/set of styled text, and based around the standard `<textView>` protocol)
+	Searching and replacing 		(`TextEdit` implementation is inherited, but does not include RegExp replace)
 	Overtype
 	Cut, copy and paste			(implements standard MVP protocols)
 	Undo and Redo
-	Mouse capture				(supported as #willCaptureMouse aspect, but not really required - use MVP''s MouseTracker instead)
+	Mouse capture				(supported as `#willCaptureMouse` aspect, but not really required - use MVP''s `MouseTracker` instead)
 	Line endings
-	Styling					(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. ScintillaSmalltalkStyler based on SmalltalkScanner)
-	Style definition				(full control is possible by altering aspects of a collection of ScintillaTextStyle objects, UI editors are provided for this too).
+	Styling						(an extensive Smalltalk framework is provided - stylers can be implemented in Smalltalk e.g. `ScintillaSmalltalkStyler` based on `SmalltalkScanner`)
+	Style definition				(full control is possible by altering aspects of a collection of `ScintillaTextStyle` objects, UI editors are provided for this too).
 	Caret, selection, 
-		and hotspot styles		(not hotspot styles)
+		and hotspot styles			(not hotspot styles)
 	Margins
-	Other Settings				(mostly)
+	Other Settings					(mostly)
 	Brace highlighting
 	Tab and Indentation Guides
 	Markers
-	Indicators					Named "modern" indicators are now supported. Indicator values are unused at present and probably not needed. The old style-byte indicators are deprecated.
+	Indicators					Named "modern" indicators are now supported. Indicator values are unused at present and probably not needed.
 	Autocompletion				(note that the container needs to invoke auto-completion when appropriate)
 	User lists
 	Keyboard commands			(some are bound to existing commands)
 	Key bindings
-	Line wrapping				(currently no public interface for visual line wrap flags)
+	Line wrapping
 	Zooming
 	Long lines
-	Direct access				(i.e. direct calls to the control, rather than through the message queue, faster but not thread safe)
-	Folding					(requires lexer support)
+	Direct access					(i.e. direct calls to the control, rather than through the message queue, faster but not thread safe)
+	Folding						(requires lexer support)
 	Annotations
 	Multiple-selection
 	
@@ -58,54 +58,53 @@ Features of Scintilla that are not currently exposed at any level higher than th
 	Multiple views				(alternatives exist using the MVP framework, though this could be useful in some applications)
 	Margin text
 	
-N.B. Scintilla is an excellent editor control, but does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to SCI_SETSTYLING is -1, then the control goes into a loop (at the time of writing).
+N.B. Scintilla is an excellent editor control, but does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
 
-Instance Variables:
-	this				<ExternalHandle>. C++ ''this'' pointer for direct function invocation.
-	currentTextStyles	<IdentityDictionary> mapping <Symbol> to <ScintillaTextStyle> for the current lexer.
-	styleIdMap		<IdentityDictionary> 
-	styler			<ScintillaStyler>. Responsible for dynamically ''colouring'' text in the view.
-	markerDefinitions	<IdentityDictionary> mapping <Symbol> to <ScintillaMarkerDefinition>.
-	markers			<IdentitySet> of <ScintillaMarker>s. All markers currently set in the view.
-	wordChars			<String> of characters considered to be word delimiters.
-	maxStyle			<SmallInteger> maximum style index. Depends on number of bits used for text styles. Default 31, maximum 127.
-	modificationEventMask <integer> bit mask controlling SCN_MODIFIED notifications (see Scintilla docs).
-	autoCStops		<String> or nil. The characters which cancel an auto-completion list when typed..
-	autoCFillups		<String> or nil. The characters which accept the selection in an auto-completion list when typed.
-	whitespaceBackcolor	<Color> or nil. The colour of the background drawn behind whitespace.
-	whitespaceForecolor	<Color> or nil. The colour of the glyphs used to display visible whitespace.
-	selectionBackcolor 	<Color>. The background colour used to highlight the selection (default is grey).
-	selectionForecolor	<Color> or nil. The foreground colour used to highlight the selection.
-	indicators			<Array> of <ScintillaIndicator>s
-	callTipBackcolor	<Color> or nil. The background colour for calltips.
-	callTipForecolor		<Color> or nil. The foreground colour for calltips.
-	callTipHighlightColor	<Color> or nil. The hilight colour for calltips.
-	braceChars		<String> of characters considered to be brace characters, e.g. ''()[]{}''.
-	whitespaceChars	<String> of characters considered to be whitespace.
-	scFlags			<integer>. Various flags.
-	allTextStyles		<IdentityDictionary> mapping <Symbol>ic lexer name to dictionary of text styles for that lexer.
-	foldMarginColor 		<Color> or nil. The fold margin background colour (if visible)
-	foldMarginHiColor 	<Color> or nil. The fold margin hilight colour (if visible).
-	foldMarkerStyle		<Symbol>. Name of the fold (outlining) marker style employed in the fold margin.
-	foldFlags			<integer>. Lexer fold flags.
-	extraStyleBits		<integer>
-	keyBindings		<IdentityDictionary> mapping Dolphin accelerator key codes to Scintilla messages. nil by default (default bindings are used).
-	indicatorStyles		<IdentityDictionary> mapping <Symbol> or <integer> indicator style names to <ScintillaIndicatorStyle>s.
+## Instance Variables:
+  `this`				`ExternalHandle`. C++ ''this'' pointer for direct function invocation.
+  `currentTextStyles`		`IdentityDictionary` mapping `Symbol` to `ScintillaTextStyle` for the current lexer.
+  `styleIdMap`			`Array` 
+  `styler`				`ScintillaStyler`. Responsible for dynamically ''colouring'' text in the view.
+  `markerDefinitions`	`IdentityDictionary` mapping `Symbol` to `ScintillaMarkerDefinition`.
+  `markers`			`IdentitySet` of `ScintillaMarker`s. All markers currently set in the view.
+  `wordChars`			`String` of characters considered to be word delimiters.
+  `registeredImages`	`LookupTable`
+  `modificationEventMask` `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
+  `autoCStops`			`String` or `nil`. The characters which cancel an auto-completion list when typed..
+  `autoCFillups`		`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
+  `whitespaceBackcolor`	`Color` or `nil.` The colour of the background drawn behind whitespace.
+  `whitespaceForecolor`	`Color` or `nil.` The colour of the glyphs used to display visible whitespace.
+  `selectionBackcolor` 	`Color`. The background colour used to highlight the selection (default is grey).
+  `selectionForecolor`	`Color` or `nil`. The foreground colour used to highlight the selection.
+  `indicators`			`Array` of `ScintillaIndicator`s
+  `callTipTabWidth`		`integer` width of tabs in call tips
+  `punctuation`			`String` or nil.
+  `callTipHighlightColor`	`Color` or `nil`. The hilight colour for calltips.
+  `braceChars`			`String` of characters considered to be brace characters, e.g. ''(){}\[\]''.
+  `whitespaces`			`String` of characters considered to be whitespace.
+  `scFlags`				`<integer>`. Various flags.
+  `allTextStyles`			`IdentityDictionary` mapping `Symbol`ic lexer name to dictionary of text styles for that lexer.
+  `foldMarginColor` 	`Color` or `nil`. The fold margin background colour (if visible)
+  `foldMarginHiColor`	`Color` or `nil`. The fold margin hilight colour (if visible).
+  `foldMarkerStyle`		`Symbol`. Name of the fold (outlining) marker style employed in the fold margin.
+  `foldFlags`			`<integer>`. Lexer fold flags.
+  `codePage`			`<integer>` code page identifier - only CP_ACP or CP_UTF8 are supported
+  `keyBindings`			`IdentityDictionary` mapping Dolphin accelerator key codes to Scintilla messages. `nil` by default (default bindings are used).
+  `indicatorStyles`		`IdentityDictionary` mapping `Symbol` or `<integer>` indicator style names to `ScintillaIndicatorStyle`s.
+  `secondarySelectionForecolor`
+  `secondarySelectionBackcolor`
+  `annotationStyles`		`IdentityDictionary`
 
-Class Variables:
-	BackgroundDwellEvents	<integer>
-	BraceHighlightMask	<integer> bit mask for accessing brace highlighting flag.
-	CodePages			<IdentityDictionary> mapping <integer> to <Symbol>
-	Commands		<IdentityDictionary> mapping Dolphin accelerator key codes to command symbols.
-	DefaultTextStyles	<IdentityDictionary> of default text style maps by lexer name.
-	FoldingMask		<integer> bit mask for access the folding (outlining) enabled flag.
-	FoldMarkerStyles	<Array> of <Symbol>s being the names of the standard fold marker styles.
-	KeyBindings		<IdentityDictionary> mapping Dolphin accelerator key codes to Scintilla messages for the default key bindings.
-	Lexers			<Array> of <Symbol>. Lexer language names.
-	ScnMap			<Array> of <Symbol>s being the selectors of the notification event handlers.
-	Whitespaces		<String>
-	IndentationGuideStyles	<Array> of <Symbol>s being the names of the indentation guide styles.
-	AutoCompletionSortModes <Array> of <Symbol>s being the names of the possible sorting modes for autocompletion lists.
+## Class Variables:
+  `AnnotationStylesOffset`	`<integer>`
+  `BackgroundDwellEvents`	`<integer>`
+  `BraceHilightingMask`		`<integer>` bit mask for accessing brace highlighting flag.
+  `CodePages`				`IdentityDictionary` mapping `<integer>` to `Symbol`
+  `DefaultCallTipTabWidth`	`<integer>`
+  `DefaultKeyBindings`		`LookupTable` mapping Dolphin accelerator key codes to Scintilla messages for the default key bindings.
+  `DefaultTextStyles`			`IdentityDictionary` of default text style maps by lexer name.
+  `MarginStylesOffset`		`<integer>`
+  `FoldingMask`			`<integer>` bit mask for access the folding (outlining) enabled flag.
 '!
 !ScintillaView categoriesForClass!MVP-Views! !
 !ScintillaView methodsFor!
@@ -113,8 +112,8 @@ Class Variables:
 acceptAutoCompletion
 	"User has selected an item so remove the list and insert the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCCOMPLETE
@@ -124,9 +123,9 @@ acceptAutoCompletion
 activeHotspotBackcolor
 	"Get the back colour for active hotspots."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETHOTSPOTACTIVEBACK
@@ -143,9 +142,9 @@ activeHotspotBackcolor: aColorOrNil
 activeHotspotForecolor
 	"Get the fore colour for active hotspots."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETHOTSPOTACTIVEFORE
@@ -228,9 +227,9 @@ addSelectionRange: anInterval
 anchorPosition
 	"Returns the position of the opposite end of the selection to the caret."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETANCHOR
@@ -241,8 +240,8 @@ anchorPosition: anchorInteger
 	"Set the selection anchor to a position. The anchor is the opposite end of the selection
 	from the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETANCHOR
@@ -374,9 +373,9 @@ annotationStylesFromStyleBytes: aByteArray
 annotationStylesOffset
 	"Get the start of the range of style numbers used for annotations"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONGETSTYLEOFFSET
@@ -386,8 +385,8 @@ annotationStylesOffset
 annotationStylesOffset: styleInteger
 	"Get the start of the range of style numbers used for annotations"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONSETSTYLEOFFSET
@@ -398,9 +397,6 @@ appendText: aString
 	"Append the <String> argument to the end of the document without changing the selection."
 
 	self modifyText: [self sciAppendText: aString size text: aString]!
-
-applyAttributes: aSequenceableCollection 
-	aSequenceableCollection keysAndValuesDo: [:i :each | each applyToView: self at: i - 1]!
 
 applyStyle: aSymbol toNext: anInteger 
 	"Apply the named style to the next anInteger characters (from the current styling position)
@@ -430,9 +426,9 @@ applyTextStylesForLexer: aSymbol
 areAdditionalCaretsVisible
 	"Whether additional carets are visible"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETADDITIONALCARETSVISIBLE
@@ -442,8 +438,8 @@ areAdditionalCaretsVisible
 areAdditionalCaretsVisible: additionalCaretsVisibleBoolean
 	"Set whether additional carets are visible"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALCARETSVISIBLE
@@ -453,9 +449,9 @@ areAdditionalCaretsVisible: additionalCaretsVisibleBoolean
 areAllLinesVisible
 	"Are all lines visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETALLLINESVISIBLE
@@ -465,9 +461,9 @@ areAllLinesVisible
 areHotspotsSingleLine
 	"Get the HotspotSingleLine property"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETHOTSPOTSINGLELINE
@@ -477,8 +473,8 @@ areHotspotsSingleLine
 areHotspotsSingleLine: singleLineBoolean
 	"Limit hotspots to single line so hotspots on two lines don't merge."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHOTSPOTSINGLELINE
@@ -550,9 +546,9 @@ autoCompletionImageIdSeparator: aCharacter
 autoCompletionListPosition
 	"Retrieve the position of the caret when the auto-completion list was displayed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCPOSSTART
@@ -587,8 +583,8 @@ backcolorChanged
 backspace
 	"Delete the selection or if no selection, the character before the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELETEBACK
@@ -599,8 +595,8 @@ backspaceNoLine
 	"Delete the selection or if no selection, the character before the caret. Will not delete
 	the character before at the start of a line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELETEBACKNOTLINE
@@ -610,9 +606,9 @@ backspaceNoLine
 backspaceUnindents
 	"Does a backspace pressed when caret is within indentation unindent?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETBACKSPACEUNINDENTS
@@ -622,8 +618,8 @@ backspaceUnindents
 backspaceUnindents: bsUnIndentsBoolean
 	"Sets whether a backspace pressed when caret is within indentation unindents."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETBACKSPACEUNINDENTS
@@ -651,8 +647,8 @@ basicClearContainerIndicators
 basicClearSelection
 	"Private - Clear the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEAR
@@ -686,8 +682,8 @@ basicPositionAtLine: lineInteger
 basicRemoveAllAnnotations
 	"Private - Clear the annotations from all lines"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONCLEARALL
@@ -697,8 +693,8 @@ basicRemoveAllAnnotations
 basicSelectAll
 	"Private - Select all the text in the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SELECTALL
@@ -719,8 +715,8 @@ basicSelectionStart: anchorInteger end: caretInteger
 basicUndo
 	"Private - Undo one action in the undo history."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_UNDO
@@ -730,8 +726,8 @@ basicUndo
 beginUndoGroup
 	"Start a sequence of actions that is undone and redone as a unit. May be nested."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BEGINUNDOACTION
@@ -894,17 +890,14 @@ callTipBackcolor
 
 	^self callTipStyle backcolor!
 
-callTipBackcolor: aColorOrNil 
+callTipBackcolor: aColorOrNil
 	"Set the background <Color> of the call tips box. If the argument is nil then the default
 	colour (white) is set."
 
-	self callTipStyle backcolor: (aColorOrNil isNil 
-				ifTrue: 
-					[self sciCallTipSetBack: nil.
-					Color white]
-				ifFalse: 
-					[self sciCallTipSetBack: aColorOrNil asRGB.
-					aColorOrNil])!
+	| color |
+	color := aColorOrNil ifNil: [Color white].
+	self sciCallTipSetBack: color asRGB.
+	self callTipStyle backcolor: color!
 
 callTipForecolor
 	"Answer the foreground <Color> of the unhighlighted text in call tips. By default this is
@@ -912,38 +905,33 @@ callTipForecolor
 
 	^self callTipStyle forecolor!
 
-callTipForecolor: aColorOrNil 
+callTipForecolor: aColorOrNil
 	"Set the foreground <Color> of the unhighlighted text in call tips. If the argument is nil
 	then the default colour (dark grey) is set."
 
-	self callTipStyle backcolor: (aColorOrNil isNil 
-				ifTrue: 
-					[self sciCallTipSetFore: nil.
-					Color darkGray]
-				ifFalse: 
-					[self sciCallTipSetFore: aColorOrNil asRGB.
-					aColorOrNil])!
+	| color |
+	color := aColorOrNil ifNil: [Color darkGray].
+	self sciCallTipSetFore: color asRGB.
+	self callTipStyle backcolor: color!
 
 callTipHighlightColor
-	"Answer the foreground <Color> for the highlighted part of the call tip. By default this is
-	dark blue."
+	"Answer the foreground <Color> for the highlighted part of the call tip, or nil if unspecified and the control's default (dark blue) should be used."
 
-	^callTipHighlightColor ifNil: [Color darkBlue]!
+	^callTipHighlightColor!
 
 callTipHighlightColor: aColorOrNil 
 	"Set the foreground <Color> for the highlighted part of the call tip. If the argument is nil
 	then the default colour (dark blue) is set."
 
-	(callTipHighlightColor := aColorOrNil) isNil 
-		ifTrue: [self sciCallTipSetForeHlt: nil]
-		ifFalse: [self setCallTipHighlightColor]!
+	callTipHighlightColor := aColorOrNil.
+	self setCallTipHighlightColor!
 
 callTipPosition
 	"Retrieve the position where the caret was before displaying the call tip."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPPOSSTART
@@ -969,8 +957,8 @@ callTipTabWidth: anInteger
 cancelAutoCompletion
 	"Remove the auto-completion list from the screen."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCCANCEL
@@ -980,8 +968,8 @@ cancelAutoCompletion
 cancelCallTip
 	"Remove the call tip from the screen."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPCANCEL
@@ -991,8 +979,8 @@ cancelCallTip
 cancelModes
 	"Cancel any modes such as call tip or auto-completion list display."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CANCEL
@@ -1002,9 +990,9 @@ cancelModes
 canHScroll
 	"Is the horizontal scroll bar visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETHSCROLLBAR
@@ -1031,9 +1019,9 @@ canPaste
 canRedo
 	"Are there any redoable actions in the undo history?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CANREDO
@@ -1050,8 +1038,8 @@ canScrollPastEnd: endAtLastLineBoolean
 	"Sets the scroll range so that maximum scroll position has the last line at the bottom of
 	the view (default). Setting this to false allows scrolling one page below the last line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETENDATLASTLINE
@@ -1061,9 +1049,9 @@ canScrollPastEnd: endAtLastLineBoolean
 canUndo
 	"Are there any undoable actions in the undo history?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CANUNDO
@@ -1073,9 +1061,9 @@ canUndo
 canVScroll
 	"Is the vertical scroll bar visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETVSCROLLBAR
@@ -1085,9 +1073,9 @@ canVScroll
 caretForecolor
 	"Get the foreground colour of the caret."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETCARETFORE
@@ -1097,14 +1085,14 @@ caretForecolor
 caretForecolor: foreRGB 
 	"Set the foreground colour of the caret."
 
-	self sciSetCaretFore: (foreRGB ifNil: [Color black]) asRGB!
+	self sciSetCaretFore: (foreRGB ifNil: [RGB black]) asRGB!
 
 caretPeriod
 	"Get the time in milliseconds that the caret is on and off."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETPERIOD
@@ -1114,8 +1102,8 @@ caretPeriod
 caretPeriod: periodMillisecondsInteger
 	"Get the time in milliseconds that the caret is on and off. 0 = steady on."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETPERIOD
@@ -1125,9 +1113,9 @@ caretPeriod: periodMillisecondsInteger
 caretPosition
 	"Returns the position of the caret."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCURRENTPOS
@@ -1137,8 +1125,8 @@ caretPosition
 caretPosition: caretInteger
 	"Set caret to a position, while removing any existing selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEMPTYSELECTION
@@ -1163,9 +1151,9 @@ caretStyle: aSymbol
 caretWidth
 	"Returns the width of the insert mode caret."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETWIDTH
@@ -1182,8 +1170,8 @@ caretWidth: anInteger
 centerCurrentLine
 	"Centre current line in window."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VERTICALCENTRECARET
@@ -1215,8 +1203,8 @@ charNearestPosition: aPoint
 clearAll
 	"Delete all text in the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARALL
@@ -1252,7 +1240,7 @@ codePage
 codePage: aSymbol
 	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8, #ansi)."
 
-	codePage := aSymbol ifNil: [0] ifNotNil: [CodePages keyAtValue: aSymbol].
+	codePage := aSymbol ifNil: [CP_ACP] ifNotNil: [CodePages keyAtValue: aSymbol].
 	self sciSetCodePage: codePage!
 
 columnFromPosition: anInteger
@@ -1289,8 +1277,8 @@ controlCharacter: aCharacter
 convertToLowercase
 	"Transform the selection to lower case."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LOWERCASE
@@ -1300,8 +1288,8 @@ convertToLowercase
 convertToUppercase
 	"Transform the selection to upper case."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_UPPERCASE
@@ -1311,8 +1299,8 @@ convertToUppercase
 copyLine
 	"Copy the line containing the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINECOPY
@@ -1327,8 +1315,8 @@ copyRange: anInterval
 copySelection
 	"Copy the selection to the clipboard."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COPY
@@ -1338,8 +1326,8 @@ copySelection
 copySelectionOrLine
 	"Copy the selection, if selection empty copy the line with the caret"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COPYALLOWLINE
@@ -1349,9 +1337,9 @@ copySelectionOrLine
 currentIndicatorId
 	"Get the current indicator"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETINDICATORCURRENT
@@ -1361,8 +1349,8 @@ currentIndicatorId
 currentIndicatorId: indicatorInteger
 	"Set the indicator used for IndicatorFillRange and IndicatorClearRange"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETINDICATORCURRENT
@@ -1372,9 +1360,9 @@ currentIndicatorId: indicatorInteger
 currentIndicatorValue
 	"Get the current indicator value"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETINDICATORVALUE
@@ -1384,8 +1372,8 @@ currentIndicatorValue
 currentIndicatorValue: valueInteger
 	"Set the value used for IndicatorFillRange"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETINDICATORVALUE
@@ -1395,9 +1383,9 @@ currentIndicatorValue: valueInteger
 currentLineAlpha
 	"Get the background alpha of the caret line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETLINEBACKALPHA
@@ -1407,8 +1395,8 @@ currentLineAlpha
 currentLineAlpha: alphaInteger
 	"Set background alpha of the caret line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEBACKALPHA
@@ -1418,9 +1406,9 @@ currentLineAlpha: alphaInteger
 currentLineBackcolor
 	"Get the colour of the background of the line containing the caret."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETCARETLINEBACK
@@ -1433,14 +1421,14 @@ currentLineBackcolor: backRGB
 	#currentLineAlpha to some reasonable transparency value (100 or less), or the background
 	will obliterate the text."
 
-	self sciSetCaretLineBack: (backRGB ifNil: [Color yellow]) asRGB!
+	self sciSetCaretLineBack: (backRGB ifNil: [RGB yellow]) asRGB!
 
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETLINEFRAME
@@ -1451,8 +1439,8 @@ currentLineFrameWidth: widthInteger
 	"Display the caret line framed. Set width !!= 0 to enable this option and width = 0 to
 	disable it."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEFRAME
@@ -1487,8 +1475,8 @@ currentLineText
 cutLine
 	"Cut the line containing the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINECUT
@@ -1498,8 +1486,8 @@ cutLine
 cutSelection
 	"Cut the selection to the clipboard."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CUT
@@ -1570,8 +1558,8 @@ defaultFoldTextTag
 defaultFoldTextTag: textString
 	"Set the default fold display text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETDEFAULTFOLDDISPLAYTEXT
@@ -1596,8 +1584,8 @@ defaultModEventMask
 	changes, or the 'before' notifications of deletions and insertions, and various others.
 	These can be enabled on a per-instance basis though."
 
-	^##(SC_MODEVENTMASKALL - SC_MOD_CHANGEMARKER - SC_MOD_BEFOREDELETE - SC_MOD_BEFOREINSERT 
-		- SC_MOD_CHANGEINDICATOR - SC_MOD_CONTAINER)!
+	"Enable only the set that we actually respond to"
+	^##(SC_MOD_INSERTTEXT|SC_MOD_DELETETEXT|SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN)!
 
 defaultTextStylesFor: aSymbol 
 	"Answer the default text style settings to be used for newly configured lexers."
@@ -1624,8 +1612,8 @@ defaultWindowStyle
 deleteLine
 	"Delete the line containing the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEDELETE
@@ -1635,8 +1623,8 @@ deleteLine
 deleteMarkers: markerNumberInteger
 	"Delete all markers with a particular number from all lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERDELETEALL
@@ -1646,8 +1634,8 @@ deleteMarkers: markerNumberInteger
 deleteToEndOfLine
 	"Delete forwards from the current position to the end of the line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELLINERIGHT
@@ -1657,8 +1645,8 @@ deleteToEndOfLine
 deleteToEndOfWord
 	"Delete the word to the right of the caret, but not the trailing non-word characters."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELWORDRIGHTEND
@@ -1668,8 +1656,8 @@ deleteToEndOfWord
 deleteToNextWord
 	"Delete the word to the right of the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELWORDRIGHT
@@ -1679,8 +1667,8 @@ deleteToNextWord
 deleteToStartOfLine
 	"Delete back from the current position to the start of the line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELLINELEFT
@@ -1690,8 +1678,8 @@ deleteToStartOfLine
 deleteToStartOfWord
 	"Delete the word to the left of the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELWORDLEFT
@@ -1726,8 +1714,8 @@ describeKeywordSets
 destroyAutoCompletionListImages
 	"Clear all the registered XPM images."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARREGISTEREDIMAGES
@@ -1737,16 +1725,31 @@ destroyAutoCompletionListImages
 drawingPhases
 	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
 
-	^self class drawingPhases at: self sciGetPhasesDraw + 1!
+	^self class drawingPhases at: self sciGetPhasesDraw + 1 ifAbsent: [#two]!
 
-drawingPhases: aSymbol 
-	^self sciSetPhasesDraw: (self class drawingPhases indexOf: aSymbol) - 1!
+drawingPhases: aSymbol
+	^self sciSetPhasesDraw: (aSymbol
+				ifNil: [SC_PHASES_TWO]
+				ifNotNil: [(self class drawingPhases keyAtValue: aSymbol) - 1])!
+
+drawingTechnology
+	"Answer the <Symbol> name of the technology to be used for drawing."
+
+	^self class drawingTechnologies at: self sciGetTechnology + 1 ifAbsent: [#default]!
+
+drawingTechnology: aSymbol
+	| tech |
+	tech := aSymbol
+				ifNil: [SC_TECHNOLOGY_DEFAULT]
+				ifNotNil: [(self class drawingTechnologies keyAtValue: aSymbol) - 1].
+	self sciSetTechnology: tech.
+	self isDrawingBuffered: tech = SC_TECHNOLOGY_DEFAULT!
 
 duplicateLine
 	"Duplicate the current line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEDUPLICATE
@@ -1756,8 +1759,8 @@ duplicateLine
 duplicateSelection
 	"Duplicate the selection. If selection empty duplicate the line containing the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SELECTIONDUPLICATE
@@ -1767,25 +1770,19 @@ duplicateSelection
 edgeColor
 	"Retrieve the colour used in edge indication."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETEDGECOLOUR
 						wParam: 0
 						lParam: 0)]!
 
-edgeColor: edgeColourRGB
-	"Change the colour used in edge indication."
+edgeColor: aColorOrNil
+	"Set the edge colour used to highlight long lines (those longer than the #edgeColumn setting)."
 
-	this isNil
-		ifFalse: 
-			[ScintillaLibrary default
-				directFunction: this
-				msg: SCI_SETEDGECOLOUR
-				wParam: edgeColourRGB asParameter
-				lParam: 0]!
+	self sciSetEdgeColour: (aColorOrNil ifNil: [RGB fromInteger: 16rC0C0C0]) asRGB!
 
 edgeColumn
 	"Answer the one-based <integer> index of the column considered to be the rightmost edge of
@@ -1815,7 +1812,8 @@ edgeMode: aSymbol
 		#multiline - similar to #line but allows a configurable set of vertical lines to be shown simultaneously. 
 	N.B. #background mode should be used in views with proportional fonts in preference to #line."
 
-	^self sciSetEdgeMode: (self class edgeModes keyAtValue: aSymbol) - 1!
+	^self
+		sciSetEdgeMode: (aSymbol ifNil: [0] ifNotNil: [(self class edgeModes keyAtValue: aSymbol) - 1])!
 
 editStyles
 	(ScintillaTextStylesDialog createOn: (self aspectValue: #textStyles))
@@ -1825,8 +1823,8 @@ editStyles
 emptyUndoBuffer
 	"Delete the undo history."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_EMPTYUNDOBUFFER
@@ -1838,21 +1836,23 @@ endOfLineMode
 	This controls the character, or characters in the case of #crlf, inserted into the text when
 	the carriage return key is pressed."
 
-	^self class lineEndings at: self sciGetEOLMode + 1!
+	^self class lineEndings at: self sciGetEOLMode + 1 ifAbsent: [#crlf]!
 
-endOfLineMode: aSymbol 
+endOfLineMode: aSymbol
 	"Set the End of Line mode of the receiver. The <Symbol> argument must be one of #crlf, #cr,
 	or #lf. This controls the character, or characters in the case of #crlf, inserted into the
 	text when the carriage return key is pressed. Any pre-existing text is unaffected by changes
 	to the end-of-line mode, but see also #canonicalizeLineEndings:."
 
-	self sciSetEOLMode: (self class lineEndings indexOf: aSymbol) - 1!
+	self sciSetEOLMode: (aSymbol
+				ifNil: [SC_EOL_CRLF]
+				ifNotNil: [(self class lineEndings keyAtValue: aSymbol) - 1])!
 
 endUndoGroup
 	"End a sequence of actions that is undone and redone as a unit."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ENDUNDOACTION
@@ -1894,9 +1894,9 @@ enUpdate
 errorStatus
 	"Get error status."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSTATUS
@@ -1906,8 +1906,8 @@ errorStatus
 errorStatus: statusInteger
 	"Change error status - 0 = OK."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSTATUS
@@ -1917,8 +1917,8 @@ errorStatus: statusInteger
 extendDown
 	"Move caret down one line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEDOWNEXTEND
@@ -1928,8 +1928,8 @@ extendDown
 extendLeft
 	"Move caret left one character extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARLEFTEXTEND
@@ -1939,8 +1939,8 @@ extendLeft
 extendPageDown
 	"Move caret one page down extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEDOWNEXTEND
@@ -1950,8 +1950,8 @@ extendPageDown
 extendPageUp
 	"Move caret one page up extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEUPEXTEND
@@ -1961,8 +1961,8 @@ extendPageUp
 extendParaDown
 	"Extend selection down one paragraph (delimited by empty lines)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PARADOWNEXTEND
@@ -1972,8 +1972,8 @@ extendParaDown
 extendParaUp
 	"Extend selection up one paragraph (delimited by empty lines)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PARAUPEXTEND
@@ -1983,8 +1983,8 @@ extendParaUp
 extendRectangleDown
 	"Move caret down one line, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEDOWNRECTEXTEND
@@ -1994,8 +1994,8 @@ extendRectangleDown
 extendRectangleLeft
 	"Move caret left one character, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARLEFTRECTEXTEND
@@ -2005,8 +2005,8 @@ extendRectangleLeft
 extendRectanglePageDown
 	"Move caret one page down, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEDOWNRECTEXTEND
@@ -2016,8 +2016,8 @@ extendRectanglePageDown
 extendRectanglePageUp
 	"Move caret one page up, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEUPRECTEXTEND
@@ -2027,8 +2027,8 @@ extendRectanglePageUp
 extendRectangleRight
 	"Move caret right one character, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARRIGHTRECTEXTEND
@@ -2039,8 +2039,8 @@ extendRectangleToEndOfLine
 	"Move caret to last position on line, extending rectangular selection to new caret
 	position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDRECTEXTEND
@@ -2051,8 +2051,8 @@ extendRectangleToStartOfLine
 	"Move caret to first position on line, extending rectangular selection to new caret
 	position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMERECTEXTEND
@@ -2063,8 +2063,8 @@ extendRectangleToVcHome
 	"Move caret to before first visible character on line. If already there move to first
 	character on line. In either case, extend rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMERECTEXTEND
@@ -2074,8 +2074,8 @@ extendRectangleToVcHome
 extendRectangleUp
 	"Move caret up one line, extending rectangular selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEUPRECTEXTEND
@@ -2085,8 +2085,8 @@ extendRectangleUp
 extendRight
 	"Move caret right one character extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARRIGHTEXTEND
@@ -2097,8 +2097,8 @@ extendStutteredPageDown
 	"Move caret to bottom of page, or one page down if already at bottom of page, extending
 	selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STUTTEREDPAGEDOWNEXTEND
@@ -2109,8 +2109,8 @@ extendStutteredPageUp
 	"Move caret to top of page, or one page up if already at top of page, extending selection to
 	new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STUTTEREDPAGEUPEXTEND
@@ -2120,8 +2120,8 @@ extendStutteredPageUp
 extendToEndOfDisplayLine
 	"Move caret to last position on display line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDDISPLAYEXTEND
@@ -2131,8 +2131,8 @@ extendToEndOfDisplayLine
 extendToEndOfDocument
 	"Move caret to last position in document extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCUMENTENDEXTEND
@@ -2142,8 +2142,8 @@ extendToEndOfDocument
 extendToEndOfLine
 	"Move caret to last position on line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDEXTEND
@@ -2154,8 +2154,8 @@ extendToEndOfNextWord
 	"Move caret right one word, position cursor at end of word, extending selection to new caret
 	position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDRIGHTENDEXTEND
@@ -2166,8 +2166,8 @@ extendToEndOfPreviousWord
 	"Move caret left one word, position cursor at end of word, extending selection to new caret
 	position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDLEFTENDEXTEND
@@ -2177,8 +2177,8 @@ extendToEndOfPreviousWord
 extendToEndOfWord
 	"Move caret right one word extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDRIGHTEXTEND
@@ -2188,8 +2188,8 @@ extendToEndOfWord
 extendToEndOfWordPart
 	"Move to the next change in capitalisation extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDPARTRIGHTEXTEND
@@ -2200,8 +2200,8 @@ extendToEndOfWrappedLine
 	"Like LineEndExtend but when word-wrap is enabled extends first to end of display line
 	LineEndDisplayExtend, then to start of document line LineEndExtend."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDWRAPEXTEND
@@ -2211,8 +2211,8 @@ extendToEndOfWrappedLine
 extendToStartOfDisplayLine
 	"Move caret to first position on display line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMEDISPLAYEXTEND
@@ -2222,8 +2222,8 @@ extendToStartOfDisplayLine
 extendToStartOfDocument
 	"Move caret to first position in document extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCUMENTSTARTEXTEND
@@ -2233,8 +2233,8 @@ extendToStartOfDocument
 extendToStartOfLine
 	"Move caret to first position on line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMEEXTEND
@@ -2244,8 +2244,8 @@ extendToStartOfLine
 extendToStartOfVcDisplayLine
 	"Like VCHomeDisplay but extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMEDISPLAYEXTEND
@@ -2255,8 +2255,8 @@ extendToStartOfVcDisplayLine
 extendToStartOfWord
 	"Move caret left one word extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDLEFTEXTEND
@@ -2266,8 +2266,8 @@ extendToStartOfWord
 extendToStartOfWordPart
 	"Move to the previous change in capitalisation extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDPARTLEFTEXTEND
@@ -2278,8 +2278,8 @@ extendToStartOfWrappedLine
 	"Like HomeExtend but when word-wrap is enabled extends first to start of display line
 	HomeDisplayExtend, then to start of document line HomeExtend."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMEWRAPEXTEND
@@ -2289,8 +2289,8 @@ extendToStartOfWrappedLine
 extendToVcHome
 	"Like VCHome but extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMEEXTEND
@@ -2301,8 +2301,8 @@ extendToWrappedVcHome
 	"Like VCHomeExtend but when word-wrap is enabled extends first to start of display line
 	VCHomeDisplayExtend, then behaves like VCHomeExtend."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMEWRAPEXTEND
@@ -2312,8 +2312,8 @@ extendToWrappedVcHome
 extendUp
 	"Move caret up one line extending selection to new caret position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEUPEXTEND
@@ -2323,9 +2323,9 @@ extendUp
 extraAscent
 	"Get extra ascent for each line"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETEXTRAASCENT
@@ -2335,8 +2335,8 @@ extraAscent
 extraAscent: extraAscentInteger
 	"Set extra ascent for each line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEXTRAASCENT
@@ -2346,9 +2346,9 @@ extraAscent: extraAscentInteger
 extraDescent
 	"Get extra descent for each line"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETEXTRADESCENT
@@ -2358,8 +2358,8 @@ extraDescent
 extraDescent: extraDescentInteger
 	"Set extra descent for each line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEXTRADESCENT
@@ -2403,8 +2403,8 @@ find: aString range: anInterval flags: anInteger
 findAutoCompletionEntry: selectString
 	"Select the item in the auto-completion list that starts with a string."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSELECT
@@ -2419,15 +2419,11 @@ findMatchingBrace: anInteger
 
 	^self sciBraceMatch: anInteger maxReStyle: 0!
 
-findString: aString startingAt: anInteger 
-
-	self 
-		sciSetTargetRange: anInteger 
-		end: self textLength + 1.
-	^(self
-		sciSearchInTarget: aString size 
-		text: aString) + 1
-!
+findString: aString startingAt: anInteger
+	self
+		sciSetSearchFlags: SCFIND_MATCHCASE;
+		sciSetTargetRange: anInteger end: self textLength + 1.
+	^(self sciSearchInTarget: aString size text: aString) + 1!
 
 findStyleStart: aSymbol before: anInteger 
 	"Answer the one-based <integer> index of the first character in a block of the style named
@@ -2525,14 +2521,14 @@ foldMarkerStyle
 
 	^foldMarkerStyle!
 
-foldMarkerStyle: aSymbol 
+foldMarkerStyle: aSymbol
 	| folders |
 	folders := aSymbol ifNil: [#()] ifNotNil: [ScintillaMarkerDefinition perform: aSymbol].
-	markerDefinitions := markerDefinitions 
+	markerDefinitions := markerDefinitions
 				reject: [:each | each basicId between: SC_MARKNUM_FOLDEREND and: SC_MARKNUM_FOLDEROPEN].
 	folders do: 
-			[:each | 
-			each applyToView: self.
+			[:each |
+			each applyToView: self initializing: false.
 			markerDefinitions at: each name put: each].
 	foldMarkerStyle := aSymbol!
 
@@ -2558,10 +2554,12 @@ fontQuality
 
 	^self class fontQualities at: self sciGetFontQuality + 1 ifAbsent: [#default]!
 
-fontQuality: aSymbol 
+fontQuality: aSymbol
 	"Choose the quality level for text from the FontQuality enumeration."
 
-	self sciSetFontQuality: (self class fontQualities keyAtValue: aSymbol) - 1!
+	self sciSetFontQuality: (aSymbol
+				ifNil: [SC_EFF_QUALITY_DEFAULT]
+				ifNotNil: [(self class fontQualities keyAtValue: aSymbol) - 1])!
 
 forecolor: aColorOrNil
 	"Sets the background colour of the receiver to aColorOrNil. If aColorOrNil is nil then
@@ -2584,8 +2582,8 @@ formatRectangle
 formFeed
 	"Insert a Form Feed character."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FORMFEED
@@ -2639,8 +2637,8 @@ getRawAnnotations
 goto: caretInteger
 	"Set caret to a position and ensure it is visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GOTOPOS
@@ -2660,9 +2658,9 @@ handle: aHandleOrNil
 hangingIndent
 	"Retrive the start indent for wrapped lines."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWRAPSTARTINDENT
@@ -2672,8 +2670,8 @@ hangingIndent
 hangingIndent: indentInteger
 	"Set the start indent for wrapped lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPSTARTINDENT
@@ -2683,9 +2681,9 @@ hangingIndent: indentInteger
 hasAdditionalSelectionTyping
 	"Whether typing can be performed into multiple selections"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETADDITIONALSELECTIONTYPING
@@ -2695,8 +2693,8 @@ hasAdditionalSelectionTyping
 hasAdditionalSelectionTyping: additionalSelectionTypingBoolean
 	"Set whether typing can be performed into multiple selections"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELECTIONTYPING
@@ -2706,9 +2704,9 @@ hasAdditionalSelectionTyping: additionalSelectionTypingBoolean
 hasBlinkingSecondaryCarets
 	"Whether additional carets will blink"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETADDITIONALCARETSBLINK
@@ -2718,8 +2716,8 @@ hasBlinkingSecondaryCarets
 hasBlinkingSecondaryCarets: additionalCaretsBlinkBoolean
 	"Set whether additional carets will blink"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALCARETSBLINK
@@ -2758,9 +2756,9 @@ hasSelection
 hasVisibleLineEndings
 	"Are the end of line characters visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETVIEWEOL
@@ -2770,8 +2768,8 @@ hasVisibleLineEndings
 hasVisibleLineEndings: visibleBoolean
 	"Make the end of line characters visible or invisible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVIEWEOL
@@ -2796,8 +2794,8 @@ hideIndicators
 hideSelection: hideBoolean
 	"Draw the selection either highlighted or in normal (non-highlighted) style."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HIDESELECTION
@@ -2807,8 +2805,8 @@ hideSelection: hideBoolean
 highlightBracesAt: posAInteger and: posBInteger
 	"Highlight the characters at two positions."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEHIGHLIGHT
@@ -2830,9 +2828,9 @@ highlightFindMatch: anInterval
 highlightGuide
 	"Get the highlighted indentation guide column."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETHIGHLIGHTGUIDE
@@ -2842,8 +2840,8 @@ highlightGuide
 highlightGuide: columnInteger
 	"Set the highlighted indentation guide column. 0 = no highlighted guide."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHIGHLIGHTGUIDE
@@ -2853,8 +2851,8 @@ highlightGuide: columnInteger
 highlightMismatchedBrace: posInteger
 	"Highlight the character at a position indicating there is no matching brace."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEBADLIGHT
@@ -2864,9 +2862,9 @@ highlightMismatchedBrace: posInteger
 hoverTime
 	"Retrieve the time the mouse must sit still to generate a mouse dwell event."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMOUSEDWELLTIME
@@ -2876,8 +2874,8 @@ hoverTime
 hoverTime: periodMillisecondsInteger
 	"Sets the time the mouse must sit still to generate a mouse dwell event."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMOUSEDWELLTIME
@@ -2885,35 +2883,33 @@ hoverTime: periodMillisecondsInteger
 				lParam: 0]!
 
 identifyTextMatchingSelectionWithStyleName: aSymbol
-
-	| index newIndicators selection selectionStart |
+	| index newIndicators selection selectionStart selectionRange oldIndicators |
 	"get a list of indicators that aren't related to secondary selection"
-	newIndicators := self indicators reject: [:each | each styleName = aSymbol]. 
+	oldIndicators := self indicators.
+	newIndicators := oldIndicators reject: [:each | each styleName == aSymbol].
+	selectionRange := self selectionRange.
 	"If no current selection, then we are done"
-	(selection := self selection) isEmpty ifTrue: [
-		self indicators: newIndicators.
-		^self
-	].
-
-	newIndicators = #() ifTrue: [newIndicators := OrderedCollection new].
-	index := 0.
-	selectionStart := self selectionRange start.
-	[
-		index := self findString: selection startingAt: index + 1.
-		0 < index.
-	] whileTrue: [
-		| end |
-		end := index + selection size - 1.
-		index ~~ selectionStart ifTrue: [
-			newIndicators add: (ScintillaIndicator
-				styleName: aSymbol
-				range: (index to: end) 
-				tag: nil).
-			index := end + 1.
-		].
-	].
-	self indicators: newIndicators.
-!
+	selectionRange isEmpty
+		ifTrue: 
+			[newIndicators size = oldIndicators size ifFalse: [self indicators: newIndicators].
+			^self].
+	newIndicators := newIndicators asOrderedCollection.
+	selectionStart := selectionRange start.
+	selection := self selection.
+	index := 1.
+	
+	[index := self findString: selection startingAt: index.
+	0 < index] whileTrue: 
+				[| end |
+				end := index + selection size - 1.
+				index ~~ selectionStart
+					ifTrue: 
+						[newIndicators addLast: (ScintillaIndicator
+									styleName: aSymbol
+									range: (index to: end)
+									tag: nil)].
+				index := end + 1].
+	self indicators: newIndicators!
 
 idleStylingMode
 	^self class idleStylingModes at: self sciGetIdleStyling + 1!
@@ -2941,19 +2937,19 @@ imageIndexForIcon: anIcon
 			type]!
 
 imeMode
-	^self class imeInteractionModes at: self sciGetIMEInteraction + 1!
+	^self class imeInteractionModes at: self sciGetIMEInteraction + 1 ifAbsent: [#windowed]!
 
-imeMode: aSymbol 
-	self 
-		sciSetIMEInteraction: (self class imeInteractionModes indexOf: aSymbol
-				ifAbsent: [self error: 'Invalid IME interaction mode ' , aSymbol printString]) - 1!
+imeMode: aSymbol
+	self sciSetIMEInteraction: (aSymbol
+				ifNil: [SC_IME_WINDOWED]
+				ifNotNil: [(self class imeInteractionModes keyAtValue: aSymbol) - 1])!
 
 indent
 	"If selection is empty or all on one line replace the selection with a tab character. If
 	more than one line selected, indent the lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TAB
@@ -2963,9 +2959,9 @@ indent
 indentation
 	"Retrieve indentation size."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETINDENT
@@ -2975,8 +2971,8 @@ indentation
 indentation: indentSizeInteger
 	"Set the number of spaces used for one level of indentation."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETINDENT
@@ -3020,9 +3016,9 @@ indicatorIdFromName: anIntegerOrSymbol
 indicatorMaskAt: posInteger
 	"Are any indicators present at pos?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORALLONFOR
@@ -3090,7 +3086,7 @@ initializeControl
 		marginStylesOffset: MarginStylesOffset;
 		updateIndicatorStyles;
 		updateTextStyles;
-		updateMarkerDefinitions.
+		initializeMarkerDefinitions.
 	styler ifNotNil: [self invalidateStyling].
 	codePage == 0 ifFalse: [self sciSetCodePage: codePage].
 	self setCharacterClasses.
@@ -3108,6 +3104,9 @@ initializeControl
 	foldFlags ifNotNil: [self setFoldFlags].
 	keyBindings ifNotNil: [self updateKeyBindings]!
 
+initializeMarkerDefinitions
+	markerDefinitions do: [:each | each applyToView: self initializing: true]!
+
 initializeRegisteredImages
 	registeredImages := LookupTable new!
 
@@ -3119,8 +3118,8 @@ insertText: aString at: anInteger
 insertText: lengthInteger from: textString
 	"Add text to the document at current position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDTEXT
@@ -3143,9 +3142,9 @@ isAccessibilityEnabled: aBoolean
 isActiveHotspotUnderlined
 	"Get whether underlining for active hotspots."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETHOTSPOTACTIVEUNDERLINE
@@ -3155,8 +3154,8 @@ isActiveHotspotUnderlined
 isActiveHotspotUnderlined: underlineBoolean
 	"Enable / Disable underlining active hotspots."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHOTSPOTACTIVEUNDERLINE
@@ -3166,9 +3165,9 @@ isActiveHotspotUnderlined: underlineBoolean
 isAutoCompletionActive
 	"Is there an auto-completion list visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCACTIVE
@@ -3178,9 +3177,9 @@ isAutoCompletionActive
 isAutoCompletionCancelledAtStart
 	"Retrieve whether auto-completion cancelled by backspacing before start."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETCANCELATSTART
@@ -3191,8 +3190,8 @@ isAutoCompletionCancelledAtStart: cancelBoolean
 	"Should the auto-completion list be cancelled if the user backspaces to a position before
 	where the box was created."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETCANCELATSTART
@@ -3202,9 +3201,9 @@ isAutoCompletionCancelledAtStart: cancelBoolean
 isAutoCompletionCancelledWhenNoMatch
 	"Retrieve whether or not autocompletion is hidden automatically when nothing matches."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETAUTOHIDE
@@ -3214,8 +3213,8 @@ isAutoCompletionCancelledWhenNoMatch
 isAutoCompletionCancelledWhenNoMatch: autoHideBoolean
 	"Set whether or not autocompletion is hidden automatically when nothing matches."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETAUTOHIDE
@@ -3225,9 +3224,9 @@ isAutoCompletionCancelledWhenNoMatch: autoHideBoolean
 isAutoCompletionCaseInsensitive
 	"Retrieve state of ignore case flag."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETIGNORECASE
@@ -3237,8 +3236,8 @@ isAutoCompletionCaseInsensitive
 isAutoCompletionCaseInsensitive: ignoreCaseBoolean
 	"Set whether case is significant when performing auto-completion searches."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETIGNORECASE
@@ -3248,9 +3247,9 @@ isAutoCompletionCaseInsensitive: ignoreCaseBoolean
 isAutoCompletionSingleMatchChosen
 	"Retrieve whether a single item auto-completion list automatically choose the item."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETCHOOSESINGLE
@@ -3260,8 +3259,8 @@ isAutoCompletionSingleMatchChosen
 isAutoCompletionSingleMatchChosen: chooseSingleBoolean
 	"Should a single item auto-completion list automatically choose the item."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETCHOOSESINGLE
@@ -3272,9 +3271,9 @@ isAutoCompletionTruncating
 	"Retrieve whether or not autocompletion deletes any word characters after the inserted text
 	upon completion."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETDROPRESTOFWORD
@@ -3285,8 +3284,8 @@ isAutoCompletionTruncating: dropRestOfWordBoolean
 	"Set whether or not autocompletion deletes any word characters after the inserted text upon
 	completion."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETDROPRESTOFWORD
@@ -3326,8 +3325,8 @@ isBraceHighlightingEnabled: aBoolean
 isCallTipAboveText: aboveBoolean
 	"Set position of calltip, above or below text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETPOSITION
@@ -3337,9 +3336,9 @@ isCallTipAboveText: aboveBoolean
 isCallTipActive
 	"Is there an active call tip?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPACTIVE
@@ -3359,9 +3358,9 @@ isCaretSticky: aBoolean
 isCurrentLineHighlighted
 	"Is the background of the line containing the caret in a different colour?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETLINEVISIBLE
@@ -3371,8 +3370,8 @@ isCurrentLineHighlighted
 isCurrentLineHighlighted: showBoolean
 	"Display the background of the line containing the caret in a different colour."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEVISIBLE
@@ -3382,9 +3381,9 @@ isCurrentLineHighlighted: showBoolean
 isCurrentLineHighlightedAlways
 	"Is the caret line always visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETLINEVISIBLEALWAYS
@@ -3394,8 +3393,8 @@ isCurrentLineHighlightedAlways
 isCurrentLineHighlightedAlways: alwaysVisibleBoolean
 	"Sets the caret line to always visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEVISIBLEALWAYS
@@ -3410,9 +3409,9 @@ isCurrentLineMarkedWith: aSymbol
 isDrawingBuffered
 	"Is drawing done first into a buffer or direct to the screen?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETBUFFEREDDRAW
@@ -3423,12 +3422,38 @@ isDrawingBuffered: bufferedBoolean
 	"If drawing is buffered then each line of text is drawn into a bitmap buffer before drawing
 	it to the screen to avoid flicker."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETBUFFEREDDRAW
 				wParam: bufferedBoolean asParameter
+				lParam: 0]!
+
+isDrawingTwoPhase
+	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
+
+	#deprecated.
+	^this
+		ifNil: [false]
+		ifNotNil: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETTWOPHASEDRAW
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+isDrawingTwoPhase: twoPhaseBoolean
+	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
+	foreground. This avoids chopping off characters that overlap the next run."
+
+	#deprecated.
+	this
+		ifNotNil: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETTWOPHASEDRAW
+				wParam: twoPhaseBoolean asParameter
 				lParam: 0]!
 
 isFoldingEnabled
@@ -3465,9 +3490,9 @@ isIndicator: anIntegerOrSymbol setAt: positionInteger
 isInSelectionExtendMode
 	"Get whether or not regular caret moves will extend or reduce the selection."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMOVEEXTENDSSELECTION
@@ -3495,9 +3520,9 @@ isLineVisible: anInteger
 isMouseWheelCaptured
 	"Get whether mouse wheel can be active outside the window."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMOUSEWHEELCAPTURES
@@ -3507,8 +3532,8 @@ isMouseWheelCaptured
 isMouseWheelCaptured: capturesBoolean
 	"Set whether the mouse wheel can be active outside the window."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMOUSEWHEELCAPTURES
@@ -3518,9 +3543,9 @@ isMouseWheelCaptured: capturesBoolean
 isMultiSelect
 	"Whether multiple selections can be made"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMULTIPLESELECTION
@@ -3530,8 +3555,8 @@ isMultiSelect
 isMultiSelect: multipleSelectionBoolean
 	"Set whether multiple selections can be made"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMULTIPLESELECTION
@@ -3541,9 +3566,9 @@ isMultiSelect: multipleSelectionBoolean
 isOvertypeEnabled
 	"Returns true if overtype mode is active otherwise false is returned."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETOVERTYPE
@@ -3553,8 +3578,8 @@ isOvertypeEnabled
 isOvertypeEnabled: overTypeBoolean
 	"Set to overtype (true) or insert mode."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETOVERTYPE
@@ -3564,9 +3589,9 @@ isOvertypeEnabled: overTypeBoolean
 isScrollWidthTracking
 	"Retrieve whether the scroll width tracks wide lines."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSCROLLWIDTHTRACKING
@@ -3576,8 +3601,8 @@ isScrollWidthTracking
 isScrollWidthTracking: trackingBoolean
 	"Sets whether the maximum width line displayed is used to set scroll width."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSCROLLWIDTHTRACKING
@@ -3587,9 +3612,9 @@ isScrollWidthTracking: trackingBoolean
 isSelectionBackcolorExtendedToEndOfLine
 	"Is the selection end of line filled?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELEOLFILLED
@@ -3599,8 +3624,8 @@ isSelectionBackcolorExtendedToEndOfLine
 isSelectionBackcolorExtendedToEndOfLine: filledBoolean
 	"Set the selection to have its end of line filled or not."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELEOLFILLED
@@ -3610,9 +3635,9 @@ isSelectionBackcolorExtendedToEndOfLine: filledBoolean
 isSelectionEmpty
 	"Is every selected range empty?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONEMPTY
@@ -3629,9 +3654,9 @@ isSelectionKept
 isSelectionRectangular
 	"Is the selection rectangular? The alternative is the more common stream selection."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SELECTIONISRECTANGLE
@@ -3658,9 +3683,9 @@ isStylingEnabled: aBoolean
 isTextModified
 	"Is the document different from when it was last saved?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMODIFY
@@ -3676,9 +3701,9 @@ isTextModified: aBoolean
 isUndoEnabled
 	"Is undo history being collected?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETUNDOCOLLECTION
@@ -3688,8 +3713,8 @@ isUndoEnabled
 isUndoEnabled: collectUndoBoolean
 	"Choose between collecting actions into the undo history and discarding them."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETUNDOCOLLECTION
@@ -3699,9 +3724,9 @@ isUndoEnabled: collectUndoBoolean
 isUsingTabs
 	"Retrieve whether tabs will be used in indentation."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETUSETABS
@@ -3712,8 +3737,8 @@ isUsingTabs: useTabsBoolean
 	"Indentation will only use space characters if useTabs is false, otherwise it will use a
 	combination of tabs and spaces."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETUSETABS
@@ -3723,8 +3748,8 @@ isUsingTabs: useTabsBoolean
 joinTarget
 	"Join the lines in the target."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESJOIN
@@ -3781,12 +3806,14 @@ layoutCachingMode
 	the most effect, making dynamic line wrap as much as 20 times faster but this requires 7
 	times the memory required by the document contents plus around 80 bytes per line.'"    
 
-	^self class layoutCachingModes at: self sciGetLayoutCache+1!
+	^self class layoutCachingModes at: self sciGetLayoutCache+1 ifAbsent: [#none]!
 
 layoutCachingMode: aSymbol
 	"Set the layout caching mode - see #layoutCachingMode for further details."
 
-	^self sciSetLayoutCache: (self class layoutCachingModes keyAtValue: aSymbol)-1!
+	^self sciSetLayoutCache: (aSymbol
+				ifNil: [SC_CACHE_NONE]
+				ifNotNil: [(self class layoutCachingModes keyAtValue: aSymbol) - 1])!
 
 lexer
 	"Answer the symbolic name of the lexer currently configured for the receiver.
@@ -3863,9 +3890,9 @@ lexerPropertyNames
 lineCount
 	"Returns the number of lines in the document. There is always at least one."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINECOUNT
@@ -3927,9 +3954,9 @@ lineScrollBy: anInteger
 linesOnScreen
 	"Retrieves the number of lines completely visible."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESONSCREEN
@@ -3954,19 +3981,23 @@ margins
 
 	^(1 to: self marginCount) collect: [:index | ScintillaMargin view: self index: index - 1]!
 
-margins: aSequenceableCollection 
+margins: aSequenceableCollection
 	"Set the receiver's collection of margins to the <sequencedReadableCollection> of <ScintillaMargin> 
 	argument."
 
 	self marginCount: aSequenceableCollection size.
-	self applyAttributes: aSequenceableCollection!
+	aSequenceableCollection keysAndValuesDo: 
+			[:i :each |
+			each
+				basicId: i - 1;
+				applyToView: self initializing: false]!
 
 marginStylesOffset
 	"Get the start of the range of style numbers used for margin text"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINGETSTYLEOFFSET
@@ -3976,8 +4007,8 @@ marginStylesOffset
 marginStylesOffset: styleInteger
 	"Get the start of the range of style numbers used for margin text"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINSETSTYLEOFFSET
@@ -4010,7 +4041,7 @@ markerDefinitions
 							id notNil and: [id between: SC_MARKNUM_FOLDEREND and: MARKER_MAX]]].
 	^defns asSortedCollection: ScintillaAttribute sortByIdBlock!
 
-markerDefinitions: aCollection 
+markerDefinitions: aCollection
 	"Set the margin markers currently defined for this view to be those in the <Collection> of
 	<ScintillaMarkerDefinition>s argument. See #markerDefinitions for further information."
 
@@ -4023,9 +4054,9 @@ markerDefinitions: aCollection
 	available := (userIds difference: allocated) readStream.
 	markerDefinitions := markerDefinitions reject: [:each | userIds includes: each basicId].
 	aCollection do: 
-			[:each | 
+			[:each |
 			each basicId isNil ifTrue: [each basicId: available next].
-			each applyToView: self.
+			each applyToView: self initializing: false.
 			markerDefinitions at: each name put: each]!
 
 markers
@@ -4055,9 +4086,9 @@ markerTypesOnLine: anInteger
 maxCompletionListHeight
 	"Set the maximum height, in rows, of auto-completion and user lists."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETMAXHEIGHT
@@ -4067,8 +4098,8 @@ maxCompletionListHeight
 maxCompletionListHeight: rowCountInteger
 	"Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETMAXHEIGHT
@@ -4078,9 +4109,9 @@ maxCompletionListHeight: rowCountInteger
 maxCompletionListWidth
 	"Get the maximum width, in characters, of auto-completion and user lists."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETMAXWIDTH
@@ -4091,8 +4122,8 @@ maxCompletionListWidth: characterCountInteger
 	"Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to
 	autosize to fit longest item, which is the default."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETMAXWIDTH
@@ -4133,8 +4164,8 @@ modifyText: niladicBlock
 moveCaretInsideView
 	"Move the caret inside current view if it's not there already."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MOVECARETINSIDEVIEW
@@ -4144,8 +4175,8 @@ moveCaretInsideView
 moveDown
 	"Move caret down one line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEDOWN
@@ -4155,8 +4186,8 @@ moveDown
 moveLeft
 	"Move caret left one character."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARLEFT
@@ -4166,8 +4197,8 @@ moveLeft
 movePageDown
 	"Move caret one page down."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEDOWN
@@ -4177,8 +4208,8 @@ movePageDown
 movePageUp
 	"Move caret one page up."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PAGEUP
@@ -4188,8 +4219,8 @@ movePageUp
 moveParaDown
 	"Move caret down one paragraph (delimited by empty lines)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PARADOWN
@@ -4199,8 +4230,8 @@ moveParaDown
 moveParaUp
 	"Move caret up one paragraph (delimited by empty lines)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PARAUP
@@ -4210,8 +4241,8 @@ moveParaUp
 moveRight
 	"Move caret right one character."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARRIGHT
@@ -4221,8 +4252,8 @@ moveRight
 moveSelectedLinesDown
 	"Move the selected lines down one line, shifting the line below before the selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MOVESELECTEDLINESDOWN
@@ -4232,8 +4263,8 @@ moveSelectedLinesDown
 moveSelectedLinesUp
 	"Move the selected lines up one line, shifting the line above after the selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MOVESELECTEDLINESUP
@@ -4243,8 +4274,8 @@ moveSelectedLinesUp
 moveStutteredPageDown
 	"Move caret to bottom of page, or one page down if already at bottom of page."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STUTTEREDPAGEDOWN
@@ -4254,8 +4285,8 @@ moveStutteredPageDown
 moveStutteredPageUp
 	"Move caret to top of page, or one page up if already at top of page."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STUTTEREDPAGEUP
@@ -4265,8 +4296,8 @@ moveStutteredPageUp
 moveToEndOfDisplayLine
 	"Move caret to last position on display line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDDISPLAY
@@ -4276,8 +4307,8 @@ moveToEndOfDisplayLine
 moveToEndOfDocument
 	"Move caret to last position in document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCUMENTEND
@@ -4287,8 +4318,8 @@ moveToEndOfDocument
 moveToEndOfLine
 	"Move caret to last position on line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEEND
@@ -4298,8 +4329,8 @@ moveToEndOfLine
 moveToEndOfNextWord
 	"Move caret right one word, position cursor at end of word."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDRIGHTEND
@@ -4309,8 +4340,8 @@ moveToEndOfNextWord
 moveToEndOfPreviousWord
 	"Move caret left one word, position cursor at end of word."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDLEFTEND
@@ -4320,8 +4351,8 @@ moveToEndOfPreviousWord
 moveToEndOfWord
 	"Move caret right one word."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDRIGHT
@@ -4331,8 +4362,8 @@ moveToEndOfWord
 moveToEndOfWordPart
 	"Move to the change next in capitalisation."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDPARTRIGHT
@@ -4343,8 +4374,8 @@ moveToEndOfWrappedLine
 	"Like LineEnd but when word-wrap is enabled goes first to end of display line
 	LineEndDisplay, then to start of document line LineEnd."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEENDWRAP
@@ -4354,8 +4385,8 @@ moveToEndOfWrappedLine
 moveToStartOfDisplayLine
 	"Move caret to first position on display line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMEDISPLAY
@@ -4365,8 +4396,8 @@ moveToStartOfDisplayLine
 moveToStartOfDocument
 	"Move caret to first position in document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCUMENTSTART
@@ -4376,8 +4407,8 @@ moveToStartOfDocument
 moveToStartOfLine
 	"Move caret to first position on line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOME
@@ -4387,8 +4418,8 @@ moveToStartOfLine
 moveToStartOfWord
 	"Move caret left one word."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDLEFT
@@ -4398,8 +4429,8 @@ moveToStartOfWord
 moveToStartOfWordPart
 	"Move to the previous change in capitalisation."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDPARTLEFT
@@ -4410,8 +4441,8 @@ moveToStartOfWrappedLine
 	"Like Home but when word-wrap is enabled goes first to start of display line HomeDisplay,
 	then to start of document line Home."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HOMEWRAP
@@ -4422,8 +4453,8 @@ moveToVcHome
 	"Move caret to before first visible character on line. If already there move to first
 	character on line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOME
@@ -4434,8 +4465,8 @@ moveToVcStartOfDisplayLine
 	"Move caret to before first visible character on display line. If already there move to
 	first character on display line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMEDISPLAY
@@ -4446,8 +4477,8 @@ moveToWrappedVcHome
 	"Like VCHome but when word-wrap is enabled goes first to start of display line
 	VCHomeDisplay, then behaves like VCHome."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VCHOMEWRAP
@@ -4457,8 +4488,8 @@ moveToWrappedVcHome
 moveUp
 	"Move caret up one line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEUP
@@ -4470,16 +4501,18 @@ multiPasteMode
 
 	^self class multiPasteModes at: self sciGetMultiPaste + 1 ifAbsent: [#once]!
 
-multiPasteMode: aSymbol 
+multiPasteMode: aSymbol
 	"Set the effect of pasting when there are multiple selections.."
 
-	^self sciSetMultiPaste: (self class multiPasteModes keyAtValue: aSymbol) - 1!
+	^self sciSetMultiPaste: (aSymbol
+				ifNil: [SC_MULTIPASTE_ONCE]
+				ifNotNil: [(self class multiPasteModes keyAtValue: aSymbol) - 1])!
 
 newLine
 	"Insert a new line, may use a CRLF, CR or LF depending on EOL mode."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_NEWLINE
@@ -4566,6 +4599,12 @@ onViewCreated
 	self getDirectPointer.
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
+	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but the interaction with auto-completion is just too clunky. There is a noticeable delay when the auto-completion list is shown and refreshed. This is may be because Scintilla is still using a (GDI) ListBox for the auto-completion. Interaction when drawing over other GDI windows is also rather flishy-flashy. In the single-line search presenter the Scintilla view frequently fails to paint text (when the text is slightly too large vertically), and the auto-completion list comes up at the wrong location (over the text)."
+	(false and: [VMLibrary default isWindowsVistaOrGreater])
+		ifTrue: 
+			[self
+				sciSetTechnology: SC_TECHNOLOGY_DIRECTWRITE;
+				fontQuality: #lcdOptimized].
 	super onViewCreated.
 	self initializeControl!
 
@@ -4578,8 +4617,8 @@ passwordCharacter: aCharacter
 pasteClipboard
 	"Paste the contents of the clipboard into the document replacing the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PASTE
@@ -4639,9 +4678,9 @@ plainTextFrom: startInteger to: stopInteger
 positionCacheSize
 	"How many entries are allocated to the position cache?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPOSITIONCACHE
@@ -4651,8 +4690,8 @@ positionCacheSize
 positionCacheSize: sizeInteger
 	"Set number of entries in position cache"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPOSITIONCACHE
@@ -4689,9 +4728,9 @@ printAnnotationStyleBytes: aScintillaAnnotation on: aWriteStream
 printColourMode
 	"Returns the print colour mode."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPRINTCOLOURMODE
@@ -4701,8 +4740,8 @@ printColourMode
 printColourMode: modeInteger
 	"Modify colours when printing for clearer printed text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPRINTCOLOURMODE
@@ -4712,9 +4751,9 @@ printColourMode: modeInteger
 printMagnification
 	"Returns the print magnification."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPRINTMAGNIFICATION
@@ -4724,8 +4763,8 @@ printMagnification
 printMagnification: magnificationInteger
 	"Sets the print magnification added to the point size of each style for printing."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPRINTMAGNIFICATION
@@ -4800,8 +4839,8 @@ rangeOfIndicator: anIntegerOrSymbol at: positionInteger
 redo
 	"Redoes the next action on the undo history."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REDO
@@ -4811,8 +4850,8 @@ redo
 rememberCaretX
 	"Set the last x chosen value to be the caret x position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHOOSECARETX
@@ -4827,8 +4866,8 @@ removeAllAnnotations
 removeAllEdges
 	"Clear all vertical edges."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MULTIEDGECLEARALL
@@ -4844,8 +4883,8 @@ removeAllMarkers
 removeAllStyling
 	"Set all style bytes to 0, remove all folding information."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARDOCUMENTSTYLE
@@ -4903,8 +4942,8 @@ removeMarkersOfType: aSymbol
 removeSelections
 	"Clear selections to a single empty stream selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARSELECTIONS
@@ -4944,8 +4983,8 @@ restyleAll
 restyleFrom: startInteger to: endInteger
 	"Colourise a segment of the document using the current lexing language."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COLOURISE
@@ -4955,8 +4994,8 @@ restyleFrom: startInteger to: endInteger
 reverseSelectedLines
 	"Reverse order of selected lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEREVERSE
@@ -4986,8 +5025,8 @@ rgbaBitsFromBitmap: aDIBSection
 rotateSelection
 	"Set the main selection to the next selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ROTATESELECTION
@@ -4997,8 +5036,8 @@ rotateSelection
 sciAddRefDocument: docInteger
 	"Private - Extend life of document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDREFDOCUMENT
@@ -5008,8 +5047,8 @@ sciAddRefDocument: docInteger
 sciAddSelection: caretInteger anchor: anchorInteger
 	"Private - Add a selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDSELECTION
@@ -5019,8 +5058,8 @@ sciAddSelection: caretInteger anchor: anchorInteger
 sciAddStyledText: lengthInteger c: cByteArray
 	"Private - Add array of cells to document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDSTYLEDTEXT
@@ -5030,8 +5069,8 @@ sciAddStyledText: lengthInteger c: cByteArray
 sciAddTabStop: lineInteger x: xInteger
 	"Private - Add an explicit tab stop for a line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDTABSTOP
@@ -5041,8 +5080,8 @@ sciAddTabStop: lineInteger x: xInteger
 sciAddUndoAction: tokenInteger flags: flagsInteger
 	"Private - Add a container action to the undo stack"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ADDUNDOACTION
@@ -5052,8 +5091,8 @@ sciAddUndoAction: tokenInteger flags: flagsInteger
 sciAllocate: bytesInteger
 	"Private - Enlarge the document to a particular size of text bytes."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ALLOCATE
@@ -5063,9 +5102,9 @@ sciAllocate: bytesInteger
 sciAllocateExtendedStyles: numberStylesInteger
 	"Private - Allocate some extended (>255) style numbers and return the start of the range"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ALLOCATEEXTENDEDSTYLES
@@ -5075,8 +5114,8 @@ sciAllocateExtendedStyles: numberStylesInteger
 sciAllocateLineCharacterIndex: lineCharacterIndexInteger
 	"Private - Request line character index be created or its use count increased."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ALLOCATELINECHARACTERINDEX
@@ -5087,9 +5126,9 @@ sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
 	"Private - Allocate a set of sub styles for a particular base style, returning start of
 	range"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ALLOCATESUBSTYLES
@@ -5099,9 +5138,9 @@ sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
 sciAnnotationGetLines: lineInteger
 	"Private - Get the number of annotation lines for a line"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONGETLINES
@@ -5159,9 +5198,9 @@ sciAnnotationGetText: lineInteger
 sciAnnotationGetVisible
 	"Private - Get the visibility for the annotations for a view"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONGETVISIBLE
@@ -5171,8 +5210,8 @@ sciAnnotationGetVisible
 sciAnnotationSetStyles: lineInteger styles: stylesString
 	"Private - Set the annotation styles for a line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONSETSTYLES
@@ -5182,8 +5221,8 @@ sciAnnotationSetStyles: lineInteger styles: stylesString
 sciAnnotationSetText: lineInteger text: textString
 	"Private - Set the annotation text for a line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONSETTEXT
@@ -5193,8 +5232,8 @@ sciAnnotationSetText: lineInteger text: textString
 sciAnnotationSetVisible: visibleInteger
 	"Private - Set the visibility for the annotations for a view"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ANNOTATIONSETVISIBLE
@@ -5204,8 +5243,8 @@ sciAnnotationSetVisible: visibleInteger
 sciAppendText: lengthInteger text: textString
 	"Private - Append a string to the end of the document without changing the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_APPENDTEXT
@@ -5215,8 +5254,8 @@ sciAppendText: lengthInteger text: textString
 sciAssignCmdKey: keyDefinitionInteger sciCommand: sciCommandInteger
 	"Private - When key+modifier combination keyDefinition is pressed perform sciCommand."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ASSIGNCMDKEY
@@ -5226,9 +5265,9 @@ sciAssignCmdKey: keyDefinitionInteger sciCommand: sciCommandInteger
 sciAutoCGetCaseInsensitiveBehaviour
 	"Private - Get auto-completion case insensitive behaviour."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR
@@ -5238,9 +5277,9 @@ sciAutoCGetCaseInsensitiveBehaviour
 sciAutoCGetCurrent
 	"Private - Get currently selected item position in the auto-completion list"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETCURRENT
@@ -5250,9 +5289,9 @@ sciAutoCGetCurrent
 sciAutoCGetMulti
 	"Private - Retrieve the effect of autocompleting when there are multiple selections."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETMULTI
@@ -5262,9 +5301,9 @@ sciAutoCGetMulti
 sciAutoCGetOrder
 	"Private - Get the way autocompletion lists are ordered."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETORDER
@@ -5274,9 +5313,9 @@ sciAutoCGetOrder
 sciAutoCGetSeparator
 	"Private - Retrieve the auto-completion list separator character."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETSEPARATOR
@@ -5286,9 +5325,9 @@ sciAutoCGetSeparator
 sciAutoCGetTypeSeparator
 	"Private - Retrieve the auto-completion list type-separator character."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCGETTYPESEPARATOR
@@ -5299,8 +5338,8 @@ sciAutoCSetCaseInsensitiveBehaviour: behaviourInteger
 	"Private - Set auto-completion case insensitive behaviour to either prefer case-sensitive
 	matches or have no preference."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR
@@ -5311,8 +5350,8 @@ sciAutoCSetFillUps: characterSetString
 	"Private - Define a set of characters that when typed will cause the autocompletion to
 	choose the selected item."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETFILLUPS
@@ -5322,8 +5361,8 @@ sciAutoCSetFillUps: characterSetString
 sciAutoCSetMulti: multiInteger
 	"Private - Change the effect of autocompleting when there are multiple selections."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETMULTI
@@ -5333,8 +5372,8 @@ sciAutoCSetMulti: multiInteger
 sciAutoCSetOrder: orderInteger
 	"Private - Set the way autocompletion lists are ordered."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETORDER
@@ -5345,8 +5384,8 @@ sciAutoCSetSeparator: separatorCharacterInteger
 	"Private - Change the separator character in the string setting up an auto-completion list.
 	Default is space but can be changed if items contain space."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETSEPARATOR
@@ -5357,8 +5396,8 @@ sciAutoCSetTypeSeparator: separatorCharacterInteger
 	"Private - Change the type-separator character in the string setting up an auto-completion
 	list. Default is '?' but can be changed if items contain '?'."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSETTYPESEPARATOR
@@ -5369,8 +5408,8 @@ sciAutoCShow: lengthEnteredInteger itemList: itemListString
 	"Private - Display a auto-completion list. The lengthEntered parameter indicates how many
 	characters before the caret should be used to provide context."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSHOW
@@ -5380,8 +5419,8 @@ sciAutoCShow: lengthEnteredInteger itemList: itemListString
 sciAutoCStops: characterSetString
 	"Private - Define a set of character that when typed cancel the auto-completion list."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_AUTOCSTOPS
@@ -5392,8 +5431,8 @@ sciBraceBadLightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight non matching brace instead of changing its
 	style."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEBADLIGHTINDICATOR
@@ -5404,8 +5443,8 @@ sciBraceHighlightIndicator: useSettingBoolean indicator: indicatorInteger
 	"Private - Use specified indicator to highlight matching braces instead of changing their
 	style."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEHIGHLIGHTINDICATOR
@@ -5416,9 +5455,9 @@ sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
 	"Private - Find the position of a matching brace or INVALID_POSITION if no match. The
 	maxReStyle must be 0 for now. It may be defined in a future release."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BRACEMATCH
@@ -5428,8 +5467,8 @@ sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
 sciCallTipSetBack: backRGB
 	"Private - Set the background colour for the call tip."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETBACK
@@ -5439,8 +5478,8 @@ sciCallTipSetBack: backRGB
 sciCallTipSetFore: foreRGB
 	"Private - Set the foreground colour for the call tip."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETFORE
@@ -5450,8 +5489,8 @@ sciCallTipSetFore: foreRGB
 sciCallTipSetForeHlt: foreRGB
 	"Private - Set the foreground colour for the highlighted part of the call tip."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETFOREHLT
@@ -5461,8 +5500,8 @@ sciCallTipSetForeHlt: foreRGB
 sciCallTipSetHlt: highlightStartInteger highlightEnd: highlightEndInteger
 	"Private - Highlight a segment of the definition."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETHLT
@@ -5472,8 +5511,8 @@ sciCallTipSetHlt: highlightStartInteger highlightEnd: highlightEndInteger
 sciCallTipSetPosStart: posStartInteger
 	"Private - Set the start position in order to change when backspacing removes the calltip."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETPOSSTART
@@ -5483,8 +5522,8 @@ sciCallTipSetPosStart: posStartInteger
 sciCallTipShow: posInteger definition: definitionString
 	"Private - Show a call tip containing a definition near position pos."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSHOW
@@ -5494,8 +5533,8 @@ sciCallTipShow: posInteger definition: definitionString
 sciCallTipUseStyle: tabSizeInteger
 	"Private - Enable use of STYLE_CALLTIP and set call tip tab size in pixels."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPUSESTYLE
@@ -5505,9 +5544,9 @@ sciCallTipUseStyle: tabSizeInteger
 sciCanPaste
 	"Private - Will a paste succeed?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CANPASTE
@@ -5517,8 +5556,8 @@ sciCanPaste
 sciChangeInsertion: lengthInteger text: textString
 	"Private - Change the text that is being inserted in response to SC_MOD_INSERTCHECK"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHANGEINSERTION
@@ -5529,9 +5568,9 @@ sciChangeLexerState: startInteger end: endInteger
 	"Private - Indicate that the internal state of a lexer has changed over a range and
 	therefore there may be a need to redraw."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHANGELEXERSTATE
@@ -5541,9 +5580,9 @@ sciChangeLexerState: startInteger end: endInteger
 sciCharPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARPOSITIONFROMPOINT
@@ -5554,9 +5593,9 @@ sciCharPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position of a character from a point within the window. Return
 	INVALID_POSITION if not close to text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CHARPOSITIONFROMPOINTCLOSE
@@ -5566,8 +5605,8 @@ sciCharPositionFromPointClose: xInteger y: yInteger
 sciClearAllCmdKeys
 	"Private - Drop all key mappings."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARALLCMDKEYS
@@ -5577,8 +5616,8 @@ sciClearAllCmdKeys
 sciClearCmdKey: keyDefinitionInteger
 	"Private - When key+modifier combination keyDefinition is pressed do nothing."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARCMDKEY
@@ -5588,8 +5627,8 @@ sciClearCmdKey: keyDefinitionInteger
 sciClearRepresentation: encodedCharacterString
 	"Private - Remove a character representation."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARREPRESENTATION
@@ -5599,8 +5638,8 @@ sciClearRepresentation: encodedCharacterString
 sciClearTabStops: lineInteger
 	"Private - Clear explicit tabstops on a line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARTABSTOPS
@@ -5611,9 +5650,9 @@ sciContractedFoldNext: lineStartInteger
 	"Private - Find the next line at or after lineStart that is a contracted fold header line.
 	Return -1 when no more lines."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CONTRACTEDFOLDNEXT
@@ -5623,8 +5662,8 @@ sciContractedFoldNext: lineStartInteger
 sciConvertEOLs: eolModeInteger
 	"Private - Convert all line endings in the document to one mode."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CONVERTEOLS
@@ -5634,8 +5673,8 @@ sciConvertEOLs: eolModeInteger
 sciCopyRange: startInteger end: endInteger
 	"Private - Copy a range of text to the clipboard. Positions are clipped into the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COPYRANGE
@@ -5645,9 +5684,9 @@ sciCopyRange: startInteger end: endInteger
 sciCountCharacters: startInteger end: endInteger
 	"Private - Count characters between two positions."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COUNTCHARACTERS
@@ -5657,9 +5696,9 @@ sciCountCharacters: startInteger end: endInteger
 sciCountCodeUnits: startInteger end: endInteger
 	"Private - Count code units between two positions."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_COUNTCODEUNITS
@@ -5670,9 +5709,9 @@ sciCreateDocument: bytesInteger documentOptions: documentOptionsInteger
 	"Private - Create a new document object. Starts with reference count of 1 and not selected
 	into editor."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CREATEDOCUMENT
@@ -5682,8 +5721,8 @@ sciCreateDocument: bytesInteger documentOptions: documentOptionsInteger
 sciDeleteRange: startInteger lengthDelete: lengthDeleteInteger
 	"Private - Delete a range of text in the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DELETERANGE
@@ -5742,9 +5781,9 @@ sciDistanceToSecondaryStyles
 	"Private - Where styles are duplicated by a feature such as active/inactive code return the
 	distance between the two types."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DISTANCETOSECONDARYSTYLES
@@ -5754,9 +5793,9 @@ sciDistanceToSecondaryStyles
 sciDocLineFromVisible: displayLineInteger
 	"Private - Find the document line of a display line taking hidden lines into account."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DOCLINEFROMVISIBLE
@@ -5766,8 +5805,8 @@ sciDocLineFromVisible: displayLineInteger
 sciDropSelectionN: selectionInteger
 	"Private - Drop one selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DROPSELECTIONN
@@ -5802,8 +5841,8 @@ sciEncodedFromUTF8: utf8String
 sciEnsureVisible: lineInteger
 	"Private - Ensure a particular line is visible by expanding any header line hiding it."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ENSUREVISIBLE
@@ -5814,8 +5853,8 @@ sciEnsureVisibleEnforcePolicy: lineInteger
 	"Private - Ensure a particular line is visible by expanding any header line hiding it. Use
 	the currently set visibility policy to determine which range to display."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ENSUREVISIBLEENFORCEPOLICY
@@ -5826,8 +5865,8 @@ sciExpandChildren: lineInteger level: levelInteger
 	"Private - Expand a fold header and all children. Use the level argument instead of the
 	line's current level."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_EXPANDCHILDREN
@@ -5838,9 +5877,9 @@ sciFindColumn: lineInteger column: columnInteger
 	"Private - Find the position of a column on a line taking into account tabs and multi-byte
 	characters. If beyond end of line, return line end position."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDCOLUMN
@@ -5850,8 +5889,8 @@ sciFindColumn: lineInteger column: columnInteger
 sciFindIndicatorFlash: startInteger end: endInteger
 	"Private - On OS X, flash a find indicator, then fade out."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDINDICATORFLASH
@@ -5861,8 +5900,8 @@ sciFindIndicatorFlash: startInteger end: endInteger
 sciFindIndicatorHide
 	"Private - On OS X, hide the find indicator."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDINDICATORHIDE
@@ -5872,8 +5911,8 @@ sciFindIndicatorHide
 sciFindIndicatorShow: startInteger end: endInteger
 	"Private - On OS X, show a find indicator."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDINDICATORSHOW
@@ -5883,9 +5922,9 @@ sciFindIndicatorShow: startInteger end: endInteger
 sciFindText: searchFlagsInteger ft: ftFINDTEXTEX
 	"Private - Find some text in the document."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FINDTEXT
@@ -5895,8 +5934,8 @@ sciFindText: searchFlagsInteger ft: ftFINDTEXTEX
 sciFoldAll: actionInteger
 	"Private - Expand or contract all fold headers."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FOLDALL
@@ -5906,8 +5945,8 @@ sciFoldAll: actionInteger
 sciFoldChildren: lineInteger action: actionInteger
 	"Private - Expand or contract a fold header and its children."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FOLDCHILDREN
@@ -5917,9 +5956,9 @@ sciFoldChildren: lineInteger action: actionInteger
 sciFoldDisplayTextGetStyle
 	"Private - Get the style of fold display text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FOLDDISPLAYTEXTGETSTYLE
@@ -5929,8 +5968,8 @@ sciFoldDisplayTextGetStyle
 sciFoldDisplayTextSetStyle: styleInteger
 	"Private - Set the style of fold display text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FOLDDISPLAYTEXTSETSTYLE
@@ -5940,8 +5979,8 @@ sciFoldDisplayTextSetStyle: styleInteger
 sciFoldLine: lineInteger action: actionInteger
 	"Private - Expand or contract a fold header."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FOLDLINE
@@ -5951,9 +5990,9 @@ sciFoldLine: lineInteger action: actionInteger
 sciFormatRange: drawBoolean fr: frFORMATRANGE
 	"Private - On Windows, will draw the document into a display context such as a printer."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FORMATRANGE
@@ -5963,8 +6002,8 @@ sciFormatRange: drawBoolean fr: frFORMATRANGE
 sciFreeSubStyles
 	"Private - Free allocated sub styles"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_FREESUBSTYLES
@@ -5974,9 +6013,9 @@ sciFreeSubStyles
 sciGetAccessibility
 	"Private - Report accessibility status."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETACCESSIBILITY
@@ -5986,9 +6025,9 @@ sciGetAccessibility
 sciGetAutomaticFold
 	"Private - Get automatic folding behaviours."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETAUTOMATICFOLD
@@ -5998,9 +6037,9 @@ sciGetAutomaticFold
 sciGetBidirectional
 	"Private - Retrieve bidirectional text display state."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETBIDIRECTIONAL
@@ -6011,9 +6050,9 @@ sciGetCaretSticky
 	"Private - Can the caret preferred x position only be changed by explicit movement
 	commands?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETSTICKY
@@ -6023,9 +6062,9 @@ sciGetCaretSticky
 sciGetCaretStyle
 	"Private - Returns the current style of the caret."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCARETSTYLE
@@ -6035,9 +6074,9 @@ sciGetCaretStyle
 sciGetCharacterCategoryOptimization
 	"Private - Get the number of characters to have directly indexed categories"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCHARACTERCATEGORYOPTIMIZATION
@@ -6047,9 +6086,9 @@ sciGetCharacterCategoryOptimization
 sciGetCharAt: posInteger
 	"Private - Returns the character byte at the position."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCHARAT
@@ -6059,9 +6098,9 @@ sciGetCharAt: posInteger
 sciGetCodePage
 	"Private - Get the code page used to interpret the bytes of the document as characters."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCODEPAGE
@@ -6071,9 +6110,9 @@ sciGetCodePage
 sciGetColumn: posInteger
 	"Private - Retrieve the column number of a position, taking tab width into account."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCOLUMN
@@ -6083,9 +6122,9 @@ sciGetColumn: posInteger
 sciGetControlCharSymbol
 	"Private - Get the way control characters are displayed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETCONTROLCHARSYMBOL
@@ -6095,9 +6134,9 @@ sciGetControlCharSymbol
 sciGetDocPointer
 	"Private - Retrieve a pointer to the document object."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETDOCPOINTER
@@ -6107,9 +6146,9 @@ sciGetDocPointer
 sciGetDocumentOptions
 	"Private - Get which document options are set."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETDOCUMENTOPTIONS
@@ -6119,9 +6158,9 @@ sciGetDocumentOptions
 sciGetEdgeColumn
 	"Private - Retrieve the column number which text should be kept within."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETEDGECOLUMN
@@ -6131,9 +6170,9 @@ sciGetEdgeColumn
 sciGetEdgeMode
 	"Private - Retrieve the edge highlight mode."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETEDGEMODE
@@ -6144,9 +6183,9 @@ sciGetEndAtLastLine
 	"Private - Retrieve whether the maximum scroll position has the last line at the bottom of
 	the view."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETENDATLASTLINE
@@ -6156,9 +6195,9 @@ sciGetEndAtLastLine
 sciGetEOLMode
 	"Private - Retrieve the current end of line mode - one of CRLF, CR, or LF."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETEOLMODE
@@ -6168,9 +6207,9 @@ sciGetEOLMode
 sciGetFirstVisibleLine
 	"Private - Retrieve the display line at the top of the display."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETFIRSTVISIBLELINE
@@ -6180,9 +6219,9 @@ sciGetFirstVisibleLine
 sciGetFoldExpanded: lineInteger
 	"Private - Is a header line expanded?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETFOLDEXPANDED
@@ -6192,9 +6231,9 @@ sciGetFoldExpanded: lineInteger
 sciGetFoldLevel: lineInteger
 	"Private - Retrieve the fold level of a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETFOLDLEVEL
@@ -6204,9 +6243,9 @@ sciGetFoldLevel: lineInteger
 sciGetFoldParent: lineInteger
 	"Private - Find the parent line of a child line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETFOLDPARENT
@@ -6216,9 +6255,9 @@ sciGetFoldParent: lineInteger
 sciGetFontQuality
 	"Private - Retrieve the quality level for text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETFONTQUALITY
@@ -6228,9 +6267,9 @@ sciGetFontQuality
 sciGetIdleStyling
 	"Private - Retrieve the limits to idle styling."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETIDLESTYLING
@@ -6240,9 +6279,9 @@ sciGetIdleStyling
 sciGetIMEInteraction
 	"Private - Is the IME displayed in a window or inline?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETIMEINTERACTION
@@ -6252,9 +6291,9 @@ sciGetIMEInteraction
 sciGetIndentationGuides
 	"Private - Are the indentation guides visible?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETINDENTATIONGUIDES
@@ -6264,9 +6303,9 @@ sciGetIndentationGuides
 sciGetLastChild: lineInteger level: levelInteger
 	"Private - Find the last child line of a header line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLASTCHILD
@@ -6276,9 +6315,9 @@ sciGetLastChild: lineInteger level: levelInteger
 sciGetLayoutCache
 	"Private - Retrieve the degree of caching of layout information."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLAYOUTCACHE
@@ -6288,9 +6327,9 @@ sciGetLayoutCache
 sciGetLexer
 	"Private - Retrieve the lexing language of the document."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLEXER
@@ -6324,9 +6363,9 @@ sciGetLine: lineInteger
 sciGetLineCharacterIndex
 	"Private - Retrieve line character index state."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINECHARACTERINDEX
@@ -6336,9 +6375,9 @@ sciGetLineCharacterIndex
 sciGetLineEndPosition: lineInteger
 	"Private - Get the position after the last visible characters on a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEENDPOSITION
@@ -6349,9 +6388,9 @@ sciGetLineEndTypesActive
 	"Private - Get the line end types currently recognised. May be a subset of the allowed types
 	due to lexer limitation."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEENDTYPESACTIVE
@@ -6361,9 +6400,9 @@ sciGetLineEndTypesActive
 sciGetLineEndTypesAllowed
 	"Private - Get the line end types currently allowed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEENDTYPESALLOWED
@@ -6374,9 +6413,9 @@ sciGetLineEndTypesSupported
 	"Private - Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR,
 	and CRLF are supported by the lexer."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEENDTYPESSUPPORTED
@@ -6386,9 +6425,9 @@ sciGetLineEndTypesSupported
 sciGetLineIndentation: lineInteger
 	"Private - Retrieve the number of columns that a line is indented."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEINDENTATION
@@ -6398,9 +6437,9 @@ sciGetLineIndentation: lineInteger
 sciGetLineIndentPosition: lineInteger
 	"Private - Retrieve the position before the first non indentation character on a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEINDENTPOSITION
@@ -6411,9 +6450,9 @@ sciGetLineSelEndPosition: lineInteger
 	"Private - Retrieve the position of the end of the selection at the given line
 	(INVALID_POSITION if no selection on this line)."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINESELENDPOSITION
@@ -6424,9 +6463,9 @@ sciGetLineSelStartPosition: lineInteger
 	"Private - Retrieve the position of the start of the selection at the given line
 	(INVALID_POSITION if no selection on this line)."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINESELSTARTPOSITION
@@ -6436,9 +6475,9 @@ sciGetLineSelStartPosition: lineInteger
 sciGetLineState: lineInteger
 	"Private - Retrieve the extra styling information for a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINESTATE
@@ -6448,9 +6487,9 @@ sciGetLineState: lineInteger
 sciGetLineVisible: lineInteger
 	"Private - Is a line visible?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETLINEVISIBLE
@@ -6460,9 +6499,9 @@ sciGetLineVisible: lineInteger
 sciGetMainSelection
 	"Private - Which selection is the main selection"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMAINSELECTION
@@ -6472,9 +6511,9 @@ sciGetMainSelection
 sciGetMarginLeft
 	"Private - Returns the size in pixels of the left margin."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMARGINLEFT
@@ -6484,9 +6523,9 @@ sciGetMarginLeft
 sciGetMarginOptions
 	"Private - Get the margin options."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMARGINOPTIONS
@@ -6496,9 +6535,9 @@ sciGetMarginOptions
 sciGetMarginRight
 	"Private - Returns the size in pixels of the right margin."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMARGINRIGHT
@@ -6508,9 +6547,9 @@ sciGetMarginRight
 sciGetMargins
 	"Private - How many margins are there?."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMARGINS
@@ -6520,9 +6559,9 @@ sciGetMargins
 sciGetMaxLineState
 	"Private - Retrieve the last line number that has line state."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMAXLINESTATE
@@ -6532,9 +6571,9 @@ sciGetMaxLineState
 sciGetMouseSelectionRectangularSwitch
 	"Private - Whether switching to rectangular mode while selecting with the mouse is allowed."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMOUSESELECTIONRECTANGULARSWITCH
@@ -6544,9 +6583,9 @@ sciGetMouseSelectionRectangularSwitch
 sciGetMultiPaste
 	"Private - Retrieve the effect of pasting when there are multiple selections."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMULTIPASTE
@@ -6556,9 +6595,9 @@ sciGetMultiPaste
 sciGetNamedStyles
 	"Private - Retrieve the number of named styles for the lexer."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETNAMEDSTYLES
@@ -6568,9 +6607,9 @@ sciGetNamedStyles
 sciGetNextTabStop: lineInteger x: xInteger
 	"Private - Find the next explicit tab stop position on a line after a position."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETNEXTTABSTOP
@@ -6580,9 +6619,9 @@ sciGetNextTabStop: lineInteger x: xInteger
 sciGetPasteConvertEndings
 	"Private - Get convert-on-paste setting"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPASTECONVERTENDINGS
@@ -6592,9 +6631,9 @@ sciGetPasteConvertEndings
 sciGetPhasesDraw
 	"Private - How many phases is drawing done in?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPHASESDRAW
@@ -6604,9 +6643,9 @@ sciGetPhasesDraw
 sciGetPrimaryStyleFromStyle: styleInteger
 	"Private - For a secondary style, return the primary style, else return the argument."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPRIMARYSTYLEFROMSTYLE
@@ -6616,9 +6655,9 @@ sciGetPrimaryStyleFromStyle: styleInteger
 sciGetPrintWrapMode
 	"Private - Is printing line wrapped?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPRINTWRAPMODE
@@ -6679,9 +6718,9 @@ sciGetPropertyInt: keyString defaultValue: defaultValueInteger
 	"Private - Retrieve a 'property' value previously set with SetProperty, interpreted as an
 	int AFTER any '$()' variable replacement."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPROPERTYINT
@@ -6715,9 +6754,9 @@ sciGetPunctuationChars
 sciGetRectangularSelectionAnchor
 	"Private - Return the anchor position of the rectangular selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONANCHOR
@@ -6727,9 +6766,9 @@ sciGetRectangularSelectionAnchor
 sciGetRectangularSelectionAnchorVirtualSpace
 	"Private - Return the virtual space of the anchor of the rectangular selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE
@@ -6739,9 +6778,9 @@ sciGetRectangularSelectionAnchorVirtualSpace
 sciGetRectangularSelectionCaret
 	"Private - Return the caret position of the rectangular selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONCARET
@@ -6751,9 +6790,9 @@ sciGetRectangularSelectionCaret
 sciGetRectangularSelectionCaretVirtualSpace
 	"Private - Return the virtual space of the caret of the rectangular selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE
@@ -6787,9 +6826,9 @@ sciGetRepresentation: encodedCharacterString
 sciGetSearchFlags
 	"Private - Get the search flags used by SearchInTarget."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSEARCHFLAGS
@@ -6799,9 +6838,9 @@ sciGetSearchFlags
 sciGetSelectionMode
 	"Private - Get the mode of the current selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONMODE
@@ -6811,9 +6850,9 @@ sciGetSelectionMode
 sciGetSelectionNAnchor: selectionInteger
 	"Private - Return the anchor position of the nth selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNANCHOR
@@ -6823,9 +6862,9 @@ sciGetSelectionNAnchor: selectionInteger
 sciGetSelectionNAnchorVirtualSpace: selectionInteger
 	"Private - Return the virtual space of the anchor of the nth selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNANCHORVIRTUALSPACE
@@ -6835,9 +6874,9 @@ sciGetSelectionNAnchorVirtualSpace: selectionInteger
 sciGetSelectionNCaret: selectionInteger
 	"Private - Return the caret position of the nth selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNCARET
@@ -6847,9 +6886,9 @@ sciGetSelectionNCaret: selectionInteger
 sciGetSelectionNCaretVirtualSpace: selectionInteger
 	"Private - Return the virtual space of the caret of the nth selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONNCARETVIRTUALSPACE
@@ -6860,9 +6899,9 @@ sciGetStyledText: trTEXTRANGE
 	"Private - Retrieve a buffer of cells. Returns the number of bytes in the buffer not
 	including terminating NULs."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSTYLEDTEXT
@@ -6872,9 +6911,9 @@ sciGetStyledText: trTEXTRANGE
 sciGetStyleFromSubStyle: subStyleInteger
 	"Private - For a sub style, return the base style, else return the argument."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSTYLEFROMSUBSTYLE
@@ -6909,9 +6948,9 @@ sciGetSubStyleBases
 sciGetSubStylesLength: styleBaseInteger
 	"Private - The number of sub styles associated with a base style"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSUBSTYLESLENGTH
@@ -6921,9 +6960,9 @@ sciGetSubStylesLength: styleBaseInteger
 sciGetSubStylesStart: styleBaseInteger
 	"Private - The starting style number for the sub styles associated with a base style"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSUBSTYLESSTART
@@ -6933,9 +6972,9 @@ sciGetSubStylesStart: styleBaseInteger
 sciGetTabDrawMode
 	"Private - Retrieve the current tab draw mode. Returns one of SCTD_* constants."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTABDRAWMODE
@@ -6970,9 +7009,9 @@ sciGetTag: tagNumberInteger
 sciGetTechnology
 	"Private - Get the tech."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTECHNOLOGY
@@ -6982,9 +7021,9 @@ sciGetTechnology
 sciGetTextRange: trTEXTRANGE
 	"Private - Retrieve a range of text. Return the length of the text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTEXTRANGE
@@ -6994,9 +7033,9 @@ sciGetTextRange: trTEXTRANGE
 sciGetViewWS
 	"Private - Are white space characters currently visible? Returns one of SCWS_* constants."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETVIEWWS
@@ -7006,9 +7045,9 @@ sciGetViewWS
 sciGetVirtualSpaceOptions
 	"Private - Return options for virtual space behaviour."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETVIRTUALSPACEOPTIONS
@@ -7068,9 +7107,9 @@ sciGetWordChars
 sciGetWrapIndentMode
 	"Private - Retrieve how wrapped sublines are placed. Default is fixed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWRAPINDENTMODE
@@ -7080,9 +7119,9 @@ sciGetWrapIndentMode
 sciGetWrapMode
 	"Private - Retrieve whether text is word wrapped."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWRAPMODE
@@ -7092,9 +7131,9 @@ sciGetWrapMode
 sciGetWrapVisualFlags
 	"Private - Retrive the display mode of visual flags for wrapped lines."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWRAPVISUALFLAGS
@@ -7104,9 +7143,9 @@ sciGetWrapVisualFlags
 sciGetWrapVisualFlagsLocation
 	"Private - Retrive the location of visual flags for wrapped lines."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWRAPVISUALFLAGSLOCATION
@@ -7116,8 +7155,8 @@ sciGetWrapVisualFlagsLocation
 sciGotoLine: lineInteger
 	"Private - Set caret to start of a line and ensure it is visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GOTOLINE
@@ -7127,8 +7166,8 @@ sciGotoLine: lineInteger
 sciHideLines: lineStartInteger lineEnd: lineEndInteger
 	"Private - Make a range of lines invisible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_HIDELINES
@@ -7138,9 +7177,9 @@ sciHideLines: lineStartInteger lineEnd: lineEndInteger
 sciIndexPositionFromLine: lineInteger lineCharacterIndex: lineCharacterIndexInteger
 	"Private - Retrieve the position measured in index units at the start of a document line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDEXPOSITIONFROMLINE
@@ -7150,8 +7189,8 @@ sciIndexPositionFromLine: lineInteger lineCharacterIndex: lineCharacterIndexInte
 sciIndicatorClearRange: startInteger lengthClear: lengthClearInteger
 	"Private - Turn a indicator off over a range."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORCLEARRANGE
@@ -7161,9 +7200,9 @@ sciIndicatorClearRange: startInteger lengthClear: lengthClearInteger
 sciIndicatorEnd: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator end?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATOREND
@@ -7173,8 +7212,8 @@ sciIndicatorEnd: indicatorInteger pos: posInteger
 sciIndicatorFillRange: startInteger lengthFill: lengthFillInteger
 	"Private - Turn a indicator on over a range."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORFILLRANGE
@@ -7184,9 +7223,9 @@ sciIndicatorFillRange: startInteger lengthFill: lengthFillInteger
 sciIndicatorStart: indicatorInteger pos: posInteger
 	"Private - Where does a particular indicator start?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORSTART
@@ -7196,9 +7235,9 @@ sciIndicatorStart: indicatorInteger pos: posInteger
 sciIndicatorValueAt: indicatorInteger pos: posInteger
 	"Private - What value does a particular indicator have at a position?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INDICATORVALUEAT
@@ -7208,8 +7247,8 @@ sciIndicatorValueAt: indicatorInteger pos: posInteger
 sciInsertText: posInteger text: textString
 	"Private - Insert string at a position."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_INSERTTEXT
@@ -7219,9 +7258,9 @@ sciInsertText: posInteger text: textString
 sciIsRangeWord: startInteger end: endInteger
 	"Private - Is the range start..end considered a word?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ISRANGEWORD
@@ -7231,9 +7270,9 @@ sciIsRangeWord: startInteger end: endInteger
 sciLineFromIndexPosition: posInteger lineCharacterIndex: lineCharacterIndexInteger
 	"Private - Retrieve the document line containing a position measured in index units."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINEFROMINDEXPOSITION
@@ -7243,8 +7282,8 @@ sciLineFromIndexPosition: posInteger lineCharacterIndex: lineCharacterIndexInteg
 sciLineScroll: columnsInteger lines: linesInteger
 	"Private - Scroll horizontally and vertically."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESCROLL
@@ -7254,8 +7293,8 @@ sciLineScroll: columnsInteger lines: linesInteger
 sciLoadLexerLibrary: pathString
 	"Private - Load a lexer library (dll / so)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LOADLEXERLIBRARY
@@ -7265,9 +7304,9 @@ sciLoadLexerLibrary: pathString
 sciMarginGetStyle: lineInteger
 	"Private - Get the style number for the text margin for a line"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINGETSTYLE
@@ -7325,8 +7364,8 @@ sciMarginGetText: lineInteger
 sciMarginSetStyle: lineInteger style: styleInteger
 	"Private - Set the style number for the text margin for a line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINSETSTYLE
@@ -7336,8 +7375,8 @@ sciMarginSetStyle: lineInteger style: styleInteger
 sciMarginSetStyles: lineInteger styles: stylesString
 	"Private - Set the style in the text margin for a line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINSETSTYLES
@@ -7347,8 +7386,8 @@ sciMarginSetStyles: lineInteger styles: stylesString
 sciMarginSetText: lineInteger text: textString
 	"Private - Set the text in the text margin for a line"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINSETTEXT
@@ -7358,8 +7397,8 @@ sciMarginSetText: lineInteger text: textString
 sciMarginTextClearAll
 	"Private - Clear the margin text on all lines"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARGINTEXTCLEARALL
@@ -7369,8 +7408,8 @@ sciMarginTextClearAll
 sciMarkerAddSet: lineInteger markerSet: markerSetInteger
 	"Private - Add a set of markers to a line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERADDSET
@@ -7380,8 +7419,8 @@ sciMarkerAddSet: lineInteger markerSet: markerSetInteger
 sciMarkerDefinePixmap: markerNumberInteger pixmap: pixmapString
 	"Private - Define a marker from a pixmap."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERDEFINEPIXMAP
@@ -7392,8 +7431,8 @@ sciMarkerDefineRGBAImage: markerNumberInteger pixels: pixelsString
 	"Private - Define a marker from RGBA data. It has the width and height from
 	RGBAImageSetWidth/Height"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERDEFINERGBAIMAGE
@@ -7403,8 +7442,8 @@ sciMarkerDefineRGBAImage: markerNumberInteger pixels: pixelsString
 sciMarkerDeleteHandle: markerHandleInteger
 	"Private - Delete a marker."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERDELETEHANDLE
@@ -7415,8 +7454,8 @@ sciMarkerEnableHighlight: enabledBoolean
 	"Private - Enable/disable highlight for current folding bloc (smallest one that contains the
 	caret)"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERENABLEHIGHLIGHT
@@ -7426,9 +7465,9 @@ sciMarkerEnableHighlight: enabledBoolean
 sciMarkerGet: lineInteger
 	"Private - Get a bit mask of all the markers set on a line."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERGET
@@ -7438,9 +7477,9 @@ sciMarkerGet: lineInteger
 sciMarkerLineFromHandle: markerHandleInteger
 	"Private - Retrieve the line number at which a particular marker is located."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERLINEFROMHANDLE
@@ -7451,9 +7490,9 @@ sciMarkerNext: lineStartInteger markerMask: markerMaskInteger
 	"Private - Find the next line at or after lineStart that includes a marker in mask. Return
 	-1 when no more lines."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERNEXT
@@ -7463,9 +7502,9 @@ sciMarkerNext: lineStartInteger markerMask: markerMaskInteger
 sciMarkerPrevious: lineStartInteger markerMask: markerMaskInteger
 	"Private - Find the previous line before lineStart that includes a marker in mask."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERPREVIOUS
@@ -7475,8 +7514,8 @@ sciMarkerPrevious: lineStartInteger markerMask: markerMaskInteger
 sciMarkerSetAlpha: markerNumberInteger alpha: alphaInteger
 	"Private - Set the alpha used for a marker that is drawn in the text area, not the margin."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERSETALPHA
@@ -7486,9 +7525,9 @@ sciMarkerSetAlpha: markerNumberInteger alpha: alphaInteger
 sciMarkerSymbolDefined: markerNumberInteger
 	"Private - Which symbol was defined for markerNumber with MarkerDefine"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MARKERSYMBOLDEFINED
@@ -7498,8 +7537,8 @@ sciMarkerSymbolDefined: markerNumberInteger
 sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourRGB
 	"Private - Add a new vertical edge to the view."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MULTIEDGEADDLINE
@@ -7510,8 +7549,8 @@ sciMultipleSelectAddEach
 	"Private - Add each occurrence of the main selection in the target to the set of selections.
 	If the current selection is empty then select word around caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MULTIPLESELECTADDEACH
@@ -7522,8 +7561,8 @@ sciMultipleSelectAddNext
 	"Private - Add the next occurrence of the main selection to the set of selections as main.
 	If the current selection is empty then select word around caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_MULTIPLESELECTADDNEXT
@@ -7557,9 +7596,9 @@ sciNameOfStyle: styleInteger
 sciPointXFromPosition: posInteger
 	"Private - Retrieve the x value of the point in the window where a position is displayed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POINTXFROMPOSITION
@@ -7569,9 +7608,9 @@ sciPointXFromPosition: posInteger
 sciPointYFromPosition: posInteger
 	"Private - Retrieve the y value of the point in the window where a position is displayed."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POINTYFROMPOSITION
@@ -7582,9 +7621,9 @@ sciPositionAfter: posInteger
 	"Private - Given a valid document position, return the next position taking code page into
 	account. Maximum value returned is the last position in the document."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONAFTER
@@ -7595,9 +7634,9 @@ sciPositionBefore: posInteger
 	"Private - Given a valid document position, return the previous position taking code page
 	into account. Returns 0 if passed 0."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONBEFORE
@@ -7607,9 +7646,9 @@ sciPositionBefore: posInteger
 sciPositionFromPoint: xInteger y: yInteger
 	"Private - Find the position from a point within the window."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONFROMPOINT
@@ -7620,9 +7659,9 @@ sciPositionFromPointClose: xInteger y: yInteger
 	"Private - Find the position from a point within the window but return INVALID_POSITION if
 	not close to text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONFROMPOINTCLOSE
@@ -7633,9 +7672,9 @@ sciPositionRelative: posInteger relative: relativeInteger
 	"Private - Given a valid document position, return a position that differs in a number of
 	characters. Returned value is always between 0 and last position in document."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONRELATIVE
@@ -7647,9 +7686,9 @@ sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
 	UTF-16 code units. Returned value is always between 0 and last position in document. The
 	result may point half way (2 bytes) inside a non-BMP character."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_POSITIONRELATIVECODEUNITS
@@ -7659,9 +7698,9 @@ sciPositionRelativeCodeUnits: posInteger relative: relativeInteger
 sciPrivateLexerCall: operationInteger pointer: pointerInteger
 	"Private - For private communication between an application and a known lexer."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PRIVATELEXERCALL
@@ -7696,9 +7735,9 @@ sciPropertyNames
 sciPropertyType: nameString
 	"Private - Retrieve the type of a property."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PROPERTYTYPE
@@ -7708,8 +7747,8 @@ sciPropertyType: nameString
 sciRegisterImage: typeInteger xpmData: xpmDataString
 	"Private - Register an XPM image for use in autocompletion lists."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REGISTERIMAGE
@@ -7720,8 +7759,8 @@ sciRegisterRGBAImage: typeInteger pixels: pixelsString
 	"Private - Register an RGBA image for use in autocompletion lists. It has the width and
 	height from RGBAImageSetWidth/Height"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REGISTERRGBAIMAGE
@@ -7731,8 +7770,8 @@ sciRegisterRGBAImage: typeInteger pixels: pixelsString
 sciReleaseAllExtendedStyles
 	"Private - Release all extended (>255) style numbers"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RELEASEALLEXTENDEDSTYLES
@@ -7742,8 +7781,8 @@ sciReleaseAllExtendedStyles
 sciReleaseDocument: docInteger
 	"Private - Release a reference to the document, deleting document if it fades to black."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RELEASEDOCUMENT
@@ -7753,8 +7792,8 @@ sciReleaseDocument: docInteger
 sciReleaseLineCharacterIndex: lineCharacterIndexInteger
 	"Private - Decrease use count of line character index and remove if 0."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RELEASELINECHARACTERINDEX
@@ -7764,8 +7803,8 @@ sciReleaseLineCharacterIndex: lineCharacterIndexInteger
 sciReplaceSel: textString
 	"Private - Replace the selected text with the argument text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REPLACESEL
@@ -7776,9 +7815,9 @@ sciReplaceTarget: lengthInteger text: textString
 	"Private - Replace the target text with the argument text. Text is counted so it can contain
 	NULs. Returns the length of the replacement text."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REPLACETARGET
@@ -7792,9 +7831,9 @@ sciReplaceTargetRE: lengthInteger text: textString
 	Returns the length of the replacement text including any change caused by processing the \d
 	patterns."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_REPLACETARGETRE
@@ -7804,8 +7843,8 @@ sciReplaceTargetRE: lengthInteger text: textString
 sciRGBAImageSetHeight: heightInteger
 	"Private - Set the height for future RGBA image data."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RGBAIMAGESETHEIGHT
@@ -7815,8 +7854,8 @@ sciRGBAImageSetHeight: heightInteger
 sciRGBAImageSetScale: scalePercentInteger
 	"Private - Set the scale factor in percent for future RGBA image data."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RGBAIMAGESETSCALE
@@ -7826,8 +7865,8 @@ sciRGBAImageSetScale: scalePercentInteger
 sciRGBAImageSetWidth: widthInteger
 	"Private - Set the width for future RGBA image data."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_RGBAIMAGESETWIDTH
@@ -7837,8 +7876,8 @@ sciRGBAImageSetWidth: widthInteger
 sciScrollCaret
 	"Private - Ensure the caret is visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SCROLLCARET
@@ -7850,8 +7889,8 @@ sciScrollRange: secondaryInteger primary: primaryInteger
 	priority to the primary position then the secondary position. This may be used to make a
 	search match visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SCROLLRANGE
@@ -7861,8 +7900,8 @@ sciScrollRange: secondaryInteger primary: primaryInteger
 sciSearchAnchor
 	"Private - Sets the current caret position to be the search anchor."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHANCHOR
@@ -7874,9 +7913,9 @@ sciSearchInTarget: lengthInteger text: textString
 	Text is counted so it can contain NULs. Returns length of range or -1 for failure in which
 	case target is not moved."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHINTARGET
@@ -7887,9 +7926,9 @@ sciSearchNext: searchFlagsInteger text: textString
 	"Private - Find some text starting at the search anchor. Does not ensure the selection is
 	visible."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHNEXT
@@ -7900,9 +7939,9 @@ sciSearchPrev: searchFlagsInteger text: textString
 	"Private - Find some text starting at the search anchor and moving backwards. Does not
 	ensure the selection is visible."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SEARCHPREV
@@ -7912,8 +7951,8 @@ sciSearchPrev: searchFlagsInteger text: textString
 sciSetAccessibility: accessibilityInteger
 	"Private - Enable or disable accessibility."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETACCESSIBILITY
@@ -7923,8 +7962,8 @@ sciSetAccessibility: accessibilityInteger
 sciSetAdditionalCaretFore: foreRGB
 	"Private - Set the foreground colour of additional carets."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALCARETFORE
@@ -7935,8 +7974,8 @@ sciSetAdditionalSelBack: backRGB
 	"Private - Set the background colour of additional selections. Must have previously called
 	SetSelBack with non-zero first argument for this to have an effect."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELBACK
@@ -7947,8 +7986,8 @@ sciSetAdditionalSelFore: foreRGB
 	"Private - Set the foreground colour of additional selections. Must have previously called
 	SetSelFore with non-zero first argument for this to have an effect."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELFORE
@@ -7958,8 +7997,8 @@ sciSetAdditionalSelFore: foreRGB
 sciSetAutomaticFold: automaticFoldInteger
 	"Private - Set automatic folding behaviours."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETAUTOMATICFOLD
@@ -7969,8 +8008,8 @@ sciSetAutomaticFold: automaticFoldInteger
 sciSetBidirectional: bidirectionalInteger
 	"Private - Set bidirectional text display state."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETBIDIRECTIONAL
@@ -7980,8 +8019,8 @@ sciSetBidirectional: bidirectionalInteger
 sciSetCaretFore: foreRGB
 	"Private - Set the foreground colour of the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETFORE
@@ -7991,8 +8030,8 @@ sciSetCaretFore: foreRGB
 sciSetCaretLineBack: backRGB
 	"Private - Set the colour of the background of the line containing the caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEBACK
@@ -8002,8 +8041,8 @@ sciSetCaretLineBack: backRGB
 sciSetCaretSticky: useCaretStickyBehaviourInteger
 	"Private - Stop the caret preferred x position changing when the user types."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETSTICKY
@@ -8013,8 +8052,8 @@ sciSetCaretSticky: useCaretStickyBehaviourInteger
 sciSetCaretStyle: caretStyleInteger
 	"Private - Set the style of the caret to be drawn."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETSTYLE
@@ -8024,8 +8063,8 @@ sciSetCaretStyle: caretStyleInteger
 sciSetCaretWidth: pixelWidthInteger
 	"Private - Set the width of the insert mode caret."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETWIDTH
@@ -8035,8 +8074,8 @@ sciSetCaretWidth: pixelWidthInteger
 sciSetCharacterCategoryOptimization: countCharactersInteger
 	"Private - Set the number of characters to have directly indexed categories"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCHARACTERCATEGORYOPTIMIZATION
@@ -8046,8 +8085,8 @@ sciSetCharacterCategoryOptimization: countCharactersInteger
 sciSetCharsDefault
 	"Private - Reset the set of characters for whitespace and word characters to the defaults."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCHARSDEFAULT
@@ -8073,8 +8112,8 @@ sciSetControlCharSymbol: symbolInteger
 	"Private - Change the way control characters are displayed: If symbol is < 32, keep the
 	drawn way, else, use the given character."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCONTROLCHARSYMBOL
@@ -8084,20 +8123,31 @@ sciSetControlCharSymbol: symbolInteger
 sciSetDocPointer: docInteger
 	"Private - Change the document object used."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETDOCPOINTER
 				wParam: 0
 				lParam: docInteger]!
 
+sciSetEdgeColour: edgeColourRGB
+	"Private - Change the colour used in edge indication."
+
+	this
+		ifNotNil: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETEDGECOLOUR
+				wParam: edgeColourRGB asParameter
+				lParam: 0]!
+
 sciSetEdgeColumn: columnInteger
 	"Private - Set the column number of the edge. If text goes past the edge then it is
 	highlighted."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEDGECOLUMN
@@ -8108,8 +8158,8 @@ sciSetEdgeMode: edgeModeInteger
 	"Private - The edge may be displayed by a line (EDGE_LINE/EDGE_MULTILINE) or by highlighting
 	text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEDGEMODE
@@ -8119,8 +8169,8 @@ sciSetEdgeMode: edgeModeInteger
 sciSetEOLMode: eolModeInteger
 	"Private - Set the current end of line mode."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEOLMODE
@@ -8130,8 +8180,8 @@ sciSetEOLMode: eolModeInteger
 sciSetFirstVisibleLine: displayLineInteger
 	"Private - Scroll so that a display line is at the top of the display."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFIRSTVISIBLELINE
@@ -8141,8 +8191,8 @@ sciSetFirstVisibleLine: displayLineInteger
 sciSetFoldExpanded: lineInteger expanded: expandedBoolean
 	"Private - Show the children of a header line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFOLDEXPANDED
@@ -8152,8 +8202,8 @@ sciSetFoldExpanded: lineInteger expanded: expandedBoolean
 sciSetFoldFlags: flagsInteger
 	"Private - Set some style options for folding."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFOLDFLAGS
@@ -8164,8 +8214,8 @@ sciSetFoldLevel: lineInteger level: levelInteger
 	"Private - Set the fold level of a line. This encodes an integer level along with flags
 	indicating whether the line is a header and whether it is effectively white space."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFOLDLEVEL
@@ -8175,8 +8225,8 @@ sciSetFoldLevel: lineInteger level: levelInteger
 sciSetFoldMarginColour: useSettingBoolean back: backRGB
 	"Private - Set one of the colours used as a chequerboard pattern in the fold margin"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFOLDMARGINCOLOUR
@@ -8186,8 +8236,8 @@ sciSetFoldMarginColour: useSettingBoolean back: backRGB
 sciSetFoldMarginHiColour: useSettingBoolean fore: foreRGB
 	"Private - Set the other colour used as a chequerboard pattern in the fold margin"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFOLDMARGINHICOLOUR
@@ -8197,8 +8247,8 @@ sciSetFoldMarginHiColour: useSettingBoolean fore: foreRGB
 sciSetFontQuality: fontQualityInteger
 	"Private - Choose the quality level for text from the FontQuality enumeration."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETFONTQUALITY
@@ -8208,8 +8258,8 @@ sciSetFontQuality: fontQualityInteger
 sciSetHotspotActiveBack: useSettingBoolean back: backRGB
 	"Private - Set a back colour for active hotspots."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHOTSPOTACTIVEBACK
@@ -8219,8 +8269,8 @@ sciSetHotspotActiveBack: useSettingBoolean back: backRGB
 sciSetHotspotActiveFore: useSettingBoolean fore: foreRGB
 	"Private - Set a fore colour for active hotspots."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHOTSPOTACTIVEFORE
@@ -8230,8 +8280,8 @@ sciSetHotspotActiveFore: useSettingBoolean fore: foreRGB
 sciSetHScrollBar: visibleBoolean
 	"Private - Show or hide the horizontal scroll bar."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETHSCROLLBAR
@@ -8241,8 +8291,8 @@ sciSetHScrollBar: visibleBoolean
 sciSetIdentifiers: styleInteger identifiers: identifiersString
 	"Private - Set the identifiers that are shown in a particular style"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETIDENTIFIERS
@@ -8252,8 +8302,8 @@ sciSetIdentifiers: styleInteger identifiers: identifiersString
 sciSetIdleStyling: idleStylingInteger
 	"Private - Sets limits to idle styling."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETIDLESTYLING
@@ -8263,8 +8313,8 @@ sciSetIdleStyling: idleStylingInteger
 sciSetIMEInteraction: imeInteractionInteger
 	"Private - Choose to display the the IME in a winow or inline."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETIMEINTERACTION
@@ -8274,8 +8324,8 @@ sciSetIMEInteraction: imeInteractionInteger
 sciSetIndentationGuides: indentViewInteger
 	"Private - Show or hide indentation guides."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETINDENTATIONGUIDES
@@ -8285,8 +8335,8 @@ sciSetIndentationGuides: indentViewInteger
 sciSetKeyWords: keyWordSetInteger keyWords: keyWordsString
 	"Private - Set up the key words used by the lexer."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETKEYWORDS
@@ -8296,8 +8346,8 @@ sciSetKeyWords: keyWordSetInteger keyWords: keyWordsString
 sciSetLayoutCache: cacheModeInteger
 	"Private - Sets the degree of caching of layout information."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLAYOUTCACHE
@@ -8308,8 +8358,8 @@ sciSetLengthForEncode: bytesInteger
 	"Private - Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and
 	the string will be measured to the first nul."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLENGTHFORENCODE
@@ -8319,8 +8369,8 @@ sciSetLengthForEncode: bytesInteger
 sciSetLexer: lexerInteger
 	"Private - Set the lexing language of the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLEXER
@@ -8330,8 +8380,8 @@ sciSetLexer: lexerInteger
 sciSetLexerLanguage: languageString
 	"Private - Set the lexing language of the document based on string name."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLEXERLANGUAGE
@@ -8342,8 +8392,8 @@ sciSetLineEndTypesAllowed: lineEndBitSetInteger
 	"Private - Set the line end types that the application wants to use. May not be used if
 	incompatible with lexer or encoding."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLINEENDTYPESALLOWED
@@ -8353,8 +8403,8 @@ sciSetLineEndTypesAllowed: lineEndBitSetInteger
 sciSetLineIndentation: lineInteger indentation: indentationInteger
 	"Private - Change the indentation of a line to a number of columns."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLINEINDENTATION
@@ -8364,8 +8414,8 @@ sciSetLineIndentation: lineInteger indentation: indentationInteger
 sciSetLineState: lineInteger state: stateInteger
 	"Private - Used to hold extra styling information for each line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETLINESTATE
@@ -8375,8 +8425,8 @@ sciSetLineState: lineInteger state: stateInteger
 sciSetMainSelection: selectionInteger
 	"Private - Set the main selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMAINSELECTION
@@ -8386,8 +8436,8 @@ sciSetMainSelection: selectionInteger
 sciSetMarginLeft: pixelWidthInteger
 	"Private - Sets the size in pixels of the left margin."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMARGINLEFT
@@ -8397,8 +8447,8 @@ sciSetMarginLeft: pixelWidthInteger
 sciSetMarginOptions: marginOptionsInteger
 	"Private - Set the margin options."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMARGINOPTIONS
@@ -8408,8 +8458,8 @@ sciSetMarginOptions: marginOptionsInteger
 sciSetMarginRight: pixelWidthInteger
 	"Private - Sets the size in pixels of the right margin."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMARGINRIGHT
@@ -8419,8 +8469,8 @@ sciSetMarginRight: pixelWidthInteger
 sciSetMargins: marginsInteger
 	"Private - Allocate a non-standard number of margins."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMARGINS
@@ -8430,8 +8480,8 @@ sciSetMargins: marginsInteger
 sciSetModEventMask: eventMaskInteger
 	"Private - Set which document modification events are sent to the container."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMODEVENTMASK
@@ -8442,8 +8492,8 @@ sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
 	"Private - Set whether switching to rectangular mode while selecting with the mouse is
 	allowed."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMOUSESELECTIONRECTANGULARSWITCH
@@ -8453,8 +8503,8 @@ sciSetMouseSelectionRectangularSwitch: mouseSelectionRectangularSwitchBoolean
 sciSetMultiPaste: multiPasteInteger
 	"Private - Change the effect of pasting when there are multiple selections."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMULTIPASTE
@@ -8464,8 +8514,8 @@ sciSetMultiPaste: multiPasteInteger
 sciSetPasteConvertEndings: convertBoolean
 	"Private - Enable/Disable convert-on-paste for line endings"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPASTECONVERTENDINGS
@@ -8478,8 +8528,8 @@ sciSetPhasesDraw: phasesInteger
 	horizontally. In multiple phase draw, each element is drawn over the whole drawing area,
 	allowing text to overlap from one line to the next."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPHASESDRAW
@@ -8489,8 +8539,8 @@ sciSetPhasesDraw: phasesInteger
 sciSetPrintWrapMode: wrapModeInteger
 	"Private - Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPRINTWRAPMODE
@@ -8500,8 +8550,8 @@ sciSetPrintWrapMode: wrapModeInteger
 sciSetProperty: keyString value: valueString
 	"Private - Set up a value that may be used by a lexer for some optional feature."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPROPERTY
@@ -8512,8 +8562,8 @@ sciSetPunctuationChars: charactersString
 	"Private - Set the set of characters making up punctuation characters Should be called after
 	SetWordChars."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPUNCTUATIONCHARS
@@ -8523,8 +8573,8 @@ sciSetPunctuationChars: charactersString
 sciSetRectangularSelectionAnchor: anchorInteger
 	"Private - Set the anchor position of the rectangular selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONANCHOR
@@ -8534,8 +8584,8 @@ sciSetRectangularSelectionAnchor: anchorInteger
 sciSetRectangularSelectionAnchorVirtualSpace: spaceInteger
 	"Private - Set the virtual space of the anchor of the rectangular selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE
@@ -8545,8 +8595,8 @@ sciSetRectangularSelectionAnchorVirtualSpace: spaceInteger
 sciSetRectangularSelectionCaret: caretInteger
 	"Private - Set the caret position of the rectangular selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONCARET
@@ -8556,8 +8606,8 @@ sciSetRectangularSelectionCaret: caretInteger
 sciSetRectangularSelectionCaretVirtualSpace: spaceInteger
 	"Private - Set the virtual space of the caret of the rectangular selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE
@@ -8567,8 +8617,8 @@ sciSetRectangularSelectionCaretVirtualSpace: spaceInteger
 sciSetRepresentation: encodedCharacterString representation: representationString
 	"Private - Set the way a character is drawn."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETREPRESENTATION
@@ -8579,8 +8629,8 @@ sciSetSavePoint
 	"Private - Remember the current position in the undo history as the position at which the
 	document was saved."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSAVEPOINT
@@ -8590,8 +8640,8 @@ sciSetSavePoint
 sciSetSearchFlags: searchFlagsInteger
 	"Private - Set the search flags used by SearchInTarget."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSEARCHFLAGS
@@ -8602,8 +8652,8 @@ sciSetSelBack: useSettingBoolean back: backRGB
 	"Private - Set the background colour of the main and additional selections and whether to
 	use this setting."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELBACK
@@ -8613,8 +8663,8 @@ sciSetSelBack: useSettingBoolean back: backRGB
 sciSetSelection: caretInteger anchor: anchorInteger
 	"Private - Set a simple selection"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTION
@@ -8625,8 +8675,8 @@ sciSetSelectionMode: selectionModeInteger
 	"Private - Set the selection mode to stream (SC_SEL_STREAM) or rectangular
 	(SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONMODE
@@ -8636,8 +8686,8 @@ sciSetSelectionMode: selectionModeInteger
 sciSetSelectionNAnchor: selectionInteger anchor: anchorInteger
 	"Private - Set the anchor position of the nth selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNANCHOR
@@ -8647,8 +8697,8 @@ sciSetSelectionNAnchor: selectionInteger anchor: anchorInteger
 sciSetSelectionNAnchorVirtualSpace: selectionInteger space: spaceInteger
 	"Private - Set the virtual space of the anchor of the nth selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNANCHORVIRTUALSPACE
@@ -8658,8 +8708,8 @@ sciSetSelectionNAnchorVirtualSpace: selectionInteger space: spaceInteger
 sciSetSelectionNCaret: selectionInteger caret: caretInteger
 	"Private - Set the caret position of the nth selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNCARET
@@ -8669,8 +8719,8 @@ sciSetSelectionNCaret: selectionInteger caret: caretInteger
 sciSetSelectionNCaretVirtualSpace: selectionInteger space: spaceInteger
 	"Private - Set the virtual space of the caret of the nth selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNCARETVIRTUALSPACE
@@ -8680,8 +8730,8 @@ sciSetSelectionNCaretVirtualSpace: selectionInteger space: spaceInteger
 sciSetSelectionNEnd: selectionInteger caret: caretInteger
 	"Private - Sets the position that ends the selection - this becomes the currentPosition."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNEND
@@ -8691,8 +8741,8 @@ sciSetSelectionNEnd: selectionInteger caret: caretInteger
 sciSetSelectionNStart: selectionInteger anchor: anchorInteger
 	"Private - Sets the position that starts the selection - this becomes the anchor."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELECTIONNSTART
@@ -8703,8 +8753,8 @@ sciSetSelFore: useSettingBoolean fore: foreRGB
 	"Private - Set the foreground colour of the main and additional selections and whether to
 	use this setting."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELFORE
@@ -8714,8 +8764,8 @@ sciSetSelFore: useSettingBoolean fore: foreRGB
 sciSetStylingEx: lengthInteger styles: stylesString
 	"Private - Set the styles for a segment of the document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSTYLINGEX
@@ -8725,8 +8775,8 @@ sciSetStylingEx: lengthInteger styles: stylesString
 sciSetTabDrawMode: tabDrawModeInteger
 	"Private - Set how tabs are drawn when visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTABDRAWMODE
@@ -8736,8 +8786,8 @@ sciSetTabDrawMode: tabDrawModeInteger
 sciSetTargetRange: startInteger end: endInteger
 	"Private - Sets both the start and end of the target in one call."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTARGETRANGE
@@ -8747,8 +8797,8 @@ sciSetTargetRange: startInteger end: endInteger
 sciSetTechnology: technologyInteger
 	"Private - Set the technology used."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTECHNOLOGY
@@ -8758,8 +8808,8 @@ sciSetTechnology: technologyInteger
 sciSetText: textString
 	"Private - Replace the contents of the document with the argument text."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTEXT
@@ -8770,8 +8820,8 @@ sciSetViewWS: viewWSInteger
 	"Private - Make white space characters invisible, always visible or visible outside
 	indentation."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVIEWWS
@@ -8781,8 +8831,8 @@ sciSetViewWS: viewWSInteger
 sciSetVirtualSpaceOptions: virtualSpaceOptionsInteger
 	"Private - Set options for virtual space behaviour."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVIRTUALSPACEOPTIONS
@@ -8793,8 +8843,8 @@ sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 	"Private - Set the way the display area is determined when a particular line is to be moved
 	to by Find, FindNext, GotoLine, etc."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVISIBLEPOLICY
@@ -8804,8 +8854,8 @@ sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 sciSetWhitespaceBack: useSettingBoolean back: backRGB
 	"Private - Set the background colour of all whitespace and whether to use this setting."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWHITESPACEBACK
@@ -8816,8 +8866,8 @@ sciSetWhitespaceChars: charactersString
 	"Private - Set the set of characters making up whitespace for when moving or selecting by
 	word. Should be called after SetWordChars."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWHITESPACECHARS
@@ -8827,8 +8877,8 @@ sciSetWhitespaceChars: charactersString
 sciSetWhitespaceFore: useSettingBoolean fore: foreRGB
 	"Private - Set the foreground colour of all whitespace and whether to use this setting."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWHITESPACEFORE
@@ -8839,8 +8889,8 @@ sciSetWordChars: charactersString
 	"Private - Set the set of characters making up words for when moving or selecting by word.
 	First sets defaults like SetCharsDefault."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWORDCHARS
@@ -8850,8 +8900,8 @@ sciSetWordChars: charactersString
 sciSetWrapIndentMode: wrapIndentModeInteger
 	"Private - Sets how wrapped sublines are placed. Default is fixed."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPINDENTMODE
@@ -8861,8 +8911,8 @@ sciSetWrapIndentMode: wrapIndentModeInteger
 sciSetWrapMode: wrapModeInteger
 	"Private - Sets whether text is word wrapped."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPMODE
@@ -8872,8 +8922,8 @@ sciSetWrapMode: wrapModeInteger
 sciSetWrapVisualFlags: wrapVisualFlagsInteger
 	"Private - Set the display mode of visual flags for wrapped lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPVISUALFLAGS
@@ -8883,8 +8933,8 @@ sciSetWrapVisualFlags: wrapVisualFlagsInteger
 sciSetWrapVisualFlagsLocation: wrapVisualFlagsLocationInteger
 	"Private - Set the location of visual flags for wrapped lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWRAPVISUALFLAGSLOCATION
@@ -8895,8 +8945,8 @@ sciSetXCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 	"Private - Set the way the caret is kept visible when going sideways. The exclusion zone is
 	given in pixels."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETXCARETPOLICY
@@ -8907,8 +8957,8 @@ sciSetYCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 	"Private - Set the way the line the caret is on is kept visible. The exclusion zone is given
 	in lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETYCARETPOLICY
@@ -8918,8 +8968,8 @@ sciSetYCaretPolicy: caretPolicyInteger caretSlop: caretSlopInteger
 sciShowLines: lineStartInteger lineEnd: lineEndInteger
 	"Private - Make a range of lines visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SHOWLINES
@@ -8929,8 +8979,8 @@ sciShowLines: lineStartInteger lineEnd: lineEndInteger
 sciStyleClearAll
 	"Private - Clear all the styles and make equivalent to the global default style."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STYLECLEARALL
@@ -8940,8 +8990,8 @@ sciStyleClearAll
 sciStyleResetDefault
 	"Private - Reset the default style to its state at startup"
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STYLERESETDEFAULT
@@ -9000,9 +9050,9 @@ sciTargetAsUTF8
 sciTextHeight: lineInteger
 	"Private - Retrieve the height of a particular line of text in pixels."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TEXTHEIGHT
@@ -9013,9 +9063,9 @@ sciTextWidth: styleInteger text: textString
 	"Private - Measure the pixel width of some text in a particular style. NUL terminated text
 	argument. Does not handle tab or control characters."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TEXTWIDTH
@@ -9025,8 +9075,8 @@ sciTextWidth: styleInteger text: textString
 sciToggleCaretSticky
 	"Private - Switch between sticky and non-sticky: meant to be bound to a key."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TOGGLECARETSTICKY
@@ -9036,8 +9086,8 @@ sciToggleCaretSticky
 sciToggleFold: lineInteger
 	"Private - Switch a header line between expanded and contracted."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TOGGLEFOLD
@@ -9048,8 +9098,8 @@ sciToggleFoldShowText: lineInteger text: textString
 	"Private - Switch a header line between expanded and contracted and show some text after the
 	line."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TOGGLEFOLDSHOWTEXT
@@ -9059,8 +9109,8 @@ sciToggleFoldShowText: lineInteger text: textString
 sciUserListShow: listTypeInteger itemList: itemListString
 	"Private - Display a list of strings and send notification when user chooses one."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_USERLISTSHOW
@@ -9070,9 +9120,9 @@ sciUserListShow: listTypeInteger itemList: itemListString
 sciVisibleFromDocLine: docLineInteger
 	"Private - Find the display line of a document line taking hidden lines into account."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_VISIBLEFROMDOCLINE
@@ -9082,9 +9132,9 @@ sciVisibleFromDocLine: docLineInteger
 sciWordEndPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Private - Get position of end of word."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDENDPOSITION
@@ -9094,9 +9144,9 @@ sciWordEndPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 sciWordStartPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 	"Private - Get position of start of word."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WORDSTARTPOSITION
@@ -9106,9 +9156,9 @@ sciWordStartPosition: posInteger onlyWordCharacters: onlyWordCharactersBoolean
 sciWrapCount: docLineInteger
 	"Private - The number of display lines needed to wrap a document line"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_WRAPCOUNT
@@ -9356,7 +9406,7 @@ scnModified: pSCNotification
 	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"
-			super enChange]
+			self enChange]
 		ifFalse: 
 			[(eventMask
 				anyMask: ##(SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN))
@@ -9514,8 +9564,8 @@ scnZoom: anExternalAddress
 scrollDown
 	"Scroll the document down, keeping the caret visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESCROLLDOWN
@@ -9525,8 +9575,8 @@ scrollDown
 scrollToEnd
 	"Scroll to end of document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SCROLLTOEND
@@ -9536,8 +9586,8 @@ scrollToEnd
 scrollToStart
 	"Scroll to start of document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SCROLLTOSTART
@@ -9547,8 +9597,8 @@ scrollToStart
 scrollUp
 	"Scroll the document up, keeping the caret visible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESCROLLUP
@@ -9558,9 +9608,9 @@ scrollUp
 scrollWidth
 	"Retrieve the document width assumed for scrolling."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSCROLLWIDTH
@@ -9570,8 +9620,8 @@ scrollWidth
 scrollWidth: pixelWidthInteger
 	"Sets the document width assumed for scrolling."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSCROLLWIDTH
@@ -9581,26 +9631,30 @@ scrollWidth: pixelWidthInteger
 secondaryCaretForecolor
 	"Get the foreground colour of additional carets."
 
-	^this isNil
-		ifTrue: [nil]
-		ifFalse: 
+	^this
+		ifNil: [nil]
+		ifNotNil: 
 			[RGB fromInteger: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETADDITIONALCARETFORE
 						wParam: 0
 						lParam: 0)]!
 
-secondaryCaretForecolor: foreRGB 
+secondaryCaretForecolor: foreRGB
 	"Set the foreground colour of the secondary carets."
 
-	self sciSetAdditionalCaretFore: (foreRGB ifNil: [Color darkGray]) asRGB!
+	self
+		sciSetAdditionalCaretFore: (foreRGB
+				ifNil: 
+					["Use default hardcoded in Scintilla"
+					RGB fromInteger: 16r7F7F7F]) asRGB!
 
 secondarySelectionAlpha
 	"Get the alpha of the selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETADDITIONALSELALPHA
@@ -9610,8 +9664,8 @@ secondarySelectionAlpha
 secondarySelectionAlpha: alphaInteger
 	"Set the alpha of the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELALPHA
@@ -9665,9 +9719,9 @@ selection
 selectionAlpha
 	"Get the alpha of the selection."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELALPHA
@@ -9677,8 +9731,8 @@ selectionAlpha
 selectionAlpha: alphaInteger
 	"Set the alpha of the selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSELALPHA
@@ -9702,9 +9756,9 @@ selectionBackcolor: aColorOrNil
 selectionCount
 	"How many selections are there?"
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSELECTIONS
@@ -9731,13 +9785,15 @@ selectionMode
 	"Note that holding down Ctrl+Alt while selecting with the mouse will perform a #rectangular selection,
 	the normal selection mode being #stream."
 
-	^self class selectionModes at: self sciGetSelectionMode + 1!
+	^self class selectionModes at: self sciGetSelectionMode + 1 ifAbsent: [#stream]!
 
-selectionMode: aSymbol 
+selectionMode: aSymbol
 	"Set the current selection mode to be that named by the <Symbol> argument, one of #stream,
 	#rectangle or #lines."
 
-	self sciSetSelectionMode: (self class selectionModes indexOf: aSymbol) - 1!
+	self sciSetSelectionMode: (aSymbol
+				ifNil: [SC_SEL_STREAM]
+				ifNotNil: [(self class selectionModes keyAtValue: aSymbol) - 1])!
 
 selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
@@ -9872,7 +9928,11 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 				lpParam: lpParam yourAddress]!
 
 setCallTipHighlightColor
-	self sciCallTipSetForeHlt: callTipHighlightColor asRGB!
+	self
+		sciCallTipSetForeHlt: (callTipHighlightColor
+				ifNil: 
+					["Set to default hardcoded in the control"
+					RGB darkBlue]) asRGB!
 
 setCallTipTabWidth
 	self sciCallTipUseStyle: callTipTabWidth!
@@ -9915,7 +9975,9 @@ setDefaultTextStyle
 	| defaultStyle |
 	defaultStyle := self buildDefaultStyle.
 	self sciStyleResetDefault.
-	defaultStyle applyToView: self at: STYLE_DEFAULT.
+	defaultStyle
+		basicId: STYLE_DEFAULT;
+		applyToView: self initializing: true.
 	self sciStyleClearAll!
 
 setFoldFlags
@@ -10026,8 +10088,8 @@ setRawAnnotations: aCollectionOfScintillaAnnotations
 setReadOnly: readOnlyBoolean
 	"Set to read only or read write."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETREADONLY
@@ -10035,12 +10097,26 @@ setReadOnly: readOnlyBoolean
 				lParam: 0]!
 
 setSecondarySelectionBackcolor
-	selectionBackcolor 
-		ifNotNil: [self sciSetAdditionalSelBack: secondarySelectionBackcolor asRGB]!
+	self
+		sciSetAdditionalSelBack: (secondarySelectionBackcolor
+				ifNil: 
+					["Default to same as primary selection backcolor"
+					selectionBackcolor
+						ifNil: 
+							["And if even that is not specified, use the hardcoded default in Scintilla"
+							RGB fromInteger: 16rD7D7D7]])
+					asRGB!
 
 setSecondarySelectionForecolor
-	secondarySelectionForecolor 
-		ifNotNil: [self sciSetAdditionalSelFore: secondarySelectionForecolor asRGB]!
+	self
+		sciSetAdditionalSelFore: (secondarySelectionForecolor
+				ifNil: 
+					["Default to primary selection forecolor"
+					selectionForecolor
+						ifNil: 
+							["And if even that is not specified use the hardcoded default in the control"
+							RGB red]])
+					asRGB!
 
 setSelectionBackcolor
 	selectionBackcolor 
@@ -10064,8 +10140,8 @@ setTabStops: anInteger
 setTargetRangeFromSelection
 	"Make the target range start and end be the same as the selection range start and end."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TARGETFROMSELECTION
@@ -10146,8 +10222,8 @@ showUserList: aCollection id: anInteger
 showVerticalScrollBar: visibleBoolean
 	"Show or hide the vertical scroll bar."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETVSCROLLBAR
@@ -10158,8 +10234,8 @@ splitTarget: pixelWidthInteger
 	"Split the lines in the target into lines that are less wide than pixelWidth where
 	possible."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINESSPLIT
@@ -10172,8 +10248,8 @@ startDwellTimer
 startRecording
 	"Start notifying the container of all key presses and commands."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STARTRECORD
@@ -10184,8 +10260,8 @@ startStylingFrom: startInteger
 	"Set the current styling position to start. The unused parameter is no longer used and
 	should be set to 0."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STARTSTYLING
@@ -10201,14 +10277,14 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#modificationEventMask: #modificationEventMask ##(SC_MODEVENTMASKALL)) #(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color
-		black asRGB)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(RGB fromInteger: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#currentLineBackcolor: #currentLineBackcolor ##(Color
-		yellow asRGB)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
+	#(#(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(RGB
+		black)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(RGB fromInteger: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#currentLineBackcolor: #currentLineBackcolor ##(RGB
+		yellow)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
 		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#targetRange: #targetRange ##(1
-		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
-		gray asRGB)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
-		white asRGB)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue asRGB)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
-		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false))
+		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0)  #(#sciSetEdgeColumn: #sciGetEdgeColumn 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(RGB
+		fromInteger: 16rC0C0C0)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(RGB
+		white)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(RGB blue)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
+		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false))
 			do: 
 				[:each |
 				| attrib |
@@ -10229,8 +10305,8 @@ stopDwellTimer
 stopRecording
 	"Stop notifying the container of all key presses and commands."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_STOPRECORD
@@ -10274,9 +10350,9 @@ styledTextFrom: startInteger to: stopInteger
 styleIdAt: posInteger
 	"Returns the style byte at the position."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETSTYLEAT
@@ -10292,8 +10368,8 @@ styleNext: lengthInteger mask: styleInteger
 	"Change style from current styling position for length characters to a style and move the
 	current styling position to after this newly styled segment."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETSTYLING
@@ -10338,9 +10414,9 @@ styleWithId: anInteger
 stylingPosition
 	"Retrieve the position of the last correctly styled character."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETENDSTYLED
@@ -10350,8 +10426,8 @@ stylingPosition
 swapPrimarySelectionAnchorAndCaret
 	"Swap that caret and anchor of the main selection."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SWAPMAINANCHORCARET
@@ -10367,14 +10443,16 @@ tabDrawMode
 	^self class tabDrawModes at: self sciGetTabDrawMode + 1 ifAbsent: [#longArrow]!
 
 tabDrawMode: aSymbol
-	self sciSetTabDrawMode: (self class tabDrawModes keyAtValue: aSymbol) - 1!
+	self sciSetTabDrawMode: (aSymbol
+				ifNil: [SCTD_LONGARROW]
+				ifNotNil: [(self class tabDrawModes keyAtValue: aSymbol) - 1])!
 
 tabIndents
 	"Does a tab pressed when caret is within indentation indent?"
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTABINDENTS
@@ -10384,8 +10462,8 @@ tabIndents
 tabIndents: tabIndentsBoolean
 	"Sets whether a tab pressed when caret is within indentation indents."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTABINDENTS
@@ -10395,9 +10473,9 @@ tabIndents: tabIndentsBoolean
 tabWidth
 	"Retrieve the visible size of a tab."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTABWIDTH
@@ -10407,8 +10485,8 @@ tabWidth
 tabWidth: tabWidthInteger
 	"Change the visible size of a tab to be a multiple of the width of a space character."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETTABWIDTH
@@ -10418,8 +10496,8 @@ tabWidth: tabWidthInteger
 targetAll
 	"Sets the target to the whole document."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_TARGETWHOLEDOCUMENT
@@ -10488,9 +10566,9 @@ textAtLine: anInteger
 textLength
 	"Retrieve the number of characters in the document."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTEXTLENGTH
@@ -10561,8 +10639,8 @@ toggleLineNumbers
 toggleOvertype
 	"Switch from insert to overtype mode or the reverse."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_EDITTOGGLEOVERTYPE
@@ -10628,8 +10706,8 @@ tokenStartAt: anInteger
 twiddleLines
 	"Switch the current line with the previous."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_LINETRANSPOSE
@@ -10648,8 +10726,8 @@ unfoldAll
 unindent
 	"Dedent the selected lines."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_BACKTAB
@@ -10663,7 +10741,7 @@ updateIndicators
 updateIndicatorStyles
 	self hideIndicators.
 	indicatorStyles ifNil: [^self].
-	indicatorStyles do: [:each | each applyToView: self at: each basicId].
+	indicatorStyles do: [:each | each applyToView: self initializing: false].
 	(indicatorStyles lookup: #braceHighlight)
 		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
@@ -10678,9 +10756,6 @@ updateKeyBindings
 	self sciClearAllCmdKeys.
 	self keyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]!
 
-updateMarkerDefinitions
-	markerDefinitions do: [:each | each applyToView: self at: each basicId]!
-
 updateMarkers
 	self deleteMarkers: 0.
 	markers do: [:each | each addToView: self]!
@@ -10691,11 +10766,12 @@ updateTextStyles
 	self isOpen ifFalse: [^self].
 	"Ensure there is a call tip style"
 	self callTipStyle.
-	"Note that this will clear the annotation and margin styles too"
+	"Reset all the styles to defaults, and clear the annotation and margin styles too"
 	self setDefaultTextStyle.
-	currentTextStyles do: [:each | each applyToView: self].
+	"Because we have reset all styles, we need only send across non-default properties to the control."
+	currentTextStyles do: [:each | each applyToView: self initializing: true].
 	self annotationStylesOffset: AnnotationStylesOffset.
-	self annotationStyles do: [:each | each applyToView: self]!
+	self annotationStyles do: [:each | each applyToView: self initializing: true]!
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
@@ -10737,9 +10813,9 @@ whitespaceForecolor: aColorOrNil
 whitespaceMarkerSize
 	"Get the size of the dots used to mark space characters."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETWHITESPACESIZE
@@ -10749,8 +10825,8 @@ whitespaceMarkerSize
 whitespaceMarkerSize: sizeInteger
 	"Set the size of the dots used to mark space characters."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETWHITESPACESIZE
@@ -10777,14 +10853,16 @@ whitespaces: aStringOrNil
 whitespaceVisibility
 	"Answer a <Symbol> naming the level of whitespace marking currently configured in the receiver."
 
-	^self class whitespaceVisibilityLevels at: self sciGetViewWS + 1!
+	^self class whitespaceVisibilityLevels at: self sciGetViewWS + 1 ifAbsent: [#invisible]!
 
 whitespaceVisibility: aSymbol
 	"Make white space characters invisible, always visible, visible only after indentation, or
 	visible only in indentation, depending on the <Symbol> argument (one of #invisible,
 	#visibleAlways, #visibleAfterIndent, or visibleOnlyInIndent respectively)."
 
-	self sciSetViewWS: (self class whitespaceVisibilityLevels indexOf: aSymbol) - 1!
+	self sciSetViewWS: (aSymbol
+				ifNil: [SCWS_INVISIBLE]
+				ifNotNil: [(self class whitespaceVisibilityLevels keyAtValue: aSymbol) - 1])!
 
 widthOfText: aString inStyle: aSymbol 
 	"Answer the <integer> pixel width that would be needed to display the text in the <String>
@@ -10796,9 +10874,9 @@ widthOfText: aString inStyle: aSymbol
 willCaptureMouse
 	"Get whether mouse gets captured."
 
-	^this isNil
-		ifTrue: [false]
-		ifFalse: 
+	^this
+		ifNil: [false]
+		ifNotNil: 
 			[(ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETMOUSEDOWNCAPTURES
@@ -10808,8 +10886,8 @@ willCaptureMouse
 willCaptureMouse: capturesBoolean
 	"Set whether the mouse is captured when its button is pressed."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETMOUSEDOWNCAPTURES
@@ -10926,15 +11004,17 @@ wrapIndentMode
 
 	^self class wrapIndentModes at: self sciGetWrapIndentMode + 1 ifAbsent: [#fixed]!
 
-wrapIndentMode: aSymbol 
-	self sciSetWrapIndentMode: (self class wrapIndentModes keyAtValue: aSymbol) - 1!
+wrapIndentMode: aSymbol
+	self sciSetWrapIndentMode: (aSymbol
+				ifNil: [SC_WRAPINDENT_FIXED]
+				ifNotNil: [(self class wrapIndentModes keyAtValue: aSymbol) - 1])!
 
 xOffset
 	"Get the xOffset (ie, horizontal scroll position)."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETXOFFSET
@@ -10944,8 +11024,8 @@ xOffset
 xOffset: xOffsetInteger
 	"Set the xOffset (ie, horizontal scroll position)."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETXOFFSET
@@ -10955,8 +11035,8 @@ xOffset: xOffsetInteger
 zoomIn
 	"Magnify the displayed text by increasing the sizes by 1 point."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ZOOMIN
@@ -10966,9 +11046,9 @@ zoomIn
 zoomLevel
 	"Retrieve the zoom level."
 
-	^this isNil
-		ifTrue: [0]
-		ifFalse: 
+	^this
+		ifNil: [0]
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETZOOM
@@ -10979,8 +11059,8 @@ zoomLevel: zoomInPointsInteger
 	"Set the zoom level. This number of points is added to the size of all fonts. It may be
 	positive to magnify or negative to reduce."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETZOOM
@@ -10990,8 +11070,8 @@ zoomLevel: zoomInPointsInteger
 zoomOut
 	"Make the displayed text smaller by decreasing the sizes by 1 point."
 
-	this isNil
-		ifFalse: 
+	this
+		ifNotNil: 
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ZOOMOUT
@@ -11022,7 +11102,6 @@ zoomOut
 !ScintillaView categoriesFor: #annotationStylesOffset!**auto generated**!annotations!public!scintilla interface! !
 !ScintillaView categoriesFor: #annotationStylesOffset:!**auto generated**!annotations!public!scintilla interface! !
 !ScintillaView categoriesFor: #appendText:!public!text retrieval & modification! !
-!ScintillaView categoriesFor: #applyAttributes:!helpers!private! !
 !ScintillaView categoriesFor: #applyStyle:toNext:!public!styling! !
 !ScintillaView categoriesFor: #applyStyleId:toNext:!public!styling! !
 !ScintillaView categoriesFor: #applyTextStylesForLexer:!helpers!lexer!private! !
@@ -11155,10 +11234,12 @@ zoomOut
 !ScintillaView categoriesFor: #destroyAutoCompletionListImages!**auto generated**!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #drawingPhases!other settings!public!scintilla interface! !
 !ScintillaView categoriesFor: #drawingPhases:!other settings!public! !
+!ScintillaView categoriesFor: #drawingTechnology!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #drawingTechnology:!other settings!public! !
 !ScintillaView categoriesFor: #duplicateLine!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #duplicateSelection!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #edgeColor!**auto generated**!long lines!public!scintilla interface! !
-!ScintillaView categoriesFor: #edgeColor:!**auto generated**!long lines!public!scintilla interface! !
+!ScintillaView categoriesFor: #edgeColor:!long lines!public!scintilla interface! !
 !ScintillaView categoriesFor: #edgeColumn!long lines!public! !
 !ScintillaView categoriesFor: #edgeColumn:!long lines!public! !
 !ScintillaView categoriesFor: #edgeMode!long lines!public! !
@@ -11297,6 +11378,7 @@ zoomOut
 !ScintillaView categoriesFor: #indicatorsUnder:!indicators!private! !
 !ScintillaView categoriesFor: #initialize!initializing!public! !
 !ScintillaView categoriesFor: #initializeControl!initializing!private! !
+!ScintillaView categoriesFor: #initializeMarkerDefinitions!helpers!markers!private! !
 !ScintillaView categoriesFor: #initializeRegisteredImages!initializing!private! !
 !ScintillaView categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #insertText:from:!**auto generated**!public!scintilla interface!text retrieval & modification! !
@@ -11332,6 +11414,8 @@ zoomOut
 !ScintillaView categoriesFor: #isCurrentLineMarkedWith:!markers!public!testing! !
 !ScintillaView categoriesFor: #isDrawingBuffered!**auto generated**!other settings!public!scintilla interface!testing! !
 !ScintillaView categoriesFor: #isDrawingBuffered:!**auto generated**!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!public!scintilla interface! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #isFoldingEnabled!folding!public!testing! !
 !ScintillaView categoriesFor: #isFoldingEnabled:!folding!public! !
 !ScintillaView categoriesFor: #isIndicator:setAt:!indicators!public! !
@@ -11728,6 +11812,7 @@ zoomOut
 !ScintillaView categoriesFor: #sciSetCodePage:!other settings!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetControlCharSymbol:!**auto generated**!caret, selection, and hotspot styles!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetDocPointer:!**auto generated**!multiple views!private!scintilla interface! !
+!ScintillaView categoriesFor: #sciSetEdgeColour:!**auto generated**!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetEdgeColumn:!**auto generated**!long lines!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetEdgeMode:!**auto generated**!long lines!private!scintilla interface! !
 !ScintillaView categoriesFor: #sciSetEOLMode:!**auto generated**!line endings!private!scintilla interface! !
@@ -11972,7 +12057,6 @@ zoomOut
 !ScintillaView categoriesFor: #updateIndicators!helpers!indicators!private! !
 !ScintillaView categoriesFor: #updateIndicatorStyles!helpers!indicators!private! !
 !ScintillaView categoriesFor: #updateKeyBindings!helpers!key bindings!private! !
-!ScintillaView categoriesFor: #updateMarkerDefinitions!helpers!markers!private! !
 !ScintillaView categoriesFor: #updateMarkers!helpers!markers!private! !
 !ScintillaView categoriesFor: #updateTextStyles!helpers!private!style definition! !
 !ScintillaView categoriesFor: #validateUserInterface!operations!public! !
@@ -12150,6 +12234,9 @@ defaultTextStyles
 
 drawingPhases
 	^#(#one #two #multiple)!
+
+drawingTechnologies
+	^#(#default #directWrite #directWriteRetain #directWriteDC)!
 
 edgeModes
 	"Answer the symbolic names of the long-line edge marking modes supported by Scintilla."
@@ -12732,6 +12819,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #defaultKeyMap!constants!private! !
 !ScintillaView class categoriesFor: #defaultTextStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #drawingPhases!constants!private! !
+!ScintillaView class categoriesFor: #drawingTechnologies!constants!public! !
 !ScintillaView class categoriesFor: #edgeModes!constants!public! !
 !ScintillaView class categoriesFor: #foldMarkerStyles!constants!public! !
 !ScintillaView class categoriesFor: #foldTextTagStyles!constants!public! !

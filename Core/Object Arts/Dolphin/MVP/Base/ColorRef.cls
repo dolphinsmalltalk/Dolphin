@@ -28,15 +28,18 @@ asColorRef
 	^self!
 
 asIndexedColor
-	"Answer the receiver as an IndexedColour using the default palette."
+	"Answer the receiver as the nearest <IndexedColour> using the default palette."
 
 	^self asIndexedColorUsingPalette: self defaultPalette
 !
 
 asIndexedColorUsingPalette: hPalette
-	"Answer the receiver as an IndexedColour using hPalette"
+	"Answer the receiver as the nearest <IndexedColour> using hPalette"
 
 	^self asRGB asIndexedColorUsingPalette: hPalette!
+
+asInteger
+	^code!
 
 asParameter
 	"Answer the receiver such that it can be used for an API call."
@@ -85,6 +88,7 @@ setCode: anInteger
 !ColorRef categoriesFor: #asColorRef!converting!public! !
 !ColorRef categoriesFor: #asIndexedColor!converting!public! !
 !ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+!ColorRef categoriesFor: #asInteger!converting!public! !
 !ColorRef categoriesFor: #asParameter!converting!public! !
 !ColorRef categoriesFor: #asRGB!converting!public! !
 !ColorRef categoriesFor: #code!accessing!private! !

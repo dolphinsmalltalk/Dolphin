@@ -1,23 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
-	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor reserved1 reserved2 reserved3 reserved4'
+	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaMarkerDefinition guid: (GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
-ScintillaMarkerDefinition comment: 'ScintillaMarkerDefinition instances represent the configured types of <ScintillaMarker>s for a particular <ScintillaView>.
+ScintillaMarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
 
-Markers can be displayed in any margins configured for the view to mark particular lines.
+Markers can be displayed in any symbol margins configured for the view to mark particular lines.
 
-Instance Variables:
-	code		<integer>. Marker glyph code from the SC_MARK_XXX enumeration
-	forecolor	<integer>. Foreground colour value of the marker glyph.
-	backcolor	<integer>. Background colour value of the marker glyph.
-	view		<ScintillaView>. View in which this marker type is defined.
-	name	<Symbol>. Symbolic name of the marker type, e.g. #folder for a fold point marker, or some application defined name
-	alpha	<Integer>. 0..255 opacity
-	selectionBackcolor <integer> highlight background colour of selected marker
+## Instance Variables:
+  `code`				`<integer>`. Marker glyph code from the SC_MARK_XXX enumeration
+  `forecolor`			`<Color>`. Foreground colour value of the marker glyph.
+  `backcolor`			`<Color>`. Background colour value of the marker glyph.
+  `view`				`ScintillaView`. View in which this marker type is defined.
+  `name`				`Symbol`. Symbolic name of the marker type, e.g. #folder for a fold point marker, or some application defined name
+  `alpha`				`<Integer>`. 0..255 opacity
+  `selectionBackcolor` 	`Color`. Highlight background colour of selected marker.
+
+## Class Variables:
+  `FolderNames`		`IdentityDictionary` mapping `Symbol` names of folder markers to the integer code from the `SC_MARKNUM_FOLDERxxx` enumeration
+
+
 
 '!
 !ScintillaMarkerDefinition categoriesForClass!MVP-Views-Support! !
@@ -42,20 +47,16 @@ alphaValue
 	^self alpha ?? SC_ALPHA_NOALPHA!
 
 backcolor
-	^self basicBackcolor ifNotNil: [:rgbVal | RGB fromInteger: rgbVal]!
+	"Answer the background <Color> used to draw the marker, or nil if the marker definition does not specify a background colour and the Scintilla default (white) should be used."
+
+	^backcolor!
 
 backcolor: aColorOrNil
-	self basicBackcolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
+	self basicBackcolor: aColorOrNil.
 	self updateViewProperty: #backcolor!
-
-basicBackcolor
-	^backcolor!
 
 basicBackcolor: aColorOrNil 
 	backcolor := aColorOrNil!
-
-basicForecolor
-	^forecolor!
 
 basicForecolor: aColorOrNil 
 	forecolor := aColorOrNil!
@@ -63,15 +64,8 @@ basicForecolor: aColorOrNil
 basicId
 	^id ifNil: [name ifNotNil: [id := FolderNames lookup: name]]!
 
-basicSelectionBackcolor
-	^selectionBackcolor!
-
-basicSelectionBackcolor: aColor 
-	selectionBackcolor := aColor isNil 
-				ifFalse: 
-					[| rgb |
-					rgb := aColor asRGB.
-					rgb = ##(RGB red) asRGB ifFalse: [aColor asParameter]]!
+basicSelectionBackcolor: aColorOrNil
+	selectionBackcolor := aColorOrNil!
 
 code
 	^code!
@@ -80,10 +74,12 @@ code: anIntegerOrNil
 	code := anIntegerOrNil!
 
 forecolor
-	^self basicForecolor ifNotNil: [:rgbVal | Color fromInteger: rgbVal]!
+	"Answer the foreground <Color> used to draw the marker, or nil if the marker definition does not specify a foreground colour and should use the Scintilla default (black)."
+
+	^forecolor!
 
 forecolor: aColorOrNil
-	self basicForecolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
+	self basicForecolor: aColorOrNil.
 	self updateViewProperty: #forecolor!
 
 glyphName
@@ -128,7 +124,9 @@ printableProperties
 		yourself!
 
 selectionBackcolor
-	^self basicSelectionBackcolor ifNotNil: [:intVal | Color fromInteger: intVal]!
+	"Answer the background <Color> used to draw the marker when selector, or nil if the marker definition does not specify a selection background colour and the Scintilla default (red) should be used."
+
+	^selectionBackcolor!
 
 selectionBackcolor: aColor
 	self basicSelectionBackcolor: aColor.
@@ -147,12 +145,9 @@ view: aScintillaView
 !ScintillaMarkerDefinition categoriesFor: #alphaValue!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #backcolor!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #basicBackcolor!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicForecolor!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicId!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #code!accessing!private! !
 !ScintillaMarkerDefinition categoriesFor: #code:!accessing!private! !
@@ -283,14 +278,14 @@ boxTree
 buildPropertyMap
 	^IdentityDictionary new
 		at: #backcolor
-			put: (ScintillaPropertyDescriptor
-					getSelector: #basicBackcolor
-					defaultValue: Color white asParameter
+			put: (ScintillaColorPropertyDescriptor
+					getSelector: #backcolor
+					defaultValue: RGB white
 					setMessage: SCI_MARKERSETBACK);
 		at: #forecolor
-			put: (ScintillaPropertyDescriptor
-					getSelector: #basicForecolor
-					defaultValue: Color black asParameter
+			put: (ScintillaColorPropertyDescriptor
+					getSelector: #forecolor
+					defaultValue: RGB black
 					setMessage: SCI_MARKERSETFORE);
 		at: #glyphName
 			put: (ScintillaPropertyDescriptor
@@ -303,9 +298,9 @@ buildPropertyMap
 					defaultValue: SC_ALPHA_NOALPHA
 					setMessage: SCI_MARKERSETALPHA);
 		at: #selectionBackcolor
-			put: (ScintillaPropertyDescriptor
-					getSelector: #basicSelectionBackcolor
-					defaultValue: Color red asParameter
+			put: (ScintillaColorPropertyDescriptor
+					getSelector: #selectionBackcolor
+					defaultValue: RGB red
 					setMessage: SCI_MARKERSETBACKSELECTED);
 		shrink;
 		yourself!
@@ -479,22 +474,36 @@ plusMinus
 					yourself);
 		yourself!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	^
-	[:vars | 
+	[:vars |
 	| instance |
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
 	"Nil out some inst vars that have default value in old instances"
-	instance code: (instance code isZero ifFalse: [instance code]).
-	instance basicForecolor: (instance basicForecolor = Color black 
-				ifFalse: [instance basicForecolor asParameter]).
-	instance basicBackcolor: (instance basicBackcolor = Color white 
-				ifFalse: [instance basicForecolor asParameter]).
+	instance code ifNotNil: [:code | instance code: (code isZero ifFalse: [code])].
+	instance forecolor
+		ifNotNil: 
+			[:color |
+			| forecolor |
+			forecolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
+			instance basicForecolor: (forecolor asRGB asInteger == 0 ifFalse: [forecolor])].
+	instance backcolor
+		ifNotNil: 
+			[:color |
+			| backcolor |
+			backcolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
+			instance basicBackcolor: (backcolor asRGB asInteger == 16rFFFFFF ifFalse: [backcolor])].
+	instance selectionBackcolor
+		ifNotNil: 
+			[:color |
+			| backcolor |
+			backcolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
+			instance basicSelectionBackcolor: (backcolor asRGB asInteger == 16rFF ifFalse: [backcolor])].
 	instance]!
 
 stbVersion
-	^1!
+	^2!
 
 visibleCharacterGlyphs
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray

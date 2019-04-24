@@ -5596,7 +5596,7 @@ withHandle: aHandle
 	although you will need to visit #dispatchMessage:, (and any other direct users 
 	of AllViews)."
 
-	^SessionManager inputState windowAt: aHandle ifAbsent: []!
+	^SessionManager current inputState windowAt: aHandle ifAbsent: []!
 
 wndClassName
 	"Private - Answer the Windows class name to be registered with Win32 for instances of the receiver.

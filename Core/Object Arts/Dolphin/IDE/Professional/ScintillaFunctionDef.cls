@@ -87,11 +87,10 @@ emitMethodBodyOn: aPuttableStream wParam: wParam lParam: lParam
 	self hasReturnValue 
 		ifTrue: 
 			[aPuttableStream
-				nextPutAll: '^(this isNil ifTrue: [';
+				nextPutAll: '^(this ifNil: [';
 				nextPutAll: self defaultReturnValue;
-				nextPutAll: ']']
-		ifFalse: [aPuttableStream nextPutAll: '(this isNil'].
-	aPuttableStream nextPutAll: ' ifFalse: ['.
+				nextPutAll: '] ifNotNil: [']
+		ifFalse: [aPuttableStream nextPutAll: '(this ifNotNil: ['].
 	retConversion := self returnType fromMessage.
 	retConversion 
 		ifNotNil: 
@@ -465,7 +464,6 @@ renamedFunctions
 		at: 'SCI_CLEARALL' put: #clearAll;
 		at: 'SCI_EDITTOGGLEOVERTYPE' put: #toggleOvertype;
 		at: 'SCI_GETEDGECOLOUR' put: #edgeColor;
-		at: 'SCI_SETEDGECOLOUR' put: #edgeColor:;
 		at: 'SCI_GETTWOPHASEDRAW' put: #isDrawingTwoPhase;
 		at: 'SCI_SETTWOPHASEDRAW' put: #isDrawingTwoPhase:;
 		at: 'SCI_SETREADONLY' put: #setReadOnly:;
