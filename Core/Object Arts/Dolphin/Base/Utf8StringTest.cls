@@ -45,16 +45,15 @@ testDecodeNextFrom
 	"5 and 6 byte encodings - not actually valid Unicode characters, but valid UTF-8 encodings"
 	bytes := (#[16rF8 16r88 16r80 16r80 16r80] , Character dolphin asString asByteArray
 				, #[16rFB 16rBF 16rBF 16rBF 16rBF] , $£ asUtf8String asByteArray
-				, #[16rFC 16r84 16r80 16r80 16r80] , $€ asUtf8String asByteArray
-				, #[16rFD 16rBF 16rBF 16rBF 16rBF 16rBF] , $\x4F60 asUtf8String asByteArray
-)
+				, #[16rFC 16r84 16r80 16r80 16r80] , $\x20AC asUtf8String asByteArray
+				, #[16rFD 16rBF 16rBF 16rBF 16rBF 16rBF] , $\x4F60 asUtf8String asByteArray)
 				readStream.
 	self assert: (subject decodeNextFrom: bytes) equals: Character replacement.
 	self assert: (subject decodeNextFrom: bytes) equals: Character dolphin.
 	self assert: (subject decodeNextFrom: bytes) equals: Character replacement.
 	self assert: (subject decodeNextFrom: bytes) equals: $£.
 	self assert: (subject decodeNextFrom: bytes) equals: Character replacement.
-	self assert: (subject decodeNextFrom: bytes) equals: $€.
+	self assert: (subject decodeNextFrom: bytes) equals: $\x20AC.
 	self assert: (subject decodeNextFrom: bytes) equals: Character replacement.
 	self assert: (subject decodeNextFrom: bytes) equals: $\x4F60.
 	self assert: bytes atEnd!
