@@ -66,6 +66,7 @@ decodeNextFrom: aReadStream
 	11110xxx	0xF0..0xF4	Lead byte of a 4-byte character encoding
 	10xxxxxx	0x80..0xBF	Continuation bytes (x1, x2, or x3)"
 
+	| min |
 	^aReadStream basicNextAvailable
 		ifNotNil: 
 			[:c |
@@ -84,7 +85,9 @@ decodeNextFrom: aReadStream
 									[:c2 |
 									| codePoint |
 									(c2 bitAnd: 16rC0) == 16r80
-										ifTrue: [codePoint := (c bitAnd: 16r1F) << 6 bitOr: (c2 bitAnd: 16r3F)]
+										ifTrue: 
+											[codePoint := (c bitAnd: 16r1F) << 6 bitOr: (c2 bitAnd: 16r3F).
+											min := 16r80]
 										ifFalse: 
 											["Invalid1st continuation"
 											aReadStream pop.
@@ -97,7 +100,9 @@ decodeNextFrom: aReadStream
 												ifNotNil: 
 													[:c3 |
 													(c3 bitAnd: 16rC0) == 16r80
-														ifTrue: [codePoint := (codePoint bitAnd: 16r3FF) << 6 bitOr: (c3 bitAnd: 16r3F)]
+														ifTrue: 
+															[codePoint := (codePoint bitAnd: 16r3FF) << 6 bitOr: (c3 bitAnd: 16r3F).
+															min := 16r800]
 														ifFalse: 
 															["Invalid 2nd continuation"
 															aReadStream pop.
@@ -110,7 +115,9 @@ decodeNextFrom: aReadStream
 																ifNotNil: 
 																	[:c4 |
 																	(c4 bitAnd: 16rC0) == 16r80
-																		ifTrue: [codePoint := (codePoint bitAnd: 16r7FFF) << 6 bitOr: (c4 bitAnd: 16r3F)]
+																		ifTrue: 
+																			[codePoint := (codePoint bitAnd: 16r7FFF) << 6 bitOr: (c4 bitAnd: 16r3F).
+																			min := 16r10000]
 																		ifFalse: 
 																			["Invalid 3rd continuation"
 																			aReadStream pop.
@@ -123,7 +130,9 @@ decodeNextFrom: aReadStream
 																		ifNotNil: 
 																			[:c5 |
 																			(c5 bitAnd: 16rC0) == 16r80
-																				ifTrue: [codePoint := (codePoint bitAnd: 16rFFFFF) << 6 bitOr: (c5 bitAnd: 16r3F)]
+																				ifTrue: 
+																					[codePoint := (codePoint bitAnd: 16rFFFFF) << 6 bitOr: (c5 bitAnd: 16r3F).
+																					min := 16r200000]
 																				ifFalse: 
 																					["Invalid 4th continuation"
 																					aReadStream pop.
@@ -136,11 +145,17 @@ decodeNextFrom: aReadStream
 																				ifNotNil: 
 																					[:c6 |
 																					(c6 bitAnd: 16rC0) == 16r80
-																						ifTrue: [codePoint := (codePoint bitAnd: 16r1FFFFFF) << 6 bitOr: (c6 bitAnd: 16r3F)]
+																						ifTrue: 
+																							[codePoint := (codePoint bitAnd: 16r1FFFFFF) << 6 bitOr: (c6 bitAnd: 16r3F).
+																							min := 16r4000000]
 																						ifFalse: 
 																							["Invalid 5th continuation"
 																							aReadStream pop.
 																							^Character.Utf8Default]]]]]]].
+									codePoint < min
+										ifTrue: 
+											["Overlong encoding"
+											^Character.Utf8Default].
 									Character codePoint: codePoint ifInvalid: [Character.Utf8Default]]]
 						ifFalse: 
 							["On a continution byte so in the middle of a character, which is invalid"
