@@ -191,10 +191,6 @@ testNextColon
 			self should: [subject next: 1] raise: Stream endOfStreamSignal.
 			self closeTempStream: subject]!
 
-testNextFiveByteUtf8Encoding
-	"UTF-8 can encode values up to 16rFFFFFFF. In practice these are not required since the maximum Unicode code point is U+10FFFF, which requires only 4 bytes to encode, but in theory they could be encountered, and should be treated as invalid characters (i.e. substituted with the replacement character"
-!
-
 testNextIllegalUtf8CodePositions
 	"Test cases from Kuhn"
 
@@ -387,6 +383,32 @@ testNextOtherNonCharactersUtf8
 	self assert: (self
 				verifyNonChars: #('f09fbfbe' 'f09fbfbf' 'f0afbfbe' 'f0afbfbf' 'f0bfbfbe' 'f0bfbfbf' 'f18fbfbe' 'f18fbfbf' 'f19fbfbe' 'f19fbfbf' 'f1afbfbe' 'f1afbfbf' 'f1bfbfbe' 'f1bfbfbf' 'f28fbfbe' 'f28fbfbf' 'f29fbfbe' 'f29fbfbf' 'f2afbfbe' 'f2afbfbf' 'f2bfbfbe' 'f2bfbfbf' 'f38fbfbe' 'f38fbfbf' 'f39fbfbe' 'f39fbfbf' 'f3afbfbe' 'f3afbfbf' 'f3bfbfbe' 'f3bfbfbf' 'f48fbfbe' 'f48fbfbf'))
 		equals: 2 * 16 + 1!
+
+testNextOverlongUtf8
+	| subject |
+	"4.1 Overlong ASCII character encodings"
+	subject := self
+				streamOnBytes: #[16rC0 16rAF 95 16rE0 16r80 16rAF 95 16rF0 16r80 16r80 16rAF 95 16rF8 16r80 16r80 16r80 16rAF 95 16rFC 16r80 16r80 16r80 16r80 16rAF 95]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: $_].
+	self assert: subject atEnd.
+
+	"4.2 Maximum overlong sequences"
+	subject := self
+				streamOnBytes: #[16rC1 16rBF 10 16rE0 16r9F 16rBF 10 16rF0 16r8F 16rBF 16rBF 10 16rF8 16r87 16rBF 16rBF 16rBF 10 16rFC 16r83 16rBF 16rBF 16rBF 16rBF 10]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: Character lf].
+	"4.3 Overlong representations of NUL"
+	subject := self
+				streamOnBytes: #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: Character lf]!
 
 testNextPut
 	self writeableCollections do: 
@@ -835,13 +857,13 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextFiveByteUtf8Encoding!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
