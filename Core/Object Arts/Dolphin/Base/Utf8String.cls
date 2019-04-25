@@ -114,7 +114,33 @@ decodeNextFrom: aReadStream
 																		ifFalse: 
 																			["Invalid 3rd continuation"
 																			aReadStream pop.
-																			^Character.Utf8Default]]]]].
+																			^Character.Utf8Default]].
+															c >= 16rF8
+																ifTrue: 
+																	["5-byte character (not currently possible - only 4 bytes required for max Unicode char"
+																	aReadStream basicNextAvailable
+																		ifNil: [^Character.Utf8Default]
+																		ifNotNil: 
+																			[:c5 |
+																			(c5 bitAnd: 16rC0) == 16r80
+																				ifTrue: [codePoint := (codePoint bitAnd: 16rFFFFF) << 6 bitOr: (c5 bitAnd: 16r3F)]
+																				ifFalse: 
+																					["Invalid 4th continuation"
+																					aReadStream pop.
+																					^Character.Utf8Default]].
+																	c >= 16rFC
+																		ifTrue: 
+																			["6-byte character (not currently possible)"
+																			aReadStream basicNextAvailable
+																				ifNil: [^Character.Utf8Default]
+																				ifNotNil: 
+																					[:c6 |
+																					(c6 bitAnd: 16rC0) == 16r80
+																						ifTrue: [codePoint := (codePoint bitAnd: 16r1FFFFFF) << 6 bitOr: (c6 bitAnd: 16r3F)]
+																						ifFalse: 
+																							["Invalid 5th continuation"
+																							aReadStream pop.
+																							^Character.Utf8Default]]]]]]].
 									Character codePoint: codePoint ifInvalid: [Character.Utf8Default]]]
 						ifFalse: 
 							["On a continution byte so in the middle of a character, which is invalid"
@@ -167,7 +193,17 @@ encodedSizeOf: aCharacter
 		ifFalse: 
 			[| codePoint |
 			codePoint := aCharacter codePoint.
-			codePoint < 16r800 ifTrue: [2] ifFalse: [codePoint < 16rFFFF ifTrue: [3] ifFalse: [4]]]!
+			codePoint <= 16r7FF
+				ifTrue: [2]
+				ifFalse: 
+					[codePoint <= 16rFFFF
+						ifTrue: [3]
+						ifFalse: 
+							[codePoint <= 16r1FFFFF
+								ifTrue: [4]
+								ifFalse: 
+									["Theoretically this is not possible, as the current max Unicode char is 16r10FFFF, but UTF-8 allows for up to 6 bytes of encoding"
+									codePoint <= 16r3FFFFFF ifTrue: [5] ifFalse: [6]]]]]!
 
 encodeOn: aPuttableStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
