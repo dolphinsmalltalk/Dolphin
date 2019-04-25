@@ -180,7 +180,7 @@ codePoint
 		ifTrue: [AnsiCodePoints at: code +1]
 		ifFalse: 
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
-			code bitAnd: 16r1FFFFF]!
+			code bitAnd: 16rFFFFFF]!
 
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can

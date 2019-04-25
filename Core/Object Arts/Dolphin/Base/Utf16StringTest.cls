@@ -26,7 +26,7 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
-testDecodeFrom
+testDecodeNextFrom
 	| subject |
 	subject := self collectionClass new.
 	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
@@ -105,7 +105,7 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #testDecodeFrom!public! !
+!Utf16StringTest categoriesFor: #testDecodeNextFrom!public! !
 !Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

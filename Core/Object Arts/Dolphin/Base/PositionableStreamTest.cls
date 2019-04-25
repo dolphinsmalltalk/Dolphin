@@ -191,6 +191,10 @@ testNextColon
 			self should: [subject next: 1] raise: Stream endOfStreamSignal.
 			self closeTempStream: subject]!
 
+testNextFiveByteUtf8Encoding
+	"UTF-8 can encode values up to 16rFFFFFFF. In practice these are not required since the maximum Unicode code point is U+10FFFF, which requires only 4 bytes to encode, but in theory they could be encountered, and should be treated as invalid characters (i.e. substituted with the replacement character"
+!
+
 testNextIllegalUtf8CodePositions
 	"Test cases from Kuhn"
 
@@ -344,6 +348,25 @@ testNextLineCrOnly
 			self assert: stream nextLine equals: each.
 			self assert: stream atEnd.
 			self closeTempStream: stream]!
+
+testNextLongUtf8Encodings
+	"UTF-8 can encode values up to 16rFFFFFFF. In practice these are not required since the maximum Unicode code point is U+10FFFF, which requires only 4 bytes to encode, but in theory they could be encountered, and should be treated as invalid characters (i.e. substituted with the replacement character"
+
+	| subject |
+	subject := self
+				streamOnBytes: #[16rF8 16r88 16r80 16r80 16r80] , Character dolphin asString asByteArray
+						, #[16rFB 16rBF 16rBF 16rBF 16rBF] , $£ asUtf8String asByteArray
+						, #[16rFC 16r84 16r80 16r80 16r80] , $\x20AC asUtf8String asByteArray
+						, #[16rFD 16rBF 16rBF 16rBF 16rBF 16rBF] , $\x4F60 asUtf8String asByteArray
+				type: #utf8.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: Character dolphin.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $£.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $\x20AC.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $\x4F60!
 
 testNextOtherNonCharactersUtf8
 	"Other 'noncharacters' from Kuhn"
@@ -812,10 +835,12 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextFiveByteUtf8Encoding!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
