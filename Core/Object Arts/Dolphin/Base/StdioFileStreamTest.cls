@@ -96,11 +96,7 @@ testNextLineUpToEof
 			filestream := self tempReadStream.
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
-			filestream close]!
-
-testNextLongUtf8Encodings
-	"stdio streams don't handle long UTF-8 encodings correctly. Not much we can do about that as the issue is in the C runtime."
-	^self skip! !
+			filestream close]! !
 !StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
@@ -110,5 +106,12 @@ testNextLongUtf8Encodings
 !StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testNextLongUtf8Encodings!public! !
+
+!StdioFileStreamTest class methodsFor!
+
+allTestSelectors
+	| roCategory |
+	roCategory := 'strict utf8' asMethodCategory.
+	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+!StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
 
