@@ -861,9 +861,9 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
