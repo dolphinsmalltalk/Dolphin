@@ -431,6 +431,51 @@ testRataDie
 testSecond
 	self assert: self canonicalInstance second equals: 59 + (666666666/1000000000)!
 
+testStbConvertFrom
+	"Test upgrade from the original IDB DateAndTime representation to the day number and seconds representation."
+
+	{#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 524806 ##(Smalltalk.Fraction) 8 31845933559313 1001 524550 ##(Smalltalk.Duration) 7201 34 7 4039 9 51 19 37 434 38627 1001 11).
+		DateAndTime
+			year: 2019
+			month: 4
+			day: 25
+			hour: 9
+			minute: 18
+			second: 38626 / 1000
+			offset: 1 hours.
+		#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 524806 ##(Smalltalk.Fraction) 8 63087551939999999 2000001 524550 ##(Smalltalk.Duration) 7201 34 7 4001 5 59 47 117 434 119999999 2000001 7).
+		DateAndTime
+			year: 2000
+			month: 2
+			day: 29
+			hour: 23
+			minute: 58
+			second: 59999999 / 1e6
+			offset: 1 hours.
+		#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 524806 ##(Smalltalk.Fraction) 8 -47566200000001 2000001 524550 ##(Smalltalk.Duration) -57599 34 7 -1 13 59 23 19 434 119999999 2000001 7).
+		DateAndTime
+			year: -1
+			month: 6
+			day: 29
+			hour: 11
+			minute: 9
+			second: 59999999 / 1e6
+			offset: -8 hours.
+		#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 172801 524550 ##(Smalltalk.Duration) 1 8 #(1 1 1 0 0 0 2)).
+		DateAndTime
+			year: 1
+			day: 1
+			offset: Duration zero.
+		#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 8 59958230400 524550 ##(Smalltalk.Duration) 1 8 #(1901 1 1 0 0 0 3)).
+		DateAndTime
+			year: 1901
+			day: 1
+			offset: Duration zero} pairsDo: 
+				[:stl :expected |
+				| actual |
+				actual := Object fromLiteralStoreArray: stl.
+				self assert: actual equals: expected]!
+
 testToday
 	| today subject |
 	today := Date today.
@@ -587,6 +632,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testPrintOn!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
