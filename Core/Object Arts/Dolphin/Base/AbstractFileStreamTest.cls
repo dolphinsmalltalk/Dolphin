@@ -66,6 +66,12 @@ readWriteStreamOnString: aString
 setUp
 	tempFileName := File temporaryFilename!
 
+streamOnBytes: aByteArray type: aSymbol
+	(File open: tempFileName mode: #truncate check: false share: #readWrite)
+		write: aByteArray;
+		close.
+	^self streamClass read: tempFileName type: aSymbol!
+
 streamWith: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -392,6 +398,7 @@ writeableCollections
 !AbstractFileStreamTest categoriesFor: #randomData2!constants!private! !
 !AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #setUp!public!running! !
+!AbstractFileStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #strings!constants!private! !
 !AbstractFileStreamTest categoriesFor: #tearDown!public!running! !
