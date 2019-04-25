@@ -493,7 +493,7 @@ TIME.ICO                ICON                    "Res\\Time.ico"
 
 TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
 
-TIMESTAMP.ICO           ICON                    "Res\\TimeStamp.ico"
+DATEANDTIME.ICO         ICON                    "Res\\DateAndTime.ico"
 
 TOGGLELOCALHIERARCHY.ICO ICON                   "Res\\ToggleLocalHierarchy.ico"
 
