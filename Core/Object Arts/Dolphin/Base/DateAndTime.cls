@@ -451,7 +451,7 @@ daysInMonth: monthInteger forYear: yearInteger
 
 	| days |
 	days := #(31 28 31 30 31 30 31 31 30 31 30 31) at: monthInteger.
-	(monthInteger = 2 and: [self isLeapYear: yearInteger]) ifTrue: [^days + 1].
+	(monthInteger == 2 and: [self isLeapYear: yearInteger]) ifTrue: [^days + 1].
 	^days!
 
 daysToMonth: monthInteger forYear: yearInteger 
@@ -545,7 +545,7 @@ initialize
 isLeapYear: anInteger
 	"Answer true if the specified <integer> year is a leap year."
 
-	^anInteger \\ 400 = 0 or: [anInteger \\ 4 = 0 and: [anInteger \\ 100 ~= 0]]!
+	^anInteger \\ 400 == 0 or: [anInteger \\ 4 == 0 and: [anInteger \\ 100 ~~ 0]]!
 
 midnight
 	^self now midnight!
@@ -635,6 +635,21 @@ readOffsetFrom: aStream sign: aCharacter
 		readFrom: aStream
 		sign: sign
 		withDays: false!
+
+stbConvertFrom: anSTBClassFormat
+	"Version 1 changes the internal representation to a RataDie day number and seconds in the day."
+
+	^
+	[:data |
+	| totalSeconds offset |
+	offset := data second.
+	totalSeconds := data first - 59958230400 - offset asSeconds.
+	self utcSeconds: totalSeconds offset: offset asSeconds]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1!
 
 today
 	"Answer a new <DateAndTime> representing midnight local time at the beginning of the current day."
@@ -829,6 +844,8 @@ yesterday
 !DateAndTime class categoriesFor: #nowUTC!instance creation!public! !
 !DateAndTime class categoriesFor: #readFrom:!instance creation!public! !
 !DateAndTime class categoriesFor: #readOffsetFrom:sign:!helpers!private! !
+!DateAndTime class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!DateAndTime class categoriesFor: #stbVersion!binary filing!development!public! !
 !DateAndTime class categoriesFor: #today!instance creation!public! !
 !DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
 !DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
