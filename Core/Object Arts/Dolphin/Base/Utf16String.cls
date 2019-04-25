@@ -71,7 +71,8 @@ at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
 	<primitive: 63>
-	^Character utf16Value: (self wordAtOffset: anInteger + anInteger - 2)!
+	^Character utf16Value: (self wordAtOffset: anInteger + anInteger - 2)
+		ifInvalid: [Character.Utf8Default]!
 
 bom
 	^Bom!
@@ -101,18 +102,18 @@ decodeNextFrom: aReadStream
 					aReadStream basicNextAvailable
 						ifNil: 
 							["Lead surrogate but no trailing surrogate, answer the replacement character"
-							Character replacement]
+							Character.Utf8Default]
 						ifNotNil: 
 							[:c2 |
 							(c2 bitAnd: 16rFFFFFC00) == 16rDC00
 								ifTrue: 
 									["Valid surrogate pair"
-									Character safeCodePoint: (c << 10) + c2 - SurrogateOffset]
+									Character codePoint: (c << 10) + c2 - SurrogateOffset ifInvalid: [Character.Utf8Default]]
 								ifFalse: 
 									["No trailing surrogate, answer the replacement character"
 									aReadStream pop.
-									Character replacement]]]
-				ifFalse: [Character utf16Value: c]]!
+									Character.Utf8Default]]]
+				ifFalse: [Character utf16Value: c ifInvalid: [Character.Utf8Default]]]!
 
 displayOn: aStream
 	"Append the receiver in end-user form to aStream.

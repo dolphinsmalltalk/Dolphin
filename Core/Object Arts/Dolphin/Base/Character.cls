@@ -511,18 +511,26 @@ byteCharacterSet
 
 	^CharacterSet!
 
-codePoint: integer
+codePoint: anInteger
 	"Answer a <Character> representing the specified <integer> Unicode code point.
-	Raise an error if the argument is not a valid Unicode character code point."
+	Raise an error if the argument is not a valid Unicode code point."
 
-	^integer < 16r80
-		ifTrue: [CharacterSet at: integer + 1]
+	^self codePoint: anInteger
+		ifInvalid: 
+			["This block is deliberately clean to avoid block copy overhead"
+			InvalidArgumentError signal: 'Unicode character code point expected' with: 'anInteger']!
+
+codePoint: anInteger ifInvalid: exceptionHandler
+	"Answer a <Character> representing the specified <integer> Unicode code point, or the result of evaluating the <niladicValuable>, exceptionHandler, if the code point is not the code point of a valid Unicode character."
+
+	^anInteger < 16r80
+		ifTrue: [CharacterSet at: anInteger + 1]
 		ifFalse: 
-			[(AnsiCharacters lookup: integer)
+			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(self isValidCodePoint: integer)
-						ifTrue: [(self newCode: (Utf32Mask bitOr: integer)) isImmutable: true]
-						ifFalse: [self error: 'Invalid code point ' , integer hex]]]!
+					[(self isValidCodePoint: anInteger)
+						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
+						ifFalse: [exceptionHandler value]]]!
 
 cr
 	"Answer the carriage return control <Character>."
@@ -584,11 +592,13 @@ initialize
 	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
 
 isValidCodePoint: anInteger
-	"Answer whether the <integer> argument represents a valid Unicode code point. Invalid code
-	points are those outside the range 0..0x10FFFF, or within that range but non-characters."
+	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
 
-	#todo.	"This is not complete"
-	^anInteger <= Win32Constants.MAX_UCSCHAR and: [(anInteger bitAnd: 16rFFFE) ~~ 16rFFFE]!
+	^anInteger >= 0 and: 
+			[anInteger < 16rD800 or: 
+					[anInteger > 16rDFFF and: 
+							[anInteger <= Win32Constants.MAX_UCSCHAR and: 
+									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not]]]]!
 
 lf
 	"Answer the linefeed control <Character>."
@@ -635,28 +645,15 @@ onStartup
 	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
 	AnsiCharacters := ansiCharacters.
+	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
 	Utf8Default := Character
 				codePoint: ((VMLibrary default getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]])
 						wordAtOffset: 0)!
 
 replacement
-	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and
-	encodings."
+	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."
 
 	^Utf8Default!
-
-safeCodePoint: anInteger
-	"Answer a <Character> representing the specified <integer> Unicode code point, or the
-	replacement Character if the code point is not the code point of a valid Unicode character."
-
-	^anInteger < 16r80
-		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: 
-			[(AnsiCharacters lookup: anInteger)
-				ifNil: 
-					[(self isValidCodePoint: anInteger)
-						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
-						ifFalse: [self replacement]]]!
 
 space
 	"Answer the space <Character>."
@@ -669,8 +666,14 @@ tab
 	^$\t!
 
 utf16Value: anInteger
-	"Answer a <Character> representing the <integer> UTF-16 code unit, anInteger.
-	Note that the resulting Character may not represent a valid Unicode code point."
+	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger.
+	If the argument is not a valid UTF-16 code unit then an error is raised."
+
+	^self utf16Value: anInteger
+		ifInvalid: [InvalidArgumentError signal: 'UTF-16 code unit expected' with: 'anInteger']!
+
+utf16Value: anInteger ifInvalid: exceptionHandler
+	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger, or the result of evaluating the <monadicBlock>, exceptionHandler, if the code unit is not valid."
 
 	^anInteger < 16r80
 		ifTrue: 
@@ -684,11 +687,12 @@ utf16Value: anInteger
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]
 						ifFalse: 
-							[anInteger <= 16rFFFF
+							[(anInteger <= Win32Constants.MAX_UCSCHAR and: 
+									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not])
 								ifTrue: 
 									["Valid non-ascii/non-ansi code point"
 									self newCode: (Utf32Mask bitOr: anInteger)]
-								ifFalse: [self error: 'Invalid UTF-16 code unit: ' , anInteger printString]]]]!
+								ifFalse: [exceptionHandler value]]]]!
 
 utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
@@ -716,6 +720,7 @@ value: anInteger
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
 !Character class categoriesFor: #codePoint:!instance creation!public! !
+!Character class categoriesFor: #codePoint:ifInvalid:!instance creation!public! !
 !Character class categoriesFor: #cr!constants!public! !
 !Character class categoriesFor: #digitValue:!instance creation!public! !
 !Character class categoriesFor: #dolphin!constants!public! !
@@ -732,10 +737,10 @@ value: anInteger
 !Character class categoriesFor: #null!constants!public! !
 !Character class categoriesFor: #onStartup!event handling!public! !
 !Character class categoriesFor: #replacement!constants!public! !
-!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 !Character class categoriesFor: #space!constants!public! !
 !Character class categoriesFor: #tab!constants!public! !
 !Character class categoriesFor: #utf16Value:!instance creation!public! !
+!Character class categoriesFor: #utf16Value:ifInvalid:!instance creation!public! !
 !Character class categoriesFor: #utf8Value:!instance creation!public! !
 !Character class categoriesFor: #value:!instance creation!public! !
 

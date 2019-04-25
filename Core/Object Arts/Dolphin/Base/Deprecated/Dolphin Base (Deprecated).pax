@@ -133,6 +133,7 @@ package methodNames
 	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
+	add: 'Character class' -> #safeCodePoint:;
 	add: 'Date class' -> #dateAndTimeNow;
 	add: 'Date class' -> #dayOfWeek:;
 	add: 'Date class' -> #nameOfDay:;
@@ -283,6 +284,13 @@ categoryIcon
 
 	^self icon! !
 !Category class categoriesFor: #categoryIcon!constants!public! !
+
+!Character class methodsFor!
+
+safeCodePoint: anInteger
+	Notification deprecated.
+	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
+!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 
 !Class methodsFor!
 

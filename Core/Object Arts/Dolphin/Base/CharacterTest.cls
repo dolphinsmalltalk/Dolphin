@@ -99,8 +99,14 @@ testClassCodePoint
 	ch := Character codePoint: 16rFFFD.
 	self assert: ch codePoint equals: 16rFFFD.
 	self assert: ch encoding equals: #utf32.
+	"Utf-16 surrogates, not code points"
+	#(16rD800 16rDB7F 16rDB80 16rDBFF 16rDC00 16rDCFF 16rDF80 16rDFFF) do: [:i | self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error].
 	"Valid code points but not valid characters"
-	#(16rFFFE 16rFFFF 16r10FFFF) do: [:each | self should: [Character codePoint: each] raise: Error]!
+	16rFDD0 to: 16rFDEF do: [:i | self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error].
+	(0 to: 16) do: 
+			[:i |
+			self should: [Character codePoint: (i << 16) + 16rFFFE] raise: Error.
+			self should: [Character codePoint: (i << 16) + 16rFFFF] raise: Error]!
 
 testCodePoint
 	| euro utf8 utf16 |
@@ -327,7 +333,7 @@ testIsUtf8Surrogate
 			self assert: ch codeUnit equals: c.
 			self assert: ch isUtf16Surrogate.
 			self deny: ch isUtf8Surrogate.
-			self deny: ch equals: (Character codePoint: c)]!
+			self deny: ch equals: (Character newCode: (Character.Utf32Mask bitOr: c))]!
 
 testPrintString
 	self assert: $a printString equals: '$a'.

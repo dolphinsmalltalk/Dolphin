@@ -79,7 +79,7 @@ decodeNextFrom: aReadStream
 						ifTrue: 
 							["At least 2 byte character"
 							aReadStream basicNextAvailable
-								ifNil: [^Character replacement]
+								ifNil: [^Character.Utf8Default]
 								ifNotNil: 
 									[:c2 |
 									| codePoint |
@@ -88,12 +88,12 @@ decodeNextFrom: aReadStream
 										ifFalse: 
 											["Invalid1st continuation"
 											aReadStream pop.
-											^Character replacement].
+											^Character.Utf8Default].
 									c >= 16rE0
 										ifTrue: 
 											["At least a 3-byte character"
 											aReadStream basicNextAvailable
-												ifNil: [^Character replacement]
+												ifNil: [^Character.Utf8Default]
 												ifNotNil: 
 													[:c3 |
 													(c3 bitAnd: 16rC0) == 16r80
@@ -101,12 +101,12 @@ decodeNextFrom: aReadStream
 														ifFalse: 
 															["Invalid 2nd continuation"
 															aReadStream pop.
-															^Character replacement].
+															^Character.Utf8Default].
 													c >= 16rF0
 														ifTrue: 
 															["4-byte character"
 															aReadStream basicNextAvailable
-																ifNil: [^Character replacement]
+																ifNil: [^Character.Utf8Default]
 																ifNotNil: 
 																	[:c4 |
 																	(c4 bitAnd: 16rC0) == 16r80
@@ -114,11 +114,11 @@ decodeNextFrom: aReadStream
 																		ifFalse: 
 																			["Invalid 3rd continuation"
 																			aReadStream pop.
-																			^Character replacement]]]]].
-									Character safeCodePoint: codePoint]]
+																			^Character.Utf8Default]]]]].
+									Character codePoint: codePoint ifInvalid: [Character.Utf8Default]]]
 						ifFalse: 
 							["On a continution byte so in the middle of a character, which is invalid"
-							Character replacement]]]!
+							Character.Utf8Default]]]!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
