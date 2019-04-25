@@ -113,6 +113,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\Views\Cards\Dolphin Card Containers'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
 	'Dolphin Text Tile Icons'
@@ -354,7 +355,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 'TimeStamp.ico'! !
+	^##(self) defaultIcon! !
 !DateAndTime class categoriesFor: #icon!constants!public! !
 
 !DeadObject class methodsFor!
