@@ -21,28 +21,6 @@ Note that SQLRETURN is an alias for SQLSMALLINT'!
 !ODBCLibrary categoriesForClass!External-Libraries-ODBC! !
 !ODBCLibrary methodsFor!
 
-getInfo: anInteger for: aDBObject into: buffer 
-	"Private - Get the info attribute of the receiver into buffer and answer the number of bytes copied."
-
-	| len |
-	len := SWORD new.
-	aDBObject dbCheckException: (self 
-				sqlGetInfo: aDBObject asParameter
-				infoType: anInteger
-				infoValuePtr: buffer
-				bufferLength: buffer size
-				stringLengthPtr: len).
-	^len value!
-
-getInfoHandle: infoCode for: aDBObject
-	"Private - Answer an <ExternalHandle> containing the value of the an info attribute 
-	described by infoCode of the <DBConnection> or <DBStatement>, aDBObject."
-
-	| value |
-	value := ExternalHandle new.
-	self getInfo: infoCode for: aDBObject into: value.
-	^value!
-
 sqlAllocHandle: anInteger inputHandle: parentExternalHandle outputHandlePtr: newExternalHandle 
 	<stdcall: sword SQLAllocHandle sword handle handle*>
 	^self invalidCall!
@@ -124,7 +102,7 @@ sqlCloseCursor: anExternalHandle
 	^self invalidCall!
 
 sqlColAttribute: anExternalHandle columnNumber: columnInteger fieldIdentifier: idInteger characterAttributePtr: bytes bufferLength: sizeInteger stringLengthPtr: anSWORD numericAttributePtr: anExternalAddress 
-	<stdcall: sword SQLColAttribute handle word word lpvoid sword SWORD* lpvoid>
+	<stdcall: sword SQLColAttributeW handle word word lpvoid sword SWORD* lpvoid>
 	^self invalidCall!
 
 sqlColumns: anExternalHandleSTMT catalogName: aStringParmQual nameLength1: anIntegerQualLen schemaName: aStringParmOwner nameLength2: anIntegerOwnerLen tableName: aStringParmName nameLength3: anIntegerNameLen columnName: aStringParmType nameLength4: anIntegerTypeLen 
@@ -178,8 +156,8 @@ sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExte
 sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString bufferLength: sizeInteger nameLengthPtr: maxSWORD dataTypePtr: typeSWORD columnSizePtr: precisionDWORD decimalDigitsPtr: scaleSWORD nullablePtr: nullableSWORD 
 	"SQLRETURN SQLDescribeCol(
 		SQLHSTMT     StatementHandle,
-		SQLSMALLINT     ColumnNumber,
-		SQLCHAR *     ColumnName,
+		SQLUSMALLINT     ColumnNumber,
+		SQLWCHAR *     ColumnName,
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *     NameLengthPtr,
 		SQLSMALLINT *     DataTypePtr,
@@ -187,7 +165,7 @@ sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString
 		SQLSMALLINT *     DecimalDigitsPtr,
 		SQLSMALLINT *     NullablePtr);"
 
-	<stdcall: sword SQLDescribeCol handle sword lpstr sword SWORD* SWORD* DWORD* SWORD* SWORD*>
+	<stdcall: sword SQLDescribeColW handle word lpwstr sword sword* sword* dword* sword* sword*>
 	^self invalidCall!
 
 sqlDisconnect: anExternalHandle 
@@ -268,7 +246,7 @@ sqlFreeStmt: anExternalHandle option: anInteger
 	^self invalidCall!
 
 sqlGetConnectAttr: anExternalHandle attribute: idInteger valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
-	<stdcall: sword SQLGetConnectAttr handle sdword lpvoid sdword sdword*>
+	<stdcall: sword SQLGetConnectAttrW handle sdword lpvoid sdword sdword*>
 	^self invalidCall.!
 
 sqlGetData: anExternalHandleSTMT columnNumber: anIntegerPar targetType: anIntegerCType targetValuePtr: anExternalBuffer bufferLength: anIntegerMax strLenOrIndPtr: anSDWORD 
@@ -320,11 +298,11 @@ sqlGetInfo: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferL
 			SQLSMALLINT     BufferLength,
 			SQLSMALLINT *     StringLengthPtr);"
 
-	<stdcall: sword SQLGetInfo handle word lpvoid sword SWORD*>
+	<stdcall: sword SQLGetInfoW handle word lpvoid sword SWORD*>
 	^self invalidCall!
 
 sqlGetStmtAttr: anExternalHandle attribute: optionCode valuePtr: anIntegerOrStringOrBytes bufferLength: lengthInteger stringLengthPtr: anSDWORD 
-	<stdcall: sword SQLGetStmtAttr handle sdword lpvoid sdword sdword*>
+	<stdcall: sword SQLGetStmtAttrW handle sdword lpvoid sdword sdword*>
 	^self invalidCall.!
 
 sqlNumResultCols: anExternalHandle pccol: anSWORD 
@@ -384,7 +362,7 @@ sqlRowCount: anExternalHandle rowCountPtr: anSDWORD
 	^self invalidCall!
 
 sqlSetConnectAttr: anExternalHandle attribute: idInteger valuePtr: bytes stringLength: lengthInteger 
-	<stdcall: sword SQLSetConnectAttr handle sdword lpvoid sdword>
+	<stdcall: sword SQLSetConnectAttrW handle sdword lpvoid sdword>
 	^self invalidCall!
 
 sqlSetEnvAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger 
@@ -402,7 +380,7 @@ sqlSetPos: anExternalHandle rowNumber: anIntegerRow operation: anIntegerOption l
 	^self invalidCall!
 
 sqlSetStmtAttr: anExternalHandle attribute: anInteger valuePtr: anExternalAddress stringLength: lengthInteger 
-	<stdcall: sword SQLSetStmtAttr handle sdword lpvoid sdword>
+	<stdcall: sword SQLSetStmtAttrW handle sdword lpvoid sdword>
 	^self invalidCall!
 
 sqlSpecialColumns: anExternalHandle identifierType: anInteger catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName scope: anIntegerScope nullable: anIntegerNullable 
@@ -459,8 +437,6 @@ sqlTables: anExternalHandleSTMT
 
     <stdcall: sword SQLTables handle lpvoid sword lpvoid sword lpvoid sword lpvoid sword>
     ^self invalidCall! !
-!ODBCLibrary categoriesFor: #getInfo:for:into:!accessing!private! !
-!ODBCLibrary categoriesFor: #getInfoHandle:for:!accessing!private! !
 !ODBCLibrary categoriesFor: #sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlBindCol:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrInd:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlBindParameter:parameterNumber:inputOutputType:valueType:parameterType:columnSize:decimalDigits:parameterValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
