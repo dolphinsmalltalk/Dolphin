@@ -1,7 +1,5 @@
 # Dolphin
 
-_N.B. master is now the 7.1 beta which is incomplete, may have significant unresolved issues, and is not compatible with older Dolphin 7 builds. Use the 7.0 branch if you want a stable build._
-
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
 This repository contains:
