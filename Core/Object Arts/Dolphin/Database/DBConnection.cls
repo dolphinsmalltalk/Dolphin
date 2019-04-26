@@ -1427,19 +1427,17 @@ initialize
 				yourself.
 	self newConnections!
 
-invalidateHandle: anExternalHandle 
+invalidateHandle: anExternalHandle
 	"Private - Disconnect and free the specified connection handle.
 	This is used by DBConnection class to free a connection handle
 	when it only knows the handle"
 
-	| ret |
-	ret := ODBCLibrary default sqlDisconnect: anExternalHandle.
-	ret ~= SQL_SUCCESS 
-		ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
-	ret := ODBCLibrary default sqlFreeHandle: SQL_HANDLE_DBC
-				handle: anExternalHandle.
-	ret ~= SQL_SUCCESS 
-		ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
+	| ret odbc |
+	odbc := ODBCLibrary default.
+	ret := odbc sqlDisconnect: anExternalHandle.
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
+	ret := odbc sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
 
 new
 	"Answer an initialized instance of the receiver."

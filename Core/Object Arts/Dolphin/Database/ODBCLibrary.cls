@@ -321,7 +321,7 @@ sqlPrepare: anExternalHandle statementText: aString textLength: anInteger
 		SQLCHAR *     StatementText,
 		SQLINTEGER     TextLength);"
 
-	<stdcall: sword SQLPrepareW handle lpstr sdword>
+	<stdcall: sword SQLPrepareW handle lpwstr sdword>
 	^self invalidCall!
 
 sqlPrimaryKeys: anExternalHandle catalogName: aStringQual nameLength1: anIntegerQual schemaName: aStringOwn nameLength2: anIntegerOwn tableName: aStringName nameLength3: anIntegerName 

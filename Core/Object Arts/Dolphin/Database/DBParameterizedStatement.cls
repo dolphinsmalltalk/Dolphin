@@ -19,6 +19,31 @@ Instance Variables:
 !DBParameterizedStatement categoriesForClass!ODBC Interface! !
 !DBParameterizedStatement methodsFor!
 
+bindParams
+	"Private - Bind parameter columns for a prepared SQL statement so that when we 
+	subsequently fill the buffer fields the statement is ready to exec. Normally only done 
+	just before first exec (from #parameters)."
+
+	| odbc hstmt |
+	odbc := ODBCLibrary default.
+	hstmt := self allocatedHandle.
+	parameters keysAndValuesDo: 
+			[:i :eachField |
+			| buf column |
+			buf := eachField fieldBuf.
+			column := eachField column.
+			self dbCheckException: (odbc
+						sqlBindParameter: hstmt
+						parameterNumber: i
+						inputOutputType: column parameterType
+						valueType: column cType
+						parameterType: column type
+						columnSize: column precision
+						decimalDigits: column scale
+						parameterValuePtr: buf
+						bufferLength: buf byteSize
+						strLenOrIndPtr: eachField lengthBuf)]!
+
 exec
 	"(Re)Execute a prepared statement."
 
@@ -50,17 +75,18 @@ paramCols
 paramCols: anArrayOfColAttrs
 	"Set the receiver's parameter columns to anArrayOfColAttrs"
 
-	paramCols := anArrayOfColAttrs.!
+	paramCols := anArrayOfColAttrs asArray!
 
 parameters
 	"Private - Answer the receivers bound parameter fields. On first receipt (usually from 
 	#exec) completes lazy evaluation by causing allocation of a statement handle, preparing 
 	the statement, creating the array of parameter fields and binding them."
 
-	parameters == nil ifTrue: [
-		parameters := (paramCols collect: [:col | DBField newForCol: col]) asArray.
-		self setParams].
-	^parameters!
+	^parameters
+		ifNil: 
+			[parameters := paramCols collect: [:col | DBField newForCol: col].
+			self bindParams.
+			parameters]!
 
 prepare
 	"Private - Prepare the receiver for later execution when the parameter values have 
@@ -89,28 +115,6 @@ reset
 	isPrepared := false.
 	parameters := nil.!
 
-setParams
-	"Private - Bind parameter columns for a prepared SQL statement so that when we 
-	subsequently fill the buffer fields the statement is ready to exec. Normally only done 
-	just before first exec (from #parameters)."
-
-	paramCols keysAndValuesDo: 
-			[:i :eachCol | 
-			| buf eachField |
-			eachField := parameters at: i.
-			buf := eachField fieldBuf.
-			self dbCheckException: (ODBCLibrary default 
-						sqlBindParameter: self allocatedHandle
-						parameterNumber: i
-						inputOutputType: eachCol parameterType
-						valueType: SQL_C_DEFAULT
-						parameterType: eachCol type
-						columnSize: eachCol precision
-						decimalDigits: eachCol scale
-						parameterValuePtr: buf
-						bufferLength: buf byteSize
-						strLenOrIndPtr: eachField lengthBuf)]!
-
 setValues
 	"Private - Copy object values to the bound fields for the parameters of the prepared SQL
 	statement. On first receipt this will cause the parameter fields to be created and bound 	(via #parameters)."
@@ -129,6 +133,7 @@ values: anArrayOfValues
 
 	self close.
 	values := anArrayOfValues! !
+!DBParameterizedStatement categoriesFor: #bindParams!operations!private! !
 !DBParameterizedStatement categoriesFor: #exec!operations!public! !
 !DBParameterizedStatement categoriesFor: #free!public!realizing/unrealizing! !
 !DBParameterizedStatement categoriesFor: #paramCols!accessing!public! !
@@ -137,7 +142,6 @@ values: anArrayOfValues
 !DBParameterizedStatement categoriesFor: #prepare!operations!private! !
 !DBParameterizedStatement categoriesFor: #prepare:!operations!private! !
 !DBParameterizedStatement categoriesFor: #reset!initializing!private! !
-!DBParameterizedStatement categoriesFor: #setParams!operations!private! !
 !DBParameterizedStatement categoriesFor: #setValues!operations!private! !
 !DBParameterizedStatement categoriesFor: #values!accessing!public! !
 !DBParameterizedStatement categoriesFor: #values:!accessing!public! !
