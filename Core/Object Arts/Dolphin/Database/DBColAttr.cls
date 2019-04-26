@@ -2,10 +2,12 @@
 
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'SQLToCTypes'
+	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
+DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1)!
+DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 9 10 11 1)!
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
@@ -102,11 +104,9 @@ length: anInteger
 	length := anInteger!
 
 lengthC
-	"Private - Answer the length of a field sufficient to hold column
-	 entries when SQL_C_DEFAULT conversion is used (basically need
-	 an extra byte for null terminator for string types)"
+	"Private - Answer the length of ByteArray sufficient to hold an entry for this column when converted to 'C' data. This needs to include any extra space for null-terminators if the 'C' target type is some kind of string."
 
-	^self isCharType ifTrue: [length+1] ifFalse: [length]!
+	^length + (CTypesExtraBytes at: sqlType+TypeOffset)!
 
 name
 	"Answer the name instance variable."
@@ -253,14 +253,17 @@ initialize
 
 	"The types to convert the result data to on loading into our buffers - normally these are the default conversions
 	 because they are sensible for most things except GUIDs (where the default string conversion doesn't match 
-	 the reported column length, which makes allocating an appropriately sized buffer tricky. We also let the ODBC 
-	 driver(manager) convert wide character strings on our behalf"
+	 the reported column length, which makes allocating an appropriately sized buffer tricky)."
 
-	SQLToCTypes := (Array new: SQL_NUM_TYPES)
+	"The 'C' buffer types specified here must match up with the 'get' conversions defined for the SQL column type in the DBField class (see DBField>>#initialize)"
+
+	| extraBytes |
+	self addClassConstant: 'SQLToCTypes'
+		value: ((Array new: SQL_NUM_TYPES)
 				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
-				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_WVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_WCHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WCHAR + TypeOffset put: SQL_C_WCHAR;
 				at: SQL_BIT + TypeOffset put: SQL_C_BIT;
 				at: SQL_TINYINT + TypeOffset put: SQL_C_TINYINT;
 				at: SQL_BIGINT + TypeOffset put: SQL_C_SBIGINT;
@@ -281,7 +284,13 @@ initialize
 				at: SQL_TIME + TypeOffset put: SQL_C_TIME;
 				at: SQL_TIMESTAMP + TypeOffset put: SQL_C_TIMESTAMP;
 				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
-				yourself!
+				yourself).
+	extraBytes := Array new: SQL_NUM_TYPES withAll: 0.
+	SQLToCTypes keysAndValuesDo: 
+			[:eachKey :eachValue |
+			eachValue == SQL_C_CHAR ifTrue: [extraBytes at: eachKey put: 1].
+			eachValue == SQL_C_WCHAR ifTrue: [extraBytes at: eachKey put: 2]].
+	self addClassConstant: 'CTypesExtraBytes' value: extraBytes!
 
 new
 	"Answer a new initialized instance of the receiver."
