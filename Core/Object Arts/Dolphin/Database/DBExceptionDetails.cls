@@ -40,33 +40,39 @@ buildErrorInfo
 	errors isNil ifTrue: [self retCodeError: code].!
 
 buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
-	"Private - Retrieve all error information available from the ODBC Driver
-	 for <anExternalHandle>, which is of type <anIntegerHandleType>"
+	"Private - Retrieve all error information available from the ODBC Driver for <anExternalHandle>, which is of type <anIntegerHandleType>"
 
 	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
-	szSqlState := String new: SQL_STATE_SIZE.
-	szErrorMsg := String new: 512.
+	szSqlState := Utf16String newFixed: SQL_STATE_SIZE.
+	szErrorMsg := Utf16String new: 128.
 	cbErrorMsg := SWORD new.
 	fNativeError := SDWORD new.
 	recNumber := 1.
 	
-	[(ODBCLibrary default
-		sqlGetDiagRec: anIntegerHandleType
-		handle: anExternalHandle
-		recNumber: recNumber
-		szSqlState: szSqlState
-		pfNativeError: fNativeError
-		szErrorMsg: szErrorMsg
-		cbErrorMsgMax: szErrorMsg size
-		pcbErrorMsg: cbErrorMsg) = SQL_SUCCESS] 
-			whileTrue:
+	[| ret |
+	
+	[ret := ODBCLibrary default
+				sqlGetDiagRec: anIntegerHandleType
+				handle: anExternalHandle
+				recNumber: recNumber
+				szSqlState: szSqlState
+				pfNativeError: fNativeError
+				szErrorMsg: szErrorMsg
+				cbErrorMsgMax: szErrorMsg size + 1
+				pcbErrorMsg: cbErrorMsg.
+	ret == SQL_SUCCESS_WITH_INFO]
+			whileTrue: [
+				"Try again with a larger buffer"
+				szErrorMsg := Utf16String new: cbErrorMsg value].
+	ret == SQL_SUCCESS]
+			whileTrue: 
 				[| newErr |
 				newErr := DBErrorDetails fromSQLError: (szErrorMsg copyFrom: 1 to: cbErrorMsg asInteger).
 				newErr
 					nativeErr: fNativeError asInteger;
 					sqlState: (szSqlState copyFrom: 1 to: 5).
 				self addErrorDetails: newErr.
-				recNumber := recNumber + 1].!
+				recNumber := recNumber + 1]!
 
 code
 	"Answer the code instance variable."
