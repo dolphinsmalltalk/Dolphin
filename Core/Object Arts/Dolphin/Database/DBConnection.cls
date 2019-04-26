@@ -686,6 +686,7 @@ open
 				driverCompletion: (self useDriverCompletion 
 						ifTrue: [SQL_DRIVER_COMPLETE]
 						ifFalse: [SQL_DRIVER_NOPROMPT]).
+	ret == SQL_NO_DATA_FOUND ifTrue: [^nil "cancelled"].
 	self dbCheckException: ret] 
 			ifCurtailed: [self free].
 	self connectString: (connSz copyFrom: 1 to: (lenConnSz value min: connSz size))!
@@ -1316,37 +1317,43 @@ enumerateDataSources
 	"Answers an array of associations of all the data sources and
 	 their descriptions"
 
-	| nameLength1 nameLength2 dsn len description ret sources hEnv |
-	len := SQL_MAX_DSN_LENGTH + 1.
-	dsn := String newFixed: len.
-	description := String newFixed: 256.
-	nameLength1 := SWORD new.
-	nameLength2 := SWORD new.
+	| dsn description dsnLength descriptionLength hEnv odbc ret sources |
+	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
+	description := Utf16String newFixed: 4.
+	dsnLength := SWORD new.
+	descriptionLength := SWORD new.
 	hEnv := self environmentHandle.
-	ret := ODBCLibrary default 
+	odbc := ODBCLibrary default.
+	
+	[ret := odbc
 				sqlDataSources: hEnv
 				direction: SQL_FETCH_FIRST
 				serverName: dsn
-				bufferLength1: len
-				nameLength1Ptr: nameLength1
+				bufferLength1: ##(SQL_MAX_DSN_LENGTH + 1)
+				nameLength1Ptr: dsnLength
 				description: description
-				bufferLength2: description size
-				nameLength2Ptr: nameLength2.
-	sources := OrderedCollection new.
-	[ret = SQL_SUCCESS] whileTrue: 
-			[sources add: (Association key: (dsn copyFrom: 1 to: nameLength1 asInteger)
-						value: (description copyFrom: 1 to: nameLength2 asInteger)).
-			ret := ODBCLibrary default 
+				bufferLength2: description size + 1
+				nameLength2Ptr: descriptionLength.
+	ret == SQL_SUCCESS_WITH_INFO]
+			whileTrue: [description := Utf16String newFixed: descriptionLength value].
+	sources := Array writeStream.
+	[ret == SQL_SUCCESS] whileTrue: 
+			[sources nextPut: (Association key: (dsn copyFrom: 1 to: dsnLength value)
+						value: (description copyFrom: 1 to: descriptionLength value)).
+			
+			[ret := odbc
 						sqlDataSources: hEnv
 						direction: SQL_FETCH_NEXT
 						serverName: dsn
-						bufferLength1: len
-						nameLength1Ptr: nameLength1
+						bufferLength1: ##(SQL_MAX_DSN_LENGTH + 1)
+						nameLength1Ptr: dsnLength
 						description: description
-						bufferLength2: 256
-						nameLength2Ptr: nameLength2].
+						bufferLength2: description size + 1
+						nameLength2Ptr: descriptionLength.
+			ret == SQL_SUCCESS_WITH_INFO]
+					whileTrue: [description := Utf16String newFixed: descriptionLength value]].
 	ret ~= SQL_NO_DATA_FOUND ifTrue: [self dbCheckException: ret].
-	^sources asArray!
+	^sources contents!
 
 environmentHandle
 	"Private - Answer the environment handle.

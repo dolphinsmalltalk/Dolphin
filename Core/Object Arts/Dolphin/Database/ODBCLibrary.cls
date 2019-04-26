@@ -150,7 +150,7 @@ sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExte
 	    Max length of szDSN (cbDSNMax) need not be longer than
 	    SQL_MAX_DSN_LENGTH+1)."
 
-	<stdcall: sword SQLDataSources handle word lpstr sword SWORD* lpstr sword SWORD*>
+	<stdcall: sword SQLDataSourcesW handle word lpwstr sword sword* lpwstr sword sword*>
 	^self invalidCall!
 
 sqlDescribeCol: anExternalHandle columnNumber: columnInteger columnName: aString bufferLength: sizeInteger nameLengthPtr: maxSWORD dataTypePtr: typeSWORD columnSizePtr: precisionDWORD decimalDigitsPtr: scaleSWORD nullablePtr: nullableSWORD 
