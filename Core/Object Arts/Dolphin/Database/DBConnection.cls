@@ -672,8 +672,8 @@ open
 	handle isNull ifFalse: [^self].
 	
 	[| ret |
-	"#1306: From MSDN, 'Applications should allocate at least 1,024 bytes for [the connection string] buffer'"
-	connSz := String newFixed: 2048.
+	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
+	connSz := Utf16String newFixed: 2048.
 	lenConnSz := SWORD new.
 	ret := ODBCLibrary default 
 				sqlDriverConnect: self getHandle
@@ -681,7 +681,7 @@ open
 				inConnectionString: self connectString
 				stringLength1: SQL_NTS
 				outConnectionString: connSz
-				bufferLength: connSz size
+				bufferLength: connSz size + 1
 				stringLength2Ptr: lenConnSz
 				driverCompletion: (self useDriverCompletion 
 						ifTrue: [SQL_DRIVER_COMPLETE]

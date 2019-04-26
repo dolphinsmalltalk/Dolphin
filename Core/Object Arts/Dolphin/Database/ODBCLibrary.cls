@@ -178,14 +178,14 @@ sqlDriverConnect: anExternalHandle windowHandle: aWinHandle inConnectionString: 
 	SQLRETURN SQLDriverConnect(
 		SQLHDBC     ConnectionHandle,
 		SQLHWND     WindowHandle,
-		SQLCHAR *     InConnectionString,
+		SQLWCHAR *     InConnectionString,
 		SQLSMALLINT     StringLength1,
-		SQLCHAR *     OutConnectionString,
+		SQLWCHAR *     OutConnectionString,
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *     StringLength2Ptr,
 		SQLUSMALLINT     DriverCompletion);"
 
-	<stdcall: sword SQLDriverConnect handle handle lpstr sword lpstr sword SWORD* word>
+	<stdcall: sword SQLDriverConnectW handle handle lpwstr sword lpwstr sword sword* word>
 	^self invalidCall!
 
 sqlEndTran: anExternalHandleEnv handle: anExternalHandleDBC completionType: anInteger 
