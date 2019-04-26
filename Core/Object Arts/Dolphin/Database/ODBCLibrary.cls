@@ -203,7 +203,7 @@ sqlExecDirect: anExternalHandle statementText: aString textLength: anInteger
 		SQLCHAR * StatementText,
 		SQLINTEGER TextLength);"
 
-	<stdcall: sword SQLExecDirect handle lpstr sdword>
+	<stdcall: sword SQLExecDirectW handle lpwstr sdword>
 	^self invalidCall!
 
 sqlExecute: anExternalHandle 
@@ -266,13 +266,13 @@ sqlGetDiagRec: anIntegerHandleType handle: anExternalHandle recNumber: anInteger
 		SQLSMALLINT     HandleType,
 		SQLHANDLE       Handle,
 		SQLSMALLINT     RecNumber,
-		SQLCHAR *       SQLState,
+		SQLWCHAR *       SQLState,
 		SQLINTEGER *    NativeErrorPtr,
-		SQLCHAR *       MessageText,
+		SQLWCHAR *       MessageText,
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *   TextLengthPtr);"
 
-	<stdcall: sword SQLGetDiagRec word handle word lpvoid lpvoid lpvoid sword lpvoid>
+	<stdcall: sword SQLGetDiagRecW sword handle sword lpwstr sdword* lpwstr sword sword*>
 	^self invalidCall.!
 
 sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD 
