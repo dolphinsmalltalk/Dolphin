@@ -91,6 +91,19 @@ ODBCConstants at: 'SQL_CB_CLOSE' put: 16r1!
 ODBCConstants at: 'SQL_CB_DELETE' put: 16r0!
 ODBCConstants at: 'SQL_CB_PRESERVE' put: 16r2!
 ODBCConstants at: 'SQL_CLOSE' put: 16r0!
+ODBCConstants at: 'SQL_CODE_DAY' put: 16r3!
+ODBCConstants at: 'SQL_CODE_DAY_TO_HOUR' put: 16r8!
+ODBCConstants at: 'SQL_CODE_DAY_TO_MINUTE' put: 16r9!
+ODBCConstants at: 'SQL_CODE_DAY_TO_SECOND' put: 16rA!
+ODBCConstants at: 'SQL_CODE_HOUR' put: 16r4!
+ODBCConstants at: 'SQL_CODE_HOUR_TO_MINUTE' put: 16rB!
+ODBCConstants at: 'SQL_CODE_HOUR_TO_SECOND' put: 16rC!
+ODBCConstants at: 'SQL_CODE_MINUTE' put: 16r5!
+ODBCConstants at: 'SQL_CODE_MINUTE_TO_SECOND' put: 16rD!
+ODBCConstants at: 'SQL_CODE_MONTH' put: 16r2!
+ODBCConstants at: 'SQL_CODE_SECOND' put: 16r6!
+ODBCConstants at: 'SQL_CODE_YEAR' put: 16r1!
+ODBCConstants at: 'SQL_CODE_YEAR_TO_MONTH' put: 16r7!
 ODBCConstants at: 'SQL_COLUMN_ALIAS' put: 16r57!
 ODBCConstants at: 'SQL_COLUMN_AUTO_INCREMENT' put: 16rB!
 ODBCConstants at: 'SQL_COLUMN_CASE_SENSITIVE' put: 16rC!
@@ -435,6 +448,7 @@ ODBCConstants at: 'SQL_TYPE_MIN' put: -16r7!
 ODBCConstants at: 'SQL_UNBIND' put: 16r2!
 ODBCConstants at: 'SQL_UNION' put: 16r60!
 ODBCConstants at: 'SQL_UNSEARCHABLE' put: 16r0!
+ODBCConstants at: 'SQL_UNSIGNED_OFFSET' put: -16r16!
 ODBCConstants at: 'SQL_UPDATE' put: 16r2!
 ODBCConstants at: 'SQL_USE_BOOKMARKS' put: 16rC!
 ODBCConstants at: 'SQL_USER_NAME' put: 16r2F!
