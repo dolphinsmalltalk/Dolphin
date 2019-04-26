@@ -76,13 +76,13 @@ sqlBrowseConnect: anExternalHandle inConnectionString: aString stringLength1: an
 
 	SQLRETURN SQLBrowseConnect(
 		SQLHDBC     ConnectionHandle,
-		SQLCHAR *     InConnectionString,
+		SQLWCHAR *     InConnectionString,
 		SQLSMALLINT     StringLength1,
-		SQLCHAR *     OutConnectionString,
+		SQLWCHAR *     OutConnectionString,
 		SQLSMALLINT     BufferLength,
 		SQLSMALLINT *     StringLength2Ptr);"
 
-	<stdcall: sword SQLBrowseConnect handle lpstr sword lpstr sword SWORD*>
+	<stdcall: sword SQLBrowseConnectW handle lpwstr sword lpwstr sword sword*>
 	^self invalidCall!
 
 sqlCancel: anExternalHandle 
@@ -108,16 +108,16 @@ sqlColAttribute: anExternalHandle columnNumber: columnInteger fieldIdentifier: i
 sqlColumns: anExternalHandleSTMT catalogName: aStringParmQual nameLength1: anIntegerQualLen schemaName: aStringParmOwner nameLength2: anIntegerOwnerLen tableName: aStringParmName nameLength3: anIntegerNameLen columnName: aStringParmType nameLength4: anIntegerTypeLen 
 	"SQLRETURN SQLColumns(
 		SQLHSTMT     StatementHandle,
-		SQLCHAR *     CatalogName,
+		SQLWCHAR *     CatalogName,
 		SQLSMALLINT     NameLength1,
-		SQLCHAR *     SchemaName,
+		SQLWCHAR *     SchemaName,
 		SQLSMALLINT     NameLength2,
-		SQLCHAR *     TableName,
+		SQLWCHAR *     TableName,
 		SQLSMALLINT     NameLength3,
-		SQLCHAR *     ColumnName,
+		SQLWCHAR *     ColumnName,
 		SQLSMALLINT     NameLength4);"
 
-	<stdcall: sword SQLColumns handle lpstr sword lpstr sword lpstr sword lpstr sword>
+	<stdcall: sword SQLColumnsW handle lpwstr sword lpwstr sword lpwstr sword lpwstr sword>
 	^self invalidCall!
 
 sqlConnect: anExternalHandle serverName: dsnString nameLength1: dsnInteger userName: uidString nameLength2: uidIInteger authentication: authString nameLength3: authInteger 
