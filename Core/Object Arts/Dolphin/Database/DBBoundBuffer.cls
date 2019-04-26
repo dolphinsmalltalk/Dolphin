@@ -20,15 +20,15 @@ bind: aDBStatement
 	| hStmt odbc |
 	hStmt := super bind: aDBStatement.
 	odbc := ODBCLibrary default.
-	self contents with: columns
-		do: 
-			[:eachField :eachColumn |
-			| dataBuffer |
+	self contents do: 
+			[:eachField |
+			| dataBuffer column |
+			column := eachField column.
 			dataBuffer := eachField fieldBuf.
 			aDBStatement dbCheckException: (odbc
 						sqlBindCol: hStmt
-						columnNumber: eachColumn columnNumber
-						targetType: eachColumn cType
+						columnNumber: column columnNumber
+						targetType: column cType
 						targetValuePtr: dataBuffer
 						bufferLength: dataBuffer size
 						strLenOrInd: eachField lengthBuf)].

@@ -260,30 +260,30 @@ initialize
 	| extraBytes |
 	self addClassConstant: 'SQLToCTypes'
 		value: ((Array new: SQL_NUM_TYPES)
-				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
-				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_WCHAR;
-				at: SQL_WVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_CHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_LONGVARCHAR + TypeOffset put: SQL_C_CHAR;
 				at: SQL_WCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_BINARY + TypeOffset put: SQL_C_BINARY;
+				at: SQL_VARBINARY + TypeOffset put: SQL_C_BINARY;
+				at: SQL_LONGVARBINARY + TypeOffset put: SQL_C_BINARY;
 				at: SQL_BIT + TypeOffset put: SQL_C_BIT;
 				at: SQL_TINYINT + TypeOffset put: SQL_C_TINYINT;
+				at: SQL_SMALLINT + TypeOffset put: SQL_C_SHORT;
+				at: SQL_INTEGER + TypeOffset put: SQL_C_LONG;
 				at: SQL_BIGINT + TypeOffset put: SQL_C_SBIGINT;
-				at: SQL_LONGVARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_VARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_BINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_LONGVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
-				at: SQL_CHAR + TypeOffset put: SQL_C_CHAR;
 				at: SQL_NUMERIC + TypeOffset put: SQL_C_CHAR;
 				at: SQL_DECIMAL + TypeOffset put: SQL_C_CHAR;
-				at: SQL_INTEGER + TypeOffset put: SQL_C_LONG;
-				at: SQL_SMALLINT + TypeOffset put: SQL_C_SHORT;
 				at: SQL_FLOAT + TypeOffset put: SQL_C_DOUBLE;
 				at: SQL_REAL + TypeOffset put: SQL_C_FLOAT;
 				at: SQL_DOUBLE + TypeOffset put: SQL_C_DOUBLE;
 				at: SQL_DATE + TypeOffset put: SQL_C_DATE;
 				at: SQL_TIME + TypeOffset put: SQL_C_TIME;
 				at: SQL_TIMESTAMP + TypeOffset put: SQL_C_TIMESTAMP;
-				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
+				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
 				yourself).
 	extraBytes := Array new: SQL_NUM_TYPES withAll: 0.
 	SQLToCTypes keysAndValuesDo: 

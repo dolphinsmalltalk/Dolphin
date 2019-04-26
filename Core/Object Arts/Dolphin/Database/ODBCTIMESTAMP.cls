@@ -24,6 +24,20 @@ asDateAndTime
 
 	^DateAndTime year: self year month: self month day: self day hour: self hour minute: self minute second: self second + (self fraction / 1e9)!
 
+dateAndTime: aDateAndTime
+	"Set the receiver's field values from the <DateAndTime> argument."
+
+	^aDateAndTime dayMonthYearDo: 
+			[:d :m :y |
+			self
+				day: d;
+				month: m;
+				year: y;
+				hour: aDateAndTime hour;
+				minute: aDateAndTime minute;
+				second: aDateAndTime second truncated;
+				fraction: aDateAndTime nanosecond truncated]!
+
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
@@ -100,6 +114,7 @@ year: anInteger
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
 !ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
+!ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
 !ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
@@ -145,17 +160,9 @@ defineFields
 fromDateAndTime: aDateAndTime
 	"Answer an instance of the receiver representing the same local time as the <DateAndTime> argument."
 
-	^aDateAndTime dayMonthYearDo: 
-			[:d :m :y |
-			self new
-				day: d;
-				month: m;
-				year: y;
-				hour: aDateAndTime hour;
-				minute: aDateAndTime minute;
-				second: aDateAndTime second truncated;
-				fraction: aDateAndTime nanosecond truncated;
-				yourself]!
+	^self new
+		dateAndTime: aDateAndTime;
+		yourself!
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !

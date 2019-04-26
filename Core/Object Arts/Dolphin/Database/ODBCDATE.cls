@@ -21,6 +21,16 @@ asDate
 		monthIndex: self month
 		year: self year!
 
+date: aDate
+	"Set the receiver's fields from the <Date> argument."
+
+	^aDate dayMonthYearDo: 
+			[:d :m :y |
+			self
+				day: d;
+				month: m;
+				year: y]!
+
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
@@ -51,6 +61,7 @@ year: anInteger
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
 !ODBCDATE categoriesFor: #asDate!converting!public! !
+!ODBCDATE categoriesFor: #date:!accessing!public! !
 !ODBCDATE categoriesFor: #day!**compiled accessors**!public! !
 !ODBCDATE categoriesFor: #day:!**compiled accessors**!public! !
 !ODBCDATE categoriesFor: #month!**compiled accessors**!public! !
@@ -77,13 +88,9 @@ defineFields
 fromDate: aDate
 	"Answer an instance of the receiver with the details of aDate."
 
-	^aDate dayMonthYearDo: 
-			[:d :m :y |
-			self new
-				day: d;
-				month: m;
-				year: y;
-				yourself]!
+	^self new
+		date: aDate;
+		yourself!
 
 getFieldNames
 	^#(#year #month #day)! !

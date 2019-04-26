@@ -42,16 +42,17 @@ buildErrorInfo
 buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	"Private - Retrieve all error information available from the ODBC Driver for <anExternalHandle>, which is of type <anIntegerHandleType>"
 
-	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber |
+	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber odbc |
 	szSqlState := Utf16String newFixed: SQL_STATE_SIZE.
 	szErrorMsg := Utf16String new: 128.
 	cbErrorMsg := SWORD new.
 	fNativeError := SDWORD new.
 	recNumber := 1.
+	odbc := ODBCLibrary default.
 	
 	[| ret |
 	
-	[ret := ODBCLibrary default
+	[ret := odbc
 				sqlGetDiagRec: anIntegerHandleType
 				handle: anExternalHandle
 				recNumber: recNumber
@@ -61,8 +62,8 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 				cbErrorMsgMax: szErrorMsg size + 1
 				pcbErrorMsg: cbErrorMsg.
 	ret == SQL_SUCCESS_WITH_INFO]
-			whileTrue: [
-				"Try again with a larger buffer"
+			whileTrue: 
+				["Try again with a larger buffer"
 				szErrorMsg := Utf16String new: cbErrorMsg value].
 	ret == SQL_SUCCESS]
 			whileTrue: 
