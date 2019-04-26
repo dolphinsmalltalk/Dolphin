@@ -79,7 +79,7 @@ Object subclass: #DBAbstractStatement
 	classInstanceVariableNames: ''!
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'SQLToCTypes'
+	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 Object subclass: #DBConnection

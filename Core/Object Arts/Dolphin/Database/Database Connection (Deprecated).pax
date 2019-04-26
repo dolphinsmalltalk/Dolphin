@@ -45,7 +45,6 @@ package methodNames
 	add: #DBConnection -> #txnCapable;
 	add: #DBConnection -> #txnIsolationOptions;
 	add: #DBConnection -> #uniqueIndexOf:;
-	add: #DBField -> #asTimeStamp;
 	add: #DBField -> #fromTimeStamp:;
 	add: #DBResultSet -> #invalidate;
 	add: #DBResultSet -> #prev;
@@ -297,10 +296,6 @@ interpretTxnIsolationMask: mask
 
 !DBField methodsFor!
 
-asTimeStamp
-	Notification deprecated.
-	^self asDateAndTime asTimeStamp!
-
 fromTimeStamp: aTimeStamp
 	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aTimeStamp."
 
@@ -309,7 +304,6 @@ fromTimeStamp: aTimeStamp
 		buffer replaceFrom: 1 to: byteArray size with: byteArray.
 		self length: byteArray size]
 ! !
-!DBField categoriesFor: #asTimeStamp!converting!private! !
 !DBField categoriesFor: #fromTimeStamp:!converting!private! !
 
 !DBResultSet methodsFor!

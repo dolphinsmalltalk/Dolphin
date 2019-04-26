@@ -17,17 +17,20 @@ This is the normal type of buffer used by the Database Connection as it is more 
 bind: aDBStatement
 	"Private - Bind the receiver's field buffers to columns in the result table."
 
-	| hStmt |
+	| hStmt odbc |
 	hStmt := super bind: aDBStatement.
+	odbc := ODBCLibrary default.
 	self contents with: columns
 		do: 
-			[:eachField :eachColumn | 
-			aDBStatement dbCheckException: (ODBCLibrary default 
+			[:eachField :eachColumn |
+			| dataBuffer |
+			dataBuffer := eachField fieldBuf.
+			aDBStatement dbCheckException: (odbc
 						sqlBindCol: hStmt
 						columnNumber: eachColumn columnNumber
 						targetType: eachColumn cType
-						targetValuePtr: eachField fieldBuf
-						bufferLength: (##(2 raisedTo: 16) min: eachField fieldSize)
+						targetValuePtr: dataBuffer
+						bufferLength: dataBuffer size
 						strLenOrInd: eachField lengthBuf)].
 	^hStmt!
 
