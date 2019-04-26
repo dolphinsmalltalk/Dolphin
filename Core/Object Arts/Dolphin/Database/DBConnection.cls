@@ -296,12 +296,12 @@ disconnect
 driverHDBC
 	"Private - Answer the handle to the driver connection"
 
-	^ODBCLibrary default getInfoHandle: SQL_DRIVER_HDBC for: self!
+	^self getHandle: SQL_DRIVER_HDBC!
 
 driverHEnv
 	"Private - Answer the handle to the driver environment"
 
-	^ODBCLibrary default getInfoHandle: SQL_DRIVER_HENV for: self!
+	^self getHandle: SQL_DRIVER_HENV!
 
 driverName
 	"Answer the driver name"
@@ -379,16 +379,18 @@ freeStmtHandle: aDBAbstractStatement
 	ret ~= SQL_SUCCESS 
 		ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
 
-getBoolInfo: anInteger 
-	"Private - Answer a Boolean indicating the receiver's info attribute described by infoCode."
+getBoolInfo: anInteger
+	"Private - Answer a <Boolean> indicating the receiver's info attribute described by anInteger."
 
 	| value |
-	value := String new: 2.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
-	^value first == $Y!
+	value := Utf16String newFixed: 1.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: ##(1+1*2 "Byte size including implict null char")
+				stringLengthPtr: nil).
+	^value = ##($Y asUtf16String)!
 
 getDWordAttribute: anInteger 
 	"Private - Answer an <Integer> containing the 32-bit unsigned integer value of the 
@@ -405,15 +407,17 @@ getDWordAttribute: anInteger
 	self dbCheckException: ret.
 	^buffer value!
 
-getDWordInfo: anInteger 
-	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by infoCode."
+getDWordInfo: anInteger
+	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
 
 	| value |
-	value := DWORD new.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
+	value := DWORDBytes new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 4
+				stringLengthPtr: nil).
 	^value value!
 
 getHandle
@@ -427,43 +431,56 @@ getHandle
 			self class connections add: self].
 	^handle!
 
-getStringAttribute: anInteger 
-	"Private - Answer a <String> containing the value of the connection
-	attribute identified by the <integer> argument."
+getHandle: anInteger
+	| value |
+	value := ExternalHandle new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: VMConstants.IntPtrSize
+				stringLengthPtr: nil).
+	^value!
 
-	| buffer ret |
-	buffer := String new: SQL_MAX_OPTION_STRING_LENGTH + 1.
-	ret := ODBCLibrary default 
+getStringAttribute: anInteger
+	"Private - Answer a <String> containing the value of the connection attribute identified by the <integer> argument."
+
+	| buffer |
+	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
+	self dbCheckException: (ODBCLibrary default
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
-				bufferLength: buffer size
-				stringLengthPtr: nil.
-	self dbCheckException: ret.
-	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument,
-	 so we are forced to trim up to the nulls."
+				bufferLength: ##(SQL_MAX_OPTION_STRING_LENGTH + 1 * 2) "Byte size including implicit null terminator"
+				stringLengthPtr: nil).
+	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument, so we are forced to trim up to the nulls."
 	^buffer trimNulls!
 
-getStringInfo: anInteger 
+getStringInfo: anInteger
 	"Private - Answer a String containing the value of the receiver's info attribute described by infoCode."
 
 	| value len |
-	value := String new: SQL_MAX_MESSAGE_LENGTH.
-	len := ODBCLibrary default 
-				getInfo: anInteger
-				for: self
-				into: value.
-	^value copyFrom: 1 to: len!
+	value := Utf16String newFixed: SQL_MAX_MESSAGE_LENGTH.
+	len := SWORD new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: ##(SQL_MAX_MESSAGE_LENGTH + 1 * 2)
+				stringLengthPtr: len).
+	^value resize: (len value bitShift: -1)!
 
-getWordInfo: anInteger 
+getWordInfo: anInteger
 	"Private - Answer an Integer containing the value of the receiver's WORD info attribute described by infoCode."
 
 	| value |
 	value := WORD new.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 2
+				stringLengthPtr: nil).
 	^value value!
 
 hasAccessibleTables
@@ -992,7 +1009,7 @@ traceFile: aString
 
 	self 
 		setAttribute: SQL_ATTR_TRACEFILE
-		value: aString
+		value: aString asUtf16String
 		size: SQL_NTS.
 	self isTracing: true!
 
@@ -1048,7 +1065,7 @@ translationDLL: aString
 
 	self 
 		setAttribute: SQL_ATTR_TRANSLATE_LIB
-		value: aString
+		value: aString asUtf16String
 		size: SQL_NTS!
 
 uid
@@ -1148,6 +1165,7 @@ willAutoCommit: aBoolean
 !DBConnection categoriesFor: #getDWordAttribute:!accessing!private! !
 !DBConnection categoriesFor: #getDWordInfo:!enquiries!private! !
 !DBConnection categoriesFor: #getHandle!accessing!private! !
+!DBConnection categoriesFor: #getHandle:!helpers!private! !
 !DBConnection categoriesFor: #getStringAttribute:!accessing!private! !
 !DBConnection categoriesFor: #getStringInfo:!enquiries!private! !
 !DBConnection categoriesFor: #getWordInfo:!enquiries!private! !
