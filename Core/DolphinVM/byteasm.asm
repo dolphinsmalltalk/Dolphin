@@ -4306,28 +4306,6 @@ ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-BEGINPRIMITIVE primitiveReturnLiteralZero
-	ASSUME	edx:DWORD
-	ASSUME	_SP:PTR Oop
-	mov		ecx, [NEWMETHOD]
-	mov		eax, [STEPPING]
-	neg		edx
-	mov		ecx, (OTE PTR[ecx]).m_location
-	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method
-	test	eax, eax
-	mov		ecx, [ecx].m_aLiterals[0]			; Load first literal into EAX
-	jnz		stepping
-
-	lea		eax, [_SP+edx*OOPSIZE]				; primitiveSuccess(argumentCount)
-	mov		[_SP+edx*OOPSIZE], ecx				; Overwrite receiver
-	ret
-	
-stepping:
-	; Fail so can step into method
-	xor		eax, eax
-	ret
-ENDPRIMITIVE primitiveReturnLiteralZero
-
 BEGINPRIMITIVE primitiveReturnStaticZero
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
