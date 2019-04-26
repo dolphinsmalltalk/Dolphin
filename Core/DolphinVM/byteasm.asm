@@ -4306,33 +4306,6 @@ ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-BEGINPRIMITIVE primitiveReturnStaticZero
-	ASSUME	edx:DWORD
-	ASSUME	_SP:PTR Oop
-
-	mov		eax, [STEPPING]
-	mov		ecx, [NEWMETHOD]
-	neg		edx
-	mov		ecx, (OTE PTR[ecx]).m_location
-	ASSUME	ecx:PTR CompiledCodeObj					; ECX points at the new method
-	test	eax, eax								; Debugging? If so fail so can step into the method
-	mov		ecx, [ecx].m_aLiterals[0]				; Load first literal into EAX
-	ASSUME	ecx:PTR OTE								; ECX is now the OTE of the var binding
-	jnz		stepping
-
-	mov		ecx, (OTE PTR[ecx]).m_location			; Load pointer to binding
-	lea		eax, [_SP+edx*OOPSIZE]					; primitiveSuccess(argumentCount)
-	mov		ecx, (Object PTR[ecx]).fields[OOPSIZE]	; Load value Oop from binding
-	mov		[_SP+edx*OOPSIZE], ecx					; Overwrite receiver
-	ret
-
-stepping:
-	; Fail so can step into method
-	xor		eax, eax
-	ret
-	
-ENDPRIMITIVE primitiveReturnStaticZero
-
 BEGINPRIMITIVE primitiveReturnInstVar
 	; Its a primitive return of an instance variable
 	; Compiler should not generate such a method for a SmallInteger
