@@ -39,9 +39,9 @@ Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCoun
 
 Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCount)
 {
+	Oop* newSp = sp - argCount;
 	if (!m_bStepping)
 	{
-		Oop* newSp = sp - argCount;
 		*newSp = reinterpret_cast<Oop>(Pointers.True);
 		return newSp;
 	}
@@ -51,9 +51,9 @@ Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCoun
 
 Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCount)
 {
+	Oop* newSp = sp - argCount;
 	if (!m_bStepping)
 	{
-		Oop* newSp = sp - argCount;
 		*newSp = reinterpret_cast<Oop>(Pointers.False);
 		return newSp;
 	}
@@ -63,10 +63,23 @@ Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCou
 
 Oop* __fastcall Interpreter::primitiveReturnNil(Oop* const sp, unsigned argCount)
 {
+	Oop* newSp = sp - argCount;
 	if (!m_bStepping)
 	{
-		Oop* newSp = sp - argCount;
 		*newSp = reinterpret_cast<Oop>(Pointers.Nil);
+		return newSp;
+	}
+	else
+		return nullptr;
+}
+
+Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
+{
+	Oop literalZero = m_registers.m_oopNewMethod->m_location->m_aLiterals[0];
+	Oop* newSp = sp - argCount;
+	if (!m_bStepping)
+	{
+		*newSp = literalZero;
 		return newSp;
 	}
 	else
