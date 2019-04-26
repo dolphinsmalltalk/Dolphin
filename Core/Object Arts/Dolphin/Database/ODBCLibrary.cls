@@ -132,7 +132,7 @@ sqlConnect: anExternalHandle serverName: dsnString nameLength1: dsnInteger userN
 		SQLCHAR * Authentication,
 		SQLSMALLINT NameLength3);"
 
-	<stdcall: sword SQLConnect handle lpstr sword lpstr sword lpstr sword>
+	<stdcall: sword SQLConnectW handle lpwstr sword lpwstr sword lpwstr sword>
 	^self invalidCall!
 
 sqlDataSources: anExternalHandle direction: anIntegerConstant serverName: anExternalBuffer bufferLength1: anIntegerMax nameLength1Ptr: anIntegerParmLen description: anExternalBufferParm bufferLength2: anIntegerParmDMax nameLength2Ptr: anIntegerParmDLen 
