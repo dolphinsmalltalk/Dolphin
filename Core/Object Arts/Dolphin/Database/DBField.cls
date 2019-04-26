@@ -6,7 +6,7 @@ Object subclass: #DBField
 	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 DBField guid: (GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBField addClassConstant: 'GetSelectors' value: #(#getGUID #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble #getDate #getTime #getDateAndTime #getAnsiString)!
+DBField addClassConstant: 'GetSelectors' value: #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble #getDate #getTime #getDateAndTime #getAnsiString)!
 DBField addClassConstant: 'SetSelectors' value: #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: #setDate: #setTime: #setDateAndTime: #setAnsiString:)!
 DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
 
@@ -112,7 +112,7 @@ getFloat
 
 	^buffer floatAtOffset: 0!
 
-getGUID
+getGuid
 	"Private - Answer a <GUID> read from the receiver's buffer."
 
 	^GUID fromBytes: buffer!
@@ -302,7 +302,7 @@ setFloat: aNumber
 setGuid: aGUID
 	"Private - Set the receiver's buffer with an <GUID> value."
 
-	(self shouldTranslate: aGUID class: Time)
+	(self shouldTranslate: aGUID class: GUID)
 		ifTrue: 
 			[buffer
 				replaceFrom: 1
@@ -400,7 +400,7 @@ value: anObject
 !DBField categoriesFor: #getDateAndTime!converting!private! !
 !DBField categoriesFor: #getDouble!converting!private! !
 !DBField categoriesFor: #getFloat!converting!private! !
-!DBField categoriesFor: #getGUID!converting!private! !
+!DBField categoriesFor: #getGuid!converting!private! !
 !DBField categoriesFor: #getInt64!converting!private! !
 !DBField categoriesFor: #getLong!converting!private! !
 !DBField categoriesFor: #getShort!converting!private! !
@@ -441,7 +441,9 @@ initialize
 	Note that the maps rely on the sequential numbering of the type enumerations.
 	"
 
-	"Note that the mappings here must match those defined for the mappings between SQL and 'C' buffer types in the DBColAttr class>>#initialize."
+	"Note that the mappings here must match those defined for the mappings between SQL and 'C' buffer types in the DBColAttr class>>#initialize.
+	Ideally these maps would just be from the SQL_C_xxx types, avoiding the need to keep in sync with the DBColAttr map, but at present the need
+	to convert SQL_NUMERIC via SQL_C_CHAR prevents that."
 
 	self assert: [TypeOffset = (SQL_GUID abs + 1)].
 	self assert: [SQL_NUM_TYPES = (TypeOffset + SQL_VARCHAR)].
@@ -469,7 +471,7 @@ initialize
 				at: SQL_DATE + TypeOffset put: #getDate;
 				at: SQL_TIME + TypeOffset put: #getTime;
 				at: SQL_TIMESTAMP + TypeOffset put: #getDateAndTime;
-				at: SQL_GUID + TypeOffset put: #getGUID;
+				at: SQL_GUID + TypeOffset put: #getGuid;
 				yourself).
 	self addClassConstant: 'SetSelectors'
 		value: ((Array new: SQL_NUM_TYPES)
