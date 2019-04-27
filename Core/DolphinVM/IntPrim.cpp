@@ -257,13 +257,21 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			LargeIntegerOTE* oteResult = LargeInteger::Add(oteArg, ObjectMemoryIntegerValueOf(receiver));
-			// Normalize and return
-			Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
-			*(sp - 1) = oopResult;
-			ObjectMemory::AddToZct(oopResult);
-
-			return sp - 1;
+			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			if (r != 0)
+			{
+				LargeIntegerOTE* oteResult = LargeInteger::Add(oteArg, r);
+				// Normalize and return
+				Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
+				*(sp - 1) = oopResult;
+				ObjectMemory::AddToZct(oopResult);
+				return sp - 1;
+			}
+			else
+			{
+				*(sp - 1) = reinterpret_cast<Oop>(oteArg);
+				return sp - 1;
+			}
 		}
 		else if (oteArg->m_oteClass == Pointers.ClassFloat)
 		{
@@ -335,14 +343,25 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, unsigned)
 			}
 			else
 			{
-				LargeIntegerOTE* oteNegatedArg = reinterpret_cast<LargeIntegerOTE*>(oopNegatedArg);
-				LargeIntegerOTE* oteResult = LargeInteger::Add(oteNegatedArg, ObjectMemoryIntegerValueOf(receiver));
-				LargeInteger::DeallocateIntermediateResult(oteNegatedArg);
-				// Normalize and return
-				Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
-				*(sp - 1) = oopResult;
-				ObjectMemory::AddToZct(oopResult);
-				return sp - 1;
+				SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+				if (r != 0)
+				{
+					LargeIntegerOTE* oteNegatedArg = reinterpret_cast<LargeIntegerOTE*>(oopNegatedArg);
+					LargeIntegerOTE* oteResult = LargeInteger::Add(oteNegatedArg, r);
+					LargeInteger::DeallocateIntermediateResult(oteNegatedArg);
+					// Normalize and return
+					Oop oopResult = LargeInteger::NormalizeIntermediateResult(oteResult);
+					*(sp - 1) = oopResult;
+					ObjectMemory::AddToZct(oopResult);
+					return sp - 1;
+				}
+				else
+				{	
+					// Receiver is zero, so result is arg negated - we know this is an LI
+					*(sp - 1) = oopNegatedArg;
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oopNegatedArg));
+					return sp - 1;
+				}
 			}
 		}
 		else if (oteArg->m_oteClass == Pointers.ClassFloat)
