@@ -455,6 +455,67 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
 	}
 }
 
+Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+		{
+			// Dividing a SmallInteger by a large on. The primitive can only succeed in a couple of boundary cases
+			// 1. The receiver is zero. Zero divided by anything is zero.
+			// 2. The receiver is the largest negative SmallInteger, and the argument is its absolute value, result is -1
+			if (receiver == ZeroPointer)
+			{
+				*(sp - 1) = ZeroPointer;
+				return sp - 1;
+			}
+			else if (receiver == ObjectMemoryIntegerObjectOf(MinSmallInteger) && oteArg->getWordSize() == 1 && oteArg->m_location->m_digits[0] == (MinSmallInteger*-1))
+			{
+				*(sp - 1) = MinusOnePointer;
+				return sp - 1;
+			}
+			else
+			{
+				// Any other large integer divisor must result in a fractional value
+				return nullptr;
+			}
+		}
+		else if (oteArg->m_oteClass == Pointers.ClassFloat)
+		{
+			double floatA = reinterpret_cast<FloatOTE*>(oteArg)->m_location->m_fValue;
+			double floatR = ObjectMemoryIntegerValueOf(receiver);
+			FloatOTE* oteResult = Float::New(floatR / floatA);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+	else
+	{
+		// We can do this more efficiently in assembler because we can access the overflow flag safely and efficiently
+		// However this doesn't matter to much because this code path is used when #perform'ing SmallInteger>>/, or 
+		// when attempted division was inexact
+
+		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		ldiv_t qr = quoRem(a, r);
+		if (qr.rem == 0)
+		{
+			Oop oopResult = Integer::NewSigned32(qr.quot);
+			*(sp - 1) = oopResult;
+			ObjectMemory::AddToZct(oopResult);
+			return sp - 1;
+		}
+		else
+			return nullptr;
+	}
+}
+
 Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;

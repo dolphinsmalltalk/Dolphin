@@ -392,14 +392,16 @@ numerator: top denominator: bottom
 	^self basicNew numerator: top denominator: bottom!
 
 rationalisedNumerator: numInteger denominator: divInteger
-	"Answer a Fraction which is the rationalised form of numInteger
-	divided by divInteger."
+	"Answer a Fraction which is the rationalised form of numInteger divided by divInteger."
 
 	| gcd denominator numerator |
-	denominator := divInteger truncated abs.
-	numerator := divInteger negative
-		ifTrue: [numInteger truncated negated]
-		ifFalse: [numInteger truncated].
+	divInteger negative
+		ifTrue: 
+			[denominator := 0 - divInteger truncated.
+			numerator := 0 - numInteger truncated]
+		ifFalse: 
+			[denominator := divInteger truncated.
+			numerator := numInteger truncated].
 	gcd := numerator gcd: denominator.
 	denominator = gcd ifTrue: [^numerator // gcd].
 	gcd == 1 ifTrue: [^self basicNew numerator: numerator denominator: denominator].

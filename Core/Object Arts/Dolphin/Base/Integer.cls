@@ -396,19 +396,14 @@ fractionPart
 
 	^0!
 
-gcd: operand 
-	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 
-	using Euclid's algorithm. See Knuth vol. II"
+gcd: operand
+	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed using Euclid's algorithm. See Knuth vol. II"
 
-	| u v |
-	v := operand abs.
-	u := self abs.
-	[v == 0] whileFalse: 
-			[| r |
-			r := u \\ v.
-			u := v.
-			v := r].
-	^u!
+	| v u |
+	u := operand.
+	v := self.
+	[v == 0] whileFalse: [v := u \\ (u := v)].
+	^u abs!
 
 gcdbin: operand 
 	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 

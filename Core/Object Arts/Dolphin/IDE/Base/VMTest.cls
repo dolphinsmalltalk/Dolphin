@@ -1339,6 +1339,41 @@ testPrimitiveCopyFromTo
 				self assert: actual class identicalTo: expectedClass.
 				self assert: actual equals: each]!
 
+testPrimitiveDivide
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #/ setsFailCode: false.
+	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
+		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts small integer, large integer and Float arguments, and fails for everything else"
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {1 / 2}) equals: 'failed'.
+	"SmallInteger arguments"
+	self verifyBinaryPrimitive: method
+		forCases: #(#(0 1 0) #(1 1 1) #(2 1 2) #(2 2 1) #(6 2 3) #(0 16r3FFFFFFF 0) #(0 -1 0) #(0 -16r40000000 0) #(16r3FFFFFFF 1 16r3FFFFFFF) #(16r3FFFFFFF 16r3FFFFFFF 1) #(16r3FFFFFFE 2 16r1FFFFFFF)).
+	"A boundary case - SmallInteger minimum / -1 is a large integer result"
+	self assert: (method value: SmallInteger minimum withArguments: #(-1)) equals: 16r40000000.
+	"LargeInteger arguments - zero numerator is a special case, as is min small integer divided by its absolute value"
+	self verifyBinaryPrimitive: method
+		forCases: #(#(0 1 0) #(0 16r3FFFFFFF 0) #(0 -1 0) #(0 -16r40000000 0) #(16r3FFFFFFF 1 16r3FFFFFFF) #(16r3FFFFFFF -1 -16r3FFFFFFF) #(16r3FFFFFFF 16r3FFFFFFF 1) #(16r3FFFFFFE 2 16r1FFFFFFF) #(16r3FFFFFFF 16r40000000 'failed') #(16r3FFFFFFF 1.0 1.073741823e9) #(-16r40000000 1 -16r40000000) #(-16r40000000 -1 16r40000000)).
+	self assert: (method value: SmallInteger minimum withArguments: {SmallInteger minimum abs})
+		equals: -1.
+
+	"Float arguments"
+	self verifyBinaryPrimitive: method
+		forCases: {{1. 1.0. 1.0}.
+				{1. 2.0. 0.5}.
+				{2. 1.0. 2.0}.
+				{2. 0.5. 4.0}.
+				{16r3FFFFFFF. 1.0. 1.073741823e9}.
+				{16r3FFFFFFF. 0.5. 2.147483646e9}.
+				{16r3FFFFFFF. Float fmax. 5.972887152857917e-300}.
+				{16r3FFFFFFF. Float fmax negated. -5.972887152857917e-300}.
+				{0. Float fmax. 0.0}.
+				{0. Float fmax negated. 0.0}.
+				{0. Float fmin. 0.0}.
+				{0. Float fmin negated. 0.0}}!
+
 testPrimitiveEnableInterrupts
 	| enabled method |
 	method := self createPrimitiveMethodLike: ProcessorScheduler >> #enableAsyncEvents:
@@ -3023,6 +3058,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveCopyFromTo!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveDivide!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !

@@ -19,6 +19,13 @@
 namespace ST { class LargeInteger; }
 typedef TOTE<LargeInteger> LargeIntegerOTE;
 
+// Return structure for results of LargeInteger division subroutines
+struct liDiv_t
+{
+	Oop quo;
+	Oop rem;
+};
+
 namespace ST
 {
 	class Integer : public Number
@@ -60,10 +67,13 @@ namespace ST
 
 		static Oop Negate(const LargeIntegerOTE* oteLI);
 
-		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER operand);
+		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
-		static Oop Mul(const LargeIntegerOTE* oteOp1, SMALLINTEGER operand);
+		static Oop Mul(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
 		static Oop Mul(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
+
+		static liDiv_t Divide(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
+
 	};
 
 

@@ -86,6 +86,7 @@ package setPrerequisites: #(
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
 	'Presenters\List\Dolphin List Presenter'
 	'..\System\Filer\Dolphin Literal Filer'
