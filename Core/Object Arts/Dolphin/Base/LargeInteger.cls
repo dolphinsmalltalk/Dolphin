@@ -276,26 +276,46 @@ dwordAtOffset: anInteger put: anObject
 								ifFalse: [self errorSubscriptBounds: anInteger]]]]
 		ifFalse: [self dwordAtOffset: anInteger put: anObject asInteger]!
 
-gcd: operand
-	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 
-	using Stein's binary algorithm. See Knuth vol. II"
+gcd: anInteger
+	"Answer the greatest common divisor of the receiver and the <integer>, anInteger, computed using Lehmer's adapatation of the Euclid's method. See Knuth vol. II"
 
-	| k u v t |
+	| u v t |
+	"L1: Initialize"
 	u := self abs.
-	v := operand abs.
-	k := 0.
-	[(u bitAnd: 1) == 0 and: [(v bitAnd: 1) == 0]] whileTrue: 
-			[k := k + 1.
-			u := u bitShift: -1.
-			v := v bitShift: -1].
-	t := (u bitAnd: 1) == 0 ifTrue: [u bitShift: -1] ifFalse: [v negated].
-	
-	[[(t bitAnd: 1) == 0] whileTrue: [t := t bitShift: -1].
-	t > 0 ifTrue: [u := t] ifFalse: [v := t negated].
-	t := u - v.
-	t == 0]
-			whileFalse.
-	^u bitShift: k!
+	v := anInteger abs.
+	u < v
+		ifTrue: 
+			[t := v.
+			v := u.
+			u := t].
+	[v isImmediate] whileFalse: 
+			[| uHat vHat a b c d q |
+			(uHat := u bitShift: (t := ##(SmallInteger maximum highBit) - u highBit)) isImmediate
+				ifFalse: 
+					[t := t - 1.
+					uHat := uHat bitShift: -1].
+			vHat := v bitShift: t.
+			a := d := 1.
+			b := c := 0.
+			"L2: Test quotient"
+			
+			[| vPrime |
+			(vPrime := vHat + d) ~~ 0 and: 
+					[| vPrimePrime |
+					(vPrimePrime := vHat + c) ~~ 0 and: [(q := (uHat + a) // vPrimePrime) = ((uHat + b) // vPrime)]]]
+					whileTrue: 
+						["L3: Emulate Euclid"
+						c := a - (q * (a := c)).
+						d := b - (q * (b := d)).
+						vHat := uHat - (q * (uHat := vHat))].
+			"L4: Multiprecision step"
+			b == 0
+				ifTrue: [v := u \\ (u := v)]
+				ifFalse: 
+					[t := u * a + (v * b).
+					v := u * c + (v * d).
+					u := t]].
+	^v gcd: u!
 
 generality
 	"Private - Answer the generality of the receiver in the Smalltalk number system.
