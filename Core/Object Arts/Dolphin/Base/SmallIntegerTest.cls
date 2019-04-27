@@ -276,7 +276,15 @@ testQuo
 	self assert: (7 quo: 2) + 1 identicalTo: 4.
 	self assert: (7 quo: 2) + 1 identicalTo: 4.
 	self assert: (7 quo: 2 + 1) identicalTo: 2.
-	self assert: (-7 quo: 2) identicalTo: -3!
+	self assert: (-7 quo: 2) identicalTo: -3.
+	"Remember that the absolute value of `SmallInteger minimum` is one greater than `SmallInteger maximum`"
+	self assert: (SmallInteger maximum quo: SmallInteger maximum) equals: 1.
+	self assert: (SmallInteger maximum quo: SmallInteger maximum+1) equals: 0.
+	self assert: (SmallInteger maximum quo: SmallInteger minimum) equals: 0.
+	self assert: (SmallInteger minimum quo: SmallInteger maximum+1) equals: -1.
+	self assert: (SmallInteger minimum quo: SmallInteger maximum) equals: -1.
+	self assert: (SmallInteger minimum quo: SmallInteger minimum) equals: 1.
+!
 
 testRaisedToInteger
 	| expected subject |

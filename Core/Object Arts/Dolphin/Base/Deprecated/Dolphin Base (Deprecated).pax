@@ -26,6 +26,7 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
+	add: #ArithmeticValue -> #quoAndRem:;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
@@ -257,6 +258,15 @@ valueType
 	#deprecated.
 	^self format! !
 !_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
+
+!ArithmeticValue methodsFor!
+
+quoAndRem: aNumber
+	| quo |
+	Notification deprecated.
+	quo := self quo: aNumber.
+	^{quo. self - (quo * aNumber)}! !
+!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
 
 !Behavior methodsFor!
 

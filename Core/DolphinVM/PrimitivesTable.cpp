@@ -16,7 +16,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveDivide								, // case 10
 	Interpreter::primitiveMod									, // case 11
 	Interpreter::primitiveDiv									, // case 12
-	Interpreter::primitiveQuoAndRem								, // case 13
+	Interpreter::primitiveQuo									, // case 13
 	Interpreter::primitiveSubtract								, // case 14
 	Interpreter::primitiveAdd									, // case 15
 	Interpreter::primitiveEqual									, // case 16
@@ -36,7 +36,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveLargeIntegerDivide					, // case 30	LargeInteger>>#/
 	Interpreter::primitiveLargeIntegerMod						, // case 31	LargeInteger#\\ 
 	Interpreter::primitiveLargeIntegerDiv						, // case 32	LargeInteger>>#//
-	Interpreter::primitiveLargeIntegerQuoAndRem					, // case 33	Was LargeInteger>>#quo:
+	Interpreter::primitiveLargeIntegerQuo						, // case 33	LargeInteger>>#quo:
 	Interpreter::primitiveLargeIntegerBitAnd					, // case 34	LargeInteger>>#bitAnd:
 	Interpreter::primitiveLargeIntegerBitOr						, // case 35	LargeInteger>>#bitOr:
 	Interpreter::primitiveLargeIntegerBitXor					, // case 36	LargeInteger>>#bitXor:
@@ -56,7 +56,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveCopyFromTo							, // case 50	Float>>#/ in Smalltalk-80
 	Interpreter::primitiveStringCmp								, // case 51	Float>>#truncated
 	Interpreter::primitiveStringNextIndexOfFromTo				, // case 52	Float>>#fractionPart in Smalltalk-80
-	Interpreter::primitiveQuo									, // case 53	Float>>#exponent in Smalltalk-80
+	Interpreter::unusedPrimitive								, // case 53	Float>>#exponent in Smalltalk-80
 	Interpreter::primitiveHighBit								, // case 54	Float>>#timesTwoPower: in Smalltalk-80
 	Interpreter::primitiveBytesEqual							, // case 55	Not used in Smalltalk-80
 	Interpreter::primitiveStringCollate							, // case 56

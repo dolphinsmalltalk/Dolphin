@@ -287,24 +287,6 @@ quo: operand
 
 	^(self / operand) truncated!
 
-quoAndRem: aNumber
-	"Private- Answer a two element array containing the integer quotient of 
-	the receiver divided by aNumber with truncation toward zero (i.e. like C 
-	integer division), and the corresponding remainder.
-	As both quotient and remainder are typically calculated by a single division
-	operation, if both are needed it is often more efficient to use this 
-	method (assuming that the particular subclass implements it more efficiently!!)"
-
-	^{self quo: aNumber. self rem: aNumber}!
-
-quoAndRemFromInteger: anInteger
-	"Private - Answer the quotient and remainder resulting from division of 
-	the argument, anInteger, by the receiver, with truncation towards zero."
-
-	| quo |
-	quo := self quotientFromInteger: anInteger.
-	^{quo. anInteger - (quo * self)}!
-
 quotientFromInteger: anInteger 
 	"Private - Answer the quotient resulting from division of the argument, anInteger, by
 	the receiver, with truncation towards zero."
@@ -512,8 +494,6 @@ understandsArithmetic
 !ArithmeticValue categoriesFor: #negative!public!testing! !
 !ArithmeticValue categoriesFor: #positive!public!testing! !
 !ArithmeticValue categoriesFor: #quo:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #quoAndRemFromInteger:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #quotientFromInteger:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #raisedTo:!mathematical!public! !
 !ArithmeticValue categoriesFor: #raisedToInteger:!mathematical!public! !

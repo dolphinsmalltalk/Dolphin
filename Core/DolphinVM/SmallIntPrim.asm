@@ -231,57 +231,6 @@ localPrimitiveFailure0:
 
 ENDPRIMITIVE primitiveQuo
 
-;  int __fastcall Interpreter::primitiveQuoAndRem()
-; 
-; Yet another division primitive, but this time with truncation towards zero
-; which is simple makes this the same as integer division in lesser languages
-;
-; Can only succeed if argument is a SmallInteger
-;
-BEGINPRIMITIVE primitiveQuoAndRem
-	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-	mov		ecx, [_SP]						; Load argument from stack
-	sar		eax, 1							; Convert from SmallInteger
-	sar		ecx, 1							; Extract integer value of arg
-	mov		edx, eax						; (v) Sign extend eax ...				(u)
-	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
-
-	sar		edx, 31							; ... complete sign extend into edx		(v)
-	idiv	ecx
-
-	add		eax, eax						; Quotient is in eax
-
-	jno		@F
-
-	; Overflowed, must be division of -16r40000000 by -1, remainder must be zero
-	mov		ecx, eax
-	push	edx
-
-	rcr		ecx, 1							; Revert to non-shifted value
-	call	LINEWSIGNED						; 
-
-	pop		edx
-	jmp		skip
-@@:
-	or		eax, 1							; Add SmallInteger flag
-skip:
-	add		edx, edx						; Convert remainder into SmallInteger
-	mov		ecx, eax						; Get quotient into ECX
-	or		edx, 1							; Add flag for SmallInteger remainder
-
-	call	LINEWARRAY2						; Construct 2-element quotient and remainder array
-	ASSUME	eax:PTR OTE
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-localPrimitiveFailure0:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveQuoAndRem
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; _declspec(naked) int __fastcall Interpreter::primitiveBitShift()
 ;;

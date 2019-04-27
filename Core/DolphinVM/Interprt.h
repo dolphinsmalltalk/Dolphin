@@ -503,7 +503,6 @@ private:
 	static Oop* __fastcall primitiveDiv(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveMod(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveQuo(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveQuoAndRem(Oop* const sp, unsigned argCount);
 
 	// SmallInteger relational ops
 	static Oop* __fastcall primitiveEqual(Oop* const sp, unsigned argCount);
@@ -532,7 +531,7 @@ private:
 	static Oop* __fastcall primitiveLargeIntegerDivide(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLargeIntegerDiv(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLargeIntegerMod(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerQuoAndRem(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveLargeIntegerQuo(Oop* const sp, unsigned argCount);
 
 	// LargeInteger relational ops
 	static Oop* __fastcall primitiveLargeIntegerEqual(Oop* const sp, unsigned argCount);

@@ -711,13 +711,6 @@ printStringRadix: anInteger
 		showRadix: true.
 	^aStream contents!
 
-quo: aNumber
-	"Answer the integer quotient of the receiver divided by aNumber with 
-	truncation toward zero (i.e. like C integer division)."
-
-	^(self quoAndRem: aNumber) basicAt: 1
-!
-
 rounded
 	"Answer the integer nearest the receiver."
 
@@ -858,7 +851,6 @@ truncated
 !Integer categoriesFor: #printStringBase:!accessing!public! !
 !Integer categoriesFor: #printStringBase:nDigits:!printing!public! !
 !Integer categoriesFor: #printStringRadix:!printing!public! !
-!Integer categoriesFor: #quo:!arithmetic!public! !
 !Integer categoriesFor: #rounded!public!truncation and round off! !
 !Integer categoriesFor: #setBit:!bit manipulation!public! !
 !Integer categoriesFor: #size!accessing!public! !

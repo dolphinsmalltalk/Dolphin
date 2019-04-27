@@ -176,6 +176,18 @@ integerPart
 
 	^self truncated!
 
+isFloat
+	"Answer true if receiver is an instance of class Float, else answer false."
+
+	^false
+!
+
+isFraction
+	"Answer true if receiver is an instance of class Fraction, else answer false."
+
+	^false
+!
+
 isLiteral
 	"Answer whether the receiver the receiver has a literal representation which
 	is recognised by the Compiler"
@@ -321,6 +333,8 @@ to: stop do: operation
 !Number categoriesFor: #hour!converting!durations!public! !
 !Number categoriesFor: #hours!converting!durations!public! !
 !Number categoriesFor: #integerPart!accessing!public! !
+!Number categoriesFor: #isFloat!public!testing! !
+!Number categoriesFor: #isFraction!public!testing! !
 !Number categoriesFor: #isLiteral!public!testing! !
 !Number categoriesFor: #isNumber!public!testing! !
 !Number categoriesFor: #ln!mathematical!public! !

@@ -661,6 +661,12 @@ isFinite
 
 	^self fpClass anyMask: FpClassFinite!
 
+isFloat
+	"Answer true if receiver is an instance of class Float, else answer false."
+
+	^true
+!
+
 isInfinite
 	"Answer whether the receiver represents infinity (positive or negative)."
 
@@ -1011,6 +1017,7 @@ truncated
 !Float categoriesFor: #integerPart!accessing!public! !
 !Float categoriesFor: #isDenormal!public!testing! !
 !Float categoriesFor: #isFinite!public!testing! !
+!Float categoriesFor: #isFloat!public!testing! !
 !Float categoriesFor: #isInfinite!public!testing! !
 !Float categoriesFor: #isLiteral!public!testing! !
 !Float categoriesFor: #isNaN!public!testing! !
