@@ -41,53 +41,6 @@ ASSUME	_SP:PTR Oop				; Interpreters SP (stack pointer)
 ;;	is a SmallInteger, and subsequently that the argument is a SmallInteger.
 
 
-;  int __fastcall Interpreter::primitiveDivide()
-;
-; Divide fails if the receiver or arg non-SmallInteger, if arg is 0,
-; if result inexact (Smalltalk backup code creates a Fraction)
-;
-; Can only succeed if argument is a SmallInteger
-;
-BEGINPRIMITIVE primitiveDivide
-	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
-	sar		eax, 1							; Convert from SmallInteger
-	mov		ecx, [_SP]						; Load argument from stack
-	sar		ecx, 1							; Extract integer value of arg
-	jnc		localPrimitiveFailure0				; Arg not a SmallInteger
-	
-	; Division by zero does not fail the primitive, rather we allow an int division fault to be raised and trapped
-	
-	cdq										; Sign extend into edx
-	idiv	ecx
-	or		edx, edx						; Test remainder in edx
-	jnz		localPrimitiveFailure2			; Inexact, fail primitive
-
-	; N.B. Overflow is possible if min. SmallInteger negated by division by -1
-	add		eax, eax
-	mov		ecx, eax
-	jo		overflow
-	
-	or		eax, 1							; Add SmallInteger flag
-	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-overflow:
-	rcr		ecx, 1							; Revert to non-shifted value
-	call	LINEWSIGNED						; Create new LI with 32-bit signed value in ECX
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-localPrimitiveFailure0:
-localPrimitiveFailure2:
-	xor		eax, eax
-	ret
-
-ENDPRIMITIVE primitiveDivide
-
-
 ;  int __fastcall Interpreter::primitiveMod()
 ;
 ; Can only succeed if argument is a SmallInteger

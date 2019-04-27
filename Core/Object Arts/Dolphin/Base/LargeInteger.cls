@@ -276,6 +276,27 @@ dwordAtOffset: anInteger put: anObject
 								ifFalse: [self errorSubscriptBounds: anInteger]]]]
 		ifFalse: [self dwordAtOffset: anInteger put: anObject asInteger]!
 
+gcd: operand
+	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 
+	using Stein's binary algorithm. See Knuth vol. II"
+
+	| k u v t |
+	u := self abs.
+	v := operand abs.
+	k := 0.
+	[(u bitAnd: 1) == 0 and: [(v bitAnd: 1) == 0]] whileTrue: 
+			[k := k + 1.
+			u := u bitShift: -1.
+			v := v bitShift: -1].
+	t := (u bitAnd: 1) == 0 ifTrue: [u bitShift: -1] ifFalse: [v negated].
+	
+	[[(t bitAnd: 1) == 0] whileTrue: [t := t bitShift: -1].
+	t > 0 ifTrue: [u := t] ifFalse: [v := t negated].
+	t := u - v.
+	t == 0]
+			whileFalse.
+	^u bitShift: k!
+
 generality
 	"Private - Answer the generality of the receiver in the Smalltalk number system.
 	Integers are the lowest generalities (20 Large, 10 Small)."
@@ -425,6 +446,9 @@ quotientFromInteger: anInteger
 		ifTrue: [-1]
 		ifFalse: [0]!
 
+reciprocal
+	^Fraction numerator: 1 denominator: self!
+
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart 
 	"Private - Standard method for transfering bytes from one variable
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
@@ -487,6 +511,7 @@ subtractFromInteger: anInteger
 !LargeInteger categoriesFor: #digitLength!accessing!public! !
 !LargeInteger categoriesFor: #dwordAtOffset:!accessing!primitives!private! !
 !LargeInteger categoriesFor: #dwordAtOffset:put:!accessing!primitives!private! !
+!LargeInteger categoriesFor: #gcd:!factorization!public! !
 !LargeInteger categoriesFor: #generality!coercing!private! !
 !LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
 !LargeInteger categoriesFor: #hash!comparing!public! !
@@ -500,6 +525,7 @@ subtractFromInteger: anInteger
 !LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
 !LargeInteger categoriesFor: #quo:!arithmetic!public! !
 !LargeInteger categoriesFor: #quotientFromInteger:!double dispatch!private! !
+!LargeInteger categoriesFor: #reciprocal!arithmetic!public! !
 !LargeInteger categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 !LargeInteger categoriesFor: #sdwordAtOffset:!accessing!private! !
 !LargeInteger categoriesFor: #signBit!private!testing! !
