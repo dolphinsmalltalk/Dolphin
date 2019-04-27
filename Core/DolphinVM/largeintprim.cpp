@@ -1190,17 +1190,6 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 	return quoAndRem;
 }		
 
-ArrayOTE* __fastcall liNewArray2(Oop oop1, Oop oop2)
-{
-	ArrayOTE* oteResults = Array::NewUninitialized(2);
-	Array* array = oteResults->m_location;
-	array->m_elements[0] = oop1;
-	array->m_elements[1] = oop2;
-	ObjectMemory::countUp(oop1);
-	ObjectMemory::countUp(oop2);
-	return oteResults;
-}
-
 //#undef TRACE
 //#define TRACE				::trace
 
