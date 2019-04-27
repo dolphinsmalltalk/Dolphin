@@ -507,25 +507,13 @@ printStringBase: baseInteger nDigits: lengthInteger
 	^digits!
 
 quo: aNumber
-	"Answer the integer quotient defined by division with truncation toward zero.
+	"Answer the integer quotient defined by division with truncation toward zero."
 
-	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
-	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
-
-	<primitive: 53>
-	^(aNumber quoAndRemFromInteger: self) basicAt: 1
-!
-
-quoAndRem: aNumber
-	"Answer a 2-element array containing the integer quotient and remainder
-	resulting from division of the receiver by the argument with truncation 
-	toward zero.
-
-	The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
+	"The primitive fails only if aNumber is not a SmallInteger, and does not set the failure code.
 	Attempted division by zero will cause a ZeroDivide exception to be raised by the VM."
 
 	<primitive: 13>
-	^aNumber quoAndRemFromInteger: self!
+	^aNumber quotientFromInteger: self!
 
 refersToLiteral: anObject 
 	"Private - Answer whether the receiver is a reference to the literal argument.
@@ -604,7 +592,6 @@ yourAddress
 !SmallInteger categoriesFor: #printStringBase:!printing!public! !
 !SmallInteger categoriesFor: #printStringBase:nDigits:!printing!public! !
 !SmallInteger categoriesFor: #quo:!arithmetic!public! !
-!SmallInteger categoriesFor: #quoAndRem:!arithmetic!public! !
 !SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
 !SmallInteger categoriesFor: #shallowCopy!copying!public! !
 !SmallInteger categoriesFor: #species!accessing!public! !

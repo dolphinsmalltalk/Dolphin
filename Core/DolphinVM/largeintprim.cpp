@@ -1692,7 +1692,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 		if (quoAndRem.rem == reinterpret_cast<Oop>(oteU))
 		{
 			ASSERT(quoAndRem.quo == ZeroPointer);
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -1711,14 +1711,14 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 		// will create a fraction
 		deallocateIntermediateResult(rem);
 		deallocateIntermediateResult(quoAndRem.quo);
-		return NULL;
+		return nullptr;
 	}
 }
 
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerMod(Oop* const sp, unsigned)
 {
-	return NULL;
+	return nullptr;
 }		
 
 // This primitiveLargeInteger (associated with integer division selector //) does work when
@@ -1731,7 +1731,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDiv(Oop* const sp, unsigned)
 }		
 
 // Integer division with truncation towards zero
-Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, unsigned)
 {
 	Oop oopV = *sp;
 	LargeIntegerOTE* oteU = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));
@@ -1746,30 +1746,26 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem(Oop* const sp, unsig
 	{
 		LargeIntegerOTE* oteV = reinterpret_cast<LargeIntegerOTE*>(oopV);
 		if (oteV->m_oteClass	!= Pointers.ClassLargeInteger)
-			return NULL;		// Divisor not an Integer
+			return nullptr;		// Divisor not an Integer
 
 		quoAndRem = liDiv(oteU, oteV);
 	}
 
-	// Answer a two element array containing the normalized results (i.e.
-	// the quotient and remainder in their minimal representation).
-	Oop quo, rem;
 	if (quoAndRem.rem != reinterpret_cast<Oop>(oteU))
 	{
-		quo = normalizeIntermediateResult(quoAndRem.quo);
-		rem = normalizeIntermediateResult(quoAndRem.rem);
+		deallocateIntermediateResult(quoAndRem.rem);
+
+		Oop result = normalizeIntermediateResult(quoAndRem.quo);
+		*(sp - 1) = result;
+		ObjectMemory::AddToZct(result);
+		return sp - 1;
 	}
 	else
 	{
-		// Divisor larger than dividend, remainder is original dividend
-		quo = ZeroPointer;
-		rem = quoAndRem.rem;
+		// Divisor larger than dividend, quotient is zero
+		*(sp - 1) = ZeroPointer;
+		return sp - 1;
 	}		
-		
-	OTE* oteResult = reinterpret_cast<POTE>(liNewArray2(quo, rem));
-	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct(oteResult);
-	return sp - 1;
 }		
 
 //////////////////////////////////////////////////////////////////////////////

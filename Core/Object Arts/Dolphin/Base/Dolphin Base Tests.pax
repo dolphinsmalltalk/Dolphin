@@ -83,6 +83,7 @@ package classNames
 	add: #ReadStreamTest;
 	add: #ReadWriteStreamTest;
 	add: #RunArrayTest;
+	add: #ScaledDecimalTest;
 	add: #SDWORDArrayTest;
 	add: #SearchPolicyTest;
 	add: #SemaphoreTest;
@@ -332,6 +333,11 @@ DolphinTest subclass: #PackageTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ProcessTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ScaledDecimalTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
