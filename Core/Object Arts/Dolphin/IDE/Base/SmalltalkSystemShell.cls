@@ -429,7 +429,9 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem registerTool: self.
+	Smalltalk developmentSystem
+		registerTool: self;
+		systemFolderClass: self.
 	self backImage: self defaultBackImage.
 	self backcolor: self defaultBackcolor.
 	self textcolor: self defaultTextcolor.
