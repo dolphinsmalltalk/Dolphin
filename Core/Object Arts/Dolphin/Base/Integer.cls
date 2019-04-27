@@ -396,11 +396,11 @@ fractionPart
 
 	^0!
 
-gcd: operand
-	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed using Euclid's algorithm. See Knuth vol. II"
+gcd: anInteger
+	"Answer the greatest common divisor of the receiver and the <integer>, anInteger, computed using Euclid's algorithm. See Knuth vol. II"
 
 	| v u |
-	u := operand.
+	u := anInteger.
 	v := self.
 	[v == 0] whileFalse: [v := u \\ (u := v)].
 	^u abs!
