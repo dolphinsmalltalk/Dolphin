@@ -503,13 +503,25 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 
 		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
 		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
-		ldiv_t qr = quoRem(a, r);
-		if (qr.rem == 0)
+		// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction, so this is better 
+		// than calling a function written in inline assembler or the CRT DLL ldiv function.
+		SMALLINTEGER quot = r / a;
+		SMALLINTEGER rem = r % a;
+
+		if (rem == 0)
 		{
-			Oop oopResult = Integer::NewSigned32(qr.quot);
-			*(sp - 1) = oopResult;
-			ObjectMemory::AddToZct(oopResult);
-			return sp - 1;
+			if (ObjectMemoryIsIntegerValue(quot))
+			{
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(quot);
+				return sp - 1;
+			}
+			else
+			{
+				LargeIntegerOTE* oteResult = LargeInteger::liNewSigned(quot);
+				*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+				return sp - 1;
+			}
 		}
 		else
 			return nullptr;
