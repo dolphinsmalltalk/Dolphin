@@ -1012,16 +1012,13 @@ liDiv_t __stdcall liDivSingleUnsigned(const LargeIntegerOTE* oteLI, SMALLUNSIGNE
 liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 {
 	// Remainder will be SmallInteger, quotient is (potentially) unnormalized LI
-	liDiv_t quoAndRem;
 
 	// Division by -1 can result in overflow, so just pass off to negate
 	if (v == -1)
 	{
 		Oop oopQuo = LargeInteger::Negate(oteU);
 		ASSERT(oopQuo != (Oop)oteU);
-		quoAndRem.quo = oopQuo;
-		quoAndRem.rem = ZeroPointer;
-		return quoAndRem;
+		return { oopQuo, ZeroPointer };
 	}
 
 	LargeInteger* liU = oteU->m_location;
@@ -1031,22 +1028,22 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 	{
 		// 32-bit / 32-bit, optimized case
 		int32_t ui = liU->m_digits[0];
-		ldiv_t qr = quoRem(v, ui);
-		Oop oopQuo = LargeInteger::NewSigned32(qr.quot);
-		quoAndRem.quo = oopQuo;
-		_ASSERTE(ObjectMemoryIsIntegerValue(qr.rem));
-		quoAndRem.rem = ObjectMemoryIntegerObjectOf(qr.rem);
+		// VS2017 compiler recognises divide and mod sequence as needing only a single idiv
+		SMALLINTEGER quot = ui / v;
+		SMALLINTEGER rem = ui % v;
+		Oop oopQuo = LargeInteger::NewSigned32(quot);
+		_ASSERTE(ObjectMemoryIsIntegerValue(rem));
+		return { oopQuo, ObjectMemoryIntegerObjectOf(rem) };
 	}
 	else if (qSize == 2)
 	{
 		// 64-bit / 32-bit optimized case
 		int64_t ui = *reinterpret_cast<int64_t*>(liU->m_digits);
 		int64_t quo = ui/v;
-		Oop oopQuo = LargeInteger::NewSigned64(quo);
-		quoAndRem.quo = oopQuo;
 		int32_t rem = static_cast<int32_t>(ui%v);
 		_ASSERTE(ObjectMemoryIsIntegerValue(rem));
-		quoAndRem.rem = ObjectMemoryIntegerObjectOf(rem);
+		Oop oopRem = ObjectMemoryIntegerObjectOf(rem);
+		return { LargeInteger::NewSigned64(quo), oopRem };
 	}
 	else
 	{
@@ -1064,9 +1061,12 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 		{
 			// Numerator is negative
 
+
 			LargeIntegerOTE* absU = liNegatePriv(oteU);
 			ASSERT(!absU->isFree());
 			ASSERT(absU->m_count == 0);
+
+			liDiv_t quoAndRem;
 
 			if (v < 0)
 			{
@@ -1101,6 +1101,8 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 
 			// We no longer need the absolute value of the numerator
 			LargeInteger::DeallocateIntermediateResult(absU);
+
+			return quoAndRem;
 		}
 		else
 		{
@@ -1109,13 +1111,14 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 			if (v < 0)
 			{
 				// numerator +ve, denominator -ve, quo -ve, rem +ve.
-				quoAndRem = liDivSingleUnsigned(oteU, -v);
+				liDiv_t quoAndRem = liDivSingleUnsigned(oteU, -v);
 				quoAndRem.quo = negateIntermediateResult(quoAndRem.quo);
+				return quoAndRem;
 			}
 			else
 			{
 				// numerator +ve, denominator +ve, quo +ve, rem +ve
-				quoAndRem = liDivSingleUnsigned(oteU, v);
+				return liDivSingleUnsigned(oteU, v);
 			}
 		}
 	}
@@ -1160,7 +1163,6 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 	// Remainder might be 32-bit, but no guarantee it will fit in a SmallInteger
 	quoAndRem.rem = Integer::NewSigned32(rem);
 */
-	return quoAndRem;
 }		
 
 //#undef TRACE

@@ -300,8 +300,11 @@ makeRoomAtEndFor: anInteger
 	capacity := self basicSize.
 	capacity - self size < anInteger
 		ifTrue: 
-			["Too full, increase the receivers capacity. We don't bother shifting"
-			^self basicResize: capacity + (anInteger roundUpTo: self growSize)].
+			[| g n |
+			"Too full, increase the receivers capacity to the requested size, rounded up to a multiple of the growSize"
+			g := self growSize.
+			n := anInteger + g - 1.
+			^self basicResize: capacity + (n - (n \\ g))].
 	shift := 1 - firstIndex.	"N.B. shift < 0"
 
 	"Move tail of collection towards head"

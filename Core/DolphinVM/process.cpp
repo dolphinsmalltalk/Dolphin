@@ -1837,7 +1837,7 @@ inline bool Process::SuspendOverlappedCall()
 	if (pOverlapped == NULL || !pOverlapped->IsInCall())
 		return false;
 
-#if 1 //def _DEBUG
+#ifdef _DEBUG
 	TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Suspending " << *pOverlapped<< L" in process " << (OTE*)m_name << std::endl;
 #endif
 	return pOverlapped->QueueSuspend();
@@ -1849,7 +1849,7 @@ inline bool Process::ResumeOverlappedCall()
 	if (pOverlapped == NULL || !pOverlapped->IsInCall())
 		return false;
 
-#if 1//def _DEBUG
+#ifdef _DEBUG
 	TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Resuming " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(m_name) << std::endl;
 #endif
 	pOverlapped->Resume();
