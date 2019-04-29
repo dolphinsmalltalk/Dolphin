@@ -131,11 +131,15 @@ seconds
 seconds: aNumber
 	seconds := aNumber!
 
-storeOn: aStream 
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <Time> equivalent to the receiver."
+
 	aStream
-		display: self class;
+		nextPut: $(;
+		print: self class;
 		nextPutAll: ' fromSeconds: ';
-		print: self asSeconds!
+		print: self asSeconds;
+		nextPut: $)!
 
 subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."
