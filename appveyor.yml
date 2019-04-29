@@ -20,8 +20,10 @@ artifacts:
   name: DPro
 - path: RegressionTests.xml
   name: DPro
-- path: *.dll
-  name: DPro
+- path: Core\DolphinVM\Release\*.dll
+  name: VM
+- path: Core\DolphinVM\Release\*.exe
+  name: VM
 notifications:
 - provider: Email
   to:
