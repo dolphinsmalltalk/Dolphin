@@ -341,6 +341,22 @@ setRataDie: anInteger seconds: aNumber offset: secondsInteger
 	offset := secondsInteger.
 	^self!
 
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <DateAndTime> equivalent to the receiver."
+
+	aStream
+		nextPut: $(;
+		print: self class;
+		nextPutAll: ' year: ';
+		print: self year;
+		nextPutAll: ' day: ';
+		print: self dayOfYear;
+		nextPutAll: ' seconds: ';
+		print: self seconds;
+		nextPutAll: ' offset: ';
+		store: offset seconds;
+		nextPut: $)!
+
 subtractFromDateAndTime: aDateAndTime 
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. 
 	Answers a <Duration> representing the argument subtracted from the receiver."
@@ -424,6 +440,7 @@ year
 !DateAndTime categoriesFor: #second!accessing!public! !
 !DateAndTime categoriesFor: #seconds!accessing!public! !
 !DateAndTime categoriesFor: #setRataDie:seconds:offset:!initializing!private! !
+!DateAndTime categoriesFor: #storeOn:!printing!public! !
 !DateAndTime categoriesFor: #subtractFromDateAndTime:!arithmetic!double dispatch!private! !
 !DateAndTime categoriesFor: #timeZoneAbbreviation!accessing!public! !
 !DateAndTime categoriesFor: #timeZoneName!accessing!public! !
@@ -743,6 +760,26 @@ year: year day: dayOfYear hour: hour minute: minute second: second offsetSeconds
 year: yearInteger day: ordinalDateInteger offset: aDuration
 	^self year: yearInteger day: ordinalDateInteger hour: 0 minute: 0 second: 0 offset: aDuration!
 
+year: yearInteger day: ordinalDateInteger seconds: seconds offset: aDuration
+	| offset |
+	(ordinalDateInteger >= 1 and: [ordinalDateInteger <= 366])
+		ifFalse: 
+			[InvalidArgumentError signal: ordinalDateInteger printString , ' is outside [1, 366]'
+				with: 'dayOfYear'].
+	(seconds >= 0 and: [seconds < Duration.SecondsPerDay])
+		ifFalse: 
+			[InvalidArgumentError signal: ordinalDateInteger printString , ' is outside [1, 366]' with: 'seconds'].
+	offset := aDuration asSeconds.
+	self validateOffset: offset.
+	^self new
+		setRataDie: (self
+				encodeRataDieYear: yearInteger
+				month: 1
+				day: 1) + ordinalDateInteger
+				- 1
+		seconds: seconds asTrueFraction
+		offset: offset!
+
 year: yearInteger month: monthInteger day: dayInteger
 	"Answer a new <DateAndTime> representing midnight local time on the specified day of the specified month of the specified year."
 
@@ -855,7 +892,8 @@ yesterday
 !DateAndTime class categoriesFor: #year:day:hour:minute:second:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:day:hour:minute:second:offset:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:day:hour:minute:second:offsetSeconds:!instance creation!private! !
-!DateAndTime class categoriesFor: #year:day:offset:!accessing!public! !
+!DateAndTime class categoriesFor: #year:day:offset:!instance creation!public! !
+!DateAndTime class categoriesFor: #year:day:seconds:offset:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:month:day:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:month:day:hour:minute:second:!instance creation!public! !
 !DateAndTime class categoriesFor: #year:month:day:hour:minute:second:offset:!instance creation!public! !

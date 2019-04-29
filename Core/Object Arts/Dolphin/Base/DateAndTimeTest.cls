@@ -476,6 +476,13 @@ testStbConvertFrom
 				actual := Object fromLiteralStoreArray: stl.
 				self assert: actual equals: expected]!
 
+testStoreOn
+	| now stored collection |
+	now := DateAndTime now.
+	collection := OrderedCollection with: now with: self canonicalInstance.
+	stored := collection storeString.
+	self assert: (Compiler evaluate: stored) equals: collection!
+
 testToday
 	| today subject |
 	today := Date today.
@@ -633,6 +640,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testStoreOn!public!testing! !
 !DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDayHourMinuteSecondOffset!public!unit tests! !
