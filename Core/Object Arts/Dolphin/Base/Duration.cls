@@ -216,6 +216,14 @@ setSeconds: aNumber
 	seconds := aNumber.
 	^self!
 
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <Duration> equivalent to the receiver."
+
+	aStream
+		print: seconds;
+		space;
+		display: #seconds!
+
 subtractFromDateAndTime: aDateAndTime
 	"Private - Part of a double dispatch for <DateAndTime> subtraction. Answers a 
 	<DateAndTime> representing the receiver subtracted from the argument"
@@ -252,6 +260,7 @@ subtractFromDateAndTime: aDateAndTime
 !Duration categoriesFor: #printStringFormat:!printing!public! !
 !Duration categoriesFor: #seconds!accessing!public! !
 !Duration categoriesFor: #setSeconds:!initializing!private! !
+!Duration categoriesFor: #storeOn:!printing!public! !
 !Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
 
 Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
