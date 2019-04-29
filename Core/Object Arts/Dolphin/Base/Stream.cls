@@ -200,6 +200,11 @@ skipTo: anObject
 	[self atEnd] whileFalse: [self next = anObject ifTrue: [^true]].
 	^false!
 
+store: anObject
+	"Ask anObject to append its storeString to the receiver."
+
+	anObject storeOn: self!
+
 upTo: anObject
 	"Answer a collection of elements starting with the next element accessed by the receiver,
 	and up to, not inclusive of, the next element that is equal to anObject. Positions the
@@ -244,6 +249,7 @@ upToEnd
 !Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !
+!Stream categoriesFor: #store:!printing!public! !
 !Stream categoriesFor: #upTo:!accessing!public! !
 !Stream categoriesFor: #upToEnd!accessing!public! !
 
