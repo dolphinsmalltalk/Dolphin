@@ -257,11 +257,15 @@ testStb
 	self assert: rehydrated equals: subject!
 
 testStoreOn
-	| subject stored array |
+	| subject stored collection |
 	subject := Time now.
-	array := Array with: subject with: (Time hour: 23 minute: 59 second: 58).
-	stored := array storeString.
-	self assert: (Compiler evaluate: stored) equals: array! !
+	collection := OrderedCollection with: subject
+				with: (Time
+						hour: 23
+						minute: 59
+						second: 58).
+	stored := collection storeString.
+	self assert: (Compiler evaluate: stored) equals: collection! !
 !TimeTest categoriesFor: #comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
 !TimeTest categoriesFor: #hoursShould:for:!comparing!private! !
 !TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
