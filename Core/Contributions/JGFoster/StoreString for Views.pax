@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'StoreString for Views'.
 package paxVersion: 1;
 	basicComment: 'Methods in this package are used to generate a string that can be used to recreate a view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose).'.
@@ -1278,9 +1278,9 @@ storeForViewOn: aStream
 		nextPut: $(;
 		display: self class;
 		space;
-		display: #fromMilliseconds:;
+		display: #fromSeconds:;
 		space.
-	self millisecond storeForViewOn: aStream.
+	self asSeconds storeForViewOn: aStream.
 	aStream
 		nextPutAll: ' "';
 		print: self;
