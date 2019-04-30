@@ -300,6 +300,18 @@ testPrintString
 		self assert: nanos nanoseconds printString equals: expected]
 !
 
+testStoreOn
+	| subject stored collection |
+	collection := OrderedCollection new
+				add: 1 nanoseconds;
+				add: 1 microseconds;
+				add: 1 milliseconds;
+				add: 1 seconds;
+				add: 1 days;
+				add: 364 days + 23 hours + 59 minutes + 59.999999999 seconds.
+	stored := collection storeString.
+	self assert: (Compiler evaluate: stored) equals: collection!
+
 testSubtract
 	| subject |
 	subject := 1.5 seconds.
@@ -335,5 +347,6 @@ testSubtract
 !DurationTest categoriesFor: #testNumberSeconds!public!unit tests! !
 !DurationTest categoriesFor: #testPositive!public!unit tests! !
 !DurationTest categoriesFor: #testPrintString!public!unit tests! !
+!DurationTest categoriesFor: #testStoreOn!public!testing! !
 !DurationTest categoriesFor: #testSubtract!public!unit tests! !
 

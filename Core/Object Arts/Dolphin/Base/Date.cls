@@ -270,18 +270,17 @@ setDays: dayCount
 	days := dayCount
 !
 
-storeOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
-	"Use a format which is locale invariant."
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <Date> equivalent to the receiver."
 
 	aStream
-		display: self class;
+		nextPut: $(;
+		print: self class;
 		space;
 		display: #fromDays:;
 		space;
-		display: self asDays!
+		print: self asDays;
+		nextPut: $)!
 
 subtractDate: aDate
 	"Answer the difference in days between the receiver and aData, as an Integer"

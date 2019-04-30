@@ -60,10 +60,11 @@ testOrder
 					self deny: guid1 equals: guid2]]!
 
 testStoreOn
-	| subject stored |
+	| subject stored collection |
 	subject := GUID newUnique.
-	stored := subject storeString.
-	self assert: (Compiler evaluate: stored) equals: subject.
+	collection := OrderedCollection with: subject.
+	stored := collection storeString.
+	self assert: (Compiler evaluate: stored) equals: collection.
 	self assert: (Compiler evaluate: GUID null storeString) equals: GUID null!
 
 testUniqueness

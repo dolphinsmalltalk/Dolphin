@@ -158,15 +158,16 @@ species
 	^GUID!
 
 storeOn: aStream
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <GUID> equivalent to the receiver."
 
 	aStream
+		nextPut: $(;
 		print: self class;
 		space;
 		nextPutAll: #fromString:;
 		space;
-		print: self asString!
+		print: self asString;
+		nextPut: $)!
 
 stringSize
 	"Answer the number of characters in a GUID string."
