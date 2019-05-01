@@ -938,9 +938,7 @@ Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, unsigned)
 		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
 		if (oteArg != oteReceiver)
 		{
-			// In Dolphin Strings have historically never been = to any Symbols, regardless of whether they have the same characters
-			// Perhaps this behaviour should be changed for consistency with some other Smalltalk implementations
-			if (oteArg->isNullTerminated() && oteArg->m_oteClass != Pointers.ClassSymbol)
+			if (oteArg->isNullTerminated())
 			{
 				// Could double-dispatch this rather than handling all this in one
 				// primitive, or at least define one primitive for each string class, but it would mean

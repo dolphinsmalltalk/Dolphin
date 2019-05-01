@@ -33,7 +33,7 @@ denyCommutativelyEqual: aSet other: anotherSet
 	self deny: anotherSet equals: aSet!
 
 elements
-	^#(1 'a' #a)!
+	^#(1 'b' #a)!
 
 loadFactor
 	^2.0 / 3!

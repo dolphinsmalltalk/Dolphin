@@ -145,8 +145,8 @@ _separateSubStringsIn: aReadableString
 	^(self _collate: comparand) <= 0!
 
 = comparand
-	"Answer whether the receiver and the <Object> argument, comparand, 
-	are both Strings containing identical code points.
+	"Answer whether the receiver and the <Object> argument, comparand, are both <String>s containing identical code points.
+	Note that <Symbol>s are now considered equal to <String>s with the same characters.
 
 	Primitive failure results:
 		0 -	comparand is a SmallInteger.
@@ -154,19 +154,7 @@ _separateSubStringsIn: aReadableString
 		2 -	comparand and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == comparand or: 
-			[comparand isString and: 
-					[comparand isSymbol not and: 
-							[| string1 string2 |
-							"The primitive uses the OS CompareStringOrdinal function, or memcmp for a pair of byte strings of matched encoding."
-							string1 := self asUtf16String.
-							string2 := comparand asUtf16String.
-							(KernelLibrary default
-								compareStringOrdinal: string1
-								cchCount1: string1 size
-								lpString2: string2
-								cchCount2: string2 size
-								bIgnoreCase: false) == Win32Constants.CSTR_EQUAL]]]!
+	^self == comparand or: [comparand isString and: [(self _cmp: comparand) == 0]]!
 
 > comparand
 	"Answer whether the receiver is lexically greater than the <readableString>, comparand,
@@ -446,20 +434,6 @@ encodeOn: aWriteStream put: aCharacter
 encoding
 	^self class encoding!
 
-equals: comperand
-	"Answer whether the characters of the receiver are identical to those of 
-	the argument, comperand. Should not be overridden by subclasses (a kind of basic=).
-	Using this method strings and symbols compare equal if they contain the same
-	character sequence - this was not true in releases prior to 3.0."
-
-	<primitive: 55>
-	#todo.	"Doesn't work correctly for comparing Symbols to UTF encoded strings. This could be
-	       deprecated if we allowed strings and symbols to be equal for the same code point
-	       sequence."
-	(self == comperand or: [self = comperand]) ifTrue: [^true].
-	comperand isString ifFalse: [^false].
-	^(self _cmp: comperand) == 0!
-
 expandMacros
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
@@ -633,19 +607,6 @@ hash
 	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal
 	objects, and therefore it should be the same for the same sequence of characters, regardless
 	of encoding."
-
-	| utf8 hash |
-	<primitive: 106>
-	utf8 := self asUtf8String.
-	hash := 2166136261.
-	"FNV1a"
-	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
-	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
-
-hashCharacters
-	"Private - Use the standard byte hashing algorithm to hash the characters of 
-	the receiver. Used for doing lookup by value, e.g. in the Symbol table."
 
 	| utf8 hash |
 	<primitive: 106>
@@ -1139,7 +1100,7 @@ unescapePercents
 
 	| ansi |
 	ansi := self asAnsiString.
-	^(ansi equals: self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
+	^(ansi = self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
 
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
@@ -1203,7 +1164,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #displayString!printing!public! !
 !String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !String categoriesFor: #encoding!constants!public! !
-!String categoriesFor: #equals:!comparing!public! !
 !String categoriesFor: #expandMacros!printing!public! !
 !String categoriesFor: #expandMacrosWith:!printing!public! !
 !String categoriesFor: #expandMacrosWith:with:!printing!public! !
@@ -1219,7 +1179,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #formatWith:with:with:with:!printing!public! !
 !String categoriesFor: #formatWithArguments:!printing!public! !
 !String categoriesFor: #hash!comparing!public! !
-!String categoriesFor: #hashCharacters!comparing!private! !
 !String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
 !String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !String categoriesFor: #isLiteral!public!testing! !

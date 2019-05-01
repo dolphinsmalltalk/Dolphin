@@ -49,16 +49,17 @@ testAtPut
 testEquals
 	self equalityTestCases do: 
 			[:each |
-			| subject |
+			| subject ansi |
 			subject := self assimilateString: each.
 			"Identical must be equal"
 			self assert: subject equals: subject.
 			"Same characters must be equal"
 			self assert: subject equals: (self assimilateString: each).
 			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
-			self deny: subject equals: each asAnsiString.
-			self deny: subject equals: each asUtf8String.
-			self deny: subject equals: each asUtf16String.
+			ansi := each asAnsiString.
+			self assert: (ansi ~= each or: [subject = ansi]).
+			self assert: subject equals: each asUtf8String.
+			self assert: subject equals: each asUtf16String.
 			"Not equal to ByteArrays"
 			self deny: each asByteArray equals: each.
 			self deny: each equals: each asByteArray.

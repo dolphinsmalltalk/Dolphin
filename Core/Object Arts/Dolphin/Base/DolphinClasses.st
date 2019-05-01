@@ -1520,11 +1520,6 @@ SingletonSearchPolicy subclass: #NeverSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''

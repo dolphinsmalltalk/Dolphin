@@ -98,10 +98,6 @@ compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cch
 	<stdcall: sdword CompareStringW dword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall!
 
-compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
-	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
-	^self invalidCall!
-
 copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	"Copies the file named fromString to a file named toString. If
 	toString already exists then the copy will only proceed if fail
@@ -1689,7 +1685,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #copyMemory:source:length:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
