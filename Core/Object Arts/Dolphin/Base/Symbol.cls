@@ -22,14 +22,6 @@ Symbol complies with the following ANSI protocols:
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
 
-= aSymbol
-	"Symbols equality is the same as symbol identity since instances with the same
-	characters are unique.
-	The primitive should not fail."
-
-	<primitive: 110>
-	^self primitiveFailed!
-
 argumentCount
 	"Answer the <integer> number of arguments required by a method with the
 	receiver as its selector."
@@ -97,13 +89,6 @@ forwardTo: anObject
 	answering the result. Assumes the receiver is a unary selector."
 
 	^anObject perform: self!
-
-hash
-	"Answer the <integer> hash value for the receiver. Override back to the identity hash (which
-	is temporally invariant, and very fast to calculate)."
-
-	<primitive: 147>
-	^self identityHash!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that can
@@ -185,7 +170,6 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
@@ -194,7 +178,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
-!Symbol categoriesFor: #hash!comparing!public! !
 !Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
@@ -215,17 +198,17 @@ Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #<
 
 !Symbol class methodsFor!
 
-addUnique: aSymbol 
+addUnique: aSymbol
 	"Private - Add the argument aSymbol as a new entry in the Symbol Table. This private method should only be 
 	used for adding Symbols not already present in the symbol table. Please use Symbol>>intern: to obtain
 	a Symbol from a String (or alternatively String>>asSymbol)."
 
-	| bucket bucketIndex |
+	| bucketIndex |
 	aSymbol isImmutable: true.
-	bucketIndex := aSymbol hashCharacters \\ Table basicSize + 1.
-	(bucket := Table basicAt: bucketIndex) isNil 
-		ifTrue: [Table basicAt: bucketIndex put: (WeakArray with: aSymbol)]
-		ifFalse: [bucket replaceIdentity: DeadObject current with: aSymbol].
+	bucketIndex := aSymbol hash \\ Table basicSize + 1.
+	(Table basicAt: bucketIndex)
+		ifNil: [Table basicAt: bucketIndex put: (WeakArray with: aSymbol)]
+		ifNotNil: [:bucket | bucket replaceIdentity: DeadObject current with: aSymbol].
 	^aSymbol!
 
 allInstancesDo: aMonadicValuable 
@@ -243,7 +226,7 @@ findInterned: aString
 	N.B. This method previously had the selector #symbolAt:, and was private,
 	but has been renamed and made public for compatibility with VisualWorks."
 
-	(Table at: aString hashCharacters \\ Table basicSize + 1)
+	(Table at: aString hash \\ Table basicSize + 1)
 		ifNotNil: 
 			[:bucket |
 			"Inline ArrayedCollection>>do: to avoid full block for best performance"
@@ -252,7 +235,7 @@ findInterned: aString
 					[:i |
 					| each |
 					each := bucket at: i.
-					(each ~~ DeadObject.Current and: [(aString _cmp: each) == 0]) ifTrue: [^each]]].
+					each = aString ifTrue: [^each]]].
 	^nil!
 
 fromAddress: anInteger length: anInteger2

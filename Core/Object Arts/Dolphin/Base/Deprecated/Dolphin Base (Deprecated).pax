@@ -19,6 +19,7 @@ package classNames
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
+	add: #SymbolStringSearchPolicy;
 	add: #TimeStamp;
 	yourself.
 
@@ -98,6 +99,7 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
 	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
@@ -126,6 +128,7 @@ package methodNames
 	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
+	add: #String -> #equals:;
 	add: #SYSTEMTIME -> #asTimeStamp;
 	add: #Time -> #asTimeStamp;
 	add: #Time -> #hours;
@@ -219,6 +222,11 @@ OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	classInstanceVariableNames: ''!
 Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -833,6 +841,11 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
+compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
+	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
+	#deprecated.
+	^self invalidCall!
+
 getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
 	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
 	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
@@ -876,6 +889,7 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall! !
+!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
@@ -1065,8 +1079,13 @@ nextOrNil
 
 asUnicodeString
 	Notification deprecated.
-	^self asUtf16String! !
+	^self asUtf16String!
+
+equals: comperand
+	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
+	^self = comperand! !
 !String categoriesFor: #asUnicodeString!converting!public! !
+!String categoriesFor: #equals:!comparing!public! !
 
 !String class methodsFor!
 

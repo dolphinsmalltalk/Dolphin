@@ -76,20 +76,19 @@ package globalAliases: (Set new
 	add: #RBFormatter1;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\Environments\RBEnvironments';
-	add: '..\Formatters\RBFormatters';
-	add: '..\Parser\RBParser';
-	add: '..\Refactorings\RBRefactorings';
-	add: '..\Refactorings\RBReferenceFinder';
-	add: '..\SmallLint\RBSmallLint';
-	add: 'RBTestMethods';
-	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	add: '..\..\..\Camp Smalltalk\SUnit\SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\Environments\RBEnvironments'
+	'..\Formatters\RBFormatters'
+	'..\Parser\RBParser'
+	'..\Refactorings\RBRefactorings'
+	'..\Refactorings\RBReferenceFinder'
+	'..\SmallLint\RBSmallLint'
+	'RBTestMethods'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
+	'..\..\..\Camp Smalltalk\SUnit\SUnit').
 
 package!
 

@@ -105,8 +105,13 @@ testXhash
 	receiver hash = comparand hash
 "
 		#'Fundamental'.
-	self shouldnt: [smalltalkSymbol = 'Smalltalk'].
-	self shouldnt: [smalltalkSymbol hash = 'Smalltalk' hash].
+	"The original interpretation here was that Strings and Symbols were never equal, but the standard is ambiguous on this. 
+	There is some further discussion in https://github.com/dolphinsmalltalk/Dolphin/issues/518, the conclusion of which is that Strings and Symbols should be equal."
+	"self shouldnt: [smalltalkSymbol = 'Smalltalk'].
+	self shouldnt: [smalltalkSymbol hash = 'Smalltalk' hash]."
+	self assert: smalltalkSymbol equals: 'Smalltalk'.
+	self assert: smalltalkSymbol hash equals: 'Smalltalk' hash.
+
 	self value: [smalltalkSymbol hash]
 		should: [:r | r = smalltalkSymbol hash]
 		conformTo: #'Object' selector: #'hash'.

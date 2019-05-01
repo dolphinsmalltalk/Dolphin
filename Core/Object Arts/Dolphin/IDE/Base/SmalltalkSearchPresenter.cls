@@ -170,8 +170,7 @@ searchItemsStartingWith: aString maxItems: anInteger
 				ifTrue: 
 					[| classNamePrefix |
 					classNamePrefix := aString upTo: $>.
-					"Force string equality--class names are Symbols, but metaclass names are Strings"
-					[:each | each name equals: classNamePrefix]]
+					[:each | each name = classNamePrefix]]
 				ifFalse: 
 					[(aString includes: $\x20)
 						ifTrue: [[:each | each name beginsWith: aString]]

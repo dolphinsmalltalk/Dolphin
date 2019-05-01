@@ -125,10 +125,10 @@ testEquals
 			"Nor Arrays of characters"
 			self deny: subject asArray equals: subject.
 			self deny: subject equals: subject asArray].
-	"Symbols are only ever equal to other symbols, not strings with the same characters"
+	"Symbols are now equal to strings with the same characters"
 	abc := self assimilateString: 'abc'.
-	self deny: #abc equals: abc.
-	self deny: abc equals: #abc.
+	self assert: #abc equals: abc.
+	self assert: abc equals: #abc.
 !
 
 testFindStringStartingAt
@@ -335,6 +335,20 @@ testFindStringStartingAtIgnoreCase
 				startingAt: 1
 				ignoreCase: true)
 		equals: 7!
+
+testHash
+	| abc |
+	self equalityTestCases do: 
+			[:each |
+			| subject |
+			subject := self assimilateString: each.
+			"Same characters must be equal"
+			self assert: subject hash equals: subject copy hash.
+			self assert: subject hash equals: subject asUtf8String hash.
+			self assert: subject hash equals: subject asUtf16String hash].
+	"Symbols are now equal to strings with the same characters"
+	abc := self assimilateString: 'abc'.
+	self assert: #abc hash equals: abc hash!
 
 testInvalidComparisons
 	| str literals |
@@ -602,6 +616,7 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 !AbstractStringTest categoriesFor: #testEquals!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
+!AbstractStringTest categoriesFor: #testHash!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
 !AbstractStringTest categoriesFor: #testMutableCopy!public! !
 !AbstractStringTest categoriesFor: #testReverse!public! !
