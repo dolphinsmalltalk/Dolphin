@@ -12,9 +12,17 @@ Utf8String addClassConstant: 'LeadByteMask2' value: 16rC0!
 Utf8String addClassConstant: 'LeadByteMask3' value: 16rE0!
 Utf8String addClassConstant: 'LeadByteMask4' value: 16rF0!
 Utf8String addClassConstant: 'TrailByteMask' value: 16r80!
-Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin.
+Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
 
-The cautionary notes in the abstract superclass `UtfEncodedString` should be read carefully to understand the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy.'!
+When considering a `Utf8String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-8 code units, not Unicode code points. These code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point. UTF-8 surrogate characters can be inserted into other Utf8Strings (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf16String`s. To enumerate a `Utf8String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
+```
+	''Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'' readStream do: [:each | Transcript nextPut: each asUppercase]. Transcript cr; flush.
+```
+It should also be noted that the `size` of a `Utf8String` is a count of the number of code units (bytes), and not the number of whole Unicode characters. A single Unicode code point can require up to four UTF-8 code units, for example:
+```
+''🐬'' size "=> 4"
+```
+To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
 
@@ -260,6 +268,16 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
+length
+	"Answer the number of Unicode code-points in the receiver."
+
+	| length |
+	length := 0.
+	"Count the code-units that are not trailing bytes"
+	1 to: self size
+		do: [:i | ((self basicAt: i) bitAnd: Character.Utf8SurrogateMask) == 16r80 ifFalse: [length := length + 1]].
+	^length!
+
 maxEncoding
 	^4!
 
@@ -334,9 +352,7 @@ reverse
 	^reversed!
 
 strlen
-	"Private - Answer the length of the receiver (in characters) up to the first null terminator. This may
-	be less than its size if it contains embedded nulls. It can never be greater than the
-	receiver's size."
+	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
 	^CRTLibrary default strlen: self! !
 !Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
@@ -349,6 +365,7 @@ strlen
 !Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
 !Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Utf8String categoriesFor: #length!accessing!public! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
 !Utf8String categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !

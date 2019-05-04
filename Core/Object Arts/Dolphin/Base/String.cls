@@ -14,9 +14,11 @@ String addClassConstant: 'EncodingUtf32' value: 16r3!
 String addClassConstant: 'EncodingUtf8' value: 16r1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
-String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16. 
+String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
-The default and preferred string type is `Utf8String`, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16 encoded strings. `Utf16String` is the concrete subclass to  represent UTF-16 encoded strings.
+String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
+
+The default and preferred string type is `Utf8String`, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16LE encoded strings. `Utf16String` is the concrete subclass to  represent UTF-16LE encoded strings. Conversion between the string encodings is easy and fast using `asAnsiString`, `asUtf8String` and `asUtf8String`, although when converting the Unicode encodings to `AnsiString`s some characters cannot be represented and so will be "lost" (i.e. substitued with the replacement character). When working with `WriteStream`s backed by strings it is not necessary to explicitly translate to the target encoding as the class library and VM primitives will transparently convert from whatever string encoding is written.
 
 N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space for the null terminator is implicity included when a `String` is allocated, but is not reported when the size of the `String` is requested.
 
@@ -252,7 +254,7 @@ asString
 asSymbol
 	"Answer the <symbol> corresponding to the receiver."
 
-	^Symbol intern: self!
+	^Symbol intern: self asUtf8String!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -652,6 +654,14 @@ leftString: anInteger
 
 	^self first:( anInteger min: self size).
 !
+
+length
+	"Answer the number of Unicode code-points in the receiver. Note that:
+	- Strings in Dolphin are indexed by code-unit; to get the number of code units in a string send it the `size` message. The size of different types of string for the same set of Unicode code points will vary depending on the string's encoding.
+	- The code-point count is not necessarily the same as the number of user-perceived characters in a string (aka grapheme clusters), as some grapheme clusters are composed from multiple code-points."
+
+	"To be overridden by subclasses which do not have fixed-width encodings"
+	^self size!
 
 lines
 	"Answer a SequenceableCollection containing the lines of the receiver (sequences of Characters
@@ -1156,7 +1166,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #byteSize!accessing!private! !
 !String categoriesFor: #capitalized!converting!public! !
 !String categoriesFor: #codePage!constants!public! !
-!String categoriesFor: #contains:!public! !
+!String categoriesFor: #contains:!public!searching! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
 !String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !String categoriesFor: #decodeNextFrom:!encode/decode!private! !
@@ -1184,6 +1194,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #isLiteral!public!testing! !
 !String categoriesFor: #isString!public!testing! !
 !String categoriesFor: #leftString:!copying!public! !
+!String categoriesFor: #length!accessing!public! !
 !String categoriesFor: #lines!copying!public! !
 !String categoriesFor: #lookup:!accessing!public! !
 !String categoriesFor: #match:!public!searching! !
@@ -1550,66 +1561,65 @@ utf8Class
 
 	^Utf16String!
 
-with: element1
+with: character
 	"Answer a new instance of the receiver containing the single <Character> element, element1."
 
-	^(self writeStream: 4)
-		nextPut: element1;
-		contents!
-
-with: element1 with: element2
-	"Answer an instance of the receiver containing the <Character> arguments as its elements"
-
 	^(self writeStream: 2)
-		nextPut: element1;
-		nextPut: element2;
+		nextPut: character;
 		contents!
 
-with: element1 with: element2 with: element3
-	"Answer an instance of the receiver containing the <Character> arguments as its elements"
-
-	^(self writeStream: 3)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		contents!
-
-with: element1 with: element2 with: element3 with: element4
+with: firstCharacter with: secondCharacter
 	"Answer an instance of the receiver containing the <Character> arguments as its elements"
 
 	^(self writeStream: 4)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		nextPut: element4;
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
 		contents!
 
-with: element1 with: element2 with: element3 with: element4 with: element5
+with: firstCharacter with: secondCharacter with: thirdCharacter
+	"Answer an instance of the receiver containing the <Character> arguments as its elements"
+
+	^(self writeStream: 6)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		contents!
+
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter
+	"Answer an instance of the receiver containing the <Character> arguments as its elements"
+
+	^(self writeStream: 8)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		nextPut: fourthCharacter;
+		contents!
+
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter with: fifthCharacter
 	"Answer an instance of the receiver containing the <Character> arguments as its elements.
 	N.B. This is not an ANSI standard method (up to 4 elements are supported by <Array factory>
 	#with:&c messages, for more one must use #withAll:)."
 
-	^(self writeStream: 5)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		nextPut: element4;
-		nextPut: element5;
+	^(self writeStream: 10)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		nextPut: fourthCharacter;
+		nextPut: fifthCharacter;
 		contents!
 
-withAll: newElements
-	"Answer a new instance of the receiver containing all of the <Character> elements of the
-	<collection> newElements."
+withAll: aCollectionOfCharacters
+	"Answer a new instance of the receiver containing all of the <Character> elements of the <collection>, aCollectionOfCharacters."
 
 	| stream |
 	stream := self writeStream: 10.
-	newElements do: [:each | stream nextPut: each].
+	aCollectionOfCharacters readStream do: [:each | stream nextPut: each].
 	^stream contents! !
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #coerceString:!instance creation!public! !
-!String class categoriesFor: #cr!public! !
+!String class categoriesFor: #cr!constants!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #encoding!constants!public! !
@@ -1622,10 +1632,10 @@ withAll: newElements
 !String class categoriesFor: #fromAddress:!instance creation!public! !
 !String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !String class categoriesFor: #fromAtomId:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:!public! !
-!String class categoriesFor: #fromByteArray:length:!public! !
-!String class categoriesFor: #fromByteArray:length:startingAt:!public! !
-!String class categoriesFor: #fromByteArray:startingAt:!public! !
+!String class categoriesFor: #fromByteArray:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:length:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:length:startingAt:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:startingAt:!instance creation!public! !
 !String class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !String class categoriesFor: #fromId:!instance creation!public! !
 !String class categoriesFor: #fromId:in:!instance creation!public! !
@@ -1633,7 +1643,7 @@ withAll: newElements
 !String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !String class categoriesFor: #initialize!class initialization!development!public! !
 !String class categoriesFor: #installedCodePages!enquiries!public! !
-!String class categoriesFor: #lf!public! !
+!String class categoriesFor: #lf!constants!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
 !String class categoriesFor: #new:!instance creation!public! !
 !String class categoriesFor: #newFixed:!instance creation!public! !
