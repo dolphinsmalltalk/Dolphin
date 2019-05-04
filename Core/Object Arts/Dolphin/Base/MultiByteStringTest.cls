@@ -18,6 +18,10 @@ caseConversionCases
 				{'маймуница' asUtf8String. 'МАЙМУНИЦА' asUtf8String}.
 				{'ａｂｃ' asUtf8String. 'ＡＢＣ' asUtf8String}}!
 
+lengthTestCases
+	^super lengthTestCases
+		, #(#('a 🍺' 3) #('文字化け' 4) #('Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 122) #('Camión' 6) #('ᚠ' 1) #('Приве́т नमस्ते שָׁלוֹם' 22) #('🐬🍺ö' 4) #('👨🏻‍🍳' 4))!
+
 reverseTestCases
 	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
 
@@ -102,12 +106,24 @@ testIncludes
 	foreign := self collectionClass == Utf8String
 				ifTrue: [dolphin asUtf16String]
 				ifFalse: [dolphin asUtf8String].
-	foreign do: [:each | self deny: (subject includes: each)]! !
+	foreign do: [:each | self deny: (subject includes: each)]!
+
+testReverseComposites
+	self skip.	"Currently #reverse does not handle these cases - issue #765"
+	self assert: 'a 👨🏻‍🍳' reverse equals: '👨🏻‍🍳 a'.
+	self assert: 'aeiöu' reverse equals: 'uöiea'.
+	self assert: ' กำ' reverse equals: 'กำ '!
+
+withAllTestCases
+	^super withAllTestCases , #('a 🐬 test' 'Приве́т नमस्ते שָׁלוֹם' 'áèȋöû')! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
-!MultiByteStringTest categoriesFor: #reverseTestCases!private! !
+!MultiByteStringTest categoriesFor: #lengthTestCases!constants!private! !
+!MultiByteStringTest categoriesFor: #reverseTestCases!constants!private! !
 !MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testBeginsWith!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
-!MultiByteStringTest categoriesFor: #testIncludes!public! !
+!MultiByteStringTest categoriesFor: #testIncludes!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testReverseComposites!public!unit tests! !
+!MultiByteStringTest categoriesFor: #withAllTestCases!constants!private! !
 

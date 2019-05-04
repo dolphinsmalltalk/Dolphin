@@ -11,7 +11,7 @@ AnsiString comment: '`AnsiString` is the class of `Strings`s that use a single-b
 
 Note that Ansi code pages that require multiple bytes to represent each character are not supported properly in Dolphin.
 
-The default string type in Dolphin as of 7.1 is `Utf8String` rather than `AnsiString`.'!
+In all but limited circumstances `Utf8String`s should be used in preference as these can contain any Unicode character and are independent of code page. Consequently the default string type in Dolphin as of 7.1 is `Utf8String` rather than `AnsiString`.'!
 !AnsiString categoriesForClass!Collections-Text! !
 !AnsiString methodsFor!
 
@@ -220,49 +220,40 @@ initialize
 	VMLibrary default registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!
 
-with: element1
+with: aCharacter
 	^(self new: 1)
-		at: 1 put: element1;
+		at: 1 put: aCharacter;
 		yourself!
 
-with: element1 with: element2
+with: firstCharacter with: secondCharacter
 	^(self new: 2)
-		at: 1 put: element1;
-		at: 2 put: element2;
+		at: 1 put: firstCharacter;
+		at: 2 put: secondCharacter;
 		yourself!
 
-with: element1 with: element2 with: element3
+with: firstCharacter with: secondCharacter with: thirdCharacter
 	^(self new: 3)
-		at: 1 put: element1;
-		at: 2 put: element2;
-		at: 3 put: element3;
+		at: 1 put: firstCharacter;
+		at: 2 put: secondCharacter;
+		at: 3 put: thirdCharacter;
 		yourself!
 
-with: element1 with: element2 with: element3 with: element4
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter
 	^(self new: 4)
-		at: 1 put: element1;
-		at: 2 put: element2;
-		at: 3 put: element3;
-		at: 4 put: element4;
+		at: 1 put: firstCharacter;
+		at: 2 put: secondCharacter;
+		at: 3 put: thirdCharacter;
+		at: 4 put: fourthCharacter;
 		yourself!
 
-with: element1 with: element2 with: element3 with: element4 with: element5
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter with: fifthCharacter
 	^(self new: 5)
-		at: 1 put: element1;
-		at: 2 put: element2;
-		at: 3 put: element3;
-		at: 4 put: element4;
-		at: 5 put: element5;
-		yourself!
-
-withAll: newElements
-	"Answer a new instance of the receiver containing all of the 
-	elements of the <collection> newElements."
-
-	| answer |
-	answer := self new: newElements size.
-	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
-	^answer! !
+		at: 1 put: firstCharacter;
+		at: 2 put: secondCharacter;
+		at: 3 put: thirdCharacter;
+		at: 4 put: fourthCharacter;
+		at: 5 put: fifthCharacter;
+		yourself! !
 !AnsiString class categoriesFor: #coerceString:!instance creation!public! !
 !AnsiString class categoriesFor: #elementSize!constants!public! !
 !AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
@@ -272,5 +263,4 @@ withAll: newElements
 !AnsiString class categoriesFor: #with:with:with:!instance creation!public! !
 !AnsiString class categoriesFor: #with:with:with:with:!instance creation!public! !
 !AnsiString class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!AnsiString class categoriesFor: #withAll:!instance creation!public! !
 

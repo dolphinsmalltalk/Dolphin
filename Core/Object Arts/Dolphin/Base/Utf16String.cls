@@ -12,7 +12,17 @@ Utf16String addClassConstant: 'LeadOffset' value: 16rD7C0!
 Utf16String addClassConstant: 'SurrogateOffset' value: 16r35FDC00!
 Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
 
-The cautionary notes in the abstract superclass (UtfEncodedString) should be read carefully to understand the compromises made in introducing a variable width encoding into the SequenceableCollection hierarchy.'!
+When considering a `Utf16String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-16 code units, *not* Unicode code points. Most common code points for mainstream languages are represented by a single UTF-16 code unit, but it is unwise to ignore the code-point/code-unit distinction. Code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point for those characters outside the Unicode basic plane. UTF-16 surrogate characters can be inserted into other `Utf16String`s (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf8String`s. To enumerate a `Utf16String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
+
+```
+	''Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'' asUtf16String readStream do: [:each | Transcript nextPut: each asUppercase]. Transcript cr; flush.
+```
+
+It should also be noted that the `size` of a `Utf16String` is a count of the number of code units (16-bit words), and not the number of whole Unicode characters.  As mentioned most Unicode code points are encode by one UTF-16 code unit, but this is not always the case. For example:
+```
+''🐬'' asUtf16String size	"=> 2"
+```
+To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
 !Utf16String categoriesForClass!Collections-Text! !
 !Utf16String methodsFor!
 
@@ -50,9 +60,6 @@ asLowercase
 	UserLibrary default charLowerBuffW: copy cchLength: copy size.
 	^copy!
 
-asSymbol
-	^Symbol intern: self asUtf8String!
-
 asUppercase
 	"Answer a <readableString> which is a copy of the receiver but with the contents converted
 	to uppercase."
@@ -71,14 +78,13 @@ at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
 	<primitive: 63>
-	^Character utf16Value: (self wordAtOffset: anInteger + anInteger - 2)
-		ifInvalid: [Character.Utf8Default]!
+	^Character utf16Value: (self basicAt: anInteger) ifInvalid: [Character.Utf8Default]!
 
 bom
 	^Bom!
 
 byteSize
-	"Private - Answer the size in bytes of this object, including the null terminator."
+	"Private - Answer the size in bytes of this object. For historical reasons this includes the null terminator (which is actually part of the memory allocated for the String by the Dolphin VM)."
 
 	^(self basicSize + 1) << 1!
 
@@ -200,6 +206,18 @@ indexOfSubCollection: targetSequence startingAt: start
 	(or the search sequence is empty), answer 0."
 
 	^self findString: targetSequence startingAt: start!
+
+length
+	"Answer the number of Unicode code-points in the receiver."
+
+	| length |
+	length := 0.
+	"Count the code-units that are not trailing surrogates"
+	1 to: self size
+		do: 
+			[:i |
+			((self basicAt: i) bitAnd: Character.Utf16SurrogateMask) == 16rDC00 ifFalse: [length := length + 1]].
+	^length!
 
 maxEncoding
 	^2!
@@ -347,7 +365,6 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Utf16String categoriesFor: #asByteString:!converting!private! !
 !Utf16String categoriesFor: #asLowercase!converting!public! !
-!Utf16String categoriesFor: #asSymbol!converting!public! !
 !Utf16String categoriesFor: #asUppercase!converting!public! !
 !Utf16String categoriesFor: #asUtf16String!converting!public! !
 !Utf16String categoriesFor: #at:!accessing!public! !
@@ -361,6 +378,7 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !Utf16String categoriesFor: #findString:startingAt:!public!searching! !
 !Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!Utf16String categoriesFor: #length!accessing!public! !
 !Utf16String categoriesFor: #maxEncoding!constants!private! !
 !Utf16String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !Utf16String categoriesFor: #nextIndexOf:from:to:!public!searching! !

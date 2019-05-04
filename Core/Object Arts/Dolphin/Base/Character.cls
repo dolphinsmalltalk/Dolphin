@@ -2,28 +2,34 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf16SurrogateMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Character addClassConstant: 'EncodingMask' value: 16r3F000000!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
 Character addClassConstant: 'Utf16Mask' value: 16r2000000!
+Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
 Character addClassConstant: 'Utf32Mask' value: 16r3000000!
 Character addClassConstant: 'Utf8Mask' value: 16r1000000!
-Character addClassConstant: 'Utf8TrailMask' value: 16rC0!
-Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. Each Character instance represents a specific Unicode code point. The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
-	$\0	- Null
-	$\a	- Bell
-	$\b	- Backspace
-	$\t	- Tab
-	$\n	- Newline
-	$\v	- Vertical tab
-	$\f	- Form Feed
-	$\r	- Carriage return
-	$\x<HHHH> - where <HHHH> is the hex representation of the character''s code point - can be used to represent any character.
+Character addClassConstant: 'Utf8SurrogateMask' value: 16rC0!
+Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk Strings. 
 
-At present only byte characters (that are not control characters) have a printable representation, at least within the IDE.
+Each `Character` instance generally represents a specific Unicode [code point](https://en.wikipedia.org/wiki/Code_point). Note that this does not necessarily mean that each `Character` corresponds to a single user-perceived, visually distinct, character (aka grapheme cluster). Multiple `Character`s may compose into a single grapheme cluster when displayed, some examples of different types being `👨🏻‍🍳`, `ö`, and `กำ`. The 2nd example has more than one valid representation and can have either one or two code-points.
+
+ `Character` instances may also represent partial or surrogate character code-units that are part of a multi-code-unit code-point. Such surrogate instances may result from indexed access into `UTFEncodedStrings` such as `Utf8String` or `Utf16String`, and can be distinguished through the use of the `isSurrogate`, `isUtf8Surrogate`, `isUtf16Surrogate` family of testing messages. In general it is recommended to stream over strings, rather than treating them as arrays of characters, in which case surrogates will not be encountered.
+
+The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the ''$'' symbol followed by the normal printed representation of the character. 
+At present only byte characters (that are not control characters) have a printable literal representation. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
+  `$\0`		- Null
+  `$\a`		- Bell
+  `$\b`		- Backspace
+  `$\t`		- Tab
+  `$\n`		- Newline
+  `$\v`		- Vertical tab
+  `$\f`		- Form Feed
+  `$\r`		- Carriage return
+  `$\x<HHHH>` - where <HHHH> is the hex representation of the character''s code point - can be used to represent any valid code point.
 '!
 !Character categoriesForClass!Magnitude-General! !
 !Character methodsFor!
@@ -323,7 +329,7 @@ isSeparator
 	^code == 32 or: [code >= 9 and: [code <= 13]]!
 
 isSurrogate
-	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit character in it's encoding."
+	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit code-point in it's encoding."
 
 	^self isUtf16Surrogate or: [self isUtf8Surrogate]!
 
@@ -341,37 +347,37 @@ isUpperCase
 isUtf16Lead
 	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
 
-	^(code bitAnd: 16rFFFC00) == 16rD800!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rD800)!
 
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
 
-	^(code bitAnd: 16rFFF800) == 16rD800!
+	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | 16rD800)!
 
 isUtf16Trail
-	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
+	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
 
-	^(code bitAnd: 16rFFFC00) == 16rDC00!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rDC00)!
 
 isUtf8
-	"Answer whether the receiver is a UTF-8 code unit."
+	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
 
 	^code < 16r80 or: [(code bitAnd: EncodingMask) == Utf8Mask]!
 
 isUtf8Lead
-	"Answer whether the receiver is a UTF-8 leading byte."
+	"Answer whether the receiver represents a UTF-8 leading byte."
 
-	^(code bitAnd: EncodingMask) == Utf8Mask and: [code allMask: 2r11000000]!
+	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16rC0)!
 
 isUtf8Surrogate
-	"Answer whether the receiver is a UTF-8 surrogate (partial character)."
+	"Answer whether the receiver represents a UTF-8 surrogate (partial character)."
 
-	^(code bitAnd: EncodingMask | 16r80) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | 16r80)) == ##(Utf8Mask | 16r80)!
 
 isUtf8Trail
-	"Answer whether the receiver is a UTF-8 trailing byte."
+	"Answer whether the receiver represents a UTF-8 trailing byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8TrailMask)) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16r80)!
 
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
@@ -589,7 +595,8 @@ initialize
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
 	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
 	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
-	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
+	self addClassConstant: 'Utf8SurrogateMask' value: 16rC0.
+	self addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
 
 isValidCodePoint: anInteger
 	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
@@ -641,7 +648,8 @@ onStartup
 	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
 				isImmutable: true;
 				yourself.
-	ansiCharacters := IdentityDictionary new.
+	#todo. "Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
+	ansiCharacters := IdentityDictionary new: 513.
 	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
 	AnsiCharacters := ansiCharacters.
@@ -682,7 +690,7 @@ utf16Value: anInteger ifInvalid: exceptionHandler
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(anInteger >= 16rD800 and: [anInteger <= 16rDFFF])
+					[(anInteger bitAnd: 16rF800) == 16rD800
 						ifTrue: 
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]

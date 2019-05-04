@@ -8,17 +8,17 @@ Utf8String variableByteSubclass: #Symbol
 Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
 Symbol addClassConstant: 'CharClassifications' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)!
-Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
+Symbol comment: '`Symbol` is a class of interned `String`s that are guaranteed to be unique throughout the system.
 
-Presently Symbols are limited to the current byte character set, however the intention is to switch to UTF-8 symbols in future in order to allow any characters.
+`Symbol`s can contain any Unicode code points as they have the same representation as `Utf8String`s.
 
 Symbol complies with the following ANSI protocols:
-	Object
-	magnitude
-	collection
-	sequencedReadableCollection
-	readableString
-	symbol'!
+  <Object>
+  <magnitude>
+  <collection>
+  <sequencedReadableCollection>
+  <readableString>
+  <symbol>'!
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
 
@@ -178,7 +178,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
-!Symbol categoriesFor: #isAtomic!public! !
+!Symbol categoriesFor: #isAtomic!public!testing! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Symbol categoriesFor: #keywords!accessing!public! !
@@ -423,7 +423,7 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
 !Symbol class categoriesFor: #coerceString:!instance creation!public! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
-!Symbol class categoriesFor: #fromAddress:length:!public! !
+!Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
 !Symbol class categoriesFor: #intern:!instance creation!public! !
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
@@ -436,6 +436,6 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #stats!development!private! !
 !Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
-!Symbol class categoriesFor: #with:!public! !
-!Symbol class categoriesFor: #withAll:!public! !
+!Symbol class categoriesFor: #with:!instance creation!public! !
+!Symbol class categoriesFor: #withAll:!instance creation!public! !
 
