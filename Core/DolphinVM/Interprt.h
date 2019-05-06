@@ -670,6 +670,7 @@ private:
 	static Oop* __fastcall primitiveStringEqual(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, unsigned argCount);
 
+	static Oop* __fastcall primitiveStringAsUtf32String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsUtf16String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsUtf8String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsByteString(Oop* const sp, unsigned argCount);
@@ -703,6 +704,7 @@ private:
 	// Object Memory primitives
 	static Oop* __fastcall primitiveBasicIdentityHash(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveIdentityHash(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveHashMultiply(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllReferences(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllInstances(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllSubinstances(Oop* const sp, unsigned argCount);

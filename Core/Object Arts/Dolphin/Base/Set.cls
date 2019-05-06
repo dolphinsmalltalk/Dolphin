@@ -6,9 +6,9 @@ Collection variableSubclass: #Set
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Set guid: (GUID fromString: '{87b4c50b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Set addClassConstant: 'MaxOffsetIndex' value: 16r800!
-Set addClassConstant: 'PrimeSizes' value: #(4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101051 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)!
-Set addClassConstant: 'SmallPrimeOffsets' value: #[0 0 0 2 0 0 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 4 2 0 2 0 4 2 0 4 2 0 0 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 10 8 6 4 2 0 2 0 0 2 0 4 2 0 0 8 6 4 2 0 4 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 8 6 4 2 0 0 8 6 4 2 0 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 0 2 0 10 8 6 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 4 2 0 10 8 6 4 2 0 0 16 14 12 10 8 6 4 2 0 4 2 0 8 6 4 2 0 4 2 0 4 2 0 0 4 2 0 8 6 4 2 0 4 2 0 4 2 0 0 4 2 0 4 2 0 2 0 0 10 8 6 4 2 0 8 6 4 2 0 0 2 0 4 2 0 4 2 0 0 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 2 0 6 4 2 0 4 2 0 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 0 2 0 18 16 14 12 10 8 6 4 2 0 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 6 4 2 0 4 2 0 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 0 4 2 0 16 14 12 10 8 6 4 2 0 2 0 0 2 0 4 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 10 8 6 4 2 0 2 0 4 2 0 4 2 0 0 4 2 0 10 8 6 4 2 0 8 6 4 2 0 16 14 12 10 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 10 8 6 4 2 0 0 4 2 0 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 2 0 4 2 0 6 4 2 0 2 0 0 4 2 0 10 8 6 4 2 0 8 6 4 2 0 0 2 0 0 2 0 4 2 0 10 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 2 0 4 2 0 0 4 2 0 8 6 4 2 0 18 16 14 12 10 8 6 4 2 0 4 2 0 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 4 2 0 16 14 12 10 8 6 4 2 0 4 2 0 2 0 0 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 4 2 0 4 2 0 16 14 12 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 6 4 2 0 4 2 0 2 0 0 2 0 6 4 2 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 2 0 0 8 6 4 2 0 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 4 2 0 2 0 0 8 6 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 0 2 0 6 4 2 0 14 12 10 8 6 4 2 0 0 2 0 6 4 2 0 4 2 0 4 2 0 2 0 10 8 6 4 2 0 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 0 4 2 0 2 0 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 0 4 2 0 2 0 4 2 0 10 8 6 4 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 10 8 6 4 2 0 6 4 2 0 4 2 0 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 8 6 4 2 0 6 4 2 0 2 0 4 2 0 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 6 4 2 0 2 0 10 8 6 4 2 0 12 10 8 6 4 2 0 8 6 4 2 0 0 2 0 6 4 2 0 4 2 0 4 2 0 2 0 0 2 0 4 2 0 6 4 2 0 2 0 0 4 2 0 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 0 4 2 0 2 0 0 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 6 4 2 0 4 2 0 2 0 16 14 12 10 8 6 4 2 0 6 4 2 0 8 6 4 2 0 4 2 0 4 2 0 6 4 2 0 8 6 4 2 0 10 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 6 4 2 0 2 0 12 10 8 6 4 2 0 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 0 10 8 6 4 2 0 4 2 0 2 0 10 8 6 4 2 0 4 2 0 6 4 2 0 2 0 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 4 2 0 4 2 0 4 2 0 2 0 4 2 0 0 10 8 6 4 2 0 2 0 10 8 6 4 2 0 0 8 6 4 2 0 0 14 12 10 8 6 4 2 0 0 14 12 10 8 6 4 2 0 4 2 0 18 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 6 4 2 0 2 0 0 2 0 0 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 4 2 0 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 8 6 4 2 0 0 10 8 6 4 2 0 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 4 2 0 2 0 4 2 0 6 4 2 0 4 2 0 4 2 0 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 2 0 12 10 8 6 4 2 0 4 2 0 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 4 2 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 16 14 12 10 8 6 4 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 0 8 6 4 2 0 12 10 8 6 4 2 0 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 2 0 4 2 0 0 2 0 4 2 0 0 10 8 6 4 2 0 2 0 18 16 14 12 10 8 6 4 2 0 20 18 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 20 18 16 14 12 10 8 6 4 2 0 0 4 2 0 14 12 10 8 6 4 2 0 4 2 0 10 8 6 4 2 0 0 4 2 ]!
+Set addClassConstant: 'MaxOffsetIndex' value: 16r200!
+Set addClassConstant: 'PrimeSizes' value: #(1151 1549 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101027 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)!
+Set addClassConstant: 'SmallPrimeOffsets' value: #[0 0 0 8 6 4 2 0 0 2 0 4 2 0 0 4 2 0 2 0 0 2 0 4 2 0 4 2 0 0 4 2 0 2 0 0 4 2 0 8 6 4 2 0 6 4 2 0 2 0 0 2 0 0 2 0 12 10 8 6 4 2 0 2 0 4 2 0 0 8 6 4 2 0 0 4 2 0 4 2 0 2 0 4 2 0 4 2 0 0 8 6 4 2 0 0 2 0 0 10 8 6 4 2 0 10 8 6 4 2 0 2 0 0 2 0 4 2 0 0 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 0 16 14 12 10 8 6 4 2 0 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 52 50 48 46 44 42 40 38 36 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 10 8 6 4 2 0 10 8 6 4 2 0 4 2 0 12 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 4 2 0 6 4 2 0 14 12 10 8 6 4 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 0 22 20 18 16 14 12 10 8 6 4 2 0 2 0 10 8 6 4 2 0 16 14 12 10 8 6 4 2 0 22 20 18 16 14 12 10 8 6 4 2 0 6 4 2 0 8 6 4 2 0 6 4 2 0 10 8 6 4 2 0 2 0 6 4 2 0 4 2 0 2 0 34 32 30 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 12 10 8 6 4 2 0 14 12 10 8 6 4 2 0 0 28 26 24 22 20 18 16 14 12 10 8 6 4 2 0 2 0 12 10 8 6 4 2 0 4 2 0 2 0 18 16 14 12 10 8 6 4 2 0 2 0 16 14 12 10 8 6 4 2 0 6 4 2 0 2 0 4 2 0 4 2 0 12 10 8 6 4 2 0 2 0 4 2 0 4 2 0 6 4 2 0 16 14 12 10 8 6 4 2 0 10 8 6 4 2 0 8 6 ]!
 Set comment: 'Set is a generic collection class which represents an unordered, extensible/contractible, collection, accessible only by value, not by external keys. Element comparison is by equality (i.e. using #hash and #=).'!
 !Set categoriesForClass!Collections-Unordered! !
 !Set methodsFor!
@@ -438,7 +438,9 @@ defaultCapacity
 	^2!
 
 initialize
-	"Private - Initialize the receiver's class variables."
+	"Private - Initialize the receiver's class variables.
+		self initialize.
+	"
 
 	| primes last count max smallPrimeOffsets largePrimeSizes |
 	"Construct a difference table which can be used to calculate the nearest larger prime for
@@ -446,8 +448,8 @@ initialize
 	although as this is a byte array this isn't likely to be a problem. Ultimately the use of a
 	byte array limits the table size since at some point the offset to the next prime will be
 	greater than 255."
-	max := 2 ** 12 + 1.
-	primes := Integer primesUpTo: max + 255.
+	max := 2 ** 10 + 1.
+	primes := self preferredSizesUpTo: max.
 	count := max bitShift: -1.
 	smallPrimeOffsets := ByteArray new: count.
 	last := 1.
@@ -458,7 +460,7 @@ initialize
 			n := (i bitShift: 1) bitOr: 1.
 			[(p := primes at: last) >= n] whileFalse: [last := last + 1].
 			smallPrimeOffsets at: i put: p - n].	"Good prime sizes for larger tables"
-	largePrimeSizes := #(1151 1549 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101051 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)
+	largePrimeSizes := #(1151 1549 2069 2237 2423 2617 2797 2999 3167 3359 3539 3727 3911 4441 4787 5119 5471 5801 6143 6521 6827 7177 7517 7853 8783 9601 10243 10867 11549 12239 12919 13679 14293 15013 15731 17569 19051 20443 21767 23159 24611 25847 27397 28571 30047 31397 35771 38201 40841 43973 46633 48989 51631 54371 57349 60139 62969 70589 76091 80347 85843 90697 95791 101027 106261 111143 115777 120691 126311 140863 150523 160969 170557 181243 190717 201653 211891 221251 232591 242873 251443 282089 300869 321949 341227 362353 383681 401411 422927 443231 464951 482033 504011 562621 605779 647659 681607 723623 763307 808261 844709 886163 926623 967229 1014617)
 				select: [:each | each > (primes at: last)].
 	self addClassConstant: 'SmallPrimeOffsets' value: smallPrimeOffsets.
 	self addClassConstant: 'MaxOffsetIndex' value: count.
@@ -479,12 +481,34 @@ new: count
 
 	^(self basicNew: (self sizeFor: count)) initialize!
 
+preferredSizesUpTo: anInteger
+	"Private - Answer an array of prime sizes to use for Sets up to just over the specified capacity."
+
+	| avoidFactorsOf candidates |
+	"Reject any candidate primes which divide 256**k +- a, for k=[1..8] and a=[-32..32], unless < 256"
+	avoidFactorsOf := OrderedCollection new.
+	1 to: 8
+		do: 
+			[:k |
+			| n |
+			n := 256 raisedToInteger: k.
+			-32 to: 32 do: [:a | avoidFactorsOf add: n + a]].
+	candidates := Integer primesUpTo: anInteger + 255.
+	^candidates reject: 
+			[:each |
+			(##("Some primes to avoid as they nearly divide into one of our hash multipliers, 48271, or 16777619"
+			Set new
+				addAll: #(431 1609 101051);
+				addAll: #(11 13 83 1123 5333);
+				yourself) includes: each)
+				or: [each > 256 and: [avoidFactorsOf anySatisfy: [:m | m \\ each == 0]]]]!
+
 sizeFor: anInteger
 	"Private - Answer the size of Set that should be created to hold anInteger elements.
 	This formula should be kept in step with that in the instance method #privateAt:put:.
 	Try to answer only prime sizes as these give a better hash distribution."
 
-	^anInteger <= 3
+	^anInteger < 1
 		ifTrue: 
 			["Minimum capacity of Dolphin hashed collection is 5"
 			5]
@@ -514,6 +538,7 @@ sizeFor: anInteger
 !Set class categoriesFor: #initialize!development!initializing!private! !
 !Set class categoriesFor: #new!instance creation!public! !
 !Set class categoriesFor: #new:!instance creation!public! !
+!Set class categoriesFor: #preferredSizesUpTo:!development!initializing!private! !
 !Set class categoriesFor: #sizeFor:!instance creation!private! !
 
 Set class methodProtocol: #'Set factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!

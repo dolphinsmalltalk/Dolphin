@@ -84,6 +84,26 @@ Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 	}
 }
 
+Oop* __fastcall Interpreter::primitiveHashMultiply(Oop* const sp, unsigned)
+{
+	Oop arg = *sp;
+	if (ObjectMemoryIsIntegerObject(arg))
+	{
+		uint32_t seed = static_cast<uint32_t>(ObjectMemoryIntegerValueOf(arg));
+		uint32_t hash = (seed * 48271) & MaxSmallInteger;
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+	else
+	{
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
+		uint32_t seed = oteArg->m_location->m_digits[0];
+		uint32_t hash = (seed * 48271) & MaxSmallInteger;
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////////;
 // SmallInteger Bit Manipulation Primitives
 

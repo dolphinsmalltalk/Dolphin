@@ -323,17 +323,16 @@ generality
 !
 
 hash
-	"Answer the SmallInteger hash value for the receiver (itself)."
+	"Answer the positive <SmallInteger> hash value for the receiver."
 
-	^self!
+	<primitive: 109>
+	^self hashMultiply!
 
 identityHash
 	"Answer the <integer> identity hash value for the receiver (itself)."
 
-	"Implementation Note: We must override because the identity hash primitives do not work for
-	immediate objects."
-
-	^self!
+	<primitive: 109>
+	^self hashMultiply!
 
 instVarAt: index
 	"Private - Answer the receivers instance variable at the argument, index. 

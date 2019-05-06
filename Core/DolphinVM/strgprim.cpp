@@ -642,7 +642,7 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 
 							case StringEncoding::Utf32:
 								// UTF-32 char into Utf16 string - will always go
-								psz[index] = static_cast<Utf16String::CU>(codeUnit);
+								psz[index] = static_cast<Utf32String::CU>(codeUnit);
 								*newSp = oopValue;
 								return newSp;
 
@@ -1444,3 +1444,23 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 		return Interpreter::primitiveFailure(0);
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveStringAsUtf32String(Oop* const sp, unsigned)
+{
+	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
+	switch (ST::String::GetEncoding(receiver))
+	{
+	case StringEncoding::Ansi:
+	case StringEncoding::Utf8:
+	case StringEncoding::Utf16:
+		// TODO: Implement conversions to UTF-32 strings
+		return nullptr;
+
+	case StringEncoding::Utf32:
+		return sp;
+	default:
+		// Unrecognised encoding - fail the primitive.
+		return nullptr;
+	}
+}
+

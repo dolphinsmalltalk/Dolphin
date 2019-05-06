@@ -436,27 +436,12 @@ greaterThanFraction: aFraction
 
 	^aFraction numerator < (self * aFraction denominator)!
 
-hash
-	"Answer the <integer> hash value of the receiver."
+hashMultiply
+	"Answer a new positive <SmallInteger> hash value calculated from the receiver by using it's low-order bits as the seed for a simple Park-Miller LCG.
+	This can be used to generate a better distributed hash value for SmallIntegers, but also for combining hash values to generate a hash for a composite object."
 
-	"Implementation Note: In order to satisfy the invariant that Floats that compare
-	equal also have the same hash, we have to limit the precision of the hash by using 
-	only the top hashBits bits of the absolute value of the receiver, xor'ing in the shift
-	as a way of taking some account of the magnitude of the receiver.
-	Thanks to John Brant for contributing this hash function."
-
-	| bitCount shiftDistance |
-	self negative ifTrue: [^self negated hash negated].
-	bitCount := self highBit.
-	^bitCount > self hashBits 
-		ifTrue: 
-			[| value |
-			shiftDistance := self hashBits - bitCount + 1.
-			value := (self bitShift: shiftDistance) + 1 bitShift: -1.
-			value highBit > self hashBits 
-				ifTrue: [(value bitShift: -1) bitXor: (shiftDistance - 1) abs]
-				ifFalse: [value bitXor: shiftDistance abs]]
-		ifFalse: [self]!
+	<primitive: 109>
+	^(self bitAnd: VMConstants.IntPtrMask) * 48271 bitAnd: VMConstants.SmallIntegerMax!
 
 hex
 	"Answer a <readableString> whose characters are a description of 
@@ -514,6 +499,18 @@ isPowerOfTwo
 	"Return true if the receiver is an integral power of two."
 
 	^self strictlyPositive and: [(self bitAnd: self - 1) == 0]!
+
+isPrime
+	"Answer whether the receiver is a prime number. This may take a long time for larger integer values."
+
+	| i |
+	self <= 3 ifTrue: [^self > 1].
+	(self even or: [self \\ 3 == 0]) ifTrue: [^false].
+	i := 5.
+	[i * i <= self] whileTrue: 
+			[(self \\ i == 0 or: [self \\ (i + 2) == 0]) ifTrue: [^false].
+			i := i + 6].
+	^true!
 
 isSDWORD
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
@@ -811,7 +808,7 @@ truncated
 !Integer categoriesFor: #gcdbin:!factorization!public! !
 !Integer categoriesFor: #greaterThanFloat:!double dispatch!private! !
 !Integer categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Integer categoriesFor: #hash!comparing!public! !
+!Integer categoriesFor: #hashMultiply!comparing!public! !
 !Integer categoriesFor: #hex!printing!public! !
 !Integer categoriesFor: #highBit!bit manipulation!public! !
 !Integer categoriesFor: #highByte!accessing!private! !
@@ -822,6 +819,7 @@ truncated
 !Integer categoriesFor: #isInteger!public!testing! !
 !Integer categoriesFor: #isNull!public!testing! !
 !Integer categoriesFor: #isPowerOfTwo!public!testing! !
+!Integer categoriesFor: #isPrime!public!testing! !
 !Integer categoriesFor: #isSDWORD!public!testing! !
 !Integer categoriesFor: #lcm:!factorization!public! !
 !Integer categoriesFor: #lowBit!bit manipulation!public! !

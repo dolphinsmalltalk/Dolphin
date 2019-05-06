@@ -332,17 +332,13 @@ greaterThanInteger: anInteger
 hash
 	"Answer the <integer> hash value of the receiver."
 
-	"Implementation Note: It is assumed here that #hashBits must be >= SmallIntegerMax highBit.
-	This is 30 on a 32-bit host, or 62 on a 64-bit host, and the minimum LargeInteger value is
-	(2**30) or (2**62) respectively.."
-
-	| shiftDistance highBits |
-	self negative ifTrue: [^self negated hash negated].
-	shiftDistance := self hashBits - self highBit + 1.
-	highBits := (self bitShift: shiftDistance) + 1 bitShift: -1.
-	^highBits highBit > self hashBits 
-		ifTrue: [(highBits bitShift: -1) bitXor: (shiftDistance - 1) abs]
-		ifFalse: [highBits bitXor: shiftDistance abs]!
+	| hash |
+	<primitive: 106>
+	hash := 2166136261.
+	"FNV1a"
+	1 to: self basicSize do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
+	"Fold to 30 bits so is always positive SmallInteger"
+	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
 intPtrAtOffset: anInteger put: anObject 
 	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must 
