@@ -6,6 +6,7 @@ VMConstants at: 'FloatSize' put: 16r4!
 VMConstants at: 'HalfPtrBits' put: 16r10!
 VMConstants at: 'HalfPtrMask' put: 16rFFFF!
 VMConstants at: 'HalfPtrMax' put: 16r7FFF!
+VMConstants at: 'HashBits' put: 16r1E!
 VMConstants at: 'IntMax' put: 16r7FFFFFFF!
 VMConstants at: 'IntPtrBits' put: 16r20!
 VMConstants at: 'IntPtrMask' put: 16rFFFFFFFF!

@@ -155,13 +155,6 @@ fractionPart
 	^self - self truncated
 !
 
-hashBits
-	"Private - Answer the maximum number of bits in a <Number>s hash value."
-
-	"Implementation Note: We want hash values to fit within the positive SmallInteger range"
-
-	^##(VMConstants.SmallIntegerMax highBit)!
-
 hour
 	^self hours!
 
@@ -329,7 +322,6 @@ to: stop do: operation
 !Number categoriesFor: #exp!mathematical!public! !
 !Number categoriesFor: #floorLog:!mathematical!public! !
 !Number categoriesFor: #fractionPart!accessing!public! !
-!Number categoriesFor: #hashBits!comparing!private! !
 !Number categoriesFor: #hour!converting!durations!public! !
 !Number categoriesFor: #hours!converting!durations!public! !
 !Number categoriesFor: #integerPart!accessing!public! !

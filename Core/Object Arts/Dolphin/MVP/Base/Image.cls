@@ -141,7 +141,7 @@ hash
 	here since it is only necessary that equal objects have the same hash value not
 	vice versa."
 
-	^self identifier hash!
+	^(identifier ?? handle) hash!
 
 hotspot
 	"Answer a Point specifying the receiver's hot spot (only really relevant for cursors)."

@@ -112,7 +112,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveHashBytes								, // case 106	Not used in Smalltalk-80
 	Interpreter::primitiveUnwindCallback						, // case 107	ProcessorScheduler>>primUnwindCallback
 	Interpreter::primitiveHookWindowCreate						, // case 108	Not used in Smalltalk-80
-	Interpreter::unusedPrimitive								, // case 109	Not used in Smalltalk-80
+	Interpreter::primitiveHashMultiply							, // case 109	Not used in Smalltalk-80
 	Interpreter::primitiveIdentical								, // case 110	Character =, Object ==
 	Interpreter::primitiveClass									, // case 111	Object class
 	Interpreter::primitiveCoreLeftThunk							, // case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
@@ -227,7 +227,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveStringCmpOrdinal						, // case 220
 	Interpreter::primitiveBasicNext								, // case 221
 	Interpreter::primitiveBasicNextPut							, // case 222
-	Interpreter::unusedPrimitive								, // case 223
+	Interpreter::primitiveStringAsUtf32String					, // case 223
 	Interpreter::unusedPrimitive								, // case 224
 	Interpreter::unusedPrimitive								, // case 225
 	Interpreter::unusedPrimitive								, // case 226
