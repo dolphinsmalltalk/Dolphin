@@ -472,7 +472,7 @@ private:		// Private Data
 	static HANDLE m_hHeap;
 	enum { HEAPINITPAGES = 2 };
 
-	static DWORD	m_nNextIdHash;					// Next identity hash value to use
+	static uint32_t m_nNextIdHash;					// Next identity hash value to use
 
 	// These are to be used for collecting statistics in future
 	static unsigned	m_nObjectsAllocated;
@@ -1081,8 +1081,11 @@ inline bool ObjectMemory::IsConstObj(void* ptr)
 
 inline hash_t ObjectMemory::nextIdentityHash()
 {
-	m_nNextIdHash = 1664525L * m_nNextIdHash + 1013904223L;
-	return static_cast<hash_t>(m_nNextIdHash & 0xFFFF);
+	hash_t y = LOWORD(m_nNextIdHash);
+	hash_t x = HIWORD(m_nNextIdHash);
+	hash_t t = x ^ (x << 5);
+	m_nNextIdHash = y << 16 | ((y ^ (y >> 1)) ^ (t ^ (t >> 3)));
+	return static_cast<uint16_t>(m_nNextIdHash);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
