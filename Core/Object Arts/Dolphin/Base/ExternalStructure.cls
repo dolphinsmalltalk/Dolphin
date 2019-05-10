@@ -185,13 +185,18 @@ doesNotUnderstand: aMessage
 	selector of aMessage is looked up in the receiver's class' template, and 
 	if found the appropriate field is retrieved/set."
 
-	| args field |
-	args := aMessage arguments.
-	field := self template at: aMessage selector ifAbsent: [^super doesNotUnderstand: aMessage].
-	args size == 0
-		ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
-		ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
-	^super doesNotUnderstand: aMessage!
+	| key |
+	(key := aMessage selector) last == $: ifTrue: [key := key copyFrom: 1 to: key size - 1].
+	^(self template lookup: key)
+		ifNil: [super doesNotUnderstand: aMessage]
+		ifNotNil: 
+			[:field |
+			| args |
+			args := aMessage arguments.
+			args size == 0
+				ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
+				ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
+			super doesNotUnderstand: aMessage]!
 
 fieldsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
@@ -529,7 +534,6 @@ defineField: fieldName type: anExternalField offset: offset
 	"We always retain the read selector in the template - this is needed to calc the field
 	offset when compiling methods, and might be required for evaluating size_is expressions."
 	template at: fieldName asSymbol put: anExternalField.
-	anExternalField isWriteable ifTrue: [template at: (fieldName , ':') asSymbol put: anExternalField].
 	"Define a class constant for the field offset, if needed"
 	offsetConstant := self fieldOffsetConstantPrefix , fieldName.
 	(self bindingFor: offsetConstant) ifNotNil: [:var | var value == offset ifTrue: [^self]].
@@ -746,7 +750,7 @@ newTemplate
 	"Private - Reset the template instance variable of the receiver in preparation for loading a
 	new template."
 
-	template := IdentityDictionary new.
+	template := LookupTable new.
 	alignment := self baseAlignment!
 
 offsetFor: anExternalField base: anInteger 
