@@ -45,7 +45,7 @@ extern "C" { HANDLE _crtheap; }
 
 /*const*/ VMPointers Pointers;
 
-DWORD	ObjectMemory::m_nNextIdHash;
+uint32_t ObjectMemory::m_nNextIdHash;
 
 unsigned ObjectMemory::m_nOTSize;
 unsigned ObjectMemory::m_nOTMax;
