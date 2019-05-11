@@ -41,7 +41,7 @@ basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 			fall back on the slow way"
 
 			startInteger to: startInteger + sizeInteger - 1
-				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
+				do: [:i | self basicNextPut: (aSequenceableCollection at: i)]].
 	^aSequenceableCollection!
 
 basicNextPut: anObject
