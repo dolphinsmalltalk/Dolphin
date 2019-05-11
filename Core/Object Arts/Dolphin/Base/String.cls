@@ -2,13 +2,14 @@
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
+	classVariableNames: 'EncodingAnsi Encodings EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
 String isAbstract: true!
 String addClassConstant: 'EncodingAnsi' value: 16r0!
+String addClassConstant: 'Encodings' value: #(#ansi #utf8 #utf16le #utf32)!
 String addClassConstant: 'EncodingUtf16' value: 16r2!
 String addClassConstant: 'EncodingUtf32' value: 16r3!
 String addClassConstant: 'EncodingUtf8' value: 16r1!
@@ -606,9 +607,8 @@ formatWithArguments: aCollection
 		withArguments: aCollection!
 
 hash
-	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal
-	objects, and therefore it should be the same for the same sequence of characters, regardless
-	of encoding."
+	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects, and therefore it should be the same for the same sequence of characters, regardless of encoding.
+	Currently the hash is a 32-bit FNV1a with the standard constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is a choice subject to change."
 
 	| utf8 hash |
 	<primitive: 106>
@@ -847,7 +847,9 @@ replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: star
 	through stopInteger inclusive with consecutive characters of the <readableString>
 	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	aReadableString class == self class
+	| sourceEncoding |
+	sourceEncoding := aReadableString encoding.
+	(sourceEncoding == #binary or: [sourceEncoding == self encoding])
 		ifTrue: 
 			[aReadableString
 				replaceBytesOf: self
@@ -1283,10 +1285,10 @@ encoding
 	^self encodingName: self basicEncoding!
 
 encodingName: anInteger
-	^String encodings at: anInteger + 1!
+	^Encodings at: anInteger + 1!
 
 encodings
-	^#(#ansi #utf8 #utf16le #utf32)!
+	^Encodings!
 
 errorInvalidCodePoint: codePoint
 	^self error: 'Invalid code point ' , codePoint hex!

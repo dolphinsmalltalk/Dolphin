@@ -22,6 +22,19 @@ Class Variables:
 !RichTextEdit categoriesForClass!MVP-Views! !
 !RichTextEdit methodsFor!
 
+ansiText
+	"Answer an <AnsiString> containing the plain text contents of the receiver with all formatting removed. See also #rtfText."
+
+	| aStream |
+	aStream := AnsiString writeStream: 4096.
+	self streamOutOn: aStream format: SF_TEXT.
+	^aStream contents!
+
+ansiText: anAnsiString
+	"Replace the receiver control's contents with the specified plain text."
+
+	self streamInFrom: anAnsiString asAnsiString readStream format: SF_TEXT!
+
 basicLineFromPosition: anInteger 
 	"Private - Answers the zero-based line index from the zero-based character position,
 	anInteger. If anInteger is greater than the length of the text in the receiver, then the
@@ -521,52 +534,6 @@ positionOfChar: anInteger
 		lParam: anInteger - 1.
 	^pt asPoint!
 
-printRtfOn: puttableStream
-	"Append the receiver control's RTF contents to the argument,
-	puttableStream, i.e. this method is used to GET RTF from the receiver."
-
-	^self printRtfOn: puttableStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE)!
-
-printRtfOn: puttableStream format: formatMask
-	"Private - Stream the RTF contents of the receiver to the stream aStream. i.e. this method
-	is used to GET text from the receiver. The RTF is always streamed in UTF-8, so the stream
-	needs to be over a string that supports unicode encodings or there will be data loss."
-
-	| stringClass |
-	stringClass := formatMask >> 16 == CP_UTF8 ifTrue: [Utf8String] ifFalse: [AnsiString].
-	^self streamOut: formatMask | SF_RTF
-		format: (ExternalCallback block: 
-					[:dwCookie :pbBuff :cb :pcb |
-					| str |
-					str := stringClass fromAddress: pbBuff length: cb.
-					"We don't want the null terminator, if present"
-					(str basicAt: cb) = 0 ifTrue: [str := str resize: cb - 1].
-					puttableStream nextPutAll: str.
-					pcb value: cb.
-					0	"Continue streaming"]
-				descriptor: StreamingDescriptor)!
-
-printTextOn: aStream
-	"Private - Stream the plain text contents of the receiver to the <puttableStream>, aStream."
-
-	^self printTextOn: aStream format: SF_TEXT!
-
-printTextOn: aStream format: anInteger
-	^self streamOut: anInteger | SF_UNICODE
-		format: (ExternalCallback block: 
-					[:dwCookie :pbBuff :cb :pcb |
-					| str cch |
-					"Control sends block size in bytes, not chars"
-					cch := cb bitShift: -1.
-					str := Utf16String fromAddress: pbBuff length: cch.
-					"Ignore any null terminator"
-					(str basicAt: cch) = 0 ifTrue: [str := str allButLast].
-					aStream nextPutAll: str.
-					pcb value: cb.
-					"Continue streaming"
-					0]
-				descriptor: StreamingDescriptor)!
-
 privGetRichText
 	"Private - Answer the <RichText> contents of the receiver."
 
@@ -576,7 +543,7 @@ privGetRichText
 	#richText selector which keeps the entire TextEdit/Presenter group
 	in the image when stripping because #richText is implemented on View."
 
-	^self richTextClass fromRtf: self rtfText!
+	^self richTextClass fromRtf: self urtfText!
 
 queryCommand: aCommandQuery 
 	"Private - Enters details about a potential command for the receiver into the 
@@ -589,59 +556,6 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: self canPaste.
 			^true].
 	^super queryCommand: aCommandQuery!
-
-readRtfFrom: aPositionableStream
-	"Replace the receiver control's contents with the RTF data read from the argument,
-	gettableStream."
-
-	^self
-		streamIn: (ExternalCallback block: 
-					[:dwCookie :pbBuff :cb :pcb |
-					| text size |
-					text := aPositionableStream nextAvailable: cb.
-					size := text size.
-					pbBuff
-						replaceFrom: 1
-						to: size
-						with: text
-						startingAt: 1.
-					pcb value: size.
-					0]
-				descriptor: StreamingDescriptor)
-		format: SF_RTF!
-
-readTextFrom: gettableStream
-	"Replace the receiver control's contents with the plain text 
-	read from the argument, gettableStream."
-
-	^self readTextFrom: gettableStream format: ##(SF_TEXT | SF_UNICODE).
-!
-
-readTextFrom: gettableStream format: formatMask
-	"Private - Stream text from the stream, gettableStream, into the RichEdit control. The
-	receiver holds on the to the stream it is reading, because the RichEdit control appears to
-	read from it asynchronously. Answer the number of characters read from aStream.
-	Implementation Note: Extend the life of the old 'stream' to the end of the method in case
-	control still using it - BUT we must be very careful not to cause a reference to the old
-	callback to be kept in this method context, otherwise we'll build a huge linked list of
-	callbacks, blocks, and method contexts, etc."
-
-	^self
-		streamIn: (ExternalCallback block: 
-					[:dwCookie :pbBuff :cb :pcb |
-					| text size |
-					text := (gettableStream nextAvailable: cb) asUtf16String.
-					size := text size bitShift: 1.
-					pbBuff
-						replaceFrom: 1
-						to: size
-						with: text
-						startingAt: 1.
-					pcb value: size.
-					"Continue streaming"
-					0]
-				descriptor: StreamingDescriptor)
-		format: formatMask!
 
 resetCharFormat
 	"Resets the formatting attributes of the selection to the default mode."
@@ -662,20 +576,23 @@ richText: aRichText
 	self rtfText: aRichText rtf!
 
 rtfText
-	"Private - Answer a String containing the RTF contents of the receiver."
+	"Answer an <AnsiString> containing the RTF contents of the receiver in 'rtf1' format. See also #urtfText."
 
 	| aStream |
-	aStream := Utf8String writeStream: 1024.
-	self printRtfOn: aStream.
+	aStream := AnsiString writeStream: 4096.
+	self streamOutOn: aStream format: SF_RTF.
 	^aStream contents!
 
 rtfText: aString
-	"Private - Set the text contents of the receiver to the raw 
-	RTF in aString.
+	"Set the text contents of the receiver to the raw RTF in aString, accepting either 'rtf1' (ANSI) or 'urtf1' (UTF-8) formats.
 	Part of the RichText double dispatching protocol"
 
-	self readRtfFrom: aString readStream
-!
+	"Note that the control deduces the encoding from the header, it is not part of the format mask"
+	self
+		streamInFrom: ((aString leftString: 6) = '{\rtf1'
+				ifTrue: [aString asAnsiString]
+				ifFalse: [aString asUtf8String]) readStream
+		format: SF_RTF!
 
 selection
 	"Answer a string containing the plain text of the selection in the receiver."
@@ -757,7 +674,7 @@ selectionPlainText: aString
 selectionRichText
 	"Private - Answer the selected RichText in the receiver."
 
-	^self richTextClass fromRtf: self selectionRtf!
+	^self richTextClass fromRtf: self selectionUrtf!
 
 selectionRichText: aRichText
 	"Private - Replace the selected text in the receiver with the RTF 
@@ -765,15 +682,25 @@ selectionRichText: aRichText
 	This is the backend of a double-dispatch protocol between TextEdits and 
 	RichText/Strings."
 
-	^self readTextFrom: aRichText rtf readStream
-		format: ##(SFF_SELECTION | (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF)!
+	| aStream |
+	aStream := Utf8String writeStream: 512.
+	self streamOutOn: aStream format: ##(SFF_SELECTION | (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF).
+	^aStream contents!
 
 selectionRtf
-	"Private - Answer the selected text in the receiver as an RTF <Utf8String>."
+	"Private - Answer the selected text in the receiver formatted as ANSI RTF, i.e. 'rtf1' format <AnsiString>."
+
+	| s |
+	s := AnsiString writeStream: 512.
+	self streamOutOn: s format: ##(SFF_SELECTION | SF_RTF).
+	^s contents!
+
+selectionUrtf
+	"Private - Answer the selected text in the receiver formatted as UTF-8 RTF, i.e. 'urtf1' format <Utf8String>."
 
 	| s |
 	s := Utf8String writeStream: 512.
-	self printRtfOn: s format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION).
+	self streamOutOn: s format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
 	^s contents!
 
 setAutoUrlDetection: aBoolean 
@@ -845,26 +772,53 @@ state
 	 by messages added to the end of the sequence here."
 	^sequence!
 
-streamIn: callback format: anInteger
-	| answer |
+streamInFrom: aPositionableStream format: anInteger
+	| elementSize answer callback |
+	elementSize := aPositionableStream elementSize.
+	callback := ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					| text size |
+					text := aPositionableStream basicNextAvailable: cb // elementSize.
+					size := text size * elementSize.
+					self assert: [size <= cb].
+					pbBuff
+						replaceFrom: 1
+						to: size
+						with: text
+						startingAt: 1.
+					pcb value: size.	"Continue streaming"
+					0]
+				descriptor: StreamingDescriptor.
 	winStruct pfnCallback: callback asParameter.
 	answer := self
 				sendMessage: EM_STREAMIN
 				wParam: anInteger
 				lpParam: winStruct.
-	self isTextModified: false.
-	"It seems we have to increase the limit again after streaming in."
+	self isTextModified: false.	"It seems we have to increase the limit again after streaming in."
 	self setMaxTextLimit.
 	streamIn isNil ifFalse: [streamIn free].
 	streamIn := callback.
 	^answer!
 
-streamOut: formatMask format: callback
-	| result |
+streamOutOn: aWriteStream format: anInteger
+	"Private - Stream the contents of the receiver to the <puttableStream>, aWriteStream, in the format specified by the <integer> format mask, anInteger.
+	The stream is assumed to be backed by a buffer with an encoding matching that requested by the format, so the binary content streamed out by the RTE control is dumped directly into the stream. If the encoding of the stream does not match the format requested, e.g. the stream is over an AnsiString and UTF-8 RTF is requested, then the result may well be corrupt."
+
+	| result callback |
+	callback := ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					"We don't want the null terminator, if present. Note that this implies there cannot be any embedded nulls in the text."
+					aWriteStream
+						basicNext: ((pbBuff at: cb) == 0 ifTrue: [cb - 1] ifFalse: [cb])
+						putAll: pbBuff
+						startingAt: 1.
+					pcb value: cb.
+					0	"Continue streaming"]
+				descriptor: StreamingDescriptor.
 	winStruct pfnCallback: callback asParameter.
 	result := self
 				sendMessage: EM_STREAMOUT
-				wParam: formatMask
+				wParam: anInteger
 				lpParam: winStruct.
 	callback free.
 	^result!
@@ -894,6 +848,28 @@ textLimit: anInteger
 	(anInteger between: 1 and: self maxTextLimit) ifFalse: [self errorSubscriptBounds: anInteger].
 	^self sendMessage: EM_EXLIMITTEXT wParam: 0 lParam: anInteger!
 
+urtfText
+	"Answer a <Utf8String> containing the RTF contents of the receiver in 'urtf1' (UTF-8) format."
+
+	| aStream |
+	aStream := Utf8String writeStream: 4096.
+	self streamOutOn: aStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SF_RTF).
+	^aStream contents!
+
+utfText
+	"Answer a <Utf8String> containing the plain text contents of the receiver with all formatting removed. See also #ansiText."
+
+	| aStream |
+	aStream := Utf8String writeStream: 4096.
+	"Contrary to the documentation we can get the text directly in UTF-8, so we don't need to stream out as UTF-16"
+	self streamOutOn: aStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SF_TEXT).
+	^aStream contents!
+
+utfText: aUtfEncodedString
+	"Replace the receiver control's contents with the specified plain text."
+
+	self streamInFrom: aUtfEncodedString asUtf16String readStream format: ##(SF_TEXT | SF_UNICODE)!
+
 winFinalize
 	"Private - Perform finalization actions for this View on destruction."
 
@@ -908,6 +884,8 @@ wmInitMenu: message wParam: wParam lParam: lParam
 
 	Cursor arrow setCursor.
 	^super wmInitMenu: message wParam: wParam lParam: lParam! !
+!RichTextEdit categoriesFor: #ansiText!public!streaming! !
+!RichTextEdit categoriesFor: #ansiText:!public!streaming! !
 !RichTextEdit categoriesFor: #basicLineFromPosition:!accessing!private! !
 !RichTextEdit categoriesFor: #basicSelectionRange!helpers!private! !
 !RichTextEdit categoriesFor: #basicSelectionStart:end:!helpers!private! !
@@ -968,20 +946,13 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #pointSize:!accessing!private! !
 !RichTextEdit categoriesFor: #positionAtLine:!accessing!public! !
 !RichTextEdit categoriesFor: #positionOfChar:!accessing!public! !
-!RichTextEdit categoriesFor: #printRtfOn:!public!streaming! !
-!RichTextEdit categoriesFor: #printRtfOn:format:!private!streaming! !
-!RichTextEdit categoriesFor: #printTextOn:!public!streaming! !
-!RichTextEdit categoriesFor: #printTextOn:format:!private!streaming! !
 !RichTextEdit categoriesFor: #privGetRichText!private!updating! !
 !RichTextEdit categoriesFor: #queryCommand:!commands!private! !
-!RichTextEdit categoriesFor: #readRtfFrom:!public!streaming! !
-!RichTextEdit categoriesFor: #readTextFrom:!public!streaming! !
-!RichTextEdit categoriesFor: #readTextFrom:format:!private!streaming! !
 !RichTextEdit categoriesFor: #resetCharFormat!operations!public! !
 !RichTextEdit categoriesFor: #richText!accessing!public! !
 !RichTextEdit categoriesFor: #richText:!accessing!private! !
-!RichTextEdit categoriesFor: #rtfText!accessing!private! !
-!RichTextEdit categoriesFor: #rtfText:!accessing!private! !
+!RichTextEdit categoriesFor: #rtfText!public!streaming! !
+!RichTextEdit categoriesFor: #rtfText:!public!streaming! !
 !RichTextEdit categoriesFor: #selection!accessing!public! !
 !RichTextEdit categoriesFor: #selectionCharFormat!accessing!private! !
 !RichTextEdit categoriesFor: #selectionCharFormat:!accessing!private! !
@@ -995,6 +966,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #selectionRichText!private!selection! !
 !RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
 !RichTextEdit categoriesFor: #selectionRtf!private!selection! !
+!RichTextEdit categoriesFor: #selectionUrtf!private!selection! !
 !RichTextEdit categoriesFor: #setAutoUrlDetection:!helpers!private! !
 !RichTextEdit categoriesFor: #setCharFormat:flags:!helpers!private! !
 !RichTextEdit categoriesFor: #setControlBackcolor:!helpers!private! !
@@ -1002,11 +974,14 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
 !RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
 !RichTextEdit categoriesFor: #state!accessing!private! !
-!RichTextEdit categoriesFor: #streamIn:format:!private!streaming! !
-!RichTextEdit categoriesFor: #streamOut:format:!private!streaming! !
+!RichTextEdit categoriesFor: #streamInFrom:format:!private!streaming! !
+!RichTextEdit categoriesFor: #streamOutOn:format:!private!streaming! !
 !RichTextEdit categoriesFor: #text!accessing!public! !
 !RichTextEdit categoriesFor: #textLength!accessing!private! !
 !RichTextEdit categoriesFor: #textLimit:!operations!public! !
+!RichTextEdit categoriesFor: #urtfText!public!streaming! !
+!RichTextEdit categoriesFor: #utfText!public!streaming! !
+!RichTextEdit categoriesFor: #utfText:!public!streaming! !
 !RichTextEdit categoriesFor: #winFinalize!event handling!private! !
 !RichTextEdit categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
 

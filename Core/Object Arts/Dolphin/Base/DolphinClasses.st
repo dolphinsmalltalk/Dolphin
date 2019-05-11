@@ -582,7 +582,7 @@ ArrayedCollection subclass: #RunArray
 	classInstanceVariableNames: ''!
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
+	classVariableNames: 'EncodingAnsi Encodings EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
 ArrayedCollection variableSubclass: #WeakArray
