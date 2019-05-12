@@ -413,7 +413,7 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinCollectionTest subclass: #SetTest
-	instanceVariableNames: 'primes'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
