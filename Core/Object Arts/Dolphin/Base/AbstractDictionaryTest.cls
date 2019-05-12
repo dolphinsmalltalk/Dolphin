@@ -27,7 +27,7 @@ denyCommutativelyEqual: aDictionary other: anotherDictionary
 	self deny: anotherDictionary equals: aDictionary!
 
 key3Value
-	^$f!
+	^$g!
 
 makeKey: anObject
 	^anObject asInteger!

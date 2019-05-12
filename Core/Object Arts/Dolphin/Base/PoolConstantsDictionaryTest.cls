@@ -14,7 +14,7 @@ collectionClass
 	^PoolConstantsDictionary!
 
 key3Value
-	^$k!
+	^$l!
 
 makeKey: anObject
 	^'_' , anObject displayString!
