@@ -547,14 +547,48 @@ testIntegerAsFloat
 	self assert: 16r1FFFFFFFFFFFF0800 asFloat equals: 16r1FFFFFFFFFFFF0000 asFloat	"nearest even is lower"!
 
 testIntegerComparisons
-	#(-16rFFFFFFFF -16r40000001 -16r40000000 -1 0 1 16r3FFFFFFF 16r3FFFFFFF 16r40000000 16rFFFFFFFF 16r100000000000004 16r100000000000005 -16r4000000000000001 -16r4000000000000000 ##(2
-		** Float precision - 1) ##(2 ** Float precision + 1) ##(2 ** 63 - 1) ##(2 ** 64) ##(-1 * (2 ** 64)))
-		do: 
-			[:each |
-			self assert: each asFloat equals: each.
-			self assert: each hash isKindOf: SmallInteger.
-			self assert: each asFloat hash equals: each hash.
-			self assert: (each hash = 0 or: [each hash sign = each sign])]!
+	{-16rFFFFFFFF.
+		-16r40000001.
+		-16r40000000.
+		-1.
+		0.
+		1.
+		16r3FFFFFFF.
+		16r3FFFFFFF.
+		16r40000000.
+		16r7FFFFFFF.
+		16rFFFFFFFF.
+		2 ** Float precision - 1.
+		2 ** Float precision.
+		"Some larger integers will be equal, if they can be represented without loss of precision"
+		2 ** 63.
+		2 ** 64.
+		-16r4000000000000000.
+		16r100000000000010.
+		-1 * (2 ** 64)} do: 
+				[:each |
+				self assert: each asFloat equals: each.
+				self assert: each hash isKindOf: SmallInteger.
+				self assert: each asFloat hash equals: each hash]!
+
+testIntegerComparisonsImprecise
+	"Regression test for #772"
+
+	self skipUnless: [self isAtLeastVmVersion: #(2016 7 1 7)].
+	{2 ** Float precision + 1.
+		(2 ** Float precision) negated - 1.
+		16r100000000000004.
+		16r100000000000005.
+		-16r4000000000000001.
+		2 ** Float precision + 1.
+		2 ** 63 - 1} do: 
+				[:each |
+				| subject trunc |
+				subject := each asFloat.
+				trunc := subject asInteger.
+				"Not a valid test case if this fails"
+				self deny: trunc equals: each.
+				self deny: subject equals: each]!
 
 testIntegerPart
 	self assert: 1.25 integerPart equals: 1.0.
@@ -1139,6 +1173,7 @@ testZeroDivide
 !FloatTest categoriesFor: #testInfinityComparisons!public!unit tests! !
 !FloatTest categoriesFor: #testIntegerAsFloat!public!Testing! !
 !FloatTest categoriesFor: #testIntegerComparisons!public!unit tests! !
+!FloatTest categoriesFor: #testIntegerComparisonsImprecise!public!unit tests! !
 !FloatTest categoriesFor: #testIntegerPart!public!unit tests! !
 !FloatTest categoriesFor: #testIsFinite!public!unit tests! !
 !FloatTest categoriesFor: #testIsInfinite!public!unit tests! !
