@@ -275,6 +275,19 @@ sqlGetDiagRec: anIntegerHandleType handle: anExternalHandle recNumber: anInteger
 	<stdcall: sword SQLGetDiagRecW sword handle sword lpwstr sdword* lpwstr sword sword*>
 	^self invalidCall.!
 
+sqlGetEnvAttr: anExternalHandle infoType: anIntegerType infoValuePtr: bytes bufferLength: anIntegerMax stringLengthPtr: anSWORD 
+	"Request information about the current setting of an environment attribute.
+
+		SQLRETURN SQLGetEnvAttr(
+			SQLHDBC     ConnectionHandle,
+			SQLUSMALLINT     InfoType,
+			SQLPOINTER     InfoValuePtr,
+			SQLSMALLINT     BufferLength,
+			SQLSMALLINT *     StringLengthPtr);"
+
+	<stdcall: sword SQLGetEnvAttr handle dword lpvoid dword DWORD*>
+	^self invalidCall!
+
 sqlGetFunctions: anExternalHandle functionId: anInteger supportedPtr: aWORD 
 	"Request confirmation that a particular function is implemented
 	by the driver.
@@ -460,6 +473,7 @@ sqlTables: anExternalHandleSTMT
 !ODBCLibrary categoriesFor: #sqlGetConnectAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetData:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetDiagRec:handle:recNumber:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesFor: #sqlGetEnvAttr:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
 !ODBCLibrary categoriesFor: #sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !

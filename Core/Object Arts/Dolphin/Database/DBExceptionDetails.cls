@@ -43,7 +43,7 @@ buildErrorInfoFrom: anExternalHandle type: anIntegerHandleType
 	"Private - Retrieve all error information available from the ODBC Driver for <anExternalHandle>, which is of type <anIntegerHandleType>"
 
 	| szSqlState fNativeError szErrorMsg cbErrorMsg recNumber odbc |
-	szSqlState := Utf16String newFixed: SQL_STATE_SIZE.
+	szSqlState := Utf16String newFixed: SQL_SQLSTATE_SIZE.
 	szErrorMsg := Utf16String new: 128.
 	cbErrorMsg := SWORD new.
 	fNativeError := SDWORD new.

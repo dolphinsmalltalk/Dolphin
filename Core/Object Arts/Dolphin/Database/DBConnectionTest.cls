@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
@@ -214,7 +214,7 @@ testColumnsQuery
 	columns := connection columns: 'Orders'.
 	columns with: (isAccess 
 				ifTrue: 
-					[#(#('OrderID' 4 4) #('CustomerID' ##(SQL_VARCHAR) 10) #('EmployeeID' 4 4) #('OrderDate' 11 16) #('RequiredDate' 11 16) #('ShippedDate' 11 16) #('ShipVia' 4 4) #('Freight' 2 21) #('ShipName' ##(SQL_VARCHAR) 80) #('ShipAddress' ##(SQL_VARCHAR) 120) #('ShipCity' ##(SQL_VARCHAR) 30) #('ShipRegion' ##(SQL_VARCHAR) 30) #('ShipPostalCode' ##(SQL_VARCHAR) 20) #('ShipCountry' ##(SQL_VARCHAR) 30))]
+					[#(#('OrderID' 4 4) #('CustomerID' ##(SQL_WVARCHAR) 10) #('EmployeeID' 4 4) #('OrderDate' ##(SQL_TYPE_TIMESTAMP) 16) #('RequiredDate' ##(SQL_TYPE_TIMESTAMP) 16) #('ShippedDate' ##(SQL_TYPE_TIMESTAMP) 16) #('ShipVia' 4 4) #('Freight' 2 21) #('ShipName' ##(SQL_WVARCHAR) 80) #('ShipAddress' ##(SQL_WVARCHAR) 120) #('ShipCity' ##(SQL_WVARCHAR) 30) #('ShipRegion' ##(SQL_WVARCHAR) 30) #('ShipPostalCode' ##(SQL_WVARCHAR) 20) #('ShipCountry' ##(SQL_WVARCHAR) 30))]
 				ifFalse: 
 					[#(#('OrderID' 4 4) #('CustomerID' ##(SQL_WCHAR) 10) #('EmployeeID' 4 4) #('OrderDate' 11 16) #('RequiredDate' 11 16) #('ShippedDate' 11 16) #('ShipVia' 4 4) #('Freight' ##(SQL_DECIMAL) 21) #('ShipName' ##(SQL_WVARCHAR) 80) #('ShipAddress' ##(SQL_WVARCHAR) 120) #('ShipCity' ##(SQL_WVARCHAR) 30) #('ShipRegion' ##(SQL_WVARCHAR) 30) #('ShipPostalCode' ##(SQL_WVARCHAR) 20) #('ShipCountry' ##(SQL_WVARCHAR) 30))])
 		do: 
@@ -382,7 +382,7 @@ testIsEmpty
 
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
-	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites allSatisfy: [:each | each name = 'Dolphin'])!
+	self assert: ((Package manager packageNamed: 'Database Connection Base') prerequisites allSatisfy: [:each | each name = 'Dolphin' or: [each name = 'Dolphin Legacy Date & Time']])!
 
 testPreparedQuery
 	| statement results |

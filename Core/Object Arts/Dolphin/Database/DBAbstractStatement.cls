@@ -100,7 +100,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -136,7 +136,7 @@ describeCols: columnNumbers
 	i := 1.
 	columnNumbers do: 
 			[:each | 
-			| ret |
+			| ret col |
 			ret := lib 
 						sqlDescribeCol: hStmt
 						columnNumber: each
@@ -148,23 +148,30 @@ describeCols: columnNumbers
 						decimalDigitsPtr: decimalDigits
 						nullablePtr: nullable.
 			self dbCheckException: ret.
-			ret := lib 
-						sqlColAttribute: hStmt
-						columnNumber: each
-						fieldIdentifier: SQL_COLUMN_LENGTH
-						characterAttributePtr: nil
-						bufferLength: nil
-						stringLengthPtr: nil
-						numericAttributePtr: colLen.	"Note using ODBC 2.x definition of column length"
-			self dbCheckException: ret.
-			answer at: i
-				put: ((DBColAttr new)
-						columnNumber: each;
-						name: (name copyFrom: 1 to: colNameLen value);
-						type: dataType value;
-						length: colLen value;
-						precision: columnSize value;
-						scale: decimalDigits value).
+
+			col := DBColAttr new
+					columnNumber: each;
+					name: (name copyFrom: 1 to: colNameLen value);
+					type: dataType value;
+					precision: columnSize value;
+					scale: decimalDigits value;
+					yourself.
+
+			col isVariableSize 
+				ifTrue: 
+					[ret := lib 
+							sqlColAttribute: hStmt
+							columnNumber: each
+							fieldIdentifier: SQL_DESC_OCTET_LENGTH
+							characterAttributePtr: nil
+							bufferLength: nil
+							stringLengthPtr: nil
+							numericAttributePtr: colLen.
+					self dbCheckException: ret.
+					col length: colLen value] 
+				ifFalse: 
+					[col length: col typeLength].
+			answer at: i put: col.
 			i := i + 1].
 	^answer!
 
