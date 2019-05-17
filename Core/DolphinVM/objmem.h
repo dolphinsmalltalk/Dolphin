@@ -1081,11 +1081,14 @@ inline bool ObjectMemory::IsConstObj(void* ptr)
 
 inline hash_t ObjectMemory::nextIdentityHash()
 {
-	hash_t y = LOWORD(m_nNextIdHash);
-	hash_t x = HIWORD(m_nNextIdHash);
-	hash_t t = x ^ (x << 5);
+	uint32_t seed = m_nNextIdHash;
+	hash_t y = LOWORD(seed);
+	hash_t x = HIWORD(seed);
+	// The 16-bit masks make no difference to the code generated in a release build (they are redundant),
+	// but prevent a debug report of loss of bits when casting to a smaller sized int in a debug build
+	hash_t t = x ^ static_cast<hash_t>((x << 5) & 0xffff);
 	m_nNextIdHash = y << 16 | ((y ^ (y >> 1)) ^ (t ^ (t >> 3)));
-	return static_cast<uint16_t>(m_nNextIdHash);
+	return static_cast<uint16_t>(m_nNextIdHash & 0xffff);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -151,13 +151,9 @@ public:
 	__forceinline OTEFlags::Spaces heapSpace() const		{ return static_cast<OTEFlags::Spaces>(m_flags.m_space); }
 	__forceinline bool flagsAllMask(BYTE mask) const		{ return (m_ubFlags & mask) == mask; }
 
-	hash_t identityHash()
+	__forceinline hash_t identityHash()
 	{
-		while (m_idHash == 0)
-		{
-			m_idHash = ObjectMemory::nextIdentityHash();
-		}
-		return m_idHash;
+		return m_idHash != 0 ? m_idHash : m_idHash = ObjectMemory::nextIdentityHash();
 	}
 
 public:
