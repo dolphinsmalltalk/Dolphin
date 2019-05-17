@@ -242,7 +242,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -686,7 +686,7 @@ open
 				driverCompletion: (self useDriverCompletion 
 						ifTrue: [SQL_DRIVER_COMPLETE]
 						ifFalse: [SQL_DRIVER_NOPROMPT]).
-	ret == SQL_NO_DATA_FOUND ifTrue: [^nil "cancelled"].
+	ret == SQL_NO_DATA ifTrue: [^nil "cancelled"].
 	self dbCheckException: ret] 
 			ifCurtailed: [self free].
 	self connectString: (connSz copyFrom: 1 to: (lenConnSz value min: connSz size))!
@@ -1309,7 +1309,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -1352,7 +1352,7 @@ enumerateDataSources
 						nameLength2Ptr: descriptionLength.
 			ret == SQL_SUCCESS_WITH_INFO]
 					whileTrue: [description := Utf16String newFixed: descriptionLength value]].
-	ret ~= SQL_NO_DATA_FOUND ifTrue: [self dbCheckException: ret].
+	ret ~= SQL_NO_DATA ifTrue: [self dbCheckException: ret].
 	^sources contents!
 
 environmentHandle
@@ -1450,12 +1450,26 @@ new
 newConnections
 	Connections := WeakSet new!
 
+odbcVersion
+
+	"self odbcVersion"
+
+	| version |
+	version := SWORD new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetEnvAttr: HEnv
+				infoType: SQL_ATTR_ODBC_VERSION
+				infoValuePtr: version
+				bufferLength: nil
+				stringLengthPtr: nil).
+	^version value!
+
 setDefaultEnvAttrs
 	| ret |
 	ret := ODBCLibrary default 
 				sqlSetEnvAttr: HEnv
 				attribute: SQL_ATTR_ODBC_VERSION
-				valuePtr: SQL_OV_ODBC2
+				valuePtr: SQL_OV_ODBC3
 				stringLength: 0.
 	self dbCheckException: ret.
 	^ret!
@@ -1484,6 +1498,7 @@ transact: aDBConnection action: anInteger
 !DBConnection class categoriesFor: #invalidateHandle:!private!realizing/unrealizing! !
 !DBConnection class categoriesFor: #new!instance creation!public! !
 !DBConnection class categoriesFor: #newConnections!accessing!private! !
+!DBConnection class categoriesFor: #odbcVersion!accessing!public! !
 !DBConnection class categoriesFor: #setDefaultEnvAttrs!accessing!private! !
 !DBConnection class categoriesFor: #transact:action:!operations!private! !
 

@@ -219,7 +219,7 @@ fetchScroll: orientationInteger offset: offsetInteger
 				sqlFetchScroll: self statementHandle
 				fetchOrientation: orientationInteger
 				fetchOffset: offsetInteger.
-	ret = SQL_NO_DATA_FOUND ifTrue: [^nil].
+	ret = SQL_NO_DATA ifTrue: [^nil].
 	statement dbCheckException: ret.
 
 	"Unbound buffers must now retrieve all columns, bound
