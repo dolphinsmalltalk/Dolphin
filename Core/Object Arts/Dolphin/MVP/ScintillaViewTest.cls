@@ -24,6 +24,31 @@ initializePresenter
 margins
 	^0 @ 0!
 
+testFindStringStartingAt
+	| found found2 |
+	presenter codePage: #utf8.
+	self assert: (presenter findString: 'Object' startingAt: 1) equals: 0.
+	"This test relies on 'Object' appearing in the text multiple times"
+	presenter text: self text.
+	found := presenter findString: 'Object' startingAt: 1.
+	self assert: found equals: (self text indexOfSubCollection: 'Object').
+	self assert: (presenter findString: 'Object' startingAt: found) equals: found.
+	self assert: found equals: (self text indexOfSubCollection: 'Object').
+	found2 := presenter findString: 'Object' startingAt: found + 1.
+	self assert: found2 > found.
+	self assert: found2 equals: (self text indexOfSubCollection: 'Object' startingAt: found+1).
+	self assert: (presenter findString: 'Wibble' startingAt: 1) equals: 0.
+	self assert: (presenter findString: '' startingAt: 1) equals: 0.
+	presenter text: 'Hello 🐬 World'.
+	found := presenter findString: '🐬' startingAt: 1.
+	self assert: found equals: 7.
+	found := presenter findString: '🐬' startingAt: 7.
+	self assert: found equals: 7.
+	found := presenter findString: '🐬' startingAt: 8.
+	self assert: found equals: 0.
+	found := presenter findString: '🐬' startingAt: 50.
+	self assert: found equals: 0!
+
 testLanguages
 	| lingos |
 	lingos := ScintillaView lexerLanguages.
@@ -45,6 +70,7 @@ testTokensFromTo
 !ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
 !ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
+!ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 

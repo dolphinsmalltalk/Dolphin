@@ -390,6 +390,8 @@ renamedFunctions
 		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
 		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
 		at: 'SCI_GETMOVEEXTENDSSELECTION' put: #isInSelectionExtendMode;
+		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
+		at: 'SCI_GETSELECTIONEND' put: #selectionEnd;
 		yourself.
 	"Markers"
 	renamedMessages
