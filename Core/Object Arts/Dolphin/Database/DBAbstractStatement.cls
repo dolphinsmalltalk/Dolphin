@@ -157,7 +157,7 @@ describeCols: columnNumbers
 					scale: decimalDigits value;
 					yourself.
 
-			col isVariableSize 
+			col hasVariableTransferOctetLength
 				ifTrue: 
 					[ret := lib 
 							sqlColAttribute: hStmt
@@ -170,7 +170,7 @@ describeCols: columnNumbers
 					self dbCheckException: ret.
 					col length: colLen value] 
 				ifFalse: 
-					[col length: col typeLength].
+					[col length: col transferOctetLength].
 			answer at: i put: col.
 			i := i + 1].
 	^answer!
