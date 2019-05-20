@@ -1547,7 +1547,7 @@ ignoredMessages
 
 	"We always get/set the selection range start and end as a pair."
 	ignoredMessages
-		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_GETSELECTIONSTART' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
+		addAll: #('SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').

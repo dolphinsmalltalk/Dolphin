@@ -2420,6 +2420,7 @@ findMatchingBrace: anInteger
 	^self sciBraceMatch: anInteger maxReStyle: 0!
 
 findString: aString startingAt: anInteger
+	aString isEmpty ifTrue: [^0].
 	self
 		sciSetSearchFlags: SCFIND_MATCHCASE;
 		sciSetTargetRange: anInteger end: self textLength + 1.
@@ -2883,19 +2884,18 @@ hoverTime: periodMillisecondsInteger
 				lParam: 0]!
 
 identifyTextMatchingSelectionWithStyleName: aSymbol
-	| index newIndicators selection selectionStart selectionRange oldIndicators |
+	| index newIndicators selection selectionStart oldIndicators |
 	"get a list of indicators that aren't related to secondary selection"
 	oldIndicators := self indicators.
 	newIndicators := oldIndicators reject: [:each | each styleName == aSymbol].
-	selectionRange := self selectionRange.
+	selection := self selection.
 	"If no current selection, then we are done"
-	selectionRange isEmpty
+	selection isEmpty
 		ifTrue: 
 			[newIndicators size = oldIndicators size ifFalse: [self indicators: newIndicators].
 			^self].
 	newIndicators := newIndicators asOrderedCollection.
-	selectionStart := selectionRange start.
-	selection := self selection.
+	selectionStart := self selectionStart.
 	index := 1.
 	
 	[index := self findString: selection startingAt: index.
@@ -9765,6 +9765,18 @@ selectionCount
 				wParam: 0
 				lParam: 0]!
 
+selectionEnd
+	"Returns the position at the end of the selection."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETSELECTIONEND
+				wParam: 0
+				lParam: 0) + 1]!
+
 selectionForecolor
 	"Answer the foreground colour of the selection, or nil if the selection foreground colouring
 	is disabled (the default)."
@@ -9861,6 +9873,18 @@ selections
 	has been made."
 
 	^self selectionRanges collect: [:each | self plainTextRange: each]!
+
+selectionStart
+	"Returns the position at the start of the selection."
+
+	^this
+		ifNil: [0]
+		ifNotNil: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETSELECTIONSTART
+				wParam: 0
+				lParam: 0) + 1]!
 
 sendMessage: anInteger 
 	"Private - Send the Win32 message, anInteger, to the receiver's real window with wParam and
@@ -11953,6 +11977,7 @@ zoomOut
 !ScintillaView categoriesFor: #selectionBackcolor!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #selectionBackcolor:!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #selectionCount!**auto generated**!multiple selection and virtual space!public!scintilla interface!selection! !
+!ScintillaView categoriesFor: #selectionEnd!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #selectionForecolor!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #selectionForecolor:!caret, selection, and hotspot styles!public! !
 !ScintillaView categoriesFor: #selectionMode!public!selection! !
@@ -11962,6 +11987,7 @@ zoomOut
 !ScintillaView categoriesFor: #selectionRanges!public!selection! !
 !ScintillaView categoriesFor: #selectionRanges:!public!selection! !
 !ScintillaView categoriesFor: #selections!public!selection! !
+!ScintillaView categoriesFor: #selectionStart!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #sendMessage:!operations!private! !
 !ScintillaView categoriesFor: #sendMessage:wParam:!operations!private! !
 !ScintillaView categoriesFor: #sendMessage:wParam:lParam:!operations!private! !
