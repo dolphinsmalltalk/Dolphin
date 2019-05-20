@@ -6,8 +6,8 @@ Object subclass: #DBField
 	poolDictionaries: 'ODBCConstants ODBCCTypes ODBCRetCodes ODBCTypes'
 	classInstanceVariableNames: ''!
 DBField guid: (GUID fromString: '{87b4c475-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBField addClassConstant: 'GetSelectors' value: #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble #getDate #getTime #getDateAndTime #getAnsiString nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #getDate #getTime #getDateAndTime)!
-DBField addClassConstant: 'SetSelectors' value: #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: #setDate: #setTime: #setDateAndTime: #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)!
+DBField addClassConstant: 'GetSelectors' value: #(#getGuid #getUtf16String #getUtf16String #getUtf16String #getBoolean #getByte #getInt64 #getByteArray #getByteArray #getByteArray #getAnsiString nil #getAnsiString #numberFromNumeric #numberFromNumeric #getLong #getShort #getDouble #getFloat #getDouble nil nil nil #getAnsiString nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #getDate #getTime #getDateAndTime)!
+DBField addClassConstant: 'SetSelectors' value: #(#setGuid: #setUtf16String: #setUtf16String: #setUtf16String: #setBoolean: #setByte: #setInt64: #setByteArray: #setByteArray: #setByteArray: #setAnsiString: nil #setAnsiString: #numberToNumeric: #numberToNumeric: #setLong: #setShort: #setDouble: #setFloat: #setDouble: nil nil nil #setAnsiString: nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #setDate: #setTime: #setDateAndTime:)!
 DBField comment: 'A DBField instance represents a column buffer for holding data as part of a DBRow.
 
 A field''s value may be converted to a Smalltalk object by sending #value, and conversely may be assigned with #value:.
@@ -468,9 +468,6 @@ initialize
 				at: SQL_FLOAT + TypeOffset put: #getDouble;
 				at: SQL_REAL + TypeOffset put: #getFloat;
 				at: SQL_DOUBLE + TypeOffset put: #getDouble;
-				at: SQL_DATE + TypeOffset put: #getDate;
-				at: SQL_TIME + TypeOffset put: #getTime;
-				at: SQL_TIMESTAMP + TypeOffset put: #getDateAndTime;
 				at: SQL_TYPE_DATE + TypeOffset put: #getDate;
 				at: SQL_TYPE_TIME + TypeOffset put: #getTime;
 				at: SQL_TYPE_TIMESTAMP + TypeOffset put: #getDateAndTime;
@@ -497,9 +494,6 @@ initialize
 				at: SQL_FLOAT + TypeOffset put: #setDouble:;
 				at: SQL_REAL + TypeOffset put: #setFloat:;
 				at: SQL_DOUBLE + TypeOffset put: #setDouble:;
-				at: SQL_DATE + TypeOffset put: #setDate:;
-				at: SQL_TIME + TypeOffset put: #setTime:;
-				at: SQL_TIMESTAMP + TypeOffset put: #setDateAndTime:;
 				at: SQL_TYPE_DATE + TypeOffset put: #setDate:;
 				at: SQL_TYPE_TIME + TypeOffset put: #setTime:;
 				at: SQL_TYPE_TIMESTAMP + TypeOffset put: #setDateAndTime:;

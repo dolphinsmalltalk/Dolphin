@@ -7,7 +7,7 @@ Object subclass: #DBColAttr
 	classInstanceVariableNames: ''!
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)!
-DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 9 10 11 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 9 10 11)!
+DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)!
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
@@ -58,6 +58,10 @@ deleteRuleMask: anInteger
 			(1 bitShift: (anInteger+4))
 			put: true ]!
 
+hasVariableTransferOctetLength
+
+	^(self isCharType or: [self isBinaryType]) and: [self isFixedPointType not]!
+
 initialize
 	"Private - Initialize the receiver"
 
@@ -74,6 +78,10 @@ isCharType
 	| cType |
 
 	^(cType := self cType) == SQL_C_CHAR or: [cType == SQL_C_WCHAR]!
+
+isFixedPointType
+
+	^sqlType == SQL_DECIMAL or: [sqlType == SQL_NUMERIC]!
 
 isForeignKey
 	"Answer true if the receiver represents a foreign key"
@@ -99,10 +107,6 @@ isPrimaryKey: aBoolean
 	"Private - Sets the receiver to be a primary key according to aBoolean"
 
 	self specialFlagAt: PrimaryKey put: aBoolean!
-
-isVariableSize
-
-	^self isCharType or: [self isBinaryType]!
 
 length
 	"Answer the length instance variable."
@@ -199,6 +203,30 @@ specialFlagAt: flagMask put: aBoolean
 
 	special mask: flagMask set: aBoolean!
 
+transferOctetLength
+
+	"Private - Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type.
+	https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
+
+	(sqlType = SQL_BIT or: [sqlType = SQL_TINYINT]) ifTrue: [^1].
+	sqlType = SQL_SMALLINT ifTrue: [^2].
+	(sqlType = SQL_INTEGER or: [sqlType = SQL_REAL]) ifTrue: [^4].
+	(sqlType = SQL_TYPE_DATE or: [sqlType = SQL_TYPE_TIME]) ifTrue: [^6].
+	(sqlType = SQL_FLOAT or: [sqlType = SQL_DOUBLE]) ifTrue: [^8].
+	(sqlType = SQL_TYPE_TIMESTAMP or: [sqlType = SQL_GUID]) ifTrue: [^16].
+
+	"SQL_BIGINT
+	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE, because this data type is returned as a character string by default. The character representation consists of 20 characters: 19 for digits and a sign, if signed, or 20 digits, if unsigned. Therefore, the length is 20."
+	sqlType = SQL_BIGINT ifTrue: [^##(20 * 2 "allow for unicode")].
+
+	"SQL_DECIMAL, SQL_NUMERIC
+	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE. This is the maximum number of digits plus two, because the data is returned as a character string and characters are needed for the digits, a sign, and a decimal point. For example, the transfer length of a column defined as NUMERIC(10,3) is 12."
+	(sqlType = SQL_DECIMAL or: [sqlType = SQL_NUMERIC]) ifTrue: [^(self precision + 2) * 2 "allow for unicode"].
+
+	self hasVariableTransferOctetLength
+		ifTrue: [self error: 'column has variable transfer octet length']
+		ifFalse: [self error: 'unknown type']!
+
 type
 	"Answer the sqlType instance variable."
 
@@ -208,31 +236,6 @@ type: anInteger
 	"Private - Set the sqlType instance variable to anInteger."
 
 	sqlType := anInteger!
-
-typeLength
-
-	"Private - Return the length (size in bytes) of the receiver based on its type."
-
-	| cType |
-
-	cType := self cType.
-
-	(cType = SQL_C_BIT or: [cType = SQL_C_TINYINT]) ifTrue: [^1].
-	cType = SQL_C_SHORT ifTrue: [^2].
-	(cType = SQL_C_LONG or: [cType = SQL_C_FLOAT]) ifTrue: [^4].
-	(cType = SQL_C_DATE or: [cType = SQL_C_TIME]) ifTrue: [^6].
-	cType = SQL_C_DOUBLE ifTrue: [^8].
-	(cType = SQL_C_TIMESTAMP or: [cType = SQL_C_GUID]) ifTrue: [^16].
-
-	"SQL_BIGINT
-	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE, because this data type is returned as a character string by default. The character representation consists of 20 characters: 19 for digits and a sign, if signed, or 20 digits, if unsigned. Therefore, the length is 20."
-	self type = SQL_BIGINT ifTrue: [^##(20 * 2 "allow for unicode")].
-
-	"SQL_DECIMAL, SQL_NUMERIC
-	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE. This is the maximum number of digits plus two, because the data is returned as a character string and characters are needed for the digits, a sign, and a decimal point. For example, the transfer length of a column defined as NUMERIC(10,3) is 12."
-	(self type = SQL_DECIMAL or: [self type = SQL_NUMERIC]) ifTrue: [^self length: (self precision + 2) * 2 "allow for unicode"].
-
-	self error: 'unknown type'!
 
 updateRuleMask
 	"Answer the update rule mask for the receiver"
@@ -254,15 +257,16 @@ updateRuleMask: anInteger
 !DBColAttr categoriesFor: #cType!accessing!private! !
 !DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
 !DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
+!DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
 !DBColAttr categoriesFor: #initialize!initializing!private! !
 !DBColAttr categoriesFor: #isBinaryType!private!testing! !
 !DBColAttr categoriesFor: #isCharType!private!testing! !
+!DBColAttr categoriesFor: #isFixedPointType!private!testing! !
 !DBColAttr categoriesFor: #isForeignKey!public!testing! !
 !DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
 !DBColAttr categoriesFor: #isKey!public!testing! !
 !DBColAttr categoriesFor: #isPrimaryKey!public!testing! !
 !DBColAttr categoriesFor: #isPrimaryKey:!accessing!private! !
-!DBColAttr categoriesFor: #isVariableSize!public!testing! !
 !DBColAttr categoriesFor: #length!accessing!public! !
 !DBColAttr categoriesFor: #length:!accessing!private! !
 !DBColAttr categoriesFor: #lengthC!accessing!private! !
@@ -277,9 +281,9 @@ updateRuleMask: anInteger
 !DBColAttr categoriesFor: #scale:!accessing!private! !
 !DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
 !DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
+!DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
 !DBColAttr categoriesFor: #type!accessing!public! !
 !DBColAttr categoriesFor: #type:!accessing!private! !
-!DBColAttr categoriesFor: #typeLength!accessing!initializing!private! !
 !DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
 !DBColAttr categoriesFor: #updateRuleMask:!accessing!private! !
 
@@ -318,12 +322,9 @@ initialize
 				at: SQL_FLOAT + TypeOffset put: SQL_C_DOUBLE;
 				at: SQL_REAL + TypeOffset put: SQL_C_FLOAT;
 				at: SQL_DOUBLE + TypeOffset put: SQL_C_DOUBLE;
-				at: SQL_DATE + TypeOffset put: SQL_C_DATE;
-				at: SQL_TIME + TypeOffset put: SQL_C_TIME;
-				at: SQL_TIMESTAMP + TypeOffset put: SQL_C_TIMESTAMP;
-				at: SQL_TYPE_DATE + TypeOffset put: SQL_C_DATE;
-				at: SQL_TYPE_TIME + TypeOffset put: SQL_C_TIME;
-				at: SQL_TYPE_TIMESTAMP + TypeOffset put: SQL_C_TIMESTAMP;
+				at: SQL_TYPE_DATE + TypeOffset put: SQL_C_TYPE_DATE;
+				at: SQL_TYPE_TIME + TypeOffset put: SQL_C_TYPE_TIME;
+				at: SQL_TYPE_TIMESTAMP + TypeOffset put: SQL_C_TYPE_TIMESTAMP;
 				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
 				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
 				yourself).
