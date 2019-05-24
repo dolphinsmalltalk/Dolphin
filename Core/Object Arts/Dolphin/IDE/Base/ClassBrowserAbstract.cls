@@ -1733,7 +1733,8 @@ printClassTitle: anObject on: target
 	"Private - Print the 'title' of the currently selected class onto the <puttableStream>, target.
 	This includes a prefix for the package."
 
-	target nextPutAll: self actualClass name!
+	target display: anObject
+!
 
 printShortCaptionForClass: aClass on: aWriteStream 
 	aClass isNil 
