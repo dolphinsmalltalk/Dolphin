@@ -528,14 +528,11 @@ testFPFaultInPrimitive
 	subsequently invoked method, even when interrupts are off."
 
 	| mask receiver |
-	mask := Float exceptionMask.
-	Float exceptionMask: (mask maskClear: CRTConstants._EM_OVERFLOW).
+	mask := Float exceptionMask: (_MCW_EM maskClear: CRTConstants._EM_OVERFLOW).
 	receiver := 2.0.
 	
 	[self
-		should: 
-			[Processor enableAsyncEvents: false.
-			(receiver timesTwoPower: Float emax) * 5.0]
+		should: [(receiver timesTwoPower: Float emax) * 5.0]
 		raise: FloatingPointException
 		matching: 
 			[:fpe |

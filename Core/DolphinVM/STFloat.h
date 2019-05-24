@@ -21,6 +21,18 @@
 namespace ST { class Float; }
 typedef TOTE<ST::Float> FloatOTE;
 
+
+__forceinline bool isNaN(double d)
+{
+	return (*reinterpret_cast<uint64_t*>(&d) & 0x7FFFFFFFFFFFFFFF) > 0x7FF0000000000000;
+}
+
+__forceinline bool isFinite(double d)
+{
+	return (*reinterpret_cast<uint32_t*>(&d) & 0x7FF00000) == 0x7FF00000;
+}
+
+
 namespace ST
 {
 	// Float is a variable Byte subclass of Number, though it is always 8 bytes long
@@ -31,6 +43,8 @@ namespace ST
 
 		static FloatOTE* __stdcall New();
 		static FloatOTE* __stdcall New(double fValue);
+
+		__forceinline bool isNaN() const { return ::isNaN(m_fValue); }
 	};
 }
 

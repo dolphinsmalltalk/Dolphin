@@ -76,7 +76,7 @@ LargeInteger includes high performance primitive implementations for the common 
 	"Answer whether the receiver is equal to the <Object>, comperand."
 
 	<primitive: 27>
-	^super = comperand!
+	^comperand understandsArithmetic and: [comperand equalToInteger: self]!
 
 > operand
 	"Answer whether the receiver is greater than the <number>, operand."

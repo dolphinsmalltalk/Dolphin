@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 
 	File: FlotPrim.cpp
 
@@ -50,6 +50,7 @@ inline FloatOTE* __stdcall Float::New(double fValue)
 	FloatOTE* newFloatPointer = reinterpret_cast<FloatOTE*>(Interpreter::m_otePools[Interpreter::FLOATPOOL].newByteObject(Pointers.ClassFloat, sizeof(double), OTEFlags::FloatSpace));
 	ASSERT(ObjectMemory::hasCurrentMark(newFloatPointer));
 	ASSERT(newFloatPointer->m_oteClass == Pointers.ClassFloat);
+	newFloatPointer->beImmutable();
 
 	Float* newFloat = newFloatPointer->m_location;
 	newFloat->m_fValue = fValue;
@@ -70,9 +71,7 @@ Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp, unsigned)
 template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const sp, const Op& op)
 {
 	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
-	Float* floatReceiver = oteFloat->m_location;
-
-	double fValue = op(floatReceiver->m_fValue);
+	double fValue = op(oteFloat->m_location->m_fValue);
 
 	if (fValue < MinSmallInteger || fValue > MaxSmallInteger)
 	{
@@ -85,21 +84,17 @@ template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const s
 			// The truncated value might actually be a SmallInteger, e.g. (SmallInteger maximum + 0.1) truncated
 			*sp = truncated;
 			ObjectMemory::AddToZct(truncated);
+			return sp;
 		}
 		else
-		{
-			// Too large, have to handle it in Smalltalk
-			return NULL;
-		}
+			return nullptr;
 	}
 	else
 	{
 		int intVal = static_cast<int>(fValue);
 		*sp = ObjectMemoryIntegerObjectOf(intVal);
+		return sp;
 	}
-
-	return sp;
-
 }
 
 
@@ -138,82 +133,71 @@ Oop* __fastcall Interpreter::primitiveFloatCeiling(Oop* const sp, unsigned)
 // When precise is turned off the compiler generates code for the conditional operator
 // statements that defaults the result to true.
 // These is no significant performance impact of using precise for these comparisons.
-#pragma float_control(precise, on, push)
+//#pragma float_control(precise, on, push)
 
-template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(Oop* const sp, const P1 &pred, const P2& predMixed)
+template <class P1> __forceinline static Oop* primitiveFloatCompare(Oop* const sp, const P1 &pred)
 {
-	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
-	Oop oopArg = *sp;
-	if (!ObjectMemoryIsIntegerObject(oopArg))
+	Float* receiver = reinterpret_cast<FloatOTE*>(*(sp - 1))->m_location;
+	// NaN's never compare <, <=, =, >= or > to anything, even another NaN
+	if (!receiver->isNaN())
 	{
-		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
-		if (oteArg->m_oteClass == Pointers.ClassFloat)
+		Oop oopArg = *sp;
+		if (!ObjectMemoryIsIntegerObject(oopArg))
 		{
-			*(sp - 1) = reinterpret_cast<Oop>(pred(oteReceiver->m_location->m_fValue, oteArg->m_location->m_fValue) 
-							? Pointers.True : Pointers.False);
+			FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+			Float* arg = oteArg->m_location;
+			if (oteArg->m_oteClass == Pointers.ClassFloat)
+			{
+				if (!arg->isNaN())
+				{
+					*(sp - 1) = reinterpret_cast<Oop>(pred(receiver->m_fValue, arg->m_fValue) ? Pointers.True : Pointers.False);
+					return sp - 1;
+				}
+			}
+			else
+			{
+				// Unhandled arg type, fail into Smalltalk code
+				return nullptr;
+			}
 		}
 		else
 		{
-			return NULL;
+			*(sp - 1) = reinterpret_cast<Oop>(pred(receiver->m_fValue, ObjectMemoryIntegerValueOf(oopArg)) ? Pointers.True : Pointers.False);
+			return sp - 1;
 		}
 	}
-	else
-	{
-		*(sp - 1) = reinterpret_cast<Oop>(predMixed(oteReceiver->m_location->m_fValue, ObjectMemoryIntegerValueOf(oopArg))
-			? Pointers.True : Pointers.False);
-	}
 
+	*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
 	return sp - 1;
 }
 
-template <class T1, class T2> struct less {
-	bool operator() (const T1& x, const T2& y) const { return x<y; }
-};
-
 Oop* Interpreter::primitiveFloatLessThan(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, ::less<double, double>(), ::less<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, std::less<double>());
 }
-
-template <class T1, class T2> struct greater {
-	bool operator() (const T1& x, const T2& y) const { return x>y; }
-};
 
 Oop* Interpreter::primitiveFloatGreaterThan(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, ::greater<double, double>(), ::greater<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, std::greater<double>());
 }
-
-
-template <class T1, class T2> struct less_equal {
-	bool operator() (const T1& x, const T2& y) const { return x<=y; }
-};
 
 Oop* Interpreter::primitiveFloatLessOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, ::less_equal<double, double>(), ::less_equal<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, std::less_equal<double>());
 }
-
-template <class T1, class T2> struct greater_equal {
-	bool operator() (const T1& x, const T2& y) const { return x>=y; }
-};
 
 Oop* Interpreter::primitiveFloatGreaterOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, ::greater_equal<double, double>(), ::greater_equal<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, std::greater_equal<double>());
 }
-
-template <class T1, class T2> struct equal_to {
-	bool operator() (const T1& x, const T2& y) const { return x==y; }
-};
 
 Oop* Interpreter::primitiveFloatEqual(Oop* const sp, unsigned)
 {
 	// Note that we can't optimise this for identical without allowing for the NaN case. Not really worth it.
-	return primitiveFloatCompare(sp, ::equal_to<double, double>(), ::equal_to<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, std::equal_to<double>());
 }
 
-#pragma float_control(pop)
+//#pragma float_control(pop)
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -221,7 +205,6 @@ Oop* Interpreter::primitiveFloatEqual(Oop* const sp, unsigned)
 // 
 // These are carefully arranged for optimal code generation. In particular the
 // Float object to hold the result is allocated before the FP calculation is
-// performed. This will temporarily "leak" the object if there is an FP fault in 
 // the calculation, although only until the next GC. By allocating the Float upfront, 
 // the C++ compiler is able to generated code that stores directly from the XMM0 
 // register into the object. If the Float is allocated after the calculation, then the result value 
@@ -230,7 +213,7 @@ Oop* Interpreter::primitiveFloatEqual(Oop* const sp, unsigned)
 // The conditions are also arranged so that the conditional forward jumps are taken in the less
 // common case, which reduces branch misprediction overhead.
 
-template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(Oop* const sp, const O1 &op, const O2& opMixed)
+template <class T> __forceinline static Oop* primitiveFloatBinaryOp(Oop* const sp, const T &op)
 {
 	Oop oopArg = *sp;
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp-1));
@@ -242,70 +225,66 @@ template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(O
 		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
 		if (oteArg->m_oteClass == Pointers.ClassFloat)
 		{
-			oteResult = Float::New();
-			oteResult->m_location->m_fValue = op(receiver->m_fValue, oteArg->m_location->m_fValue);
+			oteResult = Float::New(op(receiver->m_fValue, oteArg->m_location->m_fValue));
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			ObjectMemory::AddToZct((OTE*)oteResult);
+			return sp - 1;
 		}
 		else
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 	else
 	{
-		oteResult = Float::New();
-		oteResult->m_location->m_fValue = opMixed(receiver->m_fValue, ObjectMemoryIntegerValueOf(oopArg));
+		oteResult = Float::New(op(receiver->m_fValue, ObjectMemoryIntegerValueOf(oopArg)));
+		*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+		ObjectMemory::AddToZct((OTE*)oteResult);
+		return sp - 1;
 	}
-
-	*(sp-1) = reinterpret_cast<Oop>(oteResult);
-	ObjectMemory::AddToZct((OTE*)oteResult);
-	return sp-1;
 }
-
-// std::plus requires that T1 = T2
-template <class T1, class T2> struct plus {
-	double operator() (const T1& x, const T2& y) const { return x+y; }
-};
 
 Oop* Interpreter::primitiveFloatAdd(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp,	::plus<double, double>(), plus<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, std::plus<double>());
 }
-
-template <class T1, class T2> struct minus {
-	double operator() (const T1& x, const T2& y) const { return x - y; }
-};
 
 Oop* Interpreter::primitiveFloatSubtract(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, minus<double, double>(), minus<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, std::minus<double>());
 }
-
-template <class T1, class T2> struct multiplies {
-	double operator() (const T1& x, const T2& y) const { return x * y; }
-};
 
 Oop* Interpreter::primitiveFloatMultiply(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, multiplies<double, double>(), multiplies<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, std::multiplies<double>());
 }
 
-// std::divides requires that T1 = T2
-template <class T1, class T2> struct divides {
-	double operator() (const T1& x, const T2& y) const { return x / y; }
-};
+// primitiveFloatDivide
+//
+// As specified by ISO 10967, clause 6, a compliant implementation can support a number of 	alternate means for applications to detect FP errors :
+//	a) Notification by recording in indicators (see clause 6.2.1).
+//	b) Notification by alteration of control flow (see clause 6.2.2).
+//	c) Notification by termination with message (see clause 6.2.3).
+//
+// Here we support (a) and (b) for division by zero, depending on the current FP exception mask. If zero-divide and invalid operation exceptions
+// are unmasked, then an FP exception will be raised directly by the division operation below and will interrupt the Smalltalk code causing
+// an alteration of control flow (option (b)). If exceptions are masked, then divide by zero will not be raised, and instead a continuation 
+// value (∞ or -∞) will result. The FP status will correctly reflect division by zero in this case since the actual division operation is 
+// still performed, which is always required since indicators must always be available, even for option (b) (i.e. only (a), or (a) and (b) 
+// together, are compliant options.
+//
 
 Oop* Interpreter::primitiveFloatDivide(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, divides<double, double>(), divides<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, std::divides<double>());
 }
 
-template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const sp, const O1 &op)
+template <class T> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const sp, const T &op)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	Float* receiver = oteReceiver->m_location;
 
-	FloatOTE* oteResult = Float::New();
-	oteResult->m_location->m_fValue = op(receiver->m_fValue);
+	FloatOTE* oteResult = Float::New(op(receiver->m_fValue));
 
 	*sp = reinterpret_cast<Oop>(oteResult);
 	ObjectMemory::AddToZct((OTE*)oteResult);
@@ -366,13 +345,13 @@ Oop* Interpreter::primitiveFloatArcTan(Oop* const sp, unsigned)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-template <class T1, class T2> struct op_atan2 {
-	double operator() (const T1& y, const T2& x) const { return atan2(y, x); }
-};
-
 Oop* Interpreter::primitiveFloatArcTan2(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_atan2<double, double>(), op_atan2<double, SMALLINTEGER>());
+	struct op_atan2 {
+		double operator() (const double& y, const double& x) const { return atan2(y, x); }
+	};
+
+	return primitiveFloatBinaryOp(sp, op_atan2());
 }
 
 Oop* Interpreter::primitiveFloatExp(Oop* const sp, unsigned)
@@ -384,7 +363,7 @@ Oop* Interpreter::primitiveFloatExp(Oop* const sp, unsigned)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatLog(Oop* const sp, unsigned)
+Oop* Interpreter::primitiveFloatLn(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return log(x); }
@@ -443,13 +422,13 @@ Oop* Interpreter::primitiveFloatAbs(Oop* const sp, unsigned)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-template <class T1, class T2> struct op_pow {
-	double operator() (const T1& x, const T2& y) const { return pow(x, y); }
+template <class T> struct op_pow {
+	double operator() (const T& x, const T& y) const { return pow(x, y); }
 };
 
 Oop* Interpreter::primitiveFloatRaisedTo(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_pow<double, double>(), op_pow<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, op_pow<double>());
 }
 
 Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, unsigned)
@@ -527,7 +506,6 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp, unsi
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
-	// Its a byte object, so its simpler (no ref counting and no fixed fields)
 	FloatOTE* oteResult;
 	Behavior* behavior = receiver->m_oteClass->m_location;
 	if (behavior->isIndirect())
@@ -568,7 +546,6 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp, unsi
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
 	ASSERT(receiver->isBytes());
 
-	// Its a byte object, so its simpler (no ref counting and no fixed fields)
 	FloatOTE* oteResult;
 	Behavior* behavior = receiver->m_oteClass->m_location;
 	if (behavior->isIndirect())

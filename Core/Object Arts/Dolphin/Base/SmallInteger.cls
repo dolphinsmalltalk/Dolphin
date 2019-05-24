@@ -42,8 +42,7 @@ Wherever an Integer may be represented as a SmallInteger, then its only truly va
 
 / operand
 	"Answer the result of dividing the receiver by the <number>, operand.
-	Attempted division by zero will cause a <ZeroDivide> exception to be
-	raised.
+	Attempted division by (integer) zero will cause a non-resumable <ZeroDivide> exception to be raised by the VM.
 
 	The primitive may fail for the following reasons, but does not set the failure code:
 		 - aNumber is not a SmallInteger.
