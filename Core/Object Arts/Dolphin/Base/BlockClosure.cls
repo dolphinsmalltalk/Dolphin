@@ -593,6 +593,12 @@ ticksToRun
 	lib queryPerformanceCounter: endTime yourAddress.
 	^endTime normalize - startTime normalize!
 
+timeToRepeat: anInteger
+	"Evaluate the receiver the number of times specified by the <integer> argument, and answer a <Duration> measuring the time taken to do so."
+
+	^(([anInteger timesRepeat: [self value]] ticksToRun - [anInteger timesRepeat: [self]] ticksToRun)
+		* Delay.TicksToNanos) nanoseconds!
+
 timeToRun
 	"Evaluate the receiver and answer a <Duration> measuring the time taken to do so."
 
@@ -824,6 +830,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #tempCount!accessing!public! !
 !BlockClosure categoriesFor: #ticksToRun!operations!private! !
+!BlockClosure categoriesFor: #timeToRepeat:!event handling!public! !
 !BlockClosure categoriesFor: #timeToRun!evaluating!public! !
 !BlockClosure categoriesFor: #value!evaluating!public! !
 !BlockClosure categoriesFor: #value:!evaluating!public! !
