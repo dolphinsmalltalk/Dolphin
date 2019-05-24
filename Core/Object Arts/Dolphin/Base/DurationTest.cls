@@ -218,9 +218,9 @@ testNumberHours
 testNumberMicroseconds
 	| subject |
 	subject := 999 microseconds.
-	self assert: subject asSeconds equals: 0.000999.
+	self assert: subject asSeconds equals: 999/1e6.
 	subject := 1.5 microseconds.
-	self assert: subject asSeconds equals: 0.0000015.
+	self assert: subject asSeconds equals: 15/1e7.
 	self assert: 1000 microseconds equals: 1 milliseconds.
 	"1 nanosecond"
 	subject := (1 / 1000) microseconds.
@@ -229,9 +229,9 @@ testNumberMicroseconds
 testNumberMilliseconds
 	| subject |
 	subject := 999 milliseconds.
-	self assert: subject asSeconds equals: 0.999.
+	self assert: subject asSeconds equals: 999/1000.
 	subject := 1.5 milliseconds.
-	self assert: subject asSeconds equals: 0.0015.
+	self assert: subject asSeconds equals: 15/10000.
 	self assert: 1000 milliseconds equals: 1 seconds.
 	"1 nanosecond"
 	subject := (1 / 1000000) milliseconds.
@@ -251,9 +251,9 @@ testNumberMinutes
 testNumberNanoseconds
 	| subject |
 	subject := 999 nanoseconds.
-	self assert: subject asSeconds equals: 0.000000999.
+	self assert: subject asSeconds equals: 999/1e9.
 	subject := 1.5 nanoseconds.
-	self assert: subject asSeconds equals: 0.0000000015.
+	self assert: subject asSeconds equals: 15/1e10.
 	self assert: 1000 nanoseconds equals: 1 microseconds.
 	"1 nanosecond"
 	subject := 1 nanoseconds .

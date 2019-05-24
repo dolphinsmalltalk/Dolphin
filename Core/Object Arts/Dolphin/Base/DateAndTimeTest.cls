@@ -293,7 +293,7 @@ testJulianDate
 				second: 0
 				offset: 0 hours) julianDate
 				roundTo: 1e-6.
-	self assert: subject equals: 2456293.520833!
+	self assert: subject equals: 2456293520833/1e6!
 
 testJulianDayNumber
 	"see https://en.wikipedia.org/wiki/Julian_day."
