@@ -52,6 +52,7 @@ using namespace ST;
 // This is where the stack overflow handling is carried out
 
 extern "C" void __cdecl byteCodeLoop();	// See byteasm.asm
+extern "C" void __cdecl invalidByteCode();	// See byteasm.asm
 
 typedef volatile LONG SHAREDLONG;
 
@@ -327,7 +328,7 @@ private:
 
 	static void recoverFromFault(LPEXCEPTION_POINTERS pExRec);
 	static void sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExRec);
-	static void saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive);
+	static bool saveContextAfterFault(LPEXCEPTION_POINTERS info);
 
 	static void wakePendingCallbacks();
 	static unsigned countPendingCallbacks();
@@ -481,8 +482,8 @@ public:
 	static Oop* primitiveFailureWithInt(int failureCode, SMALLINTEGER failureInt);
 
 private:
-	// Answer whether the Interpreter is currently executing a primitive method
-	static bool isInPrimitive();
+	// Answer whether an exception occurred in a primitive
+	static bool isInPrimitive(LPEXCEPTION_POINTERS pExInfo);
 
 	static Oop* __fastcall unusedPrimitive(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveActivateMethod(Oop* const sp, unsigned argCount);
@@ -572,7 +573,7 @@ private:
 	static Oop* __fastcall primitiveFloatArcTan(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatArcTan2(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatExp(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatLog(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveFloatLn(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatLog10(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatSqrt(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatTimesTwoPower(Oop* const sp, unsigned argCount);

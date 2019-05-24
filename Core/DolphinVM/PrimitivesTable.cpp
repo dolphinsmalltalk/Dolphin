@@ -204,7 +204,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveFloatArcTan							, // case 197
 	Interpreter::primitiveFloatArcCos							, // case 198
 	Interpreter::primitiveFloatArcTan2							, // case 199
-	Interpreter::primitiveFloatLog								, // case 200
+	Interpreter::primitiveFloatLn								, // case 200
 	Interpreter::primitiveFloatExp								, // case 201
 	Interpreter::primitiveFloatSqrt								, // case 202
 	Interpreter::primitiveFloatLog10							, // case 203

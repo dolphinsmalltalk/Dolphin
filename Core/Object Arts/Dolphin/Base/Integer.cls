@@ -336,6 +336,21 @@ divideIntoInteger: anInteger
 
 	^Fraction rationalisedNumerator: anInteger denominator: self!
 
+equalToFloat: aFloat
+	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. This can only be the case for Float's with no fractional value."
+
+	^aFloat isFinite and: [aFloat fractionPart isZero and: [aFloat truncated = self]]!
+
+equalToFraction: aFraction
+	"Private - Answer whether the receiver is equal to the known <Fraction>, aFraction."
+
+	^self * aFraction denominator = aFraction numerator!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
+
+	^self - anInteger == 0!
+
 even
 	"Answer whether the receiver is an even integer. Zero is considered even.
 	Override superclass as we've a more efficient implementation."
@@ -429,7 +444,13 @@ gcdbin: operand
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat."
 
-	^aFloat < self asFloat!
+	| fpclass |
+	fpclass := aFloat fpClass.
+	^(fpclass anyMask: Float.FpClassFinite)
+		ifTrue: [self greaterThanFraction: aFloat asTrueFraction]
+		ifFalse: 
+			["aFloat is NaN, -∞ or ∞, so obviously we are only greater if it is -∞"
+			fpclass anyMask: Float.FpClassNegative]!
 
 greaterThanFraction: aFraction
 	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
@@ -498,7 +519,7 @@ isNull
 isPowerOfTwo
 	"Return true if the receiver is an integral power of two."
 
-	^self strictlyPositive and: [(self bitAnd: self - 1) == 0]!
+	^self ~~ 0 and: [(self bitAnd: self - 1) == 0]!
 
 isPrime
 	"Answer whether the receiver is a prime number. This may take a long time for larger integer values."
@@ -797,6 +818,9 @@ truncated
 !Integer categoriesFor: #divideIntoFloat:!double dispatch!private! !
 !Integer categoriesFor: #divideIntoFraction:!double dispatch!private! !
 !Integer categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Integer categoriesFor: #equalToFloat:!double dispatch!private! !
+!Integer categoriesFor: #equalToFraction:!double dispatch!private! !
+!Integer categoriesFor: #equalToInteger:!double dispatch!private! !
 !Integer categoriesFor: #even!public!testing! !
 !Integer categoriesFor: #exp10!mathematical!public! !
 !Integer categoriesFor: #factorial!factorization!public! !

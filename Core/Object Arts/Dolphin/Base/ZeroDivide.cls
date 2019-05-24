@@ -6,11 +6,18 @@ ArithmeticError subclass: #ZeroDivide
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ZeroDivide guid: (GUID fromString: '{87b4c563-026e-11d3-9fd7-00a0cc3e4a32}')!
-ZeroDivide comment: 'ZeroDivide is the class of <Error> for representing attempts at integer division by zero.
-Floating point division by zero exceptions are raised as instances of <FloatingPointException>.
+ZeroDivide comment: '`ZeroDivide` is the class of `ArithmeticError` for representing attempts at division by zero.
 
-For an example of ZeroDivide in action, evaluate the following:
-	1/0'!
+`ZeroDivide` is resumable when triggered by floating point division by zero (i.e. either operand is a floating point number). When resumed the result should be a continuation value (generally ∞ or -∞, but may also be NaN if a NaN was being divided by zero). Integer division by zero (i.e. both operands are integers) is not resumable, because there is no suitable continuation value (i.e., no representation of infinity).
+
+Examples:
+
+Evaluate the following to cause `ZeroDivide` exceptions to be raised.
+```
+	1 / 0.
+	1.23 / 0.0.
+	[1.2 / -0.0] on: ZeroDivide do: [:e | e resume]. 	"=> Float.NegativeInfinity"
+```'!
 !ZeroDivide categoriesForClass!Kernel-Exception Handling! !
 !ZeroDivide methodsFor!
 
@@ -26,9 +33,10 @@ dividend
 
 isResumable
 	"Answer whether the receiver represents a resumable error. 
-	Division by zero is not considered fatal, so allow resumption."
+		- Floating point division by zero is continuable as there is a suitable resumption value (∞ or -∞). 
+		- Integer division by zero is not continuable, so resumption is disallowed."
 
-	^true! !
+	^self dividend isInteger not! !
 !ZeroDivide categoriesFor: #_descriptionFormat!displaying!public! !
 !ZeroDivide categoriesFor: #dividend!accessing!public! !
 !ZeroDivide categoriesFor: #isResumable!public!testing! !

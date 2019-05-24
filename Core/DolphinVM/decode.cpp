@@ -793,7 +793,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 // Dump the interpreter context
 void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logStream)
 {
-	saveContextAfterFault(pExceptionInfo, isInPrimitive());
+	saveContextAfterFault(pExceptionInfo);
 	DumpContext(logStream);
 }
 

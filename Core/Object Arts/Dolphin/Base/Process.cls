@@ -809,44 +809,13 @@ initialize
 	"
 
 	self addClassConstant: 'DefaultStack' value: 1.	"Let the VM work out the minimum size (will be at least one OS page)"
-	DefaultMaxStack := 64 * 1024.				"Grow to 64K slots (256Kb) before overflow."
+	DefaultMaxStack := 64 * 1024.	"Grow to 64K slots (256Kb) before overflow."
 
-	"Floating point Inexact and Underflow exceptions will be masked (i.e. not raised) by default.
-	As specified by ISO 10967, clause 6, a compliant implementation can support a number of 
-	alternate means for applications to detect FP errors:
-		a) Notification by recording in indicators (see clause 6.2.1).
-		b) Notification by alteration of control flow (see clause 6.2.2).
-		c) Notification by termination with message (see clause 6.2.3). 
-
-	These alternates are supported in Dolphin as follows:
-	a) Indicators are accessed via Float class>>statusFlags, e.g. after detecting an infinite result.
-	b) Implemented by raising of exceptions, depending on the Float class>>exceptionMask setting.
-	c) A special case of (b), depending on how the application handles exceptions."
-
-	"Note that alternative (a), is 'required', and is 'expected to be the default'. In order to
-	support this it is necessary to provide a means for an application to examine 'indicators'
-	after performing floating point operations, which most Smalltalk implementations do not. The
-	Dolphin VM ensures that isolated FP state is maintained for each running Process, and the
-	CRT _statusfp function can be called to retrieve the current status indicators after FP operations 
-	are performed, either in primitives, or external library calls. The default exception mask now masks
-	out the continuable error cases in order to comply with the expectation that notification
-	through indicators be the default notification mechanism. For example, should an FP
-	operation cause overflow, then the result will be Float.Infinity (or
-	Float.NegativeInfinity), and the CRTConstants._EM_OVERFLOW mask will be set in 
-	Float statusFlags."
-
-	"We still provide notification through alteration of control flow (i.e. the raising of
-	exceptions) for division by zero, and invalid operations such as taking the square root of a
-	negative number. We've chosen to unmask these error cases because they generally indicate
-	logic errors in a program, and so exceptions are raised for these errors by default. This
-	can be overridden in any individual process (or for a block of computation) by setting the
-	FP exception mask appropriately. When these conditions are also masked, Float.NaN values
-	will be returned from the FP operation as continuation values."
+	"See FloatingPointException for an explanation of the default FP exception mask"
 	self addClassConstant: 'DefaultFpControl'
 		value: CRTConstants._RC_NEAR | CRTConstants._IC_PROJECTIVE | CRTConstants._DN_SAVE
-				| CRTConstants._PC_64 | CRTConstants._EM_DENORMAL
-				| CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW
-				| CRTConstants._EM_OVERFLOW!
+				| CRTConstants._PC_64
+					| (CRTConstants._MCW_EM maskClear: CRTConstants._EM_ZERODIVIDE | CRTConstants._EM_INVALID)!
 
 new
 	"Processes should be created by sending one of the #fork family of messages to a block."

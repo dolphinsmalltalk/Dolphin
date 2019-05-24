@@ -178,6 +178,23 @@ divideIntoScaledDecimal: operand
 
 	^operand retry: #/ coercing: self!
 
+equalToFloat: aFloat
+	"Private - Answer whether the receiver is equal to the the known Float, aFloat, by coercing 
+	the less general of it and the receiver. Overridden by subclasses which can implement 
+	more efficiently and/or correctly."
+
+	^aFloat retry: #= coercing: self!
+
+equalToFraction: aFraction
+	"Private - Answer whether the receiver is equal to the known <Fraction>, aFraction, by coercing the less general of it and the receiver and comparing again. Overridden by subclasses which can implement more correctly and/or efficiently."
+
+	^aFraction retry: #= coercing: self!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger, by coercing the less general of it and the receiver and comparing again. Overridden by subclasses which can implement more correctly and/or efficiently."
+
+	^anInteger retry: #= coercing: self!
+
 floor
 	"Answer the <integer> nearest the receiver toward negative infinity
 	(i.e. the largest integer less than or equal to the receiver)."
@@ -477,6 +494,9 @@ understandsArithmetic
 !ArithmeticValue categoriesFor: #divideIntoPoint:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #equalToFloat:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #equalToFraction:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #equalToInteger:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #floor!public!truncation and round off! !
 !ArithmeticValue categoriesFor: #generality!coercing!private! !
 !ArithmeticValue categoriesFor: #greaterThanFloat:!double dispatch!private! !

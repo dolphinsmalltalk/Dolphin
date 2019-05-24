@@ -49,6 +49,11 @@ Instance Variables:
 
 	^aNumber greaterThanFraction: self!
 
+= anObject
+	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
+
+	^anObject understandsArithmetic and: [anObject equalToFraction: self]!
+
 addToFloat: aFloat
 	"Private - Add the receiver to the known Float, aFloat."
 
@@ -172,6 +177,21 @@ divideIntoInteger: anInteger
 		rationalisedNumerator: anInteger * denominator
 		denominator: numerator!
 
+equalToFloat: aFloat
+	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. We are careful to avoid any loss of precision."
+
+	^aFloat isFinite and: [aFloat asTrueFraction equalToFraction: self]!
+
+equalToFraction: aFraction 
+	"Private - Answer whether the receiver is equal to the known <Fraction>, aFraction."
+
+	^numerator * aFraction denominator = (aFraction numerator * denominator)!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
+
+	^anInteger * denominator = numerator!
+
 generality
 	"Private - Answer the generality of the receiver."
 
@@ -181,16 +201,15 @@ generality
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat"
 
-	^aFloat < self asFloat!
+	| fpclass |
+	fpclass := aFloat fpClass.
+	^((fpclass anyMask: Float.FpClassFinite) and: [self greaterThanFraction: aFloat asTrueFraction])
+		or: [fpclass anyMask: Float.FpClassNegative]!
 
 greaterThanFraction: aFraction
 	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
 
-	| negative |
-	negative := aFraction negative.
-	negative = self negative ifFalse: [ ^negative ].
-	^aFraction numerator * denominator < 
-		(numerator * aFraction denominator)!
+	^numerator * aFraction denominator > (aFraction numerator * denominator)!
 
 greaterThanInteger: anInteger
 	"Private - Answer whether the receiver is greater than the known integer, anInteger"
@@ -204,9 +223,13 @@ hash
 	integral, or <Float>, if exactly representable as a Float."
 
 	| float |
-	denominator = 1 ifTrue: [^numerator hash].
-	float := [self asFloat] on: FloatingPointException do: [:ex | Float.Infinity].
-	^float isFinite ifTrue: [float hash] ifFalse: [numerator hash bitXor: denominator hash]!
+	denominator isPowerOfTwo
+		ifTrue: 
+			["Possibly representable as a Float, if not too large"
+			denominator == 1 ifTrue: [^numerator hash].
+			float := [self asFloat] on: FloatingPointException do: [:ex | Float.Infinity].
+			float isFinite ifTrue: [^float hash]].
+	^numerator hash bitXor: denominator hash!
 
 isFraction
 	"Answer true if receiver is an instance of class Fraction, else answer false."
@@ -265,7 +288,7 @@ numerator: num denominator: div
 	"Private - The numerator and denominator of the receiver are set to the num and div
 	arguments respectively. Intended for instance initialisation."
 
-	div = 0 ifTrue: [^num divideByZero].
+	div == 0 ifTrue: [^num divideByZero].
 	div negative
 		ifTrue: 
 			[numerator := num negated.
@@ -347,6 +370,7 @@ truncated
 !Fraction categoriesFor: #//!arithmetic!public! !
 !Fraction categoriesFor: #+!arithmetic!public! !
 !Fraction categoriesFor: #<!comparing!public! !
+!Fraction categoriesFor: #=!comparing!public! !
 !Fraction categoriesFor: #addToFloat:!double dispatch!private! !
 !Fraction categoriesFor: #addToFraction:!double dispatch!private! !
 !Fraction categoriesFor: #addToInteger:!double dispatch!private! !
@@ -358,6 +382,9 @@ truncated
 !Fraction categoriesFor: #divideIntoFloat:!double dispatch!private! !
 !Fraction categoriesFor: #divideIntoFraction:!double dispatch!private! !
 !Fraction categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Fraction categoriesFor: #equalToFloat:!double dispatch!private! !
+!Fraction categoriesFor: #equalToFraction:!double dispatch!private! !
+!Fraction categoriesFor: #equalToInteger:!double dispatch!private! !
 !Fraction categoriesFor: #generality!coercing!private! !
 !Fraction categoriesFor: #greaterThanFloat:!double dispatch!private! !
 !Fraction categoriesFor: #greaterThanFraction:!double dispatch!private! !

@@ -63,6 +63,7 @@ public ?primitiveActivateMethod@Interpreter@@CIPAIQAII@Z
 
 ; Byte code dispatch loop
 public _byteCodeLoop									; Main entry point from C++
+public _invalidByteCode
 EXECUTENEWMETHOD EQU ?executeNewMethod@Interpreter@@CIXPAV?$TOTE@VCompiledMethod@ST@@@@I@Z
 public EXECUTENEWMETHOD
 ACTIVATENEWMETHOD EQU ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@ST@@@Z
@@ -389,7 +390,7 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 	DWORD		shortSpecialSendNotIdentical
 	DWORD		shortSpecialSendNot
 
-	CreateInstructionLabels <invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
+	CreateInstructionLabels <_invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;; Beyond this point, all multi-byte codes (Almost all these codes not Smalltalk-80)
@@ -412,32 +413,32 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 
 	DWORD		Send													; 
 	DWORD		Supersend												;
-	DWORD		invalidByteCode											; Reserved for extended special send
+	DWORD		_invalidByteCode										; Reserved for extended special send
 	
 	DWORD		nearJump												; 
 	DWORD		nearJumpIfTrue											; 
 	DWORD		nearJumpIfFalse											; 
 	DWORD		nearJumpIfNil											;
 	DWORD		nearJumpIfNotNil										;
-	DWORD		invalidByteCode
-	DWORD		invalidByteCode
+	DWORD		_invalidByteCode
+	DWORD		_invalidByteCode
 	DWORD		sendTempNoArgs
 	DWORD		pushSelfAndTemp
 	DWORD		pushOuterTemp
 	DWORD		storeOuterTemp
 	DWORD		popStoreOuterTemp
 	DWORD		sendSelfNoArgs
-	DWORD		invalidByteCode
+	DWORD		_invalidByteCode
 	DWORD		pushTempPair
 
-	CreateInstructionLabels	<invalidByteCode>, <NUMRESERVEDDOUBLEBYTE>
+	CreateInstructionLabels	<_invalidByteCode>, <NUMRESERVEDDOUBLEBYTE>
 
 	;; Triple Byte codes (starting from 234)
 
 	DWORD		longPushConstant
 	DWORD		longPushStatic
 	DWORD		longStoreStatic
-	DWORD		invalidByteCode
+	DWORD		_invalidByteCode
 	DWORD		longPushImmediate
 	DWORD		longSend											; 
 	DWORD		longSupersend										; 
@@ -452,13 +453,13 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 	DWORD		incrementTempAndPush
 	DWORD		decrementTemp
 	DWORD		decrementTempAndPush
-	CreateInstructionLabels <invalidByteCode>, <NUMRESERVEDTRIPLEBYTE>
+	CreateInstructionLabels <_invalidByteCode>, <NUMRESERVEDTRIPLEBYTE>
 	
 	DWORD		blockCopy
 	DWORD		exLongSend
 	DWORD		exLongSupersend
 	DWORD		exLongPushImmediate
-	CreateInstructionLabels <invalidByteCode>, <0>
+	CreateInstructionLabels <_invalidByteCode>, <0>
 
 IFDEF _DEBUG
 _byteCodeCounters DD	256 DUP (0)
@@ -5110,10 +5111,10 @@ ENDBYTECODE break
 ; This routine invoked when an unrecognised byte code number is
 ; encountered, and if you want to know what it is, its index is
 ; in AL.
-BEGINRARECODE invalidByteCode
+BEGINRARECODE _invalidByteCode
 	int		3									; Exit to debugger
 	DispatchByteCode
-ENDBYTECODE invalidByteCode
+ENDBYTECODE _invalidByteCode
 
 
 END		;; Thats all folks
