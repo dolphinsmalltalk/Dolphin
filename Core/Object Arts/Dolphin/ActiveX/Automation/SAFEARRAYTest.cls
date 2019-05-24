@@ -56,7 +56,7 @@ testAXRecords
 testElementClasses
 	| array random irand triplets |
 	triplets := #(#(#SWORD -32768 32767) #(#SDWORD -2147483648 2147483647) #(#FLOAT -1.25 1.25) #(#DOUBLE -1.23456789 1.23456789) #(#BSTR '' 'abc') #(#HRESULT ##(S_OK) ##(E_NOTIMPL)) #(#VARIANT_BOOL false true) #(#CURRENCY 99.99s2) #(#SBYTE -128 127) #(#BYTE 0 255) #(#WORD 0 65535) #(#DWORD 0 4294967295) #(#VARIANT 1 1.0 'abc' nil true 1.2s2 ##(DATE
-				now) ##(3 / 5)) #(#DECIMAL 12345.12345s) #(#LARGE_INTEGER -9223372036854775808 9223372036854775807)).
+				now) 0.6) #(#DECIMAL 12345.12345s) #(#LARGE_INTEGER -9223372036854775808 9223372036854775807)).
 	triplets do: 
 			[:each |
 			| sa2 |

@@ -39,7 +39,7 @@ testXisNested
 testXisResumable
 	" <ZeroDivide>#isResumable "
 	#'Exception'.
-	self value: [	[(ZeroDivide dividend: 1) signal
+	self value: [	[(ZeroDivide dividend: 1.0) signal
 				] on: ZeroDivide do: [ :aZeroDivide |
 					aZeroDivide return: aZeroDivide isResumable ] ]
 		should: [:r | r] conformTo: #'ZeroDivide' selector: #'isResumable'.!
