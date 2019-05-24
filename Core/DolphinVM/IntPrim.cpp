@@ -497,23 +497,21 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 				*(sp - 1) = MinusOnePointer;
 				return sp - 1;
 			}
-			else
-			{
-				// Any other large integer divisor must result in a fractional value
-				return nullptr;
-			}
+			// else any other large integer divisor must result in a fractional value
 		}
 		else if (oteArg->m_oteClass == Pointers.ClassFloat)
 		{
 			double floatA = reinterpret_cast<FloatOTE*>(oteArg)->m_location->m_fValue;
-			double floatR = ObjectMemoryIntegerValueOf(receiver);
-			FloatOTE* oteResult = Float::New(floatR / floatA);
-			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
-			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
-			return sp - 1;
+			// To avoid generating a second ZeroDivide exception if the first is resumed, we detect and fail on division-by-zero here
+			if (floatA != 0)
+			{
+				double floatR = ObjectMemoryIntegerValueOf(receiver);
+				FloatOTE* oteResult = Float::New(floatR / floatA);
+				*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
+				return sp - 1;
+			}
 		}
-		else
-			return nullptr;
 	}
 	else
 	{
@@ -543,9 +541,9 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 				return sp - 1;
 			}
 		}
-		else
-			return nullptr;
 	}
+
+	return nullptr;
 }
 
 Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
