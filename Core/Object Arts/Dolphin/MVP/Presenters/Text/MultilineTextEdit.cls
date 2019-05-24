@@ -112,7 +112,7 @@ displayOnFormats
 displayOnText
 	"Private - Answers a reasonably short piece of the receiver's text."
 
-	^self plainTextRange: (self lineRange: 1)!
+	^self lineCount > 0 ifTrue: [self plainTextRange: (self lineRange: 1)] ifFalse: ['']!
 
 dlgCode
 	"Private - Answer the combination of DLGC_XXX flags usually appropriate for the
