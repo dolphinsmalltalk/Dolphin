@@ -114,7 +114,7 @@ earlyTermination: aBoolean
 			"Let the sleep: complete (allow a reasonable period so we can be fairly sure  it does)"
 			count := 0.
 			[a ~= 0 and: [count < 500]] whileTrue: 
-					[Processor sleep: 1.
+					[Processor sleep: 1 milliseconds.
 					count := count + 1].
 			"The curtailment block should now have run"
 			self assert: a identicalTo: 0.
@@ -351,13 +351,13 @@ suspendAndTerminate
 	self assert: a identicalTo: 1.
 	proc suspend.	"suspend it before it gets a chance to queue its termination request"
 	self assert: proc isSuspended.
-	Processor sleep: 20.	"wait for the overlapped call to complete"
+	Processor sleep: 20 milliseconds.	"wait for the overlapped call to complete"
 	self assert: proc isSuspended.
 	self assert: a identicalTo: 1.
 	proc terminate.
 	i := 1.
 	
-	[Processor sleep: 10.
+	[Processor sleep: 10 milliseconds.
 	proc isTerminated or: [i > 100]] whileFalse: [i := i + 1].
 	self assert: proc isTerminated.
 	self assert: a identicalTo: 1.

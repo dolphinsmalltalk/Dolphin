@@ -1298,11 +1298,9 @@ flash: anInteger
 	| canvas rect |
 	canvas := self canvas.
 	rect := self clientRectangle.
-	(1 to: anInteger*2)
-		do: [:i | canvas invertRectangle: rect]
-		separatedBy: [Processor sleep: 65].
-	canvas free
-!
+	(1 to: anInteger * 2) do: [:i | canvas invertRectangle: rect]
+		separatedBy: [Processor sleep: 65 milliseconds].
+	canvas free!
 
 font
 	"Answer the current font aspect. "

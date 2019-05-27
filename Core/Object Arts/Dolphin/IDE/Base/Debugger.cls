@@ -1356,7 +1356,7 @@ restartMethodFrame: frame
 	self return: nil fromFrame: frame.
 	process isWaiting ifFalse: [^self].
 	"The unwind appears to be blocked, give it a little more time..."
-	Processor sleep: 100.
+	Processor sleep: 100 milliseconds.
 	process isWaiting 
 		ifTrue: 
 			[self blockedRestartWarning: (MessageSend 

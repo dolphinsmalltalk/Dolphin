@@ -221,28 +221,28 @@ testBigStringSort
 
 !VMTest methodsFor!
 
-assertLoopInterruptible: aBlock 
+assertLoopInterruptible: aBlock
 	| intervals execTime last sampleInterval go |
 	go := true.
 	last := Time millisecondClockValue.
 	intervals := OrderedCollection new.
-	sampleInterval := 3.
+	sampleInterval := 3 milliseconds.
 	
 	[
 	[Processor sleep: sampleInterval.
 	go and: 
 			[| next |
 			next := Time millisecondClockValue.
-			intervals addLast: next - last.
+			intervals addLast: (next - last) milliseconds.
 			last := next.
-			true]] 
-			whileTrue] 
+			true]]
+			whileTrue]
 			forkAt: Processor userInterruptPriority.
-	execTime := Time millisecondsToRun: aBlock.
+	execTime := aBlock timeToRun.
 	go := false.
-	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self 
-		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+	self
+		assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
+	self assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
 
 getCPUTime
 	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."

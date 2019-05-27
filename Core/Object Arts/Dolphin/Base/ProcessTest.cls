@@ -300,7 +300,7 @@ testCopy
 	sem := Semaphore new.
 	shared := IdentityDictionary with: #state -> 0.
 	shared at: #sourceProcess put: (self forkWaiterOn: sem sharing: shared).
-	Processor sleep: 1.
+	Processor sleep: 1 milliseconds.
 	shared at: #copyProcess put: (shared at: #sourceProcess) copy.
 	"	Transcript
 		print: Processor activeProcess id;
@@ -411,7 +411,7 @@ testForkedBlockHomeFrame
 	"Bug #52 - access to out-of-proc home frame, e.g. when debugging ProgressDialog operation block"
 
 	[self assertIsNil: Processor activeProcess topFrame homeFrame] fork.
-	Processor sleep: 10!
+	Processor sleep: 10 milliseconds!
 
 testLargeAddress
 	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
@@ -527,7 +527,7 @@ testSeparateContexts
 	sourceProcess := 
 			[sem wait.
 			x := x + 1] forkAt: Processor userInterruptPriority.
-	Processor sleep: 1.
+	Processor sleep: 1 milliseconds.
 	copyProcess := sourceProcess copy.
 	self assert: x identicalTo: 0.
 	sem signal.
