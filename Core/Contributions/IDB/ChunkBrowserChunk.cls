@@ -151,7 +151,7 @@ picked: aBoolean
 	picked := aBoolean!
 
 pickedIconIndex
-	^picked ifTrue: [View icon imageIndex] ifFalse: [0]!
+	^picked ifTrue: [^Exception icon imageIndex] ifFalse: [0]!
 
 rawText
 	^rawText!
