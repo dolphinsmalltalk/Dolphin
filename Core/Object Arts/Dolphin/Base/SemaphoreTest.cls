@@ -21,7 +21,7 @@ testCriticalEarlyTermination
 	"The Semaphore has been released, but terminate the background proc before it can start executing it's critical section"
 	p terminate.
 	"Allow the process to unwind itself and signal the Semaphore"
-	Processor sleep: 10.
+	Processor sleep: 10 milliseconds.
 	"The Semaphore should have been released."
 	self assert: s excessSignals identicalTo: 1! !
 !SemaphoreTest categoriesFor: #testCriticalEarlyTermination!public!unit tests! !

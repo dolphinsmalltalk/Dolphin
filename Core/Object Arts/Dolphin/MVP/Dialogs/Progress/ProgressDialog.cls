@@ -248,7 +248,7 @@ example1
 	"
 
 	^self showModalWhile: [:progress | 
-		1 to: 100 do: [:i | Processor sleep: 30. progress value: i; text: i displayString, '%']. 'completed']!
+		1 to: 100 do: [:i | Processor sleep: 30 milliseconds. progress value: i; text: i displayString, '%']. 'completed']!
 
 example2
 	"A simple modeless progress dialog.
@@ -264,7 +264,7 @@ example2
 			1 to: 100
 				do: 
 					[:i | 
-					Processor sleep: 100.
+					Processor sleep: 100 milliseconds.
 					progress
 						value: i;
 						text: i displayString , '%'].
@@ -280,7 +280,7 @@ example3
 	^(self 
 		create: 'Numeric progress dialog'
 		operation: [:progress | 
-		10 to: 1 by: -1 do: [:i | progress value: i. Processor sleep: 400]. 'completed'])
+		10 to: 1 by: -1 do: [:i | progress value: i. Processor sleep: 400 milliseconds]. 'completed'])
 			caption: 'Count down ...';
 			allowCancel: false;
 			showModal!

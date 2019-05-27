@@ -279,7 +279,7 @@ icon
 						ifNone: [].
 			failedRule notNil 
 				ifTrue: 
-					[Processor sleep: 100.
+					[Processor sleep: 100 milliseconds.
 					self class lintIconOfRule: failedRule]
 				ifFalse: [self class lintPassIcon]]!
 

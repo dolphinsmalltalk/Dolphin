@@ -67,7 +67,7 @@ displayValue
 				with: ex description]!
 
 errorBubbleTimeout
-	^2000!
+	^2 seconds!
 
 errorLocation
 	"Answers the screen coordnates of where the error can be found. Typically this is the base of the caret location in our associated view"

@@ -345,7 +345,7 @@ showHintBubble
 				caption: 'Hint';
 				maxWidth: 140;
 				willFade: true;
-				timeout: 5000.
+				timeout: 5 seconds.
 	hintBubble
 		position: (self mapPoint: self sunPosition to: View desktop);
 		notify: 'Find the dolphin inside and click to continue.'!

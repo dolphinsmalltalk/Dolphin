@@ -156,7 +156,7 @@ playNoteAtX: cell
 	note := self scale at: cell x + 1.
 	self midiOutChannel 
 		playNote: note
-		duration: self noteDuration * self beatTime
+		duration: (self noteDuration * self beatTime) milliseconds
 		channel: (self voiceChannelForNoteIndex: cell x).
 	self 
 		trigger: #playNote:forCell:
@@ -168,7 +168,7 @@ playNoteAtY: cell
 	note := self scale at: cell y + 1.
 	self midiOutChannel 
 		playNote: note
-		duration: self noteDuration * self beatTime
+		duration: (self noteDuration * self beatTime) milliseconds
 		channel: (self voiceChannelForNoteIndex: cell y).
 	self 
 		trigger: #playNote:forCell:
@@ -468,7 +468,7 @@ onStartup
 play
 	self isPlaying ifTrue: [^self stop].
 	StepProcess := [
-			[(Delay forMilliseconds: self beatTime) wait.
+			[(Delay forDuration: self beatTime milliseconds) wait.
 			self step] repeat] 
 				forkAt: Processor highestPriority.
 	self trigger: #playStarted!

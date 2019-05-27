@@ -42,7 +42,7 @@ repaint
 	false
 		ifTrue: 
 			[inspector view update.
-			Processor sleep: 1500]!
+			Processor sleep: 1500 milliseconds]!
 
 seqCollMoveDownTest: testClass
 	| inspectee collection |

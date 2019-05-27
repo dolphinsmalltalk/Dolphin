@@ -165,7 +165,7 @@ initialize
 	iconId := 0.
 	"TTF_TRACK is needed so the bubble come up where we tell it to, and not at the current cursor position"
 	itemFlags := ##(TTF_PARSELINKS | TTF_TRACK | TTF_ABSOLUTE).
-	timeout := 0.
+	timeout := 0 seconds.
 	tooltipStyle := ##(TTS_BALLOON | TTS_NOPREFIX | TTS_NOFADE).
 	maxWidth := SmallInteger maximum	"Allows a toolip with embedded CRs to go onto multiples lines"!
 
@@ -302,20 +302,20 @@ position: aPoint
 	self trackPosition!
 
 startTimeout
-	timeout > 0 
-		ifTrue: 
+	timeout isZero
+		ifFalse: 
 			[timeoutProcess := 
 					[Processor sleep: timeout.
 					[self close] postToMessageQueue] fork]!
 
 timeout
-	"Answer the number of milliseconds for which the bubble will be displayed.
-	If <= 0, then the bubble is displayed until clicked or otherwise closed explicitly."
+	"Answer the <Duration> for which the bubble will be displayed.
+	If the <Duration> is zero, then the bubble is displayed until clicked or otherwise closed explicitly."
 
 	^timeout!
 
-timeout: anInteger 
-	timeout := anInteger!
+timeout: aDuration
+	timeout := aDuration!
 
 tooltip
 	^tooltip!

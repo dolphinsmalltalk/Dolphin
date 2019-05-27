@@ -14,7 +14,7 @@ defaultDeviceId
 	^0!
 
 defaultDuration
-	^5000!
+	^5 seconds!
 
 defaultVelocity
 	^127!
@@ -90,12 +90,11 @@ playNote: noteName channel: channel
 		duration: self defaultDuration
 		channel: channel!
 
-playNote: noteName duration: ms channel: channel
- 
-	self 
+playNote: noteName duration: aDuration channel: channel
+	self
 		playNote: noteName
 		velocity: self defaultVelocity
-		duration: ms
+		duration: aDuration
 		channel: channel!
 
 playNote: noteName velocity: velocity channel: channel 
@@ -105,21 +104,21 @@ playNote: noteName velocity: velocity channel: channel
 		duration: self defaultDuration
 		channel: channel!
 
-playNote: noteName velocity: velocity duration: ms channel: channel 
+playNote: noteName velocity: velocity duration: aDuration channel: channel
 	"Play a new note for a specified duration"
 
 	| noteVal |
 	noteVal := self mapNoteToValue: noteName.
-	self midiout 
+	self midiout
 		keyDown: noteVal
 		velocity: velocity
 		channel: channel.
 
 	"If the duration is nil the note goes on forever"
-	ms ifNil: [^self].
+	aDuration ifNil: [^self].
 	
-	[Processor sleep: ms.
-	midiout notNil ifTrue: [self midiout keyUp: noteVal channel: channel]] 
+	[Processor sleep: aDuration.
+	midiout notNil ifTrue: [self midiout keyUp: noteVal channel: channel]]
 			forkAt: Processor highestPriority!
 
 voice: voice channel: channel
