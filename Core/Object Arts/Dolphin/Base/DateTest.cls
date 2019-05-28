@@ -43,7 +43,7 @@ testFromSeconds
 	today := Date today.
 	date := Date fromSeconds: today asSeconds.
 	self assert: today equals: date.
-	dtNow := DateAndTime now.
+	dtNow := DateAndTime nowUTC.
 	now := Date fromSeconds: dtNow asSeconds.
 	self assert: now year equals: dtNow year.
 	self assert: now month equals: dtNow month.
