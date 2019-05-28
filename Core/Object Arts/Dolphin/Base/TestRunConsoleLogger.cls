@@ -21,7 +21,10 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	| passed |
 	passed := aTestResult hasPassed.
 	stream
+		nextPutAll: 'Test run ';
 		nextPutAll: (passed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
+		nextPutAll: ' at';
+		print: DateAndTime now;
 		cr;
 		display: aTestResult;
 		cr.
@@ -38,6 +41,15 @@ startingCase: aTestCase
 	stream
 		print: aTestCase;
 		nextPutAll: ' ... ';
+		flush!
+
+startingRun: aTestSuite
+	stream
+		nextPutAll: 'Starting test run at';
+		print: DateAndTime now;
+		nextPutAll: ' in locale ';
+		print: Locale default code;
+		cr;
 		flush!
 
 stream: anObject
@@ -96,6 +108,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 !TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
+!TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
