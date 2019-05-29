@@ -1101,6 +1101,18 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 	<stdcall: bool HeapValidate handle dword lpvoid>
 	^self invalidCall!
 
+isWow64
+	"Answers whether this Dolphin process is running on 64-bit Windows on the WOW64 subsystem. The answer will be false if the host is 32-bit Windows."
+
+	| bool |
+	bool := BOOL new.
+	(self isWow64Process: self getCurrentProcess wow64Process: bool) ifFalse: [self systemError].
+	^bool value	!
+
+isWow64Process: hProcess wow64Process: wow64Process
+	<stdcall: bool IsWow64Process handle bool*>
+	^self invalidCall!
+
 lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpDestStr: lpDestStr cchDest: cchDest
 	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall
@@ -1766,6 +1778,8 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #isWow64!enquiries!public! !
+!KernelLibrary categoriesFor: #isWow64Process:wow64Process:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
