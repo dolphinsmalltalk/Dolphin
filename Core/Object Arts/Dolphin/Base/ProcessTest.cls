@@ -415,6 +415,7 @@ testForkedBlockHomeFrame
 
 testLargeAddress
 	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
+	self skipIfWin32.
 	blocks := OrderedCollection new: 3000.
 	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
 	

@@ -32,6 +32,7 @@ package methodNames
 	add: #TestCase -> #shouldnt:trigger:against:;
 	add: #TestCase -> #shouldnt:triggerAnyOf:against:;
 	add: #TestCase -> #skipIfCiBuild;
+	add: #TestCase -> #skipIfWin32;
 	add: #TestCase -> #skipUnless:;
 	add: #TestResult -> #debugCase:;
 	add: 'TestCase class' -> #buildSuiteFromConcreteMethods:;
@@ -276,6 +277,11 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 skipIfCiBuild
 	self skipUnless: [self isCiBuild not]!
 
+skipIfWin32
+	"Skip if running on 32-bit Windows"
+
+	self skipUnless: [KernelLibrary default isWow64]!
+
 skipUnless: aBooleanOrBlock
 	" If the assumption in aBooleanOrBlock is not true, abandon the running test
 	and mark it as passed. "
@@ -305,6 +311,7 @@ skipUnless: aBooleanOrBlock
 !TestCase categoriesFor: #shouldnt:trigger:against:!asserting!public! !
 !TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!asserting!public! !
 !TestCase categoriesFor: #skipIfCiBuild!helpers!public! !
+!TestCase categoriesFor: #skipIfWin32!helpers!public! !
 !TestCase categoriesFor: #skipUnless:!asserting!public! !
 
 !TestCase class methodsFor!
