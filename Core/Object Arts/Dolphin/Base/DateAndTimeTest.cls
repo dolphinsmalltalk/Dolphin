@@ -185,7 +185,7 @@ testFromString
 	self assert: fromString printString equals: '-1199-01-05T20:33:14.321+00:00'.
 
 	"Fractional seconds down to nanoseconds"
-	fromString := DateAndTime fromString: '2019-04-19T15:33:37.067259812+01:00'.
+	fromString := DateAndTime fromString: '2019-04-19T15:33:37.067259812+12:45'.
 	self assert: fromString
 		equals: (DateAndTime
 				year: 2019
@@ -194,7 +194,17 @@ testFromString
 				hour: 15
 				minute: 33
 				second: 37 + (067259812 / 1e9)
-				offset: 1 hour)!
+				offset: 12 hours + 45 minutes).
+	fromString := DateAndTime fromString: '2020-02-29T11:21:57.1902598-12:00'.
+	self assert: fromString
+		equals: (DateAndTime
+				year: 2020
+				month: 2
+				day: 29
+				hour: 11
+				minute: 21
+				second: 57 + (190259800 / 1e9)
+				offset: -12 hours)!
 
 testFromSYSTEMTIME
 	| ts sysTime |

@@ -644,9 +644,7 @@ readOffsetFrom: aStream sign: aCharacter
 	| sign |
 	aCharacter = $Z ifTrue: [^Duration zero].
 	sign := aCharacter = $+
-				ifTrue: 
-					[aStream next.
-					1]
+				ifTrue: [1]
 				ifFalse: [aCharacter = $- ifTrue: [-1] ifFalse: [^Locale timeZoneInformation offset]].
 	^Duration
 		readFrom: aStream
