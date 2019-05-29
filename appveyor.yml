@@ -14,10 +14,9 @@ build:
   project: Core\DolphinVM\DolphinVM.sln
   verbosity: minimal
 after_build:
-- cmd: >-
-    Core\DolphinVM\AppVeyorZIPDolphinVM
+- cmd: Core\DolphinVM\AppVeyorZIPDolphinVM
 test_script:
-- cmd: BootAndTestDPRO
+- cmd: AppVeyorBootAndTest
 artifacts:
 - path: dpro.*
   name: DPro
