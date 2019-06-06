@@ -3328,12 +3328,17 @@ compileGetMethod: aSymbol forField: anExternalField
 compileNewFields
 	self definesNewFields ifFalse: [^self].
 	self template keysAndValuesDo: 
-			[:selector :field |
-			(self shouldCompile: selector forField: field)
+			[:getSelector :field |
+			field isReadable
 				ifTrue: 
-					[selector last == $:
-						ifTrue: [self compileSetMethod: selector forField: field]
-						ifFalse: [self compileGetMethod: selector forField: field]]]!
+					[(self shouldCompile: getSelector forField: field)
+						ifTrue: [self compileGetMethod: getSelector forField: field]].
+			field isWriteable
+				ifTrue: 
+					[| setSelector |
+					setSelector := (getSelector copyWith: ':') asSymbol.
+					(self shouldCompile: setSelector forField: field)
+						ifTrue: [self compileSetMethod: setSelector forField: field]]]!
 
 compileSetMethod: aSelector forField: anExternalField
 	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
