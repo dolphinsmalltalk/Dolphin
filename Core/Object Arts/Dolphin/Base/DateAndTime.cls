@@ -656,10 +656,21 @@ stbConvertFrom: anSTBClassFormat
 
 	^
 	[:data |
-	| totalSeconds offset |
-	offset := data second.
-	totalSeconds := data first - 59958230400 - offset asSeconds.
-	self utcSeconds: totalSeconds offset: offset asSeconds]!
+		(data at: 2) class == Duration ifTrue: [		"Original code satisfies one set of tests"
+			| totalSeconds offset |
+			offset := data second.
+			totalSeconds := data first - 59958230400 - offset asSeconds.
+			self utcSeconds: totalSeconds offset: offset asSeconds.
+		] ifFalse: [							"This satisfied another format found in the wild"
+			| days seconds offset totalSeconds |
+			days := data at: 1.		"Days since Sunday, December 31, 0000"
+			days := days - 693961.	"Days since December 31, 1900"
+			seconds := data at: 2.	"Likely to be a Fraction"
+			offset := data at: 3.
+			totalSeconds := days * 86400 + seconds - offset.		"86400 == (24 * 60 * 60)"
+			self utcSeconds: totalSeconds offset: offset.
+		]
+	]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
