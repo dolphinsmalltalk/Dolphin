@@ -486,6 +486,36 @@ testStbConvertFrom
 				actual := Object fromLiteralStoreArray: stl.
 				self assert: actual equals: expected]!
 
+testStbConvertFrom0
+	"Test upgrade from version 0.
+	The stored instances I have do not have a Duration instance for seconds (JGF)"
+
+	"Create a ByteArray from 96fc6fa776aff7f8e76246917a28cda0195e27be (24 April 2019)
+	
+	| ts date time dat |
+	ts := TimeStamp current.
+	date := ts date.
+	time := ts time.
+	time seconds class == Fraction ifFalse: [self error: 'wrong class!!'].
+	dat := DateAndTime
+		year: date year 
+		month: date month 
+		day: date dayOfMonth 
+		hour: time hour 
+		minute: time minute 
+		second: time second.
+	dat binaryStoreBytes.
+	 "
+
+	| bytes dat string |
+	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 
+		105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 
+		217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
+	dat := DateAndTime fromBinaryStoreBytes: bytes.
+	string := dat printString.
+	self assert: string = ' 2019-06-07T10:23:03.387-07:00'.	"What is with the leading space?"
+!
+
 testStoreOn
 	| now stored collection |
 	now := DateAndTime now.
@@ -650,6 +680,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !DateAndTimeTest categoriesFor: #testRataDie!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testSecond!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testStbConvertFrom!public!unit tests! !
+!DateAndTimeTest categoriesFor: #testStbConvertFrom0!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testStoreOn!public!testing! !
 !DateAndTimeTest categoriesFor: #testToday!public!unit tests! !
 !DateAndTimeTest categoriesFor: #testYearMonthDay!public!unit tests! !
