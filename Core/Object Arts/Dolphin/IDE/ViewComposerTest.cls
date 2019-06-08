@@ -49,6 +49,21 @@ getButtonResource
 getContainerResource
 	^(ResourceIdentifier class: ContainerView) resource!
 
+openTestSubjectOn: aResourceId
+	^vc
+		ifNil: 
+			[vc := aResourceId
+						ifNil: [ViewComposer show]
+						ifNotNil: 
+							[vc := ViewComposer create
+										openOn: aResourceId;
+										show;
+										yourself]]
+		ifNotNil: [vc openOn: aResourceId]!
+
+openTestSubjectOnNewShell
+	^self openTestSubjectOn: (ResourceIdentifier class: Shell)!
+
 sampleClass
 	^sampleClass
 		ifNil: 
@@ -59,10 +74,6 @@ sampleClass
 						poolDictionaries: ''
 						classInstanceVariableNames: '']!
 
-setUp
-	vc := ViewComposer show.
-!
-
 tearDown
 	DragDropSession current ifNotNil: [:dd | dd cancelTrackingAt: 0 @ 0].
 	sampleClass ifNotNil: [sampleClass removeFromSystem].
@@ -71,9 +82,9 @@ tearDown
 
 testBasicEdit
 	| sampleResourceIdentifier |
-	self assert: vc caption equals: 'View Composer'.
 	"Test open something reasonably complex"
-	vc openOn: (ResourceIdentifier class: MethodBrowserShell).
+	self openTestSubjectOn: (ResourceIdentifier class: MethodBrowserShell).
+	self assert: vc caption equals: 'MethodBrowserShell.Default view(ShellView)'.
 	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	"Test saving"
@@ -95,7 +106,7 @@ testBasicEdit
 
 testCutCopyPaste
 	| shell container button |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	shell := vc composingView.
 	container := vc
 				pasteResource: self getContainerResource
@@ -135,6 +146,7 @@ testCutCopyPaste
 
 testDragResourceOverEmptyArena
 	| session |
+	self openTestSubjectOn: nil.
 	vc onDragOverArena: (session := self dragResourceFor: Shell).
 	self assert: session operation identicalTo: #copy.
 	self assert: session suggestedTarget identicalTo: vc arena!
@@ -143,15 +155,16 @@ testDropResourceLinkOverShell
 	"Drop a Checkbox link onto a shell"
 
 	| ddSession |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	ddSession := self doArenaDropOf: TextPresenter operation: #link.
 	self assert: vc primarySelection isKindOf: ReferenceView.
-	self assert: vc primarySelection resourceIdentifier equals: (ResourceIdentifier class: TextPresenter).
+	self assert: vc primarySelection resourceIdentifier
+		equals: (ResourceIdentifier class: TextPresenter).
 	ddSession!
 
 testDropResourceOverEmptyArena
 	"Drop a shell onto an empty arena"
-
+	self openTestSubjectOn: nil.
 	self doArenaDropOf: Shell operation: #copy.
 	self assert: vc composingView isKindOf: ShellView!
 
@@ -159,7 +172,7 @@ testDropResourceOverHierarchy
 	"Drop a Checkbox onto a shell"
 
 	| session |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	session := self dragResourceFor: TextPresenter.
 	session
 		operation: #copy;
@@ -169,7 +182,7 @@ testDropResourceOverHierarchy
 
 testDropResourceOverShell
 	"Drop a Checkbox onto a shell"
-
+	self openTestSubjectOn: nil.
 	self doArenaDropOf: TextPresenter operation: #copy.
 	self assert: vc primarySelection isKindOf: TextEdit!
 
@@ -177,7 +190,7 @@ testIgnoreShellPreferredExtent
 	"Check to make sure that the VC doesn't allow the choice of shell extents
 	even when they are marked as #userPreferredExtent"
 
-	vc openOn: (ResourceIdentifier class: Shell).
+	self openTestSubjectOnNewShell.
 	self assert: vc composingView usePreferredExtent.
 	"If this test fails check to see that ShellView>>resourcce_Default_view does indeed have an
 	extent of 600@400 when saved by the VC"
@@ -185,7 +198,7 @@ testIgnoreShellPreferredExtent
 
 testNoDragResourceOverInUseArena
 	| session toolbox |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	toolbox := vc instVarNamed: 'toolboxPresenter'.
 	session := InternalDragDropSession dragSource: toolbox view item: (ResourceIdentifier class: Shell).
 	toolbox resourcesPresenter onDragResource: session.
@@ -200,7 +213,7 @@ testPasteToArena
 	"Get a ShellView to paste"
 
 	| shell button |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	shell := vc composingView.
 	vc copySelection.
 	vc viewCloseNoPrompt.
@@ -226,7 +239,7 @@ testPasteToArena
 
 testWidenSelection
 	| chb classTree |
-	vc openOn: (ResourceIdentifier class: ClassBrowserShell name: 'Default view').
+	self openTestSubjectOn: (ResourceIdentifier class: ClassBrowserShell name: 'Default view').
 	chb := vc composingView.
 	classTree := chb viewNamed: 'classes'.
 	vc selection: classTree.
@@ -242,7 +255,7 @@ testWidenSelection
 
 testZOrderPreservedByMutate
 	| shell |
-	vc newShellView.
+	self openTestSubjectOnNewShell.
 	shell := vc pasteContext.
 	1 to: 3
 		do: 
@@ -261,8 +274,9 @@ testZOrderPreservedByMutate
 !ViewComposerTest categoriesFor: #dragResourceFor:!helpers!private! !
 !ViewComposerTest categoriesFor: #getButtonResource!helpers!private! !
 !ViewComposerTest categoriesFor: #getContainerResource!helpers!private! !
+!ViewComposerTest categoriesFor: #openTestSubjectOn:!helpers!private! !
+!ViewComposerTest categoriesFor: #openTestSubjectOnNewShell!helpers!private! !
 !ViewComposerTest categoriesFor: #sampleClass!accessing!private! !
-!ViewComposerTest categoriesFor: #setUp!private!running! !
 !ViewComposerTest categoriesFor: #tearDown!private!running! !
 !ViewComposerTest categoriesFor: #testBasicEdit!public!unit tests! !
 !ViewComposerTest categoriesFor: #testCutCopyPaste!public!unit tests! !
