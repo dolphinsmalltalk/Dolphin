@@ -113,6 +113,6 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
-!OLEVERB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OLEVERB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -217,7 +217,7 @@ getFieldNames
 
 propertyId
 	^HttpServerLoggingProperty! !
-!HTTP_LOGGING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LOGGING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_LOGGING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_LOGGING_INFO class categoriesFor: #propertyId!public! !
 

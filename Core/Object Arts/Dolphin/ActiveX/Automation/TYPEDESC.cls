@@ -258,7 +258,7 @@ initialize
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
-!TYPEDESC class categoriesFor: #defineFields!initializing!public! !
+!TYPEDESC class categoriesFor: #defineFields!public!template definition! !
 !TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
 

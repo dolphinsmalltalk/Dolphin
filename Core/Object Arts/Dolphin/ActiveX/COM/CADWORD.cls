@@ -39,6 +39,6 @@ elementClass
 
 	^DWORD
 ! !
-!CADWORD class categoriesFor: #defineFields!initializing!public! !
+!CADWORD class categoriesFor: #defineFields!public!template definition! !
 !CADWORD class categoriesFor: #elementClass!constants!public! !
 

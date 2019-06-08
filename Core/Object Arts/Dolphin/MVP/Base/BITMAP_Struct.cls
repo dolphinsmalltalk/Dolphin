@@ -105,7 +105,7 @@ fileOutStem
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
-!BITMAP class categoriesFor: #defineFields!initializing!public! !
+!BITMAP class categoriesFor: #defineFields!public!template definition! !
 !BITMAP class categoriesFor: #fileOutStem!private!source filing! !
 !BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

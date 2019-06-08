@@ -253,6 +253,6 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
-!GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -146,7 +146,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEPEN! !
-!EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMREXTCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTCREATEPEN class categoriesFor: #iTypes!constants!public! !
 

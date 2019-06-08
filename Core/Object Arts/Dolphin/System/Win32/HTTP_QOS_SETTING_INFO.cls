@@ -110,7 +110,7 @@ qosSetting: anHttpQosSetting
 	^(self new)
 		value: anHttpQosSetting;
 		yourself! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_QOS_SETTING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #maxBandwidth:!instance creation!public! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #maxConnections:!instance creation!public! !

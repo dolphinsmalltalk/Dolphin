@@ -133,6 +133,6 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
-!XFORM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!XFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

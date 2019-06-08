@@ -154,7 +154,7 @@ now
 	"Note that avoiding GetSystemTimePreciseAsFileTime is deliberate, as the less precise value from GetSystemTimeAsFileTime is that used to update file write times, etc."
 	KernelLibrary default getSystemTimeAsFileTime: answer.
 	^answer! !
-!FILETIME class categoriesFor: #defineFields!initializing!public! !
+!FILETIME class categoriesFor: #defineFields!public!template definition! !
 !FILETIME class categoriesFor: #fromInteger:!instance creation!public! !
 !FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
 !FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !

@@ -89,6 +89,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
-!DTBGOPTS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!DTBGOPTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

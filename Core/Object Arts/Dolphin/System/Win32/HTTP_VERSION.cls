@@ -66,6 +66,6 @@ defineFields
 
 getFieldNames
 	^#(#MajorVersion #MinorVersion)! !
-!HTTP_VERSION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_VERSION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_VERSION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

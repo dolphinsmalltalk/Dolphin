@@ -320,7 +320,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_STRETCHDIBITS! !
-!EMRSTRETCHDIBITS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSTRETCHDIBITS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSTRETCHDIBITS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSTRETCHDIBITS class categoriesFor: #iTypes!constants!public! !
 

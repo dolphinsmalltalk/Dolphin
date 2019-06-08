@@ -107,6 +107,6 @@ defineFields
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
 !BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
-!BITMAPINFO class categoriesFor: #defineFields!initializing!public! !
+!BITMAPINFO class categoriesFor: #defineFields!public!template definition! !
 !BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

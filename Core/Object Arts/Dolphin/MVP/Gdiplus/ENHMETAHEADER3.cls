@@ -293,6 +293,6 @@ defineFields
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
-!ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !ENHMETAHEADER3 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

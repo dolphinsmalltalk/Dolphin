@@ -1117,7 +1117,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #basicNew!instance creation!private! !
 !Behavior categoriesFor: #basicNew:!instance creation!private! !
 !Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
-!Behavior categoriesFor: #bindingFor:!compiling!public! !
+!Behavior categoriesFor: #bindingFor:!binding!public! !
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Behavior categoriesFor: #compile:!compiling!public! !
 !Behavior categoriesFor: #compileAll!compiling!development!public! !
@@ -1136,7 +1136,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
-!Behavior categoriesFor: #fullBindingFor:!compiling!public! !
+!Behavior categoriesFor: #fullBindingFor:!binding!public! !
 !Behavior categoriesFor: #hasCompilationFailures!public!testing! !
 !Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Behavior categoriesFor: #hasMethods!methods-testing!public! !

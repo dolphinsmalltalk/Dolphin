@@ -113,6 +113,6 @@ getFieldNames
 	^#(#s_addr)! !
 !IN_ADDR class categoriesFor: #address:!instance creation!public! !
 !IN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!IN_ADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!IN_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

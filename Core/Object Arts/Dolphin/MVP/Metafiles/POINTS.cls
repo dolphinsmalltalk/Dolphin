@@ -88,6 +88,6 @@ x: x y: y
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
-!POINTS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!POINTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !POINTS class categoriesFor: #x:y:!instance creation!public! !
 

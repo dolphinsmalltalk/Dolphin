@@ -6,15 +6,44 @@ Copyright (c) Object Arts Ltd, 1997-2000.
 
 Scribble is a sample component for accepting ''ink'' as a series of mouse or pen strokes.
 
+## Examples
+
 To create a Scribble pad in a dummy shell window evaluate:
 
-Scribble show.
+```
+ScribbleShell show.
+```
 
 To create two Scribble pads sharing the same model and at the same time rendering the model in a standard <listPresenter> try evaluating:
-
+```
 scribble := Scribble show.
 Scribble showOn: scribble model.
-ListPresenter showOn: scribble model.'.
+ListPresenter showOn: scribble model.
+```
+
+## Deployment:
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+ScribbleDocument show.
+(ImageStripper new)
+	rootPackage: Scribble owningPackage;
+	executableName: ''Scribble.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''Scribble.xml''.
+```
+
+Or as Xml:
+```
+XmlPad openOn: ''Scribble.xml''
+```'.
 
 package basicPackageVersion: '2005.6.5.15'.
 
@@ -22,6 +51,7 @@ package basicPackageVersion: '2005.6.5.15'.
 package classNames
 	add: #InkStroke;
 	add: #Scribble;
+	add: #ScribbleDocument;
 	add: #ScribbleView;
 	yourself.
 
@@ -31,12 +61,12 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter'
+	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
 
 package!
 
@@ -49,6 +79,11 @@ Object subclass: #InkStroke
 	classInstanceVariableNames: ''!
 Presenter subclass: #Scribble
 	instanceVariableNames: 'newStroke trackingCanvas'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractDocumentShell subclass: #ScribbleDocument
+	instanceVariableNames: 'scribblePresenter checkpoint'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

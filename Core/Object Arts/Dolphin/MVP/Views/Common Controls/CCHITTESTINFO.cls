@@ -55,6 +55,6 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags)! !
-!CCHITTESTINFO class categoriesFor: #defineFields!development!public! !
+!CCHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
 !CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
 

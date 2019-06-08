@@ -296,6 +296,6 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
-!TYPEATTR class categoriesFor: #defineFields!initializing!public! !
+!TYPEATTR class categoriesFor: #defineFields!public!template definition! !
 !TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

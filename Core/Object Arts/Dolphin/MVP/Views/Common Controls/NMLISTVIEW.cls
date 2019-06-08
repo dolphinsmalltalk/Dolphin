@@ -84,6 +84,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
-!NMLISTVIEW class categoriesFor: #defineFields!initializing!public! !
+!NMLISTVIEW class categoriesFor: #defineFields!public!template definition! !
 !NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

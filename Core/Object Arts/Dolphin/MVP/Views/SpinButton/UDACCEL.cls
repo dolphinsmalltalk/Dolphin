@@ -54,6 +54,6 @@ defineFields
 
 getFieldNames
 	^#(#nSec #nInc)! !
-!UDACCEL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!UDACCEL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

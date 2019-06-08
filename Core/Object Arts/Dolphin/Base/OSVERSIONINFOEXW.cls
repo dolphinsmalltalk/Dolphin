@@ -190,6 +190,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
-!OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

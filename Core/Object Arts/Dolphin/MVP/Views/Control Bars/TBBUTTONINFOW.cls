@@ -131,6 +131,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
-!TBBUTTONINFOW class categoriesFor: #defineFields!initializing!public! !
+!TBBUTTONINFOW class categoriesFor: #defineFields!public!template definition! !
 !TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

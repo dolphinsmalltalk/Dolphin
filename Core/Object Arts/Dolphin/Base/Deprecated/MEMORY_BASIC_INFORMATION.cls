@@ -77,7 +77,7 @@ forAddress: anAddress
 
 getFieldNames
 	^#(#BaseAddress #AllocationBase #AllocationProtect #RegionSize #State #Protect #Type)! !
-!MEMORY_BASIC_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!MEMORY_BASIC_INFORMATION class categoriesFor: #defineFields!public!template definition! !
 !MEMORY_BASIC_INFORMATION class categoriesFor: #forAddress:!instance creation!public! !
 !MEMORY_BASIC_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

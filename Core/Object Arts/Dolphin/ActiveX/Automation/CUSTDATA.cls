@@ -90,7 +90,7 @@ initialize
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
-!CUSTDATA class categoriesFor: #defineFields!initializing!public! !
+!CUSTDATA class categoriesFor: #defineFields!public!template definition! !
 !CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !CUSTDATA class categoriesFor: #initialize!public! !
 

@@ -145,6 +145,6 @@ defineFields
 
 getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
-!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!public!template definition! !
 !TIME_ZONE_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -247,7 +247,7 @@ pointerClass
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!ITEMIDLIST class categoriesFor: #defineFields!initializing!public! !
+!ITEMIDLIST class categoriesFor: #defineFields!public!template definition! !
 !ITEMIDLIST class categoriesFor: #exampleCopying!examples!public! !
 !ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
 !ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !

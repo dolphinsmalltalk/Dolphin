@@ -253,6 +253,6 @@ defineFields
 
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
-!HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_AUTH_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

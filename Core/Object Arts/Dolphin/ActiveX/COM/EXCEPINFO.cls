@@ -280,6 +280,6 @@ defineFields
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
 !EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
-!EXCEPINFO class categoriesFor: #defineFields!initializing!public! !
+!EXCEPINFO class categoriesFor: #defineFields!public!template definition! !
 !EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

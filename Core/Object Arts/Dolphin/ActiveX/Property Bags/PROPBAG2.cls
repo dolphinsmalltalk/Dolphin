@@ -120,6 +120,6 @@ defineFields
 
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
-!PROPBAG2 class categoriesFor: #defineFields!initializing!public! !
+!PROPBAG2 class categoriesFor: #defineFields!public!template definition! !
 !PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

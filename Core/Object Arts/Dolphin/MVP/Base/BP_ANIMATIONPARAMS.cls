@@ -95,6 +95,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
-!BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -65,6 +65,6 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
-!IDLDESC class categoriesFor: #defineFields!initializing!public! !
+!IDLDESC class categoriesFor: #defineFields!public!template definition! !
 !IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

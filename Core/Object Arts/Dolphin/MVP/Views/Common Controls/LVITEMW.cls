@@ -362,7 +362,7 @@ getFieldNames
 initialize
 	CallbackPrototype := self new allCallbacks; bytes! !
 !LVITEMW class categoriesFor: #allCallbacks!public! !
-!LVITEMW class categoriesFor: #defineFields!initializing!public! !
+!LVITEMW class categoriesFor: #defineFields!public!template definition! !
 !LVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LVITEMW class categoriesFor: #initialize!development!public! !
 

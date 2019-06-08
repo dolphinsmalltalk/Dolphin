@@ -107,6 +107,6 @@ defineFields
 
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
-!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

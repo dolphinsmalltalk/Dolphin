@@ -94,6 +94,6 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
-!ELEMDESC class categoriesFor: #defineFields!initializing!public! !
+!ELEMDESC class categoriesFor: #defineFields!public!template definition! !
 !ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

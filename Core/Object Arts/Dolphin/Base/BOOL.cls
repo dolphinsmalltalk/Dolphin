@@ -43,5 +43,5 @@ defineFields
 		type: ((BOOLField new)
 				beOverride;
 				yourself)! !
-!BOOL class categoriesFor: #defineFields!initializing!public! !
+!BOOL class categoriesFor: #defineFields!public!template definition! !
 

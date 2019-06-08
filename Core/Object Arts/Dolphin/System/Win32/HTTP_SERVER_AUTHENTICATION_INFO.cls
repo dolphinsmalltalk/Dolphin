@@ -164,7 +164,7 @@ getFieldNames
 
 propertyId
 	^HttpServerAuthenticationProperty! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
 

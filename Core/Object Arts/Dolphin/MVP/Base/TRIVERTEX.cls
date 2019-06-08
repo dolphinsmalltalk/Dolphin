@@ -148,6 +148,6 @@ defineFields
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
-!TRIVERTEX class categoriesFor: #defineFields!initializing!public! !
+!TRIVERTEX class categoriesFor: #defineFields!public!template definition! !
 !TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

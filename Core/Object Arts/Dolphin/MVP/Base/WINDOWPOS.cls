@@ -102,6 +102,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
-!WINDOWPOS class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
 !WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

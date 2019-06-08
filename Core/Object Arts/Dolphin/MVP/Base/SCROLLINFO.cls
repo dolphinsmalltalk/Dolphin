@@ -168,6 +168,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
-!SCROLLINFO class categoriesFor: #defineFields!initializing!public! !
+!SCROLLINFO class categoriesFor: #defineFields!public!template definition! !
 !SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

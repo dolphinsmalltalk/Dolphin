@@ -119,6 +119,6 @@ defineFields
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
-!OVERLAPPED class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OVERLAPPED class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

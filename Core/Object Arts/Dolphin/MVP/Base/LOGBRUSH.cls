@@ -124,7 +124,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!LOGBRUSH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !

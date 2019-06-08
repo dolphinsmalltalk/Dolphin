@@ -55,6 +55,6 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
-!GETTEXTEX class categoriesFor: #defineFields!initializing!public! !
+!GETTEXTEX class categoriesFor: #defineFields!public!template definition! !
 !GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

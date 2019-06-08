@@ -167,6 +167,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
-!TCITEMW class categoriesFor: #defineFields!initializing!public! !
+!TCITEMW class categoriesFor: #defineFields!public!template definition! !
 !TCITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

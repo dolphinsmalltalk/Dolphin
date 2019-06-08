@@ -119,7 +119,7 @@ iTypes
 		with: EMR_POLYGON
 		with: EMR_POLYBEZIERTO
 		with: EMR_POLYLINETO! !
-!EMRPOLYLINE class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYLINE class categoriesFor: #defineFields!public!template definition! !
 !EMRPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYLINE class categoriesFor: #iTypes!constants!public! !
 

@@ -206,6 +206,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
-!LITEM class categoriesFor: #defineFields!initializing!public! !
+!LITEM class categoriesFor: #defineFields!public!template definition! !
 !LITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

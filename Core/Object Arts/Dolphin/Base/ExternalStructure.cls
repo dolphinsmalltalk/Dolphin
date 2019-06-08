@@ -985,7 +985,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #removeRedundantOffsetConstants!private!template definition! !
 !ExternalStructure class categoriesFor: #resetTemplate!public!template definition! !
 !ExternalStructure class categoriesFor: #setGuid:!accessing!private! !
-!ExternalStructure class categoriesFor: #shrink!compiling!private! !
+!ExternalStructure class categoriesFor: #shrink!private!template definition! !
 !ExternalStructure class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !ExternalStructure class categoriesFor: #structurePacker!public!template definition! !
 !ExternalStructure class categoriesFor: #template!accessing!private! !

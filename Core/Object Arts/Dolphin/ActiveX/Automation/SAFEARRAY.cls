@@ -638,7 +638,7 @@ vt
 	^VT_ARRAY! !
 !SAFEARRAY class categoriesFor: #clear:!public!realizing/unrealizing! !
 !SAFEARRAY class categoriesFor: #createVector:vt:extra:!helpers!private! !
-!SAFEARRAY class categoriesFor: #defineFields!initializing!public! !
+!SAFEARRAY class categoriesFor: #defineFields!public!template definition! !
 !SAFEARRAY class categoriesFor: #elementSize!accessing!public! !
 !SAFEARRAY class categoriesFor: #fromAddress:elementClass:owner:!instance creation!public! !
 !SAFEARRAY class categoriesFor: #fromAddress:vt:owner:!instance creation!public! !

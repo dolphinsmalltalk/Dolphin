@@ -65,7 +65,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTTEXTOUTA! !
-!EMREXTTEXTOUTA class categoriesFor: #defineFields!initializing!public! !
+!EMREXTTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
 !EMREXTTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

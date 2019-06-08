@@ -101,6 +101,6 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
-!GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

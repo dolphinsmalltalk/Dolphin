@@ -148,7 +148,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORMATCHTOTARGETW! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!initializing!public! !
+!EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!public!template definition! !
 !EMRCOLORMATCHTOTARGET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCOLORMATCHTOTARGET class categoriesFor: #iTypes!constants!public! !
 

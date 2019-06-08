@@ -194,7 +194,7 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
-!PRINTDLGW class categoriesFor: #defineFields!initializing!public! !
+!PRINTDLGW class categoriesFor: #defineFields!public!template definition! !
 !PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PRINTDLGW class categoriesFor: #packing!constants!public! !
 

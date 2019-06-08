@@ -58,6 +58,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwTime)! !
-!LASTINPUTINFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LASTINPUTINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !LASTINPUTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

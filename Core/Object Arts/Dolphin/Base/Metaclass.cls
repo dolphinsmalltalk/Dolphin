@@ -151,7 +151,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
 !Metaclass categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Metaclass categoriesFor: #bindingFor:!compiling!public! !
+!Metaclass categoriesFor: #bindingFor:!binding!public! !
 !Metaclass categoriesFor: #classPool!class variables!public! !
 !Metaclass categoriesFor: #classVariables!class variables!public! !
 !Metaclass categoriesFor: #classVarNames!class variables!public! !

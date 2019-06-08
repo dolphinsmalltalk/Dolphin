@@ -373,6 +373,6 @@ defineFields
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
-!PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

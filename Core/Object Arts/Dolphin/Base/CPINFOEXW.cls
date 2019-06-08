@@ -131,6 +131,6 @@ defineFields
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
 !CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
-!CPINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CPINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

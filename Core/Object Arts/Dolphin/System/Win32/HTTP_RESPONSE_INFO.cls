@@ -106,6 +106,6 @@ defineFields
 
 getFieldNames
 	^#(#Type #Length #pInfo)! !
-!HTTP_RESPONSE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_RESPONSE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

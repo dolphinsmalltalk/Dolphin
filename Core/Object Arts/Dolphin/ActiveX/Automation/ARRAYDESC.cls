@@ -67,6 +67,6 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
-!ARRAYDESC class categoriesFor: #defineFields!initializing!public! !
+!ARRAYDESC class categoriesFor: #defineFields!public!template definition! !
 !ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

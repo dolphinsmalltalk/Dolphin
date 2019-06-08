@@ -69,6 +69,6 @@ defineFields
 
 getFieldNames
 	^#(#oldColor #newColor)! !
-!GpColorMap class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpColorMap class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

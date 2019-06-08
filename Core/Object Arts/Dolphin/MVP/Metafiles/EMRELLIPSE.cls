@@ -66,7 +66,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ELLIPSE with: EMR_RECTANGLE! !
-!EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
 

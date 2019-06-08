@@ -73,7 +73,7 @@ iTypes
 					with: EMR_SETSTRETCHBLTMODE
 					with: EMR_SETICMMODE
 					with: EMR_SETTEXTALIGN)! !
-!EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
 

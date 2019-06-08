@@ -32,6 +32,6 @@ defineFields
 
 fileOutStem
 	^super fileOutStem , '_struct'! !
-!BOOLEAN class categoriesFor: #defineFields!initializing!public! !
+!BOOLEAN class categoriesFor: #defineFields!public!template definition! !
 !BOOLEAN class categoriesFor: #fileOutStem!development!private!source filing! !
 

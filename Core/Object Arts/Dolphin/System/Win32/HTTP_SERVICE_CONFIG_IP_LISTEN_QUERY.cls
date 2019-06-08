@@ -81,6 +81,6 @@ defineFields
 
 getFieldNames
 	^#(#AddrCount #AddrList)! !
-!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -190,6 +190,6 @@ defineFields
 
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
-!EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

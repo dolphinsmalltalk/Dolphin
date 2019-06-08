@@ -77,7 +77,7 @@ getFieldNames
 
 propertyId
 	^HttpServerBindingProperty! !
-!HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_BINDING_INFO class categoriesFor: #propertyId!public! !
 

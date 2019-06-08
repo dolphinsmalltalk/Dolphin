@@ -69,6 +69,6 @@ defineFields
 
 getFieldNames
 	^#(#nFromPage #nToPage)! !
-!PRINTPAGERANGE class categoriesFor: #defineFields!initializing!public! !
+!PRINTPAGERANGE class categoriesFor: #defineFields!public!template definition! !
 !PRINTPAGERANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

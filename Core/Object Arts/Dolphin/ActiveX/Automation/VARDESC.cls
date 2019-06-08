@@ -223,6 +223,6 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
-!VARDESC class categoriesFor: #defineFields!initializing!public! !
+!VARDESC class categoriesFor: #defineFields!public!template definition! !
 !VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -78,7 +78,7 @@ formatCodes
 
 getFieldNames
 	^#(#flags)! !
-!_FPIEEE_VALUE class categoriesFor: #defineFields!initializing!public! !
+!_FPIEEE_VALUE class categoriesFor: #defineFields!public!template definition! !
 !_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
 !_FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

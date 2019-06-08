@@ -131,6 +131,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
-!BROWSEINFOW class categoriesFor: #defineFields!initializing!public! !
+!BROWSEINFOW class categoriesFor: #defineFields!public!template definition! !
 !BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

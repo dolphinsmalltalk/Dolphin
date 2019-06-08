@@ -86,6 +86,6 @@ defineFields
 
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
-!MINMAXINFO class categoriesFor: #defineFields!initializing!public! !
+!MINMAXINFO class categoriesFor: #defineFields!public!template definition! !
 !MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

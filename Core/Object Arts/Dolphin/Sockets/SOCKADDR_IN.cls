@@ -107,6 +107,6 @@ defineFields
 
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
-!SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

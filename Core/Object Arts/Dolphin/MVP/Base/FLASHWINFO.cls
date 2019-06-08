@@ -81,6 +81,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
-!FLASHWINFO class categoriesFor: #defineFields!initializing!public! !
+!FLASHWINFO class categoriesFor: #defineFields!public!template definition! !
 !FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

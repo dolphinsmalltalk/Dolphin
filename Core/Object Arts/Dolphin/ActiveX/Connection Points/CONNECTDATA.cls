@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#punk #dwCookie)! !
-!CONNECTDATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CONNECTDATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

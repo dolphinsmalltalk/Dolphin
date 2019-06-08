@@ -229,7 +229,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #associationClass!constants!private! !
 !SystemDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !SystemDictionary categoriesFor: #at:put:!accessing!public! !
-!SystemDictionary categoriesFor: #bindingFor:!compiling!public! !
+!SystemDictionary categoriesFor: #bindingFor:!binding!public! !
 !SystemDictionary categoriesFor: #classAdded:!event handling!private! !
 !SystemDictionary categoriesFor: #classRemoved:!private!removing! !
 !SystemDictionary categoriesFor: #classUpdated:!event handling!private! !

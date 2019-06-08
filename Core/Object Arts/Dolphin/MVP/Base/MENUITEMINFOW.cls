@@ -262,6 +262,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
-!MENUITEMINFOW class categoriesFor: #defineFields!initializing!public! !
+!MENUITEMINFOW class categoriesFor: #defineFields!public!template definition! !
 !MENUITEMINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

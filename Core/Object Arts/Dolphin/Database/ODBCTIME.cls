@@ -89,7 +89,7 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
-!ODBCTIME class categoriesFor: #defineFields!initializing!public! !
+!ODBCTIME class categoriesFor: #defineFields!public!template definition! !
 !ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
 !ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

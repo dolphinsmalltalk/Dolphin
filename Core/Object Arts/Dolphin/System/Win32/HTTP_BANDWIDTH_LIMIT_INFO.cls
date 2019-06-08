@@ -80,7 +80,7 @@ maxBandwidth: anInteger
 
 qosType
 	^HttpQosSettingTypeBandwidth! !
-!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #maxBandwidth:!public! !
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #qosType!constants!public! !

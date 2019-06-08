@@ -167,6 +167,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
-!CHOOSEFONTW class categoriesFor: #defineFields!initializing!public! !
+!CHOOSEFONTW class categoriesFor: #defineFields!public!template definition! !
 !CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

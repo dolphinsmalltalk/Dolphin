@@ -19,7 +19,7 @@ Instance Variables:
 	selector		<Symbol>. Selector of the method being compiled, if available
 
 N.B. The inherited''''tag'''' instance variable is used to hold the <integer> error code, but the inherited ''''messageText'''' instance variable is unused.'''!
-!CompilerNotification categoriesForClass!System-Exception Handling! !
+!CompilerNotification categoriesForClass!System-Compiler! !
 !CompilerNotification methodsFor!
 
 _descriptionArguments

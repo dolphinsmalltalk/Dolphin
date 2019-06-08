@@ -121,6 +121,6 @@ defineFields
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
-!GpBitmapData class categoriesFor: #defineFields!initializing!public! !
+!GpBitmapData class categoriesFor: #defineFields!public!template definition! !
 !GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -132,7 +132,7 @@ threeThreeTwo
 	"
 Time millisecondsToRun: [PALETTEENTRY threeThreeTwo]
 "! !
-!PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
 

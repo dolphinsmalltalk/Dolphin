@@ -85,6 +85,6 @@ defineFields
 
 propertyId
 	^self subclassResponsibility! !
-!HTTP_PROPERTY_FLAGS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_PROPERTY_FLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_PROPERTY_FLAGS class categoriesFor: #propertyId!constants!public! !
 

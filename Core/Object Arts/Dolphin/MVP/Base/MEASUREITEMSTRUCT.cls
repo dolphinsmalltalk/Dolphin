@@ -87,6 +87,6 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
-!MEASUREITEMSTRUCT class categoriesFor: #defineFields!initializing!public! !
+!MEASUREITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
 !MEASUREITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

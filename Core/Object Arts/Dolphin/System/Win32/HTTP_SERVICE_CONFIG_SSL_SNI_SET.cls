@@ -79,6 +79,6 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

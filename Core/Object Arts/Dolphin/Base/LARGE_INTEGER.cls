@@ -62,5 +62,5 @@ defineFields
 		defineField: #highPart
 			type: SDWORDField new beOverride
 			offset: 4! !
-!LARGE_INTEGER class categoriesFor: #defineFields!initializing!public! !
+!LARGE_INTEGER class categoriesFor: #defineFields!public!template definition! !
 

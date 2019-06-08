@@ -214,7 +214,7 @@ packing
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [8] ifFalse: [4]! !
-!PARAFORMAT class categoriesFor: #defineFields!initializing!public! !
+!PARAFORMAT class categoriesFor: #defineFields!public!template definition! !
 !PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PARAFORMAT class categoriesFor: #packing!constants!public! !
 

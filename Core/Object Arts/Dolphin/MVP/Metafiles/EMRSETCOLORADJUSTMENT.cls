@@ -68,7 +68,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORADJUSTMENT! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
 

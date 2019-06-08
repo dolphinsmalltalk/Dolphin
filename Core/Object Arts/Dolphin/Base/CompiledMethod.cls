@@ -204,8 +204,8 @@ storeSourceString: aString
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
 !CompiledMethod categoriesFor: #<=!comparing!public! !
-!CompiledMethod categoriesFor: #categories!categories!development!public! !
-!CompiledMethod categoriesFor: #categories:!categories!private! !
+!CompiledMethod categoriesFor: #categories!categories-accessing!development!public! !
+!CompiledMethod categoriesFor: #categories:!categories-accessing!private! !
 !CompiledMethod categoriesFor: #changeManager!development!private! !
 !CompiledMethod categoriesFor: #changePosition!development!private!testing! !
 !CompiledMethod categoriesFor: #displayOn:!printing!public! !
@@ -229,7 +229,7 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #owningPackageIfLoose!accessing!development!public! !
 !CompiledMethod categoriesFor: #printOn:!printing!public! !
 !CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
-!CompiledMethod categoriesFor: #protocols!categories!development!public! !
+!CompiledMethod categoriesFor: #protocols!categories-accessing!development!public! !
 !CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
 !CompiledMethod categoriesFor: #recompile!compiling!development!private! !
 !CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !

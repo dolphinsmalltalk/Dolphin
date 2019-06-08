@@ -103,7 +103,7 @@ inactive
 propertyId
 	^HttpServerStateProperty! !
 !HTTP_STATE_INFO class categoriesFor: #active!instance creation!public! !
-!HTTP_STATE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_STATE_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_STATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_STATE_INFO class categoriesFor: #inactive!instance creation!public! !
 !HTTP_STATE_INFO class categoriesFor: #propertyId!constants!public! !

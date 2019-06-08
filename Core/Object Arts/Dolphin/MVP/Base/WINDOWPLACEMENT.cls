@@ -79,6 +79,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
-!WINDOWPLACEMENT class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPLACEMENT class categoriesFor: #defineFields!public!template definition! !
 !WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

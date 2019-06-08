@@ -195,6 +195,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
-!HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_V1 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_RESPONSE_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

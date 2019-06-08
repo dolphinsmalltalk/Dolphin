@@ -98,7 +98,7 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
-!LOGPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGPALETTE class categoriesFor: #new!instance creation!public! !
 

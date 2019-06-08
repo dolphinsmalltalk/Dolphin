@@ -139,6 +139,6 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
-!GpPropertyItem class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpPropertyItem class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpPropertyItem class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -174,6 +174,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
-!TOOLINFOW class categoriesFor: #defineFields!initializing!public! !
+!TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
 !TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

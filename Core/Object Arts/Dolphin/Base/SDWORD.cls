@@ -63,7 +63,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SDWORD class categoriesFor: #defineFields!initializing!public! !
+!SDWORD class categoriesFor: #defineFields!public!template definition! !
 !SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !SDWORD class categoriesFor: #initialize!development!initializing!private! !
 !SDWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

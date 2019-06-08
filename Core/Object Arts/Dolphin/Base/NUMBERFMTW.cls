@@ -200,6 +200,6 @@ defineFields
 
 getFieldNames
 	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
-!NUMBERFMTW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!NUMBERFMTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !NUMBERFMTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

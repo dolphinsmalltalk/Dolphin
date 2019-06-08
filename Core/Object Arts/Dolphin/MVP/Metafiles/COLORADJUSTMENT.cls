@@ -230,6 +230,6 @@ defineFields
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
-!COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

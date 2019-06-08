@@ -89,6 +89,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
-!BP_PAINTPARAMS class categoriesFor: #defineFields!initializing!public! !
+!BP_PAINTPARAMS class categoriesFor: #defineFields!public!template definition! !
 !BP_PAINTPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

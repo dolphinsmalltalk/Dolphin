@@ -136,6 +136,6 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
-!WNDCLASS class categoriesFor: #defineFields!initializing!public! !
+!WNDCLASS class categoriesFor: #defineFields!public!template definition! !
 !WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

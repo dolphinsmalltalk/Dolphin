@@ -172,6 +172,6 @@ defineFields
 
 getFieldNames
 	^#(#Format)! !
-!NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !NET_ADDRESS_INFO class categoriesFor: #getFieldNames!accessing!private! !
 
