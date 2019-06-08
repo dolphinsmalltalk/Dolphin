@@ -422,11 +422,12 @@ publishedAspectsOfInstances
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from previous version. 
-		Version 1: Added a retainPachydermInfo instance var (removed in v3).
-		Version 2: Added a rootClasses instance var and the events instance var in model.
-		Version 3: Consolidates all flags into one integer flags variable.
-		Version 4:  isToGo flag added (the default)
-		Version 5: supersentMessages and spare inst vars added"
+		1: Added a retainPachydermInfo instance var (removed in v3).
+		2: Added a rootClasses instance var and the events instance var in model.
+		3: Consolidates all flags into one integer flags variable.
+		4:  isToGo flag added (the default)
+		5: supersentMessages and spare inst vars added
+		6: runFlags added and spare inst vars added"
 
 	^
 	[:data | 
@@ -465,7 +466,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^5! !
+	^6! !
 !ImageStripper class categoriesFor: #for:!instance creation!public! !
 !ImageStripper class categoriesFor: #publishedAspectsOfInstances!development!public! !
 !ImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
