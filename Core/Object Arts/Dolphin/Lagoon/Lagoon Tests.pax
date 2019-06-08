@@ -18,12 +18,13 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
+	'..\..\Samples\MVP\Etch-a-Sketch\Etch-a-Sketch'
 	'..\..\Samples\MVP\Hello World\Hello World'
 	'..\..\Samples\Console\Hello World\Hello World (Console)'
+	'..\MVP\Icons\Internal Bitmaps and Icons'
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\Samples\MVP\Scribble\Scribble').
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments').
 
 package!
 

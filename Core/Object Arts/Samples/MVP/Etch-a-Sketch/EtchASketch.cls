@@ -131,7 +131,7 @@ sampleDescription
 	^'Etch-a-Sketch'! !
 !EtchASketch class categoriesFor: #defaultModel!models!public! !
 !EtchASketch class categoriesFor: #icon!constants!public! !
-!EtchASketch class categoriesFor: #initialize!initializing!private! !
+!EtchASketch class categoriesFor: #initialize!class initialization!private! !
 !EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
 !EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
 

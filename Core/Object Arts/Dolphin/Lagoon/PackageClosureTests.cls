@@ -72,6 +72,18 @@ testCommandLineHelloWorld
 	self verifyPackageClosure: (self environmentForAppDeployment: {CommandLineHelloWorld owningPackage})
 		missing: self consoleAppUnimplemented!
 
+testEtchASketch
+	"Etch-a-sketch uses an InternalIcon, and STB."
+
+	| env |
+	env := self environmentForAppDeployment: {EtchASketch owningPackage}.
+	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:).
+	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
+	self assert: (env includesClass: InternalIcon).
+	self assert: (env includesClass: STBOutFiler).
+	self assert: (env includesSelector: #owningPackage in: ClassDescription).
+	self deny: (env includesSelector: #owningPackage in: Class)!
+
 testHelloWorld
 	"Tests predicted unimplemented messages of a minimal GUI application.
 
@@ -88,12 +100,6 @@ testNotepad
 	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
 
 	self verifyPackageClosure: (self environmentForAppDeployment: {Notepad owningPackage})
-		missing: self simpleGuiAppUnimplementedMessages!
-
-testScribble
-	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
-
-	self verifyPackageClosure: (self environmentForAppDeployment: {Scribble owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testSystemPackage
@@ -118,9 +124,9 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 !PackageClosureTests categoriesFor: #environmentForPackageClosure:!helpers!private! !
 !PackageClosureTests categoriesFor: #simpleGuiAppUnimplementedMessages!constants!private! !
 !PackageClosureTests categoriesFor: #testCommandLineHelloWorld!public!unit tests! !
+!PackageClosureTests categoriesFor: #testEtchASketch!public!unit tests! !
 !PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
 !PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !
-!PackageClosureTests categoriesFor: #testScribble!public!unit tests! !
 !PackageClosureTests categoriesFor: #testSystemPackage!public!unit tests! !
 !PackageClosureTests categoriesFor: #verifyPackageClosure:missing:!helpers!private! !
 

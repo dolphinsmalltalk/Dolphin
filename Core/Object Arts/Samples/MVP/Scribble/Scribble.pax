@@ -8,7 +8,7 @@ Scribble is a sample component for accepting ''ink'' as a series of mouse or pen
 
 ## Examples
 
-To create a Scribble pad in a dummy shell window evaluate:
+To create a Scribble document window evaluate:
 
 ```
 ScribbleShell show.
@@ -64,6 +64,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
