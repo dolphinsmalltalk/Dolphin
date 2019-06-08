@@ -44,8 +44,7 @@ Save: destination PersistFormat: persistFormat
 			[in, optional, defaultvalue(0)] PersistFormatEnum PersistFormat);"
 
 	<virtual stdcall: hresult 85 variant sdword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODB_Recordset categoriesFor: #save!**auto generated**!methods!public! !
 !ADODB_Recordset categoriesFor: #save:persistFormat:!**auto generated**!methods!public! !
 !ADODB_Recordset categoriesFor: #Save:PersistFormat:!**auto generated**!COM Interfaces-_Recordset!private! !

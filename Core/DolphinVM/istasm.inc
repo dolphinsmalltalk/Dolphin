@@ -339,17 +339,17 @@ Process	STRUCT 2t
 	m_priority				Oop				?			; SmallInteger
 	m_myList				POTE			?			; Link
 	m_callbackDepth			Oop				?			; SmallInteger
-	m_primitiveFailureCode	Oop				?			; SmallInteger?
+							Oop				?			; SmallInteger?
 	m_primitiveFailureData	Oop				?			; Any
 	m_fpeMask				Oop				?			; SmallInteger
 	m_waitOverlap			POTE			?			; Semaphore
 	m_thread				Oop				?
 	m_exceptionEnv			POTE			?
 	m_alreadyPrinnted		Oop				?
-	m_reserved1				Oop				?
+							Oop				?
 	m_debugger				POTE			?
 	m_name					Oop				?
-	m_reserved2				Oop				?
+							Oop				?
 	m_stack					Oop				0t DUP (?)
 Process	ENDS
 
@@ -747,16 +747,25 @@ GetIPOffsetUsing MACRO tempRegister
 	ENDIF
 ENDM
 
+PrimitiveFailureNonInteger EQU 0
+PrimitiveFailureIndexOutOfRange EQU 1
+PrimitiveFailureBadValueType EQU 2
+PrimitiveFailureSystemError EQU 3
+PrimitiveFailureWrongNumberOfArgs EQU 4
+PrimitiveFailureNotIndexable EQU 6
+PrimitiveFailureNotBytes EQU 8
+PrimitiveFailureValueOutOfRange EQU 11
+PrimitiveFailureOverflow EQU 12
+PrimitiveFailureInvalidReceiver EQU 19
 
 PrimitiveFailureCode MACRO failureCode
-	mov		edx, [ACTIVEPROCESS]
-	xor		eax, eax
-	mov		(Process PTR[edx]).m_primitiveFailureCode, failureCode*2+1
+	mov		eax, failureCode*2+1			; We now return a SmallInteger failure code
 	ret
 ENDM
 	
 LocalPrimitiveFailure MACRO failureCode
-localPrimitiveFailure&failureCode:
+
+%local&failureCode&:
 	PrimitiveFailureCode failureCode
 ENDM
 

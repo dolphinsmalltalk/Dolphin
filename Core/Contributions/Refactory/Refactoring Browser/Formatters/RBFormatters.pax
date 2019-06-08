@@ -21,10 +21,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package!
 

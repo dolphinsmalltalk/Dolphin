@@ -20,7 +20,7 @@ chooseColor: aWinCHOOSECOLOR
 		);"
 
 	<stdcall: bool ChooseColorW CHOOSECOLORW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 chooseFont: aWinCHOOSEFONT
 	"Create a Font common dialog box that enables the user to choose attributes for a logical font.
@@ -32,8 +32,7 @@ chooseFont: aWinCHOOSEFONT
 	);"
 
 	<stdcall: bool ChooseFontW lpvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 commDlgExtendedError
 	"The CommDlgExtendedError function returns a common dialog box error code.
@@ -41,8 +40,7 @@ commDlgExtendedError
 	the common dialog box functions."
 
 	<stdcall: dword CommDlgExtendedError>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 findText: aWinFINDREPLACE
 	"Create a system-defined modeless dialog box that lets the user specify a string to search for and options to 
@@ -53,8 +51,7 @@ findText: aWinFINDREPLACE
 		);"
 
 	<stdcall: handle FindTextW lpvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFileTitle: lpszFile lpszTitle: lpszTitle cbBuf: cbBuf
 	"Answer the title of the file identified by the lpszFile parameter.
@@ -65,7 +62,7 @@ getFileTitle: lpszFile lpszTitle: lpszTitle cbBuf: cbBuf
 		);"
 
 	<stdcall: sword GetFileTitleW lpwstr lpwstr word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getOpenFileName: aWinOPENFILENAME
 	"Creates an Open common dialog box that lets the user specify the drive, directory, and the name 
@@ -76,7 +73,7 @@ getOpenFileName: aWinOPENFILENAME
 		);"
 
 	<stdcall: bool GetOpenFileNameW lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getSaveFileName: aWinOPENFILENAME
 	"Creates a Save common dialog box that lets the user specify the drive, directory, 
@@ -87,8 +84,7 @@ getSaveFileName: aWinOPENFILENAME
 		);"
 
 	<stdcall: bool GetSaveFileNameW lpvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 replaceText: aWinFINDREPLACE
 	"Create a system-defined modeless dialog box that lets the user specify
@@ -100,8 +96,7 @@ replaceText: aWinFINDREPLACE
 		);"
 
 	<stdcall: handle ReplaceTextW FINDREPLACEW*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 systemError
 	"Generate an error based on the last recorded host system error."

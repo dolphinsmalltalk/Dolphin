@@ -29,8 +29,8 @@ FindName: findName lHashVal: lHashVal ppTInfo: ppTInfo rgMemId: rgMemId pcFound:
 			[in, out] unsigned short* pcFound);
 	"
 
-	<virtual stdcall: hresult 12 lpwstr dword lppvoid SDWORD* DWORD*>
-	^self invalidCall!
+	<virtual stdcall: hresult 12 lpwstr dword lppvoid sdword* dword*>
+	^self invalidCall: _failureCode!
 
 getAllCustData
 	"Answer a <CUSTDATA> describing the custom data associated with the type library."
@@ -51,8 +51,8 @@ GetDocumentation: index pBstrName: pBstrName pBstrDocString: pBstrDocString pdwH
 	Note that we deliberately return the HRESULT code as an integer value rather than having an
 	exception raised."
 
-	<virtual stdcall: sdword 10 sdword lppvoid lppvoid DWORD* lppvoid>
-	^self invalidCall!
+	<virtual stdcall: sdword 10 sdword lppvoid lppvoid dword* lppvoid>
+	^self invalidCall: _failureCode!
 
 getLibAttr
 	"Answer a <TLIBATTR> detailing the library attributes for the receiver
@@ -73,7 +73,7 @@ GetLibAttr: getLibAttr
 	"
 
 	<virtual stdcall: hresult 8 TLIBATTR**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeComp
 	"Answer the <ITypeComp> result of invoking the COM Object's GetTypeComp() method."
@@ -91,13 +91,13 @@ GetTypeComp: getTypeComp
 	the vtable defined in ITypeLib>>defineFunctions. DO NOT MODIFY!!"
 
 	<virtual stdcall: hresult 9 lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetTypeInfo: index ppTInfo: ppTInfo
 	"Callout for the ITypeLib::GetTypeInfo() interface function."
 
 	<virtual stdcall: hresult 5 dword lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetTypeInfoCount
 	"Private - Invoke the GetTypeInfoCount() method of the COM object wrapped by the receiver.
@@ -106,7 +106,7 @@ GetTypeInfoCount
 	"
 
 	<virtual stdcall: dword 4>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeInfoOfGuid: guid ifNone: exceptionHandler
 	"Answer an ITypeInfo for the type with <GUID>, guid, or if there is no
@@ -132,15 +132,15 @@ GetTypeInfoOfGuid: guid ppTInfo: ppTInfo
 	"
 
 	"Modified to return integer code rather than raising an exception here"
-	<virtual stdcall: sdword 7 GUID* ITypeInfo**>
-	^self invalidCall
-!
+
+	<virtual stdcall: sdword 7 guid* ITypeInfo**>
+	^self invalidCall: _failureCode!
 
 GetTypeInfoType: index pTKind: pTKind
 	"Callout for the ITypeLib::GetTypeInfoType() interface function."
 
-	<virtual stdcall: hresult 6 dword SDWORD*>
-	^self invalidCall!
+	<virtual stdcall: hresult 6 dword sdword*>
+	^self invalidCall: _failureCode!
 
 isName: aString
 	"Answer whether specified string is the name of a member in the receiver."
@@ -163,8 +163,8 @@ IsName: szNameBuf lHashVal: lHashVal pfName: pfName
 			[out] BSTR* pBstrLibName);
 	"
 
-	<virtual stdcall: hresult 11 lpwstr dword DWORD*>
-	^self invalidCall!
+	<virtual stdcall: hresult 11 lpwstr dword dword*>
+	^self invalidCall: _failureCode!
 
 nameAt: index
 	"Private - Answer the 'name' of the element with the specified <integer> 
@@ -200,7 +200,7 @@ ReleaseTLibAttr: releaseTLibAttr
 	"
 
 	<virtual stdcall: void 13 TLIBATTR*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 typeComp
 	"Answer an ITypeComp on the receiver."

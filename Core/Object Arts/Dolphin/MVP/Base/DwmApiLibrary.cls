@@ -10,11 +10,11 @@ DwmApiLibrary comment: ''!
 !DwmApiLibrary categoriesForClass!External-Libraries! !
 !DwmApiLibrary methodsFor!
 
-dwmIsCompositionEnabled: pfEnabled 
+dwmIsCompositionEnabled: pfEnabled
 	"HRESULT DwmIsCompositionEnabled( BOOL *pfEnabled);"
 
 	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !DwmApiLibrary categoriesFor: #dwmIsCompositionEnabled:!public! !
 
 !DwmApiLibrary class methodsFor!

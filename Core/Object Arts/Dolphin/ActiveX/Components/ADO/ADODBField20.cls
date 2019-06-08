@@ -36,8 +36,7 @@ AppendChunk: data
 			[in] VARIANT Data);"
 
 	<virtual stdcall: hresult 18 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
@@ -84,8 +83,7 @@ get_ActualSize: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Attributes: pl
 	"Private - Get the value of the 'Attributes' property of the receiver.
@@ -93,8 +91,7 @@ get_Attributes: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DataFormat: ppiDF
 	"Private - Get the value of the 'DataFormat' property of the receiver.
@@ -102,8 +99,7 @@ get_DataFormat: ppiDF
 			[out, retval] IUnknown** ppiDF);"
 
 	<virtual stdcall: hresult 22 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DefinedSize: pl
 	"Private - Get the value of the 'DefinedSize' property of the receiver.
@@ -111,8 +107,7 @@ get_DefinedSize: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Name: pbstr
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -120,8 +115,7 @@ get_Name: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_NumericScale: pbNumericScale
 	"Private - Get the value of the 'NumericScale' property of the receiver.
@@ -129,8 +123,7 @@ get_NumericScale: pbNumericScale
 			[out, retval] BYTE* pbNumericScale);"
 
 	<virtual stdcall: hresult 17 byte*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_OriginalValue: pvar
 	"Private - Get the value of the 'OriginalValue' property of the receiver.
@@ -138,8 +131,7 @@ get_OriginalValue: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 20 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Precision: pbPrecision
 	"Private - Get the value of the 'Precision' property of the receiver.
@@ -147,8 +139,7 @@ get_Precision: pbPrecision
 			[out, retval] BYTE* pbPrecision);"
 
 	<virtual stdcall: hresult 16 byte*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Type: pDataType
 	"Private - Get the value of the 'Type' property of the receiver.
@@ -156,8 +147,7 @@ get_Type: pDataType
 			[out, retval] DataTypeEnum* pDataType);"
 
 	<virtual stdcall: hresult 13 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_UnderlyingValue: pvar
 	"Private - Get the value of the 'UnderlyingValue' property of the receiver.
@@ -165,8 +155,7 @@ get_UnderlyingValue: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 21 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Value: pvar
 	"Private - Get the value of the 'Value' property of the receiver.
@@ -174,8 +163,7 @@ get_Value: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 14 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getChunk: length
 	"Answer the <VARIANT> result of invoking the GetChunk() method of the COM object."
@@ -196,8 +184,7 @@ GetChunk: length pvar: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 19 sdword variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 name
 	"Answer the <bstr> value of the 'Name' property of the receiver."
@@ -267,8 +254,7 @@ put_Attributes: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 28 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DefinedSize: pl
 	"Private - Set the value of the 'DefinedSize' property of the object wrapped by the 
@@ -277,8 +263,7 @@ put_DefinedSize: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 27 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_NumericScale: pbNumericScale
 	"Private - Set the value of the 'NumericScale' property of the object wrapped by the 
@@ -287,8 +272,7 @@ put_NumericScale: pbNumericScale
 			[in] BYTE pbNumericScale);"
 
 	<virtual stdcall: hresult 25 byte>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Precision: pbPrecision
 	"Private - Set the value of the 'Precision' property of the object wrapped by the 
@@ -297,8 +281,7 @@ put_Precision: pbPrecision
 			[in] BYTE pbPrecision);"
 
 	<virtual stdcall: hresult 24 byte>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Type: pDataType
 	"Private - Set the value of the 'Type' property of the object wrapped by the 
@@ -307,8 +290,7 @@ put_Type: pDataType
 			[in] DataTypeEnum pDataType);"
 
 	<virtual stdcall: hresult 26 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Value: pvar
 	"Private - Set the value of the 'Value' property of the object wrapped by the 
@@ -317,8 +299,7 @@ put_Value: pvar
 			[in] VARIANT pvar);"
 
 	<virtual stdcall: hresult 15 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_DataFormat: ppiDF
 	"Private - Set the value of the 'DataFormat' property of the object wrapped by the 
@@ -327,8 +308,7 @@ putref_DataFormat: ppiDF
 			[in] IUnknown* ppiDF);"
 
 	<virtual stdcall: hresult 23 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setDataFormat: ppiDF
 	"Set the 'DataFormat' property of the receiver to the <IUnknown*> value of the argument."

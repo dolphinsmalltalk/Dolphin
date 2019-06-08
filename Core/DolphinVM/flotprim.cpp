@@ -87,7 +87,8 @@ template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const s
 			return sp;
 		}
 		else
-			return nullptr;
+			// Non-finite receiver - can't be represented as an integer
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	}
 	else
 	{
@@ -157,7 +158,7 @@ template <class P1> __forceinline static Oop* primitiveFloatCompare(Oop* const s
 			else
 			{
 				// Unhandled arg type, fail into Smalltalk code
-				return nullptr;
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		else
@@ -232,7 +233,7 @@ template <class T> __forceinline static Oop* primitiveFloatBinaryOp(Oop* const s
 		}
 		else
 		{
-			return nullptr;
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 	}
 	else
@@ -410,7 +411,7 @@ Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, unsigned)
 		return sp-1;
 	}
 	else
-		return NULL;
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 Oop* Interpreter::primitiveFloatAbs(Oop* const sp, unsigned)
@@ -497,7 +498,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp, unsi
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Index not an integer
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
@@ -519,7 +520,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp, unsi
 
 		// We can check that the offset is in bounds
 		if (static_cast<int>(offset) < 0 ||	offset+sizeof(double) > oteBytes->bytesSize())
-			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
 		oteResult = Float::New(*reinterpret_cast<double*>(&(bytes->m_fields[offset])));
@@ -537,7 +538,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp, unsi
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Index not an integer
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
@@ -559,7 +560,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp, unsi
 
 		// We can check that the offset is in bounds
 		if (static_cast<int>(offset) < 0 || offset+sizeof(float) > oteBytes->bytesSize())
-			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
 		oteResult = Float::New(*reinterpret_cast<float*>(&(bytes->m_fields[offset])));
@@ -577,7 +578,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp, u
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Index not an integer
 	}
 
 	double fValue;
@@ -590,7 +591,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp, u
 	{
 		if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
 		{
-			return primitiveFailure(PrimitiveFailureBadValue);
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 		FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
 		fValue = oteValue->m_location->m_fValue;
@@ -617,7 +618,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp, u
 
 		// We can check that the offset is in bounds
 		if (static_cast<int>(offset) < 0 || static_cast<int>(offset+sizeof(double)) > oteBytes->bytesSizeForUpdate())
-			return primitiveFailure(1);	// Non-integer value or Out of bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Non-integer value or Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
 		*reinterpret_cast<double*>(&(bytes->m_fields[offset])) = fValue;
@@ -634,7 +635,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp, u
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Index not an integer
 	}
 
 	float fValue;
@@ -647,7 +648,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp, u
 	{
 		if (ObjectMemory::fetchClassOf(valuePointer) != Pointers.ClassFloat)
 		{
-			return primitiveFailure(PrimitiveFailureBadValue);
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 		FloatOTE* oteValue = reinterpret_cast<FloatOTE*>(valuePointer);
 		fValue = static_cast<float>(oteValue->m_location->m_fValue);
@@ -674,7 +675,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp, u
 
 		// We can check that the offset is in bounds
 		if (static_cast<int>(offset) < 0 || static_cast<int>(offset+sizeof(float)) > oteBytes->bytesSizeForUpdate())
-			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
 		*reinterpret_cast<float*>(&(bytes->m_fields[offset])) = fValue;
@@ -690,7 +691,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, unsigned)
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Index not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Index not an integer
 	}
 
 	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
@@ -714,7 +715,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, unsigned)
 
 		// We can check that the offset is in bounds
 		if (static_cast<int>(offset) < 0 || offset+sizeof(double) > oteBytes->bytesSize())
-			return primitiveFailure(PrimitiveFailureBoundsError);	// Out of bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;
 		pLongDbl = reinterpret_cast<_FP80*>(&(bytes->m_fields[offset]));

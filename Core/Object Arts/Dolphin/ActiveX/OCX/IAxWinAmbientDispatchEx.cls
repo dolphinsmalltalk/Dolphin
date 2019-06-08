@@ -43,8 +43,7 @@ SetAmbientDispatch: pDispatch
 			[in] IDispatch* pDispatch);"
 
 	<virtual stdcall: hresult 36 IDispatch*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IAxWinAmbientDispatchEx categoriesFor: #setAmbientDispatch:!**auto generated**!methods!public! !
 !IAxWinAmbientDispatchEx categoriesFor: #SetAmbientDispatch:!**auto generated**!COM Interfaces-IAxWinAmbientDispatchEx!private! !
 

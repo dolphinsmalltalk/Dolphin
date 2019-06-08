@@ -30,7 +30,7 @@ get_Global: pGlobal
 			[out, retval]VARIANT_BOOL* pGlobal);"
 
 	<virtual stdcall: hresult 12 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_IgnoreCase: pIgnoreCase
 	"Private - Get the value of the 'IgnoreCase' property of the receiver.
@@ -39,7 +39,7 @@ get_IgnoreCase: pIgnoreCase
 			[out, retval]VARIANT_BOOL* pIgnoreCase);"
 
 	<virtual stdcall: hresult 10 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Pattern: pPattern
 	"Private - Get the value of the 'Pattern' property of the receiver.
@@ -48,7 +48,7 @@ get_Pattern: pPattern
 			[out, retval]BSTR* pPattern);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 global
 	"Answer whether the regular expression should be tested against all possible matches in a
@@ -119,7 +119,7 @@ put_Global: pGlobal
 			[in]VARIANT_BOOL pGlobal);"
 
 	<virtual stdcall: hresult 13 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_IgnoreCase: pIgnoreCase
 	"Private - Set the value of the 'IgnoreCase' property of the object wrapped by the 
@@ -129,7 +129,7 @@ put_IgnoreCase: pIgnoreCase
 			[in]VARIANT_BOOL pIgnoreCase);"
 
 	<virtual stdcall: hresult 11 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_Pattern: pPattern
 	"Private - Set the value of the 'Pattern' property of the object wrapped by the 
@@ -139,7 +139,7 @@ put_Pattern: pPattern
 			[in]BSTR pPattern);"
 
 	<virtual stdcall: hresult 9 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 replace: sourceString replaceString: replaceString
 	"Answer the <String> result of performing a regular expression based search/replace, where

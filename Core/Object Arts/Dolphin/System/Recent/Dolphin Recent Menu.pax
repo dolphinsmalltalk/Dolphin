@@ -17,10 +17,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Registry\Dolphin Registry Access';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Registry\Dolphin Registry Access').
 
 package!
 

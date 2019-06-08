@@ -37,13 +37,12 @@ anySatisfy: discriminator
 	^false!
 
 at: index
-	"Answer the receiver's indexed element at the <integer> argument, index.
-	Implementation Note: Subclasses are generally implemented as indexable objects,
-	so we can use the indexable instance variable accessing primitive (i.e.
-	revert to the Object implementation)."
+	"Answer the receiver's indexed element at the <integer> argument, index."
+
+	"Implementation Note: Subclasses are generally implemented as indexable objects, so we can use the indexable instance variable accessing primitive (i.e. revert to the Object implementation)."
 
 	<primitive: 60>
-	^self errorAt: index!
+	^self _primitiveError: _failureCode at: index!
 
 at: index ifAbsent: exceptionBlock
 	"Answer an <Object> which is the element of the receiver 
@@ -63,15 +62,18 @@ at: index put: newElement
 	revert to the Object implementation)."
 
 	<primitive: 61>
-	^self errorAt: index put: newElement!
+	^self
+		_primitiveError: _failureCode
+		at: index
+		put: newElement!
 
 copyFrom: startInteger to: stopInteger
 	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
 	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
 	the same order."
 
-	| len |
 	<primitive: 50>
+	| len |
 	len := stopInteger - startInteger + 1.
 	^(self species new: len)
 		replaceFrom: 1
@@ -191,15 +193,13 @@ resize: anInteger
 	^super resize: anInteger!
 
 size
-	"Answer the size of the collection. 
-	Implementation Note: Subclasses are generally implemented as indexable objects,
-	so we can use the indexable instance variable size primitive.
+	"Answer the size of the collection."
+
+	"Implementation Note: Subclasses are generally implemented as indexable objects, so we can use the indexable instance variable size primitive.
 	This primitive should not fail."
 
 	<primitive: 62>
-	^self primitiveFailed
-
-!
+	^self primitiveFailed: _failureCode!
 
 sort
 	"Perform an in-place sort of the contents of the receiver using the default sort algorithm and sort order, which is defined by the result of sending #<= to pairs of elements."

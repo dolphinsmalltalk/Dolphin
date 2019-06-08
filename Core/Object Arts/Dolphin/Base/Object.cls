@@ -77,6 +77,25 @@ _deepenShallowCopy: clone trail: copiesDictionary
 		clone instVarAt: i put: ((clone instVarAt: i) _deepCopy: copiesDictionary)].
 	^clone!
 
+_primitiveError: anInteger at: index
+	"Private - An at: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
+
+	anInteger == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	^self primitiveFailed: anInteger!
+
+_primitiveError: anInteger at: index put: value
+	"Private - An at:put: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
+
+	anInteger == _PrimitiveFailureCode.Immutable ifTrue: [Processor constWriteSignal signalWith: self].
+	anInteger == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	(anInteger == _PrimitiveFailureCode.BadValueType
+		or: [anInteger == _PrimitiveFailureCode.ValueOutOfRange]) ifTrue: [^self errorCantHold: value].
+	^self primitiveFailed: anInteger!
+
 ~~ comparand
 	"Answer whether the <Object>, comparand,  is NOT identical to the receiver.
 
@@ -112,8 +131,8 @@ _deepenShallowCopy: clone trail: copiesDictionary
 	which reimplement either #= or #hash, will probably need to 
 	reimplement both."
 
-	<primitive: 110> 
-	^self primitiveFailed!
+	<primitive: 110>
+	^self primitiveFailed: _failureCode!
 
 == comparand
 	"Answer whether the <Object>, comparand, is the same, identical, 
@@ -125,7 +144,7 @@ _deepenShallowCopy: clone trail: copiesDictionary
 	(unless #perform'd), because #== is inlined by the Compiler."
 
 	<primitive: 110>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 -> anObject 
 	"Answer an Association with the receiver as the key, and anObject as the value"
@@ -156,7 +175,7 @@ allReferences: aBoolean
 	references if the <boolean> argument is true. The primitive should not fail."
 
 	<primitive: 153>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 appendToStream: puttableStream
 	"Private - Append the receiver's elements to the argument, puttableStream.
@@ -187,65 +206,62 @@ asUIntPtr
 
 at: index
 	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented.
+	As basicAt:, but may be reimplemented."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 60>
-	^self errorAt: index!
+	^self _primitiveError: _failureCode at: index!
 
 at: index put: value
-	"Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value.
-	As basicAt:put: but may be reimplemented.
+	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	As basicAt:put: but may be reimplemented."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's mutable size) 
-		2	- the argument, value, is not of a class which can be stored in the receiver
-			(e.g. its a non-SmallInteger and the receiver is a ByteArray)."
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		BadValueType		- the argument, value, is not of a class which can be stored in the receiver (e.g. its a non-SmallInteger and the receiver is a ByteArray).
+		ValueOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
 
 	<primitive: 61>
-	^self errorAt: index put: value!
+	^self
+		_primitiveError: _failureCode
+		at: index
+		put: value!
 
 basicAt: aSmallInteger
 	"Private - Answer the receiver's indexed instance variable at the argument index.
+	MUST not be reimplemented (except by classes whose instances have immediate representations such as SmallInteger).
 
 	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
-	MUST not be reimplemented (except by classes whose instances have immediate representations
-	such as SmallInteger).
-
-	Implementation Note: This message is inlined by the compiler, and is never sent 
-	unless directly performed, or unless the inlined code detects an error (such as
-	an out-of-bounds index). It is not possible to override this message successfully."
+	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index). It is not possible to override this message successfully."
 
 	<primitive: 60>
-	^self errorAt: aSmallInteger!
+	^self _primitiveError: _failureCode at: aSmallInteger!
 
 basicAt: aSmallInteger put: value
-	"Private - Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value. 
+	"Private - Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value. 
+	MUST not be reimplemented (except by classes whose instances have immediate representations	such as SmallInteger)."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's mutable size) 
-		2	- the argument, value, is not of a class which can be stored in the receiver
-			(e.g. its a non-SmallInteger and the receiver is a ByteArray).
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		BadValueType		- the argument, value, is not of a class which can be stored in the receiver
+						(e.g. its a non-SmallInteger and the receiver is a ByteArray).
+		ValueOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
 
-	MUST not be reimplemented (except by classes whose instances have immediate representations
-	such as SmallInteger).
-
-	Implementation Note: This message is inlined by the compiler, and is never sent 
-	unless directly performed, or unless the inlined code detects an error (such as
-	an out-of-bounds index). It is not possible to override this message successfully."
+	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index). It is not possible to override this message successfully."
 
 	<primitive: 61>
-	^self errorAt: aSmallInteger put: value!
+	^self
+		_primitiveError: _failureCode
+		at: aSmallInteger
+		put: value!
 
 basicClass
 	"Answer a <classDescription> which is the class of the receiver.
@@ -256,7 +272,7 @@ basicClass
 	the class of a different object (e.g. in the case of proxies).,"
 
 	<primitive: 111>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicDoesNotUnderstand: failedMessage
 	"A message sent to the receiver was not implemented by the receiver or its superclasses 
@@ -293,9 +309,9 @@ basicIdentityHash
 	
 	N.B. The primitive does not fail, but will raise a benign invalid memory access 
 	exception if called for immediate subclasses such as SmallInteger."
-	
+
 	<primitive: 75>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicIdentityIndexOf: anElement from: start to: stop
 	"Private - Answer the index of the next occurrence of anElement in the receiver's indexable
@@ -315,12 +331,12 @@ basicIdentityIndexOf: anElement from: start to: stop
 	behavior can be useful when repetitively searching through an object as it simplifies the termination 
 	condition (e.g. See WeakArray>>corpsesDo:)."
 
-	| index |
 	<primitive: 59>
+	| index |
 	index := start.
-	[index > stop] whileFalse: [
-		(self basicAt: index) == anElement ifTrue: [^index].
-		index := index + 1].
+	[index > stop] whileFalse: 
+			[(self basicAt: index) == anElement ifTrue: [^index].
+			index := index + 1].
 	^0!
 
 basicPrintOn: aStream
@@ -350,11 +366,11 @@ basicResize: anInteger
 		0 -	anInteger is not a positive SmallInteger
 		1 -	the receiver is not of an indexable (variable sized) class."
 
-	| answer |
 	<primitive: 101>
+	| answer |
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
-	1 to: anInteger do: [ :i | answer basicAt: i put: (self basicAt: i) ].
+	1 to: anInteger do: [:i | answer basicAt: i put: (self basicAt: i)].
 	self become: answer!
 
 basicShallowCopy
@@ -362,14 +378,11 @@ basicShallowCopy
 	variables. This implementation suffices for most objects.
 	The primitive does not fail."
 
-	| class copy size |
 	<primitive: 155>
-
+	| class copy size |
 	class := self basicClass.
 	size := self basicSize.
-	copy := class isVariable 
-		ifTrue: [class basicNew: size]
-		ifFalse: [class basicNew].
+	copy := class isVariable ifTrue: [class basicNew: size] ifFalse: [class basicNew].
 	size := size + class instSize.
 	1 to: size do: [:i | copy instVarAt: i put: (self instVarAt: i)].
 	^copy!
@@ -381,14 +394,14 @@ basicSize
 	The primitive should not fail. It must be overridden for immediate objects."
 
 	<primitive: 62>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicYourAddress
 	"Private - See #yourAddress. Must not be reimplemented (except by subclasses whose
 	instances have immediate representations, e.g. SmallInteger)."
 
 	<primitive: 103>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 become: anObject
 	"Swap the instance pointers of the receiver and the argument, anObject. All variables 
@@ -410,32 +423,25 @@ become: anObject
 	to become prevalent on other platforms."
 
 	<primitive: 72>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 becomeA: aClass
-	"Change the class of the receiver to aClass, iff they are of the same 'shape' - 
-	e.g. pointer objects cannot be converted to byte objects and vice versa.
+	"Change the class of the receiver to aClass, iff they are of the same 'shape' - e.g. pointer objects cannot be converted to byte objects and vice versa.
 	
 	SmallIntegers	can be mutated to new byte objects which are always of length 4.
 	
 	Primitive failure reasons:
-		0	-	argument, aClass, is not a Behavior
-		1	-	receiver's class and aClass are not the same shape.
+		BadValueType		- argument, aClass, is not a Behavior
+		ValueOutOfRange	- receiver's class and aClass are not the same shape.
 		
-	Consider carefully before using this method as although it may improve performance, 
-	it has potential side effects similar to those of #become:. As a rule of thumb, send 
-	#becomeA: only to objects of known ownership (e.g. temporaries). Changing the class of 
-	objects passed as parameters could well confuse the other objects referencing those 
-	parameters. 
+	Consider carefully before using this method as although it may improve performance, it has potential side effects similar to those of #become:. As a rule of thumb, send #becomeA: only to objects of known ownership (e.g. temporaries). Changing the class of  objects passed as parameters could well confuse the other objects referencing those parameters. 
 
-	It is always safe to change the class of a SmallInteger, since a new object is created 
-	of the specified variable byte class to hold the value of the SmallInteger."
+	It is always safe to change the class of a SmallInteger, since a new object is created of the specified variable byte class to hold the value of the SmallInteger."
 
 	<primitive: 102>
-	^self class instanceSpec = aClass instanceSpec 
-		ifTrue: [ self primitiveFailed ]
-		ifFalse: [ self error: 'Incompatible class instance shapes' ].
-!
+	^_failureCode == _PrimitiveFailureCode.ValueOutOfRange
+		ifTrue: [self error: 'Incompatible class instance shapes']
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 becomeAn: aClass
 	"Sigh, just to keep Russ (aka The Grammar Pedant) happy."
@@ -539,7 +545,7 @@ class
 	The primitive should not fail."
 
 	<primitive: 111>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 copy
 	"Answer an <Object> which is a copy of the receiver (by default a copy which shares the receiver's 
@@ -610,47 +616,10 @@ error: signalerText
 
 	^Error signal: signalerText!
 
-errorAt: index
-	"An at: operation on the receiver failed. Determine the cause of the error, and 
-	raise an appropriate error."
-
-	^self class isVariable
-		ifTrue: 
-			[index isInteger ifTrue: [self errorSubscriptBounds: index] ifFalse: [Error nonIntegerIndex: index]]
-		ifFalse: [Error notIndexable: self]!
-
-errorAt: index put: value
-	"An at:put: operation on the receiver failed. Determine the cause of the error, and 
-	raise an appropriate error."
-
-	^self class isVariable
-		ifTrue: 
-			[index isInteger
-				ifTrue: 
-					[(index between: 1 and: self size)
-						ifTrue: 
-							[self isImmutable
-								ifTrue: [Processor constWriteSignal signalWith: self]
-								ifFalse: [self errorCantHold: value]]
-						ifFalse: [self errorSubscriptBounds: index]]
-				ifFalse: [Error nonIntegerIndex: index]]
-		ifFalse: [Error notIndexable: self]!
-
 errorCantHold: anObject
 	"Raise an error that the receiver cannot hold anObject (as it is of the wrong type)"
 
 	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)!
-
-errorInstVarAt: anInteger put: anObject
-	^self isImmutable
-		ifTrue: [Processor constWriteSignal signalWith: self]
-		ifFalse: 
-			[anInteger isInteger
-				ifTrue: 
-					[(anInteger between: 1 and: self class instSize + self basicSize)
-						ifTrue: [self errorCantHold: anObject]
-						ifFalse: [self errorSubscriptBounds: anInteger]]
-				ifFalse: [Error nonIntegerIndex: anInteger]]!
 
 errorNotFound: anObject
 	"Raise a NotFoundError indicating that anObject was not found 
@@ -797,34 +766,32 @@ initialize
 	^self!
 
 instVarAt: index
-	"Private - Answer a variable in the receiver. The numbering of the variables begins with 
-	named instance variables, and corresponds to the order in which the instance variables
-	were defined. Indexed variables have indices following those of the named instance
-	variables.
+	"Private - Answer a variable in the receiver. The numbering of the variables begins with named instance variables, and corresponds to the order in which the instance variables were defined. Indexed variables have indices following those of the named instance variables."
 
-	Primitive failure reasons:
-		0	-	aSmallInteger is not a SmallInteger.
-		1	-	aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
+	"Primitive failure reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger.
+		IndexoutOfRange	- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	^index isInteger
-		ifTrue: [self errorSubscriptBounds: index]
-		ifFalse: [Error nonIntegerIndex: index]!
+	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^(BoundsError new)
+				receiver: self;
+				signalWith: index].
+	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^Error nonIntegerIndex: index].
+	^self primitiveFailed: _failureCode!
 
-instVarAt: index put: value 
-	"Private - Store the argument, value, into a named variable in the receiver. The numbering 
-	of the variables begines with named instance variables, and corresponds to the 
-	order in which the instance variables were defined. Indexed variables have indices 
-	following those of the named instance variables.
+instVarAt: index put: value
+	"Private - Store the argument, value, into a named variable in the receiver. The numbering of the variables begines with named instance variables, and corresponds to the order in which the instance variables were defined. Indexed variables have indices following those of the named instance variables."
 
-	Primitive failure reasons:
-		0	-	aSmallInteger is not a SmallInteger.
-		1	-	aSmallInteger is out of bounds (not in the range 1..receiver's mutable size)
-		2	-	the argument, value, is a type of object which cannot be stored in
-				the receiver."
+	"Primitive failure reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger.
+		IndexOutOfRange	- aSmallInteger is out of bounds (not in the range 1..receiver's mutable size)
+		BadValueType		- the argument, value, is a type of object which cannot be stored in the receiver."
 
 	<primitive: 74>
-	^self errorInstVarAt: index put: value!
+	^self
+		_primitiveError: _failureCode
+		at: index
+		put: value!
 
 instVarNamed: aString
 	"Answer the value of the named instance variable of the receiver.
@@ -865,16 +832,16 @@ isImmutable
 	"Answer whether the receiver is a constant object, for example a compiled literal."
 
 	<primitive: 177>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
-isImmutable: aBoolean 
+isImmutable: aBoolean
 	"Set whether the receiver is a constant object. Any attempt to write to either named or
 	indexable instance variables of a constant object will result in an exception. The primitive
 	will fail if the receiver is a permanently immutable object such as a <SmallInteger> arnd
 	the argument is not 'true'."
 
 	<primitive: 178>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 isIndexable
 	"Answer whether or not the receiver has indexable instance variables (in addition
@@ -987,78 +954,79 @@ oneWayBecome: anObject
 	as efficient as #become:."
 
 	<primitive: 154>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 perform: selector
-	"Send the receiver the unary message indicated by the <selector> argument,
-	answering the result. 
+	"Send the receiver the unary message indicated by the <selector> argument, answering the result. 
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not zero."
+		InvalidSelector		- selector is not a Symbol
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not zero."
 
 	<primitive: 83>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: {}!
 
 perform: selector with: argument1
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
-	The first argument selector is the <selector> of the message. The second <Object> argument, 
-	argument1, is the argument of the message to be sent. 
+	The first argument selector is the <selector> of the message. The second <Object> argument,  argument1, is the argument of the message to be sent. 
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not one."
+		InvalidSelector		- selector is not a Symbol
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not one."
 
 	<primitive: 83>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: {argument1}!
 
 perform: selector with: argument1 with: argument2
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
-	The first argument <selector> is the selector of the message. The other arguments <argument1>
-	and <argument2>, are the argument of the message to be sent.
+	The first argument <selector> is the selector of the message. The other arguments <argument1> and <argument2>, are the argument of the message to be sent.
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not two."
+		InvalidSelector		- selector is not a Symbol
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not two."
 
 	<primitive: 83>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: {argument1. argument2}!
 
 perform: selector with: argument1 with: argument2 with: argument3
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
-	The first argument selector is the <selector> of the message. The other <Object> arguments
-	argument1, argument2 and argument3 are the arguments of the message to be sent. 
+	The first argument selector is the <selector> of the message. The other <Object> arguments argument1, argument2 and argument3 are the arguments of the message to be sent. 
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not three."
+		InvalidSelector		- selector is not a Symbol
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not three."
 
 	<primitive: 83>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: {argument1. argument2. argument3}!
 
 perform: selector with: argument1 with: argument2 with: argument3 with: argument4
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
-	The first argument selector is the <selector> of the message. The other <Object> arguments
-	argument1, argument2, argument3, and argument4 are the arguments of the message to be sent. 
+	The first argument selector is the <selector> of the message. The other <Object> arguments argument1, argument2, argument3, and argument4 are the arguments of the message to be sent. 
+
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not four."
+		InvalidSelector		- selector is not a Symbol
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not four."
 
 	<primitive: 83>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: {argument1. argument2. argument3. argument4}!
@@ -1069,17 +1037,18 @@ perform: selector withArguments: arguments
 	are the elements of the <Array>, arguments. 
 
 	Primitive failure reasons:
-		0 -	The number of arguments expected with the selector is not the number supplied.
-		1 -	arguments is not an <Array>."
+		InvalidSelector		- selector is not a Symbol
+		BadValueType		- arguments is not an Array
+		WrongNumberOfArgs	- The number of arguments expected with the selector is not the size of the arguments."
 
 	<primitive: 84>
 	^Error
-		performFailed: Processor activeProcess primitiveFailureCode
+		performFailed: _failureCode
 		of: selector
 		for: self
 		withArgs: arguments!
 
-perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor 
+perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor
 	"Private - Send message with selector, aSymbol, to anObject,
 	with arguments instantiated from memory at anAddress using the 
 	the external arguments types from the typinfo in anExternalDescriptor.
@@ -1091,12 +1060,12 @@ perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor
 	the ExternalLibrary class).
 
 	Primitive Failure reasons:
-		0	-	anExternalDescriptor is invalid.
-		1	-	anAddress is not a valid address object (SmallInteger/byte indirection)
-		2	-	the selector, aSymbol, is an immediate object (e.g. a SmallInteger)."
+		BadValueType	-	anExternalDescriptor is invalid.
+		BadValueType	-	anAddress is not a valid address object (SmallInteger/byte indirection)
+		InvalidSelector	-	the selector, aSymbol, is an immediate object (e.g. a SmallInteger)."
 
 	<primitive: 114>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 postCopy
 	"Apply any final flourish to the copy that may be required. This should be overridden by
@@ -1108,15 +1077,15 @@ postCopy
 
 	^self!
 
-primitiveFailed
+primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code
 	specified by the primitive."
 
-	| proc |
+	| proc failure |
 	proc := Processor activeProcess.
-	^self
-		error: ('Primitive <1p> failed (<2d>)' expandMacrosWithArguments: {proc topFrame sender method. 
-					proc primitiveFailureCode})!
+	failure := _PrimitiveFailureCode keyAtValue: anInteger ifAbsent: [anInteger].
+	^self error: ('Primitive <1p> failed (<2d>)'
+				expandMacrosWithArguments: {proc topFrame sender method. failure})!
 
 printOn: target
 	"Append, to the <puttableStream>, target, a string whose characters are a 
@@ -1217,7 +1186,7 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
-resize: anInteger 
+resize: anInteger
 	"Resize the receiver to accomodate anInteger indexable instance variables. If anInteger 
 	is greater than the current size of the receiver, then new, safely initialized, elements are 
 	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
@@ -1231,12 +1200,12 @@ resize: anInteger
 	to override it.
 
 	Primitive failure reason:
-		0 -	anInteger is not a positive SmallInteger
-		1 -	the receiver is not of an indexable (variable sized) class.
-		2 -	the receiver is immutable."
+		NonIntegerIndex		- anInteger is not a positive SmallInteger
+		NotIndexable		- the receiver is not of an indexable (variable sized) class.
+		InvalidOperation		- the receiver is immutable."
 
-	| answer |
 	<primitive: 101>
+	| answer |
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
 	1 to: anInteger do: [:i | answer at: i put: (self at: i)].
@@ -1280,7 +1249,7 @@ setSpecialBehavior: anInteger
 		1 - the receiver is an immediate object."
 
 	<primitive: 69>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 shallowCopy
 	"Answer a copy of the receiver which shares the receiver's instance 
@@ -1310,7 +1279,7 @@ size
 	as the named instance variables are not included). The primitive should not fail."
 
 	<primitive: 62>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 species
 	"Answer the preferred class of the receiver - not always the same as the
@@ -1319,7 +1288,7 @@ species
 	should result from the enumeration messages #collect:, #select:, and #reject:"
 
 	<primitive: 111>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 stbFixup: anSTBInFiler at: newObjectIndex
 	"Answer the true object that must be used to represent the receiver when read from anSTBInFiler.
@@ -1383,8 +1352,7 @@ swappingBecome: anObject
 	implementations."
 
 	<primitive: 72>
-	^self primitiveFailed
-!
+	^self primitiveFailed: _failureCode!
 
 trigger: anEventSymbol
 	"Evaluate the sequence of MessageSends registered for the receiver and the event, 
@@ -1540,7 +1508,7 @@ yourAddress
 	manage its lifetime yourself."
 
 	<primitive: 103>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 yourself
 	"Answer the receiver (useful for returning the receiver from a cascaded message)."
@@ -1550,6 +1518,8 @@ yourself
 !Object categoriesFor: #??!converting!public! !
 !Object categoriesFor: #_deepCopy:!copying!private! !
 !Object categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
+!Object categoriesFor: #_primitiveError:at:!exceptions!private! !
+!Object categoriesFor: #_primitiveError:at:put:!exceptions!private! !
 !Object categoriesFor: #~~!comparing!public! !
 !Object categoriesFor: #~=!comparing!public! !
 !Object categoriesFor: #=!comparing!public! !
@@ -1599,10 +1569,7 @@ yourself
 !Object categoriesFor: #displayString!displaying!public! !
 !Object categoriesFor: #doesNotUnderstand:!exceptions!public!vm entry points! !
 !Object categoriesFor: #error:!exceptions!public! !
-!Object categoriesFor: #errorAt:!exceptions!public! !
-!Object categoriesFor: #errorAt:put:!exceptions!public! !
 !Object categoriesFor: #errorCantHold:!exceptions!public! !
-!Object categoriesFor: #errorInstVarAt:put:!exceptions!private!vm entry points! !
 !Object categoriesFor: #errorNotFound:!exceptions!public! !
 !Object categoriesFor: #errorSubscriptBounds:!exceptions!public! !
 !Object categoriesFor: #events!debugger-step over!events!public! !
@@ -1649,7 +1616,7 @@ yourself
 !Object categoriesFor: #perform:withArguments:!message sending!public! !
 !Object categoriesFor: #perform:withArgumentsAt:descriptor:!message sending!private! !
 !Object categoriesFor: #postCopy!copying!public! !
-!Object categoriesFor: #primitiveFailed!exceptions!public! !
+!Object categoriesFor: #primitiveFailed:!exceptions!public! !
 !Object categoriesFor: #printOn:!printing!public! !
 !Object categoriesFor: #printString!printing!public! !
 !Object categoriesFor: #propertyAt:!properties!public! !

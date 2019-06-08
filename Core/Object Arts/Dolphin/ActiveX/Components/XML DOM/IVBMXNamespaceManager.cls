@@ -88,7 +88,7 @@ DeclarePrefix: prefix namespaceURI: namespaceURI
 			[in]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 14 bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_allowOverride: fOverride
 	"Private - Get the value of the 'allowOverride' property of the receiver.
@@ -97,7 +97,7 @@ get_allowOverride: fOverride
 			[out, retval]VARIANT_BOOL* fOverride);"
 
 	<virtual stdcall: hresult 9 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDeclaredPrefixes
 	"Answer the <IMXNamespacePrefixes> result of invoking the getDeclaredPrefixes() method of the COM object."
@@ -115,7 +115,7 @@ GetDeclaredPrefixes: prefixes
 			[out, retval]IMXNamespacePrefixes** prefixes);"
 
 	<virtual stdcall: hresult 15 IMXNamespacePrefixes**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPrefixes: namespaceURI
 	"Answer the <IMXNamespacePrefixes> result of invoking the getPrefixes() method of the COM object."
@@ -136,7 +136,7 @@ GetPrefixes: namespaceURI prefixes: prefixes
 			[out, retval]IMXNamespacePrefixes** prefixes);"
 
 	<virtual stdcall: hresult 16 bstr IMXNamespacePrefixes**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getURI: prefix
 	"Answer the <VARIANT> result of invoking the getURI() method of the COM object."
@@ -157,7 +157,7 @@ GetURI: prefix uri: uri
 			[out, retval]VARIANT* uri);"
 
 	<virtual stdcall: hresult 17 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getURIFromNode: strPrefix contextNode: contextNode
 	"Answer the <VARIANT> result of invoking the getURIFromNode() method of the COM object."
@@ -180,7 +180,7 @@ GetURIFromNode: strPrefix contextNode: contextNode uri: uri
 			[out, retval]VARIANT* uri);"
 
 	<virtual stdcall: hresult 18 bstr IXMLDOMNode* variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -198,7 +198,7 @@ PopContext
 		HRESULT __stdcall popContext();"
 
 	<virtual stdcall: hresult 13>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PushContext
 	"Invoke the pushContext() method of the COM object.
@@ -206,7 +206,7 @@ PushContext
 		HRESULT __stdcall pushContext();"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pushNodeContext: contextNode
 	"Invoke the pushNodeContext() method of the COM object.
@@ -224,7 +224,7 @@ PushNodeContext: contextNode fDeep: fDeep
 			[in, defaultvalue(true)]VARIANT_BOOL fDeep);"
 
 	<virtual stdcall: hresult 12 IXMLDOMNode* varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_allowOverride: fOverride
 	"Private - Set the value of the 'allowOverride' property of the object wrapped by the 
@@ -234,7 +234,7 @@ put_allowOverride: fOverride
 			[in]VARIANT_BOOL fOverride);"
 
 	<virtual stdcall: hresult 8 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Reset
 	"Invoke the reset() method of the COM object.
@@ -242,7 +242,7 @@ Reset
 		HRESULT __stdcall reset();"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IVBMXNamespaceManager categoriesFor: #allowOverride!**auto generated**!properties!public! !
 !IVBMXNamespaceManager categoriesFor: #allowOverride:!**auto generated**!properties!public! !
 !IVBMXNamespaceManager categoriesFor: #DeclarePrefix:namespaceURI:!**auto generated**!COM Interfaces-IVBMXNamespaceManager!public! !

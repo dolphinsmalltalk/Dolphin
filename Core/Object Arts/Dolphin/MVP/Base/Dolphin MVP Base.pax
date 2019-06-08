@@ -1330,7 +1330,7 @@ getConsoleWindow
 		wireHWND __stdcall GetConsoleWindow();"
 
 	<stdcall: handle GetConsoleWindow>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public!win32 functions-console! !
 
 !MessageSend methodsFor!
@@ -1423,7 +1423,7 @@ show
 
 !ShlwapiLibrary methodsFor!
 
-colorHLSToRGB: wHue wLuminance: wLuminance wSaturation: wSaturation 
+colorHLSToRGB: wHue wLuminance: wLuminance wSaturation: wSaturation
 	"Invoke the ColorHLSToRGB() function of the module wrapped by the receiver.
 	Helpstring: Converts colors from hue-luminance-saturation (HLS) format to RGB format.
 
@@ -1434,7 +1434,7 @@ colorHLSToRGB: wHue wLuminance: wLuminance wSaturation: wSaturation
 		);"
 
 	<stdcall: dword ColorHLSToRGB word word word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSaturation
 	"Invoke the ColorRGBToHLS() function of the module wrapped by the receiver.
@@ -1447,7 +1447,7 @@ colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSatu
 			WORD* pwSaturation);"
 
 	<stdcall: void ColorRGBToHLS dword word* word* word*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ShlwapiLibrary categoriesFor: #colorHLSToRGB:wLuminance:wSaturation:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:!**auto generated**!public! !
 
@@ -1484,7 +1484,7 @@ asResourceId
 !UserLibrary methodsFor!
 
 adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
-  	"Calculates the required size of the rectangle of a window with extended style based 
+	"Calculates the required size of the rectangle of a window with extended style based 
 	on the desired client-rectangle size. The window rectangle can then be passed to the 
 	CreateWindowEx function to create a window whose client area is the desired size. 
 
@@ -1496,7 +1496,7 @@ adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exSty
 		);"
 
 	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
 	"Invoke the AnimateWindow() function of the module wrapped by the receiver.
@@ -1508,7 +1508,7 @@ animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
 			[in]DWORD dwFlags);"
 
 	<stdcall: bool AnimateWindow handle dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 	"The AttachThreadInput function attaches the input processing mechanism of one thread to that of another thread. 
@@ -1519,11 +1519,10 @@ attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 		BOOL fAttach <>       // attach or detach
 		);"
 
+	<stdcall: bool AttachThreadInput dword dword bool>
+	^self invalidCall: _failureCode!
 
-	<stdcall: bool AttachThreadInput DWORD DWORD bool >
-	^self invalidCall!
-
-beginDeferWindowPos: nNumWindows 
+beginDeferWindowPos: nNumWindows
 	"Invoke the BeginDeferWindowPos() function of the module wrapped by the receiver.
 	Helpstring: Allocates memory for a multiple-window-position structure and returns the handle to the structure
 
@@ -1531,7 +1530,7 @@ beginDeferWindowPos: nNumWindows
 			int nNumWindows);"
 
 	<stdcall: handle BeginDeferWindowPos sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 beginPaint: hWindow lpPaint: aPAINTSTRUCT
 	"Prepare the specified window for painting, filling aPAINTSTRUCT
@@ -1541,8 +1540,8 @@ beginPaint: hWindow lpPaint: aPAINTSTRUCT
 			LPPAINTSTRUCT lpPaint	// pointer to structure for paint information
 		);"
 
-	<stdcall: handle BeginPaint handle PAINTSTRUCT* >
-	^self invalidCall!
+	<stdcall: handle BeginPaint handle PAINTSTRUCT*>
+	^self invalidCall: _failureCode!
 
 bringWindowToTop: hWnd
 	"Bring the specified window to the top of the Z order, activating it if it is a
@@ -1552,7 +1551,7 @@ bringWindowToTop: hWnd
 		);"
 
 	<stdcall: bool BringWindowToTop handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
 	"Pass a message to the specified Unicode window procedure. 
@@ -1568,7 +1567,7 @@ callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
 	as being a DWORD as this allows us to pass a wider range of types."
 
 	<stdcall: uintptr CallWindowProcW dword handle dword uintptr uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
 	"Answers the handle of the window that contains the specified point. 
@@ -1579,7 +1578,7 @@ childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
 		);"
 
 	<stdcall: handle ChildWindowFromPointEx handle POINTL dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 clientToScreen: aWindowHandle lpPoint: aPOINT
 	"Converts the client coordinates in aPOINT to screen coordinates.
@@ -1588,8 +1587,8 @@ clientToScreen: aWindowHandle lpPoint: aPOINT
 			LPPOINT lpPoint 	// pointer to structure containing screen coordinates  
 		);"
 
-	<stdcall: void ClientToScreen handle POINTL* >
-	^self invalidCall!
+	<stdcall: void ClientToScreen handle POINTL*>
+	^self invalidCall: _failureCode!
 
 closeClipboard
 	"Close the clipboard. Answers 0 if fails.
@@ -1597,14 +1596,14 @@ closeClipboard
 		BOOL CloseClipboard(VOID)"
 
 	<stdcall: bool CloseClipboard>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 countClipboardFormats
 	"Answer the number of registered clipboard formats.
 		int CountClipboardFormats(VOID)"
 
 	<stdcall: sdword CountClipboardFormats>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createAcceleratorTable: pTable cEntries: tableSize
 	"Create an accelerator table. 
@@ -1614,21 +1613,21 @@ createAcceleratorTable: pTable cEntries: tableSize
 		);"
 
 	<stdcall: handle CreateAcceleratorTableW ACCEL* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createMenu
 	"Create an empty menu.
 		HMENU CreateMenu(VOID)"
 
 	<stdcall: handle CreateMenu>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createPopupMenu
 	"Create an empty popup menu.
 		HMENU CreateMenu(VOID)"
 
 	<stdcall: handle CreatePopupMenu>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style x: x y: y nWidth: width nHeight: height hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
 	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
@@ -1652,9 +1651,9 @@ createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle:
 		);"
 
 	<stdcall: handle CreateWindowExW dword lpvoid lpwstr dword sdword sdword sdword sdword handle handle handle lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: uFlags 
+deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: uFlags
 	"Invoke the DeferWindowPos() function of the module wrapped by the receiver.
 	Helpstring: Updates the specified multiple-window-position structure for the specified window
 
@@ -1669,7 +1668,7 @@ deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: 
 			UINT uFlags);"
 
 	<stdcall: handle DeferWindowPos handle handle handle sdword sdword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
 	"Deletes an item from the the Menu with handle, hMenu.
@@ -1680,7 +1679,7 @@ deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
 			UINT uFlags);"
 
 	<stdcall: bool DeleteMenu handle dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 destroyAcceleratorTable: hAcceleratorTable
 	"Destroys an accelerator table.
@@ -1689,7 +1688,7 @@ destroyAcceleratorTable: hAcceleratorTable
 		);"
 
 	<stdcall: bool DestroyAcceleratorTable handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 destroyIcon: hIcon
 	"Destroy the specified icon.
@@ -1698,7 +1697,7 @@ destroyIcon: hIcon
 		);"
 
 	<stdcall: bool DestroyIcon handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 destroyMenu: hMenu
 	"Destroy the specified menu.
@@ -1707,7 +1706,7 @@ destroyMenu: hMenu
 			);"
 
 	<stdcall: bool DestroyMenu handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
 	"Invoke the DrawEdge() function of the module wrapped by the receiver.
@@ -1720,7 +1719,7 @@ drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
 			[in]UINT grfFlags);"
 
 	<stdcall: bool DrawEdge handle RECT* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawFocusRect: hdc lprc: aRECT
 	"Draw a rectangle in the style used to indicate focus.
@@ -1729,8 +1728,8 @@ drawFocusRect: hdc lprc: aRECT
 			CONST RECT *lprc	// pointer to structure for rectangle
 		);"
 
-	<stdcall: bool DrawFocusRect handle RECT* >
-	^self invalidCall!
+	<stdcall: bool DrawFocusRect handle RECT*>
+	^self invalidCall: _failureCode!
 
 drawFrameControl: hdc lprc: lprc uType: uType uState: uState
 	"Invoke the DrawFrameControl() function of the module wrapped by the receiver.
@@ -1743,7 +1742,7 @@ drawFrameControl: hdc lprc: lprc uType: uType uState: uState
 			[in]UINT uState);"
 
 	<stdcall: bool DrawFrameControl handle RECT* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniCur: anInteger hbrFlickerFreeDraw: brush diFlags: flags
 	"Draws an icon or cursor on the specified device context as specified by the flags
@@ -1762,7 +1761,7 @@ drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniC
 		);"
 
 	<stdcall: bool DrawIconEx handle sdword sdword handle sdword sdword dword handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawMenuBar: aWindowHandle
 	"Draw the menu bar of the specified window (e.g. when the bars contents
@@ -1772,7 +1771,7 @@ drawMenuBar: aWindowHandle
 		);"
 
 	<stdcall: bool DrawMenuBar handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: x y: y cx: cx cy: cy fuFlags: fuFlags
 	"Invoke the DrawState() function of the module wrapped by the receiver.
@@ -1791,7 +1790,7 @@ drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: 
 			[in]unsigned int fuFlags);"
 
 	<stdcall: bool DrawStateW handle handle void* intptr uintptr sdword sdword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTFormat lpDTParams: lpdtParams
 	"Draw text in the specified rectange with the specified options (see Win32 docs)
@@ -1804,9 +1803,10 @@ drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTF
 			UINT dwDTFormat,						// formatting options 
 			LPDRAWTEXTPARAMS lpDTParams	// pointer to struct with options 
 		);
-	" 
+	"
+
 	<stdcall: sdword DrawTextExW handle lpwstr sdword RECT* dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 emptyClipboard
 	"Empty the (open) clipboard. Answers 0 if fails.
@@ -1814,9 +1814,9 @@ emptyClipboard
 		BOOL EmptyClipboard(VOID)"
 
 	<stdcall: bool EmptyClipboard>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-endDeferWindowPos: hWinPosInfo 
+endDeferWindowPos: hWinPosInfo
 	"Invoke the EndDeferWindowPos() function of the module wrapped by the receiver.
 	Helpstring: Updates the position and size of one or more windows in a single screen-refreshing cycle
 
@@ -1824,7 +1824,7 @@ endDeferWindowPos: hWinPosInfo
 			HDWP hWinPosInfo);"
 
 	<stdcall: bool EndDeferWindowPos handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endDialog: dialogHandle nResult: anInteger
 	"Destroy a modal dialog box, causing the system to end any processing for the dialog box. 
@@ -1834,7 +1834,7 @@ endDialog: dialogHandle nResult: anInteger
 		);"
 
 	<stdcall: bool EndDialog handle intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endPaint: hWindow lpPaint: aPAINTSTRUCT
 	"Mark the end of painting in the specified window (other half of BeginPaint() sandwich).
@@ -1843,8 +1843,8 @@ endPaint: hWindow lpPaint: aPAINTSTRUCT
 			CONST PAINTSTRUCT *lpPaint // pointer to structure for paint data  
 		);"
 
-	<stdcall: bool EndPaint handle PAINTSTRUCT* >
-	^self invalidCall!
+	<stdcall: bool EndPaint handle PAINTSTRUCT*>
+	^self invalidCall: _failureCode!
 
 enumClipboardFormats: knownFormat
 	"Enumerate the data formats that are currently available on the clipboard, beginning
@@ -1856,11 +1856,11 @@ enumClipboardFormats: knownFormat
 		);"
 
 	<stdcall: dword EnumClipboardFormats dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enumThreadWindows: dwThreadId lpfn: aCallbackThunk lParam: lParam
 	<stdcall: bool EnumThreadWindows dword lpvoid uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enumWindows: aCallbackThunk lParam: lParam
 	"Enumerate all top-level windows on the screen by passing the handle of each window, in turn, to 
@@ -1873,7 +1873,7 @@ enumWindows: aCallbackThunk lParam: lParam
 		);"
 
 	<stdcall: bool EnumWindows lpvoid uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fillRect: hdc lprc: aRECT hbr: hBrush
 	"Fill a rectangle using the specified brush. Left and top borders are inclusive, 
@@ -1885,26 +1885,25 @@ fillRect: hdc lprc: aRECT hbr: hBrush
 		);"
 
 	<stdcall: bool FillRect handle RECT* handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 findWindow: lpClassName lpWindowName: lpWindowName
 	"Find and answer the handle of the top-level window with matching class name and caption."
 
 	<stdcall: handle FindWindowW lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 flashWindow: hWnd bInvert: bInvert
 	"Flash the window with handle, hWnd."
 
 	<stdcall: bool FlashWindow handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 flashWindowEx: pfwi
 	"BOOL FlashWindowEx( PFLASHWINFO pfwi // flash status information );"
 
 	<stdcall: bool FlashWindowEx FLASHWINFO*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 frameRect: hdc lprc: aRECT hbr: hBrush
 	"Draw a border around the specified rectangle using the specified brush.
@@ -1916,7 +1915,7 @@ frameRect: hdc lprc: aRECT hbr: hBrush
 		);"
 
 	<stdcall: bool FrameRect handle RECT* handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getAncestor: hwnd gaFlags: gaFlags
 	"Invoke the GetAncestor() function of the module wrapped by the receiver.
@@ -1927,14 +1926,14 @@ getAncestor: hwnd gaFlags: gaFlags
 			[in]UINT gaFlags);"
 
 	<stdcall: handle GetAncestor handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getCapture
 	"Retreive the handle of the current window with mouse capture.
 		HANDLE GetCapture(VOID)."
 
 	<stdcall: handle GetCapture>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
 	"Retrieves the name of the Windows class to which the specified window belongs.
@@ -1945,7 +1944,7 @@ getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
 		);"
 
 	<stdcall: sdword GetClassNameW handle lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getClientRect: aWindowHandle lpRect: aRECT
 	"Retrieve the coordinates of hWnd's client area into aRECT.
@@ -1957,16 +1956,16 @@ getClientRect: aWindowHandle lpRect: aRECT
 			LPRECT lpRect 	// address of structure for client coordinates
 		);"
 
-	<stdcall: bool GetClientRect handle RECT* >
-	^self invalidCall!
+	<stdcall: bool GetClientRect handle RECT*>
+	^self invalidCall: _failureCode!
 
 getClipboardData: format
-  	"Answer a global memory handle for the clipboard data in the specified format. 
+	"Answer a global memory handle for the clipboard data in the specified format. 
 	
 		HANDLE GetClipboardData(UINT format);"
 
 	<stdcall: handle GetClipboardData dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMaxCount
 	"Copy the name of the specified registered clipboard format into the
@@ -1979,14 +1978,14 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 		);"
 
 	<stdcall: sdword GetClipboardFormatNameW dword lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getCursor
 	"Retrieve the handle of the current system cursor.
 		HCURSOR GetCursor(VOID)."
 
 	<stdcall: handle GetCursor>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getCursorPos: aPOINT
 	"Retrieve the cursor's position, in screen coordinates. Answer whether the request succeeds.
@@ -1994,8 +1993,8 @@ getCursorPos: aPOINT
 			LPPOINT  lpPoint
 		   );"
 
-	<stdcall: bool GetCursorPos POINTL* >
-	^self invalidCall!
+	<stdcall: bool GetCursorPos POINTL*>
+	^self invalidCall: _failureCode!
 
 getDC
 	"Answer a DC for drawing on the desktop.
@@ -2018,11 +2017,11 @@ getDC: aWindowHandle
 		HDC GetDC(HWND hWnd);"
 
 	<stdcall: handle GetDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDCEx: aWindowHandle hrgnClip: rgnExternalHandle flags: flagsInteger
 	<stdcall: handle GetDCEx handle handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getFocus
 	"Answers the handle of the keyboard focus window associated with the thread that called the function,
@@ -2031,14 +2030,14 @@ getFocus
 		HWND GetFocus(VOID);"
 
 	<stdcall: handle GetFocus>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getForegroundWindow
 	"Answer the handle of the window with which the user is currently working.
 		HWND GetForegroundWindow(VOID)"
 
 	<stdcall: handle GetForegroundWindow>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getIconInfo: hIcon piconinfo: anICONINFO
 	"Populate the argument, anICONINFO, with information about the  icon or cursor
@@ -2048,8 +2047,8 @@ getIconInfo: hIcon piconinfo: anICONINFO
 			PICONINFO piconinfo 	// address of icon structure	
 		);"
 
-	<stdcall: bool GetIconInfo handle ICONINFO* >
-	^self invalidCall!
+	<stdcall: bool GetIconInfo handle ICONINFO*>
+	^self invalidCall: _failureCode!
 
 getLastActivePopup: aHandle
 	"Answer the handle of the pop-up window owned by the specified window 
@@ -2059,7 +2058,7 @@ getLastActivePopup: aHandle
 		);"
 
 	<stdcall: handle GetLastActivePopup handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getLastInputInfo: plii
 	"Retrieves the time of the last input event.
@@ -2068,13 +2067,11 @@ getLastInputInfo: plii
 		);"
 
 	<stdcall: bool GetLastInputInfo LASTINPUTINFO*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getMenuInfo: hMenu lpcmi: aMenuItemInfo
 	<stdcall: bool GetMenuInfo handle MENUINFO*>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 getNextDlgGroupItem: p1 hCtl: p2 bPrevious: p3
 	"HWND GetNextDlgGroupItem(
@@ -2084,7 +2081,7 @@ getNextDlgGroupItem: p1 hCtl: p2 bPrevious: p3
 		);"
 
 	<stdcall: handle GetNextDlgGroupItem handle handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getNextDlgTabItem: p1 hCtl: p2 bPrevious: p3
 	"HWND GetNextDlgTabItem(
@@ -2094,7 +2091,7 @@ getNextDlgTabItem: p1 hCtl: p2 bPrevious: p3
 		);"
 
 	<stdcall: handle GetNextDlgTabItem handle handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProp: aWindowHandle lpString: name
 	"Answer a data handle which is the previously added (with #setProp:etc) named property 
@@ -2108,9 +2105,7 @@ getProp: aWindowHandle lpString: name
 	integer value, so we use uintptr, as we reserve #handle for real handles."
 
 	<stdcall: uintptr GetPropW handle lpwstr>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 	"Retrieve the parameters of a scroll bar, including the minimum and maximum 
@@ -2121,12 +2116,12 @@ getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 			LPSCROLLINFO lpsi	// pointer to structure for scroll parameters
 		);"
 
-	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO* >
-	^self invalidCall!
+	<stdcall: bool GetScrollInfo handle sdword SCROLLINFO*>
+	^self invalidCall: _failureCode!
 
 getSystemMenu: anExternalHandle bRevert: aBoolean
 	<stdcall: handle GetSystemMenu handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTopWindow: aHandle
 	"Answer the handle of the top-most child of the window with the specified handle.
@@ -2135,7 +2130,7 @@ getTopWindow: aHandle
 		);"
 
 	<stdcall: handle GetTopWindow handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getUpdateRect: hWnd lpRect: lpRect bErase: bErase
 	"Get the update rectangle for the Window with handle, hWnd. If the update
@@ -2150,7 +2145,7 @@ getUpdateRect: hWnd lpRect: lpRect bErase: bErase
 		); "
 
 	<stdcall: bool GetUpdateRect handle RECT* bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindow: hWnd uCmd: flags
 	"Answer the handle of a window that has the specified relationship to hWnd.
@@ -2160,7 +2155,7 @@ getWindow: hWnd uCmd: flags
 		);"
 
 	<stdcall: handle GetWindow handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowDC: aWindowHandle
 	"Answer the handle of a display device context (DC) which can be used to draw
@@ -2171,9 +2166,9 @@ getWindowDC: aWindowHandle
 		HDC GetWindowDC(HWND hWnd);"
 
 	<stdcall: handle GetWindowDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset 
+getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various signed 32-bit integer values retrieved from the window with handle, aWindowHandle.
 	If an unsigned value is required, use getWindowULong:nIndex:
 
@@ -2191,9 +2186,9 @@ getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	Answers 0 if the function fails."
 
 	<stdcall: sdword GetWindowLongW handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
+getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various signed intptr values retrieved from the window with handle, aWindowHandle.
 	If an unsigned value is required, use getWindowULongPtr:nIndex:. Note that this function
 	is only supported on 64-bit Windows.
@@ -2222,7 +2217,7 @@ getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	Answers 0 if the function fails."
 
 	<stdcall: intptr GetWindowLongPtrW handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowPlacement: hWnd lpwndpl: lpwndpl
 	"Retrieve the show state and restored, minimized, and maximized positions 
@@ -2232,8 +2227,8 @@ getWindowPlacement: hWnd lpwndpl: lpwndpl
 			WINDOWPLACEMENT *lpwndpl 	// address of structure for position data
 		);"
 
-	<stdcall: bool GetWindowPlacement handle WINDOWPLACEMENT* >
-	^self invalidCall!
+	<stdcall: bool GetWindowPlacement handle WINDOWPLACEMENT*>
+	^self invalidCall: _failureCode!
 
 getWindowRect: aWindowHandle lpRect: aRECT
 	"Retrieves the dimensions of the bounding rectangle of the specified window
@@ -2244,8 +2239,8 @@ getWindowRect: aWindowHandle lpRect: aRECT
 			LPRECT lpRect 	// address of structure for window coordinates
 		);"
 
-	<stdcall: bool GetWindowRect handle RECT* >
-	^self invalidCall!
+	<stdcall: bool GetWindowRect handle RECT*>
+	^self invalidCall: _failureCode!
 
 getWindowText: aWindow lpString: aBuffer nMaxCount: len
 	"Copy the text of the specified window (its title bar, or other appropriate text)
@@ -2257,7 +2252,7 @@ getWindowText: aWindow lpString: aBuffer nMaxCount: len
 		);"
 
 	<stdcall: sdword GetWindowTextW handle lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowTextLength: hWnd
 	"Answer the length, in characters, of the specified window's title 'text'
@@ -2266,7 +2261,7 @@ getWindowTextLength: hWnd
 		);"
 
 	<stdcall: sdword GetWindowTextLengthW handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
 	"The GetWindowThreadProcessId function retrieves the identifier of the thread that created 
@@ -2278,15 +2273,15 @@ getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
 		);
 "
 
-	<stdcall: DWORD GetWindowThreadProcessId handle DWORD* >
-	^self invalidCall!
+	<stdcall: dword GetWindowThreadProcessId handle dword*>
+	^self invalidCall: _failureCode!
 
-getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset 
+getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various unsigned 32-bit integer values retrieved from the window with handle,
 	aWindowHandle. See #getWindowLongPtr:offset: for more details"
 
 	<stdcall: dword GetWindowLongW handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various unsigned values retrieved from the window with handle, aWindowHandle. See
@@ -2295,7 +2290,7 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Note: This function only exists on Win64. It is not present on Win32."
 
 	<stdcall: uintptr GetWindowLongPtrW handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
 	"Insert a new item into a menu.
@@ -2308,7 +2303,7 @@ insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINF
 		);"
 
 	<stdcall: bool InsertMenuItemW handle dword bool MENUITEMINFOW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 invalidate: hWnd lpRect: aRECT bErase: aBoolean
 	"Add aRECT to hWnd's update region (that portion of the
@@ -2320,7 +2315,7 @@ invalidate: hWnd lpRect: aRECT bErase: aBoolean
 		);"
 
 	<stdcall: bool InvalidateRect handle RECT* bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
 	"Invalidates the client area within the specified region by adding it to the current update region of a window. 
@@ -2334,7 +2329,7 @@ invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
 		);"
 
 	<stdcall: bool InvalidateRgn handle handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 invertRect: hdc lprc: aRECT
 	"The InvertRect function inverts a rectangle in a window by performing a logical 
@@ -2345,23 +2340,23 @@ invertRect: hdc lprc: aRECT
 		CONST RECT *lprc	// address of structure with rectangle	
 		); "
 
-	<stdcall: bool InvertRect handle RECT* >
-	^self invalidCall!
+	<stdcall: bool InvertRect handle RECT*>
+	^self invalidCall: _failureCode!
 
 isChild: hWndParent hWnd: hWnd
 	"Answer whether the window identified by the handle, hWnd, is 
 	a child of the window identified by the handle, hWndParent."
 
 	<stdcall: bool IsChild handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isClipboardFormatAvailable: format
-  	"Answer whether the clipboard contains data in the specified format. 
+	"Answer whether the clipboard contains data in the specified format. 
 	
 		BOOL IsClipboardFormatAvailable(UINT format);"
 
 	<stdcall: bool IsClipboardFormatAvailable dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isDialogMessage: aHandle lpMsg: aMSG
 	"Determine whether a message is intended for the specified dialog 
@@ -2371,8 +2366,8 @@ isDialogMessage: aHandle lpMsg: aMSG
 			LPMSG lpMsg	// address of structure with message
 		);"
 
-	<stdcall: bool IsDialogMessageW handle MSG* >
-	^self invalidCall!
+	<stdcall: bool IsDialogMessageW handle MSG*>
+	^self invalidCall: _failureCode!
 
 isIconic: aWindowHandle
 	"Answer whether the specified window is iconic (minimized). 
@@ -2381,11 +2376,11 @@ isIconic: aWindowHandle
 		);"
 
 	<stdcall: bool IsIconic handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isWindowUnicode: hWnd
 	<stdcall: bool IsWindowUnicode handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isZoomed: aWindowHandle
 	"Answer wether a window is zoomed (maximized). See also #isIconic:.
@@ -2394,7 +2389,7 @@ isZoomed: aWindowHandle
 		);"
 
 	<stdcall: bool IsZoomed handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
 	"Load the specified accelerator table from the resources of the application identified
@@ -2408,7 +2403,7 @@ loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
 			);"
 
 	<stdcall: handle LoadAcceleratorsW handle lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadCursorFromFile: aFilename
 	"Creates a cursor based on data contained in the specified file, and answer the handle, 
@@ -2419,7 +2414,7 @@ loadCursorFromFile: aFilename
 	   );"
 
 	<stdcall: handle LoadCursorFromFileW lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadIcon: anInstanceHandle lpIconName: anIntegerID
 	"Loads the specified icon resource from the specified module.
@@ -2429,8 +2424,7 @@ loadIcon: anInstanceHandle lpIconName: anIntegerID
 		);"
 
 	<stdcall: handle LoadIconW handle lpvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad: flags
 	"Load an icon, cursor, or bitmap.
@@ -2444,7 +2438,7 @@ loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad
 		);"
 
 	<stdcall: handle LoadImageW handle lpvoid dword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadMenu: anExternalHandle lpMenuName: anIntegerOrString
 	"Load the specified menu from the resources of the application identified
@@ -2458,11 +2452,11 @@ loadMenu: anExternalHandle lpMenuName: anIntegerOrString
 			);"
 
 	<stdcall: handle LoadMenuW handle lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lockWindowUpdate: anExternalHandle
 	<stdcall: bool LockWindowUpdate handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 makeDragList: aWindowHandle
 	"The MakeDragList function changes the specified single-selection list box 
@@ -2471,7 +2465,7 @@ makeDragList: aWindowHandle
 	BOOL MakeDragList( HWND hLB);"
 
 	<stdcall: bool MakeDragList handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 mapWindowPoints: fromHwnd hWndTo: toHwnd lpPoints: points cPoints: count
 	"Map a set of points from a coordinate space relative to one window 
@@ -2485,7 +2479,7 @@ mapWindowPoints: fromHwnd hWndTo: toHwnd lpPoints: points cPoints: count
 	   );"
 
 	<stdcall: sdword MapWindowPoints handle handle lpvoid dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId lpNewItem: menuText
 	"Changes an existing menu item the specified menu with the specified
@@ -2500,7 +2494,7 @@ modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId 
 		);"
 
 	<stdcall: bool ModifyMenuW handle dword dword dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 openClipboard: hWnd
 	"Open the clipboard, associating it with the specified window.
@@ -2509,11 +2503,11 @@ openClipboard: hWnd
 		BOOL OpenClipboard(HWND)"
 
 	<stdcall: bool OpenClipboard handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-printWindow: hwnd hdcBlt: hDC nFlags: anInteger 
+printWindow: hwnd hdcBlt: hDC nFlags: anInteger
 	<stdcall: bool PrintWindow handle handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
 	"Update the specified rectangle or region in a window's client area. 
@@ -2526,7 +2520,7 @@ redrawWindow: hWnd lprcUpdate: lprcUpdate hrgnUpdate: hrgnUpdate flags: flags
 	"
 
 	<stdcall: bool RedrawWindow handle RECT* handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 registerClass: aWNDCLASS
 	"Registers a window class for subsequent use in calls to the CreateWindow or 
@@ -2535,8 +2529,8 @@ registerClass: aWNDCLASS
 			CONST WNDCLASS  *lpwc 	// address of structure with class data
 		);"
 
-	<stdcall: word RegisterClassW WNDCLASS* >
-	^self invalidCall!
+	<stdcall: word RegisterClassW WNDCLASS*>
+	^self invalidCall: _failureCode!
 
 registerClipboardFormat: formatName
 	"Register a new clipboard format name, answering its system wide identifier.
@@ -2546,7 +2540,7 @@ registerClipboardFormat: formatName
 		);"
 
 	<stdcall: dword RegisterClipboardFormatW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: anIntegerVk
 	"Define a hot key for the current thread.
@@ -2558,7 +2552,7 @@ registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: an
 		);"
 
 	<stdcall: bool RegisterHotKey handle sdword dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 registerWindowMessage: aString
 	"Defines a new window message that is guaranteed to be unique system wide.
@@ -2568,14 +2562,14 @@ registerWindowMessage: aString
 		);"
 
 	<stdcall: dword RegisterWindowMessageW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 releaseCapture
 	"Release the mouse capture from a window, restoring normal mouse input processing.
 		BOOL ReleaseCapture(VOID)"
-  
+
 	<stdcall: bool ReleaseCapture>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 releaseDC: hDC
 	"Release the specified device context. This is the second half of the 'DC source' protocol,
@@ -2596,8 +2590,7 @@ releaseDC: hWnd hDC: hDC
 		);"
 
 	<stdcall: sdword ReleaseDC handle handle>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 removeMenu: aMenu uPosition: idOrPos uFlags: flags
 	"Delete a menu item from the specified menu. If the menu item activates a pop-up menu, 
@@ -2610,7 +2603,7 @@ removeMenu: aMenu uPosition: idOrPos uFlags: flags
 		);"
 
 	<stdcall: bool RemoveMenu handle dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeProp: aWindowHandle lpString: name
 	"Remove an the entry identified by lpString from the property list of 
@@ -2621,9 +2614,7 @@ removeProp: aWindowHandle lpString: name
 		);"
 
 	<stdcall: handle RemovePropW handle lpvoid>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 screenToClient: aWindowHandle lpPoint: aPOINT
 	"Converts the screen coordinates in aPOINT to client coordinates.
@@ -2632,11 +2623,10 @@ screenToClient: aWindowHandle lpPoint: aPOINT
 			LPPOINT lpPoint 	// address of structure containing coordinates  
 		);"
 
-	<stdcall: bool ScreenToClient handle POINTL* >
-	^self invalidCall!
+	<stdcall: bool ScreenToClient handle POINTL*>
+	^self invalidCall: _failureCode!
 
-scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcScroll: scrollRECT prcClip: clipRECT
-	hrgnUpdate: hUpdateRegion prcUpdate: update flags: flags
+scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcScroll: scrollRECT prcClip: clipRECT hrgnUpdate: hUpdateRegion prcUpdate: update flags: flags
 	"The ScrollWindowEx function scrolls the content of the specified window's client
 	area. This function is similar to the ScrollWindow function, but it has additional features. 
 
@@ -2652,7 +2642,7 @@ scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcS
 	);"
 
 	<stdcall: sdword ScrollWindowEx handle sdword sdword RECT* RECT* handle lpvoid dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: wParam lParam: lParam
 	"Send a message to the specified control in a dialog box. 
@@ -2665,33 +2655,33 @@ sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: w
 		   );"
 
 	<stdcall: uintptr SendDlgItemMessageW handle sdword dword uintptr intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	to pointer."
 
 	<stdcall: intptr SendMessageW handle dword uintptr lpvoid>
-	^self invalidCall !
+	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	and wParam to pointers."
 
 	<stdcall: intptr SendMessageW handle dword lpvoid lpvoid>
-	^self invalidCall !
+	^self invalidCall: _failureCode!
 
 sendMessageU: aWindowHandle msg: msg wParam: wParam lParam: lParam
 	"As sendMessage:msg:wParam:lParam:, but returns an unsigned integer."
 
 	<stdcall: uintptr SendMessageA handle dword uintptr uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sendMessageU: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lpParam, but returns an unsigned integer."
 
 	<stdcall: uintptr SendMessageA handle dword uintptr lpvoid>
-	^self invalidCall !
+	^self invalidCall: _failureCode!
 
 setCapture: aWindowHandle
 	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receivers all
@@ -2701,7 +2691,7 @@ setCapture: aWindowHandle
 		);"
 
 	<stdcall: handle SetCapture handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setClassLong: aWindowHandle nIndex: offset dwNewLong: value
 	"Change an attribute of the specified window class, setting 
@@ -2716,7 +2706,7 @@ setClassLong: aWindowHandle nIndex: offset dwNewLong: value
 		);"
 
 	<stdcall: dword SetClassLongW handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setClipboardData: uFormat hMem: hMem
 	"Places data on the clipboard in the specified clipboard format.
@@ -2729,7 +2719,7 @@ setClipboardData: uFormat hMem: hMem
 		);"
 
 	<stdcall: handle SetClipboardData dword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setCursorPosX: x y: y
 	"Move the cursor to the specified screen coordinates. The coordinates are clipped to 
@@ -2741,7 +2731,7 @@ setCursorPosX: x y: y
 		);"
 
 	<stdcall: bool SetCursorPos sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
 	"Sets the title or text of a control in a dialog box. 
@@ -2753,7 +2743,7 @@ setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
 		);"
 
 	<stdcall: bool SetDlgItemInt handle sdword dword bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setFocus: aWindowHandle
 	"Transfer the keyboard focus to the specified window. All keyboard input 
@@ -2764,15 +2754,15 @@ setFocus: aWindowHandle
 		);"
 
 	<stdcall: handle SetFocus handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setForegroundWindow: aHandle
-  	"Makes the specified top-level window associated with the current thread the active window
+	"Makes the specified top-level window associated with the current thread the active window
 	and force it to the foreground.. 
 		HWND SetForegroundWindow( HWND hWnd);"
 
 	<stdcall: handle SetForegroundWindow handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setLayeredWindowAttributes: aWindowHandle lcrKey: crKey bAlpha: bAlpha dwFlags: flags
 	"The SetLayeredWindowAttributes function sets the opacity and transparency color key of a layered window.
@@ -2786,7 +2776,7 @@ setLayeredWindowAttributes: aWindowHandle lcrKey: crKey bAlpha: bAlpha dwFlags: 
 	"
 
 	<stdcall: bool SetLayeredWindowAttributes handle dword byte dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setMenu: windowHandle hMenu: menuHandle
 	"Assign a new menu to the specified window.
@@ -2796,7 +2786,7 @@ setMenu: windowHandle hMenu: menuHandle
 		);"
 
 	<stdcall: bool SetMenu handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setMenuDefaultItem: hMenu uItem: uItem fByPos: fByPos
 	"Set the default item for the menu with handle, hMenu
@@ -2808,9 +2798,7 @@ setMenuDefaultItem: hMenu uItem: uItem fByPos: fByPos
 		);"
 
 	<stdcall: dword SetMenuDefaultItem handle dword dword>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 setMenuInfo: hMenu lpcmi: aMenuItemInfo
 	"Set various information about a menu.
@@ -2820,9 +2808,7 @@ setMenuInfo: hMenu lpcmi: aMenuItemInfo
 		);"
 
 	<stdcall: bool SetMenuInfo handle MENUINFO*>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 setMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemInfo
 	"Set various information about a menu item.
@@ -2834,9 +2820,7 @@ setMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemIn
 		);"
 
 	<stdcall: bool SetMenuItemInfoW handle dword bool MENUITEMINFOW*>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 setParent: hWndChild hWndNewParent: hWndParent
 	"Set the parent window of the window with handle hWnd.
@@ -2847,7 +2831,7 @@ setParent: hWndChild hWndNewParent: hWndParent
 		);"
 
 	<stdcall: dword SetParent handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setProp: aWindowHandle lpString: name hData: anObject
 	"Answer true if name and anObject are successfully added to the property list.
@@ -2865,9 +2849,7 @@ setProp: aWindowHandle lpString: name hData: anObject
 	to the property list. The application must use the RemoveProp function to remove the entries."
 
 	<stdcall: bool SetPropW handle lpvoid handle>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
 	"Set the minimum and maximum scrolling positions, the page size, and the position 
@@ -2880,7 +2862,7 @@ setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
 		);"
 
 	<stdcall: sdword SetScrollInfo handle sdword SCROLLINFO* bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setSysColors: count lpaElements: elements lpaRgbValues: values
 	"
@@ -2894,7 +2876,7 @@ setSysColors: count lpaElements: elements lpaRgbValues: values
 			);"
 
 	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"Change an attribute of the specified window, setting 
@@ -2907,11 +2889,11 @@ setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 		);"
 
 	<stdcall: sdword SetWindowLongW handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowLongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	<stdcall: intptr SetWindowLongPtrW handle sdword intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
 	"Set the show state and the restored, minimized, and maximized positions 
@@ -2922,16 +2904,9 @@ setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
 			);"
 
 	<stdcall: bool SetWindowPlacement handle lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-setWindowPos: aWindowHandle
-	hWndInsertAfter: hwndInsertAfter
-	x: x
-	y: y
-	cx: cx
-	cy: cy
-	uFlags: flags
-	
+setWindowPos: aWindowHandle hWndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: flags
 	"Change the size, position, and Z order of a child, pop-up, or top-level window.
 	Windows are ordered according to their appearance on the screen. The topmost window 
 	receives the highest rank and is the first window in the Z order. 
@@ -2946,16 +2921,15 @@ setWindowPos: aWindowHandle
 		);"
 
 	<stdcall: bool SetWindowPos handle dword sdword sdword sdword sdword dword>
-	^self invalidCall
-		!
+	^self invalidCall: _failureCode!
 
 setWindowULong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	<stdcall: dword SetWindowLongW handle sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 showCursor: aBoolean
 	"Show or hide the cursor. N.B. A count is maintained of the number of times 
@@ -2966,7 +2940,7 @@ showCursor: aBoolean
 		);"
 
 	<stdcall: sdword ShowCursor bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	"
@@ -2978,9 +2952,9 @@ systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	);"
 
 	<stdcall: bool SystemParametersInfoW dword dword lpvoid dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-trackMouseEvent: lpEventTrack 
+trackMouseEvent: lpEventTrack
 	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
 	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
 
@@ -2988,7 +2962,7 @@ trackMouseEvent: lpEventTrack
 			TRACKMOUSEEVENT* lpEventTrack);"
 
 	<stdcall: bool TrackMouseEvent TRACKMOUSEEVENT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 trackPopupMenu: hMenu uFlags: uFlags x: x y: y nReserved: reserved hWnd: hWnd prcRect: aRect
 	"Display a pop-up menu at the specified location (anywhere on the screen) and track the selection of 
@@ -3003,8 +2977,8 @@ trackPopupMenu: hMenu uFlags: uFlags x: x y: y nReserved: reserved hWnd: hWnd pr
 			CONST RECT *prcRect	// points to RECT that specifies no-dismissal area
 		);"
 
-	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECT* >
-	^self invalidCall!
+	<stdcall: bool TrackPopupMenu handle dword sdword sdword sdword handle RECT*>
+	^self invalidCall: _failureCode!
 
 translateAccelerator: handleWindow haccl: handleAccelerators lpmsg: aMSG
 	"Translate accelerator keys for menu commands, translating WM_KEYDOWN or WM_SYSKEYDOWN 
@@ -3022,9 +2996,8 @@ translateAccelerator: handleWindow haccl: handleAccelerators lpmsg: aMSG
 	Answers true if the function succeeds, and has consumed the message. Answers false if the 
 	functions fails. The exact error is available by sending KernelLibrary>>getLastError."
 
-	<stdcall: bool TranslateAccelerator handle handle MSG* >
-	^self invalidCall
-!
+	<stdcall: bool TranslateAccelerator handle handle MSG*>
+	^self invalidCall: _failureCode!
 
 unregisterClass: classAtomOrStringName hInstance: instanceHandle
 	"Remove a window class.
@@ -3034,11 +3007,11 @@ unregisterClass: classAtomOrStringName hInstance: instanceHandle
 		);"
 
 	<stdcall: bool UnregisterClassW lpvoid handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 unregisterHotKey: aWindowHandle id: anIntegerId
 	<stdcall: bool UnregisterHotKey handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 validate: hWnd lpRect: aRECT
 	"Remove aRECT from hWnd's update region (that portion of the
@@ -3048,8 +3021,8 @@ validate: hWnd lpRect: aRECT
 			CONST RECT *lpRect		// address of rectangle coordinates 
 		);"
 
-	<stdcall: bool ValidateRect handle RECT* >
-	^self invalidCall!
+	<stdcall: bool ValidateRect handle RECT*>
+	^self invalidCall: _failureCode!
 
 windowFromPoint: aPOINTL
 	"The WindowFromPoint function retrieves the handle of the window that contains the
@@ -3067,7 +3040,7 @@ windowFromPoint: aPOINTL
 	for a nonrestrictive search."
 
 	<stdcall: handle WindowFromPoint POINTL>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 !UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !

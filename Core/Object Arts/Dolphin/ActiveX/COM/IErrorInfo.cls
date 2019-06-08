@@ -47,8 +47,7 @@ GetDescription: pBstrDescription
 	"
 
 	<virtual stdcall: hresult 6 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetGUID: pGUID
 	"Invoke the GetGUID() method of the object wrapped by the receiver.
@@ -58,9 +57,8 @@ GetGUID: pGUID
 
 	"
 
-	<virtual stdcall: hresult 4 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 guid*>
+	^self invalidCall: _failureCode!
 
 GetHelpContext: pdwHelpContext
 	"Invoke the GetHelpContext() method of the object wrapped by the receiver.
@@ -71,8 +69,7 @@ GetHelpContext: pdwHelpContext
 	"
 
 	<virtual stdcall: hresult 8 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetHelpFile: pBstrHelpFile
 	"Invoke the GetHelpFile() method of the object wrapped by the receiver.
@@ -83,8 +80,7 @@ GetHelpFile: pBstrHelpFile
 	"
 
 	<virtual stdcall: hresult 7 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetSource: pBstrSource
 	"Invoke the GetSource() method of the object wrapped by the receiver.
@@ -95,8 +91,7 @@ GetSource: pBstrSource
 	"
 
 	<virtual stdcall: hresult 5 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 helpContext
 	"Answer the <integer> help context associated with the receiver."

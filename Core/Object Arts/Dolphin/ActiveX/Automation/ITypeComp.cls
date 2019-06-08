@@ -15,8 +15,8 @@ Bind: bind lHashVal: lHashVal wFlags: wFlags ppTInfo: ppTInfo pDescKind: pDescKi
 	N.B. This method has been automatically generated from 
 	the vtable defined in ITypeComp>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: hresult 4 lpwstr dword word lppvoid SDWORD* lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 4 lpwstr dword word lppvoid sdword* lppvoid>
+	^self invalidCall: _failureCode!
 
 BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 	"Callout for the ITypeComp::BindType() interface function.
@@ -24,7 +24,7 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 	the vtable defined in ITypeComp>>defineFunctions. DO NOT MODIFY!!"
 
 	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ITypeComp categoriesFor: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
 !ITypeComp categoriesFor: #BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
 

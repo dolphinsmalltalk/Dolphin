@@ -45,8 +45,7 @@ RegisterCategories: cCategories rgCategoryInfo: rgCategoryInfo
 	"
 
 	<virtual stdcall: hresult 4 dword CATEGORYINFO*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 registerCategory: catid description: desc
 	"Register a single category with the <GUID>, catid, <readableString> description, desc, 
@@ -78,9 +77,8 @@ RegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 6 GUID* dword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 6 guid* dword guid*>
+	^self invalidCall: _failureCode!
 
 RegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 	"Private - Invoke the RegisterClassReqCategories() method of the COM object wrapped by the receiver.
@@ -91,9 +89,8 @@ RegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 8 GUID* dword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 8 guid* dword guid*>
+	^self invalidCall: _failureCode!
 
 registerCoClass: rclsid categories: catids
 	"Register the COM component with <CLSID>, rclsid, as an implementor of the
@@ -191,9 +188,8 @@ UnRegisterCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 5 dword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 5 dword guid*>
+	^self invalidCall: _failureCode!
 
 UnRegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 	"Private - Invoke the UnRegisterClassImplCategories() method of the COM object wrapped by the receiver.
@@ -204,9 +200,8 @@ UnRegisterClassImplCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 7 GUID* dword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 7 guid* dword guid*>
+	^self invalidCall: _failureCode!
 
 UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 	"Private - Invoke the UnRegisterClassReqCategories() method of the COM object wrapped by the receiver.
@@ -217,9 +212,8 @@ UnRegisterClassReqCategories: rclsid cCategories: cCategories rgcatid: rgcatid
 			[in] GUID* rgcatid);
 	"
 
-	<virtual stdcall: hresult 9 GUID* dword GUID*>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 9 guid* dword guid*>
+	^self invalidCall: _failureCode! !
 !ICatRegister categoriesFor: #buildCatIdArray:!helpers!private! !
 !ICatRegister categoriesFor: #registerCategories:!operations!public! !
 !ICatRegister categoriesFor: #RegisterCategories:rgCategoryInfo:!**auto generated**!COM Interfaces-ICatRegister!private! !

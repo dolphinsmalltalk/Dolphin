@@ -12,7 +12,7 @@ IRootStorage is for saving a users data in low-memory situations. Its single me
 !IRootStorage categoriesForClass!COM-Interfaces! !
 !IRootStorage methodsFor!
 
-SwitchToFile: pszFile 
+SwitchToFile: pszFile
 	"Invoke the SwitchToFile() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SwitchToFile(
@@ -21,7 +21,7 @@ SwitchToFile: pszFile
 	"
 
 	<virtual stdcall: hresult 4 lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IRootStorage categoriesFor: #SwitchToFile:!**auto generated**!COM Interfaces-OBJIDL.IRootStorage!primitives!public! !
 
 IRootStorage methodProtocol: #IRootStorage attributes: #(#readOnly) selectors: #(#SwitchToFile:)!

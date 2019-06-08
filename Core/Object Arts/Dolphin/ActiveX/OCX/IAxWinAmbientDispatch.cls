@@ -275,8 +275,7 @@ get_AllowContextMenu: pbAllowContextMenu
 			[out, retval] VARIANT_BOOL* pbAllowContextMenu);"
 
 	<virtual stdcall: hresult 31 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AllowShowUI: pbAllowShowUI
 	"Private - Get the value of the 'AllowShowUI' property of the receiver.
@@ -285,8 +284,7 @@ get_AllowShowUI: pbAllowShowUI
 			[out, retval] VARIANT_BOOL* pbAllowShowUI);"
 
 	<virtual stdcall: hresult 33 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AllowWindowlessActivation: pbCanWindowlessActivate
 	"Private - Get the value of the 'AllowWindowlessActivation' property of the receiver.
@@ -295,8 +293,7 @@ get_AllowWindowlessActivation: pbCanWindowlessActivate
 			[out, retval] VARIANT_BOOL* pbCanWindowlessActivate);"
 
 	<virtual stdcall: hresult 9 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_BackColor: pclrBackground
 	"Private - Get the value of the 'BackColor' property of the receiver.
@@ -305,8 +302,7 @@ get_BackColor: pclrBackground
 			[out, retval] OLE_COLOR* pclrBackground);"
 
 	<virtual stdcall: hresult 11 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DisplayAsDefault: pbDisplayAsDefault
 	"Private - Get the value of the 'DisplayAsDefault' property of the receiver.
@@ -315,8 +311,7 @@ get_DisplayAsDefault: pbDisplayAsDefault
 			[out, retval] VARIANT_BOOL* pbDisplayAsDefault);"
 
 	<virtual stdcall: hresult 19 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 	"Private - Get the value of the 'DocHostDoubleClickFlags' property of the receiver.
@@ -325,8 +320,7 @@ get_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 			[out, retval] unsigned long* pdwDocHostDoubleClickFlags);"
 
 	<virtual stdcall: hresult 29 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DocHostFlags: pdwDocHostFlags
 	"Private - Get the value of the 'DocHostFlags' property of the receiver.
@@ -335,8 +329,7 @@ get_DocHostFlags: pdwDocHostFlags
 			[out, retval] unsigned long* pdwDocHostFlags);"
 
 	<virtual stdcall: hresult 27 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Font: pFont
 	"Private - Get the value of the 'Font' property of the receiver.
@@ -345,8 +338,7 @@ get_Font: pFont
 			[out, retval] IFontDisp** pFont);"
 
 	<virtual stdcall: hresult 21 IFontDisp**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ForeColor: pclrForeground
 	"Private - Get the value of the 'ForeColor' property of the receiver.
@@ -355,8 +347,7 @@ get_ForeColor: pclrForeground
 			[out, retval] OLE_COLOR* pclrForeground);"
 
 	<virtual stdcall: hresult 13 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_LocaleID: plcidLocaleID
 	"Private - Get the value of the 'LocaleID' property of the receiver.
@@ -365,8 +356,7 @@ get_LocaleID: plcidLocaleID
 			[out, retval] unsigned long* plcidLocaleID);"
 
 	<virtual stdcall: hresult 15 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MessageReflect: pbMsgReflect
 	"Private - Get the value of the 'MessageReflect' property of the receiver.
@@ -375,8 +365,7 @@ get_MessageReflect: pbMsgReflect
 			[out, retval] VARIANT_BOOL* pbMsgReflect);"
 
 	<virtual stdcall: hresult 23 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_OptionKeyPath: pbstrOptionKeyPath
 	"Private - Get the value of the 'OptionKeyPath' property of the receiver.
@@ -385,8 +374,7 @@ get_OptionKeyPath: pbstrOptionKeyPath
 			[out, retval] BSTR* pbstrOptionKeyPath);"
 
 	<virtual stdcall: hresult 35 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ShowGrabHandles: pbShowGrabHandles
 	"Private - Get the value of the 'ShowGrabHandles' property of the receiver.
@@ -395,8 +383,7 @@ get_ShowGrabHandles: pbShowGrabHandles
 			[out, retval] VARIANT_BOOL* pbShowGrabHandles);"
 
 	<virtual stdcall: hresult 24 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ShowHatching: pbShowHatching
 	"Private - Get the value of the 'ShowHatching' property of the receiver.
@@ -405,8 +392,7 @@ get_ShowHatching: pbShowHatching
 			[out, retval] VARIANT_BOOL* pbShowHatching);"
 
 	<virtual stdcall: hresult 25 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_UserMode: pbUserMode
 	"Private - Get the value of the 'UserMode' property of the receiver.
@@ -415,8 +401,7 @@ get_UserMode: pbUserMode
 			[out, retval] VARIANT_BOOL* pbUserMode);"
 
 	<virtual stdcall: hresult 17 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 localeID
 	"Answer the <dword> value of the 'LocaleID' property of the receiver.
@@ -477,8 +462,7 @@ put_AllowContextMenu: pbAllowContextMenu
 			[in] VARIANT_BOOL pbAllowContextMenu);"
 
 	<virtual stdcall: hresult 30 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_AllowShowUI: pbAllowShowUI
 	"Private - Set the value of the 'AllowShowUI' property of the object wrapped by the 
@@ -488,8 +472,7 @@ put_AllowShowUI: pbAllowShowUI
 			[in] VARIANT_BOOL pbAllowShowUI);"
 
 	<virtual stdcall: hresult 32 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_AllowWindowlessActivation: pbCanWindowlessActivate
 	"Private - Set the value of the 'AllowWindowlessActivation' property of the object wrapped by the 
@@ -499,8 +482,7 @@ put_AllowWindowlessActivation: pbCanWindowlessActivate
 			[in] VARIANT_BOOL pbCanWindowlessActivate);"
 
 	<virtual stdcall: hresult 8 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_BackColor: pclrBackground
 	"Private - Set the value of the 'BackColor' property of the object wrapped by the 
@@ -510,8 +492,7 @@ put_BackColor: pclrBackground
 			[in] OLE_COLOR pclrBackground);"
 
 	<virtual stdcall: hresult 10 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DisplayAsDefault: pbDisplayAsDefault
 	"Private - Set the value of the 'DisplayAsDefault' property of the object wrapped by the 
@@ -521,8 +502,7 @@ put_DisplayAsDefault: pbDisplayAsDefault
 			[in] VARIANT_BOOL pbDisplayAsDefault);"
 
 	<virtual stdcall: hresult 18 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 	"Private - Set the value of the 'DocHostDoubleClickFlags' property of the object wrapped by the 
@@ -532,8 +512,7 @@ put_DocHostDoubleClickFlags: pdwDocHostDoubleClickFlags
 			[in] unsigned long pdwDocHostDoubleClickFlags);"
 
 	<virtual stdcall: hresult 28 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DocHostFlags: pdwDocHostFlags
 	"Private - Set the value of the 'DocHostFlags' property of the object wrapped by the 
@@ -543,8 +522,7 @@ put_DocHostFlags: pdwDocHostFlags
 			[in] unsigned long pdwDocHostFlags);"
 
 	<virtual stdcall: hresult 26 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Font: pFont
 	"Private - Set the value of the 'Font' property of the object wrapped by the 
@@ -554,8 +532,7 @@ put_Font: pFont
 			[in] IFontDisp* pFont);"
 
 	<virtual stdcall: hresult 20 IFontDisp*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ForeColor: pclrForeground
 	"Private - Set the value of the 'ForeColor' property of the object wrapped by the 
@@ -565,8 +542,7 @@ put_ForeColor: pclrForeground
 			[in] OLE_COLOR pclrForeground);"
 
 	<virtual stdcall: hresult 12 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_LocaleID: plcidLocaleID
 	"Private - Set the value of the 'LocaleID' property of the object wrapped by the 
@@ -576,8 +552,7 @@ put_LocaleID: plcidLocaleID
 			[in] unsigned long plcidLocaleID);"
 
 	<virtual stdcall: hresult 14 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MessageReflect: pbMsgReflect
 	"Private - Set the value of the 'MessageReflect' property of the object wrapped by the 
@@ -587,8 +562,7 @@ put_MessageReflect: pbMsgReflect
 			[in] VARIANT_BOOL pbMsgReflect);"
 
 	<virtual stdcall: hresult 22 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_OptionKeyPath: pbstrOptionKeyPath
 	"Private - Set the value of the 'OptionKeyPath' property of the object wrapped by the 
@@ -598,8 +572,7 @@ put_OptionKeyPath: pbstrOptionKeyPath
 			[in] BSTR pbstrOptionKeyPath);"
 
 	<virtual stdcall: hresult 34 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_UserMode: pbUserMode
 	"Private - Set the value of the 'UserMode' property of the object wrapped by the 
@@ -609,8 +582,7 @@ put_UserMode: pbUserMode
 			[in] VARIANT_BOOL pbUserMode);"
 
 	<virtual stdcall: hresult 16 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 showGrabHandles
 	"Answer the <varbool> value of the 'ShowGrabHandles' property of the receiver.

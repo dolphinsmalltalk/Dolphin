@@ -70,7 +70,7 @@ ErrorParameters: index param: param
 			[out, retval]BSTR* param);"
 
 	<virtual stdcall: hresult 17 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 errorParametersCount
 	"Answer the <sdword> value of the 'errorParametersCount' property of the receiver."
@@ -97,7 +97,7 @@ get_allErrors: allErrors
 			[out, retval]IXMLDOMParseErrorCollection** allErrors);"
 
 	<virtual stdcall: hresult 16 IXMLDOMParseErrorCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_errorParametersCount: count
 	"Private - Get the value of the 'errorParametersCount' property of the receiver.
@@ -106,7 +106,7 @@ get_errorParametersCount: count
 			[out, retval]long* count);"
 
 	<virtual stdcall: hresult 18 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_errorXPath: xpathexpr
 	"Private - Get the value of the 'errorXPath' property of the receiver.
@@ -115,7 +115,7 @@ get_errorXPath: xpathexpr
 			[out, retval]BSTR* xpathexpr);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMParseError2 categoriesFor: #allErrors!**auto generated**!properties!public! !
 !IXMLDOMParseError2 categoriesFor: #errorParameters:!**auto generated**!methods!public! !
 !IXMLDOMParseError2 categoriesFor: #ErrorParameters:param:!**auto generated**!COM Interfaces-IXMLDOMParseError2!private! !

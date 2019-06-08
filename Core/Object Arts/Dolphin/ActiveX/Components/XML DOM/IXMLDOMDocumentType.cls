@@ -30,7 +30,7 @@ get_entities: entityMap
 			[out, retval]IXMLDOMNamedNodeMap** entityMap);"
 
 	<virtual stdcall: hresult 45 IXMLDOMNamedNodeMap**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_name: rootName
 	"Private - Get the value of the 'name' property of the receiver.
@@ -39,7 +39,7 @@ get_name: rootName
 			[out, retval]BSTR* rootName);"
 
 	<virtual stdcall: hresult 44 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_notations: notationMap
 	"Private - Get the value of the 'notations' property of the receiver.
@@ -48,7 +48,7 @@ get_notations: notationMap
 			[out, retval]IXMLDOMNamedNodeMap** notationMap);"
 
 	<virtual stdcall: hresult 46 IXMLDOMNamedNodeMap**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 name
 	"Answer the <bstr> value of the 'name' property of the receiver.

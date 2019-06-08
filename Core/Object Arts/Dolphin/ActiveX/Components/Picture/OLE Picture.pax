@@ -80,8 +80,8 @@ oleCreatePictureIndirect: pDesc riid: riid fOwn: fOwn ppvObj: ppvObj
 			VOID** ppvObj);
  	"
 
-	<stdcall: hresult OleCreatePictureIndirect PICTDESC* GUID* bool void**>
-	^self invalidCall!
+	<stdcall: hresult OleCreatePictureIndirect PICTDESC* guid* bool void**>
+	^self invalidCall: _failureCode!
 
 oleLoadPicture: pStream lSize: lSize fRunmode: fRunmode riid: riid ppvObj: ppvObj
 	"Load an OLE picture object from an IStream.
@@ -96,8 +96,9 @@ oleLoadPicture: pStream lSize: lSize fRunmode: fRunmode riid: riid ppvObj: ppvOb
 		"
 
 	"Avoid creating dependency on structured storage package by declaring stream as void*"
-	<stdcall: hresult OleLoadPicture void* sdword bool GUID* void**>
-	^self invalidCall!
+
+	<stdcall: hresult OleLoadPicture void* sdword bool guid* void**>
+	^self invalidCall: _failureCode!
 
 oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr riid: iid ppvRet: ppv
 	"Loads an OLE picture (StdPicture) object from a file. Only mentioned in the doc's, but 
@@ -111,10 +112,9 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 			REFIID    riid,
 			LPVOID *  ppvRet );
 	"
-	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword IID* void**>
-	^self invalidCall
 
-! !
+	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword guid* void**>
+	^self invalidCall: _failureCode! !
 !OLEAutLibrary categoriesFor: #oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
 !OLEAutLibrary categoriesFor: #oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !
 !OLEAutLibrary categoriesFor: #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:!OLE Functions-OLE!public! !

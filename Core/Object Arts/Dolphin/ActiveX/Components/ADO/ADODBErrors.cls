@@ -20,8 +20,7 @@ Clear
 		HRESULT __stdcall Clear();"
 
 	<virtual stdcall: hresult 12>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Item: index ppvObject: ppvObject
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -30,8 +29,7 @@ get_Item: index ppvObject: ppvObject
 			[out, retval] Error** ppvObject);"
 
 	<virtual stdcall: hresult 11 variant ADODBError**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 item: index
 	"Answer the <ADODBError> value of the 'Item' property of the receiver."

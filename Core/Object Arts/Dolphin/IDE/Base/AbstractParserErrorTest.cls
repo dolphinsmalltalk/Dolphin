@@ -1114,7 +1114,7 @@ testErrorsPrimitivesCloseTagRecovery
 	ast := [SmalltalkParser parseMethod: source] on: SmalltalkParser errorClass do: [:ex | ex resume].
 	self assert: ast formattedCode equals: 'blah
 	<primitive: 10>
-	^self invalidCall'!
+	^self invalidCall: _failureCode'!
 
 testErrorsRedefiningPseudo
 	#('self' 'super' 'thisContext') do: 

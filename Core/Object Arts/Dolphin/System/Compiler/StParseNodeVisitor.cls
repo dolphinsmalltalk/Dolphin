@@ -16,9 +16,6 @@ processBlock: aBlockNode
 	self visitArgumentNodes: aBlockNode arguments.
 	self visitNode: aBlockNode body!
 
-tagBeforeTemporaries
-	^false!
-
 visitArgumentNode: anStParameterNode
 	"Here to allow subclasses to detect arguments or temporaries."
 
@@ -63,6 +60,7 @@ visitMessageNode: aMessageNode
 
 visitMethodNode: aMethodNode
 	self visitArgumentNodes: aMethodNode arguments.
+	aMethodNode tag ifNotNil: [:tag | self visitNode: tag].
 	self visitNode: aMethodNode body!
 
 visitNode: aNode 
@@ -75,7 +73,7 @@ visitParameterNode: anStParameterNode
 	^self visitVariableNode: anStParameterNode!
 
 visitPrimitiveNode: anStPrimitiveNode
-	!
+	anStPrimitiveNode errorTemp ifNotNil: [:temp | self visitNode: temp]!
 
 visitReturnNode: aReturnNode
 	self visitNode: aReturnNode value!
@@ -85,10 +83,6 @@ visitSelfVariableNode: anStSelfVariableNode
 
 visitSequenceNode: aSequenceNode
 	self visitTemporaryNodes: aSequenceNode temporaries.
-	self tagBeforeTemporaries
-		ifFalse: 
-			[aSequenceNode parent
-				ifNotNil: [:parent | parent isMethod ifTrue: [parent tag ifNotNil: [:tag | self visitNode: tag]]]].
 	self visitStatements: aSequenceNode statements!
 
 visitSpecialVariableNode: anStSpecialVariableNode
@@ -114,7 +108,6 @@ visitThisContextVariableNode: anStSelfVariableNode
 visitVariableNode: aVariableNode
 	^aVariableNode! !
 !StParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
-!StParseNodeVisitor categoriesFor: #tagBeforeTemporaries!public!testing! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !

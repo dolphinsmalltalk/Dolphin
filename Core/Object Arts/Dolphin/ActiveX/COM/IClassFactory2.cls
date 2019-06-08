@@ -26,8 +26,8 @@ CreateInstanceLic: punkOuter pUnkReserved: pUnkReserved riid: riid bstrKey: bstr
 
 	"
 
-	<virtual stdcall: hresult 8 IUnknown* IUnknown* GUID* bstr IUnknown**>
-	^self invalidCall!
+	<virtual stdcall: hresult 8 IUnknown* IUnknown* guid* bstr IUnknown**>
+	^self invalidCall: _failureCode!
 
 GetLicInfo: pLicInfo
 	"Invoke the GetLicInfo() method of the object wrapped by the receiver.
@@ -38,8 +38,7 @@ GetLicInfo: pLicInfo
 	"
 
 	<virtual stdcall: hresult 6 LICINFO*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 requestLicenseKey
 	"Request a runtime license key"
@@ -59,8 +58,7 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 	"
 
 	<virtual stdcall: hresult 7 dword bstr*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IClassFactory2 categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
 !IClassFactory2 categoriesFor: #GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
 !IClassFactory2 categoriesFor: #requestLicenseKey!accessing!enquiries!public! !

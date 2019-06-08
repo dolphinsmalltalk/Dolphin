@@ -86,7 +86,7 @@ get_length: nLength
 			[out, retval]int* nLength);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getIndexFromName: strURI strLocalName: strLocalName
 	"Answer the <SDWORD> result of invoking the getIndexFromName() method of the COM object.
@@ -111,7 +111,7 @@ GetIndexFromName: strURI strLocalName: strLocalName nIndex: nIndex
 			[out, retval]int* nIndex);"
 
 	<virtual stdcall: hresult 12 bstr bstr sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getIndexFromQName: strQName
 	"Answer the <SDWORD> result of invoking the getIndexFromQName() method of the COM object.
@@ -134,7 +134,7 @@ GetIndexFromQName: strQName nIndex: nIndex
 			[out, retval]int* nIndex);"
 
 	<virtual stdcall: hresult 13 bstr sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getLocalName: nIndex
 	"Answer the <BSTR> result of invoking the getLocalName() method of the COM object.
@@ -157,7 +157,7 @@ GetLocalName: nIndex strLocalName: strLocalName
 			[out, retval]BSTR* strLocalName);"
 
 	<virtual stdcall: hresult 10 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getQName: nIndex
 	"Answer the <BSTR> result of invoking the getQName() method of the COM object.
@@ -180,7 +180,7 @@ GetQName: nIndex strQName: strQName
 			[out, retval]BSTR* strQName);"
 
 	<virtual stdcall: hresult 11 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getType: nIndex
 	"Answer the <BSTR> result of invoking the getType() method of the COM object.
@@ -203,7 +203,7 @@ GetType: nIndex strType: strType
 			[out, retval]BSTR* strType);"
 
 	<virtual stdcall: hresult 14 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeFromName: strURI strLocalName: strLocalName
 	"Answer the <BSTR> result of invoking the getTypeFromName() method of the COM object.
@@ -228,7 +228,7 @@ GetTypeFromName: strURI strLocalName: strLocalName strType: strType
 			[out, retval]BSTR* strType);"
 
 	<virtual stdcall: hresult 15 bstr bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeFromQName: strQName
 	"Answer the <BSTR> result of invoking the getTypeFromQName() method of the COM object.
@@ -251,7 +251,7 @@ GetTypeFromQName: strQName strType: strType
 			[out, retval]BSTR* strType);"
 
 	<virtual stdcall: hresult 16 bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getURI: nIndex
 	"Answer the <BSTR> result of invoking the getURI() method of the COM object.
@@ -274,7 +274,7 @@ GetURI: nIndex strURI: strURI
 			[out, retval]BSTR* strURI);"
 
 	<virtual stdcall: hresult 9 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValue: nIndex
 	"Answer the <BSTR> result of invoking the getValue() method of the COM object.
@@ -297,7 +297,7 @@ GetValue: nIndex strValue: strValue
 			[out, retval]BSTR* strValue);"
 
 	<virtual stdcall: hresult 17 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValueFromName: strURI strLocalName: strLocalName
 	"Answer the <BSTR> result of invoking the getValueFromName() method of the COM object.
@@ -322,7 +322,7 @@ GetValueFromName: strURI strLocalName: strLocalName strValue: strValue
 			[out, retval]BSTR* strValue);"
 
 	<virtual stdcall: hresult 18 bstr bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValueFromQName: strQName
 	"Answer the <BSTR> result of invoking the getValueFromQName() method of the COM object.
@@ -345,7 +345,7 @@ GetValueFromQName: strQName strValue: strValue
 			[out, retval]BSTR* strValue);"
 
 	<virtual stdcall: hresult 19 bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

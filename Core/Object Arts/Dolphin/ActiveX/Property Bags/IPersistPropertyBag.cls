@@ -19,15 +19,14 @@ initNew
 	self InitNew
 !
 
-InitNew 
+InitNew
 	"Private - Invoke the InitNew() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall InitNew();
 	"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Load: pPropBag pErrorLog: pErrorLog
 	"Private - Invoke the Load() method of the COM object wrapped by the receiver.
@@ -38,8 +37,7 @@ Load: pPropBag pErrorLog: pErrorLog
 	"
 
 	<virtual stdcall: sdword 6 IPropertyBag* IErrorLog*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties 
 	"Save the object's properties into the <IPropertyBag>, pPropBag, optionally clearing
@@ -63,8 +61,7 @@ Save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties
 	"
 
 	<virtual stdcall: hresult 7 IPropertyBag* bool bool>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IPersistPropertyBag categoriesFor: #initNew!methods!public! !
 !IPersistPropertyBag categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
 !IPersistPropertyBag categoriesFor: #Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !

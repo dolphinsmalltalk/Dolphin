@@ -133,7 +133,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		ecx, [_SP]							; Get as return value suspendingList (may want to restore)
 
 	sar		edx, 1								; Frame offset is a SmallInteger?
-	jnc		localPrimitiveFailure0				; No - primitive failure 0
+	jnc		localPrimitiveFailureNonInteger		; No - primitive failure 0
 
 	add		edx, [ACTIVEPROCESS]				; Add offset back to active proc. base address to get frame address in edx
 	sub		_SP, OOPSIZE*3						; Pop args
@@ -177,7 +177,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		_BP, [BASEPOINTER]
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveReturnFromInterrupt
 	
@@ -218,7 +218,7 @@ BEGINPRIMITIVE primitiveValue
 	ASSUME	edx:PTR BlockClosure
 
 	cmp		al, [edx].m_info.argumentCount			; Compare arg counts
-	jne		localPrimitiveFailure0					; No
+	jne		localPrimitiveFailureWrongNumberOfArgs	; No
 	ASSUME	eax:NOTHING								; EAX no longer needed
 
 	pop		eax										; Discard saved _BP which we no longer need
@@ -233,9 +233,9 @@ BEGINPRIMITIVE primitiveValue
 	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
+localPrimitiveFailureWrongNumberOfArgs:
 	pop	_BP											; Restore saved base pointer
-	PrimitiveFailureCode 0
+	PrimitiveFailureCode PrimitiveFailureWrongNumberOfArgs
 
 ENDPRIMITIVE primitiveValue
 
@@ -250,7 +250,7 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 	ASSUME	edx:PTR BlockClosure
 
 	cmp		[edx].m_info.argumentCount, 0		; Must be a zero arg block ...
-	jne		localPrimitiveFailure0				; ... if not fail it
+	jne		localPrimitiveFailureWrongNumberOfArgs		; ... if not fail it
 
 	;; Past this point, the primitive is guaranteed to succeed
 	;; Make room for the closure receiver on top of the unwind block for activateBlock 
@@ -279,7 +279,7 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureWrongNumberOfArgs
 
 ENDPRIMITIVE primitiveValueOnUnwind
 
@@ -291,20 +291,20 @@ BEGINPRIMITIVE primitiveBecome
 	mov		ecx, [_SP]
 	mov		eax, [OBJECTTABLE]
 	test	cl, 1
-	jnz		localPrimitiveFailure0				; Can't swap SmallIntegers
+	jnz		localPrimitiveFailureBadValueType			; Can't swap SmallIntegers
 	ASSUME	ecx:PTR OTE
 
 	add		eax, FIRSTCHAROFFSET+256*OTENTRYSIZE
 	cmp		ecx, eax
-	jl		localPrimitiveFailure0
+	jl		localPrimitiveFailureBadValueType
 
 	mov		edx, [_SP-OOPSIZE]
 	test	dl, 1
-	jnz		localPrimitiveFailure0
+	jnz		localPrimitiveFailureBadValueType
 	ASSUME	edx:PTR OTE
 
 	cmp		edx, eax
-	jl		localPrimitiveFailure0
+	jl		localPrimitiveFailureBadValueType
 
 	; THIS MUST BE CHANGED IF OTE LAYOUT CHANGED.
 	; Note that we swap the location pointer (obviously), the class pointer (as we
@@ -342,14 +342,14 @@ BEGINPRIMITIVE primitiveBecome
 	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureBadValueType
 
 ENDPRIMITIVE primitiveBecome
 
 BEGINPRIMITIVE primitiveStructureIsNull
-	mov		ecx, [_SP]								; Access argument
+	mov		ecx, [_SP]								; Access receiver
 	ASSUME	ecx:PTR OTE
-	mov		eax, [oteFalse]							; Use EAX for true/false so is non-zero on exit from primitive
+	mov		eax, [oteFalse]
 
 	; Ok, it might still be an object whose first inst var might be an address
 	mov		edx, [ecx].m_location					; Ptr to object now in edx
@@ -366,7 +366,7 @@ BEGINPRIMITIVE primitiveStructureIsNull
 
 	mov		eax, [oteTrue]
 	cmp		edx, [oteNil]
-	jne		localPrimitiveFailure0					; Not nil, a SmallInteger, nor a byte object, so invalid
+	jne		localPrimitiveFailureBadValueType		; Not nil, a SmallInteger, nor a byte object, so invalid
 	jmp		answer									; Answer true (nil is null)
 	
 @@:
@@ -393,15 +393,14 @@ zeroTest:
 	ASSUME	ecx:PTR OTE								; Expected to contain pre-loaded "true"
 
 	cmp		edx, 0
-	jne		answer
-	sub		eax, OTENTRYSIZE						; True immediately preceeds False in the OT
+	cmove	eax, [oteTrue]
 
 answer:
 	mov		[_SP], eax
 	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureBadValueType
 
 ENDPRIMITIVE primitiveStructureIsNull
 
@@ -414,7 +413,7 @@ BEGINPRIMITIVE primitiveBytesIsNull
 	and		edx, 7fffffffh							; Mask out immutability bit
 	cmp		edx, SIZEOF DWORD						; Must be exactly 4 bytes (excluding any header)
 
-	jne		localPrimitiveFailure0					; If not 32-bits, fail the primitive
+	jne		localPrimitiveFailureValueOutOfRange	; If not 32-bits, fail the primitive
 
 	mov		edx, [eax].m_location					; Ptr to object now in edx
 	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
@@ -428,7 +427,7 @@ BEGINPRIMITIVE primitiveBytesIsNull
 	mov		[_SP], ecx
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveBytesIsNull
 

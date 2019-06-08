@@ -71,7 +71,7 @@ Execute: sourceString ppMatches: ppMatches
 			[out, retval]IDispatch** ppMatches);"
 
 	<virtual stdcall: hresult 16 bstr IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Multiline: pMultiline
 	"Private - Get the value of the 'Multiline' property of the receiver.
@@ -80,7 +80,7 @@ get_Multiline: pMultiline
 			[out, retval]VARIANT_BOOL* pMultiline);"
 
 	<virtual stdcall: hresult 14 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 matchCollectionClass
 	^IMatchCollection2!
@@ -108,7 +108,7 @@ put_Multiline: pMultiline
 			[in]VARIANT_BOOL pMultiline);"
 
 	<virtual stdcall: hresult 15 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 replace: sourceString replaceString: replaceString 
 	"Answer the <String> result of performing a regular expression based search/replace, where
@@ -138,7 +138,7 @@ Replace: sourceString replaceVar: replaceVar pDestString: pDestString
 			[out, retval]BSTR* pDestString);"
 
 	<virtual stdcall: hresult 18 bstr variant bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Test: sourceString pMatch: pMatch
 	"Private - Invoke the Test() method of the COM object.
@@ -148,7 +148,7 @@ Test: sourceString pMatch: pMatch
 			[out, retval]VARIANT_BOOL* pMatch);"
 
 	<virtual stdcall: hresult 17 bstr varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IRegExp2 categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp2!private! !
 !IRegExp2 categoriesFor: #get_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
 !IRegExp2 categoriesFor: #matchCollectionClass!constants!private! !

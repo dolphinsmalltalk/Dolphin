@@ -27,7 +27,7 @@ get_tagName: tagName
 			[out, retval]BSTR* tagName);"
 
 	<virtual stdcall: hresult 44 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getAttribute: name
 	"Answer the <VARIANT> result of invoking the getAttribute() method of the COM object.
@@ -50,7 +50,7 @@ GetAttribute: name value: value
 			[out, retval]VARIANT* value);"
 
 	<virtual stdcall: hresult 45 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getAttributeNode: name
 	"Answer the <IXMLDOMAttribute> result of invoking the getAttributeNode() method of the COM object.
@@ -73,7 +73,7 @@ GetAttributeNode: name attributeNode: attributeNode
 			[out, retval]IXMLDOMAttribute** attributeNode);"
 
 	<virtual stdcall: hresult 48 bstr IXMLDOMAttribute**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getElementsByTagName: tagName
 	"Answer a <sequencedReadableCollection> on the <IXMLDOMNodeList> result 
@@ -96,7 +96,7 @@ GetElementsByTagName: tagName resultList: resultList
 			[out, retval]IXMLDOMNodeList** resultList);"
 
 	<virtual stdcall: hresult 51 bstr IXMLDOMNodeList**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 namespaceURI: aString
 	"Set the namespace of this element.
@@ -112,7 +112,7 @@ Normalize
 		HRESULT __stdcall normalize();"
 
 	<virtual stdcall: hresult 52>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 RemoveAttribute: name
 	"Invoke the removeAttribute() method of the COM object.
@@ -122,7 +122,7 @@ RemoveAttribute: name
 			[in]BSTR name);"
 
 	<virtual stdcall: hresult 47 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeAttributeNode: domAttribute
 	"Answer the <IXMLDOMAttribute> result of invoking the removeAttributeNode() method of the COM object.
@@ -145,7 +145,7 @@ RemoveAttributeNode: domAttribute attributeNode: attributeNode
 			[out, retval]IXMLDOMAttribute** attributeNode);"
 
 	<virtual stdcall: hresult 50 IXMLDOMAttribute* IXMLDOMAttribute**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setAttribute: name value: value
 	"Invoke the setAttribute() method of the COM object.
@@ -165,7 +165,7 @@ SetAttribute: name value: value
 			[in]VARIANT value);"
 
 	<virtual stdcall: hresult 46 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setAttributeNode: domAttribute
 	"Answer the <IXMLDOMAttribute> result of invoking the setAttributeNode() method of the COM object.
@@ -188,7 +188,7 @@ SetAttributeNode: domAttribute attributeNode: attributeNode
 			[out, retval]IXMLDOMAttribute** attributeNode);"
 
 	<virtual stdcall: hresult 49 IXMLDOMAttribute* IXMLDOMAttribute**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 tagName
 	"Answer the <bstr> value of the 'tagName' property of the receiver.

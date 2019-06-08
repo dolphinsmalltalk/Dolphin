@@ -24,8 +24,7 @@ Advise: pAdvSink pdwConnection: pdwConnection
 	"
 
 	<virtual stdcall: hresult 20 IUnknown* dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 appName
 	"Answer the name of the application hosting the object."
@@ -48,8 +47,7 @@ Close: dwSaveOption
 	"
 
 	<virtual stdcall: sdword 7 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 DoVerb: iVerb lpmsg: lpmsg pActiveSite: pActiveSite lindex: lindex hwndParent: hwndParent lprcPosRect: lprcPosRect
 	"Private - Invoke the DoVerb() method of the COM object wrapped by the receiver.
@@ -64,8 +62,7 @@ DoVerb: iVerb lpmsg: lpmsg pActiveSite: pActiveSite lindex: lindex hwndParent: h
 	"
 
 	<virtual stdcall: hresult 12 sdword MSG* IOleClientSite* sdword handle RECT*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 doVerb: iVerb msg: aMSG activeSite: piSite parentView: parentView rectangle: rect 
 	"Ask the OLE object to perform the action identified by the <integer> verb, iVerb.
@@ -88,8 +85,7 @@ EnumAdvise: ppenumAdvise
 	"
 
 	<virtual stdcall: hresult 22 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 enumVerbs
 	| ienum |
@@ -105,8 +101,7 @@ EnumVerbs: ppEnumOleVerb
 	"
 
 	<virtual stdcall: hresult 13 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 fullName
 	"Answer the full name of the object."
@@ -121,8 +116,7 @@ GetClientSite: ppClientSite
 	"
 
 	<virtual stdcall: hresult 5 IOleClientSite**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetClipboardData: dwReserved ppDataObject: ppDataObject
 	"Private - Invoke the GetClipboardData() method of the COM object wrapped by the receiver.
@@ -133,8 +127,7 @@ GetClipboardData: dwReserved ppDataObject: ppDataObject
 	"
 
 	<virtual stdcall: hresult 11 dword IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getExtent: dwDrawAspect 
 	"Answer the <SIZE> result of invoking the COM Object's GetExtent() method."
@@ -156,8 +149,7 @@ GetExtent: dwDrawAspect psizel: psizel
 	"
 
 	<virtual stdcall: hresult 19 dword SIZE*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getMiscStatus: dwAspect 
 	"Answer the <DWORD> result of invoking the COM Object's GetMiscStatus() method."
@@ -179,8 +171,7 @@ GetMiscStatus: dwAspect pdwStatus: pdwStatus
 	"
 
 	<virtual stdcall: hresult 23 dword dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetMoniker: dwAssign dwWhichMoniker: dwWhichMoniker ppmk: ppmk
 	"Private - Invoke the GetMoniker() method of the COM object wrapped by the receiver.
@@ -192,8 +183,7 @@ GetMoniker: dwAssign dwWhichMoniker: dwWhichMoniker ppmk: ppmk
 	"
 
 	<virtual stdcall: hresult 9 dword dword IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getUserClassID
 	"Answer the <GUID> result of invoking the COM Object's GetUserClassID() method."
@@ -212,9 +202,8 @@ GetUserClassID: pClsid
 			[out] GUID* pClsid);
 	"
 
-	<virtual stdcall: hresult 16 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 16 guid*>
+	^self invalidCall: _failureCode!
 
 getUserType: dwFormOfType
 	"Answer the <Utf16String> result of invoking the COM Object's GetUserType() method.
@@ -237,8 +226,7 @@ GetUserType: dwFormOfType pszUserType: pszUserType
 	"
 
 	<virtual stdcall: hresult 17 dword lpwstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 InitFromData: pDataObject fCreation: fCreation dwReserved: dwReserved
 	"Private - Invoke the InitFromData() method of the COM object wrapped by the receiver.
@@ -250,18 +238,16 @@ InitFromData: pDataObject fCreation: fCreation dwReserved: dwReserved
 	"
 
 	<virtual stdcall: hresult 10 IUnknown* sdword dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-IsUpToDate 
+IsUpToDate
 	"Private - Invoke the IsUpToDate() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall IsUpToDate();
 	"
 
 	<virtual stdcall: hresult 15>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetClientSite: pClientSite
 	"Private - Invoke the SetClientSite() method of the COM object wrapped by the receiver.
@@ -271,8 +257,7 @@ SetClientSite: pClientSite
 	"
 
 	<virtual stdcall: sdword 4 IOleClientSite*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetColorScheme: pLogpal
 	"Private - Invoke the SetColorScheme() method of the COM object wrapped by the receiver.
@@ -282,8 +267,7 @@ SetColorScheme: pLogpal
 	"
 
 	<virtual stdcall: hresult 24 LOGPALETTE*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setExtent: dwDrawAspect psizel: psizel 
 	"Set the extent of the specified aspect of the receiver to the 
@@ -311,8 +295,7 @@ SetExtent: dwDrawAspect psizel: psizel
 	"
 
 	<virtual stdcall: sdword 18 dword SIZE*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setHostNames: szContainerApp szContainerObj: szContainerObj
 	"Invoke the SetHostNames() method of the COM Object.
@@ -333,8 +316,7 @@ SetHostNames: szContainerApp szContainerObj: szContainerObj
 	"
 
 	<virtual stdcall: sdword 6 lpwstr lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetMoniker: dwWhichMoniker pmk: pmk
 	"Private - Invoke the SetMoniker() method of the COM object wrapped by the receiver.
@@ -345,8 +327,7 @@ SetMoniker: dwWhichMoniker pmk: pmk
 	"
 
 	<virtual stdcall: hresult 8 dword IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 shortName
 	"Answer the full name of the object."
@@ -370,18 +351,16 @@ Unadvise: dwConnection
 	"
 
 	<virtual stdcall: sdword 21 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-Update 
+Update
 	"Private - Invoke the Update() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall Update();
 	"
 
 	<virtual stdcall: hresult 14>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 verbs
 	^[OLEEnumerator onIEnum: self enumVerbs] on: HRESULTError

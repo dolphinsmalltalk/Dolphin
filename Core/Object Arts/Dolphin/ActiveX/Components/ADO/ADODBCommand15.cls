@@ -104,7 +104,9 @@ CreateParameter: name Type: type Direction: direction Size: size Value: value pp
 	"Private - Invoke the CreateParameter() method of the COM object.
 
 		HRESULT __stdcall CreateParameter(
-			[in, optional, defaultvalue("")] BSTR Name,
+			[in, optional, defaultvalue("
+
+	")] BSTR Name,
 			[in, optional, defaultvalue(0)] DataTypeEnum Type,
 			[in, optional, defaultvalue(1)] ParameterDirectionEnum Direction,
 			[in, optional, defaultvalue(0)] long Size,
@@ -112,8 +114,7 @@ CreateParameter: name Type: type Direction: direction Size: size Value: value pp
 			[out, retval] _Parameter** ppiprm);"
 
 	<virtual stdcall: hresult 19 bstr sdword sdword sdword variant ADODB_Parameter**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 execute
 	"Invoke the Execute() method of the COM object.
@@ -149,8 +150,7 @@ Execute: recordsAffected Parameters: parameters Options: options ppiRs: ppiRs
 			[out, retval] _Recordset** ppiRs);"
 
 	<virtual stdcall: hresult 18 variant* variant* sdword ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ActiveConnection: ppvObject
 	"Private - Get the value of the 'ActiveConnection' property of the receiver.
@@ -158,8 +158,7 @@ get_ActiveConnection: ppvObject
 			[out, retval] _Connection** ppvObject);"
 
 	<virtual stdcall: hresult 9 ADODB_Connection**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CommandText: pbstr
 	"Private - Get the value of the 'CommandText' property of the receiver.
@@ -167,8 +166,7 @@ get_CommandText: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CommandTimeout: pl
 	"Private - Get the value of the 'CommandTimeout' property of the receiver.
@@ -176,8 +174,7 @@ get_CommandTimeout: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CommandType: plCmdType
 	"Private - Get the value of the 'CommandType' property of the receiver.
@@ -185,8 +182,7 @@ get_CommandType: plCmdType
 			[out, retval] CommandTypeEnum* plCmdType);"
 
 	<virtual stdcall: hresult 22 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Name: pbstrName
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -194,8 +190,7 @@ get_Name: pbstrName
 			[out, retval] BSTR* pbstrName);"
 
 	<virtual stdcall: hresult 23 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Parameters: ppvObject
 	"Private - Get the value of the 'Parameters' property of the receiver.
@@ -203,8 +198,7 @@ get_Parameters: ppvObject
 			[out, retval] Parameters** ppvObject);"
 
 	<virtual stdcall: hresult 20 ADODBParameters**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Prepared: pfPrepared
 	"Private - Get the value of the 'Prepared' property of the receiver.
@@ -212,8 +206,7 @@ get_Prepared: pfPrepared
 			[out, retval] VARIANT_BOOL* pfPrepared);"
 
 	<virtual stdcall: hresult 16 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 name
 	"Answer the <bstr> value of the 'Name' property of the receiver."
@@ -262,8 +255,7 @@ put_ActiveConnection: ppvObject
 			[in] VARIANT ppvObject);"
 
 	<virtual stdcall: hresult 11 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CommandText: pbstr
 	"Private - Set the value of the 'CommandText' property of the object wrapped by the 
@@ -272,8 +264,7 @@ put_CommandText: pbstr
 			[in] BSTR pbstr);"
 
 	<virtual stdcall: hresult 13 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CommandTimeout: pl
 	"Private - Set the value of the 'CommandTimeout' property of the object wrapped by the 
@@ -282,8 +273,7 @@ put_CommandTimeout: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 15 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CommandType: plCmdType
 	"Private - Set the value of the 'CommandType' property of the object wrapped by the 
@@ -292,8 +282,7 @@ put_CommandType: plCmdType
 			[in] CommandTypeEnum plCmdType);"
 
 	<virtual stdcall: hresult 21 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Name: pbstrName
 	"Private - Set the value of the 'Name' property of the object wrapped by the 
@@ -302,8 +291,7 @@ put_Name: pbstrName
 			[in] BSTR pbstrName);"
 
 	<virtual stdcall: hresult 24 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Prepared: pfPrepared
 	"Private - Set the value of the 'Prepared' property of the object wrapped by the 
@@ -312,8 +300,7 @@ put_Prepared: pfPrepared
 			[in] VARIANT_BOOL pfPrepared);"
 
 	<virtual stdcall: hresult 17 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_ActiveConnection: ppvObject
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
@@ -322,8 +309,7 @@ putref_ActiveConnection: ppvObject
 			[in] _Connection* ppvObject);"
 
 	<virtual stdcall: hresult 10 ADODB_Connection*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setActiveConnection: ppvObject
 	"Set the 'ActiveConnection' property of the receiver to the <ADODB_Connection*> value of the argument."

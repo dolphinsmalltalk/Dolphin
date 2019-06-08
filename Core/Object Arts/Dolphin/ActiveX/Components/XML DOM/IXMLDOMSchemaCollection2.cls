@@ -52,7 +52,7 @@ get_validateOnLoad: validateOnLoad
 			[out, retval]VARIANT_BOOL* validateOnLoad);"
 
 	<virtual stdcall: hresult 17 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDeclaration: node
 	"Answer the <ISchemaItem> result of invoking the getDeclaration() method of the COM object."
@@ -73,7 +73,7 @@ GetDeclaration: node item: item
 			[out, retval]ISchemaItem** item);"
 
 	<virtual stdcall: hresult 19 IXMLDOMNode* ISchemaItem**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getSchema: namespaceURI
 	"Answer the <ISchema> result of invoking the getSchema() method of the COM object."
@@ -94,7 +94,7 @@ GetSchema: namespaceURI schema: schema
 			[out, retval]ISchema** schema);"
 
 	<virtual stdcall: hresult 18 bstr ISchema**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_validateOnLoad: validateOnLoad
 	"Private - Set the value of the 'validateOnLoad' property of the object wrapped by the 
@@ -104,7 +104,7 @@ put_validateOnLoad: validateOnLoad
 			[in]VARIANT_BOOL validateOnLoad);"
 
 	<virtual stdcall: hresult 16 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Validate
 	"Invoke the validate() method of the COM object.
@@ -112,7 +112,7 @@ Validate
 		HRESULT __stdcall validate();"
 
 	<virtual stdcall: hresult 15>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 validateOnLoad
 	"Answer the <varbool> value of the 'validateOnLoad' property of the receiver."

@@ -22,9 +22,8 @@ InterfaceSupportsErrorInfo: riid
 
 	"
 
-	<virtual stdcall: hresult 4 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 guid*>
+	^self invalidCall: _failureCode!
 
 supportsErrorInfo: interface
 	"Answer whether error information is supported for the specified interface

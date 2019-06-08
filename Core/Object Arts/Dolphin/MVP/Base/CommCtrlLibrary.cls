@@ -22,7 +22,7 @@ imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
 			COLORREF crMask);"
 
 	<stdcall: sdword ImageList_AddMasked handle handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dyHotspot
 	"Invoke the ImageList_BeginDrag() function of the module wrapped by the receiver.
@@ -35,7 +35,7 @@ imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dy
 			int dyHotspot);"
 
 	<stdcall: bool ImageList_BeginDrag handle sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
 	"Invoke the ImageList_Create() function of the module wrapped by the receiver.
@@ -49,7 +49,7 @@ imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
 			int cGrow);"
 
 	<stdcall: handle ImageList_Create sdword sdword dword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_Destroy: himl
 	"Invoke the ImageList_Destroy() function of the module wrapped by the receiver.
@@ -59,7 +59,7 @@ imageList_Destroy: himl
 			HIMAGELIST himl);"
 
 	<stdcall: bool ImageList_Destroy handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_DragEnter: hwndLock x: x y: y
 	"Invoke the ImageList_DragEnter() function of the module wrapped by the receiver.
@@ -71,7 +71,7 @@ imageList_DragEnter: hwndLock x: x y: y
 			int y);"
 
 	<stdcall: bool ImageList_DragEnter handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_DragLeave: hwndLock
 	"Invoke the ImageList_DragLeave() function of the module wrapped by the receiver.
@@ -81,7 +81,7 @@ imageList_DragLeave: hwndLock
 			HWND hwndLock);"
 
 	<stdcall: bool ImageList_DragLeave handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_DragMove: x y: y
 	"Invoke the ImageList_DragMove() function of the module wrapped by the receiver.
@@ -92,7 +92,7 @@ imageList_DragMove: x y: y
 			int y);"
 
 	<stdcall: bool ImageList_DragMove sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_DragShowNolock: fShow
 	"Invoke the ImageList_DragShowNolock() function of the module wrapped by the receiver.
@@ -102,7 +102,7 @@ imageList_DragShowNolock: fShow
 			BOOL fShow);"
 
 	<stdcall: bool ImageList_DragShowNolock bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_Draw: hImageList i: index hdcDst: hdc x: x y: y fStyle: style
 	"The ImageList_Draw function draws an image list item in the specified
@@ -117,10 +117,9 @@ imageList_Draw: hImageList i: index hdcDst: hdc x: x y: y fStyle: style
 		UINT fStyle);	"
 
 	<stdcall: bool ImageList_Draw handle sdword handle sdword sdword dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk rgbFg: rgbFg fStyle: fStyle 
+imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk rgbFg: rgbFg fStyle: fStyle
 	"Invoke the ImageList_DrawEx() function of the module wrapped by the receiver.
 	Helpstring: Draws an image list item in the specified device context using the given drawing style and color
 
@@ -137,9 +136,9 @@ imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk 
 			unsigned int fStyle);"
 
 	<stdcall: bool ImageList_DrawEx handle sdword handle sdword sdword sdword sdword dword dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-imageList_Duplicate: himl 
+imageList_Duplicate: himl
 	"Invoke the ImageList_Duplicate() function of the module wrapped by the receiver.
 	Helpstring: Creates a duplicate of an existing image list
 
@@ -147,7 +146,7 @@ imageList_Duplicate: himl
 			HIMAGELIST himl);"
 
 	<stdcall: handle ImageList_Duplicate handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_EndDrag
 	"Invoke the ImageList_EndDrag() function of the module wrapped by the receiver.
@@ -156,7 +155,7 @@ imageList_EndDrag
 		void __stdcall ImageList_EndDrag();"
 
 	<stdcall: void ImageList_EndDrag>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_GetBkColor: himl
 	"Invoke the ImageList_GetBkColor() function of the module wrapped by the receiver.
@@ -166,7 +165,7 @@ imageList_GetBkColor: himl
 			HIMAGELIST himl);"
 
 	<stdcall: dword ImageList_GetBkColor handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_GetIcon: himl i: i flags: flags
 	"Invoke the ImageList_GetIcon() function of the module wrapped by the receiver.
@@ -178,9 +177,9 @@ imageList_GetIcon: himl i: i flags: flags
 			UINT flags);"
 
 	<stdcall: handle ImageList_GetIcon handle sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-imageList_GetIconSize: himl cx: cx cy: cy 
+imageList_GetIconSize: himl cx: cx cy: cy
 	"Invoke the ImageList_GetIconSize() function of the module wrapped by the receiver.
 	Helpstring: Retrieves the dimensions of images in the image list.
 
@@ -190,7 +189,7 @@ imageList_GetIconSize: himl cx: cx cy: cy
 			int* cy);"
 
 	<stdcall: bool ImageList_GetIconSize handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_GetImageCount: himl
 	"Invoke the ImageList_GetImageCount() function of the module wrapped by the receiver.
@@ -200,7 +199,7 @@ imageList_GetImageCount: himl
 			HIMAGELIST himl);"
 
 	<stdcall: sdword ImageList_GetImageCount handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: uType uFlags: uFlags
 	"Invoke the ImageList_LoadImage() function of the module wrapped by the receiver.
@@ -216,7 +215,7 @@ imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: u
 			UINT uFlags);"
 
 	<stdcall: handle ImageList_LoadImageW handle lpwstr sdword sdword dword dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_ReplaceIcon: himl i: i hicon: hicon
 	"Invoke the ImageList_ReplaceIcon() function of the module wrapped by the receiver.
@@ -228,7 +227,7 @@ imageList_ReplaceIcon: himl i: i hicon: hicon
 			HICON HICON);"
 
 	<stdcall: sdword ImageList_ReplaceIcon handle sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_SetBkColor: himl clrBk: clrBk
 	"Invoke the ImageList_SetBkColor() function of the module wrapped by the receiver.
@@ -239,7 +238,7 @@ imageList_SetBkColor: himl clrBk: clrBk
 			COLORREF clrBk);"
 
 	<stdcall: dword ImageList_SetBkColor handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotspot: dyHotspot
 	"Invoke the ImageList_SetDragCursorImage() function of the module wrapped by the receiver.
@@ -252,7 +251,7 @@ imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotsp
 			int dyHotspot);"
 
 	<stdcall: bool ImageList_SetDragCursorImage handle sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 imageList_SetIconSize: himl cx: cx cy: cy
 	"Invoke the ImageList_SetIconSize() function of the module wrapped by the receiver.
@@ -264,13 +263,13 @@ imageList_SetIconSize: himl cx: cx cy: cy
 			int cy);"
 
 	<stdcall: bool ImageList_SetIconSize handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 initCommonControlsEx: anINITCOMMONCONTROLSEX
 	"Initialize the receiver as specified by the init struct argument."
 
-	<stdcall: bool InitCommonControlsEx void* >
-	^self invalidCall!
+	<stdcall: bool InitCommonControlsEx void*>
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize and answer the receiver.
@@ -295,7 +294,7 @@ loadIconMetric: hInst pszName: pszName lims: lims phico: phico
 			[out, retval]HICON* phico);"
 
 	<stdcall: sdword LoadIconMetric handle void* sdword handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 	"Invoke the LoadIconWithScaleDown() function of the module wrapped by the receiver.
@@ -309,7 +308,7 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 			[out, retval]HICON* phico);"
 
 	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CommCtrlLibrary categoriesFor: #imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
 !CommCtrlLibrary categoriesFor: #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
 !CommCtrlLibrary categoriesFor: #imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !

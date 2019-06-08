@@ -185,7 +185,7 @@ parseBlock
 	"Set start position before attempting to parse the block args so can use for error reporting if necessary"
 	node left: position.
 	self parseBlockArgsInto: node.
-	node body: (self parseStatementsOf: node allowTag: false).
+	node body: (self parseStatementsOf: node).
 	(currentToken isSpecial: $])
 		ifFalse: 
 			[| blockEnd |
@@ -249,7 +249,7 @@ parseBraceArray
 	self step.
 	node := self braceArrayNodeClass new.
 	node left: start.
-	self parseStatementList: false into: node.
+	self parseStatementList: node.
 	(currentToken isSpecial: $})
 		ifFalse: 
 			[self parserError: CErrBraceNotClosed range: (start to: self errorPosition - 1)
@@ -300,7 +300,7 @@ parseExpression: aString
 							value: 'doIt'}
 				arguments: #().
 	method source: aString.
-	body := self parseStatementsOf: method allowTag: false.
+	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
 		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
@@ -619,9 +619,9 @@ parseMessagePattern
 
 parseMethod
 	methodNode := self parseMessagePattern.
-	"	self parseResourceTag."
+	self parseTags.
 	self addCommentsTo: methodNode.
-	methodNode body: (self parseStatementsOf: methodNode allowTag: true).
+	methodNode body: (self parseStatementsOf: methodNode).
 	"	methodNode tags: tags."
 	^methodNode!
 
@@ -657,9 +657,9 @@ parseOptimizedExpression
 	position := currentToken start.
 	self step.
 	node := self optimizedNodeClass new.
-	body := self parseStatementsOf: node allowTag: false.
+	body := self parseStatementsOf: node.
 	isClosed := currentToken isSpecial: $).
-	node 
+	node
 		left: position
 		body: body
 		right: (isClosed ifTrue: [currentToken start] ifFalse: [scanner previousStepPosition]).
@@ -766,13 +766,12 @@ parserError: anInteger range: anInterval extras: anArray
 		range: anInterval
 		extras: anArray!
 
-parseStatementList: tagBoolean into: sequenceNode
+parseStatementList: sequenceNode
 	| statements end periods node firstReturn |
 	end := false.
 	statements := OrderedCollection new.
 	periods := OrderedCollection new.
 	self addCommentsTo: sequenceNode.
-	tagBoolean ifTrue: [self parseTag].
 	AllowEmptyStatements
 		ifTrue: 
 			[[currentToken isSpecial: $.] whileTrue: 
@@ -820,18 +819,18 @@ parseStatementList: tagBoolean into: sequenceNode
 		periods: periods.
 	^sequenceNode!
 
-parseStatementsOf: aNode allowTag: tagBoolean 
+parseStatementsOf: aNode
 	| temps leftBar rightBar |
 	temps := #().
 	leftBar := rightBar := nil.
-	currentToken isBinary 
+	currentToken isBinary
 		ifTrue: 
-			[currentToken value == #| 
+			[currentToken value == #|
 				ifTrue: 
 					[leftBar := currentToken start.
 					self step.
 					temps := self parseTempsOf: aNode.
-					(currentToken isBinary: #|) 
+					(currentToken isBinary: #|)
 						ifTrue: 
 							[rightBar := currentToken start.
 							self step]
@@ -843,45 +842,26 @@ parseStatementsOf: aNode allowTag: tagBoolean
 							declarations..."
 							rightBar := self errorPosition - 1]]
 				ifFalse: 
-					[currentToken value == #'||' 
+					[currentToken value == #'||'
 						ifTrue: 
 							[rightBar := (leftBar := currentToken start) + 1.
 							self step]]].
-	^self parseStatementList: tagBoolean
-		into: (self sequenceNodeClass 
+	^self parseStatementList: (self sequenceNodeClass
 				leftBar: leftBar
 				temporaries: temps
 				rightBar: rightBar)!
-
-parseTag
-	| tag start |
-	(currentToken isBinary: #<) ifFalse: [^self].
-	start := currentToken start.
-	self step.
-	tag := self parseTag: start.
-	methodNode tag: tag.
-	(currentToken isBinary: #>) 
-		ifFalse: 
-			[self parserError: CErrExpectCloseTag.
-			"Error ignored, attempt to recover..."
-			tag stop: currentToken start - 1.
-			^self].
-	tag stop: currentToken start.
-	self step!
 
 parseTag: startInteger
 	^currentToken isKeyword
 		ifTrue: 
 			[currentToken value = 'primitive:'
 				ifTrue: 
-					[| primitiveIndex |
+					[| primitiveIndex primitiveNode |
 					self step.
 					(currentToken isLiteralToken not or: [currentToken value isInteger not])
 						ifTrue: 
 							[self parserError: CErrExpectPrimIdx.
-							"Error ignored, attempt to recover, skip the
-							offending token unless it is the close tag
-							and return a dummy primitive node..."
+							"Error ignored, attempt to recover, skip the offending token unless it is the close tag and return a dummy primitive node..."
 							(currentToken isBinary: #>) ifFalse: [self step].
 							^(StPrimitiveNode primitiveIndex: 0)
 								start: startInteger;
@@ -890,11 +870,32 @@ parseTag: startInteger
 					(primitiveIndex between: 1 and: VMConstants.MaxPrimitive)
 						ifFalse: [self parserError: CErrBadPrimIdx].
 					self step.
-					(StPrimitiveNode primitiveIndex: primitiveIndex)
-						start: startInteger;
-						yourself]
+					primitiveNode := (StPrimitiveNode primitiveIndex: primitiveIndex)
+								start: startInteger;
+								yourself.
+					(currentToken isKeyword and: [currentToken value = 'error:'])
+						ifTrue: 
+							[self step.
+							primitiveNode errorTemp: self parseTempDecl].
+					primitiveNode]
 				ifFalse: [self parseExternalCall: startInteger isVirtual: false]]
 		ifFalse: [self parseExtendedExternalCall: startInteger]!
+
+parseTags
+	| tag start |
+	(currentToken isBinary: #<) ifFalse: [^self].
+	start := currentToken start.
+	self step.
+	tag := self parseTag: start.
+	methodNode tag: tag.
+	(currentToken isBinary: #>)
+		ifFalse: 
+			[self parserError: CErrExpectCloseTag.
+			"Error ignored, attempt to recover..."
+			tag stop: currentToken start - 1.
+			^self].
+	tag stop: currentToken start.
+	self step!
 
 parseTempDecl
 	^self parseVariableNode: self tempDeclClass!
@@ -1169,10 +1170,10 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parserError:range:!error handling!private! !
 !SmalltalkParser categoriesFor: #parserError:range:extra:!error handling!private! !
 !SmalltalkParser categoriesFor: #parserError:range:extras:!error handling!private! !
-!SmalltalkParser categoriesFor: #parseStatementList:into:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseStatementsOf:allowTag:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTag!parsing!private! !
+!SmalltalkParser categoriesFor: #parseStatementList:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseStatementsOf:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTag:!parsing!private! !
+!SmalltalkParser categoriesFor: #parseTags!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTempDecl!parsing!private! !
 !SmalltalkParser categoriesFor: #parseTempsOf:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseUnaryMessage!parsing!private! !

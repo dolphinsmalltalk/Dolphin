@@ -140,6 +140,34 @@ library DolphinVM
 	const int MinSmallInteger = -0x40000000;
 	const int MaxSmallInteger = 0x3FFFFFFF;
 
+	typedef enum _PrimitiveFailureCode {
+		Success = -1,
+		NonIntegerIndex, 
+		IndexOutOfRange, 
+		BadValueType, 
+		SystemError, 
+		WrongNumberOfArgs, 
+		NonInstantiable,
+		NotIndexable, 
+		NotPointers, 
+		NotBytes, 
+		NotFixed, 
+		InvalidAddress, 
+		ValueOutOfRange, 
+		Overflow, 
+		OutOfMemory,
+		Inexact, 
+		InvalidEncoding, 
+		NotImplemented, 
+		InvalidOperation, 
+		InvalidSelector,
+		InvalidReceiver,
+		PendingTermination,
+		LastRunnable,
+		Immutable,
+		UnspecifiedError
+	} _PrimitiveFailureCode;
+
 	[
 		object,
 		uuid(2C0F5BFA-719E-440A-B115-3CE751B4553C),

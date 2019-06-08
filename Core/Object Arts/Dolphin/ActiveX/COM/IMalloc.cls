@@ -22,8 +22,7 @@ Alloc: cb
 	"
 
 	<virtual stdcall: void* 4 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 DidAlloc: pv
 	"Invoke the DidAlloc() method of the object wrapped by the receiver.
@@ -34,8 +33,7 @@ DidAlloc: pv
 	"
 
 	<virtual stdcall: sdword 8 void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Free: pv
 	"Invoke the Free() method of the object wrapped by the receiver.
@@ -46,8 +44,7 @@ Free: pv
 	"
 
 	<virtual stdcall: void 6 void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetSize: pv
 	"Invoke the GetSize() method of the object wrapped by the receiver.
@@ -58,8 +55,7 @@ GetSize: pv
 	"
 
 	<virtual stdcall: dword 7 void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 HeapMinimize
 	"Invoke the HeapMinimize() method of the object wrapped by the receiver.
@@ -69,8 +65,7 @@ HeapMinimize
 	"
 
 	<virtual stdcall: void 9>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Realloc: pv cb: cb
 	"Invoke the Realloc() method of the object wrapped by the receiver.
@@ -82,8 +77,7 @@ Realloc: pv cb: cb
 	"
 
 	<virtual stdcall: void* 5 void* dword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IMalloc categoriesFor: #Alloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 !IMalloc categoriesFor: #DidAlloc:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !
 !IMalloc categoriesFor: #Free:!**auto generated**!COM Interfaces-OBJIDL.IMalloc!public! !

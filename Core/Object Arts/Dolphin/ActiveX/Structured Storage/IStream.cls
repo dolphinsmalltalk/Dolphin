@@ -50,7 +50,7 @@ cacheStats
 	mode := statstg grfMode.
 	statstg free!
 
-Clone: ppstm 
+Clone: ppstm
 	"Invoke the Clone() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Clone(
@@ -58,9 +58,9 @@ Clone: ppstm
 	"
 
 	<virtual stdcall: hresult 14 IStream**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-Commit: grfCommitFlags 
+Commit: grfCommitFlags
 	"Invoke the Commit() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Commit(
@@ -68,7 +68,7 @@ Commit: grfCommitFlags
 	"
 
 	<virtual stdcall: hresult 9 dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 contents
 	"Answer a <collection> containing the complete contents of the stream."
@@ -90,7 +90,7 @@ copyFrom: startInteger to: stopInteger
 	self position: startInteger - 1.
 	^self next: stopInteger - startInteger + 1!
 
-CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
+CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten
 	"Invoke the CopyTo() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall CopyTo(
@@ -101,7 +101,7 @@ CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten
 	"
 
 	<virtual stdcall: hresult 8 IStream* qword qword* qword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 copyTo: anIStream count: size 
 	"Copy the specified number of bytes in the receiver from the current
@@ -193,7 +193,7 @@ lockFrom: start to: end type: dwLockType
 		cb: end - start + 1
 		dwLockType: dwLockType!
 
-LockRegion: libOffset cb: cb dwLockType: dwLockType 
+LockRegion: libOffset cb: cb dwLockType: dwLockType
 	"Invoke the LockRegion() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall LockRegion(
@@ -204,7 +204,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	"
 
 	<virtual stdcall: hresult 11 qword qword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 mode
 	"Answer the access mode flags of the receiving stream."
@@ -315,14 +315,14 @@ Revert
 	"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 rollback
 	"Rollback modifications to the receiver since the last checkpoint."
 
 	self Revert!
 
-Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition 
+Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 	"Invoke the Seek() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Seek(
@@ -332,9 +332,9 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 	"
 
 	<virtual stdcall: hresult 6 sqword dword qword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-SetSize: libNewSize 
+SetSize: libNewSize
 	"Invoke the SetSize() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetSize(
@@ -342,7 +342,7 @@ SetSize: libNewSize
 	"
 
 	<virtual stdcall: hresult 7 qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setToEnd
 	"Set the receivers position reference to the end of the collection."
@@ -385,7 +385,7 @@ stat
 	self Stat: struct grfStatFlag: STATFLAG_DEFAULT.
 	^struct!
 
-Stat: pstatstg grfStatFlag: grfStatFlag 
+Stat: pstatstg grfStatFlag: grfStatFlag
 	"Invoke the Stat() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Stat(
@@ -394,7 +394,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	"
 
 	<virtual stdcall: hresult 13 STATSTG* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 tab
 	"Store a tab character as the next element of the receiver.
@@ -419,7 +419,7 @@ unlockFrom: start to: end type: dwLockType
 		cb: end - start + 1
 		dwLockType: dwLockType!
 
-UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
+UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	"Invoke the UnlockRegion() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall UnlockRegion(
@@ -429,7 +429,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	"
 
 	<virtual stdcall: hresult 12 qword qword dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IStream categoriesFor: #at:!accessing!public! !
 !IStream categoriesFor: #at:put:!accessing!public! !
 !IStream categoriesFor: #atEnd!public!testing! !

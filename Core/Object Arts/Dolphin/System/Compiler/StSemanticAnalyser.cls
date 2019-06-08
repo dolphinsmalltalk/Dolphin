@@ -512,6 +512,10 @@ visitBlockNode: aBlockNode
 	self processBlock: aBlockNode.
 	self removeScope!
 
+visitExternalCallNode: anStExternalCallNode
+	self currentScope
+		declareLocalVariable: (StGeneratedTempVariable node: (StTempDeclNode named: '_failureCode'))!
+
 visitLiteralArrayNode: aLiteralArrayNode
 	"We don't want to visit the individual elements"
 
@@ -561,6 +565,10 @@ visitOptimizedNode: anOptimizedNode
 			currentScope := outerCurrentScope.
 			scopes := outerScopes]!
 
+visitPrimitiveNode: anStPrimitiveNode
+	self currentScope declareLocalVariable: (StGeneratedTempVariable
+				node: (anStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
+
 visitReturnNode: aReturnNode
 	currentScope markFarReturn.
 	^super visitReturnNode: aReturnNode!
@@ -593,7 +601,7 @@ visitSuperVariableNode: anStSuperVariableNode
 	self visitVariableNode: anStSuperVariableNode.
 	currentScope markNeedsSelf!
 
-visitTemporaryNode: anStTempDeclNode
+visitTempDeclNode: anStTempDeclNode
 	self checkRedefines: anStTempDeclNode.
 	self currentScope declareTemp: anStTempDeclNode!
 
@@ -603,7 +611,7 @@ visitTemporaryNodes: aNodeCollection
 	count := self countOuterTemps + self currentScope argumentCount.
 	aNodeCollection do: 
 			[:each |
-			self visitTemporaryNode: each.
+			self visitNode: each.
 			(count := count + 1) > VMConstants.MaxTemps
 				ifTrue: 
 					[self
@@ -674,16 +682,18 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #visitArgumentNodes:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
+!StSemanticAnalyser categoriesFor: #visitExternalCallNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
+!StSemanticAnalyser categoriesFor: #visitPrimitiveNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitReturnNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitSelfVariableNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
 !StSemanticAnalyser categoriesFor: #visitSuperVariableNode:!public!visiting! !
-!StSemanticAnalyser categoriesFor: #visitTemporaryNode:!public!visiting! !
+!StSemanticAnalyser categoriesFor: #visitTempDeclNode:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitTemporaryNodes:!public!visiting! !
 !StSemanticAnalyser categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 

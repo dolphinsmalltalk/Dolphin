@@ -56,7 +56,7 @@ byteAtOffset: anInteger
 		0 -	anInteger is not a SmallInteger."
 
 	<primitive: 132>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 byteAtOffset: anInteger put: anIntegerByteValue
 	"Replace the byte at offset anInteger from the base address stored as the 
@@ -73,7 +73,7 @@ byteAtOffset: anInteger put: anIntegerByteValue
 		3 -	anIntegerByteValue is not in the range 0..255."
 
 	<primitive: 133>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 copyFrom: startInteger to: stopInteger
 	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
@@ -115,41 +115,41 @@ displayOn: aStream
 		ifFalse: [super displayOn: aStream]!
 
 dwordAtOffset: anInteger
-	"Answer the unsigned 4 byte integer at offset (i.e. zero relative) 
-	anInteger in the memory pointed at by the receiver.
+	"Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger"
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger"
 
-	| answer |
 	<primitive: 134>
+	| answer |
 	answer := 0.
-	3 to: 0 by: -1 do: [:i |
-		answer := (answer bitShift: 8) + (self byteAtOffset: anInteger + i)].
+	3 to: 0
+		by: -1
+		do: [:i | answer := (answer bitShift: 8) + (self byteAtOffset: anInteger + i)].
 	^answer!
 
 dwordAtOffset: anInteger put: anObject
-	"Store an unsigned 4 byte value at byte offset anInteger 
-	within the receiver.
+	"Store an unsigned 4-byte value at byte offset anInteger within the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		2 -	anObject is not a SmallInteger or a 4-byte object
-	"
-	
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		BadValueType		- anObject is not a SmallInteger or a 4-byte object"
+
 	<primitive: 135>
-	^self retryDwordAtOffset: anInteger put: anObject!
+	^self
+		retryDwordAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
-intPtrAtOffset: anInteger 
-	"Answer the machine word sized signed integer value (i.e. may be 32 or 64-bit, depending on
-	host OS) at offset (i.e. zero relative) anInteger in the receiver. 
+intPtrAtOffset: anInteger
+	"Answer the machine word sized signed integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - sizeof(INT_PTR))."
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		BadValueType		- anObject it not an integer of byte object of suitable size for storing as a INT_PTR value."
 
-	| answer |
 	<primitive: 186>
+	| answer |
 	answer := 0.
 	VMConstants.IntPtrSize - 1 to: 0
 		by: -1
@@ -157,12 +157,12 @@ intPtrAtOffset: anInteger
 	answer byteSize > VMConstants.IntPtrSize ifTrue: [answer := answer bitInvert + 1].
 	^answer!
 
-intPtrAtOffset: anInteger put: anObject 
+intPtrAtOffset: anInteger put: anObject
 	"Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must 
 	be representable in a machine word. Uses the longPtrAtOffset:put: primitive."
 
-	| value |
 	<primitive: 187>
+	| value |
 	value := anObject asInteger.
 	value byteSize > VMConstants.IntPtrSize ifFalse: [^self errorCantHold: anObject].
 	1 to: VMConstants.IntPtrSize do: [:index | self at: anInteger + index put: (value digitAt: index)].
@@ -183,10 +183,12 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 		4	- 'from' or 'to' interval is out-of-bounds
 	"
 
-	| fromOffset |
 	<primitive: 143>
+	| fromOffset |
 	fromOffset := fromStart - start.
-	stop to: start by: -1 do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
+	stop to: start
+		by: -1
+		do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
 	^aByteObject!
 
 resize: anInteger
@@ -194,23 +196,23 @@ resize: anInteger
 	We ignore the request, since we don't know how to resize the object
 	pointed at (or even if it is resizable)."!
 
-sdwordAtOffset: anInteger 
-	"Answers the signed 4 byte integer at byte offset anInteger in the receiver.
+sdwordAtOffset: anInteger
+	"Answers the signed 4-byte integer at byte offset anInteger in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger"
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger."
 
-	| answer |
 	<primitive: 136>
+	| answer |
 	answer := self dwordAtOffset: anInteger.
 	^answer > 16r7FFFFFFF ifTrue: [(answer bitXor: 16rFFFFFFFF) bitInvert] ifFalse: [answer]!
 
-sdwordAtOffset: anInteger put: anObject 
+sdwordAtOffset: anInteger put: anObject
 	"Store anObject as a signed integer at anInteger offset in the receiver. anInteger must 
 	be representable in 32-bits. Uses the dwordAtOffset:put: primitive."
 
-	| value |
 	<primitive: 137>
+	| value |
 	value := anObject asInteger.
 	value isSDWORD ifFalse: [^self errorCantHold: anObject].
 	1 to: 4 do: [:index | self at: anInteger + index put: (value digitAt: index)].
@@ -223,55 +225,54 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler saveObject: self as: nil!
 
 swordAtOffset: anInteger
-	"Answer the signed 2 byte integer at offset (i.e. zero relative) 
-	anInteger in the memory pointed at by the receiver."
+	"Answer the signed 2-byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver."
 
-	| answer |
 	<primitive: 140>
+	| answer |
 	answer := self wordAtOffset: anInteger.
-	^answer >= 16r8000
-		ifTrue: [ (16r10000 - answer) negated ]
-		ifFalse: [ answer ]
-!
+	^answer >= 16r8000 ifTrue: [(16r10000 - answer) negated] ifFalse: [answer]!
 
 swordAtOffset: anInteger put: anObject
-	"Store a signed 2 byte value at byte offset anInteger within the receiver (which is the 
-	same as storing an unsigned value, except that the range of acceptable values is different).
-	If anObject is not representable as a 16-bit signed (Small)Integer, then raise a 'cannot hold' error.
+	"Store a signed 2-byte value at byte offset anInteger within the receiver (which is the same as storing an unsigned value, except that the range of acceptable values is different).
+	If anObject is not representable as a 16-bit signed (Small)Integer, then raise a 'cannot hold' error."
 
-	Primitive failure results:
-		0 -	anInteger is not a SmallInteger
-		2 -	anObject is not a SmallInteger
-		3 -	anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
+	"Primitive failure results:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		BadValueType		- anObject is not a SmallInteger
+		ValueOutOfRange 	- anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
 
 	<primitive: 141>
-	^self retrySWordAtOffset: anInteger put: anObject!
+	^self
+		retrySWordAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
-uintPtrAtOffset: anInteger 
-	"Answer the machine word sized integer value (i.e. may be 32 or 64-bit, depending on host
-	OS) at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver. 
+uintPtrAtOffset: anInteger
+	"Answer the machine word sized integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger"
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger"
 
-	| answer |
 	<primitive: 184>
+	| answer |
 	answer := 0.
 	VMConstants.IntPtrSize - 1 to: 0
 		by: -1
 		do: [:i | answer := (answer bitShift: 8) + (self byteAtOffset: anInteger + i)].
 	^answer!
 
-uintPtrAtOffset: anInteger put: anObject 
-	"Store an unsigned 4 byte value at byte offset anInteger 
-	within the receiver.
+uintPtrAtOffset: anInteger put: anObject
+	"Store an unsigned 4 byte value at byte offset anInteger within the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		2 -	anObject is not a SmallInteger or in the representable range."
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		BadValueType		- anObject it not an integer of byte object of suitable size for storing as a UINT_PTR value."
 
 	<primitive: 185>
-	^self retryUIntPtrAtOffset: anInteger put: anObject!
+	^self
+		retryUIntPtrAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 value
 	"Answer the value of the receiver (the address itself)"
@@ -285,20 +286,19 @@ value: anInteger
 	self basicUIntPtrAtOffset: 0 put: anInteger!
 
 wordAtOffset: anInteger
-	"Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the 
-	memory pointed at by the receiver.
-	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least 
-	significant first. A GP Fault interrupt will occur if an attempt is made to read inaccessible
-	memory via this method. This will not affect the stability of the system.
+	"Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver.
+	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first. 
+	A GP Fault interrupt will occur if an attempt is made to read inaccessible memory via this method. This will not affect the stability of the system."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger."
+	"Primitive failure reasons:
+		NonIntegerIndex 		- anInteger is not a SmallInteger"
 
-	| answer |
 	<primitive: 138>
+	| answer |
 	answer := 0.
-	1 to: 0 by: -1 do: [:i |
-		answer := (answer bitShift: 8) + (self byteAtOffset: anInteger + i)].
+	1 to: 0
+		by: -1
+		do: [:i | answer := (answer bitShift: 8) + (self byteAtOffset: anInteger + i)].
 	^answer!
 
 wordAtOffset: anInteger put: anObject
@@ -307,12 +307,15 @@ wordAtOffset: anInteger put: anObject
 	raise a 'cannot hold' error.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		2 -	anObject is not a SmallInteger.
-		3 -	anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		BadValueType		- anObject is not a SmallInteger
+		ValueOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
 
 	<primitive: 139>
-	^self retryWordAtOffset: anInteger put: anObject!
+	^self
+		retryWordAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 yourAddress
 	"Answer the address at which the receiver points, rather than the address of 

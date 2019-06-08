@@ -52,7 +52,7 @@ get_errorCode: errorCode
 			[out, retval]long* errorCode);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_filepos: filePosition
 	"Private - Get the value of the 'filepos' property of the receiver.
@@ -61,7 +61,7 @@ get_filepos: filePosition
 			[out, retval]long* filePosition);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_line: lineNumber
 	"Private - Get the value of the 'line' property of the receiver.
@@ -70,7 +70,7 @@ get_line: lineNumber
 			[out, retval]long* lineNumber);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_linepos: linePosition
 	"Private - Get the value of the 'linepos' property of the receiver.
@@ -79,7 +79,7 @@ get_linepos: linePosition
 			[out, retval]long* linePosition);"
 
 	<virtual stdcall: hresult 13 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_reason: reasonString
 	"Private - Get the value of the 'reason' property of the receiver.
@@ -88,7 +88,7 @@ get_reason: reasonString
 			[out, retval]BSTR* reasonString);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_srcText: sourceString
 	"Private - Get the value of the 'srcText' property of the receiver.
@@ -97,7 +97,7 @@ get_srcText: sourceString
 			[out, retval]BSTR* sourceString);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_url: urlString
 	"Private - Get the value of the 'url' property of the receiver.
@@ -106,7 +106,7 @@ get_url: urlString
 			[out, retval]BSTR* urlString);"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

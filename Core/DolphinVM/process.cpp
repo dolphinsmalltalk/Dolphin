@@ -233,7 +233,7 @@ Oop* __fastcall Interpreter::primitiveEnableInterrupts(Oop* const sp, unsigned a
 		return sp - 1;
 	}
 	else
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -304,10 +304,10 @@ Oop* Interpreter::primitiveQueueInterrupt(Oop* const sp, unsigned)
 			return sp - 2;
 		}
 		else
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	}
 	else
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1217,7 +1217,7 @@ Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp, unsigned)
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
+		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
 	}
 
 	// Causes interrupts to be re-enabled to prevent carry over
@@ -1259,17 +1259,17 @@ Oop* __fastcall Interpreter::primitiveWait(Oop* const sp, unsigned)
 	if (!ObjectMemoryIsIntegerObject(oopTimeout))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(oopTimeout);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Must be a SmallInteger
 	}
 
 	SMALLINTEGER timeout = ObjectMemoryIntegerValueOf(oopTimeout);
 	if (timeout != INFINITE && timeout != 0)
-		return primitiveFailureWithInt(PrimitiveFailureBadValue, timeout);
+		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 
 	OTE* oteRetValHolder = reinterpret_cast<OTE*>(*sp);
 	if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
 		oteRetValHolder->getWordSize() == ObjectHeaderSize)
-		return primitiveFailureWith(4, Oop(oteRetValHolder));	// Must be a suitable value holder
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Must be a suitable value holder
 
 	SemaphoreOTE* thisReceiver = reinterpret_cast<SemaphoreOTE*>(*(sp - 2));
 	Semaphore* sem = thisReceiver->m_location;
@@ -1412,7 +1412,7 @@ Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, unsigned argumentCou
 	CHECKREFERENCES
 #endif
 	if (argumentCount > 1)
-		return primitiveFailure(2);	// Too many arguments
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);	// Too many arguments
 
 	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(*(sp - argumentCount));
 	Process* proc = receiverProcess->m_location;
@@ -1421,13 +1421,13 @@ Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, unsigned argumentCou
 	// waiting on a Semaphore, should not be resumed, only suspended
 	// processes.
 	if (proc->IsWaiting())
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 
 	LinkedListOTE* oteList;
 	if (argumentCount == 0 || (oteList = reinterpret_cast<LinkedListOTE*>(*sp))->isNil())
 	{
 		if (!resume(receiverProcess))
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	}
 	else
 	{
@@ -1462,13 +1462,13 @@ Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumen
 		if (!ObjectMemoryIsIntegerObject(oopSteps))
 		{
 			OTE* oteArg = reinterpret_cast<OTE*>(oopSteps);
-			return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
+			return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
 		}
 		steps = ObjectMemoryIntegerValueOf(oopSteps);
 	}
 	break;
 	default:
-		return primitiveFailure(PrimitiveFailureWrongNumberOfArgs);	// Too many arguments
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);	// Too many arguments
 	}
 
 	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(*(sp - argumentCount));
@@ -1476,7 +1476,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumen
 
 	// Detect terminated, or pending termination, processes
 	if (proc->SuspendedFrame() == Oop(Pointers.Nil))
-		return primitiveFailure(11);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 
 	// We must kill the sampling timer to prevent it upsetting results
 	CancelSampleTimer();
@@ -1490,7 +1490,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumen
 	if (!oteList->isNil())
 	{
 		if (oteList->m_oteClass == Pointers.ClassSemaphore)
-			return primitiveFailure(11);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 
 		// The process is waiting on a list (i.e. its not just suspended)
 		// so we'll remove it from that list, and 
@@ -1519,7 +1519,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumen
 	return primitiveSuccess(0);
 }
 
-int Interpreter::SuspendProcess(ProcessOTE* processPointer)
+_PrimitiveFailureCode Interpreter::SuspendProcess(ProcessOTE* processPointer)
 {
 	ProcessOTE* active = activeProcessPointer();
 	if (processPointer == active)
@@ -1541,7 +1541,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 
 		TODO("Use SuspendActive here - need to rewrite slightly")
 			if (schedule() == processPointer)
-				return 1;		// Couldn't switch away (last runnable process?)
+				return _PrimitiveFailureCode::LastRunnable;
 
 		CheckProcessSwitch();
 #ifdef _DEBUG
@@ -1558,7 +1558,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 		if (process->IsWaiting())
 		{
 			if (process->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
-				return 2;	// Process is pending termination
+				return _PrimitiveFailureCode::PendingTermination;	// Process is pending termination
 
 			// N.B. In a runtime system we do not check the type of process.m_myList, 
 			// but just assume it is a kind of LinkedList, if it isn't (which could
@@ -1571,10 +1571,10 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 			(suspendingList->remove(processPointer))->countDown();
 		}
 		else
-			return 0;	// Cannot suspend a suspended process
+			return _PrimitiveFailureCode::InvalidOperation;	// Cannot suspend a suspended process
 	}
 
-	return -1;	// Succeeded
+	return _PrimitiveFailureCode::Success;
 }
 
 #pragma auto_inline(off)
@@ -1585,7 +1585,7 @@ Oop* __fastcall Interpreter::primitiveSuspend(Oop* const sp, unsigned)
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
-	int nRet = SuspendProcess(processPointer);
+	_PrimitiveFailureCode nRet = SuspendProcess(processPointer);
 	if (nRet >= 0)
 		return primitiveFailure(nRet);
 
@@ -1608,7 +1608,7 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp, unsigned)
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
-	int nRet = SuspendProcess(processPointer);
+	_PrimitiveFailureCode nRet = SuspendProcess(processPointer);
 	if (nRet >= 0)
 		return primitiveFailure(nRet);
 
@@ -1657,14 +1657,14 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp, unsigned)
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be a SmallInteger
+		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
 	}
 
 	SMALLUNSIGNED newPriority = ObjectMemoryIntegerValueOf(argPointer);
 	ProcessorScheduler* sched = scheduler();
 	ArrayOTE* listsArrayPointer = sched->m_processLists;
 	if (newPriority > listsArrayPointer->pointersSize())
-		return primitiveFailure(PrimitiveFailureBoundsError);	// Priority out of range
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Priority out of range
 
 	// Changing a processes priority implicitly enables interrupts
 	// This is because the interrupt disabled state should not be 
@@ -1725,7 +1725,7 @@ Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp, unsigned)
 	Oop oopIndex = *(sp-1);
 	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(oopIndex);
 	if (which <= 0 || which > NumPointers)
-		return primitiveFailure(1);	// out of bounds
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// out of bounds
 
 	// top of stack is value to be put
 	Oop oopValue = *sp;
@@ -1754,7 +1754,7 @@ Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp, unsigned)
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// Must be an SmallInteger
+		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be an SmallInteger
 	}
 
 	Oop oldInterval = ObjectMemoryIntegerObjectOf(m_nInputPollInterval);

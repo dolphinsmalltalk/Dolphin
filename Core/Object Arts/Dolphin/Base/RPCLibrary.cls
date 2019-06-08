@@ -17,7 +17,7 @@ rpcStringFree: lppstr
 		);"
 
 	<stdcall: sdword RpcStringFreeA char**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 uuidCompare: uuid1 uuid2: uuid2 status: status
 	"Answer an <integer> order between the  <GUID>, uuid1, is equal to the <GUID>, uuid2,
@@ -29,7 +29,7 @@ uuidCompare: uuid1 uuid2: uuid2 status: status
 		);"
 
 	<stdcall: sdword UuidCompare void* void* dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 uuidCreate: uuidBuf
 	"Create a new UUID.
@@ -37,9 +37,9 @@ uuidCreate: uuidBuf
 		RPC_STATUS RPC_ENTRY UuidCreate( 
 			UUID *  Uuid  
 		);"
- 
+
 	<stdcall: sdword UuidCreate void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 uuidFromString: uuid uuid: lppstr
 	"Converts a string to a UUID.
@@ -50,7 +50,7 @@ uuidFromString: uuid uuid: lppstr
 		);"
 
 	<stdcall: sdword UuidFromStringA char* void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 uuidHash: uuid status: status
 	"
@@ -60,7 +60,7 @@ uuidHash: uuid status: status
 		);"
 
 	<stdcall: word UuidHash void* dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 uuidToString: uuid stringUuid: lppstr
 	"Converts a UUID to a string.
@@ -70,7 +70,7 @@ uuidToString: uuid stringUuid: lppstr
 		);"
 
 	<stdcall: sdword UuidToStringA void* char**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
 !RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
 !RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !

@@ -31,7 +31,7 @@ IndirectAtPreamble MACRO							;; Set up EAX/EDX ready to access value
 
 	mov		eax, [eax].m_pointer					;; Load pointer out of object (immediately after header)
 
-	jnc		localPrimitiveFailure0						;; Arg not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureNonInteger			;; Arg not a SmallInteger, fail the primitive
 
 	ASSUME	eax:NOTHING
 	ASSUME	ecx:NOTHING
@@ -50,7 +50,7 @@ IndirectAtPutPreamble MACRO							;; Set up EAX/EDX ready to access value
 
 	mov		eax, [eax].m_pointer					;; Load pointer out of object (immediately after header)
 
-	jnc		localPrimitiveFailure0						;; Arg not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureNonInteger			;; Arg not a SmallInteger, fail the primitive
 
 	ASSUME	eax:NOTHING
 	ASSUME	ecx:NOTHING
@@ -104,15 +104,15 @@ BEGINPRIMITIVE primitiveWORDAt
 	ASSUME	ecx:PTR OTE
 	sar		edx, 1									; Convert byte offset from SmallInteger (at the same time testing bottom bit)
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
-	jnc		localPrimitiveFailure0						; Arg not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailureNonInteger			; Arg not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange			; Negative offset not valid
 				     	
    	; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF WORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		localPrimitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	movzx	ecx, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
 
@@ -121,8 +121,8 @@ BEGINPRIMITIVE primitiveWORDAt
 	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
 
 ENDPRIMITIVE primitiveWORDAt
 
@@ -136,15 +136,15 @@ BEGINPRIMITIVE primitiveSWORDAt
 	mov		edx, [_SP]								; Load the byte offset
 	sar		edx, 1									; Convert byte offset from SmallInteger (at the same time testing bottom bit)
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
-	jnc		localPrimitiveFailure0						; Arg not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailureNonInteger			; Arg not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange			; Negative offset not valid
 				     	
 	; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF WORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		localPrimitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	movsx	ecx, WORD PTR[eax+edx-SIZEOF WORD]		; No, load WORD from object[offset]
 
@@ -153,17 +153,21 @@ BEGINPRIMITIVE primitiveSWORDAt
 	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
 
 ENDPRIMITIVE primitiveSWORDAt
 
-primitiveFailure0:
-	PrimitiveFailureCode 0
-primitiveFailure1:
-	PrimitiveFailureCode 1
-primitiveFailure2:
-	PrimitiveFailureCode 2
+primitiveFailureNonInteger:
+	PrimitiveFailureCode PrimitiveFailureNonInteger
+primitiveFailureIndexOutOfRange:
+	PrimitiveFailureCode PrimitiveFailureIndexOutOfRange
+primitiveFailureBadValueType:
+	PrimitiveFailureCode PrimitiveFailureBadValueType
+primitiveFailureNotBytes:
+	PrimitiveFailureCode PrimitiveFailureNotBytes
+primitiveFailureValueOutOfRange:
+	PrimitiveFailureCode PrimitiveFailureValueOutOfRange
 
 ; static BOOL __fastcall Interpreter::primitiveDWORDAt()
 ;
@@ -180,15 +184,15 @@ BEGINPRIMITIVE primitiveDWORDAt
 	sar		edx, 1									; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 
-	jnc		localPrimitiveFailure0						; Not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailureNonInteger			; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange			; Negative offset not valid
 
 	;; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		localPrimitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	mov		eax, [eax+edx-SIZEOF DWORD]				; No, load DWORD from object[offset]
 
@@ -212,8 +216,8 @@ largePositiveRequired:						; eax contains left shifted value
 	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
 
 ENDPRIMITIVE primitiveDWORDAt
 
@@ -243,7 +247,7 @@ largePositiveRequired:
 	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveIndirectDWORDAt
 
@@ -264,15 +268,15 @@ BEGINPRIMITIVE primitiveSDWORDAt
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 	ASSUME	eax:PTR Object
 
-	jnc		localPrimitiveFailure0						; Not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1						; Negative offset not valid
+	jnc		localPrimitiveFailureNonInteger			; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange			; Negative offset not valid
 
 	;; Receiver is a normal byte object
 	mov		ecx, [ecx].m_size
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	and		ecx, 7fffffffh							; Ignore immutability bit
 	cmp		edx, ecx								; Off end of object?
-	jg		localPrimitiveFailure1						; Yes, offset too large
+	jg		localPrimitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	mov		eax, [eax+edx-SIZEOF DWORD]				; No, load SDWORD from object[offset]
 	ASSUME	eax:SDWORD
@@ -294,8 +298,8 @@ BEGINPRIMITIVE primitiveSDWORDAt
 	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
 
 ENDPRIMITIVE primitiveSDWORDAt
 
@@ -312,15 +316,15 @@ BEGINPRIMITIVE primitiveSDWORDAtPut
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 	ASSUME	eax:PTR Object
 
-	js		primitiveFailure1						; Negative offset invalid
-	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
+	js		primitiveFailureIndexOutOfRange			; Negative offset invalid
+	jnc		primitiveFailureNonInteger				; Offset, not a SmallInteger, fail the primitive
 
 	;; Receiver is a normal byte object
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size						; Off end of object? N.B. Don't mask out immutable bit
 	lea		eax, [eax+edx-SIZEOF DWORD]				; Calculate destination address
 	ASSUME	eax:PTR SDWORD							; EAX now points at slot to update
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		primitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	;; Deliberately drop through into the common backend
 ENDPRIMITIVE primitiveSDWORDAtPut
@@ -347,14 +351,14 @@ sdwordAtPut PROC
 	; Non-SmallInteger value
 	test	[edx].m_flags, MASK m_pointer
 	mov		ecx, [edx].m_size
-	jnz		primitiveFailure2						; Can't assign pointer object
+	jnz		primitiveFailureBadValueType			; Can't assign pointer object
 
 	and		ecx, 7fffffffh							; Mask out the immutability bit (can assign const object)
 	cmp		ecx, SIZEOF DWORD
 
 	mov		edx, [edx].m_location					; Get pointer to arg2 into ecx
 	ASSUME	edx:PTR LargeInteger
-	jne		primitiveFailure2
+	jne		primitiveFailureBadValueType
 
 	; So now we know it's a 4-byte object, let's see if its a negative large integer
 	mov		edx, [edx].m_digits[0]					; Load the 32-bit value
@@ -369,6 +373,26 @@ sdwordAtPut PROC
 sdwordAtPut ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+BEGINPRIMITIVE primitiveIndirectSDWORDAtPut
+	mov		ecx, [_SP-OOPSIZE*2]					; Access receiver
+	ASSUME	ecx:PTR OTE
+	mov		edx, [_SP-OOPSIZE]						; Load the byte offset
+	sar		edx, 1									; Convert byte offset from SmallInteger
+
+	mov		eax, [ecx].m_location					; EAX is pointer to receiver
+
+	jnc		primitiveFailureNonInteger				; Offset, not a SmallInteger, fail the primitive
+	;js		PrimitiveFailureIndexOutOfRange				; Negative offset ARE valid
+
+	; Receiver is an ExternalAddress
+	mov		eax, (ExternalAddress PTR[eax]).m_pointer; Load pointer out of object (immediately after header)
+	add		eax, edx								; Calculate destination address
+
+	jmp		sdwordAtPut								; Pass control to the common backend
+ENDPRIMITIVE primitiveIndirectSDWORDAtPut
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; An exact copy of the above, but omits LargePositiveInteger range check
 
 BEGINPRIMITIVE primitiveDWORDAtPut
@@ -379,14 +403,14 @@ BEGINPRIMITIVE primitiveDWORDAtPut
 
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 
-	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
-	js		primitiveFailure1						; Negative offset invalid
+	jnc		primitiveFailureNonInteger				; Offset, not a SmallInteger, fail the primitive
+	js		primitiveFailureIndexOutOfRange			; Negative offset invalid
 
 	;; Receiver is a normal byte object
 	add		edx, SIZEOF DWORD						; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size						; Off end of object? N.B. Don't mask out immutable bit
 	lea		eax, [eax+edx-SIZEOF DWORD]				; Calculate destination address
-	jg		primitiveFailure1						; Yes, offset too large
+	jg		primitiveFailureIndexOutOfRange			; Yes, offset too large
 
 	; DELIBERATELY DROP THROUGH into dwordAtPut
 ENDPRIMITIVE primitiveDWORDAtPut
@@ -415,10 +439,12 @@ dwordAtPut PROC
 	ret
 
 @@:	
+	; Validate the value argument is suitable - if not we return PrimitiveFailureBadValueType for all error cases
+
 	ASSUME	edx:PTR OTE
 	; Non-SmallInteger value
 	test	[edx].m_flags, MASK m_pointer
-	jnz		primitiveFailure2						; Can't assign pointer object
+	jnz		primitiveFailureBadValueType			; Can't assign pointer object
 
 	mov		ecx, [edx].m_size
 	and		ecx, 7fffffffh							; Mask out the immutable bit on the assigned value
@@ -429,12 +455,13 @@ dwordAtPut PROC
 	je		@F										; 4 bytes, can store down
 
 	cmp		ecx, SIZEOF QWORD
-	jne		primitiveFailure2
+	jne		primitiveFailureBadValueType
 
 	; It's an 8 byte object, may be able to store if top byte zero (e.g. positive LargeIntegers >= 16r80000000)
 	ASSUME	edx:PTR QWORDBytes
 	cmp		[edx].m_highPart, 0
-	jne		primitiveFailure2						; Top dword not zero, so disallow it
+	jne		primitiveFailureBadValueType			; Top dword not zero, so disallow it
+
 @@:
 	ASSUME	edx:PTR DWORDBytes
 
@@ -451,26 +478,6 @@ dwordAtPut PROC
 dwordAtPut ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-BEGINPRIMITIVE primitiveIndirectSDWORDAtPut
-	mov		ecx, [_SP-OOPSIZE*2]					; Access receiver
-	ASSUME	ecx:PTR OTE
-	mov		edx, [_SP-OOPSIZE]						; Load the byte offset
-	sar		edx, 1									; Convert byte offset from SmallInteger
-
-	mov		eax, [ecx].m_location					; EAX is pointer to receiver
-
-	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
-	;js		primitiveFailure1						; Negative offset ARE valid
-
-	; Receiver is an ExternalAddress
-	mov		eax, (ExternalAddress PTR[eax]).m_pointer; Load pointer out of object (immediately after header)
-	add		eax, edx								; Calculate destination address
-
-	jmp		sdwordAtPut								; Pass control to the common backend
-ENDPRIMITIVE primitiveIndirectSDWORDAtPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; As above, but receiver is indirection object
 
 BEGINPRIMITIVE primitiveIndirectDWORDAtPut
@@ -481,7 +488,7 @@ BEGINPRIMITIVE primitiveIndirectDWORDAtPut
 
 	mov		eax, [ecx].m_location					; EAX is pointer to receiver
 
-	jnc		primitiveFailure0						; Offset, not a SmallInteger, fail the primitive
+	jnc		primitiveFailureNonInteger				; Offset, not a SmallInteger, fail the primitive
 
 	; Receiver is an ExternalAddress
 	mov		eax, (ExternalAddress PTR[eax]).m_pointer; Load pointer out of object (immediately after header)
@@ -515,7 +522,7 @@ overflow:
 	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveIndirectSDWORDAt
 
@@ -532,7 +539,7 @@ BEGINPRIMITIVE primitiveIndirectSWORDAt
 	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveIndirectSWORDAt
 
@@ -548,7 +555,7 @@ BEGINPRIMITIVE primitiveIndirectWORDAt
 	mov		[_SP-OOPSIZE], ecx						; Overwrite receiver
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveIndirectWORDAt
 
@@ -570,7 +577,7 @@ BEGINPRIMITIVE primitiveByteAtAddress
 	mov		[_SP-OOPSIZE], ecx				; Store new SmallInteger at stack top
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureNonInteger
 
 ENDPRIMITIVE primitiveByteAtAddress
 
@@ -594,7 +601,7 @@ BEGINPRIMITIVE primitiveByteAtAddressPut
 	mov		ecx, [ecx].m_location			; Load address of object into EAX
 	ASSUME	ecx:PTR ExternalAddress
 
-	jnc		localPrimitiveFailure0      	; Offset not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureNonInteger	; Offset not a SmallInteger, fail the primitive
 
 	mov		ecx, [ecx].m_pointer			; Load the base address from the object
 	ASSUME	ecx:PTR BYTE
@@ -605,10 +612,10 @@ BEGINPRIMITIVE primitiveByteAtAddressPut
 	mov		edx, eax						; Load value into EDX
 
 	sar		edx, 1							; Convert byte value from SmallInteger
-	jnc		localPrimitiveFailure2      	; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureBadValueType  	; Not a SmallInteger, fail the primitive
 	
 	cmp		edx, 0FFh						; Is it in range?
-	ja		localPrimitiveFailure3      	; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailureValueOutOfRange	; No, too big (N.B. unsigned comparison)
 
 	mov		[ecx], dl						; Store byte at the specified offset
 
@@ -617,9 +624,10 @@ BEGINPRIMITIVE primitiveByteAtAddressPut
 	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 2
-LocalPrimitiveFailure 3
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
+LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveByteAtAddressPut
 
@@ -632,18 +640,18 @@ BEGINPRIMITIVE primitiveWORDAtPut
 	mov		edx, [_SP-OOPSIZE]				; Load the byte offset
 	sar		edx, 1							; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location			; Load address of object
-	jnc		localPrimitiveFailure0       	; Not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1			; Negative offsets not valid
+	jnc		localPrimitiveFailureNonInteger	; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange	; Negative offsets not valid
 
 	add		edx, SIZEOF WORD				; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size				; Off end of object? N.B. Ignore the immutable bit so fails if receiver constant
-	jg		localPrimitiveFailure1			; Yes, offset too large, fail it
+	jg		localPrimitiveFailureIndexOutOfRange	; Yes, offset too large, fail it
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureBadValueType   ; Not a SmallInteger, fail the primitive
 	cmp		ecx, 0FFFFh						; Is it in range?
-	ja		localPrimitiveFailure3       	; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailureValueOutOfRange	; No, too big (N.B. unsigned comparison)
 
 	mov		WORD PTR[eax+edx-SIZEOF WORD], cx	; No, Store down the 16-bit value
 
@@ -653,10 +661,10 @@ BEGINPRIMITIVE primitiveWORDAtPut
 	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-LocalPrimitiveFailure 3
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
+LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveWORDAtPut
 
@@ -668,9 +676,9 @@ BEGINPRIMITIVE primitiveIndirectWORDAtPut
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureBadValueType ; Not a SmallInteger, fail the primitive
 	cmp		ecx, 0FFFFh						; Is it in range?
-	ja		localPrimitiveFailure3       	; No, too big (N.B. unsigned comparison)
+	ja		localPrimitiveFailureValueOutOfRange ; No, too big (N.B. unsigned comparison)
 
 	mov		WORD PTR[eax+edx], cx			; Store down the 16-bit value
 
@@ -679,9 +687,9 @@ BEGINPRIMITIVE primitiveIndirectWORDAtPut
 	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 2
-LocalPrimitiveFailure 3
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveIndirectWORDAtPut
 
@@ -695,20 +703,20 @@ BEGINPRIMITIVE primitiveSWORDAtPut
 	mov		edx, [_SP-OOPSIZE]				; Load the byte offset
 	sar		edx, 1							; Convert byte offset from SmallInteger
 	mov		eax, [ecx].m_location			; Load address of object
-	jnc		localPrimitiveFailure0       	; Not a SmallInteger, fail the primitive
-	js		localPrimitiveFailure1			; Negative offsets not valid
+	jnc		localPrimitiveFailureNonInteger       	; Not a SmallInteger, fail the primitive
+	js		localPrimitiveFailureIndexOutOfRange	; Negative offsets not valid
 
 	add		edx, SIZEOF WORD				; Adjust offset to be last byte ref'd
 	cmp		edx, [ecx].m_size				; Off end of object? N.B. Ignore the immutable bit so fails if receiver constant
-	jg		localPrimitiveFailure1			; Yes, offset too large, fail it
+	jg		localPrimitiveFailureIndexOutOfRange	; Yes, offset too large, fail it
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureBadValueType      	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 08000h						; Is it in range?
-	jge		localPrimitiveFailure3       	; No, too large positive
+	jge		localPrimitiveFailureValueOutOfRange   	; No, too large positive
 	cmp		ecx, -08000h
-	jl		localPrimitiveFailure3			; No, too large negative
+	jl		localPrimitiveFailureValueOutOfRange	; No, too large negative
 
 	mov		WORD PTR[eax+edx-SIZEOF WORD], cx	; No, Store down the 16-bit value
 
@@ -717,10 +725,11 @@ BEGINPRIMITIVE primitiveSWORDAtPut
 	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-LocalPrimitiveFailure 3
+	
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureIndexOutOfRange
+LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveSWORDAtPut
 
@@ -735,11 +744,11 @@ BEGINPRIMITIVE primitiveIndirectSWORDAtPut
 
 	mov		ecx, [_SP]						; Load the value argument
 	sar		ecx, 1							; Convert byte value from SmallInteger
-	jnc		localPrimitiveFailure2       	; Not a SmallInteger, fail the primitive
+	jnc		localPrimitiveFailureBadValueType  	; Not a SmallInteger, fail the primitive
 	cmp		ecx, 08000h						; Is it in range?
-	jge		localPrimitiveFailure3       	; No, too large positive
+	jge		localPrimitiveFailureValueOutOfRange  	; No, too large positive
 	cmp		ecx, -08000h
-	jl		localPrimitiveFailure3			; No, too large negative
+	jl		localPrimitiveFailureValueOutOfRange	; No, too large negative
 
 	mov		WORD PTR[eax+edx], cx			; Store down the 16-bit value
 
@@ -748,9 +757,9 @@ BEGINPRIMITIVE primitiveIndirectSWORDAtPut
 	mov		[_SP-OOPSIZE*2], ecx			; SmallInteger answer (same as value arg)
 	ret
 
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 2
-LocalPrimitiveFailure 3
+LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
 
 ENDPRIMITIVE primitiveIndirectSWORDAtPut
 

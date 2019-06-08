@@ -107,29 +107,29 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);	// startAt is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(1);	// stop is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp - 2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(2);	// start is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
 	OTE* argPointer = reinterpret_cast<OTE*>(*(sp - 3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isBytes())
-		return primitiveFailure(3);	// Argument MUST be a byte object
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Argument MUST be a byte object
 
 	// Empty move if stop before start, is considered valid regardless (strange but true)
 	// this is the convention adopted by most implementations.
 	if (stop >= start)
 	{
 		if (startAt < 1 || start < 1)
-			return primitiveFailure(4);		// Out-of-bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out-of-bounds
 
 		// We still permit the argument to be an address to cut down on the number of primitives
 		// and double dispatch methods we must implement (2 rather than 4)
@@ -153,7 +153,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, unsigned)
 			// reasons (since stopAt >= startAt) we don't need to test 
 			// that startAt <= length
 			if (stop > length)
-				return primitiveFailure(4);		// Bounds error (or object is immutable so size < 0)
+				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Bounds error (or object is immutable so size < 0)
 
 			VariantByteObject* argBytes = reinterpret_cast<BytesOTE*>(argPointer)->m_location;
 			pTo = argBytes->m_fields;
@@ -169,7 +169,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, unsigned)
 			// furthermore if stop <= length then => start <= length
 			int stopAt = startAt+stop-start;
 			if (stopAt > length)
-				return primitiveFailure(4);
+				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 		}
 
 		// Only works for byte objects
@@ -196,28 +196,28 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, unsign
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);	// startAt is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(1);	// stop is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(2);	// start is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
 	OTE* argPointer = reinterpret_cast<OTE*>(*(sp-3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isBytes())
-		return primitiveFailure(3);	// Argument MUST be a byte object
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Argument MUST be a byte object
 
 	// Empty move if stop before start, is considered valid regardless (strange but true)
 	if (stop >= start)
 	{
 		if (start < 1 || startAt < 1)
-			return primitiveFailure(4);		// out-of-bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// out-of-bounds
 
 		AddressOTE* receiverPointer = reinterpret_cast<AddressOTE*>(*(sp-4));
 		// Only works for byte objects
@@ -253,7 +253,7 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, unsign
 			// reasons (since stopAt >= startAt) we don't need to test 
 			// that startAt <= length
 			if (stop > length)
-				return primitiveFailure(4);		// Bounds error
+				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Bounds error
 
 			VariantByteObject* argBytes = reinterpret_cast<BytesOTE*>(argPointer)->m_location;
 			pTo = argBytes->m_fields;
@@ -322,7 +322,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, uns
 				else
 				{
 					// To/from out of bounds
-					return primitiveFailure(2);
+					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 				}
 			}
 
@@ -331,12 +331,12 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, uns
 		}
 		else
 		{
-			return primitiveFailure(1);				// from not an integer
+			return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);				// from not an integer
 		}
 	}
 	else
 	{
-		return primitiveFailure(0);				// to not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);				// to not an integer
 	}
 }
 
@@ -457,15 +457,15 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 
 		default:
 			// Unrecognised encoding
-			return primitiveFailure(2);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 		}
 
 		// Index out of range
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 
 	// Index argument not a SmallInteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
@@ -539,11 +539,13 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 								// Unrecognised character encoding
 								break;
 							}
-							return primitiveFailure(2);
+							return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 						}
 					}
-					// Out of bounds or immutable
-					return primitiveFailure(1);
+					{
+						// Out of bounds or immutable
+						return primitiveFailure(receiverSize < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+					}
 
 				case StringEncoding::Utf8:
 					if (index < receiverSize / static_cast<int>(sizeof(Utf8String::CU)))
@@ -557,10 +559,13 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 							return newSp;
 						}
 						// else the non-ascii/non-UTF8 char will require multiple bytes and can't be at:put:
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 					}
-					// Out of bounds or immutable
-					return primitiveFailure(1);
+					else
+					{
+						// Out of bounds or immutable
+						return primitiveFailure(receiverSize < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+					}
 
 				case StringEncoding::Utf16:
 					if (index < receiverSize / static_cast<int>(sizeof(Utf16String::CU)))
@@ -609,10 +614,13 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 								break;
 							}
 							// Can't store the char in a UTF-16 encoded string
-							return primitiveFailure(2);
+							return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 						}
 					}
-					return primitiveFailure(1);
+					else
+					{
+						return primitiveFailure(receiverSize < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+					}
 
 				case StringEncoding::Utf32:
 					if (index < receiverSize / static_cast<int>(sizeof(Utf32String::CU)))
@@ -651,10 +659,13 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 								break;
 							}
 							// Can't store the char in a UTF-32 encoded string
-							return primitiveFailure(2);
+							return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 						}
 					}
-					return primitiveFailure(1);
+					else
+					{
+						return primitiveFailure(receiverSize < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+					}
 
 				default:
 					// Unrecognised receiver string encoding
@@ -663,15 +674,15 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 			}
 
 			// Value is not a valid code point for the destination string
-			return primitiveFailure(2);
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 
 		// Index out of range or immutable string
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 
 	// Index argument not a SmallInteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 void Interpreter::PushCharacter(Oop* const sp, MWORD codePoint)
@@ -720,11 +731,11 @@ Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, unsigned)
 		}
 
 		// Not a valid code point
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 	}
 
 	// Not a SmallInteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnyStringCompare(const OTE* oteReceiver, const OTE* oteArg)
@@ -830,7 +841,7 @@ template <class OpA, class OpW> static Oop* primitiveStringComparisonOp(Oop* con
 			else
 			{
 				// Arg not a null terminated byte object
-				return Interpreter::primitiveFailure(1);
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		else
@@ -843,7 +854,7 @@ template <class OpA, class OpW> static Oop* primitiveStringComparisonOp(Oop* con
 	else
 	{
 		// Arg is a SmallInteger
-		return Interpreter::primitiveFailure(0);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 }
 
@@ -952,7 +963,7 @@ Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, unsigned)
 			else
 			{
 				// Arg not a null terminated byte object
-				return Interpreter::primitiveFailure(1);
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		else
@@ -965,7 +976,7 @@ Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, unsigned)
 	else
 	{
 		// Arg is a SmallInteger
-		return Interpreter::primitiveFailure(0);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 }
 
@@ -997,7 +1008,7 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, unsigned)
 			else
 			{
 				// Arg not same type
-				return Interpreter::primitiveFailure(1);
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		else
@@ -1010,7 +1021,7 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, unsigned)
 	else
 	{
 		// Arg is a SmallInteger
-		return Interpreter::primitiveFailure(0);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 }
 
@@ -1066,7 +1077,7 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, unsigned)
 		}
 		case StringEncoding::Utf32:
 		default:
-			return primitiveFailure(0);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 		}
 	}
 	else
@@ -1111,27 +1122,7 @@ Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, unsigne
 		// TODO: Implement conversion for UTF-32
 	default:
 		// Unrecognised encoding - fail the primitive.
-		return nullptr;
-	}
-}
-
-Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
-{
-	ASSERT(oteString->isNullTerminated());
-
-	switch (ST::String::GetEncoding(oteString))
-	{
-	case StringEncoding::Utf8:
-		return Utf16String::New<CP_UTF8>(reinterpret_cast<const Utf8StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
-	case StringEncoding::Utf16:
-		ASSERT(FALSE);
-		return reinterpret_cast<Utf16StringOTE*>(oteString);
-	case StringEncoding::Utf32:
-		// TODO: Implement conversion for UTF-32
-		return nullptr;
-	case StringEncoding::Ansi:
-	default:
-		return Utf16String::New<CP_ACP>(reinterpret_cast<const AnsiStringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
+		return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 	}
 }
 
@@ -1171,7 +1162,7 @@ Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp, unsigned)
 		// TODO: Implement conversion for UTF-32
 	default:
 		// Unrecognised encoding - fail the primitive
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 	}
 }
 
@@ -1209,7 +1200,7 @@ Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp, unsigned
 		// TODO: Implement conversion for UTF-32
 	default:
 		// Unrecognised encoding - fail the primitive
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 	}
 }
 
@@ -1425,9 +1416,10 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
 			}
 			break;
+
 			default:
 				// Unrecognised encoding pair - fail the primitive
-				return primitiveFailure(2);
+				return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 			}
 
 			return sp - 1;
@@ -1435,13 +1427,13 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 		else
 		{
 			// Arg not a null terminated byte object
-			return Interpreter::primitiveFailure(1);
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 	}
 	else
 	{
 		// Arg is a SmallInteger
-		return Interpreter::primitiveFailure(0);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 }
 
@@ -1454,13 +1446,13 @@ Oop* __fastcall Interpreter::primitiveStringAsUtf32String(Oop* const sp, unsigne
 	case StringEncoding::Utf8:
 	case StringEncoding::Utf16:
 		// TODO: Implement conversions to UTF-32 strings
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 
 	case StringEncoding::Utf32:
 		return sp;
 	default:
 		// Unrecognised encoding - fail the primitive.
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
 	}
 }
 

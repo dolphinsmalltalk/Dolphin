@@ -42,7 +42,7 @@ get_namespaces: namespaces
 			[out, retval]ISchemaStringCollection** namespaces);"
 
 	<virtual stdcall: hresult 17 ISchemaStringCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_processContents: processContents
 	"Private - Get the value of the 'processContents' property of the receiver.
@@ -51,7 +51,7 @@ get_processContents: processContents
 			[out, retval]SCHEMAPROCESSCONTENTS* processContents);"
 
 	<virtual stdcall: hresult 18 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 namespaces
 	"Answer the <ISchemaStringCollection> value of the 'namespaces' property of the receiver."

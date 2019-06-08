@@ -185,7 +185,7 @@ crtFault: aByteArray
 	pick up the code"
 	^CRTError signal!
 
-enableAsyncEvents: aBoolean 
+enableAsyncEvents: aBoolean
 	"Private - Enable/disable asynchronous interrupts and semaphore signals. This does not
 	prevent process switches due to synchronous process synchronisation, but it does prevent a
 	process from being pre-empted due to asynchronous events. N.B. Do not rely on disabling
@@ -193,7 +193,7 @@ enableAsyncEvents: aBoolean
 	available in a future pre-emptive multi-threaded VM."
 
 	<primitive: 95>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 enableInterrupts
 	"Private - Enable asynchronous interrupts and semaphore signals, and yield the processor in
@@ -314,7 +314,7 @@ interruptWith: aBlock
 	aBlock value.
 	self enableInterrupts!
 
-iret: frameOffset list: suspendingList 
+iret: frameOffset list: suspendingList
 	"Private - Return to the active process'  frame, at the specified 
 	offset from the process base, on completion of an interrupt, restoring 
 	the <List>|<Semaphore>, suspendingList, which is nil if the process 
@@ -330,7 +330,7 @@ iret: frameOffset list: suspendingList
 	terminate unexpectedly if the specified frameOffset is invalid."
 
 	<primitive: 68>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 isActiveMain
 	"Answer whether or not the active process is the main GUI process."
@@ -441,7 +441,7 @@ primUnwindInterrupt
 	The primitive does not fail."
 
 	<primitive: 150>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 processesAt: anInteger 
 	"Answer the number of processes at the specified priority level."

@@ -56,7 +56,7 @@ CreateProcessor: ppProcessor
 			[out, retval]IXSLProcessor** ppProcessor);"
 
 	<virtual stdcall: hresult 10 IXSLProcessor**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_stylesheet: stylesheet
 	"Private - Get the value of the 'stylesheet' property of the receiver.
@@ -65,7 +65,7 @@ get_stylesheet: stylesheet
 			[out, retval]IXMLDOMNode** stylesheet);"
 
 	<virtual stdcall: hresult 9 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -85,7 +85,7 @@ putref_stylesheet: stylesheet
 			[in]IXMLDOMNode* stylesheet);"
 
 	<virtual stdcall: hresult 8 IXMLDOMNode*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setStylesheet: stylesheet
 	"Set the 'stylesheet' property of the receiver to the <IXMLDOMNode*> value of the argument.

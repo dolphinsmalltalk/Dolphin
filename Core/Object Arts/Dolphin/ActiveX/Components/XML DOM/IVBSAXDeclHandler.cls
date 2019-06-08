@@ -82,7 +82,7 @@ AttributeDecl: strElementName strAttributeName: strAttributeName strType: strTyp
 			[in, out]BSTR* strValue);"
 
 	<virtual stdcall: hresult 9 bstr* bstr* bstr* bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 elementDecl: strName strModel: strModel
 	"Invoke the elementDecl() method of the COM object.
@@ -108,7 +108,7 @@ ElementDecl: strName strModel: strModel
 			[in, out]BSTR* strModel);"
 
 	<virtual stdcall: hresult 8 bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 externalEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Invoke the externalEntityDecl() method of the COM object.
@@ -137,7 +137,7 @@ ExternalEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 			[in, out]BSTR* strSystemId);"
 
 	<virtual stdcall: hresult 11 bstr* bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 internalEntityDecl: strName strValue: strValue
 	"Invoke the internalEntityDecl() method of the COM object.
@@ -163,7 +163,7 @@ InternalEntityDecl: strName strValue: strValue
 			[in, out]BSTR* strValue);"
 
 	<virtual stdcall: hresult 10 bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

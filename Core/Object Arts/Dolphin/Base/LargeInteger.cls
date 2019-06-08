@@ -103,7 +103,7 @@ addToInteger: anInteger
 	"
 
 	<primitive: 21>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 asFloat
 	"Answer the floating point representation of the receiver. Some precision may be lost. The
@@ -112,11 +112,11 @@ asFloat
 	Primitive Failure Reasons: 
 		1 - The receiver has more than 64-bits "
 
-	| result nTruncatedBits |
 	<primitive: 167>
+	| result nTruncatedBits |
 	result := self abs.
 	nTruncatedBits := result highBit - Float precision.
-	nTruncatedBits > 0 
+	nTruncatedBits > 0
 		ifTrue: 
 			[| exponent mask trailingBits carry |
 			mask := (1 bitShift: nTruncatedBits) - 1.
@@ -124,9 +124,9 @@ asFloat
 			carry := trailingBits bitShift: 1 - nTruncatedBits.
 			result := result bitShift: nTruncatedBits negated.
 			exponent := nTruncatedBits.
-			(carry isZero or: [(trailingBits bitAnd: (mask bitShift: -1)) isZero and: [result even]]) 
+			(carry isZero or: [(trailingBits bitAnd: (mask bitShift: -1)) isZero and: [result even]])
 				ifFalse: [result := result + 1].
-			^self positive 
+			^self positive
 				ifTrue: [result asFloat timesTwoPower: exponent]
 				ifFalse: [result asFloat negated timesTwoPower: exponent]].
 
@@ -152,13 +152,13 @@ bitAnd: mask
 	"
 
 	<primitive: 34>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 bitInvert
 	"Answer an integer whose bits are the complement of the receiver."
 
 	<primitive: 38>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 bitOr: anInteger
 	"Answer an integer whose bits are the logical OR of the
@@ -169,7 +169,7 @@ bitOr: anInteger
 	"
 
 	<primitive: 35>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 bitShift: delta
 	"Answer an integer which is the receiver bits shifted by the
@@ -197,7 +197,7 @@ bitXor: anInteger
 	"
 
 	<primitive: 36>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 byteAt: index 
 	"Private - Answer the byte (radix 256 digit) at index in the receiver.
@@ -246,35 +246,29 @@ digitLength
 	^size!
 
 dwordAtOffset: anInteger
-	"Private - Answer the unsigned 4 byte integer at offset (i.e. zero relative) 
-	anInteger in the receiver.
+	"Private - Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - 4)."
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
 
 	<primitive: 120>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
-dwordAtOffset: anInteger put: anObject 
+dwordAtOffset: anInteger put: anObject
 	"Private - Store an unsigned 4 byte value at byte offset anInteger within the receiver. Note
 	that this will fail unless the LargeInteger has first been marked as mutable."
 
 	<primitive: 121>
-	^anObject isInteger 
+	_failureCode == _PrimitiveFailureCode.BadValueType
+		ifTrue: [^self dwordAtOffset: anInteger put: anObject asInteger].
+	_failureCode == _PrimitiveFailureCode.IndexOutOfRange
 		ifTrue: 
-			[| code |
-			code := Processor activeProcess primitiveFailureCode.
-			code < 2 
-				ifTrue: 
-					["Erroneous offset parameter"
-					code == 0 
-						ifTrue: [Error nonIntegerIndex: anInteger]
-						ifFalse: 
-							[self isImmutable 
-								ifTrue: [Processor constWriteSignal signalWith: self]
-								ifFalse: [self errorSubscriptBounds: anInteger]]]]
-		ifFalse: [self dwordAtOffset: anInteger put: anObject asInteger]!
+			[^self isImmutable
+				ifTrue: [Processor constWriteSignal signalWith: self]
+				ifFalse: [self errorSubscriptBounds: anInteger]].
+	_failureCode == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: anInteger].
+	^self primitiveFailed: _failureCode!
 
 gcd: anInteger
 	"Answer the greatest common divisor of the receiver and the <integer>, anInteger, computed using Lehmer's adapatation of the Euclid's method. See Knuth vol. II"
@@ -332,21 +326,22 @@ greaterThanInteger: anInteger
 hash
 	"Answer the <integer> hash value of the receiver."
 
-	| hash |
 	<primitive: 106>
+	| hash |
 	hash := 2166136261.
 	"FNV1a"
-	1 to: self basicSize do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
+	1 to: self basicSize
+		do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
 	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
-intPtrAtOffset: anInteger put: anObject 
+intPtrAtOffset: anInteger put: anObject
 	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must 
 	be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize
 	a new LargeInteger with a SmallInteger value."
 
-	| value |
 	<primitive: 183>
+	| value |
 	value := anObject asInteger.
 	value byteSize > VMConstants.IntPtrSize ifFalse: [^self errorCantHold: anObject].
 	1 to: VMConstants.IntPtrSize
@@ -373,7 +368,7 @@ multiplyByInteger: anInteger
 	The primitive should not fail for an Integer argument, so we treat that as an error."
 
 	<primitive: 29>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 negated
 	"Answer the negative value of the receiver.
@@ -388,7 +383,7 @@ normalize
 	leading sign digits), or a SmallInteger."
 
 	<primitive: 28>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 printOn: aWriteStream base: anInteger
 	"Print the receiver in <integer> base anInteger to the <puttableStream>, aWriteStream.
@@ -465,7 +460,7 @@ quotientFromInteger: anInteger
 reciprocal
 	^Fraction numerator: 1 denominator: self!
 
-replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart 
+replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
 
@@ -478,17 +473,17 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"
 
 	<primitive: 142>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
-sdwordAtOffset: anInteger 
-	"Private - Answers the signed 4 byte integer at byte offset anInteger in the receiver.
+sdwordAtOffset: anInteger
+	"Private - Answers the signed 4 byte integer at byte offset anInteger in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds."
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SDWORD)+1))."
 
 	<primitive: 122>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 signBit
 	"Private - Answer the receiver's sign bit. This will be 0 for positive integers

@@ -3781,7 +3781,7 @@ newBatchAccessor
 
 queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
 	<stdcall: bool QueryThreadCycleTime handle qword*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #queryThreadCycleTime:cycleTime:!public!win32 functions-performance monitoring! !
 
 !LayoutManager methodsFor!
@@ -6074,8 +6074,13 @@ displayOn: aStream
 displayOn: aStream
 	aStream
 		nextPutAll: '<Primitive: ';
-		display: self primitiveIndex;
-		nextPut: $>! !
+		display: self primitiveIndex.
+	errorTemp
+		ifNotNil: 
+			[aStream
+				nextPutAll: ' error: ';
+				display: errorTemp name].
+	aStream nextPut: $>! !
 !StPrimitiveNode categoriesFor: #displayOn:!printing!public! !
 
 !StProgramNode methodsFor!

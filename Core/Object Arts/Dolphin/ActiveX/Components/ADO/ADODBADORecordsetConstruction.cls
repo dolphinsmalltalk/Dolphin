@@ -35,8 +35,7 @@ get_Chapter: plChapter
 			[out, retval] long* plChapter);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_RowPosition: ppRowPos
 	"Private - Get the value of the 'RowPosition' property of the receiver.
@@ -44,8 +43,7 @@ get_RowPosition: ppRowPos
 			[out, retval] IUnknown** ppRowPos);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Rowset: ppRowset
 	"Private - Get the value of the 'Rowset' property of the receiver.
@@ -53,8 +51,7 @@ get_Rowset: ppRowset
 			[out, retval] IUnknown** ppRowset);"
 
 	<virtual stdcall: hresult 8 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Chapter: plChapter
 	"Private - Set the value of the 'Chapter' property of the object wrapped by the 
@@ -63,8 +60,7 @@ put_Chapter: plChapter
 			[in] long plChapter);"
 
 	<virtual stdcall: hresult 11 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_RowPosition: ppRowPos
 	"Private - Set the value of the 'RowPosition' property of the object wrapped by the 
@@ -73,8 +69,7 @@ put_RowPosition: ppRowPos
 			[in] IUnknown* ppRowPos);"
 
 	<virtual stdcall: hresult 13 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Rowset: ppRowset
 	"Private - Set the value of the 'Rowset' property of the object wrapped by the 
@@ -83,8 +78,7 @@ put_Rowset: ppRowset
 			[in] IUnknown* ppRowset);"
 
 	<virtual stdcall: hresult 9 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 rowPosition
 	"Answer the <IUnknown> value of the 'RowPosition' property of the receiver."

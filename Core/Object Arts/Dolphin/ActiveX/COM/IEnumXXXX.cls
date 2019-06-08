@@ -27,7 +27,7 @@ Clone: clone
 	"Private - Invoke the IEnumXXXX::Clone() interface function."
 
 	<virtual stdcall: hresult 7 lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 collect: transformer
 	"Evaluate the <monadicValuable> argument, transformer, for each of the 
@@ -109,7 +109,7 @@ Next: next rgelt: rgelt pceltFetched: pceltFetched
 	"Private - Invoke the IEnumXXXX::Next() interface function."
 
 	<virtual stdcall: hresult 4 dword lpvoid dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 nextAvailable
 	"Answer the next element from the receiver, or nil if there are
@@ -170,7 +170,7 @@ Reset
 	"Private - Invoke the IEnumXXXX::Reset() interface function."
 
 	<virtual stdcall: hresult 6>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
@@ -199,7 +199,7 @@ Skip: skip
 	"Private - Invoke the IEnumXXXX::Skip() interface function."
 
 	<virtual stdcall: hresult 5 dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 upToEnd
 	"Answer a collection consisting of the remaining elements in the receiver (i.e. from the current

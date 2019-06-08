@@ -76,7 +76,7 @@ AttributeDecl: pwchElementName cchElementName: cchElementName pwchAttributeName:
 			[in]int cchValue);"
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ElementDecl: pwchName cchName: cchName pwchModel: pwchModel cchModel: cchModel
 	"Invoke the elementDecl() method of the COM object.
@@ -88,7 +88,7 @@ ElementDecl: pwchName cchName: cchName pwchModel: pwchModel cchModel: cchModel
 			[in]int cchModel);"
 
 	<virtual stdcall: hresult 4 word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ExternalEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId
 	"Invoke the externalEntityDecl() method of the COM object.
@@ -102,7 +102,7 @@ ExternalEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 			[in]int cchSystemId);"
 
 	<virtual stdcall: hresult 7 word* sdword word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cchValue
 	"Invoke the internalEntityDecl() method of the COM object.
@@ -114,7 +114,7 @@ InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cch
 			[in]int cchValue);"
 
 	<virtual stdcall: hresult 6 word* sdword word* sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXDeclHandler categoriesFor: #AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
 !ISAXDeclHandler categoriesFor: #ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
 !ISAXDeclHandler categoriesFor: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !

@@ -90,7 +90,7 @@ get_anyAttribute: anyAttribute
 			[out, retval]ISchemaAny** anyAttribute);"
 
 	<virtual stdcall: hresult 33 ISchemaAny**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_attributes: attributes
 	"Private - Get the value of the 'attributes' property of the receiver.
@@ -99,7 +99,7 @@ get_attributes: attributes
 			[out, retval]ISchemaItemCollection** attributes);"
 
 	<virtual stdcall: hresult 34 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_contentModel: contentModel
 	"Private - Get the value of the 'contentModel' property of the receiver.
@@ -108,7 +108,7 @@ get_contentModel: contentModel
 			[out, retval]ISchemaModelGroup** contentModel);"
 
 	<virtual stdcall: hresult 36 ISchemaModelGroup**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_contentType: contentType
 	"Private - Get the value of the 'contentType' property of the receiver.
@@ -117,7 +117,7 @@ get_contentType: contentType
 			[out, retval]SCHEMACONTENTTYPE* contentType);"
 
 	<virtual stdcall: hresult 35 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_isAbstract: abstract
 	"Private - Get the value of the 'isAbstract' property of the receiver.
@@ -126,7 +126,7 @@ get_isAbstract: abstract
 			[out, retval]VARIANT_BOOL* abstract);"
 
 	<virtual stdcall: hresult 32 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_prohibitedSubstitutions: prohibited
 	"Private - Get the value of the 'prohibitedSubstitutions' property of the receiver.
@@ -135,7 +135,7 @@ get_prohibitedSubstitutions: prohibited
 			[out, retval]SCHEMADERIVATIONMETHOD* prohibited);"
 
 	<virtual stdcall: hresult 37 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isAbstract
 	"Answer the <varbool> value of the 'isAbstract' property of the receiver."

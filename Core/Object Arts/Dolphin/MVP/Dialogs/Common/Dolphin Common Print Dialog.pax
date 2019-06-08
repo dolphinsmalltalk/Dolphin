@@ -79,10 +79,9 @@ printDlg: aWinPRINTDLG
 		);"
 
 	<stdcall: bool PrintDlgW PRINTDLGW*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-printDlgEx: lppd 
+printDlgEx: lppd
 	"Invoke the PRINTDLGEX() function of the module wrapped by the receiver.
 	Helpstring: Displays a Print property sheet for configuring a print job
 
@@ -90,7 +89,7 @@ printDlgEx: lppd
 			PRINTDLGEXW* lppd);"
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
 !ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
 

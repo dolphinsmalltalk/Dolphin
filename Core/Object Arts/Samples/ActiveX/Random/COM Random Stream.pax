@@ -42,14 +42,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\System\Random\Dolphin Random Stream';
-	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
+	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 
 package setManualPrerequisites: #(
 	'Windows Shell').

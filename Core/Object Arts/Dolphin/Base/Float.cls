@@ -390,7 +390,7 @@ arcTan
 	"Answer a <Float> which is the inverse tangent of the receiver in radians."
 
 	<primitive: 197>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 arcTan: aNumber
 	"Answer the arc-tangent of the receiver/aFloat in radians."
@@ -574,7 +574,7 @@ exp
 	"Answer the exponential of the receiver. The primitive should not fail."
 
 	<primitive: 201>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 exponent
 	"Answer the <SmallInteger> which is the exponent part of the receiver's floating point representation."
@@ -616,7 +616,7 @@ fpClass
 	The primitive should not fail."
 
 	<primitive: 211>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 fractionPart
 	"Answer a <Float> representing the fractional part of the receiver."
@@ -877,7 +877,7 @@ printOn: aStream significantFigures: anInteger
 
 qwordAtOffset: anInteger
 	<primitive: 191>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 raisedTo: aNumber
 	"Answer a <Float> which is the receiver raised to the power of the <number> argument.
@@ -970,7 +970,7 @@ tan
 	"Answer a <Float> which is the tangent of the receiver, which is treated as an angle in radians. May raise FloatingPointException, depending on the value of the receiver and the current FP exception mask."
 
 	<primitive: 194>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 timesTwoPower: aNumber
 	"Answer the receiver times two to the power of the argument, aNumber.

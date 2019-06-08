@@ -34,13 +34,13 @@ parseLiteralByteArrayObject
 					^node]].
 	^super parseLiteralByteArrayObject!
 
-parsePatternBlock: aClass 
+parsePatternBlock: aClass
 	| position node |
 	position := currentToken start.
 	self step.
 	node := self parseBlockArgsInto: aClass new.
 	node left: position.
-	node body: (self parseStatementsOf: node allowTag: false).
+	node body: (self parseStatementsOf: node).
 	#rbFix.	"Use #isSpecial: and Dolphin compiler compatible error reporting"
 	(currentToken isSpecial: $}) ifFalse: [self parserError: CErrBraceNotClosed].
 	node right: currentToken start.

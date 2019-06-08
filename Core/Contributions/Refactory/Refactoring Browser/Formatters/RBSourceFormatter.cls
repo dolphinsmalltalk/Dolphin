@@ -114,8 +114,13 @@ visitMethodNode: aMethodNode
 visitPrimitiveNode: anStPrimitiveNode
 	codeStream
 		nextPutAll: '<primitive: ';
-		print: anStPrimitiveNode primitiveIndex;
-		nextPut: $>.
+		print: anStPrimitiveNode primitiveIndex.
+	anStPrimitiveNode errorTemp
+		ifNotNil: 
+			[:errorTemp |
+			codeStream nextPutAll: ' error: '.
+			self visitNode: errorTemp].
+	codeStream nextPut: $>.
 	self newLine!
 
 visitVariableNode: aVariableNode

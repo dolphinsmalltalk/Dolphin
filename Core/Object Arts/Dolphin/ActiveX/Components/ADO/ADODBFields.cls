@@ -47,8 +47,7 @@ Append: name Type: type DefinedSize: definedSize Attrib: attrib FieldValue: fiel
 			[in, optional] VARIANT FieldValue);"
 
 	<virtual stdcall: hresult 14 bstr sdword sdword sdword variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 CancelUpdate
 	"Invoke the CancelUpdate() method of the COM object.
@@ -56,8 +55,7 @@ CancelUpdate
 		HRESULT __stdcall CancelUpdate();"
 
 	<virtual stdcall: hresult 17>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 resync
 	"Invoke the Resync() method of the COM object.
@@ -72,8 +70,7 @@ Resync: resyncValues
 			[in, optional, defaultvalue(2)] ResyncEnum ResyncValues);"
 
 	<virtual stdcall: hresult 16 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Update
 	"Invoke the Update() method of the COM object.
@@ -81,8 +78,7 @@ Update
 		HRESULT __stdcall Update();"
 
 	<virtual stdcall: hresult 15>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBFields categoriesFor: #append:type:!**auto generated**!methods!public! !
 !ADODBFields categoriesFor: #append:type:definedSize:attrib:fieldValue:!**auto generated**!methods!public! !
 !ADODBFields categoriesFor: #Append:Type:DefinedSize:Attrib:FieldValue:!**auto generated**!COM Interfaces-Fields!private! !

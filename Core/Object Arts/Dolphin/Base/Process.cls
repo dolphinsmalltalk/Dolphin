@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -54,17 +54,6 @@ Class Variables:
 _alreadyPrinted
 	^_alreadyPrinted!
 
-at: anInteger 
-	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented.
-
-	Primitive Failure Reasons:
-		0	- index is not a SmallInteger
-		1	- index out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 60>
-	^self errorAt: anInteger!
-
 at: anInteger ifAbsent: exceptionBlock 
 	"Answer an <Object> which is the element of the receiver 
 	at the specified <SmallInteger> index. If the index is out of bounds 
@@ -74,30 +63,32 @@ at: anInteger ifAbsent: exceptionBlock
 		ifTrue: [self at: anInteger]
 		ifFalse: [exceptionBlock value]!
 
-at: anInteger put: anObject 
-	"Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value.
+at: anInteger put: anObject
+	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value."
 
-	Primitive Failure Reasons:
-		0	- index is not a <SmallInteger>
-		1	- index is out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 176>
-	^self errorAt: anInteger put: anObject!
-
-basicAt: anInteger put: anObject 
-	"Private - Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value. 
-
-	Primitive Failure Reasons:
-		0	- index is not a SmallInteger
-		1	- index out of bounds (not in the range 1..receiver's indexable size) 
-
-	MUST not be reimplemented (except by classes whose instances have special representations
-	such as SmallInteger)."
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- index is not a SmallInteger
+		IndexOutOfRange	- index out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 176>
-	^self errorAt: anInteger put: anObject!
+	^self
+		_primitiveError: _failureCode
+		at: anInteger
+		put: anObject!
+
+basicAt: anInteger put: anObject
+	"Private - Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	MUST not be reimplemented (except by classes whose instances have special representations such as SmallInteger)."
+
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- index is not a SmallInteger
+		IndexOutOfRange	- index out of bounds (not in the range 1..receiver's indexable size)"
+
+	<primitive: 176>
+	^self
+		_primitiveError: _failureCode
+		at: anInteger
+		put: anObject!
 
 basicSuspendedFrame
 	"Private - Answer the SmallInteger pointer into the stack of the suspended frame. If nil then
@@ -327,18 +318,6 @@ name: anObject
 
 	name := anObject!
 
-primitiveFailureCode
-	"Private - Answer the SmallInteger failure code set by the last primitive which failed 
-	when executed by the receiver. This should be retrieved as soon as possible following a 
-	failure so that it is not overwritten by a subsequent failure - remember that not all
-	primitive failures are errors, and they are a faily common occurrence in SmallInteger arithmetic.
-	Some primitives may not set a failure code when they fail.
-	Currently each primitive defines its own failure codes (documented in the primitive call method), 
-	and additional information of any type may also be present in 'primitiveFailureData'.
-	The failure code/data are not normally affected by primitives which succeed."
-
-	^primitiveFailureCode!
-
 primitiveFailureData
 	"Private - Answer the extra failure data set by the last primitive which failed (and
 	which had extra information to supply about the failure over and above the failure code).
@@ -347,15 +326,12 @@ primitiveFailureData
 	^primitiveFailureData!
 
 primTerminate
-	"Private - Transition the receiver from its current state to the Terminated state. Once
-	Terminated, a Process cannot (easily) be resumed or restarted.
+	"Private - Transition the receiver from its current state to the Terminated state. Once terminated, a Process cannot (easily) be resumed or restarted."
 
-	Primitive Failure Reasons:
+	"Primitive Failure Reasons:
 
-	0 - Not used
-	1 - The receiver is the last running process, so it cannot be terminated until another
-	process has been started (an Idle Panic interrupt will also be generated). Assuming correct
-	recovery after the idle panic, a second attempt at termination should succeed."
+	InvalidOperation	- The process is suspended (processes can only be terminated from within their own running context)
+	LastRunning	- The receiver is the last running process, so it cannot be terminated until another process has been started (an Idle Panic interrupt will also be generated). Assuming correct recovery after the idle panic, a second attempt at termination should succeed."
 
 	"Implementation Note: This primitive is approximately equivalent to:
 
@@ -370,9 +346,9 @@ primTerminate
 	resources, than the alternative of dedicating another process to this task."
 
 	<primitive: 91>
-	^Processor activeProcess primitiveFailureCode == 1 
+	^_failureCode == _PrimitiveFailureCode.LastRunnable
 		ifTrue: [false	"Please try again"]
-		ifFalse: [self primitiveFailed]!
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 printOn: aStream
 	"Append a short debug description of the receiver to aStream."
@@ -407,9 +383,9 @@ priority: anInteger
 		1 -	anInteger is not in the range of permissible priorities (1..highest priority)."
 
 	<primitive: 92>
-	^((anInteger isMemberOf: SmallInteger) and: [anInteger between: 1 and: Processor highestPriority])
-		ifTrue: [self primitiveFailed]
-		ifFalse: [self error: ('Invalid Process priority <1p>' expandMacrosWith: priority)]!
+	^_failureCode < 2
+		ifTrue: [self error: ('Invalid Process priority <1p>' expandMacrosWith: anInteger)]
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 queueInterrupt: anInteger
 	"Queue an interrupt with the specified number for the receiver (which can be in any resumable state)
@@ -426,7 +402,7 @@ queueInterrupt: anInteger with: anObject
 		1 -	the receiver is dead (i.e. not runnable)."
 
 	<primitive: 98>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resetFloatingPoint
 	CRTLibrary default
@@ -443,7 +419,7 @@ resume
 	is equivalent to sending #resume: with nil as the argument)."
 
 	<primitive: 87>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resume: suspendingListOrNil
 	"Change the state of the receiver from Suspended to Ready/Waiting 
@@ -462,14 +438,14 @@ resume: suspendingListOrNil
 		1 - 	the receiver has been terminated (or not properly initialized)."
 
 	<primitive: 87>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resumeUnconditionally
 	"Change the state of the receiver to Ready to run regardless of its current
 	state (unless terminated)."
 
 	<primitive: 87>
-	myList isNil ifTrue: [^self primitiveFailed]!
+	myList isNil ifTrue: [^self primitiveFailed: _failureCode]!
 
 setFpControl: flagsInteger mask: maskInteger
 	"Set the current floating point control word for the receiver. If the receiver is the
@@ -608,14 +584,17 @@ suspend
 	(when resumed).
 
 	Primitive failure results:
+		InvalidOperation		- the process is already suspended.
+		LastRunning		- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		PendingTermination	- the process is pending termination
+
 		0 -	the process is already suspended.
 		1 -	the process is the active process and could not be suspended because
 			it is the only runnable process remaining."
 
-	| failureCode |
 	<primitive: 88>
-	failureCode := Processor activeProcess primitiveFailureCode.
-	^failureCode == 1 ifTrue: [false] ifFalse: [self primitiveFailed]!
+	^_failureCode == _PrimitiveFailureCode.LastRunnable
+		ifTrue: [false] ifFalse: [self primitiveFailed: _failureCode]!
 
 suspendedFrame
 	"Private - Answer a stack frame for the receiver's suspended context, nil if the receiver is dead."
@@ -641,20 +620,17 @@ suspendUnconditionally
 	Answers the receiver.
 
 	Primitive failure results:
-		0 -	the process is already suspended.
-		1 -	the process is the active process and could not be suspended because
-			it is the only runnable process remaining.
-		2-	the process is pending termination
+		InvalidOperation		- the process is already suspended.
+		LastRunning		- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		PendingTermination	- the process is pending termination
 
 	The first two failure codes are ignored. Any other failure code is unexpected, and will result in 
 	normal failure handling."
 
-	| failureCode |
 	<primitive: 88>
-	failureCode := Processor activeProcess primitiveFailureCode.
-	^failureCode == 1 
+	^_failureCode == _PrimitiveFailureCode.LastRunnable
 		ifTrue: [false]
-		ifFalse: [failureCode == 0 ifTrue: [self] ifFalse: [self primitiveFailed]]!
+		ifFalse: [_failureCode == _PrimitiveFailureCode.InvalidOperation ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
 
 terminate
 	"Transition the receiver from its current state to the Terminated state. Once Terminated, 
@@ -695,7 +671,6 @@ topFrame
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
 !Process categoriesFor: #_alreadyPrinted!accessing!private! !
-!Process categoriesFor: #at:!accessing!public! !
 !Process categoriesFor: #at:ifAbsent:!accessing!public! !
 !Process categoriesFor: #at:put:!accessing!public! !
 !Process categoriesFor: #basicAt:put:!accessing!private! !
@@ -731,7 +706,6 @@ topFrame
 !Process categoriesFor: #lastError!accessing!public! !
 !Process categoriesFor: #name!accessing!public! !
 !Process categoriesFor: #name:!accessing!public! !
-!Process categoriesFor: #primitiveFailureCode!accessing!private! !
 !Process categoriesFor: #primitiveFailureData!accessing!private! !
 !Process categoriesFor: #primTerminate!private!states-changing! !
 !Process categoriesFor: #printOn:!printing!public! !

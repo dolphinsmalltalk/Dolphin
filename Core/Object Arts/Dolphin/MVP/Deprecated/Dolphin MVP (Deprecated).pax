@@ -760,8 +760,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 			ULONG_PTR dwData);"
 
 	<stdcall: bool WinHelpA handle lpstr dword uintptr>
-	#deprecated. "Not supported on Windows 10 and later."
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 
 !View methodsFor!

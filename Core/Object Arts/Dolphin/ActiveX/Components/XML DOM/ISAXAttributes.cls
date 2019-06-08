@@ -130,7 +130,7 @@ GetIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 			[out, retval]int* pnIndex);"
 
 	<virtual stdcall: hresult 9 word* sdword word* sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getIndexFromQName: pwchQName cchQName: cchQName
 	"Answer the <SDWORD> result of invoking the getIndexFromQName() method of the COM object."
@@ -153,7 +153,7 @@ GetIndexFromQName: pwchQName cchQName: cchQName pnIndex: pnIndex
 			[out, retval]int* pnIndex);"
 
 	<virtual stdcall: hresult 10 word* sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getLength
 	"Answer the <SDWORD> result of invoking the getLength() method of the COM object."
@@ -171,7 +171,7 @@ GetLength: pnLength
 			[out, retval]int* pnLength);"
 
 	<virtual stdcall: hresult 4 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getLocalName: nIndex
 	"Invoke the getLocalName() method of the COM object."
@@ -197,7 +197,7 @@ GetLocalName: nIndex ppwchLocalName: ppwchLocalName pcchLocalName: pcchLocalName
 			[out]int* pcchLocalName);"
 
 	<virtual stdcall: hresult 6 sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getName: nIndex
 	"Invoke the getName() method of the COM object."
@@ -235,7 +235,7 @@ GetName: nIndex ppwchUri: ppwchUri pcchUri: pcchUri ppwchLocalName: ppwchLocalNa
 			[out]int* pcchQName);"
 
 	<virtual stdcall: hresult 8 sdword word** sdword* word** sdword* word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getQName: nIndex
 	"Invoke the getQName() method of the COM object."
@@ -261,7 +261,7 @@ GetQName: nIndex ppwchQName: ppwchQName pcchQName: pcchQName
 			[out]int* pcchQName);"
 
 	<virtual stdcall: hresult 7 sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getType: nIndex
 	"Invoke the getType() method of the COM object."
@@ -287,7 +287,7 @@ GetType: nIndex ppwchType: ppwchType pcchType: pcchType
 			[out]int* pcchType);"
 
 	<virtual stdcall: hresult 11 sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
 	"Invoke the getTypeFromName() method of the COM object."
@@ -319,7 +319,7 @@ GetTypeFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNam
 			[out]int* pcchType);"
 
 	<virtual stdcall: hresult 12 word* sdword word* sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeFromQName: pwchQName cchQName: cchQName
 	"Invoke the getTypeFromQName() method of the COM object."
@@ -347,7 +347,7 @@ GetTypeFromQName: pwchQName cchQName: cchQName ppwchType: ppwchType pcchType: pc
 			[out]int* pcchType);"
 
 	<virtual stdcall: hresult 13 word* sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getURI: nIndex
 	"Invoke the getURI() method of the COM object."
@@ -373,7 +373,7 @@ GetURI: nIndex ppwchUri: ppwchUri pcchUri: pcchUri
 			[out]int* pcchUri);"
 
 	<virtual stdcall: hresult 5 sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValue: nIndex
 	"Invoke the getValue() method of the COM object."
@@ -399,7 +399,7 @@ GetValue: nIndex ppwchValue: ppwchValue pcchValue: pcchValue
 			[out]int* pcchValue);"
 
 	<virtual stdcall: hresult 14 sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
 	"Invoke the getValueFromName() method of the COM object."
@@ -431,7 +431,7 @@ GetValueFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalNa
 			[out]int* pcchValue);"
 
 	<virtual stdcall: hresult 15 word* sdword word* sdword word** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getValueFromQName: pwchQName cchQName: cchQName
 	"Invoke the getValueFromQName() method of the COM object."
@@ -459,7 +459,7 @@ GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue
 			[out]int* pcchValue);"
 
 	<virtual stdcall: hresult 16 word* sdword word** sdword*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXAttributes categoriesFor: #getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
 !ISAXAttributes categoriesFor: #GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
 !ISAXAttributes categoriesFor: #getIndexFromQName:cchQName:!**auto generated**!methods!public! !

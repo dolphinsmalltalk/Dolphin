@@ -59,7 +59,7 @@ ImportNode: node deep: deep clone: clone
 			[out, retval]IXMLDOMNode** clone);"
 
 	<virtual stdcall: hresult 84 IXMLDOMNode* varbool IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 validateNode: node
 	"Answer the <IXMLDOMParseError> result of invoking the validateNode() method of the COM object.
@@ -82,7 +82,7 @@ ValidateNode: node errorObj: errorObj
 			[out, retval]IXMLDOMParseError** errorObj);"
 
 	<virtual stdcall: hresult 83 IXMLDOMNode* IXMLDOMParseError**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMDocument3 categoriesFor: #importNode:deep:!**auto generated**!methods!public! !
 !IXMLDOMDocument3 categoriesFor: #ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
 !IXMLDOMDocument3 categoriesFor: #validateNode:!**auto generated**!methods!public! !

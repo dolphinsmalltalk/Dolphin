@@ -153,7 +153,7 @@ asFloat
 	"Answer the floating point representation of the receiver. The primitive should not fail."
 
 	<primitive: 168>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 asStackPointer
 	^self!
@@ -375,17 +375,17 @@ lowBit
 	Implementation Note: The primitive makes use of the Intel
 	BSF instruction."
 
-	| i t |
 	<primitive: 152>
+	| i t |
 	self == 0 ifTrue: [^self].
 	t := self.
 	i := 1.
-	[(t bitAnd: 16rF) == 0] whileTrue: [
-		i := i + 4.
-		t := t bitShift: -4].
-	[(t bitAnd: 1) == 0] whileTrue: [
-		i := i + 1.
-		t := t bitShift: -1].
+	[(t bitAnd: 16rF) == 0] whileTrue: 
+			[i := i + 4.
+			t := t bitShift: -4].
+	[(t bitAnd: 1) == 0] whileTrue: 
+			[i := i + 1.
+			t := t bitShift: -1].
 	^i!
 
 multiplyByInteger: anInteger 
@@ -466,8 +466,8 @@ printString
 	(SmallInteger>>printOn:base: makes it redundant), printing SmallIntegers is such a
 	common operation that it is worth providing an optimised version generating a String."
 
-	| integer answer digits |
 	<primitive: 44>
+	| integer answer digits |
 	self < 0 ifTrue: [^'-' , self negated printString].
 	answer := String new: (digits := self decimalDigitLength).
 	integer := self.

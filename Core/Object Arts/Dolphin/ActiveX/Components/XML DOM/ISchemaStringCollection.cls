@@ -55,7 +55,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 10 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_item: index bstr: bstr
 	"Private - Get the value of the 'item' property of the receiver.
@@ -65,7 +65,7 @@ get_item: index bstr: bstr
 			[out, retval]BSTR* bstr);"
 
 	<virtual stdcall: hresult 8 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: length
 	"Private - Get the value of the 'length' property of the receiver.
@@ -74,7 +74,7 @@ get_length: length
 			[out, retval]long* length);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

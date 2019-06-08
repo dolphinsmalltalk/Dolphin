@@ -20,8 +20,7 @@ ADOCheck
 		HRESULT __stdcall ADOCheck();"
 
 	<virtual stdcall: hresult 4>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBIRecFields categoriesFor: #ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
 
 !ADODBIRecFields class methodsFor!

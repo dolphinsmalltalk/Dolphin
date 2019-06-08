@@ -133,12 +133,12 @@ Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, unsigned)
 				return sp - 1;
 			}
 			else
-				return nullptr;
+				return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 		}
 		else
 			return sp - 1;
 	}
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -431,7 +431,7 @@ Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, unsigned)
 		}
 	}
 
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::InvalidReceiver);
 }
 
 #pragma code_seg(GC_SEG)

@@ -82,15 +82,14 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\Change Objects\RBChangeObjects';
-	add: '..\Environments\RBEnvironments';
-	add: '..\Parser\RBParser';
-	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\Change Objects\RBChangeObjects'
+	'..\Environments\RBEnvironments'
+	'..\Parser\RBParser'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package!
 

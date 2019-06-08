@@ -35,7 +35,7 @@
 
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
 {
-	return !m_bStepping ? sp - argCount : nullptr;
+	return !m_bStepping ? sp - argCount : reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCount)
@@ -47,7 +47,7 @@ Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCoun
 		return newSp;
 	}
 	else
-		return nullptr;
+		return reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCount)
@@ -59,7 +59,7 @@ Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCou
 		return newSp;
 	}
 	else
-		return nullptr;
+		return reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnNil(Oop* const sp, unsigned argCount)
@@ -71,7 +71,7 @@ Oop* __fastcall Interpreter::primitiveReturnNil(Oop* const sp, unsigned argCount
 		return newSp;
 	}
 	else
-		return nullptr;
+		return reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
@@ -84,7 +84,7 @@ Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned 
 		return newSp;
 	}
 	else
-		return nullptr;
+		return reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
@@ -97,7 +97,7 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned a
 		return newSp;
 	}
 	else
-		return nullptr;
+		return reinterpret_cast<Oop*>(ZeroPointer);
 }
 
 
@@ -217,7 +217,6 @@ bool Interpreter::IsUserBreakRequested()
 	int vk = hotkey & 0x1FF;
 	bool interrupt = (::GetAsyncKeyState(vk) & 0x8001) != 0;
 	int modifiers = (hotkey >> 9);
-	if (modifiers & FSHIFT)
 	{
 		interrupt &= (::GetAsyncKeyState(VK_SHIFT) & 0x8001) != 0;
 	}
@@ -849,7 +848,7 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, unsigned)
 		return sp - 1;
 	}
 	else
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 }
 
 

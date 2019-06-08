@@ -93,6 +93,7 @@ package methodNames
 	add: #Date -> #weekday;
 	add: #Date -> #weekdayIndex;
 	add: #DateAndTime -> #asTimeStamp;
+	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
@@ -349,112 +350,112 @@ extra
 _controlfp: newInteger mask: maskInteger
 	<cdecl: dword _controlfp dword dword>
 	#deprecated.	"Insecure - use _controlfp_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
 	#deprecated.	"This function is considered insecure and should not be used - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _eof: handleInteger
 	<cdecl: sdword _eof sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _filelength: handleInteger
 	<cdecl: sdword _filelength sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _finite: aFloat
 	<cdecl: bool _finite double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _fpclass: aFloat
 	<cdecl: sdword _fpclass double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _gcvt: aFloat count: anInteger buffer: aString
 	<cdecl: char* _gcvt double sdword char*>
 	#deprecated.	"Insecure - use _gcvt_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
 	<cdecl: sdword _gcvt_s char* intptr double sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _i64toa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _i64toa sqword lpstr sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _logb: aFloat
 	<cdecl: double _logb double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _ltoa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _ltoa sdword lpstr sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _makepath: path drive: drive dir: dir fname: fname ext: ext
 	<cdecl: void _makepath char* char* char* char* char*>
 	#deprecated.	"Insecure. Use #_makepath_s:sizeInBytes:drive:dir:fname:ext:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _putenv: aString
 	<cdecl: sdword _putenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _rotl: anUnsignedlInteger shift: anInteger
 	<cdecl: dword _rotl dword sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _rotr: anUnsignedlInteger shift: anInteger
 	<cdecl: dword _rotr dword sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	<cdecl: void _splitpath char* char* char* char* char*>
 	#deprecated.	"Insecure - use _splitpath_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _stricoll: string1 string2: string2
 	<cdecl: sdword _stricoll lpstr lpstr>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 acos: aFloat
 	<cdecl: double acos double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asin: aFloat
 	<cdecl: double asin double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 atan: aFloat
 	<cdecl: double atan double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 atan: yFloat x: xFloat
 	<cdecl: double atan2 double double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ceil: aFloat
 	<cdecl: double ceil double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 chmod: aFilenameString pmode: aModeInteger
 	#deprecated.
@@ -463,147 +464,147 @@ chmod: aFilenameString pmode: aModeInteger
 cos: aFloat
 	<cdecl: double cos double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 exp: aFloat
 	<cdecl: double exp double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fabs: aFloat
 	<cdecl: double fabs double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 floor: aFloat
 	<cdecl: double floor double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fopen: nameString mode: modeString
 	<cdecl: handle fopen lpstr lpstr>
 	#deprecated.	"Insecure"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fopen_s: pFile filename: nameString mode: modeString
 	<cdecl: sdword fopen_s handle* lpstr lpstr>
 	#deprecated.	"No longer used"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
 	#deprecated.	"Insecure - use fread_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 freopen: pathString mode: modeString stream: anExternalHandle
 	<cdecl: handle freopen char* char* handle>
 	#deprecated.	"Insecured - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 frexp: x expptr: expptr
 	<cdecl: double frexp double sdword*>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fseek: aFILE offset: offsetInteger origin: originInteger
 	<cdecl: sdword fseek handle sdword sdword>
 	#deprecated. "Use _fseeki64:offset:origin:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ftell: aFILE
 	<cdecl: sdword ftell handle>
 	#deprecated.	"Use #_ftelli64:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 iswspace: aCharacter
 	<cdecl: bool iswspace char>
 	#deprecated.	"Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ldexp: aFloat exp: anInteger
 	<cdecl: double ldexp double sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log: aFloat
 	<cdecl: double log double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log10: aFloat
 	<cdecl: double log10 double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log2: aFloat
 	<cdecl: double log2 double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memcpy: dest src: src count: count
 	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memmove: dest src: src count: count
 	<cdecl: void* memmove void* void* intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 modf: aFloat intptr: intFloatOut
 	<cdecl: double modf double lpvoid>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pow: xFloat y: yFloat
 	<cdecl: double pow double double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sin: aFloat
 	<cdecl: double sin double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sqrt: aFloat
 	<cdecl: double sqrt double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strcat: strDestination strSource: strSource
 	<cdecl: lpstr strcat lpstr lpstr>
 	#deprecated.	"This function may cause buffer overruns so is insecure. Use strcat_s instead."
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strerror: errno
 	<cdecl: lpstr strerror sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strncpy: strDest strSource: strSource count: count
 	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 tan: aFloat
 	<cdecl: double tan double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 thread_chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Use CRTLibraryNonBlocking>>chmod:pmode:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 thread_errno
 	<overlap cdecl: sdword _errno>
 	#deprecated. "Use CRTLibraryNonBlocking>>errno"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
@@ -776,6 +777,15 @@ oneStringArg
 	^self argumentTypes: 'lpstr'! !
 !ExternalDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
 
+!ExternalLibrary methodsFor!
+
+invalidCall
+	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
+
+	Notification deprecated. 
+	^self invalidCall: 0! !
+!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
+
 !ExternalStructure methodsFor!
 
 do: aOneArgumentBlock 
@@ -844,24 +854,24 @@ lowSWord
 compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
 	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
 	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
 	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
-	^self invalidCall
+	^self invalidCall: _failureCode
 
 !
 
 getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
 	<stdcall: dword GetFileSize handle dword*>
 	#deprecated. "Use #getFileSizeEx:lpFileSize:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
 	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
 	#deprecated. "Deprecated by Microsoft - use GetTimeFormatEx instead"
-	^self invalidCall
+	^self invalidCall: _failureCode
 
 !
 
@@ -873,22 +883,22 @@ getVersionEx: anOSVERSIONINFO
 
 	<stdcall: bool GetVersionExW OSVERSIONINFO*>
 	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lstrcmp: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpW lpwstr lpwstr>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lstrcmpi: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpiW lpwstr lpwstr>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
@@ -1162,7 +1172,7 @@ timeSeparator
 timeGetTime
 	<stdcall: dword timeGetTime>
 	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
 
 "End of package definition"!

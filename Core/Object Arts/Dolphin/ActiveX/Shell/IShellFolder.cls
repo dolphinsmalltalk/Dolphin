@@ -15,64 +15,64 @@ BindToObject: bindToObject pbc: pbc riid: riid ppvOut: ppvOut
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 6 lpvoid lpvoid REFGUID lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 6 lpvoid lpvoid REFGUID lppvoid>
+	^self invalidCall: _failureCode!
 
 BindToStorage: bindToStorage pbc: pbc riid: riid ppv: ppv
 	"Callout for the IShellFolder::BindToStorage() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 7 lpvoid lpvoid REFGUID lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 7 lpvoid lpvoid REFGUID lppvoid>
+	^self invalidCall: _failureCode!
 
 CompareIDs: compareIDs pidl1: pidl1 pidl2: pidl2
 	"Callout for the IShellFolder::CompareIDs() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 8 DWORD lpvoid lpvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 8 dword lpvoid lpvoid>
+	^self invalidCall: _failureCode!
 
 CreateViewObject: createViewObject riid: riid ppvOut: ppvOut
 	"Callout for the IShellFolder::CreateViewObject() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 9 handle REFGUID lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 9 handle REFGUID lppvoid>
+	^self invalidCall: _failureCode!
 
 EnumObjects: enumObjects grfFlags: grfFlags ppenumIDList: ppenumIDList
 	"Callout for the IShellFolder::EnumObjects() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 5 handle DWORD lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 5 handle dword lppvoid>
+	^self invalidCall: _failureCode!
 
 GetAttributesOf: getAttributesOf apidl: apidl rgfInOut: rgfInOut
 	"Callout for the IShellFolder::GetAttributesOf() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 10 DWORD lppvoid DWORD*>
-	^self invalidCall!
+	<virtual stdcall: hresult 10 dword lppvoid dword*>
+	^self invalidCall: _failureCode!
 
 GetDisplayNameOf: getDisplayNameOf uFlags: uFlags lpName: lpName
 	"Callout for the IShellFolder::GetDisplayNameOf() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 12 lpvoid DWORD lpvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 12 lpvoid dword lpvoid>
+	^self invalidCall: _failureCode!
 
 GetUIObjectOf: getUIObjectOf cidl: cidl apidl: apidl riid: riid prgfInOut: prgfInOut ppvOut: ppvOut
 	"Callout for the IShellFolder::GetUIObjectOf() interface function.
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 11 handle DWORD lppvoid REFGUID DWORD* lppvoid>
-	^self invalidCall!
+	<virtual stdcall: hresult 11 handle dword lppvoid REFGUID dword* lppvoid>
+	^self invalidCall: _failureCode!
 
 idlFromPath: path 
 	"Answer an ITEMIDLIST from the specified <readableString> path."
@@ -84,8 +84,8 @@ ParseDisplayName: parseDisplayName pbc: pbc lpwszDisplayName: lpwszDisplayName p
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 4 handle lpvoid lpwstr DWORD* lppvoid DWORD*>
-	^self invalidCall!
+	<virtual stdcall: hresult 4 handle lpvoid lpwstr dword* lppvoid dword*>
+	^self invalidCall: _failureCode!
 
 pidlFromPath: path
 	"Answer a PIDL from the specified <readableString> path."
@@ -106,8 +106,8 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 13 handle lpvoid lpwstr DWORD lppvoid>
-	^self invalidCall! !
+	<virtual stdcall: hresult 13 handle lpvoid lpwstr dword lppvoid>
+	^self invalidCall: _failureCode! !
 !IShellFolder categoriesFor: #BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
 !IShellFolder categoriesFor: #BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
 !IShellFolder categoriesFor: #CompareIDs:pidl1:pidl2:!COM Interfaces-IShellFolder!public! !

@@ -55,15 +55,14 @@ cloneFormat: aPixelFormatConstant
 
 	^self cloneBitmapRectangle: (Point zero extent: self extent) format: aPixelFormatConstant!
 
-lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData 
-	| status gpHandle |
-	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default 
+lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
+	| status |
+	(status := GdiplusLibrary default
 				gdipBitmapLockBits: self handle
 				rect: rect
 				flags: flags
 				format: format
-				lockedBitmapData: lockedBitmapData) = Ok 
+				lockedBitmapData: lockedBitmapData) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapLockBits' with: status]
 	"Invoke the GdipBitmapLockBits() function of the module wrapped by the receiver.
 
@@ -101,11 +100,10 @@ pixelAt: aPoint put: anARGB
 				color: anARGB asParameter.
 	status = Ok ifFalse: [GdiplusError signal: 'GdipBitmapSetPixel  failed' with: status]!
 
-unlockBits: lockedBitmapData 
-	| status gpHandle |
-	gpHandle := ExternalHandle new.
+unlockBits: lockedBitmapData
+	| status |
 	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
-				lockedBitmapData: lockedBitmapData) = Ok 
+				lockedBitmapData: lockedBitmapData) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
 !GdiplusBitmap categoriesFor: #asBitmap!public! !
 !GdiplusBitmap categoriesFor: #asIcon!public! !

@@ -134,8 +134,7 @@ get_BackColor: pclrBackColor
 			[out, retval] OLE_COLOR* pclrBackColor);"
 
 	<virtual stdcall: hresult 10 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_BorderStyle: psBorderStyle
 	"Private - Get the value of the 'BorderStyle' property of the receiver."

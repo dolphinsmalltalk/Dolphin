@@ -47,8 +47,7 @@ Add: index ppPart: ppPart
 	"
 
 	<virtual stdcall: hresult 13 sdword CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver.
@@ -78,8 +77,7 @@ Delete: varBP
 	"
 
 	<virtual stdcall: hresult 11 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 DeleteAll
 	"Invoke the DeleteAll() method of the COM object wrapped by the receiver.
@@ -89,8 +87,7 @@ DeleteAll
 	"
 
 	<virtual stdcall: hresult 12>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get__NewEnum: retval
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -100,8 +97,7 @@ get__NewEnum: retval
 	"
 
 	<virtual stdcall: hresult 10 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Count: varCount
 	"Private - Get the value of the 'Count' property of the receiver.
@@ -112,8 +108,7 @@ get_Count: varCount
 	"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Item: index ppBody: ppBody
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -125,8 +120,7 @@ get_Item: index ppBody: ppBody
 	"
 
 	<virtual stdcall: hresult 9 sdword CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

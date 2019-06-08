@@ -25,7 +25,7 @@ _AboutBox
 		HRESULT __stdcall _AboutBox();"
 
 	<virtual stdcall: hresult 24>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 addCode: code
 	"Invoke the AddCode() method of the COM object.
@@ -42,7 +42,7 @@ AddCode: code
 			[in]BSTR Code);"
 
 	<virtual stdcall: hresult 27 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 addObject: name object: object
 	"Invoke the AddObject() method of the COM object.
@@ -73,7 +73,7 @@ AddObject: name Object: object AddMembers: addMembers
 			[in, defaultvalue(false)]VARIANT_BOOL AddMembers);"
 
 	<virtual stdcall: hresult 25 bstr IDispatch* varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 allowUI
 	"Answer the <varbool> value of the 'AllowUI' property of the receiver.
@@ -133,7 +133,7 @@ Eval: expression pvarResult: pvarResult
 			[out, retval]VARIANT* pvarResult);"
 
 	<virtual stdcall: hresult 28 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 executeStatement: statement
 	"Invoke the ExecuteStatement() method of the COM object.
@@ -150,7 +150,7 @@ ExecuteStatement: statement
 			[in]BSTR Statement);"
 
 	<virtual stdcall: hresult 29 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_AllowUI: pfAllowUI
 	"Private - Get the value of the 'AllowUI' property of the receiver.
@@ -159,7 +159,7 @@ get_AllowUI: pfAllowUI
 			[out, retval]VARIANT_BOOL* pfAllowUI);"
 
 	<virtual stdcall: hresult 16 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_CodeObject: ppdispObject
 	"Private - Get the value of the 'CodeObject' property of the receiver.
@@ -168,7 +168,7 @@ get_CodeObject: ppdispObject
 			[out, retval]IDispatch** ppdispObject);"
 
 	<virtual stdcall: hresult 22 IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Error: ppse
 	"Private - Get the value of the 'Error' property of the receiver.
@@ -177,7 +177,7 @@ get_Error: ppse
 			[out, retval]IScriptError** ppse);"
 
 	<virtual stdcall: hresult 21 IScriptError**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Language: pbstrLanguage
 	"Private - Get the value of the 'Language' property of the receiver.
@@ -186,7 +186,7 @@ get_Language: pbstrLanguage
 			[out, retval]BSTR* pbstrLanguage);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Modules: ppmods
 	"Private - Get the value of the 'Modules' property of the receiver.
@@ -195,7 +195,7 @@ get_Modules: ppmods
 			[out, retval]IScriptModuleCollection** ppmods);"
 
 	<virtual stdcall: hresult 20 IScriptModuleCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Procedures: ppdispProcedures
 	"Private - Get the value of the 'Procedures' property of the receiver.
@@ -204,7 +204,7 @@ get_Procedures: ppdispProcedures
 			[out, retval]IScriptProcedureCollection** ppdispProcedures);"
 
 	<virtual stdcall: hresult 23 IScriptProcedureCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_SitehWnd: phwnd
 	"Private - Get the value of the 'SitehWnd' property of the receiver.
@@ -213,7 +213,7 @@ get_SitehWnd: phwnd
 			[out, retval]long* phwnd);"
 
 	<virtual stdcall: hresult 13 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_State: pssState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -222,7 +222,7 @@ get_State: pssState
 			[out, retval]ScriptControlStates* pssState);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Timeout: plMilleseconds
 	"Private - Get the value of the 'Timeout' property of the receiver.
@@ -231,7 +231,7 @@ get_Timeout: plMilleseconds
 			[out, retval]long* plMilleseconds);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_UseSafeSubset: pfUseSafeSubset
 	"Private - Get the value of the 'UseSafeSubset' property of the receiver.
@@ -240,7 +240,7 @@ get_UseSafeSubset: pfUseSafeSubset
 			[out, retval]VARIANT_BOOL* pfUseSafeSubset);"
 
 	<virtual stdcall: hresult 18 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -297,7 +297,7 @@ put_AllowUI: pfAllowUI
 			[in]VARIANT_BOOL pfAllowUI);"
 
 	<virtual stdcall: hresult 17 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_Language: pbstrLanguage
 	"Private - Set the value of the 'Language' property of the object wrapped by the 
@@ -307,7 +307,7 @@ put_Language: pbstrLanguage
 			[in]BSTR pbstrLanguage);"
 
 	<virtual stdcall: hresult 9 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_SitehWnd: phwnd
 	"Private - Set the value of the 'SitehWnd' property of the object wrapped by the 
@@ -317,7 +317,7 @@ put_SitehWnd: phwnd
 			[in]long phwnd);"
 
 	<virtual stdcall: hresult 12 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_State: pssState
 	"Private - Set the value of the 'State' property of the object wrapped by the 
@@ -327,7 +327,7 @@ put_State: pssState
 			[in]ScriptControlStates pssState);"
 
 	<virtual stdcall: hresult 11 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_Timeout: plMilleseconds
 	"Private - Set the value of the 'Timeout' property of the object wrapped by the 
@@ -337,7 +337,7 @@ put_Timeout: plMilleseconds
 			[in]long plMilleseconds);"
 
 	<virtual stdcall: hresult 15 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_UseSafeSubset: pfUseSafeSubset
 	"Private - Set the value of the 'UseSafeSubset' property of the object wrapped by the 
@@ -347,7 +347,7 @@ put_UseSafeSubset: pfUseSafeSubset
 			[in]VARIANT_BOOL pfUseSafeSubset);"
 
 	<virtual stdcall: hresult 19 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 reset
 	"Invoke the Reset() method of the COM object.
@@ -363,7 +363,7 @@ Reset
 		HRESULT __stdcall Reset();"
 
 	<virtual stdcall: hresult 26>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 run: procedureName parameters: parameters
 	"Answer the <VARIANT> result of invoking the Run() method of the COM object.
@@ -388,7 +388,7 @@ Run: procedureName Parameters: parameters pvarResult: pvarResult
 			[out, retval]VARIANT* pvarResult);"
 
 	<virtual stdcall: hresult 30 bstr SAFEARRAY** variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sitehWnd
 	"Answer the <sdword> value of the 'SitehWnd' property of the receiver.

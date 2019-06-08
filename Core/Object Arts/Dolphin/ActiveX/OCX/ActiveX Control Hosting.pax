@@ -169,7 +169,7 @@ axWinInit
 	"Initialize the AX host window stuff."
 
 	<stdcall: bool AtlAxWinInit>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !VMLibrary categoriesFor: #axWinInit!initializing!public! !
 
 "End of package definition"!

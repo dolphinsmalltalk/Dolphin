@@ -14,7 +14,7 @@ All functions in this library use the stdcall calling convention.'!
 !GDILibrary categoriesForClass!External-Data-Structured-Win32! !
 !GDILibrary methodsFor!
 
-addFontResource: fontFile 
+addFontResource: fontFile
 	"Adds the font resource from the specified file to the system font table.
 	The font can subsequently be used for text output by any application. 
 
@@ -23,7 +23,7 @@ addFontResource: fontFile
 	);"
 
 	<stdcall: sdword AddFontResourceW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 beginPath: hdc
 	"Invoke the BeginPath() function of the module wrapped by the receiver.
@@ -33,7 +33,7 @@ beginPath: hdc
 			HDC HDC);"
 
 	<stdcall: bool BeginPath handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bitBlt: hdcDest nXDest: nXDest nYDest: nYDest nWidth: nWidth nHeight: nHeight hdcSrc: hdcSrc nXSrc: nXSrc nYSrc: nYSrc dwRop: dwRop
 	"Invoke the BitBlt() function of the module wrapped by the receiver.
@@ -51,7 +51,7 @@ bitBlt: hdcDest nXDest: nXDest nYDest: nYDest nWidth: nWidth nHeight: nHeight hd
 			DWORD dwRop);"
 
 	<stdcall: bool BitBlt handle sdword sdword sdword sdword handle sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 closeFigure: hdc
 	"Invoke the CloseFigure() function of the module wrapped by the receiver.
@@ -61,7 +61,7 @@ closeFigure: hdc
 			HDC HDC);"
 
 	<stdcall: bool CloseFigure handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 combineRgn: hrgnDst hrgnSrc1: hrgnSrc1 hrgnSrc2: hrgnSrc2 fnCombineMode: fnCombineMode
 	"Invoke the CombineRgn() function of the module wrapped by the receiver.
@@ -74,7 +74,7 @@ combineRgn: hrgnDst hrgnSrc1: hrgnSrc1 hrgnSrc2: hrgnSrc2 fnCombineMode: fnCombi
 			int fnCombineMode);"
 
 	<stdcall: sdword CombineRgn handle handle handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createBitmap: width nHeight: height cPlanes: planes cBitsPerPel: bps lpvBits: bits
 	"The CreateBitmap method answers a bitmap of the specified width, height, and
@@ -89,7 +89,7 @@ createBitmap: width nHeight: height cPlanes: planes cBitsPerPel: bps lpvBits: bi
 	);"
 
 	<stdcall: handle CreateBitmap sdword sdword dword dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createBrushIndirect: lplb
 	"Invoke the CreateBrushIndirect() function of the module wrapped by the receiver.
@@ -99,7 +99,7 @@ createBrushIndirect: lplb
 			LOGBRUSH* lplb);"
 
 	<stdcall: handle CreateBrushIndirect LOGBRUSH*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createCompatibleBitmap: hdc nWidth: nWidth nHeight: nHeight
 	"Invoke the CreateCompatibleBitmap() function of the module wrapped by the receiver.
@@ -111,7 +111,7 @@ createCompatibleBitmap: hdc nWidth: nWidth nHeight: nHeight
 			int nHeight);"
 
 	<stdcall: handle CreateCompatibleBitmap handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createCompatibleDC: hdc
 	"Invoke the CreateCompatibleDC() function of the module wrapped by the receiver.
@@ -121,7 +121,7 @@ createCompatibleDC: hdc
 			HDC HDC);"
 
 	<stdcall: handle CreateCompatibleDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createDC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpInitData: lpInitData
 	"Invoke the CreateDC() function of the module wrapped by the receiver.
@@ -134,7 +134,7 @@ createDC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpInitData: l
 			DEVMODE* lpInitData);"
 
 	<stdcall: handle CreateDCW lpwstr lpwstr lpwstr void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSection dwOffset: dwOffset
 	"Invoke the CreateDIBSection() function of the module wrapped by the receiver.
@@ -149,7 +149,7 @@ createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSect
 			DWORD dwOffset);"
 
 	<stdcall: handle CreateDIBSection handle void* dword void** handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createEllipticRgnIndirect: lprc
 	"Invoke the CreateEllipticRgnIndirect() function of the module wrapped by the receiver.
@@ -159,7 +159,7 @@ createEllipticRgnIndirect: lprc
 			RECT* lprc);"
 
 	<stdcall: handle CreateEllipticRgnIndirect RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createFontIndirectA: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
@@ -169,7 +169,7 @@ createFontIndirectA: lplf
 			LOGFONT* lplf);"
 
 	<stdcall: handle CreateFontIndirectA LOGFONT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createFontIndirectW: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
@@ -179,7 +179,7 @@ createFontIndirectW: lplf
 			LOGFONTW* lplf);"
 
 	<stdcall: handle CreateFontIndirectW LOGFONTW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lpdvminit
 	"Invoke the CreateIC() function of the module wrapped by the receiver.
@@ -192,7 +192,7 @@ createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lp
 			DEVMODE* lpdvminit);"
 
 	<stdcall: handle CreateICW lpwstr lpwstr lpwstr DEVMODE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createPalette: lplgpl
 	"Invoke the CreatePalette() function of the module wrapped by the receiver.
@@ -202,7 +202,7 @@ createPalette: lplgpl
 			LOGPALETTE* lplgpl);"
 
 	<stdcall: handle CreatePalette LOGPALETTE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createPen: fnPenStyle nWidth: nWidth crColor: crColor
 	"Invoke the CreatePen() function of the module wrapped by the receiver.
@@ -214,7 +214,7 @@ createPen: fnPenStyle nWidth: nWidth crColor: crColor
 			COLORREF crColor);"
 
 	<stdcall: handle CreatePen sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createPenIndirect: lplgpn
 	"Invoke the CreatePenIndirect() function of the module wrapped by the receiver.
@@ -224,7 +224,7 @@ createPenIndirect: lplgpn
 			LOGPEN* lplgpn);"
 
 	<stdcall: handle CreatePenIndirect LOGPEN*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createRectRgnIndirect: lprc
 	"Invoke the CreateRectRgnIndirect() function of the module wrapped by the receiver.
@@ -234,7 +234,7 @@ createRectRgnIndirect: lprc
 			RECT* lprc);"
 
 	<stdcall: handle CreateRectRgnIndirect RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 deleteDC: hdc
 	"Invoke the DeleteDC() function of the module wrapped by the receiver.
@@ -244,7 +244,7 @@ deleteDC: hdc
 			HDC HDC);"
 
 	<stdcall: bool DeleteDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 deleteObject: hgdiobj
 	"Invoke the DeleteObject() function of the module wrapped by the receiver.
@@ -254,7 +254,7 @@ deleteObject: hgdiobj
 			HGDIOBJ HGDIOBJ);"
 
 	<stdcall: bool DeleteObject handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ellipse: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 	"Draw an ellipse. The center of the ellipse is the center of the specified 
@@ -269,7 +269,7 @@ ellipse: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 		);"
 
 	<stdcall: bool Ellipse handle sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endDoc: hdc
 	"Invoke the EndDoc() function of the module wrapped by the receiver.
@@ -279,7 +279,7 @@ endDoc: hdc
 			HDC HDC);"
 
 	<stdcall: sdword EndDoc handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endPage: hdc
 	"Invoke the EndPage() function of the module wrapped by the receiver.
@@ -289,7 +289,7 @@ endPage: hdc
 			HDC HDC);"
 
 	<stdcall: sdword EndPage handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endPath: hdc
 	"Invoke the EndPath() function of the module wrapped by the receiver.
@@ -299,7 +299,7 @@ endPath: hdc
 			HDC HDC);"
 
 	<stdcall: bool EndPath handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallbackThunk lParam: anInteger
 	"Enumerate the fonts in a specified family available on a specified
@@ -312,9 +312,7 @@ enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallb
 		);"
 
 	<stdcall: sdword EnumFontFamiliesW handle lpwstr lpvoid uintptr>
-	^self invalidCall
-
-!
+	^self invalidCall: _failureCode!
 
 enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInteger
 	"Enumerate the fonts with the specified face name on the specified device throught the
@@ -328,7 +326,7 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 		);"
 
 	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightRect nBottomRect: nBottomRect
 	"Invoke the ExcludeClipRect() function of the module wrapped by the receiver.
@@ -342,7 +340,7 @@ excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightR
 			int nBottomRect);"
 
 	<stdcall: sdword ExcludeClipRect handle sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbCount: cbCount lpDx: lpDx
 	"Invoke the ExtTextOut() function of the module wrapped by the receiver.
@@ -359,7 +357,7 @@ extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbC
 			int* lpDx);"
 
 	<stdcall: bool ExtTextOutW handle sdword sdword dword RECT* lpwstr dword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fillRgn: hdc hRgn: hRgn hBr: hBr
 	"The FillRgn function fills a region by using the specified brush. 
@@ -370,7 +368,7 @@ fillRgn: hdc hRgn: hRgn hBr: hBr
 			);"
 
 	<stdcall: bool FillRgn handle handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 frameRgn: hdc hRgn: hRgn hBr: hBr nWidth: nWidth nHeight: nHeight
 	"Draws a border around the specified region by using the specified brush. 
@@ -383,7 +381,7 @@ frameRgn: hdc hRgn: hRgn hBr: hBr nWidth: nWidth nHeight: nHeight
 			);"
 
 	<stdcall: bool FrameRgn handle handle handle dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 gdiAlphaBlend: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc ftn: blend
 	"Invoke the GdiAlphaBlend() function of the module wrapped by the receiver.
@@ -403,7 +401,7 @@ gdiAlphaBlend: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest
 			[in]BLENDFUNCTION ftn);"
 
 	<stdcall: bool GdiAlphaBlend handle sdword sdword sdword sdword handle sdword sdword sdword sdword BLENDFUNCTION>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 gdiGradientFill: hdc pVertex: pVertex nVertex: dwNumVertex pMesh: pMesh nCount: dwNumMesh ulMode: dwMode
 	"Invoke the GdiGradientFill() function of the module wrapped by the receiver.
@@ -418,7 +416,7 @@ gdiGradientFill: hdc pVertex: pVertex nVertex: dwNumVertex pMesh: pMesh nCount: 
 			[in]ULONG ulMode);"
 
 	<stdcall: bool GdiGradientFill handle TRIVERTEX* dword void* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest wDest: nWidthDest hDest: nHeightDest hdcSrc: hdcSrc xoriginSrc: nXOriginSrc yoriginSrc: nYOriginSrc wSrc: nWidthSrc hSrc: nHeightSrc crTransparent: crTransparent
 	"Invoke the GdiTransparentBlt() function of the module wrapped by the receiver.
@@ -438,7 +436,7 @@ gdiTransparentBlt: hdcDest xoriginDest: nXOriginDest yoriginDest: nYOriginDest w
 			[in]UINT crTransparent);"
 
 	<stdcall: bool GdiTransparentBlt handle sdword sdword sdword sdword handle sdword sdword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBkColor: hdc
 	"Invoke the GetBkColor() function of the module wrapped by the receiver.
@@ -448,7 +446,7 @@ getBkColor: hdc
 			HDC HDC);"
 
 	<stdcall: dword GetBkColor handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBkMode: hdc
 	"Invoke the GetBkMode() function of the module wrapped by the receiver.
@@ -458,7 +456,7 @@ getBkMode: hdc
 			HDC HDC);"
 
 	<stdcall: sdword GetBkMode handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getClipBox: hdc lprc: lprc
 	"Invoke the GetClipBox() function of the module wrapped by the receiver.
@@ -469,7 +467,7 @@ getClipBox: hdc lprc: lprc
 			RECT* lprc);"
 
 	<stdcall: sdword GetClipBox handle RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getCurrentObject: hdc uObjectType: uObjectType
 	"Invoke the GetCurrentObject() function of the module wrapped by the receiver.
@@ -480,15 +478,15 @@ getCurrentObject: hdc uObjectType: uObjectType
 			UINT uObjectType);"
 
 	<stdcall: handle GetCurrentObject handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getDCBrushColor: hdc 
+getDCBrushColor: hdc
 	<stdcall: dword GetDCBrushColor handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getDCPenColor: hdc 
+getDCPenColor: hdc
 	<stdcall: dword GetDCPenColor handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDeviceCaps: hdc nIndex: nIndex
 	"Invoke the GetDeviceCaps() function of the module wrapped by the receiver.
@@ -499,7 +497,7 @@ getDeviceCaps: hdc nIndex: nIndex
 			int nIndex);"
 
 	<stdcall: sdword GetDeviceCaps handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColors
 	"Invoke the GetDIBColorTable() function of the module wrapped by the receiver.
@@ -512,7 +510,7 @@ getDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColo
 			RGBQUAD* pColors);"
 
 	<stdcall: dword GetDIBColorTable handle dword dword RGBQUAD*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDIBits: hdc hbm: hbm uStartScan: uStartScan cScanLines: cScanLines lpvBits: lpvBits lpbi: lpbi uUsage: uUsage
 	"Invoke the GetDIBits() function of the module wrapped by the receiver.
@@ -528,7 +526,7 @@ getDIBits: hdc hbm: hbm uStartScan: uStartScan cScanLines: cScanLines lpvBits: l
 			UINT uUsage);"
 
 	<stdcall: sdword GetDIBits handle handle dword dword void* BITMAPINFO* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getMapMode: hdc
 	"Invoke the GetMapMode() function of the module wrapped by the receiver.
@@ -538,7 +536,7 @@ getMapMode: hdc
 			HDC HDC);"
 
 	<stdcall: sdword GetMapMode handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getNearestPaletteIndex: hpal crColor: crColor
 	"Invoke the GetNearestPaletteIndex() function of the module wrapped by the receiver.
@@ -549,7 +547,7 @@ getNearestPaletteIndex: hpal crColor: crColor
 			COLORREF crColor);"
 
 	<stdcall: dword GetNearestPaletteIndex handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getObject: objectHandle cbBuffer: count lpvObject: buffer
 	"Obtains information about a specified graphics object. Depending on 
@@ -563,7 +561,7 @@ getObject: objectHandle cbBuffer: count lpvObject: buffer
 		);"
 
 	<stdcall: sdword GetObjectA handle sdword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getObjectW: objectHandle cbBuffer: count lpvObject: buffer
 	"Obtains information about a specified graphics object. Depending on 
@@ -577,11 +575,11 @@ getObjectW: objectHandle cbBuffer: count lpvObject: buffer
 		);"
 
 	<stdcall: sdword GetObjectW handle sdword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC 
+getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC
 	<stdcall: dword GetOutlineTextMetricsW handle dword OUTLINETEXTMETRICW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
 	"Invoke the GetPaletteEntries() function of the module wrapped by the receiver.
@@ -594,7 +592,7 @@ getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
 			PALETTEENTRY* lppe);"
 
 	<stdcall: dword GetPaletteEntries handle dword dword PALETTEENTRY*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPixel: aHandle xPos: xPos yPos: yPos
 	"Answer the value of the pixel at the specified coordinates in the specified DC.
@@ -606,7 +604,7 @@ getPixel: aHandle xPos: xPos yPos: yPos
 		);"
 
 	<stdcall: dword GetPixel handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getROP2: hdc
 	"Invoke the GetROP2() function of the module wrapped by the receiver.
@@ -616,7 +614,7 @@ getROP2: hdc
 			HDC HDC);"
 
 	<stdcall: sdword GetROP2 handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getStockObject: fnObject
 	"Invoke the GetStockObject() function of the module wrapped by the receiver.
@@ -626,9 +624,9 @@ getStockObject: fnObject
 			int fnObject);"
 
 	<stdcall: handle GetStockObject sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getTextColor: hdc 
+getTextColor: hdc
 	"The GetTextColor function retrieves the current text color for the specified device context.
 
 	COLORREF GetTextColor(
@@ -636,7 +634,7 @@ getTextColor: hdc
 	);"
 
 	<stdcall: dword GetTextColor handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 	"Invoke the GetTextExtentPoint32() function of the module wrapped by the receiver.
@@ -649,16 +647,16 @@ getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 			SIZEL* lpSize);"
 
 	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword SIZE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTextMetrics: hdc lptm: lptm
 	"Invoke the GetTextMetrics() GDI call to populate a TEXTMETRICW structure, lptm, with
 	metrics for the font currently selected into the device context with handle, hdc."
 
 	<stdcall: bool GetTextMetricsW handle TEXTMETRICW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getViewportExtEx: hdc lpSize: lpSize 
+getViewportExtEx: hdc lpSize: lpSize
 	"The GetViewportExtEx function retrieves the x-extent and y-extent of the
 	current viewport for the specified device context. 
 
@@ -666,9 +664,8 @@ getViewportExtEx: hdc lpSize: lpSize
 			HDC  hdc,	// handle of device context 
 			LPPOINT  lpPoint 	// points to retrieved extent origin );"
 
-	<stdcall: bool GetViewportExtEx handle POINTL* >
-	^self invalidCall
-!
+	<stdcall: bool GetViewportExtEx handle POINTL*>
+	^self invalidCall: _failureCode!
 
 getViewportOrgEx: hdc lppt: lppt
 	"The GetViewportOrgEx function retrieves the origin of the
@@ -678,9 +675,8 @@ getViewportOrgEx: hdc lppt: lppt
 			HDC  hdc,	// handle of device context 
 			LPPOINT  lpPoint 	// points to retrieved extent origin );"
 
-	<stdcall: bool GetViewportOrgEx handle POINTL* >
-	^self invalidCall
-!
+	<stdcall: bool GetViewportOrgEx handle POINTL*>
+	^self invalidCall: _failureCode!
 
 getWindowExtEx: hdc lpSize: lpSize
 	"Invoke the GetWindowExtEx() function of the module wrapped by the receiver.
@@ -691,7 +687,7 @@ getWindowExtEx: hdc lpSize: lpSize
 			SIZE* lpSize);"
 
 	<stdcall: bool GetWindowExtEx handle SIZE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowOrgEx: hdc lppt: lppt
 	"The GetWindowOrgExfunction retrieves the origin of the
@@ -701,9 +697,8 @@ getWindowOrgEx: hdc lppt: lppt
 			HDC  hdc,	// handle of device context 
 			LPPOINT  lpPoint 	// points to retrieved extent origin );"
 
-	<stdcall: bool GetWindowOrgEx handle POINTL* >
-	^self invalidCall
-!
+	<stdcall: bool GetWindowOrgEx handle POINTL*>
+	^self invalidCall: _failureCode!
 
 intersectClipRect: hdc nLeftRect: left nTopRect: top nRightRect: right nBottomRect: bottom
 	"The IntersectClipRect function creates a new clipping region from the intersection
@@ -718,7 +713,7 @@ intersectClipRect: hdc nLeftRect: left nTopRect: top nRightRect: right nBottomRe
 	);"
 
 	<stdcall: sdword IntersectClipRect handle sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 invertRgn: hdc hRgn: hRgn
 	"The InvertRgn function inverts the colors in the specified region. 
@@ -730,7 +725,7 @@ invertRgn: hdc hRgn: hRgn
 	"
 
 	<stdcall: bool InvertRgn handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lineTo: hdc nXEnd: newX nYEnd: newY
 	"The LineTo function draws a line from the current position up to, but not including, the specified point. 
@@ -741,7 +736,7 @@ lineTo: hdc nXEnd: newX nYEnd: newY
 		);"
 
 	<stdcall: bool LineTo handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 moveToEx: hdc x: x y: y lpPoint: lpPoint
 	"Invoke the MoveToEx() function of the module wrapped by the receiver.
@@ -754,12 +749,11 @@ moveToEx: hdc x: x y: y lpPoint: lpPoint
 			[defaultvalue(0)]POINTL* lpPoint);"
 
 	<stdcall: bool MoveToEx handle sdword sdword POINTL*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 offsetWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
-	<stdcall: bool OffsetWindowOrgEx handle sdword sdword POINTL* >
-	^self invalidCall
-	!
+	<stdcall: bool OffsetWindowOrgEx handle sdword sdword POINTL*>
+	^self invalidCall: _failureCode!
 
 paintRgn: hdc hRgn: hRgn
 	"Paints the specified region by using the brush currently selected into the device context. 
@@ -769,7 +763,7 @@ paintRgn: hdc hRgn: hRgn
 		);"
 
 	<stdcall: bool PaintRgn handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 patBlt: hdc nXLeft: x nYLeft: y nWidth: width nHeight: height dwRop: rop
 	"
@@ -783,7 +777,7 @@ patBlt: hdc nXLeft: x nYLeft: y nWidth: width nHeight: height dwRop: rop
 	);"
 
 	<stdcall: bool PatBlt handle sdword sdword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 plgBlt: hdcDest lpPoint: lpPoint hdcSrc: hdcSrc nXSrc: nXSrc nYSrc: nYSrc nWidth: nWidth nHeight: nHeight hbmMask: hbmMask sMask: sMask yMask: yMask
 	"Invoke the PlgBlt() function of the module wrapped by the receiver.
@@ -802,7 +796,7 @@ plgBlt: hdcDest lpPoint: lpPoint hdcSrc: hdcSrc nXSrc: nXSrc nYSrc: nYSrc nWidth
 			int yMask);"
 
 	<stdcall: bool PlgBlt handle word* handle sdword sdword sdword sdword handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 polygon: hdc lpPoints: points nCount: count
 	"Draw a Polygon consisting of 2 or more straight sides, and then fill in the shape.
@@ -814,7 +808,7 @@ polygon: hdc lpPoints: points nCount: count
 	);"
 
 	<stdcall: bool Polygon handle lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ptInRegion: hdc x: x y: y
 	"Determines whether the specified point is inside the specified region. 
@@ -825,7 +819,7 @@ ptInRegion: hdc x: x y: y
 			);"
 
 	<stdcall: bool PtInRegion handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 realizePalette: hdc
 	"Invoke the RealizePalette() function of the module wrapped by the receiver.
@@ -835,7 +829,7 @@ realizePalette: hdc
 			HDC HDC);"
 
 	<stdcall: dword RealizePalette handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 rectangle: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 	"Draw a rectangle. The rectangle is outlined by using the current 
@@ -849,7 +843,7 @@ rectangle: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b
 		);"
 
 	<stdcall: bool Rectangle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 rectVisible: hdc lprc: aRECT
 	"The RectVisible function determines whether any part of the specified rectangle
@@ -860,10 +854,10 @@ rectVisible: hdc lprc: aRECT
 		CONST RECT *lprc 	// address of rectangle structure  
 	);"
 
-	<stdcall: bool RectVisible handle RECT* >
-	^self invalidCall!
+	<stdcall: bool RectVisible handle RECT*>
+	^self invalidCall: _failureCode!
 
-removeFontResource: fontFile 
+removeFontResource: fontFile
 	"The RemoveFontResource function removes the fonts in the specified file from the system font table. 
 	If the font was added using the AddFontResourceEx function, you must use the RemoveFontResourceEx function. 
 
@@ -873,7 +867,7 @@ removeFontResource: fontFile
 	"
 
 	<stdcall: bool RemoveFontResourceW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 restoreDC: hDC nSavedDC: nSavedDC
 	"Restores a device context (DC) to the specified state.
@@ -885,7 +879,7 @@ restoreDC: hDC nSavedDC: nSavedDC
 		);"
 
 	<stdcall: bool RestoreDC handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 roundRect: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b nWidth: rx nHeight: ry
 	"Draw a rectangle with rounded corners. The rectangle is outlined by using 
@@ -901,7 +895,7 @@ roundRect: hdc nLeftRect: l nTopRect: t nRightRect: r nBottomRect: b nWidth: rx 
 		);"
 
 	<stdcall: bool RoundRect handle sdword sdword sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 saveDC: hDC
 	"The SaveDC function saves the current state of the specified device context 
@@ -912,7 +906,7 @@ saveDC: hDC
 		);"
 
 	<stdcall: sdword SaveDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectClipPath: hdc iMode: iMode
 	"Invoke the SelectClipPath() function of the module wrapped by the receiver.
@@ -923,7 +917,7 @@ selectClipPath: hdc iMode: iMode
 			int iMode);"
 
 	<stdcall: bool SelectClipPath handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectClipRgn: hdc hrgn: hRegion
 	"The SelectClipRgn function selects a region as the current clipping region
@@ -933,8 +927,9 @@ selectClipRgn: hdc hrgn: hRegion
 		HDC hdc		// handle of device context 
 		HRGN hrgn		// handle of region to be selected  
 	);"
+
 	<stdcall: sdword SelectClipRgn handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectObject: hdc hgdiobj: hgdiobj
 	"Invoke the SelectObject() function of the module wrapped by the receiver.
@@ -945,7 +940,7 @@ selectObject: hdc hgdiobj: hgdiobj
 			HGDIOBJ HGDIOBJ);"
 
 	<stdcall: handle SelectObject handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectPalette: hdc hPal: hPal bForceBackground: forceBackground
 	"Selects the logical palette hPal into a device context, hdc.
@@ -964,7 +959,7 @@ selectPalette: hdc hPal: hPal bForceBackground: forceBackground
 		BOOL bForceBackground);"
 
 	<stdcall: handle SelectPalette handle handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setBkColor: hdc crColor: color
 	"The SetBkColor function sets the current background color to the specified 
@@ -977,7 +972,7 @@ setBkColor: hdc crColor: color
 		);"
 
 	<stdcall: dword SetBkColor handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setBkMode: hdc iBkMode: mode
 	"The SetBkMode function sets the background mix mode of the specified device context. 
@@ -989,7 +984,7 @@ setBkMode: hdc iBkMode: mode
 		);"
 
 	<stdcall: sdword SetBkMode handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setBrushOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 	"Sets the brush origin that GDI assigns to the next brush an application selects into the specified device context. 
@@ -999,9 +994,8 @@ setBrushOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  nYOrg,	// y-coordinate of new origin 
 			LPPOINT  lppt 	// points to previous brush origin );"
 
-	<stdcall: bool SetBrushOrgEx handle sdword sdword POINTL* >
-	^self invalidCall
-	!
+	<stdcall: bool SetBrushOrgEx handle sdword sdword POINTL*>
+	^self invalidCall: _failureCode!
 
 setDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColors
 	"Invoke the SetDIBColorTable() function of the module wrapped by the receiver.
@@ -1014,7 +1008,7 @@ setDIBColorTable: hdc uStartIndex: uStartIndex cEntries: cEntries pColors: pColo
 			RGBQUAD* pColors);"
 
 	<stdcall: dword SetDIBColorTable handle dword dword RGBQUAD*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setDIBits: hdc hbmp: hbmp uStartScan: uStartScan cScanLines: cScanLines lpvBits: lpvBits lpbmi: lpbmi fuColorUse: fuColorUse
 	"Invoke the SetDIBits() function of the module wrapped by the receiver.
@@ -1030,7 +1024,7 @@ setDIBits: hdc hbmp: hbmp uStartScan: uStartScan cScanLines: cScanLines lpvBits:
 			UINT fuColorUse);"
 
 	<stdcall: sdword SetDIBits handle handle dword dword void* void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setMapMode: hdc fnMapMode: fnMapMode
 	"Invoke the SetMapMode() function of the module wrapped by the receiver.
@@ -1041,7 +1035,7 @@ setMapMode: hdc fnMapMode: fnMapMode
 			int fnMapMode);"
 
 	<stdcall: sdword SetMapMode handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setPixelV: hdc x: x y: y crColor: pixelColor
 	"The SetPixelV function sets the pixel at the specified coordinates to the
@@ -1056,7 +1050,7 @@ setPixelV: hdc x: x y: y crColor: pixelColor
 	);"
 
 	<stdcall: bool SetPixelV handle sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setROP2: hdc fnDrawMode: fnDrawMode
 	"Invoke the SetROP2() function of the module wrapped by the receiver.
@@ -1067,7 +1061,7 @@ setROP2: hdc fnDrawMode: fnDrawMode
 			int fnDrawMode);"
 
 	<stdcall: sdword SetROP2 handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setTextAlign: hdc fMode: mode
 	"
@@ -1077,7 +1071,7 @@ setTextAlign: hdc fMode: mode
 	);"
 
 	<stdcall: dword SetTextAlign handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setTextColor: hdc crColor: colour
 	"The SetTextColor function sets the text color for the specified
@@ -1089,9 +1083,9 @@ setTextColor: hdc crColor: colour
 	);"
 
 	<stdcall: dword SetTextColor handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize 
+setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 	"The SetViewportExtEx function sets the horizontal and vertical extents
 	of the viewport for a device context by using the specified values. 
 
@@ -1101,9 +1095,8 @@ setViewportExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetViewportExtEx handle sdword sdword POINTL* >
-	^self invalidCall
-!
+	<stdcall: bool SetViewportExtEx handle sdword sdword POINTL*>
+	^self invalidCall: _failureCode!
 
 setViewportOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 	"The SetViewportOrgEx function specifies which device point maps to the window origin (0,0). 
@@ -1114,9 +1107,8 @@ setViewportOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetViewportOrgEx handle sdword sdword POINTL* >
-	^self invalidCall
-	!
+	<stdcall: bool SetViewportOrgEx handle sdword sdword POINTL*>
+	^self invalidCall: _failureCode!
 
 setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 	"Invoke the SetWindowExtEx() function of the module wrapped by the receiver.
@@ -1129,7 +1121,7 @@ setWindowExtEx: hdc nXExtent: nXExtent nYExtent: nYExtent lpSize: lpSize
 			SIZE* lpSize);"
 
 	<stdcall: bool SetWindowExtEx handle sdword sdword SIZE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 	"The SetWindowOrgEx function specifies which window point maps to the viewport origin (0,0). 
@@ -1140,9 +1132,8 @@ setWindowOrgEx: hdc nXOrg: x nYOrg: y lppt: aPOINT
 			int  Y,	// y-coordinate of new origin 
 			LPPOINT  lpPoint 	// points to previous origin );"
 
-	<stdcall: bool SetWindowOrgEx handle sdword sdword POINTL* >
-	^self invalidCall
-	!
+	<stdcall: bool SetWindowOrgEx handle sdword sdword POINTL*>
+	^self invalidCall: _failureCode!
 
 startDoc: hdc lpdi: info
 	"Start a print job.
@@ -1151,10 +1142,8 @@ startDoc: hdc lpdi: info
 			CONST DOCINFOW *lpdi 	// address of structure with file names  
 		);"
 
-	<stdcall: sdword StartDocW handle DOCINFOW* >
-	^self invalidCall
-
-!
+	<stdcall: sdword StartDocW handle DOCINFOW*>
+	^self invalidCall: _failureCode!
 
 startPage: hdc
 	"Invoke the StartPage() function of the module wrapped by the receiver.
@@ -1164,11 +1153,10 @@ startPage: hdc
 			HDC HDC);"
 
 	<stdcall: sdword StartPage handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-stretchBlt: hdc nXOriginDest: x nYOriginDest: y nWidthDest: w nHeightDest: h 
-	hdcSrc: hdcSrc nXOriginSrc: sx nYOriginSrc: sy nWidthSrc: sw nHeightSrc: sh dwRop: dwRop
-  	"Copy a bitmap from a source rectangle into a destination rectangle, stretching or 
+stretchBlt: hdc nXOriginDest: x nYOriginDest: y nWidthDest: w nHeightDest: h hdcSrc: hdcSrc nXOriginSrc: sx nYOriginSrc: sy nWidthSrc: sw nHeightSrc: sh dwRop: dwRop
+	"Copy a bitmap from a source rectangle into a destination rectangle, stretching or 
 	compressing it to fit the dimensions of the destination rectangle, if necessary. Windows 
 	stretches or compresses the bitmap according to the stretching mode currently set in 
 	the destination device context. 
@@ -1187,7 +1175,7 @@ stretchBlt: hdc nXOriginDest: x nYOriginDest: y nWidthDest: w nHeightDest: h
 		);"
 
 	<stdcall: bool StretchBlt handle sdword sdword sdword sdword handle sdword sdword sdword sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stretchDIBits: hdc xDest: xDest yDest: yDest nDestWidth: nDestWidth nDestHeight: nDestHeight xSrc: xSrc ySrc: ySrc nSrcWidth: nSrcWidth nSrcHeight: nSrcHeight lpBits: lpBits lpBitsInfo: lpBitsInfo iUsage: iUsage dwRop: dwRop
 	"Invoke the StretchDIBits() function of the module wrapped by the receiver.
@@ -1209,7 +1197,7 @@ stretchDIBits: hdc xDest: xDest yDest: yDest nDestWidth: nDestWidth nDestHeight:
 			DWORD dwRop);"
 
 	<stdcall: sdword StretchDIBits handle sdword sdword sdword sdword sdword sdword sdword sdword void* void* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbString
 	"Invoke the TextOut() function of the module wrapped by the receiver.
@@ -1223,7 +1211,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 			int cbString);"
 
 	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !GDILibrary categoriesFor: #addFontResource:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #beginPath:!**auto generated**!public!win32 functions-path! !
 !GDILibrary categoriesFor: #bitBlt:nXDest:nYDest:nWidth:nHeight:hdcSrc:nXSrc:nYSrc:dwRop:!**auto generated**!public!win32 functions-bitmap! !

@@ -16,20 +16,19 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\IDE\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Views\SysLink\Dolphin SysLink Control';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\MVP\Gdiplus\Gdiplus ImageView';
-	yourself).
+package setPrerequisites: #(
+	'..\..\IDE\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\MVP\Gdiplus\Gdiplus ImageView').
 
 package!
 

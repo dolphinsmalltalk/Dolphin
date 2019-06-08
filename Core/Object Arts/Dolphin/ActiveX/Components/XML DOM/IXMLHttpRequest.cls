@@ -22,7 +22,7 @@ Abort
 		HRESULT __stdcall abort();"
 
 	<virtual stdcall: hresult 13>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_readyState: plState
 	"Private - Get the value of the 'readyState' property of the receiver.
@@ -31,7 +31,7 @@ get_readyState: plState
 			[out, retval]long* plState);"
 
 	<virtual stdcall: hresult 20 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_responseBody: pvarBody
 	"Private - Get the value of the 'responseBody' property of the receiver.
@@ -40,7 +40,7 @@ get_responseBody: pvarBody
 			[out, retval]VARIANT* pvarBody);"
 
 	<virtual stdcall: hresult 18 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_responseStream: pvarBody
 	"Private - Get the value of the 'responseStream' property of the receiver.
@@ -49,7 +49,7 @@ get_responseStream: pvarBody
 			[out, retval]VARIANT* pvarBody);"
 
 	<virtual stdcall: hresult 19 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_responseText: pbstrBody
 	"Private - Get the value of the 'responseText' property of the receiver.
@@ -58,7 +58,7 @@ get_responseText: pbstrBody
 			[out, retval]BSTR* pbstrBody);"
 
 	<virtual stdcall: hresult 17 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_responseXML: ppBody
 	"Private - Get the value of the 'responseXML' property of the receiver.
@@ -67,7 +67,7 @@ get_responseXML: ppBody
 			[out, retval]IDispatch** ppBody);"
 
 	<virtual stdcall: hresult 16 IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_status: plStatus
 	"Private - Get the value of the 'status' property of the receiver.
@@ -76,7 +76,7 @@ get_status: plStatus
 			[out, retval]long* plStatus);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_statusText: pbstrStatus
 	"Private - Get the value of the 'statusText' property of the receiver.
@@ -85,7 +85,7 @@ get_statusText: pbstrStatus
 			[out, retval]BSTR* pbstrStatus);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getAllResponseHeaders
 	"Answer the <BSTR> result of invoking the getAllResponseHeaders() method of the COM object.
@@ -105,7 +105,7 @@ GetAllResponseHeaders: pbstrHeaders
 			[out, retval]BSTR* pbstrHeaders);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getResponseHeader: bstrHeader
 	"Answer the <BSTR> result of invoking the getResponseHeader() method of the COM object.
@@ -128,7 +128,7 @@ GetResponseHeader: bstrHeader pbstrValue: pbstrValue
 			[out, retval]BSTR* pbstrValue);"
 
 	<virtual stdcall: hresult 10 bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 onreadystatechange: arg1
 	"Set the 'onreadystatechange' property of the receiver to the <IDispatch*> value of the argument.
@@ -172,7 +172,7 @@ Open: bstrMethod bstrUrl: bstrUrl varAsync: varAsync bstrUser: bstrUser bstrPass
 			[in, optional]VARIANT bstrPassword);"
 
 	<virtual stdcall: hresult 8 bstr bstr variant variant variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_onreadystatechange: arg1
 	"Private - Set the value of the 'onreadystatechange' property of the object wrapped by the 
@@ -182,7 +182,7 @@ put_onreadystatechange: arg1
 			[in]IDispatch* arg1);"
 
 	<virtual stdcall: hresult 21 IDispatch*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 readyState
 	"Answer the <sdword> value of the 'readyState' property of the receiver.
@@ -255,7 +255,7 @@ Send: varBody
 			[in, optional]VARIANT varBody);"
 
 	<virtual stdcall: hresult 12 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetRequestHeader: bstrHeader bstrValue: bstrValue
 	"Invoke the setRequestHeader() method of the COM object.
@@ -266,7 +266,7 @@ SetRequestHeader: bstrHeader bstrValue: bstrValue
 			[in]BSTR bstrValue);"
 
 	<virtual stdcall: hresult 9 bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 status
 	"Answer the <sdword> value of the 'status' property of the receiver.

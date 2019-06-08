@@ -64,7 +64,7 @@ Comment: strChars
 			[in, out]BSTR* strChars);"
 
 	<virtual stdcall: hresult 14 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndCDATA
 	"Invoke the endCDATA() method of the COM object.
@@ -73,7 +73,7 @@ EndCDATA
 		HRESULT __stdcall endCDATA();"
 
 	<virtual stdcall: hresult 13>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndDTD
 	"Invoke the endDTD() method of the COM object.
@@ -82,7 +82,7 @@ EndDTD
 		HRESULT __stdcall endDTD();"
 
 	<virtual stdcall: hresult 9>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endEntity: strName
 	"Invoke the endEntity() method of the COM object.
@@ -99,7 +99,7 @@ EndEntity: strName
 			[in, out]BSTR* strName);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -118,7 +118,7 @@ StartCDATA
 		HRESULT __stdcall startCDATA();"
 
 	<virtual stdcall: hresult 12>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 startDTD: strName strPublicId: strPublicId strSystemId: strSystemId
 	"Invoke the startDTD() method of the COM object.
@@ -147,7 +147,7 @@ StartDTD: strName strPublicId: strPublicId strSystemId: strSystemId
 			[in, out]BSTR* strSystemId);"
 
 	<virtual stdcall: hresult 8 bstr* bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 startEntity: strName
 	"Invoke the startEntity() method of the COM object.
@@ -164,7 +164,7 @@ StartEntity: strName
 			[in, out]BSTR* strName);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IVBSAXLexicalHandler categoriesFor: #comment:!**auto generated**!methods!public! !
 !IVBSAXLexicalHandler categoriesFor: #Comment:!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!private! !
 !IVBSAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-IVBSAXLexicalHandler!public! !

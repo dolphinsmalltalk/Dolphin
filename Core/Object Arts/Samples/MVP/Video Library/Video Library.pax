@@ -29,24 +29,25 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls';
-	add: '..\..\..\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
-	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls'
+	'..\..\..\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\..\Dolphin\Base\Dolphin Legacy Date & Time'
+	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus').
 
 package!
 

@@ -20,8 +20,7 @@ Cancel
 		HRESULT __stdcall Cancel();"
 
 	<virtual stdcall: hresult 33>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 charset
 	"Answer the <bstr> value of the 'Charset' property of the receiver."
@@ -44,8 +43,7 @@ Close
 		HRESULT __stdcall Close();"
 
 	<virtual stdcall: hresult 23>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 copyTo: destStream
 	"Invoke the CopyTo() method of the COM object.
@@ -63,8 +61,7 @@ CopyTo: destStream CharNumber: charNumber
 			[in, optional, defaultvalue(-1)] long CharNumber);"
 
 	<virtual stdcall: hresult 27 ADODB_Stream* sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 eos
 	"Answer the <varbool> value of the 'EOS' property of the receiver."
@@ -81,8 +78,7 @@ Flush
 		HRESULT __stdcall Flush();"
 
 	<virtual stdcall: hresult 28>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Charset: pbstrCharset
 	"Private - Get the value of the 'Charset' property of the receiver.
@@ -90,8 +86,7 @@ get_Charset: pbstrCharset
 			[out, retval] BSTR* pbstrCharset);"
 
 	<virtual stdcall: hresult 19 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_EOS: pEOS
 	"Private - Get the value of the 'EOS' property of the receiver.
@@ -99,8 +94,7 @@ get_EOS: pEOS
 			[out, retval] VARIANT_BOOL* pEOS);"
 
 	<virtual stdcall: hresult 9 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_LineSeparator: pLS
 	"Private - Get the value of the 'LineSeparator' property of the receiver.
@@ -108,8 +102,7 @@ get_LineSeparator: pLS
 			[out, retval] LineSeparatorEnum* pLS);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Mode: pMode
 	"Private - Get the value of the 'Mode' property of the receiver.
@@ -117,8 +110,7 @@ get_Mode: pMode
 			[out, retval] ConnectModeEnum* pMode);"
 
 	<virtual stdcall: hresult 17 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Position: pPos
 	"Private - Get the value of the 'Position' property of the receiver.
@@ -126,8 +118,7 @@ get_Position: pPos
 			[out, retval] long* pPos);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Size: pSize
 	"Private - Get the value of the 'Size' property of the receiver.
@@ -135,8 +126,7 @@ get_Size: pSize
 			[out, retval] long* pSize);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_State: pState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -144,8 +134,7 @@ get_State: pState
 			[out, retval] ObjectStateEnum* pState);"
 
 	<virtual stdcall: hresult 16 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Type: ptype
 	"Private - Get the value of the 'Type' property of the receiver.
@@ -153,8 +142,7 @@ get_Type: ptype
 			[out, retval] StreamTypeEnum* ptype);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 lineSeparator
 	"Answer the <sdword> value of the 'LineSeparator' property of the receiver."
@@ -178,8 +166,7 @@ LoadFromFile: fileName
 			[in] BSTR FileName);"
 
 	<virtual stdcall: hresult 30 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 mode
 	"Answer the <sdword> value of the 'Mode' property of the receiver."
@@ -229,8 +216,7 @@ Open: source Mode: mode Options: options UserName: userName Password: password
 			[in, optional] BSTR Password);"
 
 	<virtual stdcall: hresult 22 variant sdword sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 position
 	"Answer the <sdword> value of the 'Position' property of the receiver."
@@ -254,8 +240,7 @@ put_Charset: pbstrCharset
 			[in] BSTR pbstrCharset);"
 
 	<virtual stdcall: hresult 20 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_LineSeparator: pLS
 	"Private - Set the value of the 'LineSeparator' property of the object wrapped by the 
@@ -264,8 +249,7 @@ put_LineSeparator: pLS
 			[in] LineSeparatorEnum pLS);"
 
 	<virtual stdcall: hresult 15 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Mode: pMode
 	"Private - Set the value of the 'Mode' property of the object wrapped by the 
@@ -274,8 +258,7 @@ put_Mode: pMode
 			[in] ConnectModeEnum pMode);"
 
 	<virtual stdcall: hresult 18 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Position: pPos
 	"Private - Set the value of the 'Position' property of the object wrapped by the 
@@ -284,8 +267,7 @@ put_Position: pPos
 			[in] long pPos);"
 
 	<virtual stdcall: hresult 11 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Type: ptype
 	"Private - Set the value of the 'Type' property of the object wrapped by the 
@@ -294,8 +276,7 @@ put_Type: ptype
 			[in] StreamTypeEnum ptype);"
 
 	<virtual stdcall: hresult 13 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 read
 	"Answer the <VARIANT> result of invoking the Read() method of the COM object.
@@ -322,8 +303,7 @@ Read: numBytes pval: pval
 			[out, retval] VARIANT* pval);"
 
 	<virtual stdcall: hresult 21 sdword variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 readText
 	"Answer the <BSTR> result of invoking the ReadText() method of the COM object.
@@ -350,8 +330,7 @@ ReadText: numChars pbstr: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 31 sdword bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 saveToFile: fileName
 	"Invoke the SaveToFile() method of the COM object.
@@ -369,8 +348,7 @@ SaveToFile: fileName Options: options
 			[in, optional, defaultvalue(1)] SaveOptionsEnum Options);"
 
 	<virtual stdcall: hresult 29 bstr sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetEOS
 	"Invoke the SetEOS() method of the COM object.
@@ -378,8 +356,7 @@ SetEOS
 		HRESULT __stdcall SetEOS();"
 
 	<virtual stdcall: hresult 26>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 size
 	"Answer the <sdword> value of the 'Size' property of the receiver."
@@ -396,8 +373,7 @@ SkipLine
 		HRESULT __stdcall SkipLine();"
 
 	<virtual stdcall: hresult 24>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver."
@@ -436,8 +412,7 @@ Write: buffer
 			[in] VARIANT Buffer);"
 
 	<virtual stdcall: hresult 25 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 writeText: data
 	"Invoke the WriteText() method of the COM object.
@@ -455,8 +430,7 @@ WriteText: data Options: options
 			[in, optional, defaultvalue(0)] StreamWriteEnum Options);"
 
 	<virtual stdcall: hresult 32 bstr sdword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODB_Stream categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Stream!public! !
 !ADODB_Stream categoriesFor: #charset!**auto generated**!properties!public! !
 !ADODB_Stream categoriesFor: #charset:!**auto generated**!properties!public! !

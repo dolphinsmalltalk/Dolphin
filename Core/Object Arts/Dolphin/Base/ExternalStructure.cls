@@ -287,30 +287,30 @@ invalidArgErrorClass
 	^InvalidExternalCall
 !
 
-invalidCall
+invalidCall: anInteger
 	"An invalid virtual call was attempted through one of the receiver's methods.
 	Generate an appropriate error from the following categories:
 		-	Argument type error. At least one argument was either out of range or of invalid type.
 			Only the first such error is reported.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| failureCode proc |
+	| proc |
 	proc := Processor activeProcess.
-	(failureCode := proc primitiveFailureCode) < 0 ifTrue: [^self hresultError: proc primitiveFailureData].
-	failureCode >= 16 
+	anInteger < 0 ifTrue: [^self hresultError: proc primitiveFailureData].
+	anInteger >= 16r10000
 		ifTrue: 
 			[| frame i arg descriptor |
 			frame := proc topFrame sender.
 			descriptor := frame method descriptor.
-			i := descriptor argumentIndexFromOffset: failureCode - 16.
+			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
 			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass 
+			self invalidArgErrorClass
 				invalidArgument: arg
 				got: (frame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)].	"One of the arguments was invalid?"
 
 	"All arguments were apparently valid, it must have been some system or unknown error."
-	^self primitiveFailed!
+	^self primitiveFailed: anInteger!
 
 isFieldBrowsable: aSymbol
 	^self class isFieldBrowsable: aSymbol!
@@ -428,7 +428,7 @@ yourAddress
 !ExternalStructure categoriesFor: #initializeAtAddress:!initializing!private! !
 !ExternalStructure categoriesFor: #initializePointer!initializing!private! !
 !ExternalStructure categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalStructure categoriesFor: #invalidCall!exceptions!public! !
+!ExternalStructure categoriesFor: #invalidCall:!exceptions!public! !
 !ExternalStructure categoriesFor: #isFieldBrowsable:!printing!private! !
 !ExternalStructure categoriesFor: #isNull!public!testing! !
 !ExternalStructure categoriesFor: #isPointer!public!testing! !

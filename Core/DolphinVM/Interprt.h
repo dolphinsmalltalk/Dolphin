@@ -19,6 +19,7 @@
 
 #include "DolphinX.h"
 #include "bytecdes.h"
+#include "DolphinSmalltalk_i.h"
 
 using namespace ST;
 
@@ -406,7 +407,7 @@ public:
 	static void Yield();
 	static BOOL FastYield();
 	static void sleep(ProcessOTE* aProcess);
-	static int SuspendProcess(ProcessOTE* oteProc);
+	static _PrimitiveFailureCode SuspendProcess(ProcessOTE* oteProc);
 	static void QueueProcessOn(ProcessOTE* oteProc, LinkedListOTE* oteList);
 	static BOOL __stdcall Reschedule();
 
@@ -476,10 +477,10 @@ public:
 	//		of primitives invoked by special selectors, then only
 	//		the argumentCount can be relied upon.
 
-	static Oop* primitiveFailure(int failureCode);
-	static Oop* primitiveFailureWith(int failureCode, Oop failureOop);
-	static Oop* primitiveFailureWith(int failureCode, OTE* failureObject);
-	static Oop* primitiveFailureWithInt(int failureCode, SMALLINTEGER failureInt);
+	static Oop* primitiveFailure(_PrimitiveFailureCode failureCode);
+	static Oop* primitiveFailureWith(_PrimitiveFailureCode, Oop failureOop);
+	static Oop* primitiveFailureWith(_PrimitiveFailureCode failureCode, OTE* failureObject);
+	static Oop* primitiveFailureWithInt(_PrimitiveFailureCode failureCode, SMALLINTEGER failureInt);
 
 private:
 	// Answer whether an exception occurred in a primitive
@@ -600,9 +601,7 @@ private:
 
 	///////////////////////////////////////////////////////////////////////////
 	// External Buffer access primitives
-
-	enum { PrimitiveFailureNonInteger, PrimitiveFailureBoundsError, PrimitiveFailureBadValue, PrimitiveFailureSystemError, PrimitiveFailureWrongNumberOfArgs };
-
+	
 	static Oop* __fastcall primitiveStructureIsNull(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveBytesIsNull(Oop* const sp, unsigned argCount);
 

@@ -20,8 +20,7 @@ Cancel
 		HRESULT __stdcall Cancel();"
 
 	<virtual stdcall: hresult 26>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_State: plObjState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -29,8 +28,7 @@ get_State: plObjState
 			[out, retval] long* plObjState);"
 
 	<virtual stdcall: hresult 25 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver."

@@ -1073,7 +1073,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, unsigned argCou
 	OverlappedCall* pCall = OverlappedCall::Do(method, argCount);
 	if (pCall == NULL)
 		// Nested overlapped calls are not supported
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 
 	HARDASSERT(newProcessWaiting());
 

@@ -152,15 +152,15 @@ BEGINPRIMITIVE primitiveVirtualCall
 	
 	mov		eax, [eax].m_location
 	ASSUME	eax:PTR ExternalStructure
-	jb		localPrimitiveFailure0
+	jb		localPrimitiveFailureInvalidReceiver
 
 	mov		eax, [eax].m_contents
 	test	al, 1
-	jnz		localPrimitiveFailure0
+	jnz		localPrimitiveFailureInvalidReceiver
 	ASSUME	eax:PTR OTE
 
 	test	[eax].m_flags, MASK m_pointer
-	jnz		localPrimitiveFailure0
+	jnz		localPrimitiveFailureInvalidReceiver
 
 @@:
 	ASSUME	eax:PTR OTE									; At this point, EAX is OTE of 'this' pointer
@@ -209,8 +209,7 @@ BEGINPRIMITIVE primitiveVirtualCall
 	ASSUME	eax:NOTHING
 	ASSUME	edx:NOTHING
 
-	LocalPrimitiveFailure 0
-	LocalPrimitiveFailure 1
+LocalPrimitiveFailure PrimitiveFailureInvalidReceiver
 
 ENDPRIMITIVE primitiveVirtualCall
 
@@ -265,9 +264,8 @@ procAddressNotCached:
 	ASSUME	edx:PTR InterpRegisters
 	add		esp, 16											; Remove args pushed for aborted call
 	mov		edx, [edx].m_pActiveProcess
-	xor		eax, eax
-	mov		(Process PTR[edx]).m_primitiveFailureCode, SMALLINTONE
-	ret
+	PrimitiveFailureCode PrimitiveFailureSystemError
+
 asyncDLL32Call ENDP
 
 getProcAddress PROC
@@ -349,7 +347,8 @@ procAddressNotCached:
 	jnz		performCall
 
 	add		esp, 20											; Remove args pushed for aborted call
-	PrimitiveFailureCode 1
+	
+	PrimitiveFailureCode PrimitiveFailureSystemError
 
 ENDPRIMITIVE primitiveDLL32Call
 
@@ -1672,18 +1671,15 @@ preCallFail:
 	; ARE BP BASED ADDRESSING FOR LOCALS, SO DON'T NEED TO BOTHER (RESTORING
 	; ESP FROM EBP CORRECTLY ON EXIT IS HANDLED BY MASM)
 
-	lea		INDEX, [INDEX*2+(16*2)+1]			; failureCode = SmallInteger(16+INDEX)
+	lea		eax, [INDEX*2+(65536*2)+1]			; failureCode = SmallInteger(0x10000+INDEX)
 	mov		edx, callContext
 	ASSUME	edx:PTR InterpRegisters
 
-	xor		eax, eax							; Clear EAX in order to fail the primitive
-	
 	mov		ecx, [edx].m_pActiveProcess
 	ASSUME	ecx:PTR Process
 
 	mov		_SP, [edx].m_stackPointer
 	mov		_BP, [edx].m_basePointer
-	mov		[ecx].m_primitiveFailureCode, INDEX
 
 	;; Must load _IP after last use of INDEX, as shares register 
 	ASSERTEQU %INDEX, %_IP
@@ -1760,7 +1756,7 @@ extCallRetSWORD:
 ;;
 extCallRetHRESULT:
 	test	RESULT, RESULT
-	jge		extCallRetDWORD						; If successful return code, return as DWORD
+	jge		extCallRetDWORD					; If successful return code, return as DWORD
 
 	; FAILED(HRESULT)
 	ASSERTNEQU %RESULT, <ecx>
@@ -1780,14 +1776,13 @@ extCallRetHRESULT:
 	mov		_IP, [ecx].m_instructionPointer
 	mov		_BP, [ecx].m_basePointer
 
-	mov		[edx].m_primitiveFailureCode, -1
 	mov		ecx, [edx].m_primitiveFailureData
 	mov		[edx].m_primitiveFailureData, eax
 	ASSUME	edx:NOTHING
 	
 	CountDownOopIn <c>
 
-	xor		eax,eax								; Fail the primitive
+	mov		eax, -1						; Fail the primitive
 	ret
 
 hrOverflow:
@@ -1809,13 +1804,12 @@ hrOverflow:
 	mov		_BP, [ecx].m_basePointer
 	ASSUME	ecx:NOTHING
 
-	mov		[edx].m_primitiveFailureCode, -1
 	mov		ecx, [edx].m_primitiveFailureData
 	mov		[edx].m_primitiveFailureData, eax
 	
 	CountDownOopIn <c>
 	
-	xor		eax,eax								; Fail the primitive
+	mov		eax, -1						; Fail the primitive
 	ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

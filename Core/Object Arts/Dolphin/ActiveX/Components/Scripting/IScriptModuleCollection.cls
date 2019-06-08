@@ -54,7 +54,7 @@ Add: name Object: object ppmod: ppmod
 			[out, retval]IScriptModule** ppmod);"
 
 	<virtual stdcall: hresult 11 bstr variant* IScriptModule**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver.
@@ -73,7 +73,7 @@ get__NewEnum: ppenumContexts
 			[out, retval]IUnknown** ppenumContexts);"
 
 	<virtual stdcall: hresult 8 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Count: plCount
 	"Private - Get the value of the 'Count' property of the receiver.
@@ -82,7 +82,7 @@ get_Count: plCount
 			[out, retval]long* plCount);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Item: index ppmod: ppmod
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -92,7 +92,7 @@ get_Item: index ppmod: ppmod
 			[out, retval]IScriptModule** ppmod);"
 
 	<virtual stdcall: hresult 9 variant IScriptModule**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

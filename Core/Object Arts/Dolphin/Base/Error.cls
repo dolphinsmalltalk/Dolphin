@@ -83,23 +83,17 @@ notYetImplemented
 performFailed: anInteger of: selector for: receiver withArgs: arguments
 	"Private - A primitive perform call failed, generate an appropriate error."
 
-	^(selector isMemberOf: Symbol)
+	anInteger == _PrimitiveFailureCode.InvalidSelector
+		ifTrue: [^receiver error: ('Invalid selector <1p>' expandMacrosWith: selector)].
+	anInteger == _PrimitiveFailureCode.BadValueType
+		ifTrue: [^receiver error: 'Arguments not Array: ' , arguments printString].
+	anInteger == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: 
-			[(arguments isMemberOf: Array)
-				ifTrue: 
-					[| argCount |
-					"This should not fail, because if not understood does not fail primitive"
-					argCount := selector argumentCount.
-					argCount = arguments size
-						ifTrue: 
-							[receiver
-								error: ('Primitive perform of <1p> failed (<2d>)' expandMacrosWith: selector with: anInteger)]
-						ifFalse: 
-							[receiver
-								error: ('Incorrect number of arguments: <1d>, expected <2d>' expandMacrosWith: arguments size
-										with: argCount)]]
-				ifFalse: [receiver error: 'Arguments not Array: ' , arguments printString]]
-		ifFalse: [receiver error: ('Invalid selector <1p>' expandMacrosWith: selector)]!
+			[^receiver
+				error: ('Incorrect number of arguments: <1d>, expected <2d>' expandMacrosWith: arguments size
+						with: selector argumentCount)].
+	receiver
+		error: ('Primitive perform of <1p> failed (<2d>)' expandMacrosWith: selector with: anInteger)!
 
 severityClass
 	"Answer an exception class describing the severity of the notification."

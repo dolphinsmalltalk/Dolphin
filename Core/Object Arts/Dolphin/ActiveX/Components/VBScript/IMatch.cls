@@ -53,7 +53,7 @@ get_FirstIndex: pFirstIndex
 			[out, retval]long* pFirstIndex);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Length: pLength
 	"Private - Get the value of the 'Length' property of the receiver.
@@ -62,7 +62,7 @@ get_Length: pLength
 			[out, retval]long* pLength);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Value: pValue
 	"Private - Get the value of the 'Value' property of the receiver.
@@ -71,7 +71,7 @@ get_Value: pValue
 			[out, retval]BSTR* pValue);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

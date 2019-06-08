@@ -63,8 +63,7 @@ get_Application: ppDisp
 			[out, retval] IDispatch** ppDisp);"
 
 	<virtual stdcall: hresult 16 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Busy: pBool
 	"Private - Get the value of the 'Busy' property of the receiver.
@@ -74,8 +73,7 @@ get_Busy: pBool
 			[out, retval] VARIANT_BOOL* pBool);"
 
 	<virtual stdcall: hresult 32 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Container: ppDisp
 	"Private - Get the value of the 'Container' property of the receiver.
@@ -85,8 +83,7 @@ get_Container: ppDisp
 			[out, retval] IDispatch** ppDisp);"
 
 	<virtual stdcall: hresult 18 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Document: ppDisp
 	"Private - Get the value of the 'Document' property of the receiver.
@@ -96,8 +93,7 @@ get_Document: ppDisp
 			[out, retval] IDispatch** ppDisp);"
 
 	<virtual stdcall: hresult 19 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Height: pl
 	"Private - Get the value of the 'Height' property of the receiver.
@@ -107,8 +103,7 @@ get_Height: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 28 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Left: pl
 	"Private - Get the value of the 'Left' property of the receiver.
@@ -118,8 +113,7 @@ get_Left: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 22 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_LocationName: locationName
 	"Private - Get the value of the 'LocationName' property of the receiver.
@@ -129,8 +123,7 @@ get_LocationName: locationName
 			[out, retval] BSTR* LocationName);"
 
 	<virtual stdcall: hresult 30 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_LocationURL: locationURL
 	"Private - Get the value of the 'LocationURL' property of the receiver.
@@ -140,8 +133,7 @@ get_LocationURL: locationURL
 			[out, retval] BSTR* LocationURL);"
 
 	<virtual stdcall: hresult 31 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Parent: ppDisp
 	"Private - Get the value of the 'Parent' property of the receiver.
@@ -151,8 +143,7 @@ get_Parent: ppDisp
 			[out, retval] IDispatch** ppDisp);"
 
 	<virtual stdcall: hresult 17 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Top: pl
 	"Private - Get the value of the 'Top' property of the receiver.
@@ -162,8 +153,7 @@ get_Top: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 24 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_TopLevelContainer: pBool
 	"Private - Get the value of the 'TopLevelContainer' property of the receiver.
@@ -173,8 +163,7 @@ get_TopLevelContainer: pBool
 			[out, retval] VARIANT_BOOL* pBool);"
 
 	<virtual stdcall: hresult 20 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Type: type
 	"Private - Get the value of the 'Type' property of the receiver.
@@ -184,8 +173,7 @@ get_Type: type
 			[out, retval] BSTR* Type);"
 
 	<virtual stdcall: hresult 21 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Width: pl
 	"Private - Get the value of the 'Width' property of the receiver.
@@ -195,8 +183,7 @@ get_Width: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 26 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GoBack
 	"Invoke the GoBack() method of the COM object wrapped by the receiver.
@@ -205,8 +192,7 @@ GoBack
 		HRESULT __stdcall GoBack();"
 
 	<virtual stdcall: hresult 8>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GoForward
 	"Invoke the GoForward() method of the COM object wrapped by the receiver.
@@ -215,8 +201,7 @@ GoForward
 		HRESULT __stdcall GoForward();"
 
 	<virtual stdcall: hresult 9>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GoHome
 	"Invoke the GoHome() method of the COM object wrapped by the receiver.
@@ -225,8 +210,7 @@ GoHome
 		HRESULT __stdcall GoHome();"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GoSearch
 	"Invoke the GoSearch() method of the COM object wrapped by the receiver.
@@ -235,8 +219,7 @@ GoSearch
 		HRESULT __stdcall GoSearch();"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 height
 	"Answer the <sdword> value of the 'Height' property of the receiver.
@@ -328,8 +311,7 @@ Navigate: url Flags: flags TargetFrameName: targetFrameName PostData: postData H
 			[in, optional] VARIANT* Headers);"
 
 	<virtual stdcall: hresult 12 bstr variant* variant* variant* variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 parent
 	"Answer the <IDispatch> value of the 'Parent' property of the receiver.
@@ -350,8 +332,7 @@ put_Height: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 29 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Left: pl
 	"Private - Set the value of the 'Left' property of the object wrapped by the 
@@ -362,8 +343,7 @@ put_Left: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 23 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Top: pl
 	"Private - Set the value of the 'Top' property of the object wrapped by the 
@@ -374,8 +354,7 @@ put_Top: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 25 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Width: pl
 	"Private - Set the value of the 'Width' property of the object wrapped by the 
@@ -386,8 +365,7 @@ put_Width: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 27 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Refresh
 	"Invoke the Refresh() method of the COM object wrapped by the receiver.
@@ -396,8 +374,7 @@ Refresh
 		HRESULT __stdcall Refresh();"
 
 	<virtual stdcall: hresult 13>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 refresh2: level
 	"Invoke the Refresh2() method of the COM object.
@@ -414,8 +391,7 @@ Refresh2: level
 			[in, optional] VARIANT* Level);"
 
 	<virtual stdcall: hresult 14 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Stop
 	"Invoke the Stop() method of the COM object wrapped by the receiver.
@@ -424,8 +400,7 @@ Stop
 		HRESULT __stdcall Stop();"
 
 	<virtual stdcall: hresult 15>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 top
 	"Answer the <sdword> value of the 'Top' property of the receiver.

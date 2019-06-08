@@ -52,8 +52,8 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
-	| offset |
 	<primitive: 188>
+	| offset |
 	offset := startAtInteger - startInteger.
 	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
@@ -128,9 +128,10 @@ newFromStack: aSmallInteger
 	into. When the method returns this will probably cause a crash. In other words, do not 
 	attempt to use this method in normal code."
 
-	<primitive: 190>
 	"This primitive should not fail for Array class."
-	^self primitiveFailed!
+
+	<primitive: 190>
+	^self primitiveFailed: _failureCode!
 
 with: element1 
 	"Answer a new instance of the receiver containing the single 

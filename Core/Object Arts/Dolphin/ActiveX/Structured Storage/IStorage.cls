@@ -42,7 +42,7 @@ clsid: aCLSID
 
 	self SetClass: aCLSID!
 
-Commit: grfCommitFlags 
+Commit: grfCommitFlags
 	"Invoke the Commit() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Commit(
@@ -51,7 +51,7 @@ Commit: grfCommitFlags
 	"
 
 	<virtual stdcall: hresult 10 dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 copy: elementName to: anIStorage 
 	"Copy the named element in the receiver (which may be a sub-storage or stream)
@@ -75,7 +75,7 @@ copy: elementName to: anIStorage withName: newElementName
 		pwcsNewName: newElementName
 		grfFlags: STGMOVE_COPY!
 
-CopyTo: ciidExclude rgiidExclude: rgiidExclude snbExclude: snbExclude pstgDest: pstgDest 
+CopyTo: ciidExclude rgiidExclude: rgiidExclude snbExclude: snbExclude pstgDest: pstgDest
 	"Invoke the CopyTo() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall CopyTo(
@@ -87,9 +87,9 @@ CopyTo: ciidExclude rgiidExclude: rgiidExclude snbExclude: snbExclude pstgDest: 
 	"
 
 	<virtual stdcall: hresult 8 dword guid* lpvoid IStorage*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-CreateStorage: pwcsName grfMode: grfMode dwStgFmt: dwStgFmt reserved2: reserved2 ppstg: ppstg 
+CreateStorage: pwcsName grfMode: grfMode dwStgFmt: dwStgFmt reserved2: reserved2 ppstg: ppstg
 	"Invoke the CreateStorage() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall CreateStorage(
@@ -102,9 +102,9 @@ CreateStorage: pwcsName grfMode: grfMode dwStgFmt: dwStgFmt reserved2: reserved2
 	"
 
 	<virtual stdcall: hresult 6 lpwstr dword dword dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-CreateStream: pwcsName grfMode: grfMode reserved1: reserved1 reserved2: reserved2 ppstm: ppstm 
+CreateStream: pwcsName grfMode: grfMode reserved1: reserved1 reserved2: reserved2 ppstm: ppstm
 	"Invoke the CreateStream() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall CreateStream(
@@ -117,7 +117,7 @@ CreateStream: pwcsName grfMode: grfMode reserved1: reserved1 reserved2: reserved
 	"
 
 	<virtual stdcall: hresult 4 lpwstr dword dword dword IStream**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 defaultMode
 	"Answer the default access mode flags for opening/createing streams and other storages."
@@ -130,7 +130,7 @@ delete: elementName
 
 	self DestroyElement: elementName asUtf16String!
 
-DestroyElement: pwcsName 
+DestroyElement: pwcsName
 	"Invoke the DestroyElement() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall DestroyElement(
@@ -139,7 +139,7 @@ DestroyElement: pwcsName
 	"
 
 	<virtual stdcall: hresult 13 lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 directory
 	"Answer a <sequencedReadableCollection> of STATSTG structures describing the
@@ -157,7 +157,7 @@ doAutoConvert
 	OLELibrary default oleDoAutoConvert: self pClsidNew: answer.
 	^answer!
 
-EnumElements: reserved1 reserved2: reserved2 reserved3: reserved3 ppenum: ppenum 
+EnumElements: reserved1 reserved2: reserved2 reserved3: reserved3 ppenum: ppenum
 	"Invoke the EnumElements() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall EnumElements(
@@ -169,7 +169,7 @@ EnumElements: reserved1 reserved2: reserved2 reserved3: reserved3 ppenum: ppenum
 	"
 
 	<virtual stdcall: hresult 12 dword sbyte* dword void**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fastFlush
 	"Perform a standard flush to OS disk cache. Despite the name, this is no more 
@@ -246,7 +246,7 @@ move: elementName to: anIStorage withName: newElementName
 		pwcsNewName: newElementName
 		grfFlags: STGMOVE_MOVE!
 
-MoveElementTo: pwcsName pstgDest: pstgDest pwcsNewName: pwcsNewName grfFlags: grfFlags 
+MoveElementTo: pwcsName pstgDest: pstgDest pwcsNewName: pwcsNewName grfFlags: grfFlags
 	"Invoke the MoveElementTo() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall MoveElementTo(
@@ -258,7 +258,7 @@ MoveElementTo: pwcsName pstgDest: pstgDest pwcsNewName: pwcsNewName grfFlags: gr
 	"
 
 	<virtual stdcall: hresult 9 lpwstr IStorage* lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 newStorage: storageName 
 	"Instantiate and answer an IStorage on a new named sub-storage in the receiver
@@ -328,7 +328,7 @@ openStorage: storageName mode: stgMode
 		ppstg: answer.	"Help says must specify this"	"Help says must be NULL, else STG_E_INVALIDPARAMETER"
 	^answer!
 
-OpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstg: ppstg 
+OpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstg: ppstg
 	"Invoke the OpenStorage() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall OpenStorage(
@@ -342,7 +342,7 @@ OpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: sn
 	"
 
 	<virtual stdcall: hresult 7 lpwstr IStorage* dword lpvoid dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 openStream: streamName 
 	"Open the existing stream of the specified name in the receiver, and answer an
@@ -364,7 +364,7 @@ openStream: streamName mode: stgMode
 		ppstm: answer.	"STGM_SHARE_EXCLUSIVE must be specified"
 	^answer!
 
-OpenStream: pwcsName reserved1: reserved1 grfMode: grfMode reserved2: reserved2 ppstm: ppstm 
+OpenStream: pwcsName reserved1: reserved1 grfMode: grfMode reserved2: reserved2 ppstm: ppstm
 	"Invoke the RemoteOpenStream() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall RemoteOpenStream(
@@ -377,7 +377,7 @@ OpenStream: pwcsName reserved1: reserved1 grfMode: grfMode reserved2: reserved2 
 	"
 
 	<virtual stdcall: hresult 5 lpwstr sbyte* dword dword IStream**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 rename: string1 to: string2
 	"Change the name of the element of the receiver currently called, string1, to,
@@ -386,7 +386,7 @@ rename: string1 to: string2
 
 	self RenameElement: string1 asUtf16String pwcsNewName: string2 asUtf16String!
 
-RenameElement: pwcsOldName pwcsNewName: pwcsNewName 
+RenameElement: pwcsOldName pwcsNewName: pwcsNewName
 	"Invoke the RenameElement() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall RenameElement(
@@ -396,7 +396,7 @@ RenameElement: pwcsOldName pwcsNewName: pwcsNewName
 	"
 
 	<virtual stdcall: hresult 14 lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Revert
 	"Invoke the Revert() method of the object wrapped by the receiver.
@@ -406,14 +406,14 @@ Revert
 	"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 rollback
 	"Rollback modifications to the receiver since the last checkpoint."
 
 	self Revert!
 
-SetClass: clsid 
+SetClass: clsid
 	"Invoke the SetClass() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetClass(
@@ -422,7 +422,7 @@ SetClass: clsid
 	"
 
 	<virtual stdcall: hresult 16 guid*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setCLIPFORMAT: cf userType: aString
 	"Set the clipboard format and user type for the receiver."
@@ -432,7 +432,7 @@ setCLIPFORMAT: cf userType: aString
 		cf: cf
 		lpszUserType: aString asUtf16String!
 
-SetElementTimes: pwcsName pctime: pctime patime: patime pmtime: pmtime 
+SetElementTimes: pwcsName pctime: pctime patime: patime pmtime: pmtime
 	"Invoke the SetElementTimes() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetElementTimes(
@@ -444,9 +444,9 @@ SetElementTimes: pwcsName pctime: pctime patime: patime pmtime: pmtime
 	"
 
 	<virtual stdcall: hresult 15 lpwstr FILETIME* FILETIME* FILETIME*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-SetStateBits: grfStateBits grfMask: grfMask 
+SetStateBits: grfStateBits grfMask: grfMask
 	"Invoke the SetStateBits() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetStateBits(
@@ -456,7 +456,7 @@ SetStateBits: grfStateBits grfMask: grfMask
 	"
 
 	<virtual stdcall: hresult 17 dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stat
 	"Answer a STATSTG structure populated with stats for the receiver.
@@ -467,7 +467,7 @@ stat
 	self Stat: struct grfStatFlag: STATFLAG_DEFAULT.
 	^struct!
 
-Stat: pstatstg grfStatFlag: grfStatFlag 
+Stat: pstatstg grfStatFlag: grfStatFlag
 	"Invoke the Stat() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Stat(
@@ -477,7 +477,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	"
 
 	<virtual stdcall: hresult 18 STATSTG* dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IStorage categoriesFor: #close!operations!public! !
 !IStorage categoriesFor: #clsid!accessing!public! !
 !IStorage categoriesFor: #clsid:!accessing!public! !
