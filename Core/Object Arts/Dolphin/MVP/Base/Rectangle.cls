@@ -640,7 +640,9 @@ origin: originPoint extent: extentPoint
 	^self origin: originPoint corner: originPoint + extentPoint!
 
 unitialize
-	self addClassVariable: 'Empty' value: nil!
+	(classPool bindingFor: 'Empty')
+		isImmutable: false;
+		value: nil!
 
 vertex: aPoint1 vertex: aPoint2 
 	"Answer a new, normalised, instance of the receiver with the specified diagonally opposite

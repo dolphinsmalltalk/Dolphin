@@ -219,7 +219,7 @@ nowUTC
 	KernelLibrary default getSystemTime: answer.
 	^answer! !
 !SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
-!SYSTEMTIME class categoriesFor: #defineFields!initializing!public! !
+!SYSTEMTIME class categoriesFor: #defineFields!public!template definition! !
 !SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
 !SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SYSTEMTIME class categoriesFor: #now!instance creation!private! !

@@ -204,7 +204,7 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
-!HRESULT class categoriesFor: #defineFields!initializing!public! !
+!HRESULT class categoriesFor: #defineFields!public!template definition! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
 !HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !

@@ -218,6 +218,6 @@ defineFields
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
 !STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
-!STATSTG class categoriesFor: #defineFields!initializing!public! !
+!STATSTG class categoriesFor: #defineFields!public!template definition! !
 !STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

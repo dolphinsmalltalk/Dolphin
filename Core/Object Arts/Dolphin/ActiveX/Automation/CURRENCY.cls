@@ -95,7 +95,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
-!CURRENCY class categoriesFor: #defineFields!initializing!public! !
+!CURRENCY class categoriesFor: #defineFields!public!template definition! !
 !CURRENCY class categoriesFor: #epsilon!constants!public! !
 !CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !CURRENCY class categoriesFor: #initialize!development!initializing!private! !

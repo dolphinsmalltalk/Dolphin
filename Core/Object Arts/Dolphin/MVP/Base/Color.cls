@@ -536,7 +536,7 @@ yellow
 !Color class categoriesFor: #hue:luminance:saturation:!instance creation!public! !
 !Color class categoriesFor: #hue:saturation:value:!instance creation!public! !
 !Color class categoriesFor: #icon!constants!public! !
-!Color class categoriesFor: #initialize!class initialization!development!instance creation!public! !
+!Color class categoriesFor: #initialize!class initialization!development!public! !
 !Color class categoriesFor: #light3d!instance creation!named colors!public! !
 !Color class categoriesFor: #magenta!instance creation!named colors!public! !
 !Color class categoriesFor: #menu!instance creation!named colors!public! !

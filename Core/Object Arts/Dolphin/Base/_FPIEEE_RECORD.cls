@@ -194,7 +194,7 @@ printFlags: anInteger on: aStream
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
-!_FPIEEE_RECORD class categoriesFor: #defineFields!initializing!public! !
+!_FPIEEE_RECORD class categoriesFor: #defineFields!public!template definition! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
 !_FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

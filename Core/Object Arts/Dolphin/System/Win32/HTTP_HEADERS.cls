@@ -150,7 +150,7 @@ knownHeaderIndex: headerName
 
 knownHeaderName: anInteger
 	^self indexToHeaderMap at: anInteger! !
-!HTTP_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_HEADERS class categoriesFor: #headerToIndexMap!public! !
 !HTTP_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 !HTTP_HEADERS class categoriesFor: #knownHeaderIndex:!public! !

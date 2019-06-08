@@ -78,6 +78,6 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

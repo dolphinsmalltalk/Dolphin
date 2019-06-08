@@ -360,7 +360,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_STRETCHBLT! !
-!EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSTRETCHBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSTRETCHBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSTRETCHBLT class categoriesFor: #iTypes!constants!public! !
 

@@ -241,7 +241,7 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
-!TEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!TEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
 !TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TEXTMETRICW class categoriesFor: #packing!constants!public! !
 

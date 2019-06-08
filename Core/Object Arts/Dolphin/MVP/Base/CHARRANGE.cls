@@ -74,6 +74,6 @@ defineFields
 
 getFieldNames
 	^#(#cpMin #cpMax)! !
-!CHARRANGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CHARRANGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CHARRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

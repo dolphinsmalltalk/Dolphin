@@ -70,6 +70,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #psf #pidl)! !
-!OFNOTIFYEXW class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYEXW class categoriesFor: #defineFields!public!template definition! !
 !OFNOTIFYEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

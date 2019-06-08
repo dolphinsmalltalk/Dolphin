@@ -511,7 +511,7 @@ storeCategories
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
-!CompiledMethod categoriesFor: #storeCategories!categories!private!source filing-methods! !
+!CompiledMethod categoriesFor: #storeCategories!private!source filing-methods! !
 
 !Metaclass methodsFor!
 

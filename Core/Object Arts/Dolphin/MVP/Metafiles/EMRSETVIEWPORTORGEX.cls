@@ -71,7 +71,7 @@ iTypes
 		with: EMR_SETVIEWPORTORGEX
 		with: EMR_SETWINDOWORGEX
 		with: EMR_SETBRUSHORGEX! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
 

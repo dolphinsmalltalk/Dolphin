@@ -57,6 +57,6 @@ defineFields
 
 getFieldNames
 	^#(#cElements #lLbound)! !
-!SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

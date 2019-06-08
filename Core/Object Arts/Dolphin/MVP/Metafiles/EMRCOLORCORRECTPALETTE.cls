@@ -118,7 +118,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORCORRECTPALETTE! !
-!EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

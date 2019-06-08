@@ -199,7 +199,7 @@ yourAddress
 	^0! !
 !UndefinedObject categoriesFor: #??!converting!public! !
 !UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
-!UndefinedObject categoriesFor: #bindingFor:!compiling!public! !
+!UndefinedObject categoriesFor: #bindingFor:!binding!public! !
 !UndefinedObject categoriesFor: #deepCopy!copying!public! !
 !UndefinedObject categoriesFor: #displayOn:!displaying!public! !
 !UndefinedObject categoriesFor: #ifNil:!control flow!public! !

@@ -476,7 +476,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!FUNCDESC class categoriesFor: #defineFields!initializing!public! !
+!FUNCDESC class categoriesFor: #defineFields!public!template definition! !
 !FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !

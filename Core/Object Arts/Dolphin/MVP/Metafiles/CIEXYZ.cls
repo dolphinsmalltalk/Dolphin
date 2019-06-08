@@ -86,6 +86,6 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
-!CIEXYZ class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CIEXYZ class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

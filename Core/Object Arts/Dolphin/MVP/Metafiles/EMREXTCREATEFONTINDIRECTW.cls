@@ -82,7 +82,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEFONTINDIRECTW! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!initializing!public! !
+!EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!public!template definition! !
 !EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
 

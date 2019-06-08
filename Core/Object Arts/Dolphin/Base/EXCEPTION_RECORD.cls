@@ -124,6 +124,6 @@ defineFields
 
 getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
-!EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

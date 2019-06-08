@@ -66,6 +66,6 @@ defineFields
 
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
-!TIMEVAL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!TIMEVAL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

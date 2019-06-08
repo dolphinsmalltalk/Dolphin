@@ -105,7 +105,7 @@ fromColor: aColor
 
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
-!RGBQUAD class categoriesFor: #defineFields!initializing!public! !
+!RGBQUAD class categoriesFor: #defineFields!public!template definition! !
 !RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
 !RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -116,6 +116,6 @@ defineFields
 
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
-!TBBUTTON class categoriesFor: #defineFields!initializing!public! !
+!TBBUTTON class categoriesFor: #defineFields!public!template definition! !
 !TBBUTTON class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

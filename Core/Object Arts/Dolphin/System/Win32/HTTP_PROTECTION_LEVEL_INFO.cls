@@ -61,7 +61,7 @@ getFieldNames
 
 propertyId
 	^HttpServerProtectionLevelProperty! !
-!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #propertyId!public! !
 

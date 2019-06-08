@@ -60,7 +60,7 @@ new
 
 	^self shouldNotImplement
 ! !
-!NMHDR class categoriesFor: #defineFields!initializing!public! !
+!NMHDR class categoriesFor: #defineFields!public!template definition! !
 !NMHDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !NMHDR class categoriesFor: #itemFromNMHDR:!public! !
 !NMHDR class categoriesFor: #new!instance creation!public! !

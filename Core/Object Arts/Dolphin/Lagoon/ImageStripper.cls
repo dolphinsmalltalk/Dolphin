@@ -319,7 +319,7 @@ class: aBehavior overrides: aSymbol
 				and: [aBehavior subclasses allSatisfy: [:sub | self class: sub overrides: aSymbol]]]!
 
 classBuildingMethods
-	^#('class hierarchy-adding' 'class hierarchy-mutating')
+	^self class classBuildingMethodCategoryNames
 		collect: [:each | {each. WeakArray withAll: each asMethodCategory methods}]!
 
 classCategoriesToIgnoreAspectSetters
@@ -354,7 +354,7 @@ classReferencesToIgnore
 classRemovingMethods
 	| methods |
 	methods := Set new: 200.
-	#('class hierarchy-removing') do: [:each | methods addAll: each asMethodCategory methods].
+	self class classRemovingMethodCategoryNames do: [:each | methods addAll: each asMethodCategory methods].
 	^WeakArray withAll: methods!
 
 clearChangedProperties
@@ -433,17 +433,10 @@ developmentClasses
 
 	^developmentClasses select: [:each | each ~~ DeadObject.Current]!
 
-developmentMethodCategoryNames
-	"Answer a <collection> of the names of <MethodCategory>s containing only development methods
-	which must therefore be stripped from the image when it is deployed."
-
-	^#('development' 'class hierarchy-adding')
-!
-
 developmentMethods
 	"Answer a <dictionary> mapping the names of development categories to <CompiledMethod>s in those categories, for all categories which are considered part of the development system, and which, therefore, are not normally required in a deployed application. The methods are stored in WeakArrays to allow them to be GC'd if they are removed for other reasons."
 
-	^self developmentMethodCategoryNames
+	^self class developmentMethodCategoryNames
 		collect: [:name | {name. WeakArray withAll: name asMethodCategory methods}]!
 
 developmentResources
@@ -697,7 +690,7 @@ logConfiguration: aString
 
 logDevelopmentCategories
 	self startElement: 'DevelopmentMethodCategories' attributes: #().
-	self developmentMethodCategoryNames do: 
+	self class developmentMethodCategoryNames do: 
 			[:each |
 			self
 				logElement: 'MethodCategory'
@@ -2057,7 +2050,6 @@ writeLogFile
 !ImageStripper categoriesFor: #defaultStubFilePath!constants!private! !
 !ImageStripper categoriesFor: #destroyNotifier!operations!private! !
 !ImageStripper categoriesFor: #developmentClasses!configuration!public! !
-!ImageStripper categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper categoriesFor: #developmentMethods!accessing!public! !
 !ImageStripper categoriesFor: #developmentResources!configuration!public! !
 !ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
@@ -2195,6 +2187,17 @@ writeLogFile
 
 !ImageStripper class methodsFor!
 
+classBuildingMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing methods required only to support building classes.
+	These can be removed from the deployed application if the ClassBuilder is being removed."
+
+	^#('class hierarchy-adding' 'class hierarchy-mutating')!
+
+classRemovingMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing methods associated with removing classes. These can be stripped from the deployed application if the ClassBuilder is being removed, but only after the deployment process has finished removing classes."
+
+	^#('class hierarchy-removing')!
+
 defaultOptions
 	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
 
@@ -2207,11 +2210,20 @@ defaultOptions
 		| WriteLogMask | EmptyMethodDictsMask 
 		| ToGoMask!
 
+developmentMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing only development methods which must therefore be stripped from the image when it is deployed."
+
+	^#('development' 'class hierarchy-adding')
+!
+
 isSafeToEncryptWithProductProtection
 	"Answer whether it is save to encrypt the receiver's methods as part of the
 	the deployment of a Protected Product application"
 
 	^false! !
+!ImageStripper class categoriesFor: #classBuildingMethodCategoryNames!constants!public! !
+!ImageStripper class categoriesFor: #classRemovingMethodCategoryNames!constants!public! !
 !ImageStripper class categoriesFor: #defaultOptions!constants!private! !
+!ImageStripper class categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper class categoriesFor: #isSafeToEncryptWithProductProtection!development!public! !
 

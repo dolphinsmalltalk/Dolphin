@@ -101,7 +101,7 @@ isAtomic
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
 
-	^self ~~ #'' and: [(Compiler isAValidInitialIdentifierChar: (self at: 1)) not]!
+	^self ~~ #'' and: [self allSatisfy: [:each | '!!%&*+,-/<=>?@\|~' identityIncludes: each]]!
 
 isSymbol
 	"Dolphin doesn't usually include these type tests, but they are used by a number of add-on

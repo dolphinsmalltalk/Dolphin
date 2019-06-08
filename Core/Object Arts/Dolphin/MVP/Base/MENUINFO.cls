@@ -110,6 +110,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
-!MENUINFO class categoriesFor: #defineFields!initializing!public! !
+!MENUINFO class categoriesFor: #defineFields!public!template definition! !
 !MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

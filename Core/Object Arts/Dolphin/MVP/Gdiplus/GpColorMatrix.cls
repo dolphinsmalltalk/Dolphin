@@ -95,7 +95,7 @@ withAll: anArray
 	anArray should have 25 <Magnitude> elements"
 
 	^self new m: (FLOATArray withAll: anArray)! !
-!GpColorMatrix class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpColorMatrix class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !GpColorMatrix class categoriesFor: #identity!instance creation!public! !
 !GpColorMatrix class categoriesFor: #identityArray!constants!public! !

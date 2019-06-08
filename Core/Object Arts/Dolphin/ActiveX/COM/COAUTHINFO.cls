@@ -132,6 +132,6 @@ defineFields
 
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
-!COAUTHINFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!COAUTHINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !COAUTHINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

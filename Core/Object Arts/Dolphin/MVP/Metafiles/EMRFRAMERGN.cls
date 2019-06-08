@@ -150,7 +150,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_FRAMERGN! !
-!EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRFRAMERGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRFRAMERGN class categoriesFor: #iTypes!constants!public! !
 

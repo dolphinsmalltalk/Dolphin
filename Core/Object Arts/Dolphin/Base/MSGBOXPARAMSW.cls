@@ -127,6 +127,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
-!MSGBOXPARAMSW class categoriesFor: #defineFields!initializing!public! !
+!MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
 !MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

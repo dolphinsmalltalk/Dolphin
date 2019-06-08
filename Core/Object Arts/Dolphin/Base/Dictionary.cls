@@ -554,7 +554,7 @@ values
 !Dictionary categoriesFor: #at:put:!accessing!public! !
 !Dictionary categoriesFor: #atAll:put:!accessing!public! !
 !Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Dictionary categoriesFor: #bindingFor:!compiling!public! !
+!Dictionary categoriesFor: #bindingFor:!binding!public! !
 !Dictionary categoriesFor: #changeKey:to:!accessing!private! !
 !Dictionary categoriesFor: #collect:!enumerating!public! !
 !Dictionary categoriesFor: #copyElementsInto:!adding!private! !

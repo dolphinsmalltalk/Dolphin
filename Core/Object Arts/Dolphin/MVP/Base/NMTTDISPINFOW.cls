@@ -82,6 +82,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
-!NMTTDISPINFOW class categoriesFor: #defineFields!initializing!public! !
+!NMTTDISPINFOW class categoriesFor: #defineFields!public!template definition! !
 !NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

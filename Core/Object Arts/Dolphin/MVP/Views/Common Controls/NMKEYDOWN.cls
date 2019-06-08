@@ -38,6 +38,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #wVKey #flags)! !
-!NMKEYDOWN class categoriesFor: #defineFields!initializing!public! !
+!NMKEYDOWN class categoriesFor: #defineFields!public!template definition! !
 !NMKEYDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

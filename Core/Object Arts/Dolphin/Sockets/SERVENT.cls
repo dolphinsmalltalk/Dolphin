@@ -123,7 +123,7 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
-!SERVENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SERVENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SERVENT class categoriesFor: #fromInteger:!public! !
 !SERVENT class categoriesFor: #fromString:!public! !
 !SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

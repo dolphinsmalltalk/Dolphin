@@ -82,5 +82,5 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
-!UINT_PTR class categoriesFor: #defineFields!initializing!public! !
+!UINT_PTR class categoriesFor: #defineFields!public!template definition! !
 

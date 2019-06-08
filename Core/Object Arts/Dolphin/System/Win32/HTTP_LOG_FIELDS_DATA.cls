@@ -531,6 +531,6 @@ defineFields
 
 getFieldNames
 	^#(#Type #UserNameLength #UriStemLength #ClientIpLength #ServerNameLength #ServiceNameLength #ServerIpLength #MethodLength #UriQueryLength #HostLength #UserAgentLength #CookieLength #ReferrerLength #UserName #UriStem #ClientIp #ServerName #ServiceName #ServerIp #Method #UriQuery #Host #UserAgent #Cookie #Referrer #ServerPort #ProtocolStatus #Win32Status #MethodNum #SubStatus)! !
-!HTTP_LOG_FIELDS_DATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LOG_FIELDS_DATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_LOG_FIELDS_DATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

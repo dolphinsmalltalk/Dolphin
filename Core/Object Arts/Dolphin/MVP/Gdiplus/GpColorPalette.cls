@@ -103,6 +103,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Count #Entries)! !
-!GpColorPalette class categoriesFor: #defineFields!initializing!public! !
+!GpColorPalette class categoriesFor: #defineFields!public!template definition! !
 !GpColorPalette class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

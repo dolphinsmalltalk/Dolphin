@@ -61,7 +61,7 @@ getFieldNames
 
 propertyId
 	^HttpServerListenEndpointProperty! !
-!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #propertyId!public! !
 

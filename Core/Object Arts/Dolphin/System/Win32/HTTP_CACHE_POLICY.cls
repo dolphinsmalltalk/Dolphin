@@ -109,7 +109,7 @@ timeToLive: anInteger
 
 userInvalidates
 	^UserInvalidates! !
-!HTTP_CACHE_POLICY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CACHE_POLICY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_CACHE_POLICY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_CACHE_POLICY class categoriesFor: #initialize!public! !
 !HTTP_CACHE_POLICY class categoriesFor: #noCache!instance creation!public! !

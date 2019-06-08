@@ -22,7 +22,8 @@ package setPrerequisites: #(
 	'..\..\Samples\Console\Hello World\Hello World (Console)'
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
-	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments').
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\Samples\MVP\Scribble\Scribble').
 
 package!
 

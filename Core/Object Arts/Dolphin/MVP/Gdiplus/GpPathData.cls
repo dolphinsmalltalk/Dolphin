@@ -85,6 +85,6 @@ defineFields
 
 getFieldNames
 	^#(#Count #Points #Types)! !
-!GpPathData class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpPathData class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpPathData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

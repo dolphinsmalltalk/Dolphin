@@ -108,6 +108,6 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
-!WSADATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!WSADATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

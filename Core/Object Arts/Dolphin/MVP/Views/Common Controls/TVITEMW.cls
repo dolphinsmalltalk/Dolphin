@@ -265,6 +265,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
-!TVITEMW class categoriesFor: #defineFields!initializing!public! !
+!TVITEMW class categoriesFor: #defineFields!public!template definition! !
 !TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

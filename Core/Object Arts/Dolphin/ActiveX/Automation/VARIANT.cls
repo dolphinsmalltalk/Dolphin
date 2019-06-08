@@ -1152,7 +1152,7 @@ vt
 	^VT_VARIANT! !
 !VARIANT class categoriesFor: #classForVT:!enquiries!public! !
 !VARIANT class categoriesFor: #clear:!public!realizing/unrealizing! !
-!VARIANT class categoriesFor: #defineFields!initializing!public! !
+!VARIANT class categoriesFor: #defineFields!public!template definition! !
 !VARIANT class categoriesFor: #fromBoolean:!instance creation!public! !
 !VARIANT class categoriesFor: #fromCollection:!instance creation!public! !
 !VARIANT class categoriesFor: #fromDATE:!instance creation!public! !

@@ -79,6 +79,6 @@ defineFields
 
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
-!LVFINDINFOW class categoriesFor: #defineFields!initializing!public! !
+!LVFINDINFOW class categoriesFor: #defineFields!public!template definition! !
 !LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

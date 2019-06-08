@@ -104,6 +104,6 @@ defineFields
 
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
-!HTTP_REQUEST_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

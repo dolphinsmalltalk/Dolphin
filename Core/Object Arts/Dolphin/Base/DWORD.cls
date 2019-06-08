@@ -103,17 +103,6 @@ defineFields
 
 	self defineField: #value type: DWORDField new beOverride!
 
-fromPoint: aPoint
-	"Private - Answer a new instance of the receiver with high and low
-	words set from aPoint assuming its co-ordinates to be 16-bit signed
-	integer values, with X in the low-word. This instantiator is somewhat
-	similar to the Windows MAKEPOINT macro."
-
-	^(self new)
-		lowSWord: aPoint x;
-		highSWord: aPoint y;
-		yourself!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -125,8 +114,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DWORD class categoriesFor: #defineFields!initializing!public! !
-!DWORD class categoriesFor: #fromPoint:!instance creation!private! !
+!DWORD class categoriesFor: #defineFields!public!template definition! !
 !DWORD class categoriesFor: #initialize!development!initializing!private! !
 !DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

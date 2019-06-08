@@ -70,6 +70,6 @@ defineFields
 
 getFieldNames
 	^#(#upperLeft #lowerRight)! !
-!GRADIENT_RECT class categoriesFor: #defineFields!initializing!public! !
+!GRADIENT_RECT class categoriesFor: #defineFields!public!template definition! !
 !GRADIENT_RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

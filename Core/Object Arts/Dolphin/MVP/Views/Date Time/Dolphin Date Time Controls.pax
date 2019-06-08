@@ -37,6 +37,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models').

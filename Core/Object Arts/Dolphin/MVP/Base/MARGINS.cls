@@ -101,6 +101,6 @@ defineFields
 
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
-!MARGINS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!MARGINS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !MARGINS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -54,6 +54,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
-!NMLVODSTATECHANGE class categoriesFor: #defineFields!initializing!public! !
+!NMLVODSTATECHANGE class categoriesFor: #defineFields!public!template definition! !
 !NMLVODSTATECHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

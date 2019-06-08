@@ -103,6 +103,6 @@ defineFields
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !
-!LOGPEN class categoriesFor: #defineFields!initializing!public! !
+!LOGPEN class categoriesFor: #defineFields!public!template definition! !
 !LOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

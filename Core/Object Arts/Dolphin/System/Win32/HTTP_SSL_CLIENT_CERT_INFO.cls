@@ -109,6 +109,6 @@ defineFields
 
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
-!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

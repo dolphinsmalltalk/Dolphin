@@ -120,6 +120,6 @@ defineFields
 
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
-!HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_COOKED_URL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

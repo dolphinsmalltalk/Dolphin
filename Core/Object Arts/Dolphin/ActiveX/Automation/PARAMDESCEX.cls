@@ -47,6 +47,6 @@ defineFields
 
 getFieldNames
 	^#(#varDefaultValue)! !
-!PARAMDESCEX class categoriesFor: #defineFields!initializing!public! !
+!PARAMDESCEX class categoriesFor: #defineFields!public!template definition! !
 !PARAMDESCEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -53,6 +53,6 @@ defineFields
 
 getFieldNames
 	^#()! !
-!SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

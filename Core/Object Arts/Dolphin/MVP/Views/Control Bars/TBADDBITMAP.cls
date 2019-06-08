@@ -42,6 +42,6 @@ defineFields
 
 getFieldNames
 	^#(#hInst #nID)! !
-!TBADDBITMAP class categoriesFor: #defineFields!initializing!public! !
+!TBADDBITMAP class categoriesFor: #defineFields!public!template definition! !
 !TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

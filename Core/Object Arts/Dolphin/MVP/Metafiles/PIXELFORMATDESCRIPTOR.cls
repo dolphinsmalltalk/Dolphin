@@ -454,6 +454,6 @@ defineFields
 
 getFieldNames
 	^#(#nSize #nVersion #dwFlags #iPixelType #cColorBits #cRedBits #cRedShift #cGreenBits #cGreenShift #cBlueBits #cBlueShift #cAlphaBits #cAlphaShift #cAccumBits #cAccumRedBits #cAccumGreenBits #cAccumBlueBits #cAccumAlphaBits #cDepthBits #cStencilBits #cAuxBuffers #iLayerType #bReserved #dwLayerMask #dwVisibleMask #dwDamageMask)! !
-!PIXELFORMATDESCRIPTOR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PIXELFORMATDESCRIPTOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !PIXELFORMATDESCRIPTOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

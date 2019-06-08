@@ -156,7 +156,7 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #environment!constants!public! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolDictionary categoriesFor: #includesKey:!public!searching! !
-!PoolDictionary categoriesFor: #initializerFor:!public!source filing-sif! !
+!PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
 !PoolDictionary categoriesFor: #lookup:!accessing!public! !

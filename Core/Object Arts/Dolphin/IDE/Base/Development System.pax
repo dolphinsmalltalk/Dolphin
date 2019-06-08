@@ -1858,14 +1858,14 @@ definitionsOf: aString
 dynamicReferencesTo: aLiteral 
 	^MethodCategoryEnvironment referencesTo: aLiteral in: self!
 
-forClassHierarchyFrom: aClass 
-	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding
-	metaclasses. See also #forClassHierarchyOf:."
-
-	| classes |
-	classes := aClass withAllSubclasses asSet.
-	classes addAll: aClass class allSubclasses.
-	^self forClasses: classes!
+forClassHierarchyFrom: aClass
+ 	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding
+ 	metaclasses. See also #forClassHierarchyOf:."
+ 
+ 	| classes |
+ 	classes := aClass withAllSubclasses asSet.
+	classes addAll: aClass class withAllSubclasses.
+ 	^self forClasses: classes!
 
 forMethodCategories: categoryList 
 	^MethodCategoryEnvironment onEnvironment: self categories: categoryList!
@@ -2082,7 +2082,7 @@ renameClassVar: oldString to: newString
 !Class categoriesFor: #isDeprecated!public!source filing! !
 !Class categoriesFor: #methodChanged:!helpers!private! !
 !Class categoriesFor: #notifyPackageOfChange!helpers!private! !
-!Class categoriesFor: #renameClassVar:to:!class variables!private! !
+!Class categoriesFor: #renameClassVar:to:!class hierarchy-mutating!class variables!private! !
 
 !ClassBuilder class methodsFor!
 

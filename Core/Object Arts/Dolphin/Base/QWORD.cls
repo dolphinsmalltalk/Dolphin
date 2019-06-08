@@ -101,6 +101,6 @@ defineTemplate
 
 	super defineTemplate.
 	self assert: [self alignment = 8]! !
-!QWORD class categoriesFor: #defineFields!initializing!public! !
+!QWORD class categoriesFor: #defineFields!public!template definition! !
 !QWORD class categoriesFor: #defineTemplate!development!initializing!public! !
 

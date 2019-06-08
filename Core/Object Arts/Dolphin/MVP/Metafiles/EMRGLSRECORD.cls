@@ -89,7 +89,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSRECORD! !
-!EMRGLSRECORD class categoriesFor: #defineFields!initializing!public! !
+!EMRGLSRECORD class categoriesFor: #defineFields!public!template definition! !
 !EMRGLSRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGLSRECORD class categoriesFor: #iTypes!constants!public! !
 

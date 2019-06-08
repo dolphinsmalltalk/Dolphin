@@ -330,6 +330,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod)! !
-!SCNotification class categoriesFor: #defineFields!initializing!public! !
+!SCNotification class categoriesFor: #defineFields!public!template definition! !
 !SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

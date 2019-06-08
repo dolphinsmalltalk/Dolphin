@@ -54,6 +54,6 @@ elementClass
 
 	^LPWSTR
 ! !
-!CALPOLESTR class categoriesFor: #defineFields!initializing!public! !
+!CALPOLESTR class categoriesFor: #defineFields!public!template definition! !
 !CALPOLESTR class categoriesFor: #elementClass!constants!public! !
 

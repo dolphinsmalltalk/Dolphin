@@ -105,6 +105,6 @@ defineFields
 
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
-!GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

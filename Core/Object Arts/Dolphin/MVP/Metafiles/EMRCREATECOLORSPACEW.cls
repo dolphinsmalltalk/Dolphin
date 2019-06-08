@@ -146,7 +146,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACEW! !
-!EMRCREATECOLORSPACEW class categoriesFor: #defineFields!initializing!public! !
+!EMRCREATECOLORSPACEW class categoriesFor: #defineFields!public!template definition! !
 !EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
 

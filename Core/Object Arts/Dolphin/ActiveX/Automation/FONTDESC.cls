@@ -183,7 +183,7 @@ fromFont: font
 
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
-!FONTDESC class categoriesFor: #defineFields!initializing!public! !
+!FONTDESC class categoriesFor: #defineFields!public!template definition! !
 !FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
 !FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

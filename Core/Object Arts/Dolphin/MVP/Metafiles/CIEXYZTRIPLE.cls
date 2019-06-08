@@ -98,6 +98,6 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
-!CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CIEXYZTRIPLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

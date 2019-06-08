@@ -237,6 +237,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
-!NMCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
 !NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

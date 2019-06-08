@@ -48,6 +48,6 @@ defineFields
 
 getFieldNames
 	^#(#pt #item)! !
-!LHITTESTINFO class categoriesFor: #defineFields!initializing!public! !
+!LHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
 !LHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -160,6 +160,6 @@ defineFields
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
 !SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
-!SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

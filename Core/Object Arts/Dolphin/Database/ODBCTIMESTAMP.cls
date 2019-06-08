@@ -166,7 +166,7 @@ fromDateAndTime: aDateAndTime
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
-!ODBCTIMESTAMP class categoriesFor: #defineFields!initializing!public! !
+!ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
 !ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
 !ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

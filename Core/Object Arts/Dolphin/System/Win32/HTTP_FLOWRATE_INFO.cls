@@ -101,7 +101,7 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 
 qosType
 	^HttpQosSettingTypeFlowRate! !
-!HTTP_FLOWRATE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_FLOWRATE_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #qosType!constants!public! !

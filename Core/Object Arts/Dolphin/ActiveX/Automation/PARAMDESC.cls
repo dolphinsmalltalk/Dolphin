@@ -101,6 +101,6 @@ defineFields
 
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
-!PARAMDESC class categoriesFor: #defineFields!initializing!public! !
+!PARAMDESC class categoriesFor: #defineFields!public!template definition! !
 !PARAMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

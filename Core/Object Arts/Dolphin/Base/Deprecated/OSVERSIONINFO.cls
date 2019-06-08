@@ -202,7 +202,7 @@ uninitialize
 ! !
 !OSVERSIONINFO class categoriesFor: #clear!initializing!private! !
 !OSVERSIONINFO class categoriesFor: #current!instance creation!public! !
-!OSVERSIONINFO class categoriesFor: #defineFields!initializing!public! !
+!OSVERSIONINFO class categoriesFor: #defineFields!public!template definition! !
 !OSVERSIONINFO class categoriesFor: #getCurrent!instance creation!private! !
 !OSVERSIONINFO class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#GdiplusVersion)! !
-!GdiplusStartupInput class categoriesFor: #defineFields!initializing!public! !
+!GdiplusStartupInput class categoriesFor: #defineFields!public!template definition! !
 !GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

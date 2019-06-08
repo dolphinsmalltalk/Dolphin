@@ -2051,7 +2051,7 @@ generateDefineFields
 		crtab;
 		nextPutAll: 'self byteSize: ';
 		print: self byteSize.
-	self compileClassMethod: target contents categories: self classInitializerCategories!
+	self compileClassMethod: target contents categories: {self autoGenCategoryName. 'template definition'}!
 
 generateGlobalDefinition: structName
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,

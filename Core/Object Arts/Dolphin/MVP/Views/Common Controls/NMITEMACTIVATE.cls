@@ -91,6 +91,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
-!NMITEMACTIVATE class categoriesFor: #defineFields!initializing!public! !
+!NMITEMACTIVATE class categoriesFor: #defineFields!public!template definition! !
 !NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

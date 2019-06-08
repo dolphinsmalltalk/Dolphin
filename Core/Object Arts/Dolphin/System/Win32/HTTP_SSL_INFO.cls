@@ -171,6 +171,6 @@ defineFields
 
 getFieldNames
 	^#(#ServerCertKeySize #ConnectionKeySize #ServerCertIssuerSize #ServerCertSubjectSize #pServerCertIssuer #pServerCertSubject #pClientCertInfo #SslClientCertNegotiated)! !
-!HTTP_SSL_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SSL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SSL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

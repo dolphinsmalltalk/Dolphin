@@ -142,6 +142,6 @@ defineFields
 
 getFieldNames
 	^#(#ptlReference #nChars #offString #fOptions #rcl #offDx)! !
-!EMRTEXT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRTEXT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRTEXT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

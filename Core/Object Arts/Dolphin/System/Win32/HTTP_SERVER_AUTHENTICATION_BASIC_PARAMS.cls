@@ -70,6 +70,6 @@ defineFields
 
 getFieldNames
 	^#(#RealmLength #Realm)! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

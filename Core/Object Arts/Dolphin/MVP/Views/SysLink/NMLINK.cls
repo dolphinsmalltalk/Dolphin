@@ -40,7 +40,7 @@ getFieldNames
 
 itemFromNMHDR: anExternalAddress
 	^LITEM fromAddress: anExternalAddress yourAddress + _OffsetOf_item! !
-!NMLINK class categoriesFor: #defineFields!initializing!public! !
+!NMLINK class categoriesFor: #defineFields!public!template definition! !
 !NMLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !NMLINK class categoriesFor: #itemFromNMHDR:!public! !
 

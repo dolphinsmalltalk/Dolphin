@@ -363,7 +363,7 @@ uninitialize
 !GUID class categoriesFor: #basicByteSize!public! !
 !GUID class categoriesFor: #byteSize!constants!public! !
 !GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!GUID class categoriesFor: #defineFields!initializing!public! !
+!GUID class categoriesFor: #defineFields!public!template definition! !
 !GUID class categoriesFor: #elementSize!accessing!private! !
 !GUID class categoriesFor: #fromAddress:!instance creation!public! !
 !GUID class categoriesFor: #fromBytes:!instance creation!public! !

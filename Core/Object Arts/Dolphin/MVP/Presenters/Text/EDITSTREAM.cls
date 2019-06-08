@@ -39,6 +39,6 @@ defineFields
 
 getFieldNames
 	^#(#pfnCallback)! !
-!EDITSTREAM class categoriesFor: #defineFields!initializing!public! !
+!EDITSTREAM class categoriesFor: #defineFields!public!template definition! !
 !EDITSTREAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -92,6 +92,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
-!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

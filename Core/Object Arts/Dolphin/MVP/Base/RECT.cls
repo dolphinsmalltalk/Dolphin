@@ -115,7 +115,7 @@ uninitialize
 	Make sure our alias disappears with us."
 
 	self environment removeKey: #RECTL ifAbsent: []! !
-!RECT class categoriesFor: #defineFields!initializing!public! !
+!RECT class categoriesFor: #defineFields!public!template definition! !
 !RECT class categoriesFor: #extent:!instance creation!public! !
 !RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !RECT class categoriesFor: #left:top:right:bottom:!instance creation!public! !

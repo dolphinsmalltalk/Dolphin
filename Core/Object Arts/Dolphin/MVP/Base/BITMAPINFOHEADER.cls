@@ -201,6 +201,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
-!BITMAPINFOHEADER class categoriesFor: #defineFields!initializing!public! !
+!BITMAPINFOHEADER class categoriesFor: #defineFields!public!template definition! !
 !BITMAPINFOHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

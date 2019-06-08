@@ -92,6 +92,6 @@ defineFields
 
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
-!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -94,7 +94,7 @@ fromDate: aDate
 
 getFieldNames
 	^#(#year #month #day)! !
-!ODBCDATE class categoriesFor: #defineFields!constants!public! !
+!ODBCDATE class categoriesFor: #defineFields!public!template definition! !
 !ODBCDATE class categoriesFor: #fromDate:!instance creation!public! !
 !ODBCDATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

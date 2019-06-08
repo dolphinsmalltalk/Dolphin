@@ -80,6 +80,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
-!SECURITY_ATTRIBUTES class categoriesFor: #defineFields!initializing!public! !
+!SECURITY_ATTRIBUTES class categoriesFor: #defineFields!public!template definition! !
 !SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

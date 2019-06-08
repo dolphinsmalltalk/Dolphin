@@ -80,7 +80,7 @@ x: x y: y
 				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)
 ! !
-!POINTL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!POINTL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !POINTL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !POINTL class categoriesFor: #x:y:!instance creation!public! !
 

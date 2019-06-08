@@ -83,6 +83,6 @@ defineFields
 getFieldNames
 	^#(#pIID #pItf #hr)! !
 !MULTI_QI class categoriesFor: #clear:!public!realizing/unrealizing! !
-!MULTI_QI class categoriesFor: #defineFields!initializing!public! !
+!MULTI_QI class categoriesFor: #defineFields!public!template definition! !
 !MULTI_QI class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -80,6 +80,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
-!ENLINK class categoriesFor: #defineFields!initializing!public! !
+!ENLINK class categoriesFor: #defineFields!public!template definition! !
 !ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

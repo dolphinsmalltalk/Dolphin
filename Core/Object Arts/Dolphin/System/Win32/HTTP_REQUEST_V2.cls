@@ -85,6 +85,6 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
-!HTTP_REQUEST_V2 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_V2 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

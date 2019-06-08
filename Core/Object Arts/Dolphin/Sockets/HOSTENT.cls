@@ -148,7 +148,7 @@ host: aStringHostName
 	| answer |
 	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
 	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
-!HOSTENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HOSTENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HOSTENT class categoriesFor: #host:!instance creation!public! !
 

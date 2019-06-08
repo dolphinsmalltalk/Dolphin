@@ -64,7 +64,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESTOREDC! !
-!EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
 

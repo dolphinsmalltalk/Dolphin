@@ -7,7 +7,7 @@ CompilerNotification subclass: #CompilerInfoNotification
 	classInstanceVariableNames: ''!
 CompilerInfoNotification guid: (GUID fromString: '{135aa40a-a210-4d71-8553-a1d64829c446}')!
 CompilerInfoNotification comment: 'CompilerInfoNotification is a resumable exception used to represent low-severity semantic warnings detected by the <StSemanticChecker>'!
-!CompilerInfoNotification categoriesForClass!System-Exception Handling! !
+!CompilerInfoNotification categoriesForClass!System-Compiler! !
 !CompilerInfoNotification methodsFor!
 
 severityName

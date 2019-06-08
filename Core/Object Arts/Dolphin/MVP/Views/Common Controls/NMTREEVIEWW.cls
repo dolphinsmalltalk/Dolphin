@@ -60,6 +60,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
-!NMTREEVIEWW class categoriesFor: #defineFields!initializing!public! !
+!NMTREEVIEWW class categoriesFor: #defineFields!public!template definition! !
 !NMTREEVIEWW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
