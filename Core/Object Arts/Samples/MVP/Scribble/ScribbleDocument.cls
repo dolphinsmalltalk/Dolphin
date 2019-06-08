@@ -16,8 +16,7 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	scribblePresenter := self add: Scribble new name: 'scribble'
-!
+	scribblePresenter := self add: self class scribblePresenterClass new name: 'scribble'!
 
 fileNew
 	"The user has selected the standard File/New command."
@@ -66,7 +65,7 @@ streamOut: aStream
 !ScribbleDocument class methodsFor!
 
 defaultFileExtension
-	^'scribble'!
+	^File splitExtensionFrom: self fileType last!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
@@ -74,13 +73,18 @@ defaultModel
 
 	^ListModel new!
 
+fileType
+	"Answer a two element array describing the principal file type for this document."
+
+	^#('Scribble Files (*.scribble)' '*.scribble')!
+
 fileTypes
 	"Answer an Array of file types that can be associated with this class of document."
 
-	^#(#('Scribble Files (*.scribble)' '*.scribble') #('All Files (*.*)' '*.*'))!
+	^{self fileType. FileDialog allFilesType}!
 
 icon
-	^Scribble icon!
+	^self scribblePresenterClass icon!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -92,14 +96,19 @@ resource_Default_view
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 544 nil nil nil 7 nil nil nil 544 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Scribble) #resource_Default_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 754 1169 683 544 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 8 #() 754 193 193 nil 27 170 192 34 2 544 8 'scribble' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 1 265030 4 ##(Smalltalk.Menu) nil true 34 4 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #fileNew 8 '&New' 9373 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'DocumentShell.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 1026 1 1058 #fileOpen 8 '&Open...' 9375 1 1106 nil true 1152 8 'OpenWorkspace.ico' 1200 nil nil 1026 1 1058 #fileSave 8 '&Save' 9383 1 1106 nil true 1152 8 'FileSave.ico' 1200 nil nil 1026 1 1058 #fileSaveAs 8 'Save &As...' 1 1 nil nil nil 8 '&File' nil 134217729 nil nil 32921 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 1106 nil true 1152 8 'Scribble.ico' 1200 nil nil nil 1 nil nil 642 138 144 34 2 706 #createAt:extent: 34 2 754 3839 21 754 1201 801 416 706 #updateMenuBar 848 416 802 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 215 9 0 0 154 1 0 0] 34 1 544 864 nil 27 )!
 
+scribblePresenterClass
+	^Scribble!
+
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
 !ScribbleDocument class categoriesFor: #defaultFileExtension!constants!public! !
 !ScribbleDocument class categoriesFor: #defaultModel!models!public! !
+!ScribbleDocument class categoriesFor: #fileType!constants!public! !
 !ScribbleDocument class categoriesFor: #fileTypes!constants!public! !
 !ScribbleDocument class categoriesFor: #icon!public! !
 !ScribbleDocument class categoriesFor: #resource_Default_view!public!resources-views! !
+!ScribbleDocument class categoriesFor: #scribblePresenterClass!constants!private! !
 !ScribbleDocument class categoriesFor: #shutdownOnExit!public!testing! !
 

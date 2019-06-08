@@ -85,6 +85,6 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
-!ExternalInteger class categoriesFor: #defineTemplate!development!initializing!public! !
+!ExternalInteger class categoriesFor: #defineTemplate!public!template definition! !
 !ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
 
