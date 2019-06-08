@@ -77,7 +77,7 @@ NotationDecl: strName strPublicId: strPublicId strSystemId: strSystemId
 			[in, out]BSTR* strSystemId);"
 
 	<virtual stdcall: hresult 8 bstr* bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 unparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId strNotationName: strNotationName
 	"Invoke the unparsedEntityDecl() method of the COM object.
@@ -109,7 +109,7 @@ UnparsedEntityDecl: strName strPublicId: strPublicId strSystemId: strSystemId st
 			[in, out]BSTR* strNotationName);"
 
 	<virtual stdcall: hresult 9 bstr* bstr* bstr* bstr*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IVBSAXDTDHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !IVBSAXDTDHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !IVBSAXDTDHandler categoriesFor: #notationDecl:strPublicId:strSystemId:!**auto generated**!methods!public! !

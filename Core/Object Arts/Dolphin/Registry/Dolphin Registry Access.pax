@@ -49,9 +49,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin').
 
 package!
 
@@ -93,7 +92,7 @@ regCloseKey: hKey
 		);"
 
 	<stdcall: sdword RegCloseKey handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 regConnectRegistry: lpMachineName hKey: hKey phkResult: phkResult
 	"
@@ -104,9 +103,9 @@ regConnectRegistry: lpMachineName hKey: hKey phkResult: phkResult
 	"
 
 	<stdcall: sdword RegConnectRegistryW lpwstr handle lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOptions: dwOptions samDesired: samDesired lpSecurityAttributes: lpSecurityAttributes phkResult: phkResult lpdwDisposition: lpdwDisposition 
+regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOptions: dwOptions samDesired: samDesired lpSecurityAttributes: lpSecurityAttributes phkResult: phkResult lpdwDisposition: lpdwDisposition
 	"Create or opens the specified registry key. Answers appropriate Win32 extended error code.
 
 		LONG RegCreateKeyEx( 
@@ -121,8 +120,8 @@ regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOp
 			LPDWORD lpdwDisposition	// address of disposition value buffer 
 		); "
 
-	<stdcall: sdword RegCreateKeyExW handle lpwstr dword lpwstr dword dword lpvoid lpvoid DWORD*>
-	^self invalidCall!
+	<stdcall: sdword RegCreateKeyExW handle lpwstr dword lpwstr dword dword lpvoid lpvoid dword*>
+	^self invalidCall: _failureCode!
 
 regDeleteKey: hKey lpSubKey: lpSubKey
 	"Delete the specified sub-key of the key whose handle is hKey.
@@ -138,7 +137,7 @@ regDeleteKey: hKey lpSubKey: lpSubKey
 		);"
 
 	<stdcall: sdword RegDeleteKeyW handle lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 regDeleteValue: hKey lpValueName: lpValueName
 	"Delete the specified registry value of the key whose handle is hKey.
@@ -149,9 +148,9 @@ regDeleteValue: hKey lpValueName: lpValueName
 		);"
 
 	<stdcall: sdword RegDeleteValueW handle lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved: lpReserved lpClass: lpClass lpcbClass: lpcbClass lpftLastWriteTime: lpftLastWriteTime 
+regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved: lpReserved lpClass: lpClass lpcbClass: lpcbClass lpftLastWriteTime: lpftLastWriteTime
 	"Get details for the sub-key of hKey with the specified index.
 
 		LONG RegEnumKeyEx(
@@ -165,10 +164,10 @@ regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved
 			PFILETIME lpftLastWriteTime	// address for time key last written to 
 		);"
 
-	<stdcall: sdword RegEnumKeyExW handle sdword lpwstr DWORD* DWORD* lpwstr DWORD* FILETIME*>
-	^self invalidCall!
+	<stdcall: sdword RegEnumKeyExW handle sdword lpwstr dword* dword* lpwstr dword* FILETIME*>
+	^self invalidCall: _failureCode!
 
-regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcbValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData 
+regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcbValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData
 	"
 		LONG RegEnumValue( 
 			HKEY hKey, 			// handle of key to query 
@@ -181,10 +180,10 @@ regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcb
 			LPDWORD lpcbData 		// address for size of data buffer 
 		); "
 
-	<stdcall: sdword RegEnumValueW handle dword lpwstr DWORD* DWORD* DWORD* lpvoid DWORD*>
-	^self invalidCall!
+	<stdcall: sdword RegEnumValueW handle dword lpwstr dword* dword* dword* lpvoid dword*>
+	^self invalidCall: _failureCode!
 
-regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesired phkResult: phkResult 
+regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesired phkResult: phkResult
 	"Opens the specified registry key. Answers appropriate Win32 extended error code.
 		LONG RegOpenKeyEx(
   			HKEY hKey,		// handle of open key 
@@ -195,9 +194,9 @@ regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesire
 		);"
 
 	<stdcall: sdword RegOpenKeyExW handle lpwstr dword dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserved lpcSubKeys: lpcSubKeys lpcbMaxSubKeyLen: lpcbMaxSubKeyLen lpcbMaxClassLen: lpcbMaxClassLen lpcValues: lpcValues lpcbMaxValueNameLen: lpcbMaxValueNameLen lpcbMaxValueLen: lpcbMaxValueLen lpcbSecurityDescriptor: lpcbSecurityDescriptor lpftLastWriteTime: lpftLastWriteTime 
+regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserved lpcSubKeys: lpcSubKeys lpcbMaxSubKeyLen: lpcbMaxSubKeyLen lpcbMaxClassLen: lpcbMaxClassLen lpcValues: lpcValues lpcbMaxValueNameLen: lpcbMaxValueNameLen lpcbMaxValueLen: lpcbMaxValueLen lpcbSecurityDescriptor: lpcbSecurityDescriptor lpftLastWriteTime: lpftLastWriteTime
 	"Answer (a lot of) information about a specified registry key. 
 
 		LONG RegQueryInfoKey ( 
@@ -215,10 +214,10 @@ regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserv
 			PFILETIME lpftLastWriteTime			// address of buffer for last write time 
 	 ); "
 
-	<stdcall: sdword RegQueryInfoKeyW handle lpwstr DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* FILETIME*>
-	^self invalidCall!
+	<stdcall: sdword RegQueryInfoKeyW handle lpwstr dword* dword* dword* dword* dword* dword* dword* dword* dword* FILETIME*>
+	^self invalidCall: _failureCode!
 
-regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData 
+regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData
 	"Retrieves the type and data for a specified value name associated with an open registry key.
 		LONG RegQueryValueEx(
 			HKEY hKey,			// handle of key to query 
@@ -229,10 +228,10 @@ regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lp
 			LPDWORD lpcbData 		// address of data buffer size 
 		);"
 
-	<stdcall: sdword RegQueryValueExW handle lpwstr DWORD* DWORD* lpvoid DWORD*>
-	^self invalidCall!
+	<stdcall: sdword RegQueryValueExW handle lpwstr dword* dword* lpvoid dword*>
+	^self invalidCall: _failureCode!
 
-regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType lpData: lpData cbData: cbData 
+regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType lpData: lpData cbData: cbData
 	"Store the type and data for a specified value name associated with an open registry key.
 		LONG RegSetValueEx( 
 			HKEY hKey,		// handle of key
@@ -244,7 +243,7 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 		);"
 
 	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !AdvApiLibrary categoriesFor: #regCloseKey:!public!win32 functions-registry! !
 !AdvApiLibrary categoriesFor: #regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
 !AdvApiLibrary categoriesFor: #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !

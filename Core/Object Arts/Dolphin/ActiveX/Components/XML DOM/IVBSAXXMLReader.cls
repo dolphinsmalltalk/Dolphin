@@ -151,7 +151,7 @@ get_baseURL: strBaseURL
 			[out, retval]BSTR* strBaseURL);"
 
 	<virtual stdcall: hresult 20 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_contentHandler: oHandler
 	"Private - Get the value of the 'contentHandler' property of the receiver.
@@ -160,7 +160,7 @@ get_contentHandler: oHandler
 			[out, retval]IVBSAXContentHandler** oHandler);"
 
 	<virtual stdcall: hresult 14 IVBSAXContentHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_dtdHandler: oHandler
 	"Private - Get the value of the 'dtdHandler' property of the receiver.
@@ -169,7 +169,7 @@ get_dtdHandler: oHandler
 			[out, retval]IVBSAXDTDHandler** oHandler);"
 
 	<virtual stdcall: hresult 16 IVBSAXDTDHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_entityResolver: oResolver
 	"Private - Get the value of the 'entityResolver' property of the receiver.
@@ -178,7 +178,7 @@ get_entityResolver: oResolver
 			[out, retval]IVBSAXEntityResolver** oResolver);"
 
 	<virtual stdcall: hresult 12 IVBSAXEntityResolver**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_errorHandler: oHandler
 	"Private - Get the value of the 'errorHandler' property of the receiver.
@@ -187,7 +187,7 @@ get_errorHandler: oHandler
 			[out, retval]IVBSAXErrorHandler** oHandler);"
 
 	<virtual stdcall: hresult 18 IVBSAXErrorHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_secureBaseURL: strSecureBaseURL
 	"Private - Get the value of the 'secureBaseURL' property of the receiver.
@@ -196,7 +196,7 @@ get_secureBaseURL: strSecureBaseURL
 			[out, retval]BSTR* strSecureBaseURL);"
 
 	<virtual stdcall: hresult 22 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getFeature: strName
 	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object.
@@ -219,7 +219,7 @@ GetFeature: strName fValue: fValue
 			[out, retval]VARIANT_BOOL* fValue);"
 
 	<virtual stdcall: hresult 8 bstr varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetProperty: strName varValue: varValue
 	"Private - Invoke the getProperty() method of the COM object.
@@ -230,7 +230,7 @@ GetProperty: strName varValue: varValue
 			[out, retval]VARIANT* varValue);"
 
 	<virtual stdcall: hresult 10 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProperty_: strName
 	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
@@ -275,7 +275,7 @@ Parse: varInput
 			[in, optional]VARIANT varInput);"
 
 	<virtual stdcall: hresult 24 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ParseURL: strURL
 	"Invoke the parseURL() method of the COM object.
@@ -285,7 +285,7 @@ ParseURL: strURL
 			[in]BSTR strURL);"
 
 	<virtual stdcall: hresult 25 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_baseURL: strBaseURL
 	"Private - Set the value of the 'baseURL' property of the object wrapped by the 
@@ -295,7 +295,7 @@ put_baseURL: strBaseURL
 			[in]BSTR strBaseURL);"
 
 	<virtual stdcall: hresult 21 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_secureBaseURL: strSecureBaseURL
 	"Private - Set the value of the 'secureBaseURL' property of the object wrapped by the 
@@ -305,7 +305,7 @@ put_secureBaseURL: strSecureBaseURL
 			[in]BSTR strSecureBaseURL);"
 
 	<virtual stdcall: hresult 23 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutFeature: strName fValue: fValue
 	"Invoke the putFeature() method of the COM object.
@@ -316,7 +316,7 @@ PutFeature: strName fValue: fValue
 			[in]VARIANT_BOOL fValue);"
 
 	<virtual stdcall: hresult 9 bstr varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putProperty: strName varValue: varValue
 	"Invoke the putProperty() method of the COM object.
@@ -336,7 +336,7 @@ PutProperty: strName varValue: varValue
 			[in]VARIANT varValue);"
 
 	<virtual stdcall: hresult 11 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_contentHandler: oHandler
 	"Private - Set the value of the 'contentHandler' property of the object wrapped by the 
@@ -346,7 +346,7 @@ putref_contentHandler: oHandler
 			[in]IVBSAXContentHandler* oHandler);"
 
 	<virtual stdcall: hresult 15 IVBSAXContentHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_dtdHandler: oHandler
 	"Private - Set the value of the 'dtdHandler' property of the object wrapped by the 
@@ -356,7 +356,7 @@ putref_dtdHandler: oHandler
 			[in]IVBSAXDTDHandler* oHandler);"
 
 	<virtual stdcall: hresult 17 IVBSAXDTDHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_entityResolver: oResolver
 	"Private - Set the value of the 'entityResolver' property of the object wrapped by the 
@@ -366,7 +366,7 @@ putref_entityResolver: oResolver
 			[in]IVBSAXEntityResolver* oResolver);"
 
 	<virtual stdcall: hresult 13 IVBSAXEntityResolver*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_errorHandler: oHandler
 	"Private - Set the value of the 'errorHandler' property of the object wrapped by the 
@@ -376,7 +376,7 @@ putref_errorHandler: oHandler
 			[in]IVBSAXErrorHandler* oHandler);"
 
 	<virtual stdcall: hresult 19 IVBSAXErrorHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 secureBaseURL
 	"Answer the <bstr> value of the 'secureBaseURL' property of the receiver.

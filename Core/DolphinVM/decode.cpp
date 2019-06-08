@@ -596,8 +596,7 @@ static void DumpProcess(ProcessOTE* oteProc, wostream& logStream)
 			<< L" words, suspended frame " << reinterpret_cast<LPVOID>(pProc->SuspendedFrame())
 			<< std::dec << L", priority " << pProc->Priority()
 			<< L", callbacks " << pProc->CallbackDepth() << std::endl;
-		logStream << L"last failure " << pProc->PrimitiveFailureCode()
-			<< L":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
+		logStream << L"last failure data" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
 			<< L", FP control " << std::hex << pProc->FpControl()
 			<< L", thread " << pProc->Thread();
 	}

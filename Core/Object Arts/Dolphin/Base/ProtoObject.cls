@@ -25,20 +25,20 @@ ProtoObject comment: 'ProtoObject is an abstract class that can be used as a bas
 	(unless #perform'd), because #== is inlined by the Compiler."
 
 	<primitive: 110>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 allReferences
 	"Answer an Array containing all objects which reference the receiver.
 	The primitive should not fail."
 
 	<primitive: 153>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicClass
 	"Answer the class of the receiver. The primitive should not fail."
 
 	<primitive: 111>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicIdentityHash
 	"Answer the <integer> identity hash value for the receiver. This is
@@ -48,7 +48,7 @@ basicIdentityHash
 	hashed by identity using this value alone may be slow to access."
 
 	<primitive: 75>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 basicPrintOn: aStream
 	"Append a short developer's description of the receiver to aStream. 
@@ -76,7 +76,7 @@ basicSize
 	The primitive should not fail. It must be overridden for immediate objects."
 
 	<primitive: 62>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 become: anObject
 	"Swap the instance pointers of the receiver and the argument, anObject. All variables 
@@ -98,7 +98,7 @@ become: anObject
 	to become prevalent on other platforms."
 
 	<primitive: 72>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 doesNotUnderstand: failedMessage
 	"Sent to the receiver by the VM when a message sent to the receiver was not implemented
@@ -125,22 +125,18 @@ identityHash
 	^self basicIdentityHash bitShift: 14!
 
 instVarAt: index
-	"Private - Answer a variable in the receiver. The numbering of the variables begins with 
-	named instance variables, and corresponds to the order in which the instance variables
-	were defined. Indexed variables have indices following those of the named instance
-	variables.
+	"Private - Answer a variable in the receiver. The numbering of the variables begins with named instance variables, and corresponds to the order in which the instance variables were defined. Indexed variables have indices following those of the named instance variables."
 
-	Primitive failure reasons:
-		0	-	aSmallInteger is not a SmallInteger.
-		1	-	aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
+	"Primitive failure reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger.
+		IndexoutOfRange	- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	^index isInteger 
-		ifTrue: 
-			[(BoundsError new)
+	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^(BoundsError new)
 				receiver: self;
-				signalWith: index]
-		ifFalse: [Error nonIntegerIndex: index]!
+				signalWith: index].
+	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^Error nonIntegerIndex: index].
+	^self primitiveFailed: _failureCode!
 
 isKindOf: candidateClass
 	"Answer whether the receiver is an instance of the argument, candidateClass,
@@ -170,16 +166,16 @@ oneWayBecome: anObject
 	as efficient as #become:."
 
 	<primitive: 154>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
-primitiveFailed
+primitiveFailed: anInteger
 	"Generate an error to the effect that a primitive has failed, including the failure code
 	specified by the primitive."
 
 	| proc |
 	proc := Processor activeProcess.
 	^self error: ('Primitive <1p> failed (<2d>) '
-		expandMacrosWithArguments: {proc topFrame sender method. proc primitiveFailureCode})! !
+				expandMacrosWithArguments: {proc topFrame sender method. anInteger})! !
 !ProtoObject categoriesFor: #~~!comparing!public! !
 !ProtoObject categoriesFor: #==!comparing!public! !
 !ProtoObject categoriesFor: #allReferences!enumerating!public! !
@@ -195,5 +191,5 @@ primitiveFailed
 !ProtoObject categoriesFor: #instVarAt:!accessing!private! !
 !ProtoObject categoriesFor: #isKindOf:!public!testing! !
 !ProtoObject categoriesFor: #oneWayBecome:!mutating!public! !
-!ProtoObject categoriesFor: #primitiveFailed!exceptions!public! !
+!ProtoObject categoriesFor: #primitiveFailed:!exceptions!public! !
 

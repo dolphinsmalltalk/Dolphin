@@ -28,8 +28,7 @@ _xSave: fileName PersistFormat: persistFormat
 			[in, optional, defaultvalue(0)] PersistFormatEnum PersistFormat);"
 
 	<virtual stdcall: hresult 72 bstr sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 activeCommand
 	"Answer the <IDispatch> value of the 'ActiveCommand' property of the receiver."
@@ -46,8 +45,7 @@ Cancel
 		HRESULT __stdcall Cancel();"
 
 	<virtual stdcall: hresult 69>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 clone
 	"Answer the <ADODB_Recordset> result of invoking the Clone() method of the COM object.
@@ -74,8 +72,7 @@ Clone: lockType ppvObject: ppvObject
 			[out, retval] _Recordset** ppvObject);"
 
 	<virtual stdcall: hresult 80 sdword ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 compareBookmarks: bookmark1 bookmark2: bookmark2
 	"Answer the <SDWORD> result of invoking the CompareBookmarks() method of the COM object."
@@ -98,8 +95,7 @@ CompareBookmarks: bookmark1 Bookmark2: bookmark2 pCompare: pCompare
 			[out, retval] CompareEnum* pCompare);"
 
 	<virtual stdcall: hresult 79 variant variant sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 dataMember
 	"Answer the <bstr> value of the 'DataMember' property of the receiver."
@@ -131,8 +127,7 @@ get_ActiveCommand: ppCmd
 			[out, retval] IDispatch** ppCmd);"
 
 	<virtual stdcall: hresult 73 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DataMember: pbstrDataMember
 	"Private - Get the value of the 'DataMember' property of the receiver.
@@ -140,8 +135,7 @@ get_DataMember: pbstrDataMember
 			[out, retval] BSTR* pbstrDataMember);"
 
 	<virtual stdcall: hresult 77 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DataSource: ppunkDataSource
 	"Private - Get the value of the 'DataSource' property of the receiver.
@@ -149,8 +143,7 @@ get_DataSource: ppunkDataSource
 			[out, retval] IUnknown** ppunkDataSource);"
 
 	<virtual stdcall: hresult 70 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_StayInSync: pbStayInSync
 	"Private - Get the value of the 'StayInSync' property of the receiver.
@@ -158,8 +151,7 @@ get_StayInSync: pbStayInSync
 			[out, retval] VARIANT_BOOL* pbStayInSync);"
 
 	<virtual stdcall: hresult 75 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getString
 	"Answer the <BSTR> result of invoking the GetString() method of the COM object.
@@ -199,8 +191,7 @@ GetString: stringFormat NumRows: numRows ColumnDelimeter: columnDelimeter RowDel
 			[out, retval] BSTR* pRetString);"
 
 	<virtual stdcall: hresult 76 sdword sdword bstr bstr bstr bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DataMember: pbstrDataMember
 	"Private - Set the value of the 'DataMember' property of the object wrapped by the 
@@ -209,8 +200,7 @@ put_DataMember: pbstrDataMember
 			[in] BSTR pbstrDataMember);"
 
 	<virtual stdcall: hresult 78 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_StayInSync: pbStayInSync
 	"Private - Set the value of the 'StayInSync' property of the object wrapped by the 
@@ -219,8 +209,7 @@ put_StayInSync: pbStayInSync
 			[in] VARIANT_BOOL pbStayInSync);"
 
 	<virtual stdcall: hresult 74 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_DataSource: ppunkDataSource
 	"Private - Set the value of the 'DataSource' property of the object wrapped by the 
@@ -229,8 +218,7 @@ putref_DataSource: ppunkDataSource
 			[in] IUnknown* ppunkDataSource);"
 
 	<virtual stdcall: hresult 71 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 resync
 	"Invoke the Resync() method of the COM object.
@@ -248,8 +236,7 @@ Resync: affectRecords ResyncValues: resyncValues
 			[in, optional, defaultvalue(2)] ResyncEnum ResyncValues);"
 
 	<virtual stdcall: hresult 81 sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setDataSource: ppunkDataSource
 	"Set the 'DataSource' property of the receiver to the <IUnknown*> value of the argument."

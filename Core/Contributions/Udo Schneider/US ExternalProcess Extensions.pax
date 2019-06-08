@@ -49,12 +49,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\Burning River\ExternalProcess\ExternalProcess';
-	add: '..\Burning River\InheritableFile\InheritableFile';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\Burning River\ExternalProcess\ExternalProcess'
+	'..\Burning River\InheritableFile\InheritableFile').
 
 package!
 
@@ -168,23 +167,23 @@ handle := aHandle! !
 
 !KernelLibrary methodsFor!
 
-createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize <stdcall: bool CreatePipe handle* handle* lpvoid dword> ^self invalidCall 
-! !
+createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize
+	<stdcall: bool CreatePipe handle* handle* lpvoid dword>
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #createPipe:hWritePipe:lpPipeAttributes:nSize:!*-not in class package!public! !
 
 !UserLibrary methodsFor!
 
-waitForInputIdle: hProcess milliseconds: dwMilliseconds 
+waitForInputIdle: hProcess milliseconds: dwMilliseconds
 	"Waits until the specified process is waiting for user input with no input pending, or until the time-out interval has elapsed.
 
 	DWORD WINAPI WaitForInputIdle(
 		HANDLE hProcess,
 		DWORD dwMilliseconds
 	);"
-	<stdcall: dword WaitForInputIdle handle dword>
-	^self invalidCall
 
-	! !
+	<stdcall: dword WaitForInputIdle handle dword>
+	^self invalidCall: _failureCode! !
 !UserLibrary categoriesFor: #waitForInputIdle:milliseconds:!public! !
 
 "End of package definition"!

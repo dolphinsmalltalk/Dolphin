@@ -21,8 +21,7 @@ get_Peer: pVal
 	"
 
 	<virtual stdcall: hresult 4 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Peer: pVal
 	"Private - Set the value of the 'Peer' property of the object wrapped by the 
@@ -34,8 +33,7 @@ put_Peer: pVal
 	"
 
 	<virtual stdcall: hresult 5 IUnknown*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IIPPlugHole categoriesFor: #get_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
 !IIPPlugHole categoriesFor: #put_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
 

@@ -35,8 +35,7 @@ OnArrival: msg EventStatus: eventStatus
 	"
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !CDOISMTPOnArrival categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !CDOISMTPOnArrival categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !CDOISMTPOnArrival categoriesFor: #OnArrival:EventStatus:!**auto generated**!COM Interfaces-ISMTPOnArrival!public! !

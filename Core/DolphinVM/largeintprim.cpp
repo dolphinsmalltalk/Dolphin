@@ -107,7 +107,7 @@ template <class Op, class OpSingle> __forceinline static Oop* primitiveLargeInte
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 }
 
@@ -140,7 +140,7 @@ template <class Op, class OpSingle> __forceinline static Oop* primitiveLargeInte
 			result = op(oteReceiver, oteArg);
 		}
 		else
-			return nullptr;
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 
 	// Normalize and return
@@ -1648,7 +1648,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 	{
 		LargeIntegerOTE* oteV = reinterpret_cast<LargeIntegerOTE*>(oopV);
 		if (oteV->m_oteClass != Pointers.ClassLargeInteger)
-			return primitiveFailure(PrimitiveFailureNonInteger);	// Divisor not an Integer
+			return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Divisor not an Integer
 
 		quoAndRem = liDiv(oteU, oteV);
 		// If divisor is greater than dividend, then the result is all
@@ -1656,7 +1656,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 		if (quoAndRem.rem == reinterpret_cast<Oop>(oteU))
 		{
 			ASSERT(quoAndRem.quo == ZeroPointer);
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::Inexact);
 		}
 	}
 
@@ -1675,14 +1675,14 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 		// will create a fraction
 		deallocateIntermediateResult(rem);
 		deallocateIntermediateResult(quoAndRem.quo);
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::Inexact);
 	}
 }
 
 
 Oop* __fastcall Interpreter::primitiveLargeIntegerMod(Oop* const sp, unsigned)
 {
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 }		
 
 // This primitiveLargeInteger (associated with integer division selector //) does work when
@@ -1691,7 +1691,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerMod(Oop* const sp, unsigned)
 // negative infinity, not zero
 Oop* __fastcall Interpreter::primitiveLargeIntegerDiv(Oop* const sp, unsigned)
 {
-	return NULL;
+	return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 }		
 
 // Integer division with truncation towards zero
@@ -1710,7 +1710,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, unsigned)
 	{
 		LargeIntegerOTE* oteV = reinterpret_cast<LargeIntegerOTE*>(oopV);
 		if (oteV->m_oteClass	!= Pointers.ClassLargeInteger)
-			return nullptr;		// Divisor not an Integer
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Divisor not an Integer
 
 		quoAndRem = liDiv(oteU, oteV);
 	}
@@ -1808,7 +1808,7 @@ template <bool Lt, bool Eq> static __forceinline Oop* primitiveLargeIntegerCmp(O
 			return sp - 1;
 		}
 		else
-			return nullptr;	/* Arg not an integer, fall back on Smalltalk code*/
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);	/* Arg not an integer, fall back on Smalltalk code*/
 	}
 }
 
@@ -1893,7 +1893,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp, unsigned)
 		}
 	}
 
-	return nullptr;	/* Arg not an integer, fall back on Smalltalk code*/
+	return primitiveFailure(_PrimitiveFailureCode::BadValueType);	/* Arg not an integer, fall back on Smalltalk code*/
 }
 
 
@@ -2344,7 +2344,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsign
 	{
 		// shift MUST be a SmallInteger
 		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 	}
 }
 
@@ -2364,7 +2364,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat(Oop* const sp, unsigne
 		return sp;
 	}
 	else
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::Inexact);
 }
 
 Oop* __fastcall Interpreter::primitiveQWORDAt(Oop* const sp, unsigned)
@@ -2384,10 +2384,10 @@ Oop* __fastcall Interpreter::primitiveQWORDAt(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(PrimitiveFailureBoundsError);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 
-	return primitiveFailure(PrimitiveFailureNonInteger);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 Oop* __fastcall Interpreter::primitiveSQWORDAt(Oop* const sp, unsigned)
@@ -2407,8 +2407,8 @@ Oop* __fastcall Interpreter::primitiveSQWORDAt(Oop* const sp, unsigned)
 			return sp-1;
 		}
 		else
-			return primitiveFailure(PrimitiveFailureBoundsError);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 
-	return primitiveFailure(PrimitiveFailureNonInteger);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }

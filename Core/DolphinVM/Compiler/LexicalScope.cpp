@@ -542,7 +542,7 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 		_ASSERTE(it != allVisibleDecls.end());
 
 		TempVarDecl* pDecl = (*it).second;
-		_ASSERTE(pDecl->IsArgument() || pDecl->GetVarType() != tvtUnaccessed);
+		_ASSERTE(pDecl->IsReadOnly() || pDecl->GetVarType() != tvtUnaccessed);
 
 		POTE tempPointer = piVM->NewArray(3);
 		piVM->StorePointerWithValue(temps.fields+i, Oop(tempPointer));

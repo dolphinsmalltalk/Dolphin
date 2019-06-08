@@ -39,7 +39,7 @@ get_particles: particles
 			[out, retval]ISchemaItemCollection** particles);"
 
 	<virtual stdcall: hresult 17 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 particles
 	"Answer the <ISchemaItemCollection> value of the 'particles' property of the receiver."

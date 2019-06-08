@@ -132,31 +132,6 @@ argumentCount: anInteger
 asBlock
 	^self!
 
-at: index
-	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented.
-
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 60>
-	^self errorAt: index!
-
-at: index put: value
-	"Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value.
-	As basicAt:put: but may be reimplemented.
-
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		2	- the argument, value, is not of a class which can be stored in the receiver
-			(e.g. its a non-SmallInteger and the receiver is a ByteArray)."
-
-	<primitive: 61>
-	^self errorAt: index put: value!
-
 atPriority: anInteger
 	"Evaluate the receiver at the specified priority. On completion or curtailment the active process' 
 	priority is returned to its previous value."
@@ -605,75 +580,64 @@ timeToRun
 	^((self ticksToRun - [self] ticksToRun) * Delay.TicksToNanos) nanoseconds!
 
 value
-	"Answer the result of evaluating the receiver. Fail if the receiver is not 
-	a niladic (zero argument) block.
+	"Answer the result of evaluating the receiver. Fail if the receiver is not  a niladic (zero argument) block.
 	
 	Primitive failure reasons:
-		0 -	the receiver does not expect 0 arguments."
+		WrongNumberOfArgs	- the receiver does not expect 0 arguments."
 
-	"Implementation Note: This method is present to handle failures and as a 
-	target for #performs, as invocations of #value are performed directly for 
-	zero argument blocks."
+	"Implementation Note: This method is present to handle failures and as a  target for #performs, as invocations of #value are performed directly for zero argument blocks."
 
 	<primitive: 81>
-	^self valueFailed: 0!
+	^self valueFailed: _failureCode argumentCount: 0!
 
-value: arg1 
-	"Answer the result of evaluating the receiver. Fail if the receiver is not 
-	a monadic (one argument) block.
+value: arg1
+	"Answer the result of evaluating the receiver. Fail if the receiver is not a monadic (one argument) block.
 	
 	Primitive failure reasons:
-		0 -	the receiver does not expect 1 argument."
+		WrongNumberOfArgs	- the receiver does not expect 1 argument."
 
-	"Implementation Note: This method is present to handle failures and as a 
-	target for #performs, as invocations of #value are performed directly for one 
-	argument blocks."
+	"Implementation Note: This method is present to handle failures and as a target for #performs, as invocations of #value are performed directly for one argument blocks."
 
 	<primitive: 81>
-	^self valueFailed: 1!
+	^self valueFailed: _failureCode argumentCount: 1!
 
-value: arg1 value: arg2 
-	"Answer the result of evaluating the receiver. Fail if the receiver is not 
-	a dyadic (two argument) block.
+value: arg1 value: arg2
+	"Answer the result of evaluating the receiver. Fail if the receiver is not a dyadic (two argument) block.
 
 	Primitive failure reasons:
-		0 -	the receiver does not expect 2 arguments."
+		WrongNumberOfArgs	- the receiver does not expect 2 arguments."
 
-	"Implementation Note: This method is present to handle failures and as a 
-	target for #performs, as invocations of #value are performed directly for two
-	argument blocks."
+	"Implementation Note: This method is present to handle failures and as a target for #performs, as invocations of #value are performed directly for two argument blocks."
 
 	<primitive: 81>
-	^self valueFailed: 2!
+	^self valueFailed: _failureCode argumentCount: 2!
 
 value: arg1 value: arg2 value: arg3
-	"Answer the result of evaluating the receiver. Fail if the receiver is not 
-	a three argument block.
+	"Answer the result of evaluating the receiver. Fail if the receiver is not a three argument block.
 
 	Primitive failure reasons:
-		0 -	the receiver does not expect 3 arguments."
+		WrongNumberOfArgs	- the receiver does not expect 3 arguments."
 
 	<primitive: 81>
-	^self valueFailed: 3!
+	^self valueFailed: _failureCode argumentCount: 3!
 
 value: arg1 value: arg2 value: arg3 value: arg4
-	"Answer the result of evaluating the receiver. Fail if the receiver is not 
-	a four argument block.
+	"Answer the result of evaluating the receiver. Fail if the receiver is not  a four argument block.
 
 	Primitive failure reasons:
-		0 -	the receiver does not expect 4 arguments."
+		WrongNumberOfArgs	- the receiver does not expect 4 arguments."
 
 	<primitive: 81>
-	^self valueFailed: 4!
+	^self valueFailed: _failureCode argumentCount: 4!
 
-valueFailed: anInteger
+valueFailed: failureCode argumentCount: anInteger
 	"Private - A primitive value call failed, generate an appropriate error"
 
-	^self argumentCount == anInteger
-		ifTrue: [super primitiveFailed]
-		ifFalse: [self error: ('Block expects <1p> argument(s)' expandMacrosWith: self argumentCount)]!
+	^failureCode == _PrimitiveFailureCode.WrongNumberOfArgs
+		ifTrue: [self error: ('Block expects <1p> argument(s)' expandMacrosWith: self argumentCount)]
+		ifFalse: [super primitiveFailed: failureCode]!
 
-valueOnUnwind: aTwoArgBlock 
+valueOnUnwind: aTwoArgBlock
 	"Private - Evaluate the receiver, and should it exit by a non-local return to its home method's sender
 	(i.e. via a ^-return) then evaluate aTwoArgBlock, passing it the receiver's home context's sender (i.e.
 	the return destination), and the return value. aTwoArgBlock must include an explicit return of its
@@ -681,7 +645,7 @@ valueOnUnwind: aTwoArgBlock
 	unwind destination, or via a further ^-return, which will override the result and return destinations.
 
 	Primitive failure reasons:
-		0 -	the receiver does not expect 0 arguments."
+		WrongNumberOfArgs	- the receiver does not expect 0 arguments."
 
 	"Implementation Note: Be warned: The primitive marks the caller's stack frame as having an unwind 
 	block, by changing it's receiver to be a special magic block. The VM looks for this object when performing 
@@ -694,17 +658,17 @@ valueOnUnwind: aTwoArgBlock
 	and returns normally or is curtailed by a non-local return or an exception, or only if curtailed (respectively)."
 
 	<primitive: 79>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
-valueWithArguments: argumentArray 
+valueWithArguments: argumentArray
 	"Answer the result of evaluating the receiver with arguments from
 	the <Array>, argumentArray. Fail if the argument is not an <Array>, 
 	or if the receiver does not take the same number of arguments as are 
 	present in the <Array>.
 
 	Primitive failure reasons:
-		0 -	the receiver does not expect the number of arguments in argumentArray.
-		1 -	argumentArray is not an <Array>."
+		BadValueType		-	argumentArray is not an <Array>.
+		WrongNumberOfArgs	-	the receiver does not expect the number of arguments in argumentArray."
 
 	"Implementation Note: A block can have a maximum of 256 arguments, however 
 	this range is shared with other stack temporaries (including copied values), so the 
@@ -713,28 +677,20 @@ valueWithArguments: argumentArray
 	Stack overflow is also a possibility when the arguments are transferred to the stack."
 
 	<primitive: 82>
-	^self valueFailed: argumentArray size!
+	^self valueFailed: _failureCode argumentCount: argumentArray size!
 
-valueWithArgumentsAt: anAddress descriptor: anExternalFunctionDescriptor 
-	"Private - Answer the result of evaluating the receiver with arguments
-	instantiated from memory at anAddress using the the external argument 
-	types from, anExternalFunctionDescriptor.
+valueWithArgumentsAt: anAddress descriptor: anExternalFunctionDescriptor
+	"Private - Answer the result of evaluating the receiver with arguments instantiated from memory at anAddress using the the external argument types from, anExternalFunctionDescriptor.
 
 	Primitive Failure reasons:
-		0	-	anExternalFunctionDescriptor is not a byte object.
-		1	-	anAddress is not a valid address object (SmallInteger/byte indirection)
-		2	-	the number of arguments whose types are specified by anExternalFunctionDescriptor
-				does not match the number of arguments expected by the receiver."
+		BadValueType		-	anExternalFunctionDescriptor is not a byte object.
+		WrongNumberOfArgs	-	the number of arguments whose types are specified by anExternalFunctionDescriptor does not match the number of arguments expected by the receiver.
+		InvalidAddress		-	anAddress is not a valid address object (SmallInteger/byte indirection)"
 
-	"Implementation Note: For performance and consistency (with outbound external calls) 
-	reasons, we use a VM supplied primitive to instantiate and push the arguments and 
-	perform the message, but there is no reason that this cannot be done in Smalltalk 
-	if different argument conversions are required. The standard conversions are the 
-	same as those performed for return types by the external call primitive (see
-	the ExternalLibrary class)."
+	"Implementation Note: For performance and consistency (with outbound external calls) reasons, we use a VM supplied primitive to instantiate and push the arguments and perform the message, but there is no reason that this cannot be done in Smalltalk if different argument conversions are required. The standard conversions are the same as those performed for return types by the external call primitive (see the ExternalLibrary class)."
 
 	<primitive: 117>
-	^self valueFailed: anExternalFunctionDescriptor argumentCount!
+	^self valueFailed: _failureCode argumentCount: anExternalFunctionDescriptor argumentCount!
 
 whileFalse
 	"Repeatedly evaluate the receiver until it evaluates to true. Answer nil."
@@ -779,8 +735,6 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #argumentCount!accessing!public! !
 !BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
-!BlockClosure categoriesFor: #at:!accessing!public! !
-!BlockClosure categoriesFor: #at:put:!accessing!public! !
 !BlockClosure categoriesFor: #atPriority:!evaluating!public! !
 !BlockClosure categoriesFor: #critical!private!scheduling! !
 !BlockClosure categoriesFor: #cull:!evaluating!public! !
@@ -837,7 +791,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #value:value:!evaluating!public! !
 !BlockClosure categoriesFor: #value:value:value:!evaluating!public! !
 !BlockClosure categoriesFor: #value:value:value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #valueFailed:!exceptions!private! !
+!BlockClosure categoriesFor: #valueFailed:argumentCount:!exceptions!private! !
 !BlockClosure categoriesFor: #valueOnUnwind:!private!unwinding! !
 !BlockClosure categoriesFor: #valueWithArguments:!evaluating!public! !
 !BlockClosure categoriesFor: #valueWithArgumentsAt:descriptor:!evaluating!private! !

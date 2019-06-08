@@ -131,7 +131,8 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry').
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time').
 
 package!
 

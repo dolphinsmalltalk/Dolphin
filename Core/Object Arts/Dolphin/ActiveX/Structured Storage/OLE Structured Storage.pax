@@ -154,7 +154,7 @@ createILockBytesOnHGlobal: hglobal fDeleteOnRelease: fDeleteOnRelease pplkbyt: p
 			[out, retval]ILockBytes** pplkbyt);"
 
 	<stdcall: hresult CreateILockBytesOnHGlobal handle bool ILockBytes**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
 	"Create an IStream on the specified global memory handle, answering it via the out parameter, 
@@ -166,17 +166,17 @@ createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
  			BOOL fDeleteOnRelease,	//Whether to free memory when the object is released 
  			LPSTREAM *ppstm 		//Indirect pointer to the new stream object 
  		); "
-  
-	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid >
-	^self invalidCall!
 
-getConvertStg: pStg 
+	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid>
+	^self invalidCall: _failureCode!
+
+getConvertStg: pStg
 	"Answer the convert bit of the specified storage (see setConvertStg:fConvert:)
 
 		WINOLEAPI GetConvertStg(IStorage* pStg);"
 
 	<stdcall: hresult GetConvertStg IStorage*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getHGlobalFromILockBytes: plkbyt phglobal: phglobal
 	"Invoke the GetHGlobalFromILockBytes() function of the module wrapped by the receiver.
@@ -187,7 +187,7 @@ getHGlobalFromILockBytes: plkbyt phglobal: phglobal
 			[out, retval]HGLOBAL* phglobal);"
 
 	<stdcall: hresult GetHGlobalFromILockBytes ILockBytes* handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getHGlobalFromStream: pstm phglobal: phglobal
 	"Invoke the GetHGlobalFromStream() function of the module wrapped by the receiver.
@@ -198,9 +198,9 @@ getHGlobalFromStream: pstm phglobal: phglobal
 			[out, retval]HGLOBAL* phglobal);"
 
 	<stdcall: hresult GetHGlobalFromStream IStream* handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-oleDoAutoConvert: pStg pClsidNew: aCLSID 
+oleDoAutoConvert: pStg pClsidNew: aCLSID
 	"Automatically converts an object to a new class if automatic conversion for that object class is set in the registry.
 	Answer the new class through the out parameter, pClsidNew
 
@@ -210,7 +210,7 @@ oleDoAutoConvert: pStg pClsidNew: aCLSID
 		);"
 
 	<stdcall: hresult OleDoAutoConvert IStorage* guid*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 readClassStg: pStg pclsid: pclsid
 	"Invoke the ReadClassStg() function of the module wrapped by the receiver.
@@ -220,8 +220,8 @@ readClassStg: pStg pclsid: pclsid
 			IStorage* pStg,
 			GUID* pclsid);"
 
-	<stdcall: hresult ReadClassStg IStorage* GUID*>
-	^self invalidCall!
+	<stdcall: hresult ReadClassStg IStorage* guid*>
+	^self invalidCall: _failureCode!
 
 readClassStm: pstm pclsid: pclsid
 	"Invoke the ReadClassStm() function of the module wrapped by the receiver.
@@ -231,8 +231,8 @@ readClassStm: pstm pclsid: pclsid
 			IStream* pstm,
 			GUID* pclsid);"
 
-	<stdcall: hresult ReadClassStm IStream* GUID*>
-	^self invalidCall!
+	<stdcall: hresult ReadClassStm IStream* guid*>
+	^self invalidCall: _failureCode!
 
 readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
 	"Invoke the ReadFmtUserTypeStg() function of the module wrapped by the receiver.
@@ -244,9 +244,9 @@ readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
 			LPWSTR* lplpszUserType);"
 
 	<stdcall: hresult ReadFmtUserTypeStg IStorage* word* lpwstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-setConvertStg: pStg fConvert: aBoolean 
+setConvertStg: pStg fConvert: aBoolean
 	"Set/Reset the the convert bit in a storage to indicate that the object is to be 
 	converted to a new class when it is opened.
 
@@ -256,7 +256,7 @@ setConvertStg: pStg fConvert: aBoolean
 		);"
 
 	<stdcall: hresult SetConvertStg IStorage* bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgCreateDocfile: pwcsName grfMode: grfMode reserved: reserved ppstgOpen: ppstgOpen
 	"Invoke the StgCreateDocfile() function of the module wrapped by the receiver.
@@ -269,7 +269,7 @@ stgCreateDocfile: pwcsName grfMode: grfMode reserved: reserved ppstgOpen: ppstgO
 			[out, retval]IStorage** ppstgOpen);"
 
 	<stdcall: hresult StgCreateDocfile lpwstr sdword dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgCreateDocfileOnILockBytes: plkbyt grfMode: grfMode reserved: reserved ppstgOpen: ppstgOpen
 	"Invoke the StgCreateDocfileOnILockBytes() function of the module wrapped by the receiver.
@@ -282,7 +282,7 @@ stgCreateDocfileOnILockBytes: plkbyt grfMode: grfMode reserved: reserved ppstgOp
 			[out, retval]IStorage** ppstgOpen);"
 
 	<stdcall: hresult StgCreateDocfileOnILockBytes ILockBytes* dword dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgIsStorageFile: pwcsName
 	"Invoke the StgIsStorageFile() function of the module wrapped by the receiver.
@@ -292,7 +292,7 @@ stgIsStorageFile: pwcsName
 			LPCWSTR pwcsName);"
 
 	<stdcall: bool StgIsStorageFile lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgIsStorageILockBytes: plkbyt
 	"Invoke the StgIsStorageILockBytes() function of the module wrapped by the receiver.
@@ -302,7 +302,7 @@ stgIsStorageILockBytes: plkbyt
 			[in]ILockBytes* plkbyt);"
 
 	<stdcall: hresult StgIsStorageILockBytes ILockBytes*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgOpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstgOpen: ppstgOpen
 	"Invoke the StgOpenStorage() function of the module wrapped by the receiver.
@@ -317,7 +317,7 @@ stgOpenStorage: pwcsName pstgPriority: pstgPriority grfMode: grfMode snbExclude:
 			[out, retval]IStorage** ppstgOpen);"
 
 	<stdcall: hresult StgOpenStorage lpwstr IStorage* sdword lpwstr* dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgOpenStorageOnILockBytes: plkbyt pstgPriority: pstgPriority grfMode: grfMode snbExclude: snbExclude reserved: reserved ppstgOpen: ppstgOpen
 	"Invoke the StgOpenStorageOnILockBytes() function of the module wrapped by the receiver.
@@ -332,7 +332,7 @@ stgOpenStorageOnILockBytes: plkbyt pstgPriority: pstgPriority grfMode: grfMode s
 			[out, retval]IStorage** ppstgOpen);"
 
 	<stdcall: hresult StgOpenStorageOnILockBytes ILockBytes* IStorage* dword lpwstr* dword IStorage**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stgSetTimes: lpszName pctime: pctime patime: patime pmtime: pmtime
 	"Invoke the StgSetTimes() function of the module wrapped by the receiver.
@@ -345,7 +345,7 @@ stgSetTimes: lpszName pctime: pctime patime: patime pmtime: pmtime
 			[in]FILETIME* pmtime);"
 
 	<stdcall: hresult StgSetTimes lpwstr FILETIME* FILETIME* FILETIME*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 writeClassStg: pStg rclsid: rclsid
 	"Invoke the WriteClassStg() function of the module wrapped by the receiver.
@@ -355,8 +355,8 @@ writeClassStg: pStg rclsid: rclsid
 			IStorage* pStg,
 			GUID* rclsid);"
 
-	<stdcall: hresult WriteClassStg IStorage* GUID*>
-	^self invalidCall!
+	<stdcall: hresult WriteClassStg IStorage* guid*>
+	^self invalidCall: _failureCode!
 
 writeClassStm: pstm rclsid: rclsid
 	"Invoke the WriteClassStm() function of the module wrapped by the receiver.
@@ -366,8 +366,8 @@ writeClassStm: pstm rclsid: rclsid
 			IStream* pstm,
 			GUID* rclsid);"
 
-	<stdcall: hresult WriteClassStm IStream* GUID*>
-	^self invalidCall!
+	<stdcall: hresult WriteClassStm IStream* guid*>
+	^self invalidCall: _failureCode!
 
 writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 	"Invoke the WriteFmtUserTypeStg() function of the module wrapped by the receiver.
@@ -379,7 +379,7 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 			LPWSTR lpszUserType);"
 
 	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !OLELibrary categoriesFor: #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
 !OLELibrary categoriesFor: #createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
 !OLELibrary categoriesFor: #getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
@@ -621,7 +621,7 @@ shCreateMemStream: pInit cbInit: cbInit
 			[in]unsigned int cbInit);"
 
 	<stdcall: IStream* 12 byte* dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
 
 "End of package definition"!

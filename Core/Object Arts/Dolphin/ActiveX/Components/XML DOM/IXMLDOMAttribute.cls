@@ -39,7 +39,7 @@ get_name: attributeName
 			[out, retval]BSTR* attributeName);"
 
 	<virtual stdcall: hresult 44 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_value: attributeValue
 	"Private - Get the value of the 'value' property of the receiver.
@@ -48,7 +48,7 @@ get_value: attributeValue
 			[out, retval]VARIANT* attributeValue);"
 
 	<virtual stdcall: hresult 45 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 key
 	"Answer the <readableString> name of the receiver."
@@ -83,7 +83,7 @@ put_value: attributeValue
 			[in]VARIANT attributeValue);"
 
 	<virtual stdcall: hresult 46 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 value
 	"Answer the <variant> value of the 'value' property of the receiver.

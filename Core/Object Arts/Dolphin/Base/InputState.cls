@@ -341,7 +341,7 @@ millisecondClockValue
 	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 msgWindow
 	^msgWindow!
@@ -409,7 +409,7 @@ primSampleInterval: anInteger
 	processes, so this should be done programmatically for short periods only."
 
 	<primitive: 94>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 processDeferredActions
 	"Process all deferred actions. Normally these are processed one at a time when the message

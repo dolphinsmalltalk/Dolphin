@@ -217,11 +217,10 @@ package globalAliases: (Set new
 	add: #RBVariableNode;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Formatters\RBFormatters';
-	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\Formatters\RBFormatters'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package setManualPrerequisites: #(
 	'Smalltalk Parser').

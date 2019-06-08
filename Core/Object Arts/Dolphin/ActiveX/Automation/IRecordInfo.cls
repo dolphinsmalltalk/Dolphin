@@ -52,8 +52,7 @@ GetField: pvData szFieldName: szFieldName pvarField: pvarField
 	"
 
 	<virtual stdcall: sdword 11 void* lpwstr variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFieldNames
 	"Answer a <collection> of the names of the receiver's fields."
@@ -82,8 +81,7 @@ GetFieldNames: pcNames rgBstrNames: rgBstrNames
 	"
 
 	<virtual stdcall: hresult 15 dword* bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetFieldNoCopy: pvData szFieldName: szFieldName pvarField: pvarField ppvDataCArray: ppvDataCArray
 	"Private - Invoke the GetFieldNoCopy() method of the COM object wrapped by the receiver.
@@ -96,8 +94,7 @@ GetFieldNoCopy: pvData szFieldName: szFieldName pvarField: pvarField ppvDataCArr
 	"
 
 	<virtual stdcall: hresult 12 void* lpwstr variant* void**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetGuid: pguid
 	"Private - Invoke the GetGuid() method of the COM object wrapped by the receiver.
@@ -106,9 +103,8 @@ GetGuid: pguid
 			[out] GUID* pguid);
 	"
 
-	<virtual stdcall: hresult 7 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 7 guid*>
+	^self invalidCall: _failureCode!
 
 GetName: pbstrName
 	"Private - Invoke the GetName() method of the COM object wrapped by the receiver.
@@ -118,8 +114,7 @@ GetName: pbstrName
 	"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetSize: pcbSize
 	"Private - Invoke the GetSize() method of the COM object wrapped by the receiver.
@@ -129,8 +124,7 @@ GetSize: pcbSize
 	"
 
 	<virtual stdcall: hresult 9 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetTypeInfo: ppTypeInfo
 	"Private - Invoke the GetTypeInfo() method of the COM object wrapped by the receiver.
@@ -140,8 +134,7 @@ GetTypeInfo: ppTypeInfo
 	"
 
 	<virtual stdcall: hresult 10 ITypeInfo**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 guid
 	"Answer the <GUID> of the structure the receiver describes."
@@ -159,8 +152,7 @@ IsMatchingType: pRecordInfo
 	"
 
 	<virtual stdcall: sdword 16 IRecordInfo*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 name
 	"Answer the name of the structure described by the receiver."
@@ -186,8 +178,7 @@ PutField: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	code for errors."
 
 	<virtual stdcall: sdword 13 dword void* lpwstr variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarField
 	"Private - Invoke the PutFieldNoCopy() method of the COM object wrapped by the receiver.
@@ -200,8 +191,7 @@ PutFieldNoCopy: wFlags pvData: pvData szFieldName: szFieldName pvarField: pvarFi
 	"
 
 	<virtual stdcall: hresult 14 dword void* lpwstr variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 RecordClear: pvExisting
 	"Invoke the RecordClear() method of the COM object wrapped by the receiver.
@@ -211,8 +201,7 @@ RecordClear: pvExisting
 	"
 
 	<virtual stdcall: hresult 5 void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 RecordCopy: pvExisting pvNew: pvNew
 	"Private - Invoke the RecordCopy() method of the COM object wrapped by the receiver.
@@ -223,18 +212,16 @@ RecordCopy: pvExisting pvNew: pvNew
 	"
 
 	<virtual stdcall: hresult 6 void* void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-RecordCreate 
+RecordCreate
 	"Invoke the RecordCreate() method of the COM object wrapped by the receiver.
 
 		void* __stdcall RecordCreate();
 	"
 
 	<virtual stdcall: void* 17>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 RecordCreateCopy: pvSource ppvDest: ppvDest
 	"Private - Invoke the RecordCreateCopy() method of the COM object wrapped by the receiver.
@@ -245,8 +232,7 @@ RecordCreateCopy: pvSource ppvDest: ppvDest
 	"
 
 	<virtual stdcall: hresult 18 void* void**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 RecordDestroy: pvRecord
 	"Invoke the RecordDestroy() method of the COM object wrapped by the receiver.
@@ -256,7 +242,7 @@ RecordDestroy: pvRecord
 	"
 
 	<virtual stdcall: hresult 19 void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 RecordInit: pvNew
 	"Private - Invoke the RecordInit() method of the COM object wrapped by the receiver.
@@ -266,8 +252,7 @@ RecordInit: pvNew
 	"
 
 	<virtual stdcall: hresult 4 void*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setField: fieldNameString value: newValue into: data ifAbsent: exceptionHandler
 	"Private - Set the value of the named field of the receiver, to the

@@ -139,12 +139,16 @@ basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger sta
 	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
 	anIndexableObject."
 
-	| offset |
 	<primitive: 188>
+	| offset |
 	offset := startAtInteger - startInteger.
 	(anIndexableObject == self and: [startAtInteger < startInteger])
-		ifTrue: [stopInteger to: startInteger by: -1 do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
-		ifFalse: [startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
 	^anIndexableObject!
 
 copyWith: newElement

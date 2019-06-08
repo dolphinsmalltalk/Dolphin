@@ -29,7 +29,6 @@
 // Smalltalk classes
 #include "STContext.h"
 #include "STBlockClosure.h"
-#include "STMethodHeader.h"
 #include "STCharacter.h"
 #include "STMemoryManager.h"
 
@@ -66,7 +65,6 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(sizeof(OTEFlags) == 1);
 	ASSERT(sizeof(count_t) == 1);
 	ASSERT(sizeof(hash_t) == 2);
-	ASSERT(sizeof(BlockInfo) == sizeof(MWORD));
 	ASSERT(sizeof(STMethodHeader) == sizeof(MWORD));
 	ASSERT(OTEFlags::NumSpaces <= 8);
 	ASSERT(Context::FixedSize == 2);

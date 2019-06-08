@@ -32,8 +32,7 @@ CountProperties: pcProperties
 	"
 
 	<virtual stdcall: hresult 6 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getPropertyInfo: iProperty cProperties: cProperties 
 	"Invoke the GetPropertyInfo() method of the COM Object."
@@ -62,8 +61,7 @@ GetPropertyInfo: iProperty cProperties: cProperties pPropBag: pPropBag pcPropert
 	"
 
 	<virtual stdcall: hresult 7 dword dword PROPBAG2* dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 loadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
 	"Invoke the LoadObject() method of the COM Object."
@@ -85,8 +83,7 @@ LoadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
 	"
 
 	<virtual stdcall: hresult 8 lpwstr dword IUnknown* IErrorLog*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 read: cProperties pPropBag: pPropBag pErrLog: pErrLog 
 	"Invoke the Read() method of the COM Object."
@@ -116,9 +113,8 @@ Read: cProperties pPropBag: pPropBag pErrLog: pErrLog pvarValue: pvarValue phrEr
 			[out] HRESULT* phrError);
 	"
 
-	<virtual stdcall: hresult 4 dword PROPBAG2* IErrorLog* VARIANT* hresult*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 dword PROPBAG2* IErrorLog* variant* hresult*>
+	^self invalidCall: _failureCode!
 
 write: cProperties pPropBag: pPropBag pvarValue: pvarValue 
 	"Invoke the Write() method of the COM Object."
@@ -138,9 +134,8 @@ Write: cProperties pPropBag: pPropBag pvarValue: pvarValue
 			[in] VARIANT* pvarValue);
 	"
 
-	<virtual stdcall: hresult 5 dword PROPBAG2* VARIANT*>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 5 dword PROPBAG2* variant*>
+	^self invalidCall: _failureCode! !
 !IPropertyBag2 categoriesFor: #countProperties!**auto generated**!methods!public! !
 !IPropertyBag2 categoriesFor: #CountProperties:!**auto generated**!COM Interfaces-IPropertyBag2!private! !
 !IPropertyBag2 categoriesFor: #getPropertyInfo:cProperties:!**auto generated**!methods!public! !

@@ -22,8 +22,7 @@ get_LowerBound: pVal
 			[out, retval] long* pVal);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Seed: pVal
 	"Private - Get the value of the 'Seed' property of the receiver.
@@ -32,8 +31,7 @@ get_Seed: pVal
 			[out, retval] long* pVal);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_UpperBound: pVal
 	"Private - Get the value of the 'UpperBound' property of the receiver.
@@ -42,8 +40,7 @@ get_UpperBound: pVal
 			[out, retval] long* pVal);"
 
 	<virtual stdcall: hresult 13 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -90,8 +87,7 @@ Next: plNext
 			[out, retval] long* plNext);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_LowerBound: pVal
 	"Private - Set the value of the 'LowerBound' property of the object wrapped by the 
@@ -101,8 +97,7 @@ put_LowerBound: pVal
 			[in] long pVal);"
 
 	<virtual stdcall: hresult 12 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Seed: pVal
 	"Private - Set the value of the 'Seed' property of the object wrapped by the 
@@ -112,8 +107,7 @@ put_Seed: pVal
 			[in] long pVal);"
 
 	<virtual stdcall: hresult 10 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_UpperBound: pVal
 	"Private - Set the value of the 'UpperBound' property of the object wrapped by the 
@@ -123,8 +117,7 @@ put_UpperBound: pVal
 			[in] long pVal);"
 
 	<virtual stdcall: hresult 14 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 seed
 	"Answer the <sdword> value of the 'Seed' property of the receiver.

@@ -27,8 +27,8 @@ clsidFromProgID: lpszProgID lpclsid: lpclsid
 			LPWSTR lpszProgID,
 			GUID* lpclsid);"
 
-	<stdcall: hresult CLSIDFromProgID lpwstr GUID*>
-	^self invalidCall!
+	<stdcall: hresult CLSIDFromProgID lpwstr guid*>
+	^self invalidCall: _failureCode!
 
 clsidFromString: lpsz pclsid: pclsid
 	"Invoke the CLSIDFromString() function of the module wrapped by the receiver.
@@ -38,8 +38,8 @@ clsidFromString: lpsz pclsid: pclsid
 			LPWSTR lpsz,
 			GUID* pclsid);"
 
-	<stdcall: hresult CLSIDFromString lpwstr GUID*>
-	^self invalidCall!
+	<stdcall: hresult CLSIDFromString lpwstr guid*>
+	^self invalidCall: _failureCode!
 
 coCreateGuid: pguid
 	"Invoke the CoCreateGuid() function of the module wrapped by the receiver.
@@ -48,8 +48,8 @@ coCreateGuid: pguid
 		HRESULT __stdcall CoCreateGuid(
 			GUID* pguid);"
 
-	<stdcall: hresult CoCreateGuid GUID*>
-	^self invalidCall!
+	<stdcall: hresult CoCreateGuid guid*>
+	^self invalidCall: _failureCode!
 
 coCreateInstance: rclsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext riid: riid ppv: ppv
 	"Invoke the CoCreateInstance() function of the module wrapped by the receiver.
@@ -62,11 +62,10 @@ coCreateInstance: rclsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext riid: r
 			[in]GUID* riid,
 			[out, retval]IUnknown** ppv);"
 
-	<stdcall: hresult CoCreateInstance GUID* void* sdword GUID* IUnknown**>
-	^self invalidCall!
+	<stdcall: hresult CoCreateInstance guid* void* sdword guid* IUnknown**>
+	^self invalidCall: _failureCode!
 
-coCreateInstanceEx: clsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext 
-		pServerInfo: pServerInfo cmq: cmq rgmqResults: rgmqResults
+coCreateInstanceEx: clsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext pServerInfo: pServerInfo cmq: cmq rgmqResults: rgmqResults
 	"Manufacture an object of the COM class whose <CLSID> is, clsid, on the machine
 	identified by the <COSERVERINFO> argument, pServerInfo,. querying interfaces
 	as specified in the <MULTI_QI> array, rgmqResults..
@@ -80,8 +79,8 @@ coCreateInstanceEx: clsid pUnkOuter: pUnkOuter dwClsContext: dwClsContext
 			MULTI_QI rgmqResults 			// Array of MULTI_QI structures 
 		); "
 
-	<stdcall: hresult CoCreateInstanceEx CLSID* IUnknown* dword COSERVERINFO* dword MULTI_QI*>
-	^self invalidCall!
+	<stdcall: hresult CoCreateInstanceEx guid* IUnknown* dword COSERVERINFO* dword MULTI_QI*>
+	^self invalidCall: _failureCode!
 
 coDisconnectObject: pUnk dwReserved: zero
 	"Disconnects all remote process connections being maintained on behalf of 
@@ -96,13 +95,13 @@ coDisconnectObject: pUnk dwReserved: zero
 		);"
 
 	<stdcall: sdword CoDisconnectObject IUnknown* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coFileTimeNow: struct
 	"Populate the argument with the current time as a FILETIME."
 
 	<stdcall: bool CoFileTimeNow FILETIME*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coGetClassObject: rclsid dwClsContext: dwClsContext pServerInfo: pServerInfo riid: riid ppv: ppv
 	"Invoke the CoGetClassObject() function of the module wrapped by the receiver.
@@ -115,8 +114,8 @@ coGetClassObject: rclsid dwClsContext: dwClsContext pServerInfo: pServerInfo rii
 			[in]GUID* riid,
 			[out, retval]LPVOID* ppv);"
 
-	<stdcall: hresult CoGetClassObject GUID* dword COSERVERINFO* GUID* void**>
-	^self invalidCall!
+	<stdcall: hresult CoGetClassObject guid* dword COSERVERINFO* guid* void**>
+	^self invalidCall: _failureCode!
 
 coGetMalloc: dwMemContext ppMalloc: ppMalloc
 	"Invoke the CoGetMalloc() function of the module wrapped by the receiver.
@@ -127,9 +126,9 @@ coGetMalloc: dwMemContext ppMalloc: ppMalloc
 			[out, retval]IMalloc** ppMalloc);"
 
 	<stdcall: hresult CoGetMalloc dword IMalloc**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface 
+coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface
 	"Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker. 
 		WINOLEAPI CoGetObject(
 			LPCWSTR pszName,
@@ -138,7 +137,7 @@ coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterfac
 			void ** ppv); "
 
 	<stdcall: hresult CoGetObject lpwstr void* guid* void**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coInitialize: pvReserved
 	"Invoke the CoInitialize() function of the module wrapped by the receiver.
@@ -147,7 +146,7 @@ coInitialize: pvReserved
 			[in]LPVOID pvReserved);"
 
 	<stdcall: hresult CoInitialize void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coInitializeEx: pvReserved dwCoInit: dwCoInit
 	"Invoke the CoInitializeEx() function of the module wrapped by the receiver.
@@ -157,7 +156,7 @@ coInitializeEx: pvReserved dwCoInit: dwCoInit
 			[in]unsigned long dwCoInit);"
 
 	<stdcall: hresult CoInitializeEx void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 comOnly
 	"Answer whether COM support only is required."
@@ -181,16 +180,16 @@ coRegisterClassObject: rclsid pUnk: pUnk dwClsContext: dwClsContext flags: flags
 		LPDWORD* lpdwRegister		// [out]
 		);"
 
-	<stdcall: hresult CoRegisterClassObject CLSID* IUnknown* dword dword DWORD*>
-	^self invalidCall!
+	<stdcall: hresult CoRegisterClassObject guid* IUnknown* dword dword dword*>
+	^self invalidCall: _failureCode!
 
 coRevokeClassObject: anInteger
 	"Revoke an oustanding class registration, as identified by the cookie, anInteger
 
 		HRESULT CoRevokeClassObject(unsigned long dwRegister);"
-  
+
 	<stdcall: sdword CoRevokeClassObject dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coTaskMemAlloc: cb
 	"Invoke the CoTaskMemAlloc() function of the module wrapped by the receiver.
@@ -200,7 +199,7 @@ coTaskMemAlloc: cb
 			unsigned long cb);"
 
 	<stdcall: void* CoTaskMemAlloc dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coTaskMemFree: pv
 	"Invoke the CoTaskMemFree() function of the module wrapped by the receiver.
@@ -210,7 +209,7 @@ coTaskMemFree: pv
 			LPVOID pv);"
 
 	<stdcall: void CoTaskMemFree void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coTaskMemRealloc: pv cb: cb
 	"Invoke the CoTaskMemRealloc() function of the module wrapped by the receiver.
@@ -221,7 +220,7 @@ coTaskMemRealloc: pv cb: cb
 			unsigned long cb);"
 
 	<stdcall: void* CoTaskMemRealloc void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 coUninitialize
 	"Invoke the CoUninitialize() function of the module wrapped by the receiver.
@@ -229,7 +228,7 @@ coUninitialize
 		void __stdcall CoUninitialize();"
 
 	<stdcall: void CoUninitialize>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 iidFromString: lpsz lpiid: lpiid
 	"Invoke the IIDFromString() function of the module wrapped by the receiver.
@@ -239,8 +238,8 @@ iidFromString: lpsz lpiid: lpiid
 			LPWSTR lpsz,
 			GUID* lpiid);"
 
-	<stdcall: hresult IIDFromString lpwstr GUID*>
-	^self invalidCall!
+	<stdcall: hresult IIDFromString lpwstr guid*>
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize the receiver using the specified default task
@@ -281,12 +280,11 @@ oleInitialize: pvReserved
 			[in]LPVOID pvReserved);"
 
 	<stdcall: hresult OleInitialize void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 oleLockRunning: pUnknown fLock: fLock fLastUnlockCloses: fLastUnlockCloses
-
 	<stdcall: hresult OleLockRunning IUnknown* bool bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 oleUninitialize
 	"Invoke the OleUninitialize() function of the module wrapped by the receiver.
@@ -294,7 +292,7 @@ oleUninitialize
 		void __stdcall OleUninitialize();"
 
 	<stdcall: void OleUninitialize>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 progIDFromCLSID: clsid lplpszProgID: lplpszProgID
 	"Invoke the ProgIDFromCLSID() function of the module wrapped by the receiver.
@@ -304,8 +302,8 @@ progIDFromCLSID: clsid lplpszProgID: lplpszProgID
 			GUID* clsid,
 			LPWSTR* lplpszProgID);"
 
-	<stdcall: hresult ProgIDFromCLSID GUID* lpwstr*>
-	^self invalidCall!
+	<stdcall: hresult ProgIDFromCLSID guid* lpwstr*>
+	^self invalidCall: _failureCode!
 
 stringFromCLSID: rclsid lplpsz: lplpsz
 	"Invoke the StringFromCLSID() function of the module wrapped by the receiver.
@@ -315,8 +313,8 @@ stringFromCLSID: rclsid lplpsz: lplpsz
 			GUID* rclsid,
 			LPWSTR* lplpsz);"
 
-	<stdcall: hresult StringFromCLSID GUID* lpwstr*>
-	^self invalidCall!
+	<stdcall: hresult StringFromCLSID guid* lpwstr*>
+	^self invalidCall: _failureCode!
 
 stringFromIID: rclsid lplpsz: lplpsz
 	"Invoke the StringFromIID() function of the module wrapped by the receiver.
@@ -326,8 +324,8 @@ stringFromIID: rclsid lplpsz: lplpsz
 			GUID* rclsid,
 			LPWSTR* lplpsz);"
 
-	<stdcall: hresult StringFromIID GUID* lpwstr*>
-	^self invalidCall!
+	<stdcall: hresult StringFromIID guid* lpwstr*>
+	^self invalidCall: _failureCode!
 
 supportsDCOM
 	"Answer whether the host OS supports DCOM (i.e. remote servers).

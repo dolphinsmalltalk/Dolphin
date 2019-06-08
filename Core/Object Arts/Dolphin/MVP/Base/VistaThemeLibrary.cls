@@ -24,7 +24,7 @@ beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat:
 			[out]HDC* phdcTo);"
 
 	<stdcall: handle BeginBufferedAnimation handle handle RECT* sdword BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
 	"Invoke the BeginBufferedPaint() function of the module wrapped by the receiver.
@@ -38,7 +38,7 @@ beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintPara
 			[out]HDC* phDC);"
 
 	<stdcall: handle BeginBufferedPaint handle RECT* sdword BP_PAINTPARAMS* handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintClear: hBufferedPaint prc: prc
 	"Invoke the BufferedPaintClear() function of the module wrapped by the receiver.
@@ -49,7 +49,7 @@ bufferedPaintClear: hBufferedPaint prc: prc
 			[in, optional]RECT* prc);"
 
 	<stdcall: hresult BufferedPaintClear handle RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintInit
 	"Invoke the BufferedPaintInit() function of the module wrapped by the receiver.
@@ -58,7 +58,7 @@ bufferedPaintInit
 		HRESULT __stdcall BufferedPaintInit();"
 
 	<stdcall: hresult BufferedPaintInit>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintRenderAnimation: hwnd hdcTarget: hdcTarget
 	"Invoke the BufferedPaintRenderAnimation() function of the module wrapped by the receiver.
@@ -68,7 +68,7 @@ bufferedPaintRenderAnimation: hwnd hdcTarget: hdcTarget
 			[in]HDC hdcTarget);"
 
 	<stdcall: bool BufferedPaintRenderAnimation handle handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
 	"Invoke the BufferedPaintSetAlpha() function of the module wrapped by the receiver.
@@ -80,7 +80,7 @@ bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
 			[in]BYTE Alpha);"
 
 	<stdcall: hresult BufferedPaintSetAlpha handle RECT* byte>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintStopAllAnimations: hwnd
 	"Invoke the BufferedPaintStopAllAnimations() function of the module wrapped by the receiver.
@@ -89,7 +89,7 @@ bufferedPaintStopAllAnimations: hwnd
 			[in]HWND HWND);"
 
 	<stdcall: hresult BufferedPaintStopAllAnimations handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 bufferedPaintUnInit
 	"Invoke the BufferedPaintUnInit() function of the module wrapped by the receiver.
@@ -100,7 +100,7 @@ bufferedPaintUnInit
 	"Ignore any errors from calling this function, as we call it on shutdown."
 
 	<stdcall: sdword BufferedPaintUnInit>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
 	"Invoke the EndBufferedPaint() function of the module wrapped by the receiver.
@@ -111,7 +111,7 @@ endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
 			[in]BOOL fUpdateTarget);"
 
 	<stdcall: hresult EndBufferedPaint handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBufferedPaintBits: hBufferedPaint ppbBuffer: ppbBuffer pcxRow: pcxRow
 	"Invoke the GetBufferedPaintBits() function of the module wrapped by the receiver.
@@ -123,7 +123,7 @@ getBufferedPaintBits: hBufferedPaint ppbBuffer: ppbBuffer pcxRow: pcxRow
 			[out]int* pcxRow);"
 
 	<stdcall: hresult GetBufferedPaintBits handle RGBQUAD** sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBufferedPaintDC: hBufferedPaint
 	"Invoke the GetBufferedPaintDC() function of the module wrapped by the receiver.
@@ -133,7 +133,7 @@ getBufferedPaintDC: hBufferedPaint
 			[in]HANDLE hBufferedPaint);"
 
 	<stdcall: handle GetBufferedPaintDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBufferedPaintTargetDC: hBufferedPaint
 	"Invoke the GetBufferedPaintTargetDC() function of the module wrapped by the receiver.
@@ -143,7 +143,7 @@ getBufferedPaintTargetDC: hBufferedPaint
 			[in]HANDLE hBufferedPaint);"
 
 	<stdcall: handle GetBufferedPaintTargetDC handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getBufferedPaintTargetRect: hBufferedPaint prc: prc
 	"Invoke the GetBufferedPaintTargetRect() function of the module wrapped by the receiver.
@@ -154,7 +154,7 @@ getBufferedPaintTargetRect: hBufferedPaint prc: prc
 			[out, retval]RECT* prc);"
 
 	<stdcall: hresult GetBufferedPaintTargetRect handle RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isCompositionActive
 	"Invoke the IsCompositionActive() function of the module wrapped by the receiver.
@@ -163,7 +163,7 @@ isCompositionActive
 		BOOL __stdcall IsCompositionActive();"
 
 	<stdcall: bool IsCompositionActive>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 onExit
 	"Private - Perform any uninitialization required at system shutdown time"

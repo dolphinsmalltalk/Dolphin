@@ -19,7 +19,7 @@ dragAcceptFiles: hwnd fAccept: fAccept
 			BOOL fAccept);"
 
 	<stdcall: void DragAcceptFiles handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 dragFinish: hDrop
 	"Invoke the DragFinish() function of the module wrapped by the receiver.
@@ -29,7 +29,7 @@ dragFinish: hDrop
 			hDrop hDrop);"
 
 	<stdcall: void DragFinish handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 dragQueryFile: hDrop iFile: iFile lpszFile: lpszFile cch: cch
 	"Invoke the DragQueryFile() function of the module wrapped by the receiver.
@@ -42,7 +42,7 @@ dragQueryFile: hDrop iFile: iFile lpszFile: lpszFile cch: cch
 			UINT cch);"
 
 	<stdcall: dword DragQueryFileW handle dword lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 dragQueryPoint: hDrop lppt: lppt
 	"Invoke the DragQueryPoint() function of the module wrapped by the receiver.
@@ -53,7 +53,7 @@ dragQueryPoint: hDrop lppt: lppt
 			POINTL* lppt);"
 
 	<stdcall: bool DragQueryPoint handle POINTL*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 extractAssociatedIcon: hInst lpIconPath: lpIconPath lpiIcon: lpiIcon
 	"Invoke the ExtractAssociatedIcon() function of the module wrapped by the receiver.
@@ -65,7 +65,7 @@ extractAssociatedIcon: hInst lpIconPath: lpIconPath lpiIcon: lpiIcon
 			WORD* lpiIcon);"
 
 	<stdcall: handle ExtractAssociatedIconW handle lpwstr word*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 findExecutable: pathName
 	"Retrieves the name of the executable associated with the specified path."
@@ -97,8 +97,7 @@ findExecutable: lpFile lpDirectory: directoryStringIn lpResult: buf
 		);"
 
 	<stdcall: handle FindExecutableW lpwstr lpwstr lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getSpecialFolderLocation: anInteger
 	"
@@ -122,7 +121,7 @@ isUserAnAdmin
 		BOOL __stdcall IsUserAnAdmin();"
 
 	<stdcall: bool IsUserAnAdmin>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
 	"Notify the system of an event that an application has performed that may affect the Shell.
@@ -131,7 +130,7 @@ SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
 		dwItem1 and dwItem2, objects involved in the change."
 
 	<stdcall: void SHChangeNotify dword dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 shellExecute: hwnd lpOperation: opString lpFile: fileString lpParameters: parmString lpDirectory: dirString nShowCmd: anInteger
 	"Opens or prints the specified file, which can be an executable or document file.
@@ -145,7 +144,7 @@ shellExecute: hwnd lpOperation: opString lpFile: fileString lpParameters: parmSt
 		);"
 
 	<stdcall: handle ShellExecuteW handle lpwstr lpwstr lpwstr lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 shellOpen: fileString
 	"Opens the specified file, which can be an executable or document file.
@@ -189,7 +188,7 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			LPWSTR pszPath);"
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
 !ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
 !ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !

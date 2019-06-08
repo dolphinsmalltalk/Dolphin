@@ -42,11 +42,11 @@ Random subclass: #RandomCRT
 
 rand
 	<cdecl: sdword rand>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-srand: anInteger 
+srand: anInteger
 	<cdecl: void srand dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesFor: #rand!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
 

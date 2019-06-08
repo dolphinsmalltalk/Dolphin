@@ -9,6 +9,7 @@ package classNames
 	add: #StBlockScope;
 	add: #StClassScope;
 	add: #StEvalScope;
+	add: #StGeneratedTempVariable;
 	add: #StInstanceVariable;
 	add: #StLexicalScope;
 	add: #StLocalVariable;
@@ -35,10 +36,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Smalltalk Parser').
 
 package!
 
@@ -110,6 +110,11 @@ StVariable subclass: #StStaticVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLocalVariable subclass: #StArgumentVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StLocalVariable subclass: #StGeneratedTempVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

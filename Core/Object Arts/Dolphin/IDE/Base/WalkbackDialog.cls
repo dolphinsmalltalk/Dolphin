@@ -89,28 +89,27 @@ onInitDialog
 	] on: Error do: [:e | e resignalAsWarning].
 	^true	"direct Windows to set the focus"!
 
-primHookWindowCreate: hookBoolean 
+primHookWindowCreate: hookBoolean
 	"Private - Hook the first window creation event for the receiver.
 	We override this to force the hooking if another window is currently
-	hogging it. This prevents recursive walkbacks in some situations.
-	Primitive failure reasons:
-		0 	- hookBoolean not a boolean
-		1	- already hooked by the view in the failure data
-	"
+	hogging it. This prevents recursive walkbacks in some situations."
+
+	"Primitive failure reasons:
+		BadValueType		- hookBoolean not a boolean
+		InvalidOperation		- already hooked by the view in the failure data
+		NotImplemented		- The VM is for console apps only"
 
 	<primitive: 108>
-	^Processor activeProcess primitiveFailureCode == 1 
+	^_failureCode == _PrimitiveFailureCode.InvalidOperation
 		ifTrue: 
-			["First forcibly unhook so error walkback can be displayed"
-
-			| hooked |
+			[| hooked |
+			"First forcibly unhook so error walkback can be displayed"
 			hooked := Processor activeProcess primitiveFailureData.
 			hooked primHookWindowCreate: false.
-			Notification 
-				signal: 'Forcibly unhooked failed window create of ' , hooked basicPrintString.
+			Notification signal: 'Forcibly unhooked failed window create of ' , hooked basicPrintString.
 			"Now retry"
 			super primHookWindowCreate: hookBoolean]
-		ifFalse: [self primitiveFailed]!
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 resumable: aBoolean
 	"Set whether the resume key should be enabled or disabled."

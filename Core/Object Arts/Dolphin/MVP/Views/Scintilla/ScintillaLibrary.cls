@@ -10,21 +10,21 @@ ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciL
 !ScintillaLibrary categoriesForClass!External-Libraries! !
 !ScintillaLibrary methodsFor!
 
-directFunction: sciThis msg: msg wParam: wParam lParam: lParam 
+directFunction: sciThis msg: msg wParam: wParam lParam: lParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam 
+directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 directFunction: sciThis msg: msg wpParam: wParam lParam: lpParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword void* uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-directFunction: sciThis msg: msg wpParam: wParam lpParam: lpParam 
+directFunction: sciThis msg: msg wpParam: wParam lpParam: lpParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword void* void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver.

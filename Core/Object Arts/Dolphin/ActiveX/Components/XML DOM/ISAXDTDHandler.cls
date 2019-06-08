@@ -58,7 +58,7 @@ NotationDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: 
 			[in]int cchSystemId);"
 
 	<virtual stdcall: hresult 4 word* sdword word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId pwchNotationName: pwchNotationName cchNotationName: cchNotationName
 	"Invoke the unparsedEntityDecl() method of the COM object.
@@ -74,7 +74,7 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 			[in]int cchNotationName);"
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXDTDHandler categoriesFor: #NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
 !ISAXDTDHandler categoriesFor: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
 

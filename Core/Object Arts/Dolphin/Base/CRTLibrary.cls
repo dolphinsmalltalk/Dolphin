@@ -19,16 +19,14 @@ __iscsym: aCharacter
 		int __iscsym(int c)"
 
 	<cdecl: bool __iscsym char>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 __iscsymf: aCharacter
 	"Answer whether the argument is a letter or underscore.
 		int __iscsymf(int c)"
 
 	<cdecl: bool __iscsymf char>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 _chdir: aString
 	"Change the current working directory to that identified by the path, aString.
@@ -36,7 +34,7 @@ _chdir: aString
 		int _chdir( const char *dirname);"
 
 	<cdecl: sdword _chdir lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _chmod: aFilenameString pmode: aModeInteger
 	"Change the file-permission settings of aFilenameString to aModeInteger
@@ -44,47 +42,47 @@ _chmod: aFilenameString pmode: aModeInteger
 		int _chmod( const char *filename, int pmode );"
 
 	<cdecl: sdword _chmod lpstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_clearfp 
+_clearfp
 	"Clear and return the floating point status word
 
 		unsigned int _clearfp( void );"
 
 	<cdecl: dword _clearfp>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_close: anInteger 
+_close: anInteger
 	"Close the file associated with the descriptor, anInteger, and release the descriptor."
 
 	<cdecl: sdword _close sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _control87: newInteger mask: maskInteger
 	<cdecl: sdword _control87 dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_dup: anInteger 
+_dup: anInteger
 	"Create and answer a duplicate file descriptor for the open file with descriptor, anInteger.
 	Note that the underlying file handle is also duplicated."
 
 	<cdecl: sdword _dup sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_dup2: anInteger handle2: anInteger2 
+_dup2: anInteger handle2: anInteger2
 	"Reassign a file descriptor by copying a duplicate of the file descriptor, anInteger, over
 	the file descriptor, anInteger2. Note that the underlying file handle of the first
 	descriptor is duplicated, and any open file associated with the target file descriptor is
 	closed."
 
 	<cdecl: sdword _dup2 sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _errno
 	"Answer a pointer to the errno variable."
 
 	<cdecl: void* _errno>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _fdopen: anInteger mode: aString
 	"Associate a stream with an open file handle.
@@ -93,47 +91,47 @@ _fdopen: anInteger mode: aString
 	are automatically nulled on image load."
 
 	<cdecl: handle _fdopen sdword lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _filelengthi64: handleInteger
 	<cdecl: sqword _filelengthi64 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _fileno: aFILE
 	"Answer the <integer> file number of a CRT FILE stream."
 
 	<cdecl: sdword _fileno handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _fseeki64: aFILE offset: offsetInteger origin: originInteger
 	<cdecl: sdword _fseeki64 handle sqword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_ftelli64: anExternalHandle 
+_ftelli64: anExternalHandle
 	"Answer the <integer> position (zero-based) of the CRT FILE stream."
 
 	<cdecl: sqword _ftelli64 handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _get_osfhandle: anInteger
 	<cdecl: handle _get_osfhandle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _isatty: anInteger
 	<cdecl: bool _isatty sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
 	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _open_osfhandle: osfhandle flags: flags
 	<cdecl: sdword _open_osfhandle handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _setmode: fd mode: modeFlag
 	<cdecl: sdword _setmode sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _spawnvp: mode cmdname: aString argv: argv
 	"Spawn a new process.
@@ -145,19 +143,15 @@ _spawnvp: mode cmdname: aString argv: argv
 	"
 
 	<overlap cdecl: sdword _spawnvp sdword lpstr lpvoid>
-	^self invalidCall
-
-"
-[CRTLibrary default _spawnvp: 0 cmdname: 'command.com' argv: DWORD new.0] fork
-"!
+	^self invalidCall: _failureCode!
 
 _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
 	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _statusfp
 	<cdecl: dword _statusfp>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _stricmp: string1 string2: string2
 	"Answer the result of a case insensitive string comparison between string1 and string2,
@@ -165,16 +159,16 @@ _stricmp: string1 string2: string2
 	equal to, or greater than string2."
 
 	<cdecl: sdword _stricmp lpstr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-_strnicmp: string1 string2: string2 count: count 
+_strnicmp: string1 string2: string2 count: count
 	"Answer the result of a case insensitive string comparison between string1 and
 	string2,comparing only the first, count, characters. Answer <0, 0, or >0 according to
 	whether the first count characters of are lexicographically less than, equal to, or greater
 	than the first count characters of string2."
 
 	<cdecl: sdword _strnicmp lpstr lpstr intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _strrev: aString
 	"Answer aString, reversed.
@@ -185,16 +179,15 @@ _strrev: aString
 	and the functions works 'in-place'"
 
 	<cdecl: void _strrev lpstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 _wfopen_s: pFile filename: nameString mode: modeString
 	<cdecl: sdword _wfopen_s handle* lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _wgetcwd: aString maxlen: anInteger
 	<cdecl: lpvoid _wgetcwd lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 atoi: aString
 	"Convert a String to an integer.
@@ -202,7 +195,7 @@ atoi: aString
 		int atoi( const char *string );"
 
 	<cdecl: sdword atoi lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 close
 	"The C-runtime library cannot be closed."
@@ -219,59 +212,59 @@ fclose: anAddress
 			int fclose( FILE *stream );"
 
 	<cdecl: sdword fclose handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 feof: stream
 	<cdecl: bool feof handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-fflush: anExternalAddress 
+fflush: anExternalAddress
 	<cdecl: sdword fflush handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetc: aFILE
 	<cdecl: sdword fgetc handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgets: buf n: bufsize stream: aFILE
 	<cdecl: sdword fgets lpstr sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetwc: aFILE
 	<cdecl: sdword fgetwc handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetws: buf n: bufsize stream: aFILE
 	<cdecl: intptr fgetws lpwstr sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fputc: charValue stream: aFILE
 	<cdecl: sdword fputc sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fputs: str stream: aFILE
 	<cdecl: sdword fputs lpstr handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fputwc: charValue stream: aFILE
 	<cdecl: sdword fputwc sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fputws: str stream: aFILE
 	<cdecl: sdword fputws lpwstr handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 free: memblock
 	<cdecl: void free lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-fwrite: data size: sizeInteger count: countInteger stream: aFILE 
+fwrite: data size: sizeInteger count: countInteger stream: aFILE
 	<cdecl: sdword fwrite lpvoid intptr intptr handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize and answer the receiver."
@@ -284,31 +277,28 @@ iswcntrl: aCharacter
 		int iswcntrl( wint_t c )"
 
 	<cdecl: bool iswcntrl char>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 iswgraph: aCharacter
 	"Answer whether the argument is a printable character other than a space.
 		int iswgraph( wint_t c )"
 
 	<cdecl: bool iswgraph char>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 iswprint: aCharacter
 	"Answer whether the argument is a printable character.
 		int iswprint( wint_t c )"
 
 	<cdecl: bool iswprint char>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 iswpunct: aCharacter
 	"Answer whether the argument is a punctuation character.
 		int iswpunct( wint_t c )"
 
 	<cdecl: bool iswpunct char>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
@@ -317,11 +307,11 @@ memcmp: buf1 buf2: buf2 count: count
 		int memcmp( const void *buf1, const void *buf2, size_t count );"
 
 	<cdecl: sdword memcmp lpvoid lpvoid intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memcpy_s: dest destSize: destSize src: src count: count
 	<cdecl: sdword memcpy_s void* dword void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memset: dest c: c count: count
 	"Fill a block of memory.
@@ -329,7 +319,7 @@ memset: dest c: c count: count
 	"
 
 	<cdecl: sdword memset lpvoid sdword intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setlocale: category locale: localeString
 	"Set a specified locale category.
@@ -337,33 +327,32 @@ setlocale: category locale: localeString
 		char *setlocale( int category, const char *locale );	"
 
 	<cdecl: lpstr setlocale sdword lpstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 strcat_s: destString bufferSize: anInteger strSource: sourceString
 	<cdecl: sdword strcat_s lpstr intptr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-strcmp: string1 string2: string2 
+strcmp: string1 string2: string2
 	"Answer the order between the <String> arguments, string1 and string2.
 
 		int strcmp( const char *string1, const char *string2);
 	"
 
 	<cdecl: sdword strcmp lpstr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strcspn: string strCharSet: strCharSet
 	<cdecl: dword strcspn lpvoid char*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
 	<cdecl: sdword strerror_s lpstr intptr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strlen: aString
 	<cdecl: sdword strlen lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strncmp: string1 string2: string2 count: count
 	"Answer the order between the <String> arguments, string1 and string2,
@@ -373,11 +362,11 @@ strncmp: string1 string2: string2 count: count
 	"
 
 	<cdecl: sdword strncmp lpstr lpstr intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
 	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strpbrk: string strCharSet: strCharSet
 	"Answer a pointer to the first occurrence of any of the characters
@@ -387,8 +376,7 @@ strpbrk: string strCharSet: strCharSet
 	"
 
 	<cdecl: char* strpbrk char* char*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 synchronizeLocale
 	"Private - Synchronize the CRT's locale with the OS locale setting."
@@ -399,17 +387,17 @@ ungetc: c stream: stream
 	"Pushes the byte, c, back onto the FILE*, stream."
 
 	<cdecl: sdword ungetc sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ungetwc: c stream: stream
 	"Pushes the UTF-16 code unit, c, back onto the FILE*, stream."
 
 	<cdecl: sdword ungetwc sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wcsncmp: string1 string2: string2 count: count
 	"Answer the order between the <Utf16String> arguments, string1 and string2,
@@ -419,11 +407,11 @@ wcsncmp: string1 string2: string2 count: count
 	"
 
 	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
 	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #_chdir:!CRT functions-directory control!public! !

@@ -60,7 +60,7 @@ get_anyAttribute: anyAttribute
 			[out, retval]ISchemaAny** anyAttribute);"
 
 	<virtual stdcall: hresult 15 ISchemaAny**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_attributes: attributes
 	"Private - Get the value of the 'attributes' property of the receiver.
@@ -69,7 +69,7 @@ get_attributes: attributes
 			[out, retval]ISchemaItemCollection** attributes);"
 
 	<virtual stdcall: hresult 16 ISchemaItemCollection**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISchemaAttributeGroup categoriesFor: #anyAttribute!**auto generated**!properties!public! !
 !ISchemaAttributeGroup categoriesFor: #attributes!**auto generated**!properties!public! !
 !ISchemaAttributeGroup categoriesFor: #get_anyAttribute:!**auto generated**!COM Interfaces-ISchemaAttributeGroup!private! !

@@ -25,7 +25,7 @@ Next: celt rgelt: rgelt pceltFetched: pceltFetched
 	"
 
 	<virtual stdcall: hresult 4 dword IUnknown** dword*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IEnumUnknown categoriesFor: #Next:rgelt:pceltFetched:!**auto generated**!COM Interfaces-OBJIDL.IEnumUnknown!primitives!public! !
 
 !IEnumUnknown class methodsFor!

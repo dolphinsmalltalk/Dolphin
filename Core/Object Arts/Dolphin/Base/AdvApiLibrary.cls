@@ -13,11 +13,11 @@ This DLL contains functions mainly to do with accessing the registry, high-level
 !AdvApiLibrary categoriesForClass!External-Libraries-Win32! !
 !AdvApiLibrary methodsFor!
 
-deregisterEventSource: anExternalHandle 
+deregisterEventSource: anExternalHandle
 	<stdcall: bool DeregisterEventSource handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getUserName: buffer nSize: pBufSize 
+getUserName: buffer nSize: pBufSize
 	"Retrieve the user name of the current thread. This is the name of the user currently 
 	logged onto the system. 
 		BOOL GetUserName(
@@ -25,8 +25,8 @@ getUserName: buffer nSize: pBufSize
 			LPDWORD nSize 		// address of size of name buffer 
 		);"
 
-	<stdcall: bool GetUserNameW lpwstr DWORD*>
-	^self invalidCall!
+	<stdcall: bool GetUserNameW lpwstr dword*>
+	^self invalidCall: _failureCode!
 
 isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	"
@@ -38,10 +38,9 @@ isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	"
 
 	<stdcall: bool IsTextUnicode lpvoid sdword sdword*>
-	^self invalidCall
-	!
+	^self invalidCall: _failureCode!
 
-reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData 
+reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData
 	"
 		BOOL ReportEvent(
 			HANDLE hEventLog,	// handle returned by RegisterEventSource 
@@ -56,7 +55,7 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 		);"
 
 	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
 !AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
 !AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !

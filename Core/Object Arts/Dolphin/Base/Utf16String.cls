@@ -335,18 +335,18 @@ strlen
 
 wordAtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
-	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least 
-	significant first.
+	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	anInteger is out of bounds."
+	"Primitive failure reasons:
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		IndexOutOfRange 	- anInteger is out of bounds"
 
-	| answer |
 	<primitive: 124>
+	| answer |
 	answer := 0.
-	2 to: 1 by: -1 do: [:i |
-		answer := (answer bitShift: 8) + (self basicAt: anInteger + i)].
+	2 to: 1
+		by: -1
+		do: [:i | answer := (answer bitShift: 8) + (self basicAt: anInteger + i)].
 	^answer!
 
 wordAtOffset: anInteger put: anObject
@@ -355,13 +355,13 @@ wordAtOffset: anInteger put: anObject
 	raise a 'cannot hold' error.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	anInteger is out of bounds.
-		2 -	anObject is not a SmallInteger
-		3 -	anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
+		NonIntegerIndex		- anInteger is not a SmallInteger
+		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(WORD)).
+		BadValueType		- anObject is not a SmallInteger
+		ValueOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
 
 	<primitive: 125>
-	^self primitiveFailed! !
+	^self primitiveFailed: _failureCode! !
 !Utf16String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Utf16String categoriesFor: #asByteString:!converting!private! !
 !Utf16String categoriesFor: #asLowercase!converting!public! !

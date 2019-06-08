@@ -90,7 +90,7 @@ get_attributeGroups: attributeGroups
 			[out, retval]ISchemaItemCollection** attributeGroups);"
 
 	<virtual stdcall: hresult 20 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_attributes: attributes
 	"Private - Get the value of the 'attributes' property of the receiver.
@@ -99,7 +99,7 @@ get_attributes: attributes
 			[out, retval]ISchemaItemCollection** attributes);"
 
 	<virtual stdcall: hresult 19 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_elements: elements
 	"Private - Get the value of the 'elements' property of the receiver.
@@ -108,7 +108,7 @@ get_elements: elements
 			[out, retval]ISchemaItemCollection** elements);"
 
 	<virtual stdcall: hresult 18 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_modelGroups: modelGroups
 	"Private - Get the value of the 'modelGroups' property of the receiver.
@@ -117,7 +117,7 @@ get_modelGroups: modelGroups
 			[out, retval]ISchemaItemCollection** modelGroups);"
 
 	<virtual stdcall: hresult 21 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_notations: notations
 	"Private - Get the value of the 'notations' property of the receiver.
@@ -126,7 +126,7 @@ get_notations: notations
 			[out, retval]ISchemaItemCollection** notations);"
 
 	<virtual stdcall: hresult 22 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_schemaLocations: schemaLocations
 	"Private - Get the value of the 'schemaLocations' property of the receiver.
@@ -135,7 +135,7 @@ get_schemaLocations: schemaLocations
 			[out, retval]ISchemaStringCollection** schemaLocations);"
 
 	<virtual stdcall: hresult 23 ISchemaStringCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_targetNamespace: targetNamespace
 	"Private - Get the value of the 'targetNamespace' property of the receiver.
@@ -144,7 +144,7 @@ get_targetNamespace: targetNamespace
 			[out, retval]BSTR* targetNamespace);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_types: types
 	"Private - Get the value of the 'types' property of the receiver.
@@ -153,7 +153,7 @@ get_types: types
 			[out, retval]ISchemaItemCollection** types);"
 
 	<virtual stdcall: hresult 17 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_version: version
 	"Private - Get the value of the 'version' property of the receiver.
@@ -162,7 +162,7 @@ get_version: version
 			[out, retval]BSTR* version);"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 modelGroups
 	"Answer the <ISchemaItemCollection> value of the 'modelGroups' property of the receiver."

@@ -43,7 +43,7 @@ namespace ST
 		Oop				m_priority;
 		LinkedListOTE*	m_myList;
 		Oop				m_callbackDepth;
-		Oop				m_primitiveFailureCode;
+		Oop				m_reserved0;
 		Oop				m_primitiveFailureData;
 		Oop				m_fpControl;
 		SemaphoreOTE*	m_waitOverlap;
@@ -166,12 +166,7 @@ namespace ST
 		{
 			m_priority = integerObjectOf(priority);
 		}
-		SMALLINTEGER PrimitiveFailureCode()
-		{
-			return isIntegerObject(m_primitiveFailureCode) ? integerValueOf(m_primitiveFailureCode) : 0;
-		}
 		Oop PrimitiveFailureData() const { return m_primitiveFailureData; }
-		void SetPrimitiveFailureCode(SMALLINTEGER code);
 		void SetPrimitiveFailureData(Oop failureData);
 		void SetPrimitiveFailureData(OTE* failureData);
 		void SetPrimitiveFailureData(SMALLINTEGER failureData);

@@ -32,7 +32,7 @@ InitNew
 	the vtable defined in IPersistStreamInit>>defineFunctions. DO NOT MODIFY!!"
 
 	<virtual stdcall: sdword 9>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IPersistStreamInit categoriesFor: #initNew!initializing!public! !
 !IPersistStreamInit categoriesFor: #InitNew!COM Interfaces-IPersistStreamInit!public! !
 

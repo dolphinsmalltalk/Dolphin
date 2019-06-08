@@ -29,11 +29,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	add: '..\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\COM\OLE COM'
+	'..\Structured Storage\OLE Structured Storage').
 
 package!
 
@@ -112,8 +111,8 @@ oleLoadFromStream: pStm iidInterface: riid ppvObj: ppOut
 			void ** ppvObj	//Indirect pointer to the newly loaded object
 		);"
 
-	<stdcall: hresult OleLoadFromStream IStream* IID* lppvoid>
-	^self invalidCall!
+	<stdcall: hresult OleLoadFromStream IStream* guid* lppvoid>
+	^self invalidCall: _failureCode!
 
 oleSaveToStream: pPStm pStm: pStm
 	"Save an object with the specified IPersistStream interface to the specified IStream.
@@ -129,9 +128,9 @@ oleSaveToStream: pPStm pStm: pStm
 			IPersistStream * pPStm,	//Pointer to the interface on the object to be saved
 			IStream * pStm	//Pointer to the destination stream to which the object is saved
 		);"
- 
-	<stdcall: hresult OleSaveToStream IPersistStream* IStream* >
-	^self invalidCall! !
+
+	<stdcall: hresult OleSaveToStream IPersistStream* IStream*>
+	^self invalidCall: _failureCode! !
 !OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
 !OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
 

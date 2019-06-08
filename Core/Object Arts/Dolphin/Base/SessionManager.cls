@@ -826,7 +826,7 @@ primQuit: anInteger
 	should be initiated via #exit. The primitive never fails, and never returns."
 
 	<primitive: 113>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
 	"Private - Save the current image to fileName, optionally creating a backup of the existing file.

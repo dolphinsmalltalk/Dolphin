@@ -29,7 +29,7 @@ cryptProtectData: pDataIn szDataDescr: szDataDescr pOptionalEntropy: pOptionalEn
 			DATA_BLOB* pDataOut);"
 
 	<stdcall: bool CryptProtectData CRYPTOAPI_BLOB* lpwstr CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* dword CRYPTOAPI_BLOB*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 cryptProtectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 	"Invoke the CryptProtectMemory() function of the module wrapped by the receiver.
@@ -40,7 +40,7 @@ cryptProtectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 			unsigned long dwFlags);"
 
 	<stdcall: bool CryptProtectMemory void* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 cryptUnprotectData: pDataIn ppszDataDescr: ppszDataDescr pOptionalEntropy: pOptionalEntropy pvReserved: pvReserved pPromptStruct: pPromptStruct dwFlags: dwFlags pDataOut: pDataOut
 	"Invoke the CryptUnprotectData() function of the module wrapped by the receiver.
@@ -55,7 +55,7 @@ cryptUnprotectData: pDataIn ppszDataDescr: ppszDataDescr pOptionalEntropy: pOpti
 			DATA_BLOB* pDataOut);"
 
 	<stdcall: bool CryptUnprotectData CRYPTOAPI_BLOB* lpwstr* CRYPTOAPI_BLOB* void* CRYPTPROTECT_PROMPTSTRUCT* dword CRYPTOAPI_BLOB*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 	"Invoke the CryptUnprotectMemory() function of the module wrapped by the receiver.
@@ -66,7 +66,7 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 			unsigned long dwFlags);"
 
 	<stdcall: bool CryptUnprotectMemory void* dword dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !Crypt32Library categoriesFor: #cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
 !Crypt32Library categoriesFor: #cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
 !Crypt32Library categoriesFor: #cryptUnprotectData:ppszDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !

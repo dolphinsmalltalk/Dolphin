@@ -30,8 +30,7 @@ GetAllCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 33 CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getAllFuncCustData: index 
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllFuncCustData() method."
@@ -51,8 +50,7 @@ GetAllFuncCustData: index pCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 34 dword CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getAllImplTypeCustData: index 
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllImplTypeCustData() method."
@@ -72,8 +70,7 @@ GetAllImplTypeCustData: index pCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 37 dword CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getAllParamCustData: indexFunc indexParam: indexParam 
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllParamCustData() method."
@@ -94,8 +91,7 @@ GetAllParamCustData: indexFunc indexParam: indexParam pCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 35 dword dword CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getAllVarCustData: index 
 	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllVarCustData() method."
@@ -115,8 +111,7 @@ GetAllVarCustData: index pCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 36 dword CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getCustData: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetCustData() method."
@@ -135,9 +130,8 @@ GetCustData: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 27 GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 27 guid* variant*>
+	^self invalidCall: _failureCode!
 
 getDocumentation2: memid lcid: lcid
 	"Answer a 3 element <Array> containing the results of invoking the COM Object's 
@@ -165,8 +159,7 @@ GetDocumentation2: memid lcid: lcid pbstrHelpString: pbstrHelpString pdwHelpStri
 	"
 
 	<virtual stdcall: hresult 32 sdword dword bstr* dword* bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFuncCustData: index guid: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetFuncCustData() method."
@@ -186,9 +179,8 @@ GetFuncCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 28 dword GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 28 dword guid* variant*>
+	^self invalidCall: _failureCode!
 
 getFuncIndexOfMemId: memid invkind: invkind 
 	"Answer the <DWORD> result of invoking the COM Object's GetFuncIndexOfMemId() method."
@@ -209,8 +201,7 @@ GetFuncIndexOfMemId: memid invkind: invkind pFuncIndex: pFuncIndex
 	"
 
 	<virtual stdcall: hresult 25 sdword sdword dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getImplTypeCustData: index guid: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetImplTypeCustData() method."
@@ -230,9 +221,8 @@ GetImplTypeCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 31 dword GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 31 dword guid* variant*>
+	^self invalidCall: _failureCode!
 
 getParamCustData: indexFunc indexParam: indexParam guid: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetParamCustData() method."
@@ -253,9 +243,8 @@ GetParamCustData: indexFunc indexParam: indexParam guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 29 dword dword GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 29 dword dword guid* variant*>
+	^self invalidCall: _failureCode!
 
 GetTypeFlags: pTypeFlags
 	"Private - Invoke the GetTypeFlags() method of the COM object wrapped by the receiver.
@@ -265,8 +254,7 @@ GetTypeFlags: pTypeFlags
 	"
 
 	<virtual stdcall: hresult 24 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetTypeKind: pTypeKind
 	"Private - Invoke the GetTypeKind() method of the COM object wrapped by the receiver.
@@ -276,8 +264,7 @@ GetTypeKind: pTypeKind
 	"
 
 	<virtual stdcall: hresult 23 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getVarCustData: index guid: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetVarCustData() method."
@@ -297,9 +284,8 @@ GetVarCustData: index guid: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 30 dword GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 30 dword guid* variant*>
+	^self invalidCall: _failureCode!
 
 getVarIndexOfMemId: memid 
 	"Answer the <DWORD> result of invoking the COM Object's GetVarIndexOfMemId() method."
@@ -319,8 +305,7 @@ GetVarIndexOfMemId: memid pVarIndex: pVarIndex
 	"
 
 	<virtual stdcall: hresult 26 sdword dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 typeFlags
 	"Answer the receiver's type flags (from the TYPEFLAGS enumeration).

@@ -30,11 +30,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: 'Dolphin Sockets';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin MVP Base'
+	'Dolphin Sockets').
 
 package!
 

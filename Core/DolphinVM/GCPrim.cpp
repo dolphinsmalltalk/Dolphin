@@ -182,7 +182,7 @@ Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp, unsigned)
 	// if a very large maximum object setting is used on a machine with relatively little
 	// virtual memory
 	if (oopsLeft < 0)
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::OutOfMemory);
 
 	// Adjust stack before any process switch!
 	*sp = ObjectMemoryIntegerObjectOf(oopsLeft);

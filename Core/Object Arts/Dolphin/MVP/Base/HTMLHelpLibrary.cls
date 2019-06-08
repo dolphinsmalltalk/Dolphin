@@ -39,7 +39,7 @@ htmlHelp: hwndCaller pszFile: pszFile uCommand: uCommand dwData: dwData
 		"
 
 	<stdcall: handle HtmlHelpW handle lpwstr dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 htmlHelpCloseAll
 	"Closes all help windows opened by the current application"

@@ -47,7 +47,7 @@ get_SubMatches: ppSubMatches
 			[out, retval]IDispatch** ppSubMatches);"
 
 	<virtual stdcall: hresult 11 IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 subMatches
 	"Answer the <IDispatch> value of the 'SubMatches' property of the receiver."

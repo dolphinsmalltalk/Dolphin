@@ -20,8 +20,7 @@ get_Stream: ppStm
 			[out, retval] IUnknown** ppStm);"
 
 	<virtual stdcall: hresult 8 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Stream: ppStm
 	"Private - Set the value of the 'Stream' property of the object wrapped by the 
@@ -30,8 +29,7 @@ put_Stream: ppStm
 			[in] IUnknown* ppStm);"
 
 	<virtual stdcall: hresult 9 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 stream
 	"Answer the <IUnknown> value of the 'Stream' property of the receiver."

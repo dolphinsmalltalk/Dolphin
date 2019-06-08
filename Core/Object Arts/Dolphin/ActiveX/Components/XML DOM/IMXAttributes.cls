@@ -88,7 +88,7 @@ AddAttribute: strURI strLocalName: strLocalName strQName: strQName strType: strT
 			[in]BSTR strValue);"
 
 	<virtual stdcall: hresult 8 bstr bstr bstr bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 addAttributeFromIndex: varAtts nIndex: nIndex
 	"Invoke the addAttributeFromIndex() method of the COM object.
@@ -108,7 +108,7 @@ AddAttributeFromIndex: varAtts nIndex: nIndex
 			[in]int nIndex);"
 
 	<virtual stdcall: hresult 9 variant sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Clear
 	"Invoke the clear() method of the COM object.
@@ -117,7 +117,7 @@ Clear
 		HRESULT __stdcall clear();"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -137,7 +137,7 @@ RemoveAttribute: nIndex
 			[in]int nIndex);"
 
 	<virtual stdcall: hresult 11 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetAttribute: nIndex strURI: strURI strLocalName: strLocalName strQName: strQName strType: strType strValue: strValue
 	"Invoke the setAttribute() method of the COM object.
@@ -152,7 +152,7 @@ SetAttribute: nIndex strURI: strURI strLocalName: strLocalName strQName: strQNam
 			[in]BSTR strValue);"
 
 	<virtual stdcall: hresult 12 sdword bstr bstr bstr bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setAttributes: varAtts
 	"Invoke the setAttributes() method of the COM object.
@@ -169,7 +169,7 @@ SetAttributes: varAtts
 			[in]VARIANT varAtts);"
 
 	<virtual stdcall: hresult 13 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetLocalName: nIndex strLocalName: strLocalName
 	"Invoke the setLocalName() method of the COM object.
@@ -180,7 +180,7 @@ SetLocalName: nIndex strLocalName: strLocalName
 			[in]BSTR strLocalName);"
 
 	<virtual stdcall: hresult 14 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetQName: nIndex strQName: strQName
 	"Invoke the setQName() method of the COM object.
@@ -191,7 +191,7 @@ SetQName: nIndex strQName: strQName
 			[in]BSTR strQName);"
 
 	<virtual stdcall: hresult 15 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetType: nIndex strType: strType
 	"Invoke the setType() method of the COM object.
@@ -202,7 +202,7 @@ SetType: nIndex strType: strType
 			[in]BSTR strType);"
 
 	<virtual stdcall: hresult 16 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetURI: nIndex strURI: strURI
 	"Invoke the setURI() method of the COM object.
@@ -213,7 +213,7 @@ SetURI: nIndex strURI: strURI
 			[in]BSTR strURI);"
 
 	<virtual stdcall: hresult 17 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetValue: nIndex strValue: strValue
 	"Invoke the setValue() method of the COM object.
@@ -224,7 +224,7 @@ SetValue: nIndex strValue: strValue
 			[in]BSTR strValue);"
 
 	<virtual stdcall: hresult 18 sdword bstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IMXAttributes categoriesFor: #AddAttribute:strLocalName:strQName:strType:strValue:!**auto generated**!COM Interfaces-IMXAttributes!public! !
 !IMXAttributes categoriesFor: #addAttributeFromIndex:nIndex:!**auto generated**!methods!public! !
 !IMXAttributes categoriesFor: #AddAttributeFromIndex:nIndex:!**auto generated**!COM Interfaces-IMXAttributes!private! !

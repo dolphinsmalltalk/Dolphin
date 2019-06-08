@@ -38,8 +38,7 @@ ClientToWindow: pcx pcy: pcy
 			[in, out] int* pcy);"
 
 	<virtual stdcall: hresult 34 sdword* sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 fullName
 	"Answer the <bstr> value of the 'FullName' property of the receiver.
@@ -76,8 +75,7 @@ get_FullName: fullName
 			[out, retval] BSTR* FullName);"
 
 	<virtual stdcall: hresult 39 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_FullScreen: pbFullScreen
 	"Private - Get the value of the 'FullScreen' property of the receiver.
@@ -87,8 +85,7 @@ get_FullScreen: pbFullScreen
 			[out, retval] VARIANT_BOOL* pbFullScreen);"
 
 	<virtual stdcall: hresult 51 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_HWND: pHWND
 	"Private - Get the value of the 'HWND' property of the receiver.
@@ -98,8 +95,7 @@ get_HWND: pHWND
 			[out, retval] long* pHWND);"
 
 	<virtual stdcall: hresult 38 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MenuBar: value
 	"Private - Get the value of the 'MenuBar' property of the receiver.
@@ -109,8 +105,7 @@ get_MenuBar: value
 			[out, retval] VARIANT_BOOL* Value);"
 
 	<virtual stdcall: hresult 49 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Name: name
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -120,8 +115,7 @@ get_Name: name
 			[out, retval] BSTR* Name);"
 
 	<virtual stdcall: hresult 37 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Path: path
 	"Private - Get the value of the 'Path' property of the receiver.
@@ -131,8 +125,7 @@ get_Path: path
 			[out, retval] BSTR* Path);"
 
 	<virtual stdcall: hresult 40 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_StatusBar: pBool
 	"Private - Get the value of the 'StatusBar' property of the receiver.
@@ -142,8 +135,7 @@ get_StatusBar: pBool
 			[out, retval] VARIANT_BOOL* pBool);"
 
 	<virtual stdcall: hresult 43 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_StatusText: statusText
 	"Private - Get the value of the 'StatusText' property of the receiver.
@@ -153,8 +145,7 @@ get_StatusText: statusText
 			[out, retval] BSTR* StatusText);"
 
 	<virtual stdcall: hresult 45 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ToolBar: value
 	"Private - Get the value of the 'ToolBar' property of the receiver.
@@ -164,8 +155,7 @@ get_ToolBar: value
 			[out, retval] int* Value);"
 
 	<virtual stdcall: hresult 47 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Visible: pBool
 	"Private - Get the value of the 'Visible' property of the receiver.
@@ -175,8 +165,7 @@ get_Visible: pBool
 			[out, retval] VARIANT_BOOL* pBool);"
 
 	<virtual stdcall: hresult 41 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetProperty: property pvtValue: pvtValue
 	"Private - Invoke the GetProperty() method of the COM object wrapped by the receiver.
@@ -187,8 +176,7 @@ GetProperty: property pvtValue: pvtValue
 			[out, retval] VARIANT* pvtValue);"
 
 	<virtual stdcall: hresult 36 bstr variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getProperty_: property
 	"Answer the <VARIANT> result of invoking the COM Object's GetProperty() method.
@@ -258,8 +246,7 @@ put_FullScreen: pbFullScreen
 			[in] VARIANT_BOOL pbFullScreen);"
 
 	<virtual stdcall: hresult 52 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MenuBar: value
 	"Private - Set the value of the 'MenuBar' property of the object wrapped by the 
@@ -270,8 +257,7 @@ put_MenuBar: value
 			[in] VARIANT_BOOL Value);"
 
 	<virtual stdcall: hresult 50 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_StatusBar: pBool
 	"Private - Set the value of the 'StatusBar' property of the object wrapped by the 
@@ -282,8 +268,7 @@ put_StatusBar: pBool
 			[in] VARIANT_BOOL pBool);"
 
 	<virtual stdcall: hresult 44 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_StatusText: statusText
 	"Private - Set the value of the 'StatusText' property of the object wrapped by the 
@@ -294,8 +279,7 @@ put_StatusText: statusText
 			[in] BSTR StatusText);"
 
 	<virtual stdcall: hresult 46 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ToolBar: value
 	"Private - Set the value of the 'ToolBar' property of the object wrapped by the 
@@ -306,8 +290,7 @@ put_ToolBar: value
 			[in] int Value);"
 
 	<virtual stdcall: hresult 48 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Visible: pBool
 	"Private - Set the value of the 'Visible' property of the object wrapped by the 
@@ -318,8 +301,7 @@ put_Visible: pBool
 			[in] VARIANT_BOOL pBool);"
 
 	<virtual stdcall: hresult 42 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putProperty: property vtValue: vtValue
 	"Invoke the PutProperty() method of the COM object.
@@ -339,8 +321,7 @@ PutProperty: property vtValue: vtValue
 			[in] VARIANT vtValue);"
 
 	<virtual stdcall: hresult 35 bstr variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Quit
 	"Invoke the Quit() method of the COM object wrapped by the receiver.
@@ -349,8 +330,7 @@ Quit
 		HRESULT __stdcall Quit();"
 
 	<virtual stdcall: hresult 33>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 statusBar
 	"Answer the <varbool> value of the 'StatusBar' property of the receiver.

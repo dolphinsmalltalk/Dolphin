@@ -42,7 +42,7 @@ get_publicIdentifier: uri
 			[out, retval]BSTR* uri);"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_systemIdentifier: uri
 	"Private - Get the value of the 'systemIdentifier' property of the receiver.
@@ -51,7 +51,7 @@ get_systemIdentifier: uri
 			[out, retval]BSTR* uri);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 publicIdentifier
 	"Answer the <bstr> value of the 'publicIdentifier' property of the receiver."

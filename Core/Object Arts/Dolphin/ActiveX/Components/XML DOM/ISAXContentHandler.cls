@@ -88,7 +88,7 @@ Characters: pwchChars cchChars: cchChars
 			[in]int cchChars);"
 
 	<virtual stdcall: hresult 11 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndDocument
 	"Invoke the endDocument() method of the COM object.
@@ -96,7 +96,7 @@ EndDocument
 		HRESULT __stdcall endDocument();"
 
 	<virtual stdcall: hresult 6>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName pwchQName: pwchQName cchQName: cchQName
 	"Invoke the endElement() method of the COM object.
@@ -110,7 +110,7 @@ EndElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: pwc
 			[in]int cchQName);"
 
 	<virtual stdcall: hresult 10 word* sdword word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndPrefixMapping: pwchPrefix cchPrefix: cchPrefix
 	"Invoke the endPrefixMapping() method of the COM object.
@@ -120,7 +120,7 @@ EndPrefixMapping: pwchPrefix cchPrefix: cchPrefix
 			[in]int cchPrefix);"
 
 	<virtual stdcall: hresult 8 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 IgnorableWhitespace: pwchChars cchChars: cchChars
 	"Invoke the ignorableWhitespace() method of the COM object.
@@ -130,7 +130,7 @@ IgnorableWhitespace: pwchChars cchChars: cchChars
 			[in]int cchChars);"
 
 	<virtual stdcall: hresult 12 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ProcessingInstruction: pwchTarget cchTarget: cchTarget pwchData: pwchData cchData: cchData
 	"Invoke the processingInstruction() method of the COM object.
@@ -142,7 +142,7 @@ ProcessingInstruction: pwchTarget cchTarget: cchTarget pwchData: pwchData cchDat
 			[in]int cchData);"
 
 	<virtual stdcall: hresult 13 word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutDocumentLocator: pLocator
 	"Invoke the putDocumentLocator() method of the COM object.
@@ -151,7 +151,7 @@ PutDocumentLocator: pLocator
 			[in]ISAXLocator* pLocator);"
 
 	<virtual stdcall: hresult 4 ISAXLocator*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SkippedEntity: pwchName cchName: cchName
 	"Invoke the skippedEntity() method of the COM object.
@@ -161,7 +161,7 @@ SkippedEntity: pwchName cchName: cchName
 			[in]int cchName);"
 
 	<virtual stdcall: hresult 14 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartDocument
 	"Invoke the startDocument() method of the COM object.
@@ -169,7 +169,7 @@ StartDocument
 		HRESULT __stdcall startDocument();"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName pwchQName: pwchQName cchQName: cchQName pAttributes: pAttributes
 	"Invoke the startElement() method of the COM object.
@@ -184,7 +184,7 @@ StartElement: pwchNamespaceUri cchNamespaceUri: cchNamespaceUri pwchLocalName: p
 			[in]ISAXAttributes* pAttributes);"
 
 	<virtual stdcall: hresult 9 word* sdword word* sdword word* sdword ISAXAttributes*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cchUri
 	"Invoke the startPrefixMapping() method of the COM object.
@@ -196,7 +196,7 @@ StartPrefixMapping: pwchPrefix cchPrefix: cchPrefix pwchUri: pwchUri cchUri: cch
 			[in]int cchUri);"
 
 	<virtual stdcall: hresult 7 word* sdword word* sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXContentHandler categoriesFor: #Characters:cchChars:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
 !ISAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-ISAXContentHandler!public! !
 !ISAXContentHandler categoriesFor: #EndElement:cchNamespaceUri:pwchLocalName:cchLocalName:pwchQName:cchQName:!**auto generated**!COM Interfaces-ISAXContentHandler!public! !

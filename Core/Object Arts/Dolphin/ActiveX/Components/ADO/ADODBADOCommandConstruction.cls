@@ -20,8 +20,7 @@ get_OLEDBCommand: ppOLEDBCommand
 			[out, retval] IUnknown** ppOLEDBCommand);"
 
 	<virtual stdcall: hresult 4 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 oledbCommand
 	"Answer the <IUnknown> value of the 'OLEDBCommand' property of the receiver."
@@ -45,8 +44,7 @@ put_OLEDBCommand: ppOLEDBCommand
 			[in] IUnknown* ppOLEDBCommand);"
 
 	<virtual stdcall: hresult 5 IUnknown*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBADOCommandConstruction categoriesFor: #get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
 !ADODBADOCommandConstruction categoriesFor: #oledbCommand!**auto generated**!properties!public! !
 !ADODBADOCommandConstruction categoriesFor: #oledbCommand:!**auto generated**!properties!public! !

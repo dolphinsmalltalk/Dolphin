@@ -62,7 +62,7 @@ Comment: pwchChars cchChars: cchChars
 			[in]int cchChars);"
 
 	<virtual stdcall: hresult 10 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndCDATA
 	"Invoke the endCDATA() method of the COM object.
@@ -70,7 +70,7 @@ EndCDATA
 		HRESULT __stdcall endCDATA();"
 
 	<virtual stdcall: hresult 9>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndDTD
 	"Invoke the endDTD() method of the COM object.
@@ -78,7 +78,7 @@ EndDTD
 		HRESULT __stdcall endDTD();"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndEntity: pwchName cchName: cchName
 	"Invoke the endEntity() method of the COM object.
@@ -88,7 +88,7 @@ EndEntity: pwchName cchName: cchName
 			[in]int cchName);"
 
 	<virtual stdcall: hresult 7 word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartCDATA
 	"Invoke the startCDATA() method of the COM object.
@@ -96,7 +96,7 @@ StartCDATA
 		HRESULT __stdcall startCDATA();"
 
 	<virtual stdcall: hresult 8>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartDTD: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId
 	"Invoke the startDTD() method of the COM object.
@@ -110,7 +110,7 @@ StartDTD: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchP
 			[in]int cchSystemId);"
 
 	<virtual stdcall: hresult 4 word* sdword word* sdword word* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartEntity: pwchName cchName: cchName
 	"Invoke the startEntity() method of the COM object.
@@ -120,7 +120,7 @@ StartEntity: pwchName cchName: cchName
 			[in]int cchName);"
 
 	<virtual stdcall: hresult 6 word* sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXLexicalHandler categoriesFor: #Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
 !ISAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
 !ISAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !

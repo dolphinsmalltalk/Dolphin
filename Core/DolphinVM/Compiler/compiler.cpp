@@ -1286,14 +1286,14 @@ POTE Compiler::ParseMethod()
 	PushNewScope(0);
 
 	ParseMessagePattern();
+	if (ThisTokenIsBinary('<'))
+	{
+		ParsePrimitive();
+	}
 	ParseTemporaries();
 	
 	if (m_ok)
 	{
-		if (ThisTokenIsBinary('<'))
-		{
-			ParsePrimitive();
-		}
 		ParseStatements(Eof);
 	}
 
@@ -2109,6 +2109,13 @@ void Compiler::ParsePrimitive()
 {
 	TokenType next = NextToken();
 	Str strToken = ThisTokenText();
+
+	// Declare the implicit _failureCode temporary - this will always be the first temp of the method after the arguments
+	TempVarDecl* pErrorCodeDecl = AddTemporary((LPUTF8)"_failureCode", ThisTokenRange(), false);
+	TempVarRef* pErrorTempRef = m_pCurrentScope->AddTempRef(pErrorCodeDecl, vrtWrite, ThisTokenRange());
+	// Implicitly written to by the primitive itself, but is then read-only and cannot be assigned
+	pErrorCodeDecl->BeReadOnly();
+
 	if (next == NameColon)
 	{
 		if (strToken == (LPUTF8)"primitive:")
@@ -2120,8 +2127,23 @@ void Compiler::ParsePrimitive()
 				m_primitiveIndex=ThisTokenInteger();
 				if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & Boot))
 					CompileError(ThisTokenRange(), CErrBadPrimIdx);
+				
+				next = NextToken();
+				if (next == TokenType::NameColon && Str(ThisTokenText()) == (LPUTF8)"error:")
+				{
+					if (NextToken() == TokenType::NameConst)
+					{
+						// Rename the _failureCode temporary
+						Str errorCodeName = ThisTokenText();
+						CheckTemporaryName(errorCodeName, ThisTokenRange(), false);
+						pErrorCodeDecl->SetName(errorCodeName);
+						pErrorCodeDecl->SetTextRange(ThisTokenRange());
+						NextToken();
+					}
+					else
+						CompileError(ThisTokenRange(), CErrExpectVariable);
+				}
 
-				NextToken();
 				if (ThisTokenIsBinary('>'))
 				{
 					NextToken();

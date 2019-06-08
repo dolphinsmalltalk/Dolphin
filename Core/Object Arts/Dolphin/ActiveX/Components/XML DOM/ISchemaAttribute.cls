@@ -72,7 +72,7 @@ get_defaultValue: defaultValue
 			[out, retval]BSTR* defaultValue);"
 
 	<virtual stdcall: hresult 17 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_fixedValue: fixedValue
 	"Private - Get the value of the 'fixedValue' property of the receiver.
@@ -81,7 +81,7 @@ get_fixedValue: fixedValue
 			[out, retval]BSTR* fixedValue);"
 
 	<virtual stdcall: hresult 18 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_isReference: reference
 	"Private - Get the value of the 'isReference' property of the receiver.
@@ -90,7 +90,7 @@ get_isReference: reference
 			[out, retval]VARIANT_BOOL* reference);"
 
 	<virtual stdcall: hresult 20 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_scope: scope
 	"Private - Get the value of the 'scope' property of the receiver.
@@ -99,7 +99,7 @@ get_scope: scope
 			[out, retval]ISchemaComplexType** scope);"
 
 	<virtual stdcall: hresult 16 ISchemaComplexType**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_type: type
 	"Private - Get the value of the 'type' property of the receiver.
@@ -108,7 +108,7 @@ get_type: type
 			[out, retval]ISchemaType** type);"
 
 	<virtual stdcall: hresult 15 ISchemaType**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_use: use
 	"Private - Get the value of the 'use' property of the receiver.
@@ -117,7 +117,7 @@ get_use: use
 			[out, retval]SCHEMAUSE* use);"
 
 	<virtual stdcall: hresult 19 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isReference
 	"Answer the <varbool> value of the 'isReference' property of the receiver."

@@ -65,7 +65,7 @@ Execute: sourceString ppMatches: ppMatches
 			[out, retval]IDispatch** ppMatches);"
 
 	<virtual stdcall: hresult 14 bstr IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 matchCollectionClass
 	^IMatchCollection!
@@ -93,7 +93,7 @@ Replace: sourceString replaceString: replaceString pDestString: pDestString
 			[out, retval]BSTR* pDestString);"
 
 	<virtual stdcall: hresult 16 bstr bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Test: sourceString pMatch: pMatch
 	"Private - Invoke the Test() method of the COM object.
@@ -103,7 +103,7 @@ Test: sourceString pMatch: pMatch
 			[out, retval]VARIANT_BOOL* pMatch);"
 
 	<virtual stdcall: hresult 15 bstr varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IRegExp categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
 !IRegExp categoriesFor: #matchCollectionClass!constants!private! !
 !IRegExp categoriesFor: #replace:replaceString:!operations!public! !

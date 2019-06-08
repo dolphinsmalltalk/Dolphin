@@ -29,8 +29,7 @@ get_Description: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_HelpContext: pl
 	"Private - Get the value of the 'HelpContext' property of the receiver.
@@ -38,8 +37,7 @@ get_HelpContext: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_HelpFile: pbstr
 	"Private - Get the value of the 'HelpFile' property of the receiver.
@@ -47,8 +45,7 @@ get_HelpFile: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_NativeError: pl
 	"Private - Get the value of the 'NativeError' property of the receiver.
@@ -56,8 +53,7 @@ get_NativeError: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Number: pl
 	"Private - Get the value of the 'Number' property of the receiver.
@@ -65,8 +61,7 @@ get_Number: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Source: pbstr
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -74,8 +69,7 @@ get_Source: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_SQLState: pbstr
 	"Private - Get the value of the 'SQLState' property of the receiver.
@@ -83,8 +77,7 @@ get_SQLState: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 13 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 helpContext
 	"Answer the <sdword> value of the 'HelpContext' property of the receiver."

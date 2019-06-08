@@ -33,13 +33,12 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Change Objects\RBChangeObjects';
-	add: '..\Environments\RBEnvironments';
-	add: '..\Parser\RBParser';
-	add: '..\Refactorings\RBRefactorings';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\Change Objects\RBChangeObjects'
+	'..\Environments\RBEnvironments'
+	'..\Parser\RBParser'
+	'..\Refactorings\RBRefactorings').
 
 package!
 

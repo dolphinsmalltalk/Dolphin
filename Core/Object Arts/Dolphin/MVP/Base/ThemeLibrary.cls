@@ -360,7 +360,7 @@ closeThemeData: htheme
 			[in]HTHEME HTHEME);"
 
 	<stdcall: sdword CloseThemeData handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pClipRect: pClipRect
 	"Invoke the DrawThemeBackground() function of the module wrapped by the receiver.
@@ -375,7 +375,7 @@ drawThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: 
 			[in]RECT* pClipRect);"
 
 	<stdcall: hresult DrawThemeBackground handle handle sdword sdword RECT* RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pOptions: pOptions
 	"Invoke the DrawThemeBackgroundEx() function of the module wrapped by the receiver.
@@ -390,7 +390,7 @@ drawThemeBackgroundEx: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect
 			[in]DTBGOPTS* pOptions);"
 
 	<stdcall: hresult DrawThemeBackgroundEx handle handle sdword sdword RECT* DTBGOPTS*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pDestRect uEdge: uEdge uFlags: uFlags pContentRect: pContentRect
 	"Invoke the DrawThemeEdge() function of the module wrapped by the receiver.
@@ -407,7 +407,7 @@ drawThemeEdge: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pDestRect: pD
 			[out]RECT* pContentRect);"
 
 	<stdcall: hresult DrawThemeEdge handle handle sdword sdword RECT* dword dword RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect himl: himl iImageIndex: iImageIndex
 	"Invoke the DrawThemeIcon() function of the module wrapped by the receiver.
@@ -423,7 +423,7 @@ drawThemeIcon: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect 
 			[in]int iImageIndex);"
 
 	<stdcall: hresult DrawThemeIcon handle handle sdword sdword RECT* handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeParentBackground: hwnd hdc: hdc prc: prc
 	"Invoke the DrawThemeParentBackground() function of the module wrapped by the receiver.
@@ -435,7 +435,7 @@ drawThemeParentBackground: hwnd hdc: hdc prc: prc
 			[in, optional]RECT* prc);"
 
 	<stdcall: hresult DrawThemeParentBackground handle handle RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags dwTextFlags2: dwTextFlags2 pRect: pRect
 	"Invoke the DrawThemeText() function of the module wrapped by the receiver.
@@ -453,7 +453,7 @@ drawThemeText: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszT
 			[in]RECT* pRect);"
 
 	<stdcall: hresult DrawThemeText handle handle sdword sdword lpwstr sdword dword dword RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enableThemeDialogTexture: hwnd dwFlags: dwFlags
 	"Invoke the EnableThemeDialogTexture() function of the module wrapped by the receiver.
@@ -464,7 +464,7 @@ enableThemeDialogTexture: hwnd dwFlags: dwFlags
 			[in]DWORD dwFlags);"
 
 	<stdcall: hresult EnableThemeDialogTexture handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enableTheming: fEnable
 	"Invoke the EnableTheming() function of the module wrapped by the receiver.
@@ -474,7 +474,7 @@ enableTheming: fEnable
 			[in]BOOL fEnable);"
 
 	<stdcall: hresult EnableTheming bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getCurrentThemeName: pszThemeFileName cchMaxNameChars: cchMaxNameChars pszColorBuff: pszColorBuff cchMaxColorChars: cchMaxColorChars pszSizeBuff: pszSizeBuff cchMaxSizeChars: cchMaxSizeChars
 	"Invoke the GetCurrentThemeName() function of the module wrapped by the receiver.
@@ -489,7 +489,7 @@ getCurrentThemeName: pszThemeFileName cchMaxNameChars: cchMaxNameChars pszColorB
 			[in]int cchMaxSizeChars);"
 
 	<stdcall: hresult GetCurrentThemeName lpwstr sdword lpwstr sdword lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeAppProperties
 	"Invoke the GetThemeAppProperties() function of the module wrapped by the receiver.
@@ -498,7 +498,7 @@ getThemeAppProperties
 		DWORD __stdcall GetThemeAppProperties();"
 
 	<stdcall: dword GetThemeAppProperties>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pBoundingRect: pBoundingRect pContentRect: pContentRect
 	"Invoke the GetThemeBackgroundContentRect() function of the module wrapped by the receiver.
@@ -513,7 +513,7 @@ getThemeBackgroundContentRect: htheme hdc: hdc iPartId: iPartId iStateId: iState
 			[out]RECT* pContentRect);"
 
 	<stdcall: hresult GetThemeBackgroundContentRect handle handle sdword sdword RECT* RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pContentRect: pContentRect pExtentRect: pExtentRect
 	"Invoke the GetThemeBackgroundExtent() function of the module wrapped by the receiver.
@@ -528,7 +528,7 @@ getThemeBackgroundExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pC
 			[out]RECT* pExtentRect);"
 
 	<stdcall: hresult GetThemeBackgroundExtent handle handle sdword sdword RECT* RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pRect: pRect pRegion: pRegion
 	"Invoke the GetThemeBackgroundRegion() function of the module wrapped by the receiver.
@@ -543,7 +543,7 @@ getThemeBackgroundRegion: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pR
 			[out]HRGN* pRegion);"
 
 	<stdcall: hresult GetThemeBackgroundRegion handle handle sdword sdword RECT* handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal: pfVal
 	"Invoke the GetThemeBool() function of the module wrapped by the receiver.
@@ -557,7 +557,7 @@ getThemeBool: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pfVal:
 			[out]BOOL* pfVal);"
 
 	<stdcall: hresult GetThemeBool handle sdword sdword sdword bool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColor: pColor
 	"Invoke the GetThemeColor() function of the module wrapped by the receiver.
@@ -571,7 +571,7 @@ getThemeColor: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pColo
 			[out]COLORREF* pColor);"
 
 	<stdcall: hresult GetThemeColor handle sdword sdword sdword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName pszValueBuff: pszValueBuff cchMaxValChars: cchMaxValChars
 	"Invoke the GetThemeDocumentationProperty() function of the module wrapped by the receiver.
@@ -584,7 +584,7 @@ getThemeDocumentationProperty: pszThemeName pszPropertyName: pszPropertyName psz
 			[in]int cchMaxValChars);"
 
 	<stdcall: hresult GetThemeDocumentationProperty lpwstr lpwstr lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeEnumValue: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
 	"Invoke the GetThemeEnumValue() function of the module wrapped by the receiver.
@@ -598,7 +598,7 @@ getThemeEnumValue: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId p
 			[out]int* piVal);"
 
 	<stdcall: hresult GetThemeEnumValue handle sdword sdword sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeFilename: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszThemeFileName: pszThemeFileName cchMaxBuffChars: cchMaxBuffChars
 	"Invoke the GetThemeFilename() function of the module wrapped by the receiver.
@@ -613,7 +613,7 @@ getThemeFilename: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId ps
 			[in]int cchMaxBuffChars);"
 
 	<stdcall: hresult GetThemeFilename handle sdword sdword sdword lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId pFont: pFont
 	"Invoke the GetThemeFont() function of the module wrapped by the receiver.
@@ -628,7 +628,7 @@ getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iProp
 			[out]LOGFONTW* pFont);"
 
 	<stdcall: hresult GetThemeFont handle handle sdword sdword sdword LOGFONTW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
 	"Invoke the GetThemeInt() function of the module wrapped by the receiver.
@@ -642,7 +642,7 @@ getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: 
 			[out]int* piVal);"
 
 	<stdcall: hresult GetThemeInt handle sdword sdword sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId prc: prc pMargins: pMargins
 	"Invoke the GetThemeMargins() function of the module wrapped by the receiver.
@@ -658,7 +658,7 @@ getThemeMargins: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iP
 			[out]MARGINS* pMargins);"
 
 	<stdcall: hresult GetThemeMargins handle handle sdword sdword sdword RECT* MARGINS*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
 	"Invoke the GetThemeMetric() function of the module wrapped by the receiver.
@@ -673,7 +673,7 @@ getThemeMetric: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iPr
 			[out]int* piVal);"
 
 	<stdcall: hresult GetThemeMetric handle handle sdword sdword sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc eSize: eSize psz: psz
 	"Invoke the GetThemePartSize() function of the module wrapped by the receiver.
@@ -689,7 +689,7 @@ getThemePartSize: htheme hdc: hdc iPartId: iPartId iStateId: iStateId prc: prc e
 			[out]SIZE* psz);"
 
 	<stdcall: hresult GetThemePartSize handle handle sdword sdword RECT* sdword SIZE*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pPoint: pPoint
 	"Invoke the GetThemePosition() function of the module wrapped by the receiver.
@@ -703,7 +703,7 @@ getThemePosition: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pP
 			[out]POINTL* pPoint);"
 
 	<stdcall: hresult GetThemePosition handle sdword sdword sdword POINTL*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pOrigin: pOrigin
 	"Invoke the GetThemePropertyOrigin() function of the module wrapped by the receiver.
@@ -717,7 +717,7 @@ getThemePropertyOrigin: htheme iPartId: iPartId iStateId: iStateId iPropId: iPro
 			[out]PROPERTYORIGIN* pOrigin);"
 
 	<stdcall: hresult GetThemePropertyOrigin handle sdword sdword sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect: pRect
 	"Invoke the GetThemeRect() function of the module wrapped by the receiver.
@@ -731,7 +731,7 @@ getThemeRect: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pRect:
 			[out]RECT* pRect);"
 
 	<stdcall: hresult GetThemeRect handle sdword sdword sdword RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszBuff: pszBuff cchMaxBuffChars: cchMaxBuffChars
 	"Invoke the GetThemeString() function of the module wrapped by the receiver.
@@ -746,7 +746,7 @@ getThemeString: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId pszB
 			[in]int cchMaxBuffChars);"
 
 	<stdcall: hresult GetThemeString handle sdword sdword sdword lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysBool: htheme iBoolId: iBoolId
 	"Invoke the GetThemeSysBool() function of the module wrapped by the receiver.
@@ -757,7 +757,7 @@ getThemeSysBool: htheme iBoolId: iBoolId
 			[in]int iBoolId);"
 
 	<stdcall: bool GetThemeSysBool handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysColor: htheme iColorId: iColorId
 	"Invoke the GetThemeSysColor() function of the module wrapped by the receiver.
@@ -768,7 +768,7 @@ getThemeSysColor: htheme iColorId: iColorId
 			[in]int iColorId);"
 
 	<stdcall: dword GetThemeSysColor handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysColorBrush: htheme iColorId: iColorId
 	"Invoke the GetThemeSysColorBrush() function of the module wrapped by the receiver.
@@ -779,7 +779,7 @@ getThemeSysColorBrush: htheme iColorId: iColorId
 			[in]int iColorId);"
 
 	<stdcall: handle GetThemeSysColorBrush handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysFont: htheme iFontId: iFontId plf: plf
 	"Invoke the GetThemeSysFont() function of the module wrapped by the receiver.
@@ -791,7 +791,7 @@ getThemeSysFont: htheme iFontId: iFontId plf: plf
 			[out]LOGFONTW* plf);"
 
 	<stdcall: hresult GetThemeSysFont handle sdword LOGFONTW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysInt: htheme iIntId: iIntId piValue: piValue
 	"Invoke the GetThemeSysInt() function of the module wrapped by the receiver.
@@ -803,7 +803,7 @@ getThemeSysInt: htheme iIntId: iIntId piValue: piValue
 			[out]int* piValue);"
 
 	<stdcall: hresult GetThemeSysInt handle sdword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysSize: htheme iSizeId: iSizeId
 	"Invoke the GetThemeSysSize() function of the module wrapped by the receiver.
@@ -814,7 +814,7 @@ getThemeSysSize: htheme iSizeId: iSizeId
 			[in]int iSizeId);"
 
 	<stdcall: sdword GetThemeSysSize handle sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchMaxStringChars: cchMaxStringChars
 	"Invoke the GetThemeSysString() function of the module wrapped by the receiver.
@@ -827,7 +827,7 @@ getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchM
 			[in]int cchMaxStringChars);"
 
 	<stdcall: hresult GetThemeSysString handle sdword lpwstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText: pszText iCharCount: iCharCount dwTextFlags: dwTextFlags pBoundingRect: pBoundingRect pExtentRect: pExtentRect
 	"Invoke the GetThemeTextExtent() function of the module wrapped by the receiver.
@@ -845,7 +845,7 @@ getThemeTextExtent: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pszText:
 			[out]RECT* pExtentRect);"
 
 	<stdcall: hresult GetThemeTextExtent handle handle sdword sdword lpwstr sdword dword RECT* RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pTM
 	"Invoke the GetThemeTextMetrics() function of the module wrapped by the receiver.
@@ -859,7 +859,7 @@ getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pT
 			[out]TEXTMETRICW* pTM);"
 
 	<stdcall: hresult GetThemeTextMetrics handle handle sdword sdword TEXTMETRICW*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getWindowTheme: hwnd
 	"Invoke the GetWindowTheme() function of the module wrapped by the receiver.
@@ -869,7 +869,7 @@ getWindowTheme: hwnd
 			[in]HWND HWND);"
 
 	<stdcall: handle GetWindowTheme handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 hitTestThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId dwOptions: dwOptions pRect: pRect hrgn: hrgn ptTest: ptTest pwHitTestCode: pwHitTestCode
 	"Invoke the HitTestThemeBackground() function of the module wrapped by the receiver.
@@ -887,7 +887,7 @@ hitTestThemeBackground: htheme hdc: hdc iPartId: iPartId iStateId: iStateId dwOp
 			[out]WORD* pwHitTestCode);"
 
 	<stdcall: hresult HitTestThemeBackground handle handle sdword sdword dword RECT* handle POINTL word*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isAppThemed
 	"Invoke the IsAppThemed() function of the module wrapped by the receiver.
@@ -896,7 +896,7 @@ isAppThemed
 		BOOL __stdcall IsAppThemed();"
 
 	<stdcall: bool IsAppThemed>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isThemeActive
 	"Invoke the IsThemeActive() function of the module wrapped by the receiver.
@@ -905,7 +905,7 @@ isThemeActive
 		BOOL __stdcall IsThemeActive();"
 
 	<stdcall: bool IsThemeActive>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isThemeBackgroundPartiallyTransparent: htheme iPartId: iPartId iStateId: iStateId
 	"Invoke the IsThemeBackgroundPartiallyTransparent() function of the module wrapped by the receiver.
@@ -917,7 +917,7 @@ isThemeBackgroundPartiallyTransparent: htheme iPartId: iPartId iStateId: iStateI
 			[in]int iStateId);"
 
 	<stdcall: bool IsThemeBackgroundPartiallyTransparent handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isThemeDialogTextureEnabled: hwnd
 	"Invoke the IsThemeDialogTextureEnabled() function of the module wrapped by the receiver.
@@ -927,7 +927,7 @@ isThemeDialogTextureEnabled: hwnd
 			[in]HWND HWND);"
 
 	<stdcall: bool IsThemeDialogTextureEnabled handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isThemePartDefined: htheme iPartId: iPartId iStateId: iStateId
 	"Invoke the IsThemePartDefined() function of the module wrapped by the receiver.
@@ -939,7 +939,7 @@ isThemePartDefined: htheme iPartId: iPartId iStateId: iStateId
 			[in]int iStateId);"
 
 	<stdcall: bool IsThemePartDefined handle sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 onExit
 	"Private - Perform any uninitialization required at system shutdown time"
@@ -962,7 +962,7 @@ openThemeData: hwnd pszClassList: pszClassList
 			[in]LPWSTR pszClassList);"
 
 	<stdcall: handle OpenThemeData handle lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setThemeAppProperties: dwFlags
 	"Invoke the SetThemeAppProperties() function of the module wrapped by the receiver.
@@ -972,7 +972,7 @@ setThemeAppProperties: dwFlags
 			[in]DWORD dwFlags);"
 
 	<stdcall: void SetThemeAppProperties dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 	"Invoke the SetWindowTheme() function of the module wrapped by the receiver.
@@ -984,7 +984,7 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 			[in]LPWSTR pszSubIdList);"
 
 	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ThemeLibrary categoriesFor: #closeThemeData:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
 !ThemeLibrary categoriesFor: #drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !

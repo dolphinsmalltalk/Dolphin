@@ -33,8 +33,7 @@ Advise: pUnkSink pdwCookie: pdwCookie
 	"
 
 	<virtual stdcall: hresult 6 IUnknown* dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 connectionIID
 	"Answer the IID of the receiver's connection pointer interface."
@@ -65,8 +64,7 @@ EnumConnections: ppenum
 	"
 
 	<virtual stdcall: hresult 8 void**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getConnectionInterface
 	"Answer the <GUID> result of invoking the COM Object's GetConnectionInterface() method."
@@ -85,9 +83,8 @@ GetConnectionInterface: pIID
 			[out] GUID* pIID);
 	"
 
-	<virtual stdcall: hresult 4 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 guid*>
+	^self invalidCall: _failureCode!
 
 getConnectionPointContainer
 	"Answer the <IConnectionPointContainer> result of invoking the COM Object's GetConnectionPointContainer() method."
@@ -107,8 +104,7 @@ GetConnectionPointContainer: ppCPC
 	"
 
 	<virtual stdcall: hresult 5 IConnectionPointContainer**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -137,8 +133,7 @@ Unadvise: dwCookie
 	"
 
 	<virtual stdcall: sdword 7 dword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IConnectionPoint categoriesFor: #advise:!adding!public! !
 !IConnectionPoint categoriesFor: #Advise:pdwCookie:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
 !IConnectionPoint categoriesFor: #connectionIID!accessing!public! !

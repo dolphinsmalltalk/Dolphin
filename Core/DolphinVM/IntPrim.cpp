@@ -29,7 +29,7 @@ template <class Cmp, bool Lt> __forceinline Oop* primitiveIntegerCmp(Oop* const 
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 	else
 	{
@@ -73,7 +73,7 @@ Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 	else
 	{
@@ -111,7 +111,7 @@ template <class P> __forceinline static Oop* primitiveIntegerOp(Oop* const sp, c
 {
 	Oop arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))
-		return nullptr;
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 
 	Oop receiver = *(sp - 1);
 	*(sp - 1) = op(receiver, arg);
@@ -183,7 +183,7 @@ Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, unsigned)
 			}
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Unhandled argument type
 	}
 }
 
@@ -210,7 +210,7 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
 	}
 }
 
@@ -237,7 +237,7 @@ Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
 			return sp;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);		// Negative receiver
 	}
 	else
 	{
@@ -264,7 +264,7 @@ Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
 		}
 		else
 			// Negative, undefined
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);		// Negative receiver
 	}
 }
 
@@ -303,7 +303,7 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
 	}
 	else
 	{
@@ -394,7 +394,7 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
 	}
 	else
 	{
@@ -456,7 +456,7 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 	else
 	{
@@ -511,7 +511,11 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
 				return sp - 1;
 			}
+			else
+				return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);		// FP divide by zero
 		}
+		else
+			return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Unhandled argument type
 	}
 	else
 	{
@@ -543,7 +547,7 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 		}
 	}
 
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::Inexact);		// Does not divide exactly
 }
 
 Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
@@ -565,5 +569,5 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, uns
 		return sp;
 	}
 	else
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 }

@@ -31,8 +31,7 @@ GetClassInfo: ppTI
 	"
 
 	<virtual stdcall: hresult 4 ITypeInfo**>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IProvideClassInfo categoriesFor: #getClassInfo!**auto generated**!public! !
 !IProvideClassInfo categoriesFor: #GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
 

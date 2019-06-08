@@ -38,8 +38,8 @@ CreateInstance: pUnkOuter riid: riid ppvObject: ppvObject
 
 	"
 
-	<virtual stdcall: sdword 4 IUnknown* GUID* IUnknown**>
-	^self invalidCall!
+	<virtual stdcall: sdword 4 IUnknown* guid* IUnknown**>
+	^self invalidCall: _failureCode!
 
 LockServer: fLock
 	"Invoke the LockServer() method of the object wrapped by the receiver.
@@ -50,7 +50,7 @@ LockServer: fLock
 	"
 
 	<virtual stdcall: hresult 5 sdword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IClassFactory categoriesFor: #createInstance:iid:!instance creation!public! !
 !IClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
 !IClassFactory categoriesFor: #LockServer:!**auto generated**!public! !

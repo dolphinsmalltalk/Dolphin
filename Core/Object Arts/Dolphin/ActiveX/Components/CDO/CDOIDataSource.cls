@@ -35,8 +35,7 @@ get_ActiveConnection: varActiveConnection
 	"
 
 	<virtual stdcall: hresult 13 ADODB_Connection**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_IsDirty: pIsDirty
 	"Private - Get the value of the 'IsDirty' property of the receiver.
@@ -47,8 +46,7 @@ get_IsDirty: pIsDirty
 	"
 
 	<virtual stdcall: hresult 10 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Source: varSource
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -59,8 +57,7 @@ get_Source: varSource
 	"
 
 	<virtual stdcall: hresult 9 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_SourceClass: varSourceClass
 	"Private - Get the value of the 'SourceClass' property of the receiver.
@@ -71,8 +68,7 @@ get_SourceClass: varSourceClass
 	"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_SourceURL: varSourceURL
 	"Private - Get the value of the 'SourceURL' property of the receiver.
@@ -83,8 +79,7 @@ get_SourceURL: varSourceURL
 	"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isDirty
 	"Answer the <varbool> value of the 'IsDirty' property of the receiver.
@@ -130,8 +125,7 @@ Open: sourceURL ActiveConnection: activeConnection Mode: mode CreateOptions: cre
 	"
 
 	<virtual stdcall: hresult 17 bstr IDispatch* sdword sdword sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OpenObject: source InterfaceName: interfaceName
 	"Invoke the OpenObject() method of the COM object wrapped by the receiver.
@@ -143,8 +137,7 @@ OpenObject: source InterfaceName: interfaceName
 	"
 
 	<virtual stdcall: hresult 15 IUnknown* bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_IsDirty: pIsDirty
 	"Private - Set the value of the 'IsDirty' property of the object wrapped by the 
@@ -156,8 +149,7 @@ put_IsDirty: pIsDirty
 	"
 
 	<virtual stdcall: hresult 11 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Save
 	"Invoke the Save() method of the COM object wrapped by the receiver.
@@ -167,8 +159,7 @@ Save
 	"
 
 	<virtual stdcall: hresult 18>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SaveTo: sourceURL ActiveConnection: activeConnection Mode: mode CreateOptions: createOptions Options: options UserName: userName Password: password
 	"Invoke the SaveTo() method of the COM object wrapped by the receiver.
@@ -185,8 +176,7 @@ SaveTo: sourceURL ActiveConnection: activeConnection Mode: mode CreateOptions: c
 	"
 
 	<virtual stdcall: hresult 16 bstr IDispatch* sdword sdword sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SaveToContainer: containerURL ActiveConnection: activeConnection Mode: mode CreateOptions: createOptions Options: options UserName: userName Password: password
 	"Invoke the SaveToContainer() method of the COM object wrapped by the receiver.
@@ -203,8 +193,7 @@ SaveToContainer: containerURL ActiveConnection: activeConnection Mode: mode Crea
 	"
 
 	<virtual stdcall: hresult 19 bstr IDispatch* sdword sdword sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SaveToObject: source InterfaceName: interfaceName
 	"Invoke the SaveToObject() method of the COM object wrapped by the receiver.
@@ -216,8 +205,7 @@ SaveToObject: source InterfaceName: interfaceName
 	"
 
 	<virtual stdcall: hresult 14 IUnknown* bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 source
 	"Answer the <IUnknown> value of the 'Source' property of the receiver.

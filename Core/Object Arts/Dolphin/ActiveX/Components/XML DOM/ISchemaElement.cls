@@ -96,7 +96,7 @@ get_defaultValue: defaultValue
 			[out, retval]BSTR* defaultValue);"
 
 	<virtual stdcall: hresult 19 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_disallowedSubstitutions: disallowed
 	"Private - Get the value of the 'disallowedSubstitutions' property of the receiver.
@@ -105,7 +105,7 @@ get_disallowedSubstitutions: disallowed
 			[out, retval]SCHEMADERIVATIONMETHOD* disallowed);"
 
 	<virtual stdcall: hresult 25 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_fixedValue: fixedValue
 	"Private - Get the value of the 'fixedValue' property of the receiver.
@@ -114,7 +114,7 @@ get_fixedValue: fixedValue
 			[out, retval]BSTR* fixedValue);"
 
 	<virtual stdcall: hresult 20 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_identityConstraints: constraints
 	"Private - Get the value of the 'identityConstraints' property of the receiver.
@@ -123,7 +123,7 @@ get_identityConstraints: constraints
 			[out, retval]ISchemaItemCollection** constraints);"
 
 	<virtual stdcall: hresult 22 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_isAbstract: abstract
 	"Private - Get the value of the 'isAbstract' property of the receiver.
@@ -132,7 +132,7 @@ get_isAbstract: abstract
 			[out, retval]VARIANT_BOOL* abstract);"
 
 	<virtual stdcall: hresult 26 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_isNillable: nillable
 	"Private - Get the value of the 'isNillable' property of the receiver.
@@ -141,7 +141,7 @@ get_isNillable: nillable
 			[out, retval]VARIANT_BOOL* nillable);"
 
 	<virtual stdcall: hresult 21 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_isReference: reference
 	"Private - Get the value of the 'isReference' property of the receiver.
@@ -150,7 +150,7 @@ get_isReference: reference
 			[out, retval]VARIANT_BOOL* reference);"
 
 	<virtual stdcall: hresult 27 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_scope: scope
 	"Private - Get the value of the 'scope' property of the receiver.
@@ -159,7 +159,7 @@ get_scope: scope
 			[out, retval]ISchemaComplexType** scope);"
 
 	<virtual stdcall: hresult 18 ISchemaComplexType**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_substitutionGroup: element
 	"Private - Get the value of the 'substitutionGroup' property of the receiver.
@@ -168,7 +168,7 @@ get_substitutionGroup: element
 			[out, retval]ISchemaElement** element);"
 
 	<virtual stdcall: hresult 23 ISchemaElement**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_substitutionGroupExclusions: exclusions
 	"Private - Get the value of the 'substitutionGroupExclusions' property of the receiver.
@@ -177,7 +177,7 @@ get_substitutionGroupExclusions: exclusions
 			[out, retval]SCHEMADERIVATIONMETHOD* exclusions);"
 
 	<virtual stdcall: hresult 24 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_type: type
 	"Private - Get the value of the 'type' property of the receiver.
@@ -186,7 +186,7 @@ get_type: type
 			[out, retval]ISchemaType** type);"
 
 	<virtual stdcall: hresult 17 ISchemaType**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 identityConstraints
 	"Answer the <ISchemaItemCollection> value of the 'identityConstraints' property of the receiver."

@@ -82,7 +82,7 @@ Characters: strChars
 			[in, out]BSTR* strChars);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 EndDocument
 	"Invoke the endDocument() method of the COM object.
@@ -91,7 +91,7 @@ EndDocument
 		HRESULT __stdcall endDocument();"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endElement: strNamespaceURI strLocalName: strLocalName strQName: strQName
 	"Invoke the endElement() method of the COM object.
@@ -120,7 +120,7 @@ EndElement: strNamespaceURI strLocalName: strLocalName strQName: strQName
 			[in, out]BSTR* strQName);"
 
 	<virtual stdcall: hresult 14 bstr* bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 endPrefixMapping: strPrefix
 	"Invoke the endPrefixMapping() method of the COM object.
@@ -137,7 +137,7 @@ EndPrefixMapping: strPrefix
 			[in, out]BSTR* strPrefix);"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ignorableWhitespace: strChars
 	"Invoke the ignorableWhitespace() method of the COM object.
@@ -154,7 +154,7 @@ IgnorableWhitespace: strChars
 			[in, out]BSTR* strChars);"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -190,7 +190,7 @@ ProcessingInstruction: strTarget strData: strData
 			[in, out]BSTR* strData);"
 
 	<virtual stdcall: hresult 17 bstr* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_documentLocator: arg1
 	"Private - Set the value of the 'documentLocator' property of the object wrapped by the 
@@ -200,7 +200,7 @@ putref_documentLocator: arg1
 			[in]IVBSAXLocator* arg1);"
 
 	<virtual stdcall: hresult 8 IVBSAXLocator*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setDocumentLocator: arg1
 	"Set the 'documentLocator' property of the receiver to the <IVBSAXLocator*> value of the argument.
@@ -224,7 +224,7 @@ SkippedEntity: strName
 			[in, out]BSTR* strName);"
 
 	<virtual stdcall: hresult 18 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 StartDocument
 	"Invoke the startDocument() method of the COM object.
@@ -233,7 +233,7 @@ StartDocument
 		HRESULT __stdcall startDocument();"
 
 	<virtual stdcall: hresult 9>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 startElement: strNamespaceURI strLocalName: strLocalName strQName: strQName oAttributes: oAttributes
 	"Invoke the startElement() method of the COM object.
@@ -264,7 +264,7 @@ StartElement: strNamespaceURI strLocalName: strLocalName strQName: strQName oAtt
 			[in]IVBSAXAttributes* oAttributes);"
 
 	<virtual stdcall: hresult 13 bstr* bstr* bstr* IVBSAXAttributes*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 startPrefixMapping: strPrefix strURI: strURI
 	"Invoke the startPrefixMapping() method of the COM object.
@@ -290,7 +290,7 @@ StartPrefixMapping: strPrefix strURI: strURI
 			[in, out]BSTR* strURI);"
 
 	<virtual stdcall: hresult 11 bstr* bstr*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IVBSAXContentHandler categoriesFor: #characters:!**auto generated**!methods!public! !
 !IVBSAXContentHandler categoriesFor: #Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
 !IVBSAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !

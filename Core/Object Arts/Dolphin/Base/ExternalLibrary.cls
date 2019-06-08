@@ -189,8 +189,8 @@ invalidArgErrorClass
 
 	^InvalidExternalCall!
 
-invalidCall
-	"An invalid external call was attempted through one of the receiver's methods.
+invalidCall: anInteger
+	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive.
 	Generate an appropriate error from the following categories:
 		-	Argument type error. At least one argument was either out of range or of invalid type.
 			Only the first such error is reported. The primitive failure result will be >= 16
@@ -200,40 +200,35 @@ invalidCall
 		-	System error.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| error failureCode proc frame descriptor |
+	| error proc frame descriptor |
 	proc := Processor activeProcess.
-	failureCode := proc primitiveFailureCode.
-	failureCode < 0 ifTrue: [^HRESULTError signalWith: proc primitiveFailureData].
+	anInteger < 0 ifTrue: [^HRESULTError signalWith: proc primitiveFailureData].
 	frame := proc topFrame sender.
 	descriptor := frame method descriptor.
-	failureCode >= 16
+	anInteger >= 16r10000
 		ifTrue: 
-			["An invalid argument was passed"
-			| arg i |
-			i := descriptor argumentIndexFromOffset: failureCode - 16.
+			[| arg i |
+			"An invalid argument was passed"
+			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
 			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
 			self invalidArgErrorClass
 				invalidArgument: arg
 				got: (frame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)]
 		ifFalse: 
-			[failureCode == 0 ifTrue: [^self error: 'invalid receiver'].
-			failureCode == 1
+			[anInteger == _PrimitiveFailureCode.InvalidReceiver ifTrue: [^self error: 'invalid receiver'].
+			anInteger == _PrimitiveFailureCode.SystemError
 				ifTrue: 
 					["Function name not found in the DLL, i.e. failure of GetProcAddress().
 					Often caused by omitting the A (for ASCII) or W (for Wide = Unicode) 
 					function name suffix. Note that this may be required even if the function
 					has no string arguments."
-					^Win32Error signalWith: ERROR_PROC_NOT_FOUND].
-			failureCode == 2
-				ifTrue: 
-					["VM has detected an attempt to return an ExternalStructure of an uninitialized class (i.e. basicByteSize is zero)"
-					^self error: ('Returned ExternalStructure type not initialized: <1s>' expandMacrosWith: descriptor returnType)]].
+					^Win32Error signalWith: ERROR_PROC_NOT_FOUND]].
 
 	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
 	it must have been some system or unknown error."
 	error := KernelLibrary default getLastError.
-	^error == 0 ifTrue: [self primitiveFailed] ifFalse: [self systemError: error]!
+	^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]!
 
 isOpen
 	"Answer whether the external library represented by the receiver is open."
@@ -324,7 +319,7 @@ versionString
 !ExternalLibrary categoriesFor: #handle!accessing!private! !
 !ExternalLibrary categoriesFor: #handle:!accessing!private! !
 !ExternalLibrary categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
+!ExternalLibrary categoriesFor: #invalidCall:!exceptions!public! !
 !ExternalLibrary categoriesFor: #isOpen!public!testing! !
 !ExternalLibrary categoriesFor: #loadFlags!constants!private! !
 !ExternalLibrary categoriesFor: #loadString:!accessing!public! !

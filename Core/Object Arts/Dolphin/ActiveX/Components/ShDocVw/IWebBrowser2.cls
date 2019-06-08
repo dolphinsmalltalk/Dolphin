@@ -57,8 +57,7 @@ ExecWB: cmdID cmdexecopt: cmdexecopt pvaIn: pvaIn pvaOut: pvaOut
 			[in, out, optional] VARIANT* pvaOut);"
 
 	<virtual stdcall: hresult 55 sdword sdword variant* variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AddressBar: value
 	"Private - Get the value of the 'AddressBar' property of the receiver.
@@ -68,8 +67,7 @@ get_AddressBar: value
 			[out, retval] VARIANT_BOOL* Value);"
 
 	<virtual stdcall: hresult 68 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Offline: pbOffline
 	"Private - Get the value of the 'Offline' property of the receiver.
@@ -79,8 +77,7 @@ get_Offline: pbOffline
 			[out, retval] VARIANT_BOOL* pbOffline);"
 
 	<virtual stdcall: hresult 58 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ReadyState: plReadyState
 	"Private - Get the value of the 'ReadyState' property of the receiver.
@@ -89,8 +86,7 @@ get_ReadyState: plReadyState
 			[out, retval] READYSTATE* plReadyState);"
 
 	<virtual stdcall: hresult 57 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_RegisterAsBrowser: pbRegister
 	"Private - Get the value of the 'RegisterAsBrowser' property of the receiver.
@@ -100,8 +96,7 @@ get_RegisterAsBrowser: pbRegister
 			[out, retval] VARIANT_BOOL* pbRegister);"
 
 	<virtual stdcall: hresult 62 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_RegisterAsDropTarget: pbRegister
 	"Private - Get the value of the 'RegisterAsDropTarget' property of the receiver.
@@ -111,8 +106,7 @@ get_RegisterAsDropTarget: pbRegister
 			[out, retval] VARIANT_BOOL* pbRegister);"
 
 	<virtual stdcall: hresult 64 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Resizable: value
 	"Private - Get the value of the 'Resizable' property of the receiver.
@@ -122,8 +116,7 @@ get_Resizable: value
 			[out, retval] VARIANT_BOOL* Value);"
 
 	<virtual stdcall: hresult 70 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Silent: pbSilent
 	"Private - Get the value of the 'Silent' property of the receiver.
@@ -133,8 +126,7 @@ get_Silent: pbSilent
 			[out, retval] VARIANT_BOOL* pbSilent);"
 
 	<virtual stdcall: hresult 60 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_TheaterMode: pbRegister
 	"Private - Get the value of the 'TheaterMode' property of the receiver.
@@ -144,8 +136,7 @@ get_TheaterMode: pbRegister
 			[out, retval] VARIANT_BOOL* pbRegister);"
 
 	<virtual stdcall: hresult 66 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 navigate2: url flags: flags targetFrameName: targetFrameName postData: postData headers: headers
 	"Invoke the Navigate2() method of the COM object.
@@ -171,8 +162,7 @@ Navigate2: url Flags: flags TargetFrameName: targetFrameName PostData: postData 
 			[in, optional] VARIANT* Headers);"
 
 	<virtual stdcall: hresult 53 variant* variant* variant* variant* variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 offline
 	"Answer the <varbool> value of the 'Offline' property of the receiver.
@@ -200,8 +190,7 @@ put_AddressBar: value
 			[in] VARIANT_BOOL Value);"
 
 	<virtual stdcall: hresult 69 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Offline: pbOffline
 	"Private - Set the value of the 'Offline' property of the object wrapped by the 
@@ -212,8 +201,7 @@ put_Offline: pbOffline
 			[in] VARIANT_BOOL pbOffline);"
 
 	<virtual stdcall: hresult 59 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_RegisterAsBrowser: pbRegister
 	"Private - Set the value of the 'RegisterAsBrowser' property of the object wrapped by the 
@@ -224,8 +212,7 @@ put_RegisterAsBrowser: pbRegister
 			[in] VARIANT_BOOL pbRegister);"
 
 	<virtual stdcall: hresult 63 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_RegisterAsDropTarget: pbRegister
 	"Private - Set the value of the 'RegisterAsDropTarget' property of the object wrapped by the 
@@ -236,8 +223,7 @@ put_RegisterAsDropTarget: pbRegister
 			[in] VARIANT_BOOL pbRegister);"
 
 	<virtual stdcall: hresult 65 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Resizable: value
 	"Private - Set the value of the 'Resizable' property of the object wrapped by the 
@@ -248,8 +234,7 @@ put_Resizable: value
 			[in] VARIANT_BOOL Value);"
 
 	<virtual stdcall: hresult 71 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Silent: pbSilent
 	"Private - Set the value of the 'Silent' property of the object wrapped by the 
@@ -260,8 +245,7 @@ put_Silent: pbSilent
 			[in] VARIANT_BOOL pbSilent);"
 
 	<virtual stdcall: hresult 61 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_TheaterMode: pbRegister
 	"Private - Set the value of the 'TheaterMode' property of the object wrapped by the 
@@ -272,8 +256,7 @@ put_TheaterMode: pbRegister
 			[in] VARIANT_BOOL pbRegister);"
 
 	<virtual stdcall: hresult 67 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 queryStatusWB: cmdID
 	"Answer the <SDWORD> result of invoking the COM Object's QueryStatusWB() method.
@@ -296,8 +279,7 @@ QueryStatusWB: cmdID pcmdf: pcmdf
 			[out, retval] OLECMDF* pcmdf);"
 
 	<virtual stdcall: hresult 54 sdword sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 readyState
 	"Answer the <sdword> value of the 'ReadyState' property of the receiver."
@@ -379,8 +361,7 @@ ShowBrowserBar: pvaClsid pvarShow: pvarShow pvarSize: pvarSize
 			[in, optional] VARIANT* pvarSize);"
 
 	<virtual stdcall: hresult 56 variant* variant* variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 silent
 	"Answer the <varbool> value of the 'Silent' property of the receiver.

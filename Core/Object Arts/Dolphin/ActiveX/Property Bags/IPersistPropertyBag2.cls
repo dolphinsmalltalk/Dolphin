@@ -14,15 +14,14 @@ WARNING: This comment was automatically generated from the interface''s type inf
 !IPersistPropertyBag2 categoriesForClass!COM-Interfaces! !
 !IPersistPropertyBag2 methodsFor!
 
-IsDirty 
+IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall IsDirty();
 	"
 
 	<virtual stdcall: hresult 8>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IPersistPropertyBag2 categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
 
 IPersistPropertyBag2 methodProtocol: #IPersistPropertyBag2 attributes: #(#readOnly) selectors: #(#InitNew #IsDirty #Save:fClearDirty:fSaveAllProperties:)!

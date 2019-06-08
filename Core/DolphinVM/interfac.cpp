@@ -743,13 +743,13 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned
 			}
 
 			m_nCallbacksPending++;	 // record that callbacks are waiting to exit
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::Overflow);
 		}
 
 	}
 	else
 	{
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	}
 }
 
@@ -782,7 +782,7 @@ Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, unsigned)
 		m_nCallbacksPending++;
 	}
 
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

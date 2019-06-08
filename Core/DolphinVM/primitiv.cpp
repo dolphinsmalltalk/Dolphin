@@ -38,7 +38,7 @@ Oop* __fastcall Interpreter::unusedPrimitive(Oop* const, unsigned)
 	TRACESTREAM << L"Unused primitive " << primitiveIndex << " in " << m_registers.m_oopNewMethod << std::endl;
 #endif
 
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -161,22 +161,24 @@ Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp, unsigned)
 Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
-	SMALLINTEGER newSize;
 	
-	if (!ObjectMemoryIsIntegerObject(integerPointer) || 
-		(newSize = ObjectMemoryIntegerValueOf(integerPointer)) < 0)
-		return primitiveFailure(0);	// Size not a positive SmallInteger
+	if (!ObjectMemoryIsIntegerObject(integerPointer))
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Size not a positive SmallInteger
+
+	SMALLINTEGER newSize = ObjectMemoryIntegerValueOf(integerPointer);
+	if (newSize < 0)
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 
 	Oop oopReceiver = *(sp - 1);
 	if (ObjectMemoryIsIntegerObject(oopReceiver))
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
 
 	if (oteReceiver->isPointers())
 	{
 		Behavior* behavior = oteReceiver->m_oteClass->m_location;
 		if (!behavior->isIndexable())
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::NotIndexable);
 
 		MWORD newPointerSize = newSize + behavior->fixedFields();
 
@@ -190,7 +192,7 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, unsigned)
 		if (currentPointerSize < 0)
 		{
 			// Immutable
-			return primitiveFailure(2);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 		}
 			
 		// Changing size of mutable pointer object
@@ -212,7 +214,7 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, unsigned)
 		if (currentByteSize < 0)
 		{
 			// Immutable
-			return primitiveFailure(2);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 		}
 
 		// Changing size of mutable byte object
@@ -272,7 +274,7 @@ Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, unsigned)
 					return sp - 1;
 				}
 				// Shapes differ in significant ways
-				return primitiveFailure(2);
+				return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 			}
 			else
 			{
@@ -292,14 +294,14 @@ Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, unsigned)
 					return sp - 1;
 				}
 				// Can't change class of SmallInteger to a pointer object class
-				return primitiveFailure(2);
+				return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 			}
 		}
 		// Arg is not a class
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	}
 	// Arg is a SmallInteger (not a class)
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 }
 
 Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp, unsigned)
@@ -349,13 +351,13 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, unsigned
 		else
 		{
 			// SmallIntegers can't have special behavior
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 		}
 	}
 	else
 	{
 		// Mask is not a SmallInteger
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 	}
 }
 
@@ -368,13 +370,13 @@ Oop* __fastcall Interpreter::primitiveDeQBereavement(Oop* const sp, unsigned)
 {
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
-		return primitiveFailure(PrimitiveFailureBadValue);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 
 	PointersOTE* oteArray = reinterpret_cast<PointersOTE*>(argPointer);
 	VariantObject* array = oteArray->m_location;
 	if (oteArray->m_oteClass != Pointers.ClassArray || 
 		oteArray->pointersSize() != OopsPerBereavementQEntry)
-		return primitiveFailure(PrimitiveFailureBadValue);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 
 	// dequeueBereaved returns Pointers.True or Pointers.False
 	OTE* answer = dequeueBereaved(array);
@@ -418,18 +420,18 @@ Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, unsigned)
 {
 	Oop indexPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(indexPointer))
-		return primitiveFailure(PrimitiveFailureNonInteger);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 
 	SMALLINTEGER index = ObjectMemoryIntegerValueOf(indexPointer);
 	if (index < 1)
-		return primitiveFailure(PrimitiveFailureBoundsError);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 
 	resizeActiveProcess();
 
 	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(*(sp-2));
 	Process* receiverProcess = static_cast<Process*>(oteReceiver->m_location);
 	if (static_cast<MWORD>(index) > receiverProcess->stackSize(oteReceiver))
-			return primitiveFailure(PrimitiveFailureBoundsError);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 
 	Oop argPointer = *sp;
 	Oop oopExisting = receiverProcess->m_stack[index-1];
@@ -458,7 +460,7 @@ Oop* __fastcall Interpreter::primitiveIndexOfSP(Oop* const sp, unsigned)
 		return sp - 1;
 	}
 	else
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 // Don't care what effect on stack is!!
@@ -472,27 +474,27 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);	// startAt is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(1);	// stop is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(2);	// start is not an integer
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
 	PointersOTE* argPointer = reinterpret_cast<PointersOTE*>(*(sp-3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isPointers())
-		return primitiveFailure(3);	// Argument MUST be pointer object
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Argument MUST be pointer object
 
 	if (stop >= start)
 	{
 		if (startAt < 1 || start < 1)
-			return primitiveFailure(4);		// Out-of-bounds
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out-of-bounds
 
 		// Empty move if stop before start, is considered valid regardless (strange but true)
 		// this is the convention adopted by most implementations.
@@ -507,7 +509,7 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, unsigned)
 		start = start - 1 + toOffset;
 
 		if (stop >= length)
-			return primitiveFailure(4);		// Bounds error (or object is immutable so size < 0)
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Bounds error (or object is immutable so size < 0)
 
 		VariantObject* arg = reinterpret_cast<PointersOTE*>(argPointer)->m_location;
 		Oop* pTo = arg->m_fields;
@@ -521,7 +523,7 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, unsigned)
 
 		int stopAt = startAt + stop - start;
 		if (stopAt >= fromSize)
-			return primitiveFailure(4);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 
 		// Only works for pointer objects
 		ASSERT(receiverPointer->isPointers());
@@ -577,7 +579,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argC
 			else
 			{
 				// Out of bounds
-				return primitiveFailure(1);
+				return primitiveFailure(oteReceiver->m_oteClass->m_location->isIndexable() ? _PrimitiveFailureCode::IndexOutOfRange : _PrimitiveFailureCode::NotIndexable);
 			}
 		}
 		else
@@ -617,13 +619,13 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argC
 			}
 
 			// Out of bounds
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 		}
 	}
 	else
 	{
 		// Index not a smallinteger
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 	}
 }
 
@@ -646,7 +648,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 				int fixedFields = static_cast<int>(oteReceiver->m_oteClass->m_location->fixedFields());
 				VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
 
-				if (index >= 0 && (index + fixedFields) < size)
+				if (index + fixedFields < size)
 				{
 					Oop newValue = *sp;
 					ObjectMemory::countUp(newValue);
@@ -656,8 +658,15 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 					*newSp = newValue;
 					return newSp;
 				}
-				// Out of bounds
-				return primitiveFailure(1);
+				else
+				{
+					// Out of bounds, not indexable, or immutable
+					return primitiveFailure(size < 0 
+						? _PrimitiveFailureCode::Immutable 
+						: oteReceiver->m_oteClass->m_location->isIndexable()
+							? _PrimitiveFailureCode::IndexOutOfRange
+							: _PrimitiveFailureCode::NotIndexable);
+				}
 			}
 			else
 			{
@@ -680,9 +689,12 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 								*newSp = oopValue;
 								return newSp;
 							}
-							return primitiveFailure(1);
+							else
+							{
+								return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+							}
 						}
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 
 					case 2:
 						if (newValue <= 0xFFFF)
@@ -693,9 +705,12 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 								*newSp = oopValue;
 								return newSp;
 							}
-							return primitiveFailure(1);
+							else
+							{
+								return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+							}
 						}
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 
 					case 4:
 						if (index < (size / 4))
@@ -704,21 +719,24 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 							*newSp = oopValue;
 							return newSp;
 						}
-						return primitiveFailure(1);
+						else
+						{
+							return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+						}
 
 					default:
 						__assume(false);
 					}
 				}
-				// Not a SmallInteger
-				return primitiveFailure(2);
+				// Not a SmallInteger value to store
+				return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		// Index is not a positive SmallInteger
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 	// Index not a smallinteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 
@@ -743,7 +761,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, unsigned)
 				return newSp;
 			}
 			// Out of bounds
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 		}
 		else
 		{
@@ -782,11 +800,11 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, unsigned)
 			}
 
 			// Out of bounds
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 		}
 	}
 	// Index not a smallinteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
@@ -817,9 +835,11 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 					*newSp = newValue;
 					return newSp;
 				}
-
-				// Out of bounds
-				return primitiveFailure(1);
+				else
+				{
+					// Out of bounds or immutable
+					return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+				}
 			}
 			else
 			{
@@ -842,9 +862,13 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 								*newSp = oopValue;
 								return newSp;
 							}
-							return primitiveFailure(1);
+							else
+							{
+								// Out of bounds or immutable
+								return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+							}
 						}
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 
 					case 2:
 						if (newValue <= 0xFFFF)
@@ -855,9 +879,13 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 								*newSp = oopValue;
 								return newSp;
 							}
-							return primitiveFailure(1);
+							else
+							{
+								// Out of bounds or immutable
+								return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+							}
 						}
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
 
 					case 4:
 						if (index < (size / 4))
@@ -866,22 +894,26 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 							*newSp = oopValue;
 							return newSp;
 						}
-						return primitiveFailure(1);
+						else
+						{
+							// Out of bounds or immutable
+							return primitiveFailure(size < 0 ? _PrimitiveFailureCode::Immutable : _PrimitiveFailureCode::IndexOutOfRange);
+						}
 
 					default:
 						__assume(false);
 					}
 				}
 				// Not a SmallInteger
-				return primitiveFailure(2);
+				return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 			}
 		}
 		// Negative index
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 
 	// Index not a smallinteger
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 }
 
 Oop* __fastcall Interpreter::primitiveGetImmutable(Oop* const sp, unsigned)
@@ -914,7 +946,7 @@ Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 	}
 }
 

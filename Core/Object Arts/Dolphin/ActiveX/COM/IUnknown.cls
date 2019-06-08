@@ -29,7 +29,7 @@ AddRef
 	"
 
 	<virtual stdcall: dword 2>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asObject
 	"Answer a suitable Smalltalk object to represent the receiver's value."
@@ -52,18 +52,17 @@ QueryInterface: riid ppvObject: ppvObject
 	Implementation Note: Return integer hresult value rather than have exception thrown, as
 	E_NOINTERFACE is not really an exceptional condition at all."
 
-	<virtual stdcall: sdword 1 GUID* void**>
-	^self invalidCall!
+	<virtual stdcall: sdword 1 guid* void**>
+	^self invalidCall: _failureCode!
 
-Release 
+Release
 	"Invoke the Release() method of the COM object wrapped by the receiver.
 
 		unsigned long __stdcall Release();
 	"
 
 	<virtual stdcall: dword 3>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IUnknown categoriesFor: #addRef!methods!public! !
 !IUnknown categoriesFor: #AddRef!methods!public! !
 !IUnknown categoriesFor: #asObject!converting!public! !

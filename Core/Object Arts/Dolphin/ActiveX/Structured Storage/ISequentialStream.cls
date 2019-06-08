@@ -110,7 +110,7 @@ nextSDWORDPut: anInteger
 	self nextPutAll: (SDWORD fromInteger: anInteger).
 	^anInteger!
 
-Read: pv cb: cb pcbRead: pcbRead 
+Read: pv cb: cb pcbRead: pcbRead
 	"Invoke the Read() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Read(
@@ -120,7 +120,7 @@ Read: pv cb: cb pcbRead: pcbRead
 	"
 
 	<virtual stdcall: hresult 4 sbyte* dword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 read: buffer count: anInteger 
 	"Attempt to read the specified number of bytes from the receiver's stream
@@ -165,7 +165,7 @@ upTo: anObject
 			whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
-Write: pv cb: cb pcbWritten: pcbWritten 
+Write: pv cb: cb pcbWritten: pcbWritten
 	"Invoke the Write() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Write(
@@ -176,7 +176,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 	"
 
 	<virtual stdcall: hresult 5 sbyte* dword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 write: buffer count: anInteger 
 	"Attempt to write the specified number of bytes into the receiver's stream

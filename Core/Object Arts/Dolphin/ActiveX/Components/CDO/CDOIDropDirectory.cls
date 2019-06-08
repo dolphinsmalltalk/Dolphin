@@ -37,8 +37,7 @@ GetMessages: dirName Msgs: msgs
 	"
 
 	<virtual stdcall: hresult 8 bstr CDOIMessages**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

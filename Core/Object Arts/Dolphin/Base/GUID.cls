@@ -89,8 +89,8 @@ hash
 	"Hash the bytes of the object using the standard byte hashing
 	primitive (which should not fail)."
 
-	| hash |
 	<primitive: 106>
+	| hash |
 	hash := 2166136261.
 	"FNV1a"
 	1 to: self basicSize
@@ -144,10 +144,12 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 		4	- 'from' or 'to' interval is out-of-bounds
 	"
 
-	| fromOffset |
 	<primitive: 142>
+	| fromOffset |
 	fromOffset := fromStart - start.
-	stop to: start by: -1 do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
+	stop to: start
+		by: -1
+		do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
 	^aByteObject!
 
 species

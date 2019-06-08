@@ -150,7 +150,7 @@ StTagNode subclass: #StExternalCallNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StTagNode subclass: #StPrimitiveNode
-	instanceVariableNames: 'primitiveIndex'
+	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

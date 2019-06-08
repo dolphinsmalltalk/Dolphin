@@ -2832,14 +2832,15 @@ primHookWindowCreate: hookBoolean
 	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to
 	minimise the performance impact. The hook is automatically 'unhooked' by the VM
 	when it receive's the create notification before it sends the #subclassWindow:
-	callback.
-	Primitive failure reasons:
-		0 	- hookBoolean not a boolean
-		1	- already hooked by the view in the failure data
-	"
+	callback."
+
+	"Primitive failure reasons:
+		BadValueType		- hookBoolean not a boolean
+		InvalidOperation		- already hooked by the view in the failure data
+		NotImplemented		- The VM is for console apps only"
 
 	<primitive: 108>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 printOn: aStream
 	"Append a short description of the receiver to aStream."

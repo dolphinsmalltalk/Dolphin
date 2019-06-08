@@ -113,7 +113,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 
 		default:
 			// Not resizeable
-			return NULL;
+			return nullptr;
 	}
 
 	#if defined(_DEBUG)

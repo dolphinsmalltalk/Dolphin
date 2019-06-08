@@ -36,8 +36,7 @@ _xClone: ppvObject
 			[out, retval] _Recordset** ppvObject);"
 
 	<virtual stdcall: hresult 57 ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 _xResync
 	"Invoke the _xResync() method of the COM object.
@@ -52,8 +51,7 @@ _xResync: affectRecords
 			[in, optional, defaultvalue(3)] AffectEnum AffectRecords);"
 
 	<virtual stdcall: hresult 43 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 absolutePage
 	"Answer the <sdword> value of the 'AbsolutePage' property of the receiver."
@@ -124,8 +122,7 @@ AddNew: fieldList Values: values
 			[in, optional] VARIANT Values);"
 
 	<virtual stdcall: hresult 31 variant variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 bof
 	"Answer the <varbool> value of the 'BOF' property of the receiver."
@@ -179,8 +176,7 @@ CancelBatch: affectRecords
 			[in, optional, defaultvalue(3)] AffectEnum AffectRecords);"
 
 	<virtual stdcall: hresult 59 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 CancelUpdate
 	"Invoke the CancelUpdate() method of the COM object.
@@ -188,8 +184,7 @@ CancelUpdate
 		HRESULT __stdcall CancelUpdate();"
 
 	<virtual stdcall: hresult 32>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 close
 	self Close!
@@ -200,8 +195,7 @@ Close
 		HRESULT __stdcall Close();"
 
 	<virtual stdcall: hresult 33>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 collect: transformer 
 	"Evaluate the <monadicValuable> argument, transformer, for each of the 
@@ -264,8 +258,7 @@ Delete: affectRecords
 			[in, optional, defaultvalue(1)] AffectEnum AffectRecords);"
 
 	<virtual stdcall: hresult 34 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the 
@@ -352,8 +345,7 @@ Find: criteria SkipRecords: skipRecords SearchDirection: searchDirection Start: 
 			[in, optional] VARIANT Start);"
 
 	<virtual stdcall: hresult 68 bstr sdword sdword variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AbsolutePage: pl
 	"Private - Get the value of the 'AbsolutePage' property of the receiver.
@@ -361,8 +353,7 @@ get_AbsolutePage: pl
 			[out, retval] PositionEnum* pl);"
 
 	<virtual stdcall: hresult 45 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AbsolutePosition: pl
 	"Private - Get the value of the 'AbsolutePosition' property of the receiver.
@@ -370,8 +361,7 @@ get_AbsolutePosition: pl
 			[out, retval] PositionEnum* pl);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ActiveConnection: pvar
 	"Private - Get the value of the 'ActiveConnection' property of the receiver.
@@ -379,8 +369,7 @@ get_ActiveConnection: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 13 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_BOF: pb
 	"Private - Get the value of the 'BOF' property of the receiver.
@@ -388,8 +377,7 @@ get_BOF: pb
 			[out, retval] VARIANT_BOOL* pb);"
 
 	<virtual stdcall: hresult 14 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Bookmark: pvBookmark
 	"Private - Get the value of the 'Bookmark' property of the receiver.
@@ -397,8 +385,7 @@ get_Bookmark: pvBookmark
 			[out, retval] VARIANT* pvBookmark);"
 
 	<virtual stdcall: hresult 15 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CacheSize: pl
 	"Private - Get the value of the 'CacheSize' property of the receiver.
@@ -406,8 +393,7 @@ get_CacheSize: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 17 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Collect: index pvar: pvar
 	"Private - Get the value of the 'Collect' property of the receiver.
@@ -416,8 +402,7 @@ get_Collect: index pvar: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 64 variant variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CursorLocation: plCursorLoc
 	"Private - Get the value of the 'CursorLocation' property of the receiver.
@@ -425,8 +410,7 @@ get_CursorLocation: plCursorLoc
 			[out, retval] CursorLocationEnum* plCursorLoc);"
 
 	<virtual stdcall: hresult 60 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CursorType: plCursorType
 	"Private - Get the value of the 'CursorType' property of the receiver.
@@ -434,8 +418,7 @@ get_CursorType: plCursorType
 			[out, retval] CursorTypeEnum* plCursorType);"
 
 	<virtual stdcall: hresult 19 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_EditMode: pl
 	"Private - Get the value of the 'EditMode' property of the receiver.
@@ -443,8 +426,7 @@ get_EditMode: pl
 			[out, retval] EditModeEnum* pl);"
 
 	<virtual stdcall: hresult 47 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_EOF: pb
 	"Private - Get the value of the 'EOF' property of the receiver.
@@ -452,8 +434,7 @@ get_EOF: pb
 			[out, retval] VARIANT_BOOL* pb);"
 
 	<virtual stdcall: hresult 21 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Fields: ppvObject
 	"Private - Get the value of the 'Fields' property of the receiver.
@@ -461,8 +442,7 @@ get_Fields: ppvObject
 			[out, retval] Fields** ppvObject);"
 
 	<virtual stdcall: hresult 22 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Filter: criteria
 	"Private - Get the value of the 'Filter' property of the receiver.
@@ -470,8 +450,7 @@ get_Filter: criteria
 			[out, retval] VARIANT* Criteria);"
 
 	<virtual stdcall: hresult 48 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_LockType: plLockType
 	"Private - Get the value of the 'LockType' property of the receiver.
@@ -479,8 +458,7 @@ get_LockType: plLockType
 			[out, retval] LockTypeEnum* plLockType);"
 
 	<virtual stdcall: hresult 23 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MarshalOptions: peMarshal
 	"Private - Get the value of the 'MarshalOptions' property of the receiver.
@@ -488,8 +466,7 @@ get_MarshalOptions: peMarshal
 			[out, retval] MarshalOptionsEnum* peMarshal);"
 
 	<virtual stdcall: hresult 66 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MaxRecords: plMaxRecords
 	"Private - Get the value of the 'MaxRecords' property of the receiver.
@@ -497,8 +474,7 @@ get_MaxRecords: plMaxRecords
 			[out, retval] long* plMaxRecords);"
 
 	<virtual stdcall: hresult 25 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_PageCount: pl
 	"Private - Get the value of the 'PageCount' property of the receiver.
@@ -506,8 +482,7 @@ get_PageCount: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 50 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_PageSize: pl
 	"Private - Get the value of the 'PageSize' property of the receiver.
@@ -515,8 +490,7 @@ get_PageSize: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 51 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_RecordCount: pl
 	"Private - Get the value of the 'RecordCount' property of the receiver.
@@ -524,8 +498,7 @@ get_RecordCount: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 27 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Sort: criteria
 	"Private - Get the value of the 'Sort' property of the receiver.
@@ -533,8 +506,7 @@ get_Sort: criteria
 			[out, retval] BSTR* Criteria);"
 
 	<virtual stdcall: hresult 53 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Source: pvSource
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -542,8 +514,7 @@ get_Source: pvSource
 			[out, retval] VARIANT* pvSource);"
 
 	<virtual stdcall: hresult 30 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_State: plObjState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -551,8 +522,7 @@ get_State: plObjState
 			[out, retval] long* plObjState);"
 
 	<virtual stdcall: hresult 56 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Status: pl
 	"Private - Get the value of the 'Status' property of the receiver.
@@ -560,8 +530,7 @@ get_Status: pl
 			[out, retval] long* pl);"
 
 	<virtual stdcall: hresult 55 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getRows
 	"Answer the <VARIANT> result of invoking the GetRows() method of the COM object.
@@ -595,8 +564,7 @@ GetRows: rows Start: start Fields: fields pvar: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 35 sdword variant variant variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isEmpty
 	"Answer whether the receiver is devoid of any rows."
@@ -672,8 +640,7 @@ Move: numRecords Start: start
 			[in, optional] VARIANT Start);"
 
 	<virtual stdcall: hresult 36 sdword variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 MoveFirst
 	"Invoke the MoveFirst() method of the COM object.
@@ -681,8 +648,7 @@ MoveFirst
 		HRESULT __stdcall MoveFirst();"
 
 	<virtual stdcall: hresult 39>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 MoveLast
 	"Invoke the MoveLast() method of the COM object.
@@ -690,8 +656,7 @@ MoveLast
 		HRESULT __stdcall MoveLast();"
 
 	<virtual stdcall: hresult 40>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 MoveNext
 	"Invoke the MoveNext() method of the COM object.
@@ -699,8 +664,7 @@ MoveNext
 		HRESULT __stdcall MoveNext();"
 
 	<virtual stdcall: hresult 37>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 MovePrevious
 	"Invoke the MovePrevious() method of the COM object.
@@ -708,8 +672,7 @@ MovePrevious
 		HRESULT __stdcall MovePrevious();"
 
 	<virtual stdcall: hresult 38>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 nextRecordset
 	"Invoke the NextRecordset() method of the COM object."
@@ -730,8 +693,7 @@ NextRecordset: recordsAffected ppiRs: ppiRs
 			[out, retval] _Recordset** ppiRs);"
 
 	<virtual stdcall: hresult 62 variant* ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 open
 	"Open the recordset, using the current properties for the command,
@@ -778,8 +740,7 @@ Open: source ActiveConnection: activeConnection CursorType: cursorType LockType:
 			[in, optional, defaultvalue(-1)] long Options);"
 
 	<virtual stdcall: hresult 41 variant variant sdword sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 pageCount
 	"Answer the <sdword> value of the 'PageCount' property of the receiver."
@@ -812,8 +773,7 @@ put_AbsolutePage: pl
 			[in] PositionEnum pl);"
 
 	<virtual stdcall: hresult 46 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_AbsolutePosition: pl
 	"Private - Set the value of the 'AbsolutePosition' property of the object wrapped by the 
@@ -822,8 +782,7 @@ put_AbsolutePosition: pl
 			[in] PositionEnum pl);"
 
 	<virtual stdcall: hresult 10 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ActiveConnection: pvar
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
@@ -832,8 +791,7 @@ put_ActiveConnection: pvar
 			[in] VARIANT pvar);"
 
 	<virtual stdcall: hresult 12 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Bookmark: pvBookmark
 	"Private - Set the value of the 'Bookmark' property of the object wrapped by the 
@@ -842,8 +800,7 @@ put_Bookmark: pvBookmark
 			[in] VARIANT pvBookmark);"
 
 	<virtual stdcall: hresult 16 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CacheSize: pl
 	"Private - Set the value of the 'CacheSize' property of the object wrapped by the 
@@ -852,8 +809,7 @@ put_CacheSize: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 18 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Collect: index pvar: pvar
 	"Private - Set the value of the 'Collect' property of the object wrapped by the 
@@ -863,8 +819,7 @@ put_Collect: index pvar: pvar
 			[in] VARIANT pvar);"
 
 	<virtual stdcall: hresult 65 variant variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CursorLocation: plCursorLoc
 	"Private - Set the value of the 'CursorLocation' property of the object wrapped by the 
@@ -873,8 +828,7 @@ put_CursorLocation: plCursorLoc
 			[in] CursorLocationEnum plCursorLoc);"
 
 	<virtual stdcall: hresult 61 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CursorType: plCursorType
 	"Private - Set the value of the 'CursorType' property of the object wrapped by the 
@@ -883,8 +837,7 @@ put_CursorType: plCursorType
 			[in] CursorTypeEnum plCursorType);"
 
 	<virtual stdcall: hresult 20 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Filter: criteria
 	"Private - Set the value of the 'Filter' property of the object wrapped by the 
@@ -893,8 +846,7 @@ put_Filter: criteria
 			[in] VARIANT Criteria);"
 
 	<virtual stdcall: hresult 49 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_LockType: plLockType
 	"Private - Set the value of the 'LockType' property of the object wrapped by the 
@@ -903,8 +855,7 @@ put_LockType: plLockType
 			[in] LockTypeEnum plLockType);"
 
 	<virtual stdcall: hresult 24 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MarshalOptions: peMarshal
 	"Private - Set the value of the 'MarshalOptions' property of the object wrapped by the 
@@ -913,8 +864,7 @@ put_MarshalOptions: peMarshal
 			[in] MarshalOptionsEnum peMarshal);"
 
 	<virtual stdcall: hresult 67 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MaxRecords: plMaxRecords
 	"Private - Set the value of the 'MaxRecords' property of the object wrapped by the 
@@ -923,8 +873,7 @@ put_MaxRecords: plMaxRecords
 			[in] long plMaxRecords);"
 
 	<virtual stdcall: hresult 26 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_PageSize: pl
 	"Private - Set the value of the 'PageSize' property of the object wrapped by the 
@@ -933,8 +882,7 @@ put_PageSize: pl
 			[in] long pl);"
 
 	<virtual stdcall: hresult 52 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Sort: criteria
 	"Private - Set the value of the 'Sort' property of the object wrapped by the 
@@ -943,8 +891,7 @@ put_Sort: criteria
 			[in] BSTR Criteria);"
 
 	<virtual stdcall: hresult 54 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Source: pvSource
 	"Private - Set the value of the 'Source' property of the object wrapped by the 
@@ -953,8 +900,7 @@ put_Source: pvSource
 			[in] BSTR pvSource);"
 
 	<virtual stdcall: hresult 29 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_ActiveConnection: pvar
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
@@ -963,8 +909,7 @@ putref_ActiveConnection: pvar
 			[in] IDispatch* pvar);"
 
 	<virtual stdcall: hresult 11 IDispatch*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_Source: pvSource
 	"Private - Set the value of the 'Source' property of the object wrapped by the 
@@ -973,8 +918,7 @@ putref_Source: pvSource
 			[in] IDispatch* pvSource);"
 
 	<virtual stdcall: hresult 28 IDispatch*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 recordCount
 	"Answer the <sdword> value of the 'RecordCount' property of the receiver."
@@ -998,8 +942,7 @@ Requery: options
 			[in, optional, defaultvalue(-1)] long Options);"
 
 	<virtual stdcall: hresult 42 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setActiveConnection: pvar
 	"Set the 'ActiveConnection' property of the receiver to the <IDispatch*> value of the argument."
@@ -1085,8 +1028,7 @@ Supports: cursorOptions pb: pb
 			[out, retval] VARIANT_BOOL* pb);"
 
 	<virtual stdcall: hresult 63 sdword varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 update
 	"Invoke the Update() method of the COM object.
@@ -1112,8 +1054,7 @@ Update: fields Values: values
 			[in, optional] VARIANT Values);"
 
 	<virtual stdcall: hresult 44 variant variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 updateBatch
 	"Invoke the UpdateBatch() method of the COM object.
@@ -1128,8 +1069,7 @@ UpdateBatch: affectRecords
 			[in, optional, defaultvalue(3)] AffectEnum AffectRecords);"
 
 	<virtual stdcall: hresult 58 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 value
 	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.

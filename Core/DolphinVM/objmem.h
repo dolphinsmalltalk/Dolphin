@@ -212,7 +212,7 @@ public:
 	static void CheckPoint();
 #endif
 
-	static int __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
+	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
 	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);

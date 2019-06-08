@@ -102,7 +102,7 @@ GetBaseURL: ppwchBaseUrl
 			[out, retval]unsigned short** ppwchBaseUrl);"
 
 	<virtual stdcall: hresult 16 word**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getContentHandler
 	"Answer the <ISAXContentHandler> result of invoking the getContentHandler() method of the COM object."
@@ -120,7 +120,7 @@ GetContentHandler: ppHandler
 			[out, retval]ISAXContentHandler** ppHandler);"
 
 	<virtual stdcall: hresult 10 ISAXContentHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getDTDHandler
 	"Answer the <ISAXDTDHandler> result of invoking the getDTDHandler() method of the COM object."
@@ -138,7 +138,7 @@ GetDTDHandler: ppHandler
 			[out, retval]ISAXDTDHandler** ppHandler);"
 
 	<virtual stdcall: hresult 12 ISAXDTDHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEntityResolver
 	"Answer the <ISAXEntityResolver> result of invoking the getEntityResolver() method of the COM object."
@@ -156,7 +156,7 @@ GetEntityResolver: ppResolver
 			[out, retval]ISAXEntityResolver** ppResolver);"
 
 	<virtual stdcall: hresult 8 ISAXEntityResolver**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getErrorHandler
 	"Answer the <ISAXErrorHandler> result of invoking the getErrorHandler() method of the COM object."
@@ -174,7 +174,7 @@ GetErrorHandler: ppHandler
 			[out, retval]ISAXErrorHandler** ppHandler);"
 
 	<virtual stdcall: hresult 14 ISAXErrorHandler**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getFeature: pwchName
 	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object."
@@ -195,7 +195,7 @@ GetFeature: pwchName pvfValue: pvfValue
 			[out, retval]VARIANT_BOOL* pvfValue);"
 
 	<virtual stdcall: hresult 4 word* varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProperty: pwchName
 	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object."
@@ -216,7 +216,7 @@ GetProperty: pwchName pvarValue: pvarValue
 			[out, retval]VARIANT* pvarValue);"
 
 	<virtual stdcall: hresult 6 word* variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getSecureBaseURL
 	"Answer the <WORD> result of invoking the getSecureBaseURL() method of the COM object."
@@ -234,7 +234,7 @@ GetSecureBaseURL: ppwchSecureBaseUrl
 			[out, retval]unsigned short** ppwchSecureBaseUrl);"
 
 	<virtual stdcall: hresult 18 word**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 parse
 	"Invoke the parse() method of the COM object.
@@ -255,7 +255,7 @@ Parse: varInput
 			[in, optional]VARIANT varInput);"
 
 	<virtual stdcall: hresult 20 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ParseURL: pwchUrl
 	"Invoke the parseURL() method of the COM object.
@@ -264,7 +264,7 @@ ParseURL: pwchUrl
 			[in]unsigned short* pwchUrl);"
 
 	<virtual stdcall: hresult 21 word*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutBaseURL: pwchBaseUrl
 	"Invoke the putBaseURL() method of the COM object.
@@ -273,7 +273,7 @@ PutBaseURL: pwchBaseUrl
 			[in]unsigned short* pwchBaseUrl);"
 
 	<virtual stdcall: hresult 17 word*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutContentHandler: pHandler
 	"Invoke the putContentHandler() method of the COM object.
@@ -282,7 +282,7 @@ PutContentHandler: pHandler
 			[in]ISAXContentHandler* pHandler);"
 
 	<virtual stdcall: hresult 11 ISAXContentHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutDTDHandler: pHandler
 	"Invoke the putDTDHandler() method of the COM object.
@@ -291,7 +291,7 @@ PutDTDHandler: pHandler
 			[in]ISAXDTDHandler* pHandler);"
 
 	<virtual stdcall: hresult 13 ISAXDTDHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutEntityResolver: pResolver
 	"Invoke the putEntityResolver() method of the COM object.
@@ -300,7 +300,7 @@ PutEntityResolver: pResolver
 			[in]ISAXEntityResolver* pResolver);"
 
 	<virtual stdcall: hresult 9 ISAXEntityResolver*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutErrorHandler: pHandler
 	"Invoke the putErrorHandler() method of the COM object.
@@ -309,7 +309,7 @@ PutErrorHandler: pHandler
 			[in]ISAXErrorHandler* pHandler);"
 
 	<virtual stdcall: hresult 15 ISAXErrorHandler*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutFeature: pwchName vfValue: vfValue
 	"Invoke the putFeature() method of the COM object.
@@ -319,7 +319,7 @@ PutFeature: pwchName vfValue: vfValue
 			[in]VARIANT_BOOL vfValue);"
 
 	<virtual stdcall: hresult 5 word* varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putProperty: pwchName varValue: varValue
 	"Invoke the putProperty() method of the COM object."
@@ -337,7 +337,7 @@ PutProperty: pwchName varValue: varValue
 			[in]VARIANT varValue);"
 
 	<virtual stdcall: hresult 7 word* variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 PutSecureBaseURL: pwchSecureBaseUrl
 	"Invoke the putSecureBaseURL() method of the COM object.
@@ -346,7 +346,7 @@ PutSecureBaseURL: pwchSecureBaseUrl
 			[in]unsigned short* pwchSecureBaseUrl);"
 
 	<virtual stdcall: hresult 19 word*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXXMLReader categoriesFor: #getBaseURL!**auto generated**!methods!public! !
 !ISAXXMLReader categoriesFor: #GetBaseURL:!**auto generated**!COM Interfaces-ISAXXMLReader!private! !
 !ISAXXMLReader categoriesFor: #getContentHandler!**auto generated**!methods!public! !

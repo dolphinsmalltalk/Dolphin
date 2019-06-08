@@ -29,8 +29,7 @@ get_DSO: ppDSO
 			[out, retval] IUnknown** ppDSO);"
 
 	<virtual stdcall: hresult 4 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Session: ppSession
 	"Private - Get the value of the 'Session' property of the receiver.
@@ -38,8 +37,7 @@ get_Session: ppSession
 			[out, retval] IUnknown** ppSession);"
 
 	<virtual stdcall: hresult 5 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 session
 	"Answer the <IUnknown> value of the 'Session' property of the receiver."
@@ -58,8 +56,7 @@ WrapDSOandSession: pDSO pSession: pSession
 			[in] IUnknown* pSession);"
 
 	<virtual stdcall: hresult 6 IUnknown* IUnknown*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBADOConnectionConstruction15 categoriesFor: #dso!**auto generated**!properties!public! !
 !ADODBADOConnectionConstruction15 categoriesFor: #get_DSO:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !
 !ADODBADOConnectionConstruction15 categoriesFor: #get_Session:!**auto generated**!COM Interfaces-ADOConnectionConstruction15!private! !

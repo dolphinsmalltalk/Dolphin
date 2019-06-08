@@ -16,8 +16,8 @@ Semaphore comment: ''!
 	receiver does not make sense for a Semaphore, so override back to
 	the default (identity-based) implementation from Object."
 
-	<primitive: 110> 
-	^self primitiveFailed!
+	<primitive: 110>
+	^self primitiveFailed: _failureCode!
 
 add: newElement afterIndex: index
 	"Add newElement to the receiver immediately after the element currently at the
@@ -103,7 +103,7 @@ primSetSignals: pulse
 		0 -	pulse is not a SmallInteger."
 
 	<primitive: 99>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 printOn: aStream
 	"Print a string representation of self on aStream."
@@ -149,7 +149,7 @@ signal
 	or above its priority which are also Ready (these will run instead)."
 
 	<primitive: 85>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 terminateProcess
 	"Terminate the first process waiting on the receiver"
@@ -186,38 +186,25 @@ wait: timeout
 	^ret basicAt: 1!
 
 wait: timeout ret: returnValueHolder
-	"Private - The active Process must receive a signal through the receiver before proceeding,
-	or be interrupted (i.e. receive an interrupt from the VM), or timeout after anInteger
-	milliseconds. Answer the argument, returnValueHolder, with its first instance variable
-	updated to hold and <integer> return code.
+	"Private - The active Process must receive a signal through the receiver before proceeding, or be interrupted (i.e. receive an interrupt from the VM), or timeout after anInteger milliseconds. Answer the argument, returnValueHolder, with its first instance variable updated to hold and <integer> return code.
 
-	At present the only valid values for timeout are, INFINITE, meaning wait for ever, and 0,
-	meaning don't wait at all. The behaviour of these is as follows: INFINITE- Wait until the
-	semaphore is signalled, answering WAIT_OBJECT_O. 0 - If the receiver has excess signals,
-	then decrement the count, and answer WAIT_OBJECT_O, otherwise return immediately without
-	waiting, but answer WAIT_TIMEOUT. i.e this is a way to 'poll' a Semaphore.
+	At present the only valid values for timeout are, INFINITE, meaning wait for ever, and 0, meaning don't wait at all. The behaviour of these is as follows: 
+		INFINITE- Wait until the semaphore is signalled, answering WAIT_OBJECT_O. 0 - If the receiver has excess signals, then decrement the count, and answer 
+		WAIT_OBJECT_O, otherwise return immediately without waiting, but answer WAIT_TIMEOUT. i.e this is a way to 'poll' a Semaphore.
 
-	If no signal has been sent, then the active Process will be transitioned from Running to
-	Waiting until one is sent, when it may be returned to the Ready state.
+	If no signal has been sent, then the active Process will be transitioned from Running to Waiting until one is sent, when it may be returned to the Ready state.
 
-	The purpose the returnValueHolder argument is to allow #wait to atomically wait for the
-	availablity of a Semaphore _and_ update a variable in the enclosing context as to the
-	outcome of that wait. This is important to the correct implementation of
-	Semaphore>>critical:, for example, as otherwise it is not possible to reliably determine in
-	unwind handling whether the Semaphore was grabbed or not - one can't rely on a normal return
-	value, because the process may not yet have proceeded far enough to assign it back into a
-	temporary in the calling context.
+	The purpose the returnValueHolder argument is to allow #wait to atomically wait for the availablity of a Semaphore _and_ update a variable in the enclosing context as to the outcome of that wait. This is important to the correct implementation of
+	Semaphore>>critical:, for example, as otherwise it is not possible to reliably determine in unwind handling whether the Semaphore was acquitrf or not - one can't rely on a normal return value, because the process may not yet have proceeded far enough to assign it back into a temporary in the calling context.
 
 	Primitive failure reasons:
-		0 -	One or other argument is not a SmallInteger
-		1 -	receiver's excess signal count is not a SmallInteger (i.e. receiver corrupt).
-		2 -	anInteger is not either INFINITE (-1) or 0.
-		3 -   receiver is inactive (already waiting on a list)
-		4 -	returnValueHolder is not of an appropriate shape to hold the return value
-			(it must be a pointer object with at least one slot, e.g. a one element Array)"
+		NonIntegerIndex		- Timeout is not a SmallInteger
+		NotImplemented		- anInteger is not either INFINITE (-1) or 0.
+		InvalidOperation		- receiver is inactive (already waiting on a list)
+		BadValueType		- returnValueHolder is not of an appropriate shape to hold the return value (it must be a pointer object with at least one slot, e.g. a one element Array)"
 
 	<primitive: 86>
-	^self primitiveFailed! !
+	^self primitiveFailed: _failureCode! !
 !Semaphore categoriesFor: #=!comparing!public! !
 !Semaphore categoriesFor: #add:afterIndex:!adding!public! !
 !Semaphore categoriesFor: #critical:!process synchronisation!public! !

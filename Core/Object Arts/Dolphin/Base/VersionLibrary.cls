@@ -38,8 +38,7 @@ getFileVersionInfo: lpstrFilename dwHandle: dwHandle dwLen: dwLen lpData: lpData
 		);"
 
 	<stdcall: bool GetFileVersionInfoW lpwstr dword dword lpvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 	"Answer the size of the version information reported by the host OS.
@@ -49,9 +48,8 @@ getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 			LPDWORD lpdwHandle 	// pointer to variable to receive zero	
 		);"
 
-	<stdcall: dword GetFileVersionInfoSizeW lpwstr DWORD* >
-	^self invalidCall
-!
+	<stdcall: dword GetFileVersionInfoSizeW lpwstr dword*>
+	^self invalidCall: _failureCode!
 
 verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: puLen
 	"Query selected version information from the specified version information resource
@@ -60,12 +58,10 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 			LPWSTR lpSubBlock,	// address of value to retrieve	
 			LPVOID *lplpBuffer,	// address of buffer for version value pointer	
 			PUINT puLen 	// address of length buffer	
-		);" 
+		);"
 
-	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid DWORD* >
-	^self invalidCall
-
-! !
+	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid dword*>
+	^self invalidCall: _failureCode! !
 !VersionLibrary categoriesFor: #getFileVersionInfo:!helpers!private! !
 !VersionLibrary categoriesFor: #getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
 !VersionLibrary categoriesFor: #getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !

@@ -37,7 +37,7 @@ HasFeature: feature version: version hasFeature: hasFeature
 			[out, retval]VARIANT_BOOL* hasFeature);"
 
 	<virtual stdcall: hresult 8 bstr bstr varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

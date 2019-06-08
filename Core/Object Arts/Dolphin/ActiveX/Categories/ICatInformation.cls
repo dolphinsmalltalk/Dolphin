@@ -104,8 +104,7 @@ EnumCategories: lcid ppenumCategoryInfo: ppenumCategoryInfo
 	"
 
 	<virtual stdcall: hresult 4 dword void**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 enumClassesOfCategories: implementedCategoryGUIDs requiring: requiredCategoryGUIDs 
 	"Answer an <IEnumGUID> enumerator on the <CLSID>s of all components registered on the system
@@ -144,9 +143,8 @@ EnumClassesOfCategories: cImplemented rgcatidImpl: rgcatidImpl cRequired: cRequi
 			[out] IEnumGUID** ppenumClsid);
 	"
 
-	<virtual stdcall: hresult 6 dword GUID* dword GUID* void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 6 dword guid* dword guid* void**>
+	^self invalidCall: _failureCode!
 
 EnumImplCategoriesOfClass: rclsid ppenumCatid: ppenumCatid
 	"Private - Invoke the EnumImplCategoriesOfClass() method of the COM object wrapped by the receiver.
@@ -156,9 +154,8 @@ EnumImplCategoriesOfClass: rclsid ppenumCatid: ppenumCatid
 			[out] IEnumGUID** ppenumCatid);
 	"
 
-	<virtual stdcall: hresult 8 GUID* void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 8 guid* void**>
+	^self invalidCall: _failureCode!
 
 EnumReqCategoriesOfClass: rclsid ppenumCatid: ppenumCatid
 	"Private - Invoke the EnumReqCategoriesOfClass() method of the COM object wrapped by the receiver.
@@ -168,9 +165,8 @@ EnumReqCategoriesOfClass: rclsid ppenumCatid: ppenumCatid
 			[out] IEnumGUID** ppenumCatid);
 	"
 
-	<virtual stdcall: hresult 9 GUID* void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 9 guid* void**>
+	^self invalidCall: _failureCode!
 
 GetCategoryDesc: rcatid lcid: lcid pszDesc: pszDesc
 	"Private - Invoke the GetCategoryDesc() method of the COM object wrapped by the receiver.
@@ -181,9 +177,8 @@ GetCategoryDesc: rcatid lcid: lcid pszDesc: pszDesc
 			[out] LPWSTR* pszDesc);
 	"
 
-	<virtual stdcall: hresult 5 GUID* dword lpwstr*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 5 guid* dword lpwstr*>
+	^self invalidCall: _failureCode!
 
 IsClassOfCategories: rclsid cImplemented: cImplemented rgcatidImpl: rgcatidImpl cRequired: cRequired rgcatidReq: rgcatidReq
 	"Private - Invoke the IsClassOfCategories() method of the COM object wrapped by the receiver.
@@ -196,9 +191,8 @@ IsClassOfCategories: rclsid cImplemented: cImplemented rgcatidImpl: rgcatidImpl 
 			[in] GUID* rgcatidReq);
 	"
 
-	<virtual stdcall: hresult 7 GUID* dword GUID* dword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 7 guid* dword guid* dword guid*>
+	^self invalidCall: _failureCode!
 
 requiredCategoriesOfClass: rclsid 
 	"Answer a <collection> of <GUID>s identifying all categories required (of clients) by the COM

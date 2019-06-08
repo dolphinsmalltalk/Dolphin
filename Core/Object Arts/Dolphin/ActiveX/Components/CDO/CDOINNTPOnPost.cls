@@ -35,8 +35,7 @@ OnPost: msg EventStatus: eventStatus
 	"
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !CDOINNTPOnPost categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !CDOINNTPOnPost categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !CDOINNTPOnPost categoriesFor: #OnPost:EventStatus:!**auto generated**!COM Interfaces-INNTPOnPost!public! !

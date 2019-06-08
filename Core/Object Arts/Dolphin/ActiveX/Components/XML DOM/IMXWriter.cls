@@ -137,7 +137,7 @@ Flush
 		HRESULT __stdcall flush();"
 
 	<virtual stdcall: hresult 24>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_byteOrderMark: fWriteByteOrderMark
 	"Private - Get the value of the 'byteOrderMark' property of the receiver.
@@ -146,7 +146,7 @@ get_byteOrderMark: fWriteByteOrderMark
 			[out, retval]VARIANT_BOOL* fWriteByteOrderMark);"
 
 	<virtual stdcall: hresult 13 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_disableOutputEscaping: fValue
 	"Private - Get the value of the 'disableOutputEscaping' property of the receiver.
@@ -155,7 +155,7 @@ get_disableOutputEscaping: fValue
 			[out, retval]VARIANT_BOOL* fValue);"
 
 	<virtual stdcall: hresult 23 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_encoding: strEncoding
 	"Private - Get the value of the 'encoding' property of the receiver.
@@ -164,7 +164,7 @@ get_encoding: strEncoding
 			[out, retval]BSTR* strEncoding);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_indent: fIndentMode
 	"Private - Get the value of the 'indent' property of the receiver.
@@ -173,7 +173,7 @@ get_indent: fIndentMode
 			[out, retval]VARIANT_BOOL* fIndentMode);"
 
 	<virtual stdcall: hresult 15 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_omitXMLDeclaration: fValue
 	"Private - Get the value of the 'omitXMLDeclaration' property of the receiver.
@@ -182,7 +182,7 @@ get_omitXMLDeclaration: fValue
 			[out, retval]VARIANT_BOOL* fValue);"
 
 	<virtual stdcall: hresult 19 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_output: varDestination
 	"Private - Get the value of the 'output' property of the receiver.
@@ -191,7 +191,7 @@ get_output: varDestination
 			[out, retval]VARIANT* varDestination);"
 
 	<virtual stdcall: hresult 9 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_standalone: fValue
 	"Private - Get the value of the 'standalone' property of the receiver.
@@ -200,7 +200,7 @@ get_standalone: fValue
 			[out, retval]VARIANT_BOOL* fValue);"
 
 	<virtual stdcall: hresult 17 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_version: strVersion
 	"Private - Get the value of the 'version' property of the receiver.
@@ -209,7 +209,7 @@ get_version: strVersion
 			[out, retval]BSTR* strVersion);"
 
 	<virtual stdcall: hresult 21 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 indent
 	"Answer the <varbool> value of the 'indent' property of the receiver.
@@ -280,7 +280,7 @@ put_byteOrderMark: fWriteByteOrderMark
 			[in]VARIANT_BOOL fWriteByteOrderMark);"
 
 	<virtual stdcall: hresult 12 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_disableOutputEscaping: fValue
 	"Private - Set the value of the 'disableOutputEscaping' property of the object wrapped by the 
@@ -290,7 +290,7 @@ put_disableOutputEscaping: fValue
 			[in]VARIANT_BOOL fValue);"
 
 	<virtual stdcall: hresult 22 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_encoding: strEncoding
 	"Private - Set the value of the 'encoding' property of the object wrapped by the 
@@ -300,7 +300,7 @@ put_encoding: strEncoding
 			[in]BSTR strEncoding);"
 
 	<virtual stdcall: hresult 10 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_indent: fIndentMode
 	"Private - Set the value of the 'indent' property of the object wrapped by the 
@@ -310,7 +310,7 @@ put_indent: fIndentMode
 			[in]VARIANT_BOOL fIndentMode);"
 
 	<virtual stdcall: hresult 14 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_omitXMLDeclaration: fValue
 	"Private - Set the value of the 'omitXMLDeclaration' property of the object wrapped by the 
@@ -320,7 +320,7 @@ put_omitXMLDeclaration: fValue
 			[in]VARIANT_BOOL fValue);"
 
 	<virtual stdcall: hresult 18 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_output: varDestination
 	"Private - Set the value of the 'output' property of the object wrapped by the 
@@ -330,7 +330,7 @@ put_output: varDestination
 			[in]VARIANT varDestination);"
 
 	<virtual stdcall: hresult 8 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_standalone: fValue
 	"Private - Set the value of the 'standalone' property of the object wrapped by the 
@@ -340,7 +340,7 @@ put_standalone: fValue
 			[in]VARIANT_BOOL fValue);"
 
 	<virtual stdcall: hresult 16 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_version: strVersion
 	"Private - Set the value of the 'version' property of the object wrapped by the 
@@ -350,7 +350,7 @@ put_version: strVersion
 			[in]BSTR strVersion);"
 
 	<virtual stdcall: hresult 20 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 standalone
 	"Answer the <varbool> value of the 'standalone' property of the receiver.

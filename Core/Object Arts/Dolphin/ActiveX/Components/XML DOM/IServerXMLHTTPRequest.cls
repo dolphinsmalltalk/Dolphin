@@ -67,7 +67,7 @@ GetOption: option value: value
 			[out, retval]VARIANT* value);"
 
 	<virtual stdcall: hresult 24 sdword variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setOption: option value: value
 	"Invoke the setOption() method of the COM object.
@@ -87,7 +87,7 @@ SetOption: option value: value
 			[in]VARIANT value);"
 
 	<virtual stdcall: hresult 25 sdword variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTimeout receiveTimeout: receiveTimeout
 	"Invoke the setTimeouts() method of the COM object.
@@ -100,7 +100,7 @@ SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 			[in]long receiveTimeout);"
 
 	<virtual stdcall: hresult 22 sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 waitForResponse
 	"Answer the <VARIANT_BOOL> result of invoking the waitForResponse() method of the COM object.
@@ -129,7 +129,7 @@ WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 			[out, retval]VARIANT_BOOL* isSuccessful);"
 
 	<virtual stdcall: hresult 23 variant varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IServerXMLHTTPRequest categoriesFor: #getOption:!**auto generated**!methods!public! !
 !IServerXMLHTTPRequest categoriesFor: #GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
 !IServerXMLHTTPRequest categoriesFor: #setOption:value:!**auto generated**!methods!public! !

@@ -612,11 +612,11 @@ value
 	types that are well known to the VM, anything else goes through the
 	Smalltalk back up code."
 
-	| vt |
 	<primitive: 172>
+	| vt |
 	^((vt := self vt) allMask: VT_ARRAY)
 		ifTrue: [self array]
-		ifFalse: [self perform: (VTNames at: (vt bitAnd: VT_TYPEMASK)+1)]!
+		ifFalse: [self perform: (VTNames at: (vt bitAnd: VT_TYPEMASK) + 1)]!
 
 value: newValue
 	"Set the receiver's value to the <variantCompatible>, newValue."

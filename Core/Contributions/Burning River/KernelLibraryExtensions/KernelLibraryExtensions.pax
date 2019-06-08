@@ -37,9 +37,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
 
 package!
 
@@ -61,8 +60,8 @@ getExitCodeProcess: hProcess lpExitCode: aDWORD
 			LPDWORD lpExitCode
 			);"
 
-	<stdcall: bool GetExitCodeProcess handle DWORD*>
-	^self invalidCall!
+	<stdcall: bool GetExitCodeProcess handle dword*>
+	^self invalidCall: _failureCode!
 
 getExitCodeThread: hThread lpExitCode: aDWORD
 	"Populate aDWORD with the exit code of the specified thread.
@@ -72,8 +71,8 @@ getExitCodeThread: hThread lpExitCode: aDWORD
 		  LPDWORD lpExitCode
 		);"
 
-	<stdcall: bool GetExitCodeThread handle DWORD*>
-	^self invalidCall!
+	<stdcall: bool GetExitCodeThread handle dword*>
+	^self invalidCall: _failureCode!
 
 getLogicalDriveStrings: bufferSize buffer: aBuffer
 	"Fills a buffer with strings which specify valid drives in the system.
@@ -81,8 +80,9 @@ getLogicalDriveStrings: bufferSize buffer: aBuffer
 		DWORD nBufferLength, 	// size of buffer 
 		LPWSTR lpBuffer 		// address of buffer for drive strings 
 		);"
-	<stdcall: dword GetLogicalDriveStringsW dword lpwstr> 
-	^self invalidCall!
+
+	<stdcall: dword GetLogicalDriveStringsW dword lpwstr>
+	^self invalidCall: _failureCode!
 
 setFileAttributes: aFileName value: attributes
 	"Set the attributes for the specified file or directory. 
@@ -91,7 +91,7 @@ setFileAttributes: aFileName value: attributes
 			DWORD dwFileAttributes		// attributes );"
 
 	<stdcall: bool SetFileAttributesW lpwstr dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #getExitCodeProcess:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getExitCodeThread:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getLogicalDriveStrings:buffer:!public!win32 functions-system information! !

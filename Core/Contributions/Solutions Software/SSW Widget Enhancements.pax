@@ -81,6 +81,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
@@ -270,8 +271,9 @@ getClipRgn: hdc hrgn: hRegion
 		HDC hdc		// handle of device context 
 		HRGN hrgn		// handle of region   
 	);"
+
 	<stdcall: sdword GetClipRgn handle handle>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !GDILibrary categoriesFor: #getClipRgn:hrgn:!public!win32 functions-clipping! !
 
 !Icon methodsFor!
@@ -601,10 +603,9 @@ endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
 			[in]BOOL fUpdateTarget);"
 
 	<stdcall: hresult EndBufferedAnimation handle bool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
-
 	"Gets the duration for the specified transition.
 	HRESULT GetThemeTransitionDuration(
 		HTHEME hTheme,
@@ -616,7 +617,7 @@ getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom i
 	);"
 
 	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !VistaThemeLibrary categoriesFor: #endBufferedAnimation:fUpdateTarget:!public! !
 !VistaThemeLibrary categoriesFor: #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
 

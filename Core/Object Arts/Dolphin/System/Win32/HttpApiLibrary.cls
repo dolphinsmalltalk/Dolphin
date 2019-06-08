@@ -271,7 +271,7 @@ asyncReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags re
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asyncReceiveHttpRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveRequestEntityBody() function of the module wrapped by the receiver.
@@ -286,7 +286,7 @@ asyncReceiveHttpRequestEntityBody: requestQueueHandle requestId: requestId flags
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<overlap stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
 	"Invoke the HttpSendHttpResponse() function of the module wrapped by the receiver.
@@ -304,8 +304,8 @@ asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags http
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<overlap stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
-	^self invalidCall!
+	<overlap stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
+	^self invalidCall: _failureCode!
 
 bindQueue: anExternalHandle toUrlGroup: anIntegerGroupId
 	self setUrlGroup: anIntegerGroupId
@@ -364,7 +364,7 @@ httpAddFragmentToCache: requestQueueHandle urlPrefix: urlPrefix dataChunk: dataC
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpAddFragmentToCache handle lpwstr HTTP_DATA_CHUNK* HTTP_CACHE_POLICY* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpAddUrlToUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl urlContext: urlContext reserved: reserved
 	"Invoke the HttpAddUrlToUrlGroup() function of the module wrapped by the receiver.
@@ -377,7 +377,7 @@ httpAddUrlToUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl urlConte
 			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpAddUrlToUrlGroup qword lpwstr qword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCancelHttpRequest: requestQueueHandle requestId: requestId overlapped: overlapped
 	"Invoke the HttpCancelHttpRequest() function of the module wrapped by the receiver.
@@ -389,7 +389,7 @@ httpCancelHttpRequest: requestQueueHandle requestId: requestId overlapped: overl
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpCancelHttpRequest handle qword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCloseRequestQueue: requestQueueHandle
 	"Invoke the HttpCloseRequestQueue() function of the module wrapped by the receiver.
@@ -399,7 +399,7 @@ httpCloseRequestQueue: requestQueueHandle
 			[in]HANDLE RequestQueueHandle);"
 
 	<stdcall: dword HttpCloseRequestQueue handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCloseServerSession: serverSessionId
 	"Invoke the HttpCloseServerSession() function of the module wrapped by the receiver.
@@ -409,7 +409,7 @@ httpCloseServerSession: serverSessionId
 			[in]unsigned __int64 ServerSessionId);"
 
 	<stdcall: dword HttpCloseServerSession qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCloseUrlGroup: urlGroupId
 	"Invoke the HttpCloseUrlGroup() function of the module wrapped by the receiver.
@@ -419,7 +419,7 @@ httpCloseUrlGroup: urlGroupId
 			[in]unsigned __int64 UrlGroupId);"
 
 	<stdcall: dword HttpCloseUrlGroup qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCreateRequestQueue: version name: name securityAttributes: securityAttributes flags: flags requestQueueHandle: requestQueueHandle
 	"Invoke the HttpCreateRequestQueue() function of the module wrapped by the receiver.
@@ -433,7 +433,7 @@ httpCreateRequestQueue: version name: name securityAttributes: securityAttribute
 			[out]HANDLE* RequestQueueHandle);"
 
 	<stdcall: dword HttpCreateRequestQueue dword lpwstr SECURITY_ATTRIBUTES* dword handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCreateServerSession: version serverSessionId: serverSessionId reserved: reserved
 	"Invoke the HttpCreateServerSession() function of the module wrapped by the receiver.
@@ -445,7 +445,7 @@ httpCreateServerSession: version serverSessionId: serverSessionId reserved: rese
 			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpCreateServerSession dword qword* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
 	"Invoke the HttpCreateUrlGroup() function of the module wrapped by the receiver.
@@ -457,7 +457,7 @@ httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
 			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpCreateUrlGroup qword qword* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpDeclarePush: requestQueueHandle requestId: requestId verb: verb path: path query: query headers: headers
 	"Invoke the HttpDeclarePush() function of the module wrapped by the receiver.
@@ -472,7 +472,7 @@ httpDeclarePush: requestQueueHandle requestId: requestId verb: verb path: path q
 			[in]HTTP_REQUEST_HEADERS* Headers);"
 
 	<stdcall: dword HttpDeclarePush handle qword sdword lpwstr lpstr HTTP_REQUEST_HEADERS*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformation: pConfigInformation configInformationLength: configInformationLength pOverlapped: pOverlapped
 	"Invoke the HttpDeleteServiceConfiguration() function of the module wrapped by the receiver.
@@ -486,7 +486,7 @@ httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformat
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpDeleteServiceConfiguration handle sdword void* dword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpFlushResponseCache: requestQueueHandle urlPrefix: urlPrefix flags: flags overlapped: overlapped
 	"Invoke the HttpFlushResponseCache() function of the module wrapped by the receiver.
@@ -499,7 +499,7 @@ httpFlushResponseCache: requestQueueHandle urlPrefix: urlPrefix flags: flags ove
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpFlushResponseCache handle lpwstr dword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpInitialize: version flags: flags pReserved: pReserved
 	"Invoke the HttpInitialize() function of the module wrapped by the receiver.
@@ -511,7 +511,7 @@ httpInitialize: version flags: flags pReserved: pReserved
 			[in, out]PVOID pReserved);"
 
 	<stdcall: dword HttpInitialize dword dword void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
 	"Invoke the HttpPrepareUrl() function of the module wrapped by the receiver.
@@ -524,7 +524,7 @@ httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
 			[out]LPWSTR* PreparedUrl);"
 
 	<stdcall: dword HttpPrepareUrl void* dword lpwstr lpwstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpQueryRequestQueueProperty: requestQueueProperty property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength reserved1: reserved1 returnLength: returnLength reserved2: reserved2
 	"Invoke the HttpQueryRequestQueueProperty() function of the module wrapped by the receiver.
@@ -540,7 +540,7 @@ httpQueryRequestQueueProperty: requestQueueProperty property: property propertyI
 			[in]PVOID Reserved2);"
 
 	<stdcall: dword HttpQueryRequestQueueProperty handle sdword void* dword dword dword* void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpQueryServerSessionProperty: serverSessionId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength returnLength: returnLength
 	"Invoke the HttpQueryServerSessionProperty() function of the module wrapped by the receiver.
@@ -554,7 +554,7 @@ httpQueryServerSessionProperty: serverSessionId property: property propertyInfor
 			[out]ULONG* ReturnLength);"
 
 	<stdcall: dword HttpQueryServerSessionProperty qword sdword void* dword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput inputLength: inputLength pOutput: pOutput outputLength: outputLength pReturnLength: pReturnLength pOverlapped: pOverlapped
 	"Invoke the HttpQueryServiceConfiguration() function of the module wrapped by the receiver.
@@ -571,7 +571,7 @@ httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput i
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpQueryServiceConfiguration handle sdword void* dword void* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength returnLength: returnLength
 	"Invoke the HttpQueryUrlGroupProperty() function of the module wrapped by the receiver.
@@ -585,7 +585,7 @@ httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: pr
 			[out]ULONG* ReturnLength);"
 
 	<stdcall: dword HttpQueryUrlGroupProperty qword sdword void* dword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: byteRange buffer: buffer bufferLength: bufferLength bytesRead: bytesRead overlapped: overlapped
 	"Invoke the HttpReadFragmentFromCache() function of the module wrapped by the receiver.
@@ -600,7 +600,7 @@ httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: by
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReadFragmentFromCache handle lpwstr HTTP_BYTE_RANGE* void* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpReceiveClientCertificate: requestQueueHandle connectionId: connectionId flags: flags sslClientCertInfo: sslClientCertInfo sslClientCertInfoSize: sslClientCertInfoSize bytesReceived: bytesReceived overlapped: overlapped
 	"Invoke the HttpReceiveClientCertificate() function of the module wrapped by the receiver.
@@ -615,7 +615,7 @@ httpReceiveClientCertificate: requestQueueHandle connectionId: connectionId flag
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReceiveClientCertificate handle qword dword HTTP_SSL_CLIENT_CERT_INFO* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags requestBuffer: requestBuffer requestBufferLength: requestBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveHttpRequest() function of the module wrapped by the receiver.
@@ -631,7 +631,7 @@ httpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags req
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveRequestEntityBody() function of the module wrapped by the receiver.
@@ -646,7 +646,7 @@ httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: fla
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpRemoveUrlFromUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl flags: flags
 	"Invoke the HttpRemoveUrlFromUrlGroup() function of the module wrapped by the receiver.
@@ -658,7 +658,7 @@ httpRemoveUrlFromUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl fla
 			[in]ULONG Flags);"
 
 	<stdcall: dword HttpRemoveUrlFromUrlGroup qword lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
 	"Invoke the HttpSendHttpResponse() function of the module wrapped by the receiver.
@@ -677,7 +677,7 @@ httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpR
 			[in]PHTTP_LOG_DATA LogData);"
 
 	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags entityChunkCount: entityChunkCount entityChunks: entityChunks bytesSent: bytesSent reserved1: reserved1 reserved2: reserved2 overlapped: overlapped logData: logData
 	"Invoke the HttpSendResponseEntityBody() function of the module wrapped by the receiver.
@@ -696,7 +696,7 @@ httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags
 			[in]PHTTP_LOG_DATA LogData);"
 
 	<stdcall: dword HttpSendResponseEntityBody handle qword dword word HTTP_DATA_CHUNK* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSetRequestQueueProperty: requestQueueHandle property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength reserved1: reserved1 reserved2: reserved2
 	"Invoke the HttpSetRequestQueueProperty() function of the module wrapped by the receiver.
@@ -711,7 +711,7 @@ httpSetRequestQueueProperty: requestQueueHandle property: property propertyInfor
 			[in]PVOID Reserved2);"
 
 	<stdcall: dword HttpSetRequestQueueProperty handle sdword void* dword dword void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSetServerSessionProperty: serverSessionId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength
 	"Invoke the HttpSetServerSessionProperty() function of the module wrapped by the receiver.
@@ -724,7 +724,7 @@ httpSetServerSessionProperty: serverSessionId property: property propertyInforma
 			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetServerSessionProperty qword sdword void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation: pConfigInformation configInformationLength: configInformationLength pOverlapped: pOverlapped
 	"Invoke the HttpSetServiceConfiguration() function of the module wrapped by the receiver.
@@ -738,7 +738,7 @@ httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpSetServiceConfiguration handle sdword void* dword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: propertyInformation propertyInformationLength: propertyInformationLength
 	"Invoke the HttpSetUrlGroupProperty() function of the module wrapped by the receiver.
@@ -751,7 +751,7 @@ httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: prop
 			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetUrlGroupProperty qword sdword void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpShutdownRequestQueue: requestQueueHandle
 	"Invoke the HttpShutdownRequestQueue() function of the module wrapped by the receiver.
@@ -761,7 +761,7 @@ httpShutdownRequestQueue: requestQueueHandle
 			[in]HANDLE RequestQueueHandle);"
 
 	<stdcall: dword HttpShutdownRequestQueue handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpTerminate: flags pReserved: pReserved
 	"Invoke the HttpTerminate() function of the module wrapped by the receiver.
@@ -772,7 +772,7 @@ httpTerminate: flags pReserved: pReserved
 			[in, out]PVOID pReserved);"
 
 	<stdcall: dword HttpTerminate dword void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpWaitForDemandStart: requestQueueHandle overlapped: overlapped
 	"Invoke the HttpWaitForDemandStart() function of the module wrapped by the receiver.
@@ -783,7 +783,7 @@ httpWaitForDemandStart: requestQueueHandle overlapped: overlapped
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpWaitForDemandStart handle OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpWaitForDisconnect: requestQueueHandle connectionId: connectionId overlapped: overlapped
 	"Invoke the HttpWaitForDisconnect() function of the module wrapped by the receiver.
@@ -795,7 +795,7 @@ httpWaitForDisconnect: requestQueueHandle connectionId: connectionId overlapped:
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpWaitForDisconnect handle qword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved: reserved overlapped: overlapped
 	"Invoke the HttpWaitForDisconnectEx() function of the module wrapped by the receiver.
@@ -808,7 +808,7 @@ httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved:
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpWaitForDisconnectEx handle qword dword OVERLAPPED*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize http.sys"

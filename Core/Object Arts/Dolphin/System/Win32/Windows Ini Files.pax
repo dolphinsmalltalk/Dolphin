@@ -71,7 +71,7 @@ getPrivateProfileInt: lpAppName lpKeyName: lpKeyName nDefault: nDefault lpFileNa
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: dword GetPrivateProfileIntW lpwstr lpstr sdword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPrivateProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
 	"Invoke the GetPrivateProfileSection() function of the module wrapped by the receiver.
@@ -84,7 +84,7 @@ getPrivateProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nS
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: dword GetPrivateProfileSectionW lpwstr lpwstr dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPrivateProfileSectionNames: lpszReturnBuffer nSize: nSize lpFileName: lpFileName
 	"Invoke the GetPrivateProfileSectionNames() function of the module wrapped by the receiver.
@@ -96,7 +96,7 @@ getPrivateProfileSectionNames: lpszReturnBuffer nSize: nSize lpFileName: lpFileN
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: dword GetPrivateProfileSectionNamesW lpwstr dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPrivateProfileString: lpAppName lpKeyName: lpKeyName lpDefault: lpDefault lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
 	"Invoke the GetPrivateProfileString() function of the module wrapped by the receiver.
@@ -111,7 +111,7 @@ getPrivateProfileString: lpAppName lpKeyName: lpKeyName lpDefault: lpDefault lpR
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: dword GetPrivateProfileStringW lpwstr lpwstr lpwstr lpwstr dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
 	"Invoke the GetPrivateProfileStruct() function of the module wrapped by the receiver.
@@ -125,7 +125,7 @@ getPrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeSt
 			[in]LPCWSTR szFile);"
 
 	<stdcall: bool GetPrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 writePrivateProfileSection: lpAppName lpString: lpString lpFileName: lpFileName
 	"Invoke the WritePrivateProfileSection() function of the module wrapped by the receiver.
@@ -137,7 +137,7 @@ writePrivateProfileSection: lpAppName lpString: lpString lpFileName: lpFileName
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: bool WritePrivateProfileSectionW lpwstr lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 writePrivateProfileString: lpAppName lpKeyName: lpKeyName lpString: lpString lpFileName: lpFileName
 	"Invoke the WritePrivateProfileString() function of the module wrapped by the receiver.
@@ -150,7 +150,7 @@ writePrivateProfileString: lpAppName lpKeyName: lpKeyName lpString: lpString lpF
 			[in]LPCWSTR lpFileName);"
 
 	<stdcall: bool WritePrivateProfileStringW lpwstr lpwstr lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
 	"Invoke the WritePrivateProfileStruct() function of the module wrapped by the receiver.
@@ -164,7 +164,7 @@ writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSize
 			[in]LPCWSTR szFile);"
 
 	<stdcall: bool WritePrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
 !KernelLibrary categoriesFor: #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !
 !KernelLibrary categoriesFor: #getPrivateProfileSectionNames:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !

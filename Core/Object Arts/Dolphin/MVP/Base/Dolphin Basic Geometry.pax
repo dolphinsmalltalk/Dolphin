@@ -157,9 +157,9 @@ asPoint3D
 
 !UserLibrary methodsFor!
 
-subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2 
+subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECT* RECT* RECT*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 
 "End of package definition"!

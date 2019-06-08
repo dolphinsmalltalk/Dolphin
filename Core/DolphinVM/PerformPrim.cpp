@@ -33,11 +33,11 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 
 	const MWORD arrayArgumentCount = argumentArray->pointersSize();
 	if (arrayArgumentCount != blockArgumentCount)
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 
 	pop(2);								// N.B. ref count of Block will be assumed by storing into frame
 	// Store old context details from interpreter registers
@@ -132,7 +132,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 
 	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(*(sp - (argCount-1)));
 	if (ObjectMemoryIsIntegerObject(selectorToPerform))
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidSelector);
 	m_oopMessageSelector = selectorToPerform;
 	Oop newReceiver = *(sp - argCount);
 
@@ -180,7 +180,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 		// having restored the selector
 		ASSERT(m_oopMessageSelector!=Pointers.DoesNotUnderstandSelector);
 		m_oopMessageSelector = performSelector;
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 	}
 }
 
@@ -189,7 +189,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
 	
 	// N.B. We're using a large stack, so don't bother checking for overflow
 	//		(standard stack overflow mechanism should catch it)
@@ -206,7 +206,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 
 	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(*(sp-1));
 	if (ObjectMemoryIsIntegerObject(selectorToPerform))
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidSelector);
 
 	m_oopMessageSelector = selectorToPerform;	// Get selector from stack
 	// Don't need to count down the stack ref.
@@ -258,7 +258,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 		// Argument array already has artificially increased ref. count
 		push(Oop(argumentArray));
 		m_oopMessageSelector = performSelector;
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 	}
 }
 
@@ -267,7 +267,7 @@ Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
 {
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)
-		return primitiveFailure(0);		// Arguments not an Array
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Arguments not an Array
 	Array* arguments = oteArg->m_location;
 	Oop receiverPointer = *(sp - 1);
 	MethodOTE* oteMethod = reinterpret_cast<MethodOTE*>(*(sp - 2));
@@ -275,12 +275,12 @@ Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
 
 	CompiledMethod* method = oteMethod->m_location;
 	if (!ObjectMemory::isKindOf(receiverPointer, method->m_methodClass))
-		return primitiveFailure(1);		// Wrong class of receiver
+		return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Wrong class of receiver
 
 	const unsigned argCount = oteArg->pointersSize();
 	const unsigned methodArgCount = method->m_header.argumentCount;
 	if (methodArgCount != argCount)
-		return primitiveFailure(2);		// Wrong number of arguments
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);		// Wrong number of arguments
 
 	// Push receiver and arguments on stack (over the top of array and receiver)
 	bp[0] = receiverPointer;					// Write receiver over the top of the method

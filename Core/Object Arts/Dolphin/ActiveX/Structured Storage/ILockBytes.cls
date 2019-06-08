@@ -53,7 +53,7 @@ Flush
 	"
 
 	<virtual stdcall: hresult 6>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 handle
 	"Answer the global memory handle used for the receiver's
@@ -65,7 +65,7 @@ handle
 	OLELibrary default getHGlobalFromILockBytes: self phglobal: hglobal.
 	^hglobal!
 
-LockRegion: libOffset cb: cb dwLockType: dwLockType 
+LockRegion: libOffset cb: cb dwLockType: dwLockType
 	"Invoke the LockRegion() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall LockRegion(
@@ -76,7 +76,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	"
 
 	<virtual stdcall: hresult 8 qword qword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 readAt: offset bytes: data count: count 
 	"Read the specified number of bytes into the supplied buffer (a byte object
@@ -104,7 +104,7 @@ readAt: offset count: count
 		bytes: buffer
 		count: count!
 
-ReadAt: ulOffset pv: pv cb: cb pcbRead: pcbRead 
+ReadAt: ulOffset pv: pv cb: cb pcbRead: pcbRead
 	"Invoke the ReadAt() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall ReadAt(
@@ -116,7 +116,7 @@ ReadAt: ulOffset pv: pv cb: cb pcbRead: pcbRead
 	"
 
 	<virtual stdcall: hresult 4 qword sbyte* dword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 replaceFrom: start to: stop with: replacementBytes startingAt: startAt 
 	"Perform a standard Smalltalk replacement operation against the receiver.
@@ -137,7 +137,7 @@ setSize: anInteger
 
 	self SetSize: anInteger!
 
-SetSize: cb 
+SetSize: cb
 	"Invoke the SetSize() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall SetSize(
@@ -146,7 +146,7 @@ SetSize: cb
 	"
 
 	<virtual stdcall: hresult 7 qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stat
 	"Answer a STATSTG for the receiver."
@@ -156,7 +156,7 @@ stat
 	self Stat: answer grfStatFlag: STATFLAG_DEFAULT.
 	^answer!
 
-Stat: pstatstg grfStatFlag: grfStatFlag 
+Stat: pstatstg grfStatFlag: grfStatFlag
 	"Invoke the Stat() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall Stat(
@@ -166,9 +166,9 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	"
 
 	<virtual stdcall: hresult 10 STATSTG* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
+UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	"Invoke the UnlockRegion() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall UnlockRegion(
@@ -179,7 +179,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	"
 
 	<virtual stdcall: hresult 9 qword qword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 writeAt: offset bytes: data count: count 
 	"Write the specified number of bytes from the supplied data (a byte object
@@ -194,7 +194,7 @@ writeAt: offset bytes: data count: count
 		pcbWritten: bytesWritten.
 	^bytesWritten asInteger!
 
-WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten 
+WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 	"Invoke the WriteAt() method of the object wrapped by the receiver.
 	
 		HRESULT __stdcall WriteAt(
@@ -206,7 +206,7 @@ WriteAt: ulOffset pv: pv cb: cb pcbWritten: pcbWritten
 	"
 
 	<virtual stdcall: hresult 5 qword sbyte* dword dword*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ILockBytes categoriesFor: #at:!accessing!public! !
 !ILockBytes categoriesFor: #at:put:!accessing!public! !
 !ILockBytes categoriesFor: #copyFrom:to:!copying!public! !

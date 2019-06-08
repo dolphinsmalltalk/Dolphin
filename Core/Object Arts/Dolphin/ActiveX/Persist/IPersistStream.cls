@@ -23,8 +23,7 @@ GetSizeMax: pcbSize
 	"
 
 	<virtual stdcall: hresult 8 qword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 IsDirty
 	"Invoke the IsDirty() method of the object wrapped by the receiver.
@@ -33,8 +32,7 @@ IsDirty
 	"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Load: pstm
 	"Invoke the Load() method of the object wrapped by the receiver.
@@ -44,8 +42,7 @@ Load: pstm
 	"
 
 	<virtual stdcall: hresult 6 IStream*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 maxSize
 	"Answer the maximum amount of storage that the receiver may need to store itself.
@@ -77,8 +74,7 @@ Save: pstm fClearDirty: fClearDirty
 	"
 
 	<virtual stdcall: hresult 7 IStream* bool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 storeOn: anIStream clearDirty: aBoolean
 	"Append the receiver's persistent state to the specified IStream.

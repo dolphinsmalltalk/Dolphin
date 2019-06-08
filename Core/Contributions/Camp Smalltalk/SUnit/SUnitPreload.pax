@@ -25,9 +25,8 @@ package globalAliases: (Set new
 	add: #SUnitDelay;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
 
 package!
 

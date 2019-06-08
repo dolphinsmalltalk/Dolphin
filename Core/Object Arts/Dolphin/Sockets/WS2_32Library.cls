@@ -533,7 +533,7 @@ module WS2_32 {
 !WS2_32Library categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
 !WS2_32Library methodsFor!
 
-accept: s addr: addr addrlen: addrlen 
+accept: s addr: addr addrlen: addrlen
 	"Invoke the accept() function of the module wrapped by the receiver.
 
 		unsigned int __stdcall accept(
@@ -542,9 +542,9 @@ accept: s addr: addr addrlen: addrlen
 			int* addrlen);"
 
 	<overlap stdcall: handle accept handle void* sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-bind: s name: name namelen: namelen 
+bind: s name: name namelen: namelen
 	"Invoke the bind() function of the module wrapped by the receiver.
 
 		int __stdcall bind(
@@ -553,7 +553,7 @@ bind: s name: name namelen: namelen
 			int namelen);"
 
 	<overlap stdcall: sdword bind handle void* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 close
 	"We've finished using the socket system."
@@ -564,16 +564,16 @@ close
 			self wsaCleanup].
 	super close!
 
-closesocket: s 
+closesocket: s
 	"Invoke the closesocket() function of the module wrapped by the receiver.
 
 		int __stdcall closesocket(
 			unsigned int s);"
 
 	<stdcall: sdword closesocket handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-connect: s name: name namelen: namelen 
+connect: s name: name namelen: namelen
 	"Invoke the connect() function of the module wrapped by the receiver.
 
 		int __stdcall connect(
@@ -582,9 +582,9 @@ connect: s name: name namelen: namelen
 			int namelen);"
 
 	<overlap stdcall: sdword connect handle void* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostbyaddr: addr len: len type: type 
+gethostbyaddr: addr len: len type: type
 	"Invoke the gethostbyaddr() function of the module wrapped by the receiver.
 
 		hostent* __stdcall gethostbyaddr(
@@ -593,18 +593,18 @@ gethostbyaddr: addr len: len type: type
 			int Type);"
 
 	<overlap stdcall: HOSTENT* gethostbyaddr lpvoid sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostbyname: name 
+gethostbyname: name
 	"Answer host information corresponding to a host name from the host database.
 
 		hostent* __stdcall gethostbyname(
 			CHAR* name);"
 
 	<overlap stdcall: HOSTENT* gethostbyname lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostname: name namelen: namelen 
+gethostname: name namelen: namelen
 	"Invoke the gethostname() function of the module wrapped by the receiver.
 
 		int __stdcall gethostname(
@@ -612,9 +612,9 @@ gethostname: name namelen: namelen
 			int namelen);"
 
 	<stdcall: sdword gethostname lpstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getpeername: s name: name namelen: namelen 
+getpeername: s name: name namelen: namelen
 	"Invoke the getpeername() function of the module wrapped by the receiver.
 
 		int __stdcall getpeername(
@@ -623,27 +623,27 @@ getpeername: s name: name namelen: namelen
 			int* namelen);"
 
 	<stdcall: sdword getpeername handle void* sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getprotobyname: name 
+getprotobyname: name
 	"Invoke the getprotobyname() function of the module wrapped by the receiver.
 
 		protoent* __stdcall getprotobyname(
 			CHAR* name);"
 
 	<stdcall: PROTOENT* getprotobyname lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getprotobynumber: number 
+getprotobynumber: number
 	"Invoke the getprotobynumber() function of the module wrapped by the receiver.
 
 		protoent* __stdcall getprotobynumber(
 			int number);"
 
 	<stdcall: PROTOENT* getprotobynumber sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getservbyname: name proto: proto 
+getservbyname: name proto: proto
 	"Invoke the getservbyname() function of the module wrapped by the receiver.
 
 		servent* __stdcall getservbyname(
@@ -651,9 +651,9 @@ getservbyname: name proto: proto
 			CHAR* proto);"
 
 	<stdcall: SERVENT* getservbyname lpstr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getservbyport: port proto: proto 
+getservbyport: port proto: proto
 	"Invoke the getservbyport() function of the module wrapped by the receiver.
 
 		servent* __stdcall getservbyport(
@@ -661,9 +661,9 @@ getservbyport: port proto: proto
 			CHAR* proto);"
 
 	<stdcall: SERVENT* getservbyport sdword lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getsockname: s name: name namelen: namelen 
+getsockname: s name: name namelen: namelen
 	"Invoke the getsockname() function of the module wrapped by the receiver.
 
 		int __stdcall getsockname(
@@ -672,9 +672,9 @@ getsockname: s name: name namelen: namelen
 			int* namelen);"
 
 	<stdcall: sdword getsockname handle void* sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getsockopt: s level: level optname: optname optval: optval optlen: optlen 
+getsockopt: s level: level optname: optname optval: optval optlen: optlen
 	"Invoke the getsockopt() function of the module wrapped by the receiver.
 
 		int __stdcall getsockopt(
@@ -685,46 +685,46 @@ getsockopt: s level: level optname: optname optval: optval optlen: optlen
 			int* optlen);"
 
 	<stdcall: sdword getsockopt dword sdword sdword lpstr sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-htonl: hostlong 
+htonl: hostlong
 	"Invoke the htonl() function of the module wrapped by the receiver.
 
 		unsigned long __stdcall htonl(
 			unsigned long hostlong);"
 
 	<stdcall: dword htonl dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-htons: hostshort 
+htons: hostshort
 	"Invoke the htons() function of the module wrapped by the receiver.
 
 		unsigned short __stdcall htons(
 			unsigned short hostshort);"
 
 	<stdcall: word htons word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-inet_addr: cp 
+inet_addr: cp
 	"Invoke the inet_addr() function of the module wrapped by the receiver.
 
 		unsigned long __stdcall inet_addr(
 			CHAR* cp);"
 
 	<stdcall: dword inet_addr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 inet_ntop: saInteger pAddr: anIN_ADDR pStringBuf: aString stringBufSize: sizeInteger
 	"Convert an IN_ADDR or IN6_ADDR to a string in canonical form."
 
 	<stdcall: lpstr inet_ntop sdword void* lpstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 inet_pton: saInteger pszAddrString: aString pAddrBuf: anIN_ADDR
 	"Convert an internet address expressed as a string to an IN_ADDR or IN6_ADDR."
 
 	<stdcall: sdword inet_pton sdword lpstr void*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 initialize
 	| version res |
@@ -736,7 +736,7 @@ initialize
 			[wsaData := nil.
 			SocketError signalWith: res]!
 
-ioctlsocket: s cmd: cmd argp: argp 
+ioctlsocket: s cmd: cmd argp: argp
 	"Invoke the ioctlsocket() function of the module wrapped by the receiver.
 
 		int __stdcall ioctlsocket(
@@ -745,9 +745,9 @@ ioctlsocket: s cmd: cmd argp: argp
 			unsigned long* argp);"
 
 	<stdcall: sdword ioctlsocket dword sdword dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-listen: s backlog: backlog 
+listen: s backlog: backlog
 	"Invoke the listen() function of the module wrapped by the receiver.
 
 		int __stdcall listen(
@@ -755,27 +755,27 @@ listen: s backlog: backlog
 			int backlog);"
 
 	<stdcall: sdword listen dword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-ntohl: netlong 
+ntohl: netlong
 	"Invoke the ntohl() function of the module wrapped by the receiver.
 
 		unsigned long __stdcall ntohl(
 			unsigned long netlong);"
 
 	<stdcall: dword ntohl dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-ntohs: netshort 
+ntohs: netshort
 	"Invoke the ntohs() function of the module wrapped by the receiver.
 
 		unsigned short __stdcall ntohs(
 			unsigned short netshort);"
 
 	<stdcall: word ntohs word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-recv: s buf: buf len: len flags: flags 
+recv: s buf: buf len: len flags: flags
 	"Invoke the recv() function of the module wrapped by the receiver.
 
 		int __stdcall recv(
@@ -785,9 +785,9 @@ recv: s buf: buf len: len flags: flags
 			int flags);"
 
 	<overlap stdcall: sdword recv dword void* sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-recvfrom: s buf: buf len: len flags: flags from: from fromlen: fromlen 
+recvfrom: s buf: buf len: len flags: flags from: from fromlen: fromlen
 	"Invoke the recvfrom() function of the module wrapped by the receiver.
 
 		int __stdcall recvfrom(
@@ -799,9 +799,9 @@ recvfrom: s buf: buf len: len flags: flags from: from fromlen: fromlen
 			int* fromlen);"
 
 	<overlap stdcall: sdword recvfrom dword void* sdword sdword void* sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-select: nfds readfds: readfds writefds: writefds exceptfds: exceptfds timeout: timeout 
+select: nfds readfds: readfds writefds: writefds exceptfds: exceptfds timeout: timeout
 	"Invoke the select() function of the module wrapped by the receiver.
 
 		int __stdcall select(
@@ -812,9 +812,9 @@ select: nfds readfds: readfds writefds: writefds exceptfds: exceptfds timeout: t
 			timeval* timeout);"
 
 	<overlap stdcall: sdword select sdword FD_SET* FD_SET* FD_SET* TIMEVAL*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-send: s buf: buf len: len flags: flags 
+send: s buf: buf len: len flags: flags
 	"Invoke the send() function of the module wrapped by the receiver.
 
 		int __stdcall send(
@@ -824,9 +824,9 @@ send: s buf: buf len: len flags: flags
 			int flags);"
 
 	<overlap stdcall: sdword send dword void* sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-sendto: s buf: buf len: len flags: flags to: to tolen: tolen 
+sendto: s buf: buf len: len flags: flags to: to tolen: tolen
 	"Invoke the sendto() function of the module wrapped by the receiver.
 
 		int __stdcall sendto(
@@ -838,9 +838,9 @@ sendto: s buf: buf len: len flags: flags to: to tolen: tolen
 			int tolen);"
 
 	<overlap stdcall: sdword sendto dword void* sdword sdword void* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-setsockopt: s level: level optname: optname optval: optval optlen: optlen 
+setsockopt: s level: level optname: optname optval: optval optlen: optlen
 	"Invoke the setsockopt() function of the module wrapped by the receiver.
 
 		int __stdcall setsockopt(
@@ -851,9 +851,9 @@ setsockopt: s level: level optname: optname optval: optval optlen: optlen
 			int optlen);"
 
 	<stdcall: sdword setsockopt dword sdword sdword lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-shutdown: s how: how 
+shutdown: s how: how
 	"Invoke the shutdown() function of the module wrapped by the receiver.
 
 		int __stdcall shutdown(
@@ -861,9 +861,9 @@ shutdown: s how: how
 			int how);"
 
 	<stdcall: sdword shutdown dword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-socket: af type: type protocol: protocol 
+socket: af type: type protocol: protocol
 	"Invoke the socket() function of the module wrapped by the receiver.
 
 		unsigned int __stdcall socket(
@@ -872,7 +872,7 @@ socket: af type: type protocol: protocol
 			int protocol);"
 
 	<stdcall: handle socket sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaAddressToStringA: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo: lpProtocolInfo lpszAddressString: lpszAddressString lpdwAddressStringLength: lpdwAddressStringLength
 	"Invoke the WSAAddressToStringA() function of the module wrapped by the receiver.
@@ -885,7 +885,7 @@ wsaAddressToStringA: lpsaAddress dwAddressLength: dwAddressLength lpProtocolInfo
 			[in, out]unsigned long* lpdwAddressStringLength);"
 
 	<stdcall: sdword WSAAddressToStringA SOCKADDR* dword void* lpstr dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaCleanup
 	"Invoke the WSACleanup() function of the module wrapped by the receiver.
@@ -893,7 +893,7 @@ wsaCleanup
 		int __stdcall WSACleanup();"
 
 	<stdcall: sdword WSACleanup>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaGetLastError
 	"Invoke the WSAGetLastError() function of the module wrapped by the receiver.
@@ -901,7 +901,7 @@ wsaGetLastError
 		int __stdcall WSAGetLastError();"
 
 	<stdcall: sdword WSAGetLastError>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaStartup: wVersionRequested lpWSAData: lpWSAData
 	"Invoke the WSAStartup() function of the module wrapped by the receiver.
@@ -911,7 +911,7 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 			[out]WSAData* lpWSAData);"
 
 	<stdcall: sdword WSAStartup word WSADATA*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !WS2_32Library categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #bind:name:namelen:!public!win32 functions-sockets library! !
 !WS2_32Library categoriesFor: #close!public!realizing/unrealizing! !

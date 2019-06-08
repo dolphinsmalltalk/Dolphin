@@ -133,7 +133,7 @@ get_baseTypes: baseTypes
 			[out, retval]ISchemaItemCollection** baseTypes);"
 
 	<virtual stdcall: hresult 15 ISchemaItemCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_derivedBy: derivedBy
 	"Private - Get the value of the 'derivedBy' property of the receiver.
@@ -142,7 +142,7 @@ get_derivedBy: derivedBy
 			[out, retval]SCHEMADERIVATIONMETHOD* derivedBy);"
 
 	<virtual stdcall: hresult 18 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_enumeration: enumeration
 	"Private - Get the value of the 'enumeration' property of the receiver.
@@ -151,7 +151,7 @@ get_enumeration: enumeration
 			[out, retval]ISchemaStringCollection** enumeration);"
 
 	<virtual stdcall: hresult 29 ISchemaStringCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_final: final
 	"Private - Get the value of the 'final' property of the receiver.
@@ -160,7 +160,7 @@ get_final: final
 			[out, retval]SCHEMADERIVATIONMETHOD* final);"
 
 	<virtual stdcall: hresult 16 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_fractionDigits: fractionDigits
 	"Private - Get the value of the 'fractionDigits' property of the receiver.
@@ -169,7 +169,7 @@ get_fractionDigits: fractionDigits
 			[out, retval]VARIANT* fractionDigits);"
 
 	<virtual stdcall: hresult 25 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: length
 	"Private - Get the value of the 'length' property of the receiver.
@@ -178,7 +178,7 @@ get_length: length
 			[out, retval]VARIANT* length);"
 
 	<virtual stdcall: hresult 26 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_maxExclusive: maxExclusive
 	"Private - Get the value of the 'maxExclusive' property of the receiver.
@@ -187,7 +187,7 @@ get_maxExclusive: maxExclusive
 			[out, retval]BSTR* maxExclusive);"
 
 	<virtual stdcall: hresult 22 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_maxInclusive: maxInclusive
 	"Private - Get the value of the 'maxInclusive' property of the receiver.
@@ -196,7 +196,7 @@ get_maxInclusive: maxInclusive
 			[out, retval]BSTR* maxInclusive);"
 
 	<virtual stdcall: hresult 23 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_maxLength: maxLength
 	"Private - Get the value of the 'maxLength' property of the receiver.
@@ -205,7 +205,7 @@ get_maxLength: maxLength
 			[out, retval]VARIANT* maxLength);"
 
 	<virtual stdcall: hresult 28 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_minExclusive: minExclusive
 	"Private - Get the value of the 'minExclusive' property of the receiver.
@@ -214,7 +214,7 @@ get_minExclusive: minExclusive
 			[out, retval]BSTR* minExclusive);"
 
 	<virtual stdcall: hresult 20 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_minInclusive: minInclusive
 	"Private - Get the value of the 'minInclusive' property of the receiver.
@@ -223,7 +223,7 @@ get_minInclusive: minInclusive
 			[out, retval]BSTR* minInclusive);"
 
 	<virtual stdcall: hresult 21 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_minLength: minLength
 	"Private - Get the value of the 'minLength' property of the receiver.
@@ -232,7 +232,7 @@ get_minLength: minLength
 			[out, retval]VARIANT* minLength);"
 
 	<virtual stdcall: hresult 27 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_patterns: patterns
 	"Private - Get the value of the 'patterns' property of the receiver.
@@ -241,7 +241,7 @@ get_patterns: patterns
 			[out, retval]ISchemaStringCollection** patterns);"
 
 	<virtual stdcall: hresult 31 ISchemaStringCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_totalDigits: totalDigits
 	"Private - Get the value of the 'totalDigits' property of the receiver.
@@ -250,7 +250,7 @@ get_totalDigits: totalDigits
 			[out, retval]VARIANT* totalDigits);"
 
 	<virtual stdcall: hresult 24 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_variety: variety
 	"Private - Get the value of the 'variety' property of the receiver.
@@ -259,7 +259,7 @@ get_variety: variety
 			[out, retval]SCHEMATYPEVARIETY* variety);"
 
 	<virtual stdcall: hresult 17 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_whitespace: whitespace
 	"Private - Get the value of the 'whitespace' property of the receiver.
@@ -268,7 +268,7 @@ get_whitespace: whitespace
 			[out, retval]SCHEMAWHITESPACE* whitespace);"
 
 	<virtual stdcall: hresult 30 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isValid: data
 	"Answer the <VARIANT_BOOL> result of invoking the isValid() method of the COM object."
@@ -289,7 +289,7 @@ IsValid: data valid: valid
 			[out, retval]VARIANT_BOOL* valid);"
 
 	<virtual stdcall: hresult 19 bstr varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 length
 	"Answer the <variant> value of the 'length' property of the receiver."

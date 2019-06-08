@@ -45,8 +45,7 @@ BeginTrans: transactionLevel
 			[out, retval] long* TransactionLevel);"
 
 	<virtual stdcall: hresult 18 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Close
 	"Invoke the Close() method of the COM object.
@@ -54,8 +53,7 @@ Close
 		HRESULT __stdcall Close();"
 
 	<virtual stdcall: hresult 16>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 commandTimeout
 	"Answer the <sdword> value of the 'CommandTimeout' property of the receiver."
@@ -78,8 +76,7 @@ CommitTrans
 		HRESULT __stdcall CommitTrans();"
 
 	<virtual stdcall: hresult 19>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 connectionString
 	"Answer the <bstr> value of the 'ConnectionString' property of the receiver."
@@ -184,8 +181,7 @@ Execute: commandText RecordsAffected: recordsAffected Options: options ppiRset: 
 			[out, retval] _Recordset** ppiRset);"
 
 	<virtual stdcall: hresult 17 bstr variant* sdword ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Attributes: plAttr
 	"Private - Get the value of the 'Attributes' property of the receiver.
@@ -193,8 +189,7 @@ get_Attributes: plAttr
 			[out, retval] long* plAttr);"
 
 	<virtual stdcall: hresult 27 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CommandTimeout: plTimeout
 	"Private - Get the value of the 'CommandTimeout' property of the receiver.
@@ -202,8 +197,7 @@ get_CommandTimeout: plTimeout
 			[out, retval] long* plTimeout);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ConnectionString: pbstr
 	"Private - Get the value of the 'ConnectionString' property of the receiver.
@@ -211,8 +205,7 @@ get_ConnectionString: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ConnectionTimeout: plTimeout
 	"Private - Get the value of the 'ConnectionTimeout' property of the receiver.
@@ -220,8 +213,7 @@ get_ConnectionTimeout: plTimeout
 			[out, retval] long* plTimeout);"
 
 	<virtual stdcall: hresult 13 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CursorLocation: plCursorLoc
 	"Private - Get the value of the 'CursorLocation' property of the receiver.
@@ -229,8 +221,7 @@ get_CursorLocation: plCursorLoc
 			[out, retval] CursorLocationEnum* plCursorLoc);"
 
 	<virtual stdcall: hresult 29 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DefaultDatabase: pbstr
 	"Private - Get the value of the 'DefaultDatabase' property of the receiver.
@@ -238,8 +229,7 @@ get_DefaultDatabase: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 23 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Errors: ppvObject
 	"Private - Get the value of the 'Errors' property of the receiver.
@@ -247,8 +237,7 @@ get_Errors: ppvObject
 			[out, retval] Errors** ppvObject);"
 
 	<virtual stdcall: hresult 22 ADODBErrors**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_IsolationLevel: level
 	"Private - Get the value of the 'IsolationLevel' property of the receiver.
@@ -256,8 +245,7 @@ get_IsolationLevel: level
 			[out, retval] IsolationLevelEnum* Level);"
 
 	<virtual stdcall: hresult 25 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Mode: plMode
 	"Private - Get the value of the 'Mode' property of the receiver.
@@ -265,8 +253,7 @@ get_Mode: plMode
 			[out, retval] ConnectModeEnum* plMode);"
 
 	<virtual stdcall: hresult 31 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Provider: pbstr
 	"Private - Get the value of the 'Provider' property of the receiver.
@@ -274,8 +261,7 @@ get_Provider: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 33 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_State: plObjState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -283,8 +269,7 @@ get_State: plObjState
 			[out, retval] long* plObjState);"
 
 	<virtual stdcall: hresult 35 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Version: pbstr
 	"Private - Get the value of the 'Version' property of the receiver.
@@ -292,8 +277,7 @@ get_Version: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -360,14 +344,19 @@ Open: connectionString UserID: userID Password: password Options: options
 	"Invoke the Open() method of the COM object.
 
 		HRESULT __stdcall Open(
-			[in, optional, defaultvalue("")] BSTR ConnectionString,
-			[in, optional, defaultvalue("")] BSTR UserID,
-			[in, optional, defaultvalue("")] BSTR Password,
+			[in, optional, defaultvalue("
+
+	")] BSTR ConnectionString,
+			[in, optional, defaultvalue("
+
+	")] BSTR UserID,
+			[in, optional, defaultvalue("
+
+	")] BSTR Password,
 			[in, optional, defaultvalue(-1)] long Options);"
 
 	<virtual stdcall: hresult 21 bstr bstr bstr sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 openSchema: schema
 	"Answer the <ADODB_Recordset> result of invoking the OpenSchema() method of the COM object.
@@ -401,8 +390,7 @@ OpenSchema: schema Restrictions: restrictions SchemaID: schemaID pprset: pprset
 			[out, retval] _Recordset** pprset);"
 
 	<virtual stdcall: hresult 36 sdword variant variant ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 provider
 	"Answer the <bstr> value of the 'Provider' property of the receiver."
@@ -426,8 +414,7 @@ put_Attributes: plAttr
 			[in] long plAttr);"
 
 	<virtual stdcall: hresult 28 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CommandTimeout: plTimeout
 	"Private - Set the value of the 'CommandTimeout' property of the object wrapped by the 
@@ -436,8 +423,7 @@ put_CommandTimeout: plTimeout
 			[in] long plTimeout);"
 
 	<virtual stdcall: hresult 12 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ConnectionString: pbstr
 	"Private - Set the value of the 'ConnectionString' property of the object wrapped by the 
@@ -446,8 +432,7 @@ put_ConnectionString: pbstr
 			[in] BSTR pbstr);"
 
 	<virtual stdcall: hresult 10 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ConnectionTimeout: plTimeout
 	"Private - Set the value of the 'ConnectionTimeout' property of the object wrapped by the 
@@ -456,8 +441,7 @@ put_ConnectionTimeout: plTimeout
 			[in] long plTimeout);"
 
 	<virtual stdcall: hresult 14 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CursorLocation: plCursorLoc
 	"Private - Set the value of the 'CursorLocation' property of the object wrapped by the 
@@ -466,8 +450,7 @@ put_CursorLocation: plCursorLoc
 			[in] CursorLocationEnum plCursorLoc);"
 
 	<virtual stdcall: hresult 30 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DefaultDatabase: pbstr
 	"Private - Set the value of the 'DefaultDatabase' property of the object wrapped by the 
@@ -476,8 +459,7 @@ put_DefaultDatabase: pbstr
 			[in] BSTR pbstr);"
 
 	<virtual stdcall: hresult 24 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_IsolationLevel: level
 	"Private - Set the value of the 'IsolationLevel' property of the object wrapped by the 
@@ -486,8 +468,7 @@ put_IsolationLevel: level
 			[in] IsolationLevelEnum Level);"
 
 	<virtual stdcall: hresult 26 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Mode: plMode
 	"Private - Set the value of the 'Mode' property of the object wrapped by the 
@@ -496,8 +477,7 @@ put_Mode: plMode
 			[in] ConnectModeEnum plMode);"
 
 	<virtual stdcall: hresult 32 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Provider: pbstr
 	"Private - Set the value of the 'Provider' property of the object wrapped by the 
@@ -506,8 +486,7 @@ put_Provider: pbstr
 			[in] BSTR pbstr);"
 
 	<virtual stdcall: hresult 34 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 query: aString 
 	"Execute the SQL in aString.
@@ -521,8 +500,7 @@ RollbackTrans
 		HRESULT __stdcall RollbackTrans();"
 
 	<virtual stdcall: hresult 20>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 state
 	"Answer the <sdword> value of the 'State' property of the receiver."

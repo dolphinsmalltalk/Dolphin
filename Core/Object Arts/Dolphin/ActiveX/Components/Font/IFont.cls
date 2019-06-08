@@ -34,8 +34,7 @@ AddRefHfont: hFont
 	"
 
 	<virtual stdcall: hresult 24 handle>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 bold
 	"Answer the <varbool> value of the 'Bold' property of the receiver."
@@ -83,8 +82,7 @@ Clone: ppfont
 			[out] IFont** ppfont);"
 
 	<virtual stdcall: hresult 21 IFont**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Bold: pbold
 	"Private - Get the value of the 'Bold' property of the receiver.
@@ -93,8 +91,7 @@ get_Bold: pbold
 			[out, retval] VARIANT_BOOL* pbold);"
 
 	<virtual stdcall: hresult 8 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Charset: pcharset
 	"Private - Get the value of the 'Charset' property of the receiver.
@@ -103,17 +100,16 @@ get_Charset: pcharset
 			[out, retval] short* pcharset);"
 
 	<virtual stdcall: hresult 18 sword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-get_hFont: phfont 
+get_hFont: phfont
 	"Private - Get the value of the 'hFont' property of the receiver.
 
 		HRESULT __stdcall hFont(
 			[out, retval] OLE_HANDLE* phfont);"
 
 	<virtual stdcall: hresult 20 handle*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Italic: pitalic
 	"Private - Get the value of the 'Italic' property of the receiver.
@@ -122,8 +118,7 @@ get_Italic: pitalic
 			[out, retval] VARIANT_BOOL* pitalic);"
 
 	<virtual stdcall: hresult 10 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Name: pname
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -132,8 +127,7 @@ get_Name: pname
 			[out, retval] BSTR* pname);"
 
 	<virtual stdcall: hresult 4 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Size: psize
 	"Private - Get the value of the 'Size' property of the receiver.
@@ -142,8 +136,7 @@ get_Size: psize
 			[out, retval] CURRENCY* psize);"
 
 	<virtual stdcall: hresult 6 CURRENCY*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Strikethrough: pstrikethrough
 	"Private - Get the value of the 'Strikethrough' property of the receiver.
@@ -152,8 +145,7 @@ get_Strikethrough: pstrikethrough
 			[out, retval] VARIANT_BOOL* pstrikethrough);"
 
 	<virtual stdcall: hresult 14 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Underline: punderline
 	"Private - Get the value of the 'Underline' property of the receiver.
@@ -162,8 +154,7 @@ get_Underline: punderline
 			[out, retval] VARIANT_BOOL* punderline);"
 
 	<virtual stdcall: hresult 12 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Weight: pweight
 	"Private - Get the value of the 'Weight' property of the receiver.
@@ -172,8 +163,7 @@ get_Weight: pweight
 			[out, retval] short* pweight);"
 
 	<virtual stdcall: hresult 16 sword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 hFont
 	"Answer the handle of the font."
@@ -196,8 +186,7 @@ IsEqual: pfontOther
 			[in] IFont* pfontOther);"
 
 	<virtual stdcall: hresult 22 IFont*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 italic
 	"Answer the <varbool> value of the 'Italic' property of the receiver."
@@ -237,8 +226,7 @@ put_Bold: pbold
 			[in] VARIANT_BOOL pbold);"
 
 	<virtual stdcall: hresult 9 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Charset: pcharset
 	"Private - Set the value of the 'Charset' property of the object wrapped by the 
@@ -248,8 +236,7 @@ put_Charset: pcharset
 			[in] short pcharset);"
 
 	<virtual stdcall: hresult 19 sword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Italic: pitalic
 	"Private - Set the value of the 'Italic' property of the object wrapped by the 
@@ -259,8 +246,7 @@ put_Italic: pitalic
 			[in] VARIANT_BOOL pitalic);"
 
 	<virtual stdcall: hresult 11 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Name: pname
 	"Private - Set the value of the 'Name' property of the object wrapped by the 
@@ -270,8 +256,7 @@ put_Name: pname
 			[in] BSTR pname);"
 
 	<virtual stdcall: hresult 5 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Size: psize
 	"Private - Set the value of the 'Size' property of the object wrapped by the 
@@ -281,8 +266,7 @@ put_Size: psize
 			[in] CURRENCY psize);"
 
 	<virtual stdcall: hresult 7 CURRENCY>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Strikethrough: pstrikethrough
 	"Private - Set the value of the 'Strikethrough' property of the object wrapped by the 
@@ -292,8 +276,7 @@ put_Strikethrough: pstrikethrough
 			[in] VARIANT_BOOL pstrikethrough);"
 
 	<virtual stdcall: hresult 15 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Underline: punderline
 	"Private - Set the value of the 'Underline' property of the object wrapped by the 
@@ -303,8 +286,7 @@ put_Underline: punderline
 			[in] VARIANT_BOOL punderline);"
 
 	<virtual stdcall: hresult 13 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Weight: pweight
 	"Private - Set the value of the 'Weight' property of the object wrapped by the 
@@ -314,8 +296,7 @@ put_Weight: pweight
 			[in] short pweight);"
 
 	<virtual stdcall: hresult 17 sword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 releaseHfont: aFont 
 	"Invoke the ReleaseHfont() method of the COM Object."
@@ -331,8 +312,7 @@ ReleaseHfont: hFont
 	"
 
 	<virtual stdcall: hresult 25 handle>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 setRatio: cyLogical cyHimetric: cyHimetric
 	"Invoke the SetRatio() method of the COM object."
@@ -350,8 +330,7 @@ SetRatio: cyLogical cyHimetric: cyHimetric
 			[in] long cyHimetric);"
 
 	<virtual stdcall: hresult 23 sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 size
 	"Answer the <CURRENCY> value of the 'Size' property of the receiver."

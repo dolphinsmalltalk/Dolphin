@@ -52,7 +52,7 @@ Error: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 			[in]HRESULT hrErrorCode);"
 
 	<virtual stdcall: hresult 4 ISAXLocator* word* hresult>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 FatalError: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 	"Invoke the fatalError() method of the COM object.
@@ -63,7 +63,7 @@ FatalError: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 			[in]HRESULT hrErrorCode);"
 
 	<virtual stdcall: hresult 5 ISAXLocator* word* hresult>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
 	"Invoke the ignorableWarning() method of the COM object.
@@ -74,7 +74,7 @@ IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErr
 			[in]HRESULT hrErrorCode);"
 
 	<virtual stdcall: hresult 6 ISAXLocator* word* hresult>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXErrorHandler categoriesFor: #Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
 !ISAXErrorHandler categoriesFor: #FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
 !ISAXErrorHandler categoriesFor: #IgnorableWarning:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !

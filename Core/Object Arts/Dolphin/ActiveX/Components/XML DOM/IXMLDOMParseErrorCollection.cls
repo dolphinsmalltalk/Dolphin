@@ -60,7 +60,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_item: index error: error
 	"Private - Get the value of the 'item' property of the receiver.
@@ -70,7 +70,7 @@ get_item: index error: error
 			[out, retval]IXMLDOMParseError2** error);"
 
 	<virtual stdcall: hresult 8 sdword IXMLDOMParseError2**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: length
 	"Private - Get the value of the 'length' property of the receiver.
@@ -79,7 +79,7 @@ get_length: length
 			[out, retval]long* length);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_next: error
 	"Private - Get the value of the 'next' property of the receiver.
@@ -88,7 +88,7 @@ get_next: error
 			[out, retval]IXMLDOMParseError2** error);"
 
 	<virtual stdcall: hresult 10 IXMLDOMParseError2**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -135,7 +135,7 @@ Reset
 		HRESULT __stdcall reset();"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMParseErrorCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !IXMLDOMParseErrorCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
 !IXMLDOMParseErrorCollection categoriesFor: #get_item:error:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !

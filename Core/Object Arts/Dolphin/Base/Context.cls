@@ -12,28 +12,28 @@ Context comment: ''!
 
 at: index
 	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented.
+	As basicAt:, but may be reimplemented."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
 
 	<primitive: 60>
-	^self errorAt: index!
+	^self _primitiveError: _failureCode at: index!
 
 at: index put: value
-	"Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value.
-	As basicAt:put: but may be reimplemented.
+	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	As basicAt:put: but may be reimplemented."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		2	- the argument, value, is not of a class which can be stored in the receiver
-			(e.g. its a non-SmallInteger and the receiver is a ByteArray)."
+	"Primitive Failure Reasons:
+		NonIntegerIndex		- aSmallInteger is not a SmallInteger
+		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
 
 	<primitive: 61>
-	^self errorAt: index put: value!
+	^self
+		_primitiveError: _failureCode
+		at: index
+		put: value!
 
 block
 	^block!

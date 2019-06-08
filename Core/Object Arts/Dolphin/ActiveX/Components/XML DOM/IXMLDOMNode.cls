@@ -89,7 +89,7 @@ AppendChild: newChild outNewChild: outNewChild
 			[out, retval]IXMLDOMNode** outNewChild);"
 
 	<virtual stdcall: hresult 22 IXMLDOMNode* IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asImplType
 	"Attempt to 'cast' the receiver down from IDispatch to its actual derived interface
@@ -169,7 +169,7 @@ CloneNode: deep cloneRoot: cloneRoot
 			[out, retval]IXMLDOMNode** cloneRoot);"
 
 	<virtual stdcall: hresult 25 varbool IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 dataType
 	"Answer the <variant> value of the 'dataType' property of the receiver.
@@ -227,7 +227,7 @@ get_attributes: attributeMap
 			[out, retval]IXMLDOMNamedNodeMap** attributeMap);"
 
 	<virtual stdcall: hresult 18 IXMLDOMNamedNodeMap**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_baseName: nameString
 	"Private - Get the value of the 'baseName' property of the receiver.
@@ -236,7 +236,7 @@ get_baseName: nameString
 			[out, retval]BSTR* nameString);"
 
 	<virtual stdcall: hresult 42 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_childNodes: childList
 	"Private - Get the value of the 'childNodes' property of the receiver.
@@ -245,7 +245,7 @@ get_childNodes: childList
 			[out, retval]IXMLDOMNodeList** childList);"
 
 	<virtual stdcall: hresult 13 IXMLDOMNodeList**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_dataType: dataTypeName
 	"Private - Get the value of the 'dataType' property of the receiver.
@@ -254,7 +254,7 @@ get_dataType: dataTypeName
 			[out, retval]VARIANT* dataTypeName);"
 
 	<virtual stdcall: hresult 33 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_definition: definitionNode
 	"Private - Get the value of the 'definition' property of the receiver.
@@ -263,7 +263,7 @@ get_definition: definitionNode
 			[out, retval]IXMLDOMNode** definitionNode);"
 
 	<virtual stdcall: hresult 30 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_firstChild: firstChild
 	"Private - Get the value of the 'firstChild' property of the receiver.
@@ -272,7 +272,7 @@ get_firstChild: firstChild
 			[out, retval]IXMLDOMNode** firstChild);"
 
 	<virtual stdcall: hresult 14 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_lastChild: lastChild
 	"Private - Get the value of the 'lastChild' property of the receiver.
@@ -281,7 +281,7 @@ get_lastChild: lastChild
 			[out, retval]IXMLDOMNode** lastChild);"
 
 	<virtual stdcall: hresult 15 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_namespaceURI: namespaceURI
 	"Private - Get the value of the 'namespaceURI' property of the receiver.
@@ -290,7 +290,7 @@ get_namespaceURI: namespaceURI
 			[out, retval]BSTR* namespaceURI);"
 
 	<virtual stdcall: hresult 40 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nextSibling: nextSibling
 	"Private - Get the value of the 'nextSibling' property of the receiver.
@@ -299,7 +299,7 @@ get_nextSibling: nextSibling
 			[out, retval]IXMLDOMNode** nextSibling);"
 
 	<virtual stdcall: hresult 17 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nodeName: name
 	"Private - Get the value of the 'nodeName' property of the receiver.
@@ -308,7 +308,7 @@ get_nodeName: name
 			[out, retval]BSTR* name);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nodeType: type
 	"Private - Get the value of the 'nodeType' property of the receiver.
@@ -317,7 +317,7 @@ get_nodeType: type
 			[out, retval]DOMNodeType* type);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nodeTypedValue: typedValue
 	"Private - Get the value of the 'nodeTypedValue' property of the receiver.
@@ -326,7 +326,7 @@ get_nodeTypedValue: typedValue
 			[out, retval]VARIANT* typedValue);"
 
 	<virtual stdcall: hresult 31 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nodeTypeString: nodeType
 	"Private - Get the value of the 'nodeTypeString' property of the receiver.
@@ -335,7 +335,7 @@ get_nodeTypeString: nodeType
 			[out, retval]BSTR* nodeType);"
 
 	<virtual stdcall: hresult 26 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_nodeValue: value
 	"Private - Get the value of the 'nodeValue' property of the receiver.
@@ -344,7 +344,7 @@ get_nodeValue: value
 			[out, retval]VARIANT* value);"
 
 	<virtual stdcall: hresult 9 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_ownerDocument: domDocument
 	"Private - Get the value of the 'ownerDocument' property of the receiver.
@@ -353,7 +353,7 @@ get_ownerDocument: domDocument
 			[out, retval]IXMLDOMDocument** DOMDocument);"
 
 	<virtual stdcall: hresult 24 IXMLDOMDocument**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_parentNode: parent
 	"Private - Get the value of the 'parentNode' property of the receiver.
@@ -362,7 +362,7 @@ get_parentNode: parent
 			[out, retval]IXMLDOMNode** parent);"
 
 	<virtual stdcall: hresult 12 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_parsed: isParsed
 	"Private - Get the value of the 'parsed' property of the receiver.
@@ -371,7 +371,7 @@ get_parsed: isParsed
 			[out, retval]VARIANT_BOOL* isParsed);"
 
 	<virtual stdcall: hresult 39 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_prefix: prefixString
 	"Private - Get the value of the 'prefix' property of the receiver.
@@ -380,7 +380,7 @@ get_prefix: prefixString
 			[out, retval]BSTR* prefixString);"
 
 	<virtual stdcall: hresult 41 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_previousSibling: previousSibling
 	"Private - Get the value of the 'previousSibling' property of the receiver.
@@ -389,7 +389,7 @@ get_previousSibling: previousSibling
 			[out, retval]IXMLDOMNode** previousSibling);"
 
 	<virtual stdcall: hresult 16 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_specified: isSpecified
 	"Private - Get the value of the 'specified' property of the receiver.
@@ -398,7 +398,7 @@ get_specified: isSpecified
 			[out, retval]VARIANT_BOOL* isSpecified);"
 
 	<virtual stdcall: hresult 29 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_text: text
 	"Private - Get the value of the 'text' property of the receiver.
@@ -407,7 +407,7 @@ get_text: text
 			[out, retval]BSTR* text);"
 
 	<virtual stdcall: hresult 27 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_xml: xmlString
 	"Private - Get the value of the 'xml' property of the receiver.
@@ -416,7 +416,7 @@ get_xml: xmlString
 			[out, retval]BSTR* xmlString);"
 
 	<virtual stdcall: hresult 35 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 hasChildNodes
 	"Answer the <VARIANT_BOOL> result of invoking the hasChildNodes() method of the COM object."
@@ -434,7 +434,7 @@ HasChildNodes: hasChild
 			[out, retval]VARIANT_BOOL* hasChild);"
 
 	<virtual stdcall: hresult 23 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 innerXML
 	"Answer the XML text of all child nodes of the receiver."
@@ -464,7 +464,7 @@ InsertBefore: newChild refChild: refChild outNewChild: outNewChild
 			[out, retval]IXMLDOMNode** outNewChild);"
 
 	<virtual stdcall: hresult 19 IXMLDOMNode* variant IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -653,7 +653,7 @@ put_dataType: dataTypeName
 			[in]BSTR dataTypeName);"
 
 	<virtual stdcall: hresult 34 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_nodeTypedValue: typedValue
 	"Private - Set the value of the 'nodeTypedValue' property of the object wrapped by the 
@@ -663,7 +663,7 @@ put_nodeTypedValue: typedValue
 			[in]VARIANT typedValue);"
 
 	<virtual stdcall: hresult 32 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_nodeValue: value
 	"Private - Set the value of the 'nodeValue' property of the object wrapped by the 
@@ -673,7 +673,7 @@ put_nodeValue: value
 			[in]VARIANT value);"
 
 	<virtual stdcall: hresult 10 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_text: text
 	"Private - Set the value of the 'text' property of the object wrapped by the 
@@ -683,7 +683,7 @@ put_text: text
 			[in]BSTR text);"
 
 	<virtual stdcall: hresult 28 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeChild: childNode
 	"Answer the <IXMLDOMNode> result of invoking the removeChild() method of the COM object.
@@ -706,7 +706,7 @@ RemoveChild: childNode oldChild: oldChild
 			[out, retval]IXMLDOMNode** oldChild);"
 
 	<virtual stdcall: hresult 21 IXMLDOMNode* IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 replaceChild: newChild oldChild: oldChild
 	"Answer the <IXMLDOMNode> result of invoking the replaceChild() method of the COM object.
@@ -731,7 +731,7 @@ ReplaceChild: newChild oldChild: oldChild outOldChild: outOldChild
 			[out, retval]IXMLDOMNode** outOldChild);"
 
 	<virtual stdcall: hresult 20 IXMLDOMNode* IXMLDOMNode* IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectNodes: queryString 
 	"Answer a <sequencedReadableCollection> on the <IXMLDOMNodeList> result 
@@ -756,7 +756,7 @@ SelectNodes: queryString resultList: resultList
 			[out, retval]IXMLDOMNodeList** resultList);"
 
 	<virtual stdcall: hresult 37 bstr IXMLDOMNodeList**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 selectSingleNode: queryString
 	"Answer the <IXMLDOMNode> result of invoking the selectSingleNode() method of the COM object.
@@ -779,7 +779,7 @@ SelectSingleNode: queryString resultNode: resultNode
 			[out, retval]IXMLDOMNode** resultNode);"
 
 	<virtual stdcall: hresult 38 bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setNodeTypeAndValue: anObject
 	"Set the 'dataType' and 'nodeTypedValue' properties of the receiver to the 
@@ -853,7 +853,7 @@ TransformNode: stylesheet xmlString: xmlString
 			[out, retval]BSTR* xmlString);"
 
 	<virtual stdcall: hresult 36 IXMLDOMNode* bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 transformNodeToObject: stylesheet outputObject: outputObject
 	"Invoke the transformNodeToObject() method of the COM object.
@@ -873,7 +873,7 @@ TransformNodeToObject: stylesheet outputObject: outputObject
 			[in]VARIANT outputObject);"
 
 	<virtual stdcall: hresult 43 IXMLDOMNode* variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 xml
 	"Answer the <bstr> value of the 'xml' property of the receiver.

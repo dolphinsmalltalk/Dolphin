@@ -80,7 +80,7 @@ Clone: ppNode
 			[out, retval]IXMLDOMSelection** ppNode);"
 
 	<virtual stdcall: hresult 21 IXMLDOMSelection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 context
 	"Answer the <IXMLDOMNode> value of the 'context' property of the receiver.
@@ -116,7 +116,7 @@ get_context: ppNode
 			[out, retval]IXMLDOMNode** ppNode);"
 
 	<virtual stdcall: hresult 15 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_expr: expression
 	"Private - Get the value of the 'expr' property of the receiver.
@@ -125,7 +125,7 @@ get_expr: expression
 			[out, retval]BSTR* expression);"
 
 	<virtual stdcall: hresult 13 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetProperty: name value: value
 	"Private - Invoke the getProperty() method of the COM object.
@@ -136,7 +136,7 @@ GetProperty: name value: value
 			[out, retval]VARIANT* value);"
 
 	<virtual stdcall: hresult 22 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProperty_: name
 	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
@@ -171,7 +171,7 @@ Matches: pNode ppNode: ppNode
 			[out, retval]IXMLDOMNode** ppNode);"
 
 	<virtual stdcall: hresult 18 IXMLDOMNode* IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 peekNode
 	"Answer the <IXMLDOMNode> result of invoking the peekNode() method of the COM object.
@@ -191,7 +191,7 @@ PeekNode: ppNode
 			[out, retval]IXMLDOMNode** ppNode);"
 
 	<virtual stdcall: hresult 17 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_expr: expression
 	"Private - Set the value of the 'expr' property of the object wrapped by the 
@@ -201,7 +201,7 @@ put_expr: expression
 			[in]BSTR expression);"
 
 	<virtual stdcall: hresult 14 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_context: ppNode
 	"Private - Set the value of the 'context' property of the object wrapped by the 
@@ -211,7 +211,7 @@ putref_context: ppNode
 			[in]IXMLDOMNode* ppNode);"
 
 	<virtual stdcall: hresult 16 IXMLDOMNode*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 RemoveAll
 	"Invoke the removeAll() method of the COM object.
@@ -220,7 +220,7 @@ RemoveAll
 		HRESULT __stdcall removeAll();"
 
 	<virtual stdcall: hresult 20>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeNext
 	"Answer the <IXMLDOMNode> result of invoking the removeNext() method of the COM object.
@@ -240,7 +240,7 @@ RemoveNext: ppNode
 			[out, retval]IXMLDOMNode** ppNode);"
 
 	<virtual stdcall: hresult 19 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setContext: ppNode
 	"Set the 'context' property of the receiver to the <IXMLDOMNode*> value of the argument.
@@ -258,7 +258,7 @@ SetProperty: name value: value
 			[in]VARIANT value);"
 
 	<virtual stdcall: hresult 23 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setProperty_: name value: value
 	"Invoke the setProperty() method of the COM object.

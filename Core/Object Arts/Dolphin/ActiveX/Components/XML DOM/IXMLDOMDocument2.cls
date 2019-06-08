@@ -50,7 +50,7 @@ get_namespaces: namespaceCollection
 			[out, retval]IXMLDOMSchemaCollection** namespaceCollection);"
 
 	<virtual stdcall: hresult 77 IXMLDOMSchemaCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_schemas: otherCollection
 	"Private - Get the value of the 'schemas' property of the receiver.
@@ -59,7 +59,7 @@ get_schemas: otherCollection
 			[out, retval]VARIANT* otherCollection);"
 
 	<virtual stdcall: hresult 78 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetProperty: name value: value
 	"Private - Invoke the getProperty() method of the COM object.
@@ -70,7 +70,7 @@ GetProperty: name value: value
 			[out, retval]VARIANT* value);"
 
 	<virtual stdcall: hresult 82 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProperty_: name
 	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object.
@@ -102,7 +102,7 @@ putref_schemas: otherCollection
 			[in]VARIANT otherCollection);"
 
 	<virtual stdcall: hresult 79 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 schemas
 	"Answer the <variant> value of the 'schemas' property of the receiver.
@@ -123,7 +123,7 @@ SetProperty: name value: value
 			[in]VARIANT value);"
 
 	<virtual stdcall: hresult 81 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setProperty_: name value: value
 	"Invoke the setProperty() method of the COM object.
@@ -159,7 +159,7 @@ Validate: errorObj
 			[out, retval]IXMLDOMParseError** errorObj);"
 
 	<virtual stdcall: hresult 80 IXMLDOMParseError**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMDocument2 categoriesFor: #get_namespaces:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
 !IXMLDOMDocument2 categoriesFor: #get_schemas:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !
 !IXMLDOMDocument2 categoriesFor: #GetProperty:value:!**auto generated**!COM Interfaces-IXMLDOMDocument2!private! !

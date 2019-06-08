@@ -33,6 +33,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Anonymous Classes'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Collection Arithmetic'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
 	'STON-Core'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 

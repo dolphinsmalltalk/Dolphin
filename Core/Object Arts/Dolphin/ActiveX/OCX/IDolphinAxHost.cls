@@ -71,8 +71,7 @@ CreateControlLicEx: lpTricsData hWnd: hWnd pStream: pStream ppUnk: ppUnk piAdvis
 			[in] BSTR bstrLic);"
 
 	<virtual stdcall: hresult 7 lpwstr handle IStream* IUnknown** IPropertyNotifySink* bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_IsWindowless: pbIsWindowless
 	"Private - Get the value of the 'IsWindowless' property of the receiver.
@@ -81,8 +80,7 @@ get_IsWindowless: pbIsWindowless
 			[out, retval] VARIANT_BOOL* pbIsWindowless);"
 
 	<virtual stdcall: hresult 8 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isWindowless
 	"Answer the <varbool> value of the 'IsWindowless' property of the receiver.
@@ -112,9 +110,8 @@ QueryControl: riid ppiObject: ppiObject
 			[in] GUID* riid,
 			[out] IUnknown** ppiObject);"
 
-	<virtual stdcall: hresult 6 GUID* IUnknown**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 6 guid* IUnknown**>
+	^self invalidCall: _failureCode!
 
 SetExternalDispatch: pDisp
 	"Invoke the SetExternalDispatch() method of the COM object.
@@ -123,8 +120,7 @@ SetExternalDispatch: pDisp
 			[in] IDispatch* pDisp);"
 
 	<virtual stdcall: hresult 4 IDispatch*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetExternalUIHandler: pDisp
 	"Invoke the SetExternalUIHandler() method of the COM object.
@@ -133,8 +129,7 @@ SetExternalUIHandler: pDisp
 			[in] IDocHostUIHandlerDispatch* pDisp);"
 
 	<virtual stdcall: hresult 5 IDocHostUIHandlerDispatch*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IDolphinAxHost categoriesFor: #createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
 !IDolphinAxHost categoriesFor: #CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
 !IDolphinAxHost categoriesFor: #get_IsWindowless:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !

@@ -27,8 +27,7 @@ SetDescription: szDescription
 	"
 
 	<virtual stdcall: hresult 6 lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetGuid: rguid
 	"Invoke the SetGuid() method of the object wrapped by the receiver.
@@ -38,9 +37,8 @@ SetGuid: rguid
 
 	"
 
-	<virtual stdcall: hresult 4 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 guid*>
+	^self invalidCall: _failureCode!
 
 SetHelpContext: dwHelpContext
 	"Invoke the SetHelpContext() method of the object wrapped by the receiver.
@@ -51,8 +49,7 @@ SetHelpContext: dwHelpContext
 	"
 
 	<virtual stdcall: hresult 8 dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetHelpFile: szHelpFile
 	"Invoke the SetHelpFile() method of the object wrapped by the receiver.
@@ -63,8 +60,7 @@ SetHelpFile: szHelpFile
 	"
 
 	<virtual stdcall: hresult 7 lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SetSource: szSource
 	"Invoke the SetSource() method of the object wrapped by the receiver.
@@ -75,8 +71,7 @@ SetSource: szSource
 	"
 
 	<virtual stdcall: hresult 5 lpwstr>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ICreateErrorInfo categoriesFor: #errorInfo!accessing-interfaces!public! !
 !ICreateErrorInfo categoriesFor: #SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
 !ICreateErrorInfo categoriesFor: #SetGuid:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !

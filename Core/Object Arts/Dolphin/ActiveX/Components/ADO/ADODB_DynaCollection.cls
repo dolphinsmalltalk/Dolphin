@@ -21,8 +21,7 @@ Append: object
 			[in] IDispatch* Object);"
 
 	<virtual stdcall: hresult 11 IDispatch*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 delete: index
 	"Invoke the Delete() method of the COM object."
@@ -37,8 +36,7 @@ Delete: index
 			[in] VARIANT Index);"
 
 	<virtual stdcall: hresult 12 variant>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODB_DynaCollection categoriesFor: #Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
 !ADODB_DynaCollection categoriesFor: #delete:!**auto generated**!methods!public! !
 !ADODB_DynaCollection categoriesFor: #Delete:!**auto generated**!COM Interfaces-_DynaCollection!private! !

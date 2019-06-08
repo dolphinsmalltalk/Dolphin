@@ -31,8 +31,7 @@ GetAllCustData: pCustData
 	"
 
 	<virtual stdcall: hresult 17 CUSTDATA*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getCustData: guid 
 	"Answer the <VARIANT> result of invoking the COM Object's GetCustData() method."
@@ -51,9 +50,8 @@ GetCustData: guid pVarVal: pVarVal
 			[out] VARIANT* pVarVal);
 	"
 
-	<virtual stdcall: hresult 14 GUID* VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 14 guid* variant*>
+	^self invalidCall: _failureCode!
 
 getDocumentation2: memid lcid: lcid
 	"Answer thes 3 element <Array> containing the results of invoking the COM Object's GetDocumentation2() method."
@@ -80,8 +78,7 @@ GetDocumentation2: index lcid: lcid pbstrHelpString: pbstrHelpString pdwHelpStri
 	"
 
 	<virtual stdcall: hresult 16 sdword dword bstr* dword* bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getLibStatistics
 	"Answer a two element array of integer statistics for the library useful for sizing
@@ -104,8 +101,7 @@ GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames
 	"
 
 	<virtual stdcall: hresult 15 dword* dword*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ITypeLib2 categoriesFor: #getAllCustData!**auto generated**!public! !
 !ITypeLib2 categoriesFor: #GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
 !ITypeLib2 categoriesFor: #getCustData:!**auto generated**!public! !

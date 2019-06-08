@@ -61,11 +61,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Camp Smalltalk\SUnit\OA SUnit Extensions';
-	add: '..\..\Camp Smalltalk\SUnit\SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Camp Smalltalk\SUnit\OA SUnit Extensions'
+	'..\..\Camp Smalltalk\SUnit\SUnit').
 
 package setManualPrerequisites: #(
 	'OA SUnit Extensions').

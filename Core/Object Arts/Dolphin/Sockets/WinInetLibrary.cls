@@ -20,7 +20,7 @@ internetCheckConnection: url dwFlags: flags dwReserved: reserved
 		);"
 
 	<stdcall: bool InternetCheckConnectionW lpwstr dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 internetGoOnline: url hwndParent: parent dwReserved: reserved
 	"Prompts the user for permission to initiate connection to a URL.
@@ -32,7 +32,7 @@ internetGoOnline: url hwndParent: parent dwReserved: reserved
 		);"
 
 	<stdcall: bool InternetGoOnlineW lpwstr handle dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypass: proxyBypass dwFlags: flags
 	"Initializes an application's use of the Win32 Internet functions.
@@ -44,7 +44,7 @@ internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypas
 		IN DWORD dwFlags ); "
 
 	<stdcall: handle InternetOpenW lpwstr dword lpwstr lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ping: aURL
 	"Attempts to ping aURL. Answers true if a reply is received."

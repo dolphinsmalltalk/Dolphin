@@ -10,7 +10,7 @@ URLMonLibrary comment: ''!
 !URLMonLibrary categoriesForClass!External-Libraries-Win32! !
 !URLMonLibrary methodsFor!
 
-overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc 
+overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc
 	"Downloads data into the Internet cache and returns the file name of the cache location for retrieving the bits.
 
 	HRESULT URLDownloadToCacheFile(
@@ -23,9 +23,9 @@ overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dw
 		);"
 
 	<overlap stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc 
+overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc
 	"Downloads bits from the Internet and saves them to a file.
 		HRESULT URLDownloadToFile(
 			LPUNKNOWN pCaller,
@@ -36,7 +36,7 @@ overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReser
 	);"
 
 	<overlap stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 urlDownload: url toFile: aStringFilename 
 	"Helper method for downloading bits from the internet to a specified file.
@@ -75,7 +75,7 @@ urlDownloadToCacheFile: url
 		pBSC: nil.
 	^filename trimNulls!
 
-urlDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc 
+urlDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc
 	"Downloads data into the Internet cache and returns the file name of the cache location for retrieving the bits.
 
 	HRESULT URLDownloadToCacheFile(
@@ -88,9 +88,9 @@ urlDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength:
 		);"
 
 	<stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc 
+urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc
 	"Downloads bits from the Internet and saves them to a file.
 		HRESULT URLDownloadToFile(
 			LPUNKNOWN pCaller,
@@ -101,9 +101,9 @@ urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwRes
 		);"
 
 	<stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB 
+urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB
 	"Download data from the specified URL and answer an IStream attached to that.
 
 	Note that this function is synchronous, and does not return until the download
@@ -122,9 +122,9 @@ urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwRes
 		);"
 
 	<stdcall: hresult URLOpenBlockingStreamW IUnknown* lpwstr IStream** dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB 
+urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB
 	"Download data from the specified URL and answer an IStream attached to that.
 
 		HRESULT URLOpenPullStream( 
@@ -135,7 +135,7 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 			LPBINDSTATUSCALLBACK lpfnCB );"
 
 	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !URLMonLibrary categoriesFor: #overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
 !URLMonLibrary categoriesFor: #overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
 !URLMonLibrary categoriesFor: #urlDownload:toFile:!operations!public! !

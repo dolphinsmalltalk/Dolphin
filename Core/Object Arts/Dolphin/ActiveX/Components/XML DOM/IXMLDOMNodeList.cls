@@ -28,7 +28,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_item: index listItem: listItem
 	"Private - Get the value of the 'item' property of the receiver.
@@ -38,7 +38,7 @@ get_item: index listItem: listItem
 			[out, retval]IXMLDOMNode** listItem);"
 
 	<virtual stdcall: hresult 8 sdword IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: listLength
 	"Private - Get the value of the 'length' property of the receiver.
@@ -47,7 +47,7 @@ get_length: listLength
 			[out, retval]long* listLength);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -99,7 +99,7 @@ NextNode: nextItem
 			[out, retval]IXMLDOMNode** nextItem);"
 
 	<virtual stdcall: hresult 10 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Reset
 	"Invoke the reset() method of the COM object.
@@ -108,7 +108,7 @@ Reset
 		HRESULT __stdcall reset();"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMNodeList categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !IXMLDOMNodeList categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
 !IXMLDOMNodeList categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !

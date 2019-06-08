@@ -28,7 +28,7 @@ get_publicId: publicId
 			[out, retval]VARIANT* publicId);"
 
 	<virtual stdcall: hresult 44 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_systemId: systemId
 	"Private - Get the value of the 'systemId' property of the receiver.
@@ -37,7 +37,7 @@ get_systemId: systemId
 			[out, retval]VARIANT* systemId);"
 
 	<virtual stdcall: hresult 45 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 key
 	"Answer the <readableString> name of the receiver."

@@ -118,7 +118,7 @@ formatMethodBodyFor: aMethodNode
 	self indentWhile: 
 			[self formatMethodCommentFor: aMethodNode indentBefore: true.
 			self newLine.
-			self tagBeforeTemporaries ifTrue: [self formatTagFor: aMethodNode].
+			self formatTagFor: aMethodNode.
 			self visitNode: aMethodNode body]!
 
 formatMethodCommentFor: aNode indentBefore: aBoolean
@@ -362,11 +362,6 @@ visitReturnNode: aReturnNode
 visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
-	self tagBeforeTemporaries
-		ifFalse: 
-			[| parent |
-			parent := aSequenceNode parent.
-			(parent notNil and: [parent isMethod]) ifTrue: [self formatTagFor: parent]].
 	self formatStatementsFor: aSequenceNode! !
 !RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
 !RBFormatter categoriesFor: #firstLineLength!accessing!public! !

@@ -54,7 +54,7 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 			[out, retval]VARIANT* pvarInput);"
 
 	<virtual stdcall: hresult 4 word* word* variant*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXEntityResolver categoriesFor: #resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
 !ISAXEntityResolver categoriesFor: #ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
 

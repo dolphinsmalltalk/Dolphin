@@ -28,14 +28,14 @@ _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format w
 	see _snprintf:count:format:with:with:with: for further information."
 
 	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format with: arg1 with: arg2
 	"Private - Write data formatted by the format string into the buffer.
 	see _snprintf:count:format:with:with:with: for further information."
 
 	<cdecl: sdword _snprintf_s lpvoid intptr intptr lpstr lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 addressFromInteger: anInteger
 	"Private - Answer a new ExternalAddress instantiated from the argument.
@@ -45,7 +45,7 @@ addressFromInteger: anInteger
 	conversions very quickly."
 
 	<stdcall: lpvoid AnswerDWORD dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 applicationHandle
 	"Answer the handle of the Dolphin application instance."
@@ -56,14 +56,14 @@ argc
 	"Private - Answer the number of arguments passed to the host executable at startup"
 
 	<cdecl: sdword argc>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 argv
 	"Private - Answer a pointer to the array of UTF-16 strings which constitute the command line arguments, 
 	starting with the host executable's full path."
 
 	<cdecl: lpvoid argv>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 basePatchLevel
 	"Private - Answer the base patch level of this image. We can assume that the image already
@@ -116,8 +116,7 @@ debugDump: msgString
 	msgString, as the header description"
 
 	<stdcall: void DebugDump lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 defaultProductDetails
 	"Private - Answers an eight element<Array> describing the default
@@ -161,8 +160,7 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	parameters (such as the log file) other than those in the registry."
 
 	<stdcall: void Dump lpwstr lpwstr sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 emptyBlock
 	"Private - Answer the singleton empty clean block instance the the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
@@ -234,13 +232,13 @@ hashBytes: aByteObject count: anInteger
 	"Implementation Notes: The algorithm is FNV1a."
 
 	<cdecl: dword HashBytes lpvoid dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 highBit: anInteger
 	"Answer the index of the high bit of the argument."
 
 	<stdcall: sdword highBit dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 indexOfSpecialSelector: aSymbol ifAbsent: exceptionHandler
 	"Private - Answer the index of the special selector, aSymbol, or 
@@ -287,7 +285,7 @@ isUserBreakRequested
 	set by SmalltalkSystem>>#initialize."
 
 	<cdecl: bool IsUserBreakRequested>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isWindows10OrGreater
 	^self
@@ -402,14 +400,14 @@ largeSignedFromUnsigned: anInteger
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
 	<stdcall: sqword AnswerQWORD qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 largeUnsignedFromSigned: anInteger
 	"Private - Answer a 64-bit signed integer value instantiated from the signed integer
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
 	<stdcall: qword AnswerQWORD sqword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 makeLargeSigned: aLARGE_INTEGER
 	"Private - Answer an Integer (a SmallInteger or a LargeInteger, whichever is the minimum
@@ -418,7 +416,7 @@ makeLargeSigned: aLARGE_INTEGER
 	for reuse from Smalltalk or external primitives."
 
 	<stdcall: sqword AnswerQWORD qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 makeLargeSigned: highSDWORD highPart: lowSDWORD
 	"Private - Answer an Integer of up to 64 bits, as necessary, to represent the signed
@@ -427,14 +425,14 @@ makeLargeSigned: highSDWORD highPart: lowSDWORD
 	This routine is an example of a function returing a signed 8-byte integer (sqword)."
 
 	<stdcall: sqword AnswerQWORD sdword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 makeLargeUnsigned: eightBytes
 	"Private - Answer a positive Integer (i.e. a SmallInteger or a LargeInteger)
 	instantiated from the 64-bit argument."
 
 	<stdcall: qword AnswerQWORD qword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 makeLargeUnsigned: lowDWORD highPart: highDWORD
 	"Private - Answer an Integer of up to 64 bits, as necessary, to represent the unsigned
@@ -442,7 +440,7 @@ makeLargeUnsigned: lowDWORD highPart: highDWORD
 	This routine is an example of a qword (8-byte Integer) return type."
 
 	<stdcall: qword AnswerQWORD dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 onStartup
 	"Initialize the receiver immediately following system startup.
@@ -453,7 +451,7 @@ onStartup
 	wndProc := dlgProc := vtable := genericCallback := nil.
 	WinVerOrGreaterMask := nil!
 
-primRegistryAt:  anInteger put: anObject
+primRegistryAt: anInteger put: anObject
 	"Private - Generic VM object registering primitive. Used to register cookies, Semaphores,
 	the Corpse object, etc.
 
@@ -466,7 +464,7 @@ primRegistryAt:  anInteger put: anObject
 		2 -	anObject is not of the appropriate class for the object being registered."
 
 	<primitive: 93>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 productName
 	"Answer the localised name for Dolphin."
@@ -476,8 +474,7 @@ productName
 
 registerEventSource: aString
 	<stdcall: handle RegisterAsEventSource lpwstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 registry
 	"Private - Answer the VM registry of objects."
@@ -531,21 +528,21 @@ stderr
 	"Private - Answer the handle of the CRT stdio standard error stream"
 
 	<cdecl: handle StdErr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stdin
 	"Private - Answer the handle of the CRT stdio standard input stream"
 
 	<cdecl: handle StdIn>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 stdout
 	"Private - Answer the handle of the CRT stdio standard output stream"
 
 	<cdecl: handle StdOut>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-stringFromAddress: pointer 
+stringFromAddress: pointer
 	"Private - Answer a new String instantiated from the null-terminated String pointed 
 	at by the argument.
 	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
@@ -553,8 +550,8 @@ stringFromAddress: pointer
 	primitive's argument coercion and return object instantiation, to perform useful type
 	conversions very quickly."
 
-	| addr len |
 	<stdcall: lpstr AnswerDWORD lpvoid>
+	| addr len |
 	addr := pointer isInteger ifTrue: [pointer asExternalAddress] ifFalse: [pointer].
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
@@ -577,7 +574,7 @@ unsignedFromSigned: anInteger
 	<stdcall: dword AnswerDWORD sdword>
 	^anInteger isInteger
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
-		ifFalse: [self invalidCall]!
+		ifFalse: [self invalidCall: _failureCode]!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."

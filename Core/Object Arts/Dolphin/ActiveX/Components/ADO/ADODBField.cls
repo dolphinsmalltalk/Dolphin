@@ -20,8 +20,7 @@ get_Status: pFStatus
 			[out, retval] long* pFStatus);"
 
 	<virtual stdcall: hresult 29 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 status
 	"Answer the <sdword> value of the 'Status' property of the receiver."

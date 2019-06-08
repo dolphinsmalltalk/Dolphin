@@ -189,7 +189,7 @@ Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* const stackPointer, unsi
 	}
 	else
 	{
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 	}
 }
 
@@ -212,7 +212,7 @@ Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned arg
 			if (argCount > minSize)
 			{
 				// Not indexable, and too many fields
-				return primitiveFailure(2);
+				return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 			}
 			i = minSize;
 		}
@@ -244,7 +244,7 @@ Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned arg
 	}
 	else
 	{
-		return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 0);
+		return primitiveFailure(instSpec.m_nonInstantiable ? _PrimitiveFailureCode::NonInstantiable : _PrimitiveFailureCode::NotPointers);
 	}
 }
 
@@ -263,7 +263,7 @@ Oop* __fastcall Interpreter::primitiveNew(Oop* const sp, unsigned)
 	}
 	else
 	{
-		return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 0);
+		return primitiveFailure(instSpec.m_nonInstantiable ? _PrimitiveFailureCode::NonInstantiable : _PrimitiveFailureCode::NotFixed);
 	}
 }
 
@@ -297,12 +297,12 @@ Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, unsigned)
 		else
 		{
 			// Not indexable, or non-instantiable
-			return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 2);
+			return primitiveFailure(instSpec.m_nonInstantiable ? _PrimitiveFailureCode::NonInstantiable : _PrimitiveFailureCode::NotIndexable);
 		}
 	}
 	else
 	{
-		return primitiveFailure(0);	// Size must be positive SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Size must be positive SmallInteger
 	}
 }
 
@@ -443,26 +443,33 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, unsigned)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
 	Oop oopArg = (*sp);
-	SMALLINTEGER size;
-	if (isIntegerObject(oopArg) && (size = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
+	if (isIntegerObject(oopArg))
 	{
-		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
-		if (!(instSpec.m_pointers || instSpec.m_nonInstantiable))
+		SMALLINTEGER size = ObjectMemoryIntegerValueOf(oopArg);
+		if (size >= 0)
 		{
-			BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
-			*(sp - 1) = reinterpret_cast<Oop>(newObj);
-			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
-			return sp - 1;
+			InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+			if (!(instSpec.m_pointers || instSpec.m_nonInstantiable))
+			{
+				BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
+				*(sp - 1) = reinterpret_cast<Oop>(newObj);
+				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+				return sp - 1;
+			}
+			else
+			{
+				// Not indexable, or non-instantiable
+				return primitiveFailure(instSpec.m_nonInstantiable ? _PrimitiveFailureCode::NonInstantiable : _PrimitiveFailureCode::NotBytes);
+			}
 		}
 		else
 		{
-			// Not indexable, or non-instantiable
-			return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 2);
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 		}
 	}
 	else
 	{
-		return primitiveFailure(0);	// Size must be positive SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Size must be positive SmallInteger
 	}
 }
 
@@ -557,12 +564,12 @@ Oop* Interpreter::primitiveCopyFromTo(Oop* const sp, unsigned)
 			}
 		}
 		// Bounds error
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
 	}
 	else
 	{
 		// Non-SmallInteger from and/or to
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
 	}
 }
 
@@ -605,42 +612,58 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp, unsigned)
 {
 	Oop maxArg = *sp;
-	SMALLINTEGER maxSize;
-	if (ObjectMemoryIsIntegerObject(maxArg) && (maxSize = ObjectMemoryIntegerValueOf(maxArg)) >= 0)
+	if (ObjectMemoryIsIntegerObject(maxArg))
 	{
-		Oop initArg = *(sp - 1);
-		SMALLINTEGER initialSize;
-		if (ObjectMemoryIsIntegerObject(initArg) && (initialSize = ObjectMemoryIntegerValueOf(initArg)) >= 0)
+		SMALLINTEGER maxSize = ObjectMemoryIntegerValueOf(maxArg);
+		if (maxSize >= 0)
 		{
-			BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp - 2));
-			InstanceSpecification instSpec = receiverClass->m_location->m_instanceSpec;
-			if (instSpec.m_indexable && !instSpec.m_nonInstantiable)
+			Oop initArg = *(sp - 1);
+			SMALLINTEGER initialSize;
+			if (ObjectMemoryIsIntegerObject(initArg))
 			{
-				unsigned fixedFields = instSpec.m_fixedFields;
-				VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize + fixedFields, maxSize);
-				if (newObject)
+				if (initialSize = ObjectMemoryIntegerValueOf(initArg) >= 0)
 				{
-					*(sp - 2) = reinterpret_cast<Oop>(newObject);
-					// No point saving down SP before potential Zct reconcile as the init & max args must be SmallIntegers
-					ObjectMemory::AddToZct((OTE*)newObject);
-					return sp - 2;
+					BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp - 2));
+					InstanceSpecification instSpec = receiverClass->m_location->m_instanceSpec;
+					if (instSpec.m_indexable && !instSpec.m_nonInstantiable)
+					{
+						unsigned fixedFields = instSpec.m_fixedFields;
+						VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize + fixedFields, maxSize);
+						if (newObject)
+						{
+							*(sp - 2) = reinterpret_cast<Oop>(newObject);
+							// No point saving down SP before potential Zct reconcile as the init & max args must be SmallIntegers
+							ObjectMemory::AddToZct((OTE*)newObject);
+							return sp - 2;
+						}
+						else
+						{
+							return primitiveFailure(_PrimitiveFailureCode::OutOfMemory);	// OOM
+						}
+					}
+					else
+					{
+						return primitiveFailure(instSpec.m_nonInstantiable ? _PrimitiveFailureCode::NonInstantiable : _PrimitiveFailureCode::NotIndexable);	// Non-indexable or abstract class
+					}
 				}
 				else
-					return primitiveFailure(4);	// OOM
+				{
+					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// initialSize is out of range
+				}
 			}
 			else
 			{
-				return primitiveFailure(instSpec.m_nonInstantiable ? 3 : 2);	// Non-indexable or abstract class
+				return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// initialSize is not a SmallInteger
 			}
 		}
 		else
 		{
-			return primitiveFailure(1);	// initialSize arg not a SmallInteger
+			return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// maxSize is negative
 		}
 	}
 	else
 	{
-		return primitiveFailure(0);	// maxsize arg not a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// maxsize arg not a SmallInteger
 	}
 }
 

@@ -10,11 +10,6 @@
 
 #include "STProcess.h"	// In order to be able to set primitive failure code
 
-inline void ST::Process::SetPrimitiveFailureCode(SMALLINTEGER code)
-{
-	m_primitiveFailureCode = integerObjectOf(code);
-}
-
 inline void ST::Process::SetPrimitiveFailureData(Oop failureData)
 {
 	ObjectMemory::countDown(m_primitiveFailureData);
@@ -35,34 +30,30 @@ inline void ST::Process::SetPrimitiveFailureData(SMALLINTEGER failureData)
 	m_primitiveFailureData = integerObjectOf(failureData);
 }
 
-inline Oop* Interpreter::primitiveFailure(int failureCode)
+__forceinline Oop* Interpreter::primitiveFailure(_PrimitiveFailureCode failureCode)
 {
-	m_registers.m_pActiveProcess->m_primitiveFailureCode = integerObjectOf(failureCode);
-	return NULL;
+	return reinterpret_cast<Oop*>(ObjectMemoryIntegerObjectOf(static_cast<int>(failureCode)));
 }
 
-inline Oop* Interpreter::primitiveFailureWith(int failureCode, Oop failureData)
+inline Oop* Interpreter::primitiveFailureWith(_PrimitiveFailureCode failureCode, Oop failureData)
 {
 	Process* proc = actualActiveProcess();
-	proc->m_primitiveFailureCode = integerObjectOf(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
-	return NULL;
+	return primitiveFailure(failureCode);
 }
 
-inline Oop* Interpreter::primitiveFailureWith(int failureCode, OTE* oteFailure)
+inline Oop* Interpreter::primitiveFailureWith(_PrimitiveFailureCode failureCode, OTE* oteFailure)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(oteFailure));
 	Process* proc = actualActiveProcess();
-	proc->m_primitiveFailureCode = integerObjectOf(failureCode);
 	proc->SetPrimitiveFailureData(oteFailure);
-	return NULL;
+	return primitiveFailure(failureCode);
 }
 
 // Just to avoid any confusion with Oop overload, give this one a different name
-inline Oop* Interpreter::primitiveFailureWithInt(int failureCode, SMALLINTEGER failureData)
+inline Oop* Interpreter::primitiveFailureWithInt(_PrimitiveFailureCode failureCode, SMALLINTEGER failureData)
 {
 	Process* proc = actualActiveProcess();
-	proc->m_primitiveFailureCode = integerObjectOf(failureCode);
 	proc->SetPrimitiveFailureData(failureData);
-	return NULL;
+	return primitiveFailure(failureCode);
 }

@@ -19,7 +19,7 @@ closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
 		_In_		ULONG				dwFlags );"
 
 	<stdcall: dword BCryptCloseAlgorithmProvider handle dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject hashObjectSize: aHashObjectSize secret: aSecret secretSize: aSecretSize flags: aFlags
 	"The The BCryptCreateHash function is called to create a hash or Message Authentication Code (MAC) object.
@@ -34,7 +34,7 @@ createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject has
 		_In_		ULONG				dwFlags );"
 
 	<stdcall: dword BCryptCreateHash handle handle* byte* dword byte* dword dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 destroyHash: aHashHandle
 	"The BCryptDestroyHash function closes an algorithm provider.
@@ -43,7 +43,7 @@ destroyHash: aHashHandle
 		_Inout_	BCRYPT_HASH_HANDLE	hHash );"
 
 	<stdcall: dword BCryptDestroyHash handle>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 	"The BCryptFinishHash function retrieves the hash or Message Authentication Code (MAC) value for the data accumulated from prior calls to BCryptHashData.
@@ -55,7 +55,7 @@ finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 		_In_		ULONG				dwFlags );"
 
 	<stdcall: dword BCryptFinishHash handle byte* dword dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize resultSize: aResultSize flags: aFlags
 	"The BCryptGetProperty function retrieves the value of a named property for a BCrypt object.
@@ -69,7 +69,7 @@ getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize
 		_In_		ULONG			dwFlags ); "
 
 	<stdcall: dword BCryptGetProperty handle lpwstr byte* dword dword* dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 	"The BCryptHashData function performs a one way hash or Message Authentication Code (MAC) on a data buffer.
@@ -81,7 +81,7 @@ hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 		_In_		ULONG				dwFlags );"
 
 	<stdcall: dword BCryptHashData handle byte* dword dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: aFlags
 	"The BCryptOpenAlgorithmProvider function loads and initializes a BCrypt provider.
@@ -93,7 +93,7 @@ openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: 
 		_In_		DWORD				dwFlags );"
 
 	<stdcall: dword BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
-	^ self invalidCall.!
+	^self invalidCall: _failureCode!
 
 shaAlgorithmHandle
 	"Answer internal handle. to the SHA1 algorithm.

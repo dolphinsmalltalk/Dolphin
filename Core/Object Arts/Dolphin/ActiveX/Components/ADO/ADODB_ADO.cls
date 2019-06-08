@@ -20,8 +20,7 @@ get_Properties: ppvObject
 			[out, retval] Properties** ppvObject);"
 
 	<virtual stdcall: hresult 8 ADODBProperties**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

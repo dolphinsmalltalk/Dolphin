@@ -42,7 +42,7 @@ AddressOfMember: addressOfMember invKind: invKind ppv: ppv
 	"
 
 	<virtual stdcall: hresult 16 sdword sdword void**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asImplType
 	"Answer an <ITypeInfo> which is the resolved implementation type for the receiver
@@ -83,9 +83,8 @@ CreateInstance: pUnkOuter riid: riid ppvObj: ppvObj
 			[out] IUnknown** ppvObj);
 	"
 
-	<virtual stdcall: hresult 17 IUnknown* GUID* void**>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 17 IUnknown* guid* void**>
+	^self invalidCall: _failureCode!
 
 getAllCustData
 	"Answer a <CUSTDATA> describing the custom data associated with the type described by this ITypeInfo."
@@ -113,8 +112,7 @@ GetContainingTypeLib: ppTLib pIndex: pIndex
 	"
 
 	<virtual stdcall: hresult 19 ITypeLib** dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetDllEntry: memid invkind: invkind pBstrDllName: pBstrDllName pBstrName: pBstrName pwOrdinal: pwOrdinal
 	"Private - Invoke the GetDllEntry() method of the COM object wrapped by the receiver.
@@ -128,8 +126,7 @@ GetDllEntry: memid invkind: invkind pBstrDllName: pBstrDllName pBstrName: pBstrN
 	"
 
 	<virtual stdcall: hresult 14 sdword sdword bstr* bstr* word*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetDocumentation: memid pBstrName: pBstrName pBstrDocString: pBstrDocString pdwHelpContext: pdwHelpContext pBstrHelpFile: pBstrHelpFile
 	"Private - Invoke the GetDocumentation() method of the COM object wrapped by the receiver.
@@ -143,8 +140,7 @@ GetDocumentation: memid pBstrName: pBstrName pBstrDocString: pBstrDocString pdwH
 	"
 
 	<virtual stdcall: sdword 13 sdword bstr* bstr* dword* bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFuncDesc: index
 	"Answer the <FUNCDESC> result of invoking the COM Object's GetFuncDesc() method."
@@ -163,8 +159,7 @@ GetFuncDesc: index ppFuncDesc: ppFuncDesc
 	"
 
 	<virtual stdcall: hresult 6 dword FUNCDESC**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getIDsOfNames: names
 	"Answer a <sequencedReadableCollection> of the ids of the named
@@ -193,7 +188,7 @@ GetIDsOfNames: getIDsOfNames cNames: cNames pMemId: pMemId
 	"
 
 	<virtual stdcall: sdword 11 lpwstr* dword sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getImplTypeFlags: index 
 	"Answer the <SDWORD> result of invoking the COM Object's GetImplTypeFlags() method."
@@ -213,8 +208,7 @@ GetImplTypeFlags: index pImplTypeFlags: pImplTypeFlags
 	"
 
 	<virtual stdcall: hresult 10 dword sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getImplTypeInfoAt: anInteger
 	"Answer the an ITypeInfo describing the implementation type at the specified index in the receiver.
@@ -243,8 +237,7 @@ GetMops: memid pBstrMops: pBstrMops
 	"
 
 	<virtual stdcall: hresult 18 sdword bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 GetNames: memid rgBstrNames: rgBstrNames cMaxNames: cMaxNames pcNames: pcNames
 	"Private - Invoke the GetNames() method of the COM object wrapped by the receiver.
@@ -257,8 +250,7 @@ GetNames: memid rgBstrNames: rgBstrNames cMaxNames: cMaxNames pcNames: pcNames
 	"
 
 	<virtual stdcall: hresult 8 sdword bstr* dword dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getNamesOfMember: memid count: cMaxNames
 	"Answer an array containing the names of the member of the
@@ -299,8 +291,7 @@ GetRefTypeInfo: hreftype ppTInfo: ppTInfo
 	"
 
 	<virtual stdcall: hresult 15 dword ITypeInfo**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getRefTypeOfImplType: index 
 	"Private - Answer the <DWORD> result of invoking the COM Object's GetRefTypeOfImplType() method.
@@ -321,8 +312,7 @@ GetRefTypeOfImplType: index pRefType: pRefType
 	"
 
 	<virtual stdcall: hresult 9 dword dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getTypeAttr
 	"Answer the <TYPEATTR*> result of invoking the COM Object's GetTypeAttr() method."
@@ -341,7 +331,7 @@ GetTypeAttr: ppTypeAttr
 	"
 
 	<virtual stdcall: hresult 4 TYPEATTR**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getTypeComp
 	"Answer the <ITypeComp> result of invoking the COM Object's GetTypeComp() method."
@@ -360,8 +350,7 @@ GetTypeComp: ppTComp
 	"
 
 	<virtual stdcall: hresult 5 ITypeComp**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getVarDesc: index
 	"Answer the <VARDESC> result of invoking the COM Object's GetVarDesc() method."
@@ -380,8 +369,7 @@ GetVarDesc: index ppVarDesc: ppVarDesc
 	"
 
 	<virtual stdcall: hresult 7 dword VARDESC**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 guid
 	"Answer the guid associated with the receiver.
@@ -441,8 +429,8 @@ Invoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResult: 
 			[out] dword* puArgErr);
 	"
 
-	<virtual stdcall: hresult 12 void* dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*>
-	^self invalidCall!
+	<virtual stdcall: hresult 12 void* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	^self invalidCall: _failureCode!
 
 isDual
 	"Answer whether the receiver is describing a custom interface
@@ -534,8 +522,7 @@ ReleaseFuncDesc: pFuncDesc
 		);"
 
 	<virtual stdcall: void 21 FUNCDESC*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 ReleaseTypeAttr: pTypeAttr
 	"Invoke the ReleaseFuncDesc() method of the COM object wrapped by the receiver.
@@ -545,7 +532,7 @@ ReleaseTypeAttr: pTypeAttr
 		);"
 
 	<virtual stdcall: void 20 TYPEATTR*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ReleaseVarDesc: pVarDesc
 	"Invoke the ReleaseFuncDesc() method of the COM object wrapped by the receiver.
@@ -555,7 +542,7 @@ ReleaseVarDesc: pVarDesc
 		);"
 
 	<virtual stdcall: void 22 VARDESC*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 safeInvoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResult: pVarResult pExcepInfo: pExcepInfo puArgErr: puArgErr
 	"Invoke the Invoke() method of the COM object wrapped by the receiver, but 
@@ -563,8 +550,8 @@ safeInvoke: invoke memid: memid wFlags: wFlags pDispParams: pDispParams pVarResu
 	Implementation Note: We implement a non-exception version of this function
 	for efficiency of implementation of dual interfaces in Dolphin."
 
-	<virtual stdcall: sdword 12 void* dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*>
-	^self invalidCall!
+	<virtual stdcall: sdword 12 void* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	^self invalidCall: _failureCode!
 
 typeComp
 	"Answer an ITypeComp on the receiver."

@@ -37,8 +37,7 @@ get_Fields: varFields
 	"
 
 	<virtual stdcall: hresult 8 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getInterface: interface
 	"Answer the <IDispatch> result of invoking the COM Object's GetInterface() method.
@@ -62,8 +61,7 @@ GetInterface: interface ppUnknown: ppUnknown
 	"
 
 	<virtual stdcall: hresult 10 bstr IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -85,8 +83,7 @@ Load: loadFrom URL: url
 	"
 
 	<virtual stdcall: hresult 9 sdword bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 value
 	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.

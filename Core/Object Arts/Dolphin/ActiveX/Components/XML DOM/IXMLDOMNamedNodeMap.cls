@@ -32,7 +32,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 17 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_item: index listItem: listItem
 	"Private - Get the value of the 'item' property of the receiver.
@@ -42,7 +42,7 @@ get_item: index listItem: listItem
 			[out, retval]IXMLDOMNode** listItem);"
 
 	<virtual stdcall: hresult 11 sdword IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: listLength
 	"Private - Get the value of the 'length' property of the receiver.
@@ -51,7 +51,7 @@ get_length: listLength
 			[out, retval]long* listLength);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getNamedItem: name
 	"Answer the <IXMLDOMNode> result of invoking the getNamedItem() method of the COM object.
@@ -74,7 +74,7 @@ GetNamedItem: name namedItem: namedItem
 			[out, retval]IXMLDOMNode** namedItem);"
 
 	<virtual stdcall: hresult 8 bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getQualifiedItem: baseName namespaceURI: namespaceURI
 	"Answer the <IXMLDOMNode> result of invoking the getQualifiedItem() method of the COM object.
@@ -99,7 +99,7 @@ GetQualifiedItem: baseName namespaceURI: namespaceURI qualifiedItem: qualifiedIt
 			[out, retval]IXMLDOMNode** qualifiedItem);"
 
 	<virtual stdcall: hresult 13 bstr bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -151,7 +151,7 @@ NextNode: nextItem
 			[out, retval]IXMLDOMNode** nextItem);"
 
 	<virtual stdcall: hresult 15 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeNamedItem: name
 	"Answer the <IXMLDOMNode> result of invoking the removeNamedItem() method of the COM object.
@@ -174,7 +174,7 @@ RemoveNamedItem: name namedItem: namedItem
 			[out, retval]IXMLDOMNode** namedItem);"
 
 	<virtual stdcall: hresult 10 bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 removeQualifiedItem: baseName namespaceURI: namespaceURI
 	"Answer the <IXMLDOMNode> result of invoking the removeQualifiedItem() method of the COM object.
@@ -199,7 +199,7 @@ RemoveQualifiedItem: baseName namespaceURI: namespaceURI qualifiedItem: qualifie
 			[out, retval]IXMLDOMNode** qualifiedItem);"
 
 	<virtual stdcall: hresult 14 bstr bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 Reset
 	"Invoke the reset() method of the COM object.
@@ -208,7 +208,7 @@ Reset
 		HRESULT __stdcall reset();"
 
 	<virtual stdcall: hresult 16>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setNamedItem: newItem
 	"Answer the <IXMLDOMNode> result of invoking the setNamedItem() method of the COM object.
@@ -231,7 +231,7 @@ SetNamedItem: newItem nameItem: nameItem
 			[out, retval]IXMLDOMNode** nameItem);"
 
 	<virtual stdcall: hresult 9 IXMLDOMNode* IXMLDOMNode**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMNamedNodeMap categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !IXMLDOMNamedNodeMap categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
 !IXMLDOMNamedNodeMap categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !

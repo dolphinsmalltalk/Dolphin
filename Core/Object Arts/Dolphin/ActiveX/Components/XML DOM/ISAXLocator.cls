@@ -56,7 +56,7 @@ GetColumnNumber: pnColumn
 			[out, retval]int* pnColumn);"
 
 	<virtual stdcall: hresult 4 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getLineNumber
 	"Answer the <SDWORD> result of invoking the getLineNumber() method of the COM object."
@@ -74,7 +74,7 @@ GetLineNumber: pnLine
 			[out, retval]int* pnLine);"
 
 	<virtual stdcall: hresult 5 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getPublicId
 	"Answer the <WORD> result of invoking the getPublicId() method of the COM object."
@@ -92,7 +92,7 @@ GetPublicId: ppwchPublicId
 			[out, retval]unsigned short** ppwchPublicId);"
 
 	<virtual stdcall: hresult 6 word**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getSystemId
 	"Answer the <WORD> result of invoking the getSystemId() method of the COM object."
@@ -110,7 +110,7 @@ GetSystemId: ppwchSystemId
 			[out, retval]unsigned short** ppwchSystemId);"
 
 	<virtual stdcall: hresult 7 word**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISAXLocator categoriesFor: #getColumnNumber!**auto generated**!methods!public! !
 !ISAXLocator categoriesFor: #GetColumnNumber:!**auto generated**!COM Interfaces-ISAXLocator!private! !
 !ISAXLocator categoriesFor: #getLineNumber!**auto generated**!methods!public! !

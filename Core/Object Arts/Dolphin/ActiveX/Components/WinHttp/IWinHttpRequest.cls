@@ -113,7 +113,7 @@ Abort
 		HRESULT __stdcall Abort();"
 
 	<virtual stdcall: hresult 23>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Option: option value: value
 	"Private - Get the value of the 'Option' property of the receiver.
@@ -123,7 +123,7 @@ get_Option: option value: value
 			[out, retval]VARIANT* Value);"
 
 	<virtual stdcall: hresult 20 sdword variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_ResponseBody: body
 	"Private - Get the value of the 'ResponseBody' property of the receiver.
@@ -132,7 +132,7 @@ get_ResponseBody: body
 			[out, retval]VARIANT* Body);"
 
 	<virtual stdcall: hresult 18 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_ResponseStream: body
 	"Private - Get the value of the 'ResponseStream' property of the receiver.
@@ -141,7 +141,7 @@ get_ResponseStream: body
 			[out, retval]VARIANT* Body);"
 
 	<virtual stdcall: hresult 19 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_ResponseText: body
 	"Private - Get the value of the 'ResponseText' property of the receiver.
@@ -150,7 +150,7 @@ get_ResponseText: body
 			[out, retval]BSTR* Body);"
 
 	<virtual stdcall: hresult 17 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Status: status
 	"Private - Get the value of the 'Status' property of the receiver.
@@ -159,7 +159,7 @@ get_Status: status
 			[out, retval]long* Status);"
 
 	<virtual stdcall: hresult 15 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_StatusText: status
 	"Private - Get the value of the 'StatusText' property of the receiver.
@@ -168,7 +168,7 @@ get_StatusText: status
 			[out, retval]BSTR* Status);"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getAllResponseHeaders
 	"Answer the <BSTR> result of invoking the GetAllResponseHeaders() method of the COM object.
@@ -188,7 +188,7 @@ GetAllResponseHeaders: headers
 			[out, retval]BSTR* Headers);"
 
 	<virtual stdcall: hresult 13 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getResponseHeader: header
 	"Answer the <BSTR> result of invoking the GetResponseHeader() method of the COM object.
@@ -211,7 +211,7 @@ GetResponseHeader: header value: value
 			[out, retval]BSTR* Value);"
 
 	<virtual stdcall: hresult 12 bstr bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -252,7 +252,7 @@ Open: method url: url async: async
 			[in, optional]VARIANT Async);"
 
 	<virtual stdcall: hresult 10 bstr bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 option: option
 	"Answer the <variant> value of the 'Option' property of the receiver."
@@ -282,7 +282,7 @@ put_Option: option value: value
 			[in]VARIANT Value);"
 
 	<virtual stdcall: hresult 21 sdword variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 responseBody
 	"Answer the <variant> value of the 'ResponseBody' property of the receiver.
@@ -335,7 +335,7 @@ Send: body
 			[in, optional]VARIANT Body);"
 
 	<virtual stdcall: hresult 14 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setAutoLogonPolicy: autoLogonPolicy
 	"Invoke the SetAutoLogonPolicy() method of the COM object.
@@ -352,7 +352,7 @@ SetAutoLogonPolicy: autoLogonPolicy
 			[in]WinHttpRequestAutoLogonPolicy AutoLogonPolicy);"
 
 	<virtual stdcall: hresult 26 sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setClientCertificate: clientCertificate
 	"Invoke the SetClientCertificate() method of the COM object.
@@ -369,7 +369,7 @@ SetClientCertificate: clientCertificate
 			[in]BSTR ClientCertificate);"
 
 	<virtual stdcall: hresult 25 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setCredentials: userName password: password flags: flags
 	"Invoke the SetCredentials() method of the COM object.
@@ -391,7 +391,7 @@ SetCredentials: userName password: password flags: flags
 			[in]HTTPREQUEST_SETCREDENTIALS_FLAGS Flags);"
 
 	<virtual stdcall: hresult 9 bstr bstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setProxy: proxySetting
 	"Invoke the SetProxy() method of the COM object.
@@ -422,7 +422,7 @@ SetProxy: proxySetting proxyServer: proxyServer bypassList: bypassList
 			[in, optional]VARIANT BypassList);"
 
 	<virtual stdcall: hresult 8 sdword variant variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setRequestHeader: header value: value
 	"Invoke the SetRequestHeader() method of the COM object.
@@ -442,7 +442,7 @@ SetRequestHeader: header value: value
 			[in]BSTR Value);"
 
 	<virtual stdcall: hresult 11 bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTimeout receiveTimeout: receiveTimeout
 	"Invoke the SetTimeouts() method of the COM object.
@@ -466,7 +466,7 @@ SetTimeouts: resolveTimeout connectTimeout: connectTimeout sendTimeout: sendTime
 			[in]long ReceiveTimeout);"
 
 	<virtual stdcall: hresult 24 sdword sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 status
 	"Answer the <sdword> value of the 'Status' property of the receiver.
@@ -515,7 +515,7 @@ WaitForResponse: timeout succeeded: succeeded
 			[out, retval]VARIANT_BOOL* Succeeded);"
 
 	<virtual stdcall: hresult 22 variant varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IWinHttpRequest categoriesFor: #abort!**auto generated**!methods!public! !
 !IWinHttpRequest categoriesFor: #Abort!**auto generated**!COM Interfaces-IWinHttpRequest!private! !
 !IWinHttpRequest categoriesFor: #get_Option:value:!**auto generated**!COM Interfaces-IWinHttpRequest!private! !

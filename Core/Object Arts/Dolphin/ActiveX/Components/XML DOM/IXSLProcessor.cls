@@ -83,7 +83,7 @@ AddObject: obj namespaceURI: namespaceURI
 			[in]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 20 IDispatch* bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 addParameter: baseName parameter: parameter
 	"Invoke the addParameter() method of the COM object.
@@ -114,7 +114,7 @@ AddParameter: baseName parameter: parameter namespaceURI: namespaceURI
 			[in, defaultvalue('')]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 19 bstr variant bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_input: pVar
 	"Private - Get the value of the 'input' property of the receiver.
@@ -123,7 +123,7 @@ get_input: pVar
 			[out, retval]VARIANT* pVar);"
 
 	<virtual stdcall: hresult 9 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_output: pOutput
 	"Private - Get the value of the 'output' property of the receiver.
@@ -132,7 +132,7 @@ get_output: pOutput
 			[out, retval]VARIANT* pOutput);"
 
 	<virtual stdcall: hresult 15 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_ownerTemplate: ppTemplate
 	"Private - Get the value of the 'ownerTemplate' property of the receiver.
@@ -141,7 +141,7 @@ get_ownerTemplate: ppTemplate
 			[out, retval]IXSLTemplate** ppTemplate);"
 
 	<virtual stdcall: hresult 10 IXSLTemplate**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_readyState: pReadyState
 	"Private - Get the value of the 'readyState' property of the receiver.
@@ -150,7 +150,7 @@ get_readyState: pReadyState
 			[out, retval]long* pReadyState);"
 
 	<virtual stdcall: hresult 18 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_startMode: mode
 	"Private - Get the value of the 'startMode' property of the receiver.
@@ -159,7 +159,7 @@ get_startMode: mode
 			[out, retval]BSTR* mode);"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_startModeURI: namespaceURI
 	"Private - Get the value of the 'startModeURI' property of the receiver.
@@ -168,7 +168,7 @@ get_startModeURI: namespaceURI
 			[out, retval]BSTR* namespaceURI);"
 
 	<virtual stdcall: hresult 13 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_stylesheet: stylesheet
 	"Private - Get the value of the 'stylesheet' property of the receiver.
@@ -177,7 +177,7 @@ get_stylesheet: stylesheet
 			[out, retval]IXMLDOMNode** stylesheet);"
 
 	<virtual stdcall: hresult 21 IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 input
 	"Answer the <variant> value of the 'input' property of the receiver.
@@ -241,7 +241,7 @@ put_input: pVar
 			[in]VARIANT pVar);"
 
 	<virtual stdcall: hresult 8 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_output: pOutput
 	"Private - Set the value of the 'output' property of the object wrapped by the 
@@ -251,7 +251,7 @@ put_output: pOutput
 			[in]VARIANT pOutput);"
 
 	<virtual stdcall: hresult 14 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 readyState
 	"Answer the <sdword> value of the 'readyState' property of the receiver.
@@ -270,7 +270,7 @@ Reset
 		HRESULT __stdcall reset();"
 
 	<virtual stdcall: hresult 17>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setStartMode: mode
 	"Invoke the setStartMode() method of the COM object.
@@ -289,7 +289,7 @@ SetStartMode: mode namespaceURI: namespaceURI
 			[in, defaultvalue('')]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 11 bstr bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 startMode
 	"Answer the <bstr> value of the 'startMode' property of the receiver.
@@ -339,7 +339,7 @@ Transform: pDone
 			[out, retval]VARIANT_BOOL* pDone);"
 
 	<virtual stdcall: hresult 16 varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXSLProcessor categoriesFor: #AddObject:namespaceURI:!**auto generated**!COM Interfaces-IXSLProcessor!public! !
 !IXSLProcessor categoriesFor: #addParameter:parameter:!**auto generated**!methods!public! !
 !IXSLProcessor categoriesFor: #addParameter:parameter:namespaceURI:!**auto generated**!methods!public! !

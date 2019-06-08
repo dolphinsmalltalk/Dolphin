@@ -108,7 +108,7 @@ microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
 	<primitive: 189>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
@@ -358,7 +358,7 @@ microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
 	<primitive: 189>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 millisecondClockValue
 	"Answer the current value of the system millisecond clock."
@@ -368,7 +368,7 @@ millisecondClockValue
 	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 new
 	"Answer a new, valid, Delay, but one which will fire immediately it receives #wait.
@@ -474,11 +474,11 @@ signalTimerAfter: anInteger
 	is signalled immediately. If anInteger < 0, then the current timer (if any) is cancelled.
 
 	Primitive failure results:
-		0 - anInteger is not a SmallInteger
-		3 - OS refused to set timer (try KernelLibrary>>getLastError)"
+		NonIntegerIndex	- anInteger is not a SmallInteger
+		SystemError	- OS refused to set timer (try KernelLibrary>>getLastError)"
 
 	<primitive: 100>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 timingProcess
 	"Private - Answer the <Process> which is used to manage the list of pending Delays."

@@ -101,7 +101,7 @@ closeEnhMetaFile: hdc
 			HDC HDC);"
 
 	<stdcall: handle CloseEnhMetaFile handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 copyEnhMetaFile: hemf lpszFile: lpszFile
 	"Invoke the CopyEnhMetaFile() function of the module wrapped by the receiver.
@@ -112,7 +112,7 @@ copyEnhMetaFile: hemf lpszFile: lpszFile
 			LPCWSTR lpszFile);"
 
 	<stdcall: handle CopyEnhMetaFileW handle lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDescription
 	"Invoke the CreateEnhMetaFile() function of the module wrapped by the receiver.
@@ -125,7 +125,7 @@ createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDe
 			LPCWSTR lpDescription);"
 
 	<stdcall: handle CreateEnhMetaFileW handle lpwstr sdword* lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 deleteEnhMetaFile: hemf
 	"Invoke the DeleteEnhMetaFile() function of the module wrapped by the receiver.
@@ -135,7 +135,7 @@ deleteEnhMetaFile: hemf
 			HENHMETAFILE hemf);"
 
 	<stdcall: bool DeleteEnhMetaFile handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 enumEnhMetaFile: hdc hemf: hemf lpEnhMetaFunc: lpEnhMetaFunc lpData: lpData lpRect: lpRect
 	"Invoke the EnumEnhMetaFile() function of the module wrapped by the receiver.
@@ -149,7 +149,7 @@ enumEnhMetaFile: hdc hemf: hemf lpEnhMetaFunc: lpEnhMetaFunc lpData: lpData lpRe
 			RECT* lpRect);"
 
 	<stdcall: bool EnumEnhMetaFile handle handle void* void* RECT*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEnhMetaFile: lpszMetaFile
 	"Invoke the GetEnhMetaFile() function of the module wrapped by the receiver.
@@ -159,7 +159,7 @@ getEnhMetaFile: lpszMetaFile
 			LPCWSTR lpszMetaFile);"
 
 	<stdcall: handle GetEnhMetaFileW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEnhMetaFileBits: hemf cbBuffer: cbBuffer lpbBuffer: lpbBuffer
 	"Invoke the GetEnhMetaFileBits() function of the module wrapped by the receiver.
@@ -171,7 +171,7 @@ getEnhMetaFileBits: hemf cbBuffer: cbBuffer lpbBuffer: lpbBuffer
 			BYTE* lpbBuffer);"
 
 	<stdcall: dword GetEnhMetaFileBits handle dword byte*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEnhMetaFileDescription: hemf cchBuffer: cchBuffer lpszDescription: lpszDescription
 	"Invoke the GetEnhMetaFileDescription() function of the module wrapped by the receiver.
@@ -183,7 +183,7 @@ getEnhMetaFileDescription: hemf cchBuffer: cchBuffer lpszDescription: lpszDescri
 			LPWSTR lpszDescription);"
 
 	<stdcall: dword GetEnhMetaFileDescriptionW handle dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEnhMetaFileHeader: hemf cbBuffer: cbBuffer lpemnh: lpemnh
 	"Invoke the GetEnhMetaFileHeader() function of the module wrapped by the receiver.
@@ -195,7 +195,7 @@ getEnhMetaFileHeader: hemf cbBuffer: cbBuffer lpemnh: lpemnh
 			ENHMETAHEADER* lpemnh);"
 
 	<stdcall: dword GetEnhMetaFileHeader handle dword ENHMETAHEADER*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getEnhMetaFilePaletteEntries: hemf cbEntries: cbEntries lppe: lppe
 	"Invoke the GetEnhMetaFilePaletteEntries() function of the module wrapped by the receiver.
@@ -207,7 +207,7 @@ getEnhMetaFilePaletteEntries: hemf cbEntries: cbEntries lppe: lppe
 			PALETTEENTRY* lppe);"
 
 	<stdcall: dword GetEnhMetaFilePaletteEntries handle dword PALETTEENTRY*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 playEnhMetaFile: hdc hemf: hemf lpRect: lpRect
 	"Invoke the PlayEnhMetaFile() function of the module wrapped by the receiver.
@@ -219,7 +219,7 @@ playEnhMetaFile: hdc hemf: hemf lpRect: lpRect
 			int* lpRect);"
 
 	<stdcall: bool PlayEnhMetaFile handle handle sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 playEnhMetaFileRecord: hdc lpHandletable: lpHandletable lpEnhMetaRecord: lpEnhMetaRecord nHandles: nHandles
 	"Invoke the PlayEnhMetaFileRecord() function of the module wrapped by the receiver.
@@ -232,7 +232,7 @@ playEnhMetaFileRecord: hdc lpHandletable: lpHandletable lpEnhMetaRecord: lpEnhMe
 			UINT nHandles);"
 
 	<stdcall: bool PlayEnhMetaFileRecord handle HandleArray* ENHMETARECORD* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setEnhMetaFileBits: cbBuffer lpData: lpData
 	"Invoke the SetEnhMetaFileBits() function of the module wrapped by the receiver.
@@ -243,7 +243,7 @@ setEnhMetaFileBits: cbBuffer lpData: lpData
 			BYTE* lpData);"
 
 	<stdcall: handle SetEnhMetaFileBits dword byte*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !GDILibrary categoriesFor: #closeEnhMetaFile:!public!win32 functions-metafile! !
 !GDILibrary categoriesFor: #copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !
 !GDILibrary categoriesFor: #createEnhMetaFile:lpFileName:lpRect:lpDescription:!public!win32 functions-metafile! !

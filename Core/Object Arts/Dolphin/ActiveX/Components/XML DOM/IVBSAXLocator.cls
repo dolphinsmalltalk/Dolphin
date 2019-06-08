@@ -58,7 +58,7 @@ get_columnNumber: nColumn
 			[out, retval]int* nColumn);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_lineNumber: nLine
 	"Private - Get the value of the 'lineNumber' property of the receiver.
@@ -67,7 +67,7 @@ get_lineNumber: nLine
 			[out, retval]int* nLine);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_publicId: strPublicId
 	"Private - Get the value of the 'publicId' property of the receiver.
@@ -76,7 +76,7 @@ get_publicId: strPublicId
 			[out, retval]BSTR* strPublicId);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_systemId: strSystemId
 	"Private - Get the value of the 'systemId' property of the receiver.
@@ -85,7 +85,7 @@ get_systemId: strSystemId
 			[out, retval]BSTR* strSystemId);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
