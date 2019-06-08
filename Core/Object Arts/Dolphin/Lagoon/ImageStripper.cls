@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier'
-	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
+	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
-ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r400000!
+ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r1!
 ImageStripper addClassConstant: 'ClearGuidsMask' value: 16r1!
 ImageStripper addClassConstant: 'CompileStructsMask' value: 16r100!
 ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 16r800!
@@ -21,6 +21,7 @@ ImageStripper addClassConstant: 'LogReferencesMask' value: 16r2000!
 ImageStripper addClassConstant: 'NoXPManifestMask' value: 16r200000!
 ImageStripper addClassConstant: 'PreserveAspectsMask' value: 16r4!
 ImageStripper addClassConstant: 'PurgeStubbornClassesMask' value: 16r4000000!
+ImageStripper addClassConstant: 'RemoveAbstractUnreachable' value: 16r2!
 ImageStripper addClassConstant: 'RetainDevSysMask' value: 16r10000000!
 ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 16r8!
 ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 16r800000!
@@ -130,7 +131,7 @@ allReferencedClasses
 
 allResourcesStripped
 	self logComment: 'All resources stripped'.
-	flags := flags maskSet: AllResourcesStripped.
+	runFlags := runFlags maskSet: AllResourcesStripped.
 	self finishedStrippingResources.
 	self finishedWithAll: #(#logRemainingResources)!
 
@@ -751,7 +752,7 @@ logManifest
 	self logImageStats.
 	self logRemainingClasses.
 	developmentClasses := nil.
-	(flags allMask: AllResourcesStripped) ifFalse: [self logRemainingResources].
+	(runFlags allMask: AllResourcesStripped) ifFalse: [self logRemainingResources].
 	self endElement: true.
 	self
 		finishedWithAll: #(#logImageStats #logRemainingResources #logRemainingClasses #logReferencesToClasses)!
@@ -1196,6 +1197,8 @@ prepareCycle1: aWeakArrayOfMethods
 prepareCycle2: developmentMethods
 	self foldDuplicatesConstants.
 	self removeDevelopmentObjects: developmentMethods.
+	"We can now remove abstract unreachable methods without concern that they may be made reachable by the removal of development methods."
+	runFlags := runFlags bitOr: RemoveAbstractUnreachable.
 	self emptySystemDictionary.
 	self finishedWithAll: #(#foldDuplicatesConstants #removeDevelopmentObjects: #emptySystemDictionary)!
 
@@ -1210,7 +1213,7 @@ prepareCycle3
 	self finishedWithAll: #(#destroyAndRemoveProgress #closeExternalLibraries #removeClassGuids)!
 
 prepareCycle4
-	(flags noMask: AllResourcesStripped) ifTrue: [self finishedStrippingResources].
+	(runFlags noMask: AllResourcesStripped) ifTrue: [self finishedStrippingResources].
 	self finishedWithAll: #(#finishedStrippingResources)!
 
 prepareCycle5
@@ -1247,6 +1250,7 @@ prepareToStrip
 	This is invoked before even the development tools have been closed.
 	Answer whether to proceed with the application deployment."
 
+	runFlags := 0.
 	self openLogFile.
 	^self preStripCheck!
 
@@ -1488,8 +1492,9 @@ removeRedundantMethods
 removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	| removed unreachable |
 	removed := super removeRedundantMethodsOnceFrom: aCollectionOfClasses.
-	removed ~~ 0 ifTrue: [^removed].
-	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
+	(removed ~~ 0 or: [runFlags noMask: RemoveAbstractUnreachable]) ifTrue: [^removed].
+	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
+	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
 		removeMethods: unreachable
 		reason: 'abstract unreachable'
@@ -1828,7 +1833,7 @@ stripRedundantResources
 	"Answer true if the receiver will attempt to remove redundant resources not referenced from
 	a root package during its stripping process. Note that class stripping must be enabled too."
 
-	^(flags bitAnd: StripResourcesMask | AllResourcesStripped) = StripResourcesMask!
+	^(flags allMask: StripResourcesMask) and: [runFlags noMask: AllResourcesStripped]!
 
 stripShouldNotImplement
 	"Answer true if the stripping process will remove those methods which

@@ -550,7 +550,7 @@ removePackageManagement
 	| methods |
 	self startElement: 'StripPackageManagement' attributes: #().
 	self systemPackageManager class reset.
-	"Note that we must leave the #owningPackage definition in Class for potential runtime STB use"
+	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
 	#(#PoolDictionary #PoolConstantsDictionary #ResourceIdentifier #CompiledMethod) do: 
 			[:each |
