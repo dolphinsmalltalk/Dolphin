@@ -13,12 +13,31 @@ http://www.earslap.com/projectslab/otomata/?q=10_0_150_0306212704234525628607606
 
 20_0_150_030621270423452562860760662170_9_A_12
 
-Have fun!!'.
+Have fun!!
 
-package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiAzIEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAABSAAAACAAAAFBsaW1ib2xlUgAAADoAAABD
-b3JlXE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXEdlbmVyYXRpdmUgTXVzaWNcUGxpbWJvbGUuZXhl
-mgAAAFIAAAAIAAAAUGxpbWJvbGVSAAAADQAAAFBsaW1ib2xlU2hlbGzvtyUAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==').
+## Deployment:
+
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved in the application.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+PlimboleShell show.
+(ImageStripper new)
+	rootPackage: PlimboleShell owningPackage;
+	executableName: ''Plimbole.exe'';
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''Plimbole.xml''
+"Or view the log"
+XmlPad openOn: ''Plimbole.xml''
+```
+'.
+
 
 package classNames
 	add: #Plimbole;

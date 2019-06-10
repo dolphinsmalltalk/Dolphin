@@ -1224,7 +1224,7 @@ prepareCycle6: aWeakArrayOfMethods
 	self removeClassMetaInfo.
 	self notifyClassesOfCompletedStrip.
 	self
-		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects: #removeRedundantClassesAndResources: #stripRedundantResources)!
+		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects: #removeRedundantClassesAndResources: #shouldRemoveResources #stripRedundantResources)!
 
 prepareToDeployWith: stubFile to: path
 	supersentMethods := self buildSupersentMessageMap.
@@ -1678,6 +1678,9 @@ scanResourcesForViewReferences: aCollectionOfResourceIdentifiers
 shouldPreserveMethod: aCompiledMethod
 	^(potentialAspectSetters identityIncludes: aCompiledMethod) !
 
+shouldRemoveResources
+	^self stripRedundantResources and: [runFlags noMask: AllResourcesStripped]!
+
 shrinkHashedCollections
 	"Private - Minimize set of hashed collections."
 
@@ -1826,7 +1829,7 @@ stripRedundantResources
 	"Answer true if the receiver will attempt to remove redundant resources not referenced from
 	a root package during its stripping process. Note that class stripping must be enabled too."
 
-	^(flags allMask: StripResourcesMask) and: [runFlags noMask: AllResourcesStripped]!
+	^flags allMask: StripResourcesMask!
 
 stripShouldNotImplement
 	"Answer true if the stripping process will remove those methods which
@@ -2148,6 +2151,7 @@ writeLogFile
 !ImageStripper categoriesFor: #saveExecutable:keepImage:!operations!private! !
 !ImageStripper categoriesFor: #scanResourcesForViewReferences:!helpers!private! !
 !ImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
+!ImageStripper categoriesFor: #shouldRemoveResources!private!removing! !
 !ImageStripper categoriesFor: #shrinkHashedCollections!operations!private! !
 !ImageStripper categoriesFor: #shrinkSymbolTable!operations!private! !
 !ImageStripper categoriesFor: #snapshotDevelopmentClasses!configuration!private! !
