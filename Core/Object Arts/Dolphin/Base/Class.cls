@@ -167,7 +167,7 @@ category: category
 	self categories: {self classCategoryClass name: category asString}!
 
 classBinding
-	^self environment associationAt: self name!
+	^self environment associationAt: self name ifAbsent: []!
 
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 

@@ -817,10 +817,12 @@ recompileReferences
 	the structure length), AND any ExternalStructure methods that might be using static
 	expressions to get the byte-size."
 
-	| pred |
+	| pred binding |
+	binding := self classBinding.
+	binding isNil ifTrue: ["Not installed, so can't be any references." ^self].
 	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
 				with: self basicByteSize).
-	pred := self referenceFilterFor: self classBinding.
+	pred := self referenceFilterFor: binding.
 	ExternalLibrary
 		allMethodsDo: [:each | (each isExternalCall and: [pred value: each]) ifTrue: [each recompile]].
 	ExternalStructure allMethodsDo: 
