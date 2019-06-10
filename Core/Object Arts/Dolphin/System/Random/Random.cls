@@ -107,7 +107,7 @@ new
 	^self seed: (self systemClockSeed bitOr: 1)!
 
 newConcrete
-	^self isAbstract ifTrue: [self newDefault] ifFalse: [self basicNew]!
+	^self isNonInstantiable ifTrue: [self newDefault] ifFalse: [self basicNew]!
 
 newDefault
 	^DefaultGeneratorClass new!
