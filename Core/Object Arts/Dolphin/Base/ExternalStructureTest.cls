@@ -10,6 +10,26 @@ ExternalStructureTest comment: 'SUnitBrowser openOnTestCase: self'!
 !ExternalStructureTest categoriesForClass!Unclassified! !
 !ExternalStructureTest methodsFor!
 
+testCompileDefinition
+	"Test that compiling structure fields defines the right set of accessors:
+		- get selector for read-only fields
+		- set selector for write-only fields
+		- get and set selectors for normal fields
+		- no selectors for filler fields."
+
+	| subject |
+	subject := ExternalStructure newAnonymousSubclass.
+	subject class
+		compile: 'defineFields
+	self
+		defineField: #a type: UINT_PTRField readOnly;
+		defineField: #b type: DWORDField writeOnly;
+		defineField: #c type: WORDField new;
+		defineField: #d type: BYTEField filler'.
+	subject compileDefinition.
+	self assert: subject selectors asArray sort equals: #(#a #b: #c #c:).
+	self assert: subject byteSize equals: 12!
+
 testEquals
 	| s1 s2 s3 s4 |
 	s1 := FILETIME newPointer.
@@ -56,6 +76,7 @@ testIsNull
 
 	struct bytes: ExternalAddress new.
 	self assert: struct isNull.! !
+!ExternalStructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testEquals!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testIsNull!public!unit tests! !
 
