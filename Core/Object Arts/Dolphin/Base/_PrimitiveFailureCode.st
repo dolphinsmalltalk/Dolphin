@@ -23,7 +23,7 @@ _PrimitiveFailureCode at: 'Overflow' put: 16rC!
 _PrimitiveFailureCode at: 'PendingTermination' put: 16r14!
 _PrimitiveFailureCode at: 'Success' put: -16r1!
 _PrimitiveFailureCode at: 'SystemError' put: 16r3!
-_PrimitiveFailureCode at: 'UnspecifiedError' put: 16r16!
+_PrimitiveFailureCode at: 'UnspecifiedError' put: 16r17!
 _PrimitiveFailureCode at: 'ValueOutOfRange' put: 16rB!
 _PrimitiveFailureCode at: 'WrongNumberOfArgs' put: 16r4!
 _PrimitiveFailureCode shrink!

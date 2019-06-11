@@ -200,6 +200,13 @@ at: anInteger
 
 	^self shouldNotImplement!
 
+at: index put: value
+	"Replace the receivers indexed instance variable at the argument, index, with the argument,
+	value. Not valid for immediate, objects which are constants. Do not remove this method, as
+	the primitive implementation in Object will behave unexpectedly for immediate objects."
+
+	^self shouldNotImplement!
+
 bitAnd: operand
 	"Answer an <integer> whose bits are the logical AND of the
 	receiver's bits and those of the <integer> argument, operand."
@@ -799,6 +806,7 @@ truncated
 !Integer categoriesFor: #asStackPointer!converting!private! !
 !Integer categoriesFor: #asUIntPtr!converting!public! !
 !Integer categoriesFor: #at:!accessing!public! !
+!Integer categoriesFor: #at:put:!accessing!public! !
 !Integer categoriesFor: #bitAnd:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:put:!bit manipulation!public! !

@@ -17,7 +17,7 @@ VMConstants at: 'IsWin64' put: false!
 VMConstants at: 'MaxBlockNesting' put: 16rFF!
 VMConstants at: 'MaxLiterals' put: 16r10000!
 VMConstants at: 'MaxMessageArgs' put: 16rFF!
-VMConstants at: 'MaxPrimitive' put: 16rE0!
+VMConstants at: 'MaxPrimitive' put: 16rFF!
 VMConstants at: 'MaxTemps' put: 16rFF!
 VMConstants at: 'MaxVirtualFunction' put: 16r400!
 VMConstants at: 'SmallIntegerMax' put: 16r3FFFFFFF!
