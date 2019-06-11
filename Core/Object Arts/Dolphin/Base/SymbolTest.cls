@@ -41,9 +41,8 @@ testAsString
 testAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1) 
-		do: [:each | self should: [literal at: each put: $x] raise: BoundsError].
-	1 to: literal size
+	self should: [literal at: 0 put: $x] raise: BoundsError.
+	1 to: literal size + 1
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
 testEquals
@@ -70,10 +69,9 @@ testEquals
 testInstVarAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1)
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal].
-	1 to: literal size
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal]!
+	self should: [literal instVarAt: 0 put: $x codePoint] raise: BoundsError.
+	1 to: literal size + 1
+		do: [:each | self should: [literal instVarAt: each put: $x codePoint] raise: Processor constWriteSignal]!
 
 testPrintLiteral
 	self assert: #_ printString equals: '#_'.
