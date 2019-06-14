@@ -429,29 +429,34 @@ pmDesignator
 	^self subclassResponsibility!
 
 print: anObject on: aWriteStream format: formatString alphabet: formatChars formatters: aLookupTable
+	
 	| ch formatStream tokenStream |
 	tokenStream := formatString class writeStream: 9.
 	formatStream := formatString readStream.
 	ch := formatStream nextAvailable.
 	[ch isNil] whileFalse: 
-			[(formatChars includes: ch)
-				ifTrue: 
-					[| start |
-					tokenStream reset.
-					start := ch.
+		[ch == $'
+			ifTrue: 
+				[aWriteStream nextPutAll: (formatStream upTo: $').
+				ch := formatStream nextAvailable].
+		(formatChars includes: ch)
+			ifTrue: 
+				[| start |
+				tokenStream reset.
+				start := ch.
 					
-					[tokenStream nextPut: ch.
-					ch := formatStream nextAvailable.
-					ch = start] whileTrue.
-					(aLookupTable at: tokenStream contents)
-						value: self
-						value: anObject
-						value: aWriteStream]
-				ifFalse: 
-					[
-					ch == $\ ifTrue: [ch := formatStream next].
-					aWriteStream nextPut: ch.
-					ch := formatStream nextAvailable]]!
+				[tokenStream nextPut: ch.
+				ch := formatStream nextAvailable.
+				ch = start] whileTrue.
+				(aLookupTable at: tokenStream contents)
+					value: self
+					value: anObject
+					value: aWriteStream]
+			ifFalse: 
+				[
+				ch == $\ ifTrue: [ch := formatStream next].
+				aWriteStream nextPut: ch.
+				ch := formatStream nextAvailable]]!
 
 printDate: aDate on: aWriteStream format: aString
 	"Append to the <puttableStream>, aWriteStream, a <String> whose characters are a representation of the <Date> argument, aDate, formatted according to the format characters listed in the <String>, aString.
