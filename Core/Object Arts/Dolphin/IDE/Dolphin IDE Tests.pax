@@ -47,6 +47,7 @@ package setPrerequisites: #(
 	'..\MVP\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
 	'Professional\Dolphin Refactoring Browser'
+	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'

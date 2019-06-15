@@ -143,12 +143,14 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				if (executionTrace)
 				{
 					TRACESTREAM.Lock();
-					TRACESTREAM<< L"C entrypoint at context " << returnFrame<< L"/" << StackFrame::FromFrameOop(returnFrame)<< L", frame " << callbackFrameOop<< L"/" << pCallbackFrame << std::endl;
+					TRACESTREAM<< L"C entrypoint at context " << StackFrame::FromFrameOop(returnFrame) << L", frame " << pCallbackFrame << std::endl;
 					TRACESTREAM.Unlock();
 				}
 
 				ASSERT(!pCallbackFrame->isBlockFrame());
-				ASSERT(pCallbackFrame->m_caller == returnFrame);
+				ASSERT(pCallbackFrame->m_caller == returnFrame 
+					||	(pCallbackFrame->m_method->m_location->m_selector == Pointers.vmiSelector
+						&& StackFrame::FromFrameOop(pCallbackFrame->m_caller)->m_caller == returnFrame));
 			#endif
 
 			// Invoke asembler byte code loop in a handler which can detect and
@@ -743,7 +745,7 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned
 			}
 
 			m_nCallbacksPending++;	 // record that callbacks are waiting to exit
-			return primitiveFailure(_PrimitiveFailureCode::Overflow);
+			return primitiveFailure(_PrimitiveFailureCode::Pending);
 		}
 
 	}

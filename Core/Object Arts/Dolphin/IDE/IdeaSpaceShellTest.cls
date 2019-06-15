@@ -46,7 +46,10 @@ newViewComposerCard
 	^ideaShell newEmbeddedCardOfClass: ViewComposer!
 
 newWorkspaceCard
-	^(ideaShell newEmbeddedCardOfClass: SmalltalkWorkspaceDocument)
+	| workspace |
+	workspace := ideaShell newEmbeddedCardOfClass: SmalltalkWorkspaceDocument.
+	self assert: workspace workspace view isKindOf: ScintillaView.
+	^workspace
 		filename: (FileLocator installRelative localFileSpecFor: 'Boot.st');
 		fileLoad;
 		yourself!

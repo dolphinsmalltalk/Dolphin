@@ -509,7 +509,7 @@ void ObjectMemory::addVMRefs()
 		//		wrong size, or some error caused writing off either of its ends
 		//	3)	Stack overflow (probably due to a recursive loop going too deep),
 		//		though it this occurs it will likely cause a failure somewhat
-		//		earlier (mostly, it seems, in either activateNewMethod 
+		//		earlier (mostly, it seems, in either activating new methods 
 		//		or returnValueTo) in BYTEASM.ASM).
 		//
 		#ifdef PRIVATE_HEAP

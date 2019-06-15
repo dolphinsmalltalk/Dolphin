@@ -488,7 +488,8 @@ void Interpreter::recoverFromFault(LPEXCEPTION_POINTERS pExInfo)
 	bool inPrim = saveContextAfterFault(pExInfo);
 	if (inPrim)
 	{
-		activateNewMethod(m_registers.m_oopNewMethod->m_location);
+		DWORD exceptionCode = pExInfo->ExceptionRecord->ExceptionCode;
+		activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
 	}
 }
 
@@ -575,7 +576,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		bool inPrim = saveContextAfterFault(pExInfo);
 		if (inPrim)
 		{
-			activateNewMethod(m_registers.m_oopNewMethod->m_location);
+			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, _PrimitiveFailureCode::IntegerDivideByZero);
 		}
 #ifdef _DEBUG
 		{
@@ -636,7 +637,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		AbandonStepping();
 		if (saveContextAfterFault(pExInfo))
 		{
-			activateNewMethod(m_registers.m_oopNewMethod->m_location);
+			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
 		}
 		action = _fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
 		break;
