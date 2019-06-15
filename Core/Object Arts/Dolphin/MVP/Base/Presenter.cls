@@ -197,7 +197,7 @@ defaultNameOf: aView
 	"Private - Answer a default name for aView within the receiver. The name is 
 	of the form: classnn, where 'class' is the class of aView and 'nn' is GUID string"
 
-	^aView class name displayString , GUID newUnique displayString!
+	^aView class name displayString , GUID newUnique asString!
 
 destroy
 	"Forcibly destroy the receiver by closing the associated View"
@@ -303,7 +303,7 @@ initialize
 
 	"When overriding this method do remember to supersend!!"
 
-	view := DeafObject current.
+	view := DeafObject.Current.
 	subPresenters := OrderedCollection new.
 	helpId := self defaultHelpId.
 	self createComponents!
@@ -343,9 +343,7 @@ model: anObject
 	"Set the model of the receiver to be anObject"
 
 	model := anObject.
-	self view notNil ifTrue: [
-		self connectView]
-!
+	self hasView ifTrue: [self connectView]!
 
 name: aPresenter as: aNameString 
 	"Sets the name of aPresenter within the receiver to be aNameString"
@@ -593,7 +591,7 @@ onViewDestroyed
 	view isStateRestoring 
 		ifFalse: 
 			["If not recreating the view then discard it"
-			view := DeafObject current]!
+			view := DeafObject.Current]!
 
 onViewOpened
 	"Now run through all our sub-presenters and connect them in turn
@@ -676,11 +674,7 @@ remove: aPresenter
 
 	self view removeSubView: aPresenter view.
 	self subPresenters remove: aPresenter.
-	aPresenter parentPresenter == self 
-		ifTrue: 
-			[aPresenter
-		parentPresenter: nil; 
-				setView: DeafObject current].
+	aPresenter parentPresenter == self ifTrue: [aPresenter parentPresenter: nil].
 	names isNil ifFalse: [names removeKey: aPresenter].
 	^aPresenter!
 
