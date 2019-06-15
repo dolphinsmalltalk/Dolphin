@@ -4166,7 +4166,7 @@ wmNcDestroy: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam.
 	self clearHandle.
-	self isStateRestoring ifFalse: [interactor := creationParent := presenter := DeafObject current].	"If not being recreated, discard the presenter"
+	self isStateRestoring ifFalse: [interactor := creationParent := presenter := DeafObject.Current].	"If not being recreated, discard the presenter"
 	^answer!
 
 wmNcHitTest: message wParam: wParam lParam: lParam
