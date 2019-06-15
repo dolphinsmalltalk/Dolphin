@@ -66,8 +66,8 @@ public _byteCodeLoop									; Main entry point from C++
 public _invalidByteCode
 EXECUTENEWMETHOD EQU ?executeNewMethod@Interpreter@@CIXPAV?$TOTE@VCompiledMethod@ST@@@@I@Z
 public EXECUTENEWMETHOD
-ACTIVATENEWMETHOD EQU ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@ST@@@Z
-public ACTIVATENEWMETHOD
+ACTIVATEPRIMITIVEMETHOD EQU ?activatePrimitiveMethod@Interpreter@@SIXPAVCompiledMethod@ST@@W4_PrimitiveFailureCode@@@Z
+public ACTIVATEPRIMITIVEMETHOD
 
 public byteCodeTable
 
@@ -3899,146 +3899,6 @@ ENDBYTECODE longSend
 ; The main body of the routine is very short, being a switch
 ; through a jump table (see immediately below).
 
-;; Activate a method (i.e. update the calling stack frame's IP & sp, setup a new stack frame, and initialize appropriate interpreter 
-;; registers to execute the new methods bytecodes, and set up a stack frame)
-MActivateMethod MACRO 
-	ASSUME ecx:PTR CompiledCodeObj					; Expects ptr to new method in ECX
-
-	IFDEF PROFILING
-		inc 	[?contextsSuspended@@3IA]
-		inc 	[?methodsActivated@@3IA]
-	ENDIF
-
-	;; Work out _IP index before overwriting old method pointer
-	mov		eax, [pMethod]							; Load pointer to current method into eax
-	ASSUME	eax:PTR CompiledCodeObj
-
-	mov		edx, ecx								; Get pointer to new method into edx
-	ASSUME	edx:PTR CompiledCodeObj
-	mov		[pMethod], ecx							; Save down pointer to new method
-
-	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
-		add		eax, CompiledCodeObj.m_byteCodes
-	.ELSE
-		mov		eax, [eax].m_byteCodes
-		ASSUME	eax:PTR OTE
-		mov		eax, [eax].m_location
-	.ENDIF
-	ASSUME	eax:NOTHING
-	sub		_IP, eax
-	IFDEF _DEBUG
-		.IF (_IP > 16384)
-			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
-		.ENDIF
-	ENDIF
-	; At this point _IP is the offset into the byte codes
-
-	movzx	eax, [edx].m_header.argumentCount
-
-	; Work out the new base pointer (points at first argument - not receiver)
-	neg		eax										; We'll be subtracting arg count
-	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
-
-	; We're don't need pointer to new method any more
-	ASSUME ecx:NOTHING
-
-	; Now work out the number of temporaries required for new method
-	; Load flag word which contains temp count
-	movzx	ecx, [edx].m_header.stackTempCount		; Get stack temp count into ecx
-
-	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
-	add		_SP, OOPSIZE
-
-	mov		eax, [oteNil]							; Temps must have initial value of Nil
-	cmp		ecx, 0
-	.WHILE (!ZERO?)
-		mov		[_SP], eax
-		add		_SP, OOPSIZE
-		dec		ecx
-	.ENDW
-
-	ASSUME	_SP:PStackFrame						; _SP now points at location for new StackFrame
-
-	mov		ecx, [NEWMETHOD]					; Restore method Oop
-	; Note that we used to have to count up the method's ref. count here, but no more since the frame is on the stack
-	mov		[_SP].m_method, ecx					; Store new method oop into new StackFrame fields
-
-	; Now see whether a real (object) context is required
-
-	.IF !([edx].m_header.flags & MASK envTempCount)					; Test if method requires a context
-		mov		[_SP].m_environment, SMALLINTZERO	; Zero out the env slot as this frame has no environment
-	.ELSE
-		; At this point, _BP points at the first argument of the new context (in the stack), i.e. it is
-		; correctly set up for the new frame. ECX contains method header flags
-		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
-
-		movzx	ecx, [edx].m_header.flags
-		
-		push	edx										; Save edx for later
-		ASSUME	edx:NOTHING
-
-		shr		ecx, 2									; Access the actual env temp count
-		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
-		sub		ecx, 1									; Count is one greater than number of slots required (to flag need for Context for far ^-return)
-
-		call	NEWCONTEXT								
-		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
-
-		lea		edx, [_SP].m_environment
-		; Set the context of the stack frame to be the new method context
-		mov		[_SP].m_environment, eax
-		AddToZct <a>,<edx>
-		ASSUME	eax:NOTHING								; Context Oop no longer needed
-
-		pop		edx
-		ASSUME	edx:PTR CompiledCodeObj
-	.ENDIF
-
-	ASSUME eax:NOTHING
-	ASSUME ecx:NOTHING
-	ASSUME _SP:PStackFrame
-	ASSUME _BP:PTR Oop
-	ASSUME edx:PTR CompiledCodeObj
-
-	lea		eax, [_BP+1]						; Make SmallInteger pointer to base in EAX
-	mov		[BASEPOINTER], _BP					; Save down BP into interpreter register
-
-	mov		ecx, [ACTIVEFRAME]					; Load frame being suspended into ECX
-	ASSUME	ecx:PStackFrame
-
-	mov		[_SP].m_ip, SMALLINTZERO			; Zero out the new frames IP
-	mov		[_SP].m_bp, eax						; Store SmallInteger base pointer into new frame fields
-
-	;; Suspended contexts _SP is _BP - 2		(_BP points at first arg, not receiver)
-	sub		eax, OOPSIZE*2			  			; EAX contains SmallInteger _BP (from above)
-
-	;; Save down suspended context's _IP and _SP (using ECX)
-	mov		[ecx].m_ip, _IP						; IP index was worked out above
-	mov		[ecx].m_sp, eax
-
-	lea		eax, [ecx+1]	  					; Create SmallInteger pointer to frame being suspended ...
-	ASSUME	ecx:NOTHING							; We have no further use for the suspended context
-
-	mov		[_SP].m_sp, SMALLINTZERO			; Zero out new frames SP
-	mov		[_SP].m_caller, eax					; Store SmallInt pointer to calling frame into new context fields
-	
-	; Save down frame pointer for C++
-	mov		[ACTIVEFRAME], _SP
-
-	ASSUME	_SP:PTR Oop
-	add		_SP, SIZEOF StackFrame-OOPSIZE		; Adjust _SP to point at last field of frame
-	
-	; Set up interpreters _IP
-	GetInitialIPOfMethod <edx>
-
-	IFDEF _DEBUG
-		.IF ([EXECUTIONTRACE])
-			mov		ecx, _SP
-			call	DEBUGMETHODACTIVATED
-		.ENDIF
-	ENDIF
-
-ENDM
 
 BEGINPROC execMethodOfClass
 	ASSUME	edx:PTR OTE		; Selector (N.B. must have been saved down in MESSAGE global
@@ -4309,7 +4169,139 @@ BEGINPRIMITIVE primitiveActivateMethod
 	mov		ecx, [ecx].m_location					; Get pointer to new method into edx
 	ASSUME	ecx:PTR CompiledCodeObj
 
-	MActivateMethod
+	IFDEF PROFILING
+		inc 	[?contextsSuspended@@3IA]
+		inc 	[?methodsActivated@@3IA]
+	ENDIF
+
+	;; Work out _IP index before overwriting old method pointer
+	mov		eax, [pMethod]							; Load pointer to current method into eax
+	ASSUME	eax:PTR CompiledCodeObj
+
+	mov		edx, ecx								; Get pointer to new method into edx
+	ASSUME	edx:PTR CompiledCodeObj
+	mov		[pMethod], ecx							; Save down pointer to new method
+
+	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
+		add		eax, CompiledCodeObj.m_byteCodes
+	.ELSE
+		mov		eax, [eax].m_byteCodes
+		ASSUME	eax:PTR OTE
+		mov		eax, [eax].m_location
+	.ENDIF
+	ASSUME	eax:NOTHING
+	sub		_IP, eax
+	IFDEF _DEBUG
+		.IF (_IP > 16384)
+			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
+		.ENDIF
+	ENDIF
+	; At this point _IP is the offset into the byte codes
+
+	movzx	eax, [edx].m_header.argumentCount
+
+	; Work out the new base pointer (points at first argument - not receiver)
+	neg		eax										; We'll be subtracting arg count
+	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
+
+	; We're don't need pointer to new method any more
+	ASSUME ecx:NOTHING
+
+	; Now work out the number of temporaries required for new method
+	; Load flag word which contains temp count
+	movzx	ecx, [edx].m_header.stackTempCount		; Get stack temp count into ecx
+
+	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
+	add		_SP, OOPSIZE
+
+	mov		eax, [oteNil]							; Temps must have initial value of Nil
+	cmp		ecx, 0
+	.WHILE (!ZERO?)
+		mov		[_SP], eax
+		add		_SP, OOPSIZE
+		dec		ecx
+	.ENDW
+
+	ASSUME	_SP:PStackFrame						; _SP now points at location for new StackFrame
+
+	mov		ecx, [NEWMETHOD]					; Restore method Oop
+	; Note that we used to have to count up the method's ref. count here, but no more since the frame is on the stack
+	mov		[_SP].m_method, ecx					; Store new method oop into new StackFrame fields
+
+	; Now see whether a real (object) context is required
+
+	.IF !([edx].m_header.flags & MASK envTempCount)					; Test if method requires a context
+		mov		[_SP].m_environment, SMALLINTZERO	; Zero out the env slot as this frame has no environment
+	.ELSE
+		; At this point, _BP points at the first argument of the new context (in the stack), i.e. it is
+		; correctly set up for the new frame. ECX contains method header flags
+		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
+
+		movzx	ecx, [edx].m_header.flags
+		
+		push	edx										; Save edx for later
+		ASSUME	edx:NOTHING
+
+		shr		ecx, 2									; Access the actual env temp count
+		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
+		sub		ecx, 1									; Count is one greater than number of slots required (to flag need for Context for far ^-return)
+
+		call	NEWCONTEXT								
+		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
+
+		lea		edx, [_SP].m_environment
+		; Set the context of the stack frame to be the new method context
+		mov		[_SP].m_environment, eax
+		AddToZct <a>,<edx>
+		ASSUME	eax:NOTHING								; Context Oop no longer needed
+
+		pop		edx
+		ASSUME	edx:PTR CompiledCodeObj
+	.ENDIF
+
+	ASSUME eax:NOTHING
+	ASSUME ecx:NOTHING
+	ASSUME _SP:PStackFrame
+	ASSUME _BP:PTR Oop
+	ASSUME edx:PTR CompiledCodeObj
+
+	lea		eax, [_BP+1]						; Make SmallInteger pointer to base in EAX
+	mov		[BASEPOINTER], _BP					; Save down BP into interpreter register
+
+	mov		ecx, [ACTIVEFRAME]					; Load frame being suspended into ECX
+	ASSUME	ecx:PStackFrame
+
+	mov		[_SP].m_ip, SMALLINTZERO			; Zero out the new frames IP
+	mov		[_SP].m_bp, eax						; Store SmallInteger base pointer into new frame fields
+
+	;; Suspended contexts _SP is _BP - 2		(_BP points at first arg, not receiver)
+	sub		eax, OOPSIZE*2			  			; EAX contains SmallInteger _BP (from above)
+
+	;; Save down suspended context's _IP and _SP (using ECX)
+	mov		[ecx].m_ip, _IP						; IP index was worked out above
+	mov		[ecx].m_sp, eax
+
+	lea		eax, [ecx+1]	  					; Create SmallInteger pointer to frame being suspended ...
+	ASSUME	ecx:NOTHING							; We have no further use for the suspended context
+
+	mov		[_SP].m_sp, SMALLINTZERO			; Zero out new frames SP
+	mov		[_SP].m_caller, eax					; Store SmallInt pointer to calling frame into new context fields
+	
+	; Save down frame pointer for C++
+	mov		[ACTIVEFRAME], _SP
+
+	ASSUME	_SP:PTR Oop
+	add		_SP, SIZEOF StackFrame-OOPSIZE		; Adjust _SP to point at last field of frame
+	
+	; Set up interpreters _IP
+	GetInitialIPOfMethod <edx>
+
+	IFDEF _DEBUG
+		.IF ([EXECUTIONTRACE])
+			mov		ecx, _SP
+			call	DEBUGMETHODACTIVATED
+		.ENDIF
+	ENDIF
 
 	mov		eax, [ASYNCPENDING]
 	test	eax, eax
@@ -4711,18 +4703,169 @@ noStackTemps:
 
 ENDPROC EXECUTENEWMETHOD
 
-BEGINPROC ACTIVATENEWMETHOD
+BEGINPROC ACTIVATEPRIMITIVEMETHOD
+	ASSUME	ecx:PTR CompiledCodeObj
+	ASSUME	edx:DWORD	; Actually the _PrimitiveFailureCode enum value
+
+	add		edx, edx
+	inc		edx
+
 	; See execPrimitive above.
 	; Entered from C++, must save then set up _SP/_IP/_BP for assembler code
 	push	_SP									; Mustn't destroy for C++ caller
 	push	_IP									; Ditto _IP
 	push	_BP
 
+	push	edx									; Save primitive failure code
+
 	; Load interpreter registers
 	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_SP, [STACKPOINTER]
 	mov		_BP, [BASEPOINTER]
-	MActivateMethod
+
+	; Similar to MActivateMethod begins
+
+	IFDEF PROFILING
+		inc 	[?contextsSuspended@@3IA]
+		inc 	[?methodsActivated@@3IA]
+	ENDIF
+
+	;; Work out _IP index before overwriting old method pointer
+	mov		eax, [pMethod]							; Load pointer to current method into eax
+	ASSUME	eax:PTR CompiledCodeObj
+
+	mov		[pMethod], ecx							; Save down pointer to new method
+	mov		edx, ecx
+	ASSUME edx:PTR CompiledCodeObj
+	ASSUME ecx:NOTHING
+
+	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
+		add		eax, CompiledCodeObj.m_byteCodes
+	.ELSE
+		mov		eax, [eax].m_byteCodes
+		ASSUME	eax:PTR OTE
+		mov		eax, [eax].m_location
+	.ENDIF
+	ASSUME	eax:NOTHING
+	sub		_IP, eax
+	IFDEF _DEBUG
+		.IF (_IP > 16384)
+			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
+		.ENDIF
+	ENDIF
+	; At this point _IP is the offset into the byte codes
+
+	movzx	eax, [edx].m_header.argumentCount
+
+	; Work out the new base pointer (points at first argument - not receiver)
+	neg		eax										; We'll be subtracting arg count
+	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
+
+	; Now work out the number of temporaries required for new method
+	; Load flag word which contains temp count
+	movzx	ecx, [edx].m_header.stackTempCount		; Get stack temp count into ecx
+
+	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
+
+	add		_SP, OOPSIZE							; Adjust SP to point at first temp, or StackFrame fields if none
+	test	ecx, ecx								; Are there any stack temps required?
+	pop		eax										; failure code
+	jz		noStackTemps
+	
+	mov		[_SP], eax								; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
+	mov		eax, [oteNil]							; All other temps must have initial value of Nil
+	jmp		first
+
+@@:
+	mov		[_SP], eax
+first:
+	add		_SP, OOPSIZE
+	dec		ecx
+	jnz @B
+
+noStackTemps:
+	ASSUME	_SP:PStackFrame						; _SP now points at location for new StackFrame
+
+	mov		ecx, [NEWMETHOD]					; Restore method Oop
+	mov		[_SP].m_method, ecx					; Store new method oop into new StackFrame fields
+
+	; Now see whether a real (object) context is required
+
+	.IF !([edx].m_header.flags & MASK envTempCount)					; Test if method requires a context
+		mov		[_SP].m_environment, SMALLINTZERO	; Zero out the env slot as this frame has no environment
+	.ELSE
+		; At this point, _BP points at the first argument of the new context (in the stack), i.e. it is
+		; correctly set up for the new frame. ECX contains method header flags
+		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
+
+		movzx	ecx, [edx].m_header.flags
+		
+		push	edx										; Save edx for later
+		ASSUME	edx:NOTHING
+
+		shr		ecx, 2									; Access the actual env temp count
+		lea		edx, [_SP+1]							; 2: Calc SmallInteger frame pointer into EAX...
+		sub		ecx, 1									; Count is one greater than number of slots required (to flag need for Context for far ^-return)
+
+		call	NEWCONTEXT								
+		ASSUME	eax:PTR OTE								; EAX is the Oop of the new Context
+
+		lea		edx, [_SP].m_environment
+		; Set the context of the stack frame to be the new method context
+		mov		[_SP].m_environment, eax
+		AddToZct <a>,<edx>
+		ASSUME	eax:NOTHING								; Context Oop no longer needed
+
+		pop		edx
+		ASSUME	edx:PTR CompiledCodeObj
+	.ENDIF
+
+	ASSUME eax:NOTHING
+	ASSUME ecx:NOTHING
+	ASSUME _SP:PStackFrame
+	ASSUME _BP:PTR Oop
+	ASSUME edx:PTR CompiledCodeObj
+
+	lea		eax, [_BP+1]						; Make SmallInteger pointer to base in EAX
+	mov		[BASEPOINTER], _BP					; Save down BP into interpreter register
+
+	mov		ecx, [ACTIVEFRAME]					; Load frame being suspended into ECX
+	ASSUME	ecx:PStackFrame
+
+	mov		[_SP].m_ip, SMALLINTZERO			; Zero out the new frames IP
+	mov		[_SP].m_bp, eax						; Store SmallInteger base pointer into new frame fields
+
+	;; Suspended contexts _SP is _BP - 2		(_BP points at first arg, not receiver)
+	sub		eax, OOPSIZE*2			  			; EAX contains SmallInteger _BP (from above)
+
+	;; Save down suspended context's _IP and _SP (using ECX)
+	mov		[ecx].m_ip, _IP						; IP index was worked out above
+	mov		[ecx].m_sp, eax
+
+	lea		eax, [ecx+1]	  					; Create SmallInteger pointer to frame being suspended ...
+	ASSUME	ecx:NOTHING							; We have no further use for the suspended context
+
+	mov		[_SP].m_sp, SMALLINTZERO			; Zero out new frames SP
+	mov		[_SP].m_caller, eax					; Store SmallInt pointer to calling frame into new context fields
+	
+	; Save down frame pointer for C++
+	mov		[ACTIVEFRAME], _SP
+
+	ASSUME	_SP:PTR Oop
+	add		_SP, SIZEOF StackFrame-OOPSIZE		; Adjust _SP to point at last field of frame
+	
+	; Set up interpreters _IP
+	GetInitialIPOfMethod <edx>
+
+	IFDEF _DEBUG
+		.IF ([EXECUTIONTRACE])
+			mov		ecx, _SP
+			call	DEBUGMETHODACTIVATED
+		.ENDIF
+	ENDIF
+
+	; MActiveMethod Ends
+
 	; Store interpreter registers
 	mov		[INSTRUCTIONPOINTER], _IP
 	mov		[STACKPOINTER], _SP
@@ -4731,7 +4874,7 @@ BEGINPROC ACTIVATENEWMETHOD
 	pop		_IP
 	pop		_SP
 	ret
-ENDPROC ACTIVATENEWMETHOD
+ENDPROC ACTIVATEPRIMITIVEMETHOD
 
 ; Send the 0 argument selector #value.
 ; Optimise for zero arg blocks to bypass message lookup.

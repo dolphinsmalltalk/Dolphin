@@ -212,9 +212,8 @@ bitAnd: anInteger
 	^anInteger bitAnd: self!
 
 bitOr: anInteger
-	"Answer an Integer whose bits are the logical OR of the receiver's bits
-	and those of the argument anInteger. The primitive fails 
-	iff the operand is not a SmallInteger, but does not set the primitive failure code."
+	"Answer an Integer whose bits are the logical OR of the receiver's bits and those of the argument anInteger. The primitive fails 
+	iff the operand is not a SmallInteger."
 
 	<primitive: 41>
 	^anInteger bitOr: self!

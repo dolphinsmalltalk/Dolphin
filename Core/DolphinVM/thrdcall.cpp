@@ -626,7 +626,8 @@ void OverlappedCall::OnActivateProcess()
 			ASSERT(m_interpContext.m_stackPointer == Interpreter::m_registers.m_stackPointer);
 			ASSERT(m_interpContext.m_basePointer == Interpreter::m_registers.m_basePointer);
 			Interpreter::m_registers.m_oopNewMethod = m_interpContext.m_oopNewMethod;
-			Interpreter::activateNewMethod(m_interpContext.m_oopNewMethod->m_location);
+			// TODO: Need to pass correct failure code for the offending argument
+			Interpreter::activatePrimitiveMethod(m_interpContext.m_oopNewMethod->m_location, _PrimitiveFailureCode::InvalidOperation);
 		}
 
 		// Let the overlapped thread continue

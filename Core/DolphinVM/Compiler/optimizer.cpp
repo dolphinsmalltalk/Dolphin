@@ -1930,7 +1930,7 @@ POTE Compiler::NewMethod()
 		byte3 = ReturnMessageStackTop;
 
 		// We must adjust the debug info to account for the longer (two byte) first instruction
-		_ASSERTE(m_allScopes.size() == 1);
+		//_ASSERTE(m_allScopes.size() == 1); Some inlined scopes may have been optimised away
 		_ASSERTE(pMethodScope->GetFinalIP() == 1);
 		pMethodScope->SetFinalIP(2);
 

@@ -79,3 +79,5 @@ namespace ST
 		return basePointer()[-1];
 	}
 }
+
+std::wostream& operator<<(std::wostream& stream, ST::StackFrame *pFrame);

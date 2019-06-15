@@ -298,7 +298,7 @@ public:
 	// memory exceptions from pushing parms etc on the stack)
 	static int __stdcall callbackExceptionFilter(LPEXCEPTION_POINTERS info);
 
-	static void __fastcall activateNewMethod(CompiledMethod* methodPointer);
+	static void __fastcall activatePrimitiveMethod(CompiledMethod* methodPointer, _PrimitiveFailureCode failureCode);
 
 private:
 

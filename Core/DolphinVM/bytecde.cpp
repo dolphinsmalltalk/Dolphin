@@ -421,14 +421,8 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(Beha
 {
 	#if defined(_DEBUG)
 	{
-		std::wostringstream dc;
-		dc << classPointer<< L" does not understand " << m_oopMessageSelector << std::endl << std::ends;
-		std::wstring msg = dc.str();
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << msg;
-		if (classPointer->isMetaclass() || 
-				strcmp(static_cast<Class*>(classPointer->m_location)->Name, "DeafObject"))
-			WarningWithStackTrace(msg.c_str());
+		TRACESTREAM << classPointer << L" does not understand " << m_oopMessageSelector << std::endl << std::ends;
 	}
 	#endif
 
