@@ -96,14 +96,11 @@ package methodNames
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
-	add: 'PositionEvent class' -> #handle:message:wParam:lParam:;
 	add: 'RGB class' -> #stdColor:;
 	add: 'ScintillaIndicatorStyle class' -> #styleNames;
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
-	add: 'WindowsEvent class' -> #fromMSG:;
-	add: 'WindowsEvent class' -> #handle:message:wParam:lParam:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
 	add: 'WinImageList class' -> #width:height:flags:size:growthGranularity:;
 	yourself.
@@ -429,19 +426,6 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		hdc: hdc
 		paintStruct: ps! !
 !PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
-
-!PositionEvent class methodsFor!
-
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
-	#deprecated.
-	^(super
-		handle: wndHandle
-		message: msgInteger
-		wParam: wInteger
-		lParam: lInteger)
-		makeStruct;
-		yourself! !
-!PositionEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
 
 !RGB class methodsFor!
 
@@ -808,32 +792,14 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 
 !WindowsEvent class methodsFor!
 
-fromMSG: aMSG 
-	#deprecated.
-	^self 
-		handle: aMSG hwnd
-		message: aMSG message
-		wParam: aMSG wParam
-		lParam: aMSG lParam!
-
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
+message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 	#deprecated.
 	^self
 		window: (View fromHandle: wndHandle)
 		message: msgInteger
 		wParam: wInteger
-		lParam: lInteger!
-
-message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger 
-	#deprecated.
-	^self 
-		handle: wndHandle
-		message: msgInteger
-		wParam: wInteger
 		lParam: lInteger! !
-!WindowsEvent class categoriesFor: #fromMSG:!instance creation!public! !
-!WindowsEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
-!WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!instance creation!public! !
+!WindowsEvent class categoriesFor: #message:handle:wParam:lParam:!public! !
 
 !WinImageList class methodsFor!
 

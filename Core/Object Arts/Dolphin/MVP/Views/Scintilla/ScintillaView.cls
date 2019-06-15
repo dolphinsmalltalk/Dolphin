@@ -10182,12 +10182,13 @@ setText: aString
 	self
 		cancelModes;
 		clearAll;
-		sciAppendText: text size text: text;
-		isTextModified: false;
-		emptyUndoBuffer.
+		sciAppendText: text size text: text.
 	"Setting the text removes all current markers - we still tell Scintilla to delete them
 	though, since it seems that setting empty text may not remove any markers on line 0."
-	self removeAllMarkers.
+	self
+		removeAllMarkers;
+		isTextModified: false;
+		emptyUndoBuffer.
 	"Setting the text also removes the indicators"
 	indicators := nil!
 
