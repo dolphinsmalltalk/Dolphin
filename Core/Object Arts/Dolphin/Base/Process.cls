@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -317,13 +317,6 @@ name: anObject
 	"Set the name of the Process to the argument, anObject (see #name)"
 
 	name := anObject!
-
-primitiveFailureData
-	"Private - Answer the extra failure data set by the last primitive which failed (and
-	which had extra information to supply about the failure over and above the failure code).
-	See #primitiveFailureCode for additional information."
-
-	^primitiveFailureData!
 
 primTerminate
 	"Private - Transition the receiver from its current state to the Terminated state. Once terminated, a Process cannot (easily) be resumed or restarted."
@@ -706,7 +699,6 @@ topFrame
 !Process categoriesFor: #lastError!accessing!public! !
 !Process categoriesFor: #name!accessing!public! !
 !Process categoriesFor: #name:!accessing!public! !
-!Process categoriesFor: #primitiveFailureData!accessing!private! !
 !Process categoriesFor: #primTerminate!private!states-changing! !
 !Process categoriesFor: #printOn:!printing!public! !
 !Process categoriesFor: #priority!accessing!public! !

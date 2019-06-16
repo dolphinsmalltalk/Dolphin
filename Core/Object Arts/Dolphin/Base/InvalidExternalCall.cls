@@ -26,10 +26,18 @@ _descriptionFormat
 
 	^'Invalid arg %2: Cannot coerce %3 to %4'!
 
-argument: anObject
-	"Private - Set the arguments passed to the invalid call which the receiver represents to anArray."
+argument
+	"Answer the <Object> which is the invalid argument."
 
+	^argument!
+
+argument: anObject
 	argument := anObject!
+
+type
+	"Answer the type  expected by the argument for which the receiver represents an invalid call to anObject."
+
+	^type!
 
 type: anObject
 	"Private - Set the type expected by the argument for which the receiver represents an
@@ -38,7 +46,9 @@ type: anObject
 	type := anObject! !
 !InvalidExternalCall categoriesFor: #_descriptionArguments!displaying!public! !
 !InvalidExternalCall categoriesFor: #_descriptionFormat!displaying!private! !
+!InvalidExternalCall categoriesFor: #argument!accessing!public! !
 !InvalidExternalCall categoriesFor: #argument:!accessing!private! !
+!InvalidExternalCall categoriesFor: #type!accessing!public! !
 !InvalidExternalCall categoriesFor: #type:!accessing!private! !
 
 !InvalidExternalCall class methodsFor!

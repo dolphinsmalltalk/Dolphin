@@ -296,7 +296,7 @@ invalidCall: anInteger
 
 	| proc |
 	proc := Processor activeProcess.
-	anInteger < 0 ifTrue: [^self hresultError: proc primitiveFailureData].
+	anInteger < 0 ifTrue: [^HRESULTError signalFailureCode: anInteger].
 	anInteger >= 16r10000
 		ifTrue: 
 			[| frame i arg descriptor |

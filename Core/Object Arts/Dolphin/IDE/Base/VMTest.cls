@@ -43,8 +43,15 @@ assertImmutableResize: anObject
 	#(0 1 -1)
 		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
 
+compile: text in: aBehavior
+	| method |
+	method := Compiler compile: text in: aBehavior.
+	self deny: method identicalTo: nil.
+	method sourceDescriptor: text.
+	^method!
+
 createPrimitiveMethod: anInteger in: aBehavior argCount: argc setsFailCode: aBoolean
-	| method text |
+	| text |
 	text := String writeStream.
 	argc isZero
 		ifTrue: [text nextPutAll: 'prim ']
@@ -63,11 +70,7 @@ createPrimitiveMethod: anInteger in: aBehavior argCount: argc setsFailCode: aBoo
 		nextPutAll: (aBoolean
 					ifTrue: ['(_PrimitiveFailureCode keyAtValue:  _failureCode)']
 					ifFalse: ['''failed''']).
-	text := text contents.
-	method := Compiler compile: text in: aBehavior.
-	self deny: method identicalTo: nil.
-	method sourceDescriptor: text.
-	^method!
+	^self compile: text contents in: aBehavior!
 
 createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
 	^self
@@ -118,7 +121,11 @@ earlyTermination: aBoolean
 					count := count + 1].
 			"The curtailment block should now have run"
 			self assert: a identicalTo: 0.
-			"and the process should have died"
+			"and the process should also die fairly quickly after that"
+			count := 0.
+			[proc isTerminated not and: [count < 50]] whileTrue: 
+					[Processor sleep: 1 milliseconds.
+					count := count + 1].
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
 
@@ -487,27 +494,26 @@ testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
 
 	| method |
-	method := Compiler
+	method := self
 				compile: 'hresult: anInteger
-	<stdcall: hresult AnswerDWORD sdword>
-	| proc |
-	proc := Processor activeProcess.
-	^_failureCode -> proc primitiveFailureData'
+	<stdcall: hresult AnswerDWORD dword>
+	^self invalidCall: _failureCode'
 				in: VMLibrary.
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF) do: 
 			[:each |
 			| result |
 			result := method value: VMLibrary default withArguments: {each}.
+			self assert: result isKindOf: Integer.
 			self assert: result equals: each.
 			self assert: each class identicalTo: result class].
-	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
-	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
+
+	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code. Note that the unused bit 27 is lost."
+	#(16rFFFFFFFF 16r80004005 16rC0000000 16rBFFFFFFF 16r80000000 16rEABCFFFF 16r80290422) do: 
 			[:each |
-			| result |
-			result := method value: VMLibrary default withArguments: {each}.
-			self assert: result key equals: -1.
-			self assert: result value equals: each.
-			self assert: each class identicalTo: result value class]!
+			self
+				should: [method value: VMLibrary default withArguments: {each}]
+				raise: HRESULTError
+				matching: [:ex | ex hresult = (HRESULT fromUnsignedInteger: (each bitAnd: 16r8000000 bitInvert))]]!
 
 testExtCallRetLpwstr
 	| expected actual method |
@@ -1060,6 +1066,31 @@ testMustBeBoolean
 	"Near jump if false"
 	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 1 + 2 + 3 + 4.
 	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
+
+testOverlappedCallInvalidArguments
+	"Invalid arguments should be detected and handled as for a non-overlapped call."
+	self
+		should: [KernelLibrary default sleep: 's']
+		raise: InvalidExternalCall
+		matching: [:ex | ex argument = 's' and: [ex type = 'dword' and: [ex tag = 1]]].
+!
+
+testOverlappedCallRetHRESULT
+	"Test that HRESULT return codes are translated into exceptions correctly by overlapped calls."
+
+	| method |
+	method := self
+				compile: 'hr: anInteger <overlap stdcall: hresult AnswerDWORD sdword> ^self invalidCall: _failureCode'
+				in: VMLibrary.
+	{HRESULT win32Error: 1234. HRESULT fromUnsignedInteger: 16r80290422} do: 
+			[:each |
+			self
+				should: [method value: VMLibrary default withArguments: {each asInteger}]
+				raise: HRESULTError
+				matching: [:ex | ex hresult = each]].
+	"Positive codes are success values"
+	#(0 1 16r40290423)
+		do: [:each | self assert: (method value: VMLibrary default withArguments: {each}) equals: each]!
 
 testOverlappedCallsSuspendAndTerminate
 	5 timesRepeat: [self suspendAndTerminate]!
@@ -3002,6 +3033,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
+!VMTest categoriesFor: #compile:in:!helpers!private! !
 !VMTest categoriesFor: #createPrimitiveMethod:in:argCount:setsFailCode:!helpers!private! !
 !VMTest categoriesFor: #createPrimitiveMethodLike:setsFailCode:!helpers!private! !
 !VMTest categoriesFor: #earlyTermination:!helpers!private! !
@@ -3045,6 +3077,8 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
+!VMTest categoriesFor: #testOverlappedCallInvalidArguments!public!unit tests! !
+!VMTest categoriesFor: #testOverlappedCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !

@@ -252,7 +252,6 @@ asyncDLL32Call PROC STDCALL PUBLIC USES edi esi ebx,
 performCall:
 	push	eax												; ARG1: cached proc address
 	call	callExternalFunction
-	mov		[STACKPOINTER], _SP		 						; Save down interpreter stack pointer, e.g. for C routine
 	ret														; eax will be non-zero as otherwise we'd not be here
 
 procAddressNotCached:
@@ -1760,56 +1759,23 @@ extCallRetHRESULT:
 
 	; FAILED(HRESULT)
 	ASSERTNEQU %RESULT, <ecx>
-	
+	ASSERTEQU %RESULT, <eax>
+
+	; Bit 27 is not used in a true HRESULT, so we can 
 	mov		ecx, RESULT
-	add		RESULT, RESULT					; Will it fit into a SmallInteger
-	jo		hrOverflow						; No, more than 31 bits required (will return to my caller)
-	or		eax, 1							; Yes, create SmallInteger to return in EAX
+	and		ecx, 7ffffffh
+	add		ecx, ecx
+	inc		ecx
+	and		RESULT, 0f0000000h
+	or		RESULT, ecx
 
 	mov		ecx, callContext
 	ASSUME	ecx:PTR InterpRegisters
-
-	mov		edx, [ecx].m_pActiveProcess
-	ASSUME	edx:PTR Process
 
 	mov		_SP, [ecx].m_stackPointer
 	mov		_IP, [ecx].m_instructionPointer
 	mov		_BP, [ecx].m_basePointer
 
-	mov		ecx, [edx].m_primitiveFailureData
-	mov		[edx].m_primitiveFailureData, eax
-	ASSUME	edx:NOTHING
-	
-	CountDownOopIn <c>
-
-	mov		eax, -1						; Fail the primitive
-	ret
-
-hrOverflow:
-	call	LINEWSIGNED		
-
-	mov		ecx, callContext
-	ASSUME	ecx:PTR InterpRegisters
-
-	; Result is a LargeInteger, so we must set ref. count to 1, but only because we are storing it into
-	; a non-stack slot in the process
-	ASSUME	eax:PTR OTE
-	mov		[eax].m_count, 1
-
-	mov		edx, [ecx].m_pActiveProcess
-	ASSUME	edx:PTR Process
-
-	mov		_SP, [ecx].m_stackPointer
-	mov		_IP, [ecx].m_instructionPointer
-	mov		_BP, [ecx].m_basePointer
-	ASSUME	ecx:NOTHING
-
-	mov		ecx, [edx].m_primitiveFailureData
-	mov		[edx].m_primitiveFailureData, eax
-	
-	CountDownOopIn <c>
-	
-	mov		eax, -1						; Fail the primitive
 	ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

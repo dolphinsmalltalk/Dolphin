@@ -147,6 +147,14 @@ fail
 
 	^Fail!
 
+fromPrimitiveFailureCode: anInteger
+	"Answer an HRESULT instantiated from the HR code packed into a primitive failure code."
+
+	"The VM packs HRESULT return codes into a SmallInteger primitive failure code by stripping out bit 27, which is not used."
+
+	^self
+		fromInteger: (((anInteger bitShift: 1) bitAnd: -16r10000000) bitOr: (anInteger bitAnd: 16r7FFFFFF))!
+
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
@@ -206,6 +214,7 @@ win32Error: anInteger
 		code: anInteger! !
 !HRESULT class categoriesFor: #defineFields!public!template definition! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
+!HRESULT class categoriesFor: #fromPrimitiveFailureCode:!instance creation!public! !
 !HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !
 !HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !

@@ -119,11 +119,6 @@ void Interpreter::RemoveVMReference(OTE* pOTE)
 		m_oteNewProcess->countUp();					// new process or nil
 		m_oteUnderConstruction->countUp();			// Window currently under construction or nil
 		
-		OverlappedCall::ReincrementProcessReferences();
-
-		//m_oopMessageSelector = Pointers.Nil;
-		//m_oopNewMethod = Pointers.Nil;
-		
 		ObjectMemory::addVMRefs();
 	}
 #endif

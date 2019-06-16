@@ -428,8 +428,6 @@ void Interpreter::MarkRoots()
 		ObjectMemory::MarkObjectsAccessibleFromRoot(*m_roots[i]);
 		i++;
 	}
-
-	OverlappedCall::MarkRoots();
 }
 
 // A compacting GC has occurred, ask ObjectMemory to update any stored down Oops
@@ -456,9 +454,21 @@ void Interpreter::OnCompact()
 	ASSERT(ObjectMemory::isKindOf(m_registers.m_oteActiveProcess, Pointers.ClassProcess));
 
 	flushCaches();
+}
 
-	OverlappedCall::OnCompact();
-	//compiler->onCompact();
+void Interpreter::CompactVirtualObject(OTE* ote)
+{
+	// TODO: Uncommit any virtual memory that is not currently in use by the object (i.e. shrink process stacks)
+
+	if (ote->m_oteClass == Pointers.ClassProcess)
+	{
+		ProcessOTE* oteProcess = reinterpret_cast<ProcessOTE*>(ote);
+		OverlappedCallPtr oc = oteProcess->m_location->GetOverlappedCall();
+		if (oc)
+		{
+			oc->OnCompact();
+		}
+	}
 }
 
 #pragma code_seg()

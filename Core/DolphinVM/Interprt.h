@@ -281,6 +281,7 @@ public:
 
 	static bool disableAsyncGC(bool bDisable);
 	static void OnCompact();
+	static void CompactVirtualObject(OTE*);
 	static void MarkRoots();
 
 	// Clear down the object caches for VM alloc'd objects
@@ -478,9 +479,6 @@ public:
 	//		the argumentCount can be relied upon.
 
 	static Oop* primitiveFailure(_PrimitiveFailureCode failureCode);
-	static Oop* primitiveFailureWith(_PrimitiveFailureCode, Oop failureOop);
-	static Oop* primitiveFailureWith(_PrimitiveFailureCode failureCode, OTE* failureObject);
-	static Oop* primitiveFailureWithInt(_PrimitiveFailureCode failureCode, SMALLINTEGER failureInt);
 
 private:
 	// Answer whether an exception occurred in a primitive
