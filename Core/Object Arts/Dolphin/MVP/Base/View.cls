@@ -1755,7 +1755,7 @@ invalidateLayout
 
 invalidateLayoutDeeply
 	self invalidateLayout.
-	self allSubViewsDo: [:each | each invalidateLayout].!
+	self allSubViewsDo: [:each | each basicInvalidateLayout]!
 
 invalidateRect: rectangle
 	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window)
