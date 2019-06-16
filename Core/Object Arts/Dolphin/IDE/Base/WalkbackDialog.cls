@@ -102,11 +102,9 @@ primHookWindowCreate: hookBoolean
 	<primitive: 108>
 	^_failureCode == _PrimitiveFailureCode.InvalidOperation
 		ifTrue: 
-			[| hooked |
-			"First forcibly unhook so error walkback can be displayed"
-			hooked := Processor activeProcess primitiveFailureData.
-			hooked primHookWindowCreate: false.
-			Notification signal: 'Forcibly unhooked failed window create of ' , hooked basicPrintString.
+			["First forcibly unhook so error walkback can be displayed"
+			self primHookWindowCreate: nil.
+			Notification signal: 'Forcibly unhooked failed window creation'.
 			"Now retry"
 			super primHookWindowCreate: hookBoolean]
 		ifFalse: [self primitiveFailed: _failureCode]!

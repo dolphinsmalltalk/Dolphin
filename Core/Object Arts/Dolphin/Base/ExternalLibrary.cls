@@ -202,7 +202,7 @@ invalidCall: anInteger
 
 	| error proc frame descriptor |
 	proc := Processor activeProcess.
-	anInteger < 0 ifTrue: [^HRESULTError signalWith: proc primitiveFailureData].
+	anInteger < 0 ifTrue: [^HRESULTError signalFailureCode: anInteger].
 	frame := proc topFrame sender.
 	descriptor := frame method descriptor.
 	anInteger >= 16r10000

@@ -739,8 +739,8 @@ void Interpreter::switchTo(ProcessOTE* oteProcess)
 		//DebugCrashDump("Attempted switch to active process");
 	}
 
-	OverlappedCall* pOverlapped = newActive->GetOverlappedCall();
-	if (pOverlapped != NULL)
+	OverlappedCallPtr pOverlapped = newActive->GetOverlappedCall();
+	if (pOverlapped)
 		pOverlapped->OnActivateProcess();
 
 	HARDASSERT(!newActive->IsWaiting());
@@ -1216,8 +1216,7 @@ Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp, unsigned)
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
-		OTE* oteArg = reinterpret_cast<OTE*>(integerPointer);
-		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Must be a SmallInteger
 	}
 
 	// Causes interrupts to be re-enabled to prevent carry over
@@ -1461,8 +1460,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumen
 		Oop oopSteps = *sp;
 		if (!ObjectMemoryIsIntegerObject(oopSteps))
 		{
-			OTE* oteArg = reinterpret_cast<OTE*>(oopSteps);
-			return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
+			return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Must be a SmallInteger
 		}
 		steps = ObjectMemoryIntegerValueOf(oopSteps);
 	}
@@ -1638,8 +1636,8 @@ Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, unsigned)
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
 	ProcessOTE* oteActive = actualActiveProcessPointer();
-	OverlappedCall* pOverlapped = oteActive->m_location->GetOverlappedCall();
-	if (pOverlapped != nullptr && pOverlapped->IsInCall())
+	OverlappedCallPtr pOverlapped = oteActive->m_location->GetOverlappedCall();
+	if (pOverlapped && pOverlapped->IsInCall())
 	{
 		TerminateOverlapped(oteActive);
 	}
@@ -1656,8 +1654,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp, unsigned)
 	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
-		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
-		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Must be a SmallInteger
 	}
 
 	SMALLUNSIGNED newPriority = ObjectMemoryIntegerValueOf(argPointer);
@@ -1753,8 +1750,7 @@ Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp, unsigned)
 	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
-		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
-		return primitiveFailureWith(_PrimitiveFailureCode::NonIntegerIndex, oteArg);	// Must be an SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);	// Must be an SmallInteger
 	}
 
 	Oop oldInterval = ObjectMemoryIntegerObjectOf(m_nInputPollInterval);
@@ -1781,7 +1777,7 @@ inline OverlappedCall* Process::GetOverlappedCall()
 {
 	return ObjectMemoryIsIntegerObject(m_thread) && m_thread != ZeroPointer
 		? reinterpret_cast<OverlappedCall*>(m_thread - 1)
-		: NULL;
+		: nullptr;
 }
 
 bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
@@ -1789,8 +1785,8 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 	// Must be active or suspended by the time we get here
 	Process* proc = oteProc->m_location;
 
-	OverlappedCall* pOverlapped = proc->GetOverlappedCall();
-	if (pOverlapped != NULL)
+	OverlappedCallPtr pOverlapped = proc->GetOverlappedCall();
+	if (pOverlapped)
 	{
 		// Need to ensure process remains around at least until the thread terminates
 		// Note that we don't actually 'suspend' the process, but put it on a Semaphore
@@ -1802,7 +1798,7 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 			QueueProcessOn(oteProc, otePending);
 
 #ifdef _DEBUG
-			TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Terminating " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(proc->Name()) << std::endl;
+			TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Queueing terminate to " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(proc->Name()) << std::endl;
 #endif
 			// Queue an APC to raise a terminate exception in the overlapped call thread.
 			// The overlapped thread will queue an APC back to this thread from its termination
@@ -1833,8 +1829,8 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 
 inline bool Process::SuspendOverlappedCall()
 {
-	OverlappedCall* pOverlapped = GetOverlappedCall();
-	if (pOverlapped == NULL || !pOverlapped->IsInCall())
+	OverlappedCallPtr pOverlapped = GetOverlappedCall();
+	if (!pOverlapped || !pOverlapped->IsInCall())
 		return false;
 
 #ifdef _DEBUG
@@ -1845,8 +1841,8 @@ inline bool Process::SuspendOverlappedCall()
 
 inline bool Process::ResumeOverlappedCall()
 {
-	OverlappedCall* pOverlapped = GetOverlappedCall();
-	if (pOverlapped == NULL || !pOverlapped->IsInCall())
+	OverlappedCallPtr pOverlapped = GetOverlappedCall();
+	if (!pOverlapped || !pOverlapped->IsInCall())
 		return false;
 
 #ifdef _DEBUG

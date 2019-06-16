@@ -64,39 +64,49 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 
 	if (!underConstruction->isNil() && underConstruction != receiverPointer)
 	{
-		// Hooked by another window - fail the primitive
-		return primitiveFailureWith(_PrimitiveFailureCode::InvalidOperation, underConstruction);
-	}
-
-	if (argPointer == Oop(Pointers.True))
-	{
-		// Hooking
-
-		if (underConstruction != receiverPointer)
+		if (argPointer == reinterpret_cast<Oop>(Pointers.Nil))
 		{
-			ASSERT(underConstruction->isNil());
-			m_oteUnderConstruction = receiverPointer;
-			receiverPointer->countUp();
+			tracelock lock(TRACESTREAM);
+			TRACESTREAM << L"WARNING: Forcibly unhooking create for " << std::hex << underConstruction << std::endl;
+			ObjectMemory::nilOutPointer(m_oteUnderConstruction);
+		}
+		else
+		{
+			// Hooked by another window - fail the primitive
+			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
 		}
 	}
 	else
 	{
-		if (argPointer == Oop(Pointers.False))
+		if (argPointer == Oop(Pointers.True))
 		{
-			// Unhooking
-			if (underConstruction == receiverPointer)
+			// Hooking
+
+			if (underConstruction != receiverPointer)
 			{
-				tracelock lock(TRACESTREAM);
-				TRACESTREAM << L"WARNING: Unhooking create for " << std::hex << underConstruction << L" before HCBT_CREATEWND" << std::endl;
-				ObjectMemory::nilOutPointer(m_oteUnderConstruction);
-			}
-			else
 				ASSERT(underConstruction->isNil());
+				m_oteUnderConstruction = receiverPointer;
+				receiverPointer->countUp();
+			}
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Invalid argument
+		{
+			if (argPointer == Oop(Pointers.False))
+			{
+				// Unhooking
+				if (underConstruction == receiverPointer)
+				{
+					tracelock lock(TRACESTREAM);
+					TRACESTREAM << L"WARNING: Unhooking create for " << std::hex << underConstruction << L" before HCBT_CREATEWND" << std::endl;
+					ObjectMemory::nilOutPointer(m_oteUnderConstruction);
+				}
+				else
+					ASSERT(underConstruction->isNil());
+			}
+			else
+				return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Invalid argument
+		}
 	}
-
 	return sp - 1;
 }
 

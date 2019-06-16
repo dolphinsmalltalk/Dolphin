@@ -75,6 +75,11 @@ statusCode
 
 !HRESULTError class methodsFor!
 
+fromHRESULT: anHRESULT
+	^(FacilityClasses at: anHRESULT facilityCode ifAbsent: [self]) new
+		tag: anHRESULT;
+		yourself!
+
 fromInteger: anInteger 
 	| hr |
 	hr := HRESULT fromInteger: anInteger.
@@ -116,22 +121,28 @@ signalCode: statusCode facility: facilityCode
 
 	^self signalHRESULT: (HRESULT status: statusCode facility: facilityCode)!
 
-signalHRESULT: anInteger 
-	"Raise a new Error subinstance, with the specified error code, of an appropriate type 
-	(depending on the facility of that code)."
+signalFailureCode: anInteger
+	"Private - Signal an HRESULTError from an HRESULT packed into a primitive failure code."
 
-	^(self fromInteger: anInteger) signal!
+	^self signalHRESULT: (HRESULT fromPrimitiveFailureCode: anInteger)!
+
+signalHRESULT: anHRESULT
+	"Raise a new Error subinstance, with the specified error code, of an appropriate type (depending on the facility of that code)."
+
+	^(self fromHRESULT: anHRESULT) signal!
 
 unregisterFacilityClass: anExceptionClass
 	"Unregister the specified exception class, if registered."
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
+!HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
 !HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
 !HRESULTError class categoriesFor: #initialize!development!initializing!private! !
 !HRESULTError class categoriesFor: #registerFacility:class:!initializing!public! !
 !HRESULTError class categoriesFor: #signal:with:!instance creation!public! !
 !HRESULTError class categoriesFor: #signalCode:facility:!instance creation!public! !
+!HRESULTError class categoriesFor: #signalFailureCode:!instance creation!private! !
 !HRESULTError class categoriesFor: #signalHRESULT:!instance creation!public! !
 !HRESULTError class categoriesFor: #unregisterFacilityClass:!initializing!public! !
 
