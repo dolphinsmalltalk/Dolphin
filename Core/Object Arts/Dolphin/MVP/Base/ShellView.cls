@@ -1053,11 +1053,14 @@ wmActivate: message wParam: wParam lParam: lParam
 		ifTrue: [self presenter onViewDeactivated: event]
 		ifFalse: [self presenter onViewActivated: event	"send onActivate for WA_ACTIVE and WA_CLICKACTIVE"]!
 
-wmGetMinMaxInfo: message wParam: wParam lParam: lParam 
-	| minmax |
-	minmax := MINMAXINFO fromAddress: lParam.
-	self minExtent ifNotNil: [:min | minmax ptMinTrackSize: min asParameter].
-	self maxExtent ifNotNil: [:max | minmax ptMaxTrackSize: max asParameter].
+wmGetMinMaxInfo: message wParam: wParam lParam: lParam
+	| min max |
+	((min := self minExtent) notNil or: [(max := self maxExtent) notNil])
+		ifTrue: 
+			[| minmax |
+			minmax := MINMAXINFO fromAddress: lParam.
+			min ifNotNil: [minmax ptMinTrackSize: min asParameter].
+			max ifNotNil: [minmax ptMaxTrackSize: max asParameter]].
 	^0!
 
 wmInitMenu: message wParam: wParam lParam: lParam
@@ -1147,29 +1150,29 @@ wmSettingChange: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam)!
 
-wmSize: message wParam: wParam lParam: lParam 
+wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
 	"While we're restoring state it's not a good idea to propagate this event"
 
 	self isStateRestoring ifTrue: [^self].
-	(wParam == SIZE_MINIMIZED or: [wParam == SIZE_RESTORED]) 
+	#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
+	wParam == SIZE_MINIMIZED
 		ifTrue: 
-			[| event |
-			#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
-			event := SizeEvent 
+			[self isMinimized: true.
+			^self presenter onViewMinimized: (SizeEvent
 						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam.
-			wParam == SIZE_MINIMIZED 
-				ifTrue: 
-					[self isMinimized: true.
-					^self presenter onViewMinimized: event].
-			(wParam == SIZE_RESTORED and: [self isMinimized]) 
-				ifTrue: 
-					[self isMinimized: false.
-					^self presenter onViewRestored: event]].
+						lParam: lParam)].
+	(wParam == SIZE_RESTORED and: [self isMinimized])
+		ifTrue: 
+			[self isMinimized: false.
+			^self presenter onViewRestored: (SizeEvent
+						window: self
+						message: message
+						wParam: wParam
+						lParam: lParam)].
 	^nil!
 
 wmTimeChange: message wParam: wParam lParam: lParam
