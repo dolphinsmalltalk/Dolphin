@@ -435,16 +435,12 @@ print: anObject on: aWriteStream format: formatString alphabet: formatChars form
 	formatStream := formatString readStream.
 	ch := formatStream nextAvailable.
 	[ch isNil] whileFalse: 
-		[ch == $'
-			ifTrue: 
-				[aWriteStream nextPutAll: (formatStream upTo: $').
-				ch := formatStream nextAvailable].
-		(formatChars includes: ch)
+		[(formatChars includes: ch)
 			ifTrue: 
 				[| start |
 				tokenStream reset.
 				start := ch.
-					
+				
 				[tokenStream nextPut: ch.
 				ch := formatStream nextAvailable.
 				ch = start] whileTrue.
@@ -453,9 +449,11 @@ print: anObject on: aWriteStream format: formatString alphabet: formatChars form
 					value: anObject
 					value: aWriteStream]
 			ifFalse: 
-				[
-				ch == $\ ifTrue: [ch := formatStream next].
-				aWriteStream nextPut: ch.
+				[(#($' $\) includes: ch) 
+					ifTrue: [
+						ch == $\ ifTrue: [ch := formatStream next. aWriteStream nextPut: ch].
+						ch == $' ifTrue: [aWriteStream nextPutAll: (formatStream upTo: $')]]
+					ifFalse:[aWriteStream nextPut: ch].
 				ch := formatStream nextAvailable]]!
 
 printDate: aDate on: aWriteStream format: aString
