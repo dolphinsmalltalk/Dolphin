@@ -481,7 +481,6 @@ highBit
 	"Answer the <integer> index of the most significant non-zero bit of the binary representation of the receiver.
 	N.B. This operation is not defined for negative integers."
 
-	<primitive: 54>
 	| digits |
 	self < 0 ifTrue: [self error: 'high bit is infinite for negative integer'].
 	digits := self digitLength.

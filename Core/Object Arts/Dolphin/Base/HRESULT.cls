@@ -2,10 +2,11 @@
 
 ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
-	classVariableNames: 'Facilities Fail'
+	classVariableNames: 'Facilities FACILITY_NT_BIT Fail'
 	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+HRESULT addClassConstant: 'FACILITY_NT_BIT' value: 16r10000000!
 HRESULT comment: ''!
 !HRESULT categoriesForClass!External-Data-Unstructured! !
 !HRESULT methodsFor!
@@ -25,12 +26,19 @@ displayOn: aStream
 		(HRESULT fromInteger: Win32Errors.E_ABORT) displayString.
 	"
 
-	| buf len |
+	| buf len flags hModule code |
 	buf := Utf16String newFixed: 255.
+	flags := ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS).
+	code := self asInteger.
+	hModule := (code allMask: FACILITY_NT_BIT)
+				ifTrue: 
+					[flags := flags bitOr: FORMAT_MESSAGE_FROM_HMODULE.
+					code := code bitAnd: ##(FACILITY_NT_BIT bitInvert).
+					NTLibrary default asParameter asInteger].
 	len := KernelLibrary default
-				formatMessage: ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS)
-				lpSource: 0
-				dwMessageId: self asInteger
+				formatMessage: flags
+				lpSource: hModule
+				dwMessageId: code
 				dwLanguageId: 0
 				lpBuffer: buf
 				nSize: buf size + 1
@@ -38,7 +46,9 @@ displayOn: aStream
 	len == 0
 		ifTrue: 
 			[aStream
-				nextPutAll: 'Unrecognised HRESULT - ';
+				nextPutAll: 'Unrecognised ';
+				nextPutAll: (self isNtStatus ifTrue: ['NTSTATUS'] ifFalse: ['HRESULT']);
+				nextPutAll: ' - ';
 				nextPutAll: (self asUnsignedInteger printStringRadix: 16)]
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
@@ -60,13 +70,21 @@ facilityCode
 
 		#define HRESULT_FACILITY(hr)  (((hr) >> 16) & 0x1fff)"
 
-	^(self asUnsignedInteger bitShift: -16) bitAnd: 16r1FFF!
+	^(bytes wordAtOffset: 2) bitAnd: 16r1FFF!
 
 failed
 	"Answer whether the receiver represents the result of a failed operation
 	(named for compatibility with the C/C++ FAILED macro)."
 
-	^self asUnsignedInteger anyMask: 16r80000000!
+	^(bytes at: 4) anyMask: 16r80!
+
+isNtStatus
+	"Answer whether the receiver represents an NTSTATUS code."
+
+	"Equivalent to:
+		^self asUnsignedInteger allMask: FACILITY_NT_BIT"
+
+	^(bytes at: 4) allMask: 16r10!
 
 isSeverityError
 	"Answer whether the receiver is a SEVERITY_ERROR code."
@@ -88,14 +106,14 @@ printOn: aStream
 severity
 	"Answer the severity of the HRESULT (1 for errors, otherwise 0)."
 
-	^(self asInteger bitShift: -31) bitAnd: 16r1!
+	^(bytes at: 4) bitShift: -7!
 
 statusCode
 	"Answer the Win32 status code extracted from the receiver.
 
 		#define HRESULT_CODE(hr)	((hr) & 0xFFFF)"
 
-	^self asUnsignedInteger bitAnd: 16rFFFF!
+	^bytes wordAtOffset: 0!
 
 succeeded
 	"Answer whether the receiver represents the result of a successful operation
@@ -125,6 +143,7 @@ value: anInteger
 !HRESULT categoriesFor: #facility!accessing!public! !
 !HRESULT categoriesFor: #facilityCode!accessing!public! !
 !HRESULT categoriesFor: #failed!public!testing! !
+!HRESULT categoriesFor: #isNtStatus!public!testing! !
 !HRESULT categoriesFor: #isSeverityError!public!testing! !
 !HRESULT categoriesFor: #printOn:!displaying!public! !
 !HRESULT categoriesFor: #severity!accessing!public! !
@@ -136,6 +155,12 @@ value: anInteger
 
 !HRESULT class methodsFor!
 
+decodePrimitiveFailureCode: anInteger
+	"Private - Answer an <integer> instantiated from the NTSTATUS/HRESULT code packed into a primitive failure code.
+	The VM packs such codes into a SmallInteger primitive failure code by stripping out bit 27, which is not used."
+
+	^((anInteger bitShift: 1) bitAnd: -16r10000000) bitOr: (anInteger bitAnd: 16r7FFFFFF)!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
@@ -146,6 +171,12 @@ fail
 	"Answer the generic failure HRESULT."
 
 	^Fail!
+
+fromPrimitiveFailureCode: anInteger
+	"Answer a new instance of the receiver representing the packed-HRESULT primitive failure code, anInteger.
+	Packed HRESULT codes are created by the VM to pack a 32-bit HRESULT into a 31-bit SmallInteger by dropping an unused bit (27)."
+
+	^self new value: (self decodePrimitiveFailureCode: anInteger)!
 
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
@@ -159,7 +190,9 @@ initialize
 
 	Fail := self fromInteger: E_FAIL.
 	Facilities := LookupTable new.
-	FacilityCodes keysAndValuesDo: [:eachKey :eachValue | Facilities at: eachValue put: eachKey]!
+	FacilityCodes
+		keysAndValuesDo: [:eachKey :eachValue | self registerFacility: eachValue name: eachKey].
+	self registerFacility: FACILITY_NT_BIT >> 16 name: 'NTSTATUS'!
 
 notImplemented
 	"Answer the 'not implemented' HRESULT."
@@ -204,8 +237,10 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
+!HRESULT class categoriesFor: #decodePrimitiveFailureCode:!private!utilities! !
 !HRESULT class categoriesFor: #defineFields!public!template definition! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
+!HRESULT class categoriesFor: #fromPrimitiveFailureCode:!instance creation!public! !
 !HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !
 !HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !

@@ -46,7 +46,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 	//	ZeroPointer = general save error
 
 	if (!szFileName)
-		return _PrimitiveFailureCode::ValueOutOfRange;
+		return _PrimitiveFailureCode::InvalidParameter1;
 
 	if (nMaxObjects == 0)
 	{
@@ -55,12 +55,12 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 
 	if (nMaxObjects < m_nOTSize + OTMinHeadroom)
 	{
-		return _PrimitiveFailureCode::IndexOutOfRange;
+		return _PrimitiveFailureCode::InvalidParameter4;
 	}
 
 	if (nMaxObjects > OTMaxLimit)
 	{
-		return _PrimitiveFailureCode::IndexOutOfRange;
+		return _PrimitiveFailureCode::NoMemory;
 	}
 
 	int nRet = 3;
@@ -90,7 +90,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 		char buf[256];
 		strerror_s(buf, errno);
 		TRACE(L"Failed to open image file for save %d:'%s'\n", errno, buf);
-		return _PrimitiveFailureCode::SystemError;
+		return _PrimitiveFailureCode::Failed;
 	}
 
 #ifdef PROFILE_IMAGELOADSAVE
@@ -182,7 +182,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 			nRet = 0;
 	}
 
-	return nRet == 0 ? _PrimitiveFailureCode::Success : _PrimitiveFailureCode::UnspecifiedError;
+	return nRet == 0 ? _PrimitiveFailureCode::NoError : _PrimitiveFailureCode::Unsuccessful;
 
 }
 

@@ -12,5 +12,6 @@
 
 __forceinline Oop* Interpreter::primitiveFailure(_PrimitiveFailureCode failureCode)
 {
-	return reinterpret_cast<Oop*>(ObjectMemoryIntegerObjectOf(static_cast<int>(failureCode)));
+	ASSERT(ObjectMemoryIsIntegerObject(failureCode));
+	return reinterpret_cast<Oop*>(failureCode);
 }

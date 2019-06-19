@@ -294,17 +294,21 @@ invalidCall: anInteger
 			Only the first such error is reported.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| proc |
-	proc := Processor activeProcess.
-	anInteger < 0 ifTrue: [^HRESULTError signalFailureCode: anInteger].
+	| frame descriptor method |
+	frame := Processor activeProcess topFrame sender.
+	method := frame method.
+	descriptor := method descriptor.
+	anInteger < 0
+		ifTrue: 
+			[^descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+				ifTrue: [HRESULTError signalFailureCode: (anInteger bitOr: HRESULT.FACILITY_NT_BIT)]
+				ifFalse: [HRESULTError signalFailureCode: anInteger]].
 	anInteger >= 16r10000
 		ifTrue: 
-			[| frame i arg descriptor |
-			frame := proc topFrame sender.
-			descriptor := frame method descriptor.
+			[| i arg |
 			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
-			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass
+			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			^self invalidArgErrorClass
 				invalidArgument: arg
 				got: (frame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)].	"One of the arguments was invalid?"
@@ -316,8 +320,7 @@ isFieldBrowsable: aSymbol
 	^self class isFieldBrowsable: aSymbol!
 
 isNull
-	"Answer whether the receiver is a null external data item
-	(that is, a null pointer, or a nilled out structure)."
+	"Answer whether the receiver is a null external data item (that is, a null pointer, or a nilled out structure)."
 
 	<primitive: 170>
 	^bytes isNull!

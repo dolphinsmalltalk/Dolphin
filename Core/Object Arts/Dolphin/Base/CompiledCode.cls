@@ -580,13 +580,12 @@ textMap
 	^self debugInfo textMap!
 
 value: anObject withArguments: anArray
-	"Evaluate the receiver with the argument, anObject, as its receiver, and with the argument,
-	anArray, as the arguments to the message.
+	"Evaluate the receiver with the argument, anObject, as its receiver, and with the argument, anArray, as the arguments to the message.
 
 	Primitive failure reasons:
-		BadValueType 				- anArray is not an Array
-		WrongNumberOfArguments	- anArray contains the wrong number of arguments
-		BadValueType				- anObject is not a subinstance of the method class of the receiver."
+		InvalidParameter1			- anObject is not a subinstance of the method class of the receiver.
+		InvalidParameter2			- anArray is not an Array
+		WrongNumberOfArguments	- anArray contains the wrong number of arguments"
 
 	<primitive: 116>
 	^self primitiveFailed: _failureCode!

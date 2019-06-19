@@ -56,7 +56,7 @@ IFDEF _DEBUG
 	;;PROFILING	EQU		1
 ENDIF
 
-public ?primitiveActivateMethod@Interpreter@@CIPAIQAII@Z
+DECLAREPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Exports
@@ -73,6 +73,10 @@ public byteCodeTable
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
+
+
+; Entry points for byte code dispatcher (see primasm.asm)
+extern _primitivesTable:near32
 
 IFDEF _DEBUG
 	extern _primitiveCounters:DWORD
@@ -3992,12 +3996,12 @@ execMethod:
 
 	mov		[pMethod], edx							; Save down pointer to new method
 
-	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
-		add		eax, CompiledCodeObj.m_byteCodes
-	.ELSE
+	.IF (!(BYTE PTR([eax].m_byteCodes) & 1))
 		mov		eax, [eax].m_byteCodes
 		ASSUME	eax:PTR OTE
 		mov		eax, [eax].m_location
+	.ELSE
+		add		eax, CompiledCodeObj.m_byteCodes
 	.ENDIF
 	ASSUME	eax:NOTHING
 	sub		_IP, eax
@@ -4561,12 +4565,12 @@ BEGINPROC EXECUTENEWMETHOD
 
 	mov		[pMethod], edx							; Save down pointer to new method
 
-	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
-		add		eax, CompiledCodeObj.m_byteCodes
-	.ELSE
+	.IF (!(BYTE PTR([eax].m_byteCodes) & 1))
 		mov		eax, [eax].m_byteCodes
 		ASSUME	eax:PTR OTE
 		mov		eax, [eax].m_location
+	.ELSE
+		add		eax, CompiledCodeObj.m_byteCodes
 	.ENDIF
 	ASSUME	eax:NOTHING
 	sub		_IP, eax

@@ -293,6 +293,7 @@
     <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DolphinLib.vcxproj">

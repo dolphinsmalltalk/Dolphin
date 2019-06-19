@@ -58,8 +58,10 @@ namespace ST
 
 		// Answer a signed 32 or 64-bit LargeInteger from the unsigned 32-bit argument
 		static LargeIntegerOTE* __fastcall liNewUnsigned(uint32_t value);
+		static LargeIntegerOTE* __fastcall liNewUnsigned(uint64_t value);
 		// Answer a 32-bit LargeInteger from the signed 32-bit argument
 		static LargeIntegerOTE* __fastcall liNewSigned(int32_t value);
+		static LargeIntegerOTE* __fastcall liNewSigned(int64_t value);
 
 		static Oop __fastcall Normalize(LargeIntegerOTE* oteLI);
 		static void DeallocateIntermediateResult(LargeIntegerOTE* liOte);
@@ -69,11 +71,21 @@ namespace ST
 
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
-		static Oop Mul(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
-		static Oop Mul(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
+
+		static LargeIntegerOTE* Sub(const LargeIntegerOTE * oteLI, SMALLINTEGER operand);
+		static LargeIntegerOTE* Sub(const LargeIntegerOTE * oteLI, const LargeIntegerOTE * oteOperand);
 
 		static liDiv_t Divide(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
 
+		static Oop Mul(const LargeIntegerOTE * oteInner, SMALLINTEGER outerDigit);
+		static Oop Mul(const LargeInteger* liOuter, const MWORD outerSize, const LargeInteger* liInner, const MWORD innerSize);
+
+		static Oop BitAnd(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
+		static Oop BitAnd(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
+		static LargeIntegerOTE * BitOr(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
+		static LargeIntegerOTE * BitOr(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
+		static LargeIntegerOTE * BitXor(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
+		static LargeIntegerOTE * BitXor(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
 	};
 
 
@@ -163,7 +175,7 @@ namespace ST
 		ObjectMemory::deallocateByteObject(ote);
 	}
 
-	inline Oop LargeInteger::NormalizeIntermediateResult(LargeIntegerOTE* oteLI)
+	__forceinline Oop LargeInteger::NormalizeIntermediateResult(LargeIntegerOTE* oteLI)
 	{
 		HARDASSERT(!ObjectMemory::IsInZct(reinterpret_cast<OTE*>(oteLI)));
 		Oop oopNormalized = LargeInteger::Normalize(oteLI);
@@ -172,7 +184,7 @@ namespace ST
 		return oopNormalized;
 	}
 
-	Oop __forceinline normalizeIntermediateResult(Oop integerPointer)
+	__forceinline Oop normalizeIntermediateResult(Oop integerPointer)
 	{
 		Oop oopNormalized;
 		if (ObjectMemoryIsIntegerObject(integerPointer))

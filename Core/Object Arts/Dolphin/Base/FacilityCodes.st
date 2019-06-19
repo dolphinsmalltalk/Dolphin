@@ -6,7 +6,6 @@ FacilityCodes at: 'FACILITY_CONTROL' put: 16rA!
 FacilityCodes at: 'FACILITY_DIRECTDRAW' put: 16r876!
 FacilityCodes at: 'FACILITY_DISPATCH' put: 16r2!
 FacilityCodes at: 'FACILITY_ITF' put: 16r4!
-FacilityCodes at: 'FACILITY_NT_BIT' put: 16r10000000!
 FacilityCodes at: 'FACILITY_NULL' put: 16r0!
 FacilityCodes at: 'FACILITY_RPC' put: 16r1!
 FacilityCodes at: 'FACILITY_SSPI' put: 16r9!

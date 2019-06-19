@@ -152,15 +152,15 @@ BEGINPRIMITIVE primitiveVirtualCall
 	
 	mov		eax, [eax].m_location
 	ASSUME	eax:PTR ExternalStructure
-	jb		localPrimitiveFailureInvalidReceiver
+	jb		localPrimitiveFailureAssertionFailure
 
 	mov		eax, [eax].m_contents
 	test	al, 1
-	jnz		localPrimitiveFailureInvalidReceiver
+	jnz		localPrimitiveFailureAssertionFailure
 	ASSUME	eax:PTR OTE
 
 	test	[eax].m_flags, MASK m_pointer
-	jnz		localPrimitiveFailureInvalidReceiver
+	jnz		localPrimitiveFailureAssertionFailure
 
 @@:
 	ASSUME	eax:PTR OTE									; At this point, EAX is OTE of 'this' pointer
@@ -209,7 +209,7 @@ BEGINPRIMITIVE primitiveVirtualCall
 	ASSUME	eax:NOTHING
 	ASSUME	edx:NOTHING
 
-LocalPrimitiveFailure PrimitiveFailureInvalidReceiver
+LocalPrimitiveFailure PrimitiveFailureAssertionFailure
 
 ENDPRIMITIVE primitiveVirtualCall
 
@@ -263,7 +263,7 @@ procAddressNotCached:
 	ASSUME	edx:PTR InterpRegisters
 	add		esp, 16											; Remove args pushed for aborted call
 	mov		edx, [edx].m_pActiveProcess
-	PrimitiveFailureCode PrimitiveFailureSystemError
+	PrimitiveFailureCode PrimitiveFailureProcNotFound
 
 asyncDLL32Call ENDP
 
@@ -347,7 +347,7 @@ procAddressNotCached:
 
 	add		esp, 20											; Remove args pushed for aborted call
 	
-	PrimitiveFailureCode PrimitiveFailureSystemError
+	PrimitiveFailureCode PrimitiveFailureProcNotFound
 
 ENDPRIMITIVE primitiveDLL32Call
 

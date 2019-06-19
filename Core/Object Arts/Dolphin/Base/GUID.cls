@@ -137,11 +137,11 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
 
 	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
 	<primitive: 142>

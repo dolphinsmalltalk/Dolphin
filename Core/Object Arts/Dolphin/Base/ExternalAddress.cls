@@ -53,7 +53,7 @@ byteAtOffset: anInteger
 	methods of a pointer class).
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger."
+		InvalidParameter1 -	anInteger is not a SmallInteger."
 
 	<primitive: 132>
 	^self primitiveFailed: _failureCode!
@@ -118,7 +118,7 @@ dwordAtOffset: anInteger
 	"Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger"
+		InvalidParameter1	- anInteger is not a SmallInteger"
 
 	<primitive: 134>
 	| answer |
@@ -132,8 +132,8 @@ dwordAtOffset: anInteger put: anObject
 	"Store an unsigned 4-byte value at byte offset anInteger within the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		BadValueType		- anObject is not a SmallInteger or a 4-byte object"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		InvalidParameter2	- anObject is not a SmallInteger or a 4-byte object"
 
 	<primitive: 135>
 	^self
@@ -142,11 +142,11 @@ dwordAtOffset: anInteger put: anObject
 		failureCode: _failureCode!
 
 intPtrAtOffset: anInteger
-	"Answer the machine word sized signed integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
+	"Answer the machine-word sized signed integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		BadValueType		- anObject it not an integer of byte object of suitable size for storing as a INT_PTR value."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		InvalidParameter2	- anObject it not an integer of byte object of suitable size for storing as a INT_PTR value."
 
 	<primitive: 186>
 	| answer |
@@ -176,11 +176,12 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	object at which the receiver points.
 	
 	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+
+	Note that bounds errors cannot be detected, so this is an unsafe operation that may overwrite arbitrary memory if not used carefully.
 	"
 
 	<primitive: 143>
@@ -200,7 +201,7 @@ sdwordAtOffset: anInteger
 	"Answers the signed 4-byte integer at byte offset anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger."
+		InvalidParameter1	- anInteger is not a SmallInteger."
 
 	<primitive: 136>
 	| answer |
@@ -237,9 +238,9 @@ swordAtOffset: anInteger put: anObject
 	If anObject is not representable as a 16-bit signed (Small)Integer, then raise a 'cannot hold' error."
 
 	"Primitive failure results:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		BadValueType		- anObject is not a SmallInteger
-		ValueOutOfRange 	- anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		InvalidParameter2	- anObject is not a SmallInteger
+		IntegerOutOfRange 	- anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
 
 	<primitive: 141>
 	^self
@@ -251,7 +252,7 @@ uintPtrAtOffset: anInteger
 	"Answer the machine word sized integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger"
+		InvalidParameter1	- anInteger is not a SmallInteger"
 
 	<primitive: 184>
 	| answer |
@@ -262,11 +263,11 @@ uintPtrAtOffset: anInteger
 	^answer!
 
 uintPtrAtOffset: anInteger put: anObject
-	"Store an unsigned 4 byte value at byte offset anInteger within the receiver."
+	"Store an unsigned 4-byte value at byte offset anInteger within the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		BadValueType		- anObject it not an integer of byte object of suitable size for storing as a UINT_PTR value."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		InvalidParameter2	- anObject it not an integer of byte object of suitable size for storing as a UINT_PTR value."
 
 	<primitive: 185>
 	^self
@@ -286,12 +287,12 @@ value: anInteger
 	self basicUIntPtrAtOffset: 0 put: anInteger!
 
 wordAtOffset: anInteger
-	"Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver.
+	"Answer the unsigned 2-byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver.
 	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first. 
 	A GP Fault interrupt will occur if an attempt is made to read inaccessible memory via this method. This will not affect the stability of the system."
 
 	"Primitive failure reasons:
-		NonIntegerIndex 		- anInteger is not a SmallInteger"
+		InvalidParameter1	- anInteger is not a SmallInteger"
 
 	<primitive: 138>
 	| answer |
@@ -302,14 +303,13 @@ wordAtOffset: anInteger
 	^answer!
 
 wordAtOffset: anInteger put: anObject
-	"Store an unsigned 2 byte value at byte offset anInteger within the receiver.
-	If anObject is not representable as a 16-bit unsigned (Small)Integer, then 
-	raise a 'cannot hold' error.
+	"Store an unsigned 2-byte value at byte offset anInteger within the receiver.
+	If anObject is not representable as a 16-bit unsigned (Small)Integer, then raise a 'cannot hold' error."
 
-	Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		BadValueType		- anObject is not a SmallInteger
-		ValueOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
+	"Primitive failure reasons:
+		InvalidParameter1	- anInteger is not a SmallInteger
+		InvalidParameter2	- anObject is not a SmallInteger
+		IntegerOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
 
 	<primitive: 139>
 	^self

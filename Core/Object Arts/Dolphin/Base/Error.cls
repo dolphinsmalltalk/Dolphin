@@ -83,9 +83,9 @@ notYetImplemented
 performFailed: anInteger of: selector for: receiver withArgs: arguments
 	"Private - A primitive perform call failed, generate an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.InvalidSelector
+	anInteger == _PrimitiveFailureCode.InvalidParameter1
 		ifTrue: [^receiver error: ('Invalid selector <1p>' expandMacrosWith: selector)].
-	anInteger == _PrimitiveFailureCode.BadValueType
+	anInteger == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: [^receiver error: 'Arguments not Array: ' , arguments printString].
 	anInteger == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: 

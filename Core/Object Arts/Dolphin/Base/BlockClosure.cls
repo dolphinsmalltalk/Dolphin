@@ -635,7 +635,7 @@ valueFailed: failureCode argumentCount: anInteger
 
 	^failureCode == _PrimitiveFailureCode.WrongNumberOfArgs
 		ifTrue: [self error: ('Block expects <1p> argument(s)' expandMacrosWith: self argumentCount)]
-		ifFalse: [super primitiveFailed: failureCode]!
+		ifFalse: [self primitiveFailed: failureCode]!
 
 valueOnUnwind: aTwoArgBlock
 	"Private - Evaluate the receiver, and should it exit by a non-local return to its home method's sender
@@ -667,7 +667,7 @@ valueWithArguments: argumentArray
 	present in the <Array>.
 
 	Primitive failure reasons:
-		BadValueType		-	argumentArray is not an <Array>.
+		InvalidParameter1	-	argumentArray is not an <Array>.
 		WrongNumberOfArgs	-	the receiver does not expect the number of arguments in argumentArray."
 
 	"Implementation Note: A block can have a maximum of 256 arguments, however 
@@ -683,9 +683,9 @@ valueWithArgumentsAt: anAddress descriptor: anExternalFunctionDescriptor
 	"Private - Answer the result of evaluating the receiver with arguments instantiated from memory at anAddress using the the external argument types from, anExternalFunctionDescriptor.
 
 	Primitive Failure reasons:
-		BadValueType		-	anExternalFunctionDescriptor is not a byte object.
-		WrongNumberOfArgs	-	the number of arguments whose types are specified by anExternalFunctionDescriptor does not match the number of arguments expected by the receiver.
-		InvalidAddress		-	anAddress is not a valid address object (SmallInteger/byte indirection)"
+		InvalidParameter1	-	anAddress is not a valid address object (SmallInteger/byte indirection)
+		InvalidParameter2	-	anExternalFunctionDescriptor is not a byte object.
+		WrongNumberOfArgs	-	the number of arguments whose types are specified by anExternalFunctionDescriptor does not match the number of arguments expected by the receiver."
 
 	"Implementation Note: For performance and consistency (with outbound external calls) reasons, we use a VM supplied primitive to instantiate and push the arguments and perform the message, but there is no reason that this cannot be done in Smalltalk if different argument conversions are required. The standard conversions are the same as those performed for return types by the external call primitive (see the ExternalLibrary class)."
 

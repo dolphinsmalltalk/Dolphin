@@ -4780,17 +4780,12 @@ halt: aStackFrame cause: aString
 				resumable: true]
 		ifFalse: [debugger onHalt: aStackFrame]!
 
-primStep: steps 
-	"Private - Resume the receiver for a single step (method/block activation), at 
-    	which point the receiver will receive a debug step interrupt. If the receiver
-    	hits a breakpoint instruction before the next method/block activation, then
-    	a different interrupt will be received. Other interrupts are disabled while
-    	the receiver is stepping.
-    
-    	Primitive failure reasons:
-    		10 -	the receiver is waiting on a scheduler or semaphore list (only
-    			suspended processes can be 'stepped').
-    		11 -	the receiver has been terminated.
+primStep: steps
+	"Private - Resume the receiver for a single step (method/block activation), at which point the receiver will receive a debug step interrupt. If the receiver hits a breakpoint instruction before the next method/block activation, then a different interrupt will be received. Other interrupts are disabled while the receiver is stepping."
+
+	"Primitive failure reasons:
+    		IllegalStateChange 	- the receiver is waiting on a scheduler or semaphore list (only suspended processes can be 'stepped'
+    		AssertionFailure		- the receiver has been terminated.
 
 	Note, however, that primitive failure is ignored."
 

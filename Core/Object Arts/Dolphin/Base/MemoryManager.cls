@@ -153,7 +153,7 @@ dequeueBereavementInto: anArray
 	with its contents. Answers true if an element was dequeued into anArray, or false if the queue is empty.
 
 	Primitive failure reasons:
-		0 -	anArray is not an Array, or is not of sufficient size to hold a complete queue entry."
+		InvalidParameter1	- anArray is not an Array, or is not of sufficient size to hold a complete queue entry."
 
 	<primitive: 119>
 	^self primitiveFailed: _failureCode!
@@ -397,7 +397,7 @@ primInstanceStats: anArrayOrNil
 	unless requesting stats for several classes at once.
 
 	Primitive failure reasons: 
-		0 - anArrayOrNil is not an Array, or nil."
+		ObjectTypeMismatch 	- anArrayOrNil is not an Array, or nil."
 
 	<primitive: 179>
 	^self primitiveFailed: _failureCode!

@@ -37,7 +37,7 @@ int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 
 Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 {
-	return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+	return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 }
 
 #pragma code_seg(INIT_SEG)
@@ -73,7 +73,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 		else
 		{
 			// Hooked by another window - fail the primitive
-			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
+			return primitiveFailure(_PrimitiveFailureCode::IllegalStateChange);
 		}
 	}
 	else
@@ -104,7 +104,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 					ASSERT(underConstruction->isNil());
 			}
 			else
-				return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Invalid argument
+				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Invalid argument
 		}
 	}
 	return sp - 1;

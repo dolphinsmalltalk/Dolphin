@@ -16,46 +16,39 @@ LargeInteger includes high performance primitive implementations for the common 
 !LargeInteger methodsFor!
 
 - operand
-	"Answer a <number> which is the difference between the receiver and the <number> argument, 
-	operand."
+	"Answer a <number> which is the difference between the receiver and the <number> argument, operand."
 
 	<primitive: 22>
 	^operand subtractFromInteger: self!
 
 * operand
-	"Answer the <number> result of multiplying the receiver by 
-	the <number> argument, operand."
+	"Answer the <number> result of multiplying the receiver by the <number> argument, operand."
 
 	<primitive: 29>
 	^operand multiplyByInteger: self!
 
 / operand
-	"Answer the <number> which is the result of dividing the receiver by <number> argument, 
-	operand. If their is any remainder, then the result will be a <Fraction>. Raise a <ZeroDivide> 
-	exception if the operand is zero."
+	"Answer the <number> which is the result of dividing the receiver by <number> argument, operand. If their is any remainder, then the result will be a <Fraction>. 
+	Raise a <ZeroDivide> exception if the operand is zero."
 
 	<primitive: 30>
 	^operand divideIntoInteger: self!
 
 // operand
-	"Answer a <number> which is the quotient resulting from dividing the receiver 
-	by the <number> argument, operand,  with truncation towards negative infinity."
+	"Answer a <number> which is the quotient resulting from dividing the receiver by the <number> argument, operand,  with truncation towards negative infinity."
 
 	<primitive: 32>
 	^super // operand!
 
 \\ operand
-	"Answer the <integer> remainder defined by division with truncation toward negative 
-	infinity; e.g. 7 \\ 2 = 1, -7 \\ 2 = 1, 7 \\ -2 = -1. 
-	This is the modulo operation, but it is not the same as C modulo (%) which truncates 
-	towards zero. Report an error if the aNumber is zero."
+	"Answer the <integer> remainder defined by division with truncation toward negative infinity; e.g. 7 \\ 2 = 1, -7 \\ 2 = 1, 7 \\ -2 = -1. 
+	This is the modulo operation, but it is not the same as C modulo (%) which truncates towards zero. Report an error if the aNumber is zero."
 
 	<primitive: 31>
 	^super \\ operand!
 
 + operand
-	"Answer a <number> which is the sum of the receiver and 
-	the <number> argument, operand."
+	"Answer a <number> which is the sum of the receiver and the <number> argument, operand."
 
 	<primitive: 21>
 	^operand addToInteger: self!
@@ -92,25 +85,22 @@ LargeInteger includes high performance primitive implementations for the common 
 
 addToInteger: anInteger
 	"Private - Add the receiver to the known Integer, anInteger. 
-	We should only normally get here if anInteger is a SmallInteger.
-	Implementation Notes: As addition is commutative we can use the 
-	large integer add primitive. We do not supersend if the primitive
-	fails because it does not fail for Integer arguments, and a non-Integer
-	argument breaks the preconditions of this method.
+	We should only normally get here if anInteger is a SmallInteger."
 
-	Primitive Failure Reasons:
-		0	- anInteger is not an Integer.
+	"Implementation Notes: As addition is commutative we can use the large integer add primitive. We do not supersend if the primitive fails because it does not fail for Integer arguments, and a non-Integer argument breaks the preconditions of this method."
+
+	"Primitive Failure Reasons:
+		InvalidParameter1	- anInteger is not an Integer.
 	"
 
 	<primitive: 21>
 	^self primitiveFailed: _failureCode!
 
 asFloat
-	"Answer the floating point representation of the receiver. Some precision may be lost. The
-	result will be the nearest fp value calculated using IEEE round-to-nearest even rounding.
+	"Answer the floating point representation of the receiver. Some precision may be lost. The result will be the nearest fp value calculated using IEEE round-to-nearest even rounding."
 
-	Primitive Failure Reasons: 
-		1 - The receiver has more than 64-bits "
+	"Primitive Failure Reasons: 
+		FloatInexactResult	- The receiver cannot be represented exactly as an IEEE double precision floating point number."
 
 	<primitive: 167>
 	| result nTruncatedBits |
@@ -138,17 +128,12 @@ asFloat
 	^result!
 
 bitAnd: mask
-	"Answer an integer whose bits are the logical AND of the
-	bits of the 2's complement representation of the receiver and 
-	the bits of the 2's complement representation of the Integer 
-	argument, mask. Note that this implies sign extension of the
-	shorter of the two operands.
+	"Answer an integer whose bits are the logical AND of the bits of the 2's complement representation of the receiver and the bits of the 2's complement representation of the Integer argument, mask. Note that this implies sign extension of the shorter of the two operands."
 
-	Implementation Note: Because Dolphin Integers are always represented
-	in 2's complement, this is a very fast operation.
-	
-	Primitive Failure Reasons:
-		0	-	The argument is not an Integer (large or small).
+	"Implementation Note: Because Dolphin Integers are always represented in 2's complement, this is a very fast operation."
+
+	"Primitive Failure Reasons:
+		InvalidParameter1	- The argument is not an Integer (large or small).
 	"
 
 	<primitive: 34>
@@ -161,39 +146,32 @@ bitInvert
 	^self primitiveFailed: _failureCode!
 
 bitOr: anInteger
-	"Answer an integer whose bits are the logical OR of the
-	receiver's bits and those of the argument, anInteger.
+	"Answer an integer whose bits are the logical OR of the receiver's bits and those of the argument, anInteger."
 
-	Primitive Failure Reasons:
-		0	-	The argument is not an Integer (large or small).
+	"Primitive Failure Reasons:
+		InvalidParameter1	- The argument is not an Integer (large or small).
 	"
 
 	<primitive: 35>
 	^self primitiveFailed: _failureCode!
 
 bitShift: delta
-	"Answer an integer which is the receiver bits shifted by the
-	SmallInteger argument, delta, bit positions. The shift direction
-	is left if delta is positive, or right if delta is negative).
-	Note that the shift is arithmetic, rather than logical, so sign
-	bits are shifted in from the left on right shifts.
+	"Answer an integer which is the receiver bits shifted by the SmallInteger argument, delta, bit positions. The shift direction is left if delta is positive, or right if delta is negative).
+	Note that the shift is arithmetic, rather than logical, so sign bits are shifted in from the left on right shifts."
 
-	Primitive Failure Reasons:
-		0	- Argument, delta, is not a SmallInteger
-
-	The superclass implementation is relatively slow, but does support 
-	LargeInteger deltas!! However, it is rather unlikely you will have
-	enough memory to store the result (you'll need 256Mb or more)."
+	"Primitive Failure Reasons:
+		InvalidParameter1	- Argument, delta, is not a SmallInteger
+	"
 
 	<primitive: 37>
+	"The superclass implementation is relatively slow, but does support LargeInteger deltas!!"
 	^super bitShift: delta!
 
 bitXor: anInteger
-	"Answer an integer whose bits are the logical XOR of the
-	receiver's bits and those of the argument, anInteger.
+	"Answer an integer whose bits are the logical XOR of the receiver's bits and those of the argument, anInteger."
 
-	Primitive Failure Reasons:
-		0	-	The argument is not an Integer (large or small).
+	"Primitive Failure Reasons:
+		InvalidParameter1	- The argument is not an Integer (large or small).
 	"
 
 	<primitive: 36>
@@ -226,9 +204,7 @@ byteSize
 digitAt: anInteger 
 	"Answer the n'th byte of 2's complement representation of the receiver."
 
-	"Implementation Note: As Dolphin's LargeIntegers are stored directly in 2's complement
-	32-bit digits, we can make use of the standard byte accessing primitive, passing potential
-	out of bounds accesses to the superclass implementation."
+	"Implementation Note: As Dolphin's LargeIntegers are stored directly in 2's complement 32-bit digits, we can make use of the standard byte accessing primitive, passing potential out of bounds accesses to the superclass implementation."
 
 	<primitive: 60>
 	^super digitAt: anInteger!
@@ -249,8 +225,8 @@ dwordAtOffset: anInteger
 	"Private - Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
 
 	<primitive: 120>
 	^self primitiveFailed: _failureCode!
@@ -260,14 +236,14 @@ dwordAtOffset: anInteger put: anObject
 	that this will fail unless the LargeInteger has first been marked as mutable."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.BadValueType
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: [^self dwordAtOffset: anInteger put: anObject asInteger].
-	_failureCode == _PrimitiveFailureCode.IndexOutOfRange
+	_failureCode == _PrimitiveFailureCode.OutOfBounds
 		ifTrue: 
 			[^self isImmutable
 				ifTrue: [Processor constWriteSignal signalWith: self]
 				ifFalse: [self errorSubscriptBounds: anInteger]].
-	_failureCode == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: anInteger].
+	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
 	^self primitiveFailed: _failureCode!
 
 gcd: anInteger
@@ -335,10 +311,15 @@ hash
 	"Fold to 30 bits so is always positive SmallInteger"
 	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
+highBit
+	"Answer the <integer> index of the most significant non-zero bit of the binary representation of the receiver.
+	N.B. This operation is not defined for negative integers."
+
+	<primitive: 53>
+	^super highBit!
+
 intPtrAtOffset: anInteger put: anObject
-	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must 
-	be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize
-	a new LargeInteger with a SmallInteger value."
+	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize a new LargeInteger with a SmallInteger value."
 
 	<primitive: 183>
 	| value |
@@ -361,26 +342,24 @@ limbSize
 	^self basicSize bitShift: -2!
 
 multiplyByInteger: anInteger
-	"Private - Answer the result of multiplying the receiver by the argument, anInteger.
-	N.B. If we get in here, then anInteger must be small, in which case we just perform
-	the arithmetic in reverse (at present the SmallInteger prim's cannot handle LargeInteger arguments,
-	but the the LI prims can handle SmallInteger args).
-	The primitive should not fail for an Integer argument, so we treat that as an error."
+	"Private - Answer the result of multiplying the receiver by the argument, anInteger."
+
+	"N.B. If we get in here, then anInteger must be small, in which case we just perform the arithmetic in reverse (at present the SmallInteger prim's cannot handle LargeInteger arguments, but the the LI prims can handle SmallInteger args). The primitive should not fail for an Integer argument, so we treat that as an error."
 
 	<primitive: 29>
 	^self primitiveFailed: _failureCode!
 
 negated
-	"Answer the negative value of the receiver.
-	The primitive does not fail."
+	"Answer the negative value of the receiver."
+
+	"The primitive does not fail."
 
 	<primitive: 39>
 	^self bitInvert + 1!
 
 normalize
 	"Private - Answer the receiver in its minimal 2's complement representation.
-	The answer may be the receiver, a compressed version of the receiver (without
-	leading sign digits), or a SmallInteger."
+	The answer may be the receiver, a compressed version of the receiver (without leading sign digits), or a SmallInteger."
 
 	<primitive: 28>
 	^self primitiveFailed: _failureCode!
@@ -441,8 +420,7 @@ printOn: aWriteStream base: baseInteger nDigits: digitsInteger
 		nDigits: halfPower!
 
 quo: aNumber
-	"Answer the integer quotient of the receiver divided by aNumber with 
-	truncation toward zero (i.e. like C integer division)."
+	"Answer the integer quotient of the receiver divided by aNumber with truncation toward zero (i.e. like C integer division)."
 
 	<primitive: 33>
 	^aNumber quotientFromInteger: self
@@ -461,26 +439,25 @@ reciprocal
 	^Fraction numerator: 1 denominator: self!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
-	"Private - Standard method for transfering bytes from one variable
-	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
+	"Private - Standard method for transfering bytes from one variable byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:"
 
-	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+	"Primitive Failure Reasons:
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
 	<primitive: 142>
 	^self primitiveFailed: _failureCode!
 
 sdwordAtOffset: anInteger
-	"Private - Answers the signed 4 byte integer at byte offset anInteger in the receiver."
+	"Private - Answers the signed 4-byte integer at byte offset anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SDWORD)+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SDWORD)+1))."
 
 	<primitive: 122>
 	^self primitiveFailed: _failureCode!
@@ -526,6 +503,7 @@ subtractFromInteger: anInteger
 !LargeInteger categoriesFor: #generality!coercing!private! !
 !LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
 !LargeInteger categoriesFor: #hash!comparing!public! !
+!LargeInteger categoriesFor: #highBit!bit manipulation!public! !
 !LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
 !LargeInteger categoriesFor: #isZero!public!testing! !
 !LargeInteger categoriesFor: #limbSize!accessing!private! !

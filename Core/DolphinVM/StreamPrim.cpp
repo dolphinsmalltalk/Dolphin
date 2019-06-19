@@ -68,7 +68,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 						readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 						return sp;
 					}
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 
 				case StringEncoding::Utf8:
@@ -89,11 +89,11 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 							return sp;
 						}
 
-						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Malformed UTF-8, or at end of buffer over larger string, or at bad offset
+						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Malformed UTF-8, or at end of buffer over larger string, or at bad offset
 					}
 
 					// Out of bounds
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;
 
@@ -116,10 +116,10 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 							return sp;
 						}
 
-						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Malformed UTF-16, or reading starting at an invalid offset
+						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Malformed UTF-16, or reading starting at an invalid offset
 					}
 
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;
 
@@ -139,15 +139,16 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 							return sp;
 						}
 
-						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Invalid code point
+						return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);	// Invalid code point
 					}
 
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 				}
 				break;
 
 				default:
-					return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+					__assume(false);
+					return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 				}
 			}
 
@@ -161,7 +162,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 					return sp;
 				}
-				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 			}
 
 			else if (bufClass == Pointers.ClassArray)
@@ -173,16 +174,16 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 					return sp;
 				}
-				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 			}
 
-			return primitiveFailure(_PrimitiveFailureCode::NotImplemented);		// Collection cannot be handled by primitive, rely on Smalltalk code
+			return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Collection cannot be handled by primitive, rely on Smalltalk code
 		}
 
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// index not in range 0<index<limit
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// index not in range 0<index<limit
 	}
 
-	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);	// Receiver fails invariant check
+	return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);	// Receiver fails invariant check
 }
 #pragma runtime_checks( "c", restore ) 
 
@@ -251,7 +252,8 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									break;
 
 								default:
-									break;
+									_assume(false);
+									return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);
 								}
 
 								AnsiString::CU ch = 0;
@@ -263,10 +265,10 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									return newSp;
 								}
 
-								return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Invalid code unit for Ansi string
+								return primitiveFailure(_PrimitiveFailureCode::UnmappableCharacter);	// Invalid code unit for Ansi string
 							}
 							else
-								return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds of Ansi string
+								return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds of Ansi string
 						}
 
 						case StringEncoding::Utf8:
@@ -303,7 +305,8 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 
 							default:
 								// Unrecognised character encoding
-								break;
+								__assume(false);
+								return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);
 							}
 
 							// Now we have a code point, we can encode it in UTF-8 (if not a surrogate)
@@ -319,7 +322,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									return newSp;
 								}
 
-								return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+								return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 							}
 							else if (codePoint < 0x800)
 							{
@@ -335,7 +338,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									return newSp;
 								}
 
-								return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+								return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 							}
 							else if (U_IS_BMP(codePoint))
 							{
@@ -353,7 +356,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 										return newSp;
 									}
 
-									return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+									return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 								}
 							}
 							else if (codePoint <= MAX_UCSCHAR && !U_IS_UNICODE_NONCHAR(codePoint))
@@ -371,10 +374,10 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									return newSp;
 								}
 
-								return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+								return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 							}
 
-							return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);			// Invalid code point
+							return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);			// Invalid code point
 						}
 
 						case StringEncoding::Utf16:
@@ -397,7 +400,10 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 								{
 									codePoint = codeUnit;
 								}
-								break;
+								else
+								{
+									return primitiveFailure(_PrimitiveFailureCode::UnmappableCharacter);
+								}
 
 							case StringEncoding::Utf16:
 								// UTF-16 into UTF-16, can just write it, whether a surrogate or not
@@ -408,6 +414,10 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									*newSp = value;
 									return newSp;
 								}
+								else
+								{
+									return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
+								}
 
 							case StringEncoding::Utf32:
 								codePoint = codeUnit;
@@ -415,7 +425,8 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 
 							default:
 								// Unrecognised encoding
-								return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+								__assume(false);
+								return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);
 							}
 
 							if (U_IS_UNICODE_CHAR(codePoint))
@@ -431,8 +442,10 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 										*newSp = value;
 										return newSp;
 									}
-
-									return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+									else
+									{
+										return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
+									}
 								}
 								else
 								{
@@ -448,11 +461,16 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 										*newSp = value;
 										return newSp;
 									}
-
-									return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+									else
+									{
+										return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
+									}
 								}
 							}
-							return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);			// Invalid code point
+							else
+							{
+								return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);			// Invalid code point
+							}
 						}
 
 						case StringEncoding::Utf32:
@@ -475,7 +493,11 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									{
 										codePoint = codeUnit;
 									}
-									// else: UTF-8 surrogate, not a valid code unit for UTF-32
+									else
+									{
+										// else: UTF-8 surrogate, not a valid code unit for UTF-32
+										return primitiveFailure(_PrimitiveFailureCode::UnmappableCharacter);
+									}
 									break;
 
 								case StringEncoding::Utf16:
@@ -484,7 +506,8 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									codePoint = codeUnit;
 									break;
 								default:
-									break;
+									__assume(false);
+									return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);
 								}
 
 								if (U_IS_UNICODE_CHAR(codePoint))
@@ -494,18 +517,22 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 									*newSp = value;
 									return newSp;
 								}
-								return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);			// Invalid code point
+								else
+								{
+									return primitiveFailure(_PrimitiveFailureCode::IllegalCharacter);			// Invalid code point
+								}
 							}
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 						}
 						default:
 							// Unrecogised string encoding of the buffer
-							return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+							__assume(false);
+							return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 						}
 					}
 
 					// Not a character
-					return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+					return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 				}
 
 				else if (oteBuf->m_oteClass == Pointers.ClassByteArray)
@@ -528,11 +555,11 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 								return newSp;
 							}
 
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 						}
 					}
 
-					return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Attempt to put non-SmallInteger or out of range 0..255
+					return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Attempt to put non-SmallInteger or out of range 0..255
 				}
 			}
 			else if (oteBuf->m_oteClass == Pointers.ClassArray)
@@ -553,19 +580,19 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 					return newSp;
 				}
 
-				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 			}
 
 			// Primitive response not supported for the streamed over collection
-			return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+			return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 		}
 
 		// Out of bounds of limit
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 	}
 
 	// Invalid stream
-	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
+	return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 }
 
 // Read basic elements from a stream. In the case of character streams, will read individual integer code units (unlike primitiveNext, which reads whole characters 
@@ -603,7 +630,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, unsigned)
 					}
 					else
 						// Out of bounds
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				case 2:
 					if (MWORD(index) < (oteBuf->bytesSize() / 2))
@@ -615,23 +642,23 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, unsigned)
 					}
 					else
 						// Out of bounds
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				case 4:
 					if (MWORD(index) < (oteBuf->bytesSize() / 4))
 					{
 						uint32_t value = reinterpret_cast<QuadsOTE*>(oteBuf)->m_location->m_fields[index];
-						*sp = Integer::NewUnsigned32(value);
-						ObjectMemory::AddToZct(*sp);
+						StoreUnsigned32()(sp, value);
 						readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 						return sp;
 					}
 					else
 						// Out of bounds
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				default:
-					return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+					__assume(false);
+					return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 				}
 			}
 
@@ -644,16 +671,16 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, unsigned)
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
 					return sp;
 				}
-				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 			}
 
-			return primitiveFailure(_PrimitiveFailureCode::NotImplemented);		// Collection cannot be handled by primitive, rely on Smalltalk code
+			return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Collection cannot be handled by primitive, rely on Smalltalk code
 		}
 
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// index not in range 0<index<limit
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// index not in range 0<index<limit
 	}
 
-	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);	// Receiver fails invariant check
+	return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);	// Receiver fails invariant check
 }
 
 // Like primitiveNextPut, but always writes an integer element. For a ByteArray, this will be a byte. For a string, it will be a code unit.
@@ -688,9 +715,9 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 							*newSp = value;
 							return newSp;
 						}
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 					}
-					return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Arg too large
+					return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);	// Arg too large
 
 				case 2:
 					if (value <= 0xffff)
@@ -702,9 +729,9 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 							*newSp = value;
 							return newSp;
 						}
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 					}
-					return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);	// Arg too large
+					return primitiveFailure(_PrimitiveFailureCode::IntegerOutOfRange);	// Arg too large
 
 				case 4:
 					if (index < limit && index < oteBuf->bytesSizeForUpdate() / 4)
@@ -714,11 +741,12 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 						*newSp = value;
 						return newSp;
 					}
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// Out of bounds
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// Out of bounds
 
 				default:
 					// Unrecognised encoding, primitive response not available
-					return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+					__assume(false);
+					return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 				}
 			}
 			else if (oteBuf->m_oteClass == Pointers.ClassArray)
@@ -738,18 +766,18 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 					return newSp;
 				}
 
-				return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Out of bounds
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 			}
 			// else: Primitive response not supported for the streamed over collection
-			return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+			return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 		}
 
 		// Invalid stream
-		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
+		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 	}
 
 	// Invalid argument
-	return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
 // Non-standard, but has very beneficial effect on performance
@@ -768,7 +796,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 		{
 			Oop value = *(sp);
 			if (ObjectMemoryIsIntegerObject(value))
-				return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 			auto oteValue = reinterpret_cast<OTE*>(value);
 
 			auto oteBuf = writeStream->m_array;
@@ -781,7 +809,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 				if (oteBuf->isNullTerminated())
 				{
 					if (!oteValue->isNullTerminated())
-						return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+						return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 					auto oteStringArg= reinterpret_cast<StringOTE*>(oteValue);
 
 					switch (ENCODINGPAIR(ST::String::GetEncoding(oteBuf), ST::String::GetEncoding(oteStringArg)))
@@ -796,10 +824,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
 					}
@@ -815,10 +843,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
 					}
@@ -830,7 +858,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 					{
 						// Fail it because the UTF arg may not be representable in ANSI. 
 						// The Smalltalk backup code can decided what to do.
-						return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
+						return primitiveFailure(_PrimitiveFailureCode::UnmappableCharacter);
 					}
 					break;
 
@@ -845,10 +873,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						utf16.ToUtf8(oteStringBuf->m_location->m_characters + index, valueSize);
 					}
@@ -868,10 +896,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pchDest = oteStringBuf->m_location->m_characters;
 						::WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)pArgChars, cwchArg, reinterpret_cast<LPSTR>(pchDest + index), cbArg, nullptr, nullptr);
@@ -889,10 +917,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
 						::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg, (LPWSTR)pwsz + index, cwchArg);
@@ -910,10 +938,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
 						::MultiByteToWideChar(CP_UTF8, 0, (LPCCH)pszArg, cchArg, reinterpret_cast<LPWSTR>(pwsz + index), cwchArg);
@@ -930,10 +958,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
-							return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
 						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(WCHAR));
@@ -941,7 +969,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 					break;
 					default:
 						// Unrecognised encoding pair - fail the primitive
-						return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+						return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 					}
 				}
 				else if (bufClass == Pointers.ClassByteArray)
@@ -949,7 +977,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 					auto oteBytesBuf = reinterpret_cast<ByteArrayOTE*>(oteBuf);
 
 					if (ObjectMemory::fetchClassOf(value) != bufClass)
-						return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Attempt to put non-ByteArray
+						return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Attempt to put non-ByteArray
 
 					auto oteBytes = reinterpret_cast<ByteArrayOTE*>(value);
 					auto bytes = oteBytes->m_location;
@@ -957,10 +985,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 					newIndex = MWORD(index) + valueSize;
 
 					if (newIndex > (MWORD)limit)			// Beyond write limit
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 					if (static_cast<int>(newIndex) > oteBytesBuf->sizeForUpdate())
-						return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 					auto pb = oteBytesBuf->m_location->m_elements;
 					memcpy(pb + index, bytes->m_elements, valueSize);
@@ -971,7 +999,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 				auto oteArrayBuf = reinterpret_cast<ArrayOTE*>(oteBuf);
 
 				if (ObjectMemory::fetchClassOf(value) != Pointers.ClassArray)
-					return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Attempt to put non-Array
+					return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Attempt to put non-Array
 
 				auto oteArray = reinterpret_cast<ArrayOTE*>(value);
 				auto array = oteArray->m_location;
@@ -979,10 +1007,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 				newIndex = MWORD(index) + valueSize;
 
 				if (newIndex > (MWORD)limit)			// Beyond write limit
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				if (static_cast<int>(newIndex) > oteArrayBuf->sizeForUpdate())
-					return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// Attempt to write off end of buffer (or immutable)
+					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 				auto pTarget = oteArrayBuf->m_location->m_elements;
 
@@ -992,7 +1020,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 				}
 			}
 			else
-				return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+				return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 
 			writeStream->m_index = Integer::NewUnsigned32WithRef(newIndex);		// Increment the stream index
 
@@ -1002,10 +1030,10 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// stream position negative
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// stream position negative
 	}
 
-	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);	// Primitive response not possible for state of Stream
+	return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);	// Primitive response not possible for state of Stream
 }
 
 // The primitive handles PositionableStream>>atEnd, but only for arrays/strings
@@ -1035,9 +1063,9 @@ Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp, unsigned)
 			return sp;
 		}
 
-		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);		// Doesn't work for non-Strings/ByteArrays/Arrays, or if out of bounds
+		return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Doesn't work for non-Strings/ByteArrays/Arrays, or if out of bounds
 	}
-	return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);
+	return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 }
 
 
@@ -1052,7 +1080,7 @@ Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp, unsigned)
 	// and appears to be implemented in most Smalltalks, so we implement here too.
 	if (!ObjectMemoryIsIntegerObject(readStream->m_index) ||
 		!ObjectMemoryIsIntegerObject(readStream->m_readLimit))
-		return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);	// Receiver fails invariant check
+		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);	// Receiver fails invariant check
 
 	SMALLINTEGER index = ObjectMemoryIntegerValueOf(readStream->m_index);
 	SMALLINTEGER limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
@@ -1061,23 +1089,23 @@ Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp, unsigned)
 	// Remember that the index is 1 based (it's a Smalltalk index), and we're 0 based,
 	// so we don't need to increment it until after we've got the next object
 	if (index < 0 || index >= limit)
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);		// No, fail it
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);		// No, fail it
 
 	OTE* oteBuf = readStream->m_array;
 	BehaviorOTE* bufClass = oteBuf->m_oteClass;
 	
 	if (bufClass != Pointers.ClassByteArray)
-		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);		// Collection cannot be handled by primitive, rely on Smalltalk code
+		return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Collection cannot be handled by primitive, rely on Smalltalk code
 
 	ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(oteBuf);
 
 	const int newIndex = index + sizeof(SDWORD);
 	if (MWORD(newIndex) > oteBytes->bytesSize())
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 	const Oop oopNewIndex = ObjectMemoryIntegerObjectOf(newIndex);
 	if (int(oopNewIndex) < 0)
-		return primitiveFailure(_PrimitiveFailureCode::IndexOutOfRange);	// index overflowed SmallInteger range
+		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// index overflowed SmallInteger range
 
 	// When incrementing the index we must allow for it overflowing a SmallInteger, even though
 	// this is extremely unlikely in practice

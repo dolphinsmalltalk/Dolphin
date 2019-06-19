@@ -15,12 +15,12 @@ primHookWindowCreate: hookBoolean
 	We override this to force the hooking if another window is currently hogging it. This prevents recursive walkbacks in some situations."
 
 	"Primitive failure reasons:
-		BadValueType		- hookBoolean not a boolean
-		InvalidOperation		- already hooked by the view in the failure data
-		NotImplemented		- The VM is for console apps only"
+		InvalidParameter1	- hookBoolean not a boolean
+		IllegalStateChange 	- already hooked by another view
+		NotSupported		- The VM is for console apps only"
 
 	<primitive: 108>
-	^_failureCode == _PrimitiveFailureCode.InvalidOperation
+	^_failureCode == _PrimitiveFailureCode.IllegalStateChange
 		ifTrue: 
 			["First forcibly unhook so error walkback can be displayed"
 			self primHookWindowCreate: nil.

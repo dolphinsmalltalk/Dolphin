@@ -31,7 +31,7 @@ _sameAsString: comparand
 	Uses standard byte comparison primitive which checks for identical bytes and size.
 
 	Primitive failure reasons:
-		BadValueType	- comperand is not the same class as the receiver."
+		InvalidParameter1	- comperand is not the same class as the receiver."
 
 	<primitive: 55>
 	^false!
@@ -80,12 +80,11 @@ asString
 	^self asAnsiString!
 
 basicDwordAtOffset: anInteger
-	"Answer the unsigned 4 byte integer at offset (i.e. zero relative) 
-	anInteger in the receiver.
+	"Answer the unsigned 4-byte integer at offset (i.e. zero relative) anInteger in the receiver.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - 4)."
+		InvalidParameter1 	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (4 + 1))."
 
 	<primitive: 120>
 	| answer offset |
@@ -100,7 +99,7 @@ basicDwordAtOffset: anInteger put: anObject
 	"Private - Replace the internal contents of the receiver from offset anInteger with the first 4 bytes of anObject."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.BadValueType
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value - could be non-Numeric, or not in unsigned 32-bit range.
@@ -108,19 +107,15 @@ basicDwordAtOffset: anInteger put: anObject
 			intVal := anObject asInteger.
 			(intVal >= 0 and: [intVal <= 16rFFFFFFFF])
 				ifTrue: [^self basicDwordAtOffset: anInteger put: intVal]].
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
 basicUIntPtrAtOffset: anInteger
 	"Answer the unsigned machine word sized integer at offset (i.e. zero relative) 
 	anInteger in the receiver.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - sizeof(UINT_PTR))."
+		InvalidParameter1 	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(UINT_PTR)+1))."
 
 	<primitive: 120>
 	| answer offset |
@@ -136,7 +131,7 @@ basicUIntPtrAtOffset: anInteger put: anObject
 	the first machine word of anObject."
 
 	<primitive: 121>
-	_failureCode == _PrimitiveFailureCode.BadValueType
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value - could be non-Numeric, or not in unsigned machine word range.
@@ -144,11 +139,7 @@ basicUIntPtrAtOffset: anInteger put: anObject
 			intVal := anObject asInteger.
 			(intVal >= 0 and: [intVal <= VMConstants.UIntPtrMax])
 				ifTrue: [^self basicUIntPtrAtOffset: anInteger put: intVal]].
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
 byteAt: anInteger
 	"Answer the byte at offset anInteger in the receiver"
@@ -160,10 +151,10 @@ byteAt: aSmallInteger put: value
 	"Replace the byte at the specified index in the receiver with the specified integer byte value."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		BadValueType		- the argument, value, is not a SmallInteger.
-		ValueOutOfRange	- the argument is a SmallInteger, but not in the range [0..255]"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 0..receiver's indexable size - 1) 
+		InvalidParameter2	- the argument, value, is not a SmallInteger.
+		IntegerOutOfRange	- the argument is a SmallInteger, but not in the range [0..255]"
 
 	<primitive: 61>
 	^self
@@ -218,14 +209,13 @@ doubleAtOffset: anInteger
 	"Answer the double precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision)."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(double)+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(double)+1))."
 
 	<primitive: 128>
 	self
 		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: false.
+		failureCode: _failureCode.
 	^self primitiveFailed: _failureCode!
 
 doubleAtOffset: anInteger put: aFloat
@@ -233,27 +223,23 @@ doubleAtOffset: anInteger put: aFloat
 	If the argument is not a float, then the primitive is retried having converted it to a Float. This allows other number types to be passed as arguments."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(double)+1)).
-		BadValueType		- aFloat is not a ,<Float>"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(double)+1)).
+		InvalidParameter2	- aFloat is not a ,<Float>"
 
 	<primitive: 129>
-	_failureCode == _PrimitiveFailureCode.BadValueType
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[self doubleAtOffset: anInteger put: aFloat asFloat.
 			^aFloat].	"coerce to float and retry"
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: true.
-	^self primitiveFailed: _failureCode!
+	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
 dwordAtOffset: anInteger
 	"Answer the unsigned 4 byte integer at offset (i.e. zero relative) anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1))."
 
 	<primitive: 120>
 	| answer |
@@ -267,9 +253,9 @@ dwordAtOffset: anInteger put: anObject
 	"Store an unsigned 4 byte value at byte offset anInteger within the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1)).
-		BadValueType		- anObject is not a SmallInteger or a 4-byte object"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (4+1)).
+		InvalidParameter2	- anObject is not a SmallInteger or a 4-byte object"
 
 	<primitive: 121>
 	^self
@@ -292,35 +278,26 @@ floatAtOffset: anInteger
 	N.B. To access a double precision value (e.g. a C double) use #doubleAtOffset:"
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(float)+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(float)+1))."
 
 	<primitive: 130>
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: false.
+	self validOffset: anInteger failureCode: _failureCode.
 	^self primitiveFailed: _failureCode!
 
 floatAtOffset: anInteger put: aFloat
-	"Store the Smalltalk floating point Number, aFloat, as a single precision
-	floating point value (e.g. a C float) at byte offset (i.e. zero based) anInteger 
-	within the receiver. N.B. Some loss of precision is likely, to store a Smalltalk
-	Float as a double precision value in an ExternalBytes buffer, use #doubleAt:put:.
+	"Store the Smalltalk floating point Number, aFloat, as a single precision floating point value (e.g. a C float) at byte offset (i.e. zero based) anInteger 
+	within the receiver. N.B. Some loss of precision is likely, to store a Smalltalk Float as a double precision value in an ExternalBytes buffer, use #doubleAt:put:."
 
-	Primitive failure reasons:
-		NonIntegerIndex 	- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - 4).
-		BadValueType		- aFloat is not a Float."
+	"Primitive failure reasons:
+		InvalidParameter1 	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(float)+1)).
+		InvalidParameter2	- aFloat is not a Float."
 
 	<primitive: 131>
-	_failureCode == _PrimitiveFailureCode.BadValueType
+	_failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: [^self floatAtOffset: anInteger put: aFloat asFloat].	"coerce to float and retry"
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: true.
-	^self primitiveFailed: _failureCode!
+	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
 hash
 	"Hash the bytes of the object using the standard byte hashing
@@ -356,9 +333,9 @@ indexOfSubCollection: targetSequence startingAt: start
 	starting at the <integer> index start. If there are no such occurrences, answer 0.
 
 	Primitive Failure Reasons:
-		0	- start is not a SmallInteger
-		1	- start is out of bounds (not in the range 1..receiver's indexable size) 
-		2	- targetSequence is not of the same class as the receiver.
+		InvalidParameter1	- targetSequence is not of the same class as the receiver.
+		InvalidParameter2	- start is not a SmallInteger
+		OutOfBounds		- start is out of bounds (not in the range 1..receiver's indexable size) 
 
 	Implementation Note: The string search primitive is implemented using the 
 	Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which
@@ -369,12 +346,11 @@ indexOfSubCollection: targetSequence startingAt: start
 	^super indexOfSubCollection: targetSequence startingAt: start!
 
 intPtrAtOffset: anInteger
-	"Answer the machine word sized signed integer value (i.e. may be 32 or 64-bit, depending on
-	host OS) at offset (i.e. zero relative) anInteger in the receiver. 
+	"Answer the machine-word-sized signed integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - sizeof(INT_PTR))."
+	"Primitive failure reasons:
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(INT_PTR)+1))."
 
 	<primitive: 182>
 	| answer |
@@ -412,14 +388,13 @@ longDoubleAtOffset: anInteger
 	"Answer the 80-bit floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (i.e. 64-bit precision, so some precision may be lost)."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(long double)+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(long double)+1))."
 
 	<primitive: 159>
 	self
 		validateOffset: anInteger
-		failureCode: _failureCode
-		forUpdate: false.
+		failureCode: _failureCode.
 	^self primitiveFailed: _failureCode!
 
 notNull
@@ -465,8 +440,8 @@ qwordAtOffset: anInteger
 	"Answer an <integer> representing the unsigned 8 byte integer at the specified <integer> offset (i.e. zero relative), in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - 8)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(QWORD)+1))."
 
 	<primitive: 191>
 	^((self dwordAtOffset: anInteger + 4) bitShift: 32) + (self dwordAtOffset: anInteger)!
@@ -480,13 +455,14 @@ qwordAtOffset: offset put: value
 		dwordAtOffset: offset+4 put: (value bitShift: -32)!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
-	"Private - Standard method for transfering bytes from one variable
-	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
+	"Private - Standard method for transfering bytes from one variable byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:"
 
-	Primitive Failure Reasons:
-		NonIntegerIndex		- One of the indices (fromStart, stop, or start) is not a SmallInteger.
-		BadValueType		- aByteObject is not a byte object
-		IndexOutOfRange	- 'from' or 'to' interval is out-of-bounds
+	"Primitive Failure Reasons:
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
 	<primitive: 142>
@@ -512,65 +488,49 @@ retryDwordAtOffset: anInteger put: anObject failureCode: failureCode
 	primitive fails. Either raises an appropriate error, or converts the argument to an Integer
 	and retries."
 
-	failureCode == _PrimitiveFailureCode.BadValueType
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
 			(intVal >= 0 and: [intVal <= 16rFFFFFFFF]) ifTrue: [^self dwordAtOffset: anInteger put: intVal]].
-	self
-		validateOffset: anInteger
-		failureCode: failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retrySWordAtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing signed word into the reciever when a primitive fails.
 	Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.BadValueType
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| int |
 			"Not a suitable value - could be non-Numeric, or just not a SmallInteger. Attempt to coerce anObject and retry. anObject may not understand asInteger."
 			int := anObject asInteger.
 			(int >= -16r8000 and: [int < 16r8000]) ifTrue: [^self swordAtOffset: anInteger put: int]].
-	self
-		validateOffset: anInteger
-		failureCode: failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retryUIntPtrAtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing an unsigned pointer sized integer into the receiver when a primitive fails. Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.BadValueType
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| intVal |
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
 			(intVal >= 0 and: [intVal <= VMConstants.UIntPtrMax])
 				ifTrue: [^self uintPtrAtOffset: anInteger put: intVal]].
-	self
-		validateOffset: anInteger
-		failureCode: failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retryWordAtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing unsigned word into the reciever when a primitive fails.
 	Either raises an appropriate error, or converts the argument to an Integer and retries."
 
-	failureCode == _PrimitiveFailureCode.BadValueType
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
 		ifTrue: 
 			[| int |
 			"Not a suitable value - could be non-Numeric, or just not a SmallInteger. Attempt to coerce anObject and retry. anObject may not understand asInteger."
 			int := anObject asInteger.
 			(int >= 0 and: [int <= 16rFFFF]) ifTrue: [^self wordAtOffset: anInteger put: int]].
-	self
-		validateOffset: anInteger
-		failureCode: failureCode
-		forUpdate: true.
-	^self errorCantHold: anObject!
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 sbyteAtOffset: anInteger 
 	"Answer the signed 8-bit <Integer> at offset anInteger in the receiver"
@@ -588,8 +548,8 @@ sdwordAtOffset: anInteger
 	"Answers the signed 4-byte integer at byte offset anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(UINT_PTR)+1))."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SDWORD)+1))."
 
 	<primitive: 122>
 	| answer |
@@ -612,8 +572,8 @@ sqwordAtOffset: anInteger
 	the receiver."
 
 	"Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size - 8)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(SQWORD)+1))."
 
 	<primitive: 192>
 	^((self sdwordAtOffset: anInteger + 4) bitShift: 32) + (self dwordAtOffset: anInteger)!
@@ -670,10 +630,10 @@ swordAtOffset: anInteger put: anObject
 	"Store a signed 2-byte value at byte offset anInteger within the receiver (which is the same as storing an unsigned value). If anObject is not representable as a 16-bit signed (Small)Integer, then raise a 'cannot hold' error."
 
 	"Primitive failure results:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(UINT_PTR)).
-		BadValueType		- anObject is not a SmallInteger
-		ValueOutOfRange 	- anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(UINT_PTR)+1)).
+		InvalidParameter2	- anObject is not a SmallInteger
+		IntegerOutOfRange 	- anObject is not in the range -32768..32767 (i.e. out of signed 16-bit range)."
 
 	<primitive: 127>
 	^self
@@ -685,8 +645,8 @@ uintPtrAtOffset: anInteger
 	"Answer the machine word sized integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex 		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(UINT_PTR))."
+		InvalidParameter1 	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(UINT_PTR)+1))."
 
 	<primitive: 180>
 	| answer |
@@ -700,9 +660,9 @@ uintPtrAtOffset: anInteger put: anObject
 	"Store an unsigned 4-byte value at byte offset anInteger within the receiver."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(UINT_PTR)).
-		BadValueType		- anObject it not an integer of byte object of suitable size for storing as a UINT_PTR value."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(UINT_PTR)+1)).
+		InvalidParameter2	- anObject it not an integer of byte object of suitable size for storing as a UINT_PTR value."
 
 	<primitive: 181>
 	^self
@@ -710,24 +670,26 @@ uintPtrAtOffset: anInteger put: anObject
 		put: anObject
 		failureCode: _failureCode!
 
-validateOffset: anInteger failureCode: failureCode forUpdate: aBoolean
+updatePrimitiveFailed: failureCode atOffset: anInteger
 	"Private - Primitive failure checking code for validating an offset argument to be called immediately after a buffer accessing primitive has failed.
-	Raises an error if there is some issue with the offset."
+	Raises an appropriate error."
 
-	failureCode == _PrimitiveFailureCode.IndexOutOfRange
-		ifTrue: 
-			[^(aBoolean and: [self isImmutable])
-				ifTrue: [Processor constWriteSignal signalWith: self]
-				ifFalse: [self errorSubscriptBounds: anInteger]].
-	failureCode == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: anInteger]!
+	failureCode == _PrimitiveFailureCode.AccessViolation
+		ifTrue: [^Processor constWriteSignal signalWith: self].
+	^(self validOffset: anInteger failureCode: failureCode) ifNil: [self primitiveFailed: failureCode]!
+
+validOffset: anInteger failureCode: failureCode
+	failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: anInteger].
+	failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: anInteger].
+	^nil!
 
 wordAtOffset: anInteger
 	"Answer the unsigned 2-byte integer at offset (i.e. zero relative) anInteger in the receiver. 
 	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least  significant first."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds"
 
 	<primitive: 124>
 	| answer |
@@ -743,10 +705,10 @@ wordAtOffset: anInteger put: anObject
 	raise a 'cannot hold' error.
 
 	Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(WORD)).
-		BadValueType		- anObject is not a SmallInteger
-		ValueOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(WORD)+1)).
+		InvalidParameter2	- anObject is not a SmallInteger
+		IntegerOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
 
 	<primitive: 125>
 	^self
@@ -814,7 +776,8 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #validateOffset:failureCode:forUpdate:!accessing!private! !
+!ByteArray categoriesFor: #updatePrimitiveFailed:atOffset:!accessing!private! !
+!ByteArray categoriesFor: #validOffset:failureCode:!accessing!private! !
 !ByteArray categoriesFor: #wordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
 

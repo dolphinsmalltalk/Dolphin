@@ -2824,18 +2824,13 @@ previousSiblingView
 
 primHookWindowCreate: hookBoolean
 	"Private - Ask the VM to hook the first subsequent window creation event for the receiver.
-	When it receives such an event it will send a #subclassWindow: callback with the
-	handle of the newly created window to the receiver. This allows controls to be
-	subclassed BEFORE they return from the CreateWindowEx() call.
-	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to
-	minimise the performance impact. The hook is automatically 'unhooked' by the VM
-	when it receive's the create notification before it sends the #subclassWindow:
-	callback."
+	When it receives such an event it will send a #subclassWindow: callback with the handle of the newly created window to the receiver. This allows controls to be subclassed BEFORE they return from the CreateWindowEx() call.
+	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to minimise the performance impact. The hook is automatically 'unhooked' by the VM when it receive's the create notification before it sends the #subclassWindow: callback."
 
 	"Primitive failure reasons:
-		BadValueType		- hookBoolean not a boolean
-		InvalidOperation		- already hooked by the view in the failure data
-		NotImplemented		- The VM is for console apps only"
+		InvalidParameter1	- hookBoolean not a boolean
+		IllegalStateChange	- already hooked by another view
+		NotSupported		- The VM is for console apps only"
 
 	<primitive: 108>
 	^self primitiveFailed: _failureCode!

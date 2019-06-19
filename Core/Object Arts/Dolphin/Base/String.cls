@@ -152,9 +152,8 @@ _separateSubStringsIn: aReadableString
 	Note that <Symbol>s are now considered equal to <String>s with the same characters.
 
 	Primitive failure results:
-		0 -	comparand is a SmallInteger.
-		1 - 	comparand is not a null-terminated object.
-		2 -	comparand and/or receiver encoding not recognised."
+		InvalidParameter1  	- comparand is not a null-terminated object.
+		AssertionFailure		- comparand and/or receiver encoding not recognised."
 
 	<primitive: 219>
 	^self == comparand or: [comparand isString and: [(self _cmp: comparand) == 0]]!
@@ -290,8 +289,8 @@ at: index
 	"Answer the <Character> at the <integer> index, in the receiver."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 63>
 	^self _primitiveError: _failureCode at: index!
@@ -308,9 +307,9 @@ at: anInteger put: aCharacter
 	"Replace the character at index, anInteger, in the receiver with aCharacter."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- index is not a SmallInteger
-		IndexOutOfRange	- index out of bounds (not in the range 1..receiver's indexable size)
-		BadValueType		- aCharacter is not a Character."
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)
+		InvalidParameter2	- aCharacter is not a Character."
 
 	<primitive: 64>
 	^self
@@ -358,10 +357,10 @@ byteAt: aSmallInteger put: value
 	"Replace the byte at the specified index in the receiver with the specified integer byte value."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		BadValueType		- the argument, value, is not a SmallInteger.
-		ValueOutOfRange	- the argument is a SmallInteger, but not in the range [0..255]"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter2	- the argument, value, is not a SmallInteger.
+		IntegerOutOfRange	- the argument is a SmallInteger, but not in the range [0..255]"
 
 	<primitive: 61>
 	^self
@@ -538,9 +537,9 @@ findString: aString startingAt: anInteger
 	"Answer the index of the <String> argument within the receiver, starting at the <integer> argument. If the receiver does not contain aString, answer 0.
 
 	Primitive Failure Reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange	- anInteger is out of bounds (not in the range 1..receiver's indexable size) 
-		BadValueType		- aString is not of the same class as the receiver.
+		InvalidParameter2	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter1	- aString is not of the same class as the receiver.
 
 	Implementation Note: The string search primitive is implemented using the Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which case it isn't worth initializing the skip array in most cases, so a simple brute force search (much like that of the superclass) is used."
 
@@ -830,11 +829,11 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
 
 	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
 	<primitive: 142>

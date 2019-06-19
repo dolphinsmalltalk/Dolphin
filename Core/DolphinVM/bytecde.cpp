@@ -35,43 +35,7 @@
 
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
 {
-	return !m_bStepping ? sp - argCount : reinterpret_cast<Oop*>(ZeroPointer);
-}
-
-Oop* __fastcall Interpreter::primitiveReturnTrue(Oop* const sp, unsigned argCount)
-{
-	Oop* newSp = sp - argCount;
-	if (!m_bStepping)
-	{
-		*newSp = reinterpret_cast<Oop>(Pointers.True);
-		return newSp;
-	}
-	else
-		return reinterpret_cast<Oop*>(ZeroPointer);
-}
-
-Oop* __fastcall Interpreter::primitiveReturnFalse(Oop* const sp, unsigned argCount)
-{
-	Oop* newSp = sp - argCount;
-	if (!m_bStepping)
-	{
-		*newSp = reinterpret_cast<Oop>(Pointers.False);
-		return newSp;
-	}
-	else
-		return reinterpret_cast<Oop*>(ZeroPointer);
-}
-
-Oop* __fastcall Interpreter::primitiveReturnNil(Oop* const sp, unsigned argCount)
-{
-	Oop* newSp = sp - argCount;
-	if (!m_bStepping)
-	{
-		*newSp = reinterpret_cast<Oop>(Pointers.Nil);
-		return newSp;
-	}
-	else
-		return reinterpret_cast<Oop*>(ZeroPointer);
+	return !m_bStepping ? sp - argCount : primitiveFailure(_PrimitiveFailureCode::DebugStep);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
@@ -84,7 +48,9 @@ Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned 
 		return newSp;
 	}
 	else
-		return reinterpret_cast<Oop*>(ZeroPointer);
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
@@ -97,7 +63,9 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned a
 		return newSp;
 	}
 	else
-		return reinterpret_cast<Oop*>(ZeroPointer);
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
 }
 
 
@@ -300,8 +268,6 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMethodInClass(Beha
 }
 
 #pragma code_seg(INTERP_SEG)
-
-extern "C" intptr_t primitivesTable[PRIMITIVE_MAX];
 
 Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount)
 {
@@ -842,7 +808,7 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, unsigned)
 		return sp - 1;
 	}
 	else
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
 

@@ -270,7 +270,7 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 			m_oteProcess(oteProcess),
 			m_nSuspendCount(0),
 			m_state(OverlappedCall::Starting),
-			m_primitiveFailureCode(_PrimitiveFailureCode::Success)
+			m_primitiveFailureCode(_PrimitiveFailureCode::NoError)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
@@ -588,7 +588,7 @@ void OverlappedCall::OnActivateProcess()
 		if (dwRet != WAIT_OBJECT_0)
 			trace(L"%#x: OverlappedCall(%#x) completion wait terminated abnormally with %#x\n", GetCurrentThreadId(), this, dwRet);
 
-		if (m_primitiveFailureCode != _PrimitiveFailureCode::Success)
+		if (m_primitiveFailureCode != _PrimitiveFailureCode::NoError)
 		{
 #if TRACING == 1
 			{
@@ -602,7 +602,7 @@ void OverlappedCall::OnActivateProcess()
 			Interpreter::m_registers.m_oopNewMethod = m_interpContext.m_oopNewMethod;
 			Interpreter::activatePrimitiveMethod(m_interpContext.m_oopNewMethod->m_location, m_primitiveFailureCode);
 
-			m_primitiveFailureCode = _PrimitiveFailureCode::Success;
+			m_primitiveFailureCode = _PrimitiveFailureCode::NoError;
 		}
 
 		m_interpContext.m_oopNewMethod = reinterpret_cast<MethodOTE*>(Pointers.Nil);
@@ -1035,7 +1035,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, unsigned argCou
 	OverlappedCallPtr pCall = OverlappedCall::Do(method, argCount);
 	if (!pCall)
 		// Nested overlapped calls are not supported
-		return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+		return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 
 	HARDASSERT(newProcessWaiting());
 

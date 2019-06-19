@@ -315,19 +315,12 @@ interruptWith: aBlock
 	self enableInterrupts!
 
 iret: frameOffset list: suspendingList
-	"Private - Return to the active process'  frame, at the specified 
-	offset from the process base, on completion of an interrupt, restoring 
-	the <List>|<Semaphore>, suspendingList, which is nil if the process 
-	was active at the time of the interrupt. If a process is interrupted while
-	suspended on a list, then it is re-suspended on that list when it has finished
-	handling the interrupt, but note that it will be placed at the back of the list
-	regardless of the position it was in when interrupted.
-	Primitive failure reasons:
-		0 -	the argument, frameOffset, is not a SmallInteger
+	"Private - Return to the active process'  frame, at the specified offset from the process base, on completion of an interrupt, restoring the <List>|<Semaphore>, suspendingList, which is nil if the process was active at the time of the interrupt. If a process is interrupted while suspended on a list, then it is re-suspended on that list when it has finished handling the interrupt, but note that it will be placed at the back of the list regardless of the position it was in when interrupted."
+	
+	"Primitive failure reasons:
+		InvalidParameter1 -	the argument, frameOffset, is not a SmallInteger"
 
-	Be warned: This primitive method is not intended to be sent by user code
-	it does not perform much error checking, and may cause the VM to
-	terminate unexpectedly if the specified frameOffset is invalid."
+	"Be warned: This primitive method is not intended to be sent by user code it does not perform much error checking, and may cause the VM to terminate unexpectedly if the specified frameOffset is invalid."
 
 	<primitive: 68>
 	^self primitiveFailed: _failureCode!
@@ -405,40 +398,35 @@ pendingTerminations
 	^pendingTerminations!
 
 primReturn: anObject callback: cookie 
-	"Private - Return the <Object>, result, to the VM as the result of the callback identified by the 
-	<integer>, cookie, which the VM passed in when it originated the callback.
+	"Private - Return the <Object>, result, to the VM as the result of the callback identified by the <integer>, cookie, which the VM passed in when it originated the callback.
 	Restore the current active process to the context it was executing before the callback occurred.
-	The primitive will fail (but will not set the failure result) if:
-		- the current active process is not in a callback
-		- the callback identified by cookied was not the last
-	Answer nil in the latter case so that #callbackReturn: keeps trying to exit (assuming no deadlock,
-	it will eventually succeed when its turn comes). Where the process is attempting to return from a
-	non-existant callback (perhaps the image was saved down with a process in the middle of a callback)
-	then answer self so that the process continues, effectively ignoring the callback return request."
+
+	Primitive failure codes:
+		NoCallbackActive 	- the current active process is not in a callback
+		Retry				- the callback identified by cookied was not the last
+	
+	Answer nil in the latter case so that #callbackReturn: keeps trying to exit (assuming no deadlock, it will eventually succeed when its turn comes). Where the process is attempting to return from a non-existant callback (perhaps the image was saved down with a process in the middle of a callback) then answer self so that the process continues, effectively ignoring the callback return request."
 
 	<primitive: 104>
 	^activeProcess isInCallback ifFalse: [self]!
 
 primUnwindCallback: cookie 
-	"Private - Unwind (i.e. abnormally terminate) the callback identified by the <integer>, cookie, 
-	The context is unaffected (i.e. we continue to run in our caller).
-	Note that this is achieved by raising a Win32 structured exception, and therefore any intervening
-	frame based unwind handlers will be run.
+	"Private - Unwind (i.e. abnormally terminate) the callback identified by the <integer>, cookie, The context is unaffected (i.e. we continue to run in our caller).
+	Note that this is achieved by raising a Win32 structured exception, and therefore any intervening frame based unwind handlers will be run.
 	The primitive answers self if it 'succeeds'.
-	The primitive will fail (but not set the failure reason) if:
-		- the current active process is not in a callback
-		- the last callback was not that identified by the cookie
-	Answer nil in the latter case, so that the caller can put the active process to sleep to 
-	wait its turn. In the former case, answer self to ignore the unwind request and continue."
+
+	Primitive failure codes:
+		NoCallbackActive 	- the current active process is not in a callback
+		Retry				- the callback identified by cookied was not the current one. The callbacks must be completed in FIFO order.
+
+	Answer nil in the latter case, so that the caller can put the active process to sleep to wait its turn. In the former case, answer self to ignore the unwind request and continue."
 
 	<primitive: 107>
 	^activeProcess isInCallback ifFalse: [self]!
 
 primUnwindInterrupt
-	"Private - Unwind (i.e. abnormally terminate) the most recent interrupt for the current active 
-	process, the context is unaffected (i.e. we continue to run in our caller).
-	The primitive answers self if it 'succeeds'.
-	The primitive does not fail."
+	"Private - Unwind (i.e. abnormally terminate) the most recent interrupt for the current active process, the context is unaffected (i.e. we continue to run in our caller).
+	The primitive answers self if it 'succeeds'. The primitive does not fail."
 
 	<primitive: 150>
 	^self primitiveFailed: _failureCode!
