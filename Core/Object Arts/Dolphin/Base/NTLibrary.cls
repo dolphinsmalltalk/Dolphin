@@ -20,8 +20,8 @@ ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actua
 	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
 	^self invalidCall: _failureCode!
 
-rtlNtStatusToDosError: status
-	<stdcall: dword RtlNtStatusToDosError dword>
+rtlNtStatusToDosError: anInteger
+	<stdcall: dword RtlNtStatusToDosError ntstatus>
 	^self invalidCall: _failureCode!
 
 setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution

@@ -9,6 +9,8 @@
 
 ******************************************************************************/
 #include "Ist.h"
+typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
+
 #pragma code_seg(FFI_SEG)
 
 // Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
@@ -363,6 +365,11 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 			case ExtCallArgINTPTR:
 				pushIntPtr(*reinterpret_cast<INT_PTR*>(lpParms));
 				lpParms += sizeof(INT_PTR);
+				break;
+
+			case ExtCallArgNTSTATUS:
+				pushSigned32(*reinterpret_cast<SDWORD*>(lpParms));
+				lpParms += sizeof(NTSTATUS);
 				break;
 
 			case ExtCallArgSTRUCT:
@@ -973,6 +980,7 @@ void doBlah()
 				case ExtCallArgSDWORD:
 				case ExtCallArgDWORD:
 				case ExtCallArgHRESULT:
+				case ExtCallArgNTSTATUS:
 					_asm 
 					{
 						mov		eax, DWORD PTR [arg]	// Load Oop
@@ -1204,6 +1212,7 @@ void doBlah()
 				}
 
 				case ExtCallArgHRESULT:
+				case ExtCallArgNTSTATUS:
 				{
 					HRESULT hresult = static_cast<HRESULT>(dwValue);
 					if (FAILED(hresult))

@@ -38,6 +38,12 @@ signal: messageText with: anInteger
 	sender, unless the new instance is resumable, and the handler which catches it directs that it 
 	should be resumed."
 
-	self signalHRESULT: (HRESULT win32Error: anInteger)! !
+	self signalHRESULT: (HRESULT win32Error: anInteger)!
+
+signalFailureCode: anInteger
+	"Private - Signal a Win32Error from an NTSTATUS code packed into a primitive failure code."
+
+	^self signalWith: (NTLibrary default rtlNtStatusToDosError: (self decodePrimitiveFailureCode: anInteger))! !
 !Win32Error class categoriesFor: #signal:with:!instance creation!public! !
+!Win32Error class categoriesFor: #signalFailureCode:!instance creation!private! !
 

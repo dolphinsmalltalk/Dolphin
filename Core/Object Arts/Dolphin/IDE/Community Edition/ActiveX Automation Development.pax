@@ -6951,7 +6951,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPut: $>;
 		crtab;
-		nextPutAll: '^self invalidCall'!
+		nextPutAll: '^self invalidCall: _failureCode'!
 
 printRawPropGetComment: aFUNCDESC on: aPuttableStream isPrivate: aBoolean 
 	self printCommentPrefixOn: aPuttableStream isPrivate: aBoolean.
@@ -7198,7 +7198,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPut: $>;
 		crtab;
-		nextPutAll: '^self invalidCall'! !
+		nextPutAll: '^self invalidCall: _failureCode'! !
 !TKindModuleAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
 !TKindModuleAnalyzer categoriesFor: #generateClassFilename!private! !
 !TKindModuleAnalyzer categoriesFor: #generateClassSide:!private! !

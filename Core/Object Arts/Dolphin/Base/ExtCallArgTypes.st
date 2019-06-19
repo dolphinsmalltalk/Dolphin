@@ -21,6 +21,7 @@ ExtCallArgTypes at: 'ExtCallArgLPSTR' put: 16rC!
 ExtCallArgTypes at: 'ExtCallArgLPVOID' put: 16r1!
 ExtCallArgTypes at: 'ExtCallArgLPWSTR' put: 16r11!
 ExtCallArgTypes at: 'ExtCallArgMax' put: 16r3F!
+ExtCallArgTypes at: 'ExtCallArgNTSTATUS' put: 16r1C!
 ExtCallArgTypes at: 'ExtCallArgOOP' put: 16rD!
 ExtCallArgTypes at: 'ExtCallArgOTE' put: 16r14!
 ExtCallArgTypes at: 'ExtCallArgQWORD' put: 16r12!

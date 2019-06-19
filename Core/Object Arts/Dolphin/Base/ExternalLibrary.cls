@@ -202,28 +202,34 @@ invalidCall: anInteger
 
 	| error proc frame descriptor |
 	proc := Processor activeProcess.
-	anInteger < 0 ifTrue: [^HRESULTError signalFailureCode: anInteger].
 	frame := proc topFrame sender.
 	descriptor := frame method descriptor.
-	anInteger >= 16r10000
+	anInteger < 0
 		ifTrue: 
-			[| arg i |
-			"An invalid argument was passed"
-			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
-			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass
-				invalidArgument: arg
-				got: (frame arguments at: arg)
-				expected: (descriptor argumentTypes at: i)]
+			[| retType |
+			retType := descriptor retType.
+			retType == ExtCallArgTypes.ExtCallArgHRESULT ifTrue: [^HRESULTError signalFailureCode: anInteger].
+			retType == ExtCallArgTypes.ExtCallArgNTSTATUS ifTrue: [^Win32Error signalFailureCode: anInteger]]
 		ifFalse: 
-			[anInteger == _PrimitiveFailureCode.InvalidReceiver ifTrue: [^self error: 'invalid receiver'].
-			anInteger == _PrimitiveFailureCode.SystemError
+			[anInteger >= 16r10000
 				ifTrue: 
-					["Function name not found in the DLL, i.e. failure of GetProcAddress().
+					[| arg i |
+					"An invalid argument was passed"
+					i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
+					arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+					self invalidArgErrorClass
+						invalidArgument: arg
+						got: (frame arguments at: arg)
+						expected: (descriptor argumentTypes at: i)]
+				ifFalse: 
+					[anInteger == _PrimitiveFailureCode.InvalidReceiver ifTrue: [^self error: 'invalid receiver'].
+					anInteger == _PrimitiveFailureCode.SystemError
+						ifTrue: 
+							["Function name not found in the DLL, i.e. failure of GetProcAddress().
 					Often caused by omitting the A (for ASCII) or W (for Wide = Unicode) 
 					function name suffix. Note that this may be required even if the function
 					has no string arguments."
-					^Win32Error signalWith: ERROR_PROC_NOT_FOUND]].
+							^Win32Error signalWith: ERROR_PROC_NOT_FOUND]]].
 
 	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
 	it must have been some system or unknown error."
