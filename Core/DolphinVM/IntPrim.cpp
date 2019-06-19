@@ -9,57 +9,6 @@
 #include "Interprt.h"
 #include "InterprtPrim.inl"
 
-template <class Cmp, bool Lt> __forceinline Oop* primitiveIntegerCmp(Oop* const sp, const Cmp& cmp)
-{
-	// Normally it is better to jump on the failure case as the static prediction is that forward
-	// jumps are not taken, but these primitives are normally only invoked when the special bytecode 
-	// has triggered the fallback method (unless performed), which suggests the arg will not be a 
-	// SmallInteger, so the 99% case is that the primitive should fail
-	Oop arg = *sp;
-	if (!ObjectMemoryIsIntegerObject(arg))
-	{
-		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
-		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
-		{
-			// Whether a SmallIntegers is greater than a LargeInteger depends on the sign of the LI
-			// - All normalized negative LIs are less than all SmallIntegers
-			// - All normalized positive LIs are greater than all SmallIntegers
-			// So if sign bit of LI is not set, receiver is < arg
-			*(sp - 1) = reinterpret_cast<Oop>((oteArg->m_location->signBit(oteArg) ? Lt : !Lt) ? Pointers.True : Pointers.False);
-			return sp - 1;
-		}
-		else
-			return Interpreter::primitiveFailure(_PrimitiveFailureCode::BadValueType);
-	}
-	else
-	{
-		Oop receiver = *(sp - 1);
-		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
-		*(sp - 1) = reinterpret_cast<Oop>(cmp(static_cast<SMALLINTEGER>(receiver), static_cast<SMALLINTEGER>(arg)) ? Pointers.True : Pointers.False);
-		return sp - 1;
-	}
-}
-
-Oop* __fastcall Interpreter::primitiveLessThan(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCmp<std::less<SMALLINTEGER>, false>(sp, std::less<SMALLINTEGER>());
-}
-
-Oop* __fastcall Interpreter::primitiveLessOrEqual(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCmp<std::less_equal<SMALLINTEGER>, false>(sp, std::less_equal<SMALLINTEGER>());
-}
-
-Oop* __fastcall Interpreter::primitiveGreaterThan(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCmp<std::greater<SMALLINTEGER>, true>(sp, std::greater<SMALLINTEGER>());
-}
-
-Oop* __fastcall Interpreter::primitiveGreaterOrEqual(Oop* const sp, unsigned)
-{
-	return primitiveIntegerCmp<std::greater_equal<SMALLINTEGER>, true>(sp, std::greater_equal<SMALLINTEGER>());
-}
-
 Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 {
 	Oop arg = *sp;
@@ -73,7 +22,7 @@ Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 	else
 	{
@@ -106,38 +55,6 @@ Oop* __fastcall Interpreter::primitiveHashMultiply(Oop* const sp, unsigned)
 
 //////////////////////////////////////////////////////////////////////////////;
 // SmallInteger Bit Manipulation Primitives
-
-template <class P> __forceinline static Oop* primitiveIntegerOp(Oop* const sp, const P &op)
-{
-	Oop arg = *sp;
-	if (!ObjectMemoryIsIntegerObject(arg))
-		return Interpreter::primitiveFailure(_PrimitiveFailureCode::NonIntegerIndex);
-
-	Oop receiver = *(sp - 1);
-	*(sp - 1) = op(receiver, arg);
-	return sp - 1;
-}
-
-Oop* __fastcall Interpreter::primitiveBitAnd(Oop* const sp, unsigned)
-{
-	return primitiveIntegerOp(sp, std::bit_and<Oop>());
-}
-
-Oop* __fastcall Interpreter::primitiveBitOr(Oop* const sp, unsigned)
-{
-	return primitiveIntegerOp(sp, std::bit_or<Oop>());
-}
-
-Oop* __fastcall Interpreter::primitiveBitXor(Oop* const sp, unsigned)
-{
-	struct bit_xor {
-		Oop operator() (const Oop& receiver, const Oop& arg) const {
-			return receiver ^ (arg - 1);
-		}
-	};
-
-	return primitiveIntegerOp(sp, bit_xor());
-}
 
 Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, unsigned)
 {
@@ -183,7 +100,7 @@ Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, unsigned)
 			}
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Unhandled argument type
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);		// Unhandled argument type
 	}
 }
 
@@ -210,7 +127,7 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Unhandled argument type
 	}
 }
 
@@ -226,45 +143,17 @@ Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, unsigned)
 Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, unsigned)
 {
 	Oop oopInteger = *sp;
-	if (ObjectMemoryIsIntegerObject(oopInteger))
+	SMALLINTEGER value = static_cast<SMALLINTEGER>(oopInteger);
+	if (value >= 0)
 	{
-		SMALLINTEGER value = static_cast<SMALLINTEGER>(oopInteger);
-		if (value >= 0)
-		{
-			unsigned long index;
-			_BitScanReverse(&index, value);
-			*sp = ObjectMemoryIntegerObjectOf(index);
-			return sp;
-		}
-		else
-			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);		// Negative receiver
+		unsigned long index;
+		_BitScanReverse(&index, value);
+		*sp = ObjectMemoryIntegerObjectOf(index);
+		return sp;
 	}
 	else
 	{
-		// Note that Integers are always normalized. This means that zero cannot be a LargeInteger, i.e.
-		// the bottom limb can never be zero, and the result of this primitive cannot be zero. 
-		// Also there can be at most one leading zero limb (e.g. for 2**63)
-
-		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
-		LargeInteger* liReceiver = oteReceiver->m_location;
-		MWORD i = oteReceiver->getWordSize() - 1;
-		uint32_t digit = liReceiver->m_digits[i];
-		if (static_cast<int32_t>(digit) >= 0)
-		{
-			if (digit == 0)
-			{
-				digit = liReceiver->m_digits[--i];
-			}
-
-			unsigned long index;
-			_BitScanReverse(&index, digit);
-			index = i * 32 + index + 1;
-			*sp = ObjectMemoryIntegerObjectOf(index);
-			return sp;
-		}
-		else
-			// Negative, undefined
-			return primitiveFailure(_PrimitiveFailureCode::InvalidOperation);		// Negative receiver
+		return primitiveFailure(_PrimitiveFailureCode::NotSupported);		// Negative receiver
 	}
 }
 
@@ -303,7 +192,7 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Unhandled argument type
 	}
 	else
 	{
@@ -394,7 +283,7 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);	// Unhandled argument type
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Unhandled argument type
 	}
 	else
 	{
@@ -456,7 +345,7 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 	else
 	{
@@ -512,10 +401,10 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 				return sp - 1;
 			}
 			else
-				return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);		// FP divide by zero
+				return primitiveFailure(_PrimitiveFailureCode::FloatDivideByZero);		// FP divide by zero
 		}
 		else
-			return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Unhandled argument type
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);		// Unhandled argument type
 	}
 	else
 	{
@@ -547,7 +436,7 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, unsigned)
 		}
 	}
 
-	return primitiveFailure(_PrimitiveFailureCode::Inexact);		// Does not divide exactly
+	return primitiveFailure(_PrimitiveFailureCode::Unsuccessful);		// Does not divide exactly
 }
 
 Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, unsigned)
@@ -569,5 +458,30 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, uns
 		return sp;
 	}
 	else
-		return primitiveFailure(_PrimitiveFailureCode::ValueOutOfRange);
+		return primitiveFailure(_PrimitiveFailureCode::Failed);
+}
+
+Oop* __fastcall Interpreter::primitiveSmallIntegerAt(Oop* const sp, unsigned)
+{
+	Oop oopIndex = *sp;
+	if (ObjectMemoryIsIntegerObject(oopIndex))
+	{
+		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex);
+
+		SMALLINTEGER value = abs(ObjectMemoryIntegerValueOf(*(sp - 1)));
+		if (index > 0 && index <= 4)
+		{
+			uint8_t byte = value >> (index - 1) * 8;
+			*(sp - 1) = ObjectMemoryIntegerObjectOf(byte);
+			return sp - 1;
+		}
+		else
+		{
+			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
+		}
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
 }

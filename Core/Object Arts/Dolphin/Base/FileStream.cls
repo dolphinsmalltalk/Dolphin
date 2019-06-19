@@ -49,9 +49,10 @@ basicNext
 	It may not necessarily be a full code point unless the encoding is fixed width (i.e. #ansi, or #utf32)."
 
 	"Primitive failure reasons:
-		0 -	The receivers index or readLimit are not SmallInteger values
-		2 -	The next index is beyond the readLimit.
-		3 -	The next index is off the end of the stream buffer."
+		AssertionFailure	- The receivers index or readLimit are not SmallInteger values
+		OutOfBounds	- The next index is beyond the readLimit.
+		OutOfBounds	- The next index is off the end of the stream buffer.
+		NotSupported	- The buffer is not a supported type (i.e. ByteArray or String)."
 
 	<primitive: 221>
 	^self atEnd

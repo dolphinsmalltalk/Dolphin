@@ -33,7 +33,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
 	const MWORD arrayArgumentCount = argumentArray->pointersSize();
 	if (arrayArgumentCount != blockArgumentCount)
@@ -132,7 +132,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 
 	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(*(sp - (argCount-1)));
 	if (ObjectMemoryIsIntegerObject(selectorToPerform))
-		return primitiveFailure(_PrimitiveFailureCode::InvalidSelector);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	m_oopMessageSelector = selectorToPerform;
 	Oop newReceiver = *(sp - argCount);
 
@@ -189,7 +189,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
 	
 	// N.B. We're using a large stack, so don't bother checking for overflow
 	//		(standard stack overflow mechanism should catch it)
@@ -206,7 +206,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 
 	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(*(sp-1));
 	if (ObjectMemoryIsIntegerObject(selectorToPerform))
-		return primitiveFailure(_PrimitiveFailureCode::InvalidSelector);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
 	m_oopMessageSelector = selectorToPerform;	// Get selector from stack
 	// Don't need to count down the stack ref.
@@ -267,7 +267,7 @@ Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
 {
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Arguments not an Array
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);		// Arguments not an Array
 	Array* arguments = oteArg->m_location;
 	Oop receiverPointer = *(sp - 1);
 	MethodOTE* oteMethod = reinterpret_cast<MethodOTE*>(*(sp - 2));
@@ -275,7 +275,7 @@ Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
 
 	CompiledMethod* method = oteMethod->m_location;
 	if (!ObjectMemory::isKindOf(receiverPointer, method->m_methodClass))
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);		// Wrong class of receiver
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);		// Wrong class of receiver
 
 	const unsigned argCount = oteArg->pointersSize();
 	const unsigned methodArgCount = method->m_header.argumentCount;

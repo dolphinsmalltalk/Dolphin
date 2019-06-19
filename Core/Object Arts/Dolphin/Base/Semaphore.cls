@@ -96,11 +96,10 @@ initialize
 !
 
 primSetSignals: pulse
-	"Private - Set the excess signal count of the receiver to the argument, anInteger,
-	starting the first Waiting process, if any.
+	"Private - Set the excess signal count of the receiver to the argument, anInteger, starting the first Waiting process, if any.
 
 	Primitive failure reasons:
-		0 -	pulse is not a SmallInteger."
+		InvalidParameter1	- pulse is not a SmallInteger."
 
 	<primitive: 99>
 	^self primitiveFailed: _failureCode!
@@ -198,10 +197,9 @@ wait: timeout ret: returnValueHolder
 	Semaphore>>critical:, for example, as otherwise it is not possible to reliably determine in unwind handling whether the Semaphore was acquitrf or not - one can't rely on a normal return value, because the process may not yet have proceeded far enough to assign it back into a temporary in the calling context.
 
 	Primitive failure reasons:
-		NonIntegerIndex		- Timeout is not a SmallInteger
-		NotImplemented		- anInteger is not either INFINITE (-1) or 0.
-		InvalidOperation		- receiver is inactive (already waiting on a list)
-		BadValueType		- returnValueHolder is not of an appropriate shape to hold the return value (it must be a pointer object with at least one slot, e.g. a one element Array)"
+		InvalidParameter1	- Timeout is not a SmallInteger
+		NotSupported		- anInteger is not either INFINITE (-1) or 0.
+		InvalidParameter2	- returnValueHolder is not of an appropriate shape to hold the return value (it must be a pointer object with at least one slot, e.g. a one element Array)"
 
 	<primitive: 86>
 	^self primitiveFailed: _failureCode! !

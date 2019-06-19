@@ -258,11 +258,11 @@ basicNew
 	"Private - As #new, but must not be overridden by subclasses."
 
 	"Primitive failure reasons:
-		NotFixed		- The receiver is an indexable class, and requires a size.
-		NonInstantiable	- The receiver class is non-instantiable (abstract)."
+		ObjectTypeMismatch	- The receiver is an indexable class, and requires a size.
+		NonInstantiable		- The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
-	_failureCode == _PrimitiveFailureCode.NotFixed ifTrue: [^self basicNew: 0].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self basicNew: 0].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
@@ -270,7 +270,7 @@ basicNew: aSmallInteger
 	"Private - As #new:, but must not be overridden by subclasses."
 
 	<primitive: 71>
-	_failureCode == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
@@ -278,13 +278,12 @@ basicNewFixed: aSmallInteger
 	"Private - As #newFixed:, but must not be overridden by subclasses."
 	
 	"Primitive failure reasons:
-		NonIntegerIndex		- the argument is not a <SmallInteger>.
-		IndexOutOfRange	- the argument is negative
+		InvalidParameter1	- the argument is not a positive <SmallInteger>.
 		NonInstantiable		- the receiver is non-instantiable (abstract).
-		NotBytes			- the receiver's is not an indexable byte class."
+		ObjectTypeMismatch	- the receiver is not an indexable byte class."
 
 	<primitive: 76>
-	_failureCode == _PrimitiveFailureCode.NotBytes ifTrue: [^self errorNotPinnable].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self errorNotPinnable].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
@@ -645,11 +644,11 @@ new
 			-> Object class -> Class -> ClassDescription -> Behavior"
 
 	"Primitive failure reasons:
-		NotFixed		- The receiver is an indexable class, and requires a size.
-		NonInstantiable	- The receiver class is non-instantiable (abstract)."
+		ObjectTypeMismatch	- The receiver is an indexable class, and requires a size.
+		NonInstantiable		- The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
-	_failureCode == _PrimitiveFailureCode.NotFixed ifTrue: [^self new: 0].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self new: 0].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
@@ -663,12 +662,12 @@ new: aSmallInteger
 			-> Object class -> Class -> ClassDescription -> Behavior"
 
 	"Primitive failure reasons:
-		NonIntegerIndex	- the argument is not a positive <SmallInteger>.
-		NonInstantiable	- the receiver is non-instantiable (abstract).
-		NotIndexable	- the receiver's instances are not indexable."
+		InvalidParameter1	- the argument is not a positive <SmallInteger>.
+		NonInstantiable		- the receiver is non-instantiable (abstract).
+		ObjectTypeMismatch	- the receiver's instances are not indexable."
 
 	<primitive: 71>
-	_failureCode == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 
@@ -678,29 +677,28 @@ new: numSmallInteger max: maxSmallInteger
 	or the arguments are invalid.
 
 	Primitive failure reasons:
-		NonIntegerIndex		- One of the arguments is not a <SmallInteger>
-		IndexOutOfRange	- One of the arguments is negative.
-		NotIndexable		- The receiver is not an indexable type
+		InvalidParameter1	- numSmallInteger is not a positive SmallInteger
+		InvalidParameter2	- maxSmallInteger is not a positive SmallInteger
+		ObjectTypeMismatch	- The receiver is not an indexable type
 		NonInstantiable		- The receiver is non-instantiable
-		OutOfMemory		- There was insufficient virtual address space available to reserve the requested maximum size, or insufficient free memory to commit the initial size"
+		NoMemory		- There was insufficient virtual address space available to reserve the requested maximum size, or insufficient free memory to commit the initial size"
 
 	<primitive: 90>
-	_failureCode == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
-	_failureCode == _PrimitiveFailureCode.OutOfMemory ifTrue: [^OutOfMemoryError signal].
+	_failureCode == _PrimitiveFailureCode.NoMemory ifTrue: [^OutOfMemoryError signal].
 	self primitiveFailed: _failureCode!
 
 newFixed: aSmallInteger
 	"Answer an instance of the receiver of size aSmallInteger bytes (this method is only valid for byte objects). The object is allocated from the fixed memory heap and will not move in memory (objects allocated with primitive 71 are free to move to assist garbage collection, whereas those allocated with primitive 76 are in a traditional fixed heap)."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- the argument is not a <SmallInteger>.
-		IndexOutOfRange	- the argument is negative
+		InvalidParameter1	- the argument is not a positive <SmallInteger>.
 		NonInstantiable		- the receiver is non-instantiable (abstract).
-		NotBytes			- the receiver's is not an indexable byte class."
+		ObjecTypeMismatch	- the receiver is not an indexable byte class."
 
 	<primitive: 76>
-	_failureCode == _PrimitiveFailureCode.NotBytes ifTrue: [^self errorNotPinnable].
+	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self errorNotPinnable].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
 

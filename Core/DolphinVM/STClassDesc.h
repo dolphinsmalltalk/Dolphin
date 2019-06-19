@@ -73,7 +73,7 @@ namespace ST
 	{
 	public:
 		__declspec(property(get = getEncoding)) StringEncoding Encoding;
-		StringEncoding getEncoding() const { return static_cast<StringEncoding>(m_instanceSpec.m_extraSpec); }
+		StringEncoding getEncoding() const { return static_cast<StringEncoding>(m_instanceSpec.m_extraSpec & 0x3); }
 	};
 }
 

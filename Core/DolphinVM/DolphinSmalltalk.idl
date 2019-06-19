@@ -17,6 +17,7 @@ typedef signed char		SBYTE;
 typedef unsigned char	BYTE;
 typedef short			SWORD;
 typedef long			SDWORD;
+typedef SDWORD			NTSTATUS;
 
 typedef UINT_PTR	MWORD;
 
@@ -139,43 +140,6 @@ library DolphinVM
 
 	const int MinSmallInteger = -0x40000000;
 	const int MaxSmallInteger = 0x3FFFFFFF;
-
-	typedef enum _PrimitiveFailureCode {
-		Success = -1,
-		NonIntegerIndex,
-		IndexOutOfRange,
-		BadValueType,
-		SystemError,
-		WrongNumberOfArgs,
-		NonInstantiable,
-		NotIndexable,
-		NotPointers,
-		NotBytes,
-		NotFixed,
-		InvalidAddress,
-		ValueOutOfRange,
-		Pending,
-		OutOfMemory,
-		Inexact,
-		InvalidEncoding,
-		NotImplemented,
-		InvalidOperation,
-		InvalidSelector,
-		InvalidReceiver,
-		PendingTermination,
-		LastRunnable,
-		Immutable,
-		UnspecifiedError,
-		FloatDenormalOperand = 0x008D,	// SCODE_CODE(STATUS_FLOAT_DENORMAL_OPERAND)
-		FloatDivideByZero = 0x008E,		// SCODE_CODE(STATUS_FLOAT_DIVIDE_BY_ZERO)
-		FloatInexactReult = 0x008F,		// SCODE_CODE(STATUS_FLOAT_INEXACT_RESULT)
-		FloatInvalidOperation = 0x0090,	// SCODE_CODE(STATUS_FLOAT_INVALID_OPERATION)
-		FloatOverflow = 0x0091,			// SCODE_CODE(STATUS_FLOAT_OVERFLOW)
-		FloatStackCheck = 0x0092,		// SCODE_CODE(STATUS_FLOAT_STACK_CHECK)
-		FloatUnderflow = 0x0093,		// SCODE_CODE(STATUS_FLOAT_UNDERFLOW)
-		IntegerDivideByZero = 0x0094,	// SCODE_CODE(STATUS_INTEGER_DIVIDE_BY_ZERO)
-		IntegerOverflow = 0x0095,		// SCODE_CODE(STATUS_INTEGER_OVERFLOW)
-	} _PrimitiveFailureCode;
 
 	[
 		object,

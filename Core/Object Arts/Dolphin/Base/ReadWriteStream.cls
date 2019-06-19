@@ -17,13 +17,13 @@ basicNext
 	and strings the basic elements are integers. For Arrays, the basic elements are whatever
 	objects are stored in the array."
 
-	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection."
 
-	Primitive failure reasons:
-		0 -	The receivers index or readLimit are not SmallInteger values
-		1 -	The receiver's collection is not a byte object
-		2 -	The receiver is at its end (index >= readLimit).
-		3 -	The next index is beyond the end of the streamed over collection."
+	"Primitive failure reasons:
+		AssertionFailure	- The receivers index or readLimit are not SmallInteger values
+		OutOfBounds	- The next index is beyond the readLimit.
+		OutOfBounds	- The next index is off the end of the stream buffer.
+		NotSupported	- The buffer is not a supported type (i.e. ByteArray or String)."
 
 	<primitive: 221>
 	^position >= readLimit
@@ -61,15 +61,13 @@ isReadable
 	^true!
 
 next
-	"Answer the next object accessible by the receiver. The primitive implementation works for Strings
-	and Arrays only, and will otherwise fail if the receiver is at its end, or the index is outside
-	the bounds of the collection. Duplicate the ReadStream method as we're not a subclass.
+	"Answer the next object accessible by the receiver. The primitive implementation works for Strings and Arrays only, and will otherwise fail if the receiver is at its end, or the index is outside the bounds of the collection. Duplicate the ReadStream method as we're not a subclass."
 
-	Primitive failure reasons:
-		0 -	The receivers index or readLimit are not SmallInteger values
-		1 -	The receiver's collection is not an Array, String or ByteArray.
-		2 -	The receiver is at its end (index >= readLimit).
-		3 -	The next index is beyond the end of the streamed over collection."
+	"Primitive failure reasons:
+		AssertionFailure	- The receivers index or readLimit are not SmallInteger values
+		OutOfBounds	- The next index is beyond the readLimit.
+		OutOfBounds	- The next index is off the end of the stream buffer.
+		NotSupported	- The buffer is not a supported type (i.e. Array, ByteArray or String)."
 
 	<primitive: 65>
 	^position >= readLimit ifTrue: [self errorEndOfStream] ifFalse: [collection decodeNextFrom: self]!

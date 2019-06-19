@@ -125,6 +125,7 @@ void ObjectMemory::deallocate(OTE* ote)
 
 		default:
 			ASSERT(false);
+			__assume(false);
 	}
 }
 

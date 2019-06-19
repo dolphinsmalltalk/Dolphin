@@ -474,8 +474,8 @@ signalTimerAfter: anInteger
 	is signalled immediately. If anInteger < 0, then the current timer (if any) is cancelled.
 
 	Primitive failure results:
-		NonIntegerIndex	- anInteger is not a SmallInteger
-		SystemError	- OS refused to set timer (try KernelLibrary>>getLastError)"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		?				- OS refused to set timer. Code will be a packed HRESULT for the relevant Win32 error"
 
 	<primitive: 100>
 	^self primitiveFailed: _failureCode!

@@ -67,8 +67,8 @@ at: anInteger put: anObject
 	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- index is not a SmallInteger
-		IndexOutOfRange	- index out of bounds (not in the range 1..receiver's indexable size)"
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 176>
 	^self
@@ -81,8 +81,8 @@ basicAt: anInteger put: anObject
 	MUST not be reimplemented (except by classes whose instances have special representations such as SmallInteger)."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- index is not a SmallInteger
-		IndexOutOfRange	- index out of bounds (not in the range 1..receiver's indexable size)"
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 176>
 	^self
@@ -199,8 +199,7 @@ id
 	^self yourAddress bitShift: -16!
 
 indexOfSP: anInteger
-	"Private - Answer the index into the receiver of the VM stack pointer value, anInteger
-	(which is a pointer, bitshifted right one position, although this is an implementation
+	"Private - Answer the index into the receiver of the VM stack pointer value, anInteger (which is a pointer, bitshifted right one position, although this is an implementation
 	detail which may be changed)."
 
 	<primitive: 175>
@@ -323,8 +322,9 @@ primTerminate
 
 	"Primitive Failure Reasons:
 
-	InvalidOperation	- The process is suspended (processes can only be terminated from within their own running context)
-	LastRunning	- The receiver is the last running process, so it cannot be terminated until another process has been started (an Idle Panic interrupt will also be generated). Assuming correct recovery after the idle panic, a second attempt at termination should succeed."
+		AlreadyComplete	- The process is suspended (processes can only be terminated from within their own running context)
+		ThreadIsTerminating	- The process is already on the pending terminations list (i.e. waiting for its associated OS thread to terminate)
+		Retry				- The receiver is the last running process, so it cannot be terminated until another process has been started (an Idle Panic interrupt will also be generated). Assuming correct recovery after the idle panic, a second attempt at termination should succeed."
 
 	"Implementation Note: This primitive is approximately equivalent to:
 
@@ -339,9 +339,10 @@ primTerminate
 	resources, than the alternative of dedicating another process to this task."
 
 	<primitive: 91>
-	^_failureCode == _PrimitiveFailureCode.LastRunnable
-		ifTrue: [false	"Please try again"]
-		ifFalse: [self primitiveFailed: _failureCode]!
+	^_failureCode == _PrimitiveFailureCode.ThreadIsTerminating or: 
+			[_failureCode == _PrimitiveFailureCode.Retry
+				ifTrue: [false	"Please try again"]
+				ifFalse: [self primitiveFailed: _failureCode]]!
 
 printOn: aStream
 	"Append a short debug description of the receiver to aStream."
@@ -372,13 +373,14 @@ priority: anInteger
 	the active process, then the active process will be preempted.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	anInteger is not in the range of permissible priorities (1..highest priority)."
+		InvalidParameter1 -	anInteger is not a SmallInteger.
+		IntegerOutOfRange -	anInteger is not in the range of permissible priorities (1..highest priority)."
 
 	<primitive: 92>
-	^_failureCode < 2
-		ifTrue: [self error: ('Invalid Process priority <1p>' expandMacrosWith: anInteger)]
-		ifFalse: [self primitiveFailed: _failureCode]!
+	^(_failureCode == _PrimitiveFailureCode.InvalidParameter1
+		or: [_failureCode == _PrimitiveFailureCode.IntegerOutOfRange])
+			ifTrue: [self error: ('Invalid Process priority <1p>' expandMacrosWith: anInteger)]
+			ifFalse: [self primitiveFailed: _failureCode]!
 
 queueInterrupt: anInteger
 	"Queue an interrupt with the specified number for the receiver (which can be in any resumable state)
@@ -391,8 +393,8 @@ queueInterrupt: anInteger with: anObject
 	The argument is passed to the interrupted process and can be of any type as necessary.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	the receiver is dead (i.e. not runnable)."
+		InvalidParameter1 	- anInteger is not a SmallInteger.
+		IllegalStateChange	- the receiver is dead (i.e. not runnable)."
 
 	<primitive: 98>
 	^self primitiveFailed: _failureCode!
@@ -405,37 +407,23 @@ resetFloatingPoint
 					| CRTConstants._MCW_RC)!
 
 resume
-	"Change the state of the receiver from Suspended to Ready (by placing
-	it at the end of the Processor's queue for the receiver's priority).
-	Fail if the receiver is already waiting in a queue (in a Semaphore 
-	or the Processor). See #resume: for further details (sending this message
-	is equivalent to sending #resume: with nil as the argument)."
+	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."
 
 	<primitive: 87>
 	^self primitiveFailed: _failureCode!
 
 resume: suspendingListOrNil
-	"Change the state of the receiver from Suspended to Ready/Waiting 
-	by placing it at the end of the Processor's queue for the receiver's priority
-	if suspendingListOrNil is nil, otherwise returning it to the queue associated
-	with suspendingListOrNil. Fail if the receiver is already waiting in a queue 
-	(in a Semaphore or the Processor) - i.e. it is only appropriate to send this message to
-	previously #suspend'd Processes, it is not the means by which to start
-	currently Waiting or Ready processes (which have to wait either for the Semaphore
-	on which they are Waiting to be signalled, or their turn to run after
-	higher priority processes, and in a round robin fashion with respect to
-	Processes of the same priority if they are Ready to run).
+	"Change the state of the receiver from Suspended to Ready/Waiting by placing it at the end of the Processor's queue for the receiver's priority if suspendingListOrNil is nil, otherwise returning it to the queue associated with suspendingListOrNil. Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor) - i.e. it is only appropriate to send this message to previously #suspend'd Processes, it is not the means by which to start currently Waiting or Ready processes (which have to wait either for the Semaphore on which they are Waiting to be signalled, or their turn to run after higher priority processes, and in a round robin fashion with respect to Processes of the same priority if they are Ready to run)."
 
-	Primitive failure reasons:
-		0 -	the receiver is not suspended on a scheduler or semaphore list.
-		1 - 	the receiver has been terminated (or not properly initialized)."
+	"Primitive failure reasons:
+		IllegalStateChange 	- the receiver is not suspended on a scheduler or semaphore list.
+		AssertionFailure		- the receiver has been terminated (or not properly initialized)."
 
 	<primitive: 87>
 	^self primitiveFailed: _failureCode!
 
 resumeUnconditionally
-	"Change the state of the receiver to Ready to run regardless of its current
-	state (unless terminated)."
+	"Change the state of the receiver to Ready to run regardless of its current state (unless terminated)."
 
 	<primitive: 87>
 	myList isNil ifTrue: [^self primitiveFailed: _failureCode]!
@@ -560,34 +548,20 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler saveObject: self as: nil.!
 
 suspend
-	"Transition the receiver from Running (if active), Waiting (if waiting on a Semaphore) 
-	or Ready (if waiting to be scheduled by the Processor) states to the Suspended state 
-	(i.e. not runnable). If the receiver is the activeProcess, suspend it and schedule another, 
-	otherwise remove the receiver from the list of Ready processes in the Processor, or the 
-	list of Waiting processes in a Semaphore, and nil out its suspending list backpointer. 
-	The receiver may be transitioned back to the Ready state at any time by sending it #resume 
-	(but remember that resuming a Process that was waiting on a Semaphore when it was suspended 
-	may upset process synchronisation because it will not return to the Semaphores waiting list).
-	Report an error if the receiver is already Suspended (which is recognised by a null backpointer, 
-	as this indicates that the process is not waiting in a list).
+	"Transition the receiver from Running (if active), Waiting (if waiting on a Semaphore) or Ready (if waiting to be scheduled by the Processor) states to the Suspended state (i.e. not runnable). If the receiver is the activeProcess, suspend it and schedule another,  otherwise remove the receiver from the list of Ready processes in the Processor, or the  list of Waiting processes in a Semaphore, and nil out its suspending list backpointer. The receiver may be transitioned back to the Ready state at any time by sending it #resume (but remember that resuming a Process that was waiting on a Semaphore when it was suspended may upset process synchronisation because it will not return to the Semaphores waiting list).
+	Report an error if the receiver is already Suspended (which is recognised by a null backpointer, as this indicates that the process is not waiting in a list).
 
-	Suspended processes have a 'nil' suspending list, are not the active process, and have
-	a non-zero suspendedFrame address (which distinguishes them from terminated processes).
-	If the process is the last runnable process, then answer false, otherwise answer the receiver 
-	(when resumed).
+	Suspended processes have a 'nil' suspending list, are not the active process, and have a non-zero suspendedFrame address (which distinguishes them from terminated processes). If the process is the last runnable process, then answer false, otherwise answer the receiver (when resumed)."
 
-	Primitive failure results:
-		InvalidOperation		- the process is already suspended.
-		LastRunning		- the process is the active process and could not be suspended because it is the only runnable process remaining.
-		PendingTermination	- the process is pending termination
-
-		0 -	the process is already suspended.
-		1 -	the process is the active process and could not be suspended because
-			it is the only runnable process remaining."
+	"Primitive failure results:
+		AlreadyComplete	- the process is already suspended.
+		Retry				- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		ThreadIsTerminating	- the process is pending termination"
 
 	<primitive: 88>
-	^_failureCode == _PrimitiveFailureCode.LastRunnable
-		ifTrue: [false] ifFalse: [self primitiveFailed: _failureCode]!
+	^_failureCode == _PrimitiveFailureCode.Retry
+		ifTrue: [false]
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 suspendedFrame
 	"Private - Answer a stack frame for the receiver's suspended context, nil if the receiver is dead."
@@ -613,17 +587,16 @@ suspendUnconditionally
 	Answers the receiver.
 
 	Primitive failure results:
-		InvalidOperation		- the process is already suspended.
-		LastRunning		- the process is the active process and could not be suspended because it is the only runnable process remaining.
-		PendingTermination	- the process is pending termination
+		Completed			- the process is already suspended.
+		Retry				- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		ThreadIsTerminating	- the process is pending termination
 
-	The first two failure codes are ignored. Any other failure code is unexpected, and will result in 
-	normal failure handling."
+	The Completed and Retry failure codes are ignored. Any other failure code is unexpected, and will result in an exception being raised."
 
 	<primitive: 88>
-	^_failureCode == _PrimitiveFailureCode.LastRunnable
+	^_failureCode == _PrimitiveFailureCode.Retry
 		ifTrue: [false]
-		ifFalse: [_failureCode == _PrimitiveFailureCode.InvalidOperation ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
+		ifFalse: [_failureCode == _PrimitiveFailureCode.Completed ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
 
 terminate
 	"Transition the receiver from its current state to the Terminated state. Once Terminated, 

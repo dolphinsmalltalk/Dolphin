@@ -200,16 +200,15 @@ invalidCall: anInteger
 		-	System error.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| error proc frame descriptor |
-	proc := Processor activeProcess.
-	frame := proc topFrame sender.
-	descriptor := frame method descriptor.
+	| error frame descriptor method |
+	frame := Processor activeProcess topFrame sender.
+	method := frame method.
+	descriptor := method descriptor.
 	anInteger < 0
 		ifTrue: 
-			[| retType |
-			retType := descriptor retType.
-			retType == ExtCallArgTypes.ExtCallArgHRESULT ifTrue: [^HRESULTError signalFailureCode: anInteger].
-			retType == ExtCallArgTypes.ExtCallArgNTSTATUS ifTrue: [^Win32Error signalFailureCode: anInteger]]
+			[^descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+				ifTrue: [HRESULTError signalFailureCode: (anInteger bitOr: HRESULT.FACILITY_NT_BIT)]
+				ifFalse: [HRESULTError signalFailureCode: anInteger]]
 		ifFalse: 
 			[anInteger >= 16r10000
 				ifTrue: 
@@ -220,16 +219,7 @@ invalidCall: anInteger
 					self invalidArgErrorClass
 						invalidArgument: arg
 						got: (frame arguments at: arg)
-						expected: (descriptor argumentTypes at: i)]
-				ifFalse: 
-					[anInteger == _PrimitiveFailureCode.InvalidReceiver ifTrue: [^self error: 'invalid receiver'].
-					anInteger == _PrimitiveFailureCode.SystemError
-						ifTrue: 
-							["Function name not found in the DLL, i.e. failure of GetProcAddress().
-					Often caused by omitting the A (for ASCII) or W (for Wide = Unicode) 
-					function name suffix. Note that this may be required even if the function
-					has no string arguments."
-							^Win32Error signalWith: ERROR_PROC_NOT_FOUND]]].
+						expected: (descriptor argumentTypes at: i)]].
 
 	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
 	it must have been some system or unknown error."
@@ -291,7 +281,7 @@ systemError
 systemError: anInteger
 	"Generate an error for the host system error, anInteger"
 
-	^HRESULTError signalWith: anInteger!
+	^Win32Error signalWith: anInteger!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver.

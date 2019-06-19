@@ -17,6 +17,7 @@
 #include "STBehavior.h"
 #include "STMemoryManager.h"
 #include "ImageHeader.h"
+#include "PrimitiveFailureCode.h"
 
 using namespace ST;
 
@@ -610,7 +611,7 @@ inline void ObjectMemory::countDown(Oop rootObjectPointer)
 	extern bool alwaysReconcileOnAdd;
 #endif
 
-inline void __fastcall ObjectMemory::AddToZct(Oop oop)
+__forceinline void __fastcall ObjectMemory::AddToZct(Oop oop)
 {
 	if (!ObjectMemoryIsIntegerObject(oop))
 	{
@@ -1117,10 +1118,16 @@ inline size_t ObjectMemory::GetBytesElementSize(BytesOTE* ote)
 	{
 		switch (reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding)
 		{
+		case StringEncoding::Ansi:
+		case StringEncoding::Utf8:
+			return sizeof(uint8_t);
+
 		case StringEncoding::Utf16:
 			return sizeof(uint16_t);
 		case StringEncoding::Utf32:
 			return sizeof(uint32_t);
+		default:
+			__assume(false);
 		}
 	}
 	return sizeof(uint8_t);

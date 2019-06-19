@@ -338,8 +338,8 @@ wordAtOffset: anInteger
 	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds"
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds"
 
 	<primitive: 124>
 	| answer |
@@ -355,10 +355,10 @@ wordAtOffset: anInteger put: anObject
 	raise a 'cannot hold' error.
 
 	Primitive failure reasons:
-		NonIntegerIndex		- anInteger is not a SmallInteger
-		IndexOutOfRange 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(WORD)).
-		BadValueType		- anObject is not a SmallInteger
-		ValueOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds	 	- anInteger is out of bounds (not in the range 1..receiver's size - sizeof(WORD)).
+		InvalidParameter2	- anObject is not a SmallInteger
+		IntegerOutOfRange 	- anObject is not in the range 0..65535 (i.e. out of unsigned 16-bit range)."
 
 	<primitive: 125>
 	^self primitiveFailed: _failureCode! !

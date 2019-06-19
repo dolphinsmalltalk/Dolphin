@@ -32,7 +32,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 {
 	Oop arg = *(sp-3);
 	if (ObjectMemoryIsIntegerObject(arg))
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
 	OTE* oteArg = reinterpret_cast<OTE*>(arg);
 	const wchar_t* szFileName;
@@ -42,7 +42,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 	}
 	else if (!oteArg->isNullTerminated())
 	{
-		return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 
 	Utf16StringBuf buf;
@@ -60,8 +60,12 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 	case StringEncoding::Utf16:
 		szFileName = (const wchar_t*)reinterpret_cast<Utf16StringOTE*>(oteArg)->m_location->m_characters;
 		break;
+	case StringEncoding::Utf32:
+		return primitiveFailure(_PrimitiveFailureCode::NotSupported);
+
 	default:
-		return primitiveFailure(_PrimitiveFailureCode::InvalidEncoding);
+		__assume(false);
+		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 	}
 
 	bool bBackup = reinterpret_cast<OTE*>(*(sp-2)) == Pointers.True;
@@ -97,14 +101,14 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 	TRACESTREAM<< L"Time to save image: " << (timeEnd - timeStart)<< L" mS" << std::endl;
 #endif
 
-	return saveResult == _PrimitiveFailureCode::Success ? primitiveSuccess(4) : primitiveFailure(saveResult);
+	return saveResult == _PrimitiveFailureCode::NoError ? primitiveSuccess(4) : primitiveFailure(saveResult);
 }
 
 #elif defined(TO_GO)
 
 Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const, unsigned)
 {
-	return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+	return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 }
 
 #endif

@@ -28,8 +28,8 @@ atEnd
 	Smalltalk code for other types of collection.
 
 	Primitive failure reasons: 
-		0 - The receivers position or readLimit are not SmallInteger values 
-		1 - The receiver's collection is not an Array, String or ByteArray."
+		AssertionFailure	- The receivers position or readLimit are not SmallInteger values 
+		NotSupported	- The receiver's collection is not an Array, String or ByteArray."
 
 	<primitive: 67>
 	^position >= readLimit!

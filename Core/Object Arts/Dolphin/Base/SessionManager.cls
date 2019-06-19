@@ -832,11 +832,10 @@ primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
 	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
 
 	Primitive failure codes:
-		0	- fileName not a String
-		1	- Not used
-		2	- Unable to open image file
-		3	- I/O Error writing image file (try KernelLibrary>>getLastError).
-		4	- Insufficient max objects for current image size"
+		InvalidParameter1	- fileName not a String
+		Failed			- Unable to open image file
+		InvalidParameter4	- maxInteger is smaller than the number of objects in the image
+		NoMemory		- maxInteger is too large"
 
 	<primitive: 97>
 	^self error: 'Dolphin was unable to save the image.'!

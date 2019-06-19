@@ -352,6 +352,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 
 		default:
 			ASSERT(false);
+			__assume(false);
 		}
 	}
 

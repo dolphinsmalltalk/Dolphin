@@ -619,8 +619,7 @@ new
 	^self shouldNotImplement!
 
 newCode: anInteger
-	"Private - Answer a new instance of the receiver with the specified code. This should
-	only be used for code points > 128."
+	"Private - Answer a new instance of the receiver with the specified code. This should only be used for code points > 128."
 
 	<primitive: 157>
 	^self basicNew setCode: anInteger!

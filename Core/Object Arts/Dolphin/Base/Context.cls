@@ -15,8 +15,8 @@ at: index
 	As basicAt:, but may be reimplemented."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
 
 	<primitive: 60>
 	^self _primitiveError: _failureCode at: index!
@@ -26,8 +26,8 @@ at: index put: value
 	As basicAt:put: but may be reimplemented."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
 
 	<primitive: 61>
 	^self

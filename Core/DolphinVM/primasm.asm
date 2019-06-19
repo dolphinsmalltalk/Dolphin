@@ -75,7 +75,7 @@ ENDIF
 
 ; We still need to import the C++ primitives that require a thunk to be called from assembler (the ones that change interpreter context)
 IMPORTPRIMITIVE MACRO name
-	extern ?&name&@Interpreter@@CIPAIQAII@Z:near32
+	extern ?&name&@Interpreter@@SIPAIQAII@Z:near32
 ENDM
 
 IMPORTPRIMITIVE primitiveAsyncDLL32Call
@@ -104,7 +104,7 @@ IMPORTPRIMITIVE primitiveOopsLeft
 ; state
 DEFINECONTEXTPRIM MACRO name
 BEGINPRIMITIVE name&Thunk
-	call	?&name&@Interpreter@@CIPAIQAII@Z			;; Transfer control to C++ primitive 
+	call	?&name&@Interpreter@@SIPAIQAII@Z			;; Transfer control to C++ primitive 
 	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_BP, [BASEPOINTER]				;; _SP is always reloaded from EAX after executing a primitive
 	ret
@@ -133,7 +133,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		ecx, [_SP]							; Get as return value suspendingList (may want to restore)
 
 	sar		edx, 1								; Frame offset is a SmallInteger?
-	jnc		localPrimitiveFailureNonInteger		; No - primitive failure 0
+	jnc		localPrimitiveFailureInvalidParameter1	; No - primitive failure 0
 
 	add		edx, [ACTIVEPROCESS]				; Add offset back to active proc. base address to get frame address in edx
 	sub		_SP, OOPSIZE*3						; Pop args
@@ -177,7 +177,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		_BP, [BASEPOINTER]
 	ret
 
-LocalPrimitiveFailure PrimitiveFailureNonInteger
+LocalPrimitiveFailure PrimitiveFailureInvalidParameter1
 
 ENDPRIMITIVE primitiveReturnFromInterrupt
 	
@@ -189,10 +189,9 @@ ALIGNPRIMITIVE
 	push	_BP									; and _BP
 
 	; Load interpreter registers
-	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_SP, [STACKPOINTER]
 	mov		_BP, [BASEPOINTER]
-	call	?primitiveValue@Interpreter@@CIPAIQAII@Z
+	call	?primitiveValue@Interpreter@@SIPAIQAII@Z
 	mov		[STACKPOINTER], eax	
 	pop		_BP									; Restore callers registers
 	mov		[INSTRUCTIONPOINTER], _IP
@@ -291,20 +290,20 @@ BEGINPRIMITIVE primitiveBecome
 	mov		ecx, [_SP]
 	mov		eax, [OBJECTTABLE]
 	test	cl, 1
-	jnz		localPrimitiveFailureBadValueType			; Can't swap SmallIntegers
+	jnz		localPrimitiveFailureInvalidParameter1			; Can't swap SmallIntegers
 	ASSUME	ecx:PTR OTE
 
 	add		eax, FIRSTCHAROFFSET+256*OTENTRYSIZE
 	cmp		ecx, eax
-	jl		localPrimitiveFailureBadValueType
+	jl		localPrimitiveFailureInvalidParameter1
 
 	mov		edx, [_SP-OOPSIZE]
 	test	dl, 1
-	jnz		localPrimitiveFailureBadValueType
+	jnz		localPrimitiveFailureInvalidParameter1
 	ASSUME	edx:PTR OTE
 
 	cmp		edx, eax
-	jl		localPrimitiveFailureBadValueType
+	jl		localPrimitiveFailureInvalidParameter1
 
 	; THIS MUST BE CHANGED IF OTE LAYOUT CHANGED.
 	; Note that we swap the location pointer (obviously), the class pointer (as we
@@ -342,94 +341,9 @@ BEGINPRIMITIVE primitiveBecome
 	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure PrimitiveFailureBadValueType
+LocalPrimitiveFailure PrimitiveFailureInvalidParameter1
 
 ENDPRIMITIVE primitiveBecome
-
-BEGINPRIMITIVE primitiveStructureIsNull
-	mov		ecx, [_SP]								; Access receiver
-	ASSUME	ecx:PTR OTE
-	mov		eax, [oteFalse]
-
-	; Ok, it might still be an object whose first inst var might be an address
-	mov		edx, [ecx].m_location					; Ptr to object now in edx
-	ASSUME	edx:PTR ExternalStructure
-
-	mov		edx, [edx].m_contents					; OK, so lets see if first inst var is the 'address' we seek
-	sar		edx, 1									; First of all, is it a SmallInteger
-	jc		zeroTest								; Yes, test to see if that is zero
-
-	ASSUME	edx:PTR OTE								; No, its an object
-	sal		edx, 1									; so revert to OTE
-	test	[edx].m_flags, MASK m_pointer			; Is it bytes?
-	je		@F
-
-	mov		eax, [oteTrue]
-	cmp		edx, [oteNil]
-	jne		localPrimitiveFailureBadValueType		; Not nil, a SmallInteger, nor a byte object, so invalid
-	jmp		answer									; Answer true (nil is null)
-	
-@@:
-	mov		eax, [edx].m_oteClass					; Get oop of class of bytes into eax
-	ASSUME	eax:PTR OTE
-
-	mov		edx, [edx].m_location					; Get ptr to byte object into edx
-	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
-
-	mov		eax, [eax].m_location					; eax is ptr to class of object
-	ASSUME	eax:PTR Behavior
-
-	test	[eax].m_instanceSpec, MASK m_indirect	; Is it an indirection class?
-	mov		eax, [oteFalse]
-	jz		answer									; No, can't be null then
-
-	ASSUME	edx:PTR ExternalAddress
-	
-	; Otherwise drop through and test the address to see if it is zero
-	mov		edx, [edx].m_pointer					; Preload address value
-
-zeroTest:
-	ASSUME	edx:DWORD								; Integer pointer value
-	ASSUME	ecx:PTR OTE								; Expected to contain pre-loaded "true"
-
-	cmp		edx, 0
-	cmove	eax, [oteTrue]
-
-answer:
-	mov		[_SP], eax
-	mov		eax, _SP								; primitiveSuccess(0)
-	ret
-
-LocalPrimitiveFailure PrimitiveFailureBadValueType
-
-ENDPRIMITIVE primitiveStructureIsNull
-
-BEGINPRIMITIVE primitiveBytesIsNull
-	mov		eax, [_SP]								; Access argument
-	ASSUME	eax:PTR OTE
-	mov		ecx, [oteFalse]							; Load ECX with default answer (false)
-
-	mov		edx, [eax].m_size
-	and		edx, 7fffffffh							; Mask out immutability bit
-	cmp		edx, SIZEOF DWORD						; Must be exactly 4 bytes (excluding any header)
-
-	jne		localPrimitiveFailureValueOutOfRange	; If not 32-bits, fail the primitive
-
-	mov		edx, [eax].m_location					; Ptr to object now in edx
-	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
-
-	mov		eax, _SP								; primitiveSuccess(0)
-
-	.IF (DWORD PTR([edx].m_elements[0]) == 0)
-		sub		ecx, OTENTRYSIZE					; True immediately preceeds False in the OT
-	.ENDIF
-	
-	mov		[_SP], ecx
-	ret
-
-LocalPrimitiveFailure PrimitiveFailureValueOutOfRange
-
-ENDPRIMITIVE primitiveBytesIsNull
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ Primitive Thunks

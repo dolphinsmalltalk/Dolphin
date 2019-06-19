@@ -747,18 +747,14 @@ GetIPOffsetUsing MACRO tempRegister
 	ENDIF
 ENDM
 
-PrimitiveFailureNonInteger EQU 0
-PrimitiveFailureIndexOutOfRange EQU 1
-PrimitiveFailureBadValueType EQU 2
-PrimitiveFailureSystemError EQU 3
-PrimitiveFailureWrongNumberOfArgs EQU 4
-PrimitiveFailureNotIndexable EQU 6
-PrimitiveFailureNotBytes EQU 8
-PrimitiveFailureValueOutOfRange EQU 11
-PrimitiveFailureOverflow EQU 12
-PrimitiveFailureInvalidReceiver EQU 19
+PrimitiveFailureInvalidParameter1 EQU 0680000EFh
+PrimitiveFailureWrongNumberOfArgs EQU 040028CA1h
+PrimitiveFailureAssertionFailure EQU 068000420h
+PrimitiveFailureProcNotFound EQU 04007007Fh
+PrimitiveFailureIntegerOverflow EQU 068000095h
 
 PrimitiveFailureCode MACRO failureCode
+	ASSUME	eax:NOTHING
 	mov		eax, failureCode*2+1			; We now return a SmallInteger failure code
 	ret
 ENDM
@@ -778,21 +774,21 @@ ENDM
 
 PRIMPROC EQU PROC PUBLIC
 
+DECLAREPRIMITIVE MACRO name
+	public ?&name&@Interpreter@@SIPAIQAII@Z
+ENDM
+
 BEGINPRIMITIVE MACRO name
 	; P6 likes branch targets to be aligned, it especially doesn't like them to be split over
 	; more than one cache line
 	ALIGNPRIMITIVE
-	?&name&@Interpreter@@CIPAIQAII@Z PRIMPROC
+	?&name&@Interpreter@@SIPAIQAII@Z PRIMPROC
 	IFDEF PENTER
 		call __penter
 	ENDIF
 ENDM
 
 ENDPRIMITIVE MACRO name
-	?&name&@Interpreter@@CIPAIQAII@Z ENDP
+	?&name&@Interpreter@@SIPAIQAII@Z ENDP
 ENDM
-
-; Entry points for byte code dispatcher (see primasm.asm)
-_primitivesTable EQU ?primitivesTable@Interpreter@@0PAP6IPAIQAII@ZA
-extern _primitivesTable:near32
 

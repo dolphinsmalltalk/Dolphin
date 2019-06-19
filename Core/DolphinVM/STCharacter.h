@@ -31,7 +31,7 @@ namespace ST
 		static CharOTE* NewUnicode(MWORD value);
 
 		__declspec(property(get = getEncoding)) StringEncoding Encoding;
-		StringEncoding getEncoding() const { return static_cast<StringEncoding>(m_code >> 25); }
+		StringEncoding getEncoding() const { return static_cast<StringEncoding>((m_code >> 25) & 0x3); }
 
 		__declspec(property(get = getCodeUnit)) MWORD CodeUnit;
 		MWORD getCodeUnit() const { return ObjectMemoryIntegerValueOf(m_code) & 0xffffff; }

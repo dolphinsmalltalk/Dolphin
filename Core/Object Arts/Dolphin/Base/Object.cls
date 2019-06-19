@@ -80,20 +80,18 @@ _deepenShallowCopy: clone trail: copiesDictionary
 _primitiveError: anInteger at: index
 	"Private - An at: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: index].
-	anInteger == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^self errorSubscriptBounds: index].
-	anInteger == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
+	anInteger == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	^self primitiveFailed: anInteger!
 
 _primitiveError: anInteger at: index put: value
 	"Private - An at:put: operation on the receiver failed. Determine the cause of the error, and raise an appropriate error."
 
-	anInteger == _PrimitiveFailureCode.Immutable ifTrue: [Processor constWriteSignal signalWith: self].
-	anInteger == _PrimitiveFailureCode.NonIntegerIndex ifTrue: [^Error nonIntegerIndex: index].
-	anInteger == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^self errorSubscriptBounds: index].
-	anInteger == _PrimitiveFailureCode.NotIndexable ifTrue: [^Error notIndexable: self].
-	(anInteger == _PrimitiveFailureCode.BadValueType
-		or: [anInteger == _PrimitiveFailureCode.ValueOutOfRange]) ifTrue: [^self errorCantHold: value].
+	anInteger == _PrimitiveFailureCode.AccessViolation ifTrue: [^Processor constWriteSignal signalWith: self].
+	anInteger == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
+	anInteger == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	anInteger == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].
 	^self primitiveFailed: anInteger!
 
 ~~ comparand
@@ -209,8 +207,8 @@ at: index
 	As basicAt:, but may be reimplemented."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 60>
 	^self _primitiveError: _failureCode at: index!
@@ -220,10 +218,10 @@ at: index put: value
 	As basicAt:put: but may be reimplemented."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		BadValueType		- the argument, value, is not of a class which can be stored in the receiver (e.g. its a non-SmallInteger and the receiver is a ByteArray).
-		ValueOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter2	- the argument, value, is not of a class which can be stored in the receiver (e.g. its a non-SmallInteger and the receiver is a ByteArray).
+		IntegerOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
 
 	<primitive: 61>
 	^self
@@ -236,8 +234,8 @@ basicAt: aSmallInteger
 	MUST not be reimplemented (except by classes whose instances have immediate representations such as SmallInteger).
 
 	Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
 	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index). It is not possible to override this message successfully."
 
@@ -249,11 +247,10 @@ basicAt: aSmallInteger put: value
 	MUST not be reimplemented (except by classes whose instances have immediate representations	such as SmallInteger)."
 
 	"Primitive Failure Reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger
-		IndexOutOfRange	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
-		BadValueType		- the argument, value, is not of a class which can be stored in the receiver
-						(e.g. its a non-SmallInteger and the receiver is a ByteArray).
-		ValueOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter2	- the argument, value, is not of a class which can be stored in the receiver (e.g. its a non-SmallInteger and the receiver is a ByteArray).
+		IntegerOutOfRange	- the argument is an integer that is out of range when storing into a byte object"
 
 	"Implementation Note: This message is inlined by the compiler, and is never sent unless directly performed, or unless the inlined code detects an error (such as an out-of-bounds index). It is not possible to override this message successfully."
 
@@ -404,23 +401,14 @@ basicYourAddress
 	^self primitiveFailed: _failureCode!
 
 become: anObject
-	"Swap the instance pointers of the receiver and the argument, anObject. All variables 
-	in the entire system that pointed to the receiver will now point to the argument, and 
-	vice versa.
+	"Swap the instance pointers of the receiver and the argument, anObject. All variables in the entire system that pointed to the receiver will now point to the argument, and vice versa.
 
 	Primitive failure reasons:
-		0	-	receiver or argument an object with an immediate representation (e.g. 
-				a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
+		ObjectTypeMismatch - receiver or argument an object with an immediate representation (e.g. a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
 
-	This method should be used with extreme care, as it has side effects for others referring
-	to the receiver and anObject. In particular never attempt to pass nil, true, false, etc,
-	as the argument, as this will almost certainly cause system failure.
+	This method should be used with extreme care, as it has side effects for others referring to the receiver and anObject. In particular never attempt to pass nil, true, false, etc, as the argument, as this will almost certainly cause system failure.
 
-	N.B. Though Dolphin is faithful to the original Smalltalk-80 specification for 
-	this method, and provides a two way switch as described, this is not universally true 
-	for all Smalltalks, so portable code should assume only a one way switch. To better
-	guarantee portability you should use #swappingBecome: which, hopefully, will start
-	to become prevalent on other platforms."
+	N.B. Though Dolphin is faithful to the original Smalltalk-80 specification for this method, and provides a two way switch as described, this is not universally true for all Smalltalks, so portable code should assume only a one way switch. To better guarantee portability you should use #swappingBecome: which, hopefully, will start to become prevalent on other platforms."
 
 	<primitive: 72>
 	^self primitiveFailed: _failureCode!
@@ -431,17 +419,15 @@ becomeA: aClass
 	SmallIntegers	can be mutated to new byte objects which are always of length 4.
 	
 	Primitive failure reasons:
-		BadValueType		- argument, aClass, is not a Behavior
-		ValueOutOfRange	- receiver's class and aClass are not the same shape.
+		InvalidParameter1	- argument, aClass, is not a Behavior
+		ObjectTypeMismatch	- receiver's class and aClass are not the same shape.
 		
 	Consider carefully before using this method as although it may improve performance, it has potential side effects similar to those of #become:. As a rule of thumb, send #becomeA: only to objects of known ownership (e.g. temporaries). Changing the class of  objects passed as parameters could well confuse the other objects referencing those parameters. 
 
 	It is always safe to change the class of a SmallInteger, since a new object is created of the specified variable byte class to hold the value of the SmallInteger."
 
 	<primitive: 102>
-	^_failureCode == _PrimitiveFailureCode.ValueOutOfRange
-		ifTrue: [self error: 'Incompatible class instance shapes']
-		ifFalse: [self primitiveFailed: _failureCode]!
+	^self primitiveFailed: _failureCode!
 
 becomeAn: aClass
 	"Sigh, just to keep Russ (aka The Grammar Pedant) happy."
@@ -769,23 +755,21 @@ instVarAt: index
 	"Private - Answer a variable in the receiver. The numbering of the variables begins with named instance variables, and corresponds to the order in which the instance variables were defined. Indexed variables have indices following those of the named instance variables."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger.
-		IndexoutOfRange	- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
+		InvalidParameter1	- aSmallInteger is not a SmallInteger.
+		OutOfBounds		- aSmallInteger is out of bounds (not in the range 1..recieiver's size)."
 
 	<primitive: 73>
-	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^(BoundsError new)
-				receiver: self;
-				signalWith: index].
-	_failureCode == _PrimitiveFailureCode.IndexOutOfRange ifTrue: [^Error nonIntegerIndex: index].
+	_failureCode == _PrimitiveFailureCode.OutOfBounds ifTrue: [^self errorSubscriptBounds: index].
+	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
 	^self primitiveFailed: _failureCode!
 
 instVarAt: index put: value
 	"Private - Store the argument, value, into a named variable in the receiver. The numbering of the variables begines with named instance variables, and corresponds to the order in which the instance variables were defined. Indexed variables have indices following those of the named instance variables."
 
 	"Primitive failure reasons:
-		NonIntegerIndex		- aSmallInteger is not a SmallInteger.
-		IndexOutOfRange	- aSmallInteger is out of bounds (not in the range 1..receiver's mutable size)
-		BadValueType		- the argument, value, is a type of object which cannot be stored in the receiver."
+		InvalidParameter1	- aSmallInteger is not a SmallInteger.
+		OutOfBounds		- aSmallInteger is out of bounds (not in the range 1..receiver's mutable size)
+		InvalidParameter2	- the argument, value, is a type of object which cannot be stored in the receiver."
 
 	<primitive: 74>
 	^self
@@ -939,19 +923,13 @@ notNil
 	^true!
 
 oneWayBecome: anObject
-	"Make all references to the receiver be references to the argument (i.e. anObject replaces
-	all uses of the receiver, and the receiver's identity and contents are lost). This is the 
-	only form of #become: available in some Smalltalk systems. Can follow a two
-	way #become: for even more mind boggling fun (to maintain one objects identity, but
-	anothers value).
+	"Make all references to the receiver be references to the argument (i.e. anObject replaces all uses of the receiver, and the receiver's identity and contents are lost). This is the  only form of #become: available in some Smalltalk systems. Can follow a two
+	way #become: for even more mind boggling fun (to maintain one objects identity, but anothers value).
 
 	Primitive failure reasons:
-		0	-	receiver or argument an object with an immediate representation (e.g. 
-				a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
+		ObjectTypeMismatch	- receiver or argument an object with an immediate representation (e.g. a SmallInteger), or either is a 'permanent' objects (nil, true, false, etc).
 
-	This method should be used with care, but is some what less dangerous than #become:,
-	as it does not affect existing users of anObject. Currently the implementation is not
-	as efficient as #become:."
+	This method should be used with care, but is some what less dangerous than #become:, as it does not affect existing users of anObject. Currently the implementation is not as efficient as #become:."
 
 	<primitive: 154>
 	^self primitiveFailed: _failureCode!
@@ -1037,8 +1015,8 @@ perform: selector withArguments: arguments
 	are the elements of the <Array>, arguments. 
 
 	Primitive failure reasons:
-		InvalidSelector		- selector is not a Symbol
-		BadValueType		- arguments is not an Array
+		InvalidParameter1	- selector is not a Symbol
+		InvalidParameter2	- arguments is not an Array
 		WrongNumberOfArgs	- The number of arguments expected with the selector is not the size of the arguments."
 
 	<primitive: 84>
@@ -1060,9 +1038,9 @@ perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor
 	the ExternalLibrary class).
 
 	Primitive Failure reasons:
-		BadValueType	-	anExternalDescriptor is invalid.
-		BadValueType	-	anAddress is not a valid address object (SmallInteger/byte indirection)
-		InvalidSelector	-	the selector, aSymbol, is an immediate object (e.g. a SmallInteger)."
+		InvalidParameter1	- the selector, aSymbol, is an immediate object (e.g. a SmallInteger).
+		InvalidParameter2	- anAddress is not a valid address object (SmallInteger/byte indirection)
+		InvalidParameter3	- anExternalDescriptor is invalid."
 
 	<primitive: 114>
 	^self primitiveFailed: _failureCode!
@@ -1078,14 +1056,9 @@ postCopy
 	^self!
 
 primitiveFailed: anInteger
-	"Generate an error to the effect that a primitive has failed, including the failure code
-	specified by the primitive."
+	"Generate an error to the effect that a primitive has failed, including the failure code specified by the primitive."
 
-	| proc failure |
-	proc := Processor activeProcess.
-	failure := _PrimitiveFailureCode keyAtValue: anInteger ifAbsent: [anInteger].
-	^self error: ('Primitive <1p> failed (<2d>)'
-				expandMacrosWithArguments: {proc topFrame sender method. failure})!
+	^HRESULTError signal: 'Primitive failed' withFailureCode: anInteger!
 
 printOn: target
 	"Append, to the <puttableStream>, target, a string whose characters are a 
@@ -1200,9 +1173,9 @@ resize: anInteger
 	to override it.
 
 	Primitive failure reason:
-		NonIntegerIndex		- anInteger is not a positive SmallInteger
-		NotIndexable		- the receiver is not of an indexable (variable sized) class.
-		InvalidOperation		- the receiver is immutable."
+		InvalidParameter1	- anInteger is not a positive SmallInteger
+		ObjectTypeMismatch	- the receiver is not of an indexable (variable sized) class.
+		AccessViolation		- the receiver is immutable."
 
 	<primitive: 101>
 	| answer |
@@ -1245,8 +1218,8 @@ setSpecialBehavior: anInteger
 	"Note: Using this operations requires knowledge and care to avoid corrupting object state."
 
 	"Primitive failure reasons: 
-		0 - anInteger is not a SmallInteger 
-		1 - the receiver is an immediate object."
+		InvalidParameter1 	- anInteger is not a SmallInteger 
+		ObjectTypeMismatch	- the receiver is an immediate object."
 
 	<primitive: 69>
 	^self primitiveFailed: _failureCode!

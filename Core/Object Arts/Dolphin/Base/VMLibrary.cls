@@ -459,9 +459,9 @@ primRegistryAt: anInteger put: anObject
 	information it caches.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of the bounds of the registry
-		2 -	anObject is not of the appropriate class for the object being registered."
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of the bounds of the registry
+		InvalidParameter2	- anObject is not of the appropriate class for the object being registered."
 
 	<primitive: 93>
 	^self primitiveFailed: _failureCode!

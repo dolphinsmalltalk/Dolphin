@@ -25,6 +25,7 @@ Win32Errors at: 'ERROR_INVALID_HANDLE' put: 16r6!
 Win32Errors at: 'ERROR_INVALID_NAME' put: 16r7B!
 Win32Errors at: 'ERROR_INVALID_PARAMETER' put: 16r57!
 Win32Errors at: 'ERROR_MORE_DATA' put: 16rEA!
+Win32Errors at: 'ERROR_MR_MID_NOT_FOUND' put: 16r13D!
 Win32Errors at: 'ERROR_NO_MORE_FILES' put: 16r12!
 Win32Errors at: 'ERROR_NO_MORE_ITEMS' put: 16r103!
 Win32Errors at: 'ERROR_NOACCESS' put: 16r3E6!

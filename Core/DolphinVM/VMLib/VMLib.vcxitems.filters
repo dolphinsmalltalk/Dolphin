@@ -136,7 +136,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
@@ -146,6 +145,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp">
       <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ExternalBuf.cpp">
+      <Filter>FFI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +282,37 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h">
       <Filter>Smalltalk Objects</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\PrimitiveFailureCode.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STByteArray.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBlockClosure.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBlockInfo.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCollection.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STContext.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\FloatPrim.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\IntPrim.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\LargeIntPrim.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\StrgPrim.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExternalBuf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
@@ -327,9 +363,6 @@
     </MASM>
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm">
       <Filter>Primitives</Filter>
-    </MASM>
-    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalBytes.asm">
-      <Filter>FFI</Filter>
     </MASM>
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm">
       <Filter>FFI</Filter>

@@ -133,12 +133,12 @@ Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, unsigned)
 				return sp - 1;
 			}
 			else
-				return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+				return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 		}
 		else
 			return sp - 1;
 	}
-	return primitiveFailure(_PrimitiveFailureCode::BadValueType);
+	return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -431,7 +431,7 @@ Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, unsigned)
 		}
 	}
 
-	return primitiveFailure(_PrimitiveFailureCode::InvalidReceiver);
+	return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
 #pragma code_seg(GC_SEG)

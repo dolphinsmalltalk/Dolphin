@@ -31,27 +31,29 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 !Float methodsFor!
 
 - aNumber
-	"Answer the result of subtracting the argument, aNumber, from the receiver. The primitive will fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May also raise a floating point exception."
+	"Answer the result of subtracting the argument, aNumber, from the receiver."
+
+	"The primitive will fail if aNumber is not a SmallInteger of Float. May also raise a floating point exception."
 
 	<primitive: 161>
 	^aNumber subtractFromFloat: self!
 
 * aNumber
-	"Answer the result of multiplying the receiver by the argument, aNumber. The primitive will fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May also raise a floating point exception."
+	"Answer the result of multiplying the receiver by the argument, aNumber."
+
+	"The primitive will fail if aNumber is not a SmallInteger of Float. May also raise a floating point exception."
 
 	<primitive: 164>
 	^aNumber multiplyByFloat: self!
 
 / aNumber
-	"Answer the result of dividing the receiver by the argument, aNumber. Raise a <ZeroDivide> exception if the operand is zero. The primitive will fail in two circumstances:
-	1) if aNumber is not a <SmallInteger> or a <Float>
-	2) The operand is zero, and 
-		- the receiver is finite (because if not, division-by-zero will not raise an exception); and
-		- the relevant exceptions are unmasked, but the ZeroDivide that is raised is resumed.
+	"Answer the result of dividing the receiver by the argument, aNumber. Raise a <ZeroDivide> exception if the operand is zero."
 
-	If ZeroDivide is masked, then division by zero will not fail the primitive and will result in a continuation value, either Float.Infinity or Float.NegativeInfinity, for division by 0.0 and -0.0 respectively, except where the receiver is NaN, in which case the result is also NaN.
-		
-	The primitives does not set a failure code."
+
+	"Primitive failure codes:
+		InvalidParameter1	- aNumber is not a <SmallInteger> or a <Float>
+	 
+	If the operand is zero, and the receiver is finite (because if infinite, division-by-zero will not raise an exception); and the relevant exceptions are unmasked, then a ZeroDivide exception will be raised. If the exception is resumed then the primitive will fail and the method will return continuation value of either Float.Infinity or Float.NegativeInfinity, for division by 0.0 and -0.0 respectively, except where the receiver is NaN, in which case the result is also NaN. If ZeroDivide is masked, then division by zero will result in a continuation value direct from the primitive."
 
 	<primitive: 165>
 	^aNumber isZero
@@ -65,13 +67,15 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 			aNumber divideIntoFloat: self]!
 
 + aNumber
-	"Answer the result of adding the argument, aNumber, to the receiver.The primitive will fail if aNumber is not a SmallInteger of Float, but does not set the failure code. May also raise a floating point exception."
+	"Answer the result of adding the argument, aNumber, to the receiver.The primitive will fail if aNumber is not a SmallInteger of Float. May also raise a floating point exception."
 
 	<primitive: 160>
 	^aNumber addToFloat: self!
 
 < aNumber
-	"Answer true if the receiver is less than the argument, aNumber. If the receiver or argument is NaN, then always answer false. This relational operator is implemented as a primitive, and >, <=, and >= are expressed in terms of it. The primitive will fail if aNumber is not a SmallInteger of Float, but does not set the failure code."
+	"Answer true if the receiver is less than the argument, aNumber. If the receiver or argument is NaN, then always answer false. This relational operator is implemented as a primitive, and >, <=, and >= are expressed in terms of it."
+
+	"The primitive will fail if aNumber is not a SmallInteger of Float."
 
 	<primitive: 162>
 	^self isNaN not and: [aNumber greaterThanFloat: self]!
@@ -85,13 +89,17 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 	^(self isNaN or: [aNumber < self]) not!
 
 = anObject
-	"Answer whether the receiver is numerically equivalent to the argument, anObject (e.g. 1 = 1.0 is true). If either receiver or argument are NaN, then answer false. The primitive will fail if anObject is not a SmallInteger or a Float, but does not set the failure code."
+	"Answer whether the receiver is numerically equivalent to the argument, anObject (e.g. 1 = 1.0 is true). If either receiver or argument are NaN, then answer false."
+
+	"The primitive will fail if aNumber is not a SmallInteger of Float."
 
 	<primitive: 47>
 	^anObject understandsArithmetic and: [anObject equalToFloat: self]!
 
 > aNumber
-	"Answer true if the receiver is greater than aNumber. If either receiver or argument are NaN, then answer false. The primitive will fail if aNumber is not a SmallInteger of Float, but does not set the failure code."
+	"Answer true if the receiver is greater than aNumber. If either receiver or argument are NaN, then answer false."
+
+	"The primitive will fail if aNumber is not a SmallInteger of Float."
 
 	<primitive: 45>
 	^aNumber < self!
@@ -379,9 +387,8 @@ arcCos
 	^NaN!
 
 arcSin
-	"Answer a <Float> which is the inverse sine of the receiver in radians. If the receiver is
-	not in the range -1 .. 1 (non-inclusive) then a FloatingPointException will be raised
-	(unless the current FP exception mask includes CRTConstants._EM_INVALID)."
+	"Answer a <Float> which is the inverse sine of the receiver in radians. If the receiver is not in the range -1 .. 1 (non-inclusive) then a FloatingPointException will be raised.
+	If the exception is resumed, or the current FP exception mask includes CRTConstants._EM_INVALID, then return a NaN continuation value."
 
 	<primitive: 196>
 	^NaN!
@@ -723,14 +730,13 @@ ln
 
 log
 	"Answer a <Float> which is the base 10 logarithm of the receiver.
-	May raise an <ArithmeticError>, e.g. if the receiver is negative, although only if ZeroDivide/Invalid FP exceptions are unmasked (which they are by default).
+	May raise an <ArithmeticError>, e.g. if the receiver is negative, although only if ZeroDivide/Invalid FP exceptions are unmasked (which they are by default)."
 
-	Implementation Note: Although we could implement this in terms of #ln, that tends to lead to unfortunate precision errors such as '1000.0 log truncated' evaluating to 2. It is also faster to use the log10() function directly."
+	"Implementation Note: Although we could implement this in terms of #ln, that tends to lead to unfortunate precision errors such as '1000.0 log truncated' evaluating to 2. It is also faster to use the log10() function directly."
 
 	<primitive: 203>
 	"We may get here if ZeroDivide/Invalid FP exceptions are unmasked but the FloatingPointException was continued, in which case answer the same continuation value that one would get with exceptions masked."
-	^self isZero ifTrue: [NegativeInfinity] ifFalse: [NaN]
-!
+	^self isZero ifTrue: [NegativeInfinity] ifFalse: [NaN]!
 
 multiplyByFloat: aFloat
 	"Private - Answer the result of multiplying the known Float, aFloat, by the receiver. 
@@ -881,7 +887,7 @@ qwordAtOffset: anInteger
 
 raisedTo: aNumber
 	"Answer a <Float> which is the receiver raised to the power of the <number> argument.
-	Note: ANSI standard says that it is an error for the receiver to be negative, but I think that is bogus (unless the operand is non-integral). This implementation will,  however, raise an error (a ZeroDivide in fact, but ANSI doesn't specify the precise exception) if the receiver is zero and the argument not strictly positive)."
+	Note: ANSI standard says that it is an error for the receiver to be negative, but I think that is bogus (unless the operand is non-integral). This implementation will, however, raise an error (a ZeroDivide in fact, but ANSI doesn't specify the precise exception) if the receiver is zero and the argument not strictly positive)."
 
 	<primitive: 206>
 	^aNumber isFloat
@@ -973,8 +979,9 @@ tan
 	^self primitiveFailed: _failureCode!
 
 timesTwoPower: aNumber
-	"Answer the receiver times two to the power of the argument, aNumber.
-	The primitive only fails if the argument is not a <SmallInteger> or a <Float>."
+	"Answer the receiver times two to the power of the argument, aNumber."
+
+	"The primitive only fails if the argument is not a <SmallInteger> or a <Float>."
 
 	<primitive: 204>
 	^self * (2.0 raisedToInteger: aNumber asInteger)!
@@ -982,7 +989,7 @@ timesTwoPower: aNumber
 truncated
 	"Answer the <integer> nearest the receiver toward zero. Note that for many large floats the answer may be reported to more digits of precision that the floating point receiver was capable of representing (there are only about 15 digits of precision in a double)."
 
-	"The primitive fails if the receiver is not finite, or more than 64-bits are required to represent its value as an integer. The failure code is not set. Depending on the FP exception mask, may also raise an FP exception."
+	"The primitive fails if the receiver is not finite, or more than 64-bits are required to represent its value as an integer. Depending on the FP exception mask, may also raise an FP exception."
 
 	<primitive: 166>
 	"Implementation Note: Rather than calculate the integer approximation by a series of divisions (as in versions of Dolphin prior to 3.02), a process which was both very slow for large Floats and also prone to error, we use precise #asTrueFraction."
