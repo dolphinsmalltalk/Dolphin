@@ -75,6 +75,12 @@ statusCode
 
 !HRESULTError class methodsFor!
 
+decodePrimitiveFailureCode: anInteger
+	"Private - Answer an <integer> instantiated from the NTSTATUS/HRESULT code packed into a primitive failure code.
+	The VM packs such codes into a SmallInteger primitive failure code by stripping out bit 27, which is not used."
+
+	^((anInteger bitShift: 1) bitAnd: -16r10000000) bitOr: (anInteger bitAnd: 16r7FFFFFF)!
+
 fromHRESULT: anHRESULT
 	^(FacilityClasses at: anHRESULT facilityCode ifAbsent: [self]) new
 		tag: anHRESULT;
@@ -124,7 +130,7 @@ signalCode: statusCode facility: facilityCode
 signalFailureCode: anInteger
 	"Private - Signal an HRESULTError from an HRESULT packed into a primitive failure code."
 
-	^self signalHRESULT: (HRESULT fromPrimitiveFailureCode: anInteger)!
+	^self signalHRESULT: (HRESULT fromInteger: (self decodePrimitiveFailureCode: anInteger))!
 
 signalHRESULT: anHRESULT
 	"Raise a new Error subinstance, with the specified error code, of an appropriate type (depending on the facility of that code)."
@@ -136,6 +142,7 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
+!HRESULTError class categoriesFor: #decodePrimitiveFailureCode:!helpers!private! !
 !HRESULTError class categoriesFor: #fromHRESULT:!instance creation!public! !
 !HRESULTError class categoriesFor: #fromInteger:!instance creation!public! !
 !HRESULTError class categoriesFor: #initialize!development!initializing!private! !

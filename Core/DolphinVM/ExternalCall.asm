@@ -787,6 +787,7 @@ extCallArgSWORD:
 extCallArgINTPTR:
 extCallArgSDWORD:
 extCallArgHRESULT:
+extCallArgNTSTATUS:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1											; Is it a SmallInteger?
@@ -1754,6 +1755,7 @@ extCallRetSWORD:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetHRESULT:
+extCallRetNTSTATUS:
 	test	RESULT, RESULT
 	jge		extCallRetDWORD					; If successful return code, return as DWORD
 
@@ -1761,7 +1763,7 @@ extCallRetHRESULT:
 	ASSERTNEQU %RESULT, <ecx>
 	ASSERTEQU %RESULT, <eax>
 
-	; Bit 27 is not used in a true HRESULT, so we can 
+	; Bit 27 is not used in a true HRESULT, so we can pack the remainder into 31 bits without loss
 	mov		ecx, RESULT
 	and		ecx, 7ffffffh
 	add		ecx, ecx
@@ -2046,7 +2048,7 @@ pushOopTable	DD	OFFSET FLAT:extCallArgVOID			; 0
 	DD	OFFSET FLAT:extCallArgGUID			; 25
 	DD	OFFSET FLAT:extCallArgUINTPTR		; 26
 	DD	OFFSET FLAT:extCallArgINTPTR		; 27
-	DD	OFFSET FLAT:extCallArgReserved		; 28
+	DD	OFFSET FLAT:extCallArgNTSTATUS		; 28
 	DD	OFFSET FLAT:extCallArgReserved		; 29
 	DD	OFFSET FLAT:extCallArgReserved		; 30
 	DD	OFFSET FLAT:extCallArgReserved		; 31
@@ -2111,7 +2113,7 @@ returnOopTable	DD	OFFSET FLAT:extCallRetVOID			; 0
 	DD	OFFSET FLAT:extCallRetGUID			; 25
 	DD	OFFSET FLAT:extCallRetUINTPTR		; 26
 	DD	OFFSET FLAT:extCallRetINTPTR		; 27
-	DD	OFFSET FLAT:extCallRetReserved		; 28
+	DD	OFFSET FLAT:extCallRetNTSTATUS		; 28
 	DD	OFFSET FLAT:extCallRetReserved		; 29
 	DD	OFFSET FLAT:extCallRetReserved		; 30
 	DD	OFFSET FLAT:extCallRetReserved		; 31

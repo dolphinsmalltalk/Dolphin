@@ -2588,6 +2588,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"double", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"float", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"hresult", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
+				{ (LPUTF8)"ntstatus", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"char", DolphinX::ExtCallArgCHAR, (LPUTF8)DolphinX::ExtCallArgLPSTR},
 				{ (LPUTF8)"byte", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
@@ -2614,6 +2615,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"DOUBLE", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"FLOAT", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"HRESULT", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
+				{ (LPUTF8)"NTSTATUS", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"BYTE", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"SBYTE", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"WORD", DolphinX::ExtCallArgWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
@@ -2626,7 +2628,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"GUID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
 				{ (LPUTF8)"IID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
 				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID }
+				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 			};
 
 			answer.range = ThisTokenRange();

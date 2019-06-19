@@ -18,7 +18,7 @@ closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
 		_Inout_	BCRYPT_ALG_HANDLE	hAlgorithm,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptCloseAlgorithmProvider handle dword>
+	<stdcall: ntstatus BCryptCloseAlgorithmProvider handle dword>
 	^self invalidCall: _failureCode!
 
 createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject hashObjectSize: aHashObjectSize secret: aSecret secretSize: aSecretSize flags: aFlags
@@ -33,7 +33,7 @@ createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject has
 		_In_		ULONG				cbSecret,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptCreateHash handle handle* byte* dword byte* dword dword>
+	<stdcall: ntstatus BCryptCreateHash handle handle* byte* dword byte* dword dword>
 	^self invalidCall: _failureCode!
 
 destroyHash: aHashHandle
@@ -42,7 +42,7 @@ destroyHash: aHashHandle
 	NTSTATUS WINAPI BCryptDestroyHash(
 		_Inout_	BCRYPT_HASH_HANDLE	hHash );"
 
-	<stdcall: dword BCryptDestroyHash handle>
+	<stdcall: ntstatus BCryptDestroyHash handle>
 	^self invalidCall: _failureCode!
 
 finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
@@ -54,7 +54,7 @@ finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 		_In_		ULONG				cbOutput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptFinishHash handle byte* dword dword>
+	<stdcall: ntstatus BCryptFinishHash handle byte* dword dword>
 	^self invalidCall: _failureCode!
 
 getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize resultSize: aResultSize flags: aFlags
@@ -68,7 +68,7 @@ getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize
 		_Out_	ULONG			*pcbResult,
 		_In_		ULONG			dwFlags ); "
 
-	<stdcall: dword BCryptGetProperty handle lpwstr byte* dword dword* dword>
+	<stdcall: ntstatus BCryptGetProperty handle lpwstr byte* dword dword* dword>
 	^self invalidCall: _failureCode!
 
 hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
@@ -80,7 +80,7 @@ hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 		_In_		ULONG				cbInput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptHashData handle byte* dword dword>
+	<stdcall: ntstatus BCryptHashData handle byte* dword dword>
 	^self invalidCall: _failureCode!
 
 openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: aFlags
@@ -92,7 +92,7 @@ openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: 
 		_In_		LPCWSTR				pszImplementation,
 		_In_		DWORD				dwFlags );"
 
-	<stdcall: dword BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
+	<stdcall: ntstatus BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
 	^self invalidCall: _failureCode!
 
 shaAlgorithmHandle
@@ -100,75 +100,57 @@ shaAlgorithmHandle
 	Create it, if it was not allocated yet.
 	This handle is never freed, because re-creating it is expensive."
 
-	| status |
 	(shaAlgorithmHandle isNil or: [shaAlgorithmHandle value = 0])
 		ifTrue: 
 			[shaAlgorithmHandle := ExternalHandle new.
-			status := self
-						openAlgorithmProvider: shaAlgorithmHandle
-						id: BCRYPT_SHA1_ALGORITHM
-						implementation: nil
-						flags: 0.
-			(self statusFailed: status)
-				ifTrue: [self error: 'BCrypt>>openAlgorithmProvider failed: ' , (status printStringBase: 16)]].
+			self
+				openAlgorithmProvider: shaAlgorithmHandle
+				id: BCRYPT_SHA1_ALGORITHM
+				implementation: nil
+				flags: 0].
 	^shaAlgorithmHandle!
 
 shaCreate
 	"Creates a SHA context. In BCrypt terms, the context is the hash handle."
 
-	| hashHandle status |
+	| hashHandle |
 	hashHandle := ExternalHandle new.
-	status := self
-				createHash: self shaAlgorithmHandle
-				hashHandle: hashHandle
-				hashObject: nil
-				hashObjectSize: 0
-				secret: 0
-				secretSize: 0
-				flags: 0.
-	(self statusFailed: status)
-		ifTrue: [self error: 'BCrypt>>createHash: failed: ' , (status printStringBase: 16)].
+	self
+		createHash: self shaAlgorithmHandle
+		hashHandle: hashHandle
+		hashObject: nil
+		hashObjectSize: 0
+		secret: 0
+		secretSize: 0
+		flags: 0.
 	^hashHandle!
 
 shaDestroy: aHashHandle
 	"Destroys the argument SHA handle (context)."
 
-	| status |
-	status := self destroyHash: aHashHandle.
-	(self statusFailed: status)
-		ifTrue: [self error: 'BCrypt>>destroyHash failed: ' , (status printStringBase: 16)]!
+	self destroyHash: aHashHandle!
 
 shaGetHash: aHashHandle
 	"Answer the computed hash for the argument SHA handle.
 	 The answer will be a ByteArray of 20 bytes for SHA1"
 
-	| hash status |
+	| hash |
 	hash := ByteArray new: 20.
-	status := self
-				finishHash: aHashHandle
-				output: hash
-				outputSize: hash size
-				flags: 0.
-	(self statusFailed: status)
-		ifTrue: [self error: 'BCrypt>>finishHash failed: ' , (status printStringBase: 16)].
+	self
+		finishHash: aHashHandle
+		output: hash
+		outputSize: hash size
+		flags: 0.
 	^hash!
 
 shaHashBuffer: aHashHandle buffer: buffer
 	"Hash the contents in of ByteArray buffer in the currently open hash context."
 
-	| status |
-	status := self
-				hashData: aHashHandle
-				input: buffer
-				inputSize: buffer size
-				flags: 0.
-	(self statusFailed: status)
-		ifTrue: [self error: 'BCrypt>>hashData failed: ' , (status printStringBase: 16)]!
-
-statusFailed: aStatus
-	"Answer true if the argument NTSTATUS indicates a fail value."
-
-	^ aStatus >= 16r80000000.! !
+	self
+		hashData: aHashHandle
+		input: buffer
+		inputSize: buffer size
+		flags: 0! !
 !BCryptLibrary categoriesFor: #closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #destroyHash:!public!win32 functions-bcrypt library! !
@@ -181,7 +163,6 @@ statusFailed: aStatus
 !BCryptLibrary categoriesFor: #shaDestroy:!hashing!public! !
 !BCryptLibrary categoriesFor: #shaGetHash:!hashing!public! !
 !BCryptLibrary categoriesFor: #shaHashBuffer:buffer:!hashing!public! !
-!BCryptLibrary categoriesFor: #statusFailed:!error handling!hashing!public! !
 
 !BCryptLibrary class methodsFor!
 
