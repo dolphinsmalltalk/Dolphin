@@ -153,7 +153,12 @@ public:
 
 	__forceinline hash_t identityHash()
 	{
-		return m_idHash != 0 ? m_idHash : m_idHash = ObjectMemory::nextIdentityHash();
+		// This needs to be a loop in case nextIdentityHash ever returns zero
+		while (m_idHash == 0)
+		{
+			m_idHash = ObjectMemory::nextIdentityHash();
+		}
+		return m_idHash;
 	}
 
 public:
