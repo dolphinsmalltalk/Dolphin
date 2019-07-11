@@ -627,8 +627,7 @@ __forceinline void ObjectMemory::countUp(Oop objectPointer)
 {
 	if (!isIntegerObject(objectPointer))
 	{
-		OTE* ote = reinterpret_cast<OTE*>(objectPointer);
-		ote->countUp();
+		reinterpret_cast<OTE*>(objectPointer)->countUp();
 	}
 }
 
@@ -636,8 +635,7 @@ inline void ObjectMemory::countDown(Oop rootObjectPointer)
 {
 	if (!isIntegerObject(rootObjectPointer))
 	{
-		OTE* rootOTE = reinterpret_cast<OTE*>(rootObjectPointer);
-		rootOTE->countDown();
+		reinterpret_cast<OTE*>(rootObjectPointer)->countDown();
 	}
 }
 
@@ -873,7 +871,7 @@ inline size_t ObjectMemory::lastStrongPointerOf(const OTE* ote)
 {
 	uint8_t flags = ote->m_ubFlags;
 	return (flags & OTEFlags::PointerMask)
-		? (flags & WeaknessMask) == OTEFlags::WeakMask 
+		? (flags & WeaknessMask)
 				? ObjectHeaderSize + ote->m_oteClass->m_location->m_instanceSpec.m_fixedFields 
 				: ote->getWordSize()
 		: 0;

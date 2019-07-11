@@ -175,7 +175,7 @@ namespace ST
 		ObjectMemory::deallocateByteObject(ote);
 	}
 
-	__forceinline Oop LargeInteger::NormalizeIntermediateResult(LargeIntegerOTE* oteLI)
+	inline Oop LargeInteger::NormalizeIntermediateResult(LargeIntegerOTE* oteLI)
 	{
 		HARDASSERT(!ObjectMemory::IsInZct(reinterpret_cast<OTE*>(oteLI)));
 		Oop oopNormalized = LargeInteger::Normalize(oteLI);
@@ -184,7 +184,7 @@ namespace ST
 		return oopNormalized;
 	}
 
-	__forceinline Oop normalizeIntermediateResult(Oop integerPointer)
+	inline Oop normalizeIntermediateResult(Oop integerPointer)
 	{
 		Oop oopNormalized;
 		if (ObjectMemoryIsIntegerObject(integerPointer))

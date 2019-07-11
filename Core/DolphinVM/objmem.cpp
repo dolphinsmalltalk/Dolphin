@@ -490,7 +490,7 @@ Oop* __fastcall Interpreter::primitiveAllReferences(Oop* const sp, primargcount_
 // objectPointer (which may be a SmallInteger)
 ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool includeWeakRefs)
 {
-	WeaknessMask = includeWeakRefs ? 0 : OTEFlags::WeakMask;
+	WeaknessMask = includeWeakRefs ? 0 : OTEFlags::WeakOrZMask;
 
 	size_t range = m_nOTSize / Interpreter::m_numberOfProcessors;
 	return selectObjects(simple_partitioner(max(range, 16384)), [&](const OTE* ote) {

@@ -45,7 +45,7 @@ extern VMPointers _Pointers;
 	typedef std::map<BehaviorOTE*, int> MAPCLASSOTE2INT;
 #endif
 
-uint8_t ObjectMemory::WeaknessMask = static_cast<uint8_t>(OTEFlags::WeakMask);
+uint8_t ObjectMemory::WeaknessMask = static_cast<uint8_t>(OTEFlags::WeakOrZMask);
 
 void ObjectMemory::ClearGCInfo()
 {
@@ -126,7 +126,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	// and we don't want to pass down to the depths. When we want to turn off
 	// weakness we mask with the free bit, which obviously can't be set on any
 	// live object so the test will always fail
-	WeaknessMask = static_cast<uint8_t>(gcFlags & GCNoWeakness ? 0 : OTEFlags::WeakMask);
+	WeaknessMask = static_cast<uint8_t>(gcFlags & GCNoWeakness ? 0 : OTEFlags::WeakOrZMask);
 
 	// Get the Oop to use for corpses from the interpreter (it's a global)
 	Oop corpse = corpsePointer();

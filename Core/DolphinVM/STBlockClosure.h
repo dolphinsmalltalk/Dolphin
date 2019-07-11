@@ -50,8 +50,6 @@ namespace ST
 		static constexpr size_t FixedSize = ReceiverIndex + 1;
 		static constexpr size_t TempFrameStart = FixedSize;
 
-		static BlockOTE* __fastcall New(size_t copiedValuesCount);
-
 		SmallUinteger initialIP() const
 		{
 			return integerValueOf(m_initialIP);

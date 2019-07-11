@@ -360,7 +360,7 @@ private:
 	static void __fastcall nonLocalReturnValueTo(Oop resultPointer, Oop contextPointer);
 	static void __fastcall invalidReturn(Oop resultPointer);
 
-	static BlockOTE* __fastcall blockCopy(uint32_t ext);
+	static BlockOTE* __stdcall blockCopy(BlockCopyExtension ext);
 
 public:
 	static void __fastcall sendVMInterrupt(VMInterrupts nInterrupt, Oop argPointer);

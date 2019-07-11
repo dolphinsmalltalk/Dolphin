@@ -98,7 +98,7 @@ extern SENDVMINTERRUPT:near32
 FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@SGPAUMethodCacheEntry@1@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
 extern FINDNEWMETHODNOCACHE:near32
 
-BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@ST@@@@I@Z
+BLOCKCOPY EQU ?blockCopy@Interpreter@@CGPAV?$TOTE@VBlockClosure@ST@@@@UBlockCopyExtension@@@Z
 extern BLOCKCOPY:near32											; See bytecde.cpp
 
 INPUTPOLLCOUNTER		EQU		?m_nInputPollCounter@Interpreter@@0JC
@@ -128,8 +128,6 @@ extern NONLOCALRETURN:near32
 
 NEWCONTEXT EQU ?New@Context@ST@@SIPAV?$TOTE@VContext@ST@@@@II@Z
 extern NEWCONTEXT:near32		; See bytecde.cpp
-NEWBLOCK EQU ?New@BlockClosure@ST@@SIPAV?$TOTE@VBlockClosure@ST@@@@I@Z
-extern NEWBLOCK:near32		; See bytecde.cpp
 
 IFDEF _DEBUG
 	extern ?executionTrace@Interpreter@@2HA:DWORD
@@ -3497,10 +3495,10 @@ ENDBYTECODE shortSpecialSendNot
 ; Note that blockCopy uses _IP, but not _SP or _BP
 
 BEGINBYTECODE blockCopy
-	xor		ecx, ecx
 	mov		ecx, DWORD PTR[_IP]						; Load extension into
 	movsx	edx, WORD PTR[_IP+4]					; Load jump offset into EDX
 	add		_IP, 6
+	push	ecx										; Push BlockCopyExtension for call to blockCopy
 	mov		[INSTRUCTIONPOINTER], _IP				; Save down IP (points at start of block byte codes)...
 	mov		[STACKPOINTER], _SP		 				; ...and SP (needed in case any values to copy off stack)
 	add		_IP, edx								; Prepare to jump to first byte code after block

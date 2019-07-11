@@ -38,11 +38,11 @@ inline POBJECT ObjectMemory::allocSmallChunk(size_t chunkSize)
 #endif
 
 	ASSERT(chunkSize <= MaxSmallObjectSize);
-	return chunkSize <= MaxSizeOfPoolObject
-		? chunkSize == 0
-		? &emptyObj
-		: // Use chunk pools, which are fast but can cause memory fragmentation
-		spacePoolForSize(chunkSize).allocate()
+	return chunkSize <= MaxSizeOfPoolObject 
+		? (chunkSize == 0 
+				? &emptyObj
+				: // Use chunk pools, which are fast but can cause memory fragmentation
+					spacePoolForSize(chunkSize).allocate())
 		: static_cast<POBJECT>(__sbh_alloc_block(chunkSize));
 }
 
