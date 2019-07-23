@@ -787,7 +787,7 @@ public:
 private:
 	// Method cache is a hash table with overwrite on collision
 	// If changing method cache size, then must also modify METHODCACHEWORDS in ISTASM.INC!
-	static constexpr size_t MethodCacheSize = 1024;
+	static constexpr size_t MethodCacheSize = 4096;
 	static MethodCacheEntry methodCache[MethodCacheSize];
 
 	static void flushCaches();

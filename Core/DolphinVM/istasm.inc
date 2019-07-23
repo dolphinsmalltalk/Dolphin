@@ -483,7 +483,7 @@ TRUE					EQU		1
 PPROC					EQU		PROC PUBLIC
 MAXCOUNT				EQU		-1
 
-METHODCACHEENTRIES		EQU		1024		; Number of entries in method cache
+METHODCACHEENTRIES		EQU		4096		; Number of entries in method cache
 
 ;; N.B. if the OTE size is changed, then this mask should be adjusted, and also hash algorithm in byteasm.asm
 
@@ -739,6 +739,11 @@ GetIPOffsetUsing MACRO tempRegister
 		mov		tempRegister, [tempRegister]
 		mov		tempRegister, (OTE PTR[tempRegister]).m_location	;; Include the object header
 	.ENDIF
+	IFDEF _DEBUG
+		.IF (_IP < tempRegister)
+			int	3											;; Probably a bug - _IP should always be >= base of method bytecodes
+		.ENDIF
+	ENDIF
 	sub		_IP, tempRegister								;; Convert _IP to offset into object
 ;	IFDEF _DEBUG
 ;		.IF (_IP > 8192)

@@ -476,10 +476,6 @@ MethodCacheEntry STRUCT
 	primAddress				DWORD		?
 MethodCacheEntry ENDS
 
-;ALIGN 16
-;METHODCACHE MethodCacheEntry 1024 DUP (<>,<>,<>,<>)
-;public METHODCACHE
-
 METHODCACHE EQU ?methodCache@Interpreter@@0PAUMethodCacheEntry@1@A
 extern METHODCACHE:MethodCacheEntry
 
@@ -3929,24 +3925,27 @@ BEGINPROCNOALIGN execMethodOfClass
 	mov		[NEWMETHOD], ecx
 	pop		edx										; Restore arg count
 
+IFDEF _DEBUG
 	mov		ecx, [ecx].m_location
-	
+ENDIF
+
 	; At this point edx=argCount, ecx & [NEWMETHOD] = Oop of new method, _SP=[STACKPOINTER]
 	; eax = pointer to func to run
 	
 	; Execute new method, and dispatch the next byte code
 execMethod:
-	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
 	ASSUME	eax:DWORD
 
 	IFDEF _DEBUG
 		push	eax
 		ASSUME	eax:NOTHING
+		ASSUME	ecx:PTR CompiledCodeObj
 		movzx	eax, [ecx].m_header.primitiveIndex
 		inc DWORD PTR[_primitiveCounters+eax*4]
 		pop		eax
 		ASSUME	eax:DWORD
+		ASSUME	ecx:NOTHING
 	ENDIF
 
 	mov		ecx, _SP

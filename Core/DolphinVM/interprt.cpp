@@ -323,7 +323,8 @@ inline void Interpreter::initializeCaches()
 	// You may also need to change the cache hashing/lookup code
 	ASSERT(sizeof(OTE) == 16);
 	ASSERT(sizeof(MethodCacheEntry) == sizeof(OTE));
-	ASSERT(MethodCacheSize == 1024);
+	// Bottom 4 bits of the addresses of method cache entries must be zero
+	ASSERT((reinterpret_cast<uintptr_t>(methodCache) & 0xF) == 0);
 
 	flushCaches();
 }
