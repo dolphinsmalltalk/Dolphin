@@ -71,20 +71,13 @@ public:
 
 	// Object Pointer access
 	static Oop fetchPointerOfObject(size_t fieldIndex, PointersOTE* ote);
-	static void storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer);
 	static void storePointerWithValue(Oop& oopSlot, Oop oopValue);
-	static OTE* storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
-	static Oop storePointerWithValue(Oop& oopSlot, OTE* oteValue);
-	static void nilOutPointer(Oop& objectPointer);
+	static void storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
+	static void storePointerWithValue(Oop& oopSlot, OTE* oteValue);
 	static void nilOutPointer(OTE*& ote);
 
 	// Use these versions to store values which are not themselves ref. counted
-	static Oop storePointerWithUnrefCntdValue(Oop&, Oop);
-	static void __fastcall storePointerOfObjectWithUnrefCntdValue(size_t fieldIndex, PointersOTE* ote, Oop value);
-
-	// Word Access
-	static uintptr_t fetchWordOfObject(size_t fieldIndex, Oop objectPointer);
-	static uintptr_t storeWordOfObjectWithValue(size_t fieldIndex, Oop objectPointer, uintptr_t valueWord);
+	static void storePointerWithUnrefCntdValue(Oop&, Oop);
 
 	// Formerly Private reference count management
 	static void  __fastcall countUp(Oop objectPointer);
@@ -705,25 +698,6 @@ inline Oop ObjectMemory::fetchPointerOfObject(size_t fieldIndex, PointersOTE* ot
 	return ote->m_location->m_fields[fieldIndex];
 }
 
-// SmallIntegers and some special objects are not ref. counted, so this saves a little time
-inline void __fastcall ObjectMemory::storePointerOfObjectWithUnrefCntdValue(size_t fieldIndex, PointersOTE* ote, Oop nonRefCountedPointer)
-{
-	ASSERT(fieldIndex < ote->pointersSize());
-	VariantObject* obj = ote->m_location;
-	countDown(obj->m_fields[fieldIndex]);
-	obj->m_fields[fieldIndex] = nonRefCountedPointer;
-}
-
-inline void ObjectMemory::storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer)
-{
-	ASSERT(fieldIndex < ote->pointersSize());
-	countUp(valuePointer);
-	VariantObject* obj = ote->m_location;
-	Oop oldValue = obj->m_fields[fieldIndex];
-	obj->m_fields[fieldIndex] = valuePointer;
-	countDown(oldValue);
-}
-
 // Useful for overwriting structure members
 inline void ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
 {
@@ -734,26 +708,23 @@ inline void ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
 }
 
 // Useful for overwriting structure members
-inline Oop ObjectMemory::storePointerWithUnrefCntdValue(Oop& oopSlot, Oop oopValue)
+inline void ObjectMemory::storePointerWithUnrefCntdValue(Oop& oopSlot, Oop oopValue)
 {
 	Oop oldValue = oopSlot;
 	oopSlot = oopValue;
 	countDown(oldValue);
-	return oopValue;
 }
 
 // Useful for overwriting structure members
-inline OTE* ObjectMemory::storePointerWithValue(OTE*& oteSlot, OTE* oteValue)
+inline void ObjectMemory::storePointerWithValue(OTE*& oteSlot, OTE* oteValue)
 {
 	oteValue->countUp();			// Increase the reference count on stored object
 	OTE* oteOldValue = oteSlot;
 	oteSlot = oteValue;
 	oteOldValue->countDown();
-	return oteValue;
 }
 
-// Useful for overwriting structure members
-inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
+inline void ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
 {
 	// Sadly compiler refuses to inline the count up code, and macro seems to generate
 	// bad code(!) so inline by hand
@@ -761,36 +732,13 @@ inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
 	Oop oldValue = oopSlot;
 	oopSlot = reinterpret_cast<Oop>(oteValue);
 	countDown(oldValue);
-	return oopSlot;
-}
-
-inline void ObjectMemory::nilOutPointer(Oop& objectPointer)
-{
-	countDown(objectPointer);
-	objectPointer = reinterpret_cast<Oop>(Pointers.Nil);
 }
 
 inline void ObjectMemory::nilOutPointer(OTE*& ote)
 {
-	ote->countDown();
+	OTE* oldValue = ote;
 	ote = reinterpret_cast<OTE*>(Pointers.Nil);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Machine Word Access
-
-inline uintptr_t ObjectMemory::fetchWordOfObject(size_t wordIndex, Oop objectPointer)
-{
-	PointersOTE* ote = reinterpret_cast<PointersOTE*>(objectPointer);
-	VariantObject* obj = ote->m_location;
-	return obj->m_fields[wordIndex];
-}
-
-inline uintptr_t ObjectMemory::storeWordOfObjectWithValue(size_t wordIndex, Oop objectPointer, uintptr_t valueWord)
-{
-	PointersOTE* ote = reinterpret_cast<PointersOTE*>(objectPointer);
-	VariantObject* obj = ote->m_location;
-	return obj->m_fields[wordIndex] = valueWord;
+	oldValue->countDown();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

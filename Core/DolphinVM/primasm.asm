@@ -184,17 +184,18 @@ ENDPRIMITIVE primitiveReturnFromInterrupt
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ALIGNPRIMITIVE
 @callPrimitiveValue@8 PROC
-	push	_SP									; Mustn't destroy for C++ caller
-	push	_IP									; Ditto _IP
-	push	_BP									; and _BP
+	push	_SP
+	push	_IP
+	push	_BP
 
 	; Load interpreter registers
-	mov		_SP, [STACKPOINTER]
 	mov		_BP, [BASEPOINTER]
+	mov		_SP, ecx
+	mov		_IP, [INSTRUCTIONPOINTER]
 	call	?primitiveValue@Interpreter@@SIPAIQAII@Z
 	mov		[STACKPOINTER], eax	
-	pop		_BP									; Restore callers registers
 	mov		[INSTRUCTIONPOINTER], _IP
+	pop		_BP
 	pop		_IP
 	pop		_SP
 	ret
@@ -206,8 +207,8 @@ ALIGNPRIMITIVE
 BEGINPRIMITIVE primitiveValue
 	mov		eax, edx								; Get argument count into EAX
 	neg		edx
-	push	_BP
-	lea		_BP, [_SP+edx*OOPSIZE]
+	push	_BP										; Save base pointer in case we need it (if fail)
+	lea		_BP, [ecx+edx*OOPSIZE]
 	mov		ecx, [_BP]								; Load receiver (hopefully a block, we don't check) into ECX
 
 	CANTBEINTEGEROBJECT<ecx>
@@ -220,7 +221,7 @@ BEGINPRIMITIVE primitiveValue
 	jne		localPrimitiveFailureWrongNumberOfArgs	; No
 	ASSUME	eax:NOTHING								; EAX no longer needed
 
-	pop		eax										; Discard saved _BP which we no longer need
+	pop		eax										; Discard saved ebx which we no longer need
 
 	mov		eax, [edx].m_receiver
 	mov		[_BP], eax								; Overwrite receiving block with block receiver (!)

@@ -251,7 +251,7 @@ Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 // performance of the system (as we've discovered).
 #pragma auto_inline(off)
 
-extern "C" void __fastcall callPrimitiveValue(unsigned, argcount_t numArgs);
+extern "C" void __fastcall callPrimitiveValue(Oop* const sp, argcount_t numArgs);
 
 #ifdef PROFILING
 	size_t contextsCopied = 0;
@@ -714,13 +714,10 @@ void Interpreter::nonLocalReturnValueTo(Oop resultPointer, Oop framePointer)
 				HARDASSERT(ObjectMemory::fetchClassOf(oopReceiver)== Pointers.ClassBlockClosure);
 				// Restore the protected block as the receiver of the #ifCurtailed: message
 				*(bp-1) = oopReceiver;
-				// Zero out the stack slot so no net effect on the ref. count of the protected block
-				*(sp+1) = ZeroPointer;
 
 				// Grab the unwind block and return it to the ifCurtailed: frame as the result
 				Oop unwindBlock = *(sp+2);
 				HARDASSERT(ObjectMemory::fetchClassOf(unwindBlock)== Pointers.ClassBlockClosure);
-				*(sp+2) = ZeroPointer;
 
 				returnValueToCaller(unwindBlock, caller);
 
@@ -733,10 +730,9 @@ void Interpreter::nonLocalReturnValueTo(Oop resultPointer, Oop framePointer)
 				// Push the destination return context
 				SmallUinteger frameIndex = pProcess->indexOfSP(reinterpret_cast<Oop*>(pFrame));
 				*(sp+2) = ObjectMemoryIntegerObjectOf(frameIndex); // pushNoRefCnt(framePointer);
-				m_registers.m_stackPointer = sp+2;
 
 				// Invoke the two arg unwind block
-				callPrimitiveValue(0, 2);
+				callPrimitiveValue(sp+2, 2);
 				return;
 			}
 
