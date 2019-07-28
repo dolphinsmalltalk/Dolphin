@@ -241,16 +241,6 @@ result
 	"Answer a portable symbolic constant describing the button that was pressed by the user
 	to close the receiver."
 
-	NTLibrary isWine
-		ifTrue: 
-			[#wineFix.
-			"Suppressible message boxes under Wine have a bug where they ignore the
-			buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel
-			instead. Here we map the return button ids to the correct values"
-			(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])
-				ifTrue: 
-					[button = IDOK ifTrue: [button := IDYES].
-					button = IDCANCEL ifTrue: [button := IDNO]]].
 	^ButtonMap at: button!
 
 setForeground
@@ -276,18 +266,26 @@ showIndirect
 				instance: hInstance!
 
 showSuppressible
-	"Implementation Note: SHMessageBoxCheck does not seem to suffer from the same bug as the
-	normal message box of re-enabling a disabled owner."
+	"Private - Show a message box that offers the user the option to suppress the prompt in future, in which case the default button is returned (not the user's last choice)."
+
+	"Implementation Note: SHMessageBoxCheck does not seem to suffer from the same bug as the normal message box of re-enabling a disabled owner."
 
 	self assertStylesValid.
-	button := ShlwapiLibrary default 
+	button := ShlwapiLibrary default
 				shMessageBoxCheck: self ownerHandle
 				pszText: self text
 				pszTitle: self caption
 				uType: styleFlags
 				iDefault: (self idOfButtonAt: self defaultButton)
 				pszRegVal: self globallyUniqueId.
-	button == -1 ifTrue: [ShlwapiLibrary default systemError]!
+	button == -1 ifTrue: [ShlwapiLibrary default systemError].
+	NTLibrary isWine ifFalse: [^self].
+	#wineFix.
+	"Suppressible message boxes under Wine have a bug where they ignore the buttonStyles #yesNo and #yesNoCancel and will always answer #ok or #cancel instead. Here we map the return button ids to the correct values"
+	(self buttonStyle == #yesNo or: [self buttonStyle == #yesNoCancel])
+		ifTrue: 
+			[button = IDOK ifTrue: [button := IDYES].
+			button = IDCANCEL ifTrue: [button := IDNO]]!
 
 uniqueId
 	"Answer the unique id that, should the user decide to suppress this message box, will be
@@ -334,7 +332,7 @@ uniqueId: anObject
 !MessageBox categoriesFor: #setForeground!accessing-styles!public! !
 !MessageBox categoriesFor: #setStyle:maskedBy:!accessing-styles!private! !
 !MessageBox categoriesFor: #showIndirect!displaying!private! !
-!MessageBox categoriesFor: #showSuppressible!operations!public! !
+!MessageBox categoriesFor: #showSuppressible!operations!private! !
 !MessageBox categoriesFor: #uniqueId!accessing!public! !
 !MessageBox categoriesFor: #uniqueId:!initializing!public! !
 
