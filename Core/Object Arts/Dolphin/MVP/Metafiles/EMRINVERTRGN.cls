@@ -110,7 +110,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_INVERTRGN with: EMR_PAINTRGN! !
-!EMRINVERTRGN class categoriesFor: #defineFields!initializing!public! !
+!EMRINVERTRGN class categoriesFor: #defineFields!public!template definition! !
 !EMRINVERTRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRINVERTRGN class categoriesFor: #iTypes!constants!public! !
 

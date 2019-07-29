@@ -18,8 +18,7 @@ get_Index: pbstrIndex
 			[out, retval] BSTR* pbstrIndex);"
 
 	<virtual stdcall: hresult 84 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 index
 	"Answer the <bstr> value of the 'Index' property of the receiver."
@@ -43,8 +42,7 @@ put_Index: pbstrIndex
 			[in] BSTR pbstrIndex);"
 
 	<virtual stdcall: hresult 83 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 seek: keyValues
 	"Invoke the Seek() method of the COM object.
@@ -70,8 +68,7 @@ Seek: keyValues SeekOption: seekOption
 			[in, optional, defaultvalue(1)] SeekEnum SeekOption);"
 
 	<virtual stdcall: hresult 82 variant sdword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBRecordset21 categoriesFor: #get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
 !ADODBRecordset21 categoriesFor: #index!**auto generated**!properties!public! !
 !ADODBRecordset21 categoriesFor: #index:!**auto generated**!properties!public! !

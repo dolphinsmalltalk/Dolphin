@@ -17,6 +17,7 @@ typedef signed char		SBYTE;
 typedef unsigned char	BYTE;
 typedef short			SWORD;
 typedef long			SDWORD;
+typedef SDWORD			NTSTATUS;
 
 typedef UINT_PTR	MWORD;
 

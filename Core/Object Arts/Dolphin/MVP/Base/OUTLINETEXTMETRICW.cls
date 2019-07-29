@@ -334,6 +334,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
-!OUTLINETEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!OUTLINETEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
 !OUTLINETEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

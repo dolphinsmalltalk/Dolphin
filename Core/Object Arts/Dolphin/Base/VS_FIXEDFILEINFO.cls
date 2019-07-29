@@ -146,6 +146,6 @@ defineFields
 
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
-!VS_FIXEDFILEINFO class categoriesFor: #defineFields!initializing!public! !
+!VS_FIXEDFILEINFO class categoriesFor: #defineFields!public!template definition! !
 !VS_FIXEDFILEINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

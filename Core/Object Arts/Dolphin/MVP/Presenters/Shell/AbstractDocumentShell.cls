@@ -285,7 +285,7 @@ shortCaption
 	^self hasFilename 
 		ifTrue: 
 			[| stream |
-			stream := String writeStream.
+			stream := String writeStream: 32.
 			stream nextPutAll: (File splitFilenameFrom: self filename).
 			self isModified ifTrue: [stream nextPut: $*].
 			stream contents]
@@ -308,7 +308,7 @@ updateCaption
 	Do this here"
 
 	| stream suffix |
-	stream := String writeStream.
+	stream := String writeStream: 64.
 	stream nextPutAll: (self hasFilename ifTrue: [self filename] ifFalse: ['Untitled']).
 	suffix := self basicCaption.
 	suffix notEmpty 

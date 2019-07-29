@@ -14,6 +14,9 @@ ExternalArrayTest comment: ''!
 arrayClass
 	^self subclassResponsibility!
 
+arrayValueString: eachValue
+	^eachValue printString!
+
 canonicalizeValue: anObject 
 	^self elementToValue: (self elementFromValue: anObject)!
 
@@ -108,7 +111,7 @@ testFromToKeysAndValuesDo
 			array
 				from: 1
 				to: 1
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
 			self assert: pairs asArray equals: expected].
 	#(#(1 2) #(2 2) #(3 2)) do: 
@@ -117,7 +120,7 @@ testFromToKeysAndValuesDo
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
+						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)]]
 				raise: BoundsError].
 	pairs := OrderedCollection new.
 	"Array of two elements"
@@ -127,7 +130,7 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2)) do: 
 			[:each |
@@ -136,7 +139,7 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
 			self assert: pairs asArray equals: expected].
 	#(#(1 3) #(2 3) #(3 3)) do: 
@@ -145,7 +148,7 @@ testFromToKeysAndValuesDo
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
+						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)]]
 				raise: BoundsError].
 	"Array of three elements"
 	pairs := OrderedCollection new.
@@ -155,7 +158,7 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2) #(1 3) #(2 3) #(3 3)) do: 
 			[:each |
@@ -164,7 +167,7 @@ testFromToKeysAndValuesDo
 			array
 				from: each first
 				to: each last
-				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
+				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> (self arrayValueString: eachValue)].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
 			self assert: pairs asArray equals: expected].
 	#(#(1 4) #(2 4) #(3 4) #(4 4)) do: 
@@ -173,9 +176,10 @@ testFromToKeysAndValuesDo
 					[array
 						from: each first
 						to: each last
-						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
+						keysAndValuesDo: [:eachKey :eachValue | ]]
 				raise: BoundsError]! !
 !ExternalArrayTest categoriesFor: #arrayClass!constants!private! !
+!ExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
 !ExternalArrayTest categoriesFor: #canonicalizeValue:!private!unit tests! !
 !ExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
 !ExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !

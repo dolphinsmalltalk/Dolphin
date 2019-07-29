@@ -59,6 +59,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
-!LICINFO class categoriesFor: #defineFields!initializing!public! !
+!LICINFO class categoriesFor: #defineFields!public!template definition! !
 !LICINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

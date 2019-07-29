@@ -82,7 +82,7 @@ getFieldNames
 
 new
 	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
-!FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
 

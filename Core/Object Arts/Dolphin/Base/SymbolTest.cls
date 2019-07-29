@@ -28,27 +28,37 @@ newCopy: aCollection
 newEmptyCollection: anInteger
 	^Symbol intern: (String new: anInteger)!
 
+testAsString
+	#('abc ' '£' '€' '🐬' '你好') do: 
+			[:each |
+			| symbol actual |
+			symbol := each asSymbol.
+			actual := symbol asString.
+			self deny: actual identicalTo: symbol.
+			self deny: actual isImmutable.
+			self assert: actual equals: each]!
+
 testAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1) 
-		do: [:each | self should: [literal at: each put: $x] raise: BoundsError].
-	1 to: literal size
+	self should: [literal at: 0 put: $x] raise: BoundsError.
+	1 to: literal size + 1
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
 testEquals
 	self equalityTestCases do: 
 			[:each |
-			| subject |
+			| subject ansi |
 			subject := self assimilateString: each.
 			"Identical must be equal"
 			self assert: subject equals: subject.
 			"Same characters must be equal"
 			self assert: subject equals: (self assimilateString: each).
 			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
-			self deny: subject equals: each asAnsiString.
-			self deny: subject equals: each asUtf8String.
-			self deny: subject equals: each asUtf16String.
+			ansi := each asAnsiString.
+			self assert: (ansi ~= each or: [subject = ansi]).
+			self assert: subject equals: each asUtf8String.
+			self assert: subject equals: each asUtf16String.
 			"Not equal to ByteArrays"
 			self deny: each asByteArray equals: each.
 			self deny: each equals: each asByteArray.
@@ -59,10 +69,9 @@ testEquals
 testInstVarAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1)
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal].
-	1 to: literal size
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal]!
+	self should: [literal instVarAt: 0 put: $x codePoint] raise: BoundsError.
+	1 to: literal size + 1
+		do: [:each | self should: [literal instVarAt: each put: $x codePoint] raise: Processor constWriteSignal]!
 
 testPrintLiteral
 	self assert: #_ printString equals: '#_'.
@@ -113,6 +122,7 @@ testResize
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
 !SymbolTest categoriesFor: #newEmptyCollection:!public! !
+!SymbolTest categoriesFor: #testAsString!helpers!public! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testEquals!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !

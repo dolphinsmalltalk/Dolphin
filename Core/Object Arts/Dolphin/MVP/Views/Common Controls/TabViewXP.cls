@@ -176,7 +176,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 		in: labelRect
 		flags: ##(DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS)!
 
-paintTabLabelsOn: aCanvas 
+paintTabLabelsOn: aCanvas
 	| selectedIndex nOldMode oldFont rect itemCount |
 	itemCount := self itemCount.
 	itemCount < 1 ifTrue: [^self].
@@ -185,23 +185,24 @@ paintTabLabelsOn: aCanvas
 	selectedIndex := self getSingleSelection.
 	1 to: selectedIndex - 1
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				paintLabel: i
 				on: aCanvas
 				in: (self itemRect: i)].
-	rect := self itemRect: selectedIndex.
-	self 
-		paintLabel: selectedIndex
-		on: aCanvas
-		in: (rect 
-				translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
-	self hasFocus 
-		ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
+	"It doesn't particularly make sense, but there can be no selection in a TabView."
+	selectedIndex ~~ 0
+		ifTrue: 
+			[rect := self itemRect: selectedIndex.
+			self
+				paintLabel: selectedIndex
+				on: aCanvas
+				in: (rect translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
+			self hasFocus ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
 	selectedIndex + 1 to: itemCount
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				paintLabel: i
 				on: aCanvas
 				in: (self itemRect: i)].
@@ -224,36 +225,73 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 			["This is the background fill behind the tabs"
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
 
-paintThemedTabsOn: aCanvas offset: aMonadicValuable 
-	| selected rcItem hot numItems themeLib dc |
+paintThemedTabsOn: aCanvas offset: aMonadicValuable
+	| selected hot numItems themeLib dc part rcItem |
 	numItems := self itemCount.
 	numItems <= 0 ifTrue: [^self].
-
-	"Paint all the tabs except for the selected one"
+	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
 	hot := self itemFromPoint: self cursorPosition.
 	selected := self getSingleSelection.
 	themeLib := ThemeLibrary default.
 	dc := aCanvas asParameter.
-	(1 to: selected - 1) , (selected + 1 to: numItems) do: 
-			[:i | 
-			themeLib 
+	selected == 1
+		ifFalse: 
+			[themeLib
+				drawThemeBackground: theme
+				hdc: dc
+				iPartId: TABP_TABITEMLEFTEDGE
+				iStateId: (1 == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
+				pRect: (aMonadicValuable value: (self itemRect: 1)) asParameter
+				pClipRect: nil].
+	2 to: selected - 1
+		do: 
+			[:i |
+			themeLib
 				drawThemeBackground: theme
 				hdc: dc
 				iPartId: TABP_TABITEM
 				iStateId: (i == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
 				pRect: (aMonadicValuable value: (self itemRect: i)) asParameter
 				pClipRect: nil].
+	(selected + 1 max: 2) to: numItems - 1
+		do: 
+			[:i |
+			themeLib
+				drawThemeBackground: theme
+				hdc: dc
+				iPartId: TABP_TABITEM
+				iStateId: (i == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
+				pRect: (aMonadicValuable value: (self itemRect: i)) asParameter
+				pClipRect: nil].
+	selected == numItems
+		ifFalse: 
+			[| anInteger |
+			anInteger := TABP_TABITEMRIGHTEDGE.
+			themeLib
+				drawThemeBackground: theme
+				hdc: dc
+				iPartId: anInteger
+				iStateId: (numItems == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
+				pRect: (aMonadicValuable value: (self itemRect: numItems)) asParameter
+				pClipRect: nil].
 
 	"Paint the active selected tab. This must be done last as it is made slightly larger, and
 	therefore draws over the top of the inactive tabs"
 	rcItem := (aMonadicValuable value: (self itemRect: selected)) expandBy: self selExtra.
-	"Clip out the last line to avoid the theme bitmap overwriting the left edge if selection is first item"
-	selected == 1 
-		ifTrue: [aCanvas excludeClipRectangle: (rcItem left @ rcItem bottom - 1 corner: rcItem corner)].
-	themeLib 
+	part := selected == 1
+				ifTrue: 
+					["Clip out the last line to avoid the theme bitmap overwriting the left edge if selection is first item"
+					aCanvas excludeClipRectangle: (rcItem left @ rcItem bottom - 1 corner: rcItem corner).
+					TABP_TABITEMLEFTEDGE]
+				ifFalse: 
+					["We don't bother with using TABP_TABITEMRIGHTEDGE for the selected tab as Windows 10 has a cosmetic bug whereby the edge extends one pixel past the bottom edge, which looks a bit sloppy."
+
+					"selected == numItems ifTrue: [TABP_TABITEMRIGHTEDGE] ifFalse: [TABP_TABITEM]"
+					TABP_TABITEM].
+	themeLib
 		drawThemeBackground: theme
 		hdc: dc
-		iPartId: TABP_TABITEM
+		iPartId: part
 		iStateId: TIS_SELECTED
 		pRect: rcItem asParameter
 		pClipRect: nil!

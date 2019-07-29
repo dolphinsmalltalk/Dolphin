@@ -336,7 +336,7 @@ displayOn: aStream
 includesCategory: category
 	"Answer whether the receiver includes the named category."
 
-	^self methodsCatalogue includesKey: category asMethodCategory!
+	^methodsCatalogue notNil and: [methodsCatalogue includesKey: category asMethodCategory]!
 
 includeSelector: aSelector inCategory: categoryObject
 	"Add aSelector to aCategoryString while leaving it in its existing set of categories."
@@ -365,7 +365,7 @@ indexOfInstVar: aString ifAbsent: aNiladicValuable
 	evaluating the <niladicValuable>, aNiladicValuable."
 
 	| index |
-	index := self instVarNames indexOf: aString.
+	index := self instVarNames indexOf: aString asString.
 	^index == 0
 		ifTrue: 
 			[superclass
@@ -502,7 +502,7 @@ methodsFor
 name
 	"Answer a <readableString> that is the name of the receiver."
 
-	^self subclassResponsibility!
+	^'a subclass of ', self superclass name!
 
 owningPackage
 	^nil!
@@ -847,9 +847,9 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
 !ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
 !ClassDescription categoriesFor: #isChanged:!public!source filing! !
-!ClassDescription categoriesFor: #logDefinition!instance variables!private! !
-!ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !
-!ClassDescription categoriesFor: #logRemoveSelectors:!helpers!private! !
+!ClassDescription categoriesFor: #logDefinition!class hierarchy-mutating!instance variables!private! !
+!ClassDescription categoriesFor: #logRemoveSelector:!development!helpers!private! !
+!ClassDescription categoriesFor: #logRemoveSelectors:!development!helpers!private! !
 !ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
 !ClassDescription categoriesFor: #methodChanged:!helpers!private! !
 !ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
@@ -884,7 +884,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
-!ClassDescription categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
+!ClassDescription categoriesFor: #setShapeFlags:to:!class hierarchy-mutating!instance specification-accessing!private! !
 !ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
 !ClassDescription categoriesFor: #sharedPools!pool variables!public! !

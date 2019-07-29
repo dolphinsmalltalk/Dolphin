@@ -41,7 +41,7 @@ idbAbout: aString
 			(Bitmap fromFile: (File composePath: SessionManager current idbResourcesFolder subPath: 'about.bmp'))
 		overlayWith:
 			[:canvas | 
-			Processor sleep: 1000.
+			Processor sleep: 1 seconds.
 			canvas
 				backgroundMode: TRANSPARENT;
 				forecolor: Color blue;

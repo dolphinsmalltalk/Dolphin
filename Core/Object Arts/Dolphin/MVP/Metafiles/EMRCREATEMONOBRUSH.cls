@@ -142,7 +142,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEMONOBRUSH! !
-!EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
 

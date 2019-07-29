@@ -95,6 +95,6 @@ defineFields
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
-!FORMATRANGE class categoriesFor: #defineFields!initializing!public! !
+!FORMATRANGE class categoriesFor: #defineFields!public!template definition! !
 !FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

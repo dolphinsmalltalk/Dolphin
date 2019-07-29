@@ -9,6 +9,8 @@
 
 ******************************************************************************/
 #include "Ist.h"
+typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
+
 #pragma code_seg(FFI_SEG)
 
 // Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
@@ -156,12 +158,43 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 			return NewBSTR<Utf8String::CodePage, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf16:
 			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
+		case StringEncoding::Utf32:
+			return nullptr;
+
 		default:
 			// Unrecognised encoding
+			__assume(false);
 			break;
 		}
 	}
 
+	return nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Answer a new wide string converted from any othre type of string
+// Used for lpwstr arguments
+
+Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
+{
+	ASSERT(oteString->isNullTerminated());
+
+	switch (ST::String::GetEncoding(oteString))
+	{
+	case StringEncoding::Ansi:
+		return Utf16String::New<CP_ACP>(reinterpret_cast<const AnsiStringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
+	case StringEncoding::Utf8:
+		return Utf16String::New<CP_UTF8>(reinterpret_cast<const Utf8StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
+	case StringEncoding::Utf16:
+		ASSERT(FALSE);
+		return reinterpret_cast<Utf16StringOTE*>(oteString);
+	case StringEncoding::Utf32:
+		// TODO: Implement conversion for UTF-32
+		return nullptr;
+	default:
+		__assume(false);
+		break;
+	}
 	return nullptr;
 }
 
@@ -239,6 +272,8 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgSDWORD:
+			case ExtCallArgHRESULT:
+			case ExtCallArgNTSTATUS:
 				pushSigned32(*reinterpret_cast<SDWORD*>(lpParms));
 				lpParms += sizeof(SDWORD);
 				break;
@@ -265,6 +300,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgOOP:
+			case ExtCallArgOTE:
 				push(*reinterpret_cast<Oop*>(lpParms));
 				lpParms += sizeof(Oop);
 				break;
@@ -279,11 +315,6 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				// Push an LPVOID* instance onto the stack
 				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(BYTE**)lpParms));
 				lpParms += sizeof(BYTE*);
-				break;
-
-			case ExtCallArgHRESULT:
-				pushSigned32(*reinterpret_cast<SDWORD*>(lpParms));
-				lpParms += sizeof(HRESULT);
 				break;
 
 			case ExtCallArgLPWSTR:
@@ -301,11 +332,6 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				lpParms += sizeof(LONGLONG);
 				break;
 			
-			case ExtCallArgOTE:
-				push(*reinterpret_cast<Oop*>(lpParms));
-				lpParms += sizeof(POTE);
-				break;
-
 			case ExtCallArgBSTR:
 				push(*reinterpret_cast<LPWSTR*>(lpParms));
 				lpParms += sizeof(BSTR);
@@ -400,7 +426,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			default:
-				ASSERT(false);
+				__assume(false);
 		}
 	}
 	return types->m_argumentCount;
@@ -411,29 +437,29 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 //
 Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, unsigned)
 {
-	Oop argPointer = *sp;
-	if (ObjectMemoryIsIntegerObject(argPointer))
-		return primitiveFailure(0);
-	OTE* descriptorPointer = reinterpret_cast<OTE*>(argPointer);
+	Oop oopDescriptor = *sp;
+	if (ObjectMemoryIsIntegerObject(oopDescriptor))
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter3);
+	OTE* descriptorPointer = reinterpret_cast<OTE*>(oopDescriptor);
 	if (descriptorPointer->isBytes())
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter3);
 
-	argPointer = *(sp-2);
-	if (ObjectMemoryIsIntegerObject(argPointer))
-		return primitiveFailure(2);
+	Oop oopSelector = *(sp-2);
+	if (ObjectMemoryIsIntegerObject(oopSelector))
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	TODO("Should really check that it is actually a symbol?");
-	SymbolOTE* selectorPointer = reinterpret_cast<SymbolOTE*>(argPointer);
+	SymbolOTE* selectorPointer = reinterpret_cast<SymbolOTE*>(oopSelector);
 
 	// Decode the address argument
-	argPointer = *(sp-1);
+	Oop oopAddress = *(sp-1);
 	BYTE* lpParms;
-	if (ObjectMemoryIsIntegerObject(argPointer))
-		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(argPointer));
+	if (ObjectMemoryIsIntegerObject(oopAddress))
+		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(oopAddress));
 	else
 	{
-		OTE* args = reinterpret_cast<OTE*>(argPointer);
+		OTE* args = reinterpret_cast<OTE*>(oopAddress);
 		if (args->isPointers())
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
 		else
 		{
 			lpParms = static_cast<BYTE*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
@@ -458,15 +484,14 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, unsigned)
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
 Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, unsigned)
 {
-	Oop argPointer = *sp;
-	if (ObjectMemoryIsIntegerObject(argPointer))
-		return primitiveFailure(0);
-	OTE* descriptorPointer = reinterpret_cast<OTE*>(argPointer);
+	Oop oopDescriptor = *sp;
+	if (ObjectMemoryIsIntegerObject(oopDescriptor))
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
+	OTE* descriptorPointer = reinterpret_cast<OTE*>(oopDescriptor);
 	if (descriptorPointer->isBytes())
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
 
-	// Decode the address argument (do this last so can count down)
-	argPointer = *(sp-1);
+	Oop argPointer = *(sp-1);
 	BYTE* lpParms;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(argPointer));
@@ -474,7 +499,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, unsigned)
 	{
 		OTE* args = reinterpret_cast<OTE*>(argPointer);
 		if (args->isPointers())
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 		else
 			lpParms = static_cast<BYTE*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
 	}
@@ -489,7 +514,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, unsigned)
 	const unsigned argCount = types->m_argumentCount;
 	
 	if (argCount != blockArgumentCount)
-		return primitiveFailure(2);
+		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 
 	// Pop off args and receiver block.
 	m_registers.m_stackPointer = sp - 3;
@@ -950,6 +975,7 @@ void doBlah()
 				case ExtCallArgSDWORD:
 				case ExtCallArgDWORD:
 				case ExtCallArgHRESULT:
+				case ExtCallArgNTSTATUS:
 					_asm 
 					{
 						mov		eax, DWORD PTR [arg]	// Load Oop
@@ -1181,6 +1207,7 @@ void doBlah()
 				}
 
 				case ExtCallArgHRESULT:
+				case ExtCallArgNTSTATUS:
 				{
 					HRESULT hresult = static_cast<HRESULT>(dwValue);
 					if (FAILED(hresult))

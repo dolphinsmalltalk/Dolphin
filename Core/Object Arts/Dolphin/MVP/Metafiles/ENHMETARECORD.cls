@@ -106,7 +106,7 @@ uninitializeBeforeRemove
 
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
-!ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ENHMETARECORD class categoriesFor: #initialize!public! !
 !ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !

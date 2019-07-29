@@ -80,6 +80,21 @@ asScaledDecimal: scale
 		scale: scale
 !
 
+asTrueFraction
+	"Answer a <rational> that precisely represents the same value as the receiver."
+
+	^self asFraction!
+
+closeTo: aNumber 
+	"Pharo compatibility"
+
+	^ self closeTo: aNumber precision: 0.0001!
+
+closeTo: aNumber precision: precisionFloat
+	| max |
+	^(max := self abs max: aNumber abs) <= precisionFloat
+		or: [(self - aNumber) abs < (precisionFloat * max)]!
+
 copy
 	"Answer a copy of the receiver (by default a copy which shares the receiver's 
 	instance variables). Numbers are immutable, so we answer the receiver itself."
@@ -91,6 +106,9 @@ cos
 	which is treated as an angle in radians"
 
 	^self asFloat cos!
+
+days
+	^Duration days: self!
 
 degreesToRadians
 	"Answer a <Float> representing the receiver converted from degrees to radians."
@@ -106,6 +124,11 @@ divideByZero
 	"Private - Generate a division by zero error"
 
 	^ZeroDivide dividend: self!
+
+divideIntoDuration: aDuration 
+	"Private - Answer a new <Duration> which represents the the value in seconds of aDuration divided by the receiver."
+
+	^aDuration class seconds: aDuration asSeconds / self!
 
 even
 	"Answer whether the receiver is an even number. Zero is considered even"
@@ -132,18 +155,31 @@ fractionPart
 	^self - self truncated
 !
 
-hashBits
-	"Private - Answer the maximum number of bits in a <Number>s hash value."
+hour
+	^self hours!
 
-	"Implementation Note: We want hash values to fit within the positive SmallInteger range"
+hours
+	"Answer a <Duration> which is equivalent to the number of hours represented by the receiver."
 
-	^##(VMConstants.SmallIntegerMax highBit)!
+	^Duration hours: self!
 
 integerPart
 	"Answer an <integer>  representing the whole integer part of 
 	the receiver."
 
 	^self truncated!
+
+isFloat
+	"Answer true if receiver is an instance of class Float, else answer false."
+
+	^false
+!
+
+isFraction
+	"Answer true if receiver is an instance of class Fraction, else answer false."
+
+	^false
+!
 
 isLiteral
 	"Answer whether the receiver the receiver has a literal representation which
@@ -172,6 +208,18 @@ log: operand
 
 	^self ln / operand ln!
 
+microseconds
+	^Duration microseconds: self!
+
+milliseconds
+	^Duration milliseconds: self!
+
+minutes
+	^Duration minutes: self!
+
+nanoseconds
+	^Duration nanoseconds: self!
+
 numerator
 	"Answer the <integer> numerator of the receiver. Default is the receiver which can be 
 	overridden by the subclasses (e.g. Fraction)."
@@ -199,6 +247,9 @@ raisedTo: operand
 	operand isInteger ifTrue: [^self raisedToInteger: operand].
 	self isZero ifTrue: [^operand <= 0 ifTrue: [self error: 'Invalid operands'] ifFalse: [self]].
 	^(self asFloat ln * operand) exp!
+
+seconds
+	^Duration seconds: self!
 
 sin
 	"Answer a <Float> which is the sine of the receiver, 
@@ -257,26 +308,39 @@ to: stop do: operation
 !Number categoriesFor: #asFraction!converting!public! !
 !Number categoriesFor: #asInteger!converting!public! !
 !Number categoriesFor: #asScaledDecimal:!converting!public! !
+!Number categoriesFor: #asTrueFraction!converting!public! !
+!Number categoriesFor: #closeTo:!comparing!public! !
+!Number categoriesFor: #closeTo:precision:!comparing!public! !
 !Number categoriesFor: #copy!copying!public! !
 !Number categoriesFor: #cos!mathematical!public! !
+!Number categoriesFor: #days!converting!durations!public! !
 !Number categoriesFor: #degreesToRadians!converting!public! !
 !Number categoriesFor: #denominator!accessing!public! !
 !Number categoriesFor: #divideByZero!exceptions!private! !
+!Number categoriesFor: #divideIntoDuration:!double dispatch!durations!private! !
 !Number categoriesFor: #even!public!testing! !
 !Number categoriesFor: #exp!mathematical!public! !
 !Number categoriesFor: #floorLog:!mathematical!public! !
 !Number categoriesFor: #fractionPart!accessing!public! !
-!Number categoriesFor: #hashBits!comparing!private! !
+!Number categoriesFor: #hour!converting!durations!public! !
+!Number categoriesFor: #hours!converting!durations!public! !
 !Number categoriesFor: #integerPart!accessing!public! !
+!Number categoriesFor: #isFloat!public!testing! !
+!Number categoriesFor: #isFraction!public!testing! !
 !Number categoriesFor: #isLiteral!public!testing! !
 !Number categoriesFor: #isNumber!public!testing! !
 !Number categoriesFor: #ln!mathematical!public! !
 !Number categoriesFor: #log!mathematical!public! !
 !Number categoriesFor: #log:!mathematical!public! !
+!Number categoriesFor: #microseconds!converting!durations!public! !
+!Number categoriesFor: #milliseconds!converting!durations!public! !
+!Number categoriesFor: #minutes!converting!durations!public! !
+!Number categoriesFor: #nanoseconds!converting!durations!public! !
 !Number categoriesFor: #numerator!accessing!public! !
 !Number categoriesFor: #odd!public!testing! !
 !Number categoriesFor: #radiansToDegrees!converting!public! !
 !Number categoriesFor: #raisedTo:!mathematical!public! !
+!Number categoriesFor: #seconds!converting!durations!public! !
 !Number categoriesFor: #sin!mathematical!public! !
 !Number categoriesFor: #sqrt!mathematical!public! !
 !Number categoriesFor: #tan!mathematical!public! !

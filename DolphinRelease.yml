@@ -1,4 +1,4 @@
-version: v7.1.2.{build}
+version: v7.1.7.{build}
 skip_non_tags: true
 image: Visual Studio 2017
 configuration: Release

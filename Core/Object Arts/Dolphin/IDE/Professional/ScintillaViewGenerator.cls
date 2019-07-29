@@ -84,8 +84,11 @@ defineConstantsPool
 		at: 'CARET_SLOP' put: 1;
 		at: 'CARET_STRICT' put: 4;
 		at: 'CARETSTYLE_BLOCK' put: 2;
+		at: 'CARETSTYLE_INS_MASK' put: 15;
 		at: 'CARETSTYLE_INVISIBLE' put: 0;
 		at: 'CARETSTYLE_LINE' put: 1;
+		at: 'CARETSTYLE_OVERSTRIKE_BAR' put: 0;
+		at: 'CARETSTYLE_OVERSTRIKE_BLOCK' put: 16;
 		at: 'EDGE_BACKGROUND' put: 2;
 		at: 'EDGE_LINE' put: 1;
 		at: 'EDGE_MULTILINE' put: 3;
@@ -223,6 +226,9 @@ defineConstantsPool
 		at: 'SC_LASTSTEPINUNDOREDO' put: 256;
 		at: 'SC_LINE_END_TYPE_DEFAULT' put: 0;
 		at: 'SC_LINE_END_TYPE_UNICODE' put: 1;
+		at: 'SC_LINECHARACTERINDEX_NONE' put: 0;
+		at: 'SC_LINECHARACTERINDEX_UTF16' put: 2;
+		at: 'SC_LINECHARACTERINDEX_UTF32' put: 1;
 		at: 'SC_MARGIN_BACK' put: 2;
 		at: 'SC_MARGIN_COLOUR' put: 6;
 		at: 'SC_MARGIN_FORE' put: 3;
@@ -264,6 +270,7 @@ defineConstantsPool
 		at: 'SC_MARK_TCORNER' put: 11;
 		at: 'SC_MARK_TCORNERCURVE' put: 17;
 		at: 'SC_MARK_UNDERLINE' put: 29;
+		at: 'SC_MARK_VERTICALBOOKMARK' put: 32;
 		at: 'SC_MARK_VLINE' put: 9;
 		at: 'SC_MARKNUM_FOLDER' put: 30;
 		at: 'SC_MARKNUM_FOLDEREND' put: 25;
@@ -371,6 +378,7 @@ defineConstantsPool
 		at: 'SCI_ADDUNDOACTION' put: 2560;
 		at: 'SCI_ALLOCATE' put: 2446;
 		at: 'SCI_ALLOCATEEXTENDEDSTYLES' put: 2553;
+		at: 'SCI_ALLOCATELINECHARACTERINDEX' put: 2711;
 		at: 'SCI_ALLOCATESUBSTYLES' put: 4020;
 		at: 'SCI_ANNOTATIONCLEARALL' put: 2547;
 		at: 'SCI_ANNOTATIONGETLINES' put: 2546;
@@ -470,6 +478,7 @@ defineConstantsPool
 		at: 'SCI_COPYRANGE' put: 2419;
 		at: 'SCI_COPYTEXT' put: 2420;
 		at: 'SCI_COUNTCHARACTERS' put: 2633;
+		at: 'SCI_COUNTCODEUNITS' put: 2715;
 		at: 'SCI_CREATEDOCUMENT' put: 2375;
 		at: 'SCI_CREATELOADER' put: 2632;
 		at: 'SCI_CUT' put: 2177;
@@ -505,6 +514,7 @@ defineConstantsPool
 		at: 'SCI_FINDTEXT' put: 2150;
 		at: 'SCI_FOLDALL' put: 2662;
 		at: 'SCI_FOLDCHILDREN' put: 2238;
+		at: 'SCI_FOLDDISPLAYTEXTGETSTYLE' put: 2707;
 		at: 'SCI_FOLDDISPLAYTEXTSETSTYLE' put: 2701;
 		at: 'SCI_FOLDLINE' put: 2237;
 		at: 'SCI_FORMATRANGE' put: 2151;
@@ -532,14 +542,17 @@ defineConstantsPool
 		at: 'SCI_GETCARETSTICKY' put: 2457;
 		at: 'SCI_GETCARETSTYLE' put: 2513;
 		at: 'SCI_GETCARETWIDTH' put: 2189;
+		at: 'SCI_GETCHARACTERCATEGORYOPTIMIZATION' put: 2721;
 		at: 'SCI_GETCHARACTERPOINTER' put: 2520;
 		at: 'SCI_GETCHARAT' put: 2007;
 		at: 'SCI_GETCODEPAGE' put: 2137;
 		at: 'SCI_GETCOLUMN' put: 2129;
+		at: 'SCI_GETCOMMANDEVENTS' put: 2718;
 		at: 'SCI_GETCONTROLCHARSYMBOL' put: 2389;
 		at: 'SCI_GETCURLINE' put: 2027;
 		at: 'SCI_GETCURRENTPOS' put: 2008;
 		at: 'SCI_GETCURSOR' put: 2387;
+		at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: 2723;
 		at: 'SCI_GETDIRECTFUNCTION' put: 2184;
 		at: 'SCI_GETDIRECTPOINTER' put: 2185;
 		at: 'SCI_GETDOCPOINTER' put: 2357;
@@ -579,6 +592,7 @@ defineConstantsPool
 		at: 'SCI_GETLEXER' put: 4002;
 		at: 'SCI_GETLEXERLANGUAGE' put: 4012;
 		at: 'SCI_GETLINE' put: 2153;
+		at: 'SCI_GETLINECHARACTERINDEX' put: 2710;
 		at: 'SCI_GETLINECOUNT' put: 2154;
 		at: 'SCI_GETLINEENDPOSITION' put: 2136;
 		at: 'SCI_GETLINEENDTYPESACTIVE' put: 2658;
@@ -699,6 +713,7 @@ defineConstantsPool
 		at: 'SCI_HOMERECTEXTEND' put: 2430;
 		at: 'SCI_HOMEWRAP' put: 2349;
 		at: 'SCI_HOMEWRAPEXTEND' put: 2450;
+		at: 'SCI_INDEXPOSITIONFROMLINE' put: 2714;
 		at: 'SCI_INDICATORALLONFOR' put: 2506;
 		at: 'SCI_INDICATORCLEARRANGE' put: 2505;
 		at: 'SCI_INDICATOREND' put: 2509;
@@ -738,6 +753,7 @@ defineConstantsPool
 		at: 'SCI_LINEENDRECTEXTEND' put: 2432;
 		at: 'SCI_LINEENDWRAP' put: 2451;
 		at: 'SCI_LINEENDWRAPEXTEND' put: 2452;
+		at: 'SCI_LINEFROMINDEXPOSITION' put: 2713;
 		at: 'SCI_LINEFROMPOSITION' put: 2166;
 		at: 'SCI_LINELENGTH' put: 2350;
 		at: 'SCI_LINEREVERSE' put: 2354;
@@ -810,6 +826,7 @@ defineConstantsPool
 		at: 'SCI_POSITIONFROMPOINT' put: 2022;
 		at: 'SCI_POSITIONFROMPOINTCLOSE' put: 2023;
 		at: 'SCI_POSITIONRELATIVE' put: 2670;
+		at: 'SCI_POSITIONRELATIVECODEUNITS' put: 2716;
 		at: 'SCI_PRIVATELEXERCALL' put: 4013;
 		at: 'SCI_PROPERTYNAMES' put: 4014;
 		at: 'SCI_PROPERTYTYPE' put: 4015;
@@ -818,6 +835,7 @@ defineConstantsPool
 		at: 'SCI_REGISTERRGBAIMAGE' put: 2627;
 		at: 'SCI_RELEASEALLEXTENDEDSTYLES' put: 2552;
 		at: 'SCI_RELEASEDOCUMENT' put: 2377;
+		at: 'SCI_RELEASELINECHARACTERINDEX' put: 2712;
 		at: 'SCI_REPLACESEL' put: 2170;
 		at: 'SCI_REPLACETARGET' put: 2194;
 		at: 'SCI_REPLACETARGETRE' put: 2195;
@@ -859,11 +877,14 @@ defineConstantsPool
 		at: 'SCI_SETCARETSTICKY' put: 2458;
 		at: 'SCI_SETCARETSTYLE' put: 2512;
 		at: 'SCI_SETCARETWIDTH' put: 2188;
+		at: 'SCI_SETCHARACTERCATEGORYOPTIMIZATION' put: 2720;
 		at: 'SCI_SETCHARSDEFAULT' put: 2444;
 		at: 'SCI_SETCODEPAGE' put: 2037;
+		at: 'SCI_SETCOMMANDEVENTS' put: 2717;
 		at: 'SCI_SETCONTROLCHARSYMBOL' put: 2388;
 		at: 'SCI_SETCURRENTPOS' put: 2141;
 		at: 'SCI_SETCURSOR' put: 2386;
+		at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: 2722;
 		at: 'SCI_SETDOCPOINTER' put: 2358;
 		at: 'SCI_SETEDGECOLOUR' put: 2365;
 		at: 'SCI_SETEDGECOLUMN' put: 2361;
@@ -1112,6 +1133,7 @@ defineConstantsPool
 		at: 'SCLEX_BLITZBASIC' put: 66;
 		at: 'SCLEX_BULLANT' put: 27;
 		at: 'SCLEX_CAML' put: 65;
+		at: 'SCLEX_CIL' put: 127;
 		at: 'SCLEX_CLW' put: 45;
 		at: 'SCLEX_CLWNOCASE' put: 46;
 		at: 'SCLEX_CMAKE' put: 80;
@@ -1165,6 +1187,7 @@ defineConstantsPool
 		at: 'SCLEX_MODULA' put: 101;
 		at: 'SCLEX_MSSQL' put: 55;
 		at: 'SCLEX_MYSQL' put: 89;
+		at: 'SCLEX_NIM' put: 126;
 		at: 'SCLEX_NIMROD' put: 96;
 		at: 'SCLEX_NNCRONTAB' put: 26;
 		at: 'SCLEX_NSIS' put: 43;
@@ -1191,6 +1214,7 @@ defineConstantsPool
 		at: 'SCLEX_REGISTRY' put: 115;
 		at: 'SCLEX_RUBY' put: 22;
 		at: 'SCLEX_RUST' put: 111;
+		at: 'SCLEX_SAS' put: 125;
 		at: 'SCLEX_SCRIPTOL' put: 33;
 		at: 'SCLEX_SMALLTALK' put: 72;
 		at: 'SCLEX_SML' put: 97;
@@ -1199,6 +1223,7 @@ defineConstantsPool
 		at: 'SCLEX_SPICE' put: 78;
 		at: 'SCLEX_SQL' put: 7;
 		at: 'SCLEX_SREC' put: 117;
+		at: 'SCLEX_STATA' put: 124;
 		at: 'SCLEX_STTXT' put: 109;
 		at: 'SCLEX_TACL' put: 93;
 		at: 'SCLEX_TADS3' put: 70;
@@ -1522,7 +1547,7 @@ ignoredMessages
 
 	"We always get/set the selection range start and end as a pair."
 	ignoredMessages
-		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_GETSELECTIONSTART' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
+		addAll: #('SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
@@ -1535,6 +1560,9 @@ ignoredMessages
 
 	"sciGetCodePage is customised"
 	ignoredMessages add: 'SCI_SETCODEPAGE'.
+
+	"4.1.3: SCI_GET/SETCOMMANDEVENTS are not generated because we don't allow this to be changed (it must be false)"
+	ignoredMessages addAll: #('SCI_GETCOMMANDEVENTS' 'SCI_SETCOMMANDEVENTS').
 
 	ignoredMessages
 		shrink;

@@ -81,7 +81,7 @@ indexToHeaderMap
 		at: HttpHeaderVary put: 'Vary';
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
-!HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_RESPONSE_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_RESPONSE_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

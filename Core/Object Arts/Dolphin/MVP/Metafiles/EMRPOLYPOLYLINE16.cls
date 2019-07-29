@@ -164,7 +164,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYPOLYLINE16 with: EMR_POLYPOLYGON16! !
-!EMRPOLYPOLYLINE16 class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYPOLYLINE16 class categoriesFor: #defineFields!public!template definition! !
 !EMRPOLYPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
 

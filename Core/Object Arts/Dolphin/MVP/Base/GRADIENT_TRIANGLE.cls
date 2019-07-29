@@ -86,6 +86,6 @@ defineFields
 
 getFieldNames
 	^#(#Vertex1 #Vertex2 #Vertex3)! !
-!GRADIENT_TRIANGLE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GRADIENT_TRIANGLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GRADIENT_TRIANGLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

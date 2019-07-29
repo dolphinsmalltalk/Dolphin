@@ -352,6 +352,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 
 		default:
 			ASSERT(false);
+			__assume(false);
 		}
 	}
 
@@ -595,9 +596,7 @@ static void DumpProcess(ProcessOTE* oteProc, wostream& logStream)
 			<< L"size " << std::dec << oteProc->getWordSize()
 			<< L" words, suspended frame " << reinterpret_cast<LPVOID>(pProc->SuspendedFrame())
 			<< std::dec << L", priority " << pProc->Priority()
-			<< L", callbacks " << pProc->CallbackDepth() << std::endl;
-		logStream << L"last failure " << pProc->PrimitiveFailureCode()
-			<< L":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
+			<< L", callbacks " << pProc->CallbackDepth()
 			<< L", FP control " << std::hex << pProc->FpControl()
 			<< L", thread " << pProc->Thread();
 	}
@@ -793,7 +792,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 // Dump the interpreter context
 void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logStream)
 {
-	saveContextAfterFault(pExceptionInfo, isInPrimitive());
+	saveContextAfterFault(pExceptionInfo);
 	DumpContext(logStream);
 }
 

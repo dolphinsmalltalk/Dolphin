@@ -100,7 +100,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -117,25 +117,26 @@ describeCol: anInteger
 	^(self describeCols: (Array with: anInteger)) first!
 
 describeCols: columnNumbers 
-	"Answer an array of <DBColAttr>s describing the each of the columns
-	of the receiver with indices in the <sequencedReadableCollection> argument."
+	"Answer an array of <DBColAttr>s describing each of the columns of the receiver's results with indices in the <sequencedReadableCollection> argument."
 
 	| answer i name columnSize colNameLen dataType decimalDigits nullable nameBufSize hStmt colLen lib |
+	"Allocate a buffer sufficient to hold any column name, that we will re-use for all the columns"
 	nameBufSize := self parent maxColumnNameLength+ 1.
-	name := String newFixed: nameBufSize.
+	name := Utf16String newFixed: nameBufSize.
+	"Similarly, re-usable buffers for all the other output parameters"
 	colNameLen := SWORD new.
 	dataType := SWORD new.
-	columnSize := DWORD new.
+	columnSize := DWORDBytes new.
 	decimalDigits := SWORD new.
 	nullable := SWORD new.
-	colLen := DWORD new.
+	colLen := DWORDBytes new.
 	hStmt := self executedHandle.
 	lib := ODBCLibrary default.
 	answer := Array new: columnNumbers size.
 	i := 1.
 	columnNumbers do: 
 			[:each | 
-			| ret |
+			| ret col |
 			ret := lib 
 						sqlDescribeCol: hStmt
 						columnNumber: each
@@ -147,30 +148,45 @@ describeCols: columnNumbers
 						decimalDigitsPtr: decimalDigits
 						nullablePtr: nullable.
 			self dbCheckException: ret.
-			ret := lib 
-						sqlColAttribute: hStmt
-						columnNumber: each
-						fieldIdentifier: SQL_COLUMN_LENGTH
-						characterAttributePtr: nil
-						bufferLength: nil
-						stringLengthPtr: nil
-						numericAttributePtr: colLen.	"Note using ODBC 2.x definition of column length"
-			self dbCheckException: ret.
-			answer at: i
-				put: ((DBColAttr new)
-						columnNumber: each;
-						name: (name leftString: colNameLen value);
-						type: dataType value;
-						length: colLen value;
-						precision: columnSize value;
-						scale: decimalDigits value).
+
+			col := DBColAttr new
+					columnNumber: each;
+					name: (name copyFrom: 1 to: colNameLen value);
+					type: dataType value;
+					precision: columnSize value;
+					scale: decimalDigits value;
+					yourself.
+
+			col hasVariableTransferOctetLength
+				ifTrue: 
+					[ret := lib 
+							sqlColAttribute: hStmt
+							columnNumber: each
+							fieldIdentifier: SQL_DESC_OCTET_LENGTH
+							characterAttributePtr: nil
+							bufferLength: nil
+							stringLengthPtr: nil
+							numericAttributePtr: colLen.
+					self dbCheckException: ret.
+					col length: colLen value] 
+				ifFalse: 
+					[col length: col transferOctetLength].
+			answer at: i put: col.
 			i := i + 1].
 	^answer!
 
 driverHStmt
 	"Private - Answer the handle to the driver statement"
 
-	^ODBCLibrary default getInfoHandle: SQL_DRIVER_HSTMT for: self!
+	| value |
+	value := ExternalHandle new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: SQL_DRIVER_HSTMT
+				infoValuePtr: value
+				bufferLength: VMConstants.IntPtrSize
+				stringLengthPtr: nil).
+	^value!
 
 exceptionDetails: anIntegerRetCode
 	"Private - Answer a DBExceptionDetails instance that describes the state of the
@@ -214,19 +230,18 @@ free
 
 	handle isNull ifFalse: [[self basicFree] ensure: [self reset]]!
 
-getStringAttribute: anInteger 
-	"Private - Answer a <String> containing the value of the statement 
-	attribute identified by the <integer> argument."
+getStringAttribute: anInteger
+	"Private - Answer a <String> containing the value of the statement attribute identified by the <integer> argument."
 
-	| buffer ret |
-	buffer := String new: SQL_MAX_OPTION_STRING_LENGTH + 1.
-	ret := ODBCLibrary default 
+	| buffer |
+	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
+	self dbCheckException: (ODBCLibrary default
 				sqlGetStmtAttr: self allocatedHandle
 				attribute: anInteger
 				valuePtr: buffer
-				bufferLength: buffer size
-				stringLengthPtr: nil.
-	self dbCheckException: ret.
+				bufferLength: ##((SQL_MAX_OPTION_STRING_LENGTH + 1) * 2) "Byte size including implicit null terminator"
+				stringLengthPtr: nil).	
+	"N.B. We assume that as with SqlGetConnectAttr that the SQL server driver will not populate the stringLengthPtr argument. There do not seem to be any string options to test this against currently."
 	^buffer trimNulls!
 
 handle

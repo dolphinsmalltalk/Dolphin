@@ -435,7 +435,7 @@ void Interpreter::interpret()
 // a trappable fault
 //
 #pragma code_seg(INTERPMISC_SEG)
-void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive)
+bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 {
 	BYTE* ip = reinterpret_cast<BYTE*>(info->ContextRecord->Edi);
 	Oop byteCodes = m_registers.m_pMethod->m_byteCodes;
@@ -448,7 +448,8 @@ void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrim
 	}
 	// SP is saved down before primitives are executed, and we don't want to rely on primitive not
 	// updating the SP register until there is no possibility of a fault
-	if (!isInPrimitive)
+	bool inPrim = isInPrimitive(info);
+	if (!inPrim)
 	{
 		Oop* sp = reinterpret_cast<Oop*>(info->ContextRecord->Esi);
 		Process* pProc = actualActiveProcess();
@@ -461,6 +462,7 @@ void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrim
 				m_registers.m_stackPointer = sp;
 		}
 	}
+	return inPrim;
 }
 
 #pragma code_seg(INTERPMISC_SEG)
@@ -468,22 +470,10 @@ void Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrim
 // by testing to see whether the new method is not the same as the active method (primitives
 // do not activate until they fail). We must also ensure that the oop is still a method
 // 
-bool Interpreter::isInPrimitive()
+bool Interpreter::isInPrimitive(LPEXCEPTION_POINTERS pExInfo)
 {
-	if (!m_registers.m_oopNewMethod->isFree())
-	{
-		// HARDASSERT(ObjectMemory::isKindOf(m_oopNewMethod, Pointers.ClassCompiledMethod));
-		CompiledMethod* newMethod = m_registers.m_oopNewMethod->m_location;
-		if (newMethod == m_registers.m_pMethod)
-		{
-			return false;
-		}
-		STMethodHeader header = newMethod->m_header;
-		// If really a primitive, then flags in header will be 0
-		return header.primitiveIndex != PRIMITIVE_ACTIVATE_METHOD;
-	}
-	else
-		return false;
+	uintptr_t eip = pExInfo->ContextRecord->Eip;
+	return eip < reinterpret_cast<uintptr_t>(byteCodeLoop) || eip > reinterpret_cast<uintptr_t>(invalidByteCode);
 }
 
 void Interpreter::AbandonStepping()
@@ -495,11 +485,11 @@ void Interpreter::AbandonStepping()
 void Interpreter::recoverFromFault(LPEXCEPTION_POINTERS pExInfo)
 {
 	AbandonStepping();
-	bool inPrim = isInPrimitive();
-	saveContextAfterFault(pExInfo, inPrim);
+	bool inPrim = saveContextAfterFault(pExInfo);
 	if (inPrim)
 	{
-		activateNewMethod(m_registers.m_oopNewMethod->m_location);
+		DWORD exceptionCode = pExInfo->ExceptionRecord->ExceptionCode;
+		activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
 	}
 }
 
@@ -565,7 +555,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 				sendExceptionInterrupt(VMI_CONSTWRITE, pExInfo);
 				action = EXCEPTION_EXECUTE_HANDLER;
 			}
-			else if (isInPrimitive() && PleaseTrapGPFs())
+			else if (isInPrimitive(pExInfo) && PleaseTrapGPFs())
 			{
 				sendExceptionInterrupt(VMI_ACCESSVIOLATION, pExInfo);
 				action = EXCEPTION_EXECUTE_HANDLER;
@@ -583,11 +573,10 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 
 	case EXCEPTION_INT_DIVIDE_BY_ZERO:
 	{
-		bool inPrim = isInPrimitive();
-		saveContextAfterFault(pExInfo, inPrim);
+		bool inPrim = saveContextAfterFault(pExInfo);
 		if (inPrim)
 		{
-			activateNewMethod(m_registers.m_oopNewMethod->m_location);
+			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, _PrimitiveFailureCode::IntegerDivideByZero);
 		}
 #ifdef _DEBUG
 		{
@@ -612,7 +601,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	case EXCEPTION_INT_OVERFLOW:
 	case EXCEPTION_PRIV_INSTRUCTION:
 	case EXCEPTION_ILLEGAL_INSTRUCTION:
-		if (isInPrimitive() && PleaseTrapGPFs())
+		if (isInPrimitive(pExInfo) && PleaseTrapGPFs())
 		{
 			sendExceptionInterrupt(VMI_EXCEPTION, pExInfo);
 #ifdef _DEBUG
@@ -626,7 +615,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		break;
 
 	case SE_VMCRTFAULT:
-		if (isInPrimitive())
+		if (isInPrimitive(pExInfo))
 		{
 			sendExceptionInterrupt(VMI_CRTFAULT, pExInfo);
 			action = EXCEPTION_EXECUTE_HANDLER;
@@ -636,8 +625,20 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	case SE_VMEXIT:
 		break;
 
-	default:
-		saveContextAfterFault(pExInfo, isInPrimitive());
+	case EXCEPTION_FLT_DENORMAL_OPERAND:
+	case EXCEPTION_FLT_DIVIDE_BY_ZERO:
+	case EXCEPTION_FLT_INEXACT_RESULT:
+	case EXCEPTION_FLT_INVALID_OPERATION:
+	case EXCEPTION_FLT_OVERFLOW:
+	case EXCEPTION_FLT_UNDERFLOW:
+	case STATUS_FLOAT_MULTIPLE_FAULTS:
+	case STATUS_FLOAT_MULTIPLE_TRAPS:
+		actualActiveProcess()->ResetFP();
+		AbandonStepping();
+		if (saveContextAfterFault(pExInfo))
+		{
+			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
+		}
 		action = _fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
 		break;
 	}
@@ -647,12 +648,6 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 
 int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 {
-	actualActiveProcess()->ResetFP();
-	AbandonStepping();
-	if (isInPrimitive())
-	{
-		activateNewMethod(m_registers.m_oopNewMethod->m_location);
-	}
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);

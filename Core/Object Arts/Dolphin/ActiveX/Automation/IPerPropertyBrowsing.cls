@@ -34,8 +34,7 @@ GetDisplayString: dispID pBstr: pBstr
 	"
 
 	<virtual stdcall: sdword 4 sdword bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getPredefinedStrings: dispID 
 	"Invoke the GetPredefinedStrings() method of the COM Object."
@@ -62,9 +61,8 @@ GetPredefinedStrings: dispID pCaStringsOut: pCaStringsOut pCaCookiesOut: pCaCook
 			[out] CADWORD* pCaCookiesOut);
 	"
 
-	<virtual stdcall: sdword  6 sdword CALPOLESTR* CADWORD*>
-	^self invalidCall
-!
+	<virtual stdcall: sdword 6 sdword CALPOLESTR* CADWORD*>
+	^self invalidCall: _failureCode!
 
 getPredefinedValue: dispID dwCookie: dwCookie 
 	"Answer the <VARIANT> result of invoking the COM Object's GetPredefinedValue() method."
@@ -87,9 +85,8 @@ GetPredefinedValue: dispID dwCookie: dwCookie pVarOut: pVarOut
 			[out] VARIANT* pVarOut);
 	"
 
-	<virtual stdcall: hresult 7 sdword dword VARIANT*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 7 sdword dword variant*>
+	^self invalidCall: _failureCode!
 
 getStringsAndValues: anInteger
 	"Private - Answer an <Array> of <Association>'s between <readableString> value display names
@@ -138,9 +135,8 @@ MapPropertyToPage: dispID pClsid: pClsid
 			[out] GUID* pClsid);
 	"
 
-	<virtual stdcall: hresult 5 sdword GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 5 sdword guid*>
+	^self invalidCall: _failureCode!
 
 stringsToValues: dispid
 	"Answer an <LookupTable> mapping between <readableString> value display names 

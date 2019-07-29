@@ -19,7 +19,7 @@ testFromDays
 	self assert: today equals: date!
 
 testFromSeconds
-	| date today |
+	| date today dtNow now |
 	date := Date fromSeconds: 0.
 	self assert: date asDays equals: 0.
 	date := Date fromSeconds: 1.
@@ -42,7 +42,35 @@ testFromSeconds
 	self assert: date asDays equals: -3.
 	today := Date today.
 	date := Date fromSeconds: today asSeconds.
-	self assert: today equals: date! !
+	self assert: today equals: date.
+	dtNow := DateAndTime nowUTC.
+	now := Date fromSeconds: dtNow asSeconds.
+	self assert: now year equals: dtNow year.
+	self assert: now month equals: dtNow month.
+	self assert: now dayOfMonth equals: dtNow dayOfMonth!
+
+testStoreOn
+	| subject stored collection |
+	subject := Date today.
+	collection := OrderedCollection with: subject
+				with: (Date
+						year: -2000
+						month: 2
+						day: 29).
+	stored := collection storeString.
+	self assert: (Compiler evaluate: stored) equals: collection!
+
+testYyyymmdd
+	| subject |
+	subject := Date newDay: 1 monthIndex: 2 year: 3.
+	self assert: subject yyyymmdd equals: '0003-02-01'.
+	subject := Date year: -5 month: 2 day: 28.
+	self assert: subject yyyymmdd equals: '-0005-02-28'.
+
+
+	! !
 !DateTest categoriesFor: #testFromDays!public!unit tests! !
 !DateTest categoriesFor: #testFromSeconds!public!unit tests! !
+!DateTest categoriesFor: #testStoreOn!public!testing! !
+!DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
 

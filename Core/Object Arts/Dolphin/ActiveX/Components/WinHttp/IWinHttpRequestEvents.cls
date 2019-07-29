@@ -50,7 +50,7 @@ OnError: errorNumber errorDescription: errorDescription
 			[in]BSTR ErrorDescription);"
 
 	<virtual stdcall: void 7 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 OnResponseDataAvailable: data
 	"Invoke the OnResponseDataAvailable() method of the COM object.
@@ -59,7 +59,7 @@ OnResponseDataAvailable: data
 			[in]SAFEARRAY(BYTE)* Data);"
 
 	<virtual stdcall: void 5 SAFEARRAY**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 OnResponseFinished
 	"Invoke the OnResponseFinished() method of the COM object.
@@ -67,7 +67,7 @@ OnResponseFinished
 		void __stdcall OnResponseFinished();"
 
 	<virtual stdcall: void 6>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 OnResponseStart: status contentType: contentType
 	"Invoke the OnResponseStart() method of the COM object.
@@ -77,7 +77,7 @@ OnResponseStart: status contentType: contentType
 			[in]BSTR ContentType);"
 
 	<virtual stdcall: void 4 sdword bstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IWinHttpRequestEvents categoriesFor: #OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
 !IWinHttpRequestEvents categoriesFor: #OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
 !IWinHttpRequestEvents categoriesFor: #OnResponseFinished!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !

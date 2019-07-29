@@ -211,10 +211,9 @@ atAll: indices put: newElement
 	indices do: [:index | self at: index put: newElement]!
 
 atAllPut: newElement
-	"Replace all the elements of the receiver with the <Object> argument,
-	newElement."
+	"Replace all the elements of the receiver with the <Object> argument, newElement."
 
-	1 to: self size do: [:index | self at: index put: newElement]!
+	self from: 1 to: self size put: newElement!
 
 basicBeginsWith: aCollection
 	"Answer whether the receiver begins with the sequence
@@ -663,6 +662,25 @@ from: startInteger to: stopInteger keysAndValuesDo: operation
 		to: stopInteger
 		keysAndValuesDo: operation!
 
+from: startInteger to: stopInteger put: anObject
+	"Replace the elements of the receiver between the <integer> indices, startInteger and stopInteger, inclusive, with the <Object>, anObject."
+
+	| size written |
+	size := stopInteger - startInteger + 1.
+	written := size min: 8.
+	startInteger to: startInteger + written - 1 do: [:i | self at: i put: anObject].
+	[written < size] whileTrue: 
+			[| thisWrite remaining |
+			remaining := size - written.
+			thisWrite := written < remaining ifTrue: [written] ifFalse: [remaining].
+			self
+				replaceFrom: startInteger + written
+				to: startInteger + written + thisWrite - 1
+				with: self
+				startingAt: startInteger.
+			written := written + thisWrite].
+	^anObject!
+
 grow
 	"Private - Increase the capacity of the receiver. Answer the receiver."
 
@@ -911,6 +929,9 @@ occurrencesOfSubCollection: aSubCollection
 		index := index + size].
 	^count!
 
+pairsDo: aDyadicValuable 
+	1 to: self size by: 2 do: [ :i | aDyadicValuable value: (self at: i) value: (self at: i + 1) ]!
+
 prevIndexOf: anElement from: start to: stop
 	"Answer the index of the occurrence of anElement in the receiver between previous
 	to start, but after stop. If there are no such occurrences, answer 0."
@@ -975,6 +996,22 @@ remove: oldElement ifAbsent: exceptionHandler
 	contractible."
 
 	^self shouldNotImplement!
+
+replaceAll: oldObject with: newObject
+	"Replace all occurences of oldObject with newObject"
+
+	| index last |
+	last := self size.
+	index := self
+				nextIndexOf: oldObject
+				from: 1
+				to: last.
+	[index == 0] whileFalse: 
+			[self at: index put: newObject.
+			index := self
+						nextIndexOf: oldObject
+						from: index + 1
+						to: last]!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one sequence of bytes (or characters)
@@ -1264,6 +1301,7 @@ writeStream
 !SequenceableCollection categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
 !SequenceableCollection categoriesFor: #from:to:do:!enumerating!public! !
 !SequenceableCollection categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
+!SequenceableCollection categoriesFor: #from:to:put:!accessing!public! !
 !SequenceableCollection categoriesFor: #grow!mutating!private! !
 !SequenceableCollection categoriesFor: #hash!comparing!public! !
 !SequenceableCollection categoriesFor: #identityIndexOf:!public!searching! !
@@ -1292,12 +1330,14 @@ writeStream
 !SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #occurrencesOfSubCollection:!private!searching! !
+!SequenceableCollection categoriesFor: #pairsDo:!enumerating!public! !
 !SequenceableCollection categoriesFor: #prevIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:!public!searching! !
 !SequenceableCollection categoriesFor: #prevIndexOfSubCollection:startingAt:ifAbsent:!public!searching! !
 !SequenceableCollection categoriesFor: #randomizeUsing:!operations!public! !
 !SequenceableCollection categoriesFor: #readStream!public!streaming! !
 !SequenceableCollection categoriesFor: #remove:ifAbsent:!public!removing! !
+!SequenceableCollection categoriesFor: #replaceAll:with:!public! !
 !SequenceableCollection categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 !SequenceableCollection categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !SequenceableCollection categoriesFor: #replaceFrom:to:with:!public!replacing! !
@@ -1351,6 +1391,12 @@ emitEncodingMarkerOn: aPositionableStream
 
 	!
 
+new: anInteger streamContents: aMonadicValuable
+	| stream |
+	stream := self writeStream: anInteger.
+	aMonadicValuable value: stream.
+	^stream contents!
+
 ofSize: anInteger
 	"Private - Answer a new instance of the receiver with anInteger nil elements.
 	This method is subtly different from #new: because that, as defined for 
@@ -1362,6 +1408,9 @@ ofSize: anInteger
 	subclasses."
 
 	^self new: anInteger!
+
+streamContents: aMonadicValuable
+	^self new: 100 streamContents: aMonadicValuable!
 
 writeStream
 	"Answer a WriteStream on the a new empty instance of the receiver."
@@ -1376,7 +1425,9 @@ writeStream: anInteger
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
 !SequenceableCollection class categoriesFor: #defaultSortAlgorithm!instance creation!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
+!SequenceableCollection class categoriesFor: #new:streamContents:!public!stream creation! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
+!SequenceableCollection class categoriesFor: #streamContents:!public!stream creation! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !
 

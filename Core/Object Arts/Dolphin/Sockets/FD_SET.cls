@@ -56,6 +56,6 @@ defineFields
 
 getFieldNames
 	^#(#fd_count #fd_array)! !
-!FD_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!FD_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !FD_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

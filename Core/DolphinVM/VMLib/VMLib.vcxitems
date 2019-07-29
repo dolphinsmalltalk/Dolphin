@@ -75,6 +75,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ExternalBuf.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c">
       <CompileAs>CompileAsCpp</CompileAs>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -93,20 +94,29 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinSmalltalk.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinX.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\FloatPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImageFileResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Interprt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\IntPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\LargeIntPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\objmem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\oopq.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ote.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\PrimitiveFailureCode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBlockClosure.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBlockInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STByteArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCollection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STExternal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STFloat.h" />
@@ -121,6 +131,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethodHeader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STProcess.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\StrgPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STStackFrame.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STStream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STString.h" />
@@ -131,6 +142,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VMPointers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zbinstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ExternalBuf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
@@ -149,7 +161,6 @@
   <ItemGroup>
     <MASM Include="$(MSBuildThisFileDirectory)..\byteasm.asm" />
     <MASM Include="$(MSBuildThisFileDirectory)..\constobj.asm" />
-    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalBytes.asm" />
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm" />
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />

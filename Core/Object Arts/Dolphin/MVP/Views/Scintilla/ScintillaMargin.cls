@@ -7,36 +7,54 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	classInstanceVariableNames: ''!
 ScintillaMargin guid: (GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
 ScintillaMargin addClassConstant: 'MarginTypes' value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)!
-ScintillaMargin comment: 'ScintillaMargin instances represent the ''margin'' attributes of a <ScintillaView>.
+ScintillaMargin comment: '`ScintillaMargin` instances represent the ''margin'' attributes of a `ScintillaView`.
 
-From the Scintilla Documentation:
+There may be multiple margins to the left of the text display, plus a gap either side of the text. Each margin can be set to display either "marker" symbols, line numbers or text, as specified by the `#style` aspect. The markers that can be displayed in each margin are set with `#mask` aspect. Any markers not associated with a visible margin will be displayed as changes in background colour in the text. A width in pixels can be set for each margin using the `#width` aspect. Margins with a zero width are ignored completely. The `#isSensitive` aspect controls whether a mouse click in a margin triggers a `#marginClicked` event or selects the corresponding line of text.
 
-"There may be up to three margins to the left of the text display, plus a gap either side of the text. Each margin can be set to display either symbols or line numbers [using the #isNumbers aspect]. The markers that can be displayed in each margin are set with [#mask]. Any markers not associated with a visible margin will be displayed as changes in background colour in the text. A width in pixels can be set for each margin. Margins with a zero width are ignored completely. You can choose if a mouse click in a margin [triggers a #marginClicked event] or selects a line of text [by using the #isSensitive aspect].
+## Margin Styles
+The margin `#style` can be one of the following:
+  `#symbol`			The margin displays marker symbols
+  `#lineNumber`		The margin displays line numbers
+  `#symbolBackground`	As `#symbol`, but also colours the background of the margin in the default style background colour. This markes the margin area appear to be part of the text area.
+  `#symbolForeground`	As `#symbol` but colours the background in the default style foreground colour.
+  `#text`				The margin displays the text set for the line, if any. *N.B. Text margins are not currently modelled in the ScintillaView abstraction as a high level concept*
+  `#rightJustifiedText`	As `#text` but the text is displayed right justified
+  `#color`				As `#symbol`, but also colours the background of the margin to a colour configured as the `backcolor` of the margin.
 
-The margins are numbered 0 to 2. Using a margin number outside the valid range has no effect. By default, margin 0 is set to display line numbers, but is given a width of 0, so it is hidden. Margin 1 is set to display non-folding symbols and is given a width of 16 pixels, so it is visible. Margin 2 is set to display the folding symbols, but is given a width of 0, so it is hidden. Of course, you can set the margins to be whatever you wish."
+## Instance Variables:
+  `width`		`<integer>`. Pixel width of the margin (0 if invisible)
+  `type`		`<integer>`. Type code (numbers, symbols, or numbers and symbols) fromm the `SC_MARGIN_XXX` enumeration.
+  `isSensitive`	`<boolean>`. Whether responds to mouse clicks by sending SCN_MARGINCLICK notifications.
+  `mask`		`<integer>` flags controlling which markers can be displayed. See #mask for further details.
+  `cursorType`
+  `backcolor`	`Color` for margins styles that use it.
 
-Instance Variables:
-	width		<integer>. Pixel width of the margin (0 if invisible)
-	type		<integer>. Type code (numbers, symbols, or numbers and symbols)
-	isSensitive	<boolean>. Whether responds to mouse clicks by sending SCN_MARGINCLICK notifications.
-	mask		<integer> flags controlling which markers can be displayed. See #mask for further details.
+## Class Variables:
+  `CursorTypes`		`LookupTable`
+  `MarginTypes`		`Array`
+
+
+
+
 
 '!
 !ScintillaMargin categoriesForClass!MVP-Views-Support! !
 !ScintillaMargin methodsFor!
 
 backcolor
-	^self basicBackcolor ifNotNil: [:rgbVal | RGB fromInteger: rgbVal]!
+	"Answer the background colour used to draw the margin to the <Color> argument. Can be nil, indicatoring that the colour is unspecified, in which case Scintilla's default margin colour (black) is used, but only when the margin has the #color type."
 
-backcolor: aColorOrNil
-	self basicBackcolor: (aColorOrNil ifNotNil: [aColorOrNil asParameter]).
-	self updateViewProperty: #backcolor!
-
-basicBackcolor
 	^backcolor!
 
-basicBackcolor: anIntegerOrNil
-	backcolor := anIntegerOrNil!
+backcolor: aColorOrNil
+	"Set the background <Color> for the margin, which is used to paint the background of the margin when it has the #color type. If the argument is nil, then the control's default margin background colour will be used (black).
+	although typically this value should only be nil when the margin is not using the #color type."
+
+	self basicBackcolor: aColorOrNil.
+	self updateViewProperty: #backcolor!
+
+basicBackcolor: aColorOrNil
+	backcolor := aColorOrNil!
 
 basicCursorType
 	"Private - The Scintilla cursor type to be used in the margin, or nil if the default reverse
@@ -158,7 +176,6 @@ width: anInteger
 	self updateViewProperty: #width! !
 !ScintillaMargin categoriesFor: #backcolor!accessing!public! !
 !ScintillaMargin categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMargin categoriesFor: #basicBackcolor!accessing!private! !
 !ScintillaMargin categoriesFor: #basicBackcolor:!accessing!private! !
 !ScintillaMargin categoriesFor: #basicCursorType!accessing!private! !
 !ScintillaMargin categoriesFor: #basicCursorType:!accessing!private! !
@@ -186,44 +203,44 @@ width: anInteger
 buildPropertyMap
 	^IdentityDictionary new
 		at: #isSensitive
-			put: (QueryableScintillaPropertyDescriptor
+			put: (ScintillaPropertyDescriptor
 					getSelector: #basicIsSensitive
 					defaultValue: 0
 					setMessage: SCI_SETMARGINSENSITIVEN
 					setSelector: #basicIsSensitive:
 					getMessage: SCI_GETMARGINSENSITIVEN);
 		at: #mask
-			put: (QueryableScintillaPropertyDescriptor
+			put: (ScintillaPropertyDescriptor
 					getSelector: #mask
 					defaultValue: 0
 					setMessage: SCI_SETMARGINMASKN
 					setSelector: #mask:
 					getMessage: SCI_GETMARGINMASKN);
 		at: #type
-			put: (QueryableScintillaPropertyDescriptor
+			put: (ScintillaPropertyDescriptor
 					getSelector: #basicType
 					defaultValue: SC_MARGIN_SYMBOL
 					setMessage: SCI_SETMARGINTYPEN
 					setSelector: #basicType:
 					getMessage: SCI_GETMARGINTYPEN);
 		at: #width
-			put: (QueryableScintillaPropertyDescriptor
+			put: (ScintillaPropertyDescriptor
 					getSelector: #basicWidth
 					defaultValue: nil
 					setMessage: SCI_SETMARGINWIDTHN
 					setSelector: #basicWidth:
 					getMessage: SCI_GETMARGINWIDTHN);
 		at: #cursorType
-			put: (QueryableScintillaPropertyDescriptor
+			put: (ScintillaPropertyDescriptor
 					getSelector: #basicCursorType
 					defaultValue: SC_CURSORREVERSEARROW
 					setMessage: SCI_SETMARGINCURSORN
 					setSelector: #basicCursorType:
 					getMessage: SCI_GETMARGINCURSORN);
 		at: #backcolor
-			put: (QueryableScintillaPropertyDescriptor
-					getSelector: #basicBackcolor
-					defaultValue: 0
+			put: (ScintillaColorPropertyDescriptor
+					getSelector: #backcolor
+					defaultValue: RGB black
 					setMessage: SCI_SETMARGINBACKN
 					setSelector: #basicBackcolor:
 					getMessage: SCI_GETMARGINBACKN);
@@ -250,16 +267,18 @@ initialize
 				isImmutable: true;
 				yourself)!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	^
-	[:vars | 
+	[:vars |
 	| instance |
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
+	instance backcolor
+		ifNotNil: [:int | instance basicBackcolor: (int isZero ifFalse: [Color fromInteger: int])].
 	instance]!
 
 stbVersion
-	^2! !
+	^3! !
 !ScintillaMargin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
 !ScintillaMargin class categoriesFor: #initialize!development!initializing!public! !
 !ScintillaMargin class categoriesFor: #stbConvertFrom:!binary filing!private! !

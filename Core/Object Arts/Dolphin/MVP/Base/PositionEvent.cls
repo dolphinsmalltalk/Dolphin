@@ -16,7 +16,7 @@ extent
 	If the client area is required, it can be requested by simply sending an
 	#clientExtent message to the window."
 
-	^self width @ self height!
+	^self lpwp extent!
 
 extent: aPoint
 	"Set the extent of the window for the size event.
@@ -25,10 +25,11 @@ extent: aPoint
 	self width: aPoint x; height: aPoint y!
 
 flags
-	"Answer an <integer> containing the SWP_XXX flags associated with 
-	this position change event."
+	"Answer an <integer> containing the SWP_XXX flags associated with this position change event."
 
-	^lpwp flags!
+	"Implementation Note: For most PositionEvents we only need to access the flags, so optimise for this case, avoiding creation of a WINDOWPOS structure."
+
+	^lParam dwordAtOffset: WINDOWPOS._OffsetOf_flags!
 
 height
 	"Answer the height of the window after the size event.
@@ -36,70 +37,63 @@ height
 	If the client area is required, it can be requested by simply sending an
 	#clientExtent message to the window."
 
-	^lpwp cy!
+	^self lpwp cy!
 
 height: anInteger
 	"Set the height of the window for the size event.
 	N.B. This is not the height of the client area, but the external dimension."
 
-	^lpwp cy: anInteger!
+	^self lpwp cy: anInteger!
 
 isActivate
 	"Answer whether the receiver is describing a window activation event."
 
-	^lpwp flags noMask: SWP_NOACTIVATE!
+	^self flags noMask: SWP_NOACTIVATE!
 
 isClientAreaChanged
 	"Answer whether the receiver is describing a change in the client area."
 
-	^(lpwp flags bitAnd: ##(SWP_NOSIZE | SWP_FRAMECHANGED)) ~= SWP_NOSIZE!
+	^(self flags bitAnd: ##(SWP_NOSIZE | SWP_FRAMECHANGED)) ~= SWP_NOSIZE!
 
 isHideWindow
 	"Answer whether the receiver is describing a hide event."
 
-	^lpwp flags anyMask: SWP_HIDEWINDOW!
+	^self flags anyMask: SWP_HIDEWINDOW!
 
 isMove
 	"Answer whether the receiver is describing a move event."
 
-	^lpwp flags noMask: SWP_NOMOVE!
+	^self flags noMask: SWP_NOMOVE!
 
 isRectangleChanged
-	"Answer whether the receiver is describing a position change
-	event which has really affected the layout of the window, i.e.
-	either or both of the position and size have been changed."
+	"Answer whether the receiver is describing a position change event which has really affected the layout of the window, i.e. either or both of the position and size have been changed."
 
-	^self lpwp isRectangleChanged!
+	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
 
 isResize
 	"Answer whether the receiver is describing a resize event."
 
-	^lpwp flags noMask: SWP_NOSIZE!
+	^self flags noMask: SWP_NOSIZE!
 
 isVisibilityChange
 	"Answer whether the receiver is describing a hide/show event."
 
-	^lpwp flags anyMask: ##(SWP_SHOWWINDOW | SWP_HIDEWINDOW)!
+	^self flags anyMask: ##(SWP_SHOWWINDOW | SWP_HIDEWINDOW)!
 
 isZOrderChanged
 	"Answer whether the receiver is describing a z-order change."
 
-	^lpwp flags noMask: SWP_NOZORDER!
+	^self flags noMask: SWP_NOZORDER!
 
 lpwp
 	"Private - Answer the value of the receiver's 'lpwp' instance variable."
 
-	^lpwp!
-
-makeStruct
-	"Private - Create the WINDOWPOS structure from the message lParam."
-
-	lpwp := WINDOWPOS fromAddress: lParam.!
+	^lpwp ifNil: [lpwp := WINDOWPOS fromAddress: lParam]!
 
 position
 	"Answer the position of the window origin."
 
-	^self x @ self y!
+	^self lpwp position!
 
 printLParamOn: aStream 
 	"Private - Append a textual representation of the receiver's lParam
@@ -108,7 +102,7 @@ printLParamOn: aStream
 	aStream print: self lpwp!
 
 rectangle
-	^lpwp rectangle!
+	^self lpwp rectangle!
 
 width
 	"Answer the width of the window after the size event.
@@ -116,23 +110,23 @@ width
 	If the client area is required, it can be requested by simply sending an
 	#clientExtent message to the window."
 
-	^lpwp cx!
+	^self lpwp cx!
 
 width: anInteger
 	"Set the width of the window forthe size event.
 	N.B. This is not the width of the client area, but the external dimension."
 
-	^lpwp cx: anInteger!
+	^self lpwp cx: anInteger!
 
 x
 	"Answer the x-position of the window origin."
 
-	^lpwp x!
+	^self lpwp x!
 
 y
 	"Answer the y-position of the window origin."
 
-	^lpwp y! !
+	^self lpwp y! !
 !PositionEvent categoriesFor: #extent!accessing!public! !
 !PositionEvent categoriesFor: #extent:!accessing!public! !
 !PositionEvent categoriesFor: #flags!accessing!public! !
@@ -147,7 +141,6 @@ y
 !PositionEvent categoriesFor: #isVisibilityChange!public!testing! !
 !PositionEvent categoriesFor: #isZOrderChanged!public!testing! !
 !PositionEvent categoriesFor: #lpwp!accessing!private! !
-!PositionEvent categoriesFor: #makeStruct!initializing!private! !
 !PositionEvent categoriesFor: #position!accessing!public! !
 !PositionEvent categoriesFor: #printLParamOn:!development!printing!private! !
 !PositionEvent categoriesFor: #rectangle!accessing!public! !
@@ -159,15 +152,12 @@ y
 !PositionEvent class methodsFor!
 
 window: aView message: msgInteger wParam: wInteger lParam: lInteger
-	"Answer an instance of the receiver containing the message details specified by the
-	parameters."
+	"Answer an instance of the receiver containing the message details specified by the parameters."
 
-	^(super
+	^super
 		window: aView
 		message: msgInteger
 		wParam: wInteger
-		lParam: lInteger)
-		makeStruct;
-		yourself! !
+		lParam: lInteger asExternalAddress! !
 !PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

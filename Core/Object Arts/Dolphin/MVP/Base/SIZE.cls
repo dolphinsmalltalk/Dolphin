@@ -89,7 +89,7 @@ width: cx height: cy
 				sdwordAtOffset: 0 put: cx;
 				sdwordAtOffset: 4 put: cy;
 				yourself)! !
-!SIZE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SIZE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SIZE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SIZE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !SIZE class categoriesFor: #width:height:!instance creation!public! !

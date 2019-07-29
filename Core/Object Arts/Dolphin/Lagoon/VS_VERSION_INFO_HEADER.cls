@@ -103,6 +103,6 @@ defineFields
 
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
-!VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!initializing!private! !
+!VS_VERSION_INFO_HEADER class categoriesFor: #defineFields!private!template definition! !
 !VS_VERSION_INFO_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -204,6 +204,6 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
-!AbstractLOGFONT class categoriesFor: #defineFields!initializing!public! !
+!AbstractLOGFONT class categoriesFor: #defineFields!public!template definition! !
 !AbstractLOGFONT class categoriesFor: #getFieldNames!constants!private! !
 

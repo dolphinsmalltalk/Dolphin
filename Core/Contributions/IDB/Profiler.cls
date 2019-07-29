@@ -30,12 +30,12 @@ profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger
 	Delay resolution: samplingInterval
 		do: 
 			[| delay elapsed |
-			delay := Delay forMicroseconds: samplingInterval.
+			delay := Delay forDuration: samplingInterval.
 			
 			[| started |
-			started := Time microsecondClockValue.
+			started := Delay microsecondClockValue.
 			delay wait.
-			elapsed := Time microsecondClockValue - started.
+			elapsed := Delay microsecondClockValue - started.
 			aProfilerSampleSet isActive]
 					whileTrue: 
 						[isSampling
@@ -92,10 +92,10 @@ sampleProcess: aProcess forSet: aProfilerSampleSet elapsedTime: anInteger ignori
 	size := (aProcess stackDepthFrom: topFrame) - ignoreInteger.
 	size > 0 ifTrue: [aProfilerSampleSet addSample: (topFrame getFrames: size) elapsedTime: anInteger]!
 
-samplingInterval: anInteger 
-	"Set the sampling interval, the delay between samples being taken, to anInteger"
+samplingInterval: aDuration 
+	"Set the sampling interval, the delay between samples being taken, to the <Duration> argument"
 
-	samplingInterval := anInteger!
+	samplingInterval := aDuration!
 
 startSampling
 	"Set the state of the isSampling flag to true. If a profile is in progress the change in

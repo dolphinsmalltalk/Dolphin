@@ -164,6 +164,6 @@ defineFields
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
-!DEVMODE class categoriesFor: #defineFields!initializing!public! !
+!DEVMODE class categoriesFor: #defineFields!public!template definition! !
 !DEVMODE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

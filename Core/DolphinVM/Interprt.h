@@ -19,8 +19,14 @@
 
 #include "DolphinX.h"
 #include "bytecdes.h"
+#include "DolphinSmalltalk_i.h"
+#include "PrimitiveFailureCode.h"
 
 using namespace ST;
+
+#ifndef PRIMTABLEDECL
+#define PRIMTABLEDECL __declspec(align(16)) const
+#endif
 
 ///////////////////////////////////
 
@@ -52,6 +58,7 @@ using namespace ST;
 // This is where the stack overflow handling is carried out
 
 extern "C" void __cdecl byteCodeLoop();	// See byteasm.asm
+extern "C" void __cdecl invalidByteCode();	// See byteasm.asm
 
 typedef volatile LONG SHAREDLONG;
 
@@ -181,7 +188,7 @@ public:
 	static void pushNewObject(Oop);					// Push newly created objects (add to Zct)
 	static void pushUnknown(Oop);					// Push an object that might be new, might be old
 	static void pushBool(BOOL bValue);				// Push the appropriate Smalltalk boolean object
-	static void pushSmallInteger(SMALLINTEGER n);	// Push a gtd SmallInteger (no overflow check)
+	static void pushSmallInteger(SMALLINTEGER n);	// Store a gtd SmallInteger (no overflow check)
 	static void pushUnsigned32(DWORD value);
 	static void pushSigned32(SDWORD value);
 	static void pushUIntPtr(UINT_PTR value);
@@ -279,6 +286,7 @@ public:
 
 	static bool disableAsyncGC(bool bDisable);
 	static void OnCompact();
+	static void CompactVirtualObject(OTE*);
 	static void MarkRoots();
 
 	// Clear down the object caches for VM alloc'd objects
@@ -296,7 +304,7 @@ public:
 	// memory exceptions from pushing parms etc on the stack)
 	static int __stdcall callbackExceptionFilter(LPEXCEPTION_POINTERS info);
 
-	static void __fastcall activateNewMethod(CompiledMethod* methodPointer);
+	static void __fastcall activatePrimitiveMethod(CompiledMethod* methodPointer, _PrimitiveFailureCode failureCode);
 
 private:
 
@@ -327,7 +335,7 @@ private:
 
 	static void recoverFromFault(LPEXCEPTION_POINTERS pExRec);
 	static void sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExRec);
-	static void saveContextAfterFault(LPEXCEPTION_POINTERS info, bool isInPrimitive);
+	static bool saveContextAfterFault(LPEXCEPTION_POINTERS info);
 
 	static void wakePendingCallbacks();
 	static unsigned countPendingCallbacks();
@@ -379,12 +387,6 @@ private:
 	static OTE* dequeueBereaved(ST::VariantObject* out);
 	static void scheduleFinalization();
 
-	#ifdef INLINEMEMFNS
-		static BOOL success();
-		static BOOL setSuccess(BOOL bValue);
-		static BOOL primitiveFail();
-	#endif
-
 	static void CALLBACK TimeProc(UINT uID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2);
 
 	// Signal a semaphore; synchronously if no interrupts are pending, else asynchronously.
@@ -405,7 +407,7 @@ public:
 	static void Yield();
 	static BOOL FastYield();
 	static void sleep(ProcessOTE* aProcess);
-	static int SuspendProcess(ProcessOTE* oteProc);
+	static _PrimitiveFailureCode SuspendProcess(ProcessOTE* oteProc);
 	static void QueueProcessOn(ProcessOTE* oteProc, LinkedListOTE* oteList);
 	static BOOL __stdcall Reschedule();
 
@@ -475,21 +477,20 @@ public:
 	//		of primitives invoked by special selectors, then only
 	//		the argumentCount can be relied upon.
 
-	static Oop* primitiveFailure(int failureCode);
-	static Oop* primitiveFailureWith(int failureCode, Oop failureOop);
-	static Oop* primitiveFailureWith(int failureCode, OTE* failureObject);
-	static Oop* primitiveFailureWithInt(int failureCode, SMALLINTEGER failureInt);
+	static Oop* primitiveFailure(_PrimitiveFailureCode failureCode);
 
 private:
-	// Answer whether the Interpreter is currently executing a primitive method
-	static bool isInPrimitive();
+	// Answer whether an exception occurred in a primitive
+	static bool isInPrimitive(LPEXCEPTION_POINTERS pExInfo);
+
+public:
+	typedef Oop* (__fastcall *PrimitiveFp)(Oop* const sp, unsigned argCount);
 
 	static Oop* __fastcall unusedPrimitive(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveActivateMethod(Oop* const sp, unsigned argCount);
+
+	template<int Index> static Oop * __fastcall primitiveReturnConst(Oop * const sp, unsigned argCount);
 	static Oop* __fastcall primitiveReturnSelf(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveReturnTrue(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveReturnFalse(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveReturnNil(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveReturnLiteralZero(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveReturnInstVar(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveSetInstVar(Oop* const sp, unsigned argCount);
@@ -500,24 +501,19 @@ private:
 	static Oop* __fastcall primitiveSubtract(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveMultiply(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveDivide(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveDiv(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveMod(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveQuo(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveQuoAndRem(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveDiv(Oop* const sp, unsigned argCount);		// Still in SmallIntPrim.asm
+	static Oop* __fastcall primitiveMod(Oop* const sp, unsigned argCount);		// Still in SmallIntPrim.asm
+	static Oop* __fastcall primitiveQuo(Oop* const sp, unsigned argCount);		// Still in SmallIntPrim.asm
 
 	// SmallInteger relational ops
+	template <typename Cmp, bool Lt> static Oop* __fastcall primitiveIntegerCmp(Oop* const sp, unsigned);
 	static Oop* __fastcall primitiveEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveNotEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLessThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLessOrEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveGreaterThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveGreaterOrEqual(Oop* const sp, unsigned argCount);
 
 	// SmallInteger bit manipulation
-	static Oop* __fastcall primitiveBitAnd(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveBitOr(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveBitXor(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveBitShift(Oop* const sp, unsigned argCount);
+	
+	template <typename Op> static Oop* __fastcall primitiveIntegerOp(Oop* const sp, unsigned);
+
+	static Oop* __fastcall primitiveBitShift(Oop* const sp, unsigned argCount);		// Still in SmallIntPrim.asm
 	static Oop* __fastcall primitiveHighBit(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLowBit(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAnyMask(Oop* const sp, unsigned argCount);
@@ -526,121 +522,68 @@ private:
 	static Oop* __fastcall primitiveSmallIntegerAt(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveSmallIntegerPrintString(Oop* const sp, unsigned argCount);
 
-	// LargeInteger Arithmetic
-	static Oop* __fastcall primitiveLargeIntegerAdd(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerSub(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerMul(Oop* const sp, unsigned argCount);
+	// LargeInteger Arithmetic - mostly templated
+	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpZ(Oop * const sp, unsigned);
+	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpR(Oop * const sp, unsigned);
 	static Oop* __fastcall primitiveLargeIntegerDivide(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerDiv(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerMod(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerQuoAndRem(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveLargeIntegerQuo(Oop* const sp, unsigned argCount);
 
-	// LargeInteger relational ops
+	// LargeInteger relational ops - mostly templated
+	template<bool Lt, bool Eq> static Oop * __fastcall primitiveLargeIntegerCmp(Oop * const sp, unsigned);
 	static Oop* __fastcall primitiveLargeIntegerEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerLessThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerLessOrEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerGreaterThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerGreaterOrEqual(Oop* const sp, unsigned argCount);
 
 	// LargeInteger bit manipulation
 	static Oop* __fastcall primitiveLargeIntegerBitInvert(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerNegate(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerBitAnd(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerBitOr(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLargeIntegerBitXor(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveLargeIntegerBitShift(Oop* const sp, unsigned argCount);
+	static Oop * __fastcall primitiveLargeIntegerHighBit(Oop * const sp, unsigned);
 
 	// LargeInteger miscellaneous
-	static Oop* __fastcall primitiveLargeIntegerNormalize(Oop* const sp, unsigned argCount);
+	template<typename Op> static Oop * __fastcall primitiveLargeIntegerUnaryOp(Oop * const sp, unsigned);
 	static Oop* __fastcall primitiveLargeIntegerAsFloat(Oop* const sp, unsigned argCount);
 
 	// Float primitives
 	static Oop* __fastcall primitiveAsFloat(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatAdd(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatSubtract(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatLessThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatLessOrEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatGreaterThan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatGreaterOrEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatEqual(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatMultiply(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatDivide(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveTruncated(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatSin(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatCos(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatTan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatArcSin(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatArcCos(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatArcTan(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatArcTan2(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatExp(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatLog(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatLog10(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatSqrt(Oop* const sp, unsigned argCount);
+	template <typename Pred> static Oop* __fastcall primitiveFloatCompare(Oop* const sp, unsigned);
+	template <typename Op> static Oop* __fastcall primitiveFloatBinaryOp(Oop* const sp, unsigned);
+	template <typename Op> static Oop* __fastcall primitiveFloatUnaryOp(Oop* const sp, unsigned);
+
 	static Oop* __fastcall primitiveFloatTimesTwoPower(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatAbs(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatRaisedTo(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatFloor(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatCeiling(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatExponent(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatNegated(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatFractionPart(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveFloatIntegerPart(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveFloatClassify(Oop* const sp, unsigned argCount);
 
+	template <typename Op> static Oop* __fastcall primitiveFloatTruncationOp(Oop* const sp, unsigned);
+	
 	static Oop* __fastcall primitiveSize(Oop* const sp, unsigned argCount);
    	
 	// Object Indexing Primitives
 	static Oop* __fastcall primitiveBasicAt(Oop* const sp, const unsigned argCount);
 	static Oop* __fastcall primitiveBasicAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveAtPut(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveInstVarAt(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveInstVarAtPut(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveNextIndexOfFromTo(Oop* const sp, unsigned argCount);
 
 	///////////////////////////////////////////////////////////////////////////
 	// External Buffer access primitives
-
-	enum { PrimitiveFailureNonInteger, PrimitiveFailureBoundsError, PrimitiveFailureBadValue, PrimitiveFailureSystemError, PrimitiveFailureWrongNumberOfArgs };
-
+	
 	static Oop* __fastcall primitiveStructureIsNull(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveBytesIsNull(Oop* const sp, unsigned argCount);
 
-	static Oop* __fastcall primitiveDWORDAt(Oop* const sp, unsigned argCount);
+	template<typename T, typename P> static Oop * __fastcall primitiveIndirectIntegerAtOffset(Oop * const sp, unsigned);
+	template<typename T, typename P> static Oop * __fastcall primitiveIntegerAtOffset(Oop * const sp, unsigned);
+	template<typename T, SMALLINTEGER MinVal, SMALLINTEGER MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, unsigned);
+	template<typename T, SMALLINTEGER MinVal, SMALLINTEGER MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, unsigned);
+
+	// These have specialised implementations as they accept other than just SmallInteger values to 'put'
 	static Oop* __fastcall primitiveDWORDAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectDWORDAt(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveIndirectDWORDAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveSDWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectSDWORDAt(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveSDWORDAtPut(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveIndirectSDWORDAtPut(Oop* const sp, unsigned argCount);
 
-	static Oop* __fastcall primitiveWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveWORDAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectWORDAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveSWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectSWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveSWORDAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveIndirectSWORDAtPut(Oop* const sp, unsigned argCount);
-
-	static Oop* __fastcall primitiveQWORDAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveSQWORDAt(Oop* const sp, unsigned argCount);
-
 	// Floating point number accessors
-	static Oop* __fastcall primitiveSinglePrecisionFloatAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveSinglePrecisionFloatAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveDoublePrecisionFloatAt(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveDoublePrecisionFloatAtPut(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveLongDoubleAt(Oop* const sp, unsigned argCount);
+	template<typename T> static Oop * __fastcall primitiveFloatAtOffset(Oop * const sp, unsigned);
+	template<typename T> static Oop * __fastcall primitiveFloatAtOffsetPut(Oop * const sp, unsigned);
 
-	// Most of the External Buffer primitives handle indirect addresses
-	// as well, but bytes are normally accessed via the standard primitives 
-	// for #at: and #at:put:, which we'd rather not complicate and/or slow 
-	// these down.
-	static Oop* __fastcall primitiveByteAtAddress(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveByteAtAddressPut(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveLongDoubleAt(Oop* const sp, unsigned argCount);
 
 	// Get address of contents of a byte object
 	static Oop* __fastcall primitiveAddressOf(Oop* const sp, unsigned argCount);
@@ -666,12 +609,12 @@ private:
 	static Oop* __fastcall primitiveStringSearch(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringNextIndexOfFromTo(Oop* const sp, unsigned argCount);
 
-	static Oop* __fastcall primitiveStringCollate(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveStringCmp(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall primitiveStringCmpOrdinal(Oop* const sp, unsigned argCount);
+	// String comparisons - mostly templated
+	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, unsigned);
 	static Oop* __fastcall primitiveStringEqual(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, unsigned argCount);
 
+	static Oop* __fastcall primitiveStringAsUtf32String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsUtf16String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsUtf8String(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringAsByteString(Oop* const sp, unsigned argCount);
@@ -705,6 +648,7 @@ private:
 	// Object Memory primitives
 	static Oop* __fastcall primitiveBasicIdentityHash(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveIdentityHash(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveHashMultiply(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllReferences(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllInstances(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveAllSubinstances(Oop* const sp, unsigned argCount);
@@ -830,7 +774,7 @@ public:
 private:
 	// Method cache is a hash table with overwrite on collision
 	// If changing method cache size, then must also modify METHODCACHEWORDS in ISTASM.INC!
-	enum { MethodCacheSize = 1024 };
+	constexpr static int MethodCacheSize = 1024;
 	static MethodCacheEntry methodCache[MethodCacheSize];
 
 	static void flushCaches();
@@ -909,9 +853,6 @@ private:
 	static LONG			m_nInputPollInterval;			// Poll counter reset to this after each message queue poll
 	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
-	typedef Oop* (__fastcall *PrimitiveFp)(Oop* const sp, unsigned argCount);
-	static PrimitiveFp primitivesTable[256];
-
 public:
 	static UINT			m_ansiCodePage;
 	static WCHAR		m_unicodeReplacementChar;
@@ -932,6 +873,8 @@ public:
 		enum { VMREFSGROWTH = 64 };
 	#endif
 };
+
+extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256];
 
 std::wostream& operator<<(std::wostream& stream, const CONTEXT* pCtx);
 

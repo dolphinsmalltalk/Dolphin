@@ -1286,14 +1286,14 @@ POTE Compiler::ParseMethod()
 	PushNewScope(0);
 
 	ParseMessagePattern();
+	if (ThisTokenIsBinary('<'))
+	{
+		ParsePrimitive();
+	}
 	ParseTemporaries();
 	
 	if (m_ok)
 	{
-		if (ThisTokenIsBinary('<'))
-		{
-			ParsePrimitive();
-		}
 		ParseStatements(Eof);
 	}
 
@@ -2109,6 +2109,13 @@ void Compiler::ParsePrimitive()
 {
 	TokenType next = NextToken();
 	Str strToken = ThisTokenText();
+
+	// Declare the implicit _failureCode temporary - this will always be the first temp of the method after the arguments
+	TempVarDecl* pErrorCodeDecl = AddTemporary((LPUTF8)"_failureCode", ThisTokenRange(), false);
+	TempVarRef* pErrorTempRef = m_pCurrentScope->AddTempRef(pErrorCodeDecl, vrtWrite, ThisTokenRange());
+	// Implicitly written to by the primitive itself, but is then read-only and cannot be assigned
+	pErrorCodeDecl->BeReadOnly();
+
 	if (next == NameColon)
 	{
 		if (strToken == (LPUTF8)"primitive:")
@@ -2120,8 +2127,23 @@ void Compiler::ParsePrimitive()
 				m_primitiveIndex=ThisTokenInteger();
 				if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & Boot))
 					CompileError(ThisTokenRange(), CErrBadPrimIdx);
+				
+				next = NextToken();
+				if (next == TokenType::NameColon && Str(ThisTokenText()) == (LPUTF8)"error:")
+				{
+					if (NextToken() == TokenType::NameConst)
+					{
+						// Rename the _failureCode temporary
+						Str errorCodeName = ThisTokenText();
+						CheckTemporaryName(errorCodeName, ThisTokenRange(), false);
+						pErrorCodeDecl->SetName(errorCodeName);
+						pErrorCodeDecl->SetTextRange(ThisTokenRange());
+						NextToken();
+					}
+					else
+						CompileError(ThisTokenRange(), CErrExpectVariable);
+				}
 
-				NextToken();
 				if (ThisTokenIsBinary('>'))
 				{
 					NextToken();
@@ -2566,6 +2588,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"double", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"float", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"hresult", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
+				{ (LPUTF8)"ntstatus", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"char", DolphinX::ExtCallArgCHAR, (LPUTF8)DolphinX::ExtCallArgLPSTR},
 				{ (LPUTF8)"byte", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
@@ -2592,6 +2615,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"DOUBLE", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"FLOAT", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"HRESULT", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
+				{ (LPUTF8)"NTSTATUS", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 				{ (LPUTF8)"BYTE", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"SBYTE", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
 				{ (LPUTF8)"WORD", DolphinX::ExtCallArgWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
@@ -2604,7 +2628,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 				{ (LPUTF8)"GUID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
 				{ (LPUTF8)"IID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
 				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID }
+				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID },
 			};
 
 			answer.range = ThisTokenRange();

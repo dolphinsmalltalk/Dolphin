@@ -36,9 +36,8 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 			[in] IUnknown* pUnkObj);
 	"
 
-	<virtual stdcall: hresult 4 lpwstr VARIANT* IErrorLog*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 lpwstr variant* IErrorLog*>
+	^self invalidCall: _failureCode!
 
 write: pszPropName pVar: pVar
 	"Invoke the Write() method of the COM Object."
@@ -53,9 +52,8 @@ Write: pszPropName pVar: pVar
 			[in] VARIANT* pVar);
 	"
 
-	<virtual stdcall: hresult 5 lpwstr VARIANT*>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 5 lpwstr variant*>
+	^self invalidCall: _failureCode! !
 !IPropertyBag categoriesFor: #read:pErrorLog:!methods!public! !
 !IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!private! !
 !IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !

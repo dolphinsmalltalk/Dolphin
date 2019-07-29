@@ -64,7 +64,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPutAll: '(uFlags='.
 	flags := self uFlags.
-	flags printOn: aStream base: 16.
+	flags printOn: aStream base: 16 showRadix: true.
 	aStream
 		nextPutAll: ', hwnd=';
 		print: (View fromHandle: self hwnd);
@@ -174,6 +174,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
-!TOOLINFOW class categoriesFor: #defineFields!initializing!public! !
+!TOOLINFOW class categoriesFor: #defineFields!public!template definition! !
 !TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

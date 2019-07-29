@@ -90,7 +90,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ROUNDRECT! !
-!EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
 

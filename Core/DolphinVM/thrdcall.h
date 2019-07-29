@@ -18,7 +18,6 @@
 #define TRACING 0
 #endif
 
-
 template<class T> class SmartPtr
 {
 	T* m_pObj;
@@ -53,6 +52,12 @@ public:
 		AddRef();
 	}
 
+	// Move constructor
+	SmartPtr(SmartPtr&& other) : m_pObj(other.m_pObj)
+	{
+		other.m_pObj = nullptr;
+	}
+
 	// Destructor
 	~SmartPtr()
 	{
@@ -72,6 +77,17 @@ public:
 	SmartPtr& operator=(const SmartPtr& cp)
 	{ 
 		return operator=(cp.m_pObj); 
+	}
+
+	SmartPtr& operator=(SmartPtr&& other) 
+	{
+		if (this != &other) 
+		{
+			Release();
+			m_pObj = other.m_pObj;
+			other.m_pObj = nullptr;
+		}
+		return *this;
 	}
 
 	T* operator->() const
@@ -100,75 +116,7 @@ public:
 class OverlappedCall;
 typedef SmartPtr<OverlappedCall> OverlappedCallPtr;
 
-template <class T> class DoubleLink
-{
-	T* prev;
-	T* next;
-
-public:
-	DoubleLink() : prev(NULL), next(NULL) {}
-
-	T* Next() const { return next; }
-
-	T* Unlink()
-	{
-		// next null if last link in list
-		if (next)
-			next->prev = prev;
-		// prev pointer normally valid because there is an anchor node, but when shutting
-		// down will already have been unlinked from the list
-		if (prev)
-			prev->next = next;
-		next = prev = NULL;
-
-		return static_cast<T*>(this);
-	}
-
-	void LinkAfter(T* prevArg)
-	{
-		T* pThis = static_cast<T*>(this);
-		this->next = prevArg->next;
-		if (this->next)
-			this->next->prev = pThis;
-		this->prev = prevArg;
-		prevArg->next = pThis;
-	}
-};
-
-template <class T> class DoublyLinkedList
-{
-	DoubleLink<T> anchor;
-public:
-	T* First() const
-	{ 
-		return anchor.Next(); 
-	}
-
-	bool IsEmpty() const
-	{
-		return First() == NULL;
-	}
-
-	T* RemoveFirst()
-	{
-		T* node = First();
-		if (node != NULL)
-			node->Unlink();
-		return node;
-	}
-
-	void AddFirst(T* node)
-	{
-		// Slightly nasty thing is that anchor node is not actually the same type as
-		// the other nodes, so we need a cast here.
-		node->LinkAfter(reinterpret_cast<T*>(&anchor));
-	}
-};
-
-class OverlappedCall;
-typedef DoublyLinkedList<OverlappedCall> OverlappedCallList;
-
-class OverlappedCall : public DoubleLink<OverlappedCall>
+class OverlappedCall
 {
 public:
 	// Allocate/free methods for maintaining pool of available blocks
@@ -181,11 +129,9 @@ public:
 	DWORD AddRef();
 	DWORD Release();
 
-	enum States { Starting, Resting, Running, Terminated };
+	enum States { Starting, Resting, Terminated, Calling, Returned };
 
-	bool beStarted();
 	States beTerminated();
-	bool beResting();
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -194,21 +140,26 @@ private:
 	OverlappedCall(ProcessOTE*);
 	~OverlappedCall();
 
-	Process* GetProcess() { return m_oteProcess->m_location; }
+	Process* GetProcess() 
+	{ 
+		HARDASSERT((POTE)m_oteProcess != Pointers.Nil);
+		return m_oteProcess->m_location; 
+	}
 
 	// Start corresponding OS thread
 	bool BeginThread();
 
 	void Init();
 	void Term();
+	void Free();
 
 	void TerminateThread();
 
 	bool Initiate(CompiledMethod* pMethod, unsigned nArgCount);
 	DWORD WaitForRequest();
 	int ProcessRequests();
-	void PerformCall();
-	void CallFinished();
+	bool PerformCall();
+	bool CallFinished();
 
 	int Main();
 	int TryMain();
@@ -232,8 +183,6 @@ private:
 	bool QueueForInterpreter(PAPCFUNC pfnAPC);
 	bool QueueForMe(PAPCFUNC pfnAPC);
 
-	void compact();
-
 public:
 	///////////////////////////////////////////////////////////////////////////
 	// Static member functions
@@ -241,26 +190,20 @@ public:
 	static void Initialize();
 	static void Uninitialize();
 
-	static OverlappedCall* GetActiveProcessOverlappedCall();
-	static OverlappedCall* Do(CompiledMethod* pMethod, unsigned argCount);
+	static OverlappedCallPtr GetActiveProcessOverlappedCall();
+	static OverlappedCallPtr Do(CompiledMethod* pMethod, unsigned argCount);
 
 	static Semaphore* pendingTerms();
 
-	static void MarkRoots();
-	static void OnCompact();
-
 	void OnActivateProcess();
-
-	#ifdef _DEBUG
-		static void ReincrementProcessReferences();
-	#endif
+	void OnCompact();
 
 	bool IsInCall();
 
 private:
 	// Low-level management routines
-	static OverlappedCall* New(ProcessOTE*);
-	static OverlappedCallPtr RemoveFirstFromList(OverlappedCallList&);
+	static OverlappedCallPtr New(ProcessOTE*);
+	//static OverlappedCallPtr RemoveFirstFromList(OverlappedCallList&);
 
 	// Thread entry point function
 	static unsigned __stdcall ThreadMain(void* pThis);
@@ -272,17 +215,13 @@ private:
 	static OverlappedCallPtr BeginAPC(DWORD dwParam);
 	static OverlappedCallPtr BeginMainThreadAPC(DWORD dwParam);
 
-	static void CompactCallsOnList(OverlappedCallList& list);
+	//static void CompactCallsOnList(OverlappedCallList& list);
 
 	///////////////////////////////////////////////////////////////////////////
 	// Static data members
 private:
 
-	// Low-level pool management data
-//	static int nFirstFree;
-//	static int nMaxFree;
-	static CMonitor s_listMonitor;
-	static OverlappedCallList s_activeList;
+	//static OverlappedCallList s_activeList;
 	
 	static bool s_bShutdown;
 
@@ -293,10 +232,9 @@ public:
 		tracestream thinDump;
 	#endif
 
-private:
 	// Context of the process for which we are running
 	InterpreterRegisters	m_interpContext;
-	ProcessOTE*				m_oteProcess;
+	ProcessOTE*				m_oteProcess;	// paired Smalltalk Process
 	SHAREDLONG				m_dwRefs;
 
 	HANDLE					m_hThread;		// thread handle (returned by _beginthread(ex))
@@ -308,12 +246,9 @@ private:
 	CompiledMethod*			m_pMethod;
 	unsigned				m_nArgCount;
 	volatile States			m_state;
-public:
-	SHAREDLONG				m_nCallDepth;
 private:
 	SHAREDLONG				m_nSuspendCount;
-	bool					m_bCompletionRequestPending;
-	bool					m_bCallPrimitiveFailed;
+	_PrimitiveFailureCode	m_primitiveFailureCode;
 };
 
 
@@ -335,5 +270,5 @@ inline DWORD OverlappedCall::Release()
 inline bool OverlappedCall::IsInCall()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	return m_nCallDepth > 0;
+	return m_state >= Calling;
 }

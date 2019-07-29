@@ -110,7 +110,7 @@ iTypes
 		with: EMR_ARCTO
 		with: EMR_CHORD
 		with: EMR_PIE! !
-!EMRARC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRARC class categoriesFor: #iTypes!constants!public! !
 

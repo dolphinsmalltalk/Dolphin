@@ -437,12 +437,9 @@ removeAllKeys: keys
 	keys do: [:k | self removeKey: k]!
 
 removeAllKeys: keys ifAbsent: operation
-	"Remove any elements from the receiver with the keys in the <collection>
-	argument, keys. If any of the keys are not present in the receiver, or there 
-	are duplicates in keys, then evaluate the <niladicValuable> argument, 
-	operation, but do not stop the enumeration."
+	"Remove any elements from the receiver with the keys in the <collection> argument, keys. If any of the keys are not present in the receiver, or there are duplicates in keys, then evaluate the <niladicValuable>|<monadicValuable> argument, operation, but do not stop the enumeration."
 
-	keys do: [:k | self removeKey: k ifAbsent: operation]!
+	keys do: [:k | self removeKey: k ifAbsent: [operation cull: k]]!
 
 removeAssociation: anAssociation
 	"Remove the key and value association, anAssociation, from the receiver. Answer anAssociation."
@@ -557,7 +554,7 @@ values
 !Dictionary categoriesFor: #at:put:!accessing!public! !
 !Dictionary categoriesFor: #atAll:put:!accessing!public! !
 !Dictionary categoriesFor: #bestSlotFor:boundedBy:!development!private!statistics! !
-!Dictionary categoriesFor: #bindingFor:!compiling!public! !
+!Dictionary categoriesFor: #bindingFor:!binding!public! !
 !Dictionary categoriesFor: #changeKey:to:!accessing!private! !
 !Dictionary categoriesFor: #collect:!enumerating!public! !
 !Dictionary categoriesFor: #copyElementsInto:!adding!private! !

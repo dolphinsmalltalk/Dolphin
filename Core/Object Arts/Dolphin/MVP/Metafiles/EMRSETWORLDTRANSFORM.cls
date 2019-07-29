@@ -68,7 +68,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETWORLDTRANSFORM! !
-!EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
 

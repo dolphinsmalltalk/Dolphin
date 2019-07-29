@@ -78,6 +78,6 @@ defineFields
 
 getFieldNames
 	^#(#rgrc #lppos)! !
-!NCCALCSIZE_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!NCCALCSIZE_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !NCCALCSIZE_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -153,6 +153,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
-!CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CHOOSECOLORW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

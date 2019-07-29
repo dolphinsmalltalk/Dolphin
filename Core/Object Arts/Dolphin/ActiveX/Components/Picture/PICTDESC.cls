@@ -133,7 +133,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^OLEPicture icon! !
-!PICTDESC class categoriesFor: #defineFields!initializing!public! !
+!PICTDESC class categoriesFor: #defineFields!public!template definition! !
 !PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PICTDESC class categoriesFor: #icon!constants!public! !
 

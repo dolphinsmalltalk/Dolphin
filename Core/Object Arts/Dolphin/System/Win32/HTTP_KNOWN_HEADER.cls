@@ -72,6 +72,6 @@ defineFields
 
 getFieldNames
 	^#(#RawValueLength #pRawValue)! !
-!HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_KNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

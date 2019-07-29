@@ -55,7 +55,7 @@ displayOn: aStream
 	aStream
 		print: runCount;
 		nextPutAll: ' run in '.
-	self printDurationOn: aStream.
+	duration printHumanReadableOn: aStream.
 	passedCount := self passedCount.
 	passedCount = runCount
 		ifFalse: 
@@ -68,8 +68,8 @@ displayOn: aStream
 duration
 	^duration!
 
-duration: anInteger
-	duration := anInteger!
+duration: aDuration
+	duration := aDuration!
 
 errorCount
 	^errors size!
@@ -119,9 +119,6 @@ passed
 passedCount
 	^passed size!
 
-printDurationOn: aPuttableStream
-	Locale userDefault printDuration: duration on: aPuttableStream!
-
 printOn: aStream
 	aStream
 		print: self runCount;
@@ -138,10 +135,10 @@ results
 runCase: aTestCase
 	
 	[| start stop |
-	start := Time microsecondClockValue.
+	start := Delay microsecondClockValue.
 	aTestCase runCase.
-	stop := Time microsecondClockValue.
-	self addPass: aTestCase duration: stop - start]
+	stop := Delay microsecondClockValue.
+	self addPass: aTestCase duration: (stop - start) microseconds]
 			on: self class failure
 			do: 
 				[:signal |
@@ -197,7 +194,6 @@ tests
 !TestResult categoriesFor: #isSkipped:!public!testing! !
 !TestResult categoriesFor: #passed!accessing!public! !
 !TestResult categoriesFor: #passedCount!accessing!public! !
-!TestResult categoriesFor: #printDurationOn:!printing!public! !
 !TestResult categoriesFor: #printOn:!public! !
 !TestResult categoriesFor: #resultFor:!accessing!public! !
 !TestResult categoriesFor: #results!accessing!public! !

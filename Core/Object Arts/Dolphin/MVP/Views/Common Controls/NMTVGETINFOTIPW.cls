@@ -60,6 +60,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
-!NMTVGETINFOTIPW class categoriesFor: #defineFields!initializing!public! !
+!NMTVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
 !NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

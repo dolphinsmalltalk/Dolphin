@@ -55,12 +55,12 @@ run
 
 run: aResult
 	| start |
-	start := Time microsecondClockValue.
+	start := Delay microsecondClockValue.
 	[self tests do: 
 			[:each |
 			self changed: each.
 			each run: aResult]]
-		ensure: [aResult duration: Time microsecondClockValue - start]!
+		ensure: [aResult duration: (Delay microsecondClockValue - start) microseconds]!
 
 signalResourceErrorFor: res
 	^res signalInitializationError!

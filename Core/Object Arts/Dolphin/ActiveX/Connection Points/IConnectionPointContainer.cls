@@ -46,8 +46,7 @@ EnumConnectionPoints: ppenum
 	"
 
 	<virtual stdcall: hresult 4 IEnumConnectionPoints**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 findConnectionPoint: interfaceClass
 	"Answer the connection point for the specified <COMInterface> subclass, interfaceClass."
@@ -65,9 +64,8 @@ FindConnectionPoint: riid ppCP: ppCP
 			[out] IConnectionPoint** ppCP);
 	"
 
-	<virtual stdcall: hresult 5 GUID* IConnectionPoint**>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 5 guid* IConnectionPoint**>
+	^self invalidCall: _failureCode! !
 !IConnectionPointContainer categoriesFor: #connectionIIDs!enumerating!public! !
 !IConnectionPointContainer categoriesFor: #connectionPoints!enumerating!public! !
 !IConnectionPointContainer categoriesFor: #enumConnectionPoints!**auto generated**!methods!public! !

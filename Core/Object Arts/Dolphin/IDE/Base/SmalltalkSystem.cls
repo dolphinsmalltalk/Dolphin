@@ -2306,7 +2306,7 @@ nameForArgument: anObject
 	answer
 		nextPutAll: (type name first isVowel ifTrue: ['an'] ifFalse: ['a']);
 		print: type.
-	((anObject isKindOf: Collection) and: [anObject notEmpty and: [anObject class isBytes not]]) 
+	((anObject isKindOf: Collection) and: [(anObject isKindOf: Interval) not and: [anObject notEmpty and: [anObject class isBytes not]]]) 
 		ifTrue: 
 			[| commonBase first |
 			first := true.

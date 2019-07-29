@@ -17,6 +17,8 @@ largeComparisonPairs
 	^{{SmallInteger maximum + 1. SmallInteger maximum + 2}.
 		#(16r7FFFFFFE 16r7FFFFFFF).
 		#(16r7FFFFFFF 16r80000000).
+		#(-16r80000000 16r80000000).
+		#(-16r80000001 16r7FFFFFFF).
 		#(16r80000000 16r80000001).
 		#(16r7FFFFFFF 16r7FFFFFFFFFFFFFFF).
 		#(16r80000000 16r7FFFFFFFFFFFFFFF).
@@ -24,13 +26,20 @@ largeComparisonPairs
 		#(16r80000000 16r8000000000000000).
 		#(16r7FFFFFFF00000000 16r7FFFFFFF7FFFFFFF).
 		#(16r7FFFFFFF00000000 16r7FFFFFFFFFFFFFFF).
+		#(16r7FFFFFFF7FFFFFFF 16r7FFFFFFF80000000).
+		#(16r7FFFFFFF80000000 16r7FFFFFFF80000001).
 		#(16r7FFFFFFFFFFFFFFF 16r8000000000000000).
 		#(16r8000000000000000 16r8000000000000001).
 		#(-16r7FFFFFFF -16r7FFFFFFE).
 		#(-16r80000000 -16r7FFFFFFF).
 		#(-16r80000001 -16r80000000).
+		#(-16r80000002 -16r80000001).
 		#(-16r100000000 -16rFFFFFFFF).
 		#(-16r100000000 -16r80000001).
+		#(-16r180000000 -16r17FFFFFFF).
+		#(-16r180000001 -16r180000000).
+		#(-16r180000002 -16r180000001).
+		#(-16r180000001 -16r80000001).
 		#(-16r8000000000000000 -16r7FFFFFFFFFFFFFFF).
 		{100 factorial - 1. 100 factorial}}!
 
@@ -1019,6 +1028,11 @@ testLessThan
 			self deny: pair last < pair first].
 	self should: [SmallInteger maximum + 1 < nil] raise: MessageNotUnderstood!
 
+testLowBit
+	#(#(16r40000000 31) #(16r80000000 32) #(16r70000000 29) #(16r10000000000000000 65))
+		do: [:each | self assert: each first lowBit equals: each second.
+	self assert: each first negated lowBit equals: each second]!
+
 testMod
 	| b mod expected result |
 	b := 16r10000000000000000.
@@ -1167,6 +1181,18 @@ testPrintLargeBase2
 	binary := l printStringRadix: 2.
 	l2 := Integer readFrom: binary readStream.
 	self assert: l equals: l2!
+
+testPrintStringBase
+	
+	2 to: 32 do: [:b |
+		1 to: 1000//b do: [:n |
+			| bRaisedToN |
+			bRaisedToN := b raisedTo: n.
+			self assert: (bRaisedToN - 1 printStringBase: b) equals: (String new: n withAll: (Character digitValue: b-1)).
+			self assert: (bRaisedToN printStringBase: b) equals: ('1' , (String new: n withAll: $0)).
+			
+			self assert: (bRaisedToN negated + 1 printStringBase: b) equals: ('-' , (String new: n withAll: (Character digitValue: b-1))).
+			self assert: (bRaisedToN negated printStringBase: b) equals: ('-1' , (String new: n withAll: $0))]].!
 
 testQuo
 	| u v |
@@ -1352,7 +1378,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testAddDoubleToTriplePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToDoubleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToDoublePos!public!unit tests! !
-!LargeIntegerTest categoriesFor: #testAddSingleToSingleNeg!public! !
+!LargeIntegerTest categoriesFor: #testAddSingleToSingleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToSinglePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToTripleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSmall!public!unit tests! !
@@ -1379,16 +1405,18 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testImmutable!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testLessThan!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testLowBit!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMod!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testNegate!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testPrintLargeBase2!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testPrintStringBase!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem2!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
-!LargeIntegerTest categoriesFor: #testRaisedToInteger!public! !
+!LargeIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubFromQuad!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubFromQuadNeg!public!unit tests! !

@@ -103,8 +103,7 @@ EnableModeless: fEnable
 			[in] VARIANT_BOOL fEnable);"
 
 	<virtual stdcall: hresult 13 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 filterDataObject: pDO
 	"Answer the <IUnknown> result of invoking the FilterDataObject() method of the COM object."
@@ -125,8 +124,7 @@ FilterDataObject: pDO ppDORet: ppDORet
 			[out] IUnknown** ppDORet);"
 
 	<virtual stdcall: hresult 22 IUnknown* IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getDropTarget: pDropTarget
 	"Answer the <IUnknown> result of invoking the GetDropTarget() method of the COM object."
@@ -147,8 +145,7 @@ GetDropTarget: pDropTarget ppDropTarget: ppDropTarget
 			[out] IUnknown** ppDropTarget);"
 
 	<virtual stdcall: hresult 19 IUnknown* IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getExternal
 	"Answer the <IDispatch> result of invoking the GetExternal() method of the COM object."
@@ -166,8 +163,7 @@ GetExternal: ppDispatch
 			[out] IDispatch** ppDispatch);"
 
 	<virtual stdcall: hresult 20 IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getHostInfo: pdwFlags pdwDoubleClick: pdwDoubleClick
 	"Invoke the GetHostInfo() method of the COM object."
@@ -191,8 +187,7 @@ GetHostInfo: pdwFlags pdwDoubleClick: pdwDoubleClick
 			[in, out] unsigned long* pdwDoubleClick);"
 
 	<virtual stdcall: hresult 9 dword* dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getOptionKeyPath: dw
 	"Answer the <BSTR> result of invoking the GetOptionKeyPath() method of the COM object."
@@ -213,8 +208,7 @@ GetOptionKeyPath: pbstrKey dw: dw
 			[in] unsigned long dw);"
 
 	<virtual stdcall: hresult 18 bstr* dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 HideUI
 	"Invoke the HideUI() method of the COM object.
@@ -222,8 +216,7 @@ HideUI
 		HRESULT __stdcall HideUI();"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OnDocWindowActivate: fActivate
 	"Invoke the OnDocWindowActivate() method of the COM object.
@@ -232,8 +225,7 @@ OnDocWindowActivate: fActivate
 			[in] VARIANT_BOOL fActivate);"
 
 	<virtual stdcall: hresult 14 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 OnFrameWindowActivate: fActivate
 	"Invoke the OnFrameWindowActivate() method of the COM object.
@@ -242,8 +234,7 @@ OnFrameWindowActivate: fActivate
 			[in] VARIANT_BOOL fActivate);"
 
 	<virtual stdcall: hresult 15 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 ResizeBorder: left top: top right: right bottom: bottom pUIWindow: pUIWindow fFrameWindow: fFrameWindow
 	"Invoke the ResizeBorder() method of the COM object.
@@ -257,8 +248,7 @@ ResizeBorder: left top: top right: right bottom: bottom pUIWindow: pUIWindow fFr
 			[in] VARIANT_BOOL fFrameWindow);"
 
 	<virtual stdcall: hresult 16 sdword sdword sdword sdword IUnknown* varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 showContextMenu: dwID x: x y: y pcmdtReserved: pcmdtReserved pdispReserved: pdispReserved
 	"Answer the <HRESULT> result of invoking the ShowContextMenu() method of the COM object."
@@ -287,8 +277,7 @@ ShowContextMenu: dwID x: x y: y pcmdtReserved: pcmdtReserved pdispReserved: pdis
 			[out, retval] HRESULT* dwRetVal);"
 
 	<virtual stdcall: hresult 8 dword dword dword IUnknown* IDispatch* hresult*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 showUI: dwID pActiveObject: pActiveObject pCommandTarget: pCommandTarget pFrame: pFrame pDoc: pDoc
 	"Answer the <HRESULT> result of invoking the ShowUI() method of the COM object."
@@ -317,8 +306,7 @@ ShowUI: dwID pActiveObject: pActiveObject pCommandTarget: pCommandTarget pFrame:
 			[out, retval] HRESULT* dwRetVal);"
 
 	<virtual stdcall: hresult 10 dword IUnknown* IUnknown* IUnknown* IUnknown* hresult*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 translateAccelerator: hWnd nMessage: nMessage wParam: wParam lParam: lParam bstrGuidCmdGroup: bstrGuidCmdGroup nCmdID: nCmdID
 	"Answer the <HRESULT> result of invoking the TranslateAccelerator() method of the COM object."
@@ -349,8 +337,7 @@ TranslateAccelerator: hWnd nMessage: nMessage wParam: wParam lParam: lParam bstr
 			[out, retval] HRESULT* dwRetVal);"
 
 	<virtual stdcall: hresult 17 uintptr dword uintptr uintptr bstr dword hresult*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 translateUrl: dwTranslate bstrURLIn: bstrURLIn
 	"Answer the <BSTR> result of invoking the TranslateUrl() method of the COM object."
@@ -373,8 +360,7 @@ TranslateUrl: dwTranslate bstrURLIn: bstrURLIn pbstrURLOut: pbstrURLOut
 			[out] BSTR* pbstrURLOut);"
 
 	<virtual stdcall: hresult 21 dword bstr bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 UpdateUI
 	"Invoke the UpdateUI() method of the COM object.
@@ -382,8 +368,7 @@ UpdateUI
 		HRESULT __stdcall UpdateUI();"
 
 	<virtual stdcall: hresult 12>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IDocHostUIHandlerDispatch categoriesFor: #EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
 !IDocHostUIHandlerDispatch categoriesFor: #filterDataObject:!**auto generated**!methods!public! !
 !IDocHostUIHandlerDispatch categoriesFor: #FilterDataObject:ppDORet:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !

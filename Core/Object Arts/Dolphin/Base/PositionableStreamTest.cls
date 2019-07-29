@@ -54,15 +54,16 @@ streamOn: aString
 
 	^self streamClass on: aString!
 
-streamOnFile: pathString type: aSymbol
-	| bytes |
-	bytes := File readAllBytes: pathString.
+streamOnBytes: aByteArray type: aSymbol
 	^aSymbol == #utf8
-		ifTrue: [self streamOn: (Utf8String fromByteArray: bytes)]
+		ifTrue: [self streamOn: (Utf8String fromByteArray: aByteArray)]
 		ifFalse: 
 			[aSymbol == #utf16le
-				ifTrue: [self streamOn: (Utf16String fromByteArray: bytes)]
-				ifFalse: [self streamOn: bytes]]!
+				ifTrue: [self streamOn: (Utf16String fromByteArray: aByteArray)]
+				ifFalse: [self streamOn: aByteArray]]!
+
+streamOnFile: pathString type: aSymbol
+	^self streamOnBytes: (File readAllBytes: pathString) type: aSymbol!
 
 streamWith: aSequenceableCollection
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <SequenceableCollection> argument."
@@ -190,6 +191,35 @@ testNextColon
 			self should: [subject next: 1] raise: Stream endOfStreamSignal.
 			self closeTempStream: subject]!
 
+testNextIllegalUtf8CodePositions
+	"Test cases from Kuhn"
+
+	"5 Illegal code positions
+
+	5.1 Single UTF-16 surrogates 
+
+	5.1.1  U+D800 = ed a0 80
+	5.1.2  U+DB7F = ed ad bf
+	5.1.3  U+DB80 = ed ae 80
+	5.1.4  U+DBFF = ed af bf
+	5.1.5  U+DC00 = ed b0 80
+	5.1.6  U+DF80 = ed be 80
+	5.1.7  U+DFFF = ed bf bf"
+
+	self assert: (self verifyNonChars: #('eda080' 'edadbf' 'edae80' 'edafbf' 'edb080' 'edbe80' 'edbfbf')) equals: 7 + 1.
+
+	"5.2 Paired UTF-16 surrogates
+
+	5.2.1  U+D800 U+DC00 = ed a0 80 ed b0 80
+	5.2.2  U+D800 U+DFFF = ed a0 80 ed bf bf
+	5.2.3  U+DB7F U+DC00 = ed ad bf ed b0 80
+	5.2.4  U+DB7F U+DFFF = ed ad bf ed bf bf
+	5.2.5  U+DB80 U+DC00 = ed ae 80 ed b0 80
+	5.2.6  U+DB80 U+DFFF = ed ae 80 ed bf bf
+	5.2.7  U+DBFF U+DC00 = ed af bf ed b0 80
+	5.2.8  U+DBFF U+DFFF = ed af bf ed bf bf"
+	self assert: (self verifyNonChars:#( 'eda080' 'edb080'  'eda080' 'edbfbf' 'edadbf' 'edb080' 'edadbf' 'edbfbf' 'edae80' 'edb080' 'edae80' 'edbfbf' 'edafbf' 'edb080' 'edafbf' 'edbfbf')) equals: 16 + 1.!
+
 testNextInto
 	| stream result endOfStream |
 	"Previously-failing tests"
@@ -315,6 +345,71 @@ testNextLineCrOnly
 			self assert: stream atEnd.
 			self closeTempStream: stream]!
 
+testNextLongUtf8Encodings
+	"UTF-8 can encode values up to 16rFFFFFFF. In practice these are not required since the maximum Unicode code point is U+10FFFF, which requires only 4 bytes to encode, but in theory they could be encountered, and should be treated as invalid characters (i.e. substituted with the replacement character"
+
+	| subject |
+	subject := self
+				streamOnBytes: #[16rF8 16r88 16r80 16r80 16r80] , Character dolphin asString asByteArray
+						, #[16rFB 16rBF 16rBF 16rBF 16rBF] , $£ asUtf8String asByteArray
+						, #[16rFC 16r84 16r80 16r80 16r80] , $\x20AC asUtf8String asByteArray
+						, #[16rFD 16rBF 16rBF 16rBF 16rBF 16rBF] , $\x4F60 asUtf8String asByteArray
+				type: #utf8.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: Character dolphin.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $£.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $\x20AC.
+	self assert: subject next equals: Character replacement.
+	self assert: subject next equals: $\x4F60!
+
+testNextOtherNonCharactersUtf8
+	"Other 'noncharacters' from Kuhn"
+
+	| count |
+	"5.3.1  U+FFFE = ef bf be
+	5.3.2  U+FFFF = ef bf bf"
+
+	"stdio streams will just consume the U+FFFF, so we might get either 2 or 3 chars read here."
+	count := self streamClass == StdioFileStream ifTrue: [2] ifFalse: [3].
+	self assert: (self verifyNonChars: #('efbefe' 'efbfbf')) equals: count.
+
+	"5.3.3  U+FDD0 .. U+FDEF"
+	self assert: (self
+				verifyNonChars: #('efb790' 'efb791' 'efb792' 'efb793' 'efb794' 'efb795' 'efb796' 'efb797' 'efb798' 'efb799' 'efb79a' 'efb79b' 'efb79c' 'efb79d' 'efb79e' 'efb79f' 'efb7a0' 'efb7a1' 'efb7a2' 'efb7a3' 'efb7a4' 'efb7a5' 'efb7a6' 'efb7a7' 'efb7a8' 'efb7a9' 'efb7aa' 'efb7ab' 'efb7ac' 'efb7ad' 'efb7ae' 'efb7af'))
+		equals: 32 + 1.
+	"5.3.4  U+nFFFE U+nFFFF (for n = 1..10)"
+	self assert: (self
+				verifyNonChars: #('f09fbfbe' 'f09fbfbf' 'f0afbfbe' 'f0afbfbf' 'f0bfbfbe' 'f0bfbfbf' 'f18fbfbe' 'f18fbfbf' 'f19fbfbe' 'f19fbfbf' 'f1afbfbe' 'f1afbfbf' 'f1bfbfbe' 'f1bfbfbf' 'f28fbfbe' 'f28fbfbf' 'f29fbfbe' 'f29fbfbf' 'f2afbfbe' 'f2afbfbf' 'f2bfbfbe' 'f2bfbfbf' 'f38fbfbe' 'f38fbfbf' 'f39fbfbe' 'f39fbfbf' 'f3afbfbe' 'f3afbfbf' 'f3bfbfbe' 'f3bfbfbf' 'f48fbfbe' 'f48fbfbf'))
+		equals: 2 * 16 + 1!
+
+testNextOverlongUtf8
+	| subject |
+	"4.1 Overlong ASCII character encodings"
+	subject := self
+				streamOnBytes: #[16rC0 16rAF 95 16rE0 16r80 16rAF 95 16rF0 16r80 16r80 16rAF 95 16rF8 16r80 16r80 16r80 16rAF 95 16rFC 16r80 16r80 16r80 16r80 16rAF 95]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: $_].
+	self assert: subject atEnd.
+
+	"4.2 Maximum overlong sequences"
+	subject := self
+				streamOnBytes: #[16rC1 16rBF 10 16rE0 16r9F 16rBF 10 16rF0 16r8F 16rBF 16rBF 10 16rF8 16r87 16rBF 16rBF 16rBF 10 16rFC 16r83 16rBF 16rBF 16rBF 16rBF 10]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: Character lf].
+	"4.3 Overlong representations of NUL"
+	subject := self
+				streamOnBytes: #[16rC0 16r80 10 16rE0 16r80 16r80 10 16rF0 16r80 16r80 16r80 10 16rF8 16r80 16r80 16r80 16r80 10 16rFC 16r80 16r80 16r80 16r80 16r80 10]
+				type: #utf8.
+	5 timesRepeat: 
+			[self assert: subject next equals: Character replacement.
+			self assert: subject next equals: Character lf]!
+
 testNextPut
 	self writeableCollections do: 
 			[:pair |
@@ -413,6 +508,38 @@ testReverseContents
 	self closeTempStream: stream.
 	stream := self streamWith: '¡Hola!!'.
 	self assert: stream reverseContents equals: '!!aloH¡'.
+	self closeTempStream: stream!
+
+testSkipSeparators
+	| chars stream |
+	
+	chars := '1 2 	3
+4 €£🐬' copyWith: $\f.
+
+	stream := self streamOn: chars.
+
+	stream reset.
+	self assert: stream skipSeparators.
+	self assert: stream peek equals: $1.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $1.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $2.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $3.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $4.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $€.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: $£.
+	self assert: stream skipSeparators.
+	self assert: stream next equals: Character dolphin.
+	self deny: stream atEnd.
+	self deny: stream skipSeparators.
+	self assert: stream atEnd.
+	self deny: stream skipSeparators.
+
 	self closeTempStream: stream!
 
 testSkipToAllColon
@@ -677,6 +804,28 @@ testUpToUtf
 			self assert: stream atEnd.
 			self closeTempStream: stream]	"Utf8String. Utf16String"!
 
+verifyNonChars: anArray
+	| sep stream count bytes |
+	sep := (ByteArray with: $a codePoint) asHexString.
+	bytes := ByteArray
+				fromHexString: (String streamContents: 
+							[:s |
+							s nextPutAll: sep.
+							anArray do: 
+									[:each |
+									s
+										nextPutAll: each;
+										nextPutAll: sep]]).
+	stream := self streamOnBytes: bytes type: #utf8.
+	self deny: stream atEnd.
+	count := 0.
+	[stream atEnd] whileFalse: 
+			[| ch |
+			ch := stream next.
+			ch == $a ifTrue: [count := count + 1] ifFalse: [self assert: ch equals: Character replacement]].
+	self closeTempStream: stream.
+	^count!
+
 writeableCollections
 	^self strings , self byteArrays , self arrays , self orderedCollections!
 
@@ -696,6 +845,7 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
 !PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
+!PositionableStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
 !PositionableStreamTest categoriesFor: #strings!constants!private! !
@@ -707,18 +857,24 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testSkipSeparators!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToUtf!gettableStream only!public! !
+!PositionableStreamTest categoriesFor: #verifyNonChars:!public! !
 !PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
 

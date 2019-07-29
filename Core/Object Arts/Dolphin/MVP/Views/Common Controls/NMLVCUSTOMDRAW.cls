@@ -15,6 +15,13 @@ NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to rep
 !NMLVCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
 !NMLVCUSTOMDRAW methodsFor!
 
+applyFont
+	
+	"If a font has not been set, install the view's font to ensure any font change from a previous column is reset"
+	font isNil ifTrue: [font := self view actualFont].
+
+	^super applyFont!
+
 backcolor
 	"Answer the background <Color>."
 
@@ -58,6 +65,12 @@ column: aListViewColumn
 	"Private -"
 	column := aListViewColumn!
 
+font
+	"Answer the character font."
+
+	"We assume the font is being accessed in order to be modified, so use a copy"
+	^font ifNil: [font := self view actualFont copy]!
+
 forecolor
 	"Answer the foreground text colour."
 
@@ -83,9 +96,6 @@ itemHandle
 reset
 	"Reset the canvas to default settings."
 
-	self font
-		isItalic: false;
-		isStruckThrough: false.
 	self forecolor: (self view forecolor ifNil: [Color windowText])!
 
 subItem
@@ -93,6 +103,7 @@ subItem
 	item := self item.
 	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: item]].
 	^item! !
+!NMLVCUSTOMDRAW categoriesFor: #applyFont!operations!private! !
 !NMLVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
@@ -101,6 +112,7 @@ subItem
 !NMLVCUSTOMDRAW categoriesFor: #clrTextBk:!**compiled accessors**!public! !
 !NMLVCUSTOMDRAW categoriesFor: #column!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #column:!accessing!private! !
+!NMLVCUSTOMDRAW categoriesFor: #font!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
 !NMLVCUSTOMDRAW categoriesFor: #iSubItem!**compiled accessors**!public! !
@@ -123,6 +135,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
-!NMLVCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMLVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
 !NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

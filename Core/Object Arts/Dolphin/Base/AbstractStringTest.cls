@@ -26,6 +26,9 @@ caseConversionCases
 equalityTestCases
 	^#('' 'a' 'abc' '' 'tükörfúrógép' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'a🐬' 'a £=1.2€')!
 
+lengthTestCases
+	^#(#('' 0) #('a' 1) #('ab' 2) #('oña' 3) #('£€' 2))!
+
 newNumericArray: anInteger 
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
@@ -48,22 +51,22 @@ testAt
 testCapitalized
 	| string cap |
 	string := self assimilateString: ''.
-	self assert: (string capitalized equals: string).
+	self assert: string capitalized equals: string.
 	string := self newCollection: 'a'.
 	cap := string capitalized.
-	self assert: (cap equals: (self newCollection: 'A')).
+	self assert: cap equals: (self newCollection: 'A').
 	self assert: string equals: (self newCollection: 'a').
 	string := self newCollection: 'A'.
 	cap := string capitalized.
-	self assert: (cap equals: (self newCollection: 'A')).
+	self assert: cap equals: (self newCollection: 'A').
 	self assert: string equals: (self newCollection: 'A').
 	string := self newCollection: 'ab'.
 	cap := string capitalized.
-	self assert: (cap equals: (self newCollection: 'Ab')).
+	self assert: cap equals: (self newCollection: 'Ab').
 	self assert: string equals: (self newCollection: 'ab').
 	string := self newCollection: 'Ab'.
 	cap := string capitalized.
-	self assert: (cap equals: (self newCollection: 'Ab')).
+	self assert: cap equals: (self newCollection: 'Ab').
 	self assert: string equals: (self newCollection: 'Ab')!
 
 testCaseConversions
@@ -125,10 +128,10 @@ testEquals
 			"Nor Arrays of characters"
 			self deny: subject asArray equals: subject.
 			self deny: subject equals: subject asArray].
-	"Symbols are only ever equal to other symbols, not strings with the same characters"
+	"Symbols are now equal to strings with the same characters"
 	abc := self assimilateString: 'abc'.
-	self deny: #abc equals: abc.
-	self deny: abc equals: #abc.
+	self assert: #abc equals: abc.
+	self assert: abc equals: #abc.
 !
 
 testFindStringStartingAt
@@ -336,6 +339,20 @@ testFindStringStartingAtIgnoreCase
 				ignoreCase: true)
 		equals: 7!
 
+testHash
+	| abc |
+	self equalityTestCases do: 
+			[:each |
+			| subject |
+			subject := self assimilateString: each.
+			"Same characters must be equal"
+			self assert: subject hash equals: subject copy hash.
+			self assert: subject hash equals: subject asUtf8String hash.
+			self assert: subject hash equals: subject asUtf16String hash].
+	"Symbols are now equal to strings with the same characters"
+	abc := self assimilateString: 'abc'.
+	self assert: #abc hash equals: abc hash!
+
 testInvalidComparisons
 	| str literals |
 	str := self newCollection: 'blah'.
@@ -350,6 +367,13 @@ testInvalidComparisons
 	literals do: [:each | self should: [each <= str] raise: Error].
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
+
+testLength
+	self lengthTestCases do: 
+			[:each |
+			| subject |
+			subject := self assimilateString: each first.
+			self assert: subject length equals: each last]!
 
 testMutableCopy
 	self caseConversionCases do: 
@@ -536,6 +560,13 @@ testUnescapePercents
 			subject := self collectionClass fromString: '%97+🐬'.
 			self assert: subject unescapePercents equals: subject]!
 
+testWithAll
+	self withAllTestCases do: 
+			[:each |
+			| actual |
+			actual := self collectionClass withAll: each.
+			self assert: actual equals: each]!
+
 testWithNormalizedLineDelimiters
 	"Empty"
 
@@ -586,29 +617,37 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 				nextPutAll: receiverString;
 				nextPutAll: argumentString;
 				contents.
-	self assert: resultString equals: expected! !
+	self assert: resultString equals: expected!
+
+withAllTestCases
+	^#('' 'a' 'abc' '£€')! !
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
 !AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !
 !AbstractStringTest categoriesFor: #equalityTestCases!constants!private! !
+!AbstractStringTest categoriesFor: #lengthTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
 !AbstractStringTest categoriesFor: #reverseTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
 !AbstractStringTest categoriesFor: #testAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
-!AbstractStringTest categoriesFor: #testCaseConversions!public! !
-!AbstractStringTest categoriesFor: #testClassReadFrom!public! !
+!AbstractStringTest categoriesFor: #testCaseConversions!public!unit tests! !
+!AbstractStringTest categoriesFor: #testClassReadFrom!public!unit tests! !
 !AbstractStringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !AbstractStringTest categoriesFor: #testEquals!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
+!AbstractStringTest categoriesFor: #testHash!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
-!AbstractStringTest categoriesFor: #testMutableCopy!public! !
-!AbstractStringTest categoriesFor: #testReverse!public! !
-!AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public! !
+!AbstractStringTest categoriesFor: #testLength!public!unit tests! !
+!AbstractStringTest categoriesFor: #testMutableCopy!public!unit tests! !
+!AbstractStringTest categoriesFor: #testReverse!public!unit tests! !
+!AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
 !AbstractStringTest categoriesFor: #testSubStrings!public!unit tests! !
 !AbstractStringTest categoriesFor: #testTrimNulls!public!unit tests! !
 !AbstractStringTest categoriesFor: #testUnescapePercents!public!unit tests! !
+!AbstractStringTest categoriesFor: #testWithAll!public!unit tests! !
 !AbstractStringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
 !AbstractStringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
+!AbstractStringTest categoriesFor: #withAllTestCases!constants!private! !
 

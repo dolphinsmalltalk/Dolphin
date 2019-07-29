@@ -10,9 +10,7 @@
 #include "DolphinSmalltalk.h"
 
 #include "ote.h"
-#define POTE OTE*
 #include "VMPointers.h"
-#undef POTE
 
 #undef MinSmallInteger
 #undef MaxSmallInteger

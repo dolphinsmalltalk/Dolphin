@@ -484,8 +484,8 @@ customDrawSubItem: context
 	idx := context iSubItem.
 	column := columns at: idx + 1.
 	custom := column customDrawBlock.
-	"If not the first column, and the previous column has a custom draw block, then we need to reset the custom draw settings as otherwise we'll end up picking up whatever customizations might have been applied to the previous column."
-	(idx ~~ 0 and: [(columns at: idx) customDrawBlock notNil]) ifTrue: [context reset].
+	"We need to reset the custom draw settings as otherwise we'll end up picking up whatever customizations might have been applied to the previous column."
+	context reset.
 	^custom isNil
 		ifTrue: [context applyFont]
 		ifFalse: 
@@ -1775,24 +1775,25 @@ onLeftButtonPressed: aMouseEvent
 	self presenter trigger: #leftButtonPressed: with: aMouseEvent.
 	^self onButtonPressed: aMouseEvent.!
 
-onPositionChanged: aPositionEvent 
+onPositionChanged: aPositionEvent
 	"We must resize any auto-sizing columns *before* WM_WINDOWPOSCHANGED is passed to the
 	control, as that is when it updates scrollbars which can cause the horizontal scrollbar to
 	briefly flicker if the column widths are not adjusted beforehand (#2103)."
 
-	(aPositionEvent isRectangleChanged and: [self isReportMode]) 
+	(aPositionEvent isRectangleChanged and: [self isReportMode])
 		ifTrue: 
 			[| width count |
 			width := aPositionEvent width.
 			count := self itemCount.
-			count > 0 
+			count > 0
 				ifTrue: 
-					[| extent |
-					extent := self 
+					[| extent height |
+					height := aPositionEvent height.
+					extent := self
 								lvmApproximateViewRect: count
 								cx: width
-								cy: aPositionEvent height.
-					extent y - SystemMetrics current scrollbarHeight > aPositionEvent height 
+								cy: height.
+					extent y - SystemMetrics current scrollbarHeight > height
 						ifTrue: [width := width - SystemMetrics current scrollbarWidth]].
 			self autoResizeColumns: width].
 	^super onPositionChanged: aPositionEvent!

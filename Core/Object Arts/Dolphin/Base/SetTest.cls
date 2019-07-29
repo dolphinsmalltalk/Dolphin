@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinCollectionTest subclass: #SetTest
-	instanceVariableNames: 'primes'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -33,13 +33,13 @@ denyCommutativelyEqual: aSet other: anotherSet
 	self deny: anotherSet equals: aSet!
 
 elements
-	^#(1 'a' #a)!
+	^#(1 'b' #a)!
 
 loadFactor
 	^2.0 / 3!
 
 minimumCapacity
-	^5!
+	^3!
 
 newEmpty
 	^self collectionClass new!
@@ -58,8 +58,11 @@ newSet: elements
 			self assert: (set includes: each)].
 	^set!
 
-setUp
-	primes := Integer primesUpTo: 8192 * 2!
+setSizes
+	| lastSmall |
+	lastSmall := (Set.SmallPrimeOffsets at: Set.MaxOffsetIndex) + (Set.MaxOffsetIndex * 2 + 1).
+	^((Set preferredSizesFrom: (Integer primesUpTo: lastSmall + 256))
+		select: [:each | each <= lastSmall]) , (Set.PrimeSizes select: [:each | each > lastSmall])!
 
 testAllInstancesValid
 	| invalid |
@@ -70,18 +73,21 @@ testAllInstancesValid
 testClassSizeFor
 	"The capacity algorithm should be a prime that allows for at least 1.5x the size requested. Minimum capacity is 5."
 
-	| actualSlots previousPrime |
-	1 to: 1024
+	| actualSlots previousPrime primes |
+	primes := self setSizes asSortedCollection.
+	1 to: 4096
 		do: 
 			[:size |
-			| expectedSlots |
+			| expectedSlots i |
 			expectedSlots := size / self loadFactor.
 			actualSlots := self collectionClass sizeFor: size.
+			self assert: actualSlots isPrime.
 			self assert: expectedSlots <= actualSlots.
-			self assert: (primes includes: actualSlots).
+			i := primes anyIndexOf: actualSlots.
+			self deny: i equals: 0.
 			expectedSlots >= self minimumCapacity
 				ifTrue: 
-					[previousPrime := primes at: (primes indexOf: actualSlots) - 1.
+					[previousPrime := primes at: i - 1.
 					self assert: previousPrime < expectedSlots]]!
 
 testCopy
@@ -148,12 +154,13 @@ testIncludes
 testMaintainsLoadFactor
 	"Verify that slop is maintained as items are added to the Set and it is grown."
 
-	| subject expectedSlots |
+	| subject expectedSlots primes |
 	subject := self collectionClass new.
 	self assert: subject size equals: 0.
 	self assert: subject basicSize equals: self minimumCapacity.
 	expectedSlots := self minimumCapacity.
-	(1 to: 1024) keysAndValuesDo: 
+	primes := self setSizes.
+	(1 to: 2048) keysAndValuesDo: 
 			[:expectedSize :each |
 			| minimumSlots actualSlots actualSize originalSlots slop minGrownSlots |
 			minimumSlots := expectedSize / self loadFactor.
@@ -163,7 +170,7 @@ testMaintainsLoadFactor
 			actualSlots := subject basicSize.
 			self assert: actualSlots >= minimumSlots.
 			slop := actualSlots - actualSize.
-			self assert: slop > (actualSlots - (actualSlots * self loadFactor)).
+			self assert: slop >= (actualSlots - (actualSlots * self loadFactor)).
 			"If growth is needed, should grow to at least double the capacity"
 			minGrownSlots := (expectedSize - 1) * 2 / self loadFactor.
 			originalSlots < minimumSlots ceiling
@@ -201,7 +208,7 @@ testShallowCopy
 !SetTest categoriesFor: #newEmpty!helpers!private! !
 !SetTest categoriesFor: #newSet!private!unit tests! !
 !SetTest categoriesFor: #newSet:!private!unit tests! !
-!SetTest categoriesFor: #setUp!public!Running! !
+!SetTest categoriesFor: #setSizes!public!unit tests! !
 !SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
 !SetTest categoriesFor: #testCopy!public!unit tests! !

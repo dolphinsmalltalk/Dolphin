@@ -87,11 +87,10 @@ emitMethodBodyOn: aPuttableStream wParam: wParam lParam: lParam
 	self hasReturnValue 
 		ifTrue: 
 			[aPuttableStream
-				nextPutAll: '^(this isNil ifTrue: [';
+				nextPutAll: '^(this ifNil: [';
 				nextPutAll: self defaultReturnValue;
-				nextPutAll: ']']
-		ifFalse: [aPuttableStream nextPutAll: '(this isNil'].
-	aPuttableStream nextPutAll: ' ifFalse: ['.
+				nextPutAll: '] ifNotNil: [']
+		ifFalse: [aPuttableStream nextPutAll: '(this ifNotNil: ['].
 	retConversion := self returnType fromMessage.
 	retConversion 
 		ifNotNil: 
@@ -391,6 +390,8 @@ renamedFunctions
 		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
 		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
 		at: 'SCI_GETMOVEEXTENDSSELECTION' put: #isInSelectionExtendMode;
+		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
+		at: 'SCI_GETSELECTIONEND' put: #selectionEnd;
 		yourself.
 	"Markers"
 	renamedMessages
@@ -431,6 +432,8 @@ renamedFunctions
 		at: 'SCI_TARGETWHOLEDOCUMENT' put: #targetAll;
 		at: 'SCI_CLEAR' put: #basicClearSelection;
 		at: 'SCI_GETTEXTLENGTH' put: #textLength;
+		at: 'SCI_GETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping;
+		at: 'SCI_SETADDITIONALSELECTIONTYPING' put: #hasAdditionalSelectionTyping:;
 		yourself.
 	"Text retrieval and modification"
 	renamedMessages
@@ -463,7 +466,6 @@ renamedFunctions
 		at: 'SCI_CLEARALL' put: #clearAll;
 		at: 'SCI_EDITTOGGLEOVERTYPE' put: #toggleOvertype;
 		at: 'SCI_GETEDGECOLOUR' put: #edgeColor;
-		at: 'SCI_SETEDGECOLOUR' put: #edgeColor:;
 		at: 'SCI_GETTWOPHASEDRAW' put: #isDrawingTwoPhase;
 		at: 'SCI_SETTWOPHASEDRAW' put: #isDrawingTwoPhase:;
 		at: 'SCI_SETREADONLY' put: #setReadOnly:;
@@ -660,7 +662,7 @@ renamedFunctions
 		at: 'SCI_SCROLLTOEND' put: #scrollToEnd;
 		at: 'SCI_LINEREVERSE' put: #reverseSelectedLines;
 		yourself.
-	
+
 	"Brace highlighting"
 	renamedMessages
 		at: 'SCI_BRACEBADLIGHT' put: #highlightMismatchedBrace:;
@@ -714,9 +716,177 @@ renamedFunctions
 		at: 'SCI_GETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured;
 		at: 'SCI_SETMOUSEWHEELCAPTURES' put: #isMouseWheelCaptured:;
 		yourself.
+
+	"4.1.5"
+	renamedMessages
+		at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag;
+		at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag:;
+		yourself.
 	renamedMessages
 		shrink;
 		yourself)
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
+	"Indicators"
+
+	"Zooming"
+	"Undo and Redo"
+	"Tabs & indents"
+	""
+	"Caret"
+	"Markers"
+	"Scrolling"
+	"Line wrapping"
+
+	"Whitespace"
+
+	"Selection and information"
+	"Text retrieval and modification"
+	"Styling"
+
+	"Miscellaneous"
+
+	"Hotspot"
+
+	"Autocompletion"
+
+	"Calltips"
+
+	"Macros"
+
+	"Commands - Cursor movement"
+
+	"Commands - Selection movement"
+
+	"Unsupported rectangular selection commands"
+
+	"Commands - Deletion"
+
+	"Commands - Insertion"
+
+	"Commands - Cut, Copy & Paste"
+
+	"Commands - Other"
+
+	"Brace highlighting"
+
+	"1.67"
+
+	"1.77"
+
+	"Annotations"
+
+	"2.01"
+	"3.6.3"
+	"3.7.0"
+
+	"4.1.5"
 	"Indicators"
 
 	"Zooming"

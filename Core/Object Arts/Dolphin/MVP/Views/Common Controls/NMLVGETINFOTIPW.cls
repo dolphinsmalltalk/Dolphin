@@ -84,6 +84,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
-!NMLVGETINFOTIPW class categoriesFor: #defineFields!initializing!public! !
+!NMLVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
 !NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

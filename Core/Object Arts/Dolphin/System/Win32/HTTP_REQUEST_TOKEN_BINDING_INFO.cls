@@ -118,6 +118,6 @@ defineFields
 
 getFieldNames
 	^#(#TokenBinding #TokenBindingSize #TlsUnique #TlsUniqueSize #KeyType)! !
-!HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -20,8 +20,7 @@ Cancel
 		HRESULT __stdcall Cancel();"
 
 	<virtual stdcall: hresult 37>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODB_Connection categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Connection!public! !
 
 !ADODB_Connection class methodsFor!

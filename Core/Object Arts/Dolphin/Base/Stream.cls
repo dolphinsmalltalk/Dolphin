@@ -94,6 +94,22 @@ do: aMonadicValuable
 
 	[self atEnd] whileFalse: [aMonadicValuable value: self next]!
 
+elementSize
+	"Answer the size in bytes of the streamed over elements. It is an error if the stream has #pointers encoding. For example this is 1 for a #utf8 stream because each UTF-8 code unit requires one byte (and each UTF-8 code point may requried between 1 and 4 code units)."
+
+	^self contentsSpecies elementSize!
+
+encoding
+	"Answer the encoding of the stream, one of:
+	- #binary, e.g. a stream over a ByteArray
+	- #pointers, e.g. a Stream over an Array
+	- #ansi, a Stream over an AnsiString
+	- #utf8, a Stream over a Utf8String
+	- #utf16le, a Stream over a Utf16String
+	- #utf32, a Stream over a Utf32String."
+
+	^self contentsSpecies encoding!
+
 errorEndOfStream
 	"Raise an error to the effect that an attempt was made to read off the end of the collection
 	over which the receiver is streaming."
@@ -200,6 +216,11 @@ skipTo: anObject
 	[self atEnd] whileFalse: [self next = anObject ifTrue: [^true]].
 	^false!
 
+store: anObject
+	"Ask anObject to append its storeString to the receiver."
+
+	anObject storeOn: self!
+
 upTo: anObject
 	"Answer a collection of elements starting with the next element accessed by the receiver,
 	and up to, not inclusive of, the next element that is equal to anObject. Positions the
@@ -229,6 +250,8 @@ upToEnd
 !Stream categoriesFor: #contentsSpecies!constants!private! !
 !Stream categoriesFor: #display:!printing!public! !
 !Stream categoriesFor: #do:!enumerating!public! !
+!Stream categoriesFor: #elementSize!constants!public! !
+!Stream categoriesFor: #encoding!constants!public! !
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
 !Stream categoriesFor: #errorNotPositionable!exceptions!private! !
 !Stream categoriesFor: #errorNotReadable!exceptions!private! !
@@ -244,6 +267,7 @@ upToEnd
 !Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !
+!Stream categoriesFor: #store:!printing!public! !
 !Stream categoriesFor: #upTo:!accessing!public! !
 !Stream categoriesFor: #upToEnd!accessing!public! !
 

@@ -75,6 +75,6 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
-!NEWTEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!NEWTEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
 !NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

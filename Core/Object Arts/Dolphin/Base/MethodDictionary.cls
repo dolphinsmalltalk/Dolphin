@@ -14,6 +14,18 @@ You should not rely on the implementation details of this class, and nor should 
 !MethodDictionary categoriesForClass!Collections-Unordered!Kernel-Support! !
 !MethodDictionary methodsFor!
 
+findKeyOrNil: anObject
+	"Private - Answer the index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes."
+
+	| index mask |
+	mask := self basicSize - 1.
+	index := (anObject basicIdentityHash bitAnd: mask) + 1.
+	
+	[| key |
+	(key := self basicAt: index) isNil or: [key == anObject]]
+			whileFalse: [index := (index bitAnd: mask) + 1].
+	^index!
+
 fullCheck
 	"Private - Check the load factor in the receiver, and grow if exceeded."
 
@@ -49,6 +61,7 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
+!MethodDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !MethodDictionary categoriesFor: #fullCheck!helpers!private! !
 !MethodDictionary categoriesFor: #hash:max:!private!searching! !
 !MethodDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !

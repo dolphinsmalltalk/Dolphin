@@ -425,16 +425,15 @@ autoSwitchDelayMs
 
 	^AutoSwitchDelayMs!
 
-autoSwitchDelayMs: anInteger 
-	"Set the number of milliseconds after which instances of the receiver will automatically switch
-	to their tab when tests are running"
+autoSwitchDelayMs: aDuration 
+	"Set the <Duration> after which instances of the receiver will automatically switch to their tab when tests are running"
 
-	AutoSwitchDelayMs := anInteger!
+	AutoSwitchDelayMs := aDuration!
 
 defaultAutoSwitchDelay
-	"Private - Answer the default number of milliseconds before the plugin will automatically show itself when tests are running"
+	"Private - Answer the default <Duration> before the plugin will automatically show itself when tests are running"
 
-	^1000!
+	^1 seconds!
 
 defaultFailColor
 	^RGB

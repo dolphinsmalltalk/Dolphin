@@ -94,7 +94,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EOF! !
-!EMREOF class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREOF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMREOF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREOF class categoriesFor: #iTypes!constants!public! !
 

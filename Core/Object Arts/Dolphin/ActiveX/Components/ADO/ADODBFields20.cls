@@ -34,8 +34,7 @@ _Append: name Type: type DefinedSize: definedSize Attrib: attrib
 			[in, optional, defaultvalue(-1)] FieldAttributeEnum Attrib);"
 
 	<virtual stdcall: hresult 12 bstr sdword sdword sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 delete: index
 	"Invoke the Delete() method of the COM object."
@@ -50,8 +49,7 @@ Delete: index
 			[in] VARIANT Index);"
 
 	<virtual stdcall: hresult 13 variant>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !ADODBFields20 categoriesFor: #_append:type:!**auto generated**!methods!public! !
 !ADODBFields20 categoriesFor: #_Append:Type:DefinedSize:Attrib:!**auto generated**!COM Interfaces-Fields20!public! !
 !ADODBFields20 categoriesFor: #delete:!**auto generated**!methods!public! !

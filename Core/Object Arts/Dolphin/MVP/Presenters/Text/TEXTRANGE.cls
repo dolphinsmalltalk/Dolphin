@@ -126,7 +126,7 @@ from: startInteger to: stopInteger type: aStringClass
 
 getFieldNames
 	^#(#chrg #lpstrText)! !
-!TEXTRANGE class categoriesFor: #defineFields!initializing!public! !
+!TEXTRANGE class categoriesFor: #defineFields!public!template definition! !
 !TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

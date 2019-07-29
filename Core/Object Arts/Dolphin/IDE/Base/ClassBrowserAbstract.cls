@@ -1733,7 +1733,8 @@ printClassTitle: anObject on: target
 	"Private - Print the 'title' of the currently selected class onto the <puttableStream>, target.
 	This includes a prefix for the package."
 
-	target nextPutAll: self actualClass name!
+	target display: anObject
+!
 
 printShortCaptionForClass: aClass on: aWriteStream 
 	aClass isNil 
@@ -2144,11 +2145,6 @@ resetForFoundClass: class
 
 	self resetFor: class!
 
-resetVisitTimer
-	(self view)
-		killTimer: 1;
-		setTimer: 1 interval: 150!
-
 saveDefinition
 	"Private - Save the class definition currently in the definition window"
 
@@ -2296,13 +2292,10 @@ setVisitTimer
 
 shortCaption
 	| stream |
-	stream := String writeStream.
+	stream := String writeStream: 32.
 	self printShortCaptionForClass: self actualClass on: stream.
 	self isModified ifTrue: [stream nextPut: $*].
 	^stream contents!
-
-shortCaptionForMethod: aCompiledMethod 
-	^self printCaptionForMethod: aCompiledMethod on: String writeStream!
 
 slideyPinNames
 	^#('filtersSlidey')!
@@ -2340,7 +2333,7 @@ updateCaption
 	Do this here"
 
 	| stream |
-	stream := String writeStream.
+	stream := String writeStream: 64.
 	self method 
 		ifNotNil: [:method | self printCaptionForMethod: method on: stream]
 		ifNil: 
@@ -2348,8 +2341,7 @@ updateCaption
 				ifNil: [stream display: self class]
 				ifNotNil: [:class | self printCaptionForClass: class on: stream]].
 	self isModified ifTrue: [stream nextPut: $*].
-	self caption: stream contents.
-!
+	self caption: stream contents!
 
 updateCategories
 	"Private - Update the tree of method categories, attempting to maintain
@@ -2733,7 +2725,6 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #renameMethodProtocol!commands!private! !
 !ClassBrowserAbstract categoriesFor: #resetFor:!commands!private! !
 !ClassBrowserAbstract categoriesFor: #resetForFoundClass:!commands!private! !
-!ClassBrowserAbstract categoriesFor: #resetVisitTimer!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #saveDefinition!operations!private! !
 !ClassBrowserAbstract categoriesFor: #saveNewMethod:!operations!private! !
 !ClassBrowserAbstract categoriesFor: #saveStateOn:!private!saved state! !
@@ -2750,7 +2741,6 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #setMethodsFilter:!private!updating! !
 !ClassBrowserAbstract categoriesFor: #setVisitTimer!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #shortCaption!accessing!public! !
-!ClassBrowserAbstract categoriesFor: #shortCaptionForMethod:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #slideyPinNames!accessing!private! !
 !ClassBrowserAbstract categoriesFor: #sourceCardName!constants!private! !
 !ClassBrowserAbstract categoriesFor: #statusModel!accessing!private! !
@@ -2785,7 +2775,7 @@ addPlugin: aClassBrowserPlugin
 availablePluginClasses
 	"Private - Answers a  collection of plugin classes to choose from"
 
-	^(ClassCategory name: 'Browser-Plugins') contents!
+	^(ClassCategory name: 'Browser-Plugins') classes!
 
 classCommentIcon
 	"Private - Answer the <Icon> to use for the class comment tab"

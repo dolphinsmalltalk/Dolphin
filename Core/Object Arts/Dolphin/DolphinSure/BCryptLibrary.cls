@@ -18,8 +18,8 @@ closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
 		_Inout_	BCRYPT_ALG_HANDLE	hAlgorithm,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptCloseAlgorithmProvider handle dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptCloseAlgorithmProvider handle dword>
+	^self invalidCall: _failureCode!
 
 createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject hashObjectSize: aHashObjectSize secret: aSecret secretSize: aSecretSize flags: aFlags
 	"The The BCryptCreateHash function is called to create a hash or Message Authentication Code (MAC) object.
@@ -33,8 +33,8 @@ createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject has
 		_In_		ULONG				cbSecret,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptCreateHash handle handle* byte* dword byte* dword dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptCreateHash handle handle* byte* dword byte* dword dword>
+	^self invalidCall: _failureCode!
 
 destroyHash: aHashHandle
 	"The BCryptDestroyHash function closes an algorithm provider.
@@ -42,8 +42,8 @@ destroyHash: aHashHandle
 	NTSTATUS WINAPI BCryptDestroyHash(
 		_Inout_	BCRYPT_HASH_HANDLE	hHash );"
 
-	<stdcall: dword BCryptDestroyHash handle>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptDestroyHash handle>
+	^self invalidCall: _failureCode!
 
 finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 	"The BCryptFinishHash function retrieves the hash or Message Authentication Code (MAC) value for the data accumulated from prior calls to BCryptHashData.
@@ -54,8 +54,8 @@ finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 		_In_		ULONG				cbOutput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptFinishHash handle byte* dword dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptFinishHash handle byte* dword dword>
+	^self invalidCall: _failureCode!
 
 getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize resultSize: aResultSize flags: aFlags
 	"The BCryptGetProperty function retrieves the value of a named property for a BCrypt object.
@@ -68,8 +68,8 @@ getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize
 		_Out_	ULONG			*pcbResult,
 		_In_		ULONG			dwFlags ); "
 
-	<stdcall: dword BCryptGetProperty handle lpwstr byte* dword dword* dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptGetProperty handle lpwstr byte* dword dword* dword>
+	^self invalidCall: _failureCode!
 
 hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 	"The BCryptHashData function performs a one way hash or Message Authentication Code (MAC) on a data buffer.
@@ -80,8 +80,8 @@ hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 		_In_		ULONG				cbInput,
 		_In_		ULONG				dwFlags );"
 
-	<stdcall: dword BCryptHashData handle byte* dword dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptHashData handle byte* dword dword>
+	^self invalidCall: _failureCode!
 
 openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: aFlags
 	"The BCryptOpenAlgorithmProvider function loads and initializes a BCrypt provider.
@@ -92,74 +92,65 @@ openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: 
 		_In_		LPCWSTR				pszImplementation,
 		_In_		DWORD				dwFlags );"
 
-	<stdcall: dword BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
-	^ self invalidCall.!
+	<stdcall: ntstatus BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
+	^self invalidCall: _failureCode!
 
 shaAlgorithmHandle
 	"Answer internal handle. to the SHA1 algorithm.
 	Create it, if it was not allocated yet.
 	This handle is never freed, because re-creating it is expensive."
 
-	| status |
-
-	( shaAlgorithmHandle isNil or: [ shaAlgorithmHandle value = 0 ] ) ifTrue: [
-		shaAlgorithmHandle := ExternalHandle new.
-
-		status := self openAlgorithmProvider: shaAlgorithmHandle id: BCRYPT_SHA1_ALGORITHM implementation: nil flags: 0.
-		( self statusFailed: status ) ifTrue: [ 
-			self error: 'BCrypt>>openAlgorithmProvider failed: ', ( status printStringRadix: 16 showRadix: false ) ] ].
-
-	^ shaAlgorithmHandle.!
+	(shaAlgorithmHandle isNil or: [shaAlgorithmHandle value = 0])
+		ifTrue: 
+			[shaAlgorithmHandle := ExternalHandle new.
+			self
+				openAlgorithmProvider: shaAlgorithmHandle
+				id: BCRYPT_SHA1_ALGORITHM
+				implementation: nil
+				flags: 0].
+	^shaAlgorithmHandle!
 
 shaCreate
 	"Creates a SHA context. In BCrypt terms, the context is the hash handle."
 
-	| hashHandle status |
-
+	| hashHandle |
 	hashHandle := ExternalHandle new.
-	status := self createHash: self shaAlgorithmHandle hashHandle: hashHandle hashObject: nil hashObjectSize: 0 secret: 0 secretSize: 0 flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>createHash: failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-
-	^ hashHandle.!
+	self
+		createHash: self shaAlgorithmHandle
+		hashHandle: hashHandle
+		hashObject: nil
+		hashObjectSize: 0
+		secret: 0
+		secretSize: 0
+		flags: 0.
+	^hashHandle!
 
 shaDestroy: aHashHandle
 	"Destroys the argument SHA handle (context)."
 
-	| status | 
-
-	status := self destroyHash: aHashHandle.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>destroyHash failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-!
+	self destroyHash: aHashHandle!
 
 shaGetHash: aHashHandle
 	"Answer the computed hash for the argument SHA handle.
 	 The answer will be a ByteArray of 20 bytes for SHA1"
 
-	| hash status |
-
+	| hash |
 	hash := ByteArray new: 20.
-	status := self finishHash: aHashHandle output: hash outputSize: hash size flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>finishHash failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-
-	^ hash.!
+	self
+		finishHash: aHashHandle
+		output: hash
+		outputSize: hash size
+		flags: 0.
+	^hash!
 
 shaHashBuffer: aHashHandle buffer: buffer
 	"Hash the contents in of ByteArray buffer in the currently open hash context."
 
-	| status | 
-
-	status := self hashData: aHashHandle input: buffer inputSize: buffer size flags: 0.
-	( self statusFailed: status ) ifTrue: [ 
-		self error: 'BCrypt>>hashData failed: ', ( status printStringRadix: 16 showRadix: false ) ].
-!
-
-statusFailed: aStatus
-	"Answer true if the argument NTSTATUS indicates a fail value."
-
-	^ aStatus >= 16r80000000.! !
+	self
+		hashData: aHashHandle
+		input: buffer
+		inputSize: buffer size
+		flags: 0! !
 !BCryptLibrary categoriesFor: #closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #destroyHash:!public!win32 functions-bcrypt library! !
@@ -172,7 +163,6 @@ statusFailed: aStatus
 !BCryptLibrary categoriesFor: #shaDestroy:!hashing!public! !
 !BCryptLibrary categoriesFor: #shaGetHash:!hashing!public! !
 !BCryptLibrary categoriesFor: #shaHashBuffer:buffer:!hashing!public! !
-!BCryptLibrary categoriesFor: #statusFailed:!error handling!hashing!public! !
 
 !BCryptLibrary class methodsFor!
 

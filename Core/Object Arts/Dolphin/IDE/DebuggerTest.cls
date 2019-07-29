@@ -25,9 +25,9 @@ tearDown
 testNoShowWalkbacks
 	| start |
 	process := [self halt] forkAt: Processor userInterruptPriority.
-	start := Time millisecondClockValue.
+	start := Delay millisecondClockValue.
 	SessionManager inputState
-		loopWhile: [Time millisecondClockValue < (start + 5000) and: [process state ~= #debug]].
+		loopWhile: [Delay millisecondClockValue < (start + 5000) and: [process state ~= #debug]].
 	self assert: process state equals: #debug!
 
 testRemapIPOfSendSelf

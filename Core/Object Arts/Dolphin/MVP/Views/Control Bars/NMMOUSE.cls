@@ -68,6 +68,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
-!NMMOUSE class categoriesFor: #defineFields!initializing!public! !
+!NMMOUSE class categoriesFor: #defineFields!public!template definition! !
 !NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

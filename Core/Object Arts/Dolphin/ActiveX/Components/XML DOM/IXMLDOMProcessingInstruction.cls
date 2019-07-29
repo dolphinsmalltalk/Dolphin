@@ -47,7 +47,7 @@ get_data: value
 			[out, retval]BSTR* value);"
 
 	<virtual stdcall: hresult 45 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_target: name
 	"Private - Get the value of the 'target' property of the receiver.
@@ -56,7 +56,7 @@ get_target: name
 			[out, retval]BSTR* name);"
 
 	<virtual stdcall: hresult 44 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
@@ -75,7 +75,7 @@ put_data: value
 			[in]BSTR value);"
 
 	<virtual stdcall: hresult 46 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 target
 	"Answer the <bstr> value of the 'target' property of the receiver.

@@ -16,6 +16,18 @@ Bag conforms to the ANSI protocols:
 !Bag categoriesForClass!Collections-Unordered! !
 !Bag methodsFor!
 
+= anObject
+	"Answer whether the receiver and the <Object> comparand, are considered equivalent (in whatever respect is appropriate for the class of the receiver)."
+
+	"Two Bags are considered equal if
+		(a) they are the same object; or
+		(b) they are the same 'kind' of thing, and they have the same elements occuring the same number of times in each."
+
+	self == anObject ifTrue: [^true].
+	(anObject species == self species and: [self size == anObject size]) ifFalse: [^false].
+	contents keysAndValuesDo: [:key :value | (anObject occurrencesOf: key) = value ifFalse: [^false]].
+	^true!
+
 add: newElement
 	"Include the <Object> argument, newElement, as an element of the receiver, once.
 	newElement must not be nil. Answer newElement."
@@ -121,6 +133,11 @@ remove: oldElement ifAbsent: exceptionHandler
 		ifFalse: [contents at: oldElement put: count - 1].
 	^oldElement!
 
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	contents := contents copyEmpty!
+
 removeAllOccurrencesOf: target ifAbsent: exceptionHandler
 	"Remove all the occurrences of the <Object> target from the receiver. 
 	If target is not an element of the receiver, answer the result of evaluating 
@@ -141,6 +158,7 @@ size
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
+!Bag categoriesFor: #=!comparing!public! !
 !Bag categoriesFor: #add:!adding!public! !
 !Bag categoriesFor: #add:withOccurrences:!adding!public! !
 !Bag categoriesFor: #asBag!converting!public! !
@@ -155,6 +173,7 @@ valuesAndCountsDo: aBlock
 !Bag categoriesFor: #occurrencesOf:!public!searching! !
 !Bag categoriesFor: #postCopy!copying!public! !
 !Bag categoriesFor: #remove:ifAbsent:!public!removing! !
+!Bag categoriesFor: #removeAll!public! !
 !Bag categoriesFor: #removeAllOccurrencesOf:ifAbsent:!public!removing! !
 !Bag categoriesFor: #size!accessing!public! !
 !Bag categoriesFor: #valuesAndCountsDo:!enumerating!public! !

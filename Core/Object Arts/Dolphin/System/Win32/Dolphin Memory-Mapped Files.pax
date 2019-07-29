@@ -47,9 +47,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
 
 package!
 
@@ -73,7 +72,7 @@ ExternalAddress variableByteSubclass: #MemoryMappedFileView
 
 !KernelLibrary methodsFor!
 
-createFileMapping: hFile lpAttributes: lpAttributes flProtect: flProtect dwMaximumSizeHigh: dwMaximumSizeHigh dwMaximumSizeLow: dwMaximumSizeLow lpName: lpName 
+createFileMapping: hFile lpAttributes: lpAttributes flProtect: flProtect dwMaximumSizeHigh: dwMaximumSizeHigh dwMaximumSizeLow: dwMaximumSizeLow lpName: lpName
 	"Invoke the CreateFileMapping() function of the module wrapped by the receiver.
 	Helpstring: Maps file to memory or creates shared memory (if hFile is -1), assigns lpName to mapping, and returns mapping handle
 
@@ -86,9 +85,9 @@ createFileMapping: hFile lpAttributes: lpAttributes flProtect: flProtect dwMaxim
 			LPWSTR lpName);"
 
 	<stdcall: handle CreateFileMappingW handle void* dword dword dword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush 
+flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush
 	"Invoke the FlushViewOfFile() function of the module wrapped by the receiver.
 	Helpstring: Writes file mapping to disk
 
@@ -97,9 +96,9 @@ flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush
 			DWORD dwNumberOfBytesToFlush);"
 
 	<stdcall: sdword FlushViewOfFile void* dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap 
+mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap
 	"Invoke the MapViewOfFile() function of the module wrapped by the receiver.
 	Helpstring: Opens view of specified file mapping
 
@@ -111,9 +110,9 @@ mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetH
 			DWORD dwNumberOfBytesToMap);"
 
 	<stdcall: MemoryMappedFileView MapViewOfFile dword dword dword dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName 
+openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName
 	"Invoke the OpenFileMapping() function of the module wrapped by the receiver.
 	Helpstring: Opens existing mapping specified by lpName
 
@@ -123,9 +122,9 @@ openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName
 			LPCWSTR lpName);"
 
 	<stdcall: handle OpenFileMappingW dword bool lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-unmapViewOfFile: lpBaseAddress 
+unmapViewOfFile: lpBaseAddress
 	"Invoke the UnmapViewOfFile() function of the module wrapped by the receiver.
 	Helpstring: Releases file mapping
 
@@ -133,7 +132,7 @@ unmapViewOfFile: lpBaseAddress
 			void* lpBaseAddress);"
 
 	<stdcall: sdword UnmapViewOfFile void*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:!public!win32 functions-memory management! !

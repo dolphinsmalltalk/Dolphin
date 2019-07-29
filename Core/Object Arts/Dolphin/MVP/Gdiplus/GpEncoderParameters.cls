@@ -99,7 +99,7 @@ length: anInteger
 	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
 		Count: anInteger;
 		yourself! !
-!GpEncoderParameters class categoriesFor: #defineFields!initializing!public! !
+!GpEncoderParameters class categoriesFor: #defineFields!public!template definition! !
 !GpEncoderParameters class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !GpEncoderParameters class categoriesFor: #length:!public! !
 

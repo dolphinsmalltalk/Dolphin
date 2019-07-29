@@ -82,9 +82,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
 
 package!
 
@@ -151,7 +150,7 @@ StTagNode subclass: #StExternalCallNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StTagNode subclass: #StPrimitiveNode
-	instanceVariableNames: 'primitiveIndex'
+	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

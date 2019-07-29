@@ -1298,11 +1298,9 @@ flash: anInteger
 	| canvas rect |
 	canvas := self canvas.
 	rect := self clientRectangle.
-	(1 to: anInteger*2)
-		do: [:i | canvas invertRectangle: rect]
-		separatedBy: [Processor sleep: 65].
-	canvas free
-!
+	(1 to: anInteger * 2) do: [:i | canvas invertRectangle: rect]
+		separatedBy: [Processor sleep: 65 milliseconds].
+	canvas free!
 
 font
 	"Answer the current font aspect. "
@@ -1757,7 +1755,7 @@ invalidateLayout
 
 invalidateLayoutDeeply
 	self invalidateLayout.
-	self allSubViewsDo: [:each | each invalidateLayout].!
+	self allSubViewsDo: [:each | each basicInvalidateLayout]!
 
 invalidateRect: rectangle
 	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window)
@@ -2826,20 +2824,16 @@ previousSiblingView
 
 primHookWindowCreate: hookBoolean
 	"Private - Ask the VM to hook the first subsequent window creation event for the receiver.
-	When it receives such an event it will send a #subclassWindow: callback with the
-	handle of the newly created window to the receiver. This allows controls to be
-	subclassed BEFORE they return from the CreateWindowEx() call.
-	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to
-	minimise the performance impact. The hook is automatically 'unhooked' by the VM
-	when it receive's the create notification before it sends the #subclassWindow:
-	callback.
-	Primitive failure reasons:
-		0 	- hookBoolean not a boolean
-		1	- already hooked by the view in the failure data
-	"
+	When it receives such an event it will send a #subclassWindow: callback with the handle of the newly created window to the receiver. This allows controls to be subclassed BEFORE they return from the CreateWindowEx() call.
+	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to minimise the performance impact. The hook is automatically 'unhooked' by the VM when it receive's the create notification before it sends the #subclassWindow: callback."
+
+	"Primitive failure reasons:
+		InvalidParameter1	- hookBoolean not a boolean
+		IllegalStateChange	- already hooked by another view
+		NotSupported		- The VM is for console apps only"
 
 	<primitive: 108>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 printOn: aStream
 	"Append a short description of the receiver to aStream."
@@ -4167,7 +4161,7 @@ wmNcDestroy: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam.
 	self clearHandle.
-	self isStateRestoring ifFalse: [interactor := creationParent := presenter := DeafObject current].	"If not being recreated, discard the presenter"
+	self isStateRestoring ifFalse: [interactor := creationParent := presenter := DeafObject.Current].	"If not being recreated, discard the presenter"
 	^answer!
 
 wmNcHitTest: message wParam: wParam lParam: lParam
@@ -4346,6 +4340,12 @@ wmThemeChanged: message wParam: wParam lParam: lParam
 		freeTheme;
 		openTheme.
 	"Let the control see the theme change event too, otherwise it will not change style"
+	^nil!
+
+wmTimeChange: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_TIMECHANGE message."
+
+	"Should only be received by top-level windows."
 	^nil!
 
 wmTimer: message wParam: wParam lParam: lParam
@@ -4983,6 +4983,7 @@ zOrderTop
 !View categoriesFor: #wmSysKeyDown:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmSysKeyUp:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmThemeChanged:wParam:lParam:!event handling-win32!private! !
+!View categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmTimer:wParam:lParam:!event handling-win32!private!timers! !
 !View categoriesFor: #wmVScroll:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
@@ -5113,6 +5114,7 @@ buildMessageMap
 		at: WM_PRINTCLIENT + 1 put: #wmPrintClient:wParam:lParam:;
 		at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
 		at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
+		at: WM_TIMECHANGE + 1 put: #wmTimeChange:wParam:lParam:;
 		yourself!
 
 capture
@@ -5588,7 +5590,7 @@ withHandle: aHandle
 	although you will need to visit #dispatchMessage:, (and any other direct users 
 	of AllViews)."
 
-	^SessionManager inputState windowAt: aHandle ifAbsent: []!
+	^SessionManager current inputState windowAt: aHandle ifAbsent: []!
 
 wndClassName
 	"Private - Answer the Windows class name to be registered with Win32 for instances of the receiver.

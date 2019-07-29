@@ -103,7 +103,7 @@ fromString: aString
 
 getFieldNames
 	^#(#p_name #p_proto)! !
-!PROTOENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PROTOENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !PROTOENT class categoriesFor: #fromString:!public! !
 !PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

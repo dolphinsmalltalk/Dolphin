@@ -196,8 +196,7 @@ lookup: keyObject
 	algorithms that rely heavily on dictionary lookup (which is fairly common)."
 
 	| index |
-	index := self findKeyOrNil: keyObject.
-	^(self basicAt: index) isNil ifFalse: [values at: index]!
+	^(self basicAt: (index := self findKeyOrNil: keyObject)) isNil ifFalse: [values at: index]!
 
 moveFrom: fromIndex to: toIndex
 	"Private - Destructively move the element at index, fromIndex, over

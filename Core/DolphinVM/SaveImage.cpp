@@ -39,14 +39,14 @@
 //////////////////////////////////////////////////////////////////////////////
 // Image Save Methods
 
-int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects)
+_PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects)
 {
 	// Answer:
 	//	NULL = success
 	//	ZeroPointer = general save error
 
 	if (!szFileName)
-		return 2;
+		return _PrimitiveFailureCode::InvalidParameter1;
 
 	if (nMaxObjects == 0)
 	{
@@ -55,12 +55,12 @@ int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBacku
 
 	if (nMaxObjects < m_nOTSize + OTMinHeadroom)
 	{
-		return 4;
+		return _PrimitiveFailureCode::InvalidParameter4;
 	}
 
 	if (nMaxObjects > OTMaxLimit)
 	{
-		return 5;
+		return _PrimitiveFailureCode::NoMemory;
 	}
 
 	int nRet = 3;
@@ -90,7 +90,7 @@ int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBacku
 		char buf[256];
 		strerror_s(buf, errno);
 		TRACE(L"Failed to open image file for save %d:'%s'\n", errno, buf);
-		return 2;
+		return _PrimitiveFailureCode::Failed;
 	}
 
 #ifdef PROFILE_IMAGELOADSAVE
@@ -182,7 +182,7 @@ int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBacku
 			nRet = 0;
 	}
 
-	return nRet;
+	return nRet == 0 ? _PrimitiveFailureCode::NoError : _PrimitiveFailureCode::Unsuccessful;
 
 }
 

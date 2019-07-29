@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'StoreString for Views'.
 package paxVersion: 1;
 	basicComment: 'Methods in this package are used to generate a string that can be used to recreate a view. The primary use is to allow for diffs when a view is edited (the literal array in a resource_ method is useless for that purpose).'.
@@ -20,7 +20,6 @@ package methodNames
 	add: #CommandMenuItem -> #storeForViewOn:variables:;
 	add: #Date -> #storeForViewOn:;
 	add: #Dictionary -> #storeForViewOn:;
-	add: #DiffsScintillaStyler -> #storeForViewOn:;
 	add: #DividerMenuItem -> #fromStrings;
 	add: #DividerMenuItem -> #storeForViewOn:variables:;
 	add: #FlowLayout -> #storeForViewOn:;
@@ -69,7 +68,7 @@ package methodNames
 	add: #StyledPen -> #storeForViewOn:;
 	add: #SystemColor -> #storeForViewOn:;
 	add: #Time -> #storeForViewOn:;
-	add: #ToolbarButton -> #storeForViewOn:variables:;
+	add: #ToolbarBitmapButton -> #storeForViewOn:variables:;
 	add: #ToolbarIconButton -> #storeForViewOn:variables:;
 	add: #ToolbarSeparator -> #storeForViewOn:;
 	add: #ToolbarSystemButton -> #storeForViewOn:variables:;
@@ -94,23 +93,23 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
-	add: '..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'..\..\Object Arts\Dolphin\MVP\Views\Styled Views\Dolphin Styled Views'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package!
 
@@ -443,18 +442,6 @@ storeForViewOn: aStream
 storeForViewOn: aStream 
 	self storeOn: aStream! !
 !Dictionary categoriesFor: #storeForViewOn:!public!store view! !
-
-!DiffsScintillaStyler methodsFor!
-
-storeForViewOn: aStream 
-	diffs = #() 
-		ifTrue: 
-			[aStream
-				display: self class;
-				space;
-				display: #new]
-		ifFalse: [super storeForViewOn: aStream]! !
-!DiffsScintillaStyler categoriesFor: #storeForViewOn:!public!store view! !
 
 !DividerMenuItem methodsFor!
 
@@ -1278,7 +1265,7 @@ storeForViewOn: aStream
 		space;
 		display: #fromId:;
 		space;
-		display: id;
+		display: self id;
 		nextPutAll: ' "';
 		display: self idName;
 		nextPutAll: '")'! !
@@ -1291,16 +1278,16 @@ storeForViewOn: aStream
 		nextPut: $(;
 		display: self class;
 		space;
-		display: #fromMilliseconds:;
+		display: #fromSeconds:;
 		space.
-	milliseconds storeForViewOn: aStream.
+	self asSeconds storeForViewOn: aStream.
 	aStream
 		nextPutAll: ' "';
 		print: self;
 		nextPutAll: '")'! !
 !Time categoriesFor: #storeForViewOn:!public!store view! !
 
-!ToolbarButton methodsFor!
+!ToolbarBitmapButton methodsFor!
 
 storeForViewOn: aStream variables: aDictionary 
 	| bitmapName indexName prefix selector |
@@ -1364,7 +1351,7 @@ storeForViewOn: aStream variables: aDictionary
 		space.
 	commandDescription storeForViewOn: aStream variables: aDictionary.
 	aStream nextPut: $)! !
-!ToolbarButton categoriesFor: #storeForViewOn:variables:!public!store view! !
+!ToolbarBitmapButton categoriesFor: #storeForViewOn:variables:!public!store view! !
 
 !ToolbarIconButton methodsFor!
 

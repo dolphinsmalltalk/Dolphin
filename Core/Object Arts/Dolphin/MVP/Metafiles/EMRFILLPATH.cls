@@ -71,7 +71,7 @@ iTypes
 		with: EMR_FILLPATH
 		with: EMR_STROKEANDFILLPATH
 		with: EMR_STROKEPATH! !
-!EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
 

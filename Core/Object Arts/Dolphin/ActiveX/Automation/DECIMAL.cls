@@ -131,7 +131,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
-!DECIMAL class categoriesFor: #defineFields!initializing!public! !
+!DECIMAL class categoriesFor: #defineFields!public!template definition! !
 !DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !DECIMAL class categoriesFor: #initialize!development!initializing!private! !
 !DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !

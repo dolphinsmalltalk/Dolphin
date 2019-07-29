@@ -65,6 +65,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
-!NMTOOLBARW class categoriesFor: #defineFields!initializing!public! !
+!NMTOOLBARW class categoriesFor: #defineFields!public!template definition! !
 !NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

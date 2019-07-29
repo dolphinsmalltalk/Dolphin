@@ -6,15 +6,10 @@ DateTimeCommonControl subclass: #MonthCalendarView
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MonthCalendarView guid: (GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
-MonthCalendarView comment: 'MonthCalendarView is a <valueView> implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
+MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 
-The <valueModel> associated with a MonthCalendarView must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter, although the <Time> portion is ignored. A MonthCalendarView will normally be used in conjunction with a <DatePresenter>.
-
-Instance Variables:
-	displayFormat	<String> or nil.
-
-Class Variables:
-	DtnMap		<Array>'!
+The `<valueModel>` associated with a `MonthCalendarView` must always yield a value that can be converted to a `SYSTEMTIME` using `#asSYSTEMTIME` after mapping through the installed type converter (e.g. a `DateAndTime`), although any time portion is ignored. A `MonthCalendarView` will normally be used in conjunction with a `DatePresenter`.
+'!
 !MonthCalendarView categoriesForClass!MVP-Views! !
 !MonthCalendarView methodsFor!
 
@@ -173,7 +168,7 @@ state
 		yourself!
 
 today
-	^self mcmGetToday asTimeStamp date! !
+	^self mcmGetToday asDate! !
 !MonthCalendarView categoriesFor: #calculateExtent:!geometry!private! !
 !MonthCalendarView categoriesFor: #defaultExtent!constants!private! !
 !MonthCalendarView categoriesFor: #dtNotificationMap!private! !

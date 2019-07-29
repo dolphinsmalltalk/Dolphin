@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth _unused6 _unused7 fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -54,17 +54,6 @@ Class Variables:
 _alreadyPrinted
 	^_alreadyPrinted!
 
-at: anInteger 
-	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented.
-
-	Primitive Failure Reasons:
-		0	- index is not a SmallInteger
-		1	- index out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 60>
-	^self errorAt: anInteger!
-
 at: anInteger ifAbsent: exceptionBlock 
 	"Answer an <Object> which is the element of the receiver 
 	at the specified <SmallInteger> index. If the index is out of bounds 
@@ -74,30 +63,32 @@ at: anInteger ifAbsent: exceptionBlock
 		ifTrue: [self at: anInteger]
 		ifFalse: [exceptionBlock value]!
 
-at: anInteger put: anObject 
-	"Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value.
+at: anInteger put: anObject
+	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value."
 
-	Primitive Failure Reasons:
-		0	- index is not a <SmallInteger>
-		1	- index is out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 176>
-	^self errorAt: anInteger put: anObject!
-
-basicAt: anInteger put: anObject 
-	"Private - Replace the receivers indexed instance variable at the argument,
-	index, with the argument, value. Answer value. 
-
-	Primitive Failure Reasons:
-		0	- index is not a SmallInteger
-		1	- index out of bounds (not in the range 1..receiver's indexable size) 
-
-	MUST not be reimplemented (except by classes whose instances have special representations
-	such as SmallInteger)."
+	"Primitive Failure Reasons:
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 176>
-	^self errorAt: anInteger put: anObject!
+	^self
+		_primitiveError: _failureCode
+		at: anInteger
+		put: anObject!
+
+basicAt: anInteger put: anObject
+	"Private - Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	MUST not be reimplemented (except by classes whose instances have special representations such as SmallInteger)."
+
+	"Primitive Failure Reasons:
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)"
+
+	<primitive: 176>
+	^self
+		_primitiveError: _failureCode
+		at: anInteger
+		put: anObject!
 
 basicSuspendedFrame
 	"Private - Answer the SmallInteger pointer into the stack of the suspended frame. If nil then
@@ -208,8 +199,7 @@ id
 	^self yourAddress bitShift: -16!
 
 indexOfSP: anInteger
-	"Private - Answer the index into the receiver of the VM stack pointer value, anInteger
-	(which is a pointer, bitshifted right one position, although this is an implementation
+	"Private - Answer the index into the receiver of the VM stack pointer value, anInteger (which is a pointer, bitshifted right one position, although this is an implementation
 	detail which may be changed)."
 
 	<primitive: 175>
@@ -327,35 +317,14 @@ name: anObject
 
 	name := anObject!
 
-primitiveFailureCode
-	"Private - Answer the SmallInteger failure code set by the last primitive which failed 
-	when executed by the receiver. This should be retrieved as soon as possible following a 
-	failure so that it is not overwritten by a subsequent failure - remember that not all
-	primitive failures are errors, and they are a faily common occurrence in SmallInteger arithmetic.
-	Some primitives may not set a failure code when they fail.
-	Currently each primitive defines its own failure codes (documented in the primitive call method), 
-	and additional information of any type may also be present in 'primitiveFailureData'.
-	The failure code/data are not normally affected by primitives which succeed."
-
-	^primitiveFailureCode!
-
-primitiveFailureData
-	"Private - Answer the extra failure data set by the last primitive which failed (and
-	which had extra information to supply about the failure over and above the failure code).
-	See #primitiveFailureCode for additional information."
-
-	^primitiveFailureData!
-
 primTerminate
-	"Private - Transition the receiver from its current state to the Terminated state. Once
-	Terminated, a Process cannot (easily) be resumed or restarted.
+	"Private - Transition the receiver from its current state to the Terminated state. Once terminated, a Process cannot (easily) be resumed or restarted."
 
-	Primitive Failure Reasons:
+	"Primitive Failure Reasons:
 
-	0 - Not used
-	1 - The receiver is the last running process, so it cannot be terminated until another
-	process has been started (an Idle Panic interrupt will also be generated). Assuming correct
-	recovery after the idle panic, a second attempt at termination should succeed."
+		AlreadyComplete	- The process is suspended (processes can only be terminated from within their own running context)
+		ThreadIsTerminating	- The process is already on the pending terminations list (i.e. waiting for its associated OS thread to terminate)
+		Retry				- The receiver is the last running process, so it cannot be terminated until another process has been started (an Idle Panic interrupt will also be generated). Assuming correct recovery after the idle panic, a second attempt at termination should succeed."
 
 	"Implementation Note: This primitive is approximately equivalent to:
 
@@ -370,9 +339,10 @@ primTerminate
 	resources, than the alternative of dedicating another process to this task."
 
 	<primitive: 91>
-	^Processor activeProcess primitiveFailureCode == 1 
-		ifTrue: [false	"Please try again"]
-		ifFalse: [self primitiveFailed]!
+	^_failureCode == _PrimitiveFailureCode.ThreadIsTerminating or: 
+			[_failureCode == _PrimitiveFailureCode.Retry
+				ifTrue: [false	"Please try again"]
+				ifFalse: [self primitiveFailed: _failureCode]]!
 
 printOn: aStream
 	"Append a short debug description of the receiver to aStream."
@@ -403,13 +373,14 @@ priority: anInteger
 	the active process, then the active process will be preempted.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	anInteger is not in the range of permissible priorities (1..highest priority)."
+		InvalidParameter1 -	anInteger is not a SmallInteger.
+		IntegerOutOfRange -	anInteger is not in the range of permissible priorities (1..highest priority)."
 
 	<primitive: 92>
-	^((anInteger isMemberOf: SmallInteger) and: [anInteger between: 1 and: Processor highestPriority])
-		ifTrue: [self primitiveFailed]
-		ifFalse: [self error: ('Invalid Process priority <1p>' expandMacrosWith: priority)]!
+	^(_failureCode == _PrimitiveFailureCode.InvalidParameter1
+		or: [_failureCode == _PrimitiveFailureCode.IntegerOutOfRange])
+			ifTrue: [self error: ('Invalid Process priority <1p>' expandMacrosWith: anInteger)]
+			ifFalse: [self primitiveFailed: _failureCode]!
 
 queueInterrupt: anInteger
 	"Queue an interrupt with the specified number for the receiver (which can be in any resumable state)
@@ -422,11 +393,11 @@ queueInterrupt: anInteger with: anObject
 	The argument is passed to the interrupted process and can be of any type as necessary.
 
 	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger.
-		1 -	the receiver is dead (i.e. not runnable)."
+		InvalidParameter1 	- anInteger is not a SmallInteger.
+		IllegalStateChange	- the receiver is dead (i.e. not runnable)."
 
 	<primitive: 98>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resetFloatingPoint
 	CRTLibrary default
@@ -436,40 +407,26 @@ resetFloatingPoint
 					| CRTConstants._MCW_RC)!
 
 resume
-	"Change the state of the receiver from Suspended to Ready (by placing
-	it at the end of the Processor's queue for the receiver's priority).
-	Fail if the receiver is already waiting in a queue (in a Semaphore 
-	or the Processor). See #resume: for further details (sending this message
-	is equivalent to sending #resume: with nil as the argument)."
+	"Change the state of the receiver from Suspended to Ready (by placing it at the end of the Processor's queue for the receiver's priority). Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor). See #resume: for further details (sending this message is equivalent to sending #resume: with nil as the argument)."
 
 	<primitive: 87>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resume: suspendingListOrNil
-	"Change the state of the receiver from Suspended to Ready/Waiting 
-	by placing it at the end of the Processor's queue for the receiver's priority
-	if suspendingListOrNil is nil, otherwise returning it to the queue associated
-	with suspendingListOrNil. Fail if the receiver is already waiting in a queue 
-	(in a Semaphore or the Processor) - i.e. it is only appropriate to send this message to
-	previously #suspend'd Processes, it is not the means by which to start
-	currently Waiting or Ready processes (which have to wait either for the Semaphore
-	on which they are Waiting to be signalled, or their turn to run after
-	higher priority processes, and in a round robin fashion with respect to
-	Processes of the same priority if they are Ready to run).
+	"Change the state of the receiver from Suspended to Ready/Waiting by placing it at the end of the Processor's queue for the receiver's priority if suspendingListOrNil is nil, otherwise returning it to the queue associated with suspendingListOrNil. Fail if the receiver is already waiting in a queue (in a Semaphore or the Processor) - i.e. it is only appropriate to send this message to previously #suspend'd Processes, it is not the means by which to start currently Waiting or Ready processes (which have to wait either for the Semaphore on which they are Waiting to be signalled, or their turn to run after higher priority processes, and in a round robin fashion with respect to Processes of the same priority if they are Ready to run)."
 
-	Primitive failure reasons:
-		0 -	the receiver is not suspended on a scheduler or semaphore list.
-		1 - 	the receiver has been terminated (or not properly initialized)."
+	"Primitive failure reasons:
+		IllegalStateChange 	- the receiver is not suspended on a scheduler or semaphore list.
+		AssertionFailure		- the receiver has been terminated (or not properly initialized)."
 
 	<primitive: 87>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 resumeUnconditionally
-	"Change the state of the receiver to Ready to run regardless of its current
-	state (unless terminated)."
+	"Change the state of the receiver to Ready to run regardless of its current state (unless terminated)."
 
 	<primitive: 87>
-	myList isNil ifTrue: [^self primitiveFailed]!
+	myList isNil ifTrue: [^self primitiveFailed: _failureCode]!
 
 setFpControl: flagsInteger mask: maskInteger
 	"Set the current floating point control word for the receiver. If the receiver is the
@@ -591,31 +548,20 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler saveObject: self as: nil.!
 
 suspend
-	"Transition the receiver from Running (if active), Waiting (if waiting on a Semaphore) 
-	or Ready (if waiting to be scheduled by the Processor) states to the Suspended state 
-	(i.e. not runnable). If the receiver is the activeProcess, suspend it and schedule another, 
-	otherwise remove the receiver from the list of Ready processes in the Processor, or the 
-	list of Waiting processes in a Semaphore, and nil out its suspending list backpointer. 
-	The receiver may be transitioned back to the Ready state at any time by sending it #resume 
-	(but remember that resuming a Process that was waiting on a Semaphore when it was suspended 
-	may upset process synchronisation because it will not return to the Semaphores waiting list).
-	Report an error if the receiver is already Suspended (which is recognised by a null backpointer, 
-	as this indicates that the process is not waiting in a list).
+	"Transition the receiver from Running (if active), Waiting (if waiting on a Semaphore) or Ready (if waiting to be scheduled by the Processor) states to the Suspended state (i.e. not runnable). If the receiver is the activeProcess, suspend it and schedule another,  otherwise remove the receiver from the list of Ready processes in the Processor, or the  list of Waiting processes in a Semaphore, and nil out its suspending list backpointer. The receiver may be transitioned back to the Ready state at any time by sending it #resume (but remember that resuming a Process that was waiting on a Semaphore when it was suspended may upset process synchronisation because it will not return to the Semaphores waiting list).
+	Report an error if the receiver is already Suspended (which is recognised by a null backpointer, as this indicates that the process is not waiting in a list).
 
-	Suspended processes have a 'nil' suspending list, are not the active process, and have
-	a non-zero suspendedFrame address (which distinguishes them from terminated processes).
-	If the process is the last runnable process, then answer false, otherwise answer the receiver 
-	(when resumed).
+	Suspended processes have a 'nil' suspending list, are not the active process, and have a non-zero suspendedFrame address (which distinguishes them from terminated processes). If the process is the last runnable process, then answer false, otherwise answer the receiver (when resumed)."
 
-	Primitive failure results:
-		0 -	the process is already suspended.
-		1 -	the process is the active process and could not be suspended because
-			it is the only runnable process remaining."
+	"Primitive failure results:
+		AlreadyComplete	- the process is already suspended.
+		Retry				- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		ThreadIsTerminating	- the process is pending termination"
 
-	| failureCode |
 	<primitive: 88>
-	failureCode := Processor activeProcess primitiveFailureCode.
-	^failureCode == 1 ifTrue: [false] ifFalse: [self primitiveFailed]!
+	^_failureCode == _PrimitiveFailureCode.Retry
+		ifTrue: [false]
+		ifFalse: [self primitiveFailed: _failureCode]!
 
 suspendedFrame
 	"Private - Answer a stack frame for the receiver's suspended context, nil if the receiver is dead."
@@ -641,20 +587,16 @@ suspendUnconditionally
 	Answers the receiver.
 
 	Primitive failure results:
-		0 -	the process is already suspended.
-		1 -	the process is the active process and could not be suspended because
-			it is the only runnable process remaining.
-		2-	the process is pending termination
+		Completed			- the process is already suspended.
+		Retry				- the process is the active process and could not be suspended because it is the only runnable process remaining.
+		ThreadIsTerminating	- the process is pending termination
 
-	The first two failure codes are ignored. Any other failure code is unexpected, and will result in 
-	normal failure handling."
+	The Completed and Retry failure codes are ignored. Any other failure code is unexpected, and will result in an exception being raised."
 
-	| failureCode |
 	<primitive: 88>
-	failureCode := Processor activeProcess primitiveFailureCode.
-	^failureCode == 1 
+	^_failureCode == _PrimitiveFailureCode.Retry
 		ifTrue: [false]
-		ifFalse: [failureCode == 0 ifTrue: [self] ifFalse: [self primitiveFailed]]!
+		ifFalse: [_failureCode == _PrimitiveFailureCode.Completed ifTrue: [self] ifFalse: [self primitiveFailed: _failureCode]]!
 
 terminate
 	"Transition the receiver from its current state to the Terminated state. Once Terminated, 
@@ -695,7 +637,6 @@ topFrame
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
 !Process categoriesFor: #_alreadyPrinted!accessing!private! !
-!Process categoriesFor: #at:!accessing!public! !
 !Process categoriesFor: #at:ifAbsent:!accessing!public! !
 !Process categoriesFor: #at:put:!accessing!public! !
 !Process categoriesFor: #basicAt:put:!accessing!private! !
@@ -731,8 +672,6 @@ topFrame
 !Process categoriesFor: #lastError!accessing!public! !
 !Process categoriesFor: #name!accessing!public! !
 !Process categoriesFor: #name:!accessing!public! !
-!Process categoriesFor: #primitiveFailureCode!accessing!private! !
-!Process categoriesFor: #primitiveFailureData!accessing!private! !
 !Process categoriesFor: #primTerminate!private!states-changing! !
 !Process categoriesFor: #printOn:!printing!public! !
 !Process categoriesFor: #priority!accessing!public! !
@@ -809,44 +748,13 @@ initialize
 	"
 
 	self addClassConstant: 'DefaultStack' value: 1.	"Let the VM work out the minimum size (will be at least one OS page)"
-	DefaultMaxStack := 64 * 1024.				"Grow to 64K slots (256Kb) before overflow."
+	DefaultMaxStack := 64 * 1024.	"Grow to 64K slots (256Kb) before overflow."
 
-	"Floating point Inexact and Underflow exceptions will be masked (i.e. not raised) by default.
-	As specified by ISO 10967, clause 6, a compliant implementation can support a number of 
-	alternate means for applications to detect FP errors:
-		a) Notification by recording in indicators (see clause 6.2.1).
-		b) Notification by alteration of control flow (see clause 6.2.2).
-		c) Notification by termination with message (see clause 6.2.3). 
-
-	These alternates are supported in Dolphin as follows:
-	a) Indicators are accessed via Float class>>statusFlags, e.g. after detecting an infinite result.
-	b) Implemented by raising of exceptions, depending on the Float class>>exceptionMask setting.
-	c) A special case of (b), depending on how the application handles exceptions."
-
-	"Note that alternative (a), is 'required', and is 'expected to be the default'. In order to
-	support this it is necessary to provide a means for an application to examine 'indicators'
-	after performing floating point operations, which most Smalltalk implementations do not. The
-	Dolphin VM ensures that isolated FP state is maintained for each running Process, and the
-	CRT _statusfp function can be called to retrieve the current status indicators after FP operations 
-	are performed, either in primitives, or external library calls. The default exception mask now masks
-	out the continuable error cases in order to comply with the expectation that notification
-	through indicators be the default notification mechanism. For example, should an FP
-	operation cause overflow, then the result will be Float.Infinity (or
-	Float.NegativeInfinity), and the CRTConstants._EM_OVERFLOW mask will be set in 
-	Float statusFlags."
-
-	"We still provide notification through alteration of control flow (i.e. the raising of
-	exceptions) for division by zero, and invalid operations such as taking the square root of a
-	negative number. We've chosen to unmask these error cases because they generally indicate
-	logic errors in a program, and so exceptions are raised for these errors by default. This
-	can be overridden in any individual process (or for a block of computation) by setting the
-	FP exception mask appropriately. When these conditions are also masked, Float.NaN values
-	will be returned from the FP operation as continuation values."
+	"See FloatingPointException for an explanation of the default FP exception mask"
 	self addClassConstant: 'DefaultFpControl'
 		value: CRTConstants._RC_NEAR | CRTConstants._IC_PROJECTIVE | CRTConstants._DN_SAVE
-				| CRTConstants._PC_64 | CRTConstants._EM_DENORMAL
-				| CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW
-				| CRTConstants._EM_OVERFLOW!
+				| CRTConstants._PC_64
+					| (CRTConstants._MCW_EM maskClear: CRTConstants._EM_ZERODIVIDE | CRTConstants._EM_INVALID)!
 
 new
 	"Processes should be created by sending one of the #fork family of messages to a block."

@@ -71,6 +71,6 @@ defineFields
 
 getFieldNames
 	^#(#StartingOffset #Length)! !
-!HTTP_BYTE_RANGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BYTE_RANGE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_BYTE_RANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -37,9 +37,8 @@ QueryService: guidService riid: riid ppvObject: ppvObject
 			[out] IUnknown** ppvObject);
 	"
 
-	<virtual stdcall: hresult 4 GUID* GUID* IUnknown**>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 4 guid* guid* IUnknown**>
+	^self invalidCall: _failureCode! !
 !IServiceProvider categoriesFor: #queryService:riid:!methods!public! !
 !IServiceProvider categoriesFor: #QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
 

@@ -314,7 +314,7 @@ variableDescriptionsFor: aClass
 						nextPut: $`;
 						cr].
 			stream cr].
-	names := aClass classVarNames.
+	names := aClass classVarNames asSortedCollection.
 	names notEmpty
 		ifTrue: 
 			[stream

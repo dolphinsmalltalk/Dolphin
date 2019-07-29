@@ -1,0 +1,656 @@
+﻿| package |
+package := Package name: 'STON-Core'.
+package paxVersion: 1;
+	basicComment: '# STON - Smalltalk Object Notation
+
+[!![Build Status](https://travis-ci.org/svenvc/ston.svg?branch=master)](https://travis-ci.org/svenvc/ston)
+
+
+A lightweight text-based, human-readable data interchange format 
+for class-based object-oriented languages like Smalltalk.
+It can be used to serialize domain level objects, 
+either for persistency or network transport. 
+As its name suggests, it is based on JSON (Javascript Object Notation). 
+It adds symbols as a primitive value, class tags for object values and references. 
+Implementations for Pharo Smalltalk, Squeak and Gemstone Smalltalk are available.
+
+
+## Documentation
+
+The original [Smalltalk Object Notation](https://github.com/svenvc/ston/blob/master/ston-paper.md) paper
+
+The Pharo Enterprise book [STON](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/STON/STON.html) chapter
+
+The most formal description is [The STON Specification](https://github.com/svenvc/ston/blob/master/ston-spec.md)
+
+*Sven Van Caekenberghe* 
+[MIT Licensed](https://github.com/svenvc/ston/blob/master/license.txt)
+
+----
+
+MIT License
+
+Copyright (C) 2012 Sven Van Caekenberghe
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+'.
+
+
+package classNames
+	add: #STON;
+	add: #STONCStyleCommentsSkipStream;
+	add: #STONJSON;
+	add: #STONListWriter;
+	add: #STONMapWriter;
+	add: #STONReader;
+	add: #STONReaderError;
+	add: #STONReference;
+	add: #STONShortListWriter;
+	add: #STONStreamWriter;
+	add: #STONWriter;
+	add: #STONWriterError;
+	yourself.
+
+package methodNames
+	add: #Association -> #stonOn:;
+	add: #Boolean -> #stonContainSubObjects;
+	add: #Boolean -> #stonOn:;
+	add: #ByteArray -> #hex;
+	add: #ByteArray -> #stonOn:;
+	add: #Character -> #stonOn:;
+	add: #Class -> #stonOn:;
+	add: #ClassDescription -> #stonContainSubObjects;
+	add: #Collection -> #stonOn:;
+	add: #Date -> #stonContainSubObjects;
+	add: #Date -> #stonOn:;
+	add: #DateAndTime -> #stonContainSubObjects;
+	add: #DateAndTime -> #stonOn:;
+	add: #Dictionary -> #stonOn:;
+	add: #GUID -> #stonOn:;
+	add: #Integer -> #stonOn:;
+	add: #Interval -> #fromSton:;
+	add: #Interval -> #stonOn:;
+	add: #Metaclass -> #stonName;
+	add: #Metaclass -> #stonOn:;
+	add: #NotFoundError -> #object;
+	add: #Number -> #stonContainSubObjects;
+	add: #Number -> #stonOn:;
+	add: #Object -> #fromSton:;
+	add: #Object -> #isStonReference;
+	add: #Object -> #stonContainSubObjects;
+	add: #Object -> #stonOn:;
+	add: #Object -> #stonPostReferenceResolution;
+	add: #Object -> #stonProcessSubObjects:;
+	add: #Object -> #stonShouldWriteNilInstVars;
+	add: #Point -> #stonOn:;
+	add: #SequenceableCollection -> #stonOn:;
+	add: #Set -> #stonPostReferenceResolution;
+	add: #String -> #stonContainSubObjects;
+	add: #String -> #stonOn:;
+	add: #Symbol -> #stonOn:;
+	add: #Time -> #print24:showSeconds:on:;
+	add: #Time -> #stonContainSubObjects;
+	add: #Time -> #stonOn:;
+	add: #UndefinedObject -> #stonContainSubObjects;
+	add: #UndefinedObject -> #stonOn:;
+	add: 'ByteArray class' -> #fromSton:;
+	add: 'Character class' -> #fromSton:;
+	add: 'Class class' -> #fromSton:;
+	add: 'Collection class' -> #fromSton:;
+	add: 'Date class' -> #fromSton:;
+	add: 'DateAndTime class' -> #fromSton:;
+	add: 'Dictionary class' -> #fromSton:;
+	add: 'GUID class' -> #fromSton:;
+	add: 'Interval class' -> #fromSton:;
+	add: 'Metaclass class' -> #fromSton:;
+	add: 'NotFoundError class' -> #signalFor:;
+	add: 'Object class' -> #fromSton:;
+	add: 'Object class' -> #stonAllInstVarNames;
+	add: 'Object class' -> #stonName;
+	add: 'Point class' -> #fromSton:;
+	add: 'RunArray class' -> #fromSton:;
+	add: 'SequenceableCollection class' -> #fromSton:;
+	add: 'String class' -> #findFirstInString:inSet:startingAt:;
+	add: 'Time class' -> #fromSton:;
+	yourself.
+
+package globalNames
+	add: #NotFound;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	add: #NotFound;
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #STON
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONCStyleCommentsSkipStream
+	instanceVariableNames: 'stream peekedCharacter delimiter escape'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONJSON
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONReader
+	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONReference
+	instanceVariableNames: 'index'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONStreamWriter
+	instanceVariableNames: 'writer first'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONWriter
+	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
+	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #STONReaderError
+	instanceVariableNames: 'streamPosition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #STONWriterError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONStreamWriter subclass: #STONListWriter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONStreamWriter subclass: #STONMapWriter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONListWriter subclass: #STONShortListWriter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+NotFound := NotFoundError!
+
+
+"Loose Methods"!
+
+!Association methodsFor!
+
+stonOn: stonWriter
+
+	self class == STON associationClass
+
+		ifTrue: [ stonWriter writeAssociation: self ]
+
+		ifFalse: [ super stonOn: stonWriter ]! !
+!Association categoriesFor: #stonOn:!public!writing! !
+
+!Boolean methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	stonWriter writeBoolean: self! !
+!Boolean categoriesFor: #stonContainSubObjects!public!ston! !
+!Boolean categoriesFor: #stonOn:!public!ston! !
+
+!ByteArray methodsFor!
+
+hex
+	"Answer a hexadecimal representation of the receiver"
+
+	| hexStream string |
+	string := AnsiString new: self size * 2.
+	hexStream := string writeStream.
+	self printHexOn: hexStream.
+	^string!
+
+stonOn: stonWriter
+	"Use a hex representation"
+	
+	stonWriter writeObject: self listSingleton: self hex! !
+!ByteArray categoriesFor: #hex!public! !
+!ByteArray categoriesFor: #stonOn:!public!ston! !
+
+!ByteArray class methodsFor!
+
+fromSton: stonReader
+	^ self fromHexString: stonReader parseListSingleton! !
+!ByteArray class categoriesFor: #fromSton:!public!ston! !
+
+!Character methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self listSingleton: self asString! !
+!Character categoriesFor: #stonOn:!public! !
+
+!Character class methodsFor!
+
+fromSton: stonReader
+	^ stonReader parseListSingleton first! !
+!Character class categoriesFor: #fromSton:!public!ston! !
+
+!Class methodsFor!
+
+stonOn: stonWriter
+	stonWriter 
+		writeObject: self 
+		listSingleton: self name asSymbol! !
+!Class categoriesFor: #stonOn:!public!ston! !
+
+!Class class methodsFor!
+
+fromSton: stonReader
+	| theClassName theClass |
+	theClassName := stonReader parseListSingleton.
+	theClass := self environment at: theClassName.
+	^ theClass! !
+!Class class categoriesFor: #fromSton:!public!ston! !
+
+!ClassDescription methodsFor!
+
+stonContainSubObjects
+	^ false! !
+!ClassDescription categoriesFor: #stonContainSubObjects!public!ston! !
+
+!Collection methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self do: [
+		stonWriter encodeList: self ]
+! !
+!Collection categoriesFor: #stonOn:!public!ston! !
+
+!Collection class methodsFor!
+
+fromSton: stonReader
+	| collection |
+	collection := self new.
+	stonReader parseListDo: [ :each |
+		collection add: each ].
+	^ collection! !
+!Collection class categoriesFor: #fromSton:!public!ston! !
+
+!Date methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	"Use an ISO style YYYY-MM-DD representation"
+	
+	stonWriter writeObject: self listSingleton: self yyyymmdd! !
+!Date categoriesFor: #stonContainSubObjects!accessing!public!ston! !
+!Date categoriesFor: #stonOn:!accessing!public!ston! !
+
+!Date class methodsFor!
+
+fromSton: stonReader
+	^self readFrom: stonReader parseListSingleton readStream format: 'ymd'! !
+!Date class categoriesFor: #fromSton:!instance creation!public! !
+
+!DateAndTime methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	"Use an ISO representation with all details YYYY-MM-DDTHH:MM:SS.N+TZ (with optional nanoseconds and timezone offset)"
+	
+	stonWriter writeObject: self listSingleton: 
+		(String streamContents: [ :stream |
+			self printOn: stream withLeadingSpace: false ])! !
+!DateAndTime categoriesFor: #stonContainSubObjects!public!ston! !
+!DateAndTime categoriesFor: #stonOn:!public!ston! !
+
+!DateAndTime class methodsFor!
+
+fromSton: stonReader
+	^ self readFrom: stonReader parseListSingleton readStream! !
+!DateAndTime class categoriesFor: #fromSton:!public!ston! !
+
+!Dictionary methodsFor!
+
+stonOn: stonWriter
+	"Instances of STON mapClass will be encoded directly, without a class tag.
+	Other (sub)classes will be encoded with a class tag and will use a map representation. "
+	
+	self class == STON mapClass
+		ifTrue: [ 
+			stonWriter writeMap: self ]
+		ifFalse: [ 
+			stonWriter 
+				writeObject: self 
+				do: [ stonWriter encodeMap: self ] ]! !
+!Dictionary categoriesFor: #stonOn:!public! !
+
+!Dictionary class methodsFor!
+
+fromSton: stonReader
+	"Instances of STON mapClass will be read directly and won't arrive here.
+	Other (sub)classes will use this method."
+	
+	| dictionary |
+	dictionary := self new.
+	stonReader parseMapDo: [ :key :value |
+		dictionary at: key put: value ].
+	^ dictionary! !
+!Dictionary class categoriesFor: #fromSton:!public!ston! !
+
+!GUID methodsFor!
+
+stonOn: stonWriter
+	"Use a hex representation"
+	
+	stonWriter writeObject: self listSingleton: self idlString! !
+!GUID categoriesFor: #stonOn:!public!ston! !
+
+!GUID class methodsFor!
+
+fromSton: stonReader
+	^ self fromIdlString: stonReader parseListSingleton! !
+!GUID class categoriesFor: #fromSton:!public!ston! !
+
+!Integer methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeInteger: self! !
+!Integer categoriesFor: #stonOn:!public!ston! !
+
+!Interval methodsFor!
+
+fromSton: stonReader
+	stonReader parseNamedInstVarsFor: self!
+
+stonOn: stonWriter
+	stonWriter writeObject: self! !
+!Interval categoriesFor: #fromSton:!public!ston! !
+!Interval categoriesFor: #stonOn:!public!ston! !
+
+!Interval class methodsFor!
+
+fromSton: stonReader
+	#dolphin. "Use #basicNew"
+	^ self basicNew
+		fromSton: stonReader;
+		yourself! !
+!Interval class categoriesFor: #fromSton:!public!ston! !
+
+!Metaclass methodsFor!
+
+stonName
+	^ #Class!
+
+stonOn: stonWriter
+	stonWriter
+		writeObject: self 
+		listSingleton: self instanceClass name asSymbol! !
+!Metaclass categoriesFor: #stonName!public!ston! !
+!Metaclass categoriesFor: #stonOn:!public!ston! !
+
+!Metaclass class methodsFor!
+
+fromSton: stonReader
+	| theClassName theClass theMetaclass |
+	theClassName := stonReader parseListSingleton.
+	theClass := self environment at: theClassName.
+	theMetaclass := theClass class.
+	^ theMetaclass! !
+!Metaclass class categoriesFor: #fromSton:!public!ston! !
+
+!NotFoundError methodsFor!
+
+object
+	^self tag! !
+!NotFoundError categoriesFor: #object!public! !
+
+!NotFoundError class methodsFor!
+
+signalFor: aSymbol 
+	^self signalWith: aSymbol! !
+!NotFoundError class categoriesFor: #signalFor:!accessing!public! !
+
+!Number methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	stonWriter writeFloat: self asFloat! !
+!Number categoriesFor: #stonContainSubObjects!public!ston! !
+!Number categoriesFor: #stonOn:!public!ston! !
+
+!Object methodsFor!
+
+fromSton: stonReader
+	"Decode non-variable classes from a map of their instance variables and values.
+	Override to customize and add a matching #toSton: (see implementors)."
+	
+	self class isVariable 
+		ifTrue: [
+			stonReader error: 'custom #fromSton: implementation needed for variable/indexable class' ]
+		ifFalse: [
+			stonReader parseNamedInstVarsFor: self ]!
+
+isStonReference
+	^ false!
+
+stonContainSubObjects
+	"Return true if I contain subObjects that should be processed, false otherwise.
+	Overwrite when necessary. See also #stonProcessSubObjects:"
+	
+	^ true!
+
+stonOn: stonWriter
+	"Encode non-variable classes with a map of their instance variable and values.
+	Override to customize and add a matching #fromSton: (see implementors)."
+
+	self class isVariable 
+		ifTrue: [
+			stonWriter error: 'custom #stonOn: implementation needed for variable/indexable class' ]
+		ifFalse: [
+			stonWriter writeObject: self ]
+!
+
+stonPostReferenceResolution
+	"Hook that is called when references were resolved processing this object or one of its sub objects. This will most probably influence hash values. Override to take appropriate action."!
+
+stonProcessSubObjects: block
+	"Execute block to (potentially) change each of my subObjects.
+	In general, all instance and indexable variables are processed.
+	Overwrite when necessary. Not used when #stonContainSubObjects returns false."
+	
+	1 to: self class instSize do: [ :each |
+		self instVarAt: each put: (block value: (self instVarAt: each)) ].
+	(self class isVariable and: [ self class isBytes not ])
+		ifTrue: [
+			1 to: self basicSize do: [ :each |
+				self basicAt: each put: (block value: (self basicAt: each)) ] ]!
+
+stonShouldWriteNilInstVars
+	"Return true if my instance variables that are nil should be written out, 
+	false otherwise. Overwrite when necessary. By default, return false."
+	
+	^ false! !
+!Object categoriesFor: #fromSton:!public!ston! !
+!Object categoriesFor: #isStonReference!public!ston! !
+!Object categoriesFor: #stonContainSubObjects!public!ston! !
+!Object categoriesFor: #stonOn:!accessing!public!ston! !
+!Object categoriesFor: #stonPostReferenceResolution!public!ston! !
+!Object categoriesFor: #stonProcessSubObjects:!public!ston! !
+!Object categoriesFor: #stonShouldWriteNilInstVars!public!ston!testing! !
+
+!Object class methodsFor!
+
+fromSton: stonReader
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+	
+	^ self new
+		fromSton: stonReader;
+		yourself!
+
+stonAllInstVarNames
+	"Override to encode my instances using a custom set of instance variables or to define their order."
+	
+	^ self allInstVarNames !
+
+stonName
+	"Override to encode my instances using a different class name."
+	
+	^ self name! !
+!Object class categoriesFor: #fromSton:!public!ston! !
+!Object class categoriesFor: #stonAllInstVarNames!public!ston! !
+!Object class categoriesFor: #stonName!public!ston! !
+
+!Point methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self streamShortList: [ :array |
+		array add: x; add: y ]! !
+!Point categoriesFor: #stonOn:!public!ston! !
+
+!Point class methodsFor!
+
+fromSton: stonReader
+	"Point class>>new in Dolphin answers the immutable singleton zero instance, so we need to special case."
+
+	| answer |
+	answer := self basicNew.
+	stonReader parseListDo: 
+			[:each :index |
+			index == 1 ifTrue: [answer x: each].
+			index == 2 ifTrue: [answer y: each]].
+	^answer! !
+!Point class categoriesFor: #fromSton:!public! !
+
+!RunArray class methodsFor!
+
+fromSton: stonReader
+	^ self new
+		fromSton: stonReader;
+		yourself! !
+!RunArray class categoriesFor: #fromSton:!public!ston! !
+
+!SequenceableCollection methodsFor!
+
+stonOn: stonWriter
+	self class == STON listClass
+		ifTrue: [ stonWriter writeList: self ]
+		ifFalse: [ super stonOn: stonWriter ]! !
+!SequenceableCollection categoriesFor: #stonOn:!public!ston! !
+
+!SequenceableCollection class methodsFor!
+
+fromSton: stonReader
+	^ self streamContents: [ :stream |
+		stonReader parseListDo: [ :each |
+			stream nextPut: each ] ]! !
+!SequenceableCollection class categoriesFor: #fromSton:!public!ston! !
+
+!Set methodsFor!
+
+stonPostReferenceResolution
+	"When references were resolved in me, the hash of my elements might have changed.
+	Check if I am still healthy and rehash me if not."
+	
+	(false and: [self isHealthy]) ifFalse: [ self rehash ]! !
+!Set categoriesFor: #stonPostReferenceResolution!public!ston! !
+
+!String methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	stonWriter writeString: self! !
+!String categoriesFor: #stonContainSubObjects!public!ston! !
+!String categoriesFor: #stonOn:!public!ston! !
+
+!String class methodsFor!
+
+findFirstInString: aSymbol inSet: aByteArray startingAt: anInteger 
+	^Error notYetImplemented! !
+!String class categoriesFor: #findFirstInString:inSet:startingAt:!public! !
+
+!Symbol methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeSymbol: self! !
+!Symbol categoriesFor: #stonOn:!public!ston! !
+
+!Time methodsFor!
+
+print24: hr24Boolean showSeconds: secsBoolean on: aWriteStream
+	| format |
+	format := hr24Boolean ifTrue: ['HH:mm'] ifFalse: ['hh:mm'].
+	secsBoolean ifTrue: [format := format , ':ssfffffffff'].
+	^Locale smalltalk
+		printTime: self
+		on: aWriteStream
+		format: format!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	"Use an ISO style HH:MM:SS.N representation (with optional nanoseconds)"
+	 
+	stonWriter writeObject: self listSingleton: 
+		(String streamContents: [ :stream |
+			self print24: true showSeconds: true on: stream ])! !
+!Time categoriesFor: #print24:showSeconds:on:!public!ston! !
+!Time categoriesFor: #stonContainSubObjects!public!ston! !
+!Time categoriesFor: #stonOn:!public!ston! !
+
+!Time class methodsFor!
+
+fromSton: stonReader
+	^ self readFrom: stonReader parseListSingleton readStream! !
+!Time class categoriesFor: #fromSton:!public!ston! !
+
+!UndefinedObject methodsFor!
+
+stonContainSubObjects 
+	^ false!
+
+stonOn: stonWriter
+	stonWriter writeNull! !
+!UndefinedObject categoriesFor: #stonContainSubObjects!public!ston! !
+!UndefinedObject categoriesFor: #stonOn:!public!ston! !
+
+"End of package definition"!
+

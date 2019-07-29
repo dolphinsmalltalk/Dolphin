@@ -171,6 +171,6 @@ defineFields
 
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
-!EXTLOGPEN class categoriesFor: #defineFields!initializing!public! !
+!EXTLOGPEN class categoriesFor: #defineFields!public!template definition! !
 !EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

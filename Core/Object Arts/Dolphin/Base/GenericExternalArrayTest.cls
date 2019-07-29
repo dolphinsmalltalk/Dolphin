@@ -11,6 +11,9 @@ GenericExternalArrayTest comment: ''!
 !GenericExternalArrayTest categoriesForClass!Unclassified! !
 !GenericExternalArrayTest methodsFor!
 
+arrayValueString: eachValue
+	^eachValue displayString!
+
 elementClassNames
 	^#(#SWORD #SDWORD #FLOAT #DOUBLE #CURRENCY #BSTR #HRESULT #VARIANT_BOOL #VARIANT #DECIMAL #SBYTE #BYTE)!
 
@@ -32,6 +35,7 @@ testInvalidLength
 	"#1051."
 
 	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error! !
+!GenericExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
 !GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
 !GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
 !GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !

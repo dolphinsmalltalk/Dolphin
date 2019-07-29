@@ -49,6 +49,6 @@ new
 	used for double indirections, thus a reference is normally required."
 
 	^self newPointer! !
-!LPVOID class categoriesFor: #defineFields!initializing!public! !
+!LPVOID class categoriesFor: #defineFields!public!template definition! !
 !LPVOID class categoriesFor: #new!instance creation!public! !
 

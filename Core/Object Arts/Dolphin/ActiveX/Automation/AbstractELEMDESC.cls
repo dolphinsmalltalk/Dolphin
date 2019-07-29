@@ -92,5 +92,5 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
-!AbstractELEMDESC class categoriesFor: #defineFields!initializing!public! !
+!AbstractELEMDESC class categoriesFor: #defineFields!public!template definition! !
 

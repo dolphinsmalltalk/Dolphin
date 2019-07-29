@@ -29,7 +29,6 @@
 // Smalltalk classes
 #include "STContext.h"
 #include "STBlockClosure.h"
-#include "STMethodHeader.h"
 #include "STCharacter.h"
 #include "STMemoryManager.h"
 
@@ -66,7 +65,6 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(sizeof(OTEFlags) == 1);
 	ASSERT(sizeof(count_t) == 1);
 	ASSERT(sizeof(hash_t) == 2);
-	ASSERT(sizeof(BlockInfo) == sizeof(MWORD));
 	ASSERT(sizeof(STMethodHeader) == sizeof(MWORD));
 	ASSERT(OTEFlags::NumSpaces <= 8);
 	ASSERT(Context::FixedSize == 2);
@@ -109,7 +107,7 @@ HRESULT ObjectMemory::Initialize()
 
 	FixedSizePool::Initialize();
 
-	m_nNextIdHash = 1;
+	m_nNextIdHash = 1 << 16 | 1;
 	m_nOTSize = OTDefaultSize;
 	m_nOTMax = OTDefaultMax;
 	//m_pOT does not need to be initialized

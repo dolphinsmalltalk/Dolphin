@@ -111,25 +111,22 @@ pathFromIDList: idList
 	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
 
 SHBrowseForFolder: aWin32BROWSEINFO
-
 	<stdcall: handle SHBrowseForFolderW lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SHGetDesktopFolder: ppshf
-
 	<stdcall: hresult SHGetDesktopFolder IShellFolder**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SHGetMalloc: ppMalloc
 	"Get a pointer to the shell's IMalloc."
 
 	<stdcall: hresult SHGetMalloc IMalloc**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SHGetPathFromIDList: pidl pszPath: pszPath
-
 	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ShellLibrary categoriesFor: #allocator!accessing!public! !
 !ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
 !ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !

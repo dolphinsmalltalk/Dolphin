@@ -33,9 +33,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin').
 
 package!
 
@@ -66,7 +65,7 @@ readFromRegKey: aRegKey
 
 	| params inst basicSize instVars |
 	params := aRegKey value.
-	self assert: [params first equals: self name].
+	self assert: [params first = self name].
 	basicSize := params size > 1 ifTrue: [Integer fromString: params second] ifFalse: [0].
 	inst := basicSize > 0 ifTrue: [self basicNew: basicSize] ifFalse: [self basicNew].
 	instVars := LookupTable new.
@@ -251,7 +250,7 @@ readFromRegKey: aRegKey
 
 	| params |
 	params := aRegKey value.
-	self assert: [params first equals: self name].
+	self assert: [params first = self name].
 	^self intern: params second! !
 !Symbol class categoriesFor: #readFromRegKey:!public! !
 

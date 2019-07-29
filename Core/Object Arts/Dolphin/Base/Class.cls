@@ -167,7 +167,7 @@ category: category
 	self categories: {self classCategoryClass name: category asString}!
 
 classBinding
-	^self environment associationAt: self name!
+	^self environment associationAt: self name ifAbsent: []!
 
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 
@@ -297,12 +297,12 @@ name
 	"Answer a <readableString> that is the name of the receiver
 	Implementation Note: For compatibility reasons, the answer is actually a Symbol."
 
-	^name!
+	^name ifNil: [super name]!
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(ClassBuilder new)
 		superclass: self;
-		className: aClassSymbol asString;
+		className: aClassSymbol;
 		instanceVariableString: instVarString;
 		classVariableString: classVarString;
 		sharedPoolString: poolDictString;
@@ -671,19 +671,19 @@ variableSubclass: aClassSymbol
 
 ! !
 !Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
-!Class categoriesFor: #addClassVariable:value:!class variables!public! !
-!Class categoriesFor: #addClassVarNamed:!class variables!public! !
+!Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
+!Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
 !Class categoriesFor: #basicSharedPools:!accessing!private! !
-!Class categoriesFor: #bindingFor:!compiling!public! !
+!Class categoriesFor: #bindingFor:!binding!public! !
 !Class categoriesFor: #categories!categories-accessing!public! !
 !Class categoriesFor: #categories:!categories-accessing!public! !
 !Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
 !Class categoriesFor: #category!categories-accessing!public! !
 !Class categoriesFor: #category:!categories-accessing!public! !
-!Class categoriesFor: #classBinding!compiling!public! !
+!Class categoriesFor: #classBinding!binding!public! !
 !Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
 !Class categoriesFor: #classCategories:!categories-accessing!private! !
 !Class categoriesFor: #classPool!accessing!class variables!public! !
@@ -697,7 +697,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #guid!constants!public! !
 !Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Class categoriesFor: #includeInCategory:!categories-adding!public! !
-!Class categoriesFor: #initializeAfterLoad!initializing!public! !
+!Class categoriesFor: #initializeAfterLoad!class initialization!public! !
 !Class categoriesFor: #instanceClass!accessing!public! !
 !Class categoriesFor: #isAbstract:!instance specification-accessing!public! !
 !Class categoriesFor: #isAtomic!public!testing! !
@@ -707,7 +707,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #owningPackage!development!public!source filing! !
 !Class categoriesFor: #owningPackage:!accessing!development!public! !
 !Class categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Class categoriesFor: #removeClassVarName:!class variables!public! !
+!Class categoriesFor: #removeClassVarName:!class hierarchy-mutating!class variables!public! !
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
@@ -725,7 +725,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #stbModifyExportProxy:!binary filing!private! !
 !Class categoriesFor: #stbSaveOn:!binary filing!public! !
 !Class categoriesFor: #stbVersion!binary filing!public! !
-!Class categoriesFor: #storeGUID!development!private!source filing-methods! !
+!Class categoriesFor: #storeGUID!private!source filing-class definition! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !

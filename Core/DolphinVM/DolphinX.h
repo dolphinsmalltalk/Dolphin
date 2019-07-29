@@ -47,7 +47,7 @@ namespace DolphinX {
 		ExtCallArgGUID,			//25		GUID (128-bit unique number)
 		ExtCallArgUINTPTR,		//26
 		ExtCallArgINTPTR,		//27
-								//28
+		ExtCallArgNTSTATUS,		//28
 								//29
 								//30
 								//31

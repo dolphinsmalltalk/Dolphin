@@ -66,7 +66,7 @@ get__NewEnum: ppEnum
 			[out, retval]IUnknown** ppEnum);"
 
 	<virtual stdcall: hresult 10 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Count: pCount
 	"Private - Get the value of the 'Count' property of the receiver.
@@ -75,7 +75,7 @@ get_Count: pCount
 			[out, retval]long* pCount);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Item: index pSubMatch: pSubMatch
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -85,7 +85,7 @@ get_Item: index pSubMatch: pSubMatch
 			[out, retval]VARIANT* pSubMatch);"
 
 	<virtual stdcall: hresult 8 sdword variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

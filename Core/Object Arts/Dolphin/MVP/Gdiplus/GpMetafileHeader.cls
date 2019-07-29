@@ -316,6 +316,6 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
-!GpMetafileHeader class categoriesFor: #defineFields!initializing!public! !
+!GpMetafileHeader class categoriesFor: #defineFields!public!template definition! !
 !GpMetafileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

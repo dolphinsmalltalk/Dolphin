@@ -24,21 +24,21 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);				// to not an integer
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter3);				// to not an integer
 	const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(1);				// from not an integer
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);				// from not an integer
 	SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
 
 	Oop valuePointer = *(sp - 2);
 	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 3));
 
-//	#ifdef _DEBUG
+	#ifdef _DEBUG
 		if (ObjectMemoryIsIntegerObject(receiverPointer))
-			return primitiveFailure(2);				// Not valid for SmallIntegers
-//	#endif
+			return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);				// Not valid for SmallIntegers
+	#endif
 
 	Oop answer = ZeroPointer;
 	if (to >= from)
@@ -57,7 +57,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, unsigned)
 					// We can only be in here if to>=from, so if to>=1, then => from >= 1
 					// furthermore if to <= length then => from <= length
 					if (from < 1 || to > length)
-						return primitiveFailure(2);
+						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 					// Search is in bounds, lets do it
 			
@@ -86,7 +86,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, unsigned)
 			// Similar reasoning with to/from as for byte objects, but here we need to
 			// take account of the fixed fields.
 			if (from < 1 || (to + fixedFields > length))
-				return primitiveFailure(2);	// Out of bounds
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 
 			Oop* indexedFields = receiver->m_fields + fixedFields;
 			from--;
@@ -201,18 +201,18 @@ Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp, unsigned)
 			}
 			else
 			{
-				return primitiveFailure(1);	// out of bounds
+				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// out of bounds
 			}
 		}
 		else
 		{
 			// Receiver and substring are of different classes (e.g. String and UnicodeString) - fall back on Smalltalk code
 			// TODO: Consider double-dispatching to this prim
-			return primitiveFailure(2);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 		}
 	}
 	else
 	{
-		return primitiveFailure(0);				// startingAt not an integer
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);				// startingAt not an integer
 	}
 }

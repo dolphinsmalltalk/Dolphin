@@ -30,8 +30,7 @@ _NewEnum: ppvObject
 			[out, retval] IUnknown** ppvObject);"
 
 	<virtual stdcall: hresult 9 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
@@ -48,8 +47,7 @@ get_Count: c
 			[out, retval] long* c);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -67,8 +65,7 @@ Refresh
 		HRESULT __stdcall Refresh();"
 
 	<virtual stdcall: hresult 10>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 removeAtIndex: index
 	"Remove, and answer, the element of the receiver at the specified 

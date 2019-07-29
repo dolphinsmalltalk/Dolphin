@@ -80,6 +80,6 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
-!COSERVERINFO class categoriesFor: #defineFields!initializing!public! !
+!COSERVERINFO class categoriesFor: #defineFields!public!template definition! !
 !COSERVERINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

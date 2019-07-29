@@ -139,12 +139,16 @@ basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger sta
 	startInteger and stopInteger inclusive with elements of the receiver starting from startAtInteger. Answers
 	anIndexableObject."
 
-	| offset |
 	<primitive: 188>
+	| offset |
 	offset := startAtInteger - startInteger.
 	(anIndexableObject == self and: [startAtInteger < startInteger])
-		ifTrue: [stopInteger to: startInteger by: -1 do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
-		ifFalse: [startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
 	^anIndexableObject!
 
 copyWith: newElement
@@ -300,8 +304,11 @@ makeRoomAtEndFor: anInteger
 	capacity := self basicSize.
 	capacity - self size < anInteger
 		ifTrue: 
-			["Too full, increase the receivers capacity. We don't bother shifting"
-			^self basicResize: capacity + (anInteger roundUpTo: self growSize)].
+			[| g n |
+			"Too full, increase the receivers capacity to the requested size, rounded up to a multiple of the growSize"
+			g := self growSize.
+			n := anInteger + g - 1.
+			^self basicResize: capacity + (n - (n \\ g))].
 	shift := 1 - firstIndex.	"N.B. shift < 0"
 
 	"Move tail of collection towards head"

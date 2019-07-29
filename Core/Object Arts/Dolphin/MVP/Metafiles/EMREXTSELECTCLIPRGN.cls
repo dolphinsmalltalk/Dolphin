@@ -106,7 +106,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTSELECTCLIPRGN! !
-!EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!initializing!public! !
+!EMREXTSELECTCLIPRGN class categoriesFor: #defineFields!public!template definition! !
 !EMREXTSELECTCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTSELECTCLIPRGN class categoriesFor: #iTypes!constants!public! !
 

@@ -14,14 +14,13 @@
 #pragma once
 
 #include "STObject.h"
+#include "DolphinSmalltalk_i.h"
 
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)
 
 namespace ST
 {
-	#include "STMethodHeader.h"
-
 	class CompiledMethod : public Object
 	{
 	public:

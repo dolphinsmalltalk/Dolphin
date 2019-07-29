@@ -64,7 +64,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_item: index item: item
 	"Private - Get the value of the 'item' property of the receiver.
@@ -74,7 +74,7 @@ get_item: index item: item
 			[out, retval]ISchemaItem** item);"
 
 	<virtual stdcall: hresult 8 sdword ISchemaItem**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: length
 	"Private - Get the value of the 'length' property of the receiver.
@@ -83,7 +83,7 @@ get_length: length
 			[out, retval]long* length);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -125,7 +125,7 @@ ItemByName: name item: item
 			[out, retval]ISchemaItem** item);"
 
 	<virtual stdcall: hresult 9 bstr ISchemaItem**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 itemByQName: name namespaceURI: namespaceURI
 	"Answer the <ISchemaItem> result of invoking the itemByQName() method of the COM object."
@@ -148,7 +148,7 @@ ItemByQName: name namespaceURI: namespaceURI item: item
 			[out, retval]ISchemaItem** item);"
 
 	<virtual stdcall: hresult 10 bstr bstr ISchemaItem**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 length
 	"Answer the <sdword> value of the 'length' property of the receiver."

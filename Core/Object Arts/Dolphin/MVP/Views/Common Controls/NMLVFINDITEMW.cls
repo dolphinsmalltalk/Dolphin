@@ -38,6 +38,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
-!NMLVFINDITEMW class categoriesFor: #defineFields!initializing!public! !
+!NMLVFINDITEMW class categoriesFor: #defineFields!public!template definition! !
 !NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

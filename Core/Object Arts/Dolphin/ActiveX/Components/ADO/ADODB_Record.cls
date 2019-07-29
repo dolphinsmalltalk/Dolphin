@@ -35,8 +35,7 @@ Cancel
 		HRESULT __stdcall Cancel();"
 
 	<virtual stdcall: hresult 27>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 Close
 	"Invoke the Close() method of the COM object.
@@ -44,8 +43,7 @@ Close
 		HRESULT __stdcall Close();"
 
 	<virtual stdcall: hresult 23>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 copyRecord
 	"Answer the <BSTR> result of invoking the CopyRecord() method of the COM object.
@@ -79,8 +77,12 @@ CopyRecord: source Destination: destination UserName: userName Password: passwor
 	"Private - Invoke the CopyRecord() method of the COM object.
 
 		HRESULT __stdcall CopyRecord(
-			[in, optional, defaultvalue("")] BSTR Source,
-			[in, optional, defaultvalue("")] BSTR Destination,
+			[in, optional, defaultvalue("
+
+	")] BSTR Source,
+			[in, optional, defaultvalue("
+
+	")] BSTR Destination,
 			[in, optional] BSTR UserName,
 			[in, optional] BSTR Password,
 			[in, optional, defaultvalue(-1)] CopyRecordOptionsEnum Options,
@@ -88,8 +90,7 @@ CopyRecord: source Destination: destination UserName: userName Password: passwor
 			[out, retval] BSTR* pbstrNewURL);"
 
 	<virtual stdcall: hresult 20 bstr bstr bstr bstr sdword varbool bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 deleteRecord
 	"Invoke the DeleteRecord() method of the COM object.
@@ -107,8 +108,7 @@ DeleteRecord: source Async: async
 			[in, optional] VARIANT_BOOL Async);"
 
 	<virtual stdcall: hresult 21 bstr varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 fields
 	"Answer the <ADODBFields> value of the 'Fields' property of the receiver.
@@ -126,8 +126,7 @@ get_ActiveConnection: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 9 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Fields: ppFlds
 	"Private - Get the value of the 'Fields' property of the receiver.
@@ -135,8 +134,7 @@ get_Fields: ppFlds
 			[out, retval] Fields** ppFlds);"
 
 	<virtual stdcall: hresult 24 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Mode: pMode
 	"Private - Get the value of the 'Mode' property of the receiver.
@@ -144,8 +142,7 @@ get_Mode: pMode
 			[out, retval] ConnectModeEnum* pMode);"
 
 	<virtual stdcall: hresult 16 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ParentURL: pbstrParentURL
 	"Private - Get the value of the 'ParentURL' property of the receiver.
@@ -153,8 +150,7 @@ get_ParentURL: pbstrParentURL
 			[out, retval] BSTR* pbstrParentURL);"
 
 	<virtual stdcall: hresult 18 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_RecordType: ptype
 	"Private - Get the value of the 'RecordType' property of the receiver.
@@ -162,8 +158,7 @@ get_RecordType: ptype
 			[out, retval] RecordTypeEnum* ptype);"
 
 	<virtual stdcall: hresult 25 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Source: pvar
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -171,8 +166,7 @@ get_Source: pvar
 			[out, retval] VARIANT* pvar);"
 
 	<virtual stdcall: hresult 13 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_State: pState
 	"Private - Get the value of the 'State' property of the receiver.
@@ -180,8 +174,7 @@ get_State: pState
 			[out, retval] ObjectStateEnum* pState);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getChildren
 	"Answer the <ADODB_Recordset> result of invoking the GetChildren() method of the COM object."
@@ -199,8 +192,7 @@ GetChildren: pprset
 			[out, retval] _Recordset** pprset);"
 
 	<virtual stdcall: hresult 26 ADODB_Recordset**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -261,8 +253,12 @@ MoveRecord: source Destination: destination UserName: userName Password: passwor
 	"Private - Invoke the MoveRecord() method of the COM object.
 
 		HRESULT __stdcall MoveRecord(
-			[in, optional, defaultvalue("")] BSTR Source,
-			[in, optional, defaultvalue("")] BSTR Destination,
+			[in, optional, defaultvalue("
+
+	")] BSTR Source,
+			[in, optional, defaultvalue("
+
+	")] BSTR Destination,
 			[in, optional] BSTR UserName,
 			[in, optional] BSTR Password,
 			[in, optional, defaultvalue(-1)] MoveRecordOptionsEnum Options,
@@ -270,8 +266,7 @@ MoveRecord: source Destination: destination UserName: userName Password: passwor
 			[out, retval] BSTR* pbstrNewURL);"
 
 	<virtual stdcall: hresult 19 bstr bstr bstr bstr sdword varbool bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 open
 	"Invoke the Open() method of the COM object.
@@ -312,8 +307,7 @@ Open: source ActiveConnection: activeConnection Mode: mode CreateOptions: create
 			[in, optional] BSTR Password);"
 
 	<virtual stdcall: hresult 22 variant variant sdword sdword sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 parentURL
 	"Answer the <bstr> value of the 'ParentURL' property of the receiver."
@@ -331,8 +325,7 @@ put_ActiveConnection: pvar
 			[in] BSTR pvar);"
 
 	<virtual stdcall: hresult 10 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Mode: pMode
 	"Private - Set the value of the 'Mode' property of the object wrapped by the 
@@ -341,8 +334,7 @@ put_Mode: pMode
 			[in] ConnectModeEnum pMode);"
 
 	<virtual stdcall: hresult 17 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Source: pvar
 	"Private - Set the value of the 'Source' property of the object wrapped by the 
@@ -351,8 +343,7 @@ put_Source: pvar
 			[in] BSTR pvar);"
 
 	<virtual stdcall: hresult 14 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_ActiveConnection: pvar
 	"Private - Set the value of the 'ActiveConnection' property of the object wrapped by the 
@@ -361,8 +352,7 @@ putref_ActiveConnection: pvar
 			[in] _Connection* pvar);"
 
 	<virtual stdcall: hresult 11 ADODB_Connection*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_Source: pvar
 	"Private - Set the value of the 'Source' property of the object wrapped by the 
@@ -371,8 +361,7 @@ putref_Source: pvar
 			[in] IDispatch* pvar);"
 
 	<virtual stdcall: hresult 15 IDispatch*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 recordType
 	"Answer the <sdword> value of the 'RecordType' property of the receiver."

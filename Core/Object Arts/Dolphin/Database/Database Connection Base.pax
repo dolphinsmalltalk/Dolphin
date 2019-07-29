@@ -60,7 +60,8 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Legacy Date & Time').
 
 package!
 
@@ -78,7 +79,7 @@ Object subclass: #DBAbstractStatement
 	classInstanceVariableNames: ''!
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'SQLToCTypes'
+	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 Object subclass: #DBConnection

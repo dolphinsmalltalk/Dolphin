@@ -30,7 +30,7 @@ collectionKeyedAspectsTest: subject
 			nextBatch := aspects at: batchSize + 1.
 			self assert: nextBatch isKindOf: KeyedAspectBatch.
 			self assert: nextBatch key equals: batchSize * (i + 1) + 1.
-			self assert: nextBatch keys asArray equals: subject keys asArray.
+			self assert: nextBatch keys asArray equals: subject keys asSortedCollection asArray.
 			self assert: nextBatch batchSize equals: batchSize.
 			"Expand out - should allow full expansion"
 			aspects := (nextBatch accessorFor: subject) getBatchAccessors

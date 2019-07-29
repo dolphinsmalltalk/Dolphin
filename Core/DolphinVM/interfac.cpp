@@ -143,12 +143,14 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				if (executionTrace)
 				{
 					TRACESTREAM.Lock();
-					TRACESTREAM<< L"C entrypoint at context " << returnFrame<< L"/" << StackFrame::FromFrameOop(returnFrame)<< L", frame " << callbackFrameOop<< L"/" << pCallbackFrame << std::endl;
+					TRACESTREAM<< L"C entrypoint at context " << StackFrame::FromFrameOop(returnFrame) << L", frame " << pCallbackFrame << std::endl;
 					TRACESTREAM.Unlock();
 				}
 
 				ASSERT(!pCallbackFrame->isBlockFrame());
-				ASSERT(pCallbackFrame->m_caller == returnFrame);
+				ASSERT(pCallbackFrame->m_caller == returnFrame 
+					||	(pCallbackFrame->m_method->m_location->m_selector == Pointers.vmiSelector
+						&& StackFrame::FromFrameOop(pCallbackFrame->m_caller)->m_caller == returnFrame));
 			#endif
 
 			// Invoke asembler byte code loop in a handler which can detect and
@@ -403,7 +405,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	//
 
 	pushObject((OTE*)Pointers.ClassSymbol);
-	pushNewObject((OTE*)AnsiString::New(name));
+	pushNewObject((OTE*)Utf8String::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
@@ -426,8 +428,6 @@ void Interpreter::MarkRoots()
 		ObjectMemory::MarkObjectsAccessibleFromRoot(*m_roots[i]);
 		i++;
 	}
-
-	OverlappedCall::MarkRoots();
 }
 
 // A compacting GC has occurred, ask ObjectMemory to update any stored down Oops
@@ -454,9 +454,21 @@ void Interpreter::OnCompact()
 	ASSERT(ObjectMemory::isKindOf(m_registers.m_oteActiveProcess, Pointers.ClassProcess));
 
 	flushCaches();
+}
 
-	OverlappedCall::OnCompact();
-	//compiler->onCompact();
+void Interpreter::CompactVirtualObject(OTE* ote)
+{
+	// TODO: Uncommit any virtual memory that is not currently in use by the object (i.e. shrink process stacks)
+
+	if (ote->m_oteClass == Pointers.ClassProcess)
+	{
+		ProcessOTE* oteProcess = reinterpret_cast<ProcessOTE*>(ote);
+		OverlappedCallPtr oc = oteProcess->m_location->GetOverlappedCall();
+		if (oc)
+		{
+			oc->OnCompact();
+		}
+	}
 }
 
 #pragma code_seg()
@@ -743,13 +755,13 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned
 			}
 
 			m_nCallbacksPending++;	 // record that callbacks are waiting to exit
-			return nullptr;
+			return primitiveFailure(_PrimitiveFailureCode::Retry);
 		}
 
 	}
 	else
 	{
-		return nullptr;
+		return primitiveFailure(_PrimitiveFailureCode::NoCallbackActive);
 	}
 }
 
@@ -780,9 +792,10 @@ Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, unsigned)
 
 		// Fail and try again as this was not current callback - record that callbacks are waiting to exit
 		m_nCallbacksPending++;
+		return primitiveFailure(_PrimitiveFailureCode::Retry);
 	}
 
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::NoCallbackActive);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

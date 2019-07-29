@@ -192,7 +192,7 @@ keyStringFromCode: vkInteger modifiers: maskInteger
 	modifiers."
 
 	| keyString |
-	keyString := String writeStream.
+	keyString := String writeStream: 8.
 	self keyModifierNames: maskInteger
 		do: 
 			[:each | 

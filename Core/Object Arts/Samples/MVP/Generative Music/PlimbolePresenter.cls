@@ -242,7 +242,7 @@ showHintBubble: aString
 	hintBubble := (MessageBubble new)
 				maxWidth: 180;
 				willFade: true;
-				timeout: 1300.
+				timeout: 1300 milliseconds.
 	hintBubble
 		caption: 'Plimbole';
 		position: Cursor position;

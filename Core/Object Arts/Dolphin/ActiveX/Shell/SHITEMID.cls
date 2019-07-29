@@ -67,7 +67,7 @@ packing
 	"Uses byte packing"
 
 	^1! !
-!SHITEMID class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SHITEMID class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SHITEMID class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SHITEMID class categoriesFor: #packing!constants!public! !
 

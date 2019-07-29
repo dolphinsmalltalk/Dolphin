@@ -57,13 +57,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\Base\Dolphin Basic Geometry';
-	add: '..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Base\Dolphin MVP Base';
-	add: '..\Gdiplus\Gdiplus';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Dolphin Message Box'
+	'..\Base\Dolphin MVP Base'
+	'..\Gdiplus\Gdiplus').
 
 package!
 
@@ -152,9 +152,9 @@ to convert to PNG format first?'.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
 !ClassDescription categoriesFor: #createBadgeMethod!development!public! !
 !ClassDescription categoriesFor: #createIconMethod!development!public! !
-!ClassDescription categoriesFor: #createIconMethod:fromIcon:!public! !
-!ClassDescription categoriesFor: #createIconMethod:OfSize:!public! !
-!ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!public! !
+!ClassDescription categoriesFor: #createIconMethod:fromIcon:!development!public! !
+!ClassDescription categoriesFor: #createIconMethod:OfSize:!development!public! !
+!ClassDescription categoriesFor: #createIconMethod:ofSize:fromFile:!development!public! !
 
 !Collection methodsFor!
 

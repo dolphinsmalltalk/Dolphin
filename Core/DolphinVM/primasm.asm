@@ -59,11 +59,6 @@ longjmp				PROTO C :DWORD, :DWORD
 extern activateBlock:near32
 extern shortReturn:near32
 
-; Imports from LargeIntPrim.CPP
-
-normalizeIntermediateResult EQU ?normalizeIntermediateResult@@YGII@Z
-extern normalizeIntermediateResult:near32
-
 ; C++ Variable imports
 
 RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
@@ -80,7 +75,7 @@ ENDIF
 
 ; We still need to import the C++ primitives that require a thunk to be called from assembler (the ones that change interpreter context)
 IMPORTPRIMITIVE MACRO name
-	extern ?&name&@Interpreter@@CIPAIQAII@Z:near32
+	extern ?&name&@Interpreter@@SIPAIQAII@Z:near32
 ENDM
 
 IMPORTPRIMITIVE primitiveAsyncDLL32Call
@@ -109,7 +104,7 @@ IMPORTPRIMITIVE primitiveOopsLeft
 ; state
 DEFINECONTEXTPRIM MACRO name
 BEGINPRIMITIVE name&Thunk
-	call	?&name&@Interpreter@@CIPAIQAII@Z			;; Transfer control to C++ primitive 
+	call	?&name&@Interpreter@@SIPAIQAII@Z			;; Transfer control to C++ primitive 
 	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_BP, [BASEPOINTER]				;; _SP is always reloaded from EAX after executing a primitive
 	ret
@@ -138,7 +133,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		ecx, [_SP]							; Get as return value suspendingList (may want to restore)
 
 	sar		edx, 1								; Frame offset is a SmallInteger?
-	jnc		localPrimitiveFailure0				; No - primitive failure 0
+	jnc		localPrimitiveFailureInvalidParameter1	; No - primitive failure 0
 
 	add		edx, [ACTIVEPROCESS]				; Add offset back to active proc. base address to get frame address in edx
 	sub		_SP, OOPSIZE*3						; Pop args
@@ -182,7 +177,7 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		_BP, [BASEPOINTER]
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureInvalidParameter1
 
 ENDPRIMITIVE primitiveReturnFromInterrupt
 	
@@ -194,10 +189,9 @@ ALIGNPRIMITIVE
 	push	_BP									; and _BP
 
 	; Load interpreter registers
-	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_SP, [STACKPOINTER]
 	mov		_BP, [BASEPOINTER]
-	call	?primitiveValue@Interpreter@@CIPAIQAII@Z
+	call	?primitiveValue@Interpreter@@SIPAIQAII@Z
 	mov		[STACKPOINTER], eax	
 	pop		_BP									; Restore callers registers
 	mov		[INSTRUCTIONPOINTER], _IP
@@ -223,7 +217,7 @@ BEGINPRIMITIVE primitiveValue
 	ASSUME	edx:PTR BlockClosure
 
 	cmp		al, [edx].m_info.argumentCount			; Compare arg counts
-	jne		localPrimitiveFailure0					; No
+	jne		localPrimitiveFailureWrongNumberOfArgs	; No
 	ASSUME	eax:NOTHING								; EAX no longer needed
 
 	pop		eax										; Discard saved _BP which we no longer need
@@ -238,9 +232,9 @@ BEGINPRIMITIVE primitiveValue
 	mov		eax, _SP								; primitiveSuccess(0)
 	ret
 
-localPrimitiveFailure0:
+localPrimitiveFailureWrongNumberOfArgs:
 	pop	_BP											; Restore saved base pointer
-	PrimitiveFailureCode 0
+	PrimitiveFailureCode PrimitiveFailureWrongNumberOfArgs
 
 ENDPRIMITIVE primitiveValue
 
@@ -255,7 +249,7 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 	ASSUME	edx:PTR BlockClosure
 
 	cmp		[edx].m_info.argumentCount, 0		; Must be a zero arg block ...
-	jne		localPrimitiveFailure0				; ... if not fail it
+	jne		localPrimitiveFailureWrongNumberOfArgs		; ... if not fail it
 
 	;; Past this point, the primitive is guaranteed to succeed
 	;; Make room for the closure receiver on top of the unwind block for activateBlock 
@@ -284,7 +278,7 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 	mov		eax, _SP							; primitiveSuccess(0)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureWrongNumberOfArgs
 
 ENDPRIMITIVE primitiveValueOnUnwind
 
@@ -296,20 +290,20 @@ BEGINPRIMITIVE primitiveBecome
 	mov		ecx, [_SP]
 	mov		eax, [OBJECTTABLE]
 	test	cl, 1
-	jnz		localPrimitiveFailure0				; Can't swap SmallIntegers
+	jnz		localPrimitiveFailureInvalidParameter1			; Can't swap SmallIntegers
 	ASSUME	ecx:PTR OTE
 
 	add		eax, FIRSTCHAROFFSET+256*OTENTRYSIZE
 	cmp		ecx, eax
-	jl		localPrimitiveFailure0
+	jl		localPrimitiveFailureInvalidParameter1
 
 	mov		edx, [_SP-OOPSIZE]
 	test	dl, 1
-	jnz		localPrimitiveFailure0
+	jnz		localPrimitiveFailureInvalidParameter1
 	ASSUME	edx:PTR OTE
 
 	cmp		edx, eax
-	jl		localPrimitiveFailure0
+	jl		localPrimitiveFailureInvalidParameter1
 
 	; THIS MUST BE CHANGED IF OTE LAYOUT CHANGED.
 	; Note that we swap the location pointer (obviously), the class pointer (as we
@@ -347,233 +341,9 @@ BEGINPRIMITIVE primitiveBecome
 	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	ret
 
-LocalPrimitiveFailure 0
+LocalPrimitiveFailure PrimitiveFailureInvalidParameter1
 
 ENDPRIMITIVE primitiveBecome
-
-BEGINPRIMITIVE primitiveStructureIsNull
-	mov		ecx, [_SP]								; Access argument
-	ASSUME	ecx:PTR OTE
-	mov		eax, [oteFalse]							; Use EAX for true/false so is non-zero on exit from primitive
-
-	; Ok, it might still be an object whose first inst var might be an address
-	mov		edx, [ecx].m_location					; Ptr to object now in edx
-	ASSUME	edx:PTR ExternalStructure
-
-	mov		edx, [edx].m_contents					; OK, so lets see if first inst var is the 'address' we seek
-	sar		edx, 1									; First of all, is it a SmallInteger
-	jc		zeroTest								; Yes, test to see if that is zero
-
-	ASSUME	edx:PTR OTE								; No, its an object
-	sal		edx, 1									; so revert to OTE
-	test	[edx].m_flags, MASK m_pointer			; Is it bytes?
-	je		@F
-
-	mov		eax, [oteTrue]
-	cmp		edx, [oteNil]
-	jne		localPrimitiveFailure0					; Not nil, a SmallInteger, nor a byte object, so invalid
-	jmp		answer									; Answer true (nil is null)
-	
-@@:
-	mov		eax, [edx].m_oteClass					; Get oop of class of bytes into eax
-	ASSUME	eax:PTR OTE
-
-	mov		edx, [edx].m_location					; Get ptr to byte object into edx
-	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
-
-	mov		eax, [eax].m_location					; eax is ptr to class of object
-	ASSUME	eax:PTR Behavior
-
-	test	[eax].m_instanceSpec, MASK m_indirect	; Is it an indirection class?
-	mov		eax, [oteFalse]
-	jz		answer									; No, can't be null then
-
-	ASSUME	edx:PTR ExternalAddress
-	
-	; Otherwise drop through and test the address to see if it is zero
-	mov		edx, [edx].m_pointer					; Preload address value
-
-zeroTest:
-	ASSUME	edx:DWORD								; Integer pointer value
-	ASSUME	ecx:PTR OTE								; Expected to contain pre-loaded "true"
-
-	cmp		edx, 0
-	jne		answer
-	sub		eax, OTENTRYSIZE						; True immediately preceeds False in the OT
-
-answer:
-	mov		[_SP], eax
-	mov		eax, _SP								; primitiveSuccess(0)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveStructureIsNull
-
-BEGINPRIMITIVE primitiveBytesIsNull
-	mov		eax, [_SP]								; Access argument
-	ASSUME	eax:PTR OTE
-	mov		ecx, [oteFalse]							; Load ECX with default answer (false)
-
-	mov		edx, [eax].m_size
-	and		edx, 7fffffffh							; Mask out immutability bit
-	cmp		edx, SIZEOF DWORD						; Must be exactly 4 bytes (excluding any header)
-
-	jne		localPrimitiveFailure0					; If not 32-bits, fail the primitive
-
-	mov		edx, [eax].m_location					; Ptr to object now in edx
-	ASSUME	edx:PTR ByteArray						; We know we've got a byte object now
-
-	mov		eax, _SP								; primitiveSuccess(0)
-
-	.IF (DWORD PTR([edx].m_elements[0]) == 0)
-		sub		ecx, OTENTRYSIZE					; True immediately preceeds False in the OT
-	.ENDIF
-	
-	mov		[_SP], ecx
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveBytesIsNull
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; LargeInteger primitives
-;;
-.CODE LIPRIM_SEG
-
-;; Macro for operations for which the result is the receiver if the operand is zero
-LIARITHMPRIMR MACRO Op 
-	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
-	extern li&Op&Single:near32
-
-	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@ST@@@@0@Z
-	extern li&Op&:near32
-
-	BEGINPRIMITIVE primitiveLargeInteger&Op
-		mov		eax, [_SP]
-		mov		ecx, [_SP-OOPSIZE]							; Load receiver (under argument)
-		ASSUME	ecx:PTR OTE
-
-		.IF	(al & 1)										; SmallInteger?
-			ASSUME	eax:Oop
-			sar		eax, 1
-			jz		noOp									; Operand is zero? - result is receiver
-			push	eax
-			push	ecx
-			; N.B. SP not saved down here, so assumed not used by routine (which is independent)
-			call	li&Op&Single
-		.ELSE
-			ASSUME	eax:PTR OTE
-
-			mov		edx, [eax].m_oteClass
-			cmp		edx, [Pointers.ClassLargeInteger]
-			jne		localPrimitiveFailure0
-
-			push	eax
-			push	ecx
-			call	li&Op
-		.ENDIF
-
-		; Normalize and return
-		push	eax
-		call	normalizeIntermediateResult
-		test	al, 1
-		mov		[_SP-OOPSIZE], eax						; Overwrite receiver class with new object
-		jnz		noOp
-		AddToZct <a>
-
-	noOp:
-		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(0)
-		ret
-		
-	LocalPrimitiveFailure 0
-
-	ENDPRIMITIVE primitiveLargeInteger&Op
-ENDM
-
-;; Macro for operations for which the result is zero if the operand is zero
-LIARITHMPRIMZ MACRO Op 
-	li&Op&Single EQU ?li&Op&Single@@YGIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
-	extern li&Op&Single:near32
-
-	li&Op EQU ?li&Op&@@YGIPAV?$TOTE@VLargeInteger@ST@@@@0@Z
-	extern li&Op&:near32
-
-	BEGINPRIMITIVE primitiveLargeInteger&Op
-		mov		eax, [_SP]
-		ASSUME	eax:Oop
-		mov		ecx, [_SP-OOPSIZE]							; Load receiver (under argument)
-		ASSUME	ecx:PTR OTE
-
-		.IF	(al & 1)										; SmallInteger?
-			sar		eax, 1
-			jz		zero
-			push	eax
-			push	ecx
-			; N.B. SP not saved down here, so assumed not used by routine (which is independent)
-			call	li&Op&Single
-		.ELSE
-			ASSUME	eax:PTR OTE
-
-			mov		edx, [eax].m_oteClass
-			ASSUME	edx:PTR OTE
-			cmp		edx, [Pointers.ClassLargeInteger]
-			jne		localPrimitiveFailure0
-
-			push	eax
-			push	ecx
-			call	li&Op
-		.ENDIF
-
-		; Normalize and return
-		push	eax
-		call	normalizeIntermediateResult
-		test	al, 1
-		mov		[_SP-OOPSIZE], eax						; Overwrite receiver class with new object
-		jnz		@F
-		AddToZct <a>
-	@@:
-		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-		ret
-
-	zero:
-		lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-		mov		[_SP-OOPSIZE], SMALLINTZERO
-		ret
-		
-	LocalPrimitiveFailure 0
-
-	ENDPRIMITIVE primitiveLargeInteger&Op
-ENDM
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMR Add
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMR Sub
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMZ Mul
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMZ BitAnd
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMR BitOr
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-LIARITHMPRIMR BitXor
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-.CODE PRIM_SEG
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ Primitive Thunks
@@ -603,9 +373,6 @@ DEFINECONTEXTPRIM <primitiveUnwindInterrupt>
 ;; the specified semaphore if the time has already passed, so we must call
 ;; it as potentially context switching primitive
 DEFINECONTEXTPRIM <primitiveSignalAtTick>
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 
 ;; This is actually the GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)

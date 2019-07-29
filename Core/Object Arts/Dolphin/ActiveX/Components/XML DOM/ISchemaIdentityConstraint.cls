@@ -54,7 +54,7 @@ get_fields: fields
 			[out, retval]ISchemaStringCollection** fields);"
 
 	<virtual stdcall: hresult 16 ISchemaStringCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_referencedKey: key
 	"Private - Get the value of the 'referencedKey' property of the receiver.
@@ -63,7 +63,7 @@ get_referencedKey: key
 			[out, retval]ISchemaIdentityConstraint** key);"
 
 	<virtual stdcall: hresult 17 ISchemaIdentityConstraint**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_selector: selector
 	"Private - Get the value of the 'selector' property of the receiver.
@@ -72,7 +72,7 @@ get_selector: selector
 			[out, retval]BSTR* selector);"
 
 	<virtual stdcall: hresult 15 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 referencedKey
 	"Answer the <ISchemaIdentityConstraint> value of the 'referencedKey' property of the receiver."

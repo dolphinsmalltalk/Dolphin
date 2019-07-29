@@ -46,7 +46,15 @@ second
 second: anInteger
 	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: _OffsetOf_second put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_second put: anInteger!
+
+time: aTime
+	"Set the receiver's fields from the <Time> argument."
+
+	self
+		hour: aTime hour;
+		minute: aTime minute;
+		second: aTime second! !
 !ODBCTIME categoriesFor: #asTime!converting!public! !
 !ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
 !ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
@@ -54,6 +62,7 @@ second: anInteger
 !ODBCTIME categoriesFor: #minute:!**compiled accessors**!public! !
 !ODBCTIME categoriesFor: #second!**compiled accessors**!public! !
 !ODBCTIME categoriesFor: #second:!**compiled accessors**!public! !
+!ODBCTIME categoriesFor: #time:!accessing!public! !
 
 !ODBCTIME class methodsFor!
 
@@ -75,15 +84,12 @@ fromTime: aTime
 	"Answer an instance of the receiver with the details of aTime."
 
 	^self new
-		hour: aTime hours;
-		minute: aTime minutes;
-		second: aTime seconds;
-		yourself
-!
+		time: aTime;
+		yourself!
 
 getFieldNames
 	^#(#hour #minute #second)! !
-!ODBCTIME class categoriesFor: #defineFields!initializing!public! !
+!ODBCTIME class categoriesFor: #defineFields!public!template definition! !
 !ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
 !ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

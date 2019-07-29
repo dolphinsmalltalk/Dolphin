@@ -186,15 +186,15 @@ onEraseRequired: aColorEvent
 	self hasTransparentBackground ifFalse: [^false].
 	^super onEraseRequired: aColorEvent!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"Double buffered paint of the receiver"
 
 	"Create a back buffer and a GdiplusGraphics onto it"
 
-	| canvas graphics backGraphics backSurface ms updateRect paintStruct |
+	| canvas graphics backGraphics backSurface elapsed updateRect paintStruct |
 	_spare4 ifNil: [_spare4 := 0].
 	_spare4 := _spare4 + 1.
-	_spare4 < 2 
+	_spare4 < 2
 		ifTrue: 
 			[paintStruct := aPaintEvent paintStruct.
 			Nest ifNil: [Nest := 0].
@@ -205,36 +205,37 @@ onPaintRequired: aPaintEvent
 				show: self handle displayString;
 				cr.
 			updateRect := paintStruct isNil ifTrue: [self rectangle] ifFalse: [paintStruct rcPaint asRectangle].
-			updateRect area > 0 
-				ifTrue: 
-					[ms := Time millisecondsToRun: 
-									[backSurface := GdiplusBitmap extent: self extent.
-									backGraphics := backSurface graphics.
+			elapsed := updateRect area > 0
+						ifTrue: 
+							[
+							[backSurface := GdiplusBitmap extent: self extent.
+							backGraphics := backSurface graphics.
 
-									"Draw everything into the buffer"
-									self isAntialiased ifTrue: [backGraphics smoothingMode: SmoothingModeAntiAlias].
-									self paintParentBackgroundOn: backGraphics.
-									self paintStyledBackgroundOn: backGraphics.
-									self paintStyledEdgesOn: backGraphics.
-									self paintTransparentChildrenOn: backSurface updateRect: updateRect.
+							"Draw everything into the buffer"
+							self isAntialiased ifTrue: [backGraphics smoothingMode: SmoothingModeAntiAlias].
+							self paintParentBackgroundOn: backGraphics.
+							self paintStyledBackgroundOn: backGraphics.
+							self paintStyledEdgesOn: backGraphics.
+							self paintTransparentChildrenOn: backSurface updateRect: updateRect.
 
-									"Flip the back buffer onto the screen"
-									canvas := aPaintEvent canvas.
-									graphics := GdiplusGraphics fromCanvas: canvas.
-									graphics drawImage: backSurface.
+							"Flip the back buffer onto the screen"
+							canvas := aPaintEvent canvas.
+							graphics := GdiplusGraphics fromCanvas: canvas.
+							graphics drawImage: backSurface.
 
-									"Tidy up"
-									graphics free.
-									backGraphics free.
-									backSurface free]].
+							"Tidy up"
+							graphics free.
+							backGraphics free.
+							backSurface free]
+									timeToRun]
+						ifFalse: [Duration zero].
 			Nest timesRepeat: [Transcript show: '---'].
 			Transcript
 				show: 'Exit ';
-				show: self handle displayString;
-				space;
-				show: ms displayString;
-				show: 'ms';
-				cr.
+				display: self handle;
+				space.
+			elapsed printHumanReadableOn: Transcript.
+			Transcript cr.
 			Nest := Nest - 1].
 	_spare4 := _spare4 - 1.
 	^true!

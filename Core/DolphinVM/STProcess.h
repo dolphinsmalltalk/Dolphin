@@ -43,8 +43,8 @@ namespace ST
 		Oop				m_priority;
 		LinkedListOTE*	m_myList;
 		Oop				m_callbackDepth;
-		Oop				m_primitiveFailureCode;
-		Oop				m_primitiveFailureData;
+		Oop				m_unused1;
+		Oop				m_unused2;
 		Oop				m_fpControl;
 		SemaphoreOTE*	m_waitOverlap;
 		Oop				m_thread;
@@ -166,15 +166,6 @@ namespace ST
 		{
 			m_priority = integerObjectOf(priority);
 		}
-		SMALLINTEGER PrimitiveFailureCode()
-		{
-			return isIntegerObject(m_primitiveFailureCode) ? integerValueOf(m_primitiveFailureCode) : 0;
-		}
-		Oop PrimitiveFailureData() const { return m_primitiveFailureData; }
-		void SetPrimitiveFailureCode(SMALLINTEGER code);
-		void SetPrimitiveFailureData(Oop failureData);
-		void SetPrimitiveFailureData(OTE* failureData);
-		void SetPrimitiveFailureData(SMALLINTEGER failureData);
 		SMALLUNSIGNED CallbackDepth() const { return integerValueOf(m_callbackDepth); }
 		void IncrementCallbackDepth()
 		{

@@ -1,0 +1,166 @@
+﻿| package |
+package := Package name: 'Dolphin STON Tests'.
+package paxVersion: 1;
+	basicComment: 'Dolphin STON SUnit tests
+Copyright (c) Object Arts Ltd, 2019
+
+Tests of Dolphin specific aspects of the STON implementation.'.
+
+
+package methodNames
+	add: #Character -> #isOctetCharacter;
+	add: #Collection -> #atRandom;
+	add: #Integer -> #atRandom;
+	add: #SequenceableCollection -> #asFloatArray;
+	add: #SequenceableCollection -> #asIntegerArray;
+	add: #SequenceableCollection -> #atRandom;
+	add: #SequenceableCollection -> #doWithIndex:;
+	add: #Set -> #isHealthy;
+	add: #STONReaderTests -> #testSymbolMultiByte;
+	add: #STONWriteReadTests -> #testProcessor;
+	add: #STONWriteReadTests -> #testSystemDictionary;
+	add: #STONWriterTests -> #testIsSimpleSymbol2;
+	add: 'String class' -> #crlf;
+	add: 'Symbol class' -> #hasInterned:ifTrue:;
+	add: 'Time class' -> #hour:minute:second:;
+	add: 'Time class' -> #hour:minute:second:nanoSecond:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Random\Dolphin Random Stream'
+	'..\..\..\..\Contributions\svenc\STON\STON-Core'
+	'..\..\..\..\Contributions\svenc\STON\STON-Tests').
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Character methodsFor!
+
+isOctetCharacter
+	^code <= 16rFF! !
+!Character categoriesFor: #isOctetCharacter!public! !
+
+!Collection methodsFor!
+
+atRandom
+	| r i |
+	r := self size atRandom.
+	i := 1.
+	self do: [:each | i == r ifTrue: [^each]].
+	^self errorEmptyCollection! !
+!Collection categoriesFor: #atRandom!public! !
+
+!Integer methodsFor!
+
+atRandom
+	"Answer a random integer from 1 to self."
+
+	^(Random default next * self) truncated + 1! !
+!Integer categoriesFor: #atRandom!public! !
+
+!SequenceableCollection methodsFor!
+
+asFloatArray
+	^FLOATArray withAll: self!
+
+asIntegerArray
+	^SDWORDArray withAll: self!
+
+atRandom
+	^self at: self size atRandom!
+
+doWithIndex: aDyadicValuable 
+	"For Pharo compatibility; #keysAndValuesDo: is preferred (and faster)"
+
+	self keysAndValuesDo: [:index :value | aDyadicValuable value: value value: index]! !
+!SequenceableCollection categoriesFor: #asFloatArray!public! !
+!SequenceableCollection categoriesFor: #asIntegerArray!public! !
+!SequenceableCollection categoriesFor: #atRandom!public! !
+!SequenceableCollection categoriesFor: #doWithIndex:!public! !
+
+!Set methodsFor!
+
+isHealthy
+	"Test that object hashes match their positions stored in set's array,
+	answer true if everything ok, false otherwise
+	
+	Set allSubInstances select: [:badSet |
+		badSet isHealthy not ]
+	"
+	| capacity |
+	capacity := self basicSize.
+	1 to: capacity do: [:i | 
+		(self basicAt: i) ifNotNil: [:element |
+			(self findElementOrNil: element) == i
+				ifFalse: [ ^ false ]]].
+	^ true! !
+!Set categoriesFor: #isHealthy!public! !
+
+!STONReaderTests methodsFor!
+
+testSymbolMultiByte
+	"https://github.com/svenvc/ston/issues/25"
+
+	self assert: (self materialize: '#''£''') equals: #'£'.
+	self assert: (self materialize: '#''€''') equals: Character euro asSymbol.
+	self assert: (self materialize: '#''你好''') equals: #'你好'.
+	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
+!STONReaderTests categoriesFor: #testSymbolMultiByte!public!tests! !
+
+!STONWriteReadTests methodsFor!
+
+testProcessor
+	self serializeAndMaterialize: {'Foo'. Processor. 'Bar'}!
+
+testSystemDictionary
+	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
+!STONWriteReadTests categoriesFor: #testProcessor!public!tests! !
+!STONWriteReadTests categoriesFor: #testSystemDictionary!public!tests! !
+
+!STONWriterTests methodsFor!
+
+testIsSimpleSymbol2
+	self deny: (STON writer isSimpleSymbol: #'£').
+	self deny: (STON writer isSimpleSymbol: Character euro asSymbol).
+	self deny: (STON writer isSimpleSymbol: Character dolphin asSymbol).
+! !
+!STONWriterTests categoriesFor: #testIsSimpleSymbol2!public!tests! !
+
+!String class methodsFor!
+
+crlf
+	^##(AnsiString with: $\r with: $\n)! !
+!String class categoriesFor: #crlf!public! !
+
+!Symbol class methodsFor!
+
+hasInterned: aString ifTrue: aMonadicValuable 
+	^(self findInterned: aString) ifNil: [false] ifNotNil: [:symbol | aMonadicValuable value: symbol. true]! !
+!Symbol class categoriesFor: #hasInterned:ifTrue:!public! !
+
+!Time class methodsFor!
+
+hour: anInteger minute: anInteger2 second: anInteger3 
+	^self hours: anInteger minutes: anInteger2 seconds: anInteger3!
+
+hour: hoursInteger minute: minutesInteger second: secondsInteger nanoSecond: nanosInteger
+	^self fromSeconds: (hoursInteger * 60 + minutesInteger) * 60 + secondsInteger + (nanosInteger / 1e9)! !
+!Time class categoriesFor: #hour:minute:second:!public! !
+!Time class categoriesFor: #hour:minute:second:nanoSecond:!public! !
+
+"End of package definition"!
+

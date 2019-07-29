@@ -81,12 +81,11 @@ formatCommentsFor: aNode
 				space;
 				nextPutAll: (originalSource copyFrom: each first to: each last)]!
 
-formatMethodBodyFor: aMethodNode 
+formatMethodBodyFor: aMethodNode
 	self indentAround: 
 			[self newLines: NewLinesAfterMethodPattern.
 			self formatMethodCommentFor: aMethodNode.
-			#rbFix.	"Allow for different position of primitive tag relative to temp declarations"
-			self tagBeforeTemporaries ifTrue: [self formatTagFor: aMethodNode].
+			self formatTagFor: aMethodNode.
 			self visitNode: aMethodNode body]	"Allow for different position of primitive tag relative to temp declarations"!
 
 formatMethodCommentFor: aMethodNode
@@ -385,10 +384,6 @@ visitReturnNode: aReturnNode
 
 visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
-	#rbFix.	"Dolphin's primitive tags follow the temp definitions"
-	self tagBeforeTemporaries
-		ifFalse: 
-			[aSequenceNode parent ifNotNil: [:parent | parent isMethod ifTrue: [self formatTagFor: parent]]].
 	self formatSequenceCommentsFor: aSequenceNode.
 	self formatSequenceNodeStatementsFor: aSequenceNode!
 

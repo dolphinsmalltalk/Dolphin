@@ -20,7 +20,7 @@ pathCombine: szDest lpszDir: lpszDir lpszFile: lpszFile
 			LPCWSTR lpszFile);"
 
 	<stdcall: lpwstr PathCombineW lpwstr lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
 	"Invoke the PathCommonPrefix() function of the module wrapped by the receiver.
@@ -32,7 +32,7 @@ pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
 			LPCWSTR achPath);"
 
 	<stdcall: sdword PathCommonPrefixW lpwstr lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathCompactPath: hdc pszPath: pszPath dx: dx
 	"Invoke the PathCompactPath() function of the module wrapped by the receiver.
@@ -44,7 +44,7 @@ pathCompactPath: hdc pszPath: pszPath dx: dx
 			UINT dx);"
 
 	<stdcall: bool PathCompactPathW handle lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 	"Invoke the PathCompactPathEx() function of the module wrapped by the receiver.
@@ -57,7 +57,7 @@ pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 			DWORD dwFlags);"
 
 	<stdcall: bool PathCompactPathExW lpwstr lpwstr dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathFindNextComponent: pszPath
 	"Invoke the PathFindNextComponent() function of the module wrapped by the receiver.
@@ -67,7 +67,7 @@ pathFindNextComponent: pszPath
 			LPCWSTR pszPath);"
 
 	<stdcall: lpwstr PathFindNextComponentW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathIsRelative: pszPath
 	"Invoke the PathIsRelative() function of the module wrapped by the receiver.
@@ -77,7 +77,7 @@ pathIsRelative: pszPath
 			LPCWSTR pszPath);"
 
 	<stdcall: bool PathIsRelativeW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathIsRoot: pszPath
 	"Invoke the PathIsRoot() function of the module wrapped by the receiver.
@@ -87,7 +87,7 @@ pathIsRoot: pszPath
 			LPCWSTR pszPath);"
 
 	<stdcall: bool PathIsRootW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathIsURL: pszPath
 	"Invoke the PathIsURL() function of the module wrapped by the receiver.
@@ -97,7 +97,7 @@ pathIsURL: pszPath
 			LPCWSTR pszPath);"
 
 	<stdcall: bool PathIsURLW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathParseIconLocation: pszIconFile
 	"Invoke the PathParseIconLocation() function of the module wrapped by the receiver.
@@ -107,7 +107,7 @@ pathParseIconLocation: pszIconFile
 			LPWSTR pszIconFile);"
 
 	<stdcall: sdword PathParseIconLocationW lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo dwAttrTo: dwAttrTo
 	"Invoke the PathRelativePathTo() function of the module wrapped by the receiver.
@@ -121,7 +121,7 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 			DWORD dwAttrTo);"
 
 	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 	"Invoke the PathSetDlgItemPath() function of the module wrapped by the receiver.
@@ -133,7 +133,7 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 			LPCSTR pszPath);"
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathCompactPath:pszPath:dx:!**auto generated**!public! !

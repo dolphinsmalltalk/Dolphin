@@ -20,8 +20,7 @@ getErrorInfo: dwReserved pperrinfo: pperrinfo
 		)"
 
 	<stdcall: hresult GetErrorInfo dword lppvoid>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 sysAllocString: aUtf16String
 	"Allocates and answer a new Basic string which is a copy of the 
@@ -31,8 +30,7 @@ sysAllocString: aUtf16String
 	"
 
 	<stdcall: bstr SysAllocString lpvoid>
-	#todo "Relax lpwstr to accept int args".
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sysFreeString: aBSTR
 	"Free a Basic string previously allocated with 
@@ -41,8 +39,8 @@ sysFreeString: aBSTR
 		void SysFreeString(BSTR bstr)
 	"
 
-	<stdcall: void SysFreeString BSTR>
-	^self invalidCall!
+	<stdcall: void SysFreeString bstr>
+	^self invalidCall: _failureCode!
 
 sysStringByteLen: aBSTR
 	"Answer the length (in bytes) of a Basic string previously allocated with 
@@ -51,8 +49,8 @@ sysStringByteLen: aBSTR
 		HRESULT SysStringByteLen(BSTR bstr); 
 	"
 
-	<stdcall: hresult SysStringByteLen BSTR>
-	^self invalidCall!
+	<stdcall: hresult SysStringByteLen bstr>
+	^self invalidCall: _failureCode!
 
 sysStringLen: aBSTR
 	"Answer the length (in characters) of a Basic string previously allocated with 
@@ -61,8 +59,8 @@ sysStringLen: aBSTR
 		HRESULT SysStringLen(BSTR bstr); 
 	"
 
-	<stdcall: hresult SysStringLen BSTR>
-	^self invalidCall! !
+	<stdcall: hresult SysStringLen bstr>
+	^self invalidCall: _failureCode! !
 !OLEAutLibrary categoriesFor: #getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
 !OLEAutLibrary categoriesFor: #sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
 !OLEAutLibrary categoriesFor: #sysFreeString:!Automation Functions-String Manipulation!primitives!public! !

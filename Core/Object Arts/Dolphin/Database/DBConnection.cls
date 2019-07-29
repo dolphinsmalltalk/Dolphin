@@ -242,7 +242,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -296,12 +296,12 @@ disconnect
 driverHDBC
 	"Private - Answer the handle to the driver connection"
 
-	^ODBCLibrary default getInfoHandle: SQL_DRIVER_HDBC for: self!
+	^self getHandle: SQL_DRIVER_HDBC!
 
 driverHEnv
 	"Private - Answer the handle to the driver environment"
 
-	^ODBCLibrary default getInfoHandle: SQL_DRIVER_HENV for: self!
+	^self getHandle: SQL_DRIVER_HENV!
 
 driverName
 	"Answer the driver name"
@@ -379,16 +379,18 @@ freeStmtHandle: aDBAbstractStatement
 	ret ~= SQL_SUCCESS 
 		ifTrue: [DBError signalWith: (aDBAbstractStatement exceptionDetails: ret)]!
 
-getBoolInfo: anInteger 
-	"Private - Answer a Boolean indicating the receiver's info attribute described by infoCode."
+getBoolInfo: anInteger
+	"Private - Answer a <Boolean> indicating the receiver's info attribute described by anInteger."
 
 	| value |
-	value := String new: 2.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
-	^value first == $Y!
+	value := Utf16String newFixed: 1.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: ##(1+1*2 "Byte size including implict null char")
+				stringLengthPtr: nil).
+	^value = ##($Y asUtf16String)!
 
 getDWordAttribute: anInteger 
 	"Private - Answer an <Integer> containing the 32-bit unsigned integer value of the 
@@ -405,15 +407,17 @@ getDWordAttribute: anInteger
 	self dbCheckException: ret.
 	^buffer value!
 
-getDWordInfo: anInteger 
-	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by infoCode."
+getDWordInfo: anInteger
+	"Private - Answer an Integer containing the value of the receiver's DWORD info attribute described by anInteger."
 
 	| value |
-	value := DWORD new.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
+	value := DWORDBytes new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 4
+				stringLengthPtr: nil).
 	^value value!
 
 getHandle
@@ -427,43 +431,56 @@ getHandle
 			self class connections add: self].
 	^handle!
 
-getStringAttribute: anInteger 
-	"Private - Answer a <String> containing the value of the connection
-	attribute identified by the <integer> argument."
+getHandle: anInteger
+	| value |
+	value := ExternalHandle new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: VMConstants.IntPtrSize
+				stringLengthPtr: nil).
+	^value!
 
-	| buffer ret |
-	buffer := String new: SQL_MAX_OPTION_STRING_LENGTH + 1.
-	ret := ODBCLibrary default 
+getStringAttribute: anInteger
+	"Private - Answer a <String> containing the value of the connection attribute identified by the <integer> argument."
+
+	| buffer |
+	buffer := Utf16String newFixed: SQL_MAX_OPTION_STRING_LENGTH.
+	self dbCheckException: (ODBCLibrary default
 				sqlGetConnectAttr: self asParameter
 				attribute: anInteger
 				valuePtr: buffer
-				bufferLength: buffer size
-				stringLengthPtr: nil.
-	self dbCheckException: ret.
-	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument,
-	 so we are forced to trim up to the nulls."
+				bufferLength: ##(SQL_MAX_OPTION_STRING_LENGTH + 1 * 2) "Byte size including implicit null terminator"
+				stringLengthPtr: nil).
+	"N.B. The SQL server driver never seems to populate the stringLengthPtr argument, so we are forced to trim up to the nulls."
 	^buffer trimNulls!
 
-getStringInfo: anInteger 
+getStringInfo: anInteger
 	"Private - Answer a String containing the value of the receiver's info attribute described by infoCode."
 
 	| value len |
-	value := String new: SQL_MAX_MESSAGE_LENGTH.
-	len := ODBCLibrary default 
-				getInfo: anInteger
-				for: self
-				into: value.
-	^value copyFrom: 1 to: len!
+	value := Utf16String newFixed: SQL_MAX_MESSAGE_LENGTH.
+	len := SWORD new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: ##(SQL_MAX_MESSAGE_LENGTH + 1 * 2)
+				stringLengthPtr: len).
+	^value resize: (len value bitShift: -1)!
 
-getWordInfo: anInteger 
+getWordInfo: anInteger
 	"Private - Answer an Integer containing the value of the receiver's WORD info attribute described by infoCode."
 
 	| value |
 	value := WORD new.
-	ODBCLibrary default 
-		getInfo: anInteger
-		for: self
-		into: value.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetInfo: self asParameter
+				infoType: anInteger
+				infoValuePtr: value
+				bufferLength: 2
+				stringLengthPtr: nil).
 	^value value!
 
 hasAccessibleTables
@@ -655,8 +672,8 @@ open
 	handle isNull ifFalse: [^self].
 	
 	[| ret |
-	"#1306: From MSDN, 'Applications should allocate at least 1,024 bytes for [the connection string] buffer'"
-	connSz := String newFixed: 2048.
+	"#1306: From MSDN, 'Applications should allocate at least 1,024 characters for [the connection string] buffer'"
+	connSz := Utf16String newFixed: 2048.
 	lenConnSz := SWORD new.
 	ret := ODBCLibrary default 
 				sqlDriverConnect: self getHandle
@@ -664,11 +681,12 @@ open
 				inConnectionString: self connectString
 				stringLength1: SQL_NTS
 				outConnectionString: connSz
-				bufferLength: connSz size
+				bufferLength: connSz size + 1
 				stringLength2Ptr: lenConnSz
 				driverCompletion: (self useDriverCompletion 
 						ifTrue: [SQL_DRIVER_COMPLETE]
 						ifFalse: [SQL_DRIVER_NOPROMPT]).
+	ret == SQL_NO_DATA ifTrue: [^nil "cancelled"].
 	self dbCheckException: ret] 
 			ifCurtailed: [self free].
 	self connectString: (connSz copyFrom: 1 to: (lenConnSz value min: connSz size))!
@@ -992,7 +1010,7 @@ traceFile: aString
 
 	self 
 		setAttribute: SQL_ATTR_TRACEFILE
-		value: aString
+		value: aString asUtf16String
 		size: SQL_NTS.
 	self isTracing: true!
 
@@ -1048,7 +1066,7 @@ translationDLL: aString
 
 	self 
 		setAttribute: SQL_ATTR_TRANSLATE_LIB
-		value: aString
+		value: aString asUtf16String
 		size: SQL_NTS!
 
 uid
@@ -1148,6 +1166,7 @@ willAutoCommit: aBoolean
 !DBConnection categoriesFor: #getDWordAttribute:!accessing!private! !
 !DBConnection categoriesFor: #getDWordInfo:!enquiries!private! !
 !DBConnection categoriesFor: #getHandle!accessing!private! !
+!DBConnection categoriesFor: #getHandle:!helpers!private! !
 !DBConnection categoriesFor: #getStringAttribute:!accessing!private! !
 !DBConnection categoriesFor: #getStringInfo:!enquiries!private! !
 !DBConnection categoriesFor: #getWordInfo:!enquiries!private! !
@@ -1290,7 +1309,7 @@ dbCheckException: anIntegerRetCode
 		ifFalse: 
 			["Signal an error or warning - decide which"
 
-			(anIntegerRetCode = SQL_SUCCESS_WITH_INFO
+			((anIntegerRetCode = SQL_SUCCESS_WITH_INFO or: [anIntegerRetCode = SQL_NO_DATA])
 				ifTrue: [DBWarning]
 				ifFalse: [DBError]) signalWith: (self exceptionDetails: anIntegerRetCode)]!
 
@@ -1298,37 +1317,43 @@ enumerateDataSources
 	"Answers an array of associations of all the data sources and
 	 their descriptions"
 
-	| nameLength1 nameLength2 dsn len description ret sources hEnv |
-	len := SQL_MAX_DSN_LENGTH + 1.
-	dsn := String newFixed: len.
-	description := String newFixed: 256.
-	nameLength1 := SWORD new.
-	nameLength2 := SWORD new.
+	| dsn description dsnLength descriptionLength hEnv odbc ret sources |
+	dsn := Utf16String newFixed: SQL_MAX_DSN_LENGTH.
+	description := Utf16String newFixed: 4.
+	dsnLength := SWORD new.
+	descriptionLength := SWORD new.
 	hEnv := self environmentHandle.
-	ret := ODBCLibrary default 
+	odbc := ODBCLibrary default.
+	
+	[ret := odbc
 				sqlDataSources: hEnv
 				direction: SQL_FETCH_FIRST
 				serverName: dsn
-				bufferLength1: len
-				nameLength1Ptr: nameLength1
+				bufferLength1: ##(SQL_MAX_DSN_LENGTH + 1)
+				nameLength1Ptr: dsnLength
 				description: description
-				bufferLength2: description size
-				nameLength2Ptr: nameLength2.
-	sources := OrderedCollection new.
-	[ret = SQL_SUCCESS] whileTrue: 
-			[sources add: (Association key: (dsn copyFrom: 1 to: nameLength1 asInteger)
-						value: (description copyFrom: 1 to: nameLength2 asInteger)).
-			ret := ODBCLibrary default 
+				bufferLength2: description size + 1
+				nameLength2Ptr: descriptionLength.
+	ret == SQL_SUCCESS_WITH_INFO]
+			whileTrue: [description := Utf16String newFixed: descriptionLength value].
+	sources := Array writeStream.
+	[ret == SQL_SUCCESS] whileTrue: 
+			[sources nextPut: (Association key: (dsn copyFrom: 1 to: dsnLength value)
+						value: (description copyFrom: 1 to: descriptionLength value)).
+			
+			[ret := odbc
 						sqlDataSources: hEnv
 						direction: SQL_FETCH_NEXT
 						serverName: dsn
-						bufferLength1: len
-						nameLength1Ptr: nameLength1
+						bufferLength1: ##(SQL_MAX_DSN_LENGTH + 1)
+						nameLength1Ptr: dsnLength
 						description: description
-						bufferLength2: 256
-						nameLength2Ptr: nameLength2].
-	ret ~= SQL_NO_DATA_FOUND ifTrue: [self dbCheckException: ret].
-	^sources asArray!
+						bufferLength2: description size + 1
+						nameLength2Ptr: descriptionLength.
+			ret == SQL_SUCCESS_WITH_INFO]
+					whileTrue: [description := Utf16String newFixed: descriptionLength value]].
+	ret ~= SQL_NO_DATA ifTrue: [self dbCheckException: ret].
+	^sources contents!
 
 environmentHandle
 	"Private - Answer the environment handle.
@@ -1402,19 +1427,17 @@ initialize
 				yourself.
 	self newConnections!
 
-invalidateHandle: anExternalHandle 
+invalidateHandle: anExternalHandle
 	"Private - Disconnect and free the specified connection handle.
 	This is used by DBConnection class to free a connection handle
 	when it only knows the handle"
 
-	| ret |
-	ret := ODBCLibrary default sqlDisconnect: anExternalHandle.
-	ret ~= SQL_SUCCESS 
-		ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
-	ret := ODBCLibrary default sqlFreeHandle: SQL_HANDLE_DBC
-				handle: anExternalHandle.
-	ret ~= SQL_SUCCESS 
-		ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
+	| ret odbc |
+	odbc := ODBCLibrary default.
+	ret := odbc sqlDisconnect: anExternalHandle.
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)].
+	ret := odbc sqlFreeHandle: SQL_HANDLE_DBC handle: anExternalHandle.
+	ret ~= SQL_SUCCESS ifTrue: [DBError signalWith: (self exceptionDetails: ret)]!
 
 new
 	"Answer an initialized instance of the receiver."
@@ -1427,12 +1450,26 @@ new
 newConnections
 	Connections := WeakSet new!
 
+odbcVersion
+
+	"self odbcVersion"
+
+	| version |
+	version := SWORD new.
+	self dbCheckException: (ODBCLibrary default
+				sqlGetEnvAttr: HEnv
+				infoType: SQL_ATTR_ODBC_VERSION
+				infoValuePtr: version
+				bufferLength: nil
+				stringLengthPtr: nil).
+	^version value!
+
 setDefaultEnvAttrs
 	| ret |
 	ret := ODBCLibrary default 
 				sqlSetEnvAttr: HEnv
 				attribute: SQL_ATTR_ODBC_VERSION
-				valuePtr: SQL_OV_ODBC2
+				valuePtr: SQL_OV_ODBC3
 				stringLength: 0.
 	self dbCheckException: ret.
 	^ret!
@@ -1461,6 +1498,7 @@ transact: aDBConnection action: anInteger
 !DBConnection class categoriesFor: #invalidateHandle:!private!realizing/unrealizing! !
 !DBConnection class categoriesFor: #new!instance creation!public! !
 !DBConnection class categoriesFor: #newConnections!accessing!private! !
+!DBConnection class categoriesFor: #odbcVersion!accessing!public! !
 !DBConnection class categoriesFor: #setDefaultEnvAttrs!accessing!private! !
 !DBConnection class categoriesFor: #transact:action:!operations!private! !
 

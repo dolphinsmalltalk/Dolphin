@@ -45,6 +45,6 @@ defineFields
 
 getFieldNames
 	^#(#guid #varValue)! !
-!CUSTDATAITEM class categoriesFor: #defineFields!initializing!public! !
+!CUSTDATAITEM class categoriesFor: #defineFields!public!template definition! !
 !CUSTDATAITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

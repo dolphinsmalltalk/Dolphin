@@ -29,7 +29,7 @@ AddCode: code
 			[in]BSTR Code);"
 
 	<virtual stdcall: hresult 11 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 codeObject
 	"Answer the <IDispatch> value of the 'CodeObject' property of the receiver.
@@ -62,7 +62,7 @@ Eval: expression pvarResult: pvarResult
 			[out, retval]VARIANT* pvarResult);"
 
 	<virtual stdcall: hresult 12 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 executeStatement: statement
 	"Invoke the ExecuteStatement() method of the COM object.
@@ -79,7 +79,7 @@ ExecuteStatement: statement
 			[in]BSTR Statement);"
 
 	<virtual stdcall: hresult 13 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_CodeObject: ppdispObject
 	"Private - Get the value of the 'CodeObject' property of the receiver.
@@ -88,7 +88,7 @@ get_CodeObject: ppdispObject
 			[out, retval]IDispatch** ppdispObject);"
 
 	<virtual stdcall: hresult 9 IDispatch**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Name: pbstrName
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -97,7 +97,7 @@ get_Name: pbstrName
 			[out, retval]BSTR* pbstrName);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Procedures: ppdispProcedures
 	"Private - Get the value of the 'Procedures' property of the receiver.
@@ -106,7 +106,7 @@ get_Procedures: ppdispProcedures
 			[out, retval]IScriptProcedureCollection** ppdispProcedures);"
 
 	<virtual stdcall: hresult 10 IScriptProcedureCollection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -161,7 +161,7 @@ Run: procedureName Parameters: parameters pvarResult: pvarResult
 			[out, retval]VARIANT* pvarResult);"
 
 	<virtual stdcall: hresult 14 bstr SAFEARRAY** variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 value
 	"Answer the <bstr> value of the 'Name' property of the receiver.

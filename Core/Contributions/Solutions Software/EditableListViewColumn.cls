@@ -290,15 +290,13 @@ ownerDraw: aContext
 	aContext rc width = 0 ifTrue: [^false].
 
 	"Reset canvas/context to defaults otherwise per-column changes are carried over from previous columns"
-	canvas := aContext canvas.
-	canvas font: self parent actualFont.
 	aContext
 		forecolor: (self displayForecolor ifNil: [Color default]);
 		backcolor: (self displayBackcolor ifNil: [Color default]).
 
+	canvas := aContext canvas.
 	self hasPreDrawBlock ifTrue: 
-		[aContext font: canvas font copy.
-		self preDrawBlock value: aContext.
+		[self preDrawBlock value: aContext.
 		aContext applyFont].
 
 	iSubItem := aContext iSubItem. 
@@ -380,15 +378,17 @@ preDrawBlock: anObject
 
 rectangle
 
-	| zeroIndex itemRectangle |
+	| zeroIndex itemRectangle iconRectangle |
 
-	self isVisible ifFalse: [^##(0@0 corner: 0@0)].
+	(self isVisible and: [self parent itemCount > 0]) ifFalse: [^##(0@0 corner: 0@0)].
 
 	zeroIndex := self index - 1.
 	itemRectangle := self parent lvmGetSubItemRect: 0 subitem: zeroIndex bounding: LVIR_LABEL.
 
-	"In row image mode, the first column excludes the row icon. We want the full box"
-	(zeroIndex = 0 and: [self parent hasRowImage]) ifTrue: [itemRectangle left: (itemRectangle left - parent smallImageExtent x)].
+	"The primary column excludes the row icon (if any) We want the full box"
+	(self == self parent primaryColumn and: [self hasColumnImage]) ifTrue: 
+		[iconRectangle := self parent lvmGetSubItemRect: 0 subitem: zeroIndex bounding: LVIR_ICON.
+		itemRectangle left: iconRectangle left].
 
 	^(itemRectangle left@self parent rectangle top) extent: (itemRectangle width@self parent height)!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #MethodWorkspaceTest
 	instanceVariableNames: ''
@@ -19,7 +19,7 @@ testSelectedOrNearestNode
 	| env workspace node |
 	env := BrowserEnvironment new forClass: MethodWorkspace selectors: #(#selectedNode).
 	presenter methods: env.
-	presenter method: env allMethods first.
+	presenter selectMethod: env allMethods first.
 	self waitForInputIdle.
 	workspace := presenter sourcePresenter.
 	workspace selectionRange: (1 to: 0).

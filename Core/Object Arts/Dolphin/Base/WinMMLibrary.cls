@@ -16,7 +16,7 @@ mciGetErrorString: code lpszErrorText: returnString cchErrorText: retsize
   		BOOL mciGetErrorString(DWORD fdwError, LPTSTR lpszErrorText, UINT cchErrorText);"
 
 	<stdcall: bool mciGetErrorStringW dword lpwstr dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 mciSendString: commandString
 	"Send an MCI command, ignoring any return."
@@ -32,7 +32,7 @@ mciSendString: commandString lpszReturnString: returnString cchReturn: retsize h
 		UINT cchReturn, HANDLE hwndCallback);"
 
 	<stdcall: dword mciSendStringW lpwstr lpwstr dword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 playSound: aString hmod: anExternalHandle fdwSound: anInteger
 	"Plays a sound specified by the given filename, resource, or system event. 
@@ -42,7 +42,7 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 		BOOL PlaySound(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound);"
 
 	<stdcall: bool PlaySoundW lpvoid handle dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
 !WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !
 !WinMMLibrary categoriesFor: #mciSendString:lpszReturnString:cchReturn:hwndCallback:!public!win32 functions-MCI! !

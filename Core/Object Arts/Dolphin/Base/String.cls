@@ -2,21 +2,24 @@
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
+	classVariableNames: 'EncodingAnsi Encodings EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
 String isAbstract: true!
 String addClassConstant: 'EncodingAnsi' value: 16r0!
+String addClassConstant: 'Encodings' value: #(#ansi #utf8 #utf16le #utf32)!
 String addClassConstant: 'EncodingUtf16' value: 16r2!
 String addClassConstant: 'EncodingUtf32' value: 16r3!
 String addClassConstant: 'EncodingUtf8' value: 16r1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
-String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16. 
+String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
-The default and preferred string type is `Utf8String`, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16 encoded strings. `Utf16String` is the concrete subclass to  represent UTF-16 encoded strings.
+String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
+
+The default and preferred string type is `Utf8String`, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16LE encoded strings. `Utf16String` is the concrete subclass to  represent UTF-16LE encoded strings. Conversion between the string encodings is easy and fast using `asAnsiString`, `asUtf8String` and `asUtf8String`, although when converting the Unicode encodings to `AnsiString`s some characters cannot be represented and so will be "lost" (i.e. substitued with the replacement character). When working with `WriteStream`s backed by strings it is not necessary to explicitly translate to the target encoding as the class library and VM primitives will transparently convert from whatever string encoding is written.
 
 N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space for the null terminator is implicity included when a `String` is allocated, but is not reported when the size of the `String` is requested.
 
@@ -57,7 +60,7 @@ _cmp: comparand
 	> 0 if ordinally after the argument. This comparison is fast and locale insensitive."
 
 	<primitive: 220>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 _collate: comparand
 	"Private - Answer the receiver's <integer> collation order with respect to 
@@ -67,8 +70,8 @@ _collate: comparand
 	The comparison respects the currently configured default locale of the
 	host operating system, and the performance may disappoint in some cases."
 
-	| string1 string2 |
 	<primitive: 56>
+	| string1 string2 |
 	comparand isString ifFalse: [^self error: 'Invalid comparand'].
 	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes
 	the OS StringCompare function, in essence as follows:"
@@ -145,28 +148,15 @@ _separateSubStringsIn: aReadableString
 	^(self _collate: comparand) <= 0!
 
 = comparand
-	"Answer whether the receiver and the <Object> argument, comparand, 
-	are both Strings containing identical code points.
+	"Answer whether the receiver and the <Object> argument, comparand, are both <String>s containing identical code points.
+	Note that <Symbol>s are now considered equal to <String>s with the same characters.
 
 	Primitive failure results:
-		0 -	comparand is a SmallInteger.
-		1 - 	comparand is not a null-terminated object.
-		2 -	comparand and/or receiver encoding not recognised."
+		InvalidParameter1  	- comparand is not a null-terminated object.
+		AssertionFailure		- comparand and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == comparand or: 
-			[comparand isString and: 
-					[comparand isSymbol not and: 
-							[| string1 string2 |
-							"The primitive uses the OS CompareStringOrdinal function, or memcmp for a pair of byte strings of matched encoding."
-							string1 := self asUtf16String.
-							string2 := comparand asUtf16String.
-							(KernelLibrary default
-								compareStringOrdinal: string1
-								cchCount1: string1 size
-								lpString2: string2
-								cchCount2: string2 size
-								bIgnoreCase: false) == Win32Constants.CSTR_EQUAL]]]!
+	^self == comparand or: [comparand isString and: [(self _cmp: comparand) == 0]]!
 
 > comparand
 	"Answer whether the receiver is lexically greater than the <readableString>, comparand,
@@ -264,7 +254,7 @@ asString
 asSymbol
 	"Answer the <symbol> corresponding to the receiver."
 
-	^Symbol intern: self!
+	^Symbol intern: self asUtf8String!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -296,14 +286,14 @@ asUtf8String
 	^self asUtf16String asByteString: Utf8String!
 
 at: index
-	"Answer the <Character> at the <integer> index, in the receiver.
+	"Answer the <Character> at the <integer> index, in the receiver."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size)."
+	"Primitive Failure Reasons:
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)"
 
 	<primitive: 63>
-	^self errorAt: index!
+	^self _primitiveError: _failureCode at: index!
 
 at: index ifAbsent: exceptionBlock
 	"Answer an <Object> which is the element of the receiver 
@@ -314,17 +304,18 @@ at: index ifAbsent: exceptionBlock
 	^(index > 0 and: [index <= self size]) ifTrue: [self at: index] ifFalse: [exceptionBlock value]!
 
 at: anInteger put: aCharacter
-	"Replace the character at index, anInteger, in the receiver with aCharacter.
+	"Replace the character at index, anInteger, in the receiver with aCharacter."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	anInteger is out of bounds (not in the range 1..receiver's size).
-		2 -	aCharacter is not a Character."
+	"Primitive Failure Reasons:
+		InvalidParameter1	- index is not a SmallInteger
+		OutOfBounds		- index out of bounds (not in the range 1..receiver's indexable size)
+		InvalidParameter2	- aCharacter is not a Character."
 
 	<primitive: 64>
-	^(aCharacter isKindOf: Character)
-		ifTrue: [self errorAt: anInteger put: aCharacter]
-		ifFalse: [self error: ('can''t hold <1p>''s' expandMacrosWith: aCharacter class)]!
+	^self
+		_primitiveError: _failureCode
+		at: anInteger
+		put: aCharacter!
 
 beginsWith: comperand
 	"Answer whether the receiver starts with the exact characters
@@ -363,15 +354,19 @@ byteAt: anInteger
 	^self basicAt: anInteger!
 
 byteAt: aSmallInteger put: value
-	"Replace the byte at the specified index in the receiver with the specified integer byte value.
+	"Replace the byte at the specified index in the receiver with the specified integer byte value."
 
-	Primitive Failure Reasons:
-		0	- aSmallInteger is not a SmallInteger
-		1	- aSmallInteger out of bounds (not in the range 1..receiver's mutable size) 
-		2	- the argument, value, is not a SmallInteger in the range 0..255."
+	"Primitive Failure Reasons:
+		InvalidParameter1	- aSmallInteger is not a SmallInteger
+		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter2	- the argument, value, is not a SmallInteger.
+		IntegerOutOfRange	- the argument is a SmallInteger, but not in the range [0..255]"
 
 	<primitive: 61>
-	^self errorAt: aSmallInteger put: value!
+	^self
+		_primitiveError: _failureCode
+		at: aSmallInteger
+		put: value!
 
 byteSize
 	"Private - Answer the size in bytes of this object. N.B. this includes a null terminator,
@@ -445,20 +440,6 @@ encodeOn: aWriteStream put: aCharacter
 
 encoding
 	^self class encoding!
-
-equals: comperand
-	"Answer whether the characters of the receiver are identical to those of 
-	the argument, comperand. Should not be overridden by subclasses (a kind of basic=).
-	Using this method strings and symbols compare equal if they contain the same
-	character sequence - this was not true in releases prior to 3.0."
-
-	<primitive: 55>
-	#todo.	"Doesn't work correctly for comparing Symbols to UTF encoded strings. This could be
-	       deprecated if we allowed strings and symbols to be equal for the same code point
-	       sequence."
-	(self == comperand or: [self = comperand]) ifTrue: [^true].
-	comperand isString ifFalse: [^false].
-	^(self _cmp: comperand) == 0!
 
 expandMacros
 	"Expand the receiver with replacable arguments.
@@ -553,18 +534,14 @@ findString: aString
 	^self findString: aString startingAt: 1!
 
 findString: aString startingAt: anInteger 
-	"Answer the index of the <String> argument within the receiver, starting at the <integer>
-	argument. If the receiver does not contain aString, answer 0.
+	"Answer the index of the <String> argument within the receiver, starting at the <integer> argument. If the receiver does not contain aString, answer 0.
 
-	Primitive Failure Reasons:/
-		0	- anInteger is not a SmallInteger
-		1	- anInteger is out of bounds (not in the range 1..receiver's indexable size) 
-		2	- aString is not of the same class as the receiver.
+	Primitive Failure Reasons:
+		InvalidParameter2	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of bounds (not in the range 1..receiver's indexable size) 
+		InvalidParameter1	- aString is not of the same class as the receiver.
 
-	Implementation Note: The string search primitive is implemented using the 
-	Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which
-	case it isn't worth initializing the skip array in most cases, so a simple brute
-	force search (much like that of the superclass) is used."
+	Implementation Note: The string search primitive is implemented using the Boyer-Moore algorithm unless the receiver is less than 512 bytes long, in which case it isn't worth initializing the skip array in most cases, so a simple brute force search (much like that of the superclass) is used."
 
 	<primitive: 149>
 	^super indexOfSubCollection: aString startingAt: anInteger!
@@ -630,25 +607,11 @@ formatWithArguments: aCollection
 		withArguments: aCollection!
 
 hash
-	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal
-	objects, and therefore it should be the same for the same sequence of characters, regardless
-	of encoding."
+	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects, and therefore it should be the same for the same sequence of characters, regardless of encoding.
+	Currently the hash is a 32-bit FNV1a with the standard constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is a choice subject to change."
 
-	| utf8 hash |
 	<primitive: 106>
-	utf8 := self asUtf8String.
-	hash := 2166136261.
-	"FNV1a"
-	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
-	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
-
-hashCharacters
-	"Private - Use the standard byte hashing algorithm to hash the characters of 
-	the receiver. Used for doing lookup by value, e.g. in the Symbol table."
-
 	| utf8 hash |
-	<primitive: 106>
 	utf8 := self asUtf8String.
 	hash := 2166136261.
 	"FNV1a"
@@ -691,6 +654,14 @@ leftString: anInteger
 
 	^self first:( anInteger min: self size).
 !
+
+length
+	"Answer the number of Unicode code-points in the receiver. Note that:
+	- Strings in Dolphin are indexed by code-unit; to get the number of code units in a string send it the `size` message. The size of different types of string for the same set of Unicode code points will vary depending on the string's encoding.
+	- The code-point count is not necessarily the same as the number of user-perceived characters in a string (aka grapheme clusters), as some grapheme clusters are composed from multiple code-points."
+
+	"To be overridden by subclasses which do not have fixed-width encodings"
+	^self size!
 
 lines
 	"Answer a SequenceableCollection containing the lines of the receiver (sequences of Characters
@@ -858,17 +829,19 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
 
 	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
-	| fromOffset |
 	<primitive: 142>
+	| fromOffset |
 	fromOffset := fromStart - start.
-	stop to: start by: -1 do: [:i | aByteObject basicAt: i put: (self byteAt: i + fromOffset)].
+	stop to: start
+		by: -1
+		do: [:i | aByteObject basicAt: i put: (self byteAt: i + fromOffset)].
 	^aByteObject!
 
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger
@@ -876,7 +849,9 @@ replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: star
 	through stopInteger inclusive with consecutive characters of the <readableString>
 	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	aReadableString class == self class
+	| sourceEncoding |
+	sourceEncoding := aReadableString encoding.
+	(sourceEncoding == #binary or: [sourceEncoding == self encoding])
 		ifTrue: 
 			[aReadableString
 				replaceBytesOf: self
@@ -1111,8 +1086,8 @@ trueCompare: comparand
 	Also the comparison respects the currently configured default locale of the
 	host operating system, and the performance may disappoint in some cases."
 
-	| string1 string2 |
 	<primitive: 51>
+	| string1 string2 |
 	string1 := self asUtf16String.
 	string2 := comparand asUtf16String.
 	^(KernelLibrary default
@@ -1139,7 +1114,7 @@ unescapePercents
 
 	| ansi |
 	ansi := self asAnsiString.
-	^(ansi equals: self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
+	^(ansi = self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
 
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
@@ -1195,7 +1170,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #byteSize!accessing!private! !
 !String categoriesFor: #capitalized!converting!public! !
 !String categoriesFor: #codePage!constants!public! !
-!String categoriesFor: #contains:!public! !
+!String categoriesFor: #contains:!public!searching! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
 !String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !String categoriesFor: #decodeNextFrom:!encode/decode!private! !
@@ -1203,7 +1178,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #displayString!printing!public! !
 !String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !String categoriesFor: #encoding!constants!public! !
-!String categoriesFor: #equals:!comparing!public! !
 !String categoriesFor: #expandMacros!printing!public! !
 !String categoriesFor: #expandMacrosWith:!printing!public! !
 !String categoriesFor: #expandMacrosWith:with:!printing!public! !
@@ -1219,12 +1193,12 @@ withNormalizedLineDelimiters
 !String categoriesFor: #formatWith:with:with:with:!printing!public! !
 !String categoriesFor: #formatWithArguments:!printing!public! !
 !String categoriesFor: #hash!comparing!public! !
-!String categoriesFor: #hashCharacters!comparing!private! !
 !String categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
 !String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !String categoriesFor: #isLiteral!public!testing! !
 !String categoriesFor: #isString!public!testing! !
 !String categoriesFor: #leftString:!copying!public! !
+!String categoriesFor: #length!accessing!public! !
 !String categoriesFor: #lines!copying!public! !
 !String categoriesFor: #lookup:!accessing!public! !
 !String categoriesFor: #match:!public!searching! !
@@ -1292,6 +1266,9 @@ coerceString: aString
 
 	^aString asUtf8String!
 
+cr
+	^LineDelimiter!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -1310,10 +1287,10 @@ encoding
 	^self encodingName: self basicEncoding!
 
 encodingName: anInteger
-	^String encodings at: anInteger + 1!
+	^Encodings at: anInteger + 1!
 
 encodings
-	^#(#ansi #utf8 #utf16le #utf32)!
+	^Encodings!
 
 errorInvalidCodePoint: codePoint
 	^self error: 'Invalid code point ' , codePoint hex!
@@ -1486,6 +1463,9 @@ installedCodePages
 
 	^self systemCodePages: Win32Constants.CP_INSTALLED!
 
+lf
+	^AnsiString with: $\n!
+
 lineDelimiter
 	"Answer an immutable instance of the receiver containing the host system 
 	end-of-line character sequence (a Cr/Lf pair).
@@ -1498,8 +1478,11 @@ new: aSmallInteger
 	"Answer an instance of the default string class of sufficient size to hold the specified number of code units."
 
 	<primitive: 71>
-	self isNonInstantiable ifTrue: [^Utf8String new: aSmallInteger].
-	^self primitiveFailed!
+	_failureCode == _PrimitiveFailureCode.NonInstantiable
+		ifTrue: 
+			["Attempt to instantiate abstract class String, so answer an instance of the default concrete class, Utf8String"
+			^Utf8String new: aSmallInteger].
+	^self primitiveFailed: _failureCode!
 
 newFixed: aSmallInteger
 	"Answer a sub-instance of the receiver of size aSmallInteger bytes (this method is 
@@ -1509,8 +1492,11 @@ newFixed: aSmallInteger
 	are in a traditional fixed heap)."
 
 	<primitive: 76>
-	self isNonInstantiable ifTrue: [^Utf8String newFixed: aSmallInteger].
-	^self primitiveFailed!
+	_failureCode == _PrimitiveFailureCode.NonInstantiable
+		ifTrue: 
+			["Attempt to instantiate abstract class String, so answer an instance of the default concrete class, Utf8String"
+			^Utf8String newFixed: aSmallInteger].
+	^self primitiveFailed: _failureCode!
 
 readFrom: aStream 
 	"Answer a <String> read from the <gettableStream>, aStream
@@ -1585,65 +1571,65 @@ utf8Class
 
 	^Utf16String!
 
-with: element1
+with: character
 	"Answer a new instance of the receiver containing the single <Character> element, element1."
 
-	^(self writeStream: 4)
-		nextPut: element1;
-		contents!
-
-with: element1 with: element2
-	"Answer an instance of the receiver containing the <Character> arguments as its elements"
-
 	^(self writeStream: 2)
-		nextPut: element1;
-		nextPut: element2;
+		nextPut: character;
 		contents!
 
-with: element1 with: element2 with: element3
-	"Answer an instance of the receiver containing the <Character> arguments as its elements"
-
-	^(self writeStream: 3)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		contents!
-
-with: element1 with: element2 with: element3 with: element4
+with: firstCharacter with: secondCharacter
 	"Answer an instance of the receiver containing the <Character> arguments as its elements"
 
 	^(self writeStream: 4)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		nextPut: element4;
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
 		contents!
 
-with: element1 with: element2 with: element3 with: element4 with: element5
+with: firstCharacter with: secondCharacter with: thirdCharacter
+	"Answer an instance of the receiver containing the <Character> arguments as its elements"
+
+	^(self writeStream: 6)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		contents!
+
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter
+	"Answer an instance of the receiver containing the <Character> arguments as its elements"
+
+	^(self writeStream: 8)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		nextPut: fourthCharacter;
+		contents!
+
+with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthCharacter with: fifthCharacter
 	"Answer an instance of the receiver containing the <Character> arguments as its elements.
 	N.B. This is not an ANSI standard method (up to 4 elements are supported by <Array factory>
 	#with:&c messages, for more one must use #withAll:)."
 
-	^(self writeStream: 5)
-		nextPut: element1;
-		nextPut: element2;
-		nextPut: element3;
-		nextPut: element4;
-		nextPut: element5;
+	^(self writeStream: 10)
+		nextPut: firstCharacter;
+		nextPut: secondCharacter;
+		nextPut: thirdCharacter;
+		nextPut: fourthCharacter;
+		nextPut: fifthCharacter;
 		contents!
 
-withAll: newElements
-	"Answer a new instance of the receiver containing all of the <Character> elements of the
-	<collection> newElements."
+withAll: aCollectionOfCharacters
+	"Answer a new instance of the receiver containing all of the <Character> elements of the <collection>, aCollectionOfCharacters."
 
 	| stream |
 	stream := self writeStream: 10.
-	newElements do: [:each | stream nextPut: each].
+	aCollectionOfCharacters readStream do: [:each | stream nextPut: each].
 	^stream contents! !
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #coerceString:!instance creation!public! !
+!String class categoriesFor: #cr!constants!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #encoding!constants!public! !
@@ -1656,10 +1642,10 @@ withAll: newElements
 !String class categoriesFor: #fromAddress:!instance creation!public! !
 !String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !String class categoriesFor: #fromAtomId:!instance creation!public! !
-!String class categoriesFor: #fromByteArray:!public! !
-!String class categoriesFor: #fromByteArray:length:!public! !
-!String class categoriesFor: #fromByteArray:length:startingAt:!public! !
-!String class categoriesFor: #fromByteArray:startingAt:!public! !
+!String class categoriesFor: #fromByteArray:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:length:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:length:startingAt:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:startingAt:!instance creation!public! !
 !String class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !String class categoriesFor: #fromId:!instance creation!public! !
 !String class categoriesFor: #fromId:in:!instance creation!public! !
@@ -1667,6 +1653,7 @@ withAll: newElements
 !String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !String class categoriesFor: #initialize!class initialization!development!public! !
 !String class categoriesFor: #installedCodePages!enquiries!public! !
+!String class categoriesFor: #lf!constants!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
 !String class categoriesFor: #new:!instance creation!public! !
 !String class categoriesFor: #newFixed:!instance creation!public! !

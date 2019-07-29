@@ -200,25 +200,12 @@ at: anInteger
 
 	^self shouldNotImplement!
 
-basicPrintDigitsOn: aStream base: anInteger 
-	"Private - Print the digits of the receiver in base anInteger to aStream. N.B. The receiver
-	MUST be positive for this to work correctly."
+at: index put: value
+	"Replace the receivers indexed instance variable at the argument, index, with the argument,
+	value. Not valid for immediate, objects which are constants. Do not remove this method, as
+	the primitive implementation in Object will behave unexpectedly for immediate objects."
 
-	| quotient digits index |
-	quotient := self.
-	index := self digitLength * 8.
-	digits := Utf8String new: index.
-	[quotient < anInteger] whileFalse: 
-			[| quoRem |
-			quoRem := quotient quoAndRem: anInteger.
-			digits at: index put: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: (quoRem at: 2) + 1).
-			index := index - 1.
-			quotient := quoRem at: 1].
-	digits at: index put: ('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: quotient + 1).
-	aStream 
-		next: digits size - index + 1
-		putAll: digits
-		startingAt: index!
+	^self shouldNotImplement!
 
 bitAnd: operand
 	"Answer an <integer> whose bits are the logical AND of the
@@ -304,6 +291,11 @@ coerce: anArithmeticValue
 
 	^anArithmeticValue asInteger!
 
+decimalDigitLength
+	"Private - Answer the number of digits (only) necessary to print this number in base 10. The receiver must be positive."
+
+	^self numberOfDigitsInBase: 10!
+
 digitAt: anInteger 
 	"Answer the index'th byte of 2's complement representation of the receiver. e.g. 1 at: 1 =
 	1, -1 at: 1 = 255 (see also #byteAt:). Report an error if index is not greater than 0, but
@@ -350,6 +342,21 @@ divideIntoInteger: anInteger
 	instance creation method will answer an Integer if it can."
 
 	^Fraction rationalisedNumerator: anInteger denominator: self!
+
+equalToFloat: aFloat
+	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. This can only be the case for Float's with no fractional value."
+
+	^aFloat isFinite and: [aFloat fractionPart isZero and: [aFloat truncated = self]]!
+
+equalToFraction: aFraction
+	"Private - Answer whether the receiver is equal to the known <Fraction>, aFraction."
+
+	^self * aFraction denominator = aFraction numerator!
+
+equalToInteger: anInteger
+	"Private - Answer whether the receiver is equal to the known <Integer>, anInteger."
+
+	^self - anInteger == 0!
 
 even
 	"Answer whether the receiver is an even integer. Zero is considered even.
@@ -411,19 +418,14 @@ fractionPart
 
 	^0!
 
-gcd: operand 
-	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 
-	using Euclid's algorithm. See Knuth vol. II"
+gcd: anInteger
+	"Answer the greatest common divisor of the receiver and the <integer>, anInteger, computed using Euclid's algorithm. See Knuth vol. II"
 
-	| u v |
-	v := operand abs.
-	u := self abs.
-	[v == 0] whileFalse: 
-			[| r |
-			r := u \\ v.
-			u := v.
-			v := r].
-	^u!
+	| v u |
+	u := anInteger.
+	v := self.
+	[v == 0] whileFalse: [v := u \\ (u := v)].
+	^u abs!
 
 gcdbin: operand 
 	"Answer the greatest common divisor of the receiver and the <integer>, operand, computed 
@@ -449,47 +451,38 @@ gcdbin: operand
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat."
 
-	^aFloat < self asFloat!
+	| fpclass |
+	fpclass := aFloat fpClass.
+	^(fpclass anyMask: Float.FpClassFinite)
+		ifTrue: [self greaterThanFraction: aFloat asTrueFraction]
+		ifFalse: 
+			["aFloat is NaN, -∞ or ∞, so obviously we are only greater if it is -∞"
+			fpclass anyMask: Float.FpClassNegative]!
 
 greaterThanFraction: aFraction
 	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
 
 	^aFraction numerator < (self * aFraction denominator)!
 
-hash
-	"Answer the <integer> hash value of the receiver."
+hashMultiply
+	"Answer a new positive <SmallInteger> hash value calculated from the receiver by using it's low-order bits as the seed for a simple Park-Miller LCG.
+	This can be used to generate a better distributed hash value for SmallIntegers, but also for combining hash values to generate a hash for a composite object."
 
-	"Implementation Note: In order to satisfy the invariant that Floats that compare
-	equal also have the same hash, we have to limit the precision of the hash by using 
-	only the top hashBits bits of the absolute value of the receiver, xor'ing in the shift
-	as a way of taking some account of the magnitude of the receiver.
-	Thanks to John Brant for contributing this hash function."
-
-	| bitCount shiftDistance |
-	self negative ifTrue: [^self negated hash negated].
-	bitCount := self highBit.
-	^bitCount > self hashBits 
-		ifTrue: 
-			[| value |
-			shiftDistance := self hashBits - bitCount + 1.
-			value := (self bitShift: shiftDistance) + 1 bitShift: -1.
-			value highBit > self hashBits 
-				ifTrue: [(value bitShift: -1) bitXor: (shiftDistance - 1) abs]
-				ifFalse: [value bitXor: shiftDistance abs]]
-		ifFalse: [self]!
+	<primitive: 109>
+	^(self bitAnd: VMConstants.IntPtrMask) * 48271 bitAnd: VMConstants.SmallIntegerMax!
 
 hex
 	"Answer a <readableString> whose characters are a description of 
 	the receiver in the hexadecimal."
 
-	^self printStringRadix: 16 showRadix: true!
+	^self printStringRadix: 16!
 
 highBit
-	"Answer the <integer> index of the most significant non-zero bit of the binary 
-	representation of the receiver.
+	"Answer the <integer> index of the most significant non-zero bit of the binary representation of the receiver.
 	N.B. This operation is not defined for negative integers."
 
 	| digits |
+	self < 0 ifTrue: [self error: 'high bit is infinite for negative integer'].
 	digits := self digitLength.
 	^(self byteAt: digits) highBit + (digits - 1 bitShift: 3)!
 
@@ -532,7 +525,19 @@ isNull
 isPowerOfTwo
 	"Return true if the receiver is an integral power of two."
 
-	^self strictlyPositive and: [(self bitAnd: self - 1) == 0]!
+	^self ~~ 0 and: [(self bitAnd: self - 1) == 0]!
+
+isPrime
+	"Answer whether the receiver is a prime number. This may take a long time for larger integer values."
+
+	| i |
+	self <= 3 ifTrue: [^self > 1].
+	(self even or: [self \\ 3 == 0]) ifTrue: [^false].
+	i := 5.
+	[i * i <= self] whileTrue: 
+			[(self \\ i == 0 or: [self \\ (i + 2) == 0]) ifTrue: [^false].
+			i := i + 6].
+	^true!
 
 isSDWORD
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
@@ -638,60 +643,92 @@ notNull
 
 	^self ~~ 0!
 
-printDigitsOn: aStream base: anInteger 
-	"Private - Recursively print the digits of the receiver in base anInteger to aStream.
-	N.B. The receiver MUST be positive for this to work correctly."
+numberOfDigitsInBase: anInteger
+	"Private - Answer the number of digits required to print this number in <integer> base, anInteger."
 
-	self basicPrintDigitsOn: aStream base: anInteger!
+	| nDigits q total |
+	self < 0 ifTrue: [^self negated numberOfDigitsInBase: anInteger].
+	self < anInteger ifTrue: [^1].
+	(anInteger bitAnd: anInteger - 1) == 0
+		ifTrue: [^self highBit + anInteger highBit - 2 quo: anInteger highBit - 1].
+	q := self.
+	total := 0.
+	
+	["Make an initial nDigits guess that is less than or equal to required number of digits"
+	nDigits := anInteger == 10
+				ifTrue: 
+					[((q highBit - 1) * 1233 bitShift: -12) + 1	"This is because (2 log)/(10 log)*4096 is slightly greater than 1233"]
+				ifFalse: [q highBit quo: anInteger highBit].
+	total := total + nDigits.
+
+	"See how many digits remains above these first nDigits guess"
+	(q := q quo: (anInteger raisedToInteger: nDigits)) < anInteger]
+			whileFalse.
+	^q == 0 ifTrue: [total] ifFalse: [total + 1]!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream.
-	Although not strictly part of the ANSI protocol <number>, this method is the
-	means by which Integer complies with that protocol in order to produce
-	a literal representation of the receiver."
+	Although not strictly part of the ANSI protocol <number>, this method is the means by which Integer implements printString in a compliant manner that produces a literal representation of the receiver."
 
-	self printOn: aStream base: 10 showRadix: false!
+	self printOn: aStream base: 10!
 
-printOn: output base: base
-	"Append a text representation of the receiver on the <puttableStream>, output,
-	in the specified <integer> base with a radix prefix."
+printOn: aWriteStream base: anInteger
+	"Append a text representation of the digits of the receiver on the <puttableStream>, aWriteStream, in the <integer> base, baseInteger."
 
-	self printOn: output base: base showRadix: true!
+	self subclassResponsibility!
 
-printOn: output base: base showRadix: flag
-	"Append a text representation of the receiver on the <puttableStream>, output,
-	in the specified <integer> base, showing a radix prefix if requested."
+printOn: aWriteStream base: baseInteger nDigits: digitsInteger
+	"Append a textual representation of the receiver in <integer> base, baseInteger, to the <puttableStream>, aWriteStream, using at least <integer> digits, digitsInteger.
+	Behavior is undefined unless it holds that 0 <= self < (baseInteger raisedToInteger: digitsInteger)."
 
-	self negative
-		ifTrue: [ 
-			output nextPut: $-.
-			self negated printOn: output base: base showRadix: flag]
-		ifFalse: [
-			flag ifTrue: [base printOn: output. output nextPut: $r].
-			self printDigitsOn: output base: base]!
+	self subclassResponsibility!
 
-printStringRadix: base
-	"Answer a <readableString> whose characters are a description of 
-	the receiver in the specified <integer> radix."
+printOn: aWriteStream base: anInteger showRadix: aBoolean
+	"Append a text representation of the receiver on the <puttableStream>, aWriteStream, in the <integer> base, anInteger, showing a radix prefix if the <boolean> argument, aBoolean, is true."
 
-	^self printStringRadix: base showRadix: true!
+	self < 0
+		ifTrue: 
+			[aWriteStream nextPut: $-.
+			self negated
+				printOn: aWriteStream
+				base: anInteger
+				showRadix: aBoolean]
+		ifFalse: 
+			[aBoolean
+				ifTrue: 
+					[anInteger printOn: aWriteStream.
+					aWriteStream nextPut: $r].
+			self printOn: aWriteStream base: anInteger]!
 
-printStringRadix: base showRadix: flag
-	"Answer a String which represents the receiver in the radix, base (an Integer).
-	The radix prefix is included if the boolean flag is true."
+printStringBase: anInteger
+	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix, without a radix prefix."
 
 	| aStream |
 	aStream := String writeStream: 16.
-	self printOn: aStream base: base showRadix: flag.
-	^aStream contents
-!
+	self
+		printOn: aStream
+		base: anInteger.
+	^aStream contents!
 
-quo: aNumber
-	"Answer the integer quotient of the receiver divided by aNumber with 
-	truncation toward zero (i.e. like C integer division)."
+printStringBase: baseInteger nDigits: lengthInteger
+	"Answer the <readableString> representation of the receiver in base, anInteger, where 0 < anInteger <= 36, padded/truncated to exactly, lengthInteger, digits.
+	Behavior is undefined unless it holds that 0 <= self < (baseInteger raisedToInteger: digitsInteger)."
 
-	^(self quoAndRem: aNumber) basicAt: 1
-!
+	| answer |
+	answer := String new: lengthInteger.
+	self printOn: answer writeStream base: baseInteger nDigits: lengthInteger.
+	^answer!
+
+printStringRadix: anInteger
+	"Answer a <readableString> whose characters are a description of the receiver in the specified <integer> radix."
+
+	| aStream |
+	aStream := String writeStream: 16.
+	self
+		printOn: aStream
+		base: anInteger
+		showRadix: true.
+	^aStream contents!
 
 rounded
 	"Answer the integer nearest the receiver."
@@ -768,7 +805,7 @@ truncated
 !Integer categoriesFor: #asStackPointer!converting!private! !
 !Integer categoriesFor: #asUIntPtr!converting!public! !
 !Integer categoriesFor: #at:!accessing!public! !
-!Integer categoriesFor: #basicPrintDigitsOn:base:!printing!private! !
+!Integer categoriesFor: #at:put:!accessing!public! !
 !Integer categoriesFor: #bitAnd:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:!bit manipulation!public! !
 !Integer categoriesFor: #bitAt:put:!bit manipulation!public! !
@@ -781,12 +818,16 @@ truncated
 !Integer categoriesFor: #ceiling!public!truncation and round off! !
 !Integer categoriesFor: #clearBit:!bit manipulation!public! !
 !Integer categoriesFor: #coerce:!coercing!private! !
+!Integer categoriesFor: #decimalDigitLength!enquiries!private! !
 !Integer categoriesFor: #digitAt:!accessing!public! !
 !Integer categoriesFor: #digitLength!enquiries!public! !
 !Integer categoriesFor: #displayString!printing!public! !
 !Integer categoriesFor: #divideIntoFloat:!double dispatch!private! !
 !Integer categoriesFor: #divideIntoFraction:!double dispatch!private! !
 !Integer categoriesFor: #divideIntoInteger:!double dispatch!private! !
+!Integer categoriesFor: #equalToFloat:!double dispatch!private! !
+!Integer categoriesFor: #equalToFraction:!double dispatch!private! !
+!Integer categoriesFor: #equalToInteger:!double dispatch!private! !
 !Integer categoriesFor: #even!public!testing! !
 !Integer categoriesFor: #exp10!mathematical!public! !
 !Integer categoriesFor: #factorial!factorization!public! !
@@ -798,7 +839,7 @@ truncated
 !Integer categoriesFor: #gcdbin:!factorization!public! !
 !Integer categoriesFor: #greaterThanFloat:!double dispatch!private! !
 !Integer categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!Integer categoriesFor: #hash!comparing!public! !
+!Integer categoriesFor: #hashMultiply!comparing!public! !
 !Integer categoriesFor: #hex!printing!public! !
 !Integer categoriesFor: #highBit!bit manipulation!public! !
 !Integer categoriesFor: #highByte!accessing!private! !
@@ -809,6 +850,7 @@ truncated
 !Integer categoriesFor: #isInteger!public!testing! !
 !Integer categoriesFor: #isNull!public!testing! !
 !Integer categoriesFor: #isPowerOfTwo!public!testing! !
+!Integer categoriesFor: #isPrime!public!testing! !
 !Integer categoriesFor: #isSDWORD!public!testing! !
 !Integer categoriesFor: #lcm:!factorization!public! !
 !Integer categoriesFor: #lowBit!bit manipulation!public! !
@@ -825,13 +867,14 @@ truncated
 !Integer categoriesFor: #noMask:!bit manipulation!public! !
 !Integer categoriesFor: #normalize!converting!private! !
 !Integer categoriesFor: #notNull!public!testing! !
-!Integer categoriesFor: #printDigitsOn:base:!printing!private! !
+!Integer categoriesFor: #numberOfDigitsInBase:!enquiries!private! !
 !Integer categoriesFor: #printOn:!printing!public! !
 !Integer categoriesFor: #printOn:base:!printing!public! !
+!Integer categoriesFor: #printOn:base:nDigits:!printing!public! !
 !Integer categoriesFor: #printOn:base:showRadix:!printing!public! !
+!Integer categoriesFor: #printStringBase:!accessing!public! !
+!Integer categoriesFor: #printStringBase:nDigits:!printing!public! !
 !Integer categoriesFor: #printStringRadix:!printing!public! !
-!Integer categoriesFor: #printStringRadix:showRadix:!printing!public! !
-!Integer categoriesFor: #quo:!arithmetic!public! !
 !Integer categoriesFor: #rounded!public!truncation and round off! !
 !Integer categoriesFor: #setBit:!bit manipulation!public! !
 !Integer categoriesFor: #size!accessing!public! !

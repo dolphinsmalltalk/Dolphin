@@ -70,7 +70,7 @@ atIndex: anInteger put: anObject
 buildSelectors
 	| cols |
 	cols := self columns.
-	selectors := PluggableLookupTable new: cols size searchPolicy: SymbolStringSearchPolicy current.	"* 2"
+	selectors := LookupTable new: cols size.	"* 2"
 	cols keysAndValuesDo: 
 			[:i :col | 
 			| instName |

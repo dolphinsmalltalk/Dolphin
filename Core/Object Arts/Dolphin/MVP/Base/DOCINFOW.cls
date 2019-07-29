@@ -76,6 +76,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
-!DOCINFOW class categoriesFor: #defineFields!initializing!public! !
+!DOCINFOW class categoriesFor: #defineFields!public!template definition! !
 !DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

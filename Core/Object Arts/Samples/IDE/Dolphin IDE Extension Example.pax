@@ -28,15 +28,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Dolphin\IDE\Base\Development System';
-	add: '..\..\Dolphin\Base\Dolphin';
-	add: '..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
-	add: '..\..\Dolphin\ActiveX\Persist\OLE Persistence Base';
-	add: '..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Dolphin\IDE\Base\Development System'
+	'..\..\Dolphin\Base\Dolphin'
+	'..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\Dolphin\ActiveX\Persist\OLE Persistence Base'
+	'..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage').
 
 package!
 

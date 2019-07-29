@@ -417,7 +417,7 @@ getLooseMethods
 	by name to their owning package."
 
 	| loose |
-	loose := PluggableLookupTable new: 3072 searchPolicy: AssociationSearchPolicy current.
+	loose := PluggableLookupTable new: 4096 searchPolicy: AssociationSearchPolicy current.
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
 
@@ -1328,8 +1328,7 @@ newSystemPackage
 	inst := self current.
 	self assert: [inst packages isEmpty].
 	(dolphin := Package name: self systemPackageName)
-		basicComment: 'Dolphin Smalltalk Base System.
-Copyright (c) Object Arts Ltd. 1997-2016';
+		basicComment: self systemPackageComment;
 		basicScriptAt: #preinstall put: 'Error signal: ''Cannot replace the system package'''.
 	all := self environment allClasses.
 	all do: [:aClass | dolphin addClass: aClass].
@@ -1356,6 +1355,10 @@ systemPackage
 	SystemPackage isNil ifTrue: [SystemPackage := self newSystemPackage].
 	^SystemPackage!
 
+systemPackageComment
+	^'Dolphin 🐬 Smalltalk Base System.
+Copyright © Object Arts Ltd. 1997-2016'!
+
 systemPackageName
 	"Private - Answer the String name of the Package which owns all
 	the system objects."
@@ -1373,6 +1376,7 @@ uninitialize
 !PackageManager class categoriesFor: #newSystemPackage!operations!private! !
 !PackageManager class categoriesFor: #reset!operations!public! !
 !PackageManager class categoriesFor: #systemPackage!instance creation!public! !
+!PackageManager class categoriesFor: #systemPackageComment!constants!private! !
 !PackageManager class categoriesFor: #systemPackageName!constants!private! !
 !PackageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

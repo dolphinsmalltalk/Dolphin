@@ -108,6 +108,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
-!RGNDATA class categoriesFor: #defineFields!initializing!public! !
+!RGNDATA class categoriesFor: #defineFields!public!template definition! !
 !RGNDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

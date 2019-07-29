@@ -19,12 +19,15 @@ package classNames
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
+	add: #SymbolStringSearchPolicy;
+	add: #TimeStamp;
 	yourself.
 
 package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
+	add: #ArithmeticValue -> #quoAndRem:;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
@@ -84,17 +87,30 @@ package methodNames
 	add: #CRTLibrary -> #tan:;
 	add: #CRTLibrary -> #thread_chmod:pmode:;
 	add: #CRTLibrary -> #thread_errno;
+	add: #Date -> #asTimeStamp;
+	add: #Date -> #evaluateYYMMDD:;
+	add: #Date -> #monthIndex;
+	add: #Date -> #weekday;
+	add: #Date -> #weekdayIndex;
+	add: #DateAndTime -> #asTimeStamp;
+	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
+	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
+	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #KernelLibrary -> #getVersionEx:;
 	add: #KernelLibrary -> #lstrcmp:lpString2:;
 	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
+	add: #Locale -> #dateOrder;
+	add: #Locale -> #dateSeparator;
+	add: #Locale -> #isMonthBeforeDay;
 	add: #MessageBox -> #abortRetryIgnore;
 	add: #MessageBox -> #error;
 	add: #MessageBox -> #fatalError;
@@ -113,8 +129,22 @@ package methodNames
 	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
+	add: #String -> #equals:;
+	add: #SYSTEMTIME -> #asTimeStamp;
+	add: #Time -> #asTimeStamp;
+	add: #Time -> #hours;
+	add: #Time -> #milliseconds;
+	add: #Time -> #minutes;
+	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
+	add: 'Character class' -> #safeCodePoint:;
+	add: 'Date class' -> #dateAndTimeNow;
+	add: 'Date class' -> #dayOfWeek:;
+	add: 'Date class' -> #nameOfDay:;
+	add: 'Date class' -> #nameOfMonth:;
+	add: 'Date class' -> #shortNameOfDay:;
+	add: 'Date class' -> #shortNameOfMonth:;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -131,6 +161,8 @@ package methodNames
 	add: 'STBSingletonProxy class' -> #for:using:;
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
+	add: 'Time class' -> #dateAndTimeNow;
+	add: 'Time class' -> #microsecondsToRun:;
 	yourself.
 
 package globalNames
@@ -147,6 +179,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
+	'..\Dolphin Legacy Date & Time'
 	'..\Dolphin Message Box').
 
 package!
@@ -188,6 +221,16 @@ OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Magnitude subclass: #TimeStamp
+	instanceVariableNames: 'date time'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 STBProxy subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''
@@ -225,6 +268,15 @@ valueType
 	^self format! !
 !_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
 
+!ArithmeticValue methodsFor!
+
+quoAndRem: aNumber
+	| quo |
+	Notification deprecated.
+	quo := self quo: aNumber.
+	^{quo. self - (quo * aNumber)}! !
+!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
+
 !Behavior methodsFor!
 
 makeIndirect
@@ -251,6 +303,13 @@ categoryIcon
 
 	^self icon! !
 !Category class categoriesFor: #categoryIcon!constants!public! !
+
+!Character class methodsFor!
+
+safeCodePoint: anInteger
+	Notification deprecated.
+	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
+!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 
 !Class methodsFor!
 
@@ -291,112 +350,112 @@ extra
 _controlfp: newInteger mask: maskInteger
 	<cdecl: dword _controlfp dword dword>
 	#deprecated.	"Insecure - use _controlfp_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
 	#deprecated.	"This function is considered insecure and should not be used - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _eof: handleInteger
 	<cdecl: sdword _eof sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _filelength: handleInteger
 	<cdecl: sdword _filelength sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _finite: aFloat
 	<cdecl: bool _finite double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _fpclass: aFloat
 	<cdecl: sdword _fpclass double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _gcvt: aFloat count: anInteger buffer: aString
 	<cdecl: char* _gcvt double sdword char*>
 	#deprecated.	"Insecure - use _gcvt_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
 	<cdecl: sdword _gcvt_s char* intptr double sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _i64toa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _i64toa sqword lpstr sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _logb: aFloat
 	<cdecl: double _logb double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _ltoa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _ltoa sdword lpstr sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _makepath: path drive: drive dir: dir fname: fname ext: ext
 	<cdecl: void _makepath char* char* char* char* char*>
 	#deprecated.	"Insecure. Use #_makepath_s:sizeInBytes:drive:dir:fname:ext:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _putenv: aString
 	<cdecl: sdword _putenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _rotl: anUnsignedlInteger shift: anInteger
 	<cdecl: dword _rotl dword sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _rotr: anUnsignedlInteger shift: anInteger
 	<cdecl: dword _rotr dword sdword>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	<cdecl: void _splitpath char* char* char* char* char*>
 	#deprecated.	"Insecure - use _splitpath_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 _stricoll: string1 string2: string2
 	<cdecl: sdword _stricoll lpstr lpstr>
 	#deprecated. "Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 acos: aFloat
 	<cdecl: double acos double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 asin: aFloat
 	<cdecl: double asin double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 atan: aFloat
 	<cdecl: double atan double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 atan: yFloat x: xFloat
 	<cdecl: double atan2 double double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ceil: aFloat
 	<cdecl: double ceil double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 chmod: aFilenameString pmode: aModeInteger
 	#deprecated.
@@ -405,147 +464,147 @@ chmod: aFilenameString pmode: aModeInteger
 cos: aFloat
 	<cdecl: double cos double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 exp: aFloat
 	<cdecl: double exp double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fabs: aFloat
 	<cdecl: double fabs double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 floor: aFloat
 	<cdecl: double floor double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fopen: nameString mode: modeString
 	<cdecl: handle fopen lpstr lpstr>
 	#deprecated.	"Insecure"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fopen_s: pFile filename: nameString mode: modeString
 	<cdecl: sdword fopen_s handle* lpstr lpstr>
 	#deprecated.	"No longer used"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fread: buffer size: size count: count stream: aFILE
 	<overlap cdecl: sdword fread lpvoid intptr intptr handle>
 	#deprecated.	"Insecure - use fread_s"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 freopen: pathString mode: modeString stream: anExternalHandle
 	<cdecl: handle freopen char* char* handle>
 	#deprecated.	"Insecured - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 frexp: x expptr: expptr
 	<cdecl: double frexp double sdword*>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fseek: aFILE offset: offsetInteger origin: originInteger
 	<cdecl: sdword fseek handle sdword sdword>
 	#deprecated. "Use _fseeki64:offset:origin:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ftell: aFILE
 	<cdecl: sdword ftell handle>
 	#deprecated.	"Use #_ftelli64:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 iswspace: aCharacter
 	<cdecl: bool iswspace char>
 	#deprecated.	"Unused"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ldexp: aFloat exp: anInteger
 	<cdecl: double ldexp double sdword>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log: aFloat
 	<cdecl: double log double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log10: aFloat
 	<cdecl: double log10 double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 log2: aFloat
 	<cdecl: double log2 double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memcpy: dest src: src count: count
 	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 memmove: dest src: src count: count
 	<cdecl: void* memmove void* void* intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 modf: aFloat intptr: intFloatOut
 	<cdecl: double modf double lpvoid>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 pow: xFloat y: yFloat
 	<cdecl: double pow double double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sin: aFloat
 	<cdecl: double sin double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 sqrt: aFloat
 	<cdecl: double sqrt double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strcat: strDestination strSource: strSource
 	<cdecl: lpstr strcat lpstr lpstr>
 	#deprecated.	"This function may cause buffer overruns so is insecure. Use strcat_s instead."
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strerror: errno
 	<cdecl: lpstr strerror sdword>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 strncpy: strDest strSource: strSource count: count
 	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 tan: aFloat
 	<cdecl: double tan double>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 thread_chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Use CRTLibraryNonBlocking>>chmod:pmode:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 thread_errno
 	<overlap cdecl: sdword _errno>
 	#deprecated. "Use CRTLibraryNonBlocking>>errno"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
@@ -599,6 +658,86 @@ thread_errno
 !CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 
+!Date methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp
+!
+
+evaluateYYMMDD: aTriadicValuable
+	Notification deprecated.
+	^self dayMonthYearDo: [:d :m :y | aTriadicValuable value: y value: m value: d]!
+
+monthIndex
+	Notification deprecated.
+	^self month!
+
+weekday
+	Notification deprecated.
+	^Locale default dayOfWeekName: self dayOfWeek!
+
+weekdayIndex
+	Notification deprecated.
+	^(self asDays + 1) \\ 7 + 1! !
+!Date categoriesFor: #asTimeStamp!converting!public! !
+!Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
+!Date categoriesFor: #monthIndex!accessing!public! !
+!Date categoriesFor: #weekday!accessing!public! !
+!Date categoriesFor: #weekdayIndex!accessing!public! !
+
+!Date class methodsFor!
+
+dateAndTimeNow 
+	"Answer an Array whose first element is the current local Date and whose
+	second element is the current local Time."
+
+	"Use DateAndTime now"
+	Notification deprecated. 
+	^Time dateAndTimeNow!
+
+dayOfWeek: dayName
+	Notification deprecated.
+	^Locale default dayOfWeek: dayName!
+
+nameOfDay: dayIndex
+	"Use Locale>>dayOfWeekName:, but note that it expects Sunday as the first day of the week."
+	
+	Notification deprecated.
+	^Locale default dayOfWeekName: (dayIndex + 1) \\ 7!
+
+nameOfMonth: monthIndex
+	"Use Locale>>monthName:"
+
+	Notification deprecated.
+	^Locale default monthName: monthIndex!
+
+shortNameOfDay: dayIndex
+	"Use Locale>>dayOfWeekAbbreviation:, but note that it expects Sunday as the first day of the week."
+	
+	Notification deprecated.
+	^Locale default dayOfWeekAbbreviation: (dayIndex + 1) \\ 7!
+
+shortNameOfMonth: monthIndex
+	Notification deprecated.
+	^self monthAbbreviation: monthIndex! !
+!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
+!Date class categoriesFor: #dayOfWeek:!enquiries!public! !
+!Date class categoriesFor: #nameOfDay:!enquiries!public! !
+!Date class categoriesFor: #nameOfMonth:!enquiries!public! !
+!Date class categoriesFor: #shortNameOfDay:!enquiries!public! !
+!Date class categoriesFor: #shortNameOfMonth:!enquiries!public! !
+
+!DateAndTime methodsFor!
+
+asTimeStamp
+	"Answer a <TimeStamp> representing the local date and time of the receiver. The <TimeStamp> will be that at the receiver's offset, so:
+		- if a date/time in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asTimeStamp`)
+		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
+	Notification deprecated.
+	^TimeStamp date: self asDate time: self asTime! !
+!DateAndTime categoriesFor: #asTimeStamp!converting!public! !
+
 !ExternalCallback class methodsFor!
 
 receiver: anObject prototype: anExternalMethod
@@ -637,6 +776,15 @@ oneStringArg
 	#deprecated.
 	^self argumentTypes: 'lpstr'! !
 !ExternalDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
+
+!ExternalLibrary methodsFor!
+
+invalidCall
+	"The primitive failure code is now an implicit temp of the primitive method, and so must be passed. The instance variable of Process formerly used to store the failure code is no longer used."
+
+	Notification deprecated. 
+	^self invalidCall: 0! !
+!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
 
 !ExternalStructure methodsFor!
 
@@ -703,10 +851,29 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
+compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
+	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
+	#deprecated.
+	^self invalidCall: _failureCode!
+
+getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
+	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
+	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
+	^self invalidCall: _failureCode
+
+!
+
 getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
 	<stdcall: dword GetFileSize handle dword*>
 	#deprecated. "Use #getFileSizeEx:lpFileSize:"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
+
+getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
+	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
+	#deprecated. "Deprecated by Microsoft - use GetTimeFormatEx instead"
+	^self invalidCall: _failureCode
+
+!
 
 getVersionEx: anOSVERSIONINFO 
 	"Populate the argument with extended OS version information. Answers whether the request succeeded.
@@ -716,23 +883,26 @@ getVersionEx: anOSVERSIONINFO
 
 	<stdcall: bool GetVersionExW OSVERSIONINFO*>
 	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lstrcmp: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpW lpwstr lpwstr>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lstrcmpi: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpiW lpwstr lpwstr>
 	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
+!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
@@ -748,6 +918,33 @@ clear
 	OSVERSIONINFO clear
 ! !
 !KernelLibrary class categoriesFor: #clear!initializing!private! !
+
+!Locale methodsFor!
+
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated. "Use dateFormat"
+	^self getIntegerInfo: LOCALE_IDATE
+!
+
+dateSeparator
+	"Answer the character used in the receiver locale to separate date components."
+
+	Notification deprecated. "Use dateFormat"
+	^self getStringInfo: LOCALE_SDATE!
+
+isMonthBeforeDay
+	"Answer true if the format for the receiver is expecting a month before a day"
+
+	Notification deprecated. "Use dateFormat"
+	^self dateOrder ~= 1! !
+!Locale categoriesFor: #dateOrder!constants!public! !
+!Locale categoriesFor: #dateSeparator!constants!public! !
+!Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
 
 !MessageBox methodsFor!
 
@@ -892,8 +1089,13 @@ nextOrNil
 
 asUnicodeString
 	Notification deprecated.
-	^self asUtf16String! !
+	^self asUtf16String!
+
+equals: comperand
+	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
+	^self = comperand! !
 !String categoriesFor: #asUnicodeString!converting!public! !
+!String categoriesFor: #equals:!comparing!public! !
 
 !String class methodsFor!
 
@@ -907,12 +1109,70 @@ unicodeClass
 !String class categoriesFor: #fromUnicodeString:!instance creation!public! !
 !String class categoriesFor: #unicodeClass!constants!public! !
 
+!SYSTEMTIME methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTime! !
+!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
+
+!Time methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp!
+
+hours
+	Notification deprecated.
+	^self hour24!
+
+milliseconds
+	Notification deprecated.
+	^self millisecond!
+
+minutes
+	Notification deprecated.
+	^self minute! !
+!Time categoriesFor: #asTimeStamp!converting!public! !
+!Time categoriesFor: #hours!accessing!public! !
+!Time categoriesFor: #milliseconds!accessing!public! !
+!Time categoriesFor: #minutes!accessing!public! !
+
+!Time class methodsFor!
+
+dateAndTimeNow
+	"Answer an Array whose first element is the current local Date and whose
+	second element is the current local Time."
+
+	| now |
+	"Use DateAndTime now"
+	Notification deprecated.
+	now := DateAndTime now.
+	^{now asDate. now asTime}!
+
+microsecondsToRun: timedBlock
+	"Answer the number of microseconds consumed by the evaluation of timedBlock
+	(including the overhead)."
+
+	^timedBlock timeToRun asMicroseconds asInteger! !
+!Time class categoriesFor: #dateAndTimeNow!accessing!public! !
+!Time class categoriesFor: #microsecondsToRun:!operations!public! !
+
+!WindowsLocale methodsFor!
+
+timeSeparator
+	"Answer the character used in the receiver locale to separate time components."
+
+	Notification deprecated. "Use timeFormat"
+	^self getStringInfo: LOCALE_STIME! !
+!WindowsLocale categoriesFor: #timeSeparator!constants!public! !
+
 !WinMMLibrary methodsFor!
 
 timeGetTime
 	<stdcall: dword timeGetTime>
 	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
 
 "End of package definition"!

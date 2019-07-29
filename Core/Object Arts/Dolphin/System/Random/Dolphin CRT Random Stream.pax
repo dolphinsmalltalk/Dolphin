@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin CRT Random Stream'.
 package paxVersion: 1;
 	basicComment: 'Simple, fast, but low quality Random stream implemented on the C-runtime library rand() function. Note that this has only 16 bits of randomness.'.
@@ -19,10 +19,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Dolphin Random Stream';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Random Stream').
 
 package!
 
@@ -43,11 +42,11 @@ Random subclass: #RandomCRT
 
 rand
 	<cdecl: sdword rand>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-srand: anInteger 
+srand: anInteger
 	<cdecl: void srand dword>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesFor: #rand!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
 

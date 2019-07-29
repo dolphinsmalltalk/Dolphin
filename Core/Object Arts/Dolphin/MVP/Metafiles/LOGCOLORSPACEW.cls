@@ -208,6 +208,6 @@ defineFields
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
-!LOGCOLORSPACEW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGCOLORSPACEW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !LOGCOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

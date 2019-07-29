@@ -33,7 +33,7 @@ SplitText: offset rightHandTextNode: rightHandTextNode
 			[out, retval]IXMLDOMText** rightHandTextNode);"
 
 	<virtual stdcall: hresult 52 sdword IXMLDOMText**>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMText categoriesFor: #splitText:!**auto generated**!methods!public! !
 !IXMLDOMText categoriesFor: #SplitText:rightHandTextNode:!**auto generated**!COM Interfaces-IXMLDOMText!private! !
 

@@ -123,7 +123,7 @@ fileOutStem
 
 getFieldNames
 	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
-!DIBSECTION class categoriesFor: #defineFields!initializing!public! !
+!DIBSECTION class categoriesFor: #defineFields!public!template definition! !
 !DIBSECTION class categoriesFor: #fileOutStem!private!source filing! !
 !DIBSECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

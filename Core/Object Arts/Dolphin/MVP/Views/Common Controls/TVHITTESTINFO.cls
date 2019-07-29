@@ -54,6 +54,6 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #hItem)! !
-!TVHITTESTINFO class categoriesFor: #defineFields!initializing!public! !
+!TVHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
 !TVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

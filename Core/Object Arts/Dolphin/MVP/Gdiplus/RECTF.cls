@@ -143,7 +143,7 @@ left: left top: top width: width height: height
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
-!RECTF class categoriesFor: #defineFields!initializing!public! !
+!RECTF class categoriesFor: #defineFields!public!template definition! !
 !RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
 !RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !

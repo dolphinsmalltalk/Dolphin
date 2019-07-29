@@ -116,8 +116,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
 		nDelay = ObjectMemoryIntegerValueOf(tickPointer);
 	else
 	{
-		OTE* oteArg = reinterpret_cast<OTE*>(tickPointer);
-		return primitiveFailureWith(PrimitiveFailureNonInteger, oteArg);	// ticks must be SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// ticks must be SmallInteger
 	}
 
 	// To avoid any race conditions against the global timerID value (it is quite
@@ -162,10 +161,10 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
 		}
 		else
 		{
+			DWORD dwErr = GetLastError();
 			// System refused to set timer for some reason
-			DWORD error = GetLastError();
-			trace(L"Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, error);
-			return primitiveFailureWithInt(PrimitiveFailureSystemError, error);
+			trace(L"Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, dwErr);
+			return primitiveFailure(static_cast<_PrimitiveFailureCode>(PFC_FROM_WIN32(dwErr)));
 		}
 	}
 	else if (nDelay == 0)

@@ -279,6 +279,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
-!OPENFILENAMEW class categoriesFor: #defineFields!initializing!public! !
+!OPENFILENAMEW class categoriesFor: #defineFields!public!template definition! !
 !OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

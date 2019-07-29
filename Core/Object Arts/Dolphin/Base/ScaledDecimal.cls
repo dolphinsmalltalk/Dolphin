@@ -104,7 +104,7 @@ displayOn: target
 	"Append, to the <puttableStream, aStream, a String whose characters are a 
 	representation of the receiver as a user would want to see it."
 
-	| scaler quoRem num denom scaled |
+	| scaler quo num denom scaled |
 	scaler := scale exp10.
 	num := fraction numerator.
 	denom := fraction denominator.
@@ -113,16 +113,17 @@ displayOn: target
 		ifTrue: 
 			[target nextPut: $-.
 			scaled := scaled negated].
-	quoRem := scaled quoAndRem: scaler.
-	(quoRem at: 1) printOn: target.
+	quo := scaled quo: scaler.
+	quo printOn: target.
 	scale > 0
 		ifTrue: 
-			[target nextPut: $..
+			[| rem |
+			target nextPut: $..
+			rem := scaled.
 			scale timesRepeat: 
-					[| rem |
-					rem := (quoRem at: 2) * 10.
-					quoRem := rem quoAndRem: scaler.
-					target nextPut: (Character digitValue: (quoRem at: 1))]]!
+					[rem := (rem - (quo * scaler)) * 10.
+					quo := rem quo: scaler.
+					target nextPut: (Character digitValue: quo)]]!
 
 divideIntoScaledDecimal: operand
 	"Private - Answer the result of dividing the known <ScaledDecimal>, operand, by the receiver."
@@ -170,6 +171,12 @@ integerPart
 	^self species
 		newFromNumber: fraction integerPart
 		scale: scale!
+
+isLiteral
+	"Answer if this number can be represented as a literal that when evaluated would result in an equivalent ScaledDecimal.
+	This is only the case when the fraction can be represented precisely within the scale."
+
+	^fraction isInteger or: [(10 raisedTo: scale) \\ fraction denominator = 0]!
 
 isZero
 	"Answer whether the receiver is equal to its class' zero"
@@ -239,6 +246,20 @@ setFraction: f scale: s
 	scale := s.
 	self isImmutable: true!
 
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a collection similar to the receiver.
+	Use the literal form of ScaledDecimals when precise."
+
+	self isLiteral
+		ifTrue: [self printOn: aStream]
+		ifFalse: 
+			[aStream
+				nextPut: $(;
+				display: fraction;
+				nextPut: $s;
+				print: scale;
+				nextPut: $)]!
+
 subtractFromScaledDecimal: operand
 	"Private - Answer the result of subtracting the receiver from the 
 	known <ScaledDecimal>, operand."
@@ -271,6 +292,7 @@ truncated
 !ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #hash!comparing!public! !
 !ScaledDecimal categoriesFor: #integerPart!accessing!public! !
+!ScaledDecimal categoriesFor: #isLiteral!public!testing! !
 !ScaledDecimal categoriesFor: #isZero!public!testing! !
 !ScaledDecimal categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #negated!arithmetic!public! !
@@ -280,6 +302,7 @@ truncated
 !ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
 !ScaledDecimal categoriesFor: #scale!accessing!public! !
 !ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
+!ScaledDecimal categoriesFor: #storeOn:!public! !
 !ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
 !ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
 

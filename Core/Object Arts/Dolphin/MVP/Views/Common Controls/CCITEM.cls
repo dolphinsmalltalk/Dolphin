@@ -239,5 +239,5 @@ defineFields
 
 	self 
 		defineField: #mask type: DWORDField new offset: 0! !
-!CCITEM class categoriesFor: #defineFields!initializing!public! !
+!CCITEM class categoriesFor: #defineFields!public!template definition! !
 

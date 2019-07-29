@@ -21,6 +21,7 @@ package methodNames
 	add: #TestCase -> #deny:sameAs:;
 	add: #TestCase -> #denyIsNil:;
 	add: #TestCase -> #hash;
+	add: #TestCase -> #isCiBuild;
 	add: #TestCase -> #should:raise:matching:;
 	add: #TestCase -> #should:trigger:against:;
 	add: #TestCase -> #should:trigger:butNot:against:;
@@ -30,6 +31,9 @@ package methodNames
 	add: #TestCase -> #should:triggerAllOf:matching:butNoneOf:against:;
 	add: #TestCase -> #shouldnt:trigger:against:;
 	add: #TestCase -> #shouldnt:triggerAnyOf:against:;
+	add: #TestCase -> #skipIfCiBuild;
+	add: #TestCase -> #skipIfWin32;
+	add: #TestCase -> #skipUnless:;
 	add: #TestResult -> #debugCase:;
 	add: 'TestCase class' -> #buildSuiteFromConcreteMethods:;
 	add: 'TestCase class' -> #debugWithResult:;
@@ -41,10 +45,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: 'SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'SUnit').
 
 package!
 
@@ -138,6 +141,9 @@ hash
 	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
 
 	^testSelector hash!
+
+isCiBuild
+	^(SessionManager current getenv: 'APPVEYOR') notNil!
 
 should: aBlock raise: anException matching: discriminator
 	"Example usage:
@@ -266,7 +272,21 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 		triggerAllOf: #()
 		matching: [:message | true]
 		butNoneOf: aCollectionOfSymbols
-		against: anObject! !
+		against: anObject!
+
+skipIfCiBuild
+	self skipUnless: [self isCiBuild not]!
+
+skipIfWin32
+	"Skip if running on 32-bit Windows"
+
+	self skipUnless: [KernelLibrary default isWow64]!
+
+skipUnless: aBooleanOrBlock
+	" If the assumption in aBooleanOrBlock is not true, abandon the running test
+	and mark it as passed. "
+
+	aBooleanOrBlock value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']! !
 !TestCase categoriesFor: #<=!comparing!public! !
 !TestCase categoriesFor: #=!comparing!public! !
 !TestCase categoriesFor: #assert:identicalTo:!asserting!public! !
@@ -280,6 +300,7 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 !TestCase categoriesFor: #deny:sameAs:!public! !
 !TestCase categoriesFor: #denyIsNil:!asserting!public! !
 !TestCase categoriesFor: #hash!comparing!public! !
+!TestCase categoriesFor: #isCiBuild!helpers!public! !
 !TestCase categoriesFor: #should:raise:matching:!asserting!public! !
 !TestCase categoriesFor: #should:trigger:against:!asserting!public! !
 !TestCase categoriesFor: #should:trigger:butNot:against:!asserting!public! !
@@ -289,6 +310,9 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 !TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
 !TestCase categoriesFor: #shouldnt:trigger:against:!asserting!public! !
 !TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!asserting!public! !
+!TestCase categoriesFor: #skipIfCiBuild!helpers!public! !
+!TestCase categoriesFor: #skipIfWin32!helpers!public! !
+!TestCase categoriesFor: #skipUnless:!asserting!public! !
 
 !TestCase class methodsFor!
 
@@ -319,9 +343,9 @@ debugCase: aTestCase
 
 	
 	[| start stop |
-	start := Time microsecondClockValue.
+	start := Delay microsecondClockValue.
 	aTestCase runCase.
-	stop := Time microsecondClockValue.
+	stop := Delay microsecondClockValue.
 	self addPass: aTestCase duration: stop - start]
 			on: self class failure
 			do: 

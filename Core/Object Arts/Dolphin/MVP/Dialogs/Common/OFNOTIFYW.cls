@@ -60,6 +60,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
-!OFNOTIFYW class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYW class categoriesFor: #defineFields!public!template definition! !
 !OFNOTIFYW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

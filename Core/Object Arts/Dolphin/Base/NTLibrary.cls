@@ -18,13 +18,13 @@ Warning: This comment was automatically generated from the Module''s type inform
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
 	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-rtlNtStatusToDosError: status
-	<stdcall: dword RtlNtStatusToDosError dword>
-	^self invalidCall!
+rtlNtStatusToDosError: anInteger
+	<stdcall: dword RtlNtStatusToDosError ntstatus>
+	^self invalidCall: _failureCode!
 
-setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution 
+setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution
 	"NTSYSAPI
 		NTSTATUS
 		NTAPI
@@ -34,7 +34,7 @@ setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution
 			OUT PULONG ActualResolution"
 
 	<stdcall: dword NtSetTimerResolution dword bool dword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wineGetVersion
 	"static const char * (CDECL *pwine_get_version)(void);"

@@ -162,6 +162,6 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
-!WIN32_FIND_DATAW class categoriesFor: #defineFields!initializing!public! !
+!WIN32_FIND_DATAW class categoriesFor: #defineFields!public!template definition! !
 !WIN32_FIND_DATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

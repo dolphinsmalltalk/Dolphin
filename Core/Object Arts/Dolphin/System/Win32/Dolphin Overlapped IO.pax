@@ -47,7 +47,7 @@ ExternalStructure subclass: #OVERLAPPED
 
 !KernelLibrary methodsFor!
 
-cancelIo: hFile 
+cancelIo: hFile
 	"Invoke the CancelIo() function of the module wrapped by the receiver.
 	Helpstring: Cancels all pending input and output (I/O) operations that were issued by the calling thread for the specified file handle.
 
@@ -55,9 +55,9 @@ cancelIo: hFile
 			[in]long hFile);"
 
 	<stdcall: sdword CancelIo sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-createIoCompletionPort: fileHandle existingCompletionPort: existingCompletionPort completionKey: completionKey numberOfConcurrentThreads: numberOfConcurrentThreads 
+createIoCompletionPort: fileHandle existingCompletionPort: existingCompletionPort completionKey: completionKey numberOfConcurrentThreads: numberOfConcurrentThreads
 	"Invoke the CreateIoCompletionPort() function of the module wrapped by the receiver.
 	Helpstring: Associates an input/output (I/O) completion port with one or more file handles, or it can create an I/O completion port that is not associated with a file handle.
 
@@ -68,9 +68,9 @@ createIoCompletionPort: fileHandle existingCompletionPort: existingCompletionPor
 			[in]unsigned long NumberOfConcurrentThreads);"
 
 	<stdcall: sdword CreateIoCompletionPort sdword sdword dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getOverlappedResult: hFile lpOverlapped: lpOverlapped lpNumberOfBytesTransferred: lpNumberOfBytesTransferred bWait: bWait 
+getOverlappedResult: hFile lpOverlapped: lpOverlapped lpNumberOfBytesTransferred: lpNumberOfBytesTransferred bWait: bWait
 	"Invoke the GetOverlappedResult() function of the module wrapped by the receiver.
 	Helpstring: Retrieves the results of an overlapped operation on the specified file, named pipe, or communications device.
 
@@ -81,9 +81,9 @@ getOverlappedResult: hFile lpOverlapped: lpOverlapped lpNumberOfBytesTransferred
 			[in]long bWait);"
 
 	<stdcall: sdword GetOverlappedResult sdword OVERLAPPED* dword* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getQueuedCompletionStatus: completionPort lpNumberOfBytesTransferred: lpNumberOfBytesTransferred lpCompletionKey: lpCompletionKey lpOverlapped: lpOverlapped dwMilliseconds: dwMilliseconds 
+getQueuedCompletionStatus: completionPort lpNumberOfBytesTransferred: lpNumberOfBytesTransferred lpCompletionKey: lpCompletionKey lpOverlapped: lpOverlapped dwMilliseconds: dwMilliseconds
 	"Invoke the GetQueuedCompletionStatus() function of the module wrapped by the receiver.
 	Helpstring: attempts to dequeue an I/O completion packet from a specified I/O completion port. If there is no completion packet queued, the function waits for a pending I/O operation associated with the completion port to complete.
 
@@ -95,9 +95,9 @@ getQueuedCompletionStatus: completionPort lpNumberOfBytesTransferred: lpNumberOf
 			[in]unsigned long dwMilliseconds);"
 
 	<stdcall: sdword GetQueuedCompletionStatus sdword dword* uintptr* OVERLAPPED** dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberOfBytesTransferred dwCompletionKey: dwCompletionKey lpOverlapped: lpOverlapped 
+postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberOfBytesTransferred dwCompletionKey: dwCompletionKey lpOverlapped: lpOverlapped
 	"Invoke the PostQueuedCompletionStatus() function of the module wrapped by the receiver.
 	Helpstring: Posts an I/O completion packet to an I/O completion port.
 
@@ -108,7 +108,7 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 			[in]OVERLAPPED* lpOverlapped);"
 
 	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #cancelIo:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:!**auto generated**!public! !

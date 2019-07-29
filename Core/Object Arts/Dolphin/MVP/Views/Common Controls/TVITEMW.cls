@@ -99,7 +99,7 @@ getValidFields
 
 	| mask fields |
 	mask := self mask.
-	fields := Array writeStream.
+	fields := Array writeStream: 8.
 	fields nextPutAll: #(#mask #hItem).
 	#(#pszText #iImage #lParam #dwState #hItem #iSelectedImage #cChildren) inject: 1
 		into: 
@@ -265,6 +265,6 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
-!TVITEMW class categoriesFor: #defineFields!initializing!public! !
+!TVITEMW class categoriesFor: #defineFields!public!template definition! !
 !TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

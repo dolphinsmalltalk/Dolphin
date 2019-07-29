@@ -34,12 +34,14 @@ package methodNames
 	add: 'Compiler class' -> #icon;
 	add: 'CompilerNotification class' -> #icon;
 	add: 'Date class' -> #icon;
+	add: 'DateAndTime class' -> #icon;
 	add: 'DeadObject class' -> #icon;
 	add: 'DeafObject class' -> #icon;
 	add: 'Delay class' -> #icon;
 	add: 'Dictionary class' -> #icon;
 	add: 'DiskVolumeInformation class' -> #icon;
 	add: 'DOUBLE class' -> #icon;
+	add: 'Duration class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'Exception class' -> #icon;
 	add: 'ExternalArray class' -> #icon;
@@ -92,7 +94,6 @@ package methodNames
 	add: 'Symbol class' -> #icon;
 	add: 'SystemDictionary class' -> #icon;
 	add: 'Time class' -> #icon;
-	add: 'TimeStamp class' -> #icon;
 	add: 'True class' -> #icon;
 	add: 'UndefinedObject class' -> #icon;
 	add: 'UtfEncodedString class' -> #icon;
@@ -106,17 +107,17 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\System\Announcements\Dolphin Announcements';
-	add: '..\Base\Dolphin Basic Geometry';
-	add: '..\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\Views\Cards\Dolphin Card Containers';
-	add: '..\Base\Dolphin MVP Base';
-	add: '..\Presenters\Radio\Dolphin Radio Buttons';
-	add: 'Dolphin Text Tile Icons';
-	add: '..\Gdiplus\Gdiplus';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\System\Announcements\Dolphin Announcements'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\Views\Cards\Dolphin Card Containers'
+	'..\..\Base\Dolphin Legacy Date & Time'
+	'..\Base\Dolphin MVP Base'
+	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'Dolphin Text Tile Icons'
+	'..\Gdiplus\Gdiplus').
 
 package!
 
@@ -349,6 +350,14 @@ icon
 	^##(self) defaultIcon! !
 !Date class categoriesFor: #icon!constants!public! !
 
+!DateAndTime class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!DateAndTime class categoriesFor: #icon!constants!public! !
+
 !DeadObject class methodsFor!
 
 icon
@@ -406,6 +415,14 @@ icon
 
 	^Float icon! !
 !DOUBLE class categoriesFor: #icon!constants!public! !
+
+!Duration class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Duration class categoriesFor: #icon!constants!public! !
 
 !Error class methodsFor!
 
@@ -874,14 +891,6 @@ icon
 
 	^##(self) defaultIcon! !
 !Time class categoriesFor: #icon!constants!public! !
-
-!TimeStamp class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!TimeStamp class categoriesFor: #icon!constants!public! !
 
 !True class methodsFor!
 

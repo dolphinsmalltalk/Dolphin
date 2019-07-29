@@ -240,7 +240,8 @@ initialize
 	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows
 	version indicates Vista is available."
-	hasIconScaleDown := isVistaOrLater & isNotWine!
+	hasIconScaleDown := isVistaOrLater & isNotWine.
+	SessionManager current when: #settingChanged: send: #onSettingChanged: to: self!
 
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
@@ -328,18 +329,29 @@ nonClientMetrics
 
 !
 
-onSettingChanged: aWindowsEvent
+onSettingChanged: anArray
 	| code |
-	code := aWindowsEvent wParam.
-	code = SPI_SETICONTITLELOGFONT
+	(##(#('Policy' 'intl' 'Environment' 'ImmersiveColorSet') asSet) includes: anArray first)
 		ifTrue: 
-			[| newFont |
-			newFont := self getIconTitleFont.
-			newFont = iconTitleFont ifFalse: [iconTitleFont := newFont]].
-	code = SPI_SETNONCLIENTMETRICS ifTrue: [menuFont := nonClientMetrics := nil].
-	code = SPI_SETFLATMENU ifTrue: [hasFlatMenus := nil].
-	code = SPI_SETLISTBOXSMOOTHSCROLLING ifTrue: [hasSmoothScrollingLists := nil].
-	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil!
+			[^self].
+	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
+	code := anArray second.
+	code == SPI_SETICONTITLELOGFONT
+		ifTrue: 
+			[iconTitleFont := nil.
+			^self].
+	code == SPI_SETNONCLIENTMETRICS
+		ifTrue: 
+			[menuFont := nonClientMetrics := nil.
+			^self].
+	code == SPI_SETFLATMENU
+		ifTrue: 
+			[hasFlatMenus := nil.
+			^self].
+	code == SPI_SETLISTBOXSMOOTHSCROLLING
+		ifTrue: 
+			[hasSmoothScrollingLists := nil.
+			^self]!
 
 paddedBorderThickness
 	^self nonClientMetrics iPaddedBorderWidth!

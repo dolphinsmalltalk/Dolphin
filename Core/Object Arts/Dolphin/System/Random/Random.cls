@@ -2,7 +2,7 @@
 
 Stream subclass: #Random
 	instanceVariableNames: 'seed'
-	classVariableNames: 'DefaultGeneratorClass'
+	classVariableNames: 'Default DefaultGeneratorClass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Random guid: (GUID fromString: '{87b4c6f9-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -87,6 +87,11 @@ skip: anInteger
 
 !Random class methodsFor!
 
+default
+	"Answer the default <Random> generator."
+	
+	^Default ifNil: [Default := self new]!
+
 defaultGeneratorClass
 	^DefaultGeneratorClass!
 
@@ -102,7 +107,7 @@ new
 	^self seed: (self systemClockSeed bitOr: 1)!
 
 newConcrete
-	^self isAbstract ifTrue: [self newDefault] ifFalse: [self basicNew]!
+	^self isNonInstantiable ifTrue: [self newDefault] ifFalse: [self basicNew]!
 
 newDefault
 	^DefaultGeneratorClass new!
@@ -121,6 +126,7 @@ systemClockSeed
 	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
+!Random class categoriesFor: #default!instance creation!public! !
 !Random class categoriesFor: #defaultGeneratorClass!accessing!public! !
 !Random class categoriesFor: #defaultGeneratorClass:!accessing!public! !
 !Random class categoriesFor: #initialize!initializing!public! !

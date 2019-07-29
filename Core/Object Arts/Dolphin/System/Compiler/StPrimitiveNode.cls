@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 StTagNode subclass: #StPrimitiveNode
-	instanceVariableNames: 'primitiveIndex'
+	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -18,6 +18,12 @@ StPrimitiveNode comment: ''!
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitPrimitiveNode: self!
 
+errorTemp
+	^errorTemp!
+
+errorTemp: anObject
+	errorTemp := anObject!
+
 primitiveIndex
 	^primitiveIndex!
 
@@ -25,6 +31,8 @@ primitiveIndex: anInteger
 	primitiveIndex := anInteger! !
 !StPrimitiveNode categoriesFor: #=!comparing!public! !
 !StPrimitiveNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StPrimitiveNode categoriesFor: #errorTemp!accessing!public! !
+!StPrimitiveNode categoriesFor: #errorTemp:!accessing!private! !
 !StPrimitiveNode categoriesFor: #primitiveIndex!accessing!public! !
 !StPrimitiveNode categoriesFor: #primitiveIndex:!accessing!private! !
 

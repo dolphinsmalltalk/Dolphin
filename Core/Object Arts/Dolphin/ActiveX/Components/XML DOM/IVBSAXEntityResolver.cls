@@ -71,7 +71,7 @@ ResolveEntity: strPublicId strSystemId: strSystemId varInput: varInput
 			[out, retval]VARIANT* varInput);"
 
 	<virtual stdcall: hresult 8 bstr* bstr* variant*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IVBSAXEntityResolver categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !IVBSAXEntityResolver categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !IVBSAXEntityResolver categoriesFor: #resolveEntity:strSystemId:!**auto generated**!methods!public! !

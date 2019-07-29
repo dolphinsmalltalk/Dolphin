@@ -106,7 +106,7 @@ drawInfoTextOn: graphics
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
 
-	^TimeStamp current asMilliseconds - startTime asMilliseconds!
+	^Delay millisecondClockValue - startTime!
 
 fill
 	| dolphinPt graphics min max pts |
@@ -238,6 +238,14 @@ onDestroyed
 	self stopStepProcess.
 	^super onDestroyed!
 
+onGetCursor: aSymbol
+	"The named area of the window associated with the receiver has been hit.
+	Answer the appropriate mouse cursor, or nil to accept the default."
+
+	| wantHandCursor |
+	wantHandCursor := self isActionPoint: self cursorPosition.
+	^wantHandCursor ifTrue: [Cursor hand] ifFalse: [super onGetCursor: aSymbol]!
+
 onLeftButtonPressed: aMouseEvent 
 	self render.
 	self class splashPlayTheGame ifFalse: [^self dismiss].
@@ -246,15 +254,6 @@ onLeftButtonPressed: aMouseEvent
 			[Cursor reset.
 			self dismiss]
 		ifFalse: [self showHintBubble]!
-
-onMouseMoved: aMouseEvent 
-	| wantHandCursor |
-	wantHandCursor := self isActionPoint: aMouseEvent position.
-	^wantHandCursor 
-		ifTrue: 
-			[Cursor hand makeCurrent.
-			nil]
-		ifFalse: [super onMouseMoved: aMouseEvent]!
 
 onViewCreated
 	"Private - The receiver has just been created."
@@ -346,14 +345,14 @@ showHintBubble
 				caption: 'Hint';
 				maxWidth: 140;
 				willFade: true;
-				timeout: 5000.
+				timeout: 5 seconds.
 	hintBubble
 		position: (self mapPoint: self sunPosition to: View desktop);
 		notify: 'Find the dolphin inside and click to continue.'!
 
 startStepProcess
 	self stopStepProcess.
-	startTime := TimeStamp current.
+	startTime := Delay millisecondClockValue.
 	stepProcess := 
 			[
 			[[self step] on: Error do: [:ex | ex toTrace].
@@ -414,8 +413,8 @@ sunPosition
 !SeeingTheObjectsInside categoriesFor: #isPointInDolphin:!event handling!private!testing! !
 !SeeingTheObjectsInside categoriesFor: #loadTextureMap:!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #onDestroyed!event handling!private! !
+!SeeingTheObjectsInside categoriesFor: #onGetCursor:!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #onMouseMoved:!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #onViewCreated!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #originalBitmapExtent!constants!public! !
 !SeeingTheObjectsInside categoriesFor: #pointResolution!constants!public! !

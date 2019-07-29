@@ -2,28 +2,34 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf16SurrogateMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 Character addClassConstant: 'EncodingMask' value: 16r3F000000!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
 Character addClassConstant: 'Utf16Mask' value: 16r2000000!
+Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
 Character addClassConstant: 'Utf32Mask' value: 16r3000000!
 Character addClassConstant: 'Utf8Mask' value: 16r1000000!
-Character addClassConstant: 'Utf8TrailMask' value: 16rC0!
-Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. Each Character instance represents a specific Unicode code point. The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
-	$\0	- Null
-	$\a	- Bell
-	$\b	- Backspace
-	$\t	- Tab
-	$\n	- Newline
-	$\v	- Vertical tab
-	$\f	- Form Feed
-	$\r	- Carriage return
-	$\x<HHHH> - where <HHHH> is the hex representation of the character''s code point - can be used to represent any character.
+Character addClassConstant: 'Utf8SurrogateMask' value: 16rC0!
+Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk Strings. 
 
-At present only byte characters (that are not control characters) have a printable representation, at least within the IDE.
+Each `Character` instance generally represents a specific Unicode [code point](https://en.wikipedia.org/wiki/Code_point). Note that this does not necessarily mean that each `Character` corresponds to a single user-perceived, visually distinct, character (aka grapheme cluster). Multiple `Character`s may compose into a single grapheme cluster when displayed, some examples of different types being `👨🏻‍🍳`, `ö`, and `กำ`. The 2nd example has more than one valid representation and can have either one or two code-points.
+
+ `Character` instances may also represent partial or surrogate character code-units that are part of a multi-code-unit code-point. Such surrogate instances may result from indexed access into `UTFEncodedStrings` such as `Utf8String` or `Utf16String`, and can be distinguished through the use of the `isSurrogate`, `isUtf8Surrogate`, `isUtf16Surrogate` family of testing messages. In general it is recommended to stream over strings, rather than treating them as arrays of characters, in which case surrogates will not be encountered.
+
+The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the ''$'' symbol followed by the normal printed representation of the character. 
+At present only byte characters (that are not control characters) have a printable literal representation. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
+  `$\0`		- Null
+  `$\a`		- Bell
+  `$\b`		- Backspace
+  `$\t`		- Tab
+  `$\n`		- Newline
+  `$\v`		- Vertical tab
+  `$\f`		- Form Feed
+  `$\r`		- Carriage return
+  `$\x<HHHH>` - where <HHHH> is the hex representation of the character''s code point - can be used to represent any valid code point.
 '!
 !Character categoriesForClass!Magnitude-General! !
 !Character methodsFor!
@@ -87,13 +93,6 @@ ansiValue
 	"Answers the ansi character value of the receiver."
 
 	^code <= 16rFF ifTrue: [code] ifFalse: [self error: 'Non-ansi code point']!
-
-appendToStream: puttableStream
-	"Private - Append the receiver's elements to the argument, puttableStream.
-	Answer the receiver.
-	Implementation note: Double dispatched from streams."
-
-	puttableStream nextPut: self!
 
 asAnsiString
 	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
@@ -187,7 +186,7 @@ codePoint
 		ifTrue: [AnsiCodePoints at: code +1]
 		ifFalse: 
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
-			code bitAnd: 16r1FFFFF]!
+			code bitAnd: 16rFFFFFF]!
 
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
@@ -330,7 +329,7 @@ isSeparator
 	^code == 32 or: [code >= 9 and: [code <= 13]]!
 
 isSurrogate
-	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit character in it's encoding."
+	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit code-point in it's encoding."
 
 	^self isUtf16Surrogate or: [self isUtf8Surrogate]!
 
@@ -348,37 +347,37 @@ isUpperCase
 isUtf16Lead
 	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
 
-	^(code bitAnd: 16rFFFC00) == 16rD800!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rD800)!
 
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
 
-	^(code bitAnd: 16rFFF800) == 16rD800!
+	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | 16rD800)!
 
 isUtf16Trail
-	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
+	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
 
-	^(code bitAnd: 16rFFFC00) == 16rDC00!
+	^(code bitAnd: ##(EncodingMask | Utf16SurrogateMask)) == ##(Utf16Mask | 16rDC00)!
 
 isUtf8
-	"Answer whether the receiver is a UTF-8 code unit."
+	"Answer whether the receiver is a valid UTF-8 code unit. This is true for any ASCII character, or any UTF-8 surrogate."
 
 	^code < 16r80 or: [(code bitAnd: EncodingMask) == Utf8Mask]!
 
 isUtf8Lead
-	"Answer whether the receiver is a UTF-8 leading byte."
+	"Answer whether the receiver represents a UTF-8 leading byte."
 
-	^(code bitAnd: EncodingMask) == Utf8Mask and: [code allMask: 2r11000000]!
+	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16rC0)!
 
 isUtf8Surrogate
-	"Answer whether the receiver is a UTF-8 surrogate (partial character)."
+	"Answer whether the receiver represents a UTF-8 surrogate (partial character)."
 
-	^(code bitAnd: EncodingMask | 16r80) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | 16r80)) == ##(Utf8Mask | 16r80)!
 
 isUtf8Trail
-	"Answer whether the receiver is a UTF-8 trailing byte."
+	"Answer whether the receiver represents a UTF-8 trailing byte."
 
-	^(code bitAnd: ##(EncodingMask | Utf8TrailMask)) == ##(Utf8Mask | 16r80)!
+	^(code bitAnd: ##(EncodingMask | Utf8SurrogateMask)) == ##(Utf8Mask | 16r80)!
 
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
@@ -422,14 +421,18 @@ setCode: anInteger
 shallowCopy
 	"Answer the receiver, as Characters are immutable."
 
-	^self! !
+	^self!
+
+to: aCharacter
+	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
+
+	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
 !Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Character categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Character categoriesFor: #<!comparing!public! !
 !Character categoriesFor: #=!comparing!public! !
 !Character categoriesFor: #>!comparing!public! !
 !Character categoriesFor: #ansiValue!accessing!public! !
-!Character categoriesFor: #appendToStream:!double dispatch!private! !
 !Character categoriesFor: #asAnsiString!converting!public! !
 !Character categoriesFor: #asciiValue!accessing!public! !
 !Character categoriesFor: #asInteger!converting!public! !
@@ -482,6 +485,7 @@ shallowCopy
 !Character categoriesFor: #printOn:!printing!public! !
 !Character categoriesFor: #setCode:!accessing!initializing!private! !
 !Character categoriesFor: #shallowCopy!copying!public! !
+!Character categoriesFor: #to:!converting!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
 
@@ -513,18 +517,26 @@ byteCharacterSet
 
 	^CharacterSet!
 
-codePoint: integer
+codePoint: anInteger
 	"Answer a <Character> representing the specified <integer> Unicode code point.
-	Raise an error if the argument is not a valid Unicode character code point."
+	Raise an error if the argument is not a valid Unicode code point."
 
-	^integer < 16r80
-		ifTrue: [CharacterSet at: integer + 1]
+	^self codePoint: anInteger
+		ifInvalid: 
+			["This block is deliberately clean to avoid block copy overhead"
+			InvalidArgumentError signal: 'Unicode character code point expected' with: 'anInteger']!
+
+codePoint: anInteger ifInvalid: exceptionHandler
+	"Answer a <Character> representing the specified <integer> Unicode code point, or the result of evaluating the <niladicValuable>, exceptionHandler, if the code point is not the code point of a valid Unicode character."
+
+	^anInteger < 16r80
+		ifTrue: [CharacterSet at: anInteger + 1]
 		ifFalse: 
-			[(AnsiCharacters lookup: integer)
+			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(self isValidCodePoint: integer)
-						ifTrue: [(self newCode: (Utf32Mask bitOr: integer)) isImmutable: true]
-						ifFalse: [self error: 'Invalid code point ' , integer hex]]]!
+					[(self isValidCodePoint: anInteger)
+						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
+						ifFalse: [exceptionHandler value]]]!
 
 cr
 	"Answer the carriage return control <Character>."
@@ -558,6 +570,11 @@ esc
 
 	^$\x1B!
 
+euro
+	"Answer a <Character> representing the Euro currency symbol, €"
+
+	^$\x20AC!
+
 initialize
 	self addClassConstant: 'CharacterSet'
 		value: ((AnsiString fromByteArray: (0 to: 255) asByteArray)
@@ -578,14 +595,17 @@ initialize
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
 	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
 	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
-	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
+	self addClassConstant: 'Utf8SurrogateMask' value: 16rC0.
+	self addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
 
 isValidCodePoint: anInteger
-	"Answer whether the <integer> argument represents a valid Unicode code point. Invalid code
-	points are those outside the range 0..0x10FFFF, or within that range but non-characters."
+	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."
 
-	#todo.	"This is not complete"
-	^anInteger <= Win32Constants.MAX_UCSCHAR and: [(anInteger bitAnd: 16rFFFE) ~~ 16rFFFE]!
+	^anInteger >= 0 and: 
+			[anInteger < 16rD800 or: 
+					[anInteger > 16rDFFF and: 
+							[anInteger <= Win32Constants.MAX_UCSCHAR and: 
+									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not]]]]!
 
 lf
 	"Answer the linefeed control <Character>."
@@ -599,8 +619,7 @@ new
 	^self shouldNotImplement!
 
 newCode: anInteger
-	"Private - Answer a new instance of the receiver with the specified code. This should
-	only be used for code points > 128."
+	"Private - Answer a new instance of the receiver with the specified code. This should only be used for code points > 128."
 
 	<primitive: 157>
 	^self basicNew setCode: anInteger!
@@ -628,32 +647,20 @@ onStartup
 	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
 				isImmutable: true;
 				yourself.
-	ansiCharacters := IdentityDictionary new.
+	#todo. "Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
+	ansiCharacters := IdentityDictionary new: 513.
 	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
 	AnsiCharacters := ansiCharacters.
+	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
 	Utf8Default := Character
 				codePoint: ((VMLibrary default getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]])
 						wordAtOffset: 0)!
 
 replacement
-	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and
-	encodings."
+	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and encodings."
 
 	^Utf8Default!
-
-safeCodePoint: anInteger
-	"Answer a <Character> representing the specified <integer> Unicode code point, or the
-	replacement Character if the code point is not the code point of a valid Unicode character."
-
-	^anInteger < 16r80
-		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: 
-			[(AnsiCharacters lookup: anInteger)
-				ifNil: 
-					[(self isValidCodePoint: anInteger)
-						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
-						ifFalse: [self replacement]]]!
 
 space
 	"Answer the space <Character>."
@@ -666,8 +673,14 @@ tab
 	^$\t!
 
 utf16Value: anInteger
-	"Answer a <Character> representing the <integer> UTF-16 code unit, anInteger.
-	Note that the resulting Character may not represent a valid Unicode code point."
+	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger.
+	If the argument is not a valid UTF-16 code unit then an error is raised."
+
+	^self utf16Value: anInteger
+		ifInvalid: [InvalidArgumentError signal: 'UTF-16 code unit expected' with: 'anInteger']!
+
+utf16Value: anInteger ifInvalid: exceptionHandler
+	"Answer a <Character> (which may be a surrogate) representing the <integer> UTF-16 code unit, anInteger, or the result of evaluating the <monadicBlock>, exceptionHandler, if the code unit is not valid."
 
 	^anInteger < 16r80
 		ifTrue: 
@@ -676,16 +689,17 @@ utf16Value: anInteger
 		ifFalse: 
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
-					[(anInteger >= 16rD800 and: [anInteger <= 16rDFFF])
+					[(anInteger bitAnd: 16rF800) == 16rD800
 						ifTrue: 
 							["Surrogate"
 							self newCode: (Utf16Mask bitOr: anInteger)]
 						ifFalse: 
-							[anInteger <= 16rFFFF
+							[(anInteger <= Win32Constants.MAX_UCSCHAR and: 
+									[(anInteger >= 16rFDD0 and: [anInteger <= 16rFDEF or: [(anInteger bitAnd: 16rFFFE) == 16rFFFE]]) not])
 								ifTrue: 
 									["Valid non-ascii/non-ansi code point"
 									self newCode: (Utf32Mask bitOr: anInteger)]
-								ifFalse: [self error: 'Invalid UTF-16 code unit: ' , anInteger printString]]]]!
+								ifFalse: [exceptionHandler value]]]]!
 
 utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
@@ -713,11 +727,13 @@ value: anInteger
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
 !Character class categoriesFor: #codePoint:!instance creation!public! !
+!Character class categoriesFor: #codePoint:ifInvalid:!instance creation!public! !
 !Character class categoriesFor: #cr!constants!public! !
 !Character class categoriesFor: #digitValue:!instance creation!public! !
 !Character class categoriesFor: #dolphin!constants!public! !
 !Character class categoriesFor: #eof!constants!public! !
 !Character class categoriesFor: #esc!constants!public! !
+!Character class categoriesFor: #euro!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
 !Character class categoriesFor: #isValidCodePoint:!enquiries!public! !
 !Character class categoriesFor: #lf!constants!public! !
@@ -728,10 +744,10 @@ value: anInteger
 !Character class categoriesFor: #null!constants!public! !
 !Character class categoriesFor: #onStartup!event handling!public! !
 !Character class categoriesFor: #replacement!constants!public! !
-!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 !Character class categoriesFor: #space!constants!public! !
 !Character class categoriesFor: #tab!constants!public! !
 !Character class categoriesFor: #utf16Value:!instance creation!public! !
+!Character class categoriesFor: #utf16Value:ifInvalid:!instance creation!public! !
 !Character class categoriesFor: #utf8Value:!instance creation!public! !
 !Character class categoriesFor: #value:!instance creation!public! !
 

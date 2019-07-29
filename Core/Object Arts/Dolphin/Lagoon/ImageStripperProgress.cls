@@ -205,14 +205,10 @@ primHookWindowCreate: hookBoolean
 	The VM uses a CBT hook to achieve this. The hook is implemented in the VM to
 	minimise the performance impact. The hook is automatically 'unhooked' by the VM
 	when it receive's the create notification before it sends the #subclassWindow:
-	callback.
-	Primitive failure reasons:
-		0 	- hookBoolean not a boolean
-		1	- already hooked by the view in the failure data
-	"
+	callback."
 
 	<primitive: 108>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 progress: anInteger 
 	"Private - Report anInteger as the current level of progress"

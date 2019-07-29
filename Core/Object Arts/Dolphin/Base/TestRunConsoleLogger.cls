@@ -14,14 +14,17 @@ finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in '.
-	aTestCaseResult printDurationOn: stream.
+	aTestCaseResult duration printHumanReadableOn: stream.
 	stream cr!
 
 finishedRun: aTestResult knownSlowTests: aCollection
 	| passed |
 	passed := aTestResult hasPassed.
 	stream
+		nextPutAll: 'Test run ';
 		nextPutAll: (passed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
+		nextPutAll: ' at';
+		print: DateAndTime now;
 		cr;
 		display: aTestResult;
 		cr.
@@ -30,7 +33,7 @@ finishedRun: aTestResult knownSlowTests: aCollection
 			[self
 				summarizeTimings: aTestResult
 				baseline: aCollection
-				threshold: self slowTestThreshold * 1000]
+				threshold: self slowTestThreshold]
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
 
@@ -38,6 +41,15 @@ startingCase: aTestCase
 	stream
 		print: aTestCase;
 		nextPutAll: ' ... ';
+		flush!
+
+startingRun: aTestSuite
+	stream
+		nextPutAll: 'Starting test run at';
+		print: DateAndTime now;
+		nextPutAll: ' in locale ';
+		print: Locale default code;
+		cr;
 		flush!
 
 stream: anObject
@@ -70,16 +82,16 @@ summarizeFailures: aTestResult
 						print: each;
 						cr]]!
 
-summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
+summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 	| laggards newLaggards |
-	laggards := (aTestResult results select: [:each | each duration >= anInteger])
+	laggards := (aTestResult results select: [:each | each duration >= aDuration])
 				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a duration > b duration]).
 	newLaggards := laggards reject: [:each | aCollection includes: each case].
 	newLaggards size > 0 ifFalse: [^self].
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
-	Locale userDefault printDuration: anInteger on: stream.
+	aDuration printHumanReadableOn: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
 		print: aCollection size;
@@ -88,7 +100,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	newLaggards do: 
 			[:each |
 			stream tab.
-			each printDurationOn: stream.
+			each duration printHumanReadableOn: stream.
 			stream
 				tab;
 				print: each case;
@@ -96,6 +108,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 !TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
+!TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !

@@ -141,7 +141,7 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
 

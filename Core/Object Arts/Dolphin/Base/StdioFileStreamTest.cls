@@ -107,3 +107,11 @@ testNextLineUpToEof
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 
+!StdioFileStreamTest class methodsFor!
+
+allTestSelectors
+	| roCategory |
+	roCategory := 'strict utf8' asMethodCategory.
+	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+!StdioFileStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+

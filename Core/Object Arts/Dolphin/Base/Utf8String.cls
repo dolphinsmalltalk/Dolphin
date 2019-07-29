@@ -12,9 +12,17 @@ Utf8String addClassConstant: 'LeadByteMask2' value: 16rC0!
 Utf8String addClassConstant: 'LeadByteMask3' value: 16rE0!
 Utf8String addClassConstant: 'LeadByteMask4' value: 16rF0!
 Utf8String addClassConstant: 'TrailByteMask' value: 16r80!
-Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin.
+Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
 
-The cautionary notes in the abstract superclass `UtfEncodedString` should be read carefully to understand the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy.'!
+When considering a `Utf8String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-8 code units, not Unicode code points. These code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point. UTF-8 surrogate characters can be inserted into other Utf8Strings (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf16String`s. To enumerate a `Utf8String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
+```
+	''Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'' readStream do: [:each | Transcript nextPut: each asUppercase]. Transcript cr; flush.
+```
+It should also be noted that the `size` of a `Utf8String` is a count of the number of code units (bytes), and not the number of whole Unicode characters. A single Unicode code point can require up to four UTF-8 code units, for example:
+```
+''🐬'' size "=> 4"
+```
+To better understand the full implications of the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy it is recommended to read the cautionary notes in the abstract superclass `UtfEncodedString`.'!
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
 
@@ -66,6 +74,7 @@ decodeNextFrom: aReadStream
 	11110xxx	0xF0..0xF4	Lead byte of a 4-byte character encoding
 	10xxxxxx	0x80..0xBF	Continuation bytes (x1, x2, or x3)"
 
+	| min |
 	^aReadStream basicNextAvailable
 		ifNotNil: 
 			[:c |
@@ -79,53 +88,93 @@ decodeNextFrom: aReadStream
 						ifTrue: 
 							["At least 2 byte character"
 							aReadStream basicNextAvailable
-								ifNil: [^Character replacement]
+								ifNil: [^Character.Utf8Default]
 								ifNotNil: 
 									[:c2 |
 									| codePoint |
 									(c2 bitAnd: 16rC0) == 16r80
-										ifTrue: [codePoint := (c bitAnd: 16r1F) << 6 bitOr: (c2 bitAnd: 16r3F)]
+										ifTrue: 
+											[codePoint := (c bitAnd: 16r1F) << 6 bitOr: (c2 bitAnd: 16r3F).
+											min := 16r80]
 										ifFalse: 
 											["Invalid1st continuation"
 											aReadStream pop.
-											^Character replacement].
+											^Character.Utf8Default].
 									c >= 16rE0
 										ifTrue: 
 											["At least a 3-byte character"
 											aReadStream basicNextAvailable
-												ifNil: [^Character replacement]
+												ifNil: [^Character.Utf8Default]
 												ifNotNil: 
 													[:c3 |
 													(c3 bitAnd: 16rC0) == 16r80
-														ifTrue: [codePoint := (codePoint bitAnd: 16r3FF) << 6 bitOr: (c3 bitAnd: 16r3F)]
+														ifTrue: 
+															[codePoint := (codePoint bitAnd: 16r3FF) << 6 bitOr: (c3 bitAnd: 16r3F).
+															min := 16r800]
 														ifFalse: 
 															["Invalid 2nd continuation"
 															aReadStream pop.
-															^Character replacement].
+															^Character.Utf8Default].
 													c >= 16rF0
 														ifTrue: 
 															["4-byte character"
 															aReadStream basicNextAvailable
-																ifNil: [^Character replacement]
+																ifNil: [^Character.Utf8Default]
 																ifNotNil: 
 																	[:c4 |
 																	(c4 bitAnd: 16rC0) == 16r80
-																		ifTrue: [codePoint := (codePoint bitAnd: 16r7FFF) << 6 bitOr: (c4 bitAnd: 16r3F)]
+																		ifTrue: 
+																			[codePoint := (codePoint bitAnd: 16r7FFF) << 6 bitOr: (c4 bitAnd: 16r3F).
+																			min := 16r10000]
 																		ifFalse: 
 																			["Invalid 3rd continuation"
 																			aReadStream pop.
-																			^Character replacement]]]]].
-									Character safeCodePoint: codePoint]]
+																			^Character.Utf8Default]].
+															c >= 16rF8
+																ifTrue: 
+																	["5-byte character (not currently possible - only 4 bytes required for max Unicode char"
+																	aReadStream basicNextAvailable
+																		ifNil: [^Character.Utf8Default]
+																		ifNotNil: 
+																			[:c5 |
+																			(c5 bitAnd: 16rC0) == 16r80
+																				ifTrue: 
+																					[codePoint := (codePoint bitAnd: 16rFFFFF) << 6 bitOr: (c5 bitAnd: 16r3F).
+																					min := 16r200000]
+																				ifFalse: 
+																					["Invalid 4th continuation"
+																					aReadStream pop.
+																					^Character.Utf8Default]].
+																	c >= 16rFC
+																		ifTrue: 
+																			["6-byte character (not currently possible)"
+																			aReadStream basicNextAvailable
+																				ifNil: [^Character.Utf8Default]
+																				ifNotNil: 
+																					[:c6 |
+																					(c6 bitAnd: 16rC0) == 16r80
+																						ifTrue: 
+																							[codePoint := (codePoint bitAnd: 16r1FFFFFF) << 6 bitOr: (c6 bitAnd: 16r3F).
+																							min := 16r4000000]
+																						ifFalse: 
+																							["Invalid 5th continuation"
+																							aReadStream pop.
+																							^Character.Utf8Default]]]]]]].
+									codePoint < min
+										ifTrue: 
+											["Overlong encoding"
+											^Character.Utf8Default].
+									Character codePoint: codePoint ifInvalid: [Character.Utf8Default]]]
 						ifFalse: 
 							["On a continution byte so in the middle of a character, which is invalid"
-							Character replacement]]]!
+							Character.Utf8Default]]]!
 
 encodedAt: anInteger put: aCharacter
 	"Private - Encode the specified <Character> beginning at the specified position in the receiver.
 	Answer the <integer> index of the last code unit updated."
 
 	| codePoint |
-	codePoint := aCharacter asInteger.
+	codePoint := aCharacter codePoint.
 	^codePoint < 16r80
 		ifTrue: 
 			[self basicAt: anInteger put: codePoint.
@@ -167,7 +216,17 @@ encodedSizeOf: aCharacter
 		ifFalse: 
 			[| codePoint |
 			codePoint := aCharacter codePoint.
-			codePoint < 16r800 ifTrue: [2] ifFalse: [codePoint < 16rFFFF ifTrue: [3] ifFalse: [4]]]!
+			codePoint <= 16r7FF
+				ifTrue: [2]
+				ifFalse: 
+					[codePoint <= 16rFFFF
+						ifTrue: [3]
+						ifFalse: 
+							[codePoint <= 16r1FFFFF
+								ifTrue: [4]
+								ifFalse: 
+									["Theoretically this is not possible, as the current max Unicode char is 16r10FFFF, but UTF-8 allows for up to 6 bytes of encoding"
+									codePoint <= 16r3FFFFFF ifTrue: [5] ifFalse: [6]]]]]!
 
 encodeOn: aPuttableStream put: aCharacter
 	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
@@ -208,6 +267,16 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (16r80 bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
 										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
+
+length
+	"Answer the number of Unicode code-points in the receiver."
+
+	| length |
+	length := 0.
+	"Count the code-units that are not trailing bytes"
+	1 to: self size
+		do: [:i | ((self basicAt: i) bitAnd: Character.Utf8SurrogateMask) == 16r80 ifFalse: [length := length + 1]].
+	^length!
 
 maxEncoding
 	^4!
@@ -283,9 +352,7 @@ reverse
 	^reversed!
 
 strlen
-	"Private - Answer the length of the receiver (in characters) up to the first null terminator. This may
-	be less than its size if it contains embedded nulls. It can never be greater than the
-	receiver's size."
+	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
 	^CRTLibrary default strlen: self! !
 !Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
@@ -298,6 +365,7 @@ strlen
 !Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
 !Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
+!Utf8String categoriesFor: #length!accessing!public! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
 !Utf8String categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !

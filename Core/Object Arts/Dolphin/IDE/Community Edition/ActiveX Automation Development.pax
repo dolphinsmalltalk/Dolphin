@@ -564,6 +564,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin Message Box'
@@ -2051,7 +2052,7 @@ generateDefineFields
 		crtab;
 		nextPutAll: 'self byteSize: ';
 		print: self byteSize.
-	self compileClassMethod: target contents categories: self classInitializerCategories!
+	self compileClassMethod: target contents categories: {self autoGenCategoryName. 'template definition'}!
 
 generateGlobalDefinition: structName
 	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
@@ -4699,7 +4700,7 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 
 DllRegisterServer
 	<stdcall: hresult DllRegisterServer>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ExternalLibrary categoriesFor: #DllRegisterServer!operations!private! !
 
 !ExternalPoint methodsFor!
@@ -6470,7 +6471,7 @@ generateGlobalDefinition: globName
 	^binding value!
 
 generateInstanceSide: aPoolConstantsDictionary 
-	self generateConstants!
+	self generateConstantsIntoPool: aPoolConstantsDictionary!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes
@@ -6950,7 +6951,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPut: $>;
 		crtab;
-		nextPutAll: '^self invalidCall'!
+		nextPutAll: '^self invalidCall: _failureCode'!
 
 printRawPropGetComment: aFUNCDESC on: aPuttableStream isPrivate: aBoolean 
 	self printCommentPrefixOn: aPuttableStream isPrivate: aBoolean.
@@ -7197,7 +7198,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPut: $>;
 		crtab;
-		nextPutAll: '^self invalidCall'! !
+		nextPutAll: '^self invalidCall: _failureCode'! !
 !TKindModuleAnalyzer categoriesFor: #areWrappersRequired!private!testing! !
 !TKindModuleAnalyzer categoriesFor: #generateClassFilename!private! !
 !TKindModuleAnalyzer categoriesFor: #generateClassSide:!private! !

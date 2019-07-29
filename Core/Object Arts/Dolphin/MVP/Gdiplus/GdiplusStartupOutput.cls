@@ -68,6 +68,6 @@ defineFields
 
 getFieldNames
 	^#(#NotificationHook #NotificationUnhook)! !
-!GdiplusStartupOutput class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GdiplusStartupOutput class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GdiplusStartupOutput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

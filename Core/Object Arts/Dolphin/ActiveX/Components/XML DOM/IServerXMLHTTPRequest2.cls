@@ -66,7 +66,7 @@ SetProxy: proxySetting varProxyServer: varProxyServer varBypassList: varBypassLi
 			[in, optional]VARIANT varBypassList);"
 
 	<virtual stdcall: hresult 26 sdword variant variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 	"Invoke the setProxyCredentials() method of the COM object.
@@ -77,7 +77,7 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 			[in]BSTR bstrPassword);"
 
 	<virtual stdcall: hresult 27 bstr bstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IServerXMLHTTPRequest2 categoriesFor: #setProxy:!**auto generated**!methods!public! !
 !IServerXMLHTTPRequest2 categoriesFor: #setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
 !IServerXMLHTTPRequest2 categoriesFor: #SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !

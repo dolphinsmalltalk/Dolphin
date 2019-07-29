@@ -45,6 +45,8 @@
 // Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
 #define ATL_NO_LEAN_AND_MEAN
 
+#define UMDF_USING_NTSTATUS
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -73,7 +75,6 @@
 #pragma warning(pop)
 #include <functional>
 
-
 #include "Environ.h"
 
 typedef signed char		SBYTE;
@@ -85,6 +86,8 @@ typedef UINT_PTR	MWORD;
 typedef INT_PTR 	SMALLINTEGER;	// Optimized SmallInteger; same size as MWORD
 typedef MWORD		SMALLUNSIGNED;	// Unsigned optimized SmallInteger; same size as MWORD	
 typedef MWORD		Oop;
+
+typedef SDWORD		NTSTATUS;
 
 // Define this is using a 16-bit word
 // as it conditionally compiles in MethodHeaderExtension which
@@ -167,6 +170,7 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #include <VersionHelpers.h>
 #include <comdef.h>
 #include <oaidl.h>
+#include <ntstatus.h>
 #pragma warning(pop)
 
 #if defined(_DEBUG)

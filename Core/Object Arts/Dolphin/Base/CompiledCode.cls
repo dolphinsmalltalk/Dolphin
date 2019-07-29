@@ -279,10 +279,9 @@ isOverride
 	^false!
 
 isPacked
-	"Private - Answer whether the receiver's byte codes are packed into SmallIntegers
-	rather than being stored in a separate Byte Array"
+	"Private - Answer whether the receiver's byte codes are packed into a SmallInteger rather than being stored in a separate ByteArray."
 	
-	^byteCodes class == SmallInteger!
+	^byteCodes isImmediate!
 
 isPrimitive
 	^self primitiveIndex ~= 0!
@@ -472,8 +471,8 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
-	| offset |
 	<primitive: 188>
+	| offset |
 	offset := startAtInteger - startInteger.
 	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
@@ -580,17 +579,16 @@ textMap
 
 	^self debugInfo textMap!
 
-value: anObject withArguments: anArray 
-	"Evaluate the receiver with the argument, anObject, as its receiver, and with the argument,
-	anArray, as the arguments to the message.
+value: anObject withArguments: anArray
+	"Evaluate the receiver with the argument, anObject, as its receiver, and with the argument, anArray, as the arguments to the message.
 
 	Primitive failure reasons:
-		0 -	anArray is not an Array
-		1 -	anArray contains the wrong number of arguments
-		2 -	anObject is not a subinstance of the method class of the receiver."
+		InvalidParameter1			- anObject is not a subinstance of the method class of the receiver.
+		InvalidParameter2			- anArray is not an Array
+		WrongNumberOfArguments	- anArray contains the wrong number of arguments"
 
 	<primitive: 116>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 writesInstVar: instVarName
 	"Answer whether the receiver assigns to the named instance variable in its method class."

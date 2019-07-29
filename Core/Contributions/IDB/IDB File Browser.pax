@@ -30,35 +30,35 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
-	add: '..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Image\Dolphin Image Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: 'IDB Common';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
-	add: '..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\..\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
+	'..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'IDB Common'
+	'..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace').
 
 package!
 

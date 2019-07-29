@@ -410,7 +410,7 @@ void Lexer::ScanName()
 		m_tokenType = NilConst;
 }
 
-void Lexer::ScanQualifiedRef()
+void Lexer::ScanQualifiedName()
 {
 	LPUTF8 endLastWord = tp;
 	*tp++ = m_cc;
@@ -422,7 +422,7 @@ void Lexer::ScanQualifiedRef()
 	else
 	{
 		if (m_cc == '.' && isLetter(PeekAtChar()))
-			ScanQualifiedRef();
+			ScanQualifiedName();
 		else
 			PushBack(m_cc);
 	}
@@ -433,7 +433,7 @@ void Lexer::ScanIdentifierOrKeyword()
 	m_tokenType = NameConst;
 	ScanName();
 	if (m_tokenType == NameConst && m_cc == '.' && isLetter(PeekAtChar()))
-		ScanQualifiedRef();
+		ScanQualifiedName();
 	else
 	{
 		// It might be a Keyword terminated with a ':' (but not :=)

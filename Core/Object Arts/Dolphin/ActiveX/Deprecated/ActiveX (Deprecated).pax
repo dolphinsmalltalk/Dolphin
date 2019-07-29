@@ -10,9 +10,14 @@ package basicPackageVersion: '6.0'.
 
 package methodNames
 	add: #BSTR -> #asUnicodeString;
+	add: #DATE -> #asDate;
+	add: #DATE -> #asTimeStamp;
 	add: #LPBSTR -> #asUnicodeString;
+	add: #TimeStamp -> #asFloat;
+	add: #TimeStamp -> #asVariant;
 	add: 'DATE class' -> #max;
 	add: 'DATE class' -> #min;
+	add: 'TimeStamp class' -> #fromDATE:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -21,11 +26,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Automation\ActiveX Automation';
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\Automation\ActiveX Automation'
+	'..\..\Base\Dolphin'
+	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
+	'..\COM\OLE COM').
 
 package!
 
@@ -43,6 +48,18 @@ asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 !BSTR categoriesFor: #asUnicodeString!converting!public! !
+
+!DATE methodsFor!
+
+asDate
+	Notification deprecated.
+	^(SYSTEMTIME fromDATE: self) asDate!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp! !
+!DATE categoriesFor: #asDate!converting!public! !
+!DATE categoriesFor: #asTimeStamp!accessing!public! !
 
 !DATE class methodsFor!
 
@@ -62,6 +79,32 @@ asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 !LPBSTR categoriesFor: #asUnicodeString!converting!public! !
+
+!TimeStamp methodsFor!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	^self asParameter asFloat!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
+
+	^self asParameter asVariant! !
+!TimeStamp categoriesFor: #asFloat!converting!public! !
+!TimeStamp categoriesFor: #asVariant!converting!public! !
+
+!TimeStamp class methodsFor!
+
+fromDATE: date
+	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, date, which
+	is assumed to be an AX Automation format Date."
+	
+	| systime |
+	systime := SYSTEMTIME new.
+	OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
+	^self fromSYSTEMTIME: systime! !
+!TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
 
 "End of package definition"!
 

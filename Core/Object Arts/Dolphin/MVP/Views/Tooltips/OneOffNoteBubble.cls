@@ -11,13 +11,13 @@ OneOffNoteBubble comment: ''!
 !OneOffNoteBubble class methodsFor!
 
 addPreviouslyViewedNote: aSymbol
-	self registryKey valueAt: aSymbol put: TimeStamp current displayString!
+	self registryKey valueAt: aSymbol put: DateAndTime now displayString!
 
 defaultCaption
 	^'One-Off Note'!
 
 defaultTimeout
-	^5000!
+	^5 seconds!
 
 defaultWidth
 	^300!
@@ -44,9 +44,9 @@ name: aSymbol text: aString for: aView
 		name: aSymbol
 		text: aString
 		for: aView
-		timeout: self defaultTimeout + (aString subStrings size * 500)!
+		timeout: self defaultTimeout + (aString subStrings size * 500) milliseconds!
 
-name: aSymbol text: aString for: aView timeout: milliseconds
+name: aSymbol text: aString for: aView timeout: aDuration
 	"
 	self name: #testNote text: 'This is a test'
 	"
@@ -58,7 +58,7 @@ name: aSymbol text: aString for: aView timeout: milliseconds
 				caption: self defaultCaption;
 				maxWidth: self defaultWidth;
 				willFade: true;
-				timeout: milliseconds.
+				timeout: aDuration.
 	aView notNil ifTrue: [bubble position: aView rectangle center].
 	bubble notify: aString!
 
@@ -78,7 +78,7 @@ previouslyViewedNotes: aCollection
 	| regKey timeStamp |
 	self resetPreviouslyViewedNotes.
 	regKey := self registryKey.
-	timeStamp := TimeStamp current displayString.
+	timeStamp := DateAndTime now displayString.
 	aCollection do: [:each | regKey valueAt: each put: timeStamp]!
 
 registryKey

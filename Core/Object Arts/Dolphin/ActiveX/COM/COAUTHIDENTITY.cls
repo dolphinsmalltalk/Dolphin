@@ -132,6 +132,6 @@ defineFields
 
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
-!COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

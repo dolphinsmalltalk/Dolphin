@@ -28,7 +28,7 @@ Clear
 		HRESULT __stdcall Clear();"
 
 	<virtual stdcall: hresult 16>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 column
 	"Answer the <sdword> value of the 'Column' property of the receiver.
@@ -57,7 +57,7 @@ get_Column: plColumn
 			[out, retval]long* plColumn);"
 
 	<virtual stdcall: hresult 15 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Description: pbstrDescription
 	"Private - Get the value of the 'Description' property of the receiver.
@@ -66,7 +66,7 @@ get_Description: pbstrDescription
 			[out, retval]BSTR* pbstrDescription);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_HelpContext: plHelpContext
 	"Private - Get the value of the 'HelpContext' property of the receiver.
@@ -75,7 +75,7 @@ get_HelpContext: plHelpContext
 			[out, retval]long* plHelpContext);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_HelpFile: pbstrHelpFile
 	"Private - Get the value of the 'HelpFile' property of the receiver.
@@ -84,7 +84,7 @@ get_HelpFile: pbstrHelpFile
 			[out, retval]BSTR* pbstrHelpFile);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Line: plLine
 	"Private - Get the value of the 'Line' property of the receiver.
@@ -93,7 +93,7 @@ get_Line: plLine
 			[out, retval]long* plLine);"
 
 	<virtual stdcall: hresult 14 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Number: plNumber
 	"Private - Get the value of the 'Number' property of the receiver.
@@ -102,7 +102,7 @@ get_Number: plNumber
 			[out, retval]long* plNumber);"
 
 	<virtual stdcall: hresult 8 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Source: pbstrSource
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -111,7 +111,7 @@ get_Source: pbstrSource
 			[out, retval]BSTR* pbstrSource);"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Text: pbstrText
 	"Private - Get the value of the 'Text' property of the receiver.
@@ -120,7 +120,7 @@ get_Text: pbstrText
 			[out, retval]BSTR* pbstrText);"
 
 	<virtual stdcall: hresult 13 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 helpContext
 	"Answer the <sdword> value of the 'HelpContext' property of the receiver.

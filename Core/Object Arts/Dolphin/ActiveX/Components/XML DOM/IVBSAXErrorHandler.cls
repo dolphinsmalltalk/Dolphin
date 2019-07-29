@@ -64,7 +64,7 @@ Error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 			[in]long nErrorCode);"
 
 	<virtual stdcall: hresult 8 IVBSAXLocator* bstr* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Invoke the fatalError() method of the COM object.
@@ -86,7 +86,7 @@ FatalError: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 			[in]long nErrorCode);"
 
 	<virtual stdcall: hresult 9 IVBSAXLocator* bstr* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ignorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
 	"Invoke the ignorableWarning() method of the COM object.
@@ -108,7 +108,7 @@ IgnorableWarning: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCo
 			[in]long nErrorCode);"
 
 	<virtual stdcall: hresult 10 IVBSAXLocator* bstr* sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

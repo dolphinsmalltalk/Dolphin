@@ -745,6 +745,15 @@ expandSelectedBecause: aSymbol
 
 	self expandList: self selections because: aSymbol.!
 
+filerProxy
+	| saved |
+
+	saved := hiddenExpanded.
+	self discardHiddenExpanded.	"don't set it to nil or the resurected version will never use hiddenExpanded"
+
+	^ [super filerProxy]
+		ensure: [hiddenExpanded := saved]!
+
 getChildrenBlock
 	"answer the <monadicValuable> that we will use to find the children of
 	an Object if we have not been configured with an explicit TreeModel"
@@ -1811,18 +1820,6 @@ stateIndexFromRow: anObject
 
 	^ self stateImageIndex: (self stateFor: anObject).!
 
-stbSaveOn: anSTBOutFiler
-	"save a binary representation of the receiver to anSTBOutFiler.
-	Overriden not to save the contents of the hiddenExpanded collection too"
-
-	| saved |
-
-	saved := hiddenExpanded.
-	self discardHiddenExpanded.	"don't set it to nil or the resurected version will never use hiddenExpanded"
-
-	^ [super stbSaveOn: anSTBOutFiler]
-		ensure: [hiddenExpanded := saved].!
-
 systemDrawsStateImages
 	"private -- answer whether we can let Windows draw our state image (normally we can)"
 
@@ -2112,6 +2109,7 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #expandOrCollapse:because:!do copy!private!user initiated actions! !
 !ListTreeView categoriesFor: #expandOrSelectFirstChildBecause:!do copy!private!user initiated actions! !
 !ListTreeView categoriesFor: #expandSelectedBecause:!do copy!private!user initiated actions! !
+!ListTreeView categoriesFor: #filerProxy!binary filing!private! !
 !ListTreeView categoriesFor: #getChildrenBlock!accessing!do copy!public! !
 !ListTreeView categoriesFor: #getChildrenBlock:!accessing!do copy!public! !
 !ListTreeView categoriesFor: #getParentBlock!accessing!do copy!public! !
@@ -2211,7 +2209,6 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #stateFor:!do copy!private!states! !
 !ListTreeView categoriesFor: #stateImageIndex:!do copy!private!states! !
 !ListTreeView categoriesFor: #stateIndexFromRow:!adapters!do copy!private! !
-!ListTreeView categoriesFor: #stbSaveOn:!binary filing!do copy!public! !
 !ListTreeView categoriesFor: #systemDrawsStateImages!do not copy!private!states!testing! !
 !ListTreeView categoriesFor: #toggleExpandAll:!do copy!expanding/collapsing!public! !
 !ListTreeView categoriesFor: #toggleExpanded:!do copy!expanding/collapsing!public! !

@@ -36,5 +36,5 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: INT_PTRField new beOverride! !
-!INT_PTR class categoriesFor: #defineFields!initializing!public! !
+!INT_PTR class categoriesFor: #defineFields!public!template definition! !
 

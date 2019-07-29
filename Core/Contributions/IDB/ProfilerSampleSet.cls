@@ -57,6 +57,9 @@ clearCaches
 	samplesClasses := nil.
 	samplesSelectors := nil!
 
+duration
+	^self samplesElapsedTime microseconds!
+
 initialize
 	"Initialize a new instance of the receiver"
 
@@ -84,9 +87,6 @@ name
 
 	^name!
 
-printDuration: anInteger on: aPuttableStream
-	Locale userDefault printDuration: anInteger on: aPuttableStream!
-
 profilerIconIndex
 	"Answer the index of the icon to use for the sample set
 		green (Presenter) if the data has been analysed.
@@ -108,7 +108,7 @@ reportTo: aStream
 		print: self samplesSize;
 		cr;
 		nextPutAll: 'Elapsed Time: ';
-		print: self samplesElapsedTime;
+		print: self duration;
 		cr;
 		nextPutAll: 'Samplings: ';
 		print: self samplingCount;
@@ -141,10 +141,7 @@ samplesElapsedTime
 	^samplesElapsedTime!
 
 samplesElapsedTimeString
-	| s |
-	s := String writeStream.
-	self printDuration: self samplesElapsedTime on: s.
-	^s contents!
+	^self duration humanReadablePrintString!
 
 samplesSelectors
 	"Answer the methods used by this set. They are cached so check first"
@@ -168,13 +165,10 @@ samplingInterval
 
 	| count |
 	count := self samplesSize.
-	^count == 0 ifTrue: [0] ifFalse: [self samplesElapsedTime // count]!
+	^(count == 0 ifTrue: [0] ifFalse: [self samplesElapsedTime // count]) microseconds!
 
 samplingIntervalString
-	| s |
-	s := String writeStream.
-	self printDuration: self samplingInterval on: s.
-	^s contents!
+	^self samplingInterval humanReadablePrintString!
 
 samplingTimeStamp
 	"Answer the value of the receiver's instance variable samplingTimeStamp.
@@ -226,17 +220,17 @@ update
 	to this sample set and also the time of the last sampling"
 
 	samplingCount := samplingCount + 1.
-	samplingTimeStamp := TimeStamp date: Date today time: Time now.
+	samplingTimeStamp := DateAndTime now.
 	samplesElapsedTime := nil.
 	self trigger: #sampleSetUpdated: with: self! !
 !ProfilerSampleSet categoriesFor: #addItem:to:elapsedTime:!private helpers!public! !
 !ProfilerSampleSet categoriesFor: #addSample:elapsedTime:!profiling!public! !
 !ProfilerSampleSet categoriesFor: #clearCaches!operations!public! !
+!ProfilerSampleSet categoriesFor: #duration!accessing!public! !
 !ProfilerSampleSet categoriesFor: #initialize!initializing!public! !
 !ProfilerSampleSet categoriesFor: #isActive!accessing!public! !
 !ProfilerSampleSet categoriesFor: #isActive:!accessing!public! !
 !ProfilerSampleSet categoriesFor: #name!accessing!public! !
-!ProfilerSampleSet categoriesFor: #printDuration:on:!private!utilities! !
 !ProfilerSampleSet categoriesFor: #profilerIconIndex!accessing!public! !
 !ProfilerSampleSet categoriesFor: #reportTo:!public!reporting! !
 !ProfilerSampleSet categoriesFor: #rootNodes!accessing!public! !

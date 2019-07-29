@@ -300,7 +300,7 @@ testCopy
 	sem := Semaphore new.
 	shared := IdentityDictionary with: #state -> 0.
 	shared at: #sourceProcess put: (self forkWaiterOn: sem sharing: shared).
-	Processor sleep: 1.
+	Processor sleep: 1 milliseconds.
 	shared at: #copyProcess put: (shared at: #sourceProcess) copy.
 	"	Transcript
 		print: Processor activeProcess id;
@@ -411,10 +411,11 @@ testForkedBlockHomeFrame
 	"Bug #52 - access to out-of-proc home frame, e.g. when debugging ProgressDialog operation block"
 
 	[self assertIsNil: Processor activeProcess topFrame homeFrame] fork.
-	Processor sleep: 10!
+	Processor sleep: 10 milliseconds!
 
 testLargeAddress
 	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
+	self skipIfWin32.
 	blocks := OrderedCollection new: 3000.
 	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
 	
@@ -435,8 +436,7 @@ testLargeAddress
 	sem2 := Semaphore new.
 	value := {nil}.
 	proc := 
-			[
-			sem1 wait.
+			[sem1 wait.
 			"Deliberately assign to an outer temp to ensure there is a Context to copy"
 			result := 200 factorial.
 			value at: 1 put: result.
@@ -456,12 +456,13 @@ testLargeAddress
 		collectGarbage;
 		administerLastRites.
 	copy2 := proc copy.
-	self assert: copy2 yourAddress < proc yourAddress.
-	self assert: copy2 basicSuspendedFrame class equals: SmallInteger.
-	frame := copy2 topFrame.
-	self assert: frame basicSP class equals: SmallInteger.
-	self assert: frame basicBP class equals: SmallInteger.
-	self assert: frame basicSender class equals: SmallInteger.
+	copy2 yourAddress < proc yourAddress
+		ifTrue: 
+			[self assert: copy2 basicSuspendedFrame class equals: SmallInteger.
+			frame := copy2 topFrame.
+			self assert: frame basicSP class equals: SmallInteger.
+			self assert: frame basicBP class equals: SmallInteger.
+			self assert: frame basicSender class equals: SmallInteger].
 	sem1 signal.
 	sem2 wait.
 	expected := 200 factorial.
@@ -526,7 +527,7 @@ testSeparateContexts
 	sourceProcess := 
 			[sem wait.
 			x := x + 1] forkAt: Processor userInterruptPriority.
-	Processor sleep: 1.
+	Processor sleep: 1 milliseconds.
 	copyProcess := sourceProcess copy.
 	self assert: x identicalTo: 0.
 	sem signal.

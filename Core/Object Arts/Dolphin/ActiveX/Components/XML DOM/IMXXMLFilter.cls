@@ -112,7 +112,7 @@ get_contentHandler: oHandler
 			[out, retval]IUnknown** oHandler);"
 
 	<virtual stdcall: hresult 14 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_dtdHandler: oHandler
 	"Private - Get the value of the 'dtdHandler' property of the receiver.
@@ -121,7 +121,7 @@ get_dtdHandler: oHandler
 			[out, retval]IUnknown** oHandler);"
 
 	<virtual stdcall: hresult 16 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_entityResolver: oResolver
 	"Private - Get the value of the 'entityResolver' property of the receiver.
@@ -130,7 +130,7 @@ get_entityResolver: oResolver
 			[out, retval]IUnknown** oResolver);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_errorHandler: oHandler
 	"Private - Get the value of the 'errorHandler' property of the receiver.
@@ -139,7 +139,7 @@ get_errorHandler: oHandler
 			[out, retval]IUnknown** oHandler);"
 
 	<virtual stdcall: hresult 18 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getFeature: strName
 	"Answer the <VARIANT_BOOL> result of invoking the getFeature() method of the COM object."
@@ -160,7 +160,7 @@ GetFeature: strName fValue: fValue
 			[out, retval]VARIANT_BOOL* fValue);"
 
 	<virtual stdcall: hresult 8 bstr varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 GetProperty: strName varValue: varValue
 	"Private - Invoke the getProperty() method of the COM object.
@@ -170,7 +170,7 @@ GetProperty: strName varValue: varValue
 			[out, retval]VARIANT* varValue);"
 
 	<virtual stdcall: hresult 10 bstr variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getProperty_: strName
 	"Answer the <VARIANT> result of invoking the getProperty() method of the COM object."
@@ -201,7 +201,7 @@ PutFeature: strName fValue: fValue
 			[in]VARIANT_BOOL fValue);"
 
 	<virtual stdcall: hresult 9 bstr varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putProperty: strName varValue: varValue
 	"Invoke the putProperty() method of the COM object."
@@ -219,7 +219,7 @@ PutProperty: strName varValue: varValue
 			[in]VARIANT varValue);"
 
 	<virtual stdcall: hresult 11 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_contentHandler: oHandler
 	"Private - Set the value of the 'contentHandler' property of the object wrapped by the 
@@ -229,7 +229,7 @@ putref_contentHandler: oHandler
 			[in]IUnknown* oHandler);"
 
 	<virtual stdcall: hresult 15 IUnknown*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_dtdHandler: oHandler
 	"Private - Set the value of the 'dtdHandler' property of the object wrapped by the 
@@ -239,7 +239,7 @@ putref_dtdHandler: oHandler
 			[in]IUnknown* oHandler);"
 
 	<virtual stdcall: hresult 17 IUnknown*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_entityResolver: oResolver
 	"Private - Set the value of the 'entityResolver' property of the object wrapped by the 
@@ -249,7 +249,7 @@ putref_entityResolver: oResolver
 			[in]IUnknown* oResolver);"
 
 	<virtual stdcall: hresult 13 IUnknown*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_errorHandler: oHandler
 	"Private - Set the value of the 'errorHandler' property of the object wrapped by the 
@@ -259,7 +259,7 @@ putref_errorHandler: oHandler
 			[in]IUnknown* oHandler);"
 
 	<virtual stdcall: hresult 19 IUnknown*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setContentHandler: oHandler
 	"Set the 'contentHandler' property of the receiver to the <IUnknown*> value of the argument."

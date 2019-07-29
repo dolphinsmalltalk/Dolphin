@@ -137,6 +137,6 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
-!GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpWmfPlaceableFileHeader class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpWmfPlaceableFileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

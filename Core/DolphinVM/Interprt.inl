@@ -115,6 +115,24 @@ inline Oop Interpreter::popAndCountUp()
 	return top;
 }
 
+// Functor to write a 32-bit positive integer to a stack location - used in primitives
+struct StoreUnsigned32
+{
+	__forceinline void operator()(Oop* const sp, uint32_t dwValue)
+	{
+		if (ObjectMemoryIsPositiveIntegerValue(dwValue))
+		{
+			*sp = ObjectMemoryIntegerObjectOf(dwValue);
+		}
+		else
+		{
+			LargeIntegerOTE* oteLi = LargeInteger::liNewUnsigned(dwValue);
+			*sp = reinterpret_cast<Oop>(oteLi);
+			ObjectMemory::AddToZct((OTE*)oteLi);
+		}
+	}
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Object field access
 
@@ -230,3 +248,19 @@ inline HandleOTE* ST::ExternalHandle::New(HANDLE hValue)
 	return reinterpret_cast<HandleOTE*>(Interpreter::NewDWORD(DWORD(hValue), Pointers.ClassExternalHandle));
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Primitive templates
+
+template <int Index> Oop* __fastcall Interpreter::primitiveReturnConst(Oop* const sp, unsigned argCount)
+{
+	Oop* newSp = sp - argCount;
+	if (!m_bStepping)
+	{
+		*newSp = Pointers.pointers[Index - 1];
+		return newSp;
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
+}

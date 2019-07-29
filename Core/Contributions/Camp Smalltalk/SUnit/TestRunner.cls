@@ -74,7 +74,7 @@ displayPass
 	self displayGreen.
 	self displayMode: 'Pass'.
 	self displayDetails: result printString , self timeSinceLastPassAsString.
-	lastPass := Time now!
+	lastPass := DateAndTime now!
 
 displayRed
  	self displayColor: #red!
@@ -92,11 +92,6 @@ displayRunning
 
 displayYellow
  	self displayColor: #yellow!
-
-formatTime: aTime 
-	aTime hours > 0 ifTrue: [^aTime hours printString , 'h'].
-	aTime minutes > 0 ifTrue: [^aTime minutes printString , 'min'].
-	^aTime seconds printString , ' sec'!
 
 onViewOpened
 
@@ -140,7 +135,11 @@ script
 
 timeSinceLastPassAsString
 	lastPass isNil ifTrue: [^''].
-	^', ' , (self formatTime: (Time now subtractTime: lastPass)) , ' since last Pass'!
+	^String streamContents: 
+			[:s |
+			s nextPutAll: ', '.
+			DateAndTime now - lastPass printHumanReadableOn: s.
+			s nextPutAll: ' since last Pass']!
 
 update: anObject 
 	(anObject isKindOf: TestCase)
@@ -172,7 +171,6 @@ updateWindow
 !TestRunner categoriesFor: #displayReset!public!Updating! !
 !TestRunner categoriesFor: #displayRunning!public!Updating! !
 !TestRunner categoriesFor: #displayYellow!public!Updating! !
-!TestRunner categoriesFor: #formatTime:!helpers!public! !
 !TestRunner categoriesFor: #onViewOpened!Actions!public! !
 !TestRunner categoriesFor: #refreshTests!Actions!public! !
 !TestRunner categoriesFor: #result!Accessing!public! !

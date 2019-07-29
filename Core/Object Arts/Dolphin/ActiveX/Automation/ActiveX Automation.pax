@@ -94,6 +94,8 @@ package methodNames
 	add: #COMInterface -> #typeInfoIfNone:;
 	add: #Date -> #asFloat;
 	add: #Date -> #asVariant;
+	add: #DateAndTime -> #asFloat;
+	add: #DateAndTime -> #asVariant;
 	add: #ExternalArray -> #asSAFEARRAY;
 	add: #ExternalArray -> #asVariant;
 	add: #ExternalScalar -> #asVariant;
@@ -150,8 +152,6 @@ package methodNames
 	add: #String -> #asVariant;
 	add: #SYSTEMTIME -> #asFloat;
 	add: #SYSTEMTIME -> #asVariant;
-	add: #TimeStamp -> #asFloat;
-	add: #TimeStamp -> #asVariant;
 	add: #UndefinedObject -> #asVariant;
 	add: 'BOOL class' -> #typeName;
 	add: 'BOOLEAN class' -> #typeName;
@@ -241,7 +241,7 @@ package methodNames
 	add: 'String class' -> #vt;
 	add: 'SWORD class' -> #typeName;
 	add: 'SWORD class' -> #vt;
-	add: 'TimeStamp class' -> #fromDATE:;
+	add: 'SYSTEMTIME class' -> #fromDATE:;
 	add: 'UINT_PTR class' -> #typeName;
 	add: 'UINT_PTR class' -> #vt;
 	add: 'ULARGE_INTEGER class' -> #typeName;
@@ -271,6 +271,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM').
 
 package!
@@ -825,9 +826,23 @@ asFloat
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)."
 
-	^self asParameter asVariant! !
+	^self asSYSTEMTIME asVariant! !
 !Date categoriesFor: #asFloat!converting!public! !
 !Date categoriesFor: #asVariant!converting!public! !
+
+!DateAndTime methodsFor!
+
+asFloat
+	"Answer the OLEDATE representation of the receiver."
+
+	^self asParameter asFloat!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
+
+	^self asSYSTEMTIME asVariant! !
+!DateAndTime categoriesFor: #asFloat!converting!public! !
+!DateAndTime categoriesFor: #asVariant!converting!public! !
 
 !DOUBLE class methodsFor!
 
@@ -1576,7 +1591,7 @@ clearCustData: pCustData
 	"WINOLEAUTAPI_(void) ClearCustData(LPCUSTDATA pCustData);"
 
 	<stdcall: void ClearCustData CUSTDATA*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createErrorInfo: pperrinfo
 	"Loads _and registers_ a type library from the specified path.
@@ -1586,9 +1601,9 @@ createErrorInfo: pperrinfo
 		)"
 
 	<stdcall: hresult CreateErrorInfo lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getRecordInfoFromTypeInfo: pTypeInfo ppRecInfo: ppRecInfo 
+getRecordInfoFromTypeInfo: pTypeInfo ppRecInfo: ppRecInfo
 	"Create a RecordInfo object on the specified ITypeInfo, and answer an <IRecordInfo> on it.
 		HRESULT GetRecordInfoFromTypeInfo( 
 			ITypeInfo  pTypeInfo,  
@@ -1598,7 +1613,7 @@ getRecordInfoFromTypeInfo: pTypeInfo ppRecInfo: ppRecInfo
 	as it is most unusual for this call to succeed it would seem!!"
 
 	<stdcall: sdword GetRecordInfoFromTypeInfo ITypeInfo* IRecordInfo**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 lHashValOfNameSys: syskind lcid: lcid szName: szNem
 	"Calculate the hash value of a string.
@@ -1610,7 +1625,7 @@ lHashValOfNameSys: syskind lcid: lcid szName: szNem
 		)"
 
 	<stdcall: dword LHashValOfNameSys sdword sdword lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptlib: pptlib
 	"Load a type library from the registry entries corresponding to the specified LIBID,
@@ -1622,13 +1637,13 @@ loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptli
 			LCID lcid, 
 			ITypeLib FAR* FAR* pptlib 
 		); "
-  
-	<stdcall: hresult LoadRegTypeLib GUID* word word dword lppvoid>
-	^self invalidCall!
+
+	<stdcall: hresult LoadRegTypeLib guid* word word dword lppvoid>
+	^self invalidCall: _failureCode!
 
 loadTypeLib: szFileName pptlib: lplptlib
 	<stdcall: hresult LoadTypeLib lpwstr lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
 	"Loads, and optionally registers, a type library from the specified path.
@@ -1640,7 +1655,7 @@ loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
 		)"
 
 	<stdcall: hresult LoadTypeLibEx lpwstr sdword lppvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 oleCreateFontIndirect: pFontDesc riid: riid ppvObj: ppvObj
 	"Create an OLE font object matching the supplied <FONTDESC>. 
@@ -1651,8 +1666,8 @@ oleCreateFontIndirect: pFontDesc riid: riid ppvObj: ppvObj
 			VOID** ppvObj);
  	"
 
-	<stdcall: hresult OleCreateFontIndirect FONTDESC* GUID* void**>
-	^self invalidCall!
+	<stdcall: hresult OleCreateFontIndirect FONTDESC* guid* void**>
+	^self invalidCall: _failureCode!
 
 queryPathOfRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid lpbstrPathName: lpbstrPathName
 	"Determine the path of a registered type library.
@@ -1667,9 +1682,9 @@ queryPathOfRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lci
 		unsigned short wVerMinor,
 		LCID lcid,
 		LPBSTR lpbstrPathName);"
-  
-	<stdcall: sdword QueryPathOfRegTypeLib GUID* word word dword BSTR*>
-	^self invalidCall!
+
+	<stdcall: sdword QueryPathOfRegTypeLib guid* word word dword bstr*>
+	^self invalidCall: _failureCode!
 
 registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
 	"Invoke the RegisterTypeLib() function of the module wrapped by the receiver.
@@ -1681,7 +1696,7 @@ registerTypeLib: ptlib wszFullPath: wszFullPath wszHelpDir: wszHelpDir
 			LPWSTR wszHelpDir);"
 
 	<stdcall: sdword RegisterTypeLib ITypeLib* lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 registerTypeLibForUser: ptlib szFullPath: szFullPath szHelpDir: szHelpDir
 	"Invoke the RegisterTypeLibForUser() function of the module wrapped by the receiver.
@@ -1693,7 +1708,7 @@ registerTypeLibForUser: ptlib szFullPath: szFullPath szHelpDir: szHelpDir
 			LPWSTR szHelpDir);"
 
 	<stdcall: hresult RegisterTypeLibForUser ITypeLib* lpwstr lpwstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 safeArrayAccessData: psa ppvData: ppvData
 	"Increment the lock count of an array, and return a pointer to the array data
@@ -1706,8 +1721,7 @@ safeArrayAccessData: psa ppvData: ppvData
 		);"
 
 	<stdcall: hresult SafeArrayAccessData SAFEARRAY* lppvoid>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayCopy: psa ppsaout: ppsaout
 	"Create a copy of a SAFEARRAY.
@@ -1718,12 +1732,11 @@ safeArrayCopy: psa ppsaout: ppsaout
 		);"
 
 	<stdcall: hresult SafeArrayCopy SAFEARRAY* SAFEARRAY**>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayCreateEx: vt cDims: cDims rgsabound: rgsabound pvExtra: anExternalAddressOfNil
 	<stdcall: SAFEARRAY* SafeArrayCreateEx word sdword SAFEARRAYBOUND* lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 safeArrayCreateVectorEx: vt lLbound: lLbound cElements: cElements pvExtra: pvExtra
 	"Create a one-dimensional SAFEARRAY.
@@ -1736,8 +1749,7 @@ safeArrayCreateVectorEx: vt lLbound: lLbound cElements: cElements pvExtra: pvExt
 		);"
 
 	<stdcall: SAFEARRAY* SafeArrayCreateVectorEx sword sdword dword lpvoid>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayDestroy: psa
 	"Tidy away a SAFEARRAY. May involve releasing objects, etc.
@@ -1746,8 +1758,7 @@ safeArrayDestroy: psa
 	"
 
 	<stdcall: sdword SafeArrayDestroy SAFEARRAY*>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayGetDim: psa
 	"Answer the number of dimensions in a SAFEARRAY.
@@ -1756,10 +1767,9 @@ safeArrayGetDim: psa
 	"
 
 	<stdcall: dword SafeArrayGetDim SAFEARRAY*>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
-safeArrayGetElement: psa rgIndices: rgIndices  pv: pv
+safeArrayGetElement: psa rgIndices: rgIndices pv: pv
 	"Answer an individual element of the receiver as identified by the array
 	of indices, rgIndices, through the buffer, pv.
 
@@ -1769,9 +1779,8 @@ safeArrayGetElement: psa rgIndices: rgIndices  pv: pv
 			void FAR*  pv         
 		);"
 
-	<stdcall: hresult SafeArrayGetElement SAFEARRAY* SDWORD* lppvoid>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayGetElement SAFEARRAY* sdword* lppvoid>
+	^self invalidCall: _failureCode!
 
 safeArrayGetIID: psa pguid: pguid
 	"Get the IID of the FADF_HAVEIID safe array, psa, storing it 
@@ -1782,9 +1791,8 @@ safeArrayGetIID: psa pguid: pguid
 			GUID* pguid
 		);"
 
-	<stdcall: hresult SafeArrayGetIID SAFEARRAY* GUID*>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayGetIID SAFEARRAY* guid*>
+	^self invalidCall: _failureCode!
 
 safeArrayGetLBound: psa nDim: nDim plLbound: plLbound
 	"Answer the lower bound of the specified dimension of the <SAFEARRAY>,
@@ -1796,13 +1804,12 @@ safeArrayGetLBound: psa nDim: nDim plLbound: plLbound
 			long FAR* plLbound
 		);"
 
-	<stdcall: hresult SafeArrayGetLBound SAFEARRAY* dword SDWORD*>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayGetLBound SAFEARRAY* dword sdword*>
+	^self invalidCall: _failureCode!
 
-safeArrayGetRecordInfo: aSAFEARRAY prinfo: anIRecordInfo 
+safeArrayGetRecordInfo: aSAFEARRAY prinfo: anIRecordInfo
 	<stdcall: hresult SafeArrayGetRecordInfo SAFEARRAY* IRecordInfo**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 safeArrayGetUBound: psa nDim: nDim plUbound: plUbound
 	"Answer the upper bound of the specified dimension of the <SAFEARRAY>,
@@ -1814,9 +1821,8 @@ safeArrayGetUBound: psa nDim: nDim plUbound: plUbound
 			long FAR* plUbound
 		);"
 
-	<stdcall: hresult SafeArrayGetUBound SAFEARRAY* dword SDWORD*>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayGetUBound SAFEARRAY* dword sdword*>
+	^self invalidCall: _failureCode!
 
 safeArrayGetVartype: psa pvt: pvt
 	"Get the VARTYPE of the safe array, psa, storing it into the output parameter, pvt.
@@ -1826,15 +1832,14 @@ safeArrayGetVartype: psa pvt: pvt
 			VARTYPE* vt
 		);"
 
-	<stdcall: hresult SafeArrayGetVartype SAFEARRAY* WORD*>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayGetVartype SAFEARRAY* word*>
+	^self invalidCall: _failureCode!
 
-safeArrayPtrOfIndex: aSAFEARRAY rgIndices: aSDWORDArray ppvData: anExternalAddress 
-	<stdcall: hresult SafeArrayPtrOfIndex SAFEARRAY* SDWORD* lppvoid>
-	^self invalidCall!
+safeArrayPtrOfIndex: aSAFEARRAY rgIndices: aSDWORDArray ppvData: anExternalAddress
+	<stdcall: hresult SafeArrayPtrOfIndex SAFEARRAY* sdword* lppvoid>
+	^self invalidCall: _failureCode!
 
-safeArrayPutElement: psa rgIndices: rgIndices  pv: pv
+safeArrayPutElement: psa rgIndices: rgIndices pv: pv
 	"Replease the individual element of the receiver as identified by the array
 	of indices, rgIndices, with the contents of the buffer pointed at by the
 	<externalAddress>, pv.
@@ -1845,11 +1850,10 @@ safeArrayPutElement: psa rgIndices: rgIndices  pv: pv
 			void FAR*  pv         
 		);"
 
-	<stdcall: hresult SafeArrayPutElement SAFEARRAY* SDWORD* lpvoid>
-	^self invalidCall
- !
+	<stdcall: hresult SafeArrayPutElement SAFEARRAY* sdword* lpvoid>
+	^self invalidCall: _failureCode!
 
-safeArrayRedim: psa psaboundNew: psaboundNew 
+safeArrayRedim: psa psaboundNew: psaboundNew
 	"Resize the least significant bound of the SAFEARRAY, psa,
 	to the lower bound and element count specified in the 
 	SAFEARRAYBOUND, psaboundNew.
@@ -1860,8 +1864,7 @@ safeArrayRedim: psa psaboundNew: psaboundNew
 		);"
 
 	<stdcall: hresult SafeArrayRedim SAFEARRAY* SAFEARRAYBOUND*>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArraySetIID: psa pguid: pguid
 	"Set the IID of the FADF_HAVEIID safe array, psa.
@@ -1872,8 +1875,7 @@ safeArraySetIID: psa pguid: pguid
 		);"
 
 	<stdcall: hresult SafeArraySetIID SAFEARRAY* REFGUID>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayUnaccessData: psa
 	"Reverse a previous SafeArrayAccessData.
@@ -1882,13 +1884,11 @@ safeArrayUnaccessData: psa
 	"
 
 	<stdcall: hresult SafeArrayUnaccessData SAFEARRAY*>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 safeArrayUnlock: psa
 	<stdcall: hresult SafeArrayUnlock SAFEARRAY*>
-	^self invalidCall
- !
+	^self invalidCall: _failureCode!
 
 setErrorInfo: dwReserved perrinfo: perrinfo
 	"Set the current <IErrorInfo> pointer for the calling thread.
@@ -1899,7 +1899,7 @@ setErrorInfo: dwReserved perrinfo: perrinfo
 		)"
 
 	<stdcall: hresult GetErrorInfo dword IErrorInfo*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 systemTimeToVariantTime: lpSystemTime pvtime: pvtime
 	"Convert the <SYSTEMTIME>, lpSystemTime, to an OLE format <DATE>,
@@ -1909,9 +1909,9 @@ systemTimeToVariantTime: lpSystemTime pvtime: pvtime
 			SYSTEMTIME  lpSystemTime  
 			double  *pvtime           
 		);"
- 
-	<stdcall: bool SystemTimeToVariantTime SYSTEMTIME* DOUBLE*>
-	^self invalidCall!
+
+	<stdcall: bool SystemTimeToVariantTime SYSTEMTIME* double*>
+	^self invalidCall: _failureCode!
 
 unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid syskind: syskind
 	"Invoke the UnRegisterTypeLib() function of the module wrapped by the receiver.
@@ -1924,8 +1924,8 @@ unRegisterTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid sy
 			unsigned long lcid,
 			SYSKIND syskind);"
 
-	<stdcall: hresult UnRegisterTypeLib GUID* word word dword sdword>
-	^self invalidCall!
+	<stdcall: hresult UnRegisterTypeLib guid* word word dword sdword>
+	^self invalidCall: _failureCode!
 
 varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 	"Answer a comparison result between the two VARIANT arguments.
@@ -1934,7 +1934,7 @@ varCmp: pvarLeft pvarRight: pvarRight lcid: lcid dwFlags: dwFlags
 	"
 
 	<stdcall: hresult VarCmp variant* variant* dword dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: aFloat
 	"Convert from a string date representation to the OLE Automation date type,
@@ -1943,7 +1943,7 @@ varDateFromStr: strIn lcid: lcid dwFlags: dwFlags pdateOut: aFloat
 		HRESULT VarDateFromStr(OLECHAR* strIn, LCID lcid, DWORD dwFlags, DATE* pdateOut);"
 
 	<stdcall: hresult VarDateFromStr lpwstr dword dword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 variantChangeType: pvargDest pvarSrc: pvarSrc wFlags: wFlags vt: vt
 	"Convert a variant from one type to another. 
@@ -1956,7 +1956,7 @@ variantChangeType: pvargDest pvarSrc: pvarSrc wFlags: wFlags vt: vt
 		);"
 
 	<stdcall: hresult VariantChangeType variant* variant* word sword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 variantClear: pvarg
 	"Free a VARIANT, performing any special clean up  required (such as 
@@ -1967,8 +1967,8 @@ variantClear: pvarg
 
 		HRESULT VariantClear(VARIANTARG FAR* pvarg)"
 
-	<stdcall: sdword VariantClear VARIANT*>
-	^self invalidCall!
+	<stdcall: sdword VariantClear variant*>
+	^self invalidCall: _failureCode!
 
 variantCopy: pvargDesc pvargSrc: pvargSrc
 	"Create a copy of the <VARIANT>, pvargSrc, in the <VARIANT>, pvargDest.
@@ -1979,7 +1979,7 @@ variantCopy: pvargDesc pvargSrc: pvargSrc
 	"
 
 	<stdcall: hresult VariantCopy variant* variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 variantCopyInd: pvargDesc pvargSrc: pvargSrc
 	"Create a copy of the <VARIANT>, pvargSrc, in the <VARIANT>, pvargDest,
@@ -1991,7 +1991,7 @@ variantCopyInd: pvargDesc pvargSrc: pvargSrc
 	"
 
 	<stdcall: hresult VariantCopyInd variant* variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 variantInit: pvarg
 	"Initialize a VARIANT - sets the type tag to VT_EMPTY, but does not zero the
@@ -1999,8 +1999,8 @@ variantInit: pvarg
 
 		void VariantInit(VARIANTARG FAR* pvarg)"
 
-	<stdcall: void VariantInit VARIANT*>
-	^self invalidCall!
+	<stdcall: void VariantInit variant*>
+	^self invalidCall: _failureCode!
 
 variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 	"Convert the OLE format date-time, vtime, to a SYSTEMTIME,
@@ -2010,10 +2010,9 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 			double  vtime,              
 			LPSYSTEMTIME  lpSystemTime  
 		);"
- 
+
 	<stdcall: bool VariantTimeToSystemTime double SYSTEMTIME*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !OLEAutLibrary categoriesFor: #clearCustData:!Automation Functions-Error Handling API!public! !
 !OLEAutLibrary categoriesFor: #createErrorInfo:!Automation Functions-Error Handling API!public! !
 !OLEAutLibrary categoriesFor: #getRecordInfoFromTypeInfo:ppRecInfo:!OLE Functions-OLE!public! !
@@ -2183,31 +2182,14 @@ asVariant
 !SYSTEMTIME categoriesFor: #asFloat!converting!public! !
 !SYSTEMTIME categoriesFor: #asVariant!converting!public! !
 
-!TimeStamp methodsFor!
+!SYSTEMTIME class methodsFor!
 
-asFloat
-	"Answer the OLEDATE representation of the receiver."
-
-	^self asParameter asFloat!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
-
-	^self asParameter asVariant! !
-!TimeStamp categoriesFor: #asFloat!converting!public! !
-!TimeStamp categoriesFor: #asVariant!converting!public! !
-
-!TimeStamp class methodsFor!
-
-fromDATE: date
-	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, date, which
-	is assumed to be an AX Automation format Date."
-	
+fromDATE: aFloat 
 	| systime |
-	systime := SYSTEMTIME new.
-	OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
-	^self fromSYSTEMTIME: systime! !
-!TimeStamp class categoriesFor: #fromDATE:!instance creation!private! !
+	systime := self new.
+	OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
+	^systime! !
+!SYSTEMTIME class categoriesFor: #fromDATE:!public! !
 
 !UINT_PTR class methodsFor!
 

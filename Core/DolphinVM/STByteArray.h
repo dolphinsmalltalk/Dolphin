@@ -18,7 +18,12 @@
 
 // Declare forward references
 namespace ST { class ByteArray; }
-typedef TOTE<ST::ByteArray> ByteArrayOTE;
+
+class ByteArrayOTE : public TOTE<ST::ByteArray>
+{
+public:
+	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+};
 
 namespace ST
 {

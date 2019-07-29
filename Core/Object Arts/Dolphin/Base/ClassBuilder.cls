@@ -111,7 +111,7 @@ classCategoryClass
 className: aString
 	"Private - Set the className inst var to aString."
 
-	className := aString!
+	className := aString ifNotNil: [aString asSymbol]!
 
 classVariables
 	"Private - Answer an Array of proposed class variable names."
@@ -140,21 +140,9 @@ createNewClass
 	self
 		validateForCreate;
 		createProper;
-		install: currentClass;
 		setNewClassCategories;
 		generateGUID;
-		notifyClassCreated.
-	^currentClass!
-
-createPrivate
-	"Private - Create and answer a new class from the details contained
-	in the receiver. The class is not included in its superclasses'
-	subclasses collection nor is its name installed as a global."
-
-	self
-		validateForCreatePrivate;
-		createProper.
-	currentClass removeFromSuper.
+		installNewClass.
 	^currentClass!
 
 createProper
@@ -168,16 +156,14 @@ createProper
 	(newMetaclass := Metaclass new)
 		instanceSpec: metaSuperclass instanceSpec;
 		superclass: metaSuperclass.
-
 	(currentClass := newMetaclass new)
 		instanceSpec: instanceSpec;
-		setName: className asSymbol;
-		setSuperclass: superclass.
-	
+		setName: className;
+		superclass: superclass.
+
 	"In order to sort the metaclass subclasses, we need the instance class name, so we
 	leave addition to the superclass subclasses list until the instance class has been created."
-	newMetaclass addToSuper.
-
+	self installInSuperclass: currentClass.
 	self
 		setInstanceVariablesOf: currentClass;
 		setClassVariablesOf: currentClass;
@@ -296,6 +282,16 @@ install: aClassDescription
 			[binding isImmutable: false.
 			binding value: aClassDescription].
 	binding isImmutable: true!
+
+installInSuperclass: aClass
+	aClass addToSuper!
+
+installNewClass
+	"Private - Install aClassDescription into its environment."
+
+	self
+		install: currentClass;
+		notifyClassCreated!
 
 instanceShapeIsBeingChanged
 	"Private - Answer whether the instance spec is being changed."
@@ -759,12 +755,6 @@ validateForCreate
 
 	self
 		validateClassName;
-		validateForCreatePrivate!
-
-validateForCreatePrivate
-	"Private - Ensure that the proposed class creation would result in a valid new class."
-
-	self
 		validateSuperclassIsSubclassable;
 		validateSuperclassChainForCreate;
 		validateInstanceSpec;
@@ -944,7 +934,6 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #classVariableString:!class variables!public! !
 !ClassBuilder categoriesFor: #comment:!comments!private! !
 !ClassBuilder categoriesFor: #createNewClass!operations!private! !
-!ClassBuilder categoriesFor: #createPrivate!operations!private! !
 !ClassBuilder categoriesFor: #createProper!helpers!private! !
 !ClassBuilder categoriesFor: #currentClass!accessing!public! !
 !ClassBuilder categoriesFor: #environment!environment!private! !
@@ -958,6 +947,8 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #initialize!initializing!private! !
 !ClassBuilder categoriesFor: #initializeCopy:fromClass:superclass:!mutating!private! !
 !ClassBuilder categoriesFor: #install:!environment!private! !
+!ClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
+!ClassBuilder categoriesFor: #installNewClass!environment!private! !
 !ClassBuilder categoriesFor: #instanceShapeIsBeingChanged!private!testing! !
 !ClassBuilder categoriesFor: #instanceSpec:!class type!private! !
 !ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
@@ -1006,7 +997,6 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #validateClassVarsForCreate!private!validation! !
 !ClassBuilder categoriesFor: #validateClassVarsForModify!private!validation! !
 !ClassBuilder categoriesFor: #validateForCreate!private!validation! !
-!ClassBuilder categoriesFor: #validateForCreatePrivate!private!validation! !
 !ClassBuilder categoriesFor: #validateForModify!private!validation! !
 !ClassBuilder categoriesFor: #validateForRemove!private!validation! !
 !ClassBuilder categoriesFor: #validateForRename!private!validation! !
@@ -1039,9 +1029,7 @@ allInstVarNamesOf: aClass
 classOf: aClass
 	"Private - Answer the class of aClass or Class if it is nil."
 
-	^aClass notNil
-		ifTrue: [aClass class]
-		ifFalse: [Class]!
+	^aClass ifNil: [Class] ifNotNil: [aClass class]!
 
 forModifying: aClass 
 	"Answer a new instance of the receiver set up to modify the <Class>, aClass.
@@ -1177,7 +1165,7 @@ isValidClassName: aString
 isValidIdentifier: aString 
 	(aString isEmpty or: [self isValidInitialIdentifierChar: aString first]) ifFalse: [^false].
 	2 to: aString size do: [:i | (self isValidIdentifierChar: (aString at: i)) ifFalse: [^false]].
-	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_')) includes: aString) not!
+	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_')) includes: aString asString) not!
 
 isValidIdentifierChar: aCharacter 
 	^(self isValidInitialIdentifierChar: aCharacter) or: [aCharacter isDigit]!

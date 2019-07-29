@@ -28,7 +28,7 @@ Class Variables:
 = comperand
 	"Answer whether the receiver is considered equal to the <Object>, comperand."
 
-	^self species == comperand species and: [self name equals: comperand name]!
+	^self species == comperand species and: [self name = comperand name]!
 
 acceptsAdditions
 	"Answer whether new members can be added to the receiver.

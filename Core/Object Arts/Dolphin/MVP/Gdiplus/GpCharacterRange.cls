@@ -69,6 +69,6 @@ defineFields
 
 getFieldNames
 	^#(#First #length)! !
-!GpCharacterRange class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpCharacterRange class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !GpCharacterRange class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

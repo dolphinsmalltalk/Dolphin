@@ -21,7 +21,7 @@ get_HasReturnValue: pfHasReturnValue
 			[out, retval]VARIANT_BOOL* pfHasReturnValue);"
 
 	<virtual stdcall: hresult 10 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Name: pbstrName
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -30,7 +30,7 @@ get_Name: pbstrName
 			[out, retval]BSTR* pbstrName);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_NumArgs: pcArgs
 	"Private - Get the value of the 'NumArgs' property of the receiver.
@@ -39,7 +39,7 @@ get_NumArgs: pcArgs
 			[out, retval]long* pcArgs);"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 hasReturnValue
 	"Answer the <varbool> value of the 'HasReturnValue' property of the receiver.

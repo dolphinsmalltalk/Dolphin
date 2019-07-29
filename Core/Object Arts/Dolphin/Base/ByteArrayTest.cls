@@ -19,6 +19,9 @@ collectionClass
 dwordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF 16r80000000 16rFFFFFFFE 16rFFFFFFFF)!
 
+sdwordValues
+	^#(-16r7FFFFFFF -16r8000 -16r7FFF -16r80 -16r7F -16r1 16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16r7FFFFFFF)!
+
 testBasicDwordAtOffsetPut
 	"#1457"
 
@@ -66,7 +69,9 @@ testFromHexString
 	expected := expected contents.
 	self assert: (ByteArray fromHexString: hex) equals: expected.
 	self assert: (ByteArray fromHexString: '') equals: #[].
-	#(' 0' '1 ' 'ff' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+	"We allow lower case chars too."
+	self assert: (ByteArray fromHexString: 'fe') equals: #[254].
+	#(' 0' '1 ' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
@@ -82,12 +87,10 @@ testMixedConcatenation
 					self deny: eachArray identicalTo: result.
 					self assert: result equals: eachArray]].
 	{'a'.
-		'a' asUtf16String.
 		#(255).
 		OrderedCollection with: 123.
 		100 to: 100.
 		'ab'.
-		'ab' asUtf16String.
 		#(1 255).
 		OrderedCollection with: 123 with: 255.
 		100 to: 101} do: 
@@ -97,7 +100,10 @@ testMixedConcatenation
 						| result |
 						result := self verifyConcatenation: each with: eachArray.
 						self deny: eachArray identicalTo: result.
-						self assert: result class identicalTo: self collectionClass]]!
+						self assert: result class identicalTo: self collectionClass]].
+	"It doesn't really make sense to catenate strings onto ByteArrays, but for historical reasons this can be done for AnsiStrings. However it doesn't work for UTF-encoded strings (by design)."
+	self should: [#[] , Character dolphin asUtf8String] raise: Error.
+	self should: [#[] , Character dolphin asUtf16String] raise: Error!
 
 testSbyteAtOffset
 	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each].
@@ -119,6 +125,20 @@ testSbyteAtOffsetPut
 			array sbyteAtOffset: 0 put: each.
 			self assert: (array at: 1) equals: (each bitAnd: 255)]!
 
+testSDwordAtOffsetPut
+
+	| array |
+	array := ByteArray new: 4.
+	self assert: (array sdwordAtOffset: 0) equals: 0.
+	self sdwordValues do: 
+			[:each |
+			array sdwordAtOffset: 0 put: each.
+			self assert: (array sdwordAtOffset: 0) equals: each.
+			array sdwordAtOffset: 0 put: (SDWORD fromInteger: each).
+			self assert: (array sdwordAtOffset: 0) equals: each].
+	self should: [array sdwordAtOffset: 0 put: -16r80000001] raise: Error.
+	self should: [array sdwordAtOffset: 0 put: 16r80000000] raise: Error!
+
 testWordAtOffsetPut
 	"#1457"
 
@@ -131,20 +151,26 @@ testWordAtOffsetPut
 			self assert: (array wordAtOffset: 0) equals: each.
 			array wordAtOffset: 0 put: (WORD fromInteger: each).
 			self assert: (array wordAtOffset: 0) equals: each].
-	self should: [array wordAtOffset: 0 put: -16r8001] raise: Error.
-	self should: [array wordAtOffset: 0 put: 16rFFFF + 1] raise: Error!
+	{-16r8001. 16rFFFF + 1} do: 
+			[:each |
+			self
+				should: [array wordAtOffset: 0 put: each]
+				raise: HRESULTError
+				matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]]!
 
 wordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
 !ByteArrayTest categoriesFor: #assimilate:!public!unit tests! !
 !ByteArrayTest categoriesFor: #collectionClass!helpers!private! !
 !ByteArrayTest categoriesFor: #dwordValues!constants!private! !
+!ByteArrayTest categoriesFor: #sdwordValues!constants!private! !
 !ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testFromHexString!public! !
 !ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !
+!ByteArrayTest categoriesFor: #testSDwordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testWordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #wordValues!constants!private! !
 

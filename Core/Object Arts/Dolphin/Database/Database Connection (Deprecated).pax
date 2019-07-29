@@ -47,7 +47,9 @@ package methodNames
 	add: #DBConnection -> #uniqueIndexOf:;
 	add: #DBResultSet -> #invalidate;
 	add: #DBResultSet -> #prev;
+	add: #ODBCTIMESTAMP -> #asTimeStamp;
 	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
+	add: 'ODBCTIMESTAMP class' -> #fromTimeStamp:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -56,9 +58,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Database Connection Base';
-	yourself).
+package setPrerequisites: #(
+	'Database Connection Base'
+	'..\Base\Dolphin').
 
 package!
 
@@ -301,6 +303,20 @@ prev
 	^self previous! !
 !DBResultSet categoriesFor: #invalidate!operations!public! !
 !DBResultSet categoriesFor: #prev!accessing!public! !
+
+!ODBCTIMESTAMP methodsFor!
+
+asTimeStamp
+	Notification deprecated.
+	^self asDateAndTime asTimeStamp! !
+!ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
+
+!ODBCTIMESTAMP class methodsFor!
+
+fromTimeStamp: aTimeStamp
+	Notification deprecated.
+	^self fromTimeStamp: aTimeStamp asDateAndTime! !
+!ODBCTIMESTAMP class categoriesFor: #fromTimeStamp:!instance creation!public! !
 
 "End of package definition"!
 

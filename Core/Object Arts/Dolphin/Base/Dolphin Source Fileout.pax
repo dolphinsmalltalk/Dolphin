@@ -511,7 +511,7 @@ storeCategories
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
-!CompiledMethod categoriesFor: #storeCategories!categories!private!source filing-methods! !
+!CompiledMethod categoriesFor: #storeCategories!private!source filing-methods! !
 
 !Metaclass methodsFor!
 
@@ -1630,13 +1630,23 @@ logComment: aString
 	N.B. Logging requests should be directed through the SessionManager."
 
 	self changesFiler 
-		ifNotNil: [:logger | mutex critical: [self logComment: aString to: logger]]!
+		ifNotNil: [:logger | self logComment: aString to: logger]!
 
 logComment: aString to: aSourceFiler
 	"Private - Record aString to the specified source file as a comment. All comments
 	logged are prefixed with a timestamp."
 
-	aSourceFiler emitComment: TimeStamp current displayString, ': ', aString; cr!
+	| timestamp stampedComment |
+	timestamp := DateAndTime now.
+	stampedComment := String writeStream: 25 + aString size.
+	#todo. "Use the standard form for a DateAndTime here - Ian's chunk browser relies on the original format, so that needs to be fixed."
+	Locale invariant printDateTime: timestamp on: stampedComment format: 'HH:mm:ss, dd MMMM yyyy'.
+	stampedComment nextPutAll: ': '; nextPutAll: aString.
+	stampedComment := stampedComment contents.
+	mutex critical: 
+			[aSourceFiler
+				emitComment: stampedComment;
+				cr]!
 
 newSourceFiler: path
 	"Private - Answer a new <SourceFiler> on the specified path with the default

@@ -66,10 +66,9 @@ defaultOperation: aSymbol
 !
 
 defaultScrollDelay
-	"Answers the time (in ms) between the drop pointer entering the scroll zone
-	and a scroll operation starting"
+	"Answers the <Duration> of the delay between the drop pointer entering the scroll zone and a scroll operation starting"
 
-	^1000!
+	^1 seconds!
 
 defaultScrollInset
 	"Answers the size (in pixels) of the scroll border at the edge 

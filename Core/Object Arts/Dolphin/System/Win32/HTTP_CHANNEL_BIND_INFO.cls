@@ -107,6 +107,6 @@ defineFields
 
 getFieldNames
 	^#(#Hardening #Flags #ServiceNames #NumberOfServiceNames)! !
-!HTTP_CHANNEL_BIND_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CHANNEL_BIND_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_CHANNEL_BIND_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -19,20 +19,24 @@ The fraction field is the number of billionths of a second, i.e. a value of 1,00
 !ODBCTIMESTAMP categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCTIMESTAMP methodsFor!
 
-asTimeStamp
-	"Answers a TimeStamp which represents the receiver."
+asDateAndTime
+	"Answers a DateAndTime which represents the receiver."
 
-	| date time |
-	date := Date
-		newDay: self day
-		monthIndex: self month
-		year: self year.
+	^DateAndTime year: self year month: self month day: self day hour: self hour minute: self minute second: self second + (self fraction / 1e9)!
 
-	time := Time fromMilliseconds: ((self hour * 60 + self minute) * 60 + self second) * 1000
-							+ self milliseconds.
+dateAndTime: aDateAndTime
+	"Set the receiver's field values from the <DateAndTime> argument."
 
-	^TimeStamp date: date time: time
-!
+	^aDateAndTime dayMonthYearDo: 
+			[:d :m :y |
+			self
+				day: d;
+				month: m;
+				year: y;
+				hour: aDateAndTime hour;
+				minute: aDateAndTime minute;
+				second: aDateAndTime second truncated;
+				fraction: aDateAndTime nanosecond truncated]!
 
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
@@ -109,7 +113,8 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
-!ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
+!ODBCTIMESTAMP categoriesFor: #asDateAndTime!converting!public! !
+!ODBCTIMESTAMP categoriesFor: #dateAndTime:!accessing!public! !
 !ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #fraction!**compiled accessors**!public! !
@@ -152,27 +157,16 @@ defineFields
 		defineField: #second type: WORDField new;
 		defineField: #fraction type: DWORDField new!
 
-fromTimeStamp: aTimeStamp
-	"Answer an instance of the receiver with the details of aTimeStamp."
-
-	| date time |
-	date := aTimeStamp date.
-	time := aTimeStamp time.
+fromDateAndTime: aDateAndTime
+	"Answer an instance of the receiver representing the same local time as the <DateAndTime> argument."
 
 	^self new
-		day: date dayOfMonth;
-		month: date monthIndex;
-		year: date year;
-		hour: time hours;
-		minute: time minutes;
-		second: time seconds;
-		fraction: (time asMilliseconds \\ 1000) * 1000000;
-		yourself
-!
+		dateAndTime: aDateAndTime;
+		yourself!
 
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
-!ODBCTIMESTAMP class categoriesFor: #defineFields!initializing!public! !
-!ODBCTIMESTAMP class categoriesFor: #fromTimeStamp:!instance creation!public! !
+!ODBCTIMESTAMP class categoriesFor: #defineFields!public!template definition! !
+!ODBCTIMESTAMP class categoriesFor: #fromDateAndTime:!instance creation!public! !
 !ODBCTIMESTAMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

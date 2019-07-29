@@ -37,8 +37,7 @@ AddBodyPart: index ppPart: ppPart
 	"
 
 	<virtual stdcall: hresult 23 sdword CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 bodyParts
 	"Answer the <CDOIBodyParts> value of the 'BodyParts' property of the receiver.
@@ -189,8 +188,7 @@ get_BodyParts: varBodyParts
 	"
 
 	<virtual stdcall: hresult 8 CDOIBodyParts**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Charset: pCharset
 	"Private - Get the value of the 'Charset' property of the receiver.
@@ -201,8 +199,7 @@ get_Charset: pCharset
 	"
 
 	<virtual stdcall: hresult 14 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ContentClass: pContentClass
 	"Private - Get the value of the 'ContentClass' property of the receiver.
@@ -213,8 +210,7 @@ get_ContentClass: pContentClass
 	"
 
 	<virtual stdcall: hresult 18 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ContentClassName: pContentClassName
 	"Private - Get the value of the 'ContentClassName' property of the receiver.
@@ -225,8 +221,7 @@ get_ContentClassName: pContentClassName
 	"
 
 	<virtual stdcall: hresult 20 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ContentMediaType: pContentMediaType
 	"Private - Get the value of the 'ContentMediaType' property of the receiver.
@@ -237,8 +232,7 @@ get_ContentMediaType: pContentMediaType
 	"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ContentTransferEncoding: pContentTransferEncoding
 	"Private - Get the value of the 'ContentTransferEncoding' property of the receiver.
@@ -249,8 +243,7 @@ get_ContentTransferEncoding: pContentTransferEncoding
 	"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DataSource: varDataSource
 	"Private - Get the value of the 'DataSource' property of the receiver.
@@ -261,8 +254,7 @@ get_DataSource: varDataSource
 	"
 
 	<virtual stdcall: hresult 17 CDOIDataSource**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Fields: varFields
 	"Private - Get the value of the 'Fields' property of the receiver.
@@ -273,8 +265,7 @@ get_Fields: varFields
 	"
 
 	<virtual stdcall: hresult 13 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_FileName: varFileName
 	"Private - Get the value of the 'FileName' property of the receiver.
@@ -285,8 +276,7 @@ get_FileName: varFileName
 	"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Parent: varParent
 	"Private - Get the value of the 'Parent' property of the receiver.
@@ -297,8 +287,7 @@ get_Parent: varParent
 	"
 
 	<virtual stdcall: hresult 22 CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getDecodedContentStream
 	"Answer the <ADODB_Stream> result of invoking the COM Object's GetDecodedContentStream() method.
@@ -320,8 +309,7 @@ GetDecodedContentStream: ppStream
 	"
 
 	<virtual stdcall: hresult 26 ADODB_Stream**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getEncodedContentStream
 	"Answer the <ADODB_Stream> result of invoking the COM Object's GetEncodedContentStream() method.
@@ -343,8 +331,7 @@ GetEncodedContentStream: ppStream
 	"
 
 	<virtual stdcall: hresult 25 ADODB_Stream**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getFieldParameter: fieldName parameter: parameter
 	"Answer the <BSTR> result of invoking the COM Object's GetFieldParameter() method.
@@ -370,8 +357,7 @@ GetFieldParameter: fieldName Parameter: parameter pbstrValue: pbstrValue
 	"
 
 	<virtual stdcall: hresult 28 bstr bstr bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getInterface: interface
 	"Answer the <IDispatch> result of invoking the COM Object's GetInterface() method.
@@ -395,8 +381,7 @@ GetInterface: interface ppUnknown: ppUnknown
 	"
 
 	<virtual stdcall: hresult 29 bstr IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getStream
 	"Answer the <ADODB_Stream> result of invoking the COM Object's GetStream() method.
@@ -418,8 +403,7 @@ GetStream: ppStream
 	"
 
 	<virtual stdcall: hresult 27 ADODB_Stream**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -452,8 +436,7 @@ put_Charset: pCharset
 	"
 
 	<virtual stdcall: hresult 15 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ContentClass: pContentClass
 	"Private - Set the value of the 'ContentClass' property of the object wrapped by the 
@@ -465,8 +448,7 @@ put_ContentClass: pContentClass
 	"
 
 	<virtual stdcall: hresult 19 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ContentClassName: pContentClassName
 	"Private - Set the value of the 'ContentClassName' property of the object wrapped by the 
@@ -478,8 +460,7 @@ put_ContentClassName: pContentClassName
 	"
 
 	<virtual stdcall: hresult 21 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ContentMediaType: pContentMediaType
 	"Private - Set the value of the 'ContentMediaType' property of the object wrapped by the 
@@ -491,8 +472,7 @@ put_ContentMediaType: pContentMediaType
 	"
 
 	<virtual stdcall: hresult 12 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ContentTransferEncoding: pContentTransferEncoding
 	"Private - Set the value of the 'ContentTransferEncoding' property of the object wrapped by the 
@@ -504,8 +484,7 @@ put_ContentTransferEncoding: pContentTransferEncoding
 	"
 
 	<virtual stdcall: hresult 10 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 SaveToFile: fileName
 	"Invoke the SaveToFile() method of the COM object wrapped by the receiver.
@@ -516,8 +495,7 @@ SaveToFile: fileName
 	"
 
 	<virtual stdcall: hresult 24 bstr>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !CDOIBodyPart categoriesFor: #addBodyPart:!**auto generated**!methods!public! !
 !CDOIBodyPart categoriesFor: #AddBodyPart:ppPart:!**auto generated**!COM Interfaces-IBodyPart!private! !
 !CDOIBodyPart categoriesFor: #bodyParts!**auto generated**!properties!public! !

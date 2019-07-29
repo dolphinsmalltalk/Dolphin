@@ -360,7 +360,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ALPHABLEND! !
-!EMRALPHABLEND class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRALPHABLEND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRALPHABLEND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRALPHABLEND class categoriesFor: #iTypes!constants!public! !
 

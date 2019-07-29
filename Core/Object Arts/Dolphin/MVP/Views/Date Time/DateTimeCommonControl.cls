@@ -7,12 +7,12 @@ ValueConvertingControlView subclass: #DateTimeCommonControl
 	classInstanceVariableNames: ''!
 DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 DateTimeCommonControl isAbstract: true!
-DateTimeCommonControl comment: 'DateTimeCommonControl is the abstract class of <valueView>s implementing the Windows date/time common controls. 
+DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 
 
-The <valueModel> associated with a DateTimeCommonControl must always yield a value that can be converted to a <TimeStamp> using #asTimeStamp after mapping through the installed type converter. A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
+The `<valueModel>` associated with a `DateTimeCommonControl` must always yield a value that can be converted to a `SYSTEMTIME` using `#asParameter` after mapping through the installed type converter (e.g. a `DateAndTime`). A DateTimeCommonControl will normally be used in conjunction with a <DatePresenter>, or in some cases a <TimePresenter>.
 
-Class Instance Variables:
-	notificationMap		<Array> or <Symbol>, mapping normalized notification codes to selectors.
+
+
 '!
 !DateTimeCommonControl categoriesForClass!MVP-Views! !
 !DateTimeCommonControl methodsFor!
@@ -27,8 +27,7 @@ displayValue: aDateOrTimeOrNil
 	"Private - Set the displayed contents of the receiver from the argument."
 
 	self displayValue = aDateOrTimeOrNil ifTrue: [^self].
-	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asTimeStamp]) 
-				asParameter!
+	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME])!
 
 dtNotificationMap
 	^self subclassResponsibility!
@@ -45,13 +44,13 @@ maximum
 
 	^self range last ifNotNil: [:max | self modelClass fromSYSTEMTIME: max]!
 
-maximum: aDateOrTimeOrNil 
+maximum: aDateOrTimeOrNil
 	"Set the maximum date/time allowed by the receiver to aDateOrTimeOrNil.
 	If nil then no maximum is imposed"
 
 	| range |
 	range := self range.
-	range at: 2 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter]).
+	range at: 2 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME]).
 	self range: range!
 
 minimum
@@ -66,8 +65,8 @@ minimum: aDateOrTimeOrNil
 
 	| range |
 	range := self range.
-	range at: 1 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asParameter ]).
-	self range: range !
+	range at: 1 put: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asSYSTEMTIME]).
+	self range: range!
 
 modelClass
 	"Private - Answer the expected class of model."
@@ -108,11 +107,11 @@ range: interval
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
 	interval first notNil 
 		ifTrue: 
-			[array at: 1 put: interval first asParameter.
+			[array at: 1 put: interval first asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MIN].
 	interval last notNil 
 		ifTrue: 
-			[array at: 2 put: interval last asParameter.
+			[array at: 2 put: interval last asSYSTEMTIME.
 			gd := gd bitOr: GDTR_MAX].
 	(self 
 		sendMessage: self setRangeMessage

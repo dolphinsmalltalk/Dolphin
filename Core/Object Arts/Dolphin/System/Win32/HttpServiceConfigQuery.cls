@@ -54,6 +54,6 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc)! !
-!HttpServiceConfigQuery class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HttpServiceConfigQuery class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HttpServiceConfigQuery class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

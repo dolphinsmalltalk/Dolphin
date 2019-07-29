@@ -88,6 +88,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
-!NMTVCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMTVCUSTOMDRAW class categoriesFor: #defineFields!public!template definition! !
 !NMTVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

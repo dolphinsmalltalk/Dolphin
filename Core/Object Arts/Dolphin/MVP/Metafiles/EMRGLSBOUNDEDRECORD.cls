@@ -111,7 +111,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSBOUNDEDRECORD! !
-!EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!initializing!public! !
+!EMRGLSBOUNDEDRECORD class categoriesFor: #defineFields!public!template definition! !
 !EMRGLSBOUNDEDRECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGLSBOUNDEDRECORD class categoriesFor: #iTypes!constants!public! !
 

@@ -113,7 +113,7 @@ sampleDescription
 	^'Scribble Pad'! !
 !Scribble class categoriesFor: #defaultModel!models!public! !
 !Scribble class categoriesFor: #icon!constants!public! !
-!Scribble class categoriesFor: #initialize!initializing!private! !
+!Scribble class categoriesFor: #initialize!class initialization!private! !
 !Scribble class categoriesFor: #resource_Default_view!public!resources-views! !
 !Scribble class categoriesFor: #sampleDescription!constants!development!private! !
 

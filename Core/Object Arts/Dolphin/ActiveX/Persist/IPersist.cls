@@ -28,9 +28,8 @@ GetClassID: pClassID
 			[out] GUID* pClassID);
 	"
 
-	<virtual stdcall: hresult 4 GUID*>
-	^self invalidCall
-!
+	<virtual stdcall: hresult 4 guid*>
+	^self invalidCall: _failureCode!
 
 isDirty
 	"Answer whether the receiver is 'dirty' (i.e. has unsaved modifications).

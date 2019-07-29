@@ -35,8 +35,7 @@ get_Attributes: plAttributes
 			[out, retval] long* plAttributes);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Name: pbstr
 	"Private - Get the value of the 'Name' property of the receiver.
@@ -44,8 +43,7 @@ get_Name: pbstr
 			[out, retval] BSTR* pbstr);"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Type: ptype
 	"Private - Get the value of the 'Type' property of the receiver.
@@ -53,8 +51,7 @@ get_Type: ptype
 			[out, retval] DataTypeEnum* ptype);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Value: pval
 	"Private - Get the value of the 'Value' property of the receiver.
@@ -62,8 +59,7 @@ get_Value: pval
 			[out, retval] VARIANT* pval);"
 
 	<virtual stdcall: hresult 8 variant*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -97,8 +93,7 @@ put_Attributes: plAttributes
 			[in] long plAttributes);"
 
 	<virtual stdcall: hresult 13 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Value: pval
 	"Private - Set the value of the 'Value' property of the object wrapped by the 
@@ -107,8 +102,7 @@ put_Value: pval
 			[in] VARIANT pval);"
 
 	<virtual stdcall: hresult 9 variant>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 type
 	"Answer the <sdword> value of the 'Type' property of the receiver."

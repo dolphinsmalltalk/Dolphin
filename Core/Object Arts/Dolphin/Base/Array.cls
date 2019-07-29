@@ -52,8 +52,8 @@ replaceElementsOf: anIndexableObject from: startInteger to: stopInteger starting
 	anIndexableObject, between startInteger and stopInteger inclusive with elements of the
 	receiver starting from startAtInteger. Answers anIndexableObject."
 
-	| offset |
 	<primitive: 188>
+	| offset |
 	offset := startAtInteger - startInteger.
 	(anIndexableObject == self and: [startAtInteger < startInteger])
 		ifTrue: 
@@ -86,21 +86,18 @@ storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
-	"Implementation Note: The receiver has a compact literal form, so use that. Any
-	elements that are not themselves representable as literals are embedded as 
-	expressions to be evaluated at compile time, i.e. using ##()."
+	"Implementation Note: The receiver has a compact literal form, so use that where possible, otherwise degrade to the brace array form."
 
-	aStream nextPutAll: '#('.
-	self do: 
-			[:each |
-			each isLiteral
-				ifTrue: [each storeOn: aStream]
-				ifFalse: 
-					[aStream nextPutAll: '##('.
-					each storeOn: aStream.
-					aStream nextPut: $)]]
-		separatedBy: [aStream space].
-	aStream nextPut: $)! !
+	self isLiteral
+		ifTrue: 
+			[aStream nextPutAll: '#('.
+			self do: [:each | each storeOn: aStream] separatedBy: [aStream space].
+			aStream nextPut: $)]
+		ifFalse: 
+			["Use a brace array"
+			aStream nextPut: ${.
+			self do: [:each | each storeOn: aStream] separatedBy: [aStream nextPutAll: '. '].
+			aStream nextPut: $}]! !
 !Array categoriesFor: #addAnsweringIndex:!adding!public! !
 !Array categoriesFor: #asArray!converting!public! !
 !Array categoriesFor: #isLiteral!public!testing! !
@@ -131,9 +128,10 @@ newFromStack: aSmallInteger
 	into. When the method returns this will probably cause a crash. In other words, do not 
 	attempt to use this method in normal code."
 
-	<primitive: 190>
 	"This primitive should not fail for Array class."
-	^self primitiveFailed!
+
+	<primitive: 190>
+	^self primitiveFailed: _failureCode!
 
 with: element1 
 	"Answer a new instance of the receiver containing the single 

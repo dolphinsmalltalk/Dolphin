@@ -58,7 +58,7 @@ get_id: id
 			[out, retval]BSTR* id);"
 
 	<virtual stdcall: hresult 11 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_itemType: itemType
 	"Private - Get the value of the 'itemType' property of the receiver.
@@ -67,7 +67,7 @@ get_itemType: itemType
 			[out, retval]SOMITEMTYPE* itemType);"
 
 	<virtual stdcall: hresult 12 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_name: name
 	"Private - Get the value of the 'name' property of the receiver.
@@ -76,7 +76,7 @@ get_name: name
 			[out, retval]BSTR* name);"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_namespaceURI: namespaceURI
 	"Private - Get the value of the 'namespaceURI' property of the receiver.
@@ -85,7 +85,7 @@ get_namespaceURI: namespaceURI
 			[out, retval]BSTR* namespaceURI);"
 
 	<virtual stdcall: hresult 9 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_schema: schema
 	"Private - Get the value of the 'schema' property of the receiver.
@@ -94,7 +94,7 @@ get_schema: schema
 			[out, retval]ISchema** schema);"
 
 	<virtual stdcall: hresult 10 ISchema**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_unhandledAttributes: attributes
 	"Private - Get the value of the 'unhandledAttributes' property of the receiver.
@@ -103,7 +103,7 @@ get_unhandledAttributes: attributes
 			[out, retval]IVBSAXAttributes** attributes);"
 
 	<virtual stdcall: hresult 13 IVBSAXAttributes**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 id
 	"Answer the <bstr> value of the 'id' property of the receiver."
@@ -188,7 +188,7 @@ WriteAnnotation: annotationSink isWritten: isWritten
 			[out, retval]VARIANT_BOOL* isWritten);"
 
 	<virtual stdcall: hresult 14 IUnknown* varbool*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !ISchemaItem categoriesFor: #get_id:!**auto generated**!COM Interfaces-ISchemaItem!private! !
 !ISchemaItem categoriesFor: #get_itemType:!**auto generated**!COM Interfaces-ISchemaItem!private! !
 !ISchemaItem categoriesFor: #get_name:!**auto generated**!COM Interfaces-ISchemaItem!private! !

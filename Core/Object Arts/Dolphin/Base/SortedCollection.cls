@@ -124,6 +124,24 @@ algorithm: aSortAlgorithm
 	algorithm := aSortAlgorithm.
 	self notEmpty ifTrue: [self reSort]!
 
+anyIndexOf: anObject
+	"Answer the <integer> index of any element of the receiver, not necessarily the first, which is equal to the <Object> argument. If the receiver does not contain any elements equal to target, answer 0.
+	This search is performed using a binary chop, and so should be faster than #indexOf: for larger collections most circumstances, however the argument must be compatible with the receiver's sort block."
+
+	| searchBlock index low high |
+	searchBlock := self sortBlock.
+	low := firstIndex.
+	high := lastIndex.
+	
+	[index := (high + low) // 2.
+	low > high] whileFalse: 
+				[(searchBlock value: (self basicAt: index) value: anObject)
+					ifTrue: [low := index + 1]
+					ifFalse: [high := index - 1]].
+	^(index < firstIndex or: [index > lastIndex or: [(self basicAt: index) ~= anObject]])
+		ifTrue: [0]
+		ifFalse: [index + firstIndex - 1]!
+
 asOrderedCollection
 	"Answer an OrderedCollection containing the same elements as the receiver. The elements of
 	the OrderedCollection will be sorted (at least initially) in the sort order of the
@@ -304,6 +322,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #addLast:!adding!public! !
 !SortedCollection categoriesFor: #algorithm!accessing!public! !
 !SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
+!SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
 !SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
 !SortedCollection categoriesFor: #asSortedCollection!converting!public! !
 !SortedCollection categoriesFor: #at:put:!accessing!public! !

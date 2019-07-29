@@ -260,7 +260,7 @@ initialize
 			at: #center put: LVCFMT_CENTER;
 			shrink;
 			yourself)! !
-!LVCOLUMNW class categoriesFor: #defineFields!initializing!public! !
+!LVCOLUMNW class categoriesFor: #defineFields!public!template definition! !
 !LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
 !LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !

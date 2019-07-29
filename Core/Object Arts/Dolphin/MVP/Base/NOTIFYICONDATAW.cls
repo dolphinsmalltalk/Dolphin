@@ -128,6 +128,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
-!NOTIFYICONDATAW class categoriesFor: #defineFields!initializing!public! !
+!NOTIFYICONDATAW class categoriesFor: #defineFields!public!template definition! !
 !NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

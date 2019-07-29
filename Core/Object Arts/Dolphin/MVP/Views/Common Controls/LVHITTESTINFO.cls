@@ -57,6 +57,6 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !
-!LVHITTESTINFO class categoriesFor: #defineFields!development!public! !
+!LVHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
 !LVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

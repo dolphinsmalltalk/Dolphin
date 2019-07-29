@@ -8,27 +8,19 @@ Utf8String variableByteSubclass: #Symbol
 Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
 Symbol addClassConstant: 'CharClassifications' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)!
-Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
+Symbol comment: '`Symbol` is a class of interned `String`s that are guaranteed to be unique throughout the system.
 
-Presently Symbols are limited to the current byte character set, however the intention is to switch to UTF-8 symbols in future in order to allow any characters.
+`Symbol`s can contain any Unicode code points as they have the same representation as `Utf8String`s.
 
 Symbol complies with the following ANSI protocols:
-	Object
-	magnitude
-	collection
-	sequencedReadableCollection
-	readableString
-	symbol'!
+  <Object>
+  <magnitude>
+  <collection>
+  <sequencedReadableCollection>
+  <readableString>
+  <symbol>'!
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
-
-= aSymbol
-	"Symbols equality is the same as symbol identity since instances with the same
-	characters are unique.
-	The primitive should not fail."
-
-	<primitive: 110>
-	^self primitiveFailed!
 
 argumentCount
 	"Answer the <integer> number of arguments required by a method with the
@@ -39,10 +31,8 @@ argumentCount
 	^((ch := self at: 1) isLetter or: [ch == $_]) not ifTrue: [1] ifFalse: [self occurrencesOf: $:]!
 
 asString
-	"Answer a new <readableString> containing the characters of 
-	the receiver."
+	"Answer a new <String> containing the characters of the receiver."
 
-	<primitive: 217>
 	^self asUtf8String!
 
 asSymbol
@@ -50,6 +40,19 @@ asSymbol
 	(i.e. the receiver, since <symbol>s are unique)."
 
 	^self!
+
+asUtf8String
+	"Answer a <UTF8String> containing the same character as the receiver."
+
+	| len string |
+	len := self size.
+	string := Utf8String new: len.
+	self
+		replaceBytesOf: string
+		from: 1
+		to: len
+		startingAt: 1.
+	^string!
 
 copyFrom: startInteger to: stopInteger
 	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
@@ -79,20 +82,13 @@ displayString
 	return self (for better performance), we must override back to a suitable
 	implementation for Symbols which does not include the hash prefix."
 
-	^self mutableCopy!
+	^self asUtf8String!
 
 forwardTo: anObject
 	"Send the <Object> argument the receiver as a niladic message,
 	answering the result. Assumes the receiver is a unary selector."
 
 	^anObject perform: self!
-
-hash
-	"Answer the <integer> hash value for the receiver. Override back to the identity hash (which
-	is temporally invariant, and very fast to calculate)."
-
-	<primitive: 147>
-	^self identityHash!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that can
@@ -105,7 +101,7 @@ isAtomic
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
 
-	^self ~~ #'' and: [(Compiler isAValidInitialIdentifierChar: (self at: 1)) not]!
+	^self ~~ #'' and: [self allSatisfy: [:each | '!!%&*+,-/<=>?@\|~' identityIncludes: each]]!
 
 isSymbol
 	"Dolphin doesn't usually include these type tests, but they are used by a number of add-on
@@ -124,14 +120,7 @@ keywords
 mutableCopy
 	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."
 
-	| len |
-	len := self size.
-	^(self copyLike: len)
-		replaceFrom: 1
-			to: len
-			with: self
-			startingAt: 1;
-		yourself!
+	^self asUtf8String!
 
 numArgs
 	^self argumentCount!
@@ -181,16 +170,15 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
+!Symbol categoriesFor: #asUtf8String!converting!public! !
 !Symbol categoriesFor: #copyFrom:to:!copying!public! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
-!Symbol categoriesFor: #hash!comparing!public! !
-!Symbol categoriesFor: #isAtomic!public! !
+!Symbol categoriesFor: #isAtomic!public!testing! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Symbol categoriesFor: #keywords!accessing!public! !
@@ -210,17 +198,17 @@ Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #<
 
 !Symbol class methodsFor!
 
-addUnique: aSymbol 
+addUnique: aSymbol
 	"Private - Add the argument aSymbol as a new entry in the Symbol Table. This private method should only be 
 	used for adding Symbols not already present in the symbol table. Please use Symbol>>intern: to obtain
 	a Symbol from a String (or alternatively String>>asSymbol)."
 
-	| bucket bucketIndex |
+	| bucketIndex |
 	aSymbol isImmutable: true.
-	bucketIndex := aSymbol hashCharacters \\ Table basicSize + 1.
-	(bucket := Table basicAt: bucketIndex) isNil 
-		ifTrue: [Table basicAt: bucketIndex put: (WeakArray with: aSymbol)]
-		ifFalse: [bucket replaceIdentity: DeadObject current with: aSymbol].
+	bucketIndex := aSymbol hash \\ Table basicSize + 1.
+	(Table basicAt: bucketIndex)
+		ifNil: [Table basicAt: bucketIndex put: (WeakArray with: aSymbol)]
+		ifNotNil: [:bucket | bucket replaceIdentity: DeadObject current with: aSymbol].
 	^aSymbol!
 
 allInstancesDo: aMonadicValuable 
@@ -238,7 +226,7 @@ findInterned: aString
 	N.B. This method previously had the selector #symbolAt:, and was private,
 	but has been renamed and made public for compatibility with VisualWorks."
 
-	(Table at: aString hashCharacters \\ Table basicSize + 1)
+	(Table at: aString hash \\ Table basicSize + 1)
 		ifNotNil: 
 			[:bucket |
 			"Inline ArrayedCollection>>do: to avoid full block for best performance"
@@ -247,7 +235,7 @@ findInterned: aString
 					[:i |
 					| each |
 					each := bucket at: i.
-					(each ~~ DeadObject.Current and: [(aString _cmp: each) == 0]) ifTrue: [^each]]].
+					each = aString ifTrue: [^each]]].
 	^nil!
 
 fromAddress: anInteger length: anInteger2
@@ -435,7 +423,7 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
 !Symbol class categoriesFor: #coerceString:!instance creation!public! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
-!Symbol class categoriesFor: #fromAddress:length:!public! !
+!Symbol class categoriesFor: #fromAddress:length:!instance creation!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
 !Symbol class categoriesFor: #intern:!instance creation!public! !
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
@@ -448,6 +436,6 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #stats!development!private! !
 !Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
-!Symbol class categoriesFor: #with:!public! !
-!Symbol class categoriesFor: #withAll:!public! !
+!Symbol class categoriesFor: #with:!instance creation!public! !
+!Symbol class categoriesFor: #withAll:!instance creation!public! !
 

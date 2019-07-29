@@ -18,9 +18,9 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	self subclassResponsibility!
 
 slowTestThreshold
-	"Answer the execution time threshold, in milliseconds, over which tests are reported as slow."
+	"Answer a <Duration> which is the execution time threshold over which tests should be reported as slow."
 
-	^500!
+	^500 milliseconds!
 
 startingCase: aTestCase
 	"By default, do nothing"!

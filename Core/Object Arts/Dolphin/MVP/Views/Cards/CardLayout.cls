@@ -175,12 +175,11 @@ removeSubView: aView
 	^aView
 !
 
-showCard: aView 
-	"Show the card, aView and make this the current card. This is after
-	hiding the existing current card"
+showCard: aView
+	"Show the card, aView and make this the current card. This is after hiding the existing current card"
 
-	self assert: [self cardViews includes: aView].
-	currentCard == aView 
+	self assert: [names anySatisfy: [:each | each value == aView]].
+	currentCard == aView
 		ifFalse: 
 			[aView show.
 			currentCard notNil ifTrue: [currentCard hide].

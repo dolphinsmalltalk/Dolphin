@@ -37,6 +37,9 @@ cy: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_cy put: anInteger!
 
+extent
+	^self cx @ self cy!
+
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
@@ -50,8 +53,11 @@ hwndInsertAfter
 isRectangleChanged
 	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
 
+position
+	^self x @ self y!
+
 rectangle
-	^self x @ self y extent: self cx @ self cy!
+	^self position extent: self extent!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
@@ -66,9 +72,11 @@ y
 !WINDOWPOS categoriesFor: #cx:!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #cy!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #cy:!**compiled accessors**!public! !
+!WINDOWPOS categoriesFor: #extent!accessing!public! !
 !WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
+!WINDOWPOS categoriesFor: #position!accessing!public! !
 !WINDOWPOS categoriesFor: #rectangle!accessing!public! !
 !WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !
@@ -102,6 +110,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
-!WINDOWPOS class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPOS class categoriesFor: #defineFields!public!template definition! !
 !WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

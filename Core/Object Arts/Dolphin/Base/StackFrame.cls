@@ -314,10 +314,11 @@ isRestartable
 	"Private - Answer whether this frame is restartable. Some methods, such as
 	callback entry points, cannot be restarted at all, others not reliably."
 
-	^self sender notNil and: [ | method |
-		method := self method.
-		method isExpression or: [
-			method categories allSatisfy: [:c | c name ~= 'not restartable']]]!
+	^self sender notNil and: 
+			[| method |
+			method := self method.
+			method notNil
+				and: [method isExpression or: [method categories allSatisfy: [:c | c name ~= 'not restartable']]]]!
 
 localAt: anInteger
 	"Private - Answer the argument indexed, anInteger, from the receiver's stack frame."

@@ -149,6 +149,6 @@ defineFields
 
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
-!METAHEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!METAHEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

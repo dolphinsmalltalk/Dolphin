@@ -550,7 +550,7 @@ removePackageManagement
 	| methods |
 	self startElement: 'StripPackageManagement' attributes: #().
 	self systemPackageManager class reset.
-	"Note that we must leave the #owningPackage definition in Class for potential runtime STB use"
+	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
 	#(#PoolDictionary #PoolConstantsDictionary #ResourceIdentifier #CompiledMethod) do: 
 			[:each |
@@ -628,7 +628,7 @@ removeRedundantObjects: stripResources
 	[| continue |
 	self startElement: 'StripCycle' attributes: #().
 	continue := (self
-				removeRedundantClassesAndResources: (stripResources and: [self stripRedundantResources]))
+				removeRedundantClassesAndResources: (stripResources and: [self shouldRemoveResources]))
 					+ self removeRedundantMethods > 0.
 	self endElement: continue.
 	continue]
@@ -720,6 +720,9 @@ rootClasses
 
 shouldPreserveMethod: aCompiledMethod
 	^true!
+
+shouldRemoveResources
+	^self stripRedundantResources!
 
 shrinkEventsRegister
 	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
@@ -889,6 +892,7 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #retainInstVarNames!public!testing! !
 !BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
+!BasicImageStripper categoriesFor: #shouldRemoveResources!private!testing! !
 !BasicImageStripper categoriesFor: #shrinkEventsRegister!private! !
 !BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
 !BasicImageStripper categoriesFor: #startElement:attributes:!operations-logging!private! !

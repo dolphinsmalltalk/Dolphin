@@ -3,19 +3,19 @@
 Magnitude subclass: #Date
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Date guid: (GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
-Date comment: 'Date is the class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
+Date comment: '`Date` is a class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
 
 Instance Variables:
-	days				<integer>. Days since 1st Jan 1901
+	days				`<integer>`. Days since 1st Jan 1901
 
 Class Variables:
-	DefaultLongPicture	<boolean>. Controls whether or not the Date prints by default using the locale''s long or short representations.
-	DaysUntilMonth		<Array>
-	YearPivot			<integer>. Pivot year for 2 digit years. See #yearPivot
-	DaysInMonth		<Array>
+	DefaultLongPicture	`<boolean>`. Controls whether or not the Date prints by default using the locale''s long or short representations.
+	DaysUntilMonth		`Array` of the cumulative count of days in the year to the start of the month with the corresponding index.
+	YearPivot			`<integer>`. Pivot year for 2 digit years. See #yearPivot
+	DaysInMonth		`Array` with elements representing the number of days in the month with the corresponding index.
 
 '!
 !Date categoriesForClass!Magnitude-General! !
@@ -49,8 +49,8 @@ addMonths: monthCount desiredDay: desiredDay
 	months added. If desiredDay is non-zero then this day is set (this allows the caller to retain a particular day number 
 	even should it be truncated by intermediate arithmetic operations."
 
-	^self evaluateYYMMDD: 
-			[:yy :mm :dd | 
+	^self dayMonthYearDo:  
+			[:dd :mm :yy | 
 			| dayOfMonth daysInMonth monthIndex year |
 			monthIndex := mm + monthCount.
 			year := yy.
@@ -81,8 +81,8 @@ addYears: yearCount desiredDay: desiredDay
 	 i.e. 31 Jan becomes 30 Mar if 2 months added. If desiredDay is non-zero then this day is set (this allows
 	the caller to retain a particular day number even should it be truncated by intermediate arithmetic operations."
 
-	^self evaluateYYMMDD: 
-			[:yy :mm :dd | 
+	^self dayMonthYearDo:  
+			[ :dd :mm :yy | 
 			| dayOfMonth year daysInMonth |
 			year := yy + yearCount.
 			dayOfMonth := desiredDay == 0 ifTrue: [dd] ifFalse: [desiredDay].
@@ -92,6 +92,11 @@ addYears: yearCount desiredDay: desiredDay
 				newDay: dayOfMonth
 				monthIndex: mm
 				year: year]!
+
+asDateAndTime
+	"Answer a new <DateAndTime> representing the midnight, local time, on the same date as the receiver."
+	
+	^DateAndTime year: self year day: self dayOfYear!
 
 asDays
 	"Answer the number of days since 1901 which the receiver represents. As Dolphin dates are
@@ -109,91 +114,93 @@ asMilliseconds
 asParameter
 	"Answer the receiver in external system representation for passing to an external function call."
 
-	| struct |
-	struct := SYSTEMTIME new.
-	self evaluateYYMMDD: 
-			[:yy :mm :dd | 
-			struct
-				wYear: yy;
-				wMonth: mm;
-				wDay: dd].
-	^struct!
+	^self asSYSTEMTIME!
 
 asSeconds
 	"Answer the number of seconds between a Time on January 1, 1901, and the same time in the receiver's
 	day (this could well be a LargeInteger). Can be used to perform arithmetic with Dates and
 	Times."
 
-	^self asDays * ##(24*60*60)
+	^self asDays * Duration.SecondsPerDay
 !
 
-asTimeStamp
-	"Answer the receiver as <TimeStamp>."
+asSYSTEMTIME
+	"Answer a <SYSTEMTIME > representing midnight at the start of the same date as the receiver."
 
-	^TimeStamp date: self
-!
+	| struct |
+	struct := SYSTEMTIME new.
+	self dayMonthYearDo: 
+			[:dd :mm :yy |
+			struct
+				wYear: yy;
+				wMonth: mm;
+				wDay: dd].
+	^struct!
 
 day
 	"Answer the day of the year represented by the receiver."
 
-	^self class day: self asDays inYear: self year!
+	^self dayOfYear!
+
+dayMonthYearDo: aTriadicValuable
+	"Evaluate the the triadic valuable argument passing it the day, month, and year of the date
+	represented by the receiver, answering the result."
+
+	| year dayOfYear monthIndex |
+	year := self year.
+	dayOfYear := self class day: self asDays inYear: year.
+	monthIndex := self class monthIndexOfDay: dayOfYear inYear: year.
+	^aTriadicValuable
+		value: dayOfYear - (self class daysUntilMonth: monthIndex inYear: year)
+		value: monthIndex
+		value: year!
 
 dayOfMonth
 	"Answer the day of the month represented by the receiver."
 
-	| year julianDay monthIndex |
-	year := self year.
-	julianDay := self class day: self asDays inYear: self year.
-	monthIndex := self class monthIndexOfDay: julianDay inYear: year.
-	^julianDay - (self class daysUntilMonth: monthIndex inYear: year)!
+	^self dayMonthYearDo: [:d :m :y | d]!
 
-evaluateYYMMDD: aTriadicValuable 
-	"Evaluate the the triadic valuable argument passing it the day, month, and year of the date
-	represented by the receiver, answering the result."
+dayOfWeek
+	"Answer the day of the year represented by the receiver."
 
-	| year julianDay monthIndex |
-	year := self year.
-	julianDay := self class day: self asDays inYear: year.
-	monthIndex := self class monthIndexOfDay: julianDay inYear: year.
-	^aTriadicValuable 
-		value: year
-		value: monthIndex
-		value: julianDay - (self class daysUntilMonth: monthIndex inYear: year)!
+	^self asDays + 2 \\ 7 + 1!
+
+dayOfYear
+	"Answer the day of the year represented by the receiver."
+
+	^self class day: self asDays inYear: self year!
 
 firstDayOfMonth
 	"Answer the julian day number of the first day of the receiver's month in the receiver's year."
 
-	^self firstDayOfMonthIndex: self monthIndex!
+	^self firstDayOfMonthIndex: self month!
 
-firstDayOfMonthIndex: monthIndex 
+firstDayOfMonthIndex: monthIndex
 	"Private - Answer the julian day number of the first day of the given month at
 	monthIndex in the receiver's year."
 
-	^(DaysUntilMonth at: monthIndex)
-		+ (monthIndex > 2
-				ifTrue: [self class leapYear: self year]
-				ifFalse: [0])
-		+ 1
-!
+	^(DaysUntilMonth at: monthIndex) + (monthIndex > 2 ifTrue: [self isLeapYear] ifFalse: [0]) + 1!
 
 hash
 	"Answer the SmallInteger hash value for the receiver"
 
 	^self asDays hash!
 
-monthIndex
-	"Answer the one-based index of the month represented by the receiver; 1 for January, 2 for
-	February, and so on."
+isLeapYear
+	^self class leapYear: self year!
 
-	| year julianDay |
+month
+	"Answer the one-based index of the month represented by the receiver; 1 for January, 2 for February, and so on."
+
+	| year dayOfYear |
 	year := self year.
-	julianDay := self class day: self asDays inYear: year.
-	^self class monthIndexOfDay: julianDay inYear: year!
+	dayOfYear := self class day: self asDays inYear: year.
+	^self class monthIndexOfDay: dayOfYear inYear: year!
 
 monthName
-	"Answer the name of the month represented by the receiver (as a Symbol)."
+	"Answer a <readableString>, which is the locale specific name of the month of this date."
 
-	^self class nameOfMonth: self monthIndex!
+	^Locale default monthName: self month!
 
 monthsSince: aDate
 	"Answer the number of elapsed months Since the receiver and aDate.
@@ -203,8 +210,8 @@ monthsSince: aDate
 	accounts for leap years."
 	
 	| calMonths |
-	self evaluateYYMMDD: [ :y1 :m1 :d1 |
-		aDate evaluateYYMMDD: [ :y2 :m2 :d2 |
+	self dayMonthYearDo: [:d1 :m1 :y1 |
+		aDate dayMonthYearDo: [ :d2 :m2 :y2 |
 			calMonths := (y1 - y2) * 12 + (m1 - m2).
 			calMonths == 0 ifFalse: [
 				"Adjust for part months, but take account of the length of the month so that
@@ -225,45 +232,37 @@ printOn: aStream
 	self printOn: aStream longPicture: DefaultLongPicture!
 
 printOn: aStream format: aString
-	"Append a short textual description of the receiver to the <puttableStream> argument,
-	aStream. The format is defined by the <readableString> argument, aString, the format 
-	characters of which are as described in the Control Panel help for Windows Regional 
-	Options/Date settings (e.g. dd/MM/yyyy, formats to, for example, 27/11/2001). If the
-	format argument is nil then the receiver is printed to the stream in the currently
-	configured default format of the host OS."
+	"Append a short textual description of the receiver to the <puttableStream> argument, aStream. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>dateFormat method comment, e.g. 'dd/MM/yyyy', formats to, for example, 27/11/2001). If the format argument is nil then the receiver is printed to the stream in the currently configured default format of the host OS, which can be seen by evaluating `Locale default dateFormat`. See also: https://docs.microsoft.com/en-gb/windows/desktop/Intl/day--month--year--and-era-format-pictures"
 
-	self 
-		printOn: aStream
-		locale: Locale default
-		flags: 0
+	Locale default
+		printDate: self
+		on: aStream
 		format: aString!
 
-printOn: aStream locale: locale flags: dwFlags format: aStringOrNil
-	"Private - Append a locale specific string representation of the receiver to aStream, using the specified
-	format String (the default is used if it is nil). The format is as described in the Control Panel help 	
-	for Windows Regional Options/Date 	settings (e.g. dd/MM/yyyy, formats to, for example, 27/11/2001)."
-
-	aStream nextPutAll: (locale 
-				printDate: self
-				format: aStringOrNil
-				flags: dwFlags)!
-
-printOn: aStream locale: locale format: aStringOrNil
-	"Private - Append a locale specific string representation of the receiver to aStream, using the specified
-	format String (the default is used if it is nil). The format is as described in the Control Panel help for
-	Windows regional Time settings (e.g. hh:mm tt, formats to, for example, 10:15 pm)."
-
-	self printOn: aStream locale: locale flags: 0 format: aStringOrNil!
-
 printOn: aStream longPicture: aBoolean
-	"Private - Append an string representation of the receiver to aStream in default locale long/short
-	formats depending on aBoolean."
+	"Append an string representation of the receiver to aStream in default locale long/short formats depending on aBoolean."
 
-	self 
-		printOn: aStream 
-		locale: Locale default 
-		flags: (aBoolean ifTrue: [DATE_LONGDATE] ifFalse: [DATE_SHORTDATE])
-		format: nil!
+	| locale |
+	locale := Locale default.
+	locale
+		printDate: self
+		on: aStream
+		format: (aBoolean ifTrue: [locale longDateFormat] ifFalse: [locale dateFormat])!
+
+printStringFormat: aString 
+	"Answer a short textual description of the receiver. The format is defined by the <readableString> argument, aString, the format characters of which are as described in the Locale>>#dateFormat method comment.
+	Settings from the default locale are used."
+
+	| stream |
+	stream := String writeStream: aString size.
+	self printOn: stream format: aString.
+	^stream contents!
+
+seconds
+	"Answer the <number> of seconds past midnight in the local time of the receiver.
+	Dates always represent midnight local time, so answer 0."
+
+	^0!
 
 setDays: dayCount
 	"Private - Initialize the receiver to be dayCount days after January 1, 1901"
@@ -271,18 +270,17 @@ setDays: dayCount
 	days := dayCount
 !
 
-storeOn: aStream 
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
-
-	"Use a format which is locale invariant."
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <Date> equivalent to the receiver."
 
 	aStream
-		display: self class;
+		nextPut: $(;
+		print: self class;
 		space;
 		display: #fromDays:;
 		space;
-		display: self asDays!
+		print: self asDays;
+		nextPut: $)!
 
 subtractDate: aDate
 	"Answer the difference in days between the receiver and aData, as an Integer"
@@ -295,16 +293,6 @@ subtractDays: dayCount
 
 	^self class fromDays: self asDays - dayCount
 !
-
-weekday
-	"Answer the day of the week represented by the receiver."
-
-	^self class nameOfDay: self weekdayIndex!
-
-weekdayIndex
-	"Answer the index of the receiver's day of the week (1..7)"
-
-	^(self asDays + 1) \\ 7 + 1!
 
 year
 	"Answer the year represented by the receiver."
@@ -326,7 +314,20 @@ year
 yearsSince: aDate
 	"Answer the number of actual elapsed years since aDate."
 	
-	^(self monthsSince: aDate) // 12! !
+	^(self monthsSince: aDate) // 12!
+
+yyyymmdd
+	"Format the date in ISO 8601 standard YYYY-MM-DD, e.g. '2019-02-27'.
+		Date today yyyymmdd.
+	"
+
+	| stream |
+	stream := String writeStream: 10.
+	Locale invariant
+		printDate: self
+		on: stream
+		format: 'yyyy-MM-dd'.
+	^stream contents! !
 !Date categoriesFor: #<!comparing!public! !
 !Date categoriesFor: #=!comparing!public! !
 !Date categoriesFor: #addDays:!arithmetic!public! !
@@ -334,41 +335,38 @@ yearsSince: aDate
 !Date categoriesFor: #addMonths:desiredDay:!arithmetic!public! !
 !Date categoriesFor: #addYears:!arithmetic!public! !
 !Date categoriesFor: #addYears:desiredDay:!arithmetic!public! !
+!Date categoriesFor: #asDateAndTime!converting!public! !
 !Date categoriesFor: #asDays!converting!public! !
 !Date categoriesFor: #asMilliseconds!converting!public! !
 !Date categoriesFor: #asParameter!converting!public! !
 !Date categoriesFor: #asSeconds!converting!public! !
-!Date categoriesFor: #asTimeStamp!converting!public! !
+!Date categoriesFor: #asSYSTEMTIME!converting!public! !
 !Date categoriesFor: #day!accessing!public! !
+!Date categoriesFor: #dayMonthYearDo:!accessing!public! !
 !Date categoriesFor: #dayOfMonth!accessing!public! !
-!Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
+!Date categoriesFor: #dayOfWeek!accessing!public! !
+!Date categoriesFor: #dayOfYear!accessing!public! !
 !Date categoriesFor: #firstDayOfMonth!operations!public! !
 !Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
 !Date categoriesFor: #hash!comparing!public! !
-!Date categoriesFor: #monthIndex!accessing!public! !
+!Date categoriesFor: #isLeapYear!public!testing! !
+!Date categoriesFor: #month!accessing!public! !
 !Date categoriesFor: #monthName!accessing!public! !
 !Date categoriesFor: #monthsSince:!arithmetic!public! !
 !Date categoriesFor: #printOn:!printing!public! !
 !Date categoriesFor: #printOn:format:!printing!public! !
-!Date categoriesFor: #printOn:locale:flags:format:!printing!private! !
-!Date categoriesFor: #printOn:locale:format:!printing!private! !
-!Date categoriesFor: #printOn:longPicture:!printing!private! !
+!Date categoriesFor: #printOn:longPicture:!printing!public! !
+!Date categoriesFor: #printStringFormat:!printing!public! !
+!Date categoriesFor: #seconds!accessing!public! !
 !Date categoriesFor: #setDays:!accessing!private! !
 !Date categoriesFor: #storeOn:!printing!public! !
 !Date categoriesFor: #subtractDate:!arithmetic!public! !
 !Date categoriesFor: #subtractDays:!arithmetic!public! !
-!Date categoriesFor: #weekday!accessing!public! !
-!Date categoriesFor: #weekdayIndex!accessing!public! !
 !Date categoriesFor: #year!accessing!public! !
 !Date categoriesFor: #yearsSince:!arithmetic!public! !
+!Date categoriesFor: #yyyymmdd!accessing!public! !
 
 !Date class methodsFor!
-
-dateAndTimeNow 
-	"Answer an Array whose first element is the current local Date and whose
-	second element is the current local Time."
-
-	^Time dateAndTimeNow!
 
 dateOrderFromFormat: aFormatString
 	"Private - Answers a String giving the component order in aFormatString (e.g. 'DMY' or 'MDY')"
@@ -380,11 +378,6 @@ day: daysSinceBase inYear: anInteger
 
 	"Day 0 is 1 Jan in base year, so we add 1"
 	^daysSinceBase - (self yearAsDays: anInteger) + 1!
-
-dayOfWeek: dayName
-	"Answer the index in a week, 1, 2, 3, ..., 7, of the day named by the argument, dayName."
-
-	^Locale default dayNames at: dayName asLowercase!
 
 daysInMonth: monthName forYear: yearInteger
 	"Answer the number of days in the month whose name is, monthName, in the year, yearInteger"
@@ -434,7 +427,7 @@ defaultShortFormat
 defaultYearPivot
 	"Answer the default year pivot to use when converting date strings with 2 digit years."
 
-	^30!
+	^Locale default lastTwoDigitYear \\ 100 + 1!
 
 errorInvalidFormat
 	"Private - Raise an error that some attempt to create an instance of the receiver failed
@@ -451,14 +444,10 @@ fromDays: dayCount
 		setDays: dayCount;
 		yourself!
 
-fromSeconds: anInteger 
-	"Answer a new instance of the receiver that incorporates the second which is anInteger
-	seconds after the epoch."
+fromSeconds: aNumber
+	"Answer a new instance of the receiver that incorporates the second which is the specified <number> of seconds after the Smalltalk epoch."
 
-	"Implementation Note: Ensure that SmallInteger arithmetic is used to perform the calculation
-	when possible."
-
-	^self fromDays: (anInteger bitShift: -7) // ##(60 * 60 * 24 bitShift: -7)!
+	^self fromDays: aNumber // Duration.SecondsPerDay!
 
 fromString: aString
 	"Answer an instance of the receiver constructed from the string,
@@ -482,12 +471,10 @@ fromSYSTEMTIME: aSYSTEMTIME
 	
 	^self newDay: aSYSTEMTIME wDay monthIndex: aSYSTEMTIME wMonth year: aSYSTEMTIME wYear!
 
-indexOfMonth: monthName
-	"Answer the index in a year (1 .. 12) of the month named by the argument, 
-	monthName, where monthName is the full locale specific name, or its abbreviated form,
-	in upper or lower case."
+indexOfMonth: aString
+	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
 
-	^Locale default monthNames at: monthName asLowercase!
+	^Locale default indexOfMonth: aString!
 
 initialize
 	"Private - Initialize the class variables of the receiver
@@ -497,7 +484,6 @@ initialize
 	"
 
 	self defaultLongPicture: true.
-	self yearPivot: self defaultYearPivot.
 
 	"Days indices are for non-leap years"
 	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31).
@@ -519,6 +505,12 @@ longFormats
 
 	^Locale default longDateFormats!
 
+monthAbbreviation: monthIndex
+	"Answer a localised abbreviated String name for the month whose index is the argument, monthIndex, where January 
+	is month 1, and December is month 12."
+
+	^Locale default monthAbbreviation: monthIndex!
+
 monthIndexOfDay: dayInteger inYear: yearInteger 
 	"Private - Answer the index of the month of the specified julian day number in the specified year."
 
@@ -532,18 +524,6 @@ monthIndexOfDay: dayInteger inYear: yearInteger
 						+ (monthIndex > 2 ifTrue: [leap] ifFalse: [0]).
 			daysUntil >= dayInteger ifTrue: [^monthIndex - 1]].
 	^12!
-
-nameOfDay: dayIndex
-	"Answer a String that is the localised name of the day whose index is the argument, dayIndex, 
-	where Monday is 1 and Sunday is 7."
-
-	^Locale default nameOfDay: dayIndex abbrev: false!
-
-nameOfMonth: monthIndex
-	"Answer a localised String name for the month whose index is the argument, monthIndex, where 
-	January is month 1, and December is month 12."
-
-	^Locale default nameOfMonth: monthIndex abbrev: false!
 
 new
 	"Answer an instance of the receiver representing the current system date."
@@ -561,7 +541,10 @@ newDay: day monthIndex: month year: year
 	day, of the <integer> month index (1..12), monthIndex in the year, 
 	<integer> year, year."
 
-	^self newDay: day + (self daysUntilMonth: month inYear: year) year: year!
+	^self
+		year: year
+		month: month
+		day: day!
 
 newDay: day monthNumber: month year: year
 	"For compatibility with VisualWorks..."
@@ -623,7 +606,7 @@ readMonthFrom: aStream
 		do: 
 			[:mm | 
 			| shortName |
-			shortName := (self shortNameOfMonth: mm) copyWithout: $..
+			shortName := (self monthAbbreviation: mm) copyWithout: $..
 			(shortName skipOver: aStream ignoreCase: true) 
 				ifTrue: 
 					[aStream skipWhile: [:c | c isLetter].
@@ -653,25 +636,23 @@ shortFormats
 
 	^Locale default shortDateFormats!
 
-shortNameOfDay: dayIndex
-	"Answer a String that is the localised name of the day whose index is the argument, dayIndex, where Monday is 1 
-	and Sunday is 7."
-
-	^Locale default nameOfDay: dayIndex abbrev: true!
-
-shortNameOfMonth: monthIndex
-	"Answer a localised abbreviated String name for the month whose index is the argument, monthIndex, where January 
-	is month 1, and December is month 12."
-
-	^Locale default nameOfMonth: monthIndex abbrev: true!
-
 today
 	"Answer an instance of the receiver representing the current system date."
 
-	^self fromSYSTEMTIME: SYSTEMTIME now!
+	^DateAndTime now dayMonthYearDo: 
+			[:d :m :y |
+			self
+				newDay: d
+				monthIndex: m
+				year: y]!
 
 tomorrow
 	^self today addDays: 1!
+
+year: yearInteger month: monthInteger day: dayInteger
+	"Answer a new instance of the receiver that is the <integer> day numbered, dayInteger, of the <integer> month index (1..12), monthInteger in the year, <integer> year, yearInteger."
+
+	^self newDay: dayInteger + (self daysUntilMonth: monthInteger inYear: yearInteger) year: yearInteger!
 
 yearAsDays: yearInteger
 	"Private - Answer the number of days between January 1, 1901 and
@@ -686,9 +667,9 @@ yearAsDays: yearInteger
 
 yearPivot
 	"Answers the pivot point for two digit years. Years greater or equal to this will be assumed to be
-	in the current century. Years less than the pivot will be assumed to be in the next century"
+	in the 20th century. Years less than the pivot will be assumed to be in the 21st century"
 
-	^YearPivot!
+	^YearPivot ifNil: [self defaultYearPivot]!
 
 yearPivot: anInteger
 	"Sets the pivot point for two digit years to be anInteger. 
@@ -699,10 +680,8 @@ yearPivot: anInteger
 
 yesterday
 	^self today subtractDays: 1! !
-!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
 !Date class categoriesFor: #dateOrderFromFormat:!helpers!private! !
 !Date class categoriesFor: #day:inYear:!enquiries!private! !
-!Date class categoriesFor: #dayOfWeek:!mapping!public! !
 !Date class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
 !Date class categoriesFor: #daysInMonthIndex:forYear:!enquiries!private! !
 !Date class categoriesFor: #daysInYear:!enquiries!public! !
@@ -717,13 +696,12 @@ yesterday
 !Date class categoriesFor: #fromString:!instance creation!public! !
 !Date class categoriesFor: #fromString:format:!instance creation!public! !
 !Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Date class categoriesFor: #indexOfMonth:!mapping!public! !
+!Date class categoriesFor: #indexOfMonth:!enquiries!public! !
 !Date class categoriesFor: #initialize!development!initializing!private! !
 !Date class categoriesFor: #leapYear:!operations!public! !
 !Date class categoriesFor: #longFormats!enquiries!public! !
-!Date class categoriesFor: #monthIndexOfDay:inYear:!mapping!private! !
-!Date class categoriesFor: #nameOfDay:!mapping!public! !
-!Date class categoriesFor: #nameOfMonth:!mapping!public! !
+!Date class categoriesFor: #monthAbbreviation:!enquiries!public! !
+!Date class categoriesFor: #monthIndexOfDay:inYear:!enquiries!private! !
 !Date class categoriesFor: #new!instance creation!public! !
 !Date class categoriesFor: #newDay:month:year:!instance creation!public! !
 !Date class categoriesFor: #newDay:monthIndex:year:!instance creation!public! !
@@ -735,10 +713,9 @@ yesterday
 !Date class categoriesFor: #readMonthFrom:!helpers!private! !
 !Date class categoriesFor: #readYearFrom:!helpers!private! !
 !Date class categoriesFor: #shortFormats!enquiries!private! !
-!Date class categoriesFor: #shortNameOfDay:!mapping!public! !
-!Date class categoriesFor: #shortNameOfMonth:!mapping!public! !
 !Date class categoriesFor: #today!instance creation!public! !
-!Date class categoriesFor: #tomorrow!public! !
+!Date class categoriesFor: #tomorrow!instance creation!public! !
+!Date class categoriesFor: #year:month:day:!instance creation!public! !
 !Date class categoriesFor: #yearAsDays:!converting!private! !
 !Date class categoriesFor: #yearPivot!accessing!public! !
 !Date class categoriesFor: #yearPivot:!accessing!not an aspect!public! !

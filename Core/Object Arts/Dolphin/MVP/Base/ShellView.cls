@@ -675,7 +675,7 @@ onPreSaveImage
 
 	self isTopView ifTrue: [self propertyAt: #state put: self state]!
 
-onSettingChanged: aWindowsEvent 
+onSettingChanged: aWindowsEvent
 	SessionManager current onSettingChanged: aWindowsEvent.
 	self presenter trigger: #settingChanged: with: aWindowsEvent.
 	(aWindowsEvent wParam = SPI_SETICONTITLELOGFONT and: [font isNil]) ifTrue: [self fontChanged].
@@ -685,6 +685,11 @@ onSubViewRemoved: aView
 	(self lastFocus notNil and: [self lastFocus allParents includes: aView]) 
 		ifTrue: [self lastFocus: self].
 	super onSubViewRemoved: aView!
+
+onTimeChanged: aWindowsEvent
+	SessionManager current onTimeChanged: aWindowsEvent.
+	self presenter trigger: #timeChanged: with: aWindowsEvent.
+	^aWindowsEvent lResult!
 
 onViewActivated: anEvent 
 	"Default handler for window activation. Reset focus to the last view
@@ -1048,11 +1053,14 @@ wmActivate: message wParam: wParam lParam: lParam
 		ifTrue: [self presenter onViewDeactivated: event]
 		ifFalse: [self presenter onViewActivated: event	"send onActivate for WA_ACTIVE and WA_CLICKACTIVE"]!
 
-wmGetMinMaxInfo: message wParam: wParam lParam: lParam 
-	| minmax |
-	minmax := MINMAXINFO fromAddress: lParam.
-	self minExtent ifNotNil: [:min | minmax ptMinTrackSize: min asParameter].
-	self maxExtent ifNotNil: [:max | minmax ptMaxTrackSize: max asParameter].
+wmGetMinMaxInfo: message wParam: wParam lParam: lParam
+	| min max |
+	((min := self minExtent) notNil or: [(max := self maxExtent) notNil])
+		ifTrue: 
+			[| minmax |
+			minmax := MINMAXINFO fromAddress: lParam.
+			min ifNotNil: [minmax ptMinTrackSize: min asParameter].
+			max ifNotNil: [minmax ptMaxTrackSize: max asParameter]].
 	^0!
 
 wmInitMenu: message wParam: wParam lParam: lParam
@@ -1142,30 +1150,39 @@ wmSettingChange: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam)!
 
-wmSize: message wParam: wParam lParam: lParam 
+wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
 	"While we're restoring state it's not a good idea to propagate this event"
 
 	self isStateRestoring ifTrue: [^self].
-	(wParam == SIZE_MINIMIZED or: [wParam == SIZE_RESTORED]) 
+	#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
+	wParam == SIZE_MINIMIZED
 		ifTrue: 
-			[| event |
-			#todo.	"Work out how we can do this from #wmPositionChanged:etc instead"
-			event := SizeEvent 
+			[self isMinimized: true.
+			^self presenter onViewMinimized: (SizeEvent
 						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam.
-			wParam == SIZE_MINIMIZED 
-				ifTrue: 
-					[self isMinimized: true.
-					^self presenter onViewMinimized: event].
-			(wParam == SIZE_RESTORED and: [self isMinimized]) 
-				ifTrue: 
-					[self isMinimized: false.
-					^self presenter onViewRestored: event]].
+						lParam: lParam)].
+	(wParam == SIZE_RESTORED and: [self isMinimized])
+		ifTrue: 
+			[self isMinimized: false.
+			^self presenter onViewRestored: (SizeEvent
+						window: self
+						message: message
+						wParam: wParam
+						lParam: lParam)].
 	^nil!
+
+wmTimeChange: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_TIMECHANGE message."
+
+	^self presenter onTimeChanged: (WindowsEvent 
+				window: self
+				message: message
+				wParam: wParam
+				lParam: lParam)!
 
 wmWindowPosChanged: message wParam: wParam lParam: lParam
 	"Private - The position of the receiver is about to change in some manner.
@@ -1264,6 +1281,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #onPreSaveImage!event handling!public! !
 !ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
+!ShellView categoriesFor: #onTimeChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onViewActivated:!event handling!public! !
 !ShellView categoriesFor: #onViewCreated!event handling!public! !
 !ShellView categoriesFor: #onViewDeactivated:!event handling!public! !
@@ -1308,6 +1326,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #wmSetCursor:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmSettingChange:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmSize:wParam:lParam:!event handling!event handling-win32!private! !
+!ShellView categoriesFor: #wmTimeChange:wParam:lParam:!event handling-win32!private! !
 !ShellView categoriesFor: #wmWindowPosChanged:wParam:lParam:!event handling-win32!private! !
 
 ShellView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!

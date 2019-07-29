@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaTextStyle
-	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved1'
+	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -12,44 +12,48 @@ ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 16r3000!
 ScintillaTextStyle addClassConstant: 'ItalicMask' value: 16rC!
 ScintillaTextStyle addClassConstant: 'ReadOnlyMask' value: 16r300!
 ScintillaTextStyle addClassConstant: 'UnderlinedMask' value: 16r30!
-ScintillaTextStyle comment: 'ScintillaStyle instances represent the visual styles that can be applied to colour text in a particular <ScintillaView>.
+ScintillaTextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:
-	#normal - the default style used to draw all unstyled text, and from which user-defined styles inherit.
-	#braceHighlight - style used to highlight matching braces (where the brace highlighting feature is implemented)
-	#mismatchedBrace - style used to highlight mismatched braces (where the brace highlighting feature is implemented)
-	#controlChar - style used to draw control characters such as Form Feed when these are present in the text.
-	#lineNumber - style used to draw text in the line number margin, and to control the background colour of all margins except the fold margin.
-	#indentGuide - style used to draw indentation guides
-	#callTip - style used for call tips.
+  `#normal` - the default style used to draw all unstyled text, and from which user-defined styles inherit.
+  `#braceHighlight` - style used to highlight matching braces (where the brace highlighting feature is implemented)
+  `#mismatchedBrace` - style used to highlight mismatched braces (where the brace highlighting feature is implemented)
+  `#controlChar` - style used to draw control characters such as Form Feed when these are present in the text.
+  `#lineNumber` - style used to draw text in the line number margin, and to control the background colour of all margins except the fold margin.
+  `#indentGuide` - style used to draw indentation guides
+  `#callTip` - style used for call tips.
 	
-With the exception of #normal, these styles are present to allow control over the presentation of particular features, but they cannot themselves be set against regions of text. Note that some styling, such as that used for visible whitespace, is controlled independently of the normal text style definitions  by directly setting properties of the ScintillaView.
+Note that the `#braceHighlight` and `#mismatchedBrace` styles are normally implemented using indicator styles.
 
-Up to 256 styles can be defined per view. These have symbolic names for use in Smalltalk code, and have id''s allocated automatically. The predefined styles listed above have ids which Scintilla recognises specifically, with ids between STYLE_DEFAULT (32) and STYLE_LASTPREDEFINED (39). In addition style id 0 is reserved for "normal", which (somewhat confusingly given the existance of STYLE_DEFAULT) is the style applied to text by default and from which all the other styles inherit any unspecified properties. See the Scintilla docs for further details of the predefined styles. All other styles are user-defined, can have any symbolic name, and are allocated an unused id in the range 1..255. 
+With the exception of `#normal`, these styles are present to allow control over the presentation of particular features, but they cannot themselves be set against regions of text. Note that some styling, such as that used for visible whitespace, is controlled independently of the normal text style definitions  by directly setting properties of the `ScintillaView`.
 
-The instance variables of all styles specify the differences from the default (or "normal") style, so any that are nil imply inheritance of that aspect from the special #normal style (which has style id 0). In turn the #normal style "inherits" any unspecified font and color settings from those aspects of the view itself. 
+Up to 256 styles can be defined per view. These have symbolic names for use in Smalltalk code, and have id''s allocated automatically. The predefined styles listed above have ids which Scintilla recognises specifically, with ids between `STYLE_DEFAULT` (32) and `STYLE_LASTPREDEFINED` (39). In addition style id 0 is reserved for "normal", which (somewhat confusingly given the existance of `STYLE_DEFAULT`) is the style applied to text by default and from which all the other styles inherit any unspecified properties. See the Scintilla docs for further details of the predefined styles. All other styles are user-defined, can have any symbolic name, and are allocated an unused id in the range 1..255. 
 
-Note that Scintilla style information is now queryable from the control, but this was not the case when the Dolphin wrapper was originally designed so ScintillaTextStyle is not a <QueryableScintillaAttribute> like <ScintillaIndicatorStyle>.
+The instance variables of all styles specify the differences from the default (or "normal") style, so any that are nil imply inheritance of that aspect from the special `#normal` style (which has style id 0). In turn the `#normal` style "inherits" any unspecified font and color settings from those aspects of the view itself. 
 
-Instance Variables:
-	forecolor	<Color>. Text foreground colour.
-	backcolor	<Color>. Background colour.
-	flags		<integer> Various flags controlling font appearance, etc.
-	faceName	<String>. Font face name.
-	pointSize	<integer>. Font size in points.
-	characterSet	<integer>. Font character set.
-	case		<integer>. Font case type
-	name		<Symbol>. Symbolic name of the visual style.
-	description	<String>. Optional description of the style, useful for presentation in user preferences dialogs.
+Note that Scintilla style information is now queryable from the control, but this was not the case when the Dolphin wrapper was originally designed so `ScintillaTextStyle`s are only ever set to the control, never queried back.
 
-Class Variables:
-	ItalicMask			<integer> bitmask used to specify an italic font in ''flags'' inst. var.
-	PredefinedStyleNames	<IdentityDictionary> mapping <Symbol> to <integer> style code for all fixed/predefined styles.
-	BoldMask			<integer> bitmask used to specify a bold font in ''flags'' inst. var.
-	UnderlinedMask		<integer> bitmask used to specify an underlined font in ''flags'' inst. var.
-	ChangeableMask		<integer> bitmask used to control whether the marked text is protected from editing.
-	EolFilledMask		<integer> bitmask used to specify whether the backcolor is extended to the end-of-line.
-	HotspotMask		<integer> bitmask used to specify whether the marked text should be treated as a hotspot.'!
+##Instance Variables:
+	`forecolor`		`<Color>`. Text foreground colour.
+	`backcolor`		`<Color>`. Background colour.
+	`flags`			`<integer`> Various flags controlling font appearance, etc.
+	`faceName`		`String`. Font face name.
+	`centiPointSize`	`<integer>`. Font size in hundredths of a point.
+	`characterSet`		`<integer>`. Font character set.
+	`case`			`<integer>`. Font case type
+	`name`			`Symbol`. Symbolic name of the visual style.
+	`description`		`String`. Optional description of the style, useful for presentation in user preferences dialogs.
+	`weight`			`<integer>` font weight.
+
+##Class Variables:
+	`EolFilledMask`		`<integer>` bitmask used to specify whether the backcolor is extended to the end-of-line.
+	`HotspotMask`		`<integer>` bitmask used to specify whether the marked text should be treated as a hotspot.
+	`InvisibleMask`		`<integer>` bitmaks used to specify whether the text should be invisible.
+	`ItalicMask`			`<integer>` bitmask used to specify an italic font in `flags` inst. var.
+	`PredefinedStyleNames`	`IdentityDictionary` mapping `Symbol` to `<integer>` style code for all fixed/predefined styles.
+	`ReadOnlyMask`		`<integer>` bitmask used to specify whether the text should be read-only.
+	`UnderlinedMask`		`<integer>` bitmask used to specify an underlined font in `flags` inst. var.
+'!
 !ScintillaTextStyle categoriesForClass!MVP-Views-Support! !
 !ScintillaTextStyle methodsFor!
 
@@ -68,10 +72,11 @@ Class Variables:
 																and: [self characterSet = anObject characterSet and: [self case = anObject case]]]]]]]]]!
 
 backcolor
+	"Answer the background <Color> used to draw text in this style, or nil if the style does not specify a background colour and should inherit the default."
+
 	^backcolor!
 
 backcolor: aColorOrNil 
-	backcolor = aColorOrNil ifTrue: [^self].
 	backcolor := aColorOrNil!
 
 basicId
@@ -144,6 +149,8 @@ fontName: aStringOrNil
 	faceName := aStringOrNil!
 
 forecolor
+	"Answer the foreground <Color> used to draw text in this style, or nil if the style does not specify a foreground colour and should inherit the default."
+
 	^forecolor!
 
 forecolor: aColorOrNil 
@@ -398,14 +405,14 @@ weight: anInteger
 buildPropertyMap
 	^IdentityDictionary new
 		at: #forecolor
-			put: (ScintillaPropertyDescriptor
+			put: (ScintillaColorPropertyDescriptor
 					getSelector: #forecolor
-					defaultValue: Color black
+					defaultValue: RGB black
 					setMessage: SCI_STYLESETFORE);
 		at: #backcolor
-			put: (ScintillaPropertyDescriptor
+			put: (ScintillaColorPropertyDescriptor
 					getSelector: #backcolor
-					defaultValue: Color white
+					defaultValue: RGB white
 					setMessage: SCI_STYLESETBACK);
 		at: #fontName
 			put: (ScintillaPropertyDescriptor

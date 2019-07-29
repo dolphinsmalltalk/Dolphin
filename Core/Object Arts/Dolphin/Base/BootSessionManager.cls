@@ -31,10 +31,12 @@ initializeBootPackages
 	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
 	all safe to re-run. Therefore we must do this selectively."
 
+	PackageManager systemPackage basicComment: PackageManager systemPackageComment.
 	STBPrefix initialize.
 	Delay initializeTimingSemaphore.
 	CompilerNotification initialize.
-	(Smalltalk at: #Utf8String) initialize!
+	(Smalltalk at: #Utf8String) initialize.
+	(Smalltalk at: #SmalltalkLocale) initialize!
 
 keepAlive
 	"We stay alive until explicitly terminated."

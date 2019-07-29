@@ -32,12 +32,11 @@ initialize
 
 !Win32Error class methodsFor!
 
-signal: messageText with: anInteger 
-	"Raise a new instance of the receiver, with the error message, msg, initiating a search for an 
-	ExceptionHandler prepared to handle instances of the receiver. This method will not return to its 
-	sender, unless the new instance is resumable, and the handler which catches it directs that it 
-	should be resumed."
+signal: aString with: anInteger
+	"Raise a new instance of the receiver, with the <readableString> error message, aString, and <integer> Win32 error code, anInteger, initiating a search for an ExceptionHandler prepared to handle instances of the receiver. This method will not return to its sender, unless the new instance is resumable, and the handler which catches it directs that it should be resumed."
 
-	self signalHRESULT: (HRESULT win32Error: anInteger)! !
+	^(self fromHRESULT: (HRESULT win32Error: anInteger))
+		messageText: aString;
+		signal! !
 !Win32Error class categoriesFor: #signal:with:!instance creation!public! !
 

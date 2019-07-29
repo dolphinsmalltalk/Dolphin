@@ -127,7 +127,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPALETTEENTRIES! !
-!EMRSETPALETTEENTRIES class categoriesFor: #defineFields!initializing!public! !
+!EMRSETPALETTEENTRIES class categoriesFor: #defineFields!public!template definition! !
 !EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
 

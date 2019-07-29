@@ -80,7 +80,7 @@ Add: namespaceURI var: var
 			[in]VARIANT var);"
 
 	<virtual stdcall: hresult 8 bstr variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 AddCollection: otherCollection
 	"Invoke the addCollection() method of the COM object.
@@ -90,7 +90,7 @@ AddCollection: otherCollection
 			[in]IXMLDOMSchemaCollection* otherCollection);"
 
 	<virtual stdcall: hresult 13 IXMLDOMSchemaCollection*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get: namespaceURI
 	"Answer the <IXMLDOMNode> result of invoking the get() method of the COM object.
@@ -113,7 +113,7 @@ Get: namespaceURI schemaNode: schemaNode
 			[out, retval]IXMLDOMNode** schemaNode);"
 
 	<virtual stdcall: hresult 9 bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get__newEnum: ppUnk
 	"Private - Get the value of the '_newEnum' property of the receiver.
@@ -122,7 +122,7 @@ get__newEnum: ppUnk
 			[out, retval]IUnknown** ppUnk);"
 
 	<virtual stdcall: hresult 14 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: length
 	"Private - Get the value of the 'length' property of the receiver.
@@ -131,7 +131,7 @@ get_length: length
 			[out, retval]long* length);"
 
 	<virtual stdcall: hresult 11 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_namespaceURI: index length: length
 	"Private - Get the value of the 'namespaceURI' property of the receiver.
@@ -141,7 +141,7 @@ get_namespaceURI: index length: length
 			[out, retval]BSTR* length);"
 
 	<virtual stdcall: hresult 12 sdword bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."
@@ -183,7 +183,7 @@ Remove: namespaceURI
 			[in]BSTR namespaceURI);"
 
 	<virtual stdcall: hresult 10 bstr>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMSchemaCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
 !IXMLDOMSchemaCollection categoriesFor: #add:var:!**auto generated**!methods!public! !
 !IXMLDOMSchemaCollection categoriesFor: #Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !

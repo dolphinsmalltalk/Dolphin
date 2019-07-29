@@ -21,8 +21,7 @@ get_Item: index ppvObject: ppvObject
 			[out, retval] Property** ppvObject);"
 
 	<virtual stdcall: hresult 11 variant ADODBProperty**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 item: index
 	"Answer the <ADODBProperty> value of the 'Item' property of the receiver."

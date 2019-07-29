@@ -82,7 +82,7 @@ maxConnections: anInteger
 
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !

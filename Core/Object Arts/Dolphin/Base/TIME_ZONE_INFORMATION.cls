@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TIME_ZONE_INFORMATION
-	instanceVariableNames: 'zoneId'
+	instanceVariableNames: 'zoneId offset'
 	classVariableNames: '_OffsetOf_bias _OffsetOf_daylightBias _OffsetOf_daylightDate _OffsetOf_daylightName _OffsetOf_standardBias _OffsetOf_standardDate _OffsetOf_standardName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -47,6 +47,12 @@ currentBias
 	zoneId == Win32Constants.TIME_ZONE_ID_DAYLIGHT ifTrue: [^self bias + self daylightBias].
 	^self bias!
 
+currentName
+	"Answer the <readableString> name of the timezone when the information was queried from Windows. This accounts for daylight saving, etc."
+
+	zoneId == Win32Constants.TIME_ZONE_ID_DAYLIGHT ifTrue: [^self daylightName].
+	^self standardName!
+
 daylightBias
 	"Answer the <Integer> value of the receiver's 'daylightBias' field."
 
@@ -62,11 +68,14 @@ daylightName
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_daylightName!
 
+offset
+	^self offsetSeconds seconds!
+
+offsetSeconds
+	^offset ifNil: [offset := self currentBias negated * 60]!
+
 printableFields
-	| printable |
-	printable := super printableFields.
-	printable remove: #standardDate; remove: #daylightDate.
-	^printable!
+	^super printableFields copyWithoutAll: #(#standardDate #daylightDate)!
 
 standardBias
 	"Answer the <Integer> value of the receiver's 'standardBias' field."
@@ -92,9 +101,12 @@ zoneId: anInteger
 	zoneId := anInteger! !
 !TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #currentBias!accessing!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #currentName!accessing!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #offset!enquiries!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #offsetSeconds!enquiries!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #printableFields!development!printing!private! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardDate!**compiled accessors**!public! !
@@ -133,6 +145,6 @@ defineFields
 
 getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
-!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!public!template definition! !
 !TIME_ZONE_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

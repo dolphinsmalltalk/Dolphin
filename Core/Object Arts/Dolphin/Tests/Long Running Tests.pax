@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Long Running Tests'.
 package paxVersion: 1;
 	basicComment: 'These tests take rather a long time to run (but do pass eventually). This package is not loaded during normal regression testing to allow the test pass to complete in a reasonable time.'.
@@ -18,6 +18,7 @@ package methodNames
 	add: #IntrosortAlgorithmTest -> #testBigStringSort;
 	add: #MergesortAlgorithmTest -> #testBigStringSort;
 	add: #VMTest -> #assertLoopInterruptible:;
+	add: #VMTest -> #getCPUTime;
 	add: #VMTest -> #testLoopsInterruptible;
 	add: #VMTest -> #testQuiesceWhenUIBlocked;
 	yourself.
@@ -28,14 +29,14 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System Tests';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
-	yourself).
+package setPrerequisites: #(
+	'..\IDE\Base\Development System Tests'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'..\Base\Dolphin Legacy Date & Time'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests').
 
 package!
 
@@ -220,28 +221,45 @@ testBigStringSort
 
 !VMTest methodsFor!
 
-assertLoopInterruptible: aBlock 
+assertLoopInterruptible: aBlock
 	| intervals execTime last sampleInterval go |
 	go := true.
 	last := Time millisecondClockValue.
 	intervals := OrderedCollection new.
-	sampleInterval := 3.
+	sampleInterval := 3 milliseconds.
 	
 	[
 	[Processor sleep: sampleInterval.
 	go and: 
 			[| next |
 			next := Time millisecondClockValue.
-			intervals addLast: next - last.
+			intervals addLast: (next - last) milliseconds.
 			last := next.
-			true]] 
-			whileTrue] 
+			true]]
+			whileTrue]
 			forkAt: Processor userInterruptPriority.
-	execTime := Time millisecondsToRun: aBlock.
+	execTime := aBlock timeToRun.
 	go := false.
-	self assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
-	self 
-		assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+	self
+		assert: (intervals size > 5 and: [intervals size * 1.25 >= (execTime / sampleInterval) asFloat]).
+	self assert: (intervals size > 2 and: [intervals allSatisfy: [:each | each < (sampleInterval * 2)]])!
+
+getCPUTime
+	"Answer the total CPU time consumed since Dolphin was started, in milliseconds."
+
+	| lib user kernel creation exit |
+	creation := FILETIME new.
+	exit := FILETIME new.
+	user := FILETIME new.
+	kernel := FILETIME new.
+	lib := KernelLibrary default.
+	lib
+		getThreadTimes: lib getCurrentThread
+		lpCreationTime: creation
+		lpExitTime: exit
+		lpKernelTime: kernel
+		lpUserTime: user.
+	^Duration microseconds: (kernel asInteger + user asInteger) / 10!
 
 testLoopsInterruptible
 	"#2167: Need to test all the optimisable loop types:
@@ -297,8 +315,8 @@ testQuiesceWhenUIBlocked
 	| totalCPUBefore cpuWhileSleeping sleepTime wait |
 	totalCPUBefore := self getCPUTime.
 	"This test needs to measure over a minimum of 2 seconds in order to determine whether Dolphin has quiesced properly"
-	wait := 3000.
-	sleepTime := Time millisecondsToRun: [Processor sleep: wait].
+	wait := 3000 milliseconds.
+	sleepTime := [Processor sleep: wait asMilliseconds] timeToRun.
 	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
 	"If the sleep time was significantly longer than requested, then the VM is not waking up the image
 	 properly at the end of the timer"
@@ -306,6 +324,7 @@ testQuiesceWhenUIBlocked
 	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
 	self assert: cpuWhileSleeping < (wait * 0.03)! !
 !VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
+!VMTest categoriesFor: #getCPUTime!public!unit tests! !
 !VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
 !VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
 

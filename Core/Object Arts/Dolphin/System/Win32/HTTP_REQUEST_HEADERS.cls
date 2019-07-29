@@ -112,7 +112,7 @@ indexToHeaderMap
 		at: HttpHeaderTranslate put: 'Translate';
 		at: HttpHeaderUserAgent put: 'User-Agent';
 		yourself)! !
-!HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_REQUEST_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_REQUEST_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

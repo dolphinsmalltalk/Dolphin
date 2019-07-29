@@ -35,7 +35,7 @@ Instance Variables:
 getElementCountOf: anExternalField in: anExternalStructure
 	"Private - Answer the number of elements in the array field of the <ExternalStructure> argument."
 
-	^(anExternalStructure template at: #lengthField) readFrom: anExternalStructure!
+	^(anExternalStructure template at: lengthField) readFrom: anExternalStructure!
 
 lengthField: aSymbol
 	lengthField := aSymbol!
@@ -76,7 +76,7 @@ setLengthSelector
 !ConformantArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
 !ConformantArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
 !ConformantArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!ConformantArrayFieldLength categoriesFor: #setLengthSelector!automatic generation!development!private! !
+!ConformantArrayFieldLength categoriesFor: #setLengthSelector!accessing!private! !
 
 !ConformantArrayFieldLength class methodsFor!
 

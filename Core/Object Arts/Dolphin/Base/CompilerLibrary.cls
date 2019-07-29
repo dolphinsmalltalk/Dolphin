@@ -18,7 +18,7 @@ compile: aCompiler source: aString in: aClass flags: anInteger notifying: notifi
 	notifying, notifier, of any errors or warnings which are detected."
 
 	<stdcall: oop CompileForClass ote lpvoid ote sdword oop>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anArray flags: anInteger notifying: notifier
 	"Private - Compiler the expression source, aString, in the context of the class, aClass,
@@ -26,7 +26,7 @@ compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anAr
 	notifying, notifier, of any errors or warnings which are detected."
 
 	<stdcall: oop CompileForEval oop lpvoid ote ote sdword oop>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CompilerLibrary categoriesFor: #compile:source:in:flags:notifying:!compiling!private! !
 !CompilerLibrary categoriesFor: #compileForEvaluation:source:in:evaluationPools:flags:notifying:!compiling!private! !
 

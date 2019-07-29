@@ -2,10 +2,12 @@
 
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'SQLToCTypes'
+	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
+DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)!
+DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)!
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
@@ -56,15 +58,30 @@ deleteRuleMask: anInteger
 			(1 bitShift: (anInteger+4))
 			put: true ]!
 
+hasVariableTransferOctetLength
+
+	^(self isCharType or: [self isBinaryType]) and: [self isFixedPointType not]!
+
 initialize
 	"Private - Initialize the receiver"
 
 	special := ##(SQL_PARAM_INPUT bitShift: ParameterTypeShift)!
 
+isBinaryType
+	"Private - Answers true if the receiver represents a character based column"
+
+	^self cType == SQL_C_BINARY!
+
 isCharType
 	"Private - Answers true if the receiver represents a character based column"
 
-	^self cType == SQL_C_CHAR!
+	| cType |
+
+	^(cType := self cType) == SQL_C_CHAR or: [cType == SQL_C_WCHAR]!
+
+isFixedPointType
+
+	^sqlType == SQL_DECIMAL or: [sqlType == SQL_NUMERIC]!
 
 isForeignKey
 	"Answer true if the receiver represents a foreign key"
@@ -102,11 +119,9 @@ length: anInteger
 	length := anInteger!
 
 lengthC
-	"Private - Answer the length of a field sufficient to hold column
-	 entries when SQL_C_DEFAULT conversion is used (basically need
-	 an extra byte for null terminator for string types)"
+	"Private - Answer the length of ByteArray sufficient to hold an entry for this column when converted to 'C' data. This needs to include any extra space for null-terminators if the 'C' target type is some kind of string."
 
-	^self isCharType ifTrue: [length+1] ifFalse: [length]!
+	^length + (CTypesExtraBytes at: sqlType+TypeOffset)!
 
 name
 	"Answer the name instance variable."
@@ -188,6 +203,30 @@ specialFlagAt: flagMask put: aBoolean
 
 	special mask: flagMask set: aBoolean!
 
+transferOctetLength
+
+	"Private - Return the transfer octet length (size in bytes of the buffer necessary to receive data for this column) based on the column type.
+	https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/transfer-octet-length"
+
+	(sqlType = SQL_BIT or: [sqlType = SQL_TINYINT]) ifTrue: [^1].
+	sqlType = SQL_SMALLINT ifTrue: [^2].
+	(sqlType = SQL_INTEGER or: [sqlType = SQL_REAL]) ifTrue: [^4].
+	(sqlType = SQL_TYPE_DATE or: [sqlType = SQL_TYPE_TIME]) ifTrue: [^6].
+	(sqlType = SQL_FLOAT or: [sqlType = SQL_DOUBLE]) ifTrue: [^8].
+	(sqlType = SQL_TYPE_TIMESTAMP or: [sqlType = SQL_GUID]) ifTrue: [^16].
+
+	"SQL_BIGINT
+	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE, because this data type is returned as a character string by default. The character representation consists of 20 characters: 19 for digits and a sign, if signed, or 20 digits, if unsigned. Therefore, the length is 20."
+	sqlType = SQL_BIGINT ifTrue: [^##(20 * 2 "allow for unicode")].
+
+	"SQL_DECIMAL, SQL_NUMERIC
+	The number of bytes required to hold the character representation of this data if the character set is ANSI, and twice this number if the character set is UNICODE. This is the maximum number of digits plus two, because the data is returned as a character string and characters are needed for the digits, a sign, and a decimal point. For example, the transfer length of a column defined as NUMERIC(10,3) is 12."
+	(sqlType = SQL_DECIMAL or: [sqlType = SQL_NUMERIC]) ifTrue: [^(self precision + 2) * 2 "allow for unicode"].
+
+	self hasVariableTransferOctetLength
+		ifTrue: [self error: 'column has variable transfer octet length']
+		ifFalse: [self error: 'unknown type']!
+
 type
 	"Answer the sqlType instance variable."
 
@@ -218,8 +257,11 @@ updateRuleMask: anInteger
 !DBColAttr categoriesFor: #cType!accessing!private! !
 !DBColAttr categoriesFor: #deleteRuleMask!accessing!public! !
 !DBColAttr categoriesFor: #deleteRuleMask:!accessing!private! !
+!DBColAttr categoriesFor: #hasVariableTransferOctetLength!public!testing! !
 !DBColAttr categoriesFor: #initialize!initializing!private! !
+!DBColAttr categoriesFor: #isBinaryType!private!testing! !
 !DBColAttr categoriesFor: #isCharType!private!testing! !
+!DBColAttr categoriesFor: #isFixedPointType!private!testing! !
 !DBColAttr categoriesFor: #isForeignKey!public!testing! !
 !DBColAttr categoriesFor: #isForeignKey:!accessing!private! !
 !DBColAttr categoriesFor: #isKey!public!testing! !
@@ -239,6 +281,7 @@ updateRuleMask: anInteger
 !DBColAttr categoriesFor: #scale:!accessing!private! !
 !DBColAttr categoriesFor: #specialFlagAt:!accessing!private! !
 !DBColAttr categoriesFor: #specialFlagAt:put:!accessing!private! !
+!DBColAttr categoriesFor: #transferOctetLength!accessing!initializing!private! !
 !DBColAttr categoriesFor: #type!accessing!public! !
 !DBColAttr categoriesFor: #type:!accessing!private! !
 !DBColAttr categoriesFor: #updateRuleMask!accessing!public! !
@@ -253,35 +296,44 @@ initialize
 
 	"The types to convert the result data to on loading into our buffers - normally these are the default conversions
 	 because they are sensible for most things except GUIDs (where the default string conversion doesn't match 
-	 the reported column length, which makes allocating an appropriately sized buffer tricky. We also let the ODBC 
-	 driver(manager) convert wide character strings on our behalf"
+	 the reported column length, which makes allocating an appropriately sized buffer tricky)."
 
-	SQLToCTypes := (Array new: SQL_NUM_TYPES)
-				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
-				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_WVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_WCHAR + TypeOffset put: SQL_C_CHAR;
+	"The 'C' buffer types specified here must match up with the 'get' conversions defined for the SQL column type in the DBField class (see DBField>>#initialize)"
+
+	| extraBytes |
+	self addClassConstant: 'SQLToCTypes'
+		value: ((Array new: SQL_NUM_TYPES)
+				at: SQL_CHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_LONGVARCHAR + TypeOffset put: SQL_C_CHAR;
+				at: SQL_WCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_WLONGVARCHAR + TypeOffset put: SQL_C_WCHAR;
+				at: SQL_BINARY + TypeOffset put: SQL_C_BINARY;
+				at: SQL_VARBINARY + TypeOffset put: SQL_C_BINARY;
+				at: SQL_LONGVARBINARY + TypeOffset put: SQL_C_BINARY;
 				at: SQL_BIT + TypeOffset put: SQL_C_BIT;
 				at: SQL_TINYINT + TypeOffset put: SQL_C_TINYINT;
+				at: SQL_SMALLINT + TypeOffset put: SQL_C_SHORT;
+				at: SQL_INTEGER + TypeOffset put: SQL_C_LONG;
 				at: SQL_BIGINT + TypeOffset put: SQL_C_SBIGINT;
-				at: SQL_LONGVARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_VARBINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_BINARY + TypeOffset put: SQL_C_BINARY;
-				at: SQL_LONGVARCHAR + TypeOffset put: SQL_C_CHAR;
-				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
-				at: SQL_CHAR + TypeOffset put: SQL_C_CHAR;
 				at: SQL_NUMERIC + TypeOffset put: SQL_C_CHAR;
 				at: SQL_DECIMAL + TypeOffset put: SQL_C_CHAR;
-				at: SQL_INTEGER + TypeOffset put: SQL_C_LONG;
-				at: SQL_SMALLINT + TypeOffset put: SQL_C_SHORT;
 				at: SQL_FLOAT + TypeOffset put: SQL_C_DOUBLE;
 				at: SQL_REAL + TypeOffset put: SQL_C_FLOAT;
 				at: SQL_DOUBLE + TypeOffset put: SQL_C_DOUBLE;
-				at: SQL_DATE + TypeOffset put: SQL_C_DATE;
-				at: SQL_TIME + TypeOffset put: SQL_C_TIME;
-				at: SQL_TIMESTAMP + TypeOffset put: SQL_C_TIMESTAMP;
-				at: SQL_VARCHAR + TypeOffset put: SQL_C_CHAR;
-				yourself!
+				at: SQL_TYPE_DATE + TypeOffset put: SQL_C_TYPE_DATE;
+				at: SQL_TYPE_TIME + TypeOffset put: SQL_C_TYPE_TIME;
+				at: SQL_TYPE_TIMESTAMP + TypeOffset put: SQL_C_TYPE_TIMESTAMP;
+				at: SQL_GUID + TypeOffset put: SQL_C_GUID;
+				at: SQL_TYPE_NULL + TypeOffset put: SQL_C_DEFAULT;
+				yourself).
+	extraBytes := Array new: SQL_NUM_TYPES withAll: 0.
+	SQLToCTypes keysAndValuesDo: 
+			[:eachKey :eachValue |
+			eachValue == SQL_C_CHAR ifTrue: [extraBytes at: eachKey put: 1].
+			eachValue == SQL_C_WCHAR ifTrue: [extraBytes at: eachKey put: 2]].
+	self addClassConstant: 'CTypesExtraBytes' value: extraBytes!
 
 new
 	"Answer a new initialized instance of the receiver."

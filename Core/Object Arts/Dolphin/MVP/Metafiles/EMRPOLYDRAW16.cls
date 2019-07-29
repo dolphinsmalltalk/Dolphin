@@ -143,7 +143,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYDRAW16! !
-!EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRPOLYDRAW16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYDRAW16 class categoriesFor: #iTypes!constants!public! !
 

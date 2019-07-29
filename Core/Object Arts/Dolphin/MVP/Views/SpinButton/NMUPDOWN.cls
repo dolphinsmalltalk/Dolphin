@@ -74,6 +74,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
-!NMUPDOWN class categoriesFor: #defineFields!initializing!public! !
+!NMUPDOWN class categoriesFor: #defineFields!public!template definition! !
 !NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

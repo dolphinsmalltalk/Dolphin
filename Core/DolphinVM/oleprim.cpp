@@ -21,7 +21,7 @@
 static Oop* AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
 {
 	if (oteClass->isNil())
-		return Interpreter::primitiveFailure(4);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::ClassNotRegistered);
 
 	OTE* oteStruct = ExternalStructure::New(oteClass, ptr);
 	Oop* const sp = Interpreter::m_registers.m_stackPointer;
@@ -33,7 +33,7 @@ static Oop* AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
 static Oop* AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 {
 	if (oteClass->isNil())
-		return Interpreter::primitiveFailure(4);
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::ClassNotRegistered);
 
 	if (punk)
 		punk->AddRef();
@@ -54,7 +54,7 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 	BytesOTE* oteContents = objVariant->m_contents;
 	if (isIntegerObject(oteContents) || !oteContents->isBytes())
 		// Badly formed
-		return primitiveFailure(0);
+		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 
 
 	BehaviorOTE* oteBehaviour = oteContents->m_oteClass;
@@ -65,7 +65,7 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 		ExternalAddress* addr = reinterpret_cast<ExternalAddress*>(oteContents->m_location);
 		pVar = reinterpret_cast<VARIANT*>(addr->m_pointer);
 		if (pVar == NULL)
-			return primitiveFailure(1);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidPointer);
 	}
 	else
 		pVar = reinterpret_cast<VARIANT*>(oteContents->m_location->m_fields);
@@ -174,12 +174,12 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 		case VT_ERROR:
 		default:
 			// Anything else, we'll leave the error handling to the image
-			return primitiveFailure(3);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidVariant);
 			break;
 		}
 
 		if (oteStructClass == reinterpret_cast<BehaviorOTE*>(Pointers.Nil))
-			return primitiveFailure(4);
+			return primitiveFailure(_PrimitiveFailureCode::ClassNotRegistered);
 
 		OTE* oteRef = ExternalStructure::NewPointer(oteStructClass, pRef);
 
@@ -228,7 +228,6 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 		case VT_R8:
 			value = reinterpret_cast<Oop>(Float::New(V_R8(pVar)));
 			break;
-
 
 		case VT_BSTR:
 			value = reinterpret_cast<Oop>(Utf16String::NewFromBSTR(V_BSTR(pVar)));
@@ -289,7 +288,7 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 
 		default:
 			// Anything else, we'll leave the error handling to the image
-			return primitiveFailure(3);
+			return primitiveFailure(_PrimitiveFailureCode::InvalidVariant);
 			break;
 		}
 

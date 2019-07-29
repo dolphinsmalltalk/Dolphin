@@ -12,31 +12,31 @@ CRTLibraryNonBlocking comment: ''!
 
 _errno
 	<overlap cdecl: void* _errno>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetc: aFILE
 	<overlap cdecl: sdword fgetc handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgets: buf n: bufsize stream: aFILE
 	<overlap cdecl: sdword fgets lpstr sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetwc: aFILE
 	<overlap cdecl: sdword fgetwc handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fgetws: buf n: bufsize stream: aFILE
 	<overlap cdecl: intptr fgetws lpwstr sdword handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !CRTLibraryNonBlocking categoriesFor: #_errno!CRT functions-process and environment control!public! !
 !CRTLibraryNonBlocking categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibraryNonBlocking categoriesFor: #fgetc:!CRT functions-stream I/O!public! !

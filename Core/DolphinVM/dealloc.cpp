@@ -29,8 +29,8 @@
 
 inline void ObjectMemory::releasePointer(OTE* ote)
 {
-	ASSERT(ote->m_count == 0);
-	ASSERT(!ote->isFree());
+	HARDASSERT(ote->m_count == 0);
+	HARDASSERT(!ote->isFree());
 	ote->beFree();
 //	if (!m_pFreePointerList)
 //		_asm int 3;
@@ -125,6 +125,7 @@ void ObjectMemory::deallocate(OTE* ote)
 
 		default:
 			ASSERT(false);
+			__assume(false);
 	}
 }
 

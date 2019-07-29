@@ -131,6 +131,6 @@ defineFields
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
 !BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
-!BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

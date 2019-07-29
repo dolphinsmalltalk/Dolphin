@@ -60,9 +60,11 @@ package methodNames
 	add: #ByteArray -> #isEqualTo:;
 	add: #Collection -> #isEqualTo:;
 	add: #CompiledCode -> #isEqualTo:;
+	add: #Interval -> #isEqualTo:;
 	add: #Object -> #isEqualTo:;
 	add: #String -> #isEqualTo:;
 	add: #String -> #withCRs;
+	add: #SystemDictionary -> #isEqualTo:;
 	yourself.
 
 package globalNames
@@ -76,20 +78,19 @@ package globalAliases: (Set new
 	add: #RBFormatter1;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\Environments\RBEnvironments';
-	add: '..\Formatters\RBFormatters';
-	add: '..\Parser\RBParser';
-	add: '..\Refactorings\RBRefactorings';
-	add: '..\Refactorings\RBReferenceFinder';
-	add: '..\SmallLint\RBSmallLint';
-	add: 'RBTestMethods';
-	add: '..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	add: '..\..\..\Camp Smalltalk\SUnit\SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\Environments\RBEnvironments'
+	'..\Formatters\RBFormatters'
+	'..\Parser\RBParser'
+	'..\Refactorings\RBRefactorings'
+	'..\Refactorings\RBReferenceFinder'
+	'..\SmallLint\RBSmallLint'
+	'RBTestMethods'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
+	'..\..\..\Camp Smalltalk\SUnit\SUnit').
 
 package!
 
@@ -393,6 +394,12 @@ isEqualTo: aMethod
 	^true! !
 !CompiledCode categoriesFor: #isEqualTo:!public!testing! !
 
+!Interval methodsFor!
+
+isEqualTo: anObject
+	^self class == anObject class and: [self = anObject]! !
+!Interval categoriesFor: #isEqualTo:!public! !
+
 !Object methodsFor!
 
 isEqualTo: anObject
@@ -411,6 +418,12 @@ withCRs
 	^stream contents! !
 !String categoriesFor: #isEqualTo:!comparing!public! !
 !String categoriesFor: #withCRs!converting!public! !
+
+!SystemDictionary methodsFor!
+
+isEqualTo: aSystemDictionary 
+	^aSystemDictionary == self! !
+!SystemDictionary categoriesFor: #isEqualTo:!public! !
 
 "End of package definition"!
 

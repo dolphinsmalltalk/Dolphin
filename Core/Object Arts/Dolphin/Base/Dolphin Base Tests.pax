@@ -26,6 +26,7 @@ package classNames
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
 	add: #CommandLineTestRunner;
+	add: #DateAndTimeTest;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
 	add: #DictionaryTest;
@@ -36,6 +37,7 @@ package classNames
 	add: #DolphinTestPackages;
 	add: #DolphinTestResource;
 	add: #DOUBLEArrayTest;
+	add: #DurationTest;
 	add: #DWORDArrayTest;
 	add: #EqualitySearchPolicyTest;
 	add: #EventMessageSendTest;
@@ -62,6 +64,7 @@ package classNames
 	add: #IntervalTest;
 	add: #IntrosortAlgorithmTest;
 	add: #LargeIntegerTest;
+	add: #LocaleTest;
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MergesortAlgorithmTest;
@@ -80,6 +83,7 @@ package classNames
 	add: #ReadStreamTest;
 	add: #ReadWriteStreamTest;
 	add: #RunArrayTest;
+	add: #ScaledDecimalTest;
 	add: #SDWORDArrayTest;
 	add: #SearchPolicyTest;
 	add: #SemaphoreTest;
@@ -91,6 +95,7 @@ package classNames
 	add: #ShlwapiLibraryTest;
 	add: #SignalTest;
 	add: #SmallIntegerTest;
+	add: #SmalltalkLocaleTest;
 	add: #SortAlgorithmTest;
 	add: #SortedCollectionTest;
 	add: #StableSortAlgorithmTest;
@@ -108,6 +113,7 @@ package classNames
 	add: #UndefinedObjectTest;
 	add: #Utf16StringTest;
 	add: #Utf8StringTest;
+	add: #WindowsLocaleTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
 	yourself.
@@ -133,13 +139,19 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'Dolphin'
 	'Dolphin Additional Sort Algorithms'
+	'Dolphin Anonymous Classes'
+	'Deprecated\Dolphin Base (Deprecated)'
 	'Dolphin Command-line Parser'
 	'..\System\Random\Dolphin CRT Random Stream'
+	'Dolphin Legacy Date & Time'
 	'Dolphin Message Box'
 	'..\System\Random\Dolphin Random Stream'
 	'..\System\Compiler\Smalltalk Parser'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM').
+
+package setManualPrerequisites: #(
+	'Dolphin Anonymous Classes').
 
 package!
 
@@ -205,6 +217,11 @@ DolphinTest subclass: #ClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #DateAndTimeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #DateTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -216,6 +233,11 @@ DolphinTest subclass: #DiskVolumeInformationTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #DolphinCollectionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #DurationTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -285,6 +307,11 @@ DolphinTest subclass: #IntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #LocaleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #MemoryManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -306,6 +333,11 @@ DolphinTest subclass: #PackageTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ProcessTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ScaledDecimalTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -381,7 +413,7 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinCollectionTest subclass: #SetTest
-	instanceVariableNames: 'primes'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -526,6 +558,16 @@ IntegerTest subclass: #LargeIntegerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IntegerTest subclass: #SmallIntegerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LocaleTest subclass: #SmalltalkLocaleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LocaleTest subclass: #WindowsLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -729,12 +771,12 @@ runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	self writeJunitTestLog: aTestSuite result: result.
 	^result!
 
-setTestAttributes: suitesNode id: idInteger name: suiteName duration: durationInteger tests: testsInteger failures: failuresInteger errors: errorsInteger skipped: skippedInteger
+setTestAttributes: suitesNode id: idInteger name: suiteName duration: aDuration tests: testsInteger failures: failuresInteger errors: errorsInteger skipped: skippedInteger
 	| stream attribs |
 	attribs := suitesNode attributes.
 	idInteger ifNotNil: [attribs at: 'id' put: idInteger].
 	stream := String writeStream.
-	durationInteger / 1.0e6 printOn: stream decimalPlaces: 6.
+	aDuration asSeconds asFloat printOn: stream decimalPlaces: 6.
 	attribs
 		at: 'name' put: suiteName;
 		at: 'tests' put: testsInteger displayString;
@@ -745,11 +787,11 @@ setTestAttributes: suitesNode id: idInteger name: suiteName duration: durationIn
 		free!
 
 writeJunitTestLog: aTestSuite result: aTestResult
-	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName testsInteger errorsInteger failuresInteger skippedInteger durationInteger |
+	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName testsInteger errorsInteger failuresInteger skippedInteger duration |
 	suiteName := aTestSuite name ?? 'RegressionTests'.
 	doc := IXMLDOMDocument3 new.
 	suitesNode := doc addElement: 'testsuites'.
-	durationInteger := aTestResult duration.
+	duration := aTestResult duration.
 	testsInteger := aTestResult runCount.
 	errorsInteger := aTestResult errorCount.
 	failuresInteger := aTestResult failureCount.
@@ -758,12 +800,13 @@ writeJunitTestLog: aTestSuite result: aTestResult
 		setTestAttributes: suitesNode
 		id: nil
 		name: suiteName
-		duration: durationInteger
+		duration: duration
 		tests: testsInteger
 		failures: failuresInteger
 		errors: errorsInteger
 		skipped: skippedInteger.
-	currentId := classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
+	currentId := classTests := classErrors := classFailures := classSkipped := 0.
+	classElapsed := Duration zero.
 	currentClass := nil.
 	suiteNode := nil.
 	(aTestResult results asSortedCollection: [:a :b | a case <= b case]) do: 
@@ -784,7 +827,8 @@ writeJunitTestLog: aTestSuite result: aTestResult
 								skipped: classSkipped.
 							suiteNode free].
 					currentClass := each case class.
-					classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
+					classTests := classErrors := classFailures := classSkipped := 0.
+					classElapsed := Duration zero.
 					suiteNode := suitesNode addElement: 'testsuite'.
 					currentId := currentId + 1].
 			classTests := classTests + 1.
@@ -797,10 +841,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 			outcome := each outcome.
 			outcome == #passed
 				ifTrue: 
-					[| time |
-					time := String writeStream.
-					each duration / 1.0e6 printOn: time decimalPlaces: 6.
-					caseAttribs at: 'time' put: time contents].
+					[caseAttribs at: 'time' put: (each duration printStringFormat: 'SFFFFFF')].
 			outcome == #error
 				ifTrue: 
 					[| errorNode |

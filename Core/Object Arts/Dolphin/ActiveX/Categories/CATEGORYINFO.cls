@@ -106,6 +106,6 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
-!CATEGORYINFO class categoriesFor: #defineFields!initializing!public! !
+!CATEGORYINFO class categoriesFor: #defineFields!public!template definition! !
 !CATEGORYINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

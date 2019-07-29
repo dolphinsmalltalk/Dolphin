@@ -62,16 +62,15 @@ drawItem: aCanvas bounding: aRectangle
 	self drawTextOn: aCanvas offset: textOffset.
 	aCanvas restore!
 
-drawTextOn: aCanvas offset: anInteger 
+drawTextOn: aCanvas offset: anInteger
 	| text |
 	text := self getTextBlock ifNil: [''] ifNotNil: [:getText | getText value: model value].
-	text notEmpty 
-		ifTrue: 
-			[aCanvas
-				backgroundMode: TRANSPARENT;
-				formatText: text
-					in: (self rectangle insetOriginBy: anInteger @ 0)
-					flags: ##(DT_SINGLELINE | DT_VCENTER)]!
+	text isEmpty ifTrue: [^self].
+	aCanvas
+		backgroundMode: TRANSPARENT;
+		formatText: text
+			in: (self rectangle insetOriginBy: anInteger @ 0)
+			flags: ##(DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX)!
 
 getImageBlock
 	"Answer the <monadicValuable> to use to find out the image index of an object that will

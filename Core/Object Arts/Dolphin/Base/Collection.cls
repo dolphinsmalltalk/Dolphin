@@ -406,9 +406,6 @@ isEmpty
 	^self size == 0
 !
 
-max
-	^ self inject: self anyOne into: [:max :each | max max: each]!
-
 maxPrint
 	"Private - Answer the maximum number of characters to be printed onto a stream as 
 	the string representation of the receiver."
@@ -518,6 +515,11 @@ remove: oldElement ifAbsent: exceptionHandler
 	Must be implemented by subclasses which comply with <extensibleCollection>."
 
 	^self subclassResponsibility!
+
+removeAll
+	"Remove each element from the receiver and leave it empty."
+
+	self do: [:each | self remove: each]!
 
 removeAll: oldElements
 	"Remove each element of the <collection>, oldElements, from the receiver, raising
@@ -636,7 +638,6 @@ union: comperand
 !Collection categoriesFor: #inject:into:!enumerating!public! !
 !Collection categoriesFor: #intersection:!public!set operations! !
 !Collection categoriesFor: #isEmpty!public!testing! !
-!Collection categoriesFor: #max!public!searching! !
 !Collection categoriesFor: #maxPrint!constants!private! !
 !Collection categoriesFor: #newSelection!enumerating!private! !
 !Collection categoriesFor: #noDifference:!public!set operations! !
@@ -650,6 +651,7 @@ union: comperand
 !Collection categoriesFor: #reject:!enumerating!public! !
 !Collection categoriesFor: #remove:!public!removing! !
 !Collection categoriesFor: #remove:ifAbsent:!public!removing! !
+!Collection categoriesFor: #removeAll!public! !
 !Collection categoriesFor: #removeAll:!public!removing! !
 !Collection categoriesFor: #removeAllSuchThat:!public!removing! !
 !Collection categoriesFor: #select:!enumerating!public! !

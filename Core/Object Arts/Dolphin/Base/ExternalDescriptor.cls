@@ -326,7 +326,7 @@ initialize
 	self initializeExternalRefTypes.
 
 	"Remember that bytes and words are still pushed as 32-bit values"
-	TypeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
+	TypeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
 	TypeSizes whileMutableDo: 
 			[TypeSizes
 				at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
@@ -377,7 +377,8 @@ initializeExternalRefTypes
 		at: ExtCallArgGUID + 1 put: #REFGUID;
 		at: ExtCallArgSTRUCT + 1 put: ExtCallArgLP;
 		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
-		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP.
+		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
+		at: ExtCallArgNTSTATUS + 1 put: #SDWORD.
 	ExternalReferenceTypes isImmutable: true!
 
 initializeExternalTypes
@@ -409,7 +410,8 @@ initializeExternalTypes
 		at: 'variant' put: ExtCallArgVARIANT;
 		at: 'varbool' put: ExtCallArgVARBOOL;
 		at: 'guid' put: ExtCallArgGUID;
-		at: 'date' put: ExtCallArgDATE.
+		at: 'date' put: ExtCallArgDATE;
+		at: 'ntstatus' put: ExtCallArgNTSTATUS.
 	"void is only valid as a return type, not an argument type."
 	ExternalValueTypes at: 'void' put: ExtCallArgVOID.
 

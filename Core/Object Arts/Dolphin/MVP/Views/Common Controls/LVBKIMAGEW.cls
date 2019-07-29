@@ -168,6 +168,6 @@ defineFields
 
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
-!LVBKIMAGEW class categoriesFor: #defineFields!initializing!public! !
+!LVBKIMAGEW class categoriesFor: #defineFields!public!template definition! !
 !LVBKIMAGEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

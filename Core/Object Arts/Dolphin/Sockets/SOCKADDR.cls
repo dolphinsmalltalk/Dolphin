@@ -130,7 +130,7 @@ fromString: aString
 getFieldNames
 	^#(#sa_family)! !
 !SOCKADDR class categoriesFor: #addressFamily!constants!public! !
-!SOCKADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
 !SOCKADDR class categoriesFor: #fromString:!public! !
 !SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !

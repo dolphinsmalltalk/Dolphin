@@ -11,7 +11,7 @@ CompileFailedMethod comment: 'In certain situations (package loading, method dro
 If you want to locate all of these compilation failures remaining in your image siimply evaluate:
 
 SmalltalkSystem current browseCompileFailedMethods'!
-!CompileFailedMethod categoriesForClass!Kernel-Methods! !
+!CompileFailedMethod categoriesForClass!System-Compiler! !
 !CompileFailedMethod methodsFor!
 
 getDebugInfo

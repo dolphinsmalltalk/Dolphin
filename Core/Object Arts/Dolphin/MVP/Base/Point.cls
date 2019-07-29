@@ -356,7 +356,9 @@ one
 	^self x: 1 y: 1!
 
 unitialize
-	self addClassVariable: 'Zero' value: nil!
+	(classPool bindingFor: 'Zero')
+		isImmutable: false;
+		value: nil!
 
 x: xCoord y: yCoord 
 	"Answer a new instance of the receiver with the specified

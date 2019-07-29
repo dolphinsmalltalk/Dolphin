@@ -116,6 +116,6 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
-!PANOSE class categoriesFor: #defineFields!initializing!public! !
+!PANOSE class categoriesFor: #defineFields!public!template definition! !
 !PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

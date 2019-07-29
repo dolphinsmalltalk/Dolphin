@@ -76,7 +76,7 @@ public:
 	__forceinline MWORD pointersSize() const				{ ASSERT(isPointers());	return getSize()/sizeof(MWORD); }
 	__forceinline int pointersSizeForUpdate() const			{ ASSERT(isPointers());	return static_cast<int>(m_size)/static_cast<int>(sizeof(MWORD)); }
 	__forceinline MWORD bytesSize()	const					{ ASSERT(isBytes()); return getSize(); }
-	__forceinline int bytesSizeForUpdate() const			{ ASSERT(isBytes());  return m_size; }
+	__forceinline int bytesSizeForUpdate() const			{ ASSERT(isBytes()); return m_size; }
 
 	// The size of a byte object can be one more than it pretends because of the hidden null terminator!
 	// Answers actual byte (heap) size of the object pointed at by this OTE
@@ -151,8 +151,9 @@ public:
 	__forceinline OTEFlags::Spaces heapSpace() const		{ return static_cast<OTEFlags::Spaces>(m_flags.m_space); }
 	__forceinline bool flagsAllMask(BYTE mask) const		{ return (m_ubFlags & mask) == mask; }
 
-	hash_t identityHash()
+	__forceinline hash_t identityHash()
 	{
+		// This needs to be a loop in case nextIdentityHash ever returns zero
 		while (m_idHash == 0)
 		{
 			m_idHash = ObjectMemory::nextIdentityHash();

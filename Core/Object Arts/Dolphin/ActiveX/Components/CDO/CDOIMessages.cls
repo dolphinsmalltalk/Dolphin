@@ -45,8 +45,7 @@ Delete: index
 	"
 
 	<virtual stdcall: hresult 10 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 DeleteAll
 	"Invoke the DeleteAll() method of the COM object wrapped by the receiver.
@@ -56,8 +55,7 @@ DeleteAll
 	"
 
 	<virtual stdcall: hresult 11>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 fileName: var
 	"Answer the <bstr> value of the 'FileName' property of the receiver.
@@ -79,8 +77,7 @@ get__NewEnum: retval
 	"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Count: varCount
 	"Private - Get the value of the 'Count' property of the receiver.
@@ -91,8 +88,7 @@ get_Count: varCount
 	"
 
 	<virtual stdcall: hresult 9 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_FileName: var FileName: fileName
 	"Private - Get the value of the 'FileName' property of the receiver.
@@ -104,8 +100,7 @@ get_FileName: var FileName: fileName
 	"
 
 	<virtual stdcall: hresult 13 variant bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Item: index ppMessage: ppMessage
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -117,8 +112,7 @@ get_Item: index ppMessage: ppMessage
 	"
 
 	<virtual stdcall: hresult 8 sdword CDOIMessage**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

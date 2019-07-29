@@ -26,8 +26,7 @@ AddError: pszPropName pExcepInfo: pExcepInfo
 	"
 
 	<virtual stdcall: hresult 4 lpwstr EXCEPINFO*>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IErrorLog categoriesFor: #addError:pExcepInfo:!**auto generated**!methods!public! !
 !IErrorLog categoriesFor: #AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
 

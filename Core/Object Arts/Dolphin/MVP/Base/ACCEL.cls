@@ -55,6 +55,6 @@ defineFields
 
 getFieldNames
 	^#(#fVirt #key #cmd)! !
-!ACCEL class categoriesFor: #defineFields!initializing!public! !
+!ACCEL class categoriesFor: #defineFields!public!template definition! !
 !ACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -341,7 +341,10 @@ millisecondClockValue
 	and which also does not suffer the problem of wrapping after ~49 days of uptime."
 
 	<primitive: 174>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
+
+msgWindow
+	^msgWindow!
 
 onExit
 	"Private - The system is closing down, release system resources."
@@ -372,41 +375,25 @@ preTranslateMessage: aMSG
 	^false!
 
 primSampleInterval: anInteger
-	"Private - Set the interval (measured in milliseconds) between polls of the host system input
-	queue when running background processes. After at least the polling interval (on average 1.5
-	times the interval) following the last invocation of #isInputReady, or the dispatch of the
-	last message through the VM window proc, the VM will test the queue, and will signal the
-	inputSemaphore if there is any input ready. If anInteger is 0, the sample counter is reset
-	to the current sampling interval value (which is answered)."
+	"Private - Set the interval (measured in milliseconds) between polls of the host system input queue when running background processes. After at least the polling interval (on average 1.5 times the interval) following the last invocation of #isInputReady, or the dispatch of the last message through the VM window proc, the VM will test the queue, and will signal the inputSemaphore if there is any input ready. If anInteger is 0, the sample counter is reset to the current sampling interval value (which is answered)."
 
 	"Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger."
+		InvalidParameter1	- anInteger is not a SmallInteger."
 
 	"Notes:
 
-	1) The sampling interval only comes into play when running CPU intensive background
-	Processes - it has no significance if you never run lengthy computations in background
-	Processes.
+	1) The sampling interval only comes into play when running CPU intensive background Processes - it has no significance if you never run lengthy computations in background Processes.
 
-	2) It determines the frequency with which the VM samples the Windows message queue and
-	checks for Ctrl+Break.
+	2) It determines the frequency with which the VM samples the Windows message queue and checks for Ctrl+Break.
 
-	3) During normal operation the sampling is suppressed by the main thread's message loop (in
-	fact by it calling #isInputReady:, and by the arrival of messages dispatched through the
-	VM's window procedure..
+	3) During normal operation the sampling is suppressed by the main thread's message loop (in fact by it calling #isInputReady:, and by the arrival of messages dispatched through the VM's window procedure..
 
-	4) The choice of sampling interval is a trade off between best performance and
-	responsiveness when running CPU intensive background tasks continually. Increasing the value
-	may give a slight performance boost, but it will probably not be significant. Reducing the
-	value can improve responsiveness, but if it is reduced much below about 30mS then the cost
-	will start to become measurable.
+	4) The choice of sampling interval is a trade off between best performance and responsiveness when running CPU intensive background tasks continually. Increasing the value may give a slight performance boost, but it will probably not be significant. Reducing the value can improve responsiveness, but if it is reduced much below about 30mS then the cost will start to become measurable.
 
-	4) The sampling can be turned off completely by specifying a value of -1 to
-	#primSampleInterval:, but this will disable CTRL+BREAK, and switching away from background
-	processes, so this should be done programmatically for short periods only."
+	4) The sampling can be turned off completely by specifying a value of -1 to #primSampleInterval:, but this will disable CTRL+BREAK, and switching away from background processes, so this should be done programmatically for short periods only."
 
 	<primitive: 94>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 processDeferredActions
 	"Process all deferred actions. Normally these are processed one at a time when the message
@@ -655,6 +642,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #main:!initializing!private! !
 !InputState categoriesFor: #mainLoop!message dispatching!private! !
 !InputState categoriesFor: #millisecondClockValue!enquiries!private! !
+!InputState categoriesFor: #msgWindow!accessing!private! !
 !InputState categoriesFor: #onExit!event handling!private! !
 !InputState categoriesFor: #postAction:!message dispatching!public! !
 !InputState categoriesFor: #postQuit:!operations-shutdown!private! !

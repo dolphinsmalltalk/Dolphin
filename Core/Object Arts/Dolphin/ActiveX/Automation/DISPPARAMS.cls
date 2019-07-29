@@ -239,7 +239,7 @@ zeroArgs
 	are no arguments."
 
 	^ZeroArgs! !
-!DISPPARAMS class categoriesFor: #defineFields!initializing!public! !
+!DISPPARAMS class categoriesFor: #defineFields!public!template definition! !
 !DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
 !DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !

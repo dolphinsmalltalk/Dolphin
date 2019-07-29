@@ -46,6 +46,6 @@ defineFields
 
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
-!PAINTSTRUCT class categoriesFor: #defineFields!initializing!public! !
+!PAINTSTRUCT class categoriesFor: #defineFields!public!template definition! !
 !PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

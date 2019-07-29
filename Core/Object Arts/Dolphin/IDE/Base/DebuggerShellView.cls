@@ -10,27 +10,23 @@ DebuggerShellView comment: 'DebuggerShellView is a specialised <ShellView> used 
 !DebuggerShellView categoriesForClass!Unclassified! !
 !DebuggerShellView methodsFor!
 
-primHookWindowCreate: hookBoolean 
+primHookWindowCreate: hookBoolean
 	"Private - Hook the first window creation event for the receiver.
-	We override this to force the hooking if another window is currently
-	hogging it. This prevents recursive walkbacks in some situations.
-	Primitive failure reasons:
-		0 	- hookBoolean not a boolean
-		1	- already hooked by the view in the failure data
-	"
+	We override this to force the hooking if another window is currently hogging it. This prevents recursive walkbacks in some situations."
+
+	"Primitive failure reasons:
+		InvalidParameter1	- hookBoolean not a boolean
+		IllegalStateChange 	- already hooked by another view
+		NotSupported		- The VM is for console apps only"
 
 	<primitive: 108>
-	^Processor activeProcess primitiveFailureCode == 1 
+	^_failureCode == _PrimitiveFailureCode.IllegalStateChange
 		ifTrue: 
 			["First forcibly unhook so error walkback can be displayed"
-
-			| hooked |
-			hooked := Processor activeProcess primitiveFailureData.
-			hooked primHookWindowCreate: false.
-			Notification 
-				signal: 'Forcibly unhooked failed window create of ' , hooked basicPrintString.
+			self primHookWindowCreate: nil.
+			Notification signal: 'Forcibly unhooked failed window creation'.
 			"Now retry"
 			super primHookWindowCreate: hookBoolean]
-		ifFalse: [self primitiveFailed]! !
+		ifFalse: [self primitiveFailed: _failureCode]! !
 !DebuggerShellView categoriesFor: #primHookWindowCreate:!helpers!private! !
 

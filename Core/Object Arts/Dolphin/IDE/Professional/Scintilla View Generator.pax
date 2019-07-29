@@ -22,18 +22,17 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: 'Dolphin Refactoring Browser';
-	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
-	add: '..\..\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'Dolphin Refactoring Browser'
+	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
+	'..\..\System\Compiler\Smalltalk Parser').
 
 package!
 

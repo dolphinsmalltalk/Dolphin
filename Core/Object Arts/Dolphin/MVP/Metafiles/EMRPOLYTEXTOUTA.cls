@@ -167,7 +167,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYTEXTOUTA with: EMR_POLYTEXTOUTW! !
-!EMRPOLYTEXTOUTA class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYTEXTOUTA class categoriesFor: #defineFields!public!template definition! !
 !EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

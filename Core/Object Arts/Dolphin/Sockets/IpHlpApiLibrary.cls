@@ -25,7 +25,7 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 			BYTE* PrefixLength);"
 
 	<stdcall: dword ParseNetworkString lpwstr dword NET_ADDRESS_INFO* word* byte*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IpHlpApiLibrary categoriesFor: #parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
 
 !IpHlpApiLibrary class methodsFor!

@@ -154,7 +154,7 @@ onStartup
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
 !OLECountedArray class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OLECountedArray class categoriesFor: #defineFields!initializing!public! !
+!OLECountedArray class categoriesFor: #defineFields!public!template definition! !
 !OLECountedArray class categoriesFor: #initialize!development!initializing!private! !
 !OLECountedArray class categoriesFor: #new:!instance creation!public! !
 !OLECountedArray class categoriesFor: #onStartup!event handling!private! !

@@ -118,7 +118,7 @@ name
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(ClassBuilder new)
-		className: aClassSymbol asString;
+		className: aClassSymbol;
 		instanceVariableString: instVarString;
 		classVariableString: classVarString;
 		sharedPoolString: poolDictString;
@@ -199,7 +199,7 @@ yourAddress
 	^0! !
 !UndefinedObject categoriesFor: #??!converting!public! !
 !UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
-!UndefinedObject categoriesFor: #bindingFor:!compiling!public! !
+!UndefinedObject categoriesFor: #bindingFor:!binding!public! !
 !UndefinedObject categoriesFor: #deepCopy!copying!public! !
 !UndefinedObject categoriesFor: #displayOn:!displaying!public! !
 !UndefinedObject categoriesFor: #ifNil:!control flow!public! !

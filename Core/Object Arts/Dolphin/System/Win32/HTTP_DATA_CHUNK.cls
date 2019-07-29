@@ -231,6 +231,6 @@ defineFields
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
 !HTTP_DATA_CHUNK class categoriesFor: #data:!instance creation!public! !
-!HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_DATA_CHUNK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

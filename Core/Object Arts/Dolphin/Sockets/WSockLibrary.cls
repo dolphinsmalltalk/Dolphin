@@ -13,23 +13,23 @@ This library contains functions pertaining to the use of TCP/IP sockets under Wi
 !WSockLibrary categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
 !WSockLibrary methodsFor!
 
-accept: p1 addr: p2 addrlen: p3 
+accept: p1 addr: p2 addrlen: p3
 	"SOCKET PASCAL FAR accept (
 		SOCKET s,
 		struct sockaddr FAR *addr,
 		int FAR *addrlen);"
 
 	<stdcall: dword accept dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-bind: p1 addr: p2 namelen: p3 
+bind: p1 addr: p2 namelen: p3
 	"int PASCAL FAR bind (
 		SOCKET s,
 		const struct sockaddr FAR *addr,
 		int namelen);"
 
 	<stdcall: sdword bind dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 close
 	"We've finished using the socket system."
@@ -40,74 +40,74 @@ close
 			self wsaCleanup].
 	super close!
 
-closesocket: p1 
+closesocket: p1
 	"int PASCAL FAR closesocket (
 		SOCKET s);"
 
 	<stdcall: sdword closesocket dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-connect: p1 name: p2 namelen: p3 
+connect: p1 name: p2 namelen: p3
 	"int PASCAL FAR connect (
 		SOCKET s,
 		const struct sockaddr FAR *name,
 		int namelen);"
 
 	<overlap stdcall: sdword connect dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostbyaddr: p1 len: p2 type: p3 
+gethostbyaddr: p1 len: p2 type: p3
 	"struct hostent FAR * PASCAL FAR gethostbyaddr(
 		const char FAR * addr,
 		int len,
 		int type);"
 
 	<overlap stdcall: HOSTENT* gethostbyaddr lpstr sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostbyname: aString 
+gethostbyname: aString
 	"Answer host information corresponding to a host name from the host database.
 
 		struct hostent FAR * PASCAL FAR gethostbyname(
 			const char FAR * name);"
 
 	<overlap stdcall: HOSTENT* gethostbyname lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-gethostname: p1 namelen: p2 
+gethostname: p1 namelen: p2
 	"int PASCAL FAR gethostname (
 		char FAR * name,
 		int namelen);"
 
 	<stdcall: sdword gethostname lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getpeername: p1 name: p2 namelen: p3 
+getpeername: p1 name: p2 namelen: p3
 	"int PASCAL FAR getpeername (
 		SOCKET s,
 		struct sockaddr FAR *name,
 		int FAR * namelen);"
 
 	<stdcall: sdword getpeername dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getprotobyname: p1 
+getprotobyname: p1
 	"struct protoent FAR * PASCAL FAR getprotobyname( 
 		const char FAR *name 	
 		);"
 
 	<stdcall: PROTOENT* getprotobyname lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getprotobynumber: p1 
+getprotobynumber: p1
 	"struct protoent FAR * PASCAL FAR getprotobynumber( 
 		int proto 	
 		);"
 
 	<stdcall: PROTOENT* getprotobynumber sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getservbyname: name proto: proto 
+getservbyname: name proto: proto
 	"Answer service information corresponding to a service name and protocol.
 	proto can be nil to answer the first service entry with a matching name.
 
@@ -117,9 +117,9 @@ getservbyname: name proto: proto
 		);"
 
 	<stdcall: SERVENT* getservbyname lpstr lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getservbyport: port proto: proto 
+getservbyport: port proto: proto
 	"Answer service information corresponding to a port and protocol.
 	If proto is nil, then answers the first service entry which matches the port.
 
@@ -129,18 +129,18 @@ getservbyport: port proto: proto
 		);"
 
 	<stdcall: SERVENT* getservbyport sdword lpstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getsockname: p1 name: p2 namelen: p3 
+getsockname: p1 name: p2 namelen: p3
 	"int PASCAL FAR getsockname (
 		SOCKET s,
 		struct sockaddr FAR *name,
 		int FAR * namelen);"
 
 	<stdcall: sdword getsockname dword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-getsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5 
+getsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5
 	"int PASCAL FAR getsockopt (
 		SOCKET s,
 		int level,
@@ -149,35 +149,35 @@ getsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5
 		int FAR *optlen);"
 
 	<stdcall: sdword getsockopt dword sdword sdword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-htonl: p1 
+htonl: p1
 	"u_long PASCAL FAR htonl (
 		u_long hostlong);"
 
 	<stdcall: dword htonl dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-htons: p1 
+htons: p1
 	"u_short PASCAL FAR htons (
 		u_short hostshort);"
 
 	<stdcall: word htons word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-inet_addr: p1 
+inet_addr: p1
 	"unsigned long PASCAL FAR inet_addr (
 		const char FAR * cp);"
 
 	<stdcall: dword inet_addr lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-inetntoa: p1 
+inetntoa: p1
 	"char FAR * PASCAL FAR inet_ntoa (
 		struct in_addr in);"
 
 	<stdcall: lpvoid inet_ntoa lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize the library - note the is called when the library is opened or re-opened."
@@ -191,38 +191,38 @@ initialize
 			[wsaData := nil.
 			SocketError signalWith: res]!
 
-ioctlsocket: p1 cmd: p2 argp: p3 
+ioctlsocket: p1 cmd: p2 argp: p3
 	"int PASCAL FAR ioctlsocket (
 		SOCKET s,
 		long cmd,
 		u_long FAR *argp);"
 
 	<stdcall: sdword ioctlsocket dword sdword lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-listen: p1 backlog: p2 
+listen: p1 backlog: p2
 	"int PASCAL FAR listen (
 		SOCKET s,
 		int backlog);"
 
 	<stdcall: sdword listen dword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-ntohl: p1 
+ntohl: p1
 	"u_long PASCAL FAR ntohl (
 		u_long netlong);"
 
 	<stdcall: dword ntohl dword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-ntohs: p1 
+ntohs: p1
 	"u_short PASCAL FAR ntohs (
 		u_short netshort);"
 
 	<stdcall: word ntohs word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-recv: p1 buf: p2 len: p3 flags: p4 
+recv: p1 buf: p2 len: p3 flags: p4
 	"int PASCAL FAR recv (
 		SOCKET s,
 		char FAR * buf,
@@ -230,9 +230,9 @@ recv: p1 buf: p2 len: p3 flags: p4
 		int flags);"
 
 	<stdcall: sdword recv dword lpvoid sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-recvfrom: p1 buf: p2 len: p3 flags: p4 from: p5 fromlen: p6 
+recvfrom: p1 buf: p2 len: p3 flags: p4 from: p5 fromlen: p6
 	"int PASCAL FAR recvfrom (
 		SOCKET s,
 		char FAR * buf,
@@ -242,9 +242,9 @@ recvfrom: p1 buf: p2 len: p3 flags: p4 from: p5 fromlen: p6
 		int FAR * fromlen);"
 
 	<stdcall: sdword recvfrom dword lpvoid sdword sdword lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-select: p1 readfds: p2 writefds: p3 exceptfds: p4 timeout: p5 
+select: p1 readfds: p2 writefds: p3 exceptfds: p4 timeout: p5
 	"int PASCAL FAR select (
 		int nfds,
 		fd_set FAR *readfds,
@@ -253,9 +253,9 @@ select: p1 readfds: p2 writefds: p3 exceptfds: p4 timeout: p5
 		const struct timeval FAR *timeout);"
 
 	<stdcall: sdword select sdword lpvoid lpvoid lpvoid lpvoid>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-send: p1 buf: p2 len: p3 flags: p4 
+send: p1 buf: p2 len: p3 flags: p4
 	"int PASCAL FAR send (
 		SOCKET s,
 		const char FAR * buf,
@@ -263,9 +263,9 @@ send: p1 buf: p2 len: p3 flags: p4
 		int flags);"
 
 	<stdcall: sdword send dword lpvoid sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-sendto: p1 buf: p2 len: p3 flags: p4 to: p5 tolen: p6 
+sendto: p1 buf: p2 len: p3 flags: p4 to: p5 tolen: p6
 	"int PASCAL FAR sendto (
 		SOCKET s,
 		const char FAR * buf,
@@ -275,9 +275,9 @@ sendto: p1 buf: p2 len: p3 flags: p4 to: p5 tolen: p6
 		int tolen);"
 
 	<stdcall: sdword sendto dword lpvoid sdword sdword lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-setsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5 
+setsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5
 	"int PASCAL FAR setsockopt (
 		SOCKET s,
 		int level,
@@ -286,39 +286,39 @@ setsockopt: p1 level: p2 optname: p3 optval: p4 optlen: p5
 		int optlen);"
 
 	<stdcall: sdword setsockopt dword sdword sdword lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-shutdown: p1 how: p2 
+shutdown: p1 how: p2
 	"int PASCAL FAR shutdown (
 		SOCKET s,
 		int how);"
 
 	<stdcall: sdword shutdown dword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-socket: p1 type: p2 protocol: p3 
+socket: p1 type: p2 protocol: p3
 	"SOCKET PASCAL FAR socket (int af, int type, int protocol);"
 
 	<stdcall: dword socket sdword sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetHostByAddr: p1 wMsg: p2 addr: p3 len: p4 type: p5 buf: p6 buflen: p7 
+wsaAsyncGetHostByAddr: p1 wMsg: p2 addr: p3 len: p4 type: p5 buf: p6 buflen: p7
 	"HANDLE PASCAL FAR WSAAsyncGetHostByAddr(HWND hWnd, u_int wMsg,
                                         const char FAR * addr, int len, int type,
                                         char FAR * buf, int buflen);"
 
 	<stdcall: handle WSAAsyncGetHostByAddr handle dword lpvoid sdword sdword lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetHostByName: p1 wMsg: p2 name: p3 buf: p4 buflen: p5 
+wsaAsyncGetHostByName: p1 wMsg: p2 name: p3 buf: p4 buflen: p5
 	"HANDLE PASCAL FAR WSAAsyncGetHostByName(HWND hWnd, u_int wMsg,
                                         const char FAR * name, char FAR * buf,
                                         int buflen);"
 
 	<stdcall: handle WSAAsyncGetHostByName handle dword lpvoid lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetProtoByName: p1 wMsg: p2 name: p3 buf: p4 buflen: p5 
+wsaAsyncGetProtoByName: p1 wMsg: p2 name: p3 buf: p4 buflen: p5
 	"HANDLE WSAAsyncGetProtoByName ( 
 		HWND hWnd,	
 		u_int wMsg,	
@@ -328,9 +328,9 @@ wsaAsyncGetProtoByName: p1 wMsg: p2 name: p3 buf: p4 buflen: p5
 		);"
 
 	<stdcall: handle WSAAsyncGetProtoByName handle dword lpvoid lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetProtoByNumber: p1 wMsg: p2 number: p3 buf: p4 buflen: p5 
+wsaAsyncGetProtoByNumber: p1 wMsg: p2 number: p3 buf: p4 buflen: p5
 	"HANDLE WSAAsyncGetProtoByNumber ( 
 		HWND hWnd,	
 		u_int wMsg,	
@@ -340,9 +340,9 @@ wsaAsyncGetProtoByNumber: p1 wMsg: p2 number: p3 buf: p4 buflen: p5
 		);"
 
 	<stdcall: handle WSAAsyncGetProtoByNumber handle dword sdword lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetServByName: p1 wMsg: p2 name: p3 proto: p4 buf: p5 buflen: p6 
+wsaAsyncGetServByName: p1 wMsg: p2 name: p3 proto: p4 buf: p5 buflen: p6
 	"HANDLE WSAAsyncGetServByName ( 
 		HWND hWnd,	
 		u_int wMsg,	
@@ -353,9 +353,9 @@ wsaAsyncGetServByName: p1 wMsg: p2 name: p3 proto: p4 buf: p5 buflen: p6
 		);"
 
 	<stdcall: handle WSAAsyncGetServByName handle dword lpvoid lpvoid lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncGetServByPort: p1 wMsg: p2 port: p3 proto: p4 buf: p5 buflen: p6 
+wsaAsyncGetServByPort: p1 wMsg: p2 port: p3 proto: p4 buf: p5 buflen: p6
 	"HANDLE WSAAsyncGetServByPort ( 
 		HWND hWnd,	
 		u_int wMsg,	
@@ -366,9 +366,9 @@ wsaAsyncGetServByPort: p1 wMsg: p2 port: p3 proto: p4 buf: p5 buflen: p6
 		);"
 
 	<stdcall: handle WSAAsyncGetServByPort handle dword sdword lpvoid lpvoid sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaAsyncSelect: p1 hWnd: p2 wMsg: p3 lEvent: p4 
+wsaAsyncSelect: p1 hWnd: p2 wMsg: p3 lEvent: p4
 	"int PASCAL FAR WSAAsyncSelect(
 		SOCKET s,
 		HWND hWnd,
@@ -376,56 +376,56 @@ wsaAsyncSelect: p1 hWnd: p2 wMsg: p3 lEvent: p4
 		long lEvent);"
 
 	<stdcall: sdword WSAAsyncSelect dword handle dword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaCancelAsyncRequest: p1 
+wsaCancelAsyncRequest: p1
 	"int WSACancelAsyncRequest( 
 		HANDLE hAsyncTaskHandle 	
 		);"
 
 	<stdcall: sdword WSACancelAsyncRequest handle>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaCancelBlockingCall
 	"int WSACancelBlockingCall(void);"
 
 	<stdcall: sdword WSACancelBlockingCall>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaCleanup
 	"int WSACleanup(void);"
 
 	<stdcall: sdword WSACleanup>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaGetLastError
 	"int WSAGetLastError(void);"
 
 	<stdcall: sdword WSAGetLastError>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 wsaIsBlocking
 	"BOOL WSAIsBlocking(void);"
 
 	<stdcall: bool WSAIsBlocking>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaSetLastError: p1 
+wsaSetLastError: p1
 	"void WSASetLastError( 
 		int iError 	
 		);"
 
 	<stdcall: void WSASetLastError sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
-wsaStartup: p1 lpWSAData: p2 
+wsaStartup: p1 lpWSAData: p2
 	"int WSAStartup(
 		WORD wVersionRequested,
 		LPWSADATA lpWSAData
 		);"
 
 	<stdcall: sdword WSAStartup word lpvoid>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !WSockLibrary categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
 !WSockLibrary categoriesFor: #bind:addr:namelen:!public!win32 functions-sockets library! !
 !WSockLibrary categoriesFor: #close!public!realizing/unrealizing! !

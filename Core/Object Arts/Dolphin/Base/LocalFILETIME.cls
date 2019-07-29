@@ -48,7 +48,13 @@ now
 		LocalFILETIME now
 	"
 
-	^self fromSYSTEMTIME: SYSTEMTIME now! !
+	| lib answer |
+	lib := KernelLibrary default.
+	answer := LocalFILETIME new.
+	lib getSystemTimePreciseAsFileTime: answer.
+	"We can get away with passing in the same buffer for output as the input"
+	(lib fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [lib systemError].
+	^answer! !
 !LocalFILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
 !LocalFILETIME class categoriesFor: #now!instance creation!public! !
 

@@ -47,6 +47,6 @@ defineFields
 
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
-!FINDTEXTEX class categoriesFor: #defineFields!initializing!public! !
+!FINDTEXTEX class categoriesFor: #defineFields!public!template definition! !
 !FINDTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

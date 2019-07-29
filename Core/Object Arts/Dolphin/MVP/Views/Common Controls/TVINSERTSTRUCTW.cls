@@ -55,6 +55,6 @@ defineFields
 
 getFieldNames
 	^#(#hParent #hInsertAfter #item)! !
-!TVINSERTSTRUCTW class categoriesFor: #defineFields!initializing!public! !
+!TVINSERTSTRUCTW class categoriesFor: #defineFields!public!template definition! !
 !TVINSERTSTRUCTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

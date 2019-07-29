@@ -153,19 +153,17 @@ dequeueBereavementInto: anArray
 	with its contents. Answers true if an element was dequeued into anArray, or false if the queue is empty.
 
 	Primitive failure reasons:
-		0 -	anArray is not an Array, or is not of sufficient size to hold a complete queue entry."
+		InvalidParameter1	- anArray is not an Array, or is not of sufficient size to hold a complete queue entry."
 
 	<primitive: 119>
-	^self primitiveFailed
-!
+	^self primitiveFailed: _failureCode!
 
 dequeueForFinalization
 	"Private - Answer the next entry in the system finalization queue, or nil if it is
 	empty. The primitive should not fail."
 
 	<primitive: 118>
-	^self primitiveFailed
-!
+	^self primitiveFailed: _failureCode!
 
 directFunerals
 	"Private - Dequeue bereaved objects from the system bereavement queue, and send them an 
@@ -310,7 +308,7 @@ millisecondClock
 	"Private - Answer the current millisecond clock value."
 
 	<primitive: 174>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 minGCInterval
 	"Private - Answer the minimum interval (in milliseconds) between idle time GCs"
@@ -380,18 +378,16 @@ primCollectGarbage: flags
 	"
 
 	<primitive: 112>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 primCompact
 	"Private - Invoke the slow (compacting) garbage collector. Answers the number of
 	objects in the system following compaction. The primitive should not fail."
 
 	<primitive: 115>
-	^self primitiveFailed
+	^self primitiveFailed: _failureCode!
 
-!
-
-primInstanceStats: anArrayOrNil 
+primInstanceStats: anArrayOrNil
 	"Private - Answer a packed <Array> of triplets {class, instance count, approximate storage
 	usage}. If the argument is nil, the answer will contain a triplet for every class in the
 	system. If the argument is an array, it is expected to contain the classes for which
@@ -401,10 +397,10 @@ primInstanceStats: anArrayOrNil
 	unless requesting stats for several classes at once.
 
 	Primitive failure reasons: 
-		0 - anArrayOrNil is not an Array, or nil."
+		ObjectTypeMismatch 	- anArrayOrNil is not an Array, or nil."
 
 	<primitive: 179>
-	^self primitiveFailed!
+	^self primitiveFailed: _failureCode!
 
 registerObjects
 	"Private - Register the finalize and bereavement queue Semaphores with the VM."

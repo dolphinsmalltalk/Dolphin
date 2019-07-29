@@ -37,21 +37,22 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Automation\ActiveX Automation';
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\COM\OLE COM';
-	add: '..\..\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\COM\OLE COM'
+	'..\..\Shell\Windows Shell').
 
 package!
 

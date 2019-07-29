@@ -67,13 +67,17 @@ void ObjectMemory::compactObject(OTE* ote)
 				// If pointing at a free'd object ,then it has been moved
 				if (fieldOTE->isFree())
 				{
-					// Should be one of the old OT entries, pointing outside the o
 					Oop movedTo = reinterpret_cast<Oop>(fieldOTE->m_location);
+					// Should be one of the old OT entries
 					HARDASSERT(movedTo >= (Oop)m_pOT && movedTo < (Oop)m_pFreePointerList);
 					// Get the new OTE from the old ...
 					varObj->m_fields[i] = movedTo;
 				}
 			}
+		}
+		if (ote->heapSpace() == OTEFlags::Spaces::VirtualSpace)
+		{
+			Interpreter::CompactVirtualObject(ote);
 		}
 	}
 	// else, we don't even need to look at the body of byte objects any more

@@ -38,6 +38,6 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
-!NMSELCHANGE class categoriesFor: #defineFields!initializing!public! !
+!NMSELCHANGE class categoriesFor: #defineFields!public!template definition! !
 !NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

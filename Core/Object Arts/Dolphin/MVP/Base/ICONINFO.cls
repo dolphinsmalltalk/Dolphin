@@ -117,6 +117,6 @@ defineFields
 
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
-!ICONINFO class categoriesFor: #defineFields!development!public! !
+!ICONINFO class categoriesFor: #defineFields!development!public!template definition! !
 !ICONINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

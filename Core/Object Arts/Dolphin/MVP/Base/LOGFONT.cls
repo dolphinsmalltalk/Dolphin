@@ -64,5 +64,5 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
-!LOGFONT class categoriesFor: #defineFields!initializing!public! !
+!LOGFONT class categoriesFor: #defineFields!public!template definition! !
 

@@ -93,6 +93,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
-!TRACKMOUSEEVENT class categoriesFor: #defineFields!initializing!public! !
+!TRACKMOUSEEVENT class categoriesFor: #defineFields!public!template definition! !
 !TRACKMOUSEEVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

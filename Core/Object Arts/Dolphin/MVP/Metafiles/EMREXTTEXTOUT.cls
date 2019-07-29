@@ -125,6 +125,6 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
-!EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMREXTTEXTOUT class categoriesFor: #iTypes!constants!public! !
 

@@ -40,7 +40,7 @@ get__NewEnum: ppenumProcedures
 			[out, retval]IUnknown** ppenumProcedures);"
 
 	<virtual stdcall: hresult 8 IUnknown**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Count: plCount
 	"Private - Get the value of the 'Count' property of the receiver.
@@ -49,7 +49,7 @@ get_Count: plCount
 			[out, retval]long* plCount);"
 
 	<virtual stdcall: hresult 10 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_Item: index ppdispProcedure: ppdispProcedure
 	"Private - Get the value of the 'Item' property of the receiver.
@@ -59,7 +59,7 @@ get_Item: index ppdispProcedure: ppdispProcedure
 			[out, retval]IScriptProcedure** ppdispProcedure);"
 
 	<virtual stdcall: hresult 9 variant IScriptProcedure**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isExtensible
 	"Answer whether the receiver may add methods at run-time."

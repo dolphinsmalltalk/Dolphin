@@ -24,6 +24,7 @@ package methodNames
 	add: #Number -> #asPoint;
 	add: #Number -> #asPoint3D;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
+	add: 'DWORD class' -> #fromPoint:;
 	yourself.
 
 package globalNames
@@ -117,6 +118,20 @@ _offsetRectangle: aRectangle
 !ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
 
+!DWORD class methodsFor!
+
+fromPoint: aPoint
+	"Private - Answer a new instance of the receiver with high and low
+	words set from aPoint assuming its co-ordinates to be 16-bit signed
+	integer values, with X in the low-word. This instantiator is somewhat
+	similar to the Windows MAKEPOINT macro."
+
+	^(self new)
+		lowSWord: aPoint x;
+		highSWord: aPoint y;
+		yourself! !
+!DWORD class categoriesFor: #fromPoint:!instance creation!private! !
+
 !Number methodsFor!
 
 @ yCoord 
@@ -142,9 +157,9 @@ asPoint3D
 
 !UserLibrary methodsFor!
 
-subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2 
+subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECT* RECT* RECT*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 
 "End of package definition"!

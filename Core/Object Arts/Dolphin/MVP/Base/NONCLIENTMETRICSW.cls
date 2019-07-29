@@ -122,6 +122,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
-!NONCLIENTMETRICSW class categoriesFor: #defineFields!initializing!public! !
+!NONCLIENTMETRICSW class categoriesFor: #defineFields!public!template definition! !
 !NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,0 +1,130 @@
+﻿| package |
+package := Package name: 'STON-Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #STONCStyleCommentsSkipStreamTests;
+	add: #STONJSONTests;
+	add: #STONLargeWriteReadTests;
+	add: #STONReaderTests;
+	add: #STONTestAssociation;
+	add: #STONTestDomainObject;
+	add: #STONTestUser;
+	add: #STONTestUser2;
+	add: #STONTestUser3;
+	add: #STONWriteAsciiOnlyReadTests;
+	add: #STONWritePrettyPrinterReadTests;
+	add: #STONWriteReadCommentsTests;
+	add: #STONWriteReadTests;
+	add: #STONWriterTests;
+	add: #UUID;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Anonymous Classes'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Collection Arithmetic'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
+	'STON-Core'
+	'..\..\Camp Smalltalk\SUnit\SUnit').
+
+package setManualPrerequisites: #(
+	'Dolphin Anonymous Classes'
+	'Dolphin Collection Arithmetic').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #STONTestDomainObject
+	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #STONTestUser
+	instanceVariableNames: 'username password enabled'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GUID variableByteSubclass: #UUID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Association subclass: #STONTestAssociation
+	instanceVariableNames: 'timestamp'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONTestUser subclass: #STONTestUser2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONTestUser subclass: #STONTestUser3
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #STONCStyleCommentsSkipStreamTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #STONJSONTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #STONReaderTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #STONWriteReadTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #STONWriterTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriteReadTests subclass: #STONLargeWriteReadTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriteReadTests subclass: #STONWriteAsciiOnlyReadTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriteReadTests subclass: #STONWritePrettyPrinterReadTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriteReadTests subclass: #STONWriteReadCommentsTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

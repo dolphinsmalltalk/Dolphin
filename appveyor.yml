@@ -1,4 +1,4 @@
-version: 7.1.3.{build}
+version: 7.1.8.{build}
 pull_requests:
   do_not_increment_build_number: true
 skip_tags: true
@@ -13,13 +13,19 @@ install:
 build:
   project: Core\DolphinVM\DolphinVM.sln
   verbosity: minimal
+after_build:
+- cmd: Core\DolphinVM\AppVeyorZIPDolphinVM
 test_script:
-- cmd: BootAndTestDPRO
+- cmd: AppVeyorBootAndTest
 artifacts:
 - path: dpro.*
   name: DPro
 - path: RegressionTests.xml
   name: DPro
+- path: DolphinVM.zip
+  name: DolphinVM
+- path: DolphinPdbs.zip
+  name: DolphinPdbs
 notifications:
 - provider: Email
   to:

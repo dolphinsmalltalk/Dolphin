@@ -50,7 +50,7 @@ SchemaElementDecl: oSchemaElement
 			[in]ISchemaElement* oSchemaElement);"
 
 	<virtual stdcall: hresult 8 ISchemaElement*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IMXSchemaDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !IMXSchemaDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !IMXSchemaDeclHandler categoriesFor: #SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !

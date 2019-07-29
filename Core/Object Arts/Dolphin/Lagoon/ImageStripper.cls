@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier'
-	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
+	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
-ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r400000!
+ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r1!
 ImageStripper addClassConstant: 'ClearGuidsMask' value: 16r1!
 ImageStripper addClassConstant: 'CompileStructsMask' value: 16r100!
 ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 16r800!
@@ -21,6 +21,7 @@ ImageStripper addClassConstant: 'LogReferencesMask' value: 16r2000!
 ImageStripper addClassConstant: 'NoXPManifestMask' value: 16r200000!
 ImageStripper addClassConstant: 'PreserveAspectsMask' value: 16r4!
 ImageStripper addClassConstant: 'PurgeStubbornClassesMask' value: 16r4000000!
+ImageStripper addClassConstant: 'RemoveAbstractUnreachable' value: 16r2!
 ImageStripper addClassConstant: 'RetainDevSysMask' value: 16r10000000!
 ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 16r8!
 ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 16r800000!
@@ -130,7 +131,7 @@ allReferencedClasses
 
 allResourcesStripped
 	self logComment: 'All resources stripped'.
-	flags := flags maskSet: AllResourcesStripped.
+	runFlags := runFlags maskSet: AllResourcesStripped.
 	self finishedStrippingResources.
 	self finishedWithAll: #(#logRemainingResources)!
 
@@ -318,7 +319,7 @@ class: aBehavior overrides: aSymbol
 				and: [aBehavior subclasses allSatisfy: [:sub | self class: sub overrides: aSymbol]]]!
 
 classBuildingMethods
-	^#('class hierarchy-adding' 'class hierarchy-mutating')
+	^self class classBuildingMethodCategoryNames
 		collect: [:each | {each. WeakArray withAll: each asMethodCategory methods}]!
 
 classCategoriesToIgnoreAspectSetters
@@ -353,7 +354,7 @@ classReferencesToIgnore
 classRemovingMethods
 	| methods |
 	methods := Set new: 200.
-	#('class hierarchy-removing') do: [:each | methods addAll: each asMethodCategory methods].
+	self class classRemovingMethodCategoryNames do: [:each | methods addAll: each asMethodCategory methods].
 	^WeakArray withAll: methods!
 
 clearChangedProperties
@@ -432,17 +433,10 @@ developmentClasses
 
 	^developmentClasses select: [:each | each ~~ DeadObject.Current]!
 
-developmentMethodCategoryNames
-	"Answer a <collection> of the names of <MethodCategory>s containing only development methods
-	which must therefore be stripped from the image when it is deployed."
-
-	^#('development' 'class hierarchy-adding')
-!
-
 developmentMethods
 	"Answer a <dictionary> mapping the names of development categories to <CompiledMethod>s in those categories, for all categories which are considered part of the development system, and which, therefore, are not normally required in a deployed application. The methods are stored in WeakArrays to allow them to be GC'd if they are removed for other reasons."
 
-	^self developmentMethodCategoryNames
+	^self class developmentMethodCategoryNames
 		collect: [:name | {name. WeakArray withAll: name asMethodCategory methods}]!
 
 developmentResources
@@ -676,24 +670,15 @@ logComment: aString
 		flush!
 
 logConfiguration: aString
-	| stamp |
 	self startElement: 'Configuration' attributes: #().
 	self
 		logElement: 'ImagePath'
 		attributes: #()
 		value: SessionManager current imagePath.
-	stamp := TimeStamp currentUTC.
 	self
 		logElement: 'TimeStamp'
 		attributes: #()
-		value: (Locale userDefault
-				printDate: stamp date
-				format: 'yyyy-MM-dd'
-				flags: 0) , 'T'
-				, (Locale userDefault
-						printTime: stamp time
-						format: 'HH:mm:ss'
-						flags: 0) , 'Z'.
+		value: DateAndTime now printString.
 	self
 		logElement: 'Target'
 		attributes: #()
@@ -705,7 +690,7 @@ logConfiguration: aString
 
 logDevelopmentCategories
 	self startElement: 'DevelopmentMethodCategories' attributes: #().
-	self developmentMethodCategoryNames do: 
+	self class developmentMethodCategoryNames do: 
 			[:each |
 			self
 				logElement: 'MethodCategory'
@@ -760,7 +745,7 @@ logManifest
 	self logImageStats.
 	self logRemainingClasses.
 	developmentClasses := nil.
-	(flags allMask: AllResourcesStripped) ifFalse: [self logRemainingResources].
+	(runFlags allMask: AllResourcesStripped) ifFalse: [self logRemainingResources].
 	self endElement: true.
 	self
 		finishedWithAll: #(#logImageStats #logRemainingResources #logRemainingClasses #logReferencesToClasses)!
@@ -1205,6 +1190,8 @@ prepareCycle1: aWeakArrayOfMethods
 prepareCycle2: developmentMethods
 	self foldDuplicatesConstants.
 	self removeDevelopmentObjects: developmentMethods.
+	"We can now remove abstract unreachable methods without concern that they may be made reachable by the removal of development methods."
+	runFlags := runFlags bitOr: RemoveAbstractUnreachable.
 	self emptySystemDictionary.
 	self finishedWithAll: #(#foldDuplicatesConstants #removeDevelopmentObjects: #emptySystemDictionary)!
 
@@ -1219,7 +1206,7 @@ prepareCycle3
 	self finishedWithAll: #(#destroyAndRemoveProgress #closeExternalLibraries #removeClassGuids)!
 
 prepareCycle4
-	(flags noMask: AllResourcesStripped) ifTrue: [self finishedStrippingResources].
+	(runFlags noMask: AllResourcesStripped) ifTrue: [self finishedStrippingResources].
 	self finishedWithAll: #(#finishedStrippingResources)!
 
 prepareCycle5
@@ -1237,7 +1224,7 @@ prepareCycle6: aWeakArrayOfMethods
 	self removeClassMetaInfo.
 	self notifyClassesOfCompletedStrip.
 	self
-		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects: #removeRedundantClassesAndResources: #stripRedundantResources)!
+		finishedWithAll: #(#notifyClassesOfCompletedStrip #removeClassMetaInfo #removeRedundantObjects: #removeRedundantClassesAndResources: #shouldRemoveResources #stripRedundantResources)!
 
 prepareToDeployWith: stubFile to: path
 	supersentMethods := self buildSupersentMessageMap.
@@ -1256,6 +1243,7 @@ prepareToStrip
 	This is invoked before even the development tools have been closed.
 	Answer whether to proceed with the application deployment."
 
+	runFlags := 0.
 	self openLogFile.
 	^self preStripCheck!
 
@@ -1497,8 +1485,9 @@ removeRedundantMethods
 removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	| removed unreachable |
 	removed := super removeRedundantMethodsOnceFrom: aCollectionOfClasses.
-	removed ~~ 0 ifTrue: [^removed].
-	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
+	(removed ~~ 0 or: [runFlags noMask: RemoveAbstractUnreachable]) ifTrue: [^removed].
+	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
+	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
 		removeMethods: unreachable
 		reason: 'abstract unreachable'
@@ -1689,6 +1678,9 @@ scanResourcesForViewReferences: aCollectionOfResourceIdentifiers
 shouldPreserveMethod: aCompiledMethod
 	^(potentialAspectSetters identityIncludes: aCompiledMethod) !
 
+shouldRemoveResources
+	^self stripRedundantResources and: [runFlags noMask: AllResourcesStripped]!
+
 shrinkHashedCollections
 	"Private - Minimize set of hashed collections."
 
@@ -1837,7 +1829,7 @@ stripRedundantResources
 	"Answer true if the receiver will attempt to remove redundant resources not referenced from
 	a root package during its stripping process. Note that class stripping must be enabled too."
 
-	^(flags bitAnd: StripResourcesMask | AllResourcesStripped) = StripResourcesMask!
+	^flags allMask: StripResourcesMask!
 
 stripShouldNotImplement
 	"Answer true if the stripping process will remove those methods which
@@ -2061,7 +2053,6 @@ writeLogFile
 !ImageStripper categoriesFor: #defaultStubFilePath!constants!private! !
 !ImageStripper categoriesFor: #destroyNotifier!operations!private! !
 !ImageStripper categoriesFor: #developmentClasses!configuration!public! !
-!ImageStripper categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper categoriesFor: #developmentMethods!accessing!public! !
 !ImageStripper categoriesFor: #developmentResources!configuration!public! !
 !ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
@@ -2160,6 +2151,7 @@ writeLogFile
 !ImageStripper categoriesFor: #saveExecutable:keepImage:!operations!private! !
 !ImageStripper categoriesFor: #scanResourcesForViewReferences:!helpers!private! !
 !ImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
+!ImageStripper categoriesFor: #shouldRemoveResources!private!removing! !
 !ImageStripper categoriesFor: #shrinkHashedCollections!operations!private! !
 !ImageStripper categoriesFor: #shrinkSymbolTable!operations!private! !
 !ImageStripper categoriesFor: #snapshotDevelopmentClasses!configuration!private! !
@@ -2199,6 +2191,17 @@ writeLogFile
 
 !ImageStripper class methodsFor!
 
+classBuildingMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing methods required only to support building classes.
+	These can be removed from the deployed application if the ClassBuilder is being removed."
+
+	^#('class hierarchy-adding' 'class hierarchy-mutating')!
+
+classRemovingMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing methods associated with removing classes. These can be stripped from the deployed application if the ClassBuilder is being removed, but only after the deployment process has finished removing classes."
+
+	^#('class hierarchy-removing')!
+
 defaultOptions
 	"Private - Answer the default set of flags set up in new of converted instances of the receiver."
 
@@ -2211,11 +2214,20 @@ defaultOptions
 		| WriteLogMask | EmptyMethodDictsMask 
 		| ToGoMask!
 
+developmentMethodCategoryNames
+	"Answer a <collection> of the names of <MethodCategory>s containing only development methods which must therefore be stripped from the image when it is deployed."
+
+	^#('development' 'class hierarchy-adding')
+!
+
 isSafeToEncryptWithProductProtection
 	"Answer whether it is save to encrypt the receiver's methods as part of the
 	the deployment of a Protected Product application"
 
 	^false! !
+!ImageStripper class categoriesFor: #classBuildingMethodCategoryNames!constants!public! !
+!ImageStripper class categoriesFor: #classRemovingMethodCategoryNames!constants!public! !
 !ImageStripper class categoriesFor: #defaultOptions!constants!private! !
+!ImageStripper class categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper class categoriesFor: #isSafeToEncryptWithProductProtection!development!public! !
 

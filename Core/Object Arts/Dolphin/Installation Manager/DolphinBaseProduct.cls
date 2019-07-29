@@ -132,8 +132,6 @@ contents
 		add: #('Core\Contributions\IDB\IDB DeviceIndependentBitmap.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB Image Library.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB MultipleFileOpenDialog.pax' #plain #imageBased);
-		add: #('Core\Contributions\IDB\IDB Duration.pax' #plain #imageBased);
-		add: #('Core\Contributions\IDB\IDB DateAndTime.pax' #plain #imageBased);
 		yourself.
 
 	"Solutions Software components"
@@ -145,6 +143,12 @@ contents
 		add: #('Core\Contributions\Solutions Software\SSW EditableListView Demo.pax' #plain #imageBased);
 		yourself.
 		
+	"STON"
+	contents
+		add: #('Core\Contributions\svenc\STON\STON-Core.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON.pax' #plain #imageBased);
+		yourself.
+
 	^contents!
 
 fullName
@@ -160,9 +164,9 @@ warnOfUnlistedContent
 			[self unlistedContentException 
 				signal: 'The deployed image will include the following unlisted pre-requisite packages: ' 
 						, unlistedContent displayString]! !
-!DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!private! !
+!DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
 !DolphinBaseProduct categoriesFor: #contents!accessing!public! !
-!DolphinBaseProduct categoriesFor: #fullName!public! !
+!DolphinBaseProduct categoriesFor: #fullName!accessing!public! !
 !DolphinBaseProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
 
 !DolphinBaseProduct class methodsFor!

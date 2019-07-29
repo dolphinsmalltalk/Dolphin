@@ -233,9 +233,8 @@ GetIDsOfNames: riid rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgd
 	rather than auto-raised HRESULT exception.
 	"
 
-	<virtual stdcall: sdword 6 GUID* char** dword dword sdword*>
-	^self invalidCall
-!
+	<virtual stdcall: sdword 6 guid* char** dword dword sdword*>
+	^self invalidCall: _failureCode!
 
 getProperty: aString
 	"Answer the named property from the receiver."
@@ -319,8 +318,7 @@ GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 	"
 
 	<virtual stdcall: sdword 5 dword dword void**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getTypeInfoCount
 	"Answer the <DWORD> result of invoking the COM Object's GetTypeInfoCount() method."
@@ -340,8 +338,7 @@ GetTypeInfoCount: pctinfo
 	"
 
 	<virtual stdcall: hresult 4 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 has_NewEnum
 	"Private - Answer whether the receiver has a standard _NewEnum property,
@@ -415,9 +412,8 @@ Invoke: dispidMember riid: riid lcid: lcid wFlags: wFlags pdispparams: pdisppara
 	Implementation Note: Explicitly handle integer return codes rather than use auto-raised HRESULT exception.
 	"
 
-	<virtual stdcall: sdword 7 sdword GUID* dword word DISPPARAMS* VARIANT* EXCEPINFO* dword*>
-	^self invalidCall
-!
+	<virtual stdcall: sdword 7 sdword guid* dword word DISPPARAMS* variant* EXCEPINFO* dword*>
+	^self invalidCall: _failureCode!
 
 invoke: methodName with: arg1
 	"Invoke the method with <Integer> DISPID, id, and the single <variantCompatible>

@@ -27,10 +27,47 @@
 #include "STHashedCollection.h"	// For MethodDictionary
 #include "STContext.h"
 #include "STBlockClosure.h"
+#include "STAssoc.h"
 
 #if defined(_DEBUG)
 	#include "STClassDesc.h"
 #endif
+
+Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
+{
+	return !m_bStepping ? sp - argCount : primitiveFailure(_PrimitiveFailureCode::DebugStep);
+}
+
+Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
+{
+	Oop literalZero = m_registers.m_oopNewMethod->m_location->m_aLiterals[0];
+	Oop* newSp = sp - argCount;
+	if (!m_bStepping)
+	{
+		*newSp = literalZero;
+		return newSp;
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
+{
+	auto staticZero = reinterpret_cast<VariableBindingOTE*>(m_registers.m_oopNewMethod->m_location->m_aLiterals[0]);
+	if (!m_bStepping)
+	{
+		Oop* newSp = sp - argCount;
+		*newSp = staticZero->m_location->m_value;
+		return newSp;
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
+}
+
 
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
 // is in separate routines that will not get inlined. This can make a significant difference to the
@@ -148,7 +185,6 @@ bool Interpreter::IsUserBreakRequested()
 	int vk = hotkey & 0x1FF;
 	bool interrupt = (::GetAsyncKeyState(vk) & 0x8001) != 0;
 	int modifiers = (hotkey >> 9);
-	if (modifiers & FSHIFT)
 	{
 		interrupt &= (::GetAsyncKeyState(VK_SHIFT) & 0x8001) != 0;
 	}
@@ -232,8 +268,6 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMethodInClass(Beha
 }
 
 #pragma code_seg(INTERP_SEG)
-
-extern "C" intptr_t primitivesTable[PRIMITIVE_MAX];
 
 Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount)
 {
@@ -353,14 +387,8 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(Beha
 {
 	#if defined(_DEBUG)
 	{
-		std::wostringstream dc;
-		dc << classPointer<< L" does not understand " << m_oopMessageSelector << std::endl << std::ends;
-		std::wstring msg = dc.str();
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << msg;
-		if (classPointer->isMetaclass() || 
-				strcmp(static_cast<Class*>(classPointer->m_location)->Name, "DeafObject"))
-			WarningWithStackTrace(msg.c_str());
+		TRACESTREAM << classPointer << L" does not understand " << m_oopMessageSelector << std::endl << std::ends;
 	}
 	#endif
 
@@ -780,7 +808,7 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, unsigned)
 		return sp - 1;
 	}
 	else
-		return primitiveFailure(1);
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
 

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Database Tests'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -15,11 +15,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Database Connection Base';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	yourself).
+package setPrerequisites: #(
+	'Database Connection Base'
+	'..\IDE\Base\Development System'
+	'..\Base\Dolphin'
+	'..\..\..\..\..\Base Image\Core\Object Arts\Dolphin\Base\Dolphin Base Tests').
 
 package!
 

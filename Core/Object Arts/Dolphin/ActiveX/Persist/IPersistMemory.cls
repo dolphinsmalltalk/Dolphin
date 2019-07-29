@@ -32,8 +32,7 @@ GetSizeMax: pCbSize
 	"
 
 	<virtual stdcall: hresult 8 dword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 initNew  
 	"Invoke the InitNew() method of the COM Object."
@@ -41,25 +40,23 @@ initNew
 	self InitNew
 !
 
-InitNew 
+InitNew
 	"Private - Invoke the InitNew() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall InitNew();
 	"
 
 	<virtual stdcall: hresult 9>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
-IsDirty 
+IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver.
 
 		HRESULT __stdcall IsDirty();
 	"
 
 	<virtual stdcall: hresult 5>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 load: aByteArray
 	"Load the object from the <ByteArray>, aByteArray."
@@ -78,8 +75,7 @@ Load: pMem cbSize: cbSize
 	"
 
 	<virtual stdcall: hresult 6 byte* dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 save: fClearDirty
 	"Answer a <ByteArray> containing the persisted representation of the object 
@@ -111,8 +107,7 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 	"
 
 	<virtual stdcall: hresult 7 byte* sdword dword>
-	^self invalidCall
-! !
+	^self invalidCall: _failureCode! !
 !IPersistMemory categoriesFor: #getSizeMax!**auto generated**!methods!public! !
 !IPersistMemory categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
 !IPersistMemory categoriesFor: #initNew!**auto generated**!methods!public! !

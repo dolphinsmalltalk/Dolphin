@@ -89,8 +89,8 @@ hash
 	"Hash the bytes of the object using the standard byte hashing
 	primitive (which should not fail)."
 
-	| hash |
 	<primitive: 106>
+	| hash |
 	hash := 2166136261.
 	"FNV1a"
 	1 to: self basicSize
@@ -137,17 +137,19 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:
 
 	Primitive Failure Reasons:
-		0 	- fromStart is not a SmallInteger.
-		1	- stop is not a SmallInteger.
-		2	- start is not a SmallInteger.
-		3	- aByteObject is not a byte object
-		4	- 'from' or 'to' interval is out-of-bounds
+		InvalidParameter1	- aByteObject is not a byte object
+		InvalidParameter2	- start is not a SmallInteger.
+		InvalidParameter3	- stop is not a SmallInteger.
+		InvalidParameter4	- fromStart is not a SmallInteger.
+		OutOfBounds		- 'from' or 'to' interval is out-of-bounds
 	"
 
-	| fromOffset |
 	<primitive: 142>
+	| fromOffset |
 	fromOffset := fromStart - start.
-	stop to: start by: -1 do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
+	stop to: start
+		by: -1
+		do: [:i | aByteObject at: i put: (self basicAt: i + fromOffset)].
 	^aByteObject!
 
 species
@@ -158,15 +160,16 @@ species
 	^GUID!
 
 storeOn: aStream
-	"Append to the <puttableStream> argument, target, an expression which when 
-	evaluated will answer a collection similar to the receiver."
+	"Append to the <puttableStream> argument, target, an expression which when evaluated will answer a <GUID> equivalent to the receiver."
 
 	aStream
+		nextPut: $(;
 		print: self class;
 		space;
 		nextPutAll: #fromString:;
 		space;
-		print: self asString!
+		print: self asString;
+		nextPut: $)!
 
 stringSize
 	"Answer the number of characters in a GUID string."
@@ -273,14 +276,24 @@ fromAddress: ptr
 	the  GUID pointed at by ptr"
 
 	^ptr asExternalAddress
-		replaceBytesOf: self new
+		replaceBytesOf: self newNull
 		from: 1 to: 16 startingAt: 1!
 
 fromBytes: guidBytes
 	"Answer a new instance of the receiver which is a copy of the specified bytes."
 
-	^guidBytes replaceBytesOf: self new from: 1 to: self byteSize startingAt: 1
+	^guidBytes replaceBytesOf: self newNull from: 1 to: self byteSize startingAt: 1
 !
+
+fromIdlString: aString
+	"Answer a new instance of the receiver instantiated from the argument, aString,
+	which is in IDL format."
+
+	| answer status |
+	answer := self newNull.
+	(status := RPCLibrary default uuidFromString: aString uuid: answer) == 0
+		ifFalse: [RPCError signalWith: status].
+	^answer!
 
 fromString: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
@@ -320,14 +333,14 @@ newBuffer
 newNull
 	"Answer a new, null, instance of the receiver."
 
-	^self new!
+	^self new: self byteSize!
 
 newUnique
 	"Answer a new instance of the receiver generated using the standard
 	algorithm (i.e. the answer should be unique)."
 
 	| answer |
-	answer := self new.
+	answer := self newNull.
 	RPCLibrary default uuidCreate: answer.
 	^answer!
 
@@ -352,10 +365,11 @@ uninitialize
 !GUID class categoriesFor: #basicByteSize!public! !
 !GUID class categoriesFor: #byteSize!constants!public! !
 !GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!GUID class categoriesFor: #defineFields!initializing!public! !
+!GUID class categoriesFor: #defineFields!public!template definition! !
 !GUID class categoriesFor: #elementSize!accessing!private! !
 !GUID class categoriesFor: #fromAddress:!instance creation!public! !
 !GUID class categoriesFor: #fromBytes:!instance creation!public! !
+!GUID class categoriesFor: #fromIdlString:!instance creation!public! !
 !GUID class categoriesFor: #fromString:!instance creation!public! !
 !GUID class categoriesFor: #init:!initializing!public! !
 !GUID class categoriesFor: #initialize!development!initializing!private! !

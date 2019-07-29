@@ -41,8 +41,7 @@ AddAttachment: url UserName: userName Password: password ppBody: ppBody
 	"
 
 	<virtual stdcall: hresult 55 bstr bstr bstr CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 addRelatedBodyPart: url reference: reference referenceType: referenceType userName: userName password: password
 	"Answer the <CDOIBodyPart> result of invoking the COM Object's AddRelatedBodyPart() method.
@@ -74,8 +73,7 @@ AddRelatedBodyPart: url Reference: reference ReferenceType: referenceType UserNa
 	"
 
 	<virtual stdcall: hresult 54 bstr bstr sdword bstr bstr CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 attachments
 	"Answer the <CDOIBodyParts> value of the 'Attachments' property of the receiver.
@@ -187,8 +185,7 @@ CreateMHTMLBody: url Flags: flags UserName: userName Password: password
 	"
 
 	<virtual stdcall: hresult 56 bstr sdword bstr bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 dataSource
 	"Answer the <CDOIDataSource> value of the 'DataSource' property of the receiver.
@@ -285,8 +282,7 @@ Forward: ppMsg
 	"
 
 	<virtual stdcall: hresult 57 CDOIMessage**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 from
 	"Answer the <bstr> value of the 'From' property of the receiver.
@@ -316,8 +312,7 @@ get_Attachments: varAttachments
 	"
 
 	<virtual stdcall: hresult 38 CDOIBodyParts**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_AutoGenerateTextBody: pAutoGenerateTextBody
 	"Private - Get the value of the 'AutoGenerateTextBody' property of the receiver.
@@ -328,8 +323,7 @@ get_AutoGenerateTextBody: pAutoGenerateTextBody
 	"
 
 	<virtual stdcall: hresult 44 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_BCC: pBCC
 	"Private - Get the value of the 'BCC' property of the receiver.
@@ -340,8 +334,7 @@ get_BCC: pBCC
 	"
 
 	<virtual stdcall: hresult 8 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_BodyPart: varBodyPart
 	"Private - Get the value of the 'BodyPart' property of the receiver.
@@ -352,8 +345,7 @@ get_BodyPart: varBodyPart
 	"
 
 	<virtual stdcall: hresult 49 CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_CC: pCC
 	"Private - Get the value of the 'CC' property of the receiver.
@@ -364,8 +356,7 @@ get_CC: pCC
 	"
 
 	<virtual stdcall: hresult 10 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Configuration: pConfiguration
 	"Private - Get the value of the 'Configuration' property of the receiver.
@@ -376,8 +367,7 @@ get_Configuration: pConfiguration
 	"
 
 	<virtual stdcall: hresult 41 CDOIConfiguration**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DataSource: varDataSource
 	"Private - Get the value of the 'DataSource' property of the receiver.
@@ -388,8 +378,7 @@ get_DataSource: varDataSource
 	"
 
 	<virtual stdcall: hresult 50 CDOIDataSource**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_DSNOptions: pDSNOptions
 	"Private - Get the value of the 'DSNOptions' property of the receiver.
@@ -400,8 +389,7 @@ get_DSNOptions: pDSNOptions
 	"
 
 	<virtual stdcall: hresult 27 sdword*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_EnvelopeFields: varEnvelopeFields
 	"Private - Get the value of the 'EnvelopeFields' property of the receiver.
@@ -412,8 +400,7 @@ get_EnvelopeFields: varEnvelopeFields
 	"
 
 	<virtual stdcall: hresult 46 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Fields: varFields
 	"Private - Get the value of the 'Fields' property of the receiver.
@@ -424,8 +411,7 @@ get_Fields: varFields
 	"
 
 	<virtual stdcall: hresult 51 ADODBFields**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_FollowUpTo: pFollowUpTo
 	"Private - Get the value of the 'FollowUpTo' property of the receiver.
@@ -436,8 +422,7 @@ get_FollowUpTo: pFollowUpTo
 	"
 
 	<virtual stdcall: hresult 12 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_From: pFrom
 	"Private - Get the value of the 'From' property of the receiver.
@@ -448,8 +433,7 @@ get_From: pFrom
 	"
 
 	<virtual stdcall: hresult 14 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_HTMLBody: pHTMLBody
 	"Private - Get the value of the 'HTMLBody' property of the receiver.
@@ -460,8 +444,7 @@ get_HTMLBody: pHTMLBody
 	"
 
 	<virtual stdcall: hresult 36 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_HTMLBodyPart: varHTMLBodyPart
 	"Private - Get the value of the 'HTMLBodyPart' property of the receiver.
@@ -472,8 +455,7 @@ get_HTMLBodyPart: varHTMLBodyPart
 	"
 
 	<virtual stdcall: hresult 48 CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Keywords: pKeywords
 	"Private - Get the value of the 'Keywords' property of the receiver.
@@ -484,8 +466,7 @@ get_Keywords: pKeywords
 	"
 
 	<virtual stdcall: hresult 16 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MDNRequested: pMDNRequested
 	"Private - Get the value of the 'MDNRequested' property of the receiver.
@@ -496,8 +477,7 @@ get_MDNRequested: pMDNRequested
 	"
 
 	<virtual stdcall: hresult 52 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_MimeFormatted: pMimeFormatted
 	"Private - Get the value of the 'MimeFormatted' property of the receiver.
@@ -508,8 +488,7 @@ get_MimeFormatted: pMimeFormatted
 	"
 
 	<virtual stdcall: hresult 18 varbool*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Newsgroups: pNewsgroups
 	"Private - Get the value of the 'Newsgroups' property of the receiver.
@@ -520,8 +499,7 @@ get_Newsgroups: pNewsgroups
 	"
 
 	<virtual stdcall: hresult 20 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Organization: pOrganization
 	"Private - Get the value of the 'Organization' property of the receiver.
@@ -532,8 +510,7 @@ get_Organization: pOrganization
 	"
 
 	<virtual stdcall: hresult 22 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ReceivedTime: varReceivedTime
 	"Private - Get the value of the 'ReceivedTime' property of the receiver.
@@ -544,8 +521,7 @@ get_ReceivedTime: varReceivedTime
 	"
 
 	<virtual stdcall: hresult 24 date*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_ReplyTo: pReplyTo
 	"Private - Get the value of the 'ReplyTo' property of the receiver.
@@ -556,8 +532,7 @@ get_ReplyTo: pReplyTo
 	"
 
 	<virtual stdcall: hresult 25 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Sender: pSender
 	"Private - Get the value of the 'Sender' property of the receiver.
@@ -568,8 +543,7 @@ get_Sender: pSender
 	"
 
 	<virtual stdcall: hresult 39 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_SentOn: varSentOn
 	"Private - Get the value of the 'SentOn' property of the receiver.
@@ -580,8 +554,7 @@ get_SentOn: varSentOn
 	"
 
 	<virtual stdcall: hresult 29 date*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_Subject: pSubject
 	"Private - Get the value of the 'Subject' property of the receiver.
@@ -592,8 +565,7 @@ get_Subject: pSubject
 	"
 
 	<virtual stdcall: hresult 30 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_TextBody: pTextBody
 	"Private - Get the value of the 'TextBody' property of the receiver.
@@ -604,8 +576,7 @@ get_TextBody: pTextBody
 	"
 
 	<virtual stdcall: hresult 34 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_TextBodyPart: varTextBodyPart
 	"Private - Get the value of the 'TextBodyPart' property of the receiver.
@@ -616,8 +587,7 @@ get_TextBodyPart: varTextBodyPart
 	"
 
 	<virtual stdcall: hresult 47 CDOIBodyPart**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 get_To: pTo
 	"Private - Get the value of the 'To' property of the receiver.
@@ -628,8 +598,7 @@ get_To: pTo
 	"
 
 	<virtual stdcall: hresult 32 bstr*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getInterface: interface
 	"Answer the <IDispatch> result of invoking the COM Object's GetInterface() method.
@@ -653,8 +622,7 @@ GetInterface: interface ppUnknown: ppUnknown
 	"
 
 	<virtual stdcall: hresult 64 bstr IDispatch**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 getStream
 	"Answer the <ADODB_Stream> result of invoking the COM Object's GetStream() method.
@@ -676,8 +644,7 @@ GetStream: ppStream
 	"
 
 	<virtual stdcall: hresult 63 ADODB_Stream**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 htmlBody
 	"Answer the <bstr> value of the 'HTMLBody' property of the receiver.
@@ -822,8 +789,7 @@ Post
 	"
 
 	<virtual stdcall: hresult 58>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 postReply
 	"Answer the <CDOIMessage> result of invoking the COM Object's PostReply() method.
@@ -845,8 +811,7 @@ PostReply: ppMsg
 	"
 
 	<virtual stdcall: hresult 59 CDOIMessage**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_AutoGenerateTextBody: pAutoGenerateTextBody
 	"Private - Set the value of the 'AutoGenerateTextBody' property of the object wrapped by the 
@@ -858,8 +823,7 @@ put_AutoGenerateTextBody: pAutoGenerateTextBody
 	"
 
 	<virtual stdcall: hresult 45 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_BCC: pBCC
 	"Private - Set the value of the 'BCC' property of the object wrapped by the 
@@ -871,8 +835,7 @@ put_BCC: pBCC
 	"
 
 	<virtual stdcall: hresult 9 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_CC: pCC
 	"Private - Set the value of the 'CC' property of the object wrapped by the 
@@ -884,8 +847,7 @@ put_CC: pCC
 	"
 
 	<virtual stdcall: hresult 11 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Configuration: pConfiguration
 	"Private - Set the value of the 'Configuration' property of the object wrapped by the 
@@ -897,8 +859,7 @@ put_Configuration: pConfiguration
 	"
 
 	<virtual stdcall: hresult 42 CDOIConfiguration*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_DSNOptions: pDSNOptions
 	"Private - Set the value of the 'DSNOptions' property of the object wrapped by the 
@@ -910,8 +871,7 @@ put_DSNOptions: pDSNOptions
 	"
 
 	<virtual stdcall: hresult 28 sdword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_FollowUpTo: pFollowUpTo
 	"Private - Set the value of the 'FollowUpTo' property of the object wrapped by the 
@@ -923,8 +883,7 @@ put_FollowUpTo: pFollowUpTo
 	"
 
 	<virtual stdcall: hresult 13 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_From: pFrom
 	"Private - Set the value of the 'From' property of the object wrapped by the 
@@ -936,8 +895,7 @@ put_From: pFrom
 	"
 
 	<virtual stdcall: hresult 15 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_HTMLBody: pHTMLBody
 	"Private - Set the value of the 'HTMLBody' property of the object wrapped by the 
@@ -949,8 +907,7 @@ put_HTMLBody: pHTMLBody
 	"
 
 	<virtual stdcall: hresult 37 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Keywords: pKeywords
 	"Private - Set the value of the 'Keywords' property of the object wrapped by the 
@@ -962,8 +919,7 @@ put_Keywords: pKeywords
 	"
 
 	<virtual stdcall: hresult 17 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MDNRequested: pMDNRequested
 	"Private - Set the value of the 'MDNRequested' property of the object wrapped by the 
@@ -975,8 +931,7 @@ put_MDNRequested: pMDNRequested
 	"
 
 	<virtual stdcall: hresult 53 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_MimeFormatted: pMimeFormatted
 	"Private - Set the value of the 'MimeFormatted' property of the object wrapped by the 
@@ -988,8 +943,7 @@ put_MimeFormatted: pMimeFormatted
 	"
 
 	<virtual stdcall: hresult 19 varbool>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Newsgroups: pNewsgroups
 	"Private - Set the value of the 'Newsgroups' property of the object wrapped by the 
@@ -1001,8 +955,7 @@ put_Newsgroups: pNewsgroups
 	"
 
 	<virtual stdcall: hresult 21 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Organization: pOrganization
 	"Private - Set the value of the 'Organization' property of the object wrapped by the 
@@ -1014,8 +967,7 @@ put_Organization: pOrganization
 	"
 
 	<virtual stdcall: hresult 23 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_ReplyTo: pReplyTo
 	"Private - Set the value of the 'ReplyTo' property of the object wrapped by the 
@@ -1027,8 +979,7 @@ put_ReplyTo: pReplyTo
 	"
 
 	<virtual stdcall: hresult 26 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Sender: pSender
 	"Private - Set the value of the 'Sender' property of the object wrapped by the 
@@ -1040,8 +991,7 @@ put_Sender: pSender
 	"
 
 	<virtual stdcall: hresult 40 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Subject: pSubject
 	"Private - Set the value of the 'Subject' property of the object wrapped by the 
@@ -1053,8 +1003,7 @@ put_Subject: pSubject
 	"
 
 	<virtual stdcall: hresult 31 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_TextBody: pTextBody
 	"Private - Set the value of the 'TextBody' property of the object wrapped by the 
@@ -1066,8 +1015,7 @@ put_TextBody: pTextBody
 	"
 
 	<virtual stdcall: hresult 35 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_To: pTo
 	"Private - Set the value of the 'To' property of the object wrapped by the 
@@ -1079,8 +1027,7 @@ put_To: pTo
 	"
 
 	<virtual stdcall: hresult 33 bstr>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 putref_Configuration: pConfiguration
 	"Private - Set the value of the 'Configuration' property of the object wrapped by the 
@@ -1092,8 +1039,7 @@ putref_Configuration: pConfiguration
 	"
 
 	<virtual stdcall: hresult 43 CDOIConfiguration*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 receivedTime
 	"Answer the <date> value of the 'ReceivedTime' property of the receiver.
@@ -1126,8 +1072,7 @@ Reply: ppMsg
 	"
 
 	<virtual stdcall: hresult 60 CDOIMessage**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 replyAll
 	"Answer the <CDOIMessage> result of invoking the COM Object's ReplyAll() method.
@@ -1149,8 +1094,7 @@ ReplyAll: ppMsg
 	"
 
 	<virtual stdcall: hresult 61 CDOIMessage**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 replyTo
 	"Answer the <bstr> value of the 'ReplyTo' property of the receiver.
@@ -1179,8 +1123,7 @@ Send
 	"
 
 	<virtual stdcall: hresult 62>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 sender
 	"Answer the <bstr> value of the 'Sender' property of the receiver.

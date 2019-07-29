@@ -115,6 +115,6 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
-!DRAWITEMSTRUCT class categoriesFor: #defineFields!initializing!public! !
+!DRAWITEMSTRUCT class categoriesFor: #defineFields!public!template definition! !
 !DRAWITEMSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

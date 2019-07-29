@@ -23,7 +23,7 @@ AppendData: data
 			[in]BSTR data);"
 
 	<virtual stdcall: hresult 48 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 attributes
 	"Text-only nodes do not have any attributes"
@@ -65,7 +65,7 @@ DeleteData: offset count: count
 			[in]long count);"
 
 	<virtual stdcall: hresult 50 sdword sdword>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_data: data
 	"Private - Get the value of the 'data' property of the receiver.
@@ -74,7 +74,7 @@ get_data: data
 			[out, retval]BSTR* data);"
 
 	<virtual stdcall: hresult 44 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_length: dataLength
 	"Private - Get the value of the 'length' property of the receiver.
@@ -83,7 +83,7 @@ get_length: dataLength
 			[out, retval]long* dataLength);"
 
 	<virtual stdcall: hresult 46 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 InsertData: offset data: data
 	"Invoke the insertData() method of the COM object.
@@ -94,7 +94,7 @@ InsertData: offset data: data
 			[in]BSTR data);"
 
 	<virtual stdcall: hresult 49 sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 isText
 	"Answer whether this is a text only node."
@@ -119,7 +119,7 @@ put_data: data
 			[in]BSTR data);"
 
 	<virtual stdcall: hresult 45 bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ReplaceData: offset count: count data: data
 	"Invoke the replaceData() method of the COM object.
@@ -131,7 +131,7 @@ ReplaceData: offset count: count data: data
 			[in]BSTR data);"
 
 	<virtual stdcall: hresult 51 sdword sdword bstr>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 substringData: offset count: count
 	"Answer the <BSTR> result of invoking the substringData() method of the COM object.
@@ -156,7 +156,7 @@ SubstringData: offset count: count data: data
 			[out, retval]BSTR* data);"
 
 	<virtual stdcall: hresult 47 sdword sdword bstr*>
-	^self invalidCall! !
+	^self invalidCall: _failureCode! !
 !IXMLDOMCharacterData categoriesFor: #=!comparing!public! !
 !IXMLDOMCharacterData categoriesFor: #AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
 !IXMLDOMCharacterData categoriesFor: #attributes!properties!public! !

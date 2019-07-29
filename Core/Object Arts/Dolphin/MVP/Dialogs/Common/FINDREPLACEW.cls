@@ -199,6 +199,6 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
-!FINDREPLACEW class categoriesFor: #defineFields!initializing!public! !
+!FINDREPLACEW class categoriesFor: #defineFields!public!template definition! !
 !FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

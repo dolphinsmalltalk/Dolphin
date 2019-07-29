@@ -37,23 +37,19 @@ exampleGdipCBPerformance
 	| bitmap graphics image cachedBitmap strm time1 time2 |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
-				usingLocator: FileLocator installRelative.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
 	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
 	strm := String new writeStream.
 	strm
-		display: 'CachedBitmap drawing time in milliseconds';
+		display: 'CachedBitmap drawing time';
 		cr.
-	time1 := Time millisecondClockValue.
-	100 timesRepeat: [graphics drawImage: image at: 10 @ 10].
-	time2 := Time millisecondClockValue.
-	strm
-		display: '#drawImage: ' , (time2 - time1) displayString;
-		cr.
-	time1 := Time millisecondClockValue.
-	100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200].
-	time2 := Time millisecondClockValue.
-	strm display: '#drawCachedBitmap: ' , (time2 - time1) displayString.
+	time1 := [100 timesRepeat: [graphics drawImage: image at: 10 @ 10]] timeToRun.
+	strm display: '#drawImage: '.
+	time1 printHumanReadableOn: strm.
+	strm cr.
+	time2 := [100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200]] timeToRun.
+	strm display: '#drawCachedBitmap: '.
+	time2 printHumanReadableOn: strm.
 	^strm contents!
 
 icon

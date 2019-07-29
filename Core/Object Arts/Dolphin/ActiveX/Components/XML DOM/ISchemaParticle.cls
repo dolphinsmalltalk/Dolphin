@@ -42,7 +42,7 @@ get_maxOccurs: maxOccurs
 			[out, retval]VARIANT* maxOccurs);"
 
 	<virtual stdcall: hresult 16 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_minOccurs: minOccurs
 	"Private - Get the value of the 'minOccurs' property of the receiver.
@@ -51,7 +51,7 @@ get_minOccurs: minOccurs
 			[out, retval]VARIANT* minOccurs);"
 
 	<virtual stdcall: hresult 15 variant*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 maxOccurs
 	"Answer the <variant> value of the 'maxOccurs' property of the receiver."

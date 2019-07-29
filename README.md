@@ -1,14 +1,12 @@
 # Dolphin
 
-_N.B. master is now the 7.1 beta which is incomplete, may have significant unresolved issues, and is not compatible with older Dolphin 7 builds. Use the 7.0 branch if you want a stable build._
-
 [![Build status](https://ci.appveyor.com/api/projects/status/scael64ohx3l6io9/branch/master?svg=true)](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master)
 
 This repository contains:
 * A VS2017 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
-* The necessary Smalltalk packages to build the [Dolphin Smalltalk](http://object-arts.com) Core Images from a pre-built boot image.
+* The necessary Smalltalk packages to build the [Dolphin Smalltalk](https://object-arts.com) Core Images from a pre-built boot image.
 
-Note: if you are just looking to install Dolphin and get going as quickly as possible you may prefer to start with the release build and [Setup Installer](http://object-arts.com/downloads.html) and follow the directions [here](http://object-arts.com/gettingstarted.html). However, if you’d really like to know how Dolphin is put together then the complete sources are available here on GitHub in this repository. 
+Note: if you are just looking to install Dolphin and get going as quickly as possible you may prefer to start with the release build and [Setup Installer](https://object-arts.com/downloads.html) and follow the directions [here](https://object-arts.com/gettingstarted.html). However, if you’d really like to know how Dolphin is put together then the complete sources are available here on GitHub in this repository. 
 
 
 ## Building the Virtual Machine

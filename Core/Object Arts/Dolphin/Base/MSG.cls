@@ -63,10 +63,25 @@ swParam
 
 	^bytes intPtrAtOffset: 8!
 
+time
+	"Answer the <Integer> value of the receiver's 'time' field."
+
+	^bytes dwordAtOffset: _OffsetOf_time!
+
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
-	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
+	^bytes uintPtrAtOffset: _OffsetOf_wParam!
+
+x
+	"Answer the <Integer> value of the receiver's 'x' field."
+
+	^bytes sdwordAtOffset: _OffsetOf_x!
+
+y
+	"Answer the <Integer> value of the receiver's 'y' field."
+
+	^bytes sdwordAtOffset: _OffsetOf_y! !
 !MSG categoriesFor: #hwnd!**compiled accessors**!public! !
 !MSG categoriesFor: #isInput!public!testing! !
 !MSG categoriesFor: #isKeyboardInput!public!testing! !
@@ -74,7 +89,10 @@ wParam
 !MSG categoriesFor: #lParam!**compiled accessors**!public! !
 !MSG categoriesFor: #message!**compiled accessors**!public! !
 !MSG categoriesFor: #swParam!accessing!public! !
+!MSG categoriesFor: #time!**compiled accessors**!public! !
 !MSG categoriesFor: #wParam!**compiled accessors**!public! !
+!MSG categoriesFor: #x!**compiled accessors**!public! !
+!MSG categoriesFor: #y!**compiled accessors**!public! !
 
 !MSG class methodsFor!
 
@@ -98,14 +116,13 @@ defineFields
 		defineField: #message type: DWORDField readOnly;
 		defineField: #wParam type: UINT_PTRField readOnly;
 		defineField: #lParam type: UINT_PTRField readOnly;
-		beUncompiled;
 		defineField: #time type: DWORDField readOnly;
 		defineField: #x type: SDWORDField readOnly;
 		defineField: #y type: SDWORDField readOnly
-	"The real structure has a POINT here, but that is not part of the base Dolphin package any more so we 'inline' it"!
+	"The real structure has a POINT here instead of x and y, but that is not part of the base Dolphin package any more so we 'inline' it"!
 
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
-!MSG class categoriesFor: #defineFields!initializing!public! !
+!MSG class categoriesFor: #defineFields!public!template definition! !
 !MSG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

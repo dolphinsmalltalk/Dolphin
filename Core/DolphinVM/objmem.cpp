@@ -45,7 +45,7 @@ extern "C" { HANDLE _crtheap; }
 
 /*const*/ VMPointers Pointers;
 
-DWORD	ObjectMemory::m_nNextIdHash;
+uint32_t ObjectMemory::m_nNextIdHash;
 
 unsigned ObjectMemory::m_nOTSize;
 unsigned ObjectMemory::m_nOTMax;
@@ -133,12 +133,12 @@ Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, unsigned)
 				return sp - 1;
 			}
 			else
-				return nullptr;
+				return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 		}
 		else
 			return sp - 1;
 	}
-	return nullptr;
+	return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -431,7 +431,7 @@ Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, unsigned)
 		}
 	}
 
-	return primitiveFailure(0);
+	return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
 #pragma code_seg(GC_SEG)

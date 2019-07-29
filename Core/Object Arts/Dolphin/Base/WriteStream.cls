@@ -13,6 +13,12 @@ Instance Variables:
 !WriteStream categoriesForClass!Collections-Streams! !
 !WriteStream methodsFor!
 
+<< anObject
+	"Store the argument, or the elements of the argument if it is a <collection>, as the next element or elements of the receiver."
+
+	anObject appendToStream: self.
+	^self!
+
 basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
 	"Private - Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
@@ -35,7 +41,7 @@ basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 			fall back on the slow way"
 
 			startInteger to: startInteger + sizeInteger - 1
-				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
+				do: [:i | self basicNextPut: (aSequenceableCollection at: i)]].
 	^aSequenceableCollection!
 
 basicNextPut: anObject
@@ -245,6 +251,7 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
+!WriteStream categoriesFor: #<<!accessing!public! !
 !WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
 !WriteStream categoriesFor: #basicNextPut:!accessing!private! !
 !WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !

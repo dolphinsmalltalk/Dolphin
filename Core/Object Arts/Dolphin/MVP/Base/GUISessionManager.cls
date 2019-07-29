@@ -84,9 +84,6 @@ isUnattended
 
 	^flags allMask: UnattendedMask!
 
-onSettingChanged: aWindowsEvent 
-	SystemMetrics current onSettingChanged: aWindowsEvent!
-
 parseCmdLineFlags
 	| options |
 	super parseCmdLineFlags.
@@ -179,7 +176,6 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
 !GUISessionManager categoriesFor: #inputStateClass!constants!private! !
 !GUISessionManager categoriesFor: #isUnattended!public!testing! !
-!GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !GUISessionManager categoriesFor: #resourceManager!accessing!public! !
 !GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !

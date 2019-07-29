@@ -24,20 +24,20 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Dolphin\Base\Dolphin';
-	add: '..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Dolphin\System\Win32\Dolphin File System Watcher';
-	add: '..\..\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\Dolphin\ActiveX\Shell\Windows Shell Namespace';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Dolphin\Base\Dolphin'
+	'..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Dolphin\System\Win32\Dolphin File System Watcher'
+	'..\..\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Dolphin\ActiveX\Shell\Windows Shell Namespace').
 
 package!
 

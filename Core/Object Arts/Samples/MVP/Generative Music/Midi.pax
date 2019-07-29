@@ -26,9 +26,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin').
 
 package!
 
@@ -53,50 +52,52 @@ Object subclass: #MidiOutChannel
 !WinMMLibrary methodsFor!
 
 midiOutCloseHmo: hmo
-
 	"cdemers - 9/3/2004"
+
 	"Private Declare Function midiOutClose Lib 'winmm.dll' (ByVal hMidiOut As Long) As Long"
-"MMRESULT midiOutClose(
+
+	"MMRESULT midiOutClose(
   HMIDIOUT hmo  
 );"
-	<stdcall: dword midiOutClose dword >
-	^self invalidCall
-!
+
+	<stdcall: dword midiOutClose dword>
+	^self invalidCall: _failureCode!
 
 midiOutGetNumDevs
-
 	"cdemers - 9/3/2004"
+
 	"UINT midiOutGetNumDevs(VOID); "
+
 	<stdcall: dword midiOutGetNumDevs>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 midiOutOpenLphmo: midiOutHandle uDeviceID: uDeviceID dwCallback: dwCallback dwCallbackInstance: dwCallbackInstance dwFlags: dwFlags
-
 	"cdemers - 9/3/2004"
-"Private Declare Function midiOutOpen Lib 'winmm.dll' (lphMidiOut As Long, ByVal uDeviceID As Long, ByVal dwCallback As Long, ByVal dwInstance As Long, ByVal dwFlags As Long) As Long"
-"MMRESULT midiOutOpen(
+
+	"Private Declare Function midiOutOpen Lib 'winmm.dll' (lphMidiOut As Long, ByVal uDeviceID As Long, ByVal dwCallback As Long, ByVal dwInstance As Long, ByVal dwFlags As Long) As Long"
+
+	"MMRESULT midiOutOpen(
   LPHMIDIOUT lphmo,              
   UINT_PTR   uDeviceID,          
   DWORD_PTR  dwCallback,         
   DWORD_PTR  dwCallbackInstance, 
   DWORD      dwFlags             
 );"
-	
+
 	<stdcall: dword midiOutOpen dword* dword dword dword dword>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 midiOutShortMsgHmo: hmo dwMsg: dwMsg
-
 	"cdemers - 9/3/2004"
+
 	"Private Declare Function midiOutShortMsg Lib 'winmm.dll' (ByVal hMidiOut As Long, ByVal dwMsg As Long) As Long"
+
 	"MMRESULT midiOutShortMsg(
 		  HMIDIOUT hmo,  
 		  DWORD dwMsg);"
-	<stdcall: dword midiOutShortMsg dword dword >
-	^self invalidCall
-! !
+
+	<stdcall: dword midiOutShortMsg dword dword>
+	^self invalidCall: _failureCode! !
 !WinMMLibrary categoriesFor: #midiOutCloseHmo:!public! !
 !WinMMLibrary categoriesFor: #midiOutGetNumDevs!public! !
 !WinMMLibrary categoriesFor: #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:!public! !

@@ -19,7 +19,7 @@ Abort
 		HRESULT __stdcall abort();"
 
 	<virtual stdcall: hresult 65>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 async
 	"Answer the <varbool> value of the 'async' property of the receiver.
@@ -59,7 +59,7 @@ CreateAttribute: name attribute: attribute
 			[out, retval]IXMLDOMAttribute** attribute);"
 
 	<virtual stdcall: hresult 54 bstr IXMLDOMAttribute**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createCDATASection: data
 	"Answer the <IXMLDOMCDATASection> result of invoking the createCDATASection() method of the COM object.
@@ -82,7 +82,7 @@ CreateCDATASection: data cdata: cdata
 			[out, retval]IXMLDOMCDATASection** cdata);"
 
 	<virtual stdcall: hresult 52 bstr IXMLDOMCDATASection**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createComment: data
 	"Answer the <IXMLDOMComment> result of invoking the createComment() method of the COM object.
@@ -105,7 +105,7 @@ CreateComment: data comment: comment
 			[out, retval]IXMLDOMComment** comment);"
 
 	<virtual stdcall: hresult 51 bstr IXMLDOMComment**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createDocumentFragment
 	"Answer the <IXMLDOMDocumentFragment> result of invoking the createDocumentFragment() method of the COM object.
@@ -125,7 +125,7 @@ CreateDocumentFragment: docFrag
 			[out, retval]IXMLDOMDocumentFragment** docFrag);"
 
 	<virtual stdcall: hresult 49 IXMLDOMDocumentFragment**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createElement: tagName
 	"Answer the <IXMLDOMElement> result of invoking the createElement() method of the COM object.
@@ -148,7 +148,7 @@ CreateElement: tagName element: element
 			[out, retval]IXMLDOMElement** element);"
 
 	<virtual stdcall: hresult 48 bstr IXMLDOMElement**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createEntityReference: name
 	"Answer the <IXMLDOMEntityReference> result of invoking the createEntityReference() method of the COM object.
@@ -171,7 +171,7 @@ CreateEntityReference: name entityRef: entityRef
 			[out, retval]IXMLDOMEntityReference** entityRef);"
 
 	<virtual stdcall: hresult 55 bstr IXMLDOMEntityReference**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createNode: type name: name namespaceURI: namespaceURI
 	"Answer the <IXMLDOMNode> result of invoking the createNode() method of the COM object.
@@ -198,7 +198,7 @@ CreateNode: type name: name namespaceURI: namespaceURI node: node
 			[out, retval]IXMLDOMNode** node);"
 
 	<virtual stdcall: hresult 57 variant bstr bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createProcessingInstruction: target data: data
 	"Answer the <IXMLDOMProcessingInstruction> result of invoking the createProcessingInstruction() method of the COM object.
@@ -223,7 +223,7 @@ CreateProcessingInstruction: target data: data pi: pi
 			[out, retval]IXMLDOMProcessingInstruction** pi);"
 
 	<virtual stdcall: hresult 53 bstr bstr IXMLDOMProcessingInstruction**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 createTextNode: data
 	"Answer the <IXMLDOMText> result of invoking the createTextNode() method of the COM object.
@@ -246,7 +246,7 @@ CreateTextNode: data text: text
 			[out, retval]IXMLDOMText** text);"
 
 	<virtual stdcall: hresult 50 bstr IXMLDOMText**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 doctype
 	"Answer the <IXMLDOMDocumentType> value of the 'doctype' property of the receiver.
@@ -275,7 +275,7 @@ get_async: isAsync
 			[out, retval]VARIANT_BOOL* isAsync);"
 
 	<virtual stdcall: hresult 63 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_doctype: documentType
 	"Private - Get the value of the 'doctype' property of the receiver.
@@ -284,7 +284,7 @@ get_doctype: documentType
 			[out, retval]IXMLDOMDocumentType** documentType);"
 
 	<virtual stdcall: hresult 44 IXMLDOMDocumentType**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_documentElement: domElement
 	"Private - Get the value of the 'documentElement' property of the receiver.
@@ -293,7 +293,7 @@ get_documentElement: domElement
 			[out, retval]IXMLDOMElement** DOMElement);"
 
 	<virtual stdcall: hresult 46 IXMLDOMElement**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_implementation: impl
 	"Private - Get the value of the 'implementation' property of the receiver.
@@ -302,7 +302,7 @@ get_implementation: impl
 			[out, retval]IXMLDOMImplementation** impl);"
 
 	<virtual stdcall: hresult 45 IXMLDOMImplementation**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_parseError: errorObj
 	"Private - Get the value of the 'parseError' property of the receiver.
@@ -311,7 +311,7 @@ get_parseError: errorObj
 			[out, retval]IXMLDOMParseError** errorObj);"
 
 	<virtual stdcall: hresult 61 IXMLDOMParseError**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_preserveWhiteSpace: isPreserving
 	"Private - Get the value of the 'preserveWhiteSpace' property of the receiver.
@@ -320,7 +320,7 @@ get_preserveWhiteSpace: isPreserving
 			[out, retval]VARIANT_BOOL* isPreserving);"
 
 	<virtual stdcall: hresult 72 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_readyState: value
 	"Private - Get the value of the 'readyState' property of the receiver.
@@ -329,7 +329,7 @@ get_readyState: value
 			[out, retval]long* value);"
 
 	<virtual stdcall: hresult 60 sdword*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_resolveExternals: isResolving
 	"Private - Get the value of the 'resolveExternals' property of the receiver.
@@ -338,7 +338,7 @@ get_resolveExternals: isResolving
 			[out, retval]VARIANT_BOOL* isResolving);"
 
 	<virtual stdcall: hresult 70 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_url: urlString
 	"Private - Get the value of the 'url' property of the receiver.
@@ -347,7 +347,7 @@ get_url: urlString
 			[out, retval]BSTR* urlString);"
 
 	<virtual stdcall: hresult 62 bstr*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 get_validateOnParse: isValidating
 	"Private - Get the value of the 'validateOnParse' property of the receiver.
@@ -356,7 +356,7 @@ get_validateOnParse: isValidating
 			[out, retval]VARIANT_BOOL* isValidating);"
 
 	<virtual stdcall: hresult 68 varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 getElementsByTagName: tagName 
 	"Answer a <sequencedReadableCollection> on the <IXMLDOMNodeList> result 
@@ -382,7 +382,7 @@ GetElementsByTagName: tagName resultList: resultList
 			[out, retval]IXMLDOMNodeList** resultList);"
 
 	<virtual stdcall: hresult 56 bstr IXMLDOMNodeList**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 implementation
 	"Answer the <IXMLDOMImplementation> value of the 'implementation' property of the receiver.
@@ -422,7 +422,7 @@ Load: xmlSource isSuccessful: isSuccessful
 			[out, retval]VARIANT_BOOL* isSuccessful);"
 
 	<virtual stdcall: hresult 59 variant varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 loadText: xmlString
 	"Parse the XML in the <readableString> argument.
@@ -461,7 +461,7 @@ LoadXML: bstrXML isSuccessful: isSuccessful
 			[out, retval]VARIANT_BOOL* isSuccessful);"
 
 	<virtual stdcall: hresult 66 bstr varbool*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 nodeFromID: idString
 	"Answer the <IXMLDOMNode> result of invoking the nodeFromID() method of the COM object.
@@ -484,7 +484,7 @@ NodeFromID: idString node: node
 			[out, retval]IXMLDOMNode** node);"
 
 	<virtual stdcall: hresult 58 bstr IXMLDOMNode**>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 ondataavailable: arg1
 	"Set the 'ondataavailable' property of the receiver to the <variant> value of the argument.
@@ -559,7 +559,7 @@ put_async: isAsync
 			[in]VARIANT_BOOL isAsync);"
 
 	<virtual stdcall: hresult 64 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_ondataavailable: arg1
 	"Private - Set the value of the 'ondataavailable' property of the object wrapped by the 
@@ -569,7 +569,7 @@ put_ondataavailable: arg1
 			[in]VARIANT arg1);"
 
 	<virtual stdcall: hresult 75 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_onreadystatechange: arg1
 	"Private - Set the value of the 'onreadystatechange' property of the object wrapped by the 
@@ -579,7 +579,7 @@ put_onreadystatechange: arg1
 			[in]VARIANT arg1);"
 
 	<virtual stdcall: hresult 74 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_ontransformnode: arg1
 	"Private - Set the value of the 'ontransformnode' property of the object wrapped by the 
@@ -589,7 +589,7 @@ put_ontransformnode: arg1
 			[in]VARIANT arg1);"
 
 	<virtual stdcall: hresult 76 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_preserveWhiteSpace: isPreserving
 	"Private - Set the value of the 'preserveWhiteSpace' property of the object wrapped by the 
@@ -599,7 +599,7 @@ put_preserveWhiteSpace: isPreserving
 			[in]VARIANT_BOOL isPreserving);"
 
 	<virtual stdcall: hresult 73 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_resolveExternals: isResolving
 	"Private - Set the value of the 'resolveExternals' property of the object wrapped by the 
@@ -609,7 +609,7 @@ put_resolveExternals: isResolving
 			[in]VARIANT_BOOL isResolving);"
 
 	<virtual stdcall: hresult 71 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 put_validateOnParse: isValidating
 	"Private - Set the value of the 'validateOnParse' property of the object wrapped by the 
@@ -619,7 +619,7 @@ put_validateOnParse: isValidating
 			[in]VARIANT_BOOL isValidating);"
 
 	<virtual stdcall: hresult 69 varbool>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 putref_documentElement: domElement
 	"Private - Set the value of the 'documentElement' property of the object wrapped by the 
@@ -629,7 +629,7 @@ putref_documentElement: domElement
 			[in]IXMLDOMElement* DOMElement);"
 
 	<virtual stdcall: hresult 47 IXMLDOMElement*>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 readyState
 	"Answer the <sdword> value of the 'readyState' property of the receiver.
@@ -673,7 +673,7 @@ Save: destination
 			[in]VARIANT destination);"
 
 	<virtual stdcall: hresult 67 variant>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 setDocumentElement: domElement
 	"Set the 'documentElement' property of the receiver to the <IXMLDOMElement*> value of the argument.

@@ -33,9 +33,8 @@ GetGUID: dwGuidKind pGUID: pGUID
 			[out] GUID* pGUID);
 	"
 
-	<virtual stdcall: hresult 5 dword GUID*>
-	^self invalidCall
-! !
+	<virtual stdcall: hresult 5 dword guid*>
+	^self invalidCall: _failureCode! !
 !IProvideClassInfo2 categoriesFor: #getGUID:!**auto generated**!methods!public! !
 !IProvideClassInfo2 categoriesFor: #GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
 

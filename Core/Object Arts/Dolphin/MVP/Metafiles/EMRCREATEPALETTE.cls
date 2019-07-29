@@ -86,7 +86,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPALETTE! !
-!EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
 

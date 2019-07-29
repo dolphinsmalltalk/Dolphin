@@ -36,24 +36,24 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Base\Development System';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: '..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: '..\MVP\Dolphin MVP Tests';
-	add: 'Professional\Dolphin Professional Tools';
-	add: 'Professional\Dolphin Refactoring Browser';
-	add: '..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'Base\Development System'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'..\MVP\Base\Dolphin Basic Geometry'
+	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\MVP\Base\Dolphin MVP Base'
+	'..\MVP\Dolphin MVP Tests'
+	'Professional\Dolphin Professional Tools'
+	'Professional\Dolphin Refactoring Browser'
+	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
 

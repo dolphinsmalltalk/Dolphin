@@ -119,7 +119,7 @@ fromBytes: aByteObject
 
 getFieldNames
 	^#(#cbData #pbData)! !
-!CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !CRYPTOAPI_BLOB class categoriesFor: #fromBytes:!public! !
 !CRYPTOAPI_BLOB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

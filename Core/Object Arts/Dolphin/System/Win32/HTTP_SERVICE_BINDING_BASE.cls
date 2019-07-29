@@ -65,7 +65,7 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
-!HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_BINDING_BASE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !HTTP_SERVICE_BINDING_BASE class categoriesFor: #fromAddress:!instance creation!public! !
 !HTTP_SERVICE_BINDING_BASE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

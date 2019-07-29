@@ -1070,7 +1070,7 @@ unregister
 !COMInterface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
 !COMInterface class categoriesFor: #createContextFlags!constants!public! !
 !COMInterface class categoriesFor: #createObject:!instance creation!public! !
-!COMInterface class categoriesFor: #defineFields!automatic generation!public! !
+!COMInterface class categoriesFor: #defineFields!automatic generation!public!template definition! !
 !COMInterface class categoriesFor: #defineFunction:!automatic generation!public! !
 !COMInterface class categoriesFor: #defineFunction:argumentTypes:!automatic generation!public! !
 !COMInterface class categoriesFor: #defineFunction:descriptor:!automatic generation!public! !
@@ -1078,7 +1078,7 @@ unregister
 !COMInterface class categoriesFor: #defineFunction:returnType:argumentTypes:!automatic generation!public! !
 !COMInterface class categoriesFor: #defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
 !COMInterface class categoriesFor: #defineFunctions!initializing!public! !
-!COMInterface class categoriesFor: #defineTemplate!automatic generation!public! !
+!COMInterface class categoriesFor: #defineTemplate!public!template definition! !
 !COMInterface class categoriesFor: #defineVTable!automatic generation!public! !
 !COMInterface class categoriesFor: #elementSize!accessing!public! !
 !COMInterface class categoriesFor: #functions!initializing!private! !
@@ -1112,7 +1112,7 @@ unregister
 !COMInterface class categoriesFor: #register!adding!public! !
 !COMInterface class categoriesFor: #registerClass:forIID:!adding!public! !
 !COMInterface class categoriesFor: #registerSubclasses!initializing!public! !
-!COMInterface class categoriesFor: #removeCompiledFunctions!automatic generation!public! !
+!COMInterface class categoriesFor: #removeCompiledFunctions!automatic generation!development!public! !
 !COMInterface class categoriesFor: #setGuid:!accessing!private! !
 !COMInterface class categoriesFor: #stdMethodCallType!constants!private! !
 !COMInterface class categoriesFor: #stdMethodReturnType!constants!private! !

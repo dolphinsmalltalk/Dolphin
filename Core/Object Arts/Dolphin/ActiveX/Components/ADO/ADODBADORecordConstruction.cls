@@ -20,8 +20,7 @@ get_Row: ppRow
 			[out, retval] IUnknown** ppRow);"
 
 	<virtual stdcall: hresult 8 IUnknown**>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 parentRow: arg1
 	"Set the 'ParentRow' property of the receiver to the <IUnknown*> value of the argument."
@@ -36,8 +35,7 @@ put_ParentRow: arg1
 			[in] IUnknown* arg1);"
 
 	<virtual stdcall: hresult 10 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 put_Row: ppRow
 	"Private - Set the value of the 'Row' property of the object wrapped by the 
@@ -46,8 +44,7 @@ put_Row: ppRow
 			[in] IUnknown* ppRow);"
 
 	<virtual stdcall: hresult 9 IUnknown*>
-	^self invalidCall
-!
+	^self invalidCall: _failureCode!
 
 row
 	"Answer the <IUnknown> value of the 'Row' property of the receiver."

@@ -67,6 +67,6 @@ x: x y: y
 				floatAtOffset: 4 put: y;
 				yourself)
 ! !
-!POINTF class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!POINTF class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !POINTF class categoriesFor: #x:y:!instance creation!public! !
 

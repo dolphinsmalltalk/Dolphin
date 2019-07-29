@@ -31,8 +31,8 @@ gdipAddPathArc: path x: x y: y width: width height: height startAngle: startAngl
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipAddPathArc  handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathArc handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathArcI: path x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipAddPathArcI() function of the module wrapped by the receiver.
@@ -46,8 +46,8 @@ gdipAddPathArcI: path x: x y: y width: width height: height startAngle: startAng
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipAddPathArcI  handle sdword sdword sdword sdword float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathArcI handle sdword sdword sdword sdword float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathBezier: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 	"Invoke the GdipAddPathBezier() function of the module wrapped by the receiver.
@@ -63,8 +63,8 @@ gdipAddPathBezier: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 			REAL x4,
 			REAL y4);"
 
-	<stdcall: sdword GdipAddPathBezier  handle float float float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathBezier handle float float float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathBezierI: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 	"Invoke the GdipAddPathBezierI() function of the module wrapped by the receiver.
@@ -80,8 +80,8 @@ gdipAddPathBezierI: path x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 			int x4,
 			int y4);"
 
-	<stdcall: sdword GdipAddPathBezierI  handle sdword sdword sdword sdword sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathBezierI handle sdword sdword sdword sdword sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathBeziers: path points: points count: count
 	"Invoke the GdipAddPathBeziers() function of the module wrapped by the receiver.
@@ -91,8 +91,8 @@ gdipAddPathBeziers: path points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathBeziers  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathBeziers handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathBeziersI: path points: points count: count
 	"Invoke the GdipAddPathBeziersI() function of the module wrapped by the receiver.
@@ -102,8 +102,8 @@ gdipAddPathBeziersI: path points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathBeziersI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathBeziersI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve: path points: points count: count
 	"Invoke the GdipAddPathClosedCurve() function of the module wrapped by the receiver.
@@ -113,8 +113,8 @@ gdipAddPathClosedCurve: path points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathClosedCurve  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathClosedCurve handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve2: path points: points count: count tension: tension
 	"Invoke the GdipAddPathClosedCurve2() function of the module wrapped by the receiver.
@@ -125,8 +125,8 @@ gdipAddPathClosedCurve2: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathClosedCurve2  handle POINTF* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathClosedCurve2 handle POINTF* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurve2I: path points: points count: count tension: tension
 	"Invoke the GdipAddPathClosedCurve2I() function of the module wrapped by the receiver.
@@ -137,8 +137,8 @@ gdipAddPathClosedCurve2I: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathClosedCurve2I  handle POINTL* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathClosedCurve2I handle POINTL* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathClosedCurveI: path points: points count: count
 	"Invoke the GdipAddPathClosedCurveI() function of the module wrapped by the receiver.
@@ -148,8 +148,8 @@ gdipAddPathClosedCurveI: path points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathClosedCurveI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathClosedCurveI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurve: path points: points count: count
 	"Invoke the GdipAddPathCurve() function of the module wrapped by the receiver.
@@ -159,8 +159,8 @@ gdipAddPathCurve: path points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathCurve  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurve handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurve2: path points: points count: count tension: tension
 	"Invoke the GdipAddPathCurve2() function of the module wrapped by the receiver.
@@ -171,8 +171,8 @@ gdipAddPathCurve2: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathCurve2  handle POINTF* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurve2 handle POINTF* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurve2I: path points: points count: count tension: tension
 	"Invoke the GdipAddPathCurve2I() function of the module wrapped by the receiver.
@@ -183,8 +183,8 @@ gdipAddPathCurve2I: path points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathCurve2I  handle POINTL* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurve2I handle POINTL* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurve3: path points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
 	"Invoke the GdipAddPathCurve3() function of the module wrapped by the receiver.
@@ -197,8 +197,8 @@ gdipAddPathCurve3: path points: points count: count offset: offset numberOfSegme
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathCurve3  handle POINTF* sdword sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurve3 handle POINTF* sdword sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurve3I: path points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
 	"Invoke the GdipAddPathCurve3I() function of the module wrapped by the receiver.
@@ -211,8 +211,8 @@ gdipAddPathCurve3I: path points: points count: count offset: offset numberOfSegm
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: sdword GdipAddPathCurve3I  handle POINTL* sdword sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurve3I handle POINTL* sdword sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathCurveI: path points: points count: count
 	"Invoke the GdipAddPathCurveI() function of the module wrapped by the receiver.
@@ -222,8 +222,8 @@ gdipAddPathCurveI: path points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathCurveI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathCurveI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathEllipse: path x: x y: y width: width height: height
 	"Invoke the GdipAddPathEllipse() function of the module wrapped by the receiver.
@@ -235,8 +235,8 @@ gdipAddPathEllipse: path x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipAddPathEllipse  handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathEllipse handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathEllipseI: path x: x y: y width: width height: height
 	"Invoke the GdipAddPathEllipseI() function of the module wrapped by the receiver.
@@ -248,8 +248,8 @@ gdipAddPathEllipseI: path x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipAddPathEllipseI  handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathEllipseI handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathLine: path x1: x1 y1: y1 x2: x2 y2: y2
 	"Invoke the GdipAddPathLine() function of the module wrapped by the receiver.
@@ -261,8 +261,8 @@ gdipAddPathLine: path x1: x1 y1: y1 x2: x2 y2: y2
 			REAL x2,
 			REAL y2);"
 
-	<stdcall: sdword GdipAddPathLine  handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathLine handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathLine2: path points: points count: count
 	"Invoke the GdipAddPathLine2() function of the module wrapped by the receiver.
@@ -272,8 +272,8 @@ gdipAddPathLine2: path points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathLine2  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathLine2 handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathLine2I: path points: points count: count
 	"Invoke the GdipAddPathLine2I() function of the module wrapped by the receiver.
@@ -283,8 +283,8 @@ gdipAddPathLine2I: path points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathLine2I  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathLine2I handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathLineI: path x1: x1 y1: y1 x2: x2 y2: y2
 	"Invoke the GdipAddPathLineI() function of the module wrapped by the receiver.
@@ -296,8 +296,8 @@ gdipAddPathLineI: path x1: x1 y1: y1 x2: x2 y2: y2
 			int x2,
 			int y2);"
 
-	<stdcall: sdword GdipAddPathLineI  handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathLineI handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathPath: path addingPath: addingPath connect: connect
 	"Invoke the GdipAddPathPath() function of the module wrapped by the receiver.
@@ -307,8 +307,8 @@ gdipAddPathPath: path addingPath: addingPath connect: connect
 			[in]PGpPath addingPath,
 			long connect);"
 
-	<stdcall: sdword GdipAddPathPath  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathPath handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathPie: path x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipAddPathPie() function of the module wrapped by the receiver.
@@ -322,8 +322,8 @@ gdipAddPathPie: path x: x y: y width: width height: height startAngle: startAngl
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipAddPathPie  handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathPie handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathPieI: path x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipAddPathPieI() function of the module wrapped by the receiver.
@@ -337,8 +337,8 @@ gdipAddPathPieI: path x: x y: y width: width height: height startAngle: startAng
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipAddPathPieI  handle sdword sdword sdword sdword float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathPieI handle sdword sdword sdword sdword float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathPolygon: path points: points count: count
 	"Invoke the GdipAddPathPolygon() function of the module wrapped by the receiver.
@@ -348,8 +348,8 @@ gdipAddPathPolygon: path points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathPolygon  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathPolygon handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathPolygonI: path points: points count: count
 	"Invoke the GdipAddPathPolygonI() function of the module wrapped by the receiver.
@@ -359,8 +359,8 @@ gdipAddPathPolygonI: path points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathPolygonI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathPolygonI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathRectangle: path x: x y: y width: width height: height
 	"Invoke the GdipAddPathRectangle() function of the module wrapped by the receiver.
@@ -372,8 +372,8 @@ gdipAddPathRectangle: path x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipAddPathRectangle  handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathRectangle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipAddPathRectangleI: path x: x y: y width: width height: height
 	"Invoke the GdipAddPathRectangleI() function of the module wrapped by the receiver.
@@ -385,8 +385,8 @@ gdipAddPathRectangleI: path x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipAddPathRectangleI  handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathRectangleI handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathRectangles: path rects: rects count: count
 	"Invoke the GdipAddPathRectangles() function of the module wrapped by the receiver.
@@ -396,8 +396,8 @@ gdipAddPathRectangles: path rects: rects count: count
 			[in]GpRectF* rects,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathRectangles  handle RECTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathRectangles handle RECTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathRectanglesI: path rects: rects count: count
 	"Invoke the GdipAddPathRectanglesI() function of the module wrapped by the receiver.
@@ -407,8 +407,8 @@ gdipAddPathRectanglesI: path rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathRectanglesI  handle RECT* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathRectanglesI handle RECT* sdword>
+	^self invalidCall: _failureCode!
 
 gdipAddPathString: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
 	"Invoke the GdipAddPathString() function of the module wrapped by the receiver.
@@ -423,8 +423,8 @@ gdipAddPathString: path string: string length: length family: family style: styl
 			[in]RECTF* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: sdword GdipAddPathString  handle lpwstr sdword handle sdword float RECTF* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathString handle lpwstr sdword handle sdword float RECTF* handle>
+	^self invalidCall: _failureCode!
 
 gdipAddPathStringI: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
 	"Invoke the GdipAddPathStringI() function of the module wrapped by the receiver.
@@ -439,8 +439,8 @@ gdipAddPathStringI: path string: string length: length family: family style: sty
 			[in]RECT* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: sdword GdipAddPathStringI  handle lpwstr sdword handle sdword float RECT* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipAddPathStringI handle lpwstr sdword handle sdword float RECT* handle>
+	^self invalidCall: _failureCode!
 
 gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
 	"Invoke the GdipBeginContainer() function of the module wrapped by the receiver.
@@ -452,8 +452,8 @@ gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state:
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: sdword GdipBeginContainer  handle RECTF* RECTF* sdword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipBeginContainer handle RECTF* RECTF* sdword dword*>
+	^self invalidCall: _failureCode!
 
 gdipBeginContainer2: graphics state: state
 	"Invoke the GdipBeginContainer2() function of the module wrapped by the receiver.
@@ -462,8 +462,8 @@ gdipBeginContainer2: graphics state: state
 			PGpGraphics graphics,
 			GraphicsContainer* state);"
 
-	<stdcall: sdword GdipBeginContainer2  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipBeginContainer2 handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
 	"Invoke the GdipBeginContainerI() function of the module wrapped by the receiver.
@@ -475,8 +475,8 @@ gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: sdword GdipBeginContainerI  handle RECT* RECT* sdword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipBeginContainerI handle RECT* RECT* sdword dword*>
+	^self invalidCall: _failureCode!
 
 gdipBitmapGetPixel: bitmap x: x y: y color: color
 	"Invoke the GdipBitmapGetPixel() function of the module wrapped by the receiver.
@@ -487,8 +487,8 @@ gdipBitmapGetPixel: bitmap x: x y: y color: color
 			[in]int y,
 			[out, retval]ARGB* Color);"
 
-	<stdcall: sdword GdipBitmapGetPixel  handle sdword sdword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipBitmapGetPixel handle sdword sdword dword*>
+	^self invalidCall: _failureCode!
 
 gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapData: lockedBitmapData
 	"Invoke the GdipBitmapLockBits() function of the module wrapped by the receiver.
@@ -500,8 +500,8 @@ gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapDa
 			[in]PixelFormat format,
 			[out, retval]BitmapData* lockedBitmapData);"
 
-	<stdcall: sdword GdipBitmapLockBits  handle RECT* dword sdword GpBitmapData*>
-	^self invalidCall!
+	<stdcall: sdword GdipBitmapLockBits handle RECT* dword sdword GpBitmapData*>
+	^self invalidCall: _failureCode!
 
 gdipBitmapSetPixel: bitmap x: x y: y color: color
 	"Invoke the GdipBitmapSetPixel() function of the module wrapped by the receiver.
@@ -512,8 +512,8 @@ gdipBitmapSetPixel: bitmap x: x y: y color: color
 			[in]int y,
 			[in]ARGB Color);"
 
-	<stdcall: sdword GdipBitmapSetPixel  handle sdword sdword dword>
-	^self invalidCall!
+	<stdcall: sdword GdipBitmapSetPixel handle sdword sdword dword>
+	^self invalidCall: _failureCode!
 
 gdipBitmapSetResolution: bitmap xdpi: xdpi ydpi: ydpi
 	"Invoke the GdipBitmapSetResolution() function of the module wrapped by the receiver.
@@ -523,8 +523,8 @@ gdipBitmapSetResolution: bitmap xdpi: xdpi ydpi: ydpi
 			[in]REAL xdpi,
 			[in]REAL ydpi);"
 
-	<stdcall: sdword GdipBitmapSetResolution  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipBitmapSetResolution handle float float>
+	^self invalidCall: _failureCode!
 
 gdipBitmapUnlockBits: bitmap lockedBitmapData: lockedBitmapData
 	"Invoke the GdipBitmapUnlockBits() function of the module wrapped by the receiver.
@@ -533,8 +533,8 @@ gdipBitmapUnlockBits: bitmap lockedBitmapData: lockedBitmapData
 			[in]PGpBitmap bitmap,
 			[in]BitmapData* lockedBitmapData);"
 
-	<stdcall: sdword GdipBitmapUnlockBits  handle GpBitmapData*>
-	^self invalidCall!
+	<stdcall: sdword GdipBitmapUnlockBits handle GpBitmapData*>
+	^self invalidCall: _failureCode!
 
 gdipClearPathMarkers: path
 	"Invoke the GdipClearPathMarkers() function of the module wrapped by the receiver.
@@ -542,8 +542,8 @@ gdipClearPathMarkers: path
 		GpStatus __stdcall GdipClearPathMarkers(
 			PGpPath path);"
 
-	<stdcall: sdword GdipClearPathMarkers  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipClearPathMarkers handle>
+	^self invalidCall: _failureCode!
 
 gdipCloneBitmapArea: x y: y width: width height: height format: format srcBitmap: srcBitmap dstBitmap: dstBitmap
 	"Invoke the GdipCloneBitmapArea() function of the module wrapped by the receiver.
@@ -557,8 +557,8 @@ gdipCloneBitmapArea: x y: y width: width height: height format: format srcBitmap
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
 
-	<stdcall: sdword GdipCloneBitmapArea  float float float float sdword handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneBitmapArea float float float float sdword handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneBitmapAreaI: x y: y width: width height: height format: format srcBitmap: srcBitmap dstBitmap: dstBitmap
 	"Invoke the GdipCloneBitmapAreaI() function of the module wrapped by the receiver.
@@ -572,8 +572,8 @@ gdipCloneBitmapAreaI: x y: y width: width height: height format: format srcBitma
 			[in]PGpBitmap srcBitmap,
 			[out, retval]PGpBitmap* dstBitmap);"
 
-	<stdcall: sdword GdipCloneBitmapAreaI  sdword sdword sdword sdword sdword handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneBitmapAreaI sdword sdword sdword sdword sdword handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneBrush: brush cloneBrush: cloneBrush
 	"Invoke the GdipCloneBrush() function of the module wrapped by the receiver.
@@ -582,8 +582,8 @@ gdipCloneBrush: brush cloneBrush: cloneBrush
 			PGpBrush brush,
 			[out, retval]PGpBrush* cloneBrush);"
 
-	<stdcall: sdword GdipCloneBrush  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneBrush handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneCustomLineCap: customCap clonedCap: clonedCap
 	"Invoke the GdipCloneCustomLineCap() function of the module wrapped by the receiver.
@@ -592,8 +592,8 @@ gdipCloneCustomLineCap: customCap clonedCap: clonedCap
 			PGpCustomLineCap customCap,
 			[out, retval]PGpCustomLineCap* clonedCap);"
 
-	<stdcall: sdword GdipCloneCustomLineCap  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneCustomLineCap handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneFont: font cloneFont: cloneFont
 	"Invoke the GdipCloneFont() function of the module wrapped by the receiver.
@@ -602,8 +602,8 @@ gdipCloneFont: font cloneFont: cloneFont
 			PGpFont font,
 			[out, retval]PGpFont* cloneFont);"
 
-	<stdcall: sdword GdipCloneFont  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneFont handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneFontFamily: fontFamily clonedFontFamily: clonedFontFamily
 	"Invoke the GdipCloneFontFamily() function of the module wrapped by the receiver.
@@ -612,8 +612,8 @@ gdipCloneFontFamily: fontFamily clonedFontFamily: clonedFontFamily
 			PGpFontFamily FontFamily,
 			[out, retval]PGpFontFamily* clonedFontFamily);"
 
-	<stdcall: sdword GdipCloneFontFamily  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneFontFamily handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneImage: image cloneImage: cloneImage
 	"Invoke the GdipCloneImage() function of the module wrapped by the receiver.
@@ -622,8 +622,8 @@ gdipCloneImage: image cloneImage: cloneImage
 			[in]PGpImage image,
 			[out, retval]PGpImage* cloneImage);"
 
-	<stdcall: sdword GdipCloneImage  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneImage handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneImageAttributes: imageattr cloneImageattr: cloneImageattr
 	"Invoke the GdipCloneImageAttributes() function of the module wrapped by the receiver.
@@ -632,8 +632,8 @@ gdipCloneImageAttributes: imageattr cloneImageattr: cloneImageattr
 			[in]PGpImageAttributes imageattr,
 			[out, retval]PGpImageAttributes* cloneImageattr);"
 
-	<stdcall: sdword GdipCloneImageAttributes  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneImageAttributes handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneMatrix: matrix cloneMatrix: cloneMatrix
 	"Invoke the GdipCloneMatrix() function of the module wrapped by the receiver.
@@ -642,8 +642,8 @@ gdipCloneMatrix: matrix cloneMatrix: cloneMatrix
 			PGpMatrix matrix,
 			[out, retval]PGpMatrix* cloneMatrix);"
 
-	<stdcall: sdword GdipCloneMatrix  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneMatrix handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipClonePath: path clonePath: clonePath
 	"Invoke the GdipClonePath() function of the module wrapped by the receiver.
@@ -652,8 +652,8 @@ gdipClonePath: path clonePath: clonePath
 			PGpPath path,
 			[out, retval]PGpPath* clonePath);"
 
-	<stdcall: sdword GdipClonePath  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipClonePath handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipClonePen: pen clonepen: clonepen
 	"Invoke the GdipClonePen() function of the module wrapped by the receiver.
@@ -662,8 +662,8 @@ gdipClonePen: pen clonepen: clonepen
 			PGpPen pen,
 			[out, retval]PGpPen* clonepen);"
 
-	<stdcall: sdword GdipClonePen  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipClonePen handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneRegion: region cloneRegion: cloneRegion
 	"Invoke the GdipCloneRegion() function of the module wrapped by the receiver.
@@ -672,8 +672,8 @@ gdipCloneRegion: region cloneRegion: cloneRegion
 			PGpRegion region,
 			[out, retval]PGpRegion* cloneRegion);"
 
-	<stdcall: sdword GdipCloneRegion  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneRegion handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCloneStringFormat: format newFormat: newFormat
 	"Invoke the GdipCloneStringFormat() function of the module wrapped by the receiver.
@@ -682,8 +682,8 @@ gdipCloneStringFormat: format newFormat: newFormat
 			[in]PGpStringFormat format,
 			[out, retval]PGpStringFormat* newFormat);"
 
-	<stdcall: sdword GdipCloneStringFormat  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCloneStringFormat handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipClosePathFigure: path
 	"Invoke the GdipClosePathFigure() function of the module wrapped by the receiver.
@@ -691,8 +691,8 @@ gdipClosePathFigure: path
 		GpStatus __stdcall GdipClosePathFigure(
 			PGpPath path);"
 
-	<stdcall: sdword GdipClosePathFigure  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipClosePathFigure handle>
+	^self invalidCall: _failureCode!
 
 gdipClosePathFigures: path
 	"Invoke the GdipClosePathFigures() function of the module wrapped by the receiver.
@@ -700,8 +700,8 @@ gdipClosePathFigures: path
 		GpStatus __stdcall GdipClosePathFigures(
 			PGpPath path);"
 
-	<stdcall: sdword GdipClosePathFigures  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipClosePathFigures handle>
+	^self invalidCall: _failureCode!
 
 gdipCombineRegionPath: region path: path combineMode: combineMode
 	"Invoke the GdipCombineRegionPath() function of the module wrapped by the receiver.
@@ -711,8 +711,8 @@ gdipCombineRegionPath: region path: path combineMode: combineMode
 			PGpPath path,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionPath  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipCombineRegionPath handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipCombineRegionRect: region rect: rect combineMode: combineMode
 	"Invoke the GdipCombineRegionRect() function of the module wrapped by the receiver.
@@ -722,8 +722,8 @@ gdipCombineRegionRect: region rect: rect combineMode: combineMode
 			[in]GpRectF* rect,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionRect  handle RECTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipCombineRegionRect handle RECTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 	"Invoke the GdipCombineRegionRectI() function of the module wrapped by the receiver.
@@ -733,8 +733,8 @@ gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 			[in]GpRect* rect,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionRectI  handle RECT* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipCombineRegionRectI handle RECT* sdword>
+	^self invalidCall: _failureCode!
 
 gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
 	"Invoke the GdipCombineRegionRegion() function of the module wrapped by the receiver.
@@ -744,8 +744,8 @@ gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
 			PGpRegion region2,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionRegion  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipCombineRegionRegion handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipComment: graphics sizeData: sizeData data: data
 	"Invoke the GdipComment() function of the module wrapped by the receiver.
@@ -755,8 +755,8 @@ gdipComment: graphics sizeData: sizeData data: data
 			unsigned int sizeData,
 			[in]BYTE* data);"
 
-	<stdcall: sdword GdipComment  handle dword byte*>
-	^self invalidCall!
+	<stdcall: sdword GdipComment handle dword byte*>
+	^self invalidCall: _failureCode!
 
 gdipCreateAdjustableArrowCap: height width: width isFilled: isFilled cap: cap
 	"Invoke the GdipCreateAdjustableArrowCap() function of the module wrapped by the receiver.
@@ -767,8 +767,8 @@ gdipCreateAdjustableArrowCap: height width: width isFilled: isFilled cap: cap
 			long isFilled,
 			[out, retval]PGpAdjustableArrowCap* cap);"
 
-	<stdcall: sdword GdipCreateAdjustableArrowCap  float float sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateAdjustableArrowCap float float sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromDirectDrawSurface: surface bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromDirectDrawSurface() function of the module wrapped by the receiver.
@@ -777,8 +777,8 @@ gdipCreateBitmapFromDirectDrawSurface: surface bitmap: bitmap
 			[in]IDirectDrawSurface7* surface,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromDirectDrawSurface  void** handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromDirectDrawSurface void** handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromFile: filename bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromFile() function of the module wrapped by the receiver.
@@ -787,8 +787,8 @@ gdipCreateBitmapFromFile: filename bitmap: bitmap
 			[in]LPWSTR filename,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromFile  lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromFile lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromFileICM: filename bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromFileICM() function of the module wrapped by the receiver.
@@ -797,8 +797,8 @@ gdipCreateBitmapFromFileICM: filename bitmap: bitmap
 			[in]LPWSTR filename,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromFileICM  lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromFileICM lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromGdiDib: gdiBitmapInfo gdiBitmapData: gdiBitmapData bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromGdiDib() function of the module wrapped by the receiver.
@@ -808,8 +808,8 @@ gdipCreateBitmapFromGdiDib: gdiBitmapInfo gdiBitmapData: gdiBitmapData bitmap: b
 			[in]VOID* gdiBitmapData,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromGdiDib  void* void* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromGdiDib void* void* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromGraphics: width height: height target: target bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromGraphics() function of the module wrapped by the receiver.
@@ -820,8 +820,8 @@ gdipCreateBitmapFromGraphics: width height: height target: target bitmap: bitmap
 			[in]PGpGraphics target,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromGraphics  sdword sdword handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromGraphics sdword sdword handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromHBITMAP() function of the module wrapped by the receiver.
@@ -831,8 +831,8 @@ gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap
 			[in]HPALETTE hpal,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromHBITMAP  handle handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromHBITMAP handle handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromHICON: hicon bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromHICON() function of the module wrapped by the receiver.
@@ -841,8 +841,8 @@ gdipCreateBitmapFromHICON: hicon bitmap: bitmap
 			[in]HICON HICON,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromHICON  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromHICON handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromResource: hInstance lpBitmapName: lpBitmapName bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromResource() function of the module wrapped by the receiver.
@@ -852,8 +852,8 @@ gdipCreateBitmapFromResource: hInstance lpBitmapName: lpBitmapName bitmap: bitma
 			[in]LPWSTR lpBitmapName,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromResource  void* lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromResource void* lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromScan0: width height: height stride: stride format: format scan0: scan0 bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromScan0() function of the module wrapped by the receiver.
@@ -866,8 +866,8 @@ gdipCreateBitmapFromScan0: width height: height stride: stride format: format sc
 			[in]BYTE* Scan0,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromScan0  sdword sdword sdword sdword byte* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromScan0 sdword sdword sdword sdword byte* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStream: stream bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromStream() function of the module wrapped by the receiver.
@@ -876,8 +876,8 @@ gdipCreateBitmapFromStream: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromStream  IStream* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromStream IStream* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
 	"Invoke the GdipCreateBitmapFromStreamICM() function of the module wrapped by the receiver.
@@ -886,8 +886,8 @@ gdipCreateBitmapFromStreamICM: stream bitmap: bitmap
 			[in]IStream* stream,
 			[out, retval]PGpBitmap* bitmap);"
 
-	<stdcall: sdword GdipCreateBitmapFromStreamICM  IStream* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateBitmapFromStreamICM IStream* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
 	"Invoke the GdipCreateCachedBitmap() function of the module wrapped by the receiver.
@@ -897,8 +897,8 @@ gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
 			PGpGraphics graphics,
 			[out, retval]GpCachedBitmap** cachedBitmap);"
 
-	<stdcall: sdword GdipCreateCachedBitmap  handle handle handle**>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateCachedBitmap handle handle handle**>
+	^self invalidCall: _failureCode!
 
 gdipCreateCustomLineCap: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset customCap: customCap
 	"Invoke the GdipCreateCustomLineCap() function of the module wrapped by the receiver.
@@ -910,8 +910,8 @@ gdipCreateCustomLineCap: fillPath strokePath: strokePath baseCap: baseCap baseIn
 			REAL baseInset,
 			[out, retval]PGpCustomLineCap* customCap);"
 
-	<stdcall: sdword GdipCreateCustomLineCap  handle handle sdword float handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateCustomLineCap handle handle sdword float handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFont: fontFamily emSize: emSize style: style unit: unit font: font
 	"Invoke the GdipCreateFont() function of the module wrapped by the receiver.
@@ -923,8 +923,8 @@ gdipCreateFont: fontFamily emSize: emSize style: style unit: unit font: font
 			Unit Unit,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: sdword GdipCreateFont  handle float sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFont handle float sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFontFamilyFromName: name fontCollection: fontCollection fontFamily: fontFamily
 	"Invoke the GdipCreateFontFamilyFromName() function of the module wrapped by the receiver.
@@ -934,8 +934,8 @@ gdipCreateFontFamilyFromName: name fontCollection: fontCollection fontFamily: fo
 			[in]PGpFontCollection fontCollection,
 			[out, retval]PGpFontFamily* FontFamily);"
 
-	<stdcall: sdword GdipCreateFontFamilyFromName  lpwstr handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFontFamilyFromName lpwstr handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFontFromDC: hdc font: font
 	"Invoke the GdipCreateFontFromDC() function of the module wrapped by the receiver.
@@ -944,8 +944,8 @@ gdipCreateFontFromDC: hdc font: font
 			HDC HDC,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: sdword GdipCreateFontFromDC  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFontFromDC handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
 	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
@@ -956,8 +956,7 @@ gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
 			[out, retval]PGpFont* font);"
 
 	<stdcall: sdword GdipCreateFontFromLogfontA handle LOGFONT* handle*>
-	#deprecated.
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
 	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
@@ -967,8 +966,8 @@ gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
 			[in]LOGFONTW* LOGFONT,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: sdword GdipCreateFontFromLogfontA  handle LOGFONTW* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFontFromLogfontA handle LOGFONTW* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFromHDC: hdc graphics: graphics
 	"Invoke the GdipCreateFromHDC() function of the module wrapped by the receiver.
@@ -977,8 +976,8 @@ gdipCreateFromHDC: hdc graphics: graphics
 			HDC HDC,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: sdword GdipCreateFromHDC  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFromHDC handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFromHDC2: hdc hDevice: hDevice graphics: graphics
 	"Invoke the GdipCreateFromHDC2() function of the module wrapped by the receiver.
@@ -988,8 +987,8 @@ gdipCreateFromHDC2: hdc hDevice: hDevice graphics: graphics
 			void* hDevice,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: sdword GdipCreateFromHDC2  handle void* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFromHDC2 handle void* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFromHWND: hwnd graphics: graphics
 	"Invoke the GdipCreateFromHWND() function of the module wrapped by the receiver.
@@ -998,8 +997,8 @@ gdipCreateFromHWND: hwnd graphics: graphics
 			HWND HWND,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: sdword GdipCreateFromHWND  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFromHWND handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateFromHWNDICM: hwnd graphics: graphics
 	"Invoke the GdipCreateFromHWNDICM() function of the module wrapped by the receiver.
@@ -1008,8 +1007,8 @@ gdipCreateFromHWNDICM: hwnd graphics: graphics
 			HWND HWND,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: sdword GdipCreateFromHWNDICM  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateFromHWNDICM handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateHalftonePalette
 	"Invoke the GdipCreateHalftonePalette() function of the module wrapped by the receiver.
@@ -1017,8 +1016,8 @@ gdipCreateHalftonePalette
 
 		HPALETTE __stdcall GdipCreateHalftonePalette();"
 
-	<stdcall: handle GdipCreateHalftonePalette >
-	^self invalidCall!
+	<stdcall: handle GdipCreateHalftonePalette>
+	^self invalidCall: _failureCode!
 
 gdipCreateHatchBrush: hatchStyle forecol: forecol backcol: backcol brush: brush
 	"Invoke the GdipCreateHatchBrush() function of the module wrapped by the receiver.
@@ -1029,8 +1028,8 @@ gdipCreateHatchBrush: hatchStyle forecol: forecol backcol: backcol brush: brush
 			ARGB backcol,
 			[out, retval]PGpHatch* brush);"
 
-	<stdcall: sdword GdipCreateHatchBrush  sdword dword dword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateHatchBrush sdword dword dword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateHBITMAPFromBitmap: bitmap hbmReturn: hbmReturn background: background
 	"Invoke the GdipCreateHBITMAPFromBitmap() function of the module wrapped by the receiver.
@@ -1040,8 +1039,8 @@ gdipCreateHBITMAPFromBitmap: bitmap hbmReturn: hbmReturn background: background
 			[out]HBITMAP* hbmReturn,
 			[in]ARGB background);"
 
-	<stdcall: sdword GdipCreateHBITMAPFromBitmap  handle handle* dword>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateHBITMAPFromBitmap handle handle* dword>
+	^self invalidCall: _failureCode!
 
 gdipCreateHICONFromBitmap: bitmap hbmReturn: hbmReturn
 	"Invoke the GdipCreateHICONFromBitmap() function of the module wrapped by the receiver.
@@ -1050,8 +1049,8 @@ gdipCreateHICONFromBitmap: bitmap hbmReturn: hbmReturn
 			[in]PGpBitmap bitmap,
 			[out, retval]HICON* hbmReturn);"
 
-	<stdcall: sdword GdipCreateHICONFromBitmap  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateHICONFromBitmap handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateImageAttributes: imageattr
 	"Invoke the GdipCreateImageAttributes() function of the module wrapped by the receiver.
@@ -1059,8 +1058,8 @@ gdipCreateImageAttributes: imageattr
 		GpStatus __stdcall GdipCreateImageAttributes(
 			[out, retval]PGpImageAttributes* imageattr);"
 
-	<stdcall: sdword GdipCreateImageAttributes  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateImageAttributes handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrush: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrush() function of the module wrapped by the receiver.
@@ -1073,8 +1072,8 @@ gdipCreateLineBrush: point1 point2: point2 color1: color1 color2: color2 wrapMod
 			[in]GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrush  POINTF* POINTF* dword dword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrush POINTF* POINTF* dword dword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRect: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRect() function of the module wrapped by the receiver.
@@ -1087,8 +1086,8 @@ gdipCreateLineBrushFromRect: rect color1: color1 color2: color2 mode: mode wrapM
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRect  RECTF* dword dword sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrushFromRect RECTF* dword dword sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectI() function of the module wrapped by the receiver.
@@ -1101,8 +1100,8 @@ gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrap
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectI  RECT* dword dword sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrushFromRectI RECT* dword dword sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectWithAngle() function of the module wrapped by the receiver.
@@ -1116,8 +1115,8 @@ gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: 
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectWithAngle  RECTF* dword dword float sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrushFromRectWithAngle RECTF* dword dword float sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushFromRectWithAngleI() function of the module wrapped by the receiver.
@@ -1131,8 +1130,8 @@ gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle:
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI  RECT* dword dword float sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI RECT* dword dword float sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
 	"Invoke the GdipCreateLineBrushI() function of the module wrapped by the receiver.
@@ -1145,8 +1144,8 @@ gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMo
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushI  POINTL* POINTL* dword dword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateLineBrushI POINTL* POINTL* dword dword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMatrix: matrix
 	"Invoke the GdipCreateMatrix() function of the module wrapped by the receiver.
@@ -1154,8 +1153,8 @@ gdipCreateMatrix: matrix
 		GpStatus __stdcall GdipCreateMatrix(
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMatrix handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMatrix2: m11 m12: m12 m21: m21 m22: m22 dx: dx dy: dy matrix: matrix
 	"Invoke the GdipCreateMatrix2() function of the module wrapped by the receiver.
@@ -1169,8 +1168,8 @@ gdipCreateMatrix2: m11 m12: m12 m21: m21 m22: m22 dx: dx dy: dy matrix: matrix
 			REAL dy,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix2  float float float float float float handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMatrix2 float float float float float float handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMatrix3: rect dstplg: dstplg matrix: matrix
 	"Invoke the GdipCreateMatrix3() function of the module wrapped by the receiver.
@@ -1180,8 +1179,8 @@ gdipCreateMatrix3: rect dstplg: dstplg matrix: matrix
 			[in]GpPointF* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix3  RECTF* POINTF* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMatrix3 RECTF* POINTF* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMatrix3I: rect dstplg: dstplg matrix: matrix
 	"Invoke the GdipCreateMatrix3I() function of the module wrapped by the receiver.
@@ -1191,8 +1190,8 @@ gdipCreateMatrix3I: rect dstplg: dstplg matrix: matrix
 			[in]GpPoint* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix3I  RECT* POINTL* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMatrix3I RECT* POINTL* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
 	"Invoke the GdipCreateMetafileFromEmf() function of the module wrapped by the receiver.
@@ -1202,8 +1201,8 @@ gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
 			long deleteEmf,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromEmf  handle sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMetafileFromEmf handle sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromFile: file metafile: metafile
 	"Invoke the GdipCreateMetafileFromFile() function of the module wrapped by the receiver.
@@ -1212,8 +1211,8 @@ gdipCreateMetafileFromFile: file metafile: metafile
 			[in]LPWSTR file,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromFile  lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMetafileFromFile lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromStream: stream metafile: metafile
 	"Invoke the GdipCreateMetafileFromStream() function of the module wrapped by the receiver.
@@ -1222,8 +1221,8 @@ gdipCreateMetafileFromStream: stream metafile: metafile
 			IStream* stream,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromStream  IStream* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMetafileFromStream IStream* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
 	"Invoke the GdipCreateMetafileFromWmf() function of the module wrapped by the receiver.
@@ -1234,8 +1233,8 @@ gdipCreateMetafileFromWmf: hWmf deleteWmf: deleteWmf wmfPlaceableFileHeader: wmf
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromWmf  handle sdword GpWmfPlaceableFileHeader* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMetafileFromWmf handle sdword GpWmfPlaceableFileHeader* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromWmfFile: file wmfPlaceableFileHeader: wmfPlaceableFileHeader metafile: metafile
 	"Invoke the GdipCreateMetafileFromWmfFile() function of the module wrapped by the receiver.
@@ -1245,8 +1244,8 @@ gdipCreateMetafileFromWmfFile: file wmfPlaceableFileHeader: wmfPlaceableFileHead
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipCreateMetafileFromWmfFile  lpwstr GpWmfPlaceableFileHeader* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateMetafileFromWmfFile lpwstr GpWmfPlaceableFileHeader* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePath: brushMode path: path
 	"Invoke the GdipCreatePath() function of the module wrapped by the receiver.
@@ -1255,8 +1254,8 @@ gdipCreatePath: brushMode path: path
 			GpFillMode brushMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: sdword GdipCreatePath  sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePath sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePath2: points types: types count: count fillMode: fillMode path: path
 	"Invoke the GdipCreatePath2() function of the module wrapped by the receiver.
@@ -1268,8 +1267,8 @@ gdipCreatePath2: points types: types count: count fillMode: fillMode path: path
 			GpFillMode FillMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: sdword GdipCreatePath2  POINTF* byte* sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePath2 POINTF* byte* sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePath2I: points types: types count: count fillMode: fillMode path: path
 	"Invoke the GdipCreatePath2I() function of the module wrapped by the receiver.
@@ -1281,8 +1280,8 @@ gdipCreatePath2I: points types: types count: count fillMode: fillMode path: path
 			GpFillMode FillMode,
 			[out, retval]PGpPath* path);"
 
-	<stdcall: sdword GdipCreatePath2I  POINTL* byte* sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePath2I POINTL* byte* sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePathGradient: points count: count wrapMode: wrapMode polyGradient: polyGradient
 	"Invoke the GdipCreatePathGradient() function of the module wrapped by the receiver.
@@ -1293,8 +1292,8 @@ gdipCreatePathGradient: points count: count wrapMode: wrapMode polyGradient: pol
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
 
-	<stdcall: sdword GdipCreatePathGradient  POINTF* sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePathGradient POINTF* sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePathGradientFromPath: path polyGradient: polyGradient
 	"Invoke the GdipCreatePathGradientFromPath() function of the module wrapped by the receiver.
@@ -1303,8 +1302,8 @@ gdipCreatePathGradientFromPath: path polyGradient: polyGradient
 			[in]PGpPath path,
 			[out, retval]PGpPathGradient* polyGradient);"
 
-	<stdcall: sdword GdipCreatePathGradientFromPath  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePathGradientFromPath handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePathGradientI: points count: count wrapMode: wrapMode polyGradient: polyGradient
 	"Invoke the GdipCreatePathGradientI() function of the module wrapped by the receiver.
@@ -1315,8 +1314,8 @@ gdipCreatePathGradientI: points count: count wrapMode: wrapMode polyGradient: po
 			GpWrapMode WrapMode,
 			[out, retval]PGpPathGradient* polyGradient);"
 
-	<stdcall: sdword GdipCreatePathGradientI  POINTL* sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePathGradientI POINTL* sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePathIter: iterator path: path
 	"Invoke the GdipCreatePathIter() function of the module wrapped by the receiver.
@@ -1325,8 +1324,8 @@ gdipCreatePathIter: iterator path: path
 			[out]PGpPathIterator* iterator,
 			[in]PGpPath path);"
 
-	<stdcall: sdword GdipCreatePathIter  handle* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePathIter handle* handle>
+	^self invalidCall: _failureCode!
 
 gdipCreatePen1: color width: width unit: unit pen: pen
 	"Invoke the GdipCreatePen1() function of the module wrapped by the receiver.
@@ -1337,8 +1336,8 @@ gdipCreatePen1: color width: width unit: unit pen: pen
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
-	<stdcall: sdword GdipCreatePen1  dword float sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePen1 dword float sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreatePen2: brush width: width unit: unit pen: pen
 	"Invoke the GdipCreatePen2() function of the module wrapped by the receiver.
@@ -1349,8 +1348,8 @@ gdipCreatePen2: brush width: width unit: unit pen: pen
 			GpUnit Unit,
 			[out, retval]PGpPen* pen);"
 
-	<stdcall: sdword GdipCreatePen2  handle float sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreatePen2 handle float sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegion: region
 	"Invoke the GdipCreateRegion() function of the module wrapped by the receiver.
@@ -1358,8 +1357,8 @@ gdipCreateRegion: region
 		GpStatus __stdcall GdipCreateRegion(
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegion  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegion handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegionHrgn: hRgn region: region
 	"Invoke the GdipCreateRegionHrgn() function of the module wrapped by the receiver.
@@ -1368,8 +1367,8 @@ gdipCreateRegionHrgn: hRgn region: region
 			void* hRgn,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionHrgn  void* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegionHrgn void* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegionPath: path region: region
 	"Invoke the GdipCreateRegionPath() function of the module wrapped by the receiver.
@@ -1378,8 +1377,8 @@ gdipCreateRegionPath: path region: region
 			PGpPath path,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionPath  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegionPath handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegionRect: rect region: region
 	"Invoke the GdipCreateRegionRect() function of the module wrapped by the receiver.
@@ -1388,8 +1387,8 @@ gdipCreateRegionRect: rect region: region
 			[in]GpRectF* rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionRect  RECTF* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegionRect RECTF* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegionRectI: rect region: region
 	"Invoke the GdipCreateRegionRectI() function of the module wrapped by the receiver.
@@ -1398,8 +1397,8 @@ gdipCreateRegionRectI: rect region: region
 			[in]GpRect* rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionRectI  RECT* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegionRectI RECT* handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateRegionRgnData: regionData size: size region: region
 	"Invoke the GdipCreateRegionRgnData() function of the module wrapped by the receiver.
@@ -1409,8 +1408,8 @@ gdipCreateRegionRgnData: regionData size: size region: region
 			int size,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionRgnData  byte* sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateRegionRgnData byte* sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateSolidFill: color brush: brush
 	"Invoke the GdipCreateSolidFill() function of the module wrapped by the receiver.
@@ -1419,8 +1418,8 @@ gdipCreateSolidFill: color brush: brush
 			[in]ARGB Color,
 			[out, retval]PGpSolidFill* brush);"
 
-	<stdcall: sdword GdipCreateSolidFill  dword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateSolidFill dword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateStreamOnFile: filename access: access stream: stream
 	"Invoke the GdipCreateStreamOnFile() function of the module wrapped by the receiver.
@@ -1430,8 +1429,8 @@ gdipCreateStreamOnFile: filename access: access stream: stream
 			unsigned int access,
 			[out, retval]IStream** stream);"
 
-	<stdcall: sdword GdipCreateStreamOnFile  lpwstr dword IStream**>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateStreamOnFile lpwstr dword IStream**>
+	^self invalidCall: _failureCode!
 
 gdipCreateStringFormat: formatAttributes language: language format: format
 	"Invoke the GdipCreateStringFormat() function of the module wrapped by the receiver.
@@ -1441,8 +1440,8 @@ gdipCreateStringFormat: formatAttributes language: language format: format
 			LANGID language,
 			[out, retval]PGpStringFormat* format);"
 
-	<stdcall: sdword GdipCreateStringFormat  sdword word handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateStringFormat sdword word handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateTexture: image wrapMode: wrapMode texture: texture
 	"Invoke the GdipCreateTexture() function of the module wrapped by the receiver.
@@ -1452,8 +1451,8 @@ gdipCreateTexture: image wrapMode: wrapMode texture: texture
 			[in]GpWrapMode WrapMode,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: sdword GdipCreateTexture  handle sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateTexture handle sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateTexture2: image wrapMode: wrapMode x: x y: y width: width height: height texture: texture
 	"Invoke the GdipCreateTexture2() function of the module wrapped by the receiver.
@@ -1467,8 +1466,8 @@ gdipCreateTexture2: image wrapMode: wrapMode x: x y: y width: width height: heig
 			[in]REAL Height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: sdword GdipCreateTexture2  handle sdword float float float float handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateTexture2 handle sdword float float float float handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateTexture2I: image wrapMode: wrapMode x: x y: y width: width height: height texture: texture
 	"Invoke the GdipCreateTexture2I() function of the module wrapped by the receiver.
@@ -1482,8 +1481,8 @@ gdipCreateTexture2I: image wrapMode: wrapMode x: x y: y width: width height: hei
 			[in]int Height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: sdword GdipCreateTexture2I  handle sdword sdword sdword sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateTexture2I handle sdword sdword sdword sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateTextureIA: image imageAttributes: imageAttributes x: x y: y width: width height: height texture: texture
 	"Invoke the GdipCreateTextureIA() function of the module wrapped by the receiver.
@@ -1497,8 +1496,8 @@ gdipCreateTextureIA: image imageAttributes: imageAttributes x: x y: y width: wid
 			[in]REAL Height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: sdword GdipCreateTextureIA  handle handle float float float float handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateTextureIA handle handle float float float float handle*>
+	^self invalidCall: _failureCode!
 
 gdipCreateTextureIAI: image imageAttributes: imageAttributes x: x y: y width: width height: height texture: texture
 	"Invoke the GdipCreateTextureIAI() function of the module wrapped by the receiver.
@@ -1512,8 +1511,8 @@ gdipCreateTextureIAI: image imageAttributes: imageAttributes x: x y: y width: wi
 			[in]int Height,
 			[out, retval]PGpTexture* texture);"
 
-	<stdcall: sdword GdipCreateTextureIAI  handle handle sdword sdword sdword sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipCreateTextureIAI handle handle sdword sdword sdword sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipDeleteBrush: brush
 	"Invoke the GdipDeleteBrush() function of the module wrapped by the receiver.
@@ -1521,8 +1520,8 @@ gdipDeleteBrush: brush
 		GpStatus __stdcall GdipDeleteBrush(
 			PGpBrush brush);"
 
-	<stdcall: sdword GdipDeleteBrush  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteBrush handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteCachedBitmap: cachedBitmap
 	"Invoke the GdipDeleteCachedBitmap() function of the module wrapped by the receiver.
@@ -1530,8 +1529,8 @@ gdipDeleteCachedBitmap: cachedBitmap
 		GpStatus __stdcall GdipDeleteCachedBitmap(
 			GpCachedBitmap* cachedBitmap);"
 
-	<stdcall: sdword GdipDeleteCachedBitmap  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteCachedBitmap handle*>
+	^self invalidCall: _failureCode!
 
 gdipDeleteCustomLineCap: customCap
 	"Invoke the GdipDeleteCustomLineCap() function of the module wrapped by the receiver.
@@ -1539,8 +1538,8 @@ gdipDeleteCustomLineCap: customCap
 		GpStatus __stdcall GdipDeleteCustomLineCap(
 			PGpCustomLineCap customCap);"
 
-	<stdcall: sdword GdipDeleteCustomLineCap  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteCustomLineCap handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteFont: font
 	"Invoke the GdipDeleteFont() function of the module wrapped by the receiver.
@@ -1548,8 +1547,8 @@ gdipDeleteFont: font
 		GpStatus __stdcall GdipDeleteFont(
 			PGpFont font);"
 
-	<stdcall: sdword GdipDeleteFont  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteFont handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteFontFamily: fontFamily
 	"Invoke the GdipDeleteFontFamily() function of the module wrapped by the receiver.
@@ -1557,8 +1556,8 @@ gdipDeleteFontFamily: fontFamily
 		GpStatus __stdcall GdipDeleteFontFamily(
 			PGpFontFamily FontFamily);"
 
-	<stdcall: sdword GdipDeleteFontFamily  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteFontFamily handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteGraphics: graphics
 	"Invoke the GdipDeleteGraphics() function of the module wrapped by the receiver.
@@ -1566,8 +1565,8 @@ gdipDeleteGraphics: graphics
 		GpStatus __stdcall GdipDeleteGraphics(
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipDeleteGraphics  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteGraphics handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteMatrix: matrix
 	"Invoke the GdipDeleteMatrix() function of the module wrapped by the receiver.
@@ -1575,8 +1574,8 @@ gdipDeleteMatrix: matrix
 		GpStatus __stdcall GdipDeleteMatrix(
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipDeleteMatrix  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteMatrix handle>
+	^self invalidCall: _failureCode!
 
 gdipDeletePath: path
 	"Invoke the GdipDeletePath() function of the module wrapped by the receiver.
@@ -1584,8 +1583,8 @@ gdipDeletePath: path
 		GpStatus __stdcall GdipDeletePath(
 			PGpPath path);"
 
-	<stdcall: sdword GdipDeletePath  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeletePath handle>
+	^self invalidCall: _failureCode!
 
 gdipDeletePathIter: iterator
 	"Invoke the GdipDeletePathIter() function of the module wrapped by the receiver.
@@ -1593,8 +1592,8 @@ gdipDeletePathIter: iterator
 		GpStatus __stdcall GdipDeletePathIter(
 			[in]PGpPathIterator iterator);"
 
-	<stdcall: sdword GdipDeletePathIter  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeletePathIter handle>
+	^self invalidCall: _failureCode!
 
 gdipDeletePen: pen
 	"Invoke the GdipDeletePen() function of the module wrapped by the receiver.
@@ -1602,8 +1601,8 @@ gdipDeletePen: pen
 		GpStatus __stdcall GdipDeletePen(
 			PGpPen pen);"
 
-	<stdcall: sdword GdipDeletePen  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeletePen handle>
+	^self invalidCall: _failureCode!
 
 gdipDeletePrivateFontCollection: fontCollection
 	"Invoke the GdipDeletePrivateFontCollection() function of the module wrapped by the receiver.
@@ -1611,8 +1610,8 @@ gdipDeletePrivateFontCollection: fontCollection
 		GpStatus __stdcall GdipDeletePrivateFontCollection(
 			[out, retval]PGpFontCollection* fontCollection);"
 
-	<stdcall: sdword GdipDeletePrivateFontCollection  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipDeletePrivateFontCollection handle*>
+	^self invalidCall: _failureCode!
 
 gdipDeleteRegion: region
 	"Invoke the GdipDeleteRegion() function of the module wrapped by the receiver.
@@ -1620,8 +1619,8 @@ gdipDeleteRegion: region
 		GpStatus __stdcall GdipDeleteRegion(
 			PGpRegion region);"
 
-	<stdcall: sdword GdipDeleteRegion  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteRegion handle>
+	^self invalidCall: _failureCode!
 
 gdipDeleteStringFormat: format
 	"Invoke the GdipDeleteStringFormat() function of the module wrapped by the receiver.
@@ -1629,8 +1628,8 @@ gdipDeleteStringFormat: format
 		GpStatus __stdcall GdipDeleteStringFormat(
 			PGpStringFormat format);"
 
-	<stdcall: sdword GdipDeleteStringFormat  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDeleteStringFormat handle>
+	^self invalidCall: _failureCode!
 
 gdipDisposeImage: image
 	"Invoke the GdipDisposeImage() function of the module wrapped by the receiver.
@@ -1638,8 +1637,8 @@ gdipDisposeImage: image
 		GpStatus __stdcall GdipDisposeImage(
 			[in]PGpImage image);"
 
-	<stdcall: sdword GdipDisposeImage  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDisposeImage handle>
+	^self invalidCall: _failureCode!
 
 gdipDisposeImageAttributes: imageattr
 	"Invoke the GdipDisposeImageAttributes() function of the module wrapped by the receiver.
@@ -1647,8 +1646,8 @@ gdipDisposeImageAttributes: imageattr
 		GpStatus __stdcall GdipDisposeImageAttributes(
 			PGpImageAttributes imageattr);"
 
-	<stdcall: sdword GdipDisposeImageAttributes  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDisposeImageAttributes handle>
+	^self invalidCall: _failureCode!
 
 gdipDrawArc: graphics pen: pen x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipDrawArc() function of the module wrapped by the receiver.
@@ -1663,8 +1662,8 @@ gdipDrawArc: graphics pen: pen x: x y: y width: width height: height startAngle:
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipDrawArc  handle handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawArc handle handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawArcI: graphics pen: pen x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipDrawArcI() function of the module wrapped by the receiver.
@@ -1679,8 +1678,8 @@ gdipDrawArcI: graphics pen: pen x: x y: y width: width height: height startAngle
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipDrawArcI  handle handle sdword sdword sdword sdword float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawArcI handle handle sdword sdword sdword sdword float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawBezier: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 	"Invoke the GdipDrawBezier() function of the module wrapped by the receiver.
@@ -1697,8 +1696,8 @@ gdipDrawBezier: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: 
 			REAL x4,
 			REAL y4);"
 
-	<stdcall: sdword GdipDrawBezier  handle handle float float float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawBezier handle handle float float float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawBezierI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4
 	"Invoke the GdipDrawBezierI() function of the module wrapped by the receiver.
@@ -1715,8 +1714,8 @@ gdipDrawBezierI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4:
 			int x4,
 			int y4);"
 
-	<stdcall: sdword GdipDrawBezierI  handle handle sdword sdword sdword sdword sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawBezierI handle handle sdword sdword sdword sdword sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawBeziers: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawBeziers() function of the module wrapped by the receiver.
@@ -1727,8 +1726,8 @@ gdipDrawBeziers: graphics pen: pen points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawBeziers  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawBeziers handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawBeziersI: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawBeziersI() function of the module wrapped by the receiver.
@@ -1739,8 +1738,8 @@ gdipDrawBeziersI: graphics pen: pen points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawBeziersI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawBeziersI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
 	"Invoke the GdipDrawCachedBitmap() function of the module wrapped by the receiver.
@@ -1751,8 +1750,8 @@ gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: sdword GdipDrawCachedBitmap  handle handle* sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCachedBitmap handle handle* sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawClosedCurve() function of the module wrapped by the receiver.
@@ -1763,8 +1762,8 @@ gdipDrawClosedCurve: graphics pen: pen points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawClosedCurve  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawClosedCurve handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve2: graphics pen: pen points: points count: count tension: tension
 	"Invoke the GdipDrawClosedCurve2() function of the module wrapped by the receiver.
@@ -1776,8 +1775,8 @@ gdipDrawClosedCurve2: graphics pen: pen points: points count: count tension: ten
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawClosedCurve2  handle handle POINTF* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawClosedCurve2 handle handle POINTF* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve2I: graphics pen: pen points: points count: count tension: tension
 	"Invoke the GdipDrawClosedCurve2I() function of the module wrapped by the receiver.
@@ -1789,8 +1788,8 @@ gdipDrawClosedCurve2I: graphics pen: pen points: points count: count tension: te
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawClosedCurve2I  handle handle POINTL* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawClosedCurve2I handle handle POINTL* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurveI: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawClosedCurveI() function of the module wrapped by the receiver.
@@ -1801,8 +1800,8 @@ gdipDrawClosedCurveI: graphics pen: pen points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawClosedCurveI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawClosedCurveI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurve: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawCurve() function of the module wrapped by the receiver.
@@ -1813,8 +1812,8 @@ gdipDrawCurve: graphics pen: pen points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawCurve  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurve handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurve2: graphics pen: pen points: points count: count tension: tension
 	"Invoke the GdipDrawCurve2() function of the module wrapped by the receiver.
@@ -1826,8 +1825,8 @@ gdipDrawCurve2: graphics pen: pen points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawCurve2  handle handle POINTF* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurve2 handle handle POINTF* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurve2I: graphics pen: pen points: points count: count tension: tension
 	"Invoke the GdipDrawCurve2I() function of the module wrapped by the receiver.
@@ -1839,8 +1838,8 @@ gdipDrawCurve2I: graphics pen: pen points: points count: count tension: tension
 			int Count,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawCurve2I  handle handle POINTL* sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurve2I handle handle POINTL* sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurve3: graphics pen: pen points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
 	"Invoke the GdipDrawCurve3() function of the module wrapped by the receiver.
@@ -1854,8 +1853,8 @@ gdipDrawCurve3: graphics pen: pen points: points count: count offset: offset num
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawCurve3  handle handle POINTF* sdword sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurve3 handle handle POINTF* sdword sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurve3I: graphics pen: pen points: points count: count offset: offset numberOfSegments: numberOfSegments tension: tension
 	"Invoke the GdipDrawCurve3I() function of the module wrapped by the receiver.
@@ -1869,8 +1868,8 @@ gdipDrawCurve3I: graphics pen: pen points: points count: count offset: offset nu
 			int numberOfSegments,
 			REAL tension);"
 
-	<stdcall: sdword GdipDrawCurve3I  handle handle POINTL* sdword sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurve3I handle handle POINTL* sdword sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipDrawCurveI: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawCurveI() function of the module wrapped by the receiver.
@@ -1881,8 +1880,8 @@ gdipDrawCurveI: graphics pen: pen points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawCurveI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawCurveI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawDriverString: graphics text: text length: length font: font brush: brush positions: positions flags: flags matrix: matrix
 	"Invoke the GdipDrawDriverString() function of the module wrapped by the receiver.
@@ -1897,8 +1896,8 @@ gdipDrawDriverString: graphics text: text length: length font: font brush: brush
 			int Flags,
 			[in]PGpMatrix matrix);"
 
-	<stdcall: sdword GdipDrawDriverString  handle word* sdword handle handle POINTF* sdword handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawDriverString handle word* sdword handle handle POINTF* sdword handle>
+	^self invalidCall: _failureCode!
 
 gdipDrawEllipse: graphics pen: pen x: x y: y width: width height: height
 	"Invoke the GdipDrawEllipse() function of the module wrapped by the receiver.
@@ -1911,8 +1910,8 @@ gdipDrawEllipse: graphics pen: pen x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipDrawEllipse  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawEllipse handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawEllipseI: graphics pen: pen x: x y: y width: width height: height
 	"Invoke the GdipDrawEllipseI() function of the module wrapped by the receiver.
@@ -1925,8 +1924,8 @@ gdipDrawEllipseI: graphics pen: pen x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipDrawEllipseI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawEllipseI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImage: graphics image: image x: x y: y
 	"Invoke the GdipDrawImage() function of the module wrapped by the receiver.
@@ -1937,8 +1936,8 @@ gdipDrawImage: graphics image: image x: x y: y
 			REAL x,
 			REAL y);"
 
-	<stdcall: sdword GdipDrawImage  handle handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImage handle handle float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawImageI: graphics image: image x: x y: y
 	"Invoke the GdipDrawImageI() function of the module wrapped by the receiver.
@@ -1949,8 +1948,8 @@ gdipDrawImageI: graphics image: image x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: sdword GdipDrawImageI  handle handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImageI handle handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePointRect: graphics image: image x: x y: y srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit
 	"Invoke the GdipDrawImagePointRect() function of the module wrapped by the receiver.
@@ -1966,8 +1965,8 @@ gdipDrawImagePointRect: graphics image: image x: x y: y srcx: srcx srcy: srcy sr
 			REAL srcheight,
 			GpUnit srcUnit);"
 
-	<stdcall: sdword GdipDrawImagePointRect  handle handle float float float float float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePointRect handle handle float float float float float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePointRectI: graphics image: image x: x y: y srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit
 	"Invoke the GdipDrawImagePointRectI() function of the module wrapped by the receiver.
@@ -1983,8 +1982,8 @@ gdipDrawImagePointRectI: graphics image: image x: x y: y srcx: srcx srcy: srcy s
 			int srcheight,
 			GpUnit srcUnit);"
 
-	<stdcall: sdword GdipDrawImagePointRectI  handle handle sdword sdword sdword sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePointRectI handle handle sdword sdword sdword sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePoints: graphics image: image dstpoints: dstpoints count: count
 	"Invoke the GdipDrawImagePoints() function of the module wrapped by the receiver.
@@ -1995,8 +1994,8 @@ gdipDrawImagePoints: graphics image: image dstpoints: dstpoints count: count
 			[in]GpPointF* dstpoints,
 			int Count);"
 
-	<stdcall: sdword GdipDrawImagePoints  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePoints handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsI: graphics image: image dstpoints: dstpoints count: count
 	"Invoke the GdipDrawImagePointsI() function of the module wrapped by the receiver.
@@ -2007,8 +2006,8 @@ gdipDrawImagePointsI: graphics image: image dstpoints: dstpoints count: count
 			[in]GpPoint* dstpoints,
 			int Count);"
 
-	<stdcall: sdword GdipDrawImagePointsI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePointsI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsRect: graphics image: image points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
 	"Invoke the GdipDrawImagePointsRect() function of the module wrapped by the receiver.
@@ -2027,8 +2026,8 @@ gdipDrawImagePointsRect: graphics image: image points: points count: count srcx:
 			DrawImageAbort callback,
 			VOID* callbackData);"
 
-	<stdcall: sdword GdipDrawImagePointsRect  handle handle POINTF* sdword float float float float sdword handle void* void*>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePointsRect handle handle POINTF* sdword float float float float sdword handle void* void*>
+	^self invalidCall: _failureCode!
 
 gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
 	"Invoke the GdipDrawImagePointsRectI() function of the module wrapped by the receiver.
@@ -2047,8 +2046,8 @@ gdipDrawImagePointsRectI: graphics image: image points: points count: count srcx
 			DrawImageAbort callback,
 			VOID* callbackData);"
 
-	<stdcall: sdword GdipDrawImagePointsRectI  handle handle POINTL* sdword sdword sdword sdword sdword sdword handle void* void*>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImagePointsRectI handle handle POINTL* sdword sdword sdword sdword sdword sdword handle void* void*>
+	^self invalidCall: _failureCode!
 
 gdipDrawImageRect: graphics image: image x: x y: y width: width height: height
 	"Invoke the GdipDrawImageRect() function of the module wrapped by the receiver.
@@ -2061,8 +2060,8 @@ gdipDrawImageRect: graphics image: image x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipDrawImageRect  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImageRect handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawImageRectI: graphics image: image x: x y: y width: width height: height
 	"Invoke the GdipDrawImageRectI() function of the module wrapped by the receiver.
@@ -2075,8 +2074,8 @@ gdipDrawImageRectI: graphics image: image x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipDrawImageRectI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImageRectI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawImageRectRect: graphics image: image dstx: dstx dsty: dsty dstwidth: dstwidth dstheight: dstheight srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
 	"Invoke the GdipDrawImageRectRect() function of the module wrapped by the receiver.
@@ -2097,8 +2096,8 @@ gdipDrawImageRectRect: graphics image: image dstx: dstx dsty: dsty dstwidth: dst
 			DrawImageAbort callback,
 			VOID* callbackData);"
 
-	<stdcall: sdword GdipDrawImageRectRect  handle handle float float float float float float float float sdword handle void* void*>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImageRectRect handle handle float float float float float float float float sdword handle void* void*>
+	^self invalidCall: _failureCode!
 
 gdipDrawImageRectRectI: graphics image: image dstx: dstx dsty: dsty dstwidth: dstwidth dstheight: dstheight srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight srcUnit: srcUnit imageAttributes: imageAttributes callback: callback callbackData: callbackData
 	"Invoke the GdipDrawImageRectRectI() function of the module wrapped by the receiver.
@@ -2119,8 +2118,8 @@ gdipDrawImageRectRectI: graphics image: image dstx: dstx dsty: dsty dstwidth: ds
 			DrawImageAbort callback,
 			VOID* callbackData);"
 
-	<stdcall: sdword GdipDrawImageRectRectI  handle handle sdword sdword sdword sdword sdword sdword sdword sdword sdword handle void* void*>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawImageRectRectI handle handle sdword sdword sdword sdword sdword sdword sdword sdword sdword handle void* void*>
+	^self invalidCall: _failureCode!
 
 gdipDrawLine: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
 	"Invoke the GdipDrawLine() function of the module wrapped by the receiver.
@@ -2133,8 +2132,8 @@ gdipDrawLine: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
 			REAL x2,
 			REAL y2);"
 
-	<stdcall: sdword GdipDrawLine  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawLine handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawLineI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
 	"Invoke the GdipDrawLineI() function of the module wrapped by the receiver.
@@ -2147,8 +2146,8 @@ gdipDrawLineI: graphics pen: pen x1: x1 y1: y1 x2: x2 y2: y2
 			int x2,
 			int y2);"
 
-	<stdcall: sdword GdipDrawLineI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawLineI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawLines: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawLines() function of the module wrapped by the receiver.
@@ -2159,8 +2158,8 @@ gdipDrawLines: graphics pen: pen points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawLines  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawLines handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawLinesI: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawLinesI() function of the module wrapped by the receiver.
@@ -2171,8 +2170,8 @@ gdipDrawLinesI: graphics pen: pen points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawLinesI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawLinesI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawPath: graphics pen: pen path: path
 	"Invoke the GdipDrawPath() function of the module wrapped by the receiver.
@@ -2182,8 +2181,8 @@ gdipDrawPath: graphics pen: pen path: path
 			PGpPen pen,
 			PGpPath path);"
 
-	<stdcall: sdword GdipDrawPath  handle handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawPath handle handle handle>
+	^self invalidCall: _failureCode!
 
 gdipDrawPie: graphics pen: pen x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipDrawPie() function of the module wrapped by the receiver.
@@ -2198,8 +2197,8 @@ gdipDrawPie: graphics pen: pen x: x y: y width: width height: height startAngle:
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipDrawPie  handle handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawPie handle handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawPieI: graphics pen: pen x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipDrawPieI() function of the module wrapped by the receiver.
@@ -2214,8 +2213,8 @@ gdipDrawPieI: graphics pen: pen x: x y: y width: width height: height startAngle
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipDrawPieI  handle handle sdword sdword sdword sdword float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawPieI handle handle sdword sdword sdword sdword float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawPolygon: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawPolygon() function of the module wrapped by the receiver.
@@ -2226,8 +2225,8 @@ gdipDrawPolygon: graphics pen: pen points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawPolygon  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawPolygon handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawPolygonI: graphics pen: pen points: points count: count
 	"Invoke the GdipDrawPolygonI() function of the module wrapped by the receiver.
@@ -2238,8 +2237,8 @@ gdipDrawPolygonI: graphics pen: pen points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipDrawPolygonI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawPolygonI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawRectangle: graphics pen: pen x: x y: y width: width height: height
 	"Invoke the GdipDrawRectangle() function of the module wrapped by the receiver.
@@ -2252,8 +2251,8 @@ gdipDrawRectangle: graphics pen: pen x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipDrawRectangle  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawRectangle handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipDrawRectangleI: graphics pen: pen x: x y: y width: width height: height
 	"Invoke the GdipDrawRectangleI() function of the module wrapped by the receiver.
@@ -2266,8 +2265,8 @@ gdipDrawRectangleI: graphics pen: pen x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipDrawRectangleI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawRectangleI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawRectangles: graphics pen: pen rects: rects count: count
 	"Invoke the GdipDrawRectangles() function of the module wrapped by the receiver.
@@ -2278,8 +2277,8 @@ gdipDrawRectangles: graphics pen: pen rects: rects count: count
 			[in]GpRectF* rects,
 			int Count);"
 
-	<stdcall: sdword GdipDrawRectangles  handle handle RECTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawRectangles handle handle RECTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 	"Invoke the GdipDrawRectanglesI() function of the module wrapped by the receiver.
@@ -2290,8 +2289,8 @@ gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipDrawRectanglesI  handle handle RECT* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawRectanglesI handle handle RECT* sdword>
+	^self invalidCall: _failureCode!
 
 gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat brush: brush
 	"Invoke the GdipDrawString() function of the module wrapped by the receiver.
@@ -2305,8 +2304,8 @@ gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRe
 			[in]PGpStringFormat stringFormat,
 			[in]PGpBrush brush);"
 
-	<stdcall: sdword GdipDrawString  handle lpwstr sdword handle RECTF* handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipDrawString handle lpwstr sdword handle RECTF* handle handle>
+	^self invalidCall: _failureCode!
 
 gdipEmfToWmfBits: hEmf cbData16: cbData16 pData16: pData16 iMapMode: iMapMode eFlags: eFlags
 	"Invoke the GdipEmfToWmfBits() function of the module wrapped by the receiver.
@@ -2318,8 +2317,8 @@ gdipEmfToWmfBits: hEmf cbData16: cbData16 pData16: pData16 iMapMode: iMapMode eF
 			int iMapMode,
 			int eFlags);"
 
-	<stdcall: dword GdipEmfToWmfBits  handle dword byte* sdword sdword>
-	^self invalidCall!
+	<stdcall: dword GdipEmfToWmfBits handle dword byte* sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipEndContainer: graphics state: state
 	"Invoke the GdipEndContainer() function of the module wrapped by the receiver.
@@ -2328,8 +2327,8 @@ gdipEndContainer: graphics state: state
 			PGpGraphics graphics,
 			GraphicsContainer state);"
 
-	<stdcall: sdword GdipEndContainer  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipEndContainer handle dword>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPoint: graphics metafile: metafile destPoint: destPoint fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestPoint() function of the module wrapped by the receiver.
@@ -2342,8 +2341,8 @@ gdipEnumerateMetafileDestPoint: graphics metafile: metafile destPoint: destPoint
 			[in]VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestPoint  handle handle POINTF* void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestPoint handle handle POINTF* void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPointI: graphics metafile: metafile destPoint: destPoint fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestPointI() function of the module wrapped by the receiver.
@@ -2356,8 +2355,8 @@ gdipEnumerateMetafileDestPointI: graphics metafile: metafile destPoint: destPoin
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestPointI  handle handle POINTL* void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestPointI handle handle POINTL* void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPoints: graphics metafile: metafile destPoints: destPoints count: count fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestPoints() function of the module wrapped by the receiver.
@@ -2371,8 +2370,8 @@ gdipEnumerateMetafileDestPoints: graphics metafile: metafile destPoints: destPoi
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestPoints  handle handle POINTF* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestPoints handle handle POINTF* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPoints count: count fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestPointsI() function of the module wrapped by the receiver.
@@ -2386,8 +2385,8 @@ gdipEnumerateMetafileDestPointsI: graphics metafile: metafile destPoints: destPo
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestPointsI  handle handle POINTL* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestPointsI handle handle POINTL* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestRect: graphics metafile: metafile destRect: destRect fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestRect() function of the module wrapped by the receiver.
@@ -2400,8 +2399,8 @@ gdipEnumerateMetafileDestRect: graphics metafile: metafile destRect: destRect fn
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestRect  handle handle RECTF* void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestRect handle handle RECTF* void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileDestRectI() function of the module wrapped by the receiver.
@@ -2414,8 +2413,8 @@ gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect f
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestRectI  handle handle RECT* void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileDestRectI handle handle RECT* void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestPoint() function of the module wrapped by the receiver.
@@ -2430,8 +2429,8 @@ gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: de
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPoint  handle handle POINTF* RECTF* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPoint handle handle POINTF* RECTF* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestPointI() function of the module wrapped by the receiver.
@@ -2446,8 +2445,8 @@ gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: d
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI  handle handle POINTL* RECT* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* RECT* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestPoints() function of the module wrapped by the receiver.
@@ -2463,8 +2462,8 @@ gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: 
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPoints  handle handle POINTF* sdword RECTF* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPoints handle handle POINTF* sdword RECTF* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestPointsI() function of the module wrapped by the receiver.
@@ -2480,8 +2479,8 @@ gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints:
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI  handle handle POINTL* sdword RECT* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword RECT* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestRect() function of the module wrapped by the receiver.
@@ -2496,8 +2495,8 @@ gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: dest
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRect  handle handle RECTF* RECTF* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRect handle handle RECTF* RECTF* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
 	"Invoke the GdipEnumerateMetafileSrcRectDestRectI() function of the module wrapped by the receiver.
@@ -2512,8 +2511,8 @@ gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: des
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI  handle handle RECT* RECT* sdword void* void* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI handle handle RECT* RECT* sdword void* void* handle>
+	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve: graphics brush: brush points: points count: count
 	"Invoke the GdipFillClosedCurve() function of the module wrapped by the receiver.
@@ -2524,8 +2523,8 @@ gdipFillClosedCurve: graphics brush: brush points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipFillClosedCurve  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillClosedCurve handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve2: graphics brush: brush points: points count: count tension: tension fillMode: fillMode
 	"Invoke the GdipFillClosedCurve2() function of the module wrapped by the receiver.
@@ -2538,8 +2537,8 @@ gdipFillClosedCurve2: graphics brush: brush points: points count: count tension:
 			REAL tension,
 			GpFillMode FillMode);"
 
-	<stdcall: sdword GdipFillClosedCurve2  handle handle POINTF* sdword float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillClosedCurve2 handle handle POINTF* sdword float sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve2I: graphics brush: brush points: points count: count tension: tension fillMode: fillMode
 	"Invoke the GdipFillClosedCurve2I() function of the module wrapped by the receiver.
@@ -2552,8 +2551,8 @@ gdipFillClosedCurve2I: graphics brush: brush points: points count: count tension
 			REAL tension,
 			GpFillMode FillMode);"
 
-	<stdcall: sdword GdipFillClosedCurve2I  handle handle POINTL* sdword float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillClosedCurve2I handle handle POINTL* sdword float sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillClosedCurveI: graphics brush: brush points: points count: count
 	"Invoke the GdipFillClosedCurveI() function of the module wrapped by the receiver.
@@ -2564,8 +2563,8 @@ gdipFillClosedCurveI: graphics brush: brush points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipFillClosedCurveI  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillClosedCurveI handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillEllipse: graphics brush: brush x: x y: y width: width height: height
 	"Invoke the GdipFillEllipse() function of the module wrapped by the receiver.
@@ -2578,8 +2577,8 @@ gdipFillEllipse: graphics brush: brush x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipFillEllipse  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipFillEllipse handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipFillEllipseI: graphics brush: brush x: x y: y width: width height: height
 	"Invoke the GdipFillEllipseI() function of the module wrapped by the receiver.
@@ -2592,8 +2591,8 @@ gdipFillEllipseI: graphics brush: brush x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipFillEllipseI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillEllipseI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillPath: graphics brush: brush path: path
 	"Invoke the GdipFillPath() function of the module wrapped by the receiver.
@@ -2603,8 +2602,8 @@ gdipFillPath: graphics brush: brush path: path
 			PGpBrush brush,
 			PGpPath path);"
 
-	<stdcall: sdword GdipFillPath  handle handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPath handle handle handle>
+	^self invalidCall: _failureCode!
 
 gdipFillPie: graphics brush: brush x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipFillPie() function of the module wrapped by the receiver.
@@ -2619,8 +2618,8 @@ gdipFillPie: graphics brush: brush x: x y: y width: width height: height startAn
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipFillPie  handle handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPie handle handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipFillPieI: graphics brush: brush x: x y: y width: width height: height startAngle: startAngle sweepAngle: sweepAngle
 	"Invoke the GdipFillPieI() function of the module wrapped by the receiver.
@@ -2635,8 +2634,8 @@ gdipFillPieI: graphics brush: brush x: x y: y width: width height: height startA
 			REAL startAngle,
 			REAL sweepAngle);"
 
-	<stdcall: sdword GdipFillPieI  handle handle sdword sdword sdword sdword float float>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPieI handle handle sdword sdword sdword sdword float float>
+	^self invalidCall: _failureCode!
 
 gdipFillPolygon: graphics brush: brush points: points count: count fillMode: fillMode
 	"Invoke the GdipFillPolygon() function of the module wrapped by the receiver.
@@ -2648,8 +2647,8 @@ gdipFillPolygon: graphics brush: brush points: points count: count fillMode: fil
 			int Count,
 			GpFillMode FillMode);"
 
-	<stdcall: sdword GdipFillPolygon  handle handle POINTF* sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPolygon handle handle POINTF* sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillPolygon2: graphics brush: brush points: points count: count
 	"Invoke the GdipFillPolygon2() function of the module wrapped by the receiver.
@@ -2660,8 +2659,8 @@ gdipFillPolygon2: graphics brush: brush points: points count: count
 			[in]GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipFillPolygon2  handle handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPolygon2 handle handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillPolygon2I: graphics brush: brush points: points count: count
 	"Invoke the GdipFillPolygon2I() function of the module wrapped by the receiver.
@@ -2672,8 +2671,8 @@ gdipFillPolygon2I: graphics brush: brush points: points count: count
 			[in]GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipFillPolygon2I  handle handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPolygon2I handle handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillPolygonI: graphics brush: brush points: points count: count fillMode: fillMode
 	"Invoke the GdipFillPolygonI() function of the module wrapped by the receiver.
@@ -2685,8 +2684,8 @@ gdipFillPolygonI: graphics brush: brush points: points count: count fillMode: fi
 			int Count,
 			GpFillMode FillMode);"
 
-	<stdcall: sdword GdipFillPolygonI  handle handle POINTL* sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillPolygonI handle handle POINTL* sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillRectangle: graphics brush: brush x: x y: y width: width height: height
 	"Invoke the GdipFillRectangle() function of the module wrapped by the receiver.
@@ -2699,8 +2698,8 @@ gdipFillRectangle: graphics brush: brush x: x y: y width: width height: height
 			REAL Width,
 			REAL Height);"
 
-	<stdcall: sdword GdipFillRectangle  handle handle float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipFillRectangle handle handle float float float float>
+	^self invalidCall: _failureCode!
 
 gdipFillRectangleI: graphics brush: brush x: x y: y width: width height: height
 	"Invoke the GdipFillRectangleI() function of the module wrapped by the receiver.
@@ -2713,8 +2712,8 @@ gdipFillRectangleI: graphics brush: brush x: x y: y width: width height: height
 			int Width,
 			int Height);"
 
-	<stdcall: sdword GdipFillRectangleI  handle handle sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillRectangleI handle handle sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillRectangles: graphics brush: brush rects: rects count: count
 	"Invoke the GdipFillRectangles() function of the module wrapped by the receiver.
@@ -2725,8 +2724,8 @@ gdipFillRectangles: graphics brush: brush rects: rects count: count
 			[in]GpRectF* rects,
 			int Count);"
 
-	<stdcall: sdword GdipFillRectangles  handle handle RECTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillRectangles handle handle RECTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 	"Invoke the GdipFillRectanglesI() function of the module wrapped by the receiver.
@@ -2737,8 +2736,8 @@ gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipFillRectanglesI  handle handle RECT* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFillRectanglesI handle handle RECT* sdword>
+	^self invalidCall: _failureCode!
 
 gdipFillRegion: graphics brush: brush region: region
 	"Invoke the GdipFillRegion() function of the module wrapped by the receiver.
@@ -2748,8 +2747,8 @@ gdipFillRegion: graphics brush: brush region: region
 			PGpBrush brush,
 			PGpRegion region);"
 
-	<stdcall: sdword GdipFillRegion  handle handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipFillRegion handle handle handle>
+	^self invalidCall: _failureCode!
 
 gdipFlattenPath: path matrix: matrix flatness: flatness
 	"Invoke the GdipFlattenPath() function of the module wrapped by the receiver.
@@ -2759,8 +2758,8 @@ gdipFlattenPath: path matrix: matrix flatness: flatness
 			PGpMatrix matrix,
 			REAL flatness);"
 
-	<stdcall: sdword GdipFlattenPath  handle handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipFlattenPath handle handle float>
+	^self invalidCall: _failureCode!
 
 gdipFlush: graphics intention: intention
 	"Invoke the GdipFlush() function of the module wrapped by the receiver.
@@ -2769,8 +2768,8 @@ gdipFlush: graphics intention: intention
 			PGpGraphics graphics,
 			GpFlushIntention intention);"
 
-	<stdcall: sdword GdipFlush  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipFlush handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipFontCollectionEnumerable: fontCollection graphics: graphics numFound: numFound
 	"Invoke the GdipFontCollectionEnumerable() function of the module wrapped by the receiver.
@@ -2780,8 +2779,8 @@ gdipFontCollectionEnumerable: fontCollection graphics: graphics numFound: numFou
 			PGpGraphics graphics,
 			int* numFound);"
 
-	<stdcall: sdword GdipFontCollectionEnumerable  handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipFontCollectionEnumerable handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipFontCollectionEnumerate: fontCollection numSought: numSought gpfamilies: gpfamilies numFound: numFound graphics: graphics
 	"Invoke the GdipFontCollectionEnumerate() function of the module wrapped by the receiver.
@@ -2793,8 +2792,8 @@ gdipFontCollectionEnumerate: fontCollection numSought: numSought gpfamilies: gpf
 			int* numFound,
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipFontCollectionEnumerate  handle sdword handle* sdword* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipFontCollectionEnumerate handle sdword handle* sdword* handle>
+	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapFillState: cap fillState: fillState
 	"Invoke the GdipGetAdjustableArrowCapFillState() function of the module wrapped by the receiver.
@@ -2803,8 +2802,8 @@ gdipGetAdjustableArrowCapFillState: cap fillState: fillState
 			PGpAdjustableArrowCap cap,
 			long* fillState);"
 
-	<stdcall: sdword GdipGetAdjustableArrowCapFillState  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetAdjustableArrowCapFillState handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapHeight: cap height: height
 	"Invoke the GdipGetAdjustableArrowCapHeight() function of the module wrapped by the receiver.
@@ -2813,8 +2812,8 @@ gdipGetAdjustableArrowCapHeight: cap height: height
 			PGpAdjustableArrowCap cap,
 			REAL* Height);"
 
-	<stdcall: sdword GdipGetAdjustableArrowCapHeight  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetAdjustableArrowCapHeight handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapMiddleInset: cap middleInset: middleInset
 	"Invoke the GdipGetAdjustableArrowCapMiddleInset() function of the module wrapped by the receiver.
@@ -2823,8 +2822,8 @@ gdipGetAdjustableArrowCapMiddleInset: cap middleInset: middleInset
 			PGpAdjustableArrowCap cap,
 			REAL* middleInset);"
 
-	<stdcall: sdword GdipGetAdjustableArrowCapMiddleInset  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetAdjustableArrowCapMiddleInset handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetAdjustableArrowCapWidth: cap width: width
 	"Invoke the GdipGetAdjustableArrowCapWidth() function of the module wrapped by the receiver.
@@ -2833,8 +2832,8 @@ gdipGetAdjustableArrowCapWidth: cap width: width
 			PGpAdjustableArrowCap cap,
 			REAL* Width);"
 
-	<stdcall: sdword GdipGetAdjustableArrowCapWidth  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetAdjustableArrowCapWidth handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetAllPropertyItems: image totalBufferSize: totalBufferSize numProperties: numProperties allItems: allItems
 	"Invoke the GdipGetAllPropertyItems() function of the module wrapped by the receiver.
@@ -2845,8 +2844,8 @@ gdipGetAllPropertyItems: image totalBufferSize: totalBufferSize numProperties: n
 			[in]unsigned int numProperties,
 			PropertyItem* allItems);"
 
-	<stdcall: sdword GdipGetAllPropertyItems  handle dword dword GpPropertyItem*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetAllPropertyItems handle dword dword GpPropertyItem*>
+	^self invalidCall: _failureCode!
 
 gdipGetBrushType: brush type: type
 	"Invoke the GdipGetBrushType() function of the module wrapped by the receiver.
@@ -2855,8 +2854,8 @@ gdipGetBrushType: brush type: type
 			PGpBrush brush,
 			GpBrushType* Type);"
 
-	<stdcall: sdword GdipGetBrushType  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetBrushType handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCellAscent: family style: style cellAscent: cellAscent
 	"Invoke the GdipGetCellAscent() function of the module wrapped by the receiver.
@@ -2866,8 +2865,8 @@ gdipGetCellAscent: family style: style cellAscent: cellAscent
 			int style,
 			UINT16* CellAscent);"
 
-	<stdcall: sdword GdipGetCellAscent  handle sdword word*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCellAscent handle sdword word*>
+	^self invalidCall: _failureCode!
 
 gdipGetCellDescent: family style: style cellDescent: cellDescent
 	"Invoke the GdipGetCellDescent() function of the module wrapped by the receiver.
@@ -2877,8 +2876,8 @@ gdipGetCellDescent: family style: style cellDescent: cellDescent
 			int style,
 			UINT16* CellDescent);"
 
-	<stdcall: sdword GdipGetCellDescent  handle sdword word*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCellDescent handle sdword word*>
+	^self invalidCall: _failureCode!
 
 gdipGetClip: graphics region: region
 	"Invoke the GdipGetClip() function of the module wrapped by the receiver.
@@ -2887,8 +2886,8 @@ gdipGetClip: graphics region: region
 			PGpGraphics graphics,
 			PGpRegion region);"
 
-	<stdcall: sdword GdipGetClip  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetClip handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetClipBounds: graphics rect: rect
 	"Invoke the GdipGetClipBounds() function of the module wrapped by the receiver.
@@ -2897,8 +2896,8 @@ gdipGetClipBounds: graphics rect: rect
 			PGpGraphics graphics,
 			GpRectF* rect);"
 
-	<stdcall: sdword GdipGetClipBounds  handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetClipBounds handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetClipBoundsI: graphics rect: rect
 	"Invoke the GdipGetClipBoundsI() function of the module wrapped by the receiver.
@@ -2907,8 +2906,8 @@ gdipGetClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetClipBoundsI  handle RECT*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetClipBoundsI handle RECT*>
+	^self invalidCall: _failureCode!
 
 gdipGetCompositingMode: graphics compositingMode: compositingMode
 	"Invoke the GdipGetCompositingMode() function of the module wrapped by the receiver.
@@ -2917,8 +2916,8 @@ gdipGetCompositingMode: graphics compositingMode: compositingMode
 			PGpGraphics graphics,
 			CompositingMode* CompositingMode);"
 
-	<stdcall: sdword GdipGetCompositingMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCompositingMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCompositingQuality: graphics compositingQuality: compositingQuality
 	"Invoke the GdipGetCompositingQuality() function of the module wrapped by the receiver.
@@ -2927,8 +2926,8 @@ gdipGetCompositingQuality: graphics compositingQuality: compositingQuality
 			PGpGraphics graphics,
 			CompositingQuality* CompositingQuality);"
 
-	<stdcall: sdword GdipGetCompositingQuality  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCompositingQuality handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapBaseCap: customCap baseCap: baseCap
 	"Invoke the GdipGetCustomLineCapBaseCap() function of the module wrapped by the receiver.
@@ -2937,8 +2936,8 @@ gdipGetCustomLineCapBaseCap: customCap baseCap: baseCap
 			PGpCustomLineCap customCap,
 			GpLineCap* baseCap);"
 
-	<stdcall: sdword GdipGetCustomLineCapBaseCap  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapBaseCap handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapBaseInset: customCap inset: inset
 	"Invoke the GdipGetCustomLineCapBaseInset() function of the module wrapped by the receiver.
@@ -2947,8 +2946,8 @@ gdipGetCustomLineCapBaseInset: customCap inset: inset
 			PGpCustomLineCap customCap,
 			REAL* inset);"
 
-	<stdcall: sdword GdipGetCustomLineCapBaseInset  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapBaseInset handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 	"Invoke the GdipGetCustomLineCapStrokeCaps() function of the module wrapped by the receiver.
@@ -2958,8 +2957,8 @@ gdipGetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 			GpLineCap* startCap,
 			GpLineCap* endCap);"
 
-	<stdcall: sdword GdipGetCustomLineCapStrokeCaps  handle sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapStrokeCaps handle sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 	"Invoke the GdipGetCustomLineCapStrokeJoin() function of the module wrapped by the receiver.
@@ -2968,8 +2967,8 @@ gdipGetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 			PGpCustomLineCap customCap,
 			GpLineJoin* LineJoin);"
 
-	<stdcall: sdword GdipGetCustomLineCapStrokeJoin  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapStrokeJoin handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapType: customCap capType: capType
 	"Invoke the GdipGetCustomLineCapType() function of the module wrapped by the receiver.
@@ -2978,8 +2977,8 @@ gdipGetCustomLineCapType: customCap capType: capType
 			PGpCustomLineCap customCap,
 			CustomLineCapType* capType);"
 
-	<stdcall: sdword GdipGetCustomLineCapType  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapType handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetCustomLineCapWidthScale: customCap widthScale: widthScale
 	"Invoke the GdipGetCustomLineCapWidthScale() function of the module wrapped by the receiver.
@@ -2988,8 +2987,8 @@ gdipGetCustomLineCapWidthScale: customCap widthScale: widthScale
 			PGpCustomLineCap customCap,
 			REAL* widthScale);"
 
-	<stdcall: sdword GdipGetCustomLineCapWidthScale  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetCustomLineCapWidthScale handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetDC: graphics hdc: hdc
 	"Invoke the GdipGetDC() function of the module wrapped by the receiver.
@@ -2998,8 +2997,8 @@ gdipGetDC: graphics hdc: hdc
 			PGpGraphics graphics,
 			HDC* HDC);"
 
-	<stdcall: sdword GdipGetDC  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetDC handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetDpiX: graphics dpi: dpi
 	"Invoke the GdipGetDpiX() function of the module wrapped by the receiver.
@@ -3008,8 +3007,8 @@ gdipGetDpiX: graphics dpi: dpi
 			PGpGraphics graphics,
 			REAL* dpi);"
 
-	<stdcall: sdword GdipGetDpiX  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetDpiX handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetDpiY: graphics dpi: dpi
 	"Invoke the GdipGetDpiY() function of the module wrapped by the receiver.
@@ -3018,8 +3017,8 @@ gdipGetDpiY: graphics dpi: dpi
 			PGpGraphics graphics,
 			REAL* dpi);"
 
-	<stdcall: sdword GdipGetDpiY  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetDpiY handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetEmHeight: family style: style emHeight: emHeight
 	"Invoke the GdipGetEmHeight() function of the module wrapped by the receiver.
@@ -3029,8 +3028,8 @@ gdipGetEmHeight: family style: style emHeight: emHeight
 			int style,
 			UINT16* EmHeight);"
 
-	<stdcall: sdword GdipGetEmHeight  handle sdword word*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetEmHeight handle sdword word*>
+	^self invalidCall: _failureCode!
 
 gdipGetEncoderParameterList: image clsidEncoder: clsidEncoder size: size buffer: buffer
 	"Invoke the GdipGetEncoderParameterList() function of the module wrapped by the receiver.
@@ -3041,8 +3040,8 @@ gdipGetEncoderParameterList: image clsidEncoder: clsidEncoder size: size buffer:
 			[in]unsigned int size,
 			[out, retval]EncoderParameters* buffer);"
 
-	<stdcall: sdword GdipGetEncoderParameterList  handle GUID* dword GpEncoderParameters*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetEncoderParameterList handle guid* dword GpEncoderParameters*>
+	^self invalidCall: _failureCode!
 
 gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
 	"Invoke the GdipGetEncoderParameterListSize() function of the module wrapped by the receiver.
@@ -3052,8 +3051,8 @@ gdipGetEncoderParameterListSize: image clsidEncoder: clsidEncoder size: size
 			[in]GUID* clsidEncoder,
 			[out, retval]unsigned int* size);"
 
-	<stdcall: sdword GdipGetEncoderParameterListSize  handle GUID* dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetEncoderParameterListSize handle guid* dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetFamily: font family: family
 	"Invoke the GdipGetFamily() function of the module wrapped by the receiver.
@@ -3062,10 +3061,10 @@ gdipGetFamily: font family: family
 			PGpFont font,
 			[out, retval]PGpFontFamily* family);"
 
-	<stdcall: sdword GdipGetFamily  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFamily handle handle*>
+	^self invalidCall: _failureCode!
 
-gdipGetFamilyName: family name: name language: language 
+gdipGetFamilyName: family name: name language: language
 	"Invoke the GdipGetFamilyName() function of the module wrapped by the receiver.
 
 		Status __stdcall GdipGetFamilyName(
@@ -3074,7 +3073,7 @@ gdipGetFamilyName: family name: name language: language
 			unsigned short language);"
 
 	<stdcall: sdword GdipGetFamilyName handle lpwstr word>
-	^self invalidCall!
+	^self invalidCall: _failureCode!
 
 gdipGetFontCollectionFamilyCount: fontCollection numFound: numFound
 	"Invoke the GdipGetFontCollectionFamilyCount() function of the module wrapped by the receiver.
@@ -3083,8 +3082,8 @@ gdipGetFontCollectionFamilyCount: fontCollection numFound: numFound
 			PGpFontCollection fontCollection,
 			int* numFound);"
 
-	<stdcall: sdword GdipGetFontCollectionFamilyCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontCollectionFamilyCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontCollectionFamilyList: fontCollection numSought: numSought gpfamilies: gpfamilies numFound: numFound
 	"Invoke the GdipGetFontCollectionFamilyList() function of the module wrapped by the receiver.
@@ -3095,8 +3094,8 @@ gdipGetFontCollectionFamilyList: fontCollection numSought: numSought gpfamilies:
 			PGpFontFamily* gpfamilies,
 			int* numFound);"
 
-	<stdcall: sdword GdipGetFontCollectionFamilyList  handle sdword handle* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontCollectionFamilyList handle sdword handle* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontHeight: font graphics: graphics height: height
 	"Invoke the GdipGetFontHeight() function of the module wrapped by the receiver.
@@ -3106,8 +3105,8 @@ gdipGetFontHeight: font graphics: graphics height: height
 			[in]PGpGraphics graphics,
 			REAL* Height);"
 
-	<stdcall: sdword GdipGetFontHeight  handle handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontHeight handle handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontHeightGivenDPI: font dpi: dpi height: height
 	"Invoke the GdipGetFontHeightGivenDPI() function of the module wrapped by the receiver.
@@ -3117,8 +3116,8 @@ gdipGetFontHeightGivenDPI: font dpi: dpi height: height
 			REAL dpi,
 			REAL* Height);"
 
-	<stdcall: sdword GdipGetFontHeightGivenDPI  handle float float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontHeightGivenDPI handle float float*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontSize: font size: size
 	"Invoke the GdipGetFontSize() function of the module wrapped by the receiver.
@@ -3127,8 +3126,8 @@ gdipGetFontSize: font size: size
 			PGpFont font,
 			REAL* size);"
 
-	<stdcall: sdword GdipGetFontSize  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontSize handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontStyle: font style: style
 	"Invoke the GdipGetFontStyle() function of the module wrapped by the receiver.
@@ -3137,8 +3136,8 @@ gdipGetFontStyle: font style: style
 			PGpFont font,
 			FontStyle* style);"
 
-	<stdcall: sdword GdipGetFontStyle  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontStyle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetFontUnit: font unit: unit
 	"Invoke the GdipGetFontUnit() function of the module wrapped by the receiver.
@@ -3147,8 +3146,8 @@ gdipGetFontUnit: font unit: unit
 			PGpFont font,
 			Unit* Unit);"
 
-	<stdcall: sdword GdipGetFontUnit  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetFontUnit handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetGenericFontFamilyMonospace: nativeFamily
 	"Invoke the GdipGetGenericFontFamilyMonospace() function of the module wrapped by the receiver.
@@ -3156,8 +3155,8 @@ gdipGetGenericFontFamilyMonospace: nativeFamily
 		GpStatus __stdcall GdipGetGenericFontFamilyMonospace(
 			[out, retval]PGpFontFamily* nativeFamily);"
 
-	<stdcall: sdword GdipGetGenericFontFamilyMonospace  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetGenericFontFamilyMonospace handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetGenericFontFamilySansSerif: nativeFamily
 	"Invoke the GdipGetGenericFontFamilySansSerif() function of the module wrapped by the receiver.
@@ -3165,8 +3164,8 @@ gdipGetGenericFontFamilySansSerif: nativeFamily
 		GpStatus __stdcall GdipGetGenericFontFamilySansSerif(
 			[out, retval]PGpFontFamily* nativeFamily);"
 
-	<stdcall: sdword GdipGetGenericFontFamilySansSerif  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetGenericFontFamilySansSerif handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetGenericFontFamilySerif: nativeFamily
 	"Invoke the GdipGetGenericFontFamilySerif() function of the module wrapped by the receiver.
@@ -3174,8 +3173,8 @@ gdipGetGenericFontFamilySerif: nativeFamily
 		GpStatus __stdcall GdipGetGenericFontFamilySerif(
 			[out, retval]PGpFontFamily* nativeFamily);"
 
-	<stdcall: sdword GdipGetGenericFontFamilySerif  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetGenericFontFamilySerif handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetHatchBackgroundColor: brush backcol: backcol
 	"Invoke the GdipGetHatchBackgroundColor() function of the module wrapped by the receiver.
@@ -3184,8 +3183,8 @@ gdipGetHatchBackgroundColor: brush backcol: backcol
 			PGpHatch brush,
 			ARGB* backcol);"
 
-	<stdcall: sdword GdipGetHatchBackgroundColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetHatchBackgroundColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetHatchForegroundColor: brush forecol: forecol
 	"Invoke the GdipGetHatchForegroundColor() function of the module wrapped by the receiver.
@@ -3194,8 +3193,8 @@ gdipGetHatchForegroundColor: brush forecol: forecol
 			PGpHatch brush,
 			ARGB* forecol);"
 
-	<stdcall: sdword GdipGetHatchForegroundColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetHatchForegroundColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetHatchStyle: brush hatchStyle: hatchStyle
 	"Invoke the GdipGetHatchStyle() function of the module wrapped by the receiver.
@@ -3204,8 +3203,8 @@ gdipGetHatchStyle: brush hatchStyle: hatchStyle
 			PGpHatch brush,
 			GpHatchStyle* HatchStyle);"
 
-	<stdcall: sdword GdipGetHatchStyle  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetHatchStyle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetHemfFromMetafile: metafile hEmf: hEmf
 	"Invoke the GdipGetHemfFromMetafile() function of the module wrapped by the receiver.
@@ -3214,8 +3213,8 @@ gdipGetHemfFromMetafile: metafile hEmf: hEmf
 			PGpMetafile metafile,
 			HENHMETAFILE* hEmf);"
 
-	<stdcall: sdword GdipGetHemfFromMetafile  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetHemfFromMetafile handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageAttributesAdjustedPalette: imageattr colorPalette: colorPalette colorAdjustType: colorAdjustType
 	"Invoke the GdipGetImageAttributesAdjustedPalette() function of the module wrapped by the receiver.
@@ -3225,8 +3224,8 @@ gdipGetImageAttributesAdjustedPalette: imageattr colorPalette: colorPalette colo
 			ColorPalette* ColorPalette,
 			ColorAdjustType ColorAdjustType);"
 
-	<stdcall: sdword GdipGetImageAttributesAdjustedPalette  handle GpColorPalette* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageAttributesAdjustedPalette handle GpColorPalette* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
 	"Invoke the GdipGetImageBounds() function of the module wrapped by the receiver.
@@ -3236,8 +3235,8 @@ gdipGetImageBounds: image srcRect: srcRect srcUnit: srcUnit
 			GpRectF* srcRect,
 			GpUnit* srcUnit);"
 
-	<stdcall: sdword GdipGetImageBounds  handle RECTF* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageBounds handle RECTF* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageDecoders: numDecoders size: size decoders: decoders
 	"Invoke the GdipGetImageDecoders() function of the module wrapped by the receiver.
@@ -3247,8 +3246,8 @@ gdipGetImageDecoders: numDecoders size: size decoders: decoders
 			unsigned int size,
 			ImageCodecInfo* decoders);"
 
-	<stdcall: sdword GdipGetImageDecoders  dword dword GpImageCodecInfo*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageDecoders dword dword GpImageCodecInfo*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageDecodersSize: numDecoders size: size
 	"Invoke the GdipGetImageDecodersSize() function of the module wrapped by the receiver.
@@ -3257,8 +3256,8 @@ gdipGetImageDecodersSize: numDecoders size: size
 			unsigned int* numDecoders,
 			unsigned int* size);"
 
-	<stdcall: sdword GdipGetImageDecodersSize  dword* dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageDecodersSize dword* dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageDimension: image width: width height: height
 	"Invoke the GdipGetImageDimension() function of the module wrapped by the receiver.
@@ -3268,8 +3267,8 @@ gdipGetImageDimension: image width: width height: height
 			[out]REAL* Width,
 			[out]REAL* Height);"
 
-	<stdcall: sdword GdipGetImageDimension  handle float* float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageDimension handle float* float*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageEncoders: numEncoders size: size encoders: encoders
 	"Invoke the GdipGetImageEncoders() function of the module wrapped by the receiver.
@@ -3279,8 +3278,8 @@ gdipGetImageEncoders: numEncoders size: size encoders: encoders
 			[in]unsigned int size,
 			[in, out]ImageCodecInfo* encoders);"
 
-	<stdcall: sdword GdipGetImageEncoders  dword dword GpImageCodecInfo*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageEncoders dword dword GpImageCodecInfo*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageEncodersSize: numEncoders size: size
 	"Invoke the GdipGetImageEncodersSize() function of the module wrapped by the receiver.
@@ -3289,8 +3288,8 @@ gdipGetImageEncodersSize: numEncoders size: size
 			[out]unsigned int* numEncoders,
 			[out]unsigned int* size);"
 
-	<stdcall: sdword GdipGetImageEncodersSize  dword* dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageEncodersSize dword* dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageFlags: image flags: flags
 	"Invoke the GdipGetImageFlags() function of the module wrapped by the receiver.
@@ -3299,8 +3298,8 @@ gdipGetImageFlags: image flags: flags
 			[in]PGpImage image,
 			[out, retval]unsigned int* Flags);"
 
-	<stdcall: sdword GdipGetImageFlags  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageFlags handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageGraphicsContext: image graphics: graphics
 	"Invoke the GdipGetImageGraphicsContext() function of the module wrapped by the receiver.
@@ -3309,8 +3308,8 @@ gdipGetImageGraphicsContext: image graphics: graphics
 			[in]PGpImage image,
 			[out, retval]PGpGraphics* graphics);"
 
-	<stdcall: sdword GdipGetImageGraphicsContext  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageGraphicsContext handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageHeight: image height: height
 	"Invoke the GdipGetImageHeight() function of the module wrapped by the receiver.
@@ -3319,8 +3318,8 @@ gdipGetImageHeight: image height: height
 			[in]PGpImage image,
 			[out, retval]unsigned int* Height);"
 
-	<stdcall: sdword GdipGetImageHeight  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageHeight handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageHorizontalResolution: image resolution: resolution
 	"Invoke the GdipGetImageHorizontalResolution() function of the module wrapped by the receiver.
@@ -3329,8 +3328,8 @@ gdipGetImageHorizontalResolution: image resolution: resolution
 			[in]PGpImage image,
 			[out, retval]REAL* resolution);"
 
-	<stdcall: sdword GdipGetImageHorizontalResolution  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageHorizontalResolution handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetImagePalette: image palette: palette size: size
 	"Invoke the GdipGetImagePalette() function of the module wrapped by the receiver.
@@ -3340,8 +3339,8 @@ gdipGetImagePalette: image palette: palette size: size
 			ColorPalette* palette,
 			int size);"
 
-	<stdcall: sdword GdipGetImagePalette  handle GpColorPalette* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImagePalette handle GpColorPalette* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetImagePaletteSize: image size: size
 	"Invoke the GdipGetImagePaletteSize() function of the module wrapped by the receiver.
@@ -3350,8 +3349,8 @@ gdipGetImagePaletteSize: image size: size
 			[in]PGpImage image,
 			[out, retval]int* size);"
 
-	<stdcall: sdword GdipGetImagePaletteSize  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImagePaletteSize handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImagePixelFormat: image format: format
 	"Invoke the GdipGetImagePixelFormat() function of the module wrapped by the receiver.
@@ -3360,8 +3359,8 @@ gdipGetImagePixelFormat: image format: format
 			[in]PGpImage image,
 			[out, retval]PixelFormat* format);"
 
-	<stdcall: sdword GdipGetImagePixelFormat  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImagePixelFormat handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageRawFormat: image format: format
 	"Invoke the GdipGetImageRawFormat() function of the module wrapped by the receiver.
@@ -3370,8 +3369,8 @@ gdipGetImageRawFormat: image format: format
 			[in]PGpImage image,
 			[out, retval]GUID* format);"
 
-	<stdcall: sdword GdipGetImageRawFormat  handle GUID*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageRawFormat handle guid*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageThumbnail: image thumbWidth: thumbWidth thumbHeight: thumbHeight thumbImage: thumbImage pfnCallback: pfnCallback callbackData: callbackData
 	"Invoke the GdipGetImageThumbnail() function of the module wrapped by the receiver.
@@ -3384,8 +3383,8 @@ gdipGetImageThumbnail: image thumbWidth: thumbWidth thumbHeight: thumbHeight thu
 			[in]GetThumbnailImageAbort pfnCallback,
 			[in]VOID* callbackData);"
 
-	<stdcall: sdword GdipGetImageThumbnail  handle dword dword handle* void* void*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageThumbnail handle dword dword handle* void* void*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageType: image type: type
 	"Invoke the GdipGetImageType() function of the module wrapped by the receiver.
@@ -3394,8 +3393,8 @@ gdipGetImageType: image type: type
 			[in]PGpImage image,
 			[out, retval]ImageType* Type);"
 
-	<stdcall: sdword GdipGetImageType  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageType handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageVerticalResolution: image resolution: resolution
 	"Invoke the GdipGetImageVerticalResolution() function of the module wrapped by the receiver.
@@ -3404,8 +3403,8 @@ gdipGetImageVerticalResolution: image resolution: resolution
 			[in]PGpImage image,
 			[out, retval]REAL* resolution);"
 
-	<stdcall: sdword GdipGetImageVerticalResolution  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageVerticalResolution handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetImageWidth: image width: width
 	"Invoke the GdipGetImageWidth() function of the module wrapped by the receiver.
@@ -3414,8 +3413,8 @@ gdipGetImageWidth: image width: width
 			[in]PGpImage image,
 			[out, retval]unsigned int* Width);"
 
-	<stdcall: sdword GdipGetImageWidth  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetImageWidth handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetInterpolationMode: graphics interpolationMode: interpolationMode
 	"Invoke the GdipGetInterpolationMode() function of the module wrapped by the receiver.
@@ -3424,8 +3423,8 @@ gdipGetInterpolationMode: graphics interpolationMode: interpolationMode
 			PGpGraphics graphics,
 			InterpolationMode* InterpolationMode);"
 
-	<stdcall: sdword GdipGetInterpolationMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetInterpolationMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipGetLineBlend() function of the module wrapped by the receiver.
@@ -3436,8 +3435,8 @@ gdipGetLineBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipGetLineBlend  handle float* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineBlend handle float* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetLineBlendCount: brush count: count
 	"Invoke the GdipGetLineBlendCount() function of the module wrapped by the receiver.
@@ -3446,8 +3445,8 @@ gdipGetLineBlendCount: brush count: count
 			PGpLineGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetLineBlendCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineBlendCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineColors: brush colors: colors
 	"Invoke the GdipGetLineColors() function of the module wrapped by the receiver.
@@ -3456,8 +3455,8 @@ gdipGetLineColors: brush colors: colors
 			PGpLineGradient brush,
 			ARGB* colors);"
 
-	<stdcall: sdword GdipGetLineColors  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineColors handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 	"Invoke the GdipGetLineGammaCorrection() function of the module wrapped by the receiver.
@@ -3466,8 +3465,8 @@ gdipGetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 			PGpLineGradient brush,
 			long* useGammaCorrection);"
 
-	<stdcall: sdword GdipGetLineGammaCorrection  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineGammaCorrection handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLinePresetBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipGetLinePresetBlend() function of the module wrapped by the receiver.
@@ -3478,8 +3477,8 @@ gdipGetLinePresetBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipGetLinePresetBlend  handle dword* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLinePresetBlend handle dword* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetLinePresetBlendCount: brush count: count
 	"Invoke the GdipGetLinePresetBlendCount() function of the module wrapped by the receiver.
@@ -3488,8 +3487,8 @@ gdipGetLinePresetBlendCount: brush count: count
 			PGpLineGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetLinePresetBlendCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLinePresetBlendCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineRect: brush rect: rect
 	"Invoke the GdipGetLineRect() function of the module wrapped by the receiver.
@@ -3498,8 +3497,8 @@ gdipGetLineRect: brush rect: rect
 			PGpLineGradient brush,
 			GpRectF* rect);"
 
-	<stdcall: sdword GdipGetLineRect  handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineRect handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineRectI: brush rect: rect
 	"Invoke the GdipGetLineRectI() function of the module wrapped by the receiver.
@@ -3508,8 +3507,8 @@ gdipGetLineRectI: brush rect: rect
 			PGpLineGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetLineRectI  handle RECT*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineRectI handle RECT*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
 	"Invoke the GdipGetLineSpacing() function of the module wrapped by the receiver.
@@ -3519,8 +3518,8 @@ gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
 			int style,
 			UINT16* LineSpacing);"
 
-	<stdcall: sdword GdipGetLineSpacing  handle sdword word*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineSpacing handle sdword word*>
+	^self invalidCall: _failureCode!
 
 gdipGetLineTransform: brush matrix: matrix
 	"Invoke the GdipGetLineTransform() function of the module wrapped by the receiver.
@@ -3529,8 +3528,8 @@ gdipGetLineTransform: brush matrix: matrix
 			PGpLineGradient brush,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetLineTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetLineWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipGetLineWrapMode() function of the module wrapped by the receiver.
@@ -3539,8 +3538,8 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 			PGpLineGradient brush,
 			GpWrapMode* WrapMode);"
 
-	<stdcall: sdword GdipGetLineWrapMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLineWrapMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetLogFontA: font graphics: graphics logfonta: logfonta
 	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
@@ -3550,9 +3549,8 @@ gdipGetLogFontA: font graphics: graphics logfonta: logfonta
 			PGpGraphics graphics,
 			LOGFONTA* LOGFONTA);"
 
-	<stdcall: sdword GdipGetLogFontA  handle handle LOGFONT*>
-	#deprecated.
-	^self invalidCall!
+	<stdcall: sdword GdipGetLogFontA handle handle LOGFONT*>
+	^self invalidCall: _failureCode!
 
 gdipGetLogFontW: font graphics: graphics logfonta: logfonta
 	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
@@ -3562,8 +3560,8 @@ gdipGetLogFontW: font graphics: graphics logfonta: logfonta
 			PGpGraphics graphics,
 			LOGFONTW* LOGFONTW);"
 
-	<stdcall: sdword GdipGetLogFontW  handle handle LOGFONTW*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetLogFontW handle handle LOGFONTW*>
+	^self invalidCall: _failureCode!
 
 gdipGetMatrixElements: matrix matrixOut: matrixOut
 	"Invoke the GdipGetMatrixElements() function of the module wrapped by the receiver.
@@ -3572,8 +3570,8 @@ gdipGetMatrixElements: matrix matrixOut: matrixOut
 			[in]PGpMatrix matrix,
 			REAL* matrixOut);"
 
-	<stdcall: sdword GdipGetMatrixElements  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMatrixElements handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitDpi: metafileRasterizationLimitDpi
 	"Invoke the GdipGetMetafileDownLevelRasterizationLimit() function of the module wrapped by the receiver.
@@ -3582,8 +3580,8 @@ gdipGetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitD
 			[in]PGpMetafile metafile,
 			unsigned int* metafileRasterizationLimitDpi);"
 
-	<stdcall: sdword GdipGetMetafileDownLevelRasterizationLimit  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileDownLevelRasterizationLimit handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromEmf: hEmf header: header
 	"Invoke the GdipGetMetafileHeaderFromEmf() function of the module wrapped by the receiver.
@@ -3592,8 +3590,8 @@ gdipGetMetafileHeaderFromEmf: hEmf header: header
 			HENHMETAFILE hEmf,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromEmf  handle GpMetafileHeader*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileHeaderFromEmf handle GpMetafileHeader*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromFile: filename header: header
 	"Invoke the GdipGetMetafileHeaderFromFile() function of the module wrapped by the receiver.
@@ -3602,8 +3600,8 @@ gdipGetMetafileHeaderFromFile: filename header: header
 			[in]LPWSTR filename,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromFile  lpwstr GpMetafileHeader*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileHeaderFromFile lpwstr GpMetafileHeader*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromMetafile: metafile header: header
 	"Invoke the GdipGetMetafileHeaderFromMetafile() function of the module wrapped by the receiver.
@@ -3612,8 +3610,8 @@ gdipGetMetafileHeaderFromMetafile: metafile header: header
 			PGpMetafile metafile,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromMetafile  handle GpMetafileHeader*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileHeaderFromMetafile handle GpMetafileHeader*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromStream: stream header: header
 	"Invoke the GdipGetMetafileHeaderFromStream() function of the module wrapped by the receiver.
@@ -3622,8 +3620,8 @@ gdipGetMetafileHeaderFromStream: stream header: header
 			IStream* stream,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromStream  IStream* GpMetafileHeader*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileHeaderFromStream IStream* GpMetafileHeader*>
+	^self invalidCall: _failureCode!
 
 gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeader header: header
 	"Invoke the GdipGetMetafileHeaderFromWmf() function of the module wrapped by the receiver.
@@ -3633,8 +3631,8 @@ gdipGetMetafileHeaderFromWmf: hWmf wmfPlaceableFileHeader: wmfPlaceableFileHeade
 			[in]WmfPlaceableFileHeader* WmfPlaceableFileHeader,
 			MetafileHeader* header);"
 
-	<stdcall: sdword GdipGetMetafileHeaderFromWmf  handle GpWmfPlaceableFileHeader* GpMetafileHeader*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetMetafileHeaderFromWmf handle GpWmfPlaceableFileHeader* GpMetafileHeader*>
+	^self invalidCall: _failureCode!
 
 gdipGetNearestColor: graphics argb: argb
 	"Invoke the GdipGetNearestColor() function of the module wrapped by the receiver.
@@ -3643,8 +3641,8 @@ gdipGetNearestColor: graphics argb: argb
 			PGpGraphics graphics,
 			ARGB* ARGB);"
 
-	<stdcall: sdword GdipGetNearestColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetNearestColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPageScale: graphics scale: scale
 	"Invoke the GdipGetPageScale() function of the module wrapped by the receiver.
@@ -3653,8 +3651,8 @@ gdipGetPageScale: graphics scale: scale
 			PGpGraphics graphics,
 			REAL* scale);"
 
-	<stdcall: sdword GdipGetPageScale  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPageScale handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetPageUnit: graphics unit: unit
 	"Invoke the GdipGetPageUnit() function of the module wrapped by the receiver.
@@ -3663,8 +3661,8 @@ gdipGetPageUnit: graphics unit: unit
 			PGpGraphics graphics,
 			GpUnit* Unit);"
 
-	<stdcall: sdword GdipGetPageUnit  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPageUnit handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathData: path pathData: pathData
 	"Invoke the GdipGetPathData() function of the module wrapped by the receiver.
@@ -3673,8 +3671,8 @@ gdipGetPathData: path pathData: pathData
 			PGpPath path,
 			GpPathData* pathData);"
 
-	<stdcall: sdword GdipGetPathData  handle GpPathData*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathData handle GpPathData*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathFillMode: path fillMode: fillMode
 	"Invoke the GdipGetPathFillMode() function of the module wrapped by the receiver.
@@ -3683,8 +3681,8 @@ gdipGetPathFillMode: path fillMode: fillMode
 			PGpPath path,
 			GpFillMode* FillMode);"
 
-	<stdcall: sdword GdipGetPathFillMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathFillMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipGetPathGradientBlend() function of the module wrapped by the receiver.
@@ -3695,8 +3693,8 @@ gdipGetPathGradientBlend: brush blend: blend positions: positions count: count
 			REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipGetPathGradientBlend  handle float* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientBlend handle float* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientBlendCount: brush count: count
 	"Invoke the GdipGetPathGradientBlendCount() function of the module wrapped by the receiver.
@@ -3705,8 +3703,8 @@ gdipGetPathGradientBlendCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPathGradientBlendCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientBlendCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientCenterColor: brush colors: colors
 	"Invoke the GdipGetPathGradientCenterColor() function of the module wrapped by the receiver.
@@ -3715,8 +3713,8 @@ gdipGetPathGradientCenterColor: brush colors: colors
 			PGpPathGradient brush,
 			ARGB* colors);"
 
-	<stdcall: sdword GdipGetPathGradientCenterColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientCenterColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientCenterPoint: brush points: points
 	"Invoke the GdipGetPathGradientCenterPoint() function of the module wrapped by the receiver.
@@ -3725,8 +3723,8 @@ gdipGetPathGradientCenterPoint: brush points: points
 			PGpPathGradient brush,
 			GpPointF* Points);"
 
-	<stdcall: sdword GdipGetPathGradientCenterPoint  handle POINTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientCenterPoint handle POINTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientCenterPointI: brush points: points
 	"Invoke the GdipGetPathGradientCenterPointI() function of the module wrapped by the receiver.
@@ -3735,8 +3733,8 @@ gdipGetPathGradientCenterPointI: brush points: points
 			PGpPathGradient brush,
 			GpPoint* Points);"
 
-	<stdcall: sdword GdipGetPathGradientCenterPointI  handle POINTL*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientCenterPointI handle POINTL*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientFocusScales: brush xScale: xScale yScale: yScale
 	"Invoke the GdipGetPathGradientFocusScales() function of the module wrapped by the receiver.
@@ -3746,8 +3744,8 @@ gdipGetPathGradientFocusScales: brush xScale: xScale yScale: yScale
 			REAL* xScale,
 			REAL* yScale);"
 
-	<stdcall: sdword GdipGetPathGradientFocusScales  handle float* float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientFocusScales handle float* float*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 	"Invoke the GdipGetPathGradientGammaCorrection() function of the module wrapped by the receiver.
@@ -3756,8 +3754,8 @@ gdipGetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 			PGpPathGradient brush,
 			long* useGammaCorrection);"
 
-	<stdcall: sdword GdipGetPathGradientGammaCorrection  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientGammaCorrection handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPath: brush path: path
 	"Invoke the GdipGetPathGradientPath() function of the module wrapped by the receiver.
@@ -3766,8 +3764,8 @@ gdipGetPathGradientPath: brush path: path
 			PGpPathGradient brush,
 			PGpPath path);"
 
-	<stdcall: sdword GdipGetPathGradientPath  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientPath handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPointCount: brush count: count
 	"Invoke the GdipGetPathGradientPointCount() function of the module wrapped by the receiver.
@@ -3776,8 +3774,8 @@ gdipGetPathGradientPointCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPathGradientPointCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientPointCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPresetBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipGetPathGradientPresetBlend() function of the module wrapped by the receiver.
@@ -3788,8 +3786,8 @@ gdipGetPathGradientPresetBlend: brush blend: blend positions: positions count: c
 			REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipGetPathGradientPresetBlend  handle dword* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientPresetBlend handle dword* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientPresetBlendCount: brush count: count
 	"Invoke the GdipGetPathGradientPresetBlendCount() function of the module wrapped by the receiver.
@@ -3798,8 +3796,8 @@ gdipGetPathGradientPresetBlendCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPathGradientPresetBlendCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientPresetBlendCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientRect: brush rect: rect
 	"Invoke the GdipGetPathGradientRect() function of the module wrapped by the receiver.
@@ -3808,8 +3806,8 @@ gdipGetPathGradientRect: brush rect: rect
 			PGpPathGradient brush,
 			GpRectF* rect);"
 
-	<stdcall: sdword GdipGetPathGradientRect  handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientRect handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientRectI: brush rect: rect
 	"Invoke the GdipGetPathGradientRectI() function of the module wrapped by the receiver.
@@ -3818,8 +3816,8 @@ gdipGetPathGradientRectI: brush rect: rect
 			PGpPathGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetPathGradientRectI  handle RECT*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientRectI handle RECT*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorCount: brush count: count
 	"Invoke the GdipGetPathGradientSurroundColorCount() function of the module wrapped by the receiver.
@@ -3828,8 +3826,8 @@ gdipGetPathGradientSurroundColorCount: brush count: count
 			PGpPathGradient brush,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPathGradientSurroundColorCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientSurroundColorCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorsWithCount: brush color: color count: count
 	"Invoke the GdipGetPathGradientSurroundColorsWithCount() function of the module wrapped by the receiver.
@@ -3839,8 +3837,8 @@ gdipGetPathGradientSurroundColorsWithCount: brush color: color count: count
 			ARGB* Color,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPathGradientSurroundColorsWithCount  handle dword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientSurroundColorsWithCount handle dword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientTransform: brush matrix: matrix
 	"Invoke the GdipGetPathGradientTransform() function of the module wrapped by the receiver.
@@ -3849,8 +3847,8 @@ gdipGetPathGradientTransform: brush matrix: matrix
 			PGpPathGradient brush,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetPathGradientTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetPathGradientWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipGetPathGradientWrapMode() function of the module wrapped by the receiver.
@@ -3859,8 +3857,8 @@ gdipGetPathGradientWrapMode: brush wrapMode: wrapMode
 			PGpPathGradient brush,
 			GpWrapMode* WrapMode);"
 
-	<stdcall: sdword GdipGetPathGradientWrapMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathGradientWrapMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathLastPoint: path lastPoint: lastPoint
 	"Invoke the GdipGetPathLastPoint() function of the module wrapped by the receiver.
@@ -3869,8 +3867,8 @@ gdipGetPathLastPoint: path lastPoint: lastPoint
 			PGpPath path,
 			GpPointF* lastPoint);"
 
-	<stdcall: sdword GdipGetPathLastPoint  handle POINTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathLastPoint handle POINTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetPathPoints: path points: points count: count
 	"Invoke the GdipGetPathPoints() function of the module wrapped by the receiver.
@@ -3880,8 +3878,8 @@ gdipGetPathPoints: path points: points count: count
 			GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipGetPathPoints  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathPoints handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPathPointsI: path points: points count: count
 	"Invoke the GdipGetPathPointsI() function of the module wrapped by the receiver.
@@ -3891,8 +3889,8 @@ gdipGetPathPointsI: path points: points count: count
 			GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipGetPathPointsI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathPointsI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPathTypes: path types: types count: count
 	"Invoke the GdipGetPathTypes() function of the module wrapped by the receiver.
@@ -3902,8 +3900,8 @@ gdipGetPathTypes: path types: types count: count
 			BYTE* Types,
 			int Count);"
 
-	<stdcall: sdword GdipGetPathTypes  handle byte* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathTypes handle byte* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPathWorldBounds: path bounds: bounds matrix: matrix pen: pen
 	"Invoke the GdipGetPathWorldBounds() function of the module wrapped by the receiver.
@@ -3914,8 +3912,8 @@ gdipGetPathWorldBounds: path bounds: bounds matrix: matrix pen: pen
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: sdword GdipGetPathWorldBounds  handle RECTF* handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathWorldBounds handle RECTF* handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
 	"Invoke the GdipGetPathWorldBoundsI() function of the module wrapped by the receiver.
@@ -3926,8 +3924,8 @@ gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: sdword GdipGetPathWorldBoundsI  handle RECT* handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPathWorldBoundsI handle RECT* handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetPenBrushFill: pen brush: brush
 	"Invoke the GdipGetPenBrushFill() function of the module wrapped by the receiver.
@@ -3936,8 +3934,8 @@ gdipGetPenBrushFill: pen brush: brush
 			PGpPen pen,
 			[out, retval]PGpBrush* brush);"
 
-	<stdcall: sdword GdipGetPenBrushFill  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenBrushFill handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenColor: pen argb: argb
 	"Invoke the GdipGetPenColor() function of the module wrapped by the receiver.
@@ -3946,8 +3944,8 @@ gdipGetPenColor: pen argb: argb
 			PGpPen pen,
 			ARGB* ARGB);"
 
-	<stdcall: sdword GdipGetPenColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenCompoundArray: pen dash: dash count: count
 	"Invoke the GdipGetPenCompoundArray() function of the module wrapped by the receiver.
@@ -3957,8 +3955,8 @@ gdipGetPenCompoundArray: pen dash: dash count: count
 			REAL* dash,
 			int Count);"
 
-	<stdcall: sdword GdipGetPenCompoundArray  handle float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenCompoundArray handle float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPenCompoundCount: pen count: count
 	"Invoke the GdipGetPenCompoundCount() function of the module wrapped by the receiver.
@@ -3967,8 +3965,8 @@ gdipGetPenCompoundCount: pen count: count
 			PGpPen pen,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPenCompoundCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenCompoundCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenCustomEndCap: pen customCap: customCap
 	"Invoke the GdipGetPenCustomEndCap() function of the module wrapped by the receiver.
@@ -3977,8 +3975,8 @@ gdipGetPenCustomEndCap: pen customCap: customCap
 			PGpPen pen,
 			[out, retval]PGpCustomLineCap* customCap);"
 
-	<stdcall: sdword GdipGetPenCustomEndCap  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenCustomEndCap handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenCustomStartCap: pen customCap: customCap
 	"Invoke the GdipGetPenCustomStartCap() function of the module wrapped by the receiver.
@@ -3987,8 +3985,8 @@ gdipGetPenCustomStartCap: pen customCap: customCap
 			PGpPen pen,
 			[out, retval]PGpCustomLineCap* customCap);"
 
-	<stdcall: sdword GdipGetPenCustomStartCap  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenCustomStartCap handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenDashArray: pen dash: dash count: count
 	"Invoke the GdipGetPenDashArray() function of the module wrapped by the receiver.
@@ -3998,8 +3996,8 @@ gdipGetPenDashArray: pen dash: dash count: count
 			REAL* dash,
 			int Count);"
 
-	<stdcall: sdword GdipGetPenDashArray  handle float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenDashArray handle float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipGetPenDashCap197819: pen dashCap: dashCap
 	"Invoke the GdipGetPenDashCap197819() function of the module wrapped by the receiver.
@@ -4008,8 +4006,8 @@ gdipGetPenDashCap197819: pen dashCap: dashCap
 			PGpPen pen,
 			GpDashCap* DashCap);"
 
-	<stdcall: sdword GdipGetPenDashCap197819  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenDashCap197819 handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenDashCount: pen count: count
 	"Invoke the GdipGetPenDashCount() function of the module wrapped by the receiver.
@@ -4018,8 +4016,8 @@ gdipGetPenDashCount: pen count: count
 			PGpPen pen,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPenDashCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenDashCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenDashOffset: pen offset: offset
 	"Invoke the GdipGetPenDashOffset() function of the module wrapped by the receiver.
@@ -4028,8 +4026,8 @@ gdipGetPenDashOffset: pen offset: offset
 			PGpPen pen,
 			REAL* offset);"
 
-	<stdcall: sdword GdipGetPenDashOffset  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenDashOffset handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenDashStyle: pen dashStyle: dashStyle
 	"Invoke the GdipGetPenDashStyle() function of the module wrapped by the receiver.
@@ -4038,8 +4036,8 @@ gdipGetPenDashStyle: pen dashStyle: dashStyle
 			PGpPen pen,
 			GpDashStyle* DashStyle);"
 
-	<stdcall: sdword GdipGetPenDashStyle  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenDashStyle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenEndCap: pen endCap: endCap
 	"Invoke the GdipGetPenEndCap() function of the module wrapped by the receiver.
@@ -4048,8 +4046,8 @@ gdipGetPenEndCap: pen endCap: endCap
 			PGpPen pen,
 			GpLineCap* endCap);"
 
-	<stdcall: sdword GdipGetPenEndCap  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenEndCap handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenFillType: pen type: type
 	"Invoke the GdipGetPenFillType() function of the module wrapped by the receiver.
@@ -4058,8 +4056,8 @@ gdipGetPenFillType: pen type: type
 			PGpPen pen,
 			GpPenType* Type);"
 
-	<stdcall: sdword GdipGetPenFillType  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenFillType handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenLineJoin: pen lineJoin: lineJoin
 	"Invoke the GdipGetPenLineJoin() function of the module wrapped by the receiver.
@@ -4068,8 +4066,8 @@ gdipGetPenLineJoin: pen lineJoin: lineJoin
 			PGpPen pen,
 			GpLineJoin* LineJoin);"
 
-	<stdcall: sdword GdipGetPenLineJoin  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenLineJoin handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenMiterLimit: pen miterLimit: miterLimit
 	"Invoke the GdipGetPenMiterLimit() function of the module wrapped by the receiver.
@@ -4078,8 +4076,8 @@ gdipGetPenMiterLimit: pen miterLimit: miterLimit
 			PGpPen pen,
 			REAL* miterLimit);"
 
-	<stdcall: sdword GdipGetPenMiterLimit  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenMiterLimit handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenMode: pen penMode: penMode
 	"Invoke the GdipGetPenMode() function of the module wrapped by the receiver.
@@ -4088,8 +4086,8 @@ gdipGetPenMode: pen penMode: penMode
 			PGpPen pen,
 			GpPenAlignment* penMode);"
 
-	<stdcall: sdword GdipGetPenMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenStartCap: pen startCap: startCap
 	"Invoke the GdipGetPenStartCap() function of the module wrapped by the receiver.
@@ -4098,8 +4096,8 @@ gdipGetPenStartCap: pen startCap: startCap
 			PGpPen pen,
 			GpLineCap* startCap);"
 
-	<stdcall: sdword GdipGetPenStartCap  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenStartCap handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenTransform: pen matrix: matrix
 	"Invoke the GdipGetPenTransform() function of the module wrapped by the receiver.
@@ -4108,8 +4106,8 @@ gdipGetPenTransform: pen matrix: matrix
 			PGpPen pen,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetPenTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetPenUnit: pen unit: unit
 	"Invoke the GdipGetPenUnit() function of the module wrapped by the receiver.
@@ -4118,8 +4116,8 @@ gdipGetPenUnit: pen unit: unit
 			PGpPen pen,
 			GpUnit* Unit);"
 
-	<stdcall: sdword GdipGetPenUnit  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenUnit handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPenWidth: pen width: width
 	"Invoke the GdipGetPenWidth() function of the module wrapped by the receiver.
@@ -4128,8 +4126,8 @@ gdipGetPenWidth: pen width: width
 			PGpPen pen,
 			REAL* Width);"
 
-	<stdcall: sdword GdipGetPenWidth  handle float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPenWidth handle float*>
+	^self invalidCall: _failureCode!
 
 gdipGetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 	"Invoke the GdipGetPixelOffsetMode() function of the module wrapped by the receiver.
@@ -4138,8 +4136,8 @@ gdipGetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 			PGpGraphics graphics,
 			PixelOffsetMode* PixelOffsetMode);"
 
-	<stdcall: sdword GdipGetPixelOffsetMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPixelOffsetMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPointCount: path count: count
 	"Invoke the GdipGetPointCount() function of the module wrapped by the receiver.
@@ -4148,8 +4146,8 @@ gdipGetPointCount: path count: count
 			PGpPath path,
 			int* Count);"
 
-	<stdcall: sdword GdipGetPointCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPointCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPropertyCount: image numOfProperty: numOfProperty
 	"Invoke the GdipGetPropertyCount() function of the module wrapped by the receiver.
@@ -4158,8 +4156,8 @@ gdipGetPropertyCount: image numOfProperty: numOfProperty
 			[in]PGpImage image,
 			[out, retval]unsigned int* numOfProperty);"
 
-	<stdcall: sdword GdipGetPropertyCount  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPropertyCount handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPropertyIdList: image numOfProperty: numOfProperty list: list
 	"Invoke the GdipGetPropertyIdList() function of the module wrapped by the receiver.
@@ -4169,8 +4167,8 @@ gdipGetPropertyIdList: image numOfProperty: numOfProperty list: list
 			[in]unsigned int numOfProperty,
 			unsigned long* list);"
 
-	<stdcall: sdword GdipGetPropertyIdList  handle dword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPropertyIdList handle dword dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPropertyItem: image propId: propId propSize: propSize buffer: buffer
 	"Invoke the GdipGetPropertyItem() function of the module wrapped by the receiver.
@@ -4181,8 +4179,8 @@ gdipGetPropertyItem: image propId: propId propSize: propSize buffer: buffer
 			[in]unsigned int propSize,
 			PropertyItem* buffer);"
 
-	<stdcall: sdword GdipGetPropertyItem  handle dword dword GpPropertyItem*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPropertyItem handle dword dword GpPropertyItem*>
+	^self invalidCall: _failureCode!
 
 gdipGetPropertyItemSize: image propId: propId size: size
 	"Invoke the GdipGetPropertyItemSize() function of the module wrapped by the receiver.
@@ -4192,8 +4190,8 @@ gdipGetPropertyItemSize: image propId: propId size: size
 			[in]unsigned long propId,
 			unsigned int* size);"
 
-	<stdcall: sdword GdipGetPropertyItemSize  handle dword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPropertyItemSize handle dword dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetPropertySize: image totalBufferSize: totalBufferSize numProperties: numProperties
 	"Invoke the GdipGetPropertySize() function of the module wrapped by the receiver.
@@ -4203,8 +4201,8 @@ gdipGetPropertySize: image totalBufferSize: totalBufferSize numProperties: numPr
 			unsigned int* totalBufferSize,
 			unsigned int* numProperties);"
 
-	<stdcall: sdword GdipGetPropertySize  handle dword* dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetPropertySize handle dword* dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionBounds: region graphics: graphics rect: rect
 	"Invoke the GdipGetRegionBounds() function of the module wrapped by the receiver.
@@ -4214,8 +4212,8 @@ gdipGetRegionBounds: region graphics: graphics rect: rect
 			PGpGraphics graphics,
 			GpRectF* rect);"
 
-	<stdcall: sdword GdipGetRegionBounds  handle handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionBounds handle handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionBoundsI: region graphics: graphics rect: rect
 	"Invoke the GdipGetRegionBoundsI() function of the module wrapped by the receiver.
@@ -4225,8 +4223,8 @@ gdipGetRegionBoundsI: region graphics: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetRegionBoundsI  handle handle RECT*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionBoundsI handle handle RECT*>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: sizeFilled
 	"Invoke the GdipGetRegionData() function of the module wrapped by the receiver.
@@ -4237,8 +4235,8 @@ gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: size
 			unsigned int bufferSize,
 			unsigned int* sizeFilled);"
 
-	<stdcall: sdword GdipGetRegionData  handle byte* dword dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionData handle byte* dword dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionDataSize: region bufferSize: bufferSize
 	"Invoke the GdipGetRegionDataSize() function of the module wrapped by the receiver.
@@ -4247,8 +4245,8 @@ gdipGetRegionDataSize: region bufferSize: bufferSize
 			PGpRegion region,
 			unsigned int* bufferSize);"
 
-	<stdcall: sdword GdipGetRegionDataSize  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionDataSize handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionHRgn: region graphics: graphics hRgn: hRgn
 	"Invoke the GdipGetRegionHRgn() function of the module wrapped by the receiver.
@@ -4258,8 +4256,8 @@ gdipGetRegionHRgn: region graphics: graphics hRgn: hRgn
 			PGpGraphics graphics,
 			void** hRgn);"
 
-	<stdcall: sdword GdipGetRegionHRgn  handle handle void**>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionHRgn handle handle void**>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionScans: region rects: rects count: count matrix: matrix
 	"Invoke the GdipGetRegionScans() function of the module wrapped by the receiver.
@@ -4270,8 +4268,8 @@ gdipGetRegionScans: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetRegionScans  handle RECTF* sdword* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionScans handle RECTF* sdword* handle>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionScansCount: region count: count matrix: matrix
 	"Invoke the GdipGetRegionScansCount() function of the module wrapped by the receiver.
@@ -4281,8 +4279,8 @@ gdipGetRegionScansCount: region count: count matrix: matrix
 			unsigned int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetRegionScansCount  handle dword* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionScansCount handle dword* handle>
+	^self invalidCall: _failureCode!
 
 gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 	"Invoke the GdipGetRegionScansI() function of the module wrapped by the receiver.
@@ -4293,8 +4291,8 @@ gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetRegionScansI  handle RECT* sdword* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRegionScansI handle RECT* sdword* handle>
+	^self invalidCall: _failureCode!
 
 gdipGetRenderingOrigin: graphics x: x y: y
 	"Invoke the GdipGetRenderingOrigin() function of the module wrapped by the receiver.
@@ -4304,8 +4302,8 @@ gdipGetRenderingOrigin: graphics x: x y: y
 			int* x,
 			int* y);"
 
-	<stdcall: sdword GdipGetRenderingOrigin  handle sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetRenderingOrigin handle sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetSmoothingMode: graphics smoothingMode: smoothingMode
 	"Invoke the GdipGetSmoothingMode() function of the module wrapped by the receiver.
@@ -4314,8 +4312,8 @@ gdipGetSmoothingMode: graphics smoothingMode: smoothingMode
 			PGpGraphics graphics,
 			SmoothingMode* SmoothingMode);"
 
-	<stdcall: sdword GdipGetSmoothingMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetSmoothingMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetSolidFillColor: brush color: color
 	"Invoke the GdipGetSolidFillColor() function of the module wrapped by the receiver.
@@ -4324,8 +4322,8 @@ gdipGetSolidFillColor: brush color: color
 			[in]PGpSolidFill brush,
 			[out, retval]ARGB* Color);"
 
-	<stdcall: sdword GdipGetSolidFillColor  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetSolidFillColor handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatAlign: format align: align
 	"Invoke the GdipGetStringFormatAlign() function of the module wrapped by the receiver.
@@ -4334,8 +4332,8 @@ gdipGetStringFormatAlign: format align: align
 			[in]PGpStringFormat format,
 			StringAlignment* align);"
 
-	<stdcall: sdword GdipGetStringFormatAlign  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatAlign handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatDigitSubstitution: format language: language substitute: substitute
 	"Invoke the GdipGetStringFormatDigitSubstitution() function of the module wrapped by the receiver.
@@ -4345,8 +4343,8 @@ gdipGetStringFormatDigitSubstitution: format language: language substitute: subs
 			LANGID* language,
 			StringDigitSubstitute* substitute);"
 
-	<stdcall: sdword GdipGetStringFormatDigitSubstitution  handle word* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatDigitSubstitution handle word* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatFlags: format flags: flags
 	"Invoke the GdipGetStringFormatFlags() function of the module wrapped by the receiver.
@@ -4355,8 +4353,8 @@ gdipGetStringFormatFlags: format flags: flags
 			[in]PGpStringFormat format,
 			int* Flags);"
 
-	<stdcall: sdword GdipGetStringFormatFlags  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatFlags handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 	"Invoke the GdipGetStringFormatHotkeyPrefix() function of the module wrapped by the receiver.
@@ -4365,8 +4363,8 @@ gdipGetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 			[in]PGpStringFormat format,
 			int* HotkeyPrefix);"
 
-	<stdcall: sdword GdipGetStringFormatHotkeyPrefix  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatHotkeyPrefix handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatLineAlign: format align: align
 	"Invoke the GdipGetStringFormatLineAlign() function of the module wrapped by the receiver.
@@ -4375,8 +4373,8 @@ gdipGetStringFormatLineAlign: format align: align
 			[in]PGpStringFormat format,
 			StringAlignment* align);"
 
-	<stdcall: sdword GdipGetStringFormatLineAlign  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatLineAlign handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatMeasurableCharacterRangeCount: format count: count
 	"Invoke the GdipGetStringFormatMeasurableCharacterRangeCount() function of the module wrapped by the receiver.
@@ -4385,8 +4383,8 @@ gdipGetStringFormatMeasurableCharacterRangeCount: format count: count
 			[in]PGpStringFormat format,
 			int* Count);"
 
-	<stdcall: sdword GdipGetStringFormatMeasurableCharacterRangeCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatMeasurableCharacterRangeCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTabStopCount: format count: count
 	"Invoke the GdipGetStringFormatTabStopCount() function of the module wrapped by the receiver.
@@ -4395,8 +4393,8 @@ gdipGetStringFormatTabStopCount: format count: count
 			[in]PGpStringFormat format,
 			int* Count);"
 
-	<stdcall: sdword GdipGetStringFormatTabStopCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatTabStopCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTabStops: format count: count firstTabOffset: firstTabOffset tabStops: tabStops
 	"Invoke the GdipGetStringFormatTabStops() function of the module wrapped by the receiver.
@@ -4407,8 +4405,8 @@ gdipGetStringFormatTabStops: format count: count firstTabOffset: firstTabOffset 
 			REAL* firstTabOffset,
 			REAL* tabStops);"
 
-	<stdcall: sdword GdipGetStringFormatTabStops  handle sdword float* float*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatTabStops handle sdword float* float*>
+	^self invalidCall: _failureCode!
 
 gdipGetStringFormatTrimming: format trimming: trimming
 	"Invoke the GdipGetStringFormatTrimming() function of the module wrapped by the receiver.
@@ -4417,8 +4415,8 @@ gdipGetStringFormatTrimming: format trimming: trimming
 			[in]PGpStringFormat format,
 			StringTrimming* trimming);"
 
-	<stdcall: sdword GdipGetStringFormatTrimming  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetStringFormatTrimming handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetTextContrast: graphics contrast: contrast
 	"Invoke the GdipGetTextContrast() function of the module wrapped by the receiver.
@@ -4427,8 +4425,8 @@ gdipGetTextContrast: graphics contrast: contrast
 			PGpGraphics graphics,
 			unsigned int* contrast);"
 
-	<stdcall: sdword GdipGetTextContrast  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetTextContrast handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipGetTextRenderingHint: graphics mode: mode
 	"Invoke the GdipGetTextRenderingHint() function of the module wrapped by the receiver.
@@ -4437,8 +4435,8 @@ gdipGetTextRenderingHint: graphics mode: mode
 			PGpGraphics graphics,
 			TextRenderingHint* mode);"
 
-	<stdcall: sdword GdipGetTextRenderingHint  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetTextRenderingHint handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetTextureImage: brush image: image
 	"Invoke the GdipGetTextureImage() function of the module wrapped by the receiver.
@@ -4447,8 +4445,8 @@ gdipGetTextureImage: brush image: image
 			[in]PGpTexture brush,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipGetTextureImage  handle handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetTextureImage handle handle*>
+	^self invalidCall: _failureCode!
 
 gdipGetTextureTransform: brush matrix: matrix
 	"Invoke the GdipGetTextureTransform() function of the module wrapped by the receiver.
@@ -4457,8 +4455,8 @@ gdipGetTextureTransform: brush matrix: matrix
 			[in]PGpTexture brush,
 			[in]PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetTextureTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetTextureTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGetTextureWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipGetTextureWrapMode() function of the module wrapped by the receiver.
@@ -4467,8 +4465,8 @@ gdipGetTextureWrapMode: brush wrapMode: wrapMode
 			[in]PGpTexture brush,
 			[out, retval]GpWrapMode* WrapMode);"
 
-	<stdcall: sdword GdipGetTextureWrapMode  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetTextureWrapMode handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipGetVisibleClipBounds: graphics rect: rect
 	"Invoke the GdipGetVisibleClipBounds() function of the module wrapped by the receiver.
@@ -4477,8 +4475,8 @@ gdipGetVisibleClipBounds: graphics rect: rect
 			PGpGraphics graphics,
 			GpRectF* rect);"
 
-	<stdcall: sdword GdipGetVisibleClipBounds  handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetVisibleClipBounds handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipGetVisibleClipBoundsI: graphics rect: rect
 	"Invoke the GdipGetVisibleClipBoundsI() function of the module wrapped by the receiver.
@@ -4487,8 +4485,8 @@ gdipGetVisibleClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetVisibleClipBoundsI  handle RECT*>
-	^self invalidCall!
+	<stdcall: sdword GdipGetVisibleClipBoundsI handle RECT*>
+	^self invalidCall: _failureCode!
 
 gdipGetWorldTransform: graphics matrix: matrix
 	"Invoke the GdipGetWorldTransform() function of the module wrapped by the receiver.
@@ -4497,8 +4495,8 @@ gdipGetWorldTransform: graphics matrix: matrix
 			PGpGraphics graphics,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetWorldTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipGetWorldTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipGraphicsClear: graphics color: color
 	"Invoke the GdipGraphicsClear() function of the module wrapped by the receiver.
@@ -4507,8 +4505,8 @@ gdipGraphicsClear: graphics color: color
 			PGpGraphics graphics,
 			ARGB Color);"
 
-	<stdcall: sdword GdipGraphicsClear  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipGraphicsClear handle dword>
+	^self invalidCall: _failureCode!
 
 gdipImageForceValidation: image
 	"Invoke the GdipImageForceValidation() function of the module wrapped by the receiver.
@@ -4516,8 +4514,8 @@ gdipImageForceValidation: image
 		GpStatus __stdcall GdipImageForceValidation(
 			[in]PGpImage image);"
 
-	<stdcall: sdword GdipImageForceValidation  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipImageForceValidation handle>
+	^self invalidCall: _failureCode!
 
 gdipImageGetFrameCount: image dimensionID: dimensionID count: count
 	"Invoke the GdipImageGetFrameCount() function of the module wrapped by the receiver.
@@ -4527,8 +4525,8 @@ gdipImageGetFrameCount: image dimensionID: dimensionID count: count
 			[in]GUID* dimensionID,
 			unsigned int* Count);"
 
-	<stdcall: sdword GdipImageGetFrameCount  handle GUID* dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipImageGetFrameCount handle guid* dword*>
+	^self invalidCall: _failureCode!
 
 gdipImageGetFrameDimensionsCount: image count: count
 	"Invoke the GdipImageGetFrameDimensionsCount() function of the module wrapped by the receiver.
@@ -4537,8 +4535,8 @@ gdipImageGetFrameDimensionsCount: image count: count
 			[in]PGpImage image,
 			[out, retval]unsigned int* Count);"
 
-	<stdcall: sdword GdipImageGetFrameDimensionsCount  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipImageGetFrameDimensionsCount handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipImageGetFrameDimensionsList: image dimensionIDs: dimensionIDs count: count
 	"Invoke the GdipImageGetFrameDimensionsList() function of the module wrapped by the receiver.
@@ -4548,8 +4546,8 @@ gdipImageGetFrameDimensionsList: image dimensionIDs: dimensionIDs count: count
 			GUID* dimensionIDs,
 			unsigned int Count);"
 
-	<stdcall: sdword GdipImageGetFrameDimensionsList  handle GUID* dword>
-	^self invalidCall!
+	<stdcall: sdword GdipImageGetFrameDimensionsList handle guid* dword>
+	^self invalidCall: _failureCode!
 
 gdipImageRotateFlip: image rfType: rfType
 	"Invoke the GdipImageRotateFlip() function of the module wrapped by the receiver.
@@ -4558,8 +4556,8 @@ gdipImageRotateFlip: image rfType: rfType
 			[in]PGpImage image,
 			[in]RotateFlipType rfType);"
 
-	<stdcall: sdword GdipImageRotateFlip  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipImageRotateFlip handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipImageSelectActiveFrame: image dimensionID: dimensionID frameIndex: frameIndex
 	"Invoke the GdipImageSelectActiveFrame() function of the module wrapped by the receiver.
@@ -4569,8 +4567,8 @@ gdipImageSelectActiveFrame: image dimensionID: dimensionID frameIndex: frameInde
 			[in]GUID* dimensionID,
 			[in]unsigned int frameIndex);"
 
-	<stdcall: sdword GdipImageSelectActiveFrame  handle GUID* dword>
-	^self invalidCall!
+	<stdcall: sdword GdipImageSelectActiveFrame handle guid* dword>
+	^self invalidCall: _failureCode!
 
 gdipInvertMatrix: matrix
 	"Invoke the GdipInvertMatrix() function of the module wrapped by the receiver.
@@ -4578,8 +4576,8 @@ gdipInvertMatrix: matrix
 		GpStatus __stdcall GdipInvertMatrix(
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipInvertMatrix  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipInvertMatrix handle>
+	^self invalidCall: _failureCode!
 
 gdipIsClipEmpty: graphics result: result
 	"Invoke the GdipIsClipEmpty() function of the module wrapped by the receiver.
@@ -4588,8 +4586,8 @@ gdipIsClipEmpty: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsClipEmpty  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsClipEmpty handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsEmptyRegion: region graphics: graphics result: result
 	"Invoke the GdipIsEmptyRegion() function of the module wrapped by the receiver.
@@ -4599,8 +4597,8 @@ gdipIsEmptyRegion: region graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsEmptyRegion  handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsEmptyRegion handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsEqualRegion: region region2: region2 graphics: graphics result: result
 	"Invoke the GdipIsEqualRegion() function of the module wrapped by the receiver.
@@ -4611,8 +4609,8 @@ gdipIsEqualRegion: region region2: region2 graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsEqualRegion  handle handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsEqualRegion handle handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsInfiniteRegion: region graphics: graphics result: result
 	"Invoke the GdipIsInfiniteRegion() function of the module wrapped by the receiver.
@@ -4622,8 +4620,8 @@ gdipIsInfiniteRegion: region graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsInfiniteRegion  handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsInfiniteRegion handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsMatrixEqual: matrix matrix2: matrix2 result: result
 	"Invoke the GdipIsMatrixEqual() function of the module wrapped by the receiver.
@@ -4633,8 +4631,8 @@ gdipIsMatrixEqual: matrix matrix2: matrix2 result: result
 			[in]PGpMatrix matrix2,
 			long* result);"
 
-	<stdcall: sdword GdipIsMatrixEqual  handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsMatrixEqual handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsMatrixIdentity: matrix result: result
 	"Invoke the GdipIsMatrixIdentity() function of the module wrapped by the receiver.
@@ -4643,8 +4641,8 @@ gdipIsMatrixIdentity: matrix result: result
 			[in]PGpMatrix matrix,
 			long* result);"
 
-	<stdcall: sdword GdipIsMatrixIdentity  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsMatrixIdentity handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsMatrixInvertible: matrix result: result
 	"Invoke the GdipIsMatrixInvertible() function of the module wrapped by the receiver.
@@ -4653,8 +4651,8 @@ gdipIsMatrixInvertible: matrix result: result
 			[in]PGpMatrix matrix,
 			long* result);"
 
-	<stdcall: sdword GdipIsMatrixInvertible  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsMatrixInvertible handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsOutlineVisiblePathPoint: path x: x y: y pen: pen graphics: graphics result: result
 	"Invoke the GdipIsOutlineVisiblePathPoint() function of the module wrapped by the receiver.
@@ -4667,8 +4665,8 @@ gdipIsOutlineVisiblePathPoint: path x: x y: y pen: pen graphics: graphics result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsOutlineVisiblePathPoint  handle float float handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsOutlineVisiblePathPoint handle float float handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsOutlineVisiblePathPointI: path x: x y: y pen: pen graphics: graphics result: result
 	"Invoke the GdipIsOutlineVisiblePathPointI() function of the module wrapped by the receiver.
@@ -4681,8 +4679,8 @@ gdipIsOutlineVisiblePathPointI: path x: x y: y pen: pen graphics: graphics resul
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsOutlineVisiblePathPointI  handle sdword sdword handle handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsOutlineVisiblePathPointI handle sdword sdword handle handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
 	"Invoke the GdipIsStyleAvailable() function of the module wrapped by the receiver.
@@ -4692,8 +4690,8 @@ gdipIsStyleAvailable: family style: style isStyleAvailable: isStyleAvailable
 			int style,
 			long* IsStyleAvailable);"
 
-	<stdcall: sdword GdipIsStyleAvailable  handle sdword sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsStyleAvailable handle sdword sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleClipEmpty: graphics result: result
 	"Invoke the GdipIsVisibleClipEmpty() function of the module wrapped by the receiver.
@@ -4702,8 +4700,8 @@ gdipIsVisibleClipEmpty: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleClipEmpty  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleClipEmpty handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisiblePathPoint: path x: x y: y graphics: graphics result: result
 	"Invoke the GdipIsVisiblePathPoint() function of the module wrapped by the receiver.
@@ -4715,8 +4713,8 @@ gdipIsVisiblePathPoint: path x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisiblePathPoint  handle float float handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisiblePathPoint handle float float handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisiblePathPointI: path x: x y: y graphics: graphics result: result
 	"Invoke the GdipIsVisiblePathPointI() function of the module wrapped by the receiver.
@@ -4728,8 +4726,8 @@ gdipIsVisiblePathPointI: path x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisiblePathPointI  handle sdword sdword handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisiblePathPointI handle sdword sdword handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisiblePoint: graphics x: x y: y result: result
 	"Invoke the GdipIsVisiblePoint() function of the module wrapped by the receiver.
@@ -4740,8 +4738,8 @@ gdipIsVisiblePoint: graphics x: x y: y result: result
 			REAL y,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisiblePoint  handle float float sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisiblePoint handle float float sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisiblePointI: graphics x: x y: y result: result
 	"Invoke the GdipIsVisiblePointI() function of the module wrapped by the receiver.
@@ -4752,8 +4750,8 @@ gdipIsVisiblePointI: graphics x: x y: y result: result
 			int y,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisiblePointI  handle sdword sdword sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisiblePointI handle sdword sdword sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRect: graphics x: x y: y width: width height: height result: result
 	"Invoke the GdipIsVisibleRect() function of the module wrapped by the receiver.
@@ -4766,8 +4764,8 @@ gdipIsVisibleRect: graphics x: x y: y width: width height: height result: result
 			REAL Height,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRect  handle float float float float sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRect handle float float float float sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRectI: graphics x: x y: y width: width height: height result: result
 	"Invoke the GdipIsVisibleRectI() function of the module wrapped by the receiver.
@@ -4780,8 +4778,8 @@ gdipIsVisibleRectI: graphics x: x y: y width: width height: height result: resul
 			int Height,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRectI  handle sdword sdword sdword sdword sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRectI handle sdword sdword sdword sdword sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionPoint: region x: x y: y graphics: graphics result: result
 	"Invoke the GdipIsVisibleRegionPoint() function of the module wrapped by the receiver.
@@ -4793,8 +4791,8 @@ gdipIsVisibleRegionPoint: region x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRegionPoint  handle float float handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRegionPoint handle float float handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionPointI: region x: x y: y graphics: graphics result: result
 	"Invoke the GdipIsVisibleRegionPointI() function of the module wrapped by the receiver.
@@ -4806,8 +4804,8 @@ gdipIsVisibleRegionPointI: region x: x y: y graphics: graphics result: result
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRegionPointI  handle sdword sdword handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRegionPointI handle sdword sdword handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionRect: region x: x y: y width: width height: height graphics: graphics result: result
 	"Invoke the GdipIsVisibleRegionRect() function of the module wrapped by the receiver.
@@ -4821,8 +4819,8 @@ gdipIsVisibleRegionRect: region x: x y: y width: width height: height graphics: 
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRegionRect  handle float float float float handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRegionRect handle float float float float handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipIsVisibleRegionRectI: region x: x y: y width: width height: height graphics: graphics result: result
 	"Invoke the GdipIsVisibleRegionRectI() function of the module wrapped by the receiver.
@@ -4836,8 +4834,8 @@ gdipIsVisibleRegionRectI: region x: x y: y width: width height: height graphics:
 			PGpGraphics graphics,
 			long* result);"
 
-	<stdcall: sdword GdipIsVisibleRegionRectI  handle sdword sdword sdword sdword handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipIsVisibleRegionRectI handle sdword sdword sdword sdword handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipLoadImageFromFile: filename image: image
 	"Invoke the GdipLoadImageFromFile() function of the module wrapped by the receiver.
@@ -4846,8 +4844,8 @@ gdipLoadImageFromFile: filename image: image
 			[in]LPWSTR filename,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromFile  lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipLoadImageFromFile lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipLoadImageFromFileICM: filename image: image
 	"Invoke the GdipLoadImageFromFileICM() function of the module wrapped by the receiver.
@@ -4856,8 +4854,8 @@ gdipLoadImageFromFileICM: filename image: image
 			[in]LPWSTR filename,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromFileICM  lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipLoadImageFromFileICM lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipLoadImageFromStream: stream image: image
 	"Invoke the GdipLoadImageFromStream() function of the module wrapped by the receiver.
@@ -4866,8 +4864,8 @@ gdipLoadImageFromStream: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromStream  IStream* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipLoadImageFromStream IStream* handle*>
+	^self invalidCall: _failureCode!
 
 gdipLoadImageFromStreamICM: stream image: image
 	"Invoke the GdipLoadImageFromStreamICM() function of the module wrapped by the receiver.
@@ -4876,8 +4874,8 @@ gdipLoadImageFromStreamICM: stream image: image
 			[in]IStream* stream,
 			[out, retval]PGpImage* image);"
 
-	<stdcall: sdword GdipLoadImageFromStreamICM  IStream* handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipLoadImageFromStreamICM IStream* handle*>
+	^self invalidCall: _failureCode!
 
 gdiplusNotificationHook: token1
 	"Invoke the GdiplusNotificationHook() function of the module wrapped by the receiver.
@@ -4885,8 +4883,8 @@ gdiplusNotificationHook: token1
 		GpStatus __stdcall GdiplusNotificationHook(
 			ULONG_PTR* token);"
 
-	<stdcall: sdword GdiplusNotificationHook  uintptr*>
-	^self invalidCall!
+	<stdcall: sdword GdiplusNotificationHook uintptr*>
+	^self invalidCall: _failureCode!
 
 gdiplusNotificationUnhook: token1
 	"Invoke the GdiplusNotificationUnhook() function of the module wrapped by the receiver.
@@ -4894,8 +4892,8 @@ gdiplusNotificationUnhook: token1
 		void __stdcall GdiplusNotificationUnhook(
 			ULONG_PTR token);"
 
-	<stdcall: void GdiplusNotificationUnhook  uintptr>
-	^self invalidCall!
+	<stdcall: void GdiplusNotificationUnhook uintptr>
+	^self invalidCall: _failureCode!
 
 gdiplusShutdown: token1
 	"Invoke the GdiplusShutdown() function of the module wrapped by the receiver.
@@ -4903,8 +4901,8 @@ gdiplusShutdown: token1
 		void __stdcall GdiplusShutdown(
 			[in]ULONG_PTR token);"
 
-	<stdcall: void GdiplusStartup  uintptr>
-	^self invalidCall!
+	<stdcall: void GdiplusStartup uintptr>
+	^self invalidCall: _failureCode!
 
 gdiplusStartup: token1 input: input output: output
 	"Invoke the GdiplusStartup() function of the module wrapped by the receiver.
@@ -4914,8 +4912,8 @@ gdiplusStartup: token1 input: input output: output
 			[in]GdiplusStartupInput* input,
 			[out]GdiplusStartupOutput* output);"
 
-	<stdcall: sdword GdiplusStartup  uintptr* GdiplusStartupInput* GdiplusStartupOutput*>
-	^self invalidCall!
+	<stdcall: sdword GdiplusStartup uintptr* GdiplusStartupInput* GdiplusStartupOutput*>
+	^self invalidCall: _failureCode!
 
 gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat regionCount: regionCount regions: regions
 	"Invoke the GdipMeasureCharacterRanges() function of the module wrapped by the receiver.
@@ -4930,8 +4928,8 @@ gdipMeasureCharacterRanges: graphics str: str length: length font: font layoutRe
 			int regionCount,
 			[out, retval]PGpRegion* regions);"
 
-	<stdcall: sdword GdipMeasureCharacterRanges  handle lpwstr sdword handle RECTF* handle sdword handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipMeasureCharacterRanges handle lpwstr sdword handle RECTF* handle sdword handle*>
+	^self invalidCall: _failureCode!
 
 gdipMeasureDriverString: graphics text: text length: length font: font positions: positions flags: flags matrix: matrix boundingBox: boundingBox
 	"Invoke the GdipMeasureDriverString() function of the module wrapped by the receiver.
@@ -4946,8 +4944,8 @@ gdipMeasureDriverString: graphics text: text length: length font: font positions
 			[in]PGpMatrix matrix,
 			RECTF* BoundingBox);"
 
-	<stdcall: sdword GdipMeasureDriverString  handle word* sdword handle POINTF* sdword handle RECTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipMeasureDriverString handle word* sdword handle POINTF* sdword handle RECTF*>
+	^self invalidCall: _failureCode!
 
 gdipMeasureString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat boundingBox: boundingBox codepointsFitted: codepointsFitted linesFilled: linesFilled
 	"Invoke the GdipMeasureString() function of the module wrapped by the receiver.
@@ -4963,8 +4961,8 @@ gdipMeasureString: graphics str: str length: length font: font layoutRect: layou
 			int* codepointsFitted,
 			int* linesFilled);"
 
-	<stdcall: sdword GdipMeasureString  handle lpwstr sdword handle RECTF* handle RECTF* sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipMeasureString handle lpwstr sdword handle RECTF* handle RECTF* sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyLineTransform: brush matrix: matrix order: order
 	"Invoke the GdipMultiplyLineTransform() function of the module wrapped by the receiver.
@@ -4974,8 +4972,8 @@ gdipMultiplyLineTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyLineTransform  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyLineTransform handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyMatrix: matrix matrix2: matrix2 order: order
 	"Invoke the GdipMultiplyMatrix() function of the module wrapped by the receiver.
@@ -4985,8 +4983,8 @@ gdipMultiplyMatrix: matrix matrix2: matrix2 order: order
 			PGpMatrix matrix2,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyMatrix  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyMatrix handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyPathGradientTransform: brush matrix: matrix order: order
 	"Invoke the GdipMultiplyPathGradientTransform() function of the module wrapped by the receiver.
@@ -4996,8 +4994,8 @@ gdipMultiplyPathGradientTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyPathGradientTransform  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyPathGradientTransform handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyPenTransform: pen matrix: matrix order: order
 	"Invoke the GdipMultiplyPenTransform() function of the module wrapped by the receiver.
@@ -5007,8 +5005,8 @@ gdipMultiplyPenTransform: pen matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyPenTransform  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyPenTransform handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyTextureTransform: brush matrix: matrix order: order
 	"Invoke the GdipMultiplyTextureTransform() function of the module wrapped by the receiver.
@@ -5018,8 +5016,8 @@ gdipMultiplyTextureTransform: brush matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyTextureTransform  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyTextureTransform handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipMultiplyWorldTransform: graphics matrix: matrix order: order
 	"Invoke the GdipMultiplyWorldTransform() function of the module wrapped by the receiver.
@@ -5029,8 +5027,8 @@ gdipMultiplyWorldTransform: graphics matrix: matrix order: order
 			[in]PGpMatrix matrix,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipMultiplyWorldTransform  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipMultiplyWorldTransform handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipNewInstalledFontCollection: fontCollection
 	"Invoke the GdipNewInstalledFontCollection() function of the module wrapped by the receiver.
@@ -5038,8 +5036,8 @@ gdipNewInstalledFontCollection: fontCollection
 		GpStatus __stdcall GdipNewInstalledFontCollection(
 			[out, retval]PGpFontCollection* fontCollection);"
 
-	<stdcall: sdword GdipNewInstalledFontCollection  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipNewInstalledFontCollection handle*>
+	^self invalidCall: _failureCode!
 
 gdipNewPrivateFontCollection: fontCollection
 	"Invoke the GdipNewPrivateFontCollection() function of the module wrapped by the receiver.
@@ -5047,8 +5045,8 @@ gdipNewPrivateFontCollection: fontCollection
 		GpStatus __stdcall GdipNewPrivateFontCollection(
 			[out, retval]PGpFontCollection* fontCollection);"
 
-	<stdcall: sdword GdipNewPrivateFontCollection  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipNewPrivateFontCollection handle*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterCopyData: iterator resultCount: resultCount points: points types: types startIndex: startIndex endIndex: endIndex
 	"Invoke the GdipPathIterCopyData() function of the module wrapped by the receiver.
@@ -5061,8 +5059,8 @@ gdipPathIterCopyData: iterator resultCount: resultCount points: points types: ty
 			int startIndex,
 			int endIndex);"
 
-	<stdcall: sdword GdipPathIterCopyData  handle sdword* POINTF* byte* sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterCopyData handle sdword* POINTF* byte* sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipPathIterEnumerate: iterator resultCount: resultCount points: points types: types count: count
 	"Invoke the GdipPathIterEnumerate() function of the module wrapped by the receiver.
@@ -5074,8 +5072,8 @@ gdipPathIterEnumerate: iterator resultCount: resultCount points: points types: t
 			BYTE* Types,
 			int Count);"
 
-	<stdcall: sdword GdipPathIterEnumerate  handle sdword* POINTF* byte* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterEnumerate handle sdword* POINTF* byte* sdword>
+	^self invalidCall: _failureCode!
 
 gdipPathIterGetCount: iterator count: count
 	"Invoke the GdipPathIterGetCount() function of the module wrapped by the receiver.
@@ -5084,8 +5082,8 @@ gdipPathIterGetCount: iterator count: count
 			PGpPathIterator iterator,
 			int* Count);"
 
-	<stdcall: sdword GdipPathIterGetCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterGetCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterGetSubpathCount: iterator count: count
 	"Invoke the GdipPathIterGetSubpathCount() function of the module wrapped by the receiver.
@@ -5094,8 +5092,8 @@ gdipPathIterGetSubpathCount: iterator count: count
 			PGpPathIterator iterator,
 			int* Count);"
 
-	<stdcall: sdword GdipPathIterGetSubpathCount  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterGetSubpathCount handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterHasCurve: iterator hasCurve: hasCurve
 	"Invoke the GdipPathIterHasCurve() function of the module wrapped by the receiver.
@@ -5104,8 +5102,8 @@ gdipPathIterHasCurve: iterator hasCurve: hasCurve
 			PGpPathIterator iterator,
 			long* hasCurve);"
 
-	<stdcall: sdword GdipPathIterHasCurve  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterHasCurve handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterIsValid: iterator valid: valid
 	"Invoke the GdipPathIterIsValid() function of the module wrapped by the receiver.
@@ -5114,8 +5112,8 @@ gdipPathIterIsValid: iterator valid: valid
 			PGpPathIterator iterator,
 			long* valid);"
 
-	<stdcall: sdword GdipPathIterIsValid  handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterIsValid handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterNextMarker: iterator resultCount: resultCount startIndex: startIndex endIndex: endIndex
 	"Invoke the GdipPathIterNextMarker() function of the module wrapped by the receiver.
@@ -5126,8 +5124,8 @@ gdipPathIterNextMarker: iterator resultCount: resultCount startIndex: startIndex
 			int* startIndex,
 			int* endIndex);"
 
-	<stdcall: sdword GdipPathIterNextMarker  handle sdword* sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterNextMarker handle sdword* sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterNextMarkerPath: iterator resultCount: resultCount path: path
 	"Invoke the GdipPathIterNextMarkerPath() function of the module wrapped by the receiver.
@@ -5137,8 +5135,8 @@ gdipPathIterNextMarkerPath: iterator resultCount: resultCount path: path
 			int* resultCount,
 			PGpPath path);"
 
-	<stdcall: sdword GdipPathIterNextMarkerPath  handle sdword* handle>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterNextMarkerPath handle sdword* handle>
+	^self invalidCall: _failureCode!
 
 gdipPathIterNextPathType: iterator resultCount: resultCount pathType: pathType startIndex: startIndex endIndex: endIndex
 	"Invoke the GdipPathIterNextPathType() function of the module wrapped by the receiver.
@@ -5150,8 +5148,8 @@ gdipPathIterNextPathType: iterator resultCount: resultCount pathType: pathType s
 			int* startIndex,
 			int* endIndex);"
 
-	<stdcall: sdword GdipPathIterNextPathType  handle sdword* byte* sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterNextPathType handle sdword* byte* sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterNextSubpath: iterator resultCount: resultCount startIndex: startIndex endIndex: endIndex isClosed: isClosed
 	"Invoke the GdipPathIterNextSubpath() function of the module wrapped by the receiver.
@@ -5163,8 +5161,8 @@ gdipPathIterNextSubpath: iterator resultCount: resultCount startIndex: startInde
 			int* endIndex,
 			long* isClosed);"
 
-	<stdcall: sdword GdipPathIterNextSubpath  handle sdword* sdword* sdword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterNextSubpath handle sdword* sdword* sdword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClosed: isClosed
 	"Invoke the GdipPathIterNextSubpathPath() function of the module wrapped by the receiver.
@@ -5175,8 +5173,8 @@ gdipPathIterNextSubpathPath: iterator resultCount: resultCount path: path isClos
 			PGpPath path,
 			long* isClosed);"
 
-	<stdcall: sdword GdipPathIterNextSubpathPath  handle sdword* handle sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterNextSubpathPath handle sdword* handle sdword*>
+	^self invalidCall: _failureCode!
 
 gdipPathIterRewind: iterator
 	"Invoke the GdipPathIterRewind() function of the module wrapped by the receiver.
@@ -5184,8 +5182,8 @@ gdipPathIterRewind: iterator
 		GpStatus __stdcall GdipPathIterRewind(
 			PGpPathIterator iterator);"
 
-	<stdcall: sdword GdipPathIterRewind  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipPathIterRewind handle>
+	^self invalidCall: _failureCode!
 
 gdipPlayMetafileRecord: metafile recordType: recordType flags: flags dataSize: dataSize data: data
 	"Invoke the GdipPlayMetafileRecord() function of the module wrapped by the receiver.
@@ -5197,8 +5195,8 @@ gdipPlayMetafileRecord: metafile recordType: recordType flags: flags dataSize: d
 			unsigned int dataSize,
 			[in]BYTE* data);"
 
-	<stdcall: sdword GdipPlayMetafileRecord  handle sdword dword dword byte*>
-	^self invalidCall!
+	<stdcall: sdword GdipPlayMetafileRecord handle sdword dword dword byte*>
+	^self invalidCall: _failureCode!
 
 gdipPrivateAddFontFile: fontCollection filename: filename
 	"Invoke the GdipPrivateAddFontFile() function of the module wrapped by the receiver.
@@ -5207,8 +5205,8 @@ gdipPrivateAddFontFile: fontCollection filename: filename
 			PGpFontCollection fontCollection,
 			[in]LPWSTR filename);"
 
-	<stdcall: sdword GdipPrivateAddFontFile  handle lpwstr>
-	^self invalidCall!
+	<stdcall: sdword GdipPrivateAddFontFile handle lpwstr>
+	^self invalidCall: _failureCode!
 
 gdipPrivateAddMemoryFont: fontCollection memory: memory length: length
 	"Invoke the GdipPrivateAddMemoryFont() function of the module wrapped by the receiver.
@@ -5218,8 +5216,8 @@ gdipPrivateAddMemoryFont: fontCollection memory: memory length: length
 			[in]void* memory,
 			int length);"
 
-	<stdcall: sdword GdipPrivateAddMemoryFont  handle void* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipPrivateAddMemoryFont handle void* sdword>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafile: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafile() function of the module wrapped by the receiver.
@@ -5232,8 +5230,8 @@ gdipRecordMetafile: referenceHdc type: type frameRect: frameRect frameUnit: fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafile  handle sdword RECTF* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafile handle sdword RECTF* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafileFileName() function of the module wrapped by the receiver.
@@ -5247,8 +5245,8 @@ gdipRecordMetafileFileName: filename referenceHdc: referenceHdc type: type frame
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileFileName  lpwstr handle sdword RECTF* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafileFileName lpwstr handle sdword RECTF* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafileFileNameI() function of the module wrapped by the receiver.
@@ -5262,8 +5260,8 @@ gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileFileNameI  lpwstr handle sdword RECT* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafileFileNameI lpwstr handle sdword RECT* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafileI() function of the module wrapped by the receiver.
@@ -5276,8 +5274,8 @@ gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: fra
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileI  handle sdword RECT* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafileI handle sdword RECT* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafileStream() function of the module wrapped by the receiver.
@@ -5291,8 +5289,8 @@ gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileStream  IStream* handle sdword RECTF* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafileStream IStream* handle sdword RECTF* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
 	"Invoke the GdipRecordMetafileStreamI() function of the module wrapped by the receiver.
@@ -5306,8 +5304,8 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileStreamI  IStream* handle sdword RECT* sdword lpwstr handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipRecordMetafileStreamI IStream* handle sdword RECT* sdword lpwstr handle*>
+	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc
 	"Invoke the GdipReleaseDC() function of the module wrapped by the receiver.
@@ -5316,8 +5314,8 @@ gdipReleaseDC: graphics hdc: hdc
 			PGpGraphics graphics,
 			HDC HDC);"
 
-	<stdcall: sdword GdipReleaseDC  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipReleaseDC handle handle>
+	^self invalidCall: _failureCode!
 
 gdipRemovePropertyItem: image propId: propId
 	"Invoke the GdipRemovePropertyItem() function of the module wrapped by the receiver.
@@ -5326,8 +5324,8 @@ gdipRemovePropertyItem: image propId: propId
 			[in]PGpImage image,
 			[in]unsigned long propId);"
 
-	<stdcall: sdword GdipRemovePropertyItem  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipRemovePropertyItem handle dword>
+	^self invalidCall: _failureCode!
 
 gdipResetClip: graphics
 	"Invoke the GdipResetClip() function of the module wrapped by the receiver.
@@ -5335,8 +5333,8 @@ gdipResetClip: graphics
 		GpStatus __stdcall GdipResetClip(
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipResetClip  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetClip handle>
+	^self invalidCall: _failureCode!
 
 gdipResetImageAttributes: imageattr type: type
 	"Invoke the GdipResetImageAttributes() function of the module wrapped by the receiver.
@@ -5345,8 +5343,8 @@ gdipResetImageAttributes: imageattr type: type
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type);"
 
-	<stdcall: sdword GdipResetImageAttributes  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipResetImageAttributes handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipResetLineTransform: brush
 	"Invoke the GdipResetLineTransform() function of the module wrapped by the receiver.
@@ -5354,8 +5352,8 @@ gdipResetLineTransform: brush
 		GpStatus __stdcall GdipResetLineTransform(
 			PGpLineGradient brush);"
 
-	<stdcall: sdword GdipResetLineTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetLineTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipResetPageTransform: graphics
 	"Invoke the GdipResetPageTransform() function of the module wrapped by the receiver.
@@ -5363,8 +5361,8 @@ gdipResetPageTransform: graphics
 		GpStatus __stdcall GdipResetPageTransform(
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipResetPageTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetPageTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipResetPath: path
 	"Invoke the GdipResetPath() function of the module wrapped by the receiver.
@@ -5372,8 +5370,8 @@ gdipResetPath: path
 		GpStatus __stdcall GdipResetPath(
 			PGpPath path);"
 
-	<stdcall: sdword GdipResetPath  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetPath handle>
+	^self invalidCall: _failureCode!
 
 gdipResetPathGradientTransform: brush
 	"Invoke the GdipResetPathGradientTransform() function of the module wrapped by the receiver.
@@ -5381,8 +5379,8 @@ gdipResetPathGradientTransform: brush
 		GpStatus __stdcall GdipResetPathGradientTransform(
 			PGpPathGradient brush);"
 
-	<stdcall: sdword GdipResetPathGradientTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetPathGradientTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipResetPenTransform: pen
 	"Invoke the GdipResetPenTransform() function of the module wrapped by the receiver.
@@ -5390,8 +5388,8 @@ gdipResetPenTransform: pen
 		GpStatus __stdcall GdipResetPenTransform(
 			PGpPen pen);"
 
-	<stdcall: sdword GdipResetPenTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetPenTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipResetTextureTransform: brush
 	"Invoke the GdipResetTextureTransform() function of the module wrapped by the receiver.
@@ -5399,8 +5397,8 @@ gdipResetTextureTransform: brush
 		GpStatus __stdcall GdipResetTextureTransform(
 			[in]PGpTexture brush);"
 
-	<stdcall: sdword GdipResetTextureTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetTextureTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipResetWorldTransform: graphics
 	"Invoke the GdipResetWorldTransform() function of the module wrapped by the receiver.
@@ -5408,8 +5406,8 @@ gdipResetWorldTransform: graphics
 		GpStatus __stdcall GdipResetWorldTransform(
 			PGpGraphics graphics);"
 
-	<stdcall: sdword GdipResetWorldTransform  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipResetWorldTransform handle>
+	^self invalidCall: _failureCode!
 
 gdipRestoreGraphics: graphics state: state
 	"Invoke the GdipRestoreGraphics() function of the module wrapped by the receiver.
@@ -5418,8 +5416,8 @@ gdipRestoreGraphics: graphics state: state
 			PGpGraphics graphics,
 			GraphicsState state);"
 
-	<stdcall: sdword GdipRestoreGraphics  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipRestoreGraphics handle dword>
+	^self invalidCall: _failureCode!
 
 gdipReversePath: path
 	"Invoke the GdipReversePath() function of the module wrapped by the receiver.
@@ -5427,8 +5425,8 @@ gdipReversePath: path
 		GpStatus __stdcall GdipReversePath(
 			PGpPath path);"
 
-	<stdcall: sdword GdipReversePath  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipReversePath handle>
+	^self invalidCall: _failureCode!
 
 gdipRotateLineTransform: brush angle: angle order: order
 	"Invoke the GdipRotateLineTransform() function of the module wrapped by the receiver.
@@ -5438,8 +5436,8 @@ gdipRotateLineTransform: brush angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotateLineTransform  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotateLineTransform handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipRotateMatrix: matrix angle: angle order: order
 	"Invoke the GdipRotateMatrix() function of the module wrapped by the receiver.
@@ -5449,8 +5447,8 @@ gdipRotateMatrix: matrix angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotateMatrix  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotateMatrix handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipRotatePathGradientTransform: brush angle: angle order: order
 	"Invoke the GdipRotatePathGradientTransform() function of the module wrapped by the receiver.
@@ -5460,8 +5458,8 @@ gdipRotatePathGradientTransform: brush angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotatePathGradientTransform  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotatePathGradientTransform handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipRotatePenTransform: pen angle: angle order: order
 	"Invoke the GdipRotatePenTransform() function of the module wrapped by the receiver.
@@ -5471,8 +5469,8 @@ gdipRotatePenTransform: pen angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotatePenTransform  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotatePenTransform handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipRotateTextureTransform: brush angle: angle order: order
 	"Invoke the GdipRotateTextureTransform() function of the module wrapped by the receiver.
@@ -5482,8 +5480,8 @@ gdipRotateTextureTransform: brush angle: angle order: order
 			[in]REAL angle,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotateTextureTransform  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotateTextureTransform handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipRotateWorldTransform: graphics angle: angle order: order
 	"Invoke the GdipRotateWorldTransform() function of the module wrapped by the receiver.
@@ -5493,8 +5491,8 @@ gdipRotateWorldTransform: graphics angle: angle order: order
 			REAL angle,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipRotateWorldTransform  handle float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipRotateWorldTransform handle float sdword>
+	^self invalidCall: _failureCode!
 
 gdipSaveAdd: image encoderParams: encoderParams
 	"Invoke the GdipSaveAdd() function of the module wrapped by the receiver.
@@ -5503,8 +5501,8 @@ gdipSaveAdd: image encoderParams: encoderParams
 			[in]PGpImage image,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: sdword GdipSaveAdd  handle GpEncoderParameters*>
-	^self invalidCall!
+	<stdcall: sdword GdipSaveAdd handle GpEncoderParameters*>
+	^self invalidCall: _failureCode!
 
 gdipSaveAddImage: image newImage: newImage encoderParams: encoderParams
 	"Invoke the GdipSaveAddImage() function of the module wrapped by the receiver.
@@ -5514,8 +5512,8 @@ gdipSaveAddImage: image newImage: newImage encoderParams: encoderParams
 			[in]PGpImage newImage,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: sdword GdipSaveAddImage  handle handle GpEncoderParameters*>
-	^self invalidCall!
+	<stdcall: sdword GdipSaveAddImage handle handle GpEncoderParameters*>
+	^self invalidCall: _failureCode!
 
 gdipSaveGraphics: graphics state: state
 	"Invoke the GdipSaveGraphics() function of the module wrapped by the receiver.
@@ -5524,8 +5522,8 @@ gdipSaveGraphics: graphics state: state
 			PGpGraphics graphics,
 			GraphicsState* state);"
 
-	<stdcall: sdword GdipSaveGraphics  handle dword*>
-	^self invalidCall!
+	<stdcall: sdword GdipSaveGraphics handle dword*>
+	^self invalidCall: _failureCode!
 
 gdipSaveImageToFile: image filename: filename clsidEncoder: clsidEncoder encoderParams: encoderParams
 	"Invoke the GdipSaveImageToFile() function of the module wrapped by the receiver.
@@ -5536,8 +5534,8 @@ gdipSaveImageToFile: image filename: filename clsidEncoder: clsidEncoder encoder
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: sdword GdipSaveImageToFile  handle lpwstr GUID* GpEncoderParameters*>
-	^self invalidCall!
+	<stdcall: sdword GdipSaveImageToFile handle lpwstr guid* GpEncoderParameters*>
+	^self invalidCall: _failureCode!
 
 gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderParams: encoderParams
 	"Invoke the GdipSaveImageToStream() function of the module wrapped by the receiver.
@@ -5548,8 +5546,8 @@ gdipSaveImageToStream: image stream: stream clsidEncoder: clsidEncoder encoderPa
 			[in]GUID* clsidEncoder,
 			[in]EncoderParameters* encoderParams);"
 
-	<stdcall: sdword GdipSaveImageToStream  handle IStream* GUID* GpEncoderParameters*>
-	^self invalidCall!
+	<stdcall: sdword GdipSaveImageToStream handle IStream* guid* GpEncoderParameters*>
+	^self invalidCall: _failureCode!
 
 gdipScaleLineTransform: brush sx: sx sy: sy order: order
 	"Invoke the GdipScaleLineTransform() function of the module wrapped by the receiver.
@@ -5560,8 +5558,8 @@ gdipScaleLineTransform: brush sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScaleLineTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScaleLineTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipScaleMatrix: matrix scaleX: scaleX scaleY: scaleY order: order
 	"Invoke the GdipScaleMatrix() function of the module wrapped by the receiver.
@@ -5572,8 +5570,8 @@ gdipScaleMatrix: matrix scaleX: scaleX scaleY: scaleY order: order
 			REAL scaleY,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScaleMatrix  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScaleMatrix handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipScalePathGradientTransform: brush sx: sx sy: sy order: order
 	"Invoke the GdipScalePathGradientTransform() function of the module wrapped by the receiver.
@@ -5584,8 +5582,8 @@ gdipScalePathGradientTransform: brush sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScalePathGradientTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScalePathGradientTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipScalePenTransform: pen sx: sx sy: sy order: order
 	"Invoke the GdipScalePenTransform() function of the module wrapped by the receiver.
@@ -5596,8 +5594,8 @@ gdipScalePenTransform: pen sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScalePenTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScalePenTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipScaleTextureTransform: brush sx: sx sy: sy order: order
 	"Invoke the GdipScaleTextureTransform() function of the module wrapped by the receiver.
@@ -5608,8 +5606,8 @@ gdipScaleTextureTransform: brush sx: sx sy: sy order: order
 			[in]REAL sy,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScaleTextureTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScaleTextureTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipScaleWorldTransform: graphics sx: sx sy: sy order: order
 	"Invoke the GdipScaleWorldTransform() function of the module wrapped by the receiver.
@@ -5620,8 +5618,8 @@ gdipScaleWorldTransform: graphics sx: sx sy: sy order: order
 			REAL sy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipScaleWorldTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipScaleWorldTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapFillState: cap fillState: fillState
 	"Invoke the GdipSetAdjustableArrowCapFillState() function of the module wrapped by the receiver.
@@ -5630,8 +5628,8 @@ gdipSetAdjustableArrowCapFillState: cap fillState: fillState
 			PGpAdjustableArrowCap cap,
 			long fillState);"
 
-	<stdcall: sdword GdipSetAdjustableArrowCapFillState  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetAdjustableArrowCapFillState handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapHeight: cap height: height
 	"Invoke the GdipSetAdjustableArrowCapHeight() function of the module wrapped by the receiver.
@@ -5640,8 +5638,8 @@ gdipSetAdjustableArrowCapHeight: cap height: height
 			PGpAdjustableArrowCap cap,
 			REAL Height);"
 
-	<stdcall: sdword GdipSetAdjustableArrowCapHeight  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetAdjustableArrowCapHeight handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapMiddleInset: cap middleInset: middleInset
 	"Invoke the GdipSetAdjustableArrowCapMiddleInset() function of the module wrapped by the receiver.
@@ -5650,8 +5648,8 @@ gdipSetAdjustableArrowCapMiddleInset: cap middleInset: middleInset
 			PGpAdjustableArrowCap cap,
 			REAL middleInset);"
 
-	<stdcall: sdword GdipSetAdjustableArrowCapMiddleInset  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetAdjustableArrowCapMiddleInset handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetAdjustableArrowCapWidth: cap width: width
 	"Invoke the GdipSetAdjustableArrowCapWidth() function of the module wrapped by the receiver.
@@ -5660,8 +5658,8 @@ gdipSetAdjustableArrowCapWidth: cap width: width
 			PGpAdjustableArrowCap cap,
 			REAL Width);"
 
-	<stdcall: sdword GdipSetAdjustableArrowCapWidth  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetAdjustableArrowCapWidth handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetClipGraphics: graphics srcgraphics: srcgraphics combineMode: combineMode
 	"Invoke the GdipSetClipGraphics() function of the module wrapped by the receiver.
@@ -5671,8 +5669,8 @@ gdipSetClipGraphics: graphics srcgraphics: srcgraphics combineMode: combineMode
 			PGpGraphics srcgraphics,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipGraphics  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipGraphics handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetClipHrgn: graphics hRgn: hRgn combineMode: combineMode
 	"Invoke the GdipSetClipHrgn() function of the module wrapped by the receiver.
@@ -5682,8 +5680,8 @@ gdipSetClipHrgn: graphics hRgn: hRgn combineMode: combineMode
 			void* hRgn,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipHrgn  handle void* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipHrgn handle void* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetClipPath: graphics path: path combineMode: combineMode
 	"Invoke the GdipSetClipPath() function of the module wrapped by the receiver.
@@ -5693,8 +5691,8 @@ gdipSetClipPath: graphics path: path combineMode: combineMode
 			PGpPath path,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipPath  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipPath handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetClipRect: graphics x: x y: y width: width height: height combineMode: combineMode
 	"Invoke the GdipSetClipRect() function of the module wrapped by the receiver.
@@ -5707,8 +5705,8 @@ gdipSetClipRect: graphics x: x y: y width: width height: height combineMode: com
 			REAL Height,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipRect  handle float float float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipRect handle float float float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetClipRectI: graphics x: x y: y width: width height: height combineMode: combineMode
 	"Invoke the GdipSetClipRectI() function of the module wrapped by the receiver.
@@ -5721,8 +5719,8 @@ gdipSetClipRectI: graphics x: x y: y width: width height: height combineMode: co
 			int Height,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipRectI  handle sdword sdword sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipRectI handle sdword sdword sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetClipRegion: graphics region: region combineMode: combineMode
 	"Invoke the GdipSetClipRegion() function of the module wrapped by the receiver.
@@ -5732,8 +5730,8 @@ gdipSetClipRegion: graphics region: region combineMode: combineMode
 			PGpRegion region,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipSetClipRegion  handle handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetClipRegion handle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCompositingMode: graphics compositingMode: compositingMode
 	"Invoke the GdipSetCompositingMode() function of the module wrapped by the receiver.
@@ -5742,8 +5740,8 @@ gdipSetCompositingMode: graphics compositingMode: compositingMode
 			PGpGraphics graphics,
 			CompositingMode CompositingMode);"
 
-	<stdcall: sdword GdipSetCompositingMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCompositingMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCompositingQuality: graphics compositingQuality: compositingQuality
 	"Invoke the GdipSetCompositingQuality() function of the module wrapped by the receiver.
@@ -5752,8 +5750,8 @@ gdipSetCompositingQuality: graphics compositingQuality: compositingQuality
 			PGpGraphics graphics,
 			CompositingQuality CompositingQuality);"
 
-	<stdcall: sdword GdipSetCompositingQuality  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCompositingQuality handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapBaseCap: customCap baseCap: baseCap
 	"Invoke the GdipSetCustomLineCapBaseCap() function of the module wrapped by the receiver.
@@ -5762,8 +5760,8 @@ gdipSetCustomLineCapBaseCap: customCap baseCap: baseCap
 			PGpCustomLineCap customCap,
 			GpLineCap baseCap);"
 
-	<stdcall: sdword GdipSetCustomLineCapBaseCap  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCustomLineCapBaseCap handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapBaseInset: customCap inset: inset
 	"Invoke the GdipSetCustomLineCapBaseInset() function of the module wrapped by the receiver.
@@ -5772,8 +5770,8 @@ gdipSetCustomLineCapBaseInset: customCap inset: inset
 			PGpCustomLineCap customCap,
 			REAL inset);"
 
-	<stdcall: sdword GdipSetCustomLineCapBaseInset  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCustomLineCapBaseInset handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 	"Invoke the GdipSetCustomLineCapStrokeCaps() function of the module wrapped by the receiver.
@@ -5783,8 +5781,8 @@ gdipSetCustomLineCapStrokeCaps: customCap startCap: startCap endCap: endCap
 			GpLineCap startCap,
 			GpLineCap endCap);"
 
-	<stdcall: sdword GdipSetCustomLineCapStrokeCaps  handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCustomLineCapStrokeCaps handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 	"Invoke the GdipSetCustomLineCapStrokeJoin() function of the module wrapped by the receiver.
@@ -5793,8 +5791,8 @@ gdipSetCustomLineCapStrokeJoin: customCap lineJoin: lineJoin
 			PGpCustomLineCap customCap,
 			GpLineJoin LineJoin);"
 
-	<stdcall: sdword GdipSetCustomLineCapStrokeJoin  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCustomLineCapStrokeJoin handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetCustomLineCapWidthScale: customCap widthScale: widthScale
 	"Invoke the GdipSetCustomLineCapWidthScale() function of the module wrapped by the receiver.
@@ -5803,8 +5801,8 @@ gdipSetCustomLineCapWidthScale: customCap widthScale: widthScale
 			PGpCustomLineCap customCap,
 			REAL widthScale);"
 
-	<stdcall: sdword GdipSetCustomLineCapWidthScale  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetCustomLineCapWidthScale handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetEmpty: region
 	"Invoke the GdipSetEmpty() function of the module wrapped by the receiver.
@@ -5812,8 +5810,8 @@ gdipSetEmpty: region
 		GpStatus __stdcall GdipSetEmpty(
 			PGpRegion region);"
 
-	<stdcall: sdword GdipSetEmpty  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetEmpty handle>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesCachedBackground: imageattr enableFlag: enableFlag
 	"Invoke the GdipSetImageAttributesCachedBackground() function of the module wrapped by the receiver.
@@ -5822,8 +5820,8 @@ gdipSetImageAttributesCachedBackground: imageattr enableFlag: enableFlag
 			PGpImageAttributes imageattr,
 			long enableFlag);"
 
-	<stdcall: sdword GdipSetImageAttributesCachedBackground  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesCachedBackground handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesColorKeys: imageattr type: type enableFlag: enableFlag colorLow: colorLow colorHigh: colorHigh
 	"Invoke the GdipSetImageAttributesColorKeys() function of the module wrapped by the receiver.
@@ -5835,8 +5833,8 @@ gdipSetImageAttributesColorKeys: imageattr type: type enableFlag: enableFlag col
 			ARGB colorLow,
 			ARGB colorHigh);"
 
-	<stdcall: sdword GdipSetImageAttributesColorKeys  handle sdword sdword dword dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesColorKeys handle sdword sdword dword dword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag colorMatrix: colorMatrix grayMatrix: grayMatrix flags: flags
 	"Invoke the GdipSetImageAttributesColorMatrix() function of the module wrapped by the receiver.
@@ -5849,8 +5847,8 @@ gdipSetImageAttributesColorMatrix: imageattr type: type enableFlag: enableFlag c
 			[in]ColorMatrix* grayMatrix,
 			ColorMatrixFlags Flags);"
 
-	<stdcall: sdword GdipSetImageAttributesColorMatrix  handle sdword sdword GpColorMatrix* GpColorMatrix* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesColorMatrix handle sdword sdword GpColorMatrix* GpColorMatrix* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: gamma
 	"Invoke the GdipSetImageAttributesGamma() function of the module wrapped by the receiver.
@@ -5861,8 +5859,8 @@ gdipSetImageAttributesGamma: imageattr type: type enableFlag: enableFlag gamma: 
 			long enableFlag,
 			REAL gamma);"
 
-	<stdcall: sdword GdipSetImageAttributesGamma  handle sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesGamma handle sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesICMMode: imageattr on: on
 	"Invoke the GdipSetImageAttributesICMMode() function of the module wrapped by the receiver.
@@ -5871,8 +5869,8 @@ gdipSetImageAttributesICMMode: imageattr on: on
 			PGpImageAttributes imageattr,
 			long on);"
 
-	<stdcall: sdword GdipSetImageAttributesICMMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesICMMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesNoOp: imageattr type: type enableFlag: enableFlag
 	"Invoke the GdipSetImageAttributesNoOp() function of the module wrapped by the receiver.
@@ -5882,8 +5880,8 @@ gdipSetImageAttributesNoOp: imageattr type: type enableFlag: enableFlag
 			ColorAdjustType Type,
 			long enableFlag);"
 
-	<stdcall: sdword GdipSetImageAttributesNoOp  handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesNoOp handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag channelFlags: channelFlags
 	"Invoke the GdipSetImageAttributesOutputChannel() function of the module wrapped by the receiver.
@@ -5894,8 +5892,8 @@ gdipSetImageAttributesOutputChannel: imageattr type: type enableFlag: enableFlag
 			long enableFlag,
 			ColorChannelFlags channelFlags);"
 
-	<stdcall: sdword GdipSetImageAttributesOutputChannel  handle sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesOutputChannel handle sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag: enableFlag colorProfileFilename: colorProfileFilename
 	"Invoke the GdipSetImageAttributesOutputChannelColorProfile() function of the module wrapped by the receiver.
@@ -5906,8 +5904,8 @@ gdipSetImageAttributesOutputChannelColorProfile: imageattr type: type enableFlag
 			long enableFlag,
 			[in]LPWSTR colorProfileFilename);"
 
-	<stdcall: sdword GdipSetImageAttributesOutputChannelColorProfile  handle sdword sdword lpwstr>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesOutputChannelColorProfile handle sdword sdword lpwstr>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag mapSize: mapSize map: map
 	"Invoke the GdipSetImageAttributesRemapTable() function of the module wrapped by the receiver.
@@ -5919,8 +5917,8 @@ gdipSetImageAttributesRemapTable: imageattr type: type enableFlag: enableFlag ma
 			unsigned int mapSize,
 			[in]ColorMap* map);"
 
-	<stdcall: sdword GdipSetImageAttributesRemapTable  handle sdword sdword dword GpColorMap*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesRemapTable handle sdword sdword dword GpColorMap*>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag threshold: threshold
 	"Invoke the GdipSetImageAttributesThreshold() function of the module wrapped by the receiver.
@@ -5931,8 +5929,8 @@ gdipSetImageAttributesThreshold: imageattr type: type enableFlag: enableFlag thr
 			long enableFlag,
 			REAL threshold);"
 
-	<stdcall: sdword GdipSetImageAttributesThreshold  handle sdword sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesThreshold handle sdword sdword float>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesToIdentity: imageattr type: type
 	"Invoke the GdipSetImageAttributesToIdentity() function of the module wrapped by the receiver.
@@ -5941,8 +5939,8 @@ gdipSetImageAttributesToIdentity: imageattr type: type
 			PGpImageAttributes imageattr,
 			ColorAdjustType Type);"
 
-	<stdcall: sdword GdipSetImageAttributesToIdentity  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesToIdentity handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImageAttributesWrapMode: imageattr wrap: wrap argb: argb clamp: clamp
 	"Invoke the GdipSetImageAttributesWrapMode() function of the module wrapped by the receiver.
@@ -5953,8 +5951,8 @@ gdipSetImageAttributesWrapMode: imageattr wrap: wrap argb: argb clamp: clamp
 			ARGB ARGB,
 			long clamp);"
 
-	<stdcall: sdword GdipSetImageAttributesWrapMode  handle sdword dword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImageAttributesWrapMode handle sdword dword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetImagePalette: image palette: palette
 	"Invoke the GdipSetImagePalette() function of the module wrapped by the receiver.
@@ -5963,8 +5961,8 @@ gdipSetImagePalette: image palette: palette
 			[in]PGpImage image,
 			[in]ColorPalette* palette);"
 
-	<stdcall: sdword GdipSetImagePalette  handle GpColorPalette*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetImagePalette handle GpColorPalette*>
+	^self invalidCall: _failureCode!
 
 gdipSetInfinite: region
 	"Invoke the GdipSetInfinite() function of the module wrapped by the receiver.
@@ -5972,8 +5970,8 @@ gdipSetInfinite: region
 		GpStatus __stdcall GdipSetInfinite(
 			PGpRegion region);"
 
-	<stdcall: sdword GdipSetInfinite  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetInfinite handle>
+	^self invalidCall: _failureCode!
 
 gdipSetInterpolationMode: graphics interpolationMode: interpolationMode
 	"Invoke the GdipSetInterpolationMode() function of the module wrapped by the receiver.
@@ -5982,8 +5980,8 @@ gdipSetInterpolationMode: graphics interpolationMode: interpolationMode
 			PGpGraphics graphics,
 			InterpolationMode InterpolationMode);"
 
-	<stdcall: sdword GdipSetInterpolationMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetInterpolationMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetLineBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipSetLineBlend() function of the module wrapped by the receiver.
@@ -5994,8 +5992,8 @@ gdipSetLineBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipSetLineBlend  handle float* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineBlend handle float* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetLineColors: brush color1: color1 color2: color2
 	"Invoke the GdipSetLineColors() function of the module wrapped by the receiver.
@@ -6005,8 +6003,8 @@ gdipSetLineColors: brush color1: color1 color2: color2
 			ARGB color1,
 			ARGB color2);"
 
-	<stdcall: sdword GdipSetLineColors  handle dword dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineColors handle dword dword>
+	^self invalidCall: _failureCode!
 
 gdipSetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 	"Invoke the GdipSetLineGammaCorrection() function of the module wrapped by the receiver.
@@ -6015,8 +6013,8 @@ gdipSetLineGammaCorrection: brush useGammaCorrection: useGammaCorrection
 			PGpLineGradient brush,
 			long useGammaCorrection);"
 
-	<stdcall: sdword GdipSetLineGammaCorrection  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineGammaCorrection handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetLineLinearBlend: brush focus: focus scale: scale
 	"Invoke the GdipSetLineLinearBlend() function of the module wrapped by the receiver.
@@ -6026,8 +6024,8 @@ gdipSetLineLinearBlend: brush focus: focus scale: scale
 			REAL focus,
 			REAL scale);"
 
-	<stdcall: sdword GdipSetLineLinearBlend  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineLinearBlend handle float float>
+	^self invalidCall: _failureCode!
 
 gdipSetLinePresetBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipSetLinePresetBlend() function of the module wrapped by the receiver.
@@ -6038,8 +6036,8 @@ gdipSetLinePresetBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipSetLinePresetBlend  handle dword* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLinePresetBlend handle dword* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetLineSigmaBlend: brush focus: focus scale: scale
 	"Invoke the GdipSetLineSigmaBlend() function of the module wrapped by the receiver.
@@ -6049,8 +6047,8 @@ gdipSetLineSigmaBlend: brush focus: focus scale: scale
 			REAL focus,
 			REAL scale);"
 
-	<stdcall: sdword GdipSetLineSigmaBlend  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineSigmaBlend handle float float>
+	^self invalidCall: _failureCode!
 
 gdipSetLineTransform: brush matrix: matrix
 	"Invoke the GdipSetLineTransform() function of the module wrapped by the receiver.
@@ -6059,8 +6057,8 @@ gdipSetLineTransform: brush matrix: matrix
 			PGpLineGradient brush,
 			[in]PGpMatrix matrix);"
 
-	<stdcall: sdword GdipSetLineTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetLineWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipSetLineWrapMode() function of the module wrapped by the receiver.
@@ -6069,8 +6067,8 @@ gdipSetLineWrapMode: brush wrapMode: wrapMode
 			PGpLineGradient brush,
 			GpWrapMode WrapMode);"
 
-	<stdcall: sdword GdipSetLineWrapMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetLineWrapMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetMatrixElements: matrix m11: m11 m12: m12 m21: m21 m22: m22 dx: dx dy: dy
 	"Invoke the GdipSetMatrixElements() function of the module wrapped by the receiver.
@@ -6084,8 +6082,8 @@ gdipSetMatrixElements: matrix m11: m11 m12: m12 m21: m21 m22: m22 dx: dx dy: dy
 			REAL dx,
 			REAL dy);"
 
-	<stdcall: sdword GdipSetMatrixElements  handle float float float float float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetMatrixElements handle float float float float float float>
+	^self invalidCall: _failureCode!
 
 gdipSetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitDpi: metafileRasterizationLimitDpi
 	"Invoke the GdipSetMetafileDownLevelRasterizationLimit() function of the module wrapped by the receiver.
@@ -6094,8 +6092,8 @@ gdipSetMetafileDownLevelRasterizationLimit: metafile metafileRasterizationLimitD
 			PGpMetafile metafile,
 			unsigned int metafileRasterizationLimitDpi);"
 
-	<stdcall: sdword GdipSetMetafileDownLevelRasterizationLimit  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetMetafileDownLevelRasterizationLimit handle dword>
+	^self invalidCall: _failureCode!
 
 gdipSetPageScale: graphics scale: scale
 	"Invoke the GdipSetPageScale() function of the module wrapped by the receiver.
@@ -6104,8 +6102,8 @@ gdipSetPageScale: graphics scale: scale
 			PGpGraphics graphics,
 			REAL scale);"
 
-	<stdcall: sdword GdipSetPageScale  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPageScale handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetPageUnit: graphics unit: unit
 	"Invoke the GdipSetPageUnit() function of the module wrapped by the receiver.
@@ -6114,8 +6112,8 @@ gdipSetPageUnit: graphics unit: unit
 			PGpGraphics graphics,
 			GpUnit Unit);"
 
-	<stdcall: sdword GdipSetPageUnit  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPageUnit handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathFillMode: path fillMode: fillMode
 	"Invoke the GdipSetPathFillMode() function of the module wrapped by the receiver.
@@ -6124,8 +6122,8 @@ gdipSetPathFillMode: path fillMode: fillMode
 			PGpPath path,
 			GpFillMode FillMode);"
 
-	<stdcall: sdword GdipSetPathFillMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathFillMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipSetPathGradientBlend() function of the module wrapped by the receiver.
@@ -6136,8 +6134,8 @@ gdipSetPathGradientBlend: brush blend: blend positions: positions count: count
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipSetPathGradientBlend  handle float* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientBlend handle float* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientCenterColor: brush colors: colors
 	"Invoke the GdipSetPathGradientCenterColor() function of the module wrapped by the receiver.
@@ -6146,8 +6144,8 @@ gdipSetPathGradientCenterColor: brush colors: colors
 			PGpPathGradient brush,
 			ARGB colors);"
 
-	<stdcall: sdword GdipSetPathGradientCenterColor  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientCenterColor handle dword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientCenterPoint: brush points: points
 	"Invoke the GdipSetPathGradientCenterPoint() function of the module wrapped by the receiver.
@@ -6156,8 +6154,8 @@ gdipSetPathGradientCenterPoint: brush points: points
 			PGpPathGradient brush,
 			[in]GpPointF* Points);"
 
-	<stdcall: sdword GdipSetPathGradientCenterPoint  handle POINTF*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientCenterPoint handle POINTF*>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientCenterPointI: brush points: points
 	"Invoke the GdipSetPathGradientCenterPointI() function of the module wrapped by the receiver.
@@ -6166,8 +6164,8 @@ gdipSetPathGradientCenterPointI: brush points: points
 			PGpPathGradient brush,
 			[in]GpPoint* Points);"
 
-	<stdcall: sdword GdipSetPathGradientCenterPointI  handle POINTL*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientCenterPointI handle POINTL*>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientFocusScales: brush xScale: xScale yScale: yScale
 	"Invoke the GdipSetPathGradientFocusScales() function of the module wrapped by the receiver.
@@ -6177,8 +6175,8 @@ gdipSetPathGradientFocusScales: brush xScale: xScale yScale: yScale
 			REAL xScale,
 			REAL yScale);"
 
-	<stdcall: sdword GdipSetPathGradientFocusScales  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientFocusScales handle float float>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 	"Invoke the GdipSetPathGradientGammaCorrection() function of the module wrapped by the receiver.
@@ -6187,8 +6185,8 @@ gdipSetPathGradientGammaCorrection: brush useGammaCorrection: useGammaCorrection
 			PGpPathGradient brush,
 			long useGammaCorrection);"
 
-	<stdcall: sdword GdipSetPathGradientGammaCorrection  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientGammaCorrection handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientLinearBlend: brush focus: focus scale: scale
 	"Invoke the GdipSetPathGradientLinearBlend() function of the module wrapped by the receiver.
@@ -6198,8 +6196,8 @@ gdipSetPathGradientLinearBlend: brush focus: focus scale: scale
 			REAL focus,
 			REAL scale);"
 
-	<stdcall: sdword GdipSetPathGradientLinearBlend  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientLinearBlend handle float float>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientPath: brush path: path
 	"Invoke the GdipSetPathGradientPath() function of the module wrapped by the receiver.
@@ -6208,8 +6206,8 @@ gdipSetPathGradientPath: brush path: path
 			PGpPathGradient brush,
 			[in]PGpPath path);"
 
-	<stdcall: sdword GdipSetPathGradientPath  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientPath handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientPresetBlend: brush blend: blend positions: positions count: count
 	"Invoke the GdipSetPathGradientPresetBlend() function of the module wrapped by the receiver.
@@ -6220,8 +6218,8 @@ gdipSetPathGradientPresetBlend: brush blend: blend positions: positions count: c
 			[in]REAL* positions,
 			int Count);"
 
-	<stdcall: sdword GdipSetPathGradientPresetBlend  handle dword* float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientPresetBlend handle dword* float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientSigmaBlend: brush focus: focus scale: scale
 	"Invoke the GdipSetPathGradientSigmaBlend() function of the module wrapped by the receiver.
@@ -6231,8 +6229,8 @@ gdipSetPathGradientSigmaBlend: brush focus: focus scale: scale
 			REAL focus,
 			REAL scale);"
 
-	<stdcall: sdword GdipSetPathGradientSigmaBlend  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientSigmaBlend handle float float>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientSurroundColorsWithCount: brush color: color count: count
 	"Invoke the GdipSetPathGradientSurroundColorsWithCount() function of the module wrapped by the receiver.
@@ -6242,8 +6240,8 @@ gdipSetPathGradientSurroundColorsWithCount: brush color: color count: count
 			[in]ARGB* Color,
 			int* Count);"
 
-	<stdcall: sdword GdipSetPathGradientSurroundColorsWithCount  handle dword* sdword*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientSurroundColorsWithCount handle dword* sdword*>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientTransform: brush matrix: matrix
 	"Invoke the GdipSetPathGradientTransform() function of the module wrapped by the receiver.
@@ -6252,8 +6250,8 @@ gdipSetPathGradientTransform: brush matrix: matrix
 			PGpPathGradient brush,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipSetPathGradientTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPathGradientWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipSetPathGradientWrapMode() function of the module wrapped by the receiver.
@@ -6262,8 +6260,8 @@ gdipSetPathGradientWrapMode: brush wrapMode: wrapMode
 			PGpPathGradient brush,
 			GpWrapMode WrapMode);"
 
-	<stdcall: sdword GdipSetPathGradientWrapMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathGradientWrapMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPathMarker: path
 	"Invoke the GdipSetPathMarker() function of the module wrapped by the receiver.
@@ -6271,8 +6269,8 @@ gdipSetPathMarker: path
 		GpStatus __stdcall GdipSetPathMarker(
 			PGpPath path);"
 
-	<stdcall: sdword GdipSetPathMarker  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPathMarker handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPenBrushFill: pen brush: brush
 	"Invoke the GdipSetPenBrushFill() function of the module wrapped by the receiver.
@@ -6281,8 +6279,8 @@ gdipSetPenBrushFill: pen brush: brush
 			PGpPen pen,
 			PGpBrush brush);"
 
-	<stdcall: sdword GdipSetPenBrushFill  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenBrushFill handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPenColor: pen argb: argb
 	"Invoke the GdipSetPenColor() function of the module wrapped by the receiver.
@@ -6291,8 +6289,8 @@ gdipSetPenColor: pen argb: argb
 			PGpPen pen,
 			ARGB ARGB);"
 
-	<stdcall: sdword GdipSetPenColor  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenColor handle dword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenCompoundArray: pen dash: dash count: count
 	"Invoke the GdipSetPenCompoundArray() function of the module wrapped by the receiver.
@@ -6302,8 +6300,8 @@ gdipSetPenCompoundArray: pen dash: dash count: count
 			[in]REAL* dash,
 			int Count);"
 
-	<stdcall: sdword GdipSetPenCompoundArray  handle float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenCompoundArray handle float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenCustomEndCap: pen customCap: customCap
 	"Invoke the GdipSetPenCustomEndCap() function of the module wrapped by the receiver.
@@ -6312,8 +6310,8 @@ gdipSetPenCustomEndCap: pen customCap: customCap
 			PGpPen pen,
 			PGpCustomLineCap customCap);"
 
-	<stdcall: sdword GdipSetPenCustomEndCap  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenCustomEndCap handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPenCustomStartCap: pen customCap: customCap
 	"Invoke the GdipSetPenCustomStartCap() function of the module wrapped by the receiver.
@@ -6322,8 +6320,8 @@ gdipSetPenCustomStartCap: pen customCap: customCap
 			PGpPen pen,
 			PGpCustomLineCap customCap);"
 
-	<stdcall: sdword GdipSetPenCustomStartCap  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenCustomStartCap handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPenDashArray: pen dash: dash count: count
 	"Invoke the GdipSetPenDashArray() function of the module wrapped by the receiver.
@@ -6333,8 +6331,8 @@ gdipSetPenDashArray: pen dash: dash count: count
 			[in]REAL* dash,
 			int Count);"
 
-	<stdcall: sdword GdipSetPenDashArray  handle float* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenDashArray handle float* sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenDashCap197819: pen dashCap: dashCap
 	"Invoke the GdipSetPenDashCap197819() function of the module wrapped by the receiver.
@@ -6343,8 +6341,8 @@ gdipSetPenDashCap197819: pen dashCap: dashCap
 			PGpPen pen,
 			GpDashCap DashCap);"
 
-	<stdcall: sdword GdipSetPenDashCap197819  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenDashCap197819 handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenDashOffset: pen offset: offset
 	"Invoke the GdipSetPenDashOffset() function of the module wrapped by the receiver.
@@ -6353,8 +6351,8 @@ gdipSetPenDashOffset: pen offset: offset
 			PGpPen pen,
 			REAL offset);"
 
-	<stdcall: sdword GdipSetPenDashOffset  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenDashOffset handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetPenDashStyle: pen dashStyle: dashStyle
 	"Invoke the GdipSetPenDashStyle() function of the module wrapped by the receiver.
@@ -6363,8 +6361,8 @@ gdipSetPenDashStyle: pen dashStyle: dashStyle
 			PGpPen pen,
 			GpDashStyle DashStyle);"
 
-	<stdcall: sdword GdipSetPenDashStyle  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenDashStyle handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenEndCap: pen endCap: endCap
 	"Invoke the GdipSetPenEndCap() function of the module wrapped by the receiver.
@@ -6373,8 +6371,8 @@ gdipSetPenEndCap: pen endCap: endCap
 			PGpPen pen,
 			GpLineCap endCap);"
 
-	<stdcall: sdword GdipSetPenEndCap  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenEndCap handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenLineCap197819: pen startCap: startCap endCap: endCap dashCap: dashCap
 	"Invoke the GdipSetPenLineCap197819() function of the module wrapped by the receiver.
@@ -6385,8 +6383,8 @@ gdipSetPenLineCap197819: pen startCap: startCap endCap: endCap dashCap: dashCap
 			GpLineCap endCap,
 			GpDashCap DashCap);"
 
-	<stdcall: sdword GdipSetPenLineCap197819  handle sdword sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenLineCap197819 handle sdword sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenLineJoin: pen lineJoin: lineJoin
 	"Invoke the GdipSetPenLineJoin() function of the module wrapped by the receiver.
@@ -6395,8 +6393,8 @@ gdipSetPenLineJoin: pen lineJoin: lineJoin
 			PGpPen pen,
 			GpLineJoin LineJoin);"
 
-	<stdcall: sdword GdipSetPenLineJoin  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenLineJoin handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenMiterLimit: pen miterLimit: miterLimit
 	"Invoke the GdipSetPenMiterLimit() function of the module wrapped by the receiver.
@@ -6405,8 +6403,8 @@ gdipSetPenMiterLimit: pen miterLimit: miterLimit
 			PGpPen pen,
 			REAL miterLimit);"
 
-	<stdcall: sdword GdipSetPenMiterLimit  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenMiterLimit handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetPenMode: pen penMode: penMode
 	"Invoke the GdipSetPenMode() function of the module wrapped by the receiver.
@@ -6415,8 +6413,8 @@ gdipSetPenMode: pen penMode: penMode
 			PGpPen pen,
 			GpPenAlignment penMode);"
 
-	<stdcall: sdword GdipSetPenMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenStartCap: pen startCap: startCap
 	"Invoke the GdipSetPenStartCap() function of the module wrapped by the receiver.
@@ -6425,8 +6423,8 @@ gdipSetPenStartCap: pen startCap: startCap
 			PGpPen pen,
 			GpLineCap startCap);"
 
-	<stdcall: sdword GdipSetPenStartCap  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenStartCap handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenTransform: pen matrix: matrix
 	"Invoke the GdipSetPenTransform() function of the module wrapped by the receiver.
@@ -6435,8 +6433,8 @@ gdipSetPenTransform: pen matrix: matrix
 			PGpPen pen,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipSetPenTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetPenUnit: pen unit: unit
 	"Invoke the GdipSetPenUnit() function of the module wrapped by the receiver.
@@ -6445,8 +6443,8 @@ gdipSetPenUnit: pen unit: unit
 			PGpPen pen,
 			GpUnit Unit);"
 
-	<stdcall: sdword GdipSetPenUnit  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenUnit handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPenWidth: pen width: width
 	"Invoke the GdipSetPenWidth() function of the module wrapped by the receiver.
@@ -6455,8 +6453,8 @@ gdipSetPenWidth: pen width: width
 			PGpPen pen,
 			REAL Width);"
 
-	<stdcall: sdword GdipSetPenWidth  handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPenWidth handle float>
+	^self invalidCall: _failureCode!
 
 gdipSetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 	"Invoke the GdipSetPixelOffsetMode() function of the module wrapped by the receiver.
@@ -6465,8 +6463,8 @@ gdipSetPixelOffsetMode: graphics pixelOffsetMode: pixelOffsetMode
 			PGpGraphics graphics,
 			PixelOffsetMode PixelOffsetMode);"
 
-	<stdcall: sdword GdipSetPixelOffsetMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPixelOffsetMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetPropertyItem: image item: item
 	"Invoke the GdipSetPropertyItem() function of the module wrapped by the receiver.
@@ -6475,8 +6473,8 @@ gdipSetPropertyItem: image item: item
 			[in]PGpImage image,
 			[in]PropertyItem* item);"
 
-	<stdcall: sdword GdipSetPropertyItem  handle GpPropertyItem*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetPropertyItem handle GpPropertyItem*>
+	^self invalidCall: _failureCode!
 
 gdipSetRenderingOrigin: graphics x: x y: y
 	"Invoke the GdipSetRenderingOrigin() function of the module wrapped by the receiver.
@@ -6486,8 +6484,8 @@ gdipSetRenderingOrigin: graphics x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: sdword GdipSetRenderingOrigin  handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetRenderingOrigin handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetSmoothingMode: graphics smoothingMode: smoothingMode
 	"Invoke the GdipSetSmoothingMode() function of the module wrapped by the receiver.
@@ -6496,8 +6494,8 @@ gdipSetSmoothingMode: graphics smoothingMode: smoothingMode
 			PGpGraphics graphics,
 			SmoothingMode SmoothingMode);"
 
-	<stdcall: sdword GdipSetSmoothingMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetSmoothingMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetSolidFillColor: brush color: color
 	"Invoke the GdipSetSolidFillColor() function of the module wrapped by the receiver.
@@ -6506,8 +6504,8 @@ gdipSetSolidFillColor: brush color: color
 			[in]PGpSolidFill brush,
 			[in]ARGB Color);"
 
-	<stdcall: sdword GdipSetSolidFillColor  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetSolidFillColor handle dword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatAlign: format align: align
 	"Invoke the GdipSetStringFormatAlign() function of the module wrapped by the receiver.
@@ -6516,8 +6514,8 @@ gdipSetStringFormatAlign: format align: align
 			PGpStringFormat format,
 			StringAlignment align);"
 
-	<stdcall: sdword GdipSetStringFormatAlign  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatAlign handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatDigitSubstitution: format language: language substitute: substitute
 	"Invoke the GdipSetStringFormatDigitSubstitution() function of the module wrapped by the receiver.
@@ -6527,8 +6525,8 @@ gdipSetStringFormatDigitSubstitution: format language: language substitute: subs
 			LANGID language,
 			StringDigitSubstitute substitute);"
 
-	<stdcall: sdword GdipSetStringFormatDigitSubstitution  handle word sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatDigitSubstitution handle word sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatFlags: format flags: flags
 	"Invoke the GdipSetStringFormatFlags() function of the module wrapped by the receiver.
@@ -6537,8 +6535,8 @@ gdipSetStringFormatFlags: format flags: flags
 			PGpStringFormat format,
 			int Flags);"
 
-	<stdcall: sdword GdipSetStringFormatFlags  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatFlags handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 	"Invoke the GdipSetStringFormatHotkeyPrefix() function of the module wrapped by the receiver.
@@ -6547,8 +6545,8 @@ gdipSetStringFormatHotkeyPrefix: format hotkeyPrefix: hotkeyPrefix
 			PGpStringFormat format,
 			int HotkeyPrefix);"
 
-	<stdcall: sdword GdipSetStringFormatHotkeyPrefix  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatHotkeyPrefix handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatLineAlign: format align: align
 	"Invoke the GdipSetStringFormatLineAlign() function of the module wrapped by the receiver.
@@ -6557,8 +6555,8 @@ gdipSetStringFormatLineAlign: format align: align
 			PGpStringFormat format,
 			StringAlignment align);"
 
-	<stdcall: sdword GdipSetStringFormatLineAlign  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatLineAlign handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatMeasurableCharacterRanges: format rangeCount: rangeCount ranges: ranges
 	"Invoke the GdipSetStringFormatMeasurableCharacterRanges() function of the module wrapped by the receiver.
@@ -6568,8 +6566,8 @@ gdipSetStringFormatMeasurableCharacterRanges: format rangeCount: rangeCount rang
 			int rangeCount,
 			[in]CharacterRange* ranges);"
 
-	<stdcall: sdword GdipSetStringFormatMeasurableCharacterRanges  handle sdword GpCharacterRange*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatMeasurableCharacterRanges handle sdword GpCharacterRange*>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatTabStops: format firstTabOffset: firstTabOffset count: count tabStops: tabStops
 	"Invoke the GdipSetStringFormatTabStops() function of the module wrapped by the receiver.
@@ -6580,8 +6578,8 @@ gdipSetStringFormatTabStops: format firstTabOffset: firstTabOffset count: count 
 			int Count,
 			[in]REAL* tabStops);"
 
-	<stdcall: sdword GdipSetStringFormatTabStops  handle float sdword float*>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatTabStops handle float sdword float*>
+	^self invalidCall: _failureCode!
 
 gdipSetStringFormatTrimming: format trimming: trimming
 	"Invoke the GdipSetStringFormatTrimming() function of the module wrapped by the receiver.
@@ -6590,8 +6588,8 @@ gdipSetStringFormatTrimming: format trimming: trimming
 			PGpStringFormat format,
 			StringTrimming trimming);"
 
-	<stdcall: sdword GdipSetStringFormatTrimming  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetStringFormatTrimming handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetTextContrast: graphics contrast: contrast
 	"Invoke the GdipSetTextContrast() function of the module wrapped by the receiver.
@@ -6600,8 +6598,8 @@ gdipSetTextContrast: graphics contrast: contrast
 			PGpGraphics graphics,
 			unsigned int contrast);"
 
-	<stdcall: sdword GdipSetTextContrast  handle dword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetTextContrast handle dword>
+	^self invalidCall: _failureCode!
 
 gdipSetTextRenderingHint: graphics mode: mode
 	"Invoke the GdipSetTextRenderingHint() function of the module wrapped by the receiver.
@@ -6610,8 +6608,8 @@ gdipSetTextRenderingHint: graphics mode: mode
 			PGpGraphics graphics,
 			TextRenderingHint mode);"
 
-	<stdcall: sdword GdipSetTextRenderingHint  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetTextRenderingHint handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetTextureTransform: brush matrix: matrix
 	"Invoke the GdipSetTextureTransform() function of the module wrapped by the receiver.
@@ -6620,8 +6618,8 @@ gdipSetTextureTransform: brush matrix: matrix
 			[in]PGpTexture brush,
 			[in]PGpMatrix matrix);"
 
-	<stdcall: sdword GdipSetTextureTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetTextureTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipSetTextureWrapMode: brush wrapMode: wrapMode
 	"Invoke the GdipSetTextureWrapMode() function of the module wrapped by the receiver.
@@ -6630,8 +6628,8 @@ gdipSetTextureWrapMode: brush wrapMode: wrapMode
 			[in]PGpTexture brush,
 			[in]GpWrapMode WrapMode);"
 
-	<stdcall: sdword GdipSetTextureWrapMode  handle sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipSetTextureWrapMode handle sdword>
+	^self invalidCall: _failureCode!
 
 gdipSetWorldTransform: graphics matrix: matrix
 	"Invoke the GdipSetWorldTransform() function of the module wrapped by the receiver.
@@ -6640,8 +6638,8 @@ gdipSetWorldTransform: graphics matrix: matrix
 			PGpGraphics graphics,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipSetWorldTransform  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipSetWorldTransform handle handle>
+	^self invalidCall: _failureCode!
 
 gdipShearMatrix: matrix shearX: shearX shearY: shearY order: order
 	"Invoke the GdipShearMatrix() function of the module wrapped by the receiver.
@@ -6652,8 +6650,8 @@ gdipShearMatrix: matrix shearX: shearX shearY: shearY order: order
 			REAL shearY,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipShearMatrix  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipShearMatrix handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipStartPathFigure: path
 	"Invoke the GdipStartPathFigure() function of the module wrapped by the receiver.
@@ -6661,8 +6659,8 @@ gdipStartPathFigure: path
 		GpStatus __stdcall GdipStartPathFigure(
 			PGpPath path);"
 
-	<stdcall: sdword GdipStartPathFigure  handle>
-	^self invalidCall!
+	<stdcall: sdword GdipStartPathFigure handle>
+	^self invalidCall: _failureCode!
 
 gdipStringFormatGetGenericDefault: format
 	"Invoke the GdipStringFormatGetGenericDefault() function of the module wrapped by the receiver.
@@ -6670,8 +6668,8 @@ gdipStringFormatGetGenericDefault: format
 		GpStatus __stdcall GdipStringFormatGetGenericDefault(
 			[out, retval]PGpStringFormat* format);"
 
-	<stdcall: sdword GdipStringFormatGetGenericDefault  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipStringFormatGetGenericDefault handle*>
+	^self invalidCall: _failureCode!
 
 gdipStringFormatGetGenericTypographic: format
 	"Invoke the GdipStringFormatGetGenericTypographic() function of the module wrapped by the receiver.
@@ -6679,8 +6677,8 @@ gdipStringFormatGetGenericTypographic: format
 		GpStatus __stdcall GdipStringFormatGetGenericTypographic(
 			[out, retval]PGpStringFormat* format);"
 
-	<stdcall: sdword GdipStringFormatGetGenericTypographic  handle*>
-	^self invalidCall!
+	<stdcall: sdword GdipStringFormatGetGenericTypographic handle*>
+	^self invalidCall: _failureCode!
 
 gdipTestControl: cntrl param: param
 	"Invoke the GdipTestControl() function of the module wrapped by the receiver.
@@ -6689,8 +6687,8 @@ gdipTestControl: cntrl param: param
 			GpTestControlEnum cntrl,
 			VOID* param);"
 
-	<stdcall: sdword GdipTestControl  sdword void*>
-	^self invalidCall!
+	<stdcall: sdword GdipTestControl sdword void*>
+	^self invalidCall: _failureCode!
 
 gdipTransformMatrixPoints: matrix pts: pts count: count
 	"Invoke the GdipTransformMatrixPoints() function of the module wrapped by the receiver.
@@ -6700,8 +6698,8 @@ gdipTransformMatrixPoints: matrix pts: pts count: count
 			GpPointF* pts,
 			int Count);"
 
-	<stdcall: sdword GdipTransformMatrixPoints  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformMatrixPoints handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipTransformMatrixPointsI: matrix pts: pts count: count
 	"Invoke the GdipTransformMatrixPointsI() function of the module wrapped by the receiver.
@@ -6711,8 +6709,8 @@ gdipTransformMatrixPointsI: matrix pts: pts count: count
 			GpPoint* pts,
 			int Count);"
 
-	<stdcall: sdword GdipTransformMatrixPointsI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformMatrixPointsI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipTransformPath: path matrix: matrix
 	"Invoke the GdipTransformPath() function of the module wrapped by the receiver.
@@ -6721,8 +6719,8 @@ gdipTransformPath: path matrix: matrix
 			PGpPath path,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipTransformPath  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformPath handle handle>
+	^self invalidCall: _failureCode!
 
 gdipTransformPoints: graphics destSpace: destSpace srcSpace: srcSpace points: points count: count
 	"Invoke the GdipTransformPoints() function of the module wrapped by the receiver.
@@ -6734,8 +6732,8 @@ gdipTransformPoints: graphics destSpace: destSpace srcSpace: srcSpace points: po
 			GpPointF* Points,
 			int Count);"
 
-	<stdcall: sdword GdipTransformPoints  handle sdword sdword POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformPoints handle sdword sdword POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipTransformPointsI: graphics destSpace: destSpace srcSpace: srcSpace points: points count: count
 	"Invoke the GdipTransformPointsI() function of the module wrapped by the receiver.
@@ -6747,8 +6745,8 @@ gdipTransformPointsI: graphics destSpace: destSpace srcSpace: srcSpace points: p
 			GpPoint* Points,
 			int Count);"
 
-	<stdcall: sdword GdipTransformPointsI  handle sdword sdword POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformPointsI handle sdword sdword POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipTransformRegion: region matrix: matrix
 	"Invoke the GdipTransformRegion() function of the module wrapped by the receiver.
@@ -6757,8 +6755,8 @@ gdipTransformRegion: region matrix: matrix
 			PGpRegion region,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipTransformRegion  handle handle>
-	^self invalidCall!
+	<stdcall: sdword GdipTransformRegion handle handle>
+	^self invalidCall: _failureCode!
 
 gdipTranslateClip: graphics dx: dx dy: dy
 	"Invoke the GdipTranslateClip() function of the module wrapped by the receiver.
@@ -6768,8 +6766,8 @@ gdipTranslateClip: graphics dx: dx dy: dy
 			REAL dx,
 			REAL dy);"
 
-	<stdcall: sdword GdipTranslateClip  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateClip handle float float>
+	^self invalidCall: _failureCode!
 
 gdipTranslateClipI: graphics dx: dx dy: dy
 	"Invoke the GdipTranslateClipI() function of the module wrapped by the receiver.
@@ -6779,8 +6777,8 @@ gdipTranslateClipI: graphics dx: dx dy: dy
 			int dx,
 			int dy);"
 
-	<stdcall: sdword GdipTranslateClipI  handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateClipI handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslateLineTransform: brush dx: dx dy: dy order: order
 	"Invoke the GdipTranslateLineTransform() function of the module wrapped by the receiver.
@@ -6791,8 +6789,8 @@ gdipTranslateLineTransform: brush dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslateLineTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateLineTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslateMatrix: matrix offsetX: offsetX offsetY: offsetY order: order
 	"Invoke the GdipTranslateMatrix() function of the module wrapped by the receiver.
@@ -6803,8 +6801,8 @@ gdipTranslateMatrix: matrix offsetX: offsetX offsetY: offsetY order: order
 			REAL offsetY,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslateMatrix  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateMatrix handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslatePathGradientTransform: brush dx: dx dy: dy order: order
 	"Invoke the GdipTranslatePathGradientTransform() function of the module wrapped by the receiver.
@@ -6815,8 +6813,8 @@ gdipTranslatePathGradientTransform: brush dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslatePathGradientTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslatePathGradientTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslatePenTransform: pen dx: dx dy: dy order: order
 	"Invoke the GdipTranslatePenTransform() function of the module wrapped by the receiver.
@@ -6827,8 +6825,8 @@ gdipTranslatePenTransform: pen dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslatePenTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslatePenTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslateRegion: region dx: dx dy: dy
 	"Invoke the GdipTranslateRegion() function of the module wrapped by the receiver.
@@ -6838,8 +6836,8 @@ gdipTranslateRegion: region dx: dx dy: dy
 			REAL dx,
 			REAL dy);"
 
-	<stdcall: sdword GdipTranslateRegion  handle float float>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateRegion handle float float>
+	^self invalidCall: _failureCode!
 
 gdipTranslateRegionI: region dx: dx dy: dy
 	"Invoke the GdipTranslateRegionI() function of the module wrapped by the receiver.
@@ -6849,8 +6847,8 @@ gdipTranslateRegionI: region dx: dx dy: dy
 			int dx,
 			int dy);"
 
-	<stdcall: sdword GdipTranslateRegionI  handle sdword sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateRegionI handle sdword sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslateTextureTransform: brush dx: dx dy: dy order: order
 	"Invoke the GdipTranslateTextureTransform() function of the module wrapped by the receiver.
@@ -6861,8 +6859,8 @@ gdipTranslateTextureTransform: brush dx: dx dy: dy order: order
 			[in]REAL dy,
 			[in]GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslateTextureTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateTextureTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipTranslateWorldTransform: graphics dx: dx dy: dy order: order
 	"Invoke the GdipTranslateWorldTransform() function of the module wrapped by the receiver.
@@ -6873,8 +6871,8 @@ gdipTranslateWorldTransform: graphics dx: dx dy: dy order: order
 			REAL dy,
 			GpMatrixOrder order);"
 
-	<stdcall: sdword GdipTranslateWorldTransform  handle float float sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipTranslateWorldTransform handle float float sdword>
+	^self invalidCall: _failureCode!
 
 gdipVectorTransformMatrixPoints: matrix pts: pts count: count
 	"Invoke the GdipVectorTransformMatrixPoints() function of the module wrapped by the receiver.
@@ -6884,8 +6882,8 @@ gdipVectorTransformMatrixPoints: matrix pts: pts count: count
 			GpPointF* pts,
 			int Count);"
 
-	<stdcall: sdword GdipVectorTransformMatrixPoints  handle POINTF* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipVectorTransformMatrixPoints handle POINTF* sdword>
+	^self invalidCall: _failureCode!
 
 gdipVectorTransformMatrixPointsI: matrix pts: pts count: count
 	"Invoke the GdipVectorTransformMatrixPointsI() function of the module wrapped by the receiver.
@@ -6895,8 +6893,8 @@ gdipVectorTransformMatrixPointsI: matrix pts: pts count: count
 			GpPoint* pts,
 			int Count);"
 
-	<stdcall: sdword GdipVectorTransformMatrixPointsI  handle POINTL* sdword>
-	^self invalidCall!
+	<stdcall: sdword GdipVectorTransformMatrixPointsI handle POINTL* sdword>
+	^self invalidCall: _failureCode!
 
 gdipWarpPath: path matrix: matrix points: points count: count srcx: srcx srcy: srcy srcwidth: srcwidth srcheight: srcheight warpMode: warpMode flatness: flatness
 	"Invoke the GdipWarpPath() function of the module wrapped by the receiver.
@@ -6913,8 +6911,8 @@ gdipWarpPath: path matrix: matrix points: points count: count srcx: srcx srcy: s
 			WarpMode WarpMode,
 			REAL flatness);"
 
-	<stdcall: sdword GdipWarpPath  handle handle POINTF* sdword float float float float sdword float>
-	^self invalidCall!
+	<stdcall: sdword GdipWarpPath handle handle POINTF* sdword float float float float sdword float>
+	^self invalidCall: _failureCode!
 
 gdipWidenPath: nativePath pen: pen matrix: matrix flatness: flatness
 	"Invoke the GdipWidenPath() function of the module wrapped by the receiver.
@@ -6925,8 +6923,8 @@ gdipWidenPath: nativePath pen: pen matrix: matrix flatness: flatness
 			PGpMatrix matrix,
 			REAL flatness);"
 
-	<stdcall: sdword GdipWidenPath  handle handle handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipWidenPath handle handle handle float>
+	^self invalidCall: _failureCode!
 
 gdipWindingModeOutline: path matrix: matrix flatness: flatness
 	"Invoke the GdipWindingModeOutline() function of the module wrapped by the receiver.
@@ -6936,8 +6934,8 @@ gdipWindingModeOutline: path matrix: matrix flatness: flatness
 			PGpMatrix matrix,
 			REAL flatness);"
 
-	<stdcall: sdword GdipWindingModeOutline  handle handle float>
-	^self invalidCall!
+	<stdcall: sdword GdipWindingModeOutline handle handle float>
+	^self invalidCall: _failureCode!
 
 initialize
 	"Private - Initialize and answer the receiver."

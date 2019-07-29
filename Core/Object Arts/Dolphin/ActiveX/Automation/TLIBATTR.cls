@@ -141,6 +141,6 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
-!TLIBATTR class categoriesFor: #defineFields!initializing!public! !
+!TLIBATTR class categoriesFor: #defineFields!public!template definition! !
 !TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

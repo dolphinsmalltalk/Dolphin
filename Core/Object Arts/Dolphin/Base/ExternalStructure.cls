@@ -185,13 +185,18 @@ doesNotUnderstand: aMessage
 	selector of aMessage is looked up in the receiver's class' template, and 
 	if found the appropriate field is retrieved/set."
 
-	| args field |
-	args := aMessage arguments.
-	field := self template at: aMessage selector ifAbsent: [^super doesNotUnderstand: aMessage].
-	args size == 0
-		ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
-		ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
-	^super doesNotUnderstand: aMessage!
+	| key |
+	(key := aMessage selector) last == $: ifTrue: [key := key copyFrom: 1 to: key size - 1].
+	^(self template lookup: key)
+		ifNil: [super doesNotUnderstand: aMessage]
+		ifNotNil: 
+			[:field |
+			| args |
+			args := aMessage arguments.
+			args size == 0
+				ifTrue: [field isReadable ifTrue: [^field readFrom: self]]
+				ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
+			super doesNotUnderstand: aMessage]!
 
 fieldsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
@@ -282,37 +287,40 @@ invalidArgErrorClass
 	^InvalidExternalCall
 !
 
-invalidCall
+invalidCall: anInteger
 	"An invalid virtual call was attempted through one of the receiver's methods.
 	Generate an appropriate error from the following categories:
 		-	Argument type error. At least one argument was either out of range or of invalid type.
 			Only the first such error is reported.
 		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
 
-	| failureCode proc |
-	proc := Processor activeProcess.
-	(failureCode := proc primitiveFailureCode) < 0 ifTrue: [^self hresultError: proc primitiveFailureData].
-	failureCode >= 16 
+	| frame descriptor method |
+	frame := Processor activeProcess topFrame sender.
+	method := frame method.
+	descriptor := method descriptor.
+	anInteger < 0
 		ifTrue: 
-			[| frame i arg descriptor |
-			frame := proc topFrame sender.
-			descriptor := frame method descriptor.
-			i := descriptor argumentIndexFromOffset: failureCode - 16.
-			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			self invalidArgErrorClass 
+			[^descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+				ifTrue: [HRESULTError signalFailureCode: (anInteger bitOr: HRESULT.FACILITY_NT_BIT)]
+				ifFalse: [HRESULTError signalFailureCode: anInteger]].
+	anInteger >= 16r10000
+		ifTrue: 
+			[| i arg |
+			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
+			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			^self invalidArgErrorClass
 				invalidArgument: arg
 				got: (frame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)].	"One of the arguments was invalid?"
 
 	"All arguments were apparently valid, it must have been some system or unknown error."
-	^self primitiveFailed!
+	^self primitiveFailed: anInteger!
 
 isFieldBrowsable: aSymbol
 	^self class isFieldBrowsable: aSymbol!
 
 isNull
-	"Answer whether the receiver is a null external data item
-	(that is, a null pointer, or a nilled out structure)."
+	"Answer whether the receiver is a null external data item (that is, a null pointer, or a nilled out structure)."
 
 	<primitive: 170>
 	^bytes isNull!
@@ -423,7 +431,7 @@ yourAddress
 !ExternalStructure categoriesFor: #initializeAtAddress:!initializing!private! !
 !ExternalStructure categoriesFor: #initializePointer!initializing!private! !
 !ExternalStructure categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalStructure categoriesFor: #invalidCall!exceptions!public! !
+!ExternalStructure categoriesFor: #invalidCall:!exceptions!public! !
 !ExternalStructure categoriesFor: #isFieldBrowsable:!printing!private! !
 !ExternalStructure categoriesFor: #isNull!public!testing! !
 !ExternalStructure categoriesFor: #isPointer!public!testing! !
@@ -529,7 +537,6 @@ defineField: fieldName type: anExternalField offset: offset
 	"We always retain the read selector in the template - this is needed to calc the field
 	offset when compiling methods, and might be required for evaluating size_is expressions."
 	template at: fieldName asSymbol put: anExternalField.
-	anExternalField isWriteable ifTrue: [template at: (fieldName , ':') asSymbol put: anExternalField].
 	"Define a class constant for the field offset, if needed"
 	offsetConstant := self fieldOffsetConstantPrefix , fieldName.
 	(self bindingFor: offsetConstant) ifNotNil: [:var | var value == offset ifTrue: [^self]].
@@ -746,7 +753,7 @@ newTemplate
 	"Private - Reset the template instance variable of the receiver in preparation for loading a
 	new template."
 
-	template := IdentityDictionary new.
+	template := LookupTable new.
 	alignment := self baseAlignment!
 
 offsetFor: anExternalField base: anInteger 
@@ -813,10 +820,12 @@ recompileReferences
 	the structure length), AND any ExternalStructure methods that might be using static
 	expressions to get the byte-size."
 
-	| pred |
+	| pred binding |
+	binding := self classBinding.
+	binding isNil ifTrue: ["Not installed, so can't be any references." ^self].
 	Notification signal: ('Recompiling references to <1d> (size <2d>)...' expandMacrosWith: self
 				with: self basicByteSize).
-	pred := self referenceFilterFor: self classBinding.
+	pred := self referenceFilterFor: binding.
 	ExternalLibrary
 		allMethodsDo: [:each | (each isExternalCall and: [pred value: each]) ifTrue: [each recompile]].
 	ExternalStructure allMethodsDo: 
@@ -981,7 +990,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #removeRedundantOffsetConstants!private!template definition! !
 !ExternalStructure class categoriesFor: #resetTemplate!public!template definition! !
 !ExternalStructure class categoriesFor: #setGuid:!accessing!private! !
-!ExternalStructure class categoriesFor: #shrink!compiling!private! !
+!ExternalStructure class categoriesFor: #shrink!private!template definition! !
 !ExternalStructure class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !ExternalStructure class categoriesFor: #structurePacker!public!template definition! !
 !ExternalStructure class categoriesFor: #template!accessing!private! !
