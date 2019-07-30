@@ -286,66 +286,6 @@ ASSUME	eax:NOTHING
 ASSUME	edx:NOTHING
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-BEGINPRIMITIVE primitiveBecome
-	mov		ecx, [_SP]
-	mov		eax, [OBJECTTABLE]
-	test	cl, 1
-	jnz		localPrimitiveFailureInvalidParameter1			; Can't swap SmallIntegers
-	ASSUME	ecx:PTR OTE
-
-	add		eax, FIRSTCHAROFFSET+256*OTENTRYSIZE
-	cmp		ecx, eax
-	jl		localPrimitiveFailureInvalidParameter1
-
-	mov		edx, [_SP-OOPSIZE]
-	test	dl, 1
-	jnz		localPrimitiveFailureInvalidParameter1
-	ASSUME	edx:PTR OTE
-
-	cmp		edx, eax
-	jl		localPrimitiveFailureInvalidParameter1
-
-	; THIS MUST BE CHANGED IF OTE LAYOUT CHANGED.
-	; Note that we swap the location pointer (obviously), the class pointer (as we
-	; aren't swapping the class), and flags. All belong with the object.
-	; We don't swap the identity hash or count, as these belong with the pointer (identity)
-
-	push	ebx
-
-	; Exchange body pointers
-	mov		ebx, [ecx].m_location
-	mov		eax, [edx].m_location
-	mov		[ecx].m_location, eax
-	mov		[edx].m_location, ebx
-
-	; Exchange class pointers
-	mov		ebx, [ecx].m_oteClass
-	mov		eax, [edx].m_oteClass
-	mov		[ecx].m_oteClass, eax
-	mov		[edx].m_oteClass, ebx
-
-	; Exchange object sizes (I think it is right to swap immutability bit over too?)
-	mov		ebx, [ecx].m_size
-	mov		eax, [edx].m_size
-	mov		[ecx].m_size, eax
-	mov		[edx].m_size, ebx
-	
-	; Exchange first 8 bits of flags (exclude identityHash and ref. count)
-	mov		bl, [ecx].m_flags
-	mov		al, [edx].m_flags
-	mov		[ecx].m_flags, al
-	mov		[edx].m_flags, bl
-
-	pop		ebx
-
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure PrimitiveFailureInvalidParameter1
-
-ENDPRIMITIVE primitiveBecome
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ Primitive Thunks
 ;; Thunks for control (context switching) primitives
 ;; Other C++ primitives no longer need thunks (the convention is to return the
