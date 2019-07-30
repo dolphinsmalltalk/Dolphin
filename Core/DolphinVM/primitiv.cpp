@@ -964,3 +964,42 @@ Oop* __fastcall Interpreter::primitiveDeQForFinalize(Oop* const sp, unsigned)
 	return sp;
 }
 
+Oop* __fastcall Interpreter::primitiveBecome(Oop* const sp, unsigned)
+{
+	Oop	arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		OTE* oteArg = reinterpret_cast<OTE*>(arg);
+		if (!ObjectMemory::isPermanent(oteArg))
+		{
+			Oop receiver = *(sp - 1);
+			if (!ObjectMemoryIsIntegerObject(receiver))
+			{
+				OTE* oteReceiver = reinterpret_cast<OTE*>(receiver);
+				if (!ObjectMemory::isPermanent(oteReceiver))
+				{
+					// THIS MUST BE CHANGED IF OTE LAYOUT CHANGED.
+					// Note that we swap the location pointer(obviously), the class pointer(as we
+					// aren't swapping the class), and flags. All belong with the object.
+					// We don't swap the identity hash or count, as these belong with the pointer (identity)
+
+					// Exchange body pointers
+					std::swap(oteReceiver->m_location, oteArg->m_location);
+					// Exchange class pointers
+					std::swap(oteReceiver->m_oteClass, oteArg->m_oteClass);
+					// Exchange object sizes(I think it is right to swap immutability bit over too ? )
+					std::swap(oteReceiver->m_size, oteArg->m_size);
+					// Exchange first 8 bits of flags(exclude identityHash and ref.count)
+					std::swap(oteReceiver->m_ubFlags, oteArg->m_ubFlags);
+
+					return sp - 1;
+				}
+			}
+			// Invalid receiver
+			return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
+		}
+	}
+
+	// Invalid arg
+	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+}
