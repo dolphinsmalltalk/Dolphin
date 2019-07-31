@@ -185,6 +185,7 @@ bool Interpreter::IsUserBreakRequested()
 	int vk = hotkey & 0x1FF;
 	bool interrupt = (::GetAsyncKeyState(vk) & 0x8001) != 0;
 	int modifiers = (hotkey >> 9);
+	if (modifiers & FSHIFT)
 	{
 		interrupt &= (::GetAsyncKeyState(VK_SHIFT) & 0x8001) != 0;
 	}
