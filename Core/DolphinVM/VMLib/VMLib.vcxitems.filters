@@ -367,9 +367,6 @@
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm">
       <Filter>FFI</Filter>
     </MASM>
-    <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm">
-      <Filter>Primitives</Filter>
-    </MASM>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl" />

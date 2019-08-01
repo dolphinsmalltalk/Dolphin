@@ -1115,7 +1115,7 @@ Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp, unsigned)
 	ByteArray* byteArray = oteBytes->m_location;
 
 	*sp = Integer::NewSigned32(*reinterpret_cast<SDWORD*>(byteArray->m_elements + index));
-	ObjectMemory::AddToZct(*sp);
+	ObjectMemory::AddOopToZct(*sp);
 	return sp;
 }
 

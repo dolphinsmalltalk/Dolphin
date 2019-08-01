@@ -205,7 +205,7 @@ Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, unsig
 {
 	Oop result = Integer::NewUnsigned64(GetMicrosecondClock()/1000);
 	*sp = result;
-	ObjectMemory::AddToZct(result);
+	ObjectMemory::AddOopToZct(result);
 	return sp;
 }
 
@@ -213,7 +213,7 @@ Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp, unsig
 {
 	Oop result = Integer::NewUnsigned64(GetMicrosecondClock());
 	*sp = result;
-	ObjectMemory::AddToZct(result);
+	ObjectMemory::AddOopToZct(result);
 	return sp;
 }
 

@@ -29,23 +29,6 @@ struct StoreUIntPtr
 	}
 };
 
-struct StoreSigned32
-{
-	__forceinline void operator()(Oop* const sp, int32_t dwValue)
-	{
-		if (ObjectMemoryIsIntegerValue(dwValue))
-		{
-			*sp = ObjectMemoryIntegerObjectOf(dwValue);
-		}
-		else
-		{
-			LargeIntegerOTE* oteLi = LargeInteger::liNewSigned(dwValue);
-			*sp = reinterpret_cast<Oop>(oteLi);
-			ObjectMemory::AddToZct((OTE*)oteLi);
-		}
-	}
-};
-
 struct StoreIntPtr
 {
 	__forceinline void operator()(Oop* const sp, intptr_t ptr)
@@ -56,7 +39,7 @@ struct StoreIntPtr
 		}
 		else
 		{
-			LargeIntegerOTE* oteLi = LargeInteger::liNewSigned(ptr);
+			LargeIntegerOTE* oteLi = LargeInteger::liNewSigned32(ptr);
 			*sp = reinterpret_cast<Oop>(oteLi);
 			ObjectMemory::AddToZct((OTE*)oteLi);
 		}
@@ -69,7 +52,7 @@ struct StoreUnsigned64
 	{
 		Oop result = LargeInteger::NewUnsigned64(dwValue);
 		*sp = result;
-		ObjectMemory::AddToZct(result);
+		ObjectMemory::AddOopToZct(result);
 	}
 };
 
@@ -79,7 +62,7 @@ struct StoreSigned64
 	{
 		Oop result = LargeInteger::NewSigned64(dwValue);
 		*sp = result;
-		ObjectMemory::AddToZct(result);
+		ObjectMemory::AddOopToZct(result);
 	}
 };
 

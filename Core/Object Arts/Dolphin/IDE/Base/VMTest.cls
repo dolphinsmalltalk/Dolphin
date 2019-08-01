@@ -1237,6 +1237,20 @@ testPrimitiveBasicAtPut
 				with: i
 				with: v]!
 
+testPrimitiveBitShift
+	| method cases overflowCases |
+	method := self createPrimitiveMethodLike: SmallInteger >> #bitShift:.
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts SmallInteger arguments, and fails for everything else"
+	{'s'. 1 / 2. 1.0. SmallInteger maximum + 1. SmallInteger minimum - 1}
+		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
+	"At present this primitive does not handle LargeInteger args, unlike some other integer arithmetic primitives"
+	cases := SmallIntegerTest bitShiftTestCases.
+	overflowCases := cases select: [:each | each last class == LargeInteger].
+	self verifyBinaryPrimitive: method forCases: (cases difference: overflowCases).
+	overflowCases
+		do: [:each | self assert: (method value: each first withArguments: {each second}) equals: 'IntegerOverflow']!
+
 testPrimitiveBytesEqual
 	| method string1 string2 string3 string4 bytes1 bytes2 string5 string6 string7 |
 	method := self
@@ -1394,6 +1408,19 @@ testPrimitiveCopyFromTo
 				self assert: actual size equals: 4.
 				self assert: actual class identicalTo: expectedClass.
 				self assert: actual equals: each]!
+
+testPrimitiveDiv
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #//.
+	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
+		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts SmallInteger, and LargeInteger arguments, and fails for everything else"
+	{'s'. 1 / 2. 1.23}
+		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
+	"At present this primitive does not handle LargeInteger args, unlike some other integer arithmetic primitives"
+	self verifyBinaryPrimitive: method
+		forCases: (SmallIntegerTest integerDivideTestCases reject: [:each | each second isKindOf: Float])!
 
 testPrimitiveDivide
 	| method |
@@ -1980,6 +2007,23 @@ testPrimitiveMakePoint
 			result := method value: Context withArguments: (1 to: i) asArray.
 			1 to: expected size do: [:j | self assert: (result instVarAt: j) equals: (expected at: j)]]!
 
+testPrimitiveMod
+	| method cases |
+	method := self createPrimitiveMethodLike: SmallInteger >> #\\.
+	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
+		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts SmallInteger arguments, and fails for everything else"
+	{'s'. 1 / 2. SmallInteger maximum + 1. 1.0}
+		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
+
+	"SmallInteger arguments - overflow into a LargeInteger result is not possible"
+	cases := SmallIntegerTest moduloTestCases.
+	self verifyBinaryPrimitive: method
+		forCases: (cases select: [:each | each second class == SmallInteger]).
+	(cases reject: [:each | each second class == SmallInteger])
+		do: [:each | self assert: (method value: each first withArguments: {each second}) equals: 'InvalidParameter1']!
+
 testPrimitiveMultiply
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #*.
@@ -2169,6 +2213,17 @@ testPrimitiveObjectCount
 	count2 := method value: subject withArguments: #().
 	self assert: count1 equals: count2.
 	self assert: count1 > 0!
+
+testPrimitiveQuo
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #quo:.
+	{SmallInteger minimum. -3. -1. 0. 1. 3. SmallInteger maximum}
+		do: [:each | self should: [method value: each withArguments: #(0)] raise: ZeroDivide].
+	"The primitive assumes that the receiver is a SmallInteger; it does not check.
+	It accepts SmallInteger and LargeInteger arguments, and fails for everything else"
+	{'s'. 1 / 2. 1.23 }
+		do: [:each | self assert: (method value: 1 withArguments: {each}) equals: 'InvalidParameter1'].
+	self verifyBinaryPrimitive: method forCases: (SmallIntegerTest quoTestCases reject: [:each | each second isKindOf: Float])!
 
 testPrimitiveReplaceElements
 	self exerciseReplaceElementsOf: #($a $b $c $d $e) with: #(1 2 3 4 5 6).
@@ -3123,9 +3178,11 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBasicAtPut!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveBitShift!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveCopyFromTo!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveDiv!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveDivide!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
@@ -3145,6 +3202,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveMod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMultiply!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
@@ -3154,6 +3212,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testPrimitiveNextPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNextPutAll!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveQuo!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !

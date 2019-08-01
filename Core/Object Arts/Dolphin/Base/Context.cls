@@ -10,31 +10,6 @@ Context comment: ''!
 !Context categoriesForClass!Kernel-Processes! !
 !Context methodsFor!
 
-at: index
-	"Answer the receiver's indexed instance variable at the argument index.
-	As basicAt:, but may be reimplemented."
-
-	"Primitive Failure Reasons:
-		InvalidParameter1	- aSmallInteger is not a SmallInteger
-		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 60>
-	^self _primitiveError: _failureCode at: index!
-
-at: index put: value
-	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
-	As basicAt:put: but may be reimplemented."
-
-	"Primitive Failure Reasons:
-		InvalidParameter1	- aSmallInteger is not a SmallInteger
-		OutOfBounds		- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
-
-	<primitive: 61>
-	^self
-		_primitiveError: _failureCode
-		at: index
-		put: value!
-
 block
 	^block!
 
@@ -62,8 +37,6 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
-!Context categoriesFor: #at:!accessing!public! !
-!Context categoriesFor: #at:put:!accessing!public! !
 !Context categoriesFor: #block!accessing!private! !
 !Context categoriesFor: #frameClass!constants!public! !
 !Context categoriesFor: #home!accessing!public! !

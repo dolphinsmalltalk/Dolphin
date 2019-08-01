@@ -240,13 +240,28 @@ wostream& operator<<(wostream& st, const UnknownOTE* ote)
 
 wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 {
+	static constexpr int MaxWords = 20;
+
 	if (ote->isNil()) return st << L"nil";
 
 	LargeInteger* li = ote->m_location;
 	st << L"a LargeInteger(" << std::hex << setfill(L'0');
 	const int size = ote->getWordSize();
-	for (int i = size - 1; i >= 0; i--)
-		st << setw(8) << li->m_digits[i] << L' ';
+	if (size < MaxWords)
+	{
+		for (int i = size - 1; i >= 0; i--)
+			st << setw(8) << li->m_digits[i] << L' ';
+	}
+	else
+	{
+		// Dump only the top and bottom 10 words with middle ellipsis
+		for (int i = size - 1; i >= size - (MaxWords/2); i--)
+			st << setw(8) << li->m_digits[i] << L' ';
+		st << L"... ";
+		for (int i = (MaxWords/2)-1; i >= 0; i--)
+			st << setw(8) << li->m_digits[i] << L' ';
+	}
+
 	return st << setfill(L' ') << L')';
 }
 

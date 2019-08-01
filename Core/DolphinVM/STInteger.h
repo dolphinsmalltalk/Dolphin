@@ -60,8 +60,8 @@ namespace ST
 		static LargeIntegerOTE* __fastcall liNewUnsigned(uint32_t value);
 		static LargeIntegerOTE* __fastcall liNewUnsigned(uint64_t value);
 		// Answer a 32-bit LargeInteger from the signed 32-bit argument
-		static LargeIntegerOTE* __fastcall liNewSigned(int32_t value);
-		static LargeIntegerOTE* __fastcall liNewSigned(int64_t value);
+		static LargeIntegerOTE* __fastcall liNewSigned32(int32_t value);
+		static LargeIntegerOTE* __fastcall liNewSigned64(int64_t value);
 
 		static Oop __fastcall Normalize(LargeIntegerOTE* oteLI);
 		static void DeallocateIntermediateResult(LargeIntegerOTE* liOte);
@@ -96,7 +96,7 @@ namespace ST
 		if (ObjectMemoryIsIntegerValue(value))
 			return ObjectMemoryIntegerObjectOf(value);
 		else
-			return Oop(LargeInteger::liNewSigned(value));
+			return Oop(LargeInteger::liNewSigned32(value));
 	}
 
 	// Answer a Large or SmallInteger, whichever is the smallest representation
@@ -108,7 +108,7 @@ namespace ST
 			return ObjectMemoryIntegerObjectOf(value);
 		else
 		{
-			LargeIntegerOTE* oteNew = LargeInteger::liNewSigned(value);
+			LargeIntegerOTE* oteNew = LargeInteger::liNewSigned32(value);
 			oteNew->m_count = 1;
 			return reinterpret_cast<Oop>(oteNew);
 		}

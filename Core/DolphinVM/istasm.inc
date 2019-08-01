@@ -430,7 +430,7 @@ ASYNCPENDING			EQU		?m_bAsyncPending@Interpreter@@0JC
 EXTERN ASYNCPENDING:DWORD
 NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@KPAV?$TOTE@VBehavior@ST@@@@@Z
 extern NEWDWORD:near32
-LINEWSIGNED				EQU		?liNewSigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
+LINEWSIGNED				EQU		?liNewSigned32@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
 extern LINEWSIGNED:near32
 NEWFLOATOBJ				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@XZ
 extern NEWFLOATOBJ:near32
