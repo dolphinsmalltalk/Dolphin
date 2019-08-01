@@ -143,8 +143,6 @@
     <DisplayString>a Process({m_name,na}, Priority={m_priority>>1}, Callbacks={m_callbackDepth>>1})</DisplayString>
     <Expand>
       <Item Name="myList">m_myList</Item>
-      <Item Name="primitiveFailureCode">(OTE*)m_primitiveFailureCode,na</Item>
-      <Item Name="primitiveFailureData">(OTE*)m_primitiveFailureData,na</Item>
       <Item Name="m_fpControl">(OTE*)m_fpControl,na</Item>
       <Item Name="exceptionEnvironment">(OTE*)m_exceptionEnvironment,na</Item>
       <LinkedListItems>
