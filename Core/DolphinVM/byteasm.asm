@@ -131,9 +131,6 @@ extern NEWCONTEXT:near32		; See bytecde.cpp
 NEWBLOCK EQU ?New@BlockClosure@ST@@SIPAV?$TOTE@VBlockClosure@ST@@@@I@Z
 extern NEWBLOCK:near32		; See bytecde.cpp
 
-;; Special selector primitive response routines
-extern arithmeticBitShift:near32							; See primasm.asm
-
 IFDEF _DEBUG
 	extern ?executionTrace@Interpreter@@2HA:DWORD
 	CACHEHITS EQU ?cacheHits@@3KA
@@ -2967,15 +2964,56 @@ ENDBYTECODE sendArithmeticDiv
 ;; BitShift is a bit too complicated to expand in-line at present, due to the rather crap overflow
 ;; detection - this seems to make it no faster than multiplication, which is crap of course.
 BEGINBYTECODE sendArithmeticBitShift
-	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	test	al, 1										; Receiver is a SmallInteger?
-	jz		sendMessageToObject							; No, skip primitive response
-	call	arithmeticBitShift							; Try primitive response
-	test	al, 1										; Primitive response failed (eax==zero)?
-	jnz		sendMessage									; Failed, so send the message
+	mov		eax, [_SP-OOPSIZE]				; Access receiver beneath argument
+	test	al, 1							; Receiver is a SmallInteger?
+	jz		sendMessageToObject				; No, skip primitive response
+
+	mov		ecx, [_SP]						; Load argument from stack
+	mov		edx, eax						; Sign extend into edx from eax part 1
+	sar		ecx, 1							; Access integer value
+	jnc		sendMessage						; Not a SmallInteger, send it #bitShift:
+	js		rightShift						; If negative, perform right shift (simpler)
+
+	; Perform a left shift (more tricky sadly because of overflow detection)
+
+	sub		eax, 1							; Remove SmallInteger sign bit
+	jz		storeDispatchNext				; If receiver is zero, then result always zero
+
+	cmp		ecx, 30							; We can't shift more than 30 places this way, since receiver not zero
+	ja		sendMessage
+
+	; To avoid using a loop, we use the double precision shift first
+	; to detect potential overflow.
+	; This overflow check works, but is slow (about 12 cycles)
+	; since the majority of shifts are <= 16, perhaps should loop?
+	push 	_BP								; We must preserve _BP
+	sar		edx, 31							; Sign extend part 2
+	inc		ecx								; Need to check space for sign too
+	mov		_BP, edx						; Save sign in _BP too
+	shld	edx, eax, cl					; May overflow into edx
+	dec		ecx
+	xor		edx, _BP						; Overflowed?
+	pop		_BP
+	jnz		sendMessage						; Yes, LargeInteger needed
+
+	sal		eax, cl							; No, perform the real shift
+	jmp		storeDispatchNext
+
+rightShift:
+						
+	mov		edx, 31
+	neg		ecx								; Get shift as absolute value
+	cmp		ecx, edx						; Clamp to 31 (we'll lose all bits anyway for any left shift of 31 or greater)
+	cmovg	ecx, edx
+
+	sar		eax, cl							; Perform the shift
+
+storeDispatchNext:
+	or		eax, 1							; Replace SmallInteger flag
+	mov		[_SP-OOPSIZE], eax				; Replace stack top integer
+	sub		_SP, OOPSIZE
 
 	MPrefetch
-	mov		_SP, eax
 	DispatchNext
 
 sendMessage:

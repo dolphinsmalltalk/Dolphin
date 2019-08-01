@@ -295,7 +295,7 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
 		// Note that we must write the object to the stack before adding to the ZCT, as if the 
 		// ZCT overflows the object would otherwise be freed.
 		*sp = value;
-		ObjectMemory::AddToZct(value);
+		ObjectMemory::AddOopToZct(value);
 		return sp;
 	}
 }

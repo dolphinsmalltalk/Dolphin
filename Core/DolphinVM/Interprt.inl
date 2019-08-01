@@ -115,6 +115,24 @@ inline Oop Interpreter::popAndCountUp()
 	return top;
 }
 
+// Functor to write a 32-bit signed integer to a stack location - used in primitives
+struct StoreSigned32
+{
+	__forceinline void operator()(Oop* const sp, int32_t value)
+	{
+		if (ObjectMemoryIsIntegerValue(value))
+		{
+			*sp = ObjectMemoryIntegerObjectOf(value);
+		}
+		else
+		{
+			LargeIntegerOTE* oteLi = LargeInteger::liNewSigned32(value);
+			*sp = reinterpret_cast<Oop>(oteLi);
+			ObjectMemory::AddToZct((OTE*)oteLi);
+		}
+	}
+};
+
 // Functor to write a 32-bit positive integer to a stack location - used in primitives
 struct StoreUnsigned32
 {

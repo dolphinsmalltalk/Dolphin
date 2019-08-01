@@ -40,17 +40,11 @@ testBitOr
 testBitShift
 	"Bit manipulation (in particular check 32-bitness)"
 
-	self assert: (-1 bitShift: -1) identicalTo: -1.
-	self assert: (-1073741824 bitShift: -29) identicalTo: -2.
-	self assert: (-1073741824 bitShift: -30) identicalTo: -1.
-	self assert: (-1073741824 bitShift: -31) identicalTo: -1.
-	self assert: (-1073741824 bitShift: -32) identicalTo: -1.
-	self assert: (1 bitShift: -1) identicalTo: 0.
-	self assert: (1073741823 bitShift: -29) identicalTo: 1.
-	self assert: (1073741823 bitShift: -30) identicalTo: 0.
-	self assert: (1073741823 bitShift: -31) identicalTo: 0.
-	self assert: (1073741823 bitShift: -32) identicalTo: 0.
-	self assert: (3640 bitShift: 1) identicalTo: 7280!
+	self class bitShiftTestCases
+		do: [:each | self assert: (each first bitShift: each second) equals: each third].
+	"A very large result - be careful not to try and print these"
+	self assert: (SmallInteger maximum bitShift: SmallInteger maximum) highBit
+		equals: SmallInteger maximum + SmallInteger maximum highBit!
 
 testDecimalDigitLength
 	2 to: 10 do: [:i | | subject |
@@ -118,9 +112,15 @@ testHighBit
 	self assert: SmallInteger maximum highBit equals: 30!
 
 testIntegerDivide
-	self assert: 7 // 2 identicalTo: 3.
-	self assert: -7 // 2 identicalTo: -4.
-	self assert: 7 // -2 identicalTo: -4!
+	"Note that divide by -1 can overflow SmallInteger to LargeInteger if dividing SmallInteger minimum"
+
+	self class integerDivideTestCases
+		do: [:each | self assert: each first // each second equals: each third].
+	{1. -1. SmallInteger maximum. SmallInteger minimum} do: 
+			[:each |
+			self should: [each // 0] raise: ZeroDivide.
+			self should: [each // 0.0] raise: ZeroDivide].
+	self should: [0 // 0] raise: ZeroDivide!
 
 testLargeSmallComparisons
 	self assert: SmallInteger maximum < (SmallInteger maximum + 1).
@@ -166,26 +166,9 @@ testMinVal
 	self should: [SmallInteger minimum = (1 bitShift: VMConstants.IntPtrBits - 2) negated]!
 
 testModulo
-	self should: [-1 \\ 0] raise: ZeroDivide.
-	self assert: 6 \\ 2 equals: 0.
-	self assert: -6 \\ 2 equals: 0.
-	self assert: 5 \\ -3 equals: -1.
-	self assert: -5 \\ -3 equals: -2.
-	self assert: 7 \\ 2 equals: 1.
-	self assert: 7 \\ 2 + 1 equals: 2.
-	self assert: 7 \\ 11 equals: 7.
-	self assert: 7 \\ -2 equals: -1.
-	self assert: 7 \\ -3 equals: -2.
-	self assert: 7 \\ -4 equals: -1.
-	self assert: 7 \\ -5 equals: -3.
-	self assert: 7 \\ -6 equals: -5.
-	self assert: 7 \\ -7 equals: 0.
-	self assert: 7 \\ -8 equals: -1.
-	self assert: 7 \\ -11 equals: -4.
-	self assert: -7 \\ 2 equals: 1.
-	self assert: -7 \\ 7 equals: 0.
-	self assert: -7 \\ 11 equals: 4.
-	self assert: -7 \\ -11 equals: -7!
+	{1. -1. 0. SmallInteger maximum. SmallInteger minimum}
+		do: [:each | self should: [each \\ 0] raise: ZeroDivide].
+	self class moduloTestCases do: [:each | self assert: each first \\ each second equals: each third]!
 
 testNew
 	self should: [SmallInteger new] raise: TestResult error!
@@ -271,20 +254,7 @@ testPrintStringRadix
 	self should: [36 printStringRadix: 37] raise: Error!
 
 testQuo
-	self assert: (6 quo: 2) identicalTo: 3.
-	self assert: (7 quo: 2) identicalTo: 3.
-	self assert: (7 quo: 2) + 1 identicalTo: 4.
-	self assert: (7 quo: 2) + 1 identicalTo: 4.
-	self assert: (7 quo: 2 + 1) identicalTo: 2.
-	self assert: (-7 quo: 2) identicalTo: -3.
-	"Remember that the absolute value of `SmallInteger minimum` is one greater than `SmallInteger maximum`"
-	self assert: (SmallInteger maximum quo: SmallInteger maximum) equals: 1.
-	self assert: (SmallInteger maximum quo: SmallInteger maximum+1) equals: 0.
-	self assert: (SmallInteger maximum quo: SmallInteger minimum) equals: 0.
-	self assert: (SmallInteger minimum quo: SmallInteger maximum+1) equals: -1.
-	self assert: (SmallInteger minimum quo: SmallInteger maximum) equals: -1.
-	self assert: (SmallInteger minimum quo: SmallInteger minimum) equals: 1.
-!
+	self class quoTestCases do: [:each | self assert: (each first quo: each second) equals: each third]!
 
 testRaisedToInteger
 	| expected subject |
@@ -363,4 +333,165 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
+
+!SmallIntegerTest class methodsFor!
+
+bitShiftTestCases
+	| highBit |
+	highBit := SmallInteger maximum highBit.
+	^((0 to: highBit + 35) collect: [:i | {0. i. 0}])
+		, ((0 to: highBit + 35) collect: [:i | {1. i. 2 raisedToInteger: i}])
+			, ((0 to: highBit + 35) collect: [:i | {-1. i. (2 raisedToInteger: i) negated}]) , ((0 to: highBit)
+					collect: [:i | {SmallInteger maximum. i negated. (2 raisedToInteger: highBit - i) - 1}])
+		, {{-1. -1. -1}.
+				{-16r40000000. 1. -16r80000000}.
+				{-16r40000000. 31. -16r2000000000000000}.
+				{-16r40000000. 32. -16r4000000000000000}.
+				{-16r40000000. 33. -16r8000000000000000}.
+				{SmallInteger minimum. highBit negated + 1. -2}.
+				{SmallInteger minimum. highBit negated. -1}.
+				{SmallInteger minimum. highBit negated - 1. -1}.
+				{SmallInteger minimum. highBit negated - 2. -1}.
+				{SmallInteger minimum. highBit negated - 32. -1}.
+				{SmallInteger minimum. highBit negated - 33. -1}.
+				{SmallInteger minimum. SmallInteger minimum. -1}.
+				{1. -1. 0}.
+				{SmallInteger maximum. SmallInteger minimum. 0}.
+				{3640. 1. 7280}}!
+
+integerDivideTestCases
+	^#(#(0 1 0) #(1 1 1) #(1 -1 -1) #(0 -1 0) #(-1 1 -1) #(-1 -1 1) #(0 2 0) #(2 1 2) #(2 2 1) #(2 -1 -2) #(2 -2 -1) #(0 -2 0) #(-2 1 -2) #(-2 -2 1) #(-2 -1 2) #(-2 2 -1) #(7 2 3) #(-7 2 -4) #(7 -2 -4) #(-7 -2 3) #(1 2 0) #(-1 2 -1) #(1 -2 -1) #(-1 -2 0) #(-16r40000000 3 -16r15555556) #(-16r40000000 -3 16r15555555) #(7 -3.0 -3) #(9 4.0 2) #(9 -4.0 -3) #(2 -2.0 -1) #(2 2.0 1) #(1073741823 0.011 97612893000) #(1073741823 -0.011 -97612893001))
+		, {{0. SmallInteger maximum. 0}.
+				{0. SmallInteger maximum + 1. 0}.
+				{0. SmallInteger minimum. 0}.
+				{0. SmallInteger minimum - 1. 0}.
+				{SmallInteger minimum. 1. SmallInteger minimum}.
+				{SmallInteger minimum. -1. SmallInteger minimum negated}.
+				{SmallInteger minimum. 2. SmallInteger minimum bitShift: -1}.
+				{SmallInteger minimum. -2. (SmallInteger minimum bitShift: -1) negated}.
+				{SmallInteger minimum. SmallInteger maximum. -2}.
+				{SmallInteger minimum. SmallInteger maximum - 1. -2}.
+				{SmallInteger minimum. SmallInteger maximum - 2. -2}.
+				{SmallInteger minimum. SmallInteger maximum + 1. -1}.
+				{SmallInteger minimum. SmallInteger maximum bitShift: 1. -1}.
+				{SmallInteger minimum. SmallInteger maximum bitShift: 2. -1}.
+				{SmallInteger minimum. SmallInteger maximum squared. -1}.
+				{SmallInteger minimum. 16r7FFFFFFF. -1}.
+				{SmallInteger minimum. 16r80000000. -1}.
+				{SmallInteger minimum. 16rFFFFFFFF. -1}.
+				{SmallInteger minimum. 16r3FFFFFFFFFFFFFFF. -1}.
+				{SmallInteger minimum. 16r7FFFFFFFFFFFFFFF. -1}.
+				{SmallInteger minimum. 16r8000000000000000. -1}.
+				{SmallInteger minimum. 16rFFFFFFFFFFFFFFFF. -1}.
+				{SmallInteger minimum. SmallInteger minimum + 1. 1}.
+				{SmallInteger minimum. 1. SmallInteger minimum}.
+				{SmallInteger minimum. SmallInteger minimum. 1}.
+				{SmallInteger minimum. SmallInteger minimum - 1. 0}.
+				{SmallInteger minimum. SmallInteger minimum - 2. 0}.
+				{SmallInteger minimum. SmallInteger minimum bitShift: 1. 0}.
+				{SmallInteger minimum. SmallInteger minimum bitShift: 2. 0}.
+				{SmallInteger minimum. -16r7FFFFFFF. 0}.
+				{SmallInteger minimum. -16r80000000. 0}.
+				{SmallInteger minimum. -16rFFFFFFFF. 0}.
+				{SmallInteger minimum. -16r3FFFFFFFFFFFFFFF. 0}.
+				{SmallInteger minimum. -16r7FFFFFFFFFFFFFFF. 0}.
+				{SmallInteger minimum. -16r8000000000000000. 0}.
+				{SmallInteger minimum. -16rFFFFFFFFFFFFFFFF. 0}.
+				{SmallInteger maximum. 1. SmallInteger maximum}.
+				{SmallInteger maximum. 2. SmallInteger maximum bitShift: -1}.
+				{SmallInteger maximum. -1. SmallInteger maximum negated}.
+				{SmallInteger maximum. -2. (SmallInteger maximum bitShift: -1) negated - 1}.
+				{SmallInteger maximum. SmallInteger minimum. -1}.
+				{SmallInteger maximum. SmallInteger minimum - 1. -1}.
+				{SmallInteger maximum. SmallInteger minimum - 2. -1}.
+				{SmallInteger maximum. SmallInteger minimum + 1. -1}.
+				{SmallInteger maximum. SmallInteger minimum + 2. -2}.
+				{SmallInteger maximum. SmallInteger maximum. 1}.
+				{SmallInteger maximum. SmallInteger maximum + 1. 0}.
+				{SmallInteger maximum. SmallInteger maximum - 1. 1}.
+				{SmallInteger maximum. SmallInteger maximum bitShift: 1. 0}.
+				{SmallInteger maximum. SmallInteger maximum bitShift: 2. 0}.
+				{SmallInteger maximum. SmallInteger maximum squared. 0}.
+				{SmallInteger maximum. 16r7FFFFFFF. 0}.
+				{SmallInteger maximum. 16r80000000. 0}.
+				{SmallInteger maximum. 16rFFFFFFFF. 0}.
+				{SmallInteger maximum. 16r3FFFFFFFFFFFFFFF. 0}.
+				{SmallInteger maximum. 16r7FFFFFFFFFFFFFFF. 0}.
+				{SmallInteger maximum. 16r8000000000000000. 0}.
+				{SmallInteger maximum. 16rFFFFFFFFFFFFFFFF. 0}.
+				{SmallInteger maximum. 2.0. SmallInteger maximum bitShift: -1}.
+				{SmallInteger maximum. -2.0. (SmallInteger maximum bitShift: -1) negated - 1}.
+				{SmallInteger maximum. -0.1. SmallInteger maximum * 10 negated}.
+				{-16r40000000. Float pi. -341782638}.
+				{-16r40000000. Float pi negated. 341782637}.
+				{16r3FFFFFFF. Float pi. 341782637}.
+				{16r3FFFFFFF. Float pi negated. -341782638}}!
+
+moduloTestCases
+	^#(#(6 2 0) #(-6 2 0) #(5 -3 -1) #(-5 -3 -2) #(7 2 1) #(7 3 1) #(7 11 7) #(7 -2 -1) #(7 -3 -2) #(7 -4 -1) #(7 -5 -3) #(7 -6 -5) #(7 -7 0) #(7 -8 -1) #(7 -11 -4) #(-7 2 1) #(-7 7 0) #(-7 11 4) #(-7 -11 -7) #(0 1 0) #(0 -1 0) #(0 2 0) #(0 -2 0) #(-12 5 3) #(-12 -5 -2) #(12 -5 -3) #(12 5 2) #(7 3.0 1.0) #(7 -3.0 -2.0) #(-7 -3.0 -1.0) #(-7 3.0 2.0) #(9 -4.0 -3.0) #(9 4.0 1.0))
+		, {{0. SmallInteger maximum. 0}.
+				{0. SmallInteger minimum. 0}.
+				{0. SmallInteger maximum + 1. 0}.
+				{0. SmallInteger minimum - 1. 0}.
+				{SmallInteger maximum. 1. 0}.
+				{SmallInteger maximum. -1. 0}.
+				{SmallInteger maximum. 2. 1}.
+				{SmallInteger maximum. -2. -1}.
+				{SmallInteger maximum. 5. 3}.
+				{SmallInteger maximum. -5. -2}.
+				{SmallInteger maximum. SmallInteger maximum. 0}.
+				{SmallInteger maximum. SmallInteger maximum + 1. SmallInteger maximum}.
+				{SmallInteger maximum. SmallInteger maximum - 1. 1}.
+				{SmallInteger maximum. SmallInteger minimum. -1}.
+				{SmallInteger maximum. SmallInteger minimum - 1. -2}.
+				{SmallInteger maximum. SmallInteger minimum + 1. 0}.
+				{SmallInteger maximum. 2.0. 1.0}.
+
+				{SmallInteger minimum. 1. 0}.
+				{SmallInteger minimum. -1. 0}.
+				{SmallInteger minimum. 2. 0}.
+				{SmallInteger minimum. -2. 0}.
+				{SmallInteger minimum. 3. 2}.
+				{SmallInteger minimum. -3. -1}.
+				{SmallInteger minimum + 1. SmallInteger minimum. SmallInteger minimum + 1}.
+				{SmallInteger minimum. SmallInteger minimum. 0}.
+				{SmallInteger minimum. SmallInteger minimum - 1. SmallInteger minimum}.
+				{SmallInteger minimum. SmallInteger minimum + 1. -1}.
+				{SmallInteger minimum. SmallInteger maximum. SmallInteger maximum - 1}.
+				{SmallInteger minimum. SmallInteger maximum - 1. SmallInteger maximum - 3}.
+				{SmallInteger minimum. SmallInteger maximum + 1. 0}.
+				{SmallInteger minimum. SmallInteger maximum + 2. 1}.
+				{SmallInteger minimum. 3.0. 2.0}.
+
+				{16r3FFFFFFF. Float pi. 1.4762530326843262}.
+				{16r3FFFFFFF. Float pi negated. -1.665339708328247}.
+				{-16r40000000. Float pi. 0.6653397083282471}.
+				{-16r40000000. Float pi negated. -2.476253032684326}}!
+
+quoTestCases
+	^#(#(6 2 3) #(7 2 3) #(7 -2 -3) #(7 3 2) #(-7 2 -3) #(-7 -2 3) #(9 4 2) #(-9 4 -2) #(16r3FFFFFFF 1.23 872960831) #(16r3FFFFFFF -1.23 -872960831) #(-16r40000000 1.23 -872960832) #(-16r40000000 -1.23 872960832))
+		, {{SmallInteger maximum. SmallInteger maximum. 1}.
+				{SmallInteger maximum. SmallInteger maximum + 1. 0}.
+				{SmallInteger maximum. SmallInteger minimum. 0}.
+				{SmallInteger minimum. SmallInteger maximum + 1. -1}.
+				{SmallInteger minimum. SmallInteger maximum. -1}.
+				{SmallInteger minimum. SmallInteger minimum. 1}.
+				{SmallInteger minimum. -1. SmallInteger maximum + 1}.
+				{SmallInteger minimum. SmallInteger maximum + 1. -1}.
+				{SmallInteger minimum. SmallInteger maximum squared. 0}.
+				{SmallInteger minimum. 2.0. SmallInteger minimum bitShift: -1}.
+				{SmallInteger maximum. 4.0. SmallInteger maximum bitShift: -2}.
+				{SmallInteger maximum. Float fmax. 0}.
+				{SmallInteger maximum. Float fmax negated. 0}.
+				{SmallInteger minimum. Float fmax. 0}.
+				{SmallInteger minimum. Float fmax negated. 0}.
+				{SmallInteger minimum. 0.01. SmallInteger minimum * 100}.
+				{-16r40000000. Float pi. -341782637}.
+				{-16r40000000. Float pi negated. 341782637}.
+				{16r3FFFFFFF. Float pi. 341782637}.
+				{16r3FFFFFFF. Float pi negated. -341782637}}! !
+!SmallIntegerTest class categoriesFor: #bitShiftTestCases!constants!public! !
+!SmallIntegerTest class categoriesFor: #integerDivideTestCases!constants!public! !
+!SmallIntegerTest class categoriesFor: #moduloTestCases!constants!public! !
+!SmallIntegerTest class categoriesFor: #quoTestCases!constants!public! !
 

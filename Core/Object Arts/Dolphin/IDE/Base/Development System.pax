@@ -276,6 +276,7 @@ package methodNames
 	add: #HANDLEField -> #printAccessorExpressionSuffixOn:;
 	add: #Interval -> #newBatchAccessor;
 	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
+	add: #LargeInteger -> #debugPrintString;
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
 	add: #LOGBRUSH -> #printFieldsOn:limit:;
@@ -3783,6 +3784,23 @@ queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
 	<stdcall: bool QueryThreadCycleTime handle qword*>
 	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #queryThreadCycleTime:cycleTime:!public!win32 functions-performance monitoring! !
+
+!LargeInteger methodsFor!
+
+debugPrintString
+	| size |
+	size := self basicSize.
+	^size > 1024
+		ifTrue: 
+			[String streamContents: 
+					[:strm |
+					strm
+						nextPutAll: 'a ';
+						print: size * 8;
+						nextPutAll: '-bit ';
+						print: self class]]
+		ifFalse: [self printString]! !
+!LargeInteger categoriesFor: #debugPrintString!printing!public! !
 
 !LayoutManager methodsFor!
 

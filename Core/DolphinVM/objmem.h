@@ -312,7 +312,7 @@ public:
 #endif
 
 	static void __fastcall AddToZct(TOTE<Object>* ote);
-	static void __fastcall AddToZct(Oop);
+	static void __fastcall AddOopToZct(Oop);
 	static void __fastcall AddStackRefToZct(TOTE<Object>* ote);
 
 	// Used by Interpreter when switching processes
@@ -611,7 +611,7 @@ inline void ObjectMemory::countDown(Oop rootObjectPointer)
 	extern bool alwaysReconcileOnAdd;
 #endif
 
-__forceinline void __fastcall ObjectMemory::AddToZct(Oop oop)
+__forceinline void __fastcall ObjectMemory::AddOopToZct(Oop oop)
 {
 	if (!ObjectMemoryIsIntegerObject(oop))
 	{

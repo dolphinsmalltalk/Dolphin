@@ -15,7 +15,7 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncat
 			Oop truncated = Integer::NewSigned64(liTrunc);
 			// The truncated value might actually be a SmallInteger, e.g. (SmallInteger maximum + 0.1) truncated
 			*sp = truncated;
-			ObjectMemory::AddToZct(truncated);
+			ObjectMemory::AddOopToZct(truncated);
 			return sp;
 		}
 		else

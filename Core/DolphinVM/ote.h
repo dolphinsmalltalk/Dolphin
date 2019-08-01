@@ -191,11 +191,11 @@ public:
 #define isPositiveIntegerValue(valueWord) ((MWORD)(valueWord) <= MaxSmallInteger)
 
 // SmallInteger constants
-#define MinusOnePointer (integerObjectOf(-1))
-#define ZeroPointer (integerObjectOf(0))
-#define OnePointer (integerObjectOf(1))
-#define TwoPointer (integerObjectOf(2))
-#define ThreePointer (integerObjectOf(3))
+#define MinusOnePointer -1 /*(integerObjectOf(-1))*/
+#define ZeroPointer 1 /*(integerObjectOf(0))*/
+#define OnePointer 3 /*(integerObjectOf(1))*/
+#define TwoPointer 5 /*(integerObjectOf(2))*/
+#define ThreePointer 7 /*(integerObjectOf(3))*/
 
 #include "STObject.h"
 typedef TOTE<ST::Object> OTE;

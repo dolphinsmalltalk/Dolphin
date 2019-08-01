@@ -36,7 +36,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 	// Normalize and return
 	result = normalizeIntermediateResult(result);
 	*(sp - 1) =  result;
-	ObjectMemory::AddToZct(result);
+	ObjectMemory::AddOopToZct(result);
 
 	return sp - 1;
 }
@@ -56,7 +56,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 			// Normalize and return
 			Oop oopResult = LargeInteger::NormalizeIntermediateResult(result);
 			*(sp - 1) = oopResult;
-			ObjectMemory::AddToZct(oopResult);
+			ObjectMemory::AddOopToZct(oopResult);
 			return sp - 1;
 		}
 		else
@@ -74,7 +74,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 			// Normalize and return
 			Oop oopResult = LargeInteger::NormalizeIntermediateResult(result);
 			*(sp - 1) = oopResult;
-			ObjectMemory::AddToZct(oopResult);
+			ObjectMemory::AddOopToZct(oopResult);
 			return sp - 1;
 		}
 		else
@@ -166,7 +166,7 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveLargeInteger
 {
 	Oop oopResult = Op()(reinterpret_cast<LargeIntegerOTE*>(*sp));
 	*sp = oopResult;
-	ObjectMemory::AddToZct(oopResult);
+	ObjectMemory::AddOopToZct(oopResult);
 	return sp;
 }
 

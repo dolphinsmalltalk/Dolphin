@@ -76,7 +76,7 @@ inline static uint32_t highBit(uint32_t value)
 // Answer a new Integer instantiated from the 32-bit positive integer argument.
 // The answer is not necessarily in the most reduced form possible (i.e. even if the 
 // value would fit in a SmallInteger, this routine will still answer a LargeInteger).
-LargeIntegerOTE* __fastcall LargeInteger::liNewSigned(int32_t value)
+LargeIntegerOTE* __fastcall LargeInteger::liNewSigned32(int32_t value)
 {
 	LargeIntegerOTE* oteR = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewDWORD(value, Pointers.ClassLargeInteger));
 	oteR->beImmutable();
@@ -1493,7 +1493,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 		// Divided exactly, so we can succeed by pushing the normalized quotient
 		Oop result = normalizeIntermediateResult(quoAndRem.quo);
 		*(sp - 1) = result;
-		ObjectMemory::AddToZct(result);
+		ObjectMemory::AddOopToZct(result);
 		return sp - 1;
 	}
 	else
@@ -1533,7 +1533,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, unsigned)
 
 		Oop result = normalizeIntermediateResult(quoAndRem.quo);
 		*(sp - 1) = result;
-		ObjectMemory::AddToZct(result);
+		ObjectMemory::AddOopToZct(result);
 		return sp - 1;
 	}
 	else
@@ -1960,7 +1960,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsign
 			Oop oopShifted = liRightShift(oteReceiver, -shift);
 			Oop result = normalizeIntermediateResult(oopShifted);
 			*(sp-1) = result;
-			ObjectMemory::AddToZct(result);
+			ObjectMemory::AddOopToZct(result);
 		}
 		else
 		{
@@ -1970,7 +1970,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsign
 				LargeIntegerOTE* oteShifted = liLeftShift(oteReceiver, shift);
 				Oop result = LargeInteger::NormalizeIntermediateResult(oteShifted);
 				*(sp-1) = result;
-				ObjectMemory::AddToZct(result);
+				ObjectMemory::AddOopToZct(result);
 			}
 			// else, shift == 0, drop through to answer receiver
 		}
@@ -2005,8 +2005,9 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerHighBit(Oop* const sp, unsigne
 
 		unsigned long index;
 		_BitScanReverse(&index, digit);
+		// For very large integers that high bit index could overflow the SmallInteger range
 		index = i * 32 + index + 1;
-		*sp = ObjectMemoryIntegerObjectOf(index);
+		StoreUnsigned32()(sp, index);
 		return sp;
 	}
 	else

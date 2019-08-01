@@ -164,7 +164,6 @@
     <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm" />
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />
-    <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl">
