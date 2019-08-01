@@ -18,6 +18,11 @@ alpha
 
 	^(code bitShift: -24) bitAnd: 255!
 
+alphaMask
+	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
+
+	^code bitAnd: 16rFF000000!
+
 asARGB
 	"Answer an <ARGB> equivalent of the receiver."
 
@@ -88,6 +93,7 @@ setCode: anInteger
 	code := anInteger! !
 !ARGB categoriesFor: #=!comparing!public! !
 !ARGB categoriesFor: #alpha!accessing!public! !
+!ARGB categoriesFor: #alphaMask!accessing!private! !
 !ARGB categoriesFor: #asARGB!converting!public! !
 !ARGB categoriesFor: #asParameter!converting!public! !
 !ARGB categoriesFor: #asRGB!converting!public! !
@@ -344,10 +350,8 @@ r: redInteger g: greenInteger b: blueInteger
 	arguments, which are expected to be in the range 0..255."
 
 	^self
-		a: 255
-		r: redInteger
-		g: greenInteger
-		b: blueInteger!
+		fromInteger: ((blueInteger bitOr: ((greenInteger bitShift: 8) bitOr: (redInteger bitShift: 16)))
+				bitOr: 16rFF000000)!
 
 red: redValue green: greenValue blue: blueValue
 	"Answer a fully opaque instance whose red, green and blue components are specified as the

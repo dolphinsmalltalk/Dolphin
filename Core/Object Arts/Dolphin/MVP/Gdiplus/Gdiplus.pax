@@ -223,7 +223,9 @@ package methodNames
 	add: #Bitmap -> #asColorKeyedBitmap;
 	add: #Bitmap -> #asColorKeyedBitmap:;
 	add: #Color -> #alpha:;
+	add: #Color -> #alphaMask;
 	add: #Color -> #asARGB;
+	add: #ColorNone -> #alphaMask;
 	add: #ColorNone -> #asARGB;
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
@@ -766,6 +768,11 @@ alpha: anAlphaInteger
 				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))
 					bitOr: ((anAlphaInteger asInteger clampBetween: 0 and: 255) bitShift: 24))!
 
+alphaMask
+	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
+
+	^16rFF000000!
+
 asARGB
 	"Answer an <ARGB> equivalent of the receiver."
 
@@ -774,9 +781,9 @@ asARGB
 	"Note that the encoding is truly ARGB, as opposed to the BGR encoding used in a ColorRef."
 	^ARGB
 		fromInteger: ((((bgr bitShift: -16) bitAnd: 16rFF)
-				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))
-					bitOr: (self alpha bitShift: 24))! !
+				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16))) bitOr: self alphaMask)! !
 !Color categoriesFor: #alpha:!accessing!public! !
+!Color categoriesFor: #alphaMask!accessing!private! !
 !Color categoriesFor: #asARGB!converting!public! !
 
 !Color class methodsFor!
@@ -791,8 +798,14 @@ a: alphaValue r: redValue g: greenValue b: blueValue
 
 !ColorNone methodsFor!
 
+alphaMask
+	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
+
+	^0!
+
 asARGB
 	^ARGB none! !
+!ColorNone categoriesFor: #alphaMask!accessing!private! !
 !ColorNone categoriesFor: #asARGB!public! !
 
 !Point methodsFor!

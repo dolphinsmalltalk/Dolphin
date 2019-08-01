@@ -253,7 +253,7 @@ isInputAvailable
 	arrived since the last call to GetMessage, PeekMessage, or GetQueueStatus, so we have to
 	test against the high word."
 
-	^(UserLibrary default getQueueStatus: queueStatusMask) anyMask: queueStatusMask << 16!
+	^(UserLibrary default getQueueStatus: queueStatusMask) anyMask: (queueStatusMask bitShift: 16)!
 
 isInputReady: aMSG 
 	"Private - Answer whether there is currently a message waiting in the host system queue (if
