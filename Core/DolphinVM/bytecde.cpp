@@ -33,9 +33,74 @@
 	#include "STClassDesc.h"
 #endif
 
+// The performance of the shortcut primitive implementations for methods that return self, literal zero, etc,
+// is important to overall system performance, so it is worth retaining assembler implementations, although 
+// the carefully ordered C++ versions are not too bad.
+#ifdef _M_IX86
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
+{
+	_asm
+	{
+		lea		edx, [edx * 4]
+		sub		ecx, edx
+		cmp		[m_bStepping], 0
+		mov		eax, 90000009H
+		cmovz	eax, ecx
+		ret
+	}
+}
+
+using namespace ST;
+
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
+{
+	_asm
+	{
+		mov		eax, ecx
+		lea		edx, [edx * 4]
+		mov		ecx, [m_registers.m_oopNewMethod]
+		sub		eax, edx
+		mov		ecx, [ecx]OTE.m_location
+		cmp		[m_bStepping], 0
+		mov		ecx, [ecx]CompiledMethod.m_aLiterals[0]
+		jne		debugStep
+		mov		[eax], ecx
+		ret
+	debugStep :
+		mov		eax, 90000009H
+		ret
+	}
+}
+
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
+{
+	_asm
+	{
+		mov		ecx, [m_registers.m_oopNewMethod]
+		mov		eax, esi
+		mov		ecx, [ecx]OTE.m_location
+		lea		edx, [edx * 4]
+		mov		ecx, [ecx]CompiledMethod.m_aLiterals[0]
+		sub		eax, edx
+		mov		ecx, [ecx]OTE.m_location
+		cmp		[m_bStepping], 0
+		mov		ecx, [ecx]VariableBinding.m_value
+		jne		debugStep
+		mov		[eax], ecx
+		ret
+	debugStep :
+		mov		eax, 90000009H
+		ret
+	}
+}
+#else
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
 {
-	return !m_bStepping ? sp - argCount : primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	// This arrangement avoids any conditional jumps, although there is no guarantee a new version 
+	// of the compiler won't optimize it differently, hence the _asm block above as the performance 
+	// of this method is surprisingly important
+	Oop* newSp = sp - argCount;
+	return m_bStepping ? primitiveFailure(_PrimitiveFailureCode::DebugStep) : newSp;
 }
 
 Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
@@ -67,7 +132,7 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned a
 		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
 	}
 }
-
+#endif
 
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
 // is in separate routines that will not get inlined. This can make a significant difference to the
