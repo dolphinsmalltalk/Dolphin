@@ -2674,13 +2674,13 @@ sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 sendMessageU: aWindowHandle msg: msg wParam: wParam lParam: lParam
 	"As sendMessage:msg:wParam:lParam:, but returns an unsigned integer."
 
-	<stdcall: uintptr SendMessageA handle dword uintptr uintptr>
+	<stdcall: uintptr SendMessageW handle dword uintptr uintptr>
 	^self invalidCall: _failureCode!
 
 sendMessageU: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lpParam, but returns an unsigned integer."
 
-	<stdcall: uintptr SendMessageA handle dword uintptr lpvoid>
+	<stdcall: uintptr SendMessageW handle dword uintptr lpvoid>
 	^self invalidCall: _failureCode!
 
 setCapture: aWindowHandle
