@@ -342,8 +342,8 @@ allUnimplementedSelectors
 	^self unimplementedSelectorsIn: self systemEnvironment!
 
 applyOptionsToTool: aSmalltalkToolShell
-	(aSmalltalkToolShell view viewNamed: 'toolbar' ifNone: [])
-		ifNotNil: [:toolbar | toolbar bitmapSize: self toolbarBitmapSize]!
+	aSmalltalkToolShell view managedSubViews
+		do: [:each | (each isKindOf: Toolbar) ifTrue: [each bitmapSize: self toolbarBitmapSize]]!
 
 applyPublishedAspectsLiteralMap: aLookupTable to: aTool 
 	"Private - Applies the literal publishes aspect values held in aLookupTable to aTool"
