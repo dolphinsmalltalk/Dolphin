@@ -14,9 +14,7 @@ ProcessMonitor - Displays a dynamically updating task list, much like the Window
 
 SourceBrowser - A tool for viewing and managing the list of changed "source" objects (e.g. classes and packages) in a development system. It can be used to file them out, remove or add the changed flag, and make the underlying files writeable or readonly. It is particularly useful in conjunction with a file based source code control system such as SourceSafe or CVS.
 
-System Browser - A class browser that includes a package filter, so that one can refine that part of the hierarchy displayed in the browser to only those parts relevant to a group of selected packages.
-
-Please Note: The contents of this package must not be redistributed in any form.'.
+System Browser - A class browser that includes a package filter, so that one can refine that part of the hierarchy displayed in the browser to only those parts relevant to a group of selected packages.'.
 
 package basicPackageVersion: '6.2'.
 
