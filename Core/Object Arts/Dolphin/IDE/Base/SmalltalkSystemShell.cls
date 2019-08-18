@@ -395,10 +395,11 @@ free
 	"Close and release the current system shell (e.g. to create a runtime image).
 	Also close the associated Transcript"
 
-	Default notNil ifTrue: [ 
-		TranscriptShell free.
-		Default view destroy ].
-	Default := nil!
+	TranscriptShell free.
+	Default notNil
+		ifTrue: 
+			[Default view destroy.
+			Default := nil]!
 
 getBackcolor
 	^Backcolor ifNil: [Backcolor := ThemeColor addNamed: #smalltalkSystem color: self defaultBackcolor]!
