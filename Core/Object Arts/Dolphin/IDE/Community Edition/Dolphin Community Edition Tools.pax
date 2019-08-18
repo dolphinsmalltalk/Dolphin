@@ -14,9 +14,8 @@ Live Update - Automatically downloads and applies patches to your Dolphin image 
 
 Protocol Browser - Displays a list of all the <MethodProtocol>s known to the system and allows one to browse the selectors that constitute those protocols, and the classes that conform to it. From within the Protocol Browser it is possible to perform a wide range of protocol housekeeping activities.
 
-Tip of the Day - Displays helpful tips at startup.
-
-Please Note: The contents of this package must not be redistributed in any form.'.
+Tip of the Day - Displays helpful tips at startup.  
+'.
 
 package basicPackageVersion: '6.1'.
 
