@@ -10,6 +10,7 @@ ScintillaConstants at: 'CARET_JUMPS' put: 16r10!
 ScintillaConstants at: 'CARET_SLOP' put: 16r1!
 ScintillaConstants at: 'CARET_STRICT' put: 16r4!
 ScintillaConstants at: 'CARETSTYLE_BLOCK' put: 16r2!
+ScintillaConstants at: 'CARETSTYLE_BLOCK_AFTER' put: 16r100!
 ScintillaConstants at: 'CARETSTYLE_INS_MASK' put: 16rF!
 ScintillaConstants at: 'CARETSTYLE_INVISIBLE' put: 16r0!
 ScintillaConstants at: 'CARETSTYLE_LINE' put: 16r1!
@@ -22,7 +23,6 @@ ScintillaConstants at: 'EDGE_NONE' put: 16r0!
 ScintillaConstants at: 'INDIC_BOX' put: 16r6!
 ScintillaConstants at: 'INDIC_COMPOSITIONTHICK' put: 16rE!
 ScintillaConstants at: 'INDIC_COMPOSITIONTHIN' put: 16rF!
-ScintillaConstants at: 'INDIC_CONTAINER' put: 16r8!
 ScintillaConstants at: 'INDIC_DASH' put: 16r9!
 ScintillaConstants at: 'INDIC_DIAGONAL' put: 16r3!
 ScintillaConstants at: 'INDIC_DOTBOX' put: 16rC!
@@ -31,9 +31,6 @@ ScintillaConstants at: 'INDIC_FULLBOX' put: 16r10!
 ScintillaConstants at: 'INDIC_GRADIENT' put: 16r14!
 ScintillaConstants at: 'INDIC_GRADIENTCENTRE' put: 16r15!
 ScintillaConstants at: 'INDIC_HIDDEN' put: 16r5!
-ScintillaConstants at: 'INDIC_IME' put: 16r20!
-ScintillaConstants at: 'INDIC_IME_MAX' put: 16r23!
-ScintillaConstants at: 'INDIC_MAX' put: 16r23!
 ScintillaConstants at: 'INDIC_PLAIN' put: 16r0!
 ScintillaConstants at: 'INDIC_POINT' put: 16r12!
 ScintillaConstants at: 'INDIC_POINTCHARACTER' put: 16r13!
@@ -48,6 +45,10 @@ ScintillaConstants at: 'INDIC_TT' put: 16r2!
 ScintillaConstants at: 'INDIC0_MASK' put: 16r20!
 ScintillaConstants at: 'INDIC1_MASK' put: 16r40!
 ScintillaConstants at: 'INDIC2_MASK' put: 16r80!
+ScintillaConstants at: 'INDICATOR_CONTAINER' put: 16r8!
+ScintillaConstants at: 'INDICATOR_IME' put: 16r20!
+ScintillaConstants at: 'INDICATOR_IME_MAX' put: 16r23!
+ScintillaConstants at: 'INDICATOR_MAX' put: 16r23!
 ScintillaConstants at: 'INDICS_MASK' put: 16rE0!
 ScintillaConstants at: 'INVALID_POSITION' put: -16r1!
 ScintillaConstants at: 'KEYWORDSET_MAX' put: 16r8!
@@ -81,6 +82,9 @@ ScintillaConstants at: 'SC_CASE_MIXED' put: 16r0!
 ScintillaConstants at: 'SC_CASE_UPPER' put: 16r1!
 ScintillaConstants at: 'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE' put: 16r1!
 ScintillaConstants at: 'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE' put: 16r0!
+ScintillaConstants at: 'SC_CHARACTERSOURCE_DIRECT_INPUT' put: 16r0!
+ScintillaConstants at: 'SC_CHARACTERSOURCE_IME_RESULT' put: 16r2!
+ScintillaConstants at: 'SC_CHARACTERSOURCE_TENTATIVE_INPUT' put: 16r1!
 ScintillaConstants at: 'SC_CHARSET_8859_15' put: 16r3E8!
 ScintillaConstants at: 'SC_CHARSET_ANSI' put: 16r0!
 ScintillaConstants at: 'SC_CHARSET_ARABIC' put: 16rB2!
@@ -222,6 +226,7 @@ ScintillaConstants at: 'SC_MOD_DELETETEXT' put: 16r2!
 ScintillaConstants at: 'SC_MOD_INSERTCHECK' put: 16r100000!
 ScintillaConstants at: 'SC_MOD_INSERTTEXT' put: 16r1!
 ScintillaConstants at: 'SC_MOD_LEXERSTATE' put: 16r80000!
+ScintillaConstants at: 'SC_MOD_NONE' put: 16r0!
 ScintillaConstants at: 'SC_MODEVENTMASKALL' put: 16r3FFFFF!
 ScintillaConstants at: 'SC_MULTIAUTOC_EACH' put: 16r1!
 ScintillaConstants at: 'SC_MULTIAUTOC_ONCE' put: 16r0!
@@ -292,6 +297,7 @@ ScintillaConstants at: 'SCEN_KILLFOCUS' put: 16r100!
 ScintillaConstants at: 'SCEN_SETFOCUS' put: 16r200!
 ScintillaConstants at: 'SCFIND_CXX11REGEX' put: 16r800000!
 ScintillaConstants at: 'SCFIND_MATCHCASE' put: 16r4!
+ScintillaConstants at: 'SCFIND_NONE' put: 16r0!
 ScintillaConstants at: 'SCFIND_POSIX' put: 16r400000!
 ScintillaConstants at: 'SCFIND_REGEXP' put: 16r200000!
 ScintillaConstants at: 'SCFIND_WHOLEWORD' put: 16r2!
@@ -1072,6 +1078,7 @@ ScintillaConstants at: 'SCLEX_CPPNOCASE' put: 16r23!
 ScintillaConstants at: 'SCLEX_CSOUND' put: 16r4A!
 ScintillaConstants at: 'SCLEX_CSS' put: 16r26!
 ScintillaConstants at: 'SCLEX_D' put: 16r4F!
+ScintillaConstants at: 'SCLEX_DATAFLEX' put: 16r81!
 ScintillaConstants at: 'SCLEX_DIFF' put: 16r10!
 ScintillaConstants at: 'SCLEX_DMAP' put: 16r70!
 ScintillaConstants at: 'SCLEX_DMIS' put: 16r72!
@@ -1164,6 +1171,7 @@ ScintillaConstants at: 'SCLEX_VBSCRIPT' put: 16r1C!
 ScintillaConstants at: 'SCLEX_VERILOG' put: 16r38!
 ScintillaConstants at: 'SCLEX_VHDL' put: 16r40!
 ScintillaConstants at: 'SCLEX_VISUALPROLOG' put: 16r6B!
+ScintillaConstants at: 'SCLEX_X12' put: 16r80!
 ScintillaConstants at: 'SCLEX_XCODE' put: 16rD!
 ScintillaConstants at: 'SCLEX_XML' put: 16r5!
 ScintillaConstants at: 'SCLEX_YAML' put: 16r30!
@@ -1227,6 +1235,7 @@ ScintillaConstants at: 'STYLE_LINENUMBER' put: 16r21!
 ScintillaConstants at: 'STYLE_MAX' put: 16rFF!
 ScintillaConstants at: 'STYLE_NORMAL' put: 16r0!
 ScintillaConstants at: 'UNDO_MAY_COALESCE' put: 16r1!
+ScintillaConstants at: 'UNDO_NONE' put: 16r0!
 ScintillaConstants at: 'VISIBLE_SLOP' put: 16r1!
 ScintillaConstants at: 'VISIBLE_STRICT' put: 16r4!
 ScintillaConstants shrink!

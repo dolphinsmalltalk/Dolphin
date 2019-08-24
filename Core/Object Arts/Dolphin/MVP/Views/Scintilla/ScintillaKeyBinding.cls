@@ -138,6 +138,7 @@ initializeCommands
 				at: SCI_DELLINERIGHT put: #deleteToEndOfLine;
 				at: SCI_DELWORDLEFT put: #deleteToStartOfWord;
 				at: SCI_DELWORDRIGHT put: #deleteToNextWord;
+				at: SCI_DELWORDRIGHTEND put: #deleteToEndOfWord;
 				at: SCI_DOCUMENTEND put: #moveToEndOfDocument;
 				at: SCI_DOCUMENTENDEXTEND put: #extendToEndOfDocument;
 				at: SCI_DOCUMENTSTART put: #moveToStartOfDocument;
@@ -192,9 +193,8 @@ initializeCommands
 				at: SCI_REDO put: #redo;
 				at: SCI_SCROLLTOEND put: #scrollToEnd;
 				at: SCI_SCROLLTOSTART put: #scrollToStart;
-				at: SCI_SEARCHANCHOR put: #sciSearchAnchor;
 				at: SCI_SELECTALL put: #basicSelectAll;
-				at: SCI_SETSAVEPOINT put: #sciSetSavePoint;
+				at: SCI_SELECTIONDUPLICATE put: #duplicateSelection;
 				at: SCI_SETZOOM put: #resetZoom;
 				at: SCI_STARTRECORD put: #startRecording;
 				at: SCI_STOPRECORD put: #stopRecording;
@@ -204,7 +204,6 @@ initializeCommands
 				at: SCI_STUTTEREDPAGEUPEXTEND put: #extendStutteredPageUp;
 				at: SCI_TAB put: #indent;
 				at: SCI_TARGETFROMSELECTION put: #setTargetRangeFromSelection;
-				at: SCI_TOGGLECARETSTICKY put: #sciToggleCaretSticky;
 				at: SCI_UNDO put: #basicUndo;
 				at: SCI_UPPERCASE put: #convertToUppercase;
 				at: SCI_VCHOME put: #moveToVcHome;

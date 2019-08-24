@@ -29,9 +29,10 @@ id
 id: idString name: nameString retType: retString 
 	id := idString.
 	name := nameString.
-	self retType: retString.
 	isDeprecated := false.
-	constName := self constPrefix , name asUppercase!
+	constName := self constPrefix , name asUppercase.
+	self retType: retString.
+!
 
 isDeprecated
 	^isDeprecated!

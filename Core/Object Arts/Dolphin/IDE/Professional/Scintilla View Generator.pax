@@ -12,6 +12,7 @@ package classNames
 	add: #ScintillaDef;
 	add: #ScintillaEventDef;
 	add: #ScintillaFunctionDef;
+	add: #ScintillaParam;
 	add: #ScintillaTypeRef;
 	add: #ScintillaViewGenerator;
 	yourself.
@@ -43,13 +44,18 @@ Object subclass: #ScintillaDef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #ScintillaParam
+	instanceVariableNames: 'name typeName typeRef'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #ScintillaTypeRef
 	instanceVariableNames: 'name objectClass byRef toMessage fromMessage default'
 	classVariableNames: 'TypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ScintillaViewGenerator
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -59,7 +65,7 @@ ScintillaDef subclass: #ScintillaEventDef
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaDef subclass: #ScintillaFunctionDef
-	instanceVariableNames: 'funcType returnType wParamType wParamName lParamType lParamName'
+	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
