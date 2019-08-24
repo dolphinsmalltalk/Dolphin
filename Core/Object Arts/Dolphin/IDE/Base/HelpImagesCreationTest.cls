@@ -320,20 +320,13 @@ testSystemFolder
 	folderPresenter resetSelection.
 	(folderPresenter view)
 		lvmSetBkImage: LVBKIMAGEW new;
-		backcolor: (Color 
-					red: 255
-					green: 255
-					blue: 238).
+		backcolor: (Color named: #smalltalkSystem).
 	folderPresenter view saveHelpImageNamed: 'SystemFolderClient'.
 	originalExtent := folderPresenter topShell view extent.
 	folderPresenter topShell view extent: 1000 @ 500.
-	stsTools := folderPresenter list detect: [:each | each description = 'Source Tracking Tools'].
 	samples := folderPresenter list detect: [:each | each description = 'Sample Applications'].
 	additionalTools := folderPresenter list detect: [:each | each description = 'Additional Tools'].
 	"Top level icon images"
-	self saveIconImagesInFolder: folderPresenter.
-	"Source Tracking Tools images"
-	folderPresenter expand: stsTools.
 	self saveIconImagesInFolder: folderPresenter.
 	"Samples images"
 	folderPresenter expand: samples.
