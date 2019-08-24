@@ -1,24 +1,28 @@
-"Update the boot image
-	The original Dolphin7 DBOOT image is in this directory and this file
-	applies modifications to it based on scripts in this directory."
+"Update the boot image by applying the modifications from the scripts in this directory."
 
-| path version |
-version := Object owningPackage packageVersion.		"find last update"
-Notification signal: 'Starting at version = ' , version printString.
-version isEmpty ifTrue: [version := '7.0'].
-version := (version subStrings: $.) last asNumber.
+| path currentVersion patchVersion nextPatch stdout |
+stdout := SessionManager current stdout.
+currentVersion := Object owningPackage packageVersion.		"find last update"
+currentVersion isEmpty ifTrue: [currentVersion := '7.1.000'].
+stdout nextPutAll: 'Updating boot image from version '; print: currentVersion; cr.
+patchVersion := Integer fromString: (currentVersion subStrings: $.) last.
 [
-	version := (1001 + version) printString copyFrom: 2.
-	path := 'Core\Object Arts\Dolphin\Base\Boot\Boot' , version , '.st'.
-	Notification signal: 'Looking for update file ', path.
+	nextPatch := patchVersion + 1 printStringBase: 10 nDigits: 3.
+	path := 'Core\Object Arts\Dolphin\Base\Boot\Boot' , nextPatch , '.st'.
+	stdout nextPutAll: 'Looking for update file '; print: path; cr.
 	File exists: path.	"Is there a new update?"
 ] whileTrue: [
-	Notification signal: 'Installing update ' , version printString.
+	stdout nextPutAll: 'Installing update '; print: nextPatch; cr.
 	SourceManager default fileIn: path.
-	Object owningPackage packageVersion: '7.' , version.
-	version := version asNumber.
+	Object owningPackage packageVersion: '7.1.' , nextPatch.
+	patchVersion := Integer fromString: nextPatch.
 ].
 
-Object owningPackage isChanged: false!
-SourceManager default compressSources!
+patchVersion := Object owningPackage packageVersion.
+patchVersion = currentVersion 
+	ifTrue: [stdout nextPutAll: 'No updates found'; cr]
+	ifFalse: [
+		stdout nextPutAll: 'Updated boot image to version '; print: patchVersion; cr.
+		Object owningPackage isChanged: false.
+		SourceManager default compressSources]!
 SessionManager current quit!
