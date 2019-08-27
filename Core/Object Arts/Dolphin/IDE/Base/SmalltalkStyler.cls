@@ -155,7 +155,7 @@ lastToken
 	^view plainTextRange: last key!
 
 literalArrayIndicatorId
-	^INDIC_CONTAINER - 1!
+	^INDICATOR_CONTAINER - 1!
 
 prepareToStyleView: aScintillaView 
 	"The receiver has been set up as the styler for the specified <ScintillaView>. This is an

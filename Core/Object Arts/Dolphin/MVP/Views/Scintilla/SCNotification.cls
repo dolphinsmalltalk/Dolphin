@@ -2,12 +2,13 @@
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
+	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_characterSource _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
 SCNotification addClassConstant: '_OffsetOf_annotationLinesAdded' value: 16r54!
 SCNotification addClassConstant: '_OffsetOf_ch' value: 16r10!
+SCNotification addClassConstant: '_OffsetOf_characterSource' value: 16r60!
 SCNotification addClassConstant: '_OffsetOf_foldLevelNow' value: 16r38!
 SCNotification addClassConstant: '_OffsetOf_foldLevelPrev' value: 16r3C!
 SCNotification addClassConstant: '_OffsetOf_length' value: 16r20!
@@ -47,6 +48,11 @@ character
 	"Answer the receiver's <Character> who's codePoint is stored in the 'ch' field."
 
 	^Character codePoint: self ch!
+
+characterSource
+	"Answer the <Integer> value of the receiver's 'characterSource' field."
+
+	^bytes sdwordAtOffset: _OffsetOf_characterSource!
 
 foldLevelNow
 	"Answer the <Integer> value of the receiver's 'foldLevelNow' field."
@@ -268,6 +274,7 @@ y
 !SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
 !SCNotification categoriesFor: #ch!**compiled accessors**!public! !
 !SCNotification categoriesFor: #character!accessing!public! !
+!SCNotification categoriesFor: #characterSource!**compiled accessors**!public! !
 !SCNotification categoriesFor: #foldLevelNow!**compiled accessors**!public! !
 !SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
 !SCNotification categoriesFor: #getValidFields!accessing!private! !
@@ -326,10 +333,11 @@ defineFields
 		defineField: #token type: SDWORDField readOnly;
 		defineField: #annotationLinesAdded type: INT_PTRField readOnly;
 		defineField: #updated type: SDWORDField readOnly;
-		defineField: #listCompletionMethod type: SDWORDField readOnly.!
+		defineField: #listCompletionMethod type: SDWORDField readOnly;
+		defineField: #characterSource type: SDWORDField readOnly.!
 
 getFieldNames
-	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod)! !
+	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
 !SCNotification class categoriesFor: #defineFields!public!template definition! !
 !SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

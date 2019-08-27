@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaViewGenerator
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -84,6 +84,7 @@ defineConstantsPool
 		at: 'CARET_SLOP' put: 1;
 		at: 'CARET_STRICT' put: 4;
 		at: 'CARETSTYLE_BLOCK' put: 2;
+		at: 'CARETSTYLE_BLOCK_AFTER' put: 256;
 		at: 'CARETSTYLE_INS_MASK' put: 15;
 		at: 'CARETSTYLE_INVISIBLE' put: 0;
 		at: 'CARETSTYLE_LINE' put: 1;
@@ -96,7 +97,6 @@ defineConstantsPool
 		at: 'INDIC_BOX' put: 6;
 		at: 'INDIC_COMPOSITIONTHICK' put: 14;
 		at: 'INDIC_COMPOSITIONTHIN' put: 15;
-		at: 'INDIC_CONTAINER' put: 8;
 		at: 'INDIC_DASH' put: 9;
 		at: 'INDIC_DIAGONAL' put: 3;
 		at: 'INDIC_DOTBOX' put: 12;
@@ -105,9 +105,6 @@ defineConstantsPool
 		at: 'INDIC_GRADIENT' put: 20;
 		at: 'INDIC_GRADIENTCENTRE' put: 21;
 		at: 'INDIC_HIDDEN' put: 5;
-		at: 'INDIC_IME' put: 32;
-		at: 'INDIC_IME_MAX' put: 35;
-		at: 'INDIC_MAX' put: 35;
 		at: 'INDIC_PLAIN' put: 0;
 		at: 'INDIC_POINT' put: 18;
 		at: 'INDIC_POINTCHARACTER' put: 19;
@@ -122,6 +119,10 @@ defineConstantsPool
 		at: 'INDIC0_MASK' put: 32;
 		at: 'INDIC1_MASK' put: 64;
 		at: 'INDIC2_MASK' put: 128;
+		at: 'INDICATOR_CONTAINER' put: 8;
+		at: 'INDICATOR_IME' put: 32;
+		at: 'INDICATOR_IME_MAX' put: 35;
+		at: 'INDICATOR_MAX' put: 35;
 		at: 'INDICS_MASK' put: 224;
 		at: 'INVALID_POSITION' put: -1;
 		at: 'KEYWORDSET_MAX' put: 8;
@@ -155,6 +156,9 @@ defineConstantsPool
 		at: 'SC_CASE_UPPER' put: 1;
 		at: 'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE' put: 1;
 		at: 'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE' put: 0;
+		at: 'SC_CHARACTERSOURCE_DIRECT_INPUT' put: 0;
+		at: 'SC_CHARACTERSOURCE_IME_RESULT' put: 2;
+		at: 'SC_CHARACTERSOURCE_TENTATIVE_INPUT' put: 1;
 		at: 'SC_CHARSET_8859_15' put: 1000;
 		at: 'SC_CHARSET_ANSI' put: 0;
 		at: 'SC_CHARSET_ARABIC' put: 178;
@@ -296,6 +300,7 @@ defineConstantsPool
 		at: 'SC_MOD_INSERTCHECK' put: 1048576;
 		at: 'SC_MOD_INSERTTEXT' put: 1;
 		at: 'SC_MOD_LEXERSTATE' put: 524288;
+		at: 'SC_MOD_NONE' put: 0;
 		at: 'SC_MODEVENTMASKALL' put: 4194303;
 		at: 'SC_MULTIAUTOC_EACH' put: 1;
 		at: 'SC_MULTIAUTOC_ONCE' put: 0;
@@ -366,6 +371,7 @@ defineConstantsPool
 		at: 'SCEN_SETFOCUS' put: 512;
 		at: 'SCFIND_CXX11REGEX' put: 8388608;
 		at: 'SCFIND_MATCHCASE' put: 4;
+		at: 'SCFIND_NONE' put: 0;
 		at: 'SCFIND_POSIX' put: 4194304;
 		at: 'SCFIND_REGEXP' put: 2097152;
 		at: 'SCFIND_WHOLEWORD' put: 2;
@@ -1146,6 +1152,7 @@ defineConstantsPool
 		at: 'SCLEX_CSOUND' put: 74;
 		at: 'SCLEX_CSS' put: 38;
 		at: 'SCLEX_D' put: 79;
+		at: 'SCLEX_DATAFLEX' put: 129;
 		at: 'SCLEX_DIFF' put: 16;
 		at: 'SCLEX_DMAP' put: 112;
 		at: 'SCLEX_DMIS' put: 114;
@@ -1238,6 +1245,7 @@ defineConstantsPool
 		at: 'SCLEX_VERILOG' put: 56;
 		at: 'SCLEX_VHDL' put: 64;
 		at: 'SCLEX_VISUALPROLOG' put: 107;
+		at: 'SCLEX_X12' put: 128;
 		at: 'SCLEX_XCODE' put: 13;
 		at: 'SCLEX_XML' put: 5;
 		at: 'SCLEX_YAML' put: 48;
@@ -1301,6 +1309,7 @@ defineConstantsPool
 		at: 'STYLE_MAX' put: 255;
 		at: 'STYLE_NORMAL' put: 0;
 		at: 'UNDO_MAY_COALESCE' put: 1;
+		at: 'UNDO_NONE' put: 0;
 		at: 'VISIBLE_SLOP' put: 1;
 		at: 'VISIBLE_STRICT' put: 4;
 		shrink;
@@ -1392,6 +1401,21 @@ generateEventHandler: aScintillaEventDef
 		compileMethod: aScintillaEventDef selector
 		source: stream contents
 		categories: self autoGenEventCategories!
+
+generateFunction: func
+	| stream |
+	(self ignoredMessages includes: func constName) 
+		ifTrue: 
+			[Notification signal: 'Ignoring message ' , func constName.
+			^self].
+	stream := String writeStream: 256.
+	func emitMethodTextOn: stream.
+	self compileMethod: func selector source: stream contents.
+	func isCommand ifTrue: [commands at: func constName put: func selector].
+!
+
+generateFunctions
+	functions do: [:each | self generateFunction: each]!
 
 generateNotificationMap
 	| stream scnFirst |
@@ -1547,7 +1571,7 @@ ignoredMessages
 
 	"We always get/set the selection range start and end as a pair."
 	ignoredMessages
-		addAll: #('SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
+		addAll: #('SCI_GETSELECTIONEND' 'SCI_SETSELECTIONEND' 'SCI_SETSELECTIONSTART' 'SCI_SETSEL' 'SCI_GETTARGETSTART' 'SCI_GETTARGETEND' 'SCI_GETSELECTIONNSTART' 'SCI_GETSELECTIONNEND').
 
 	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
 	ignoredMessages addAll: #('SCI_SETTARGETSTART' 'SCI_SETTARGETEND').
@@ -1581,7 +1605,23 @@ initialize
 	parsingDeprecated := false.
 	namespace := RBNamespace new.
 	generatedSelectors := LookupTable new.
-	constantsPool := PoolConstantsDictionary new!
+	constantsPool := PoolConstantsDictionary new.
+	aliases := LookupTable new.
+	functions := OrderedCollection new!
+
+isIgnoredConstant: aString
+	
+	"INDIC_CONTAINER, INDIC_IME, INDIC_IME_MAX, and INDIC_MAX are indicator numbers, not IndicatorStyles so should not really be in the INDIC_ enumeration."
+	^(#('INDIC_CONTAINER' 'INDIC_IME' 'INDIC_IME_MAX' 'INDIC_MAX') includes: aString) or: 
+			["We don't want to bloat the constants pool with a load of lexer defines that we don't need in Dolphin"
+			lexerConstantPrefixes anySatisfy: [:each | aString beginsWith: each]]!
+
+parseAlias: aReadableStream 
+	| aliased alias |
+	aliased := aReadableStream upTo: $=.
+	alias := aReadableStream nextWord.
+	aliases at: alias put: aliased
+!
 
 parseCategory: aReadableStream 
 	| category |
@@ -1591,10 +1631,11 @@ parseCategory: aReadableStream
 	parsingDeprecated := category asLowercase = 'deprecated'!
 
 parseEnum: aReadableStream 
-	Transcript
-		display: 'Enumeration definition ignored: ';
-		nextPutAll: aReadableStream upToEnd;
-		cr!
+	| typeName prefix |
+	typeName := aReadableStream upTo: $=.
+	prefix := aReadableStream nextWord.
+	ScintillaTypeRef declareEnum: typeName
+!
 
 parseEvent: aReadableStream 
 	| event |
@@ -1619,9 +1660,11 @@ parseFile: aFileName
 	| cFile |
 	self constantsPool removeAllKeys: self constantsPool keys.
 	self defineAdditionalConstants.
+	ScintillaTypeRef resetTypeMap.
 	cFile := FileStream read: aFileName.
 	[cFile atEnd] whileFalse: [self parseLine: cFile nextLine].
 	cFile close.
+	self generateFunctions.
 	self generateConstantsPool.
 	self generateNotificationMap.
 	self generateCommandMap.
@@ -1638,22 +1681,15 @@ parseFileComment: aReadableStream
 
 	!
 
-parseFunction: aReadableStream type: aString 
-	| func stream |
+parseFunction: aReadableStream type: aString
+	| func |
 	func := (ScintillaFunctionDef tokens: (self splitDefinition: aReadableStream))
 				funcType: aString;
 				isDeprecated: parsingDeprecated;
 				comment: self getAndResetCommentQueue;
 				yourself.
 	self constantsPool at: func constName put: func id.
-	(self ignoredMessages includes: func constName) 
-		ifTrue: 
-			[Notification signal: 'Ignoring message ' , func constName.
-			^self].
-	stream := String writeStream: 256.
-	func emitMethodTextOn: stream.
-	func isCommand ifTrue: [commands at: func constName put: func selector].
-	self compileMethod: func selector source: stream contents!
+	functions addLast: func!
 
 parseInterfaceComment: aReadableStream 
 	commentQueue isEmpty ifFalse: [commentQueue space].
@@ -1678,6 +1714,8 @@ parseLine: aString
 	lineType = '#' ifTrue: [^self parseInterfaceComment: lineStream].
 	lineType = 'enu' ifTrue: [^self parseEnum: lineStream].
 	lineType = 'lex' ifTrue: [^self parseLex: lineStream].
+	lineType = 'ali' ifTrue: [^self parseAlias: lineStream].
+	lineType = 'enu' ifTrue: [^self parseEnum: lineStream].
 	(lineType beginsWith: '##') ifTrue: [^self parseFileComment: lineStream].
 
 	"Catch all"
@@ -1695,8 +1733,7 @@ parseValue: aReadableStream
 	| value numberStream radix constName |
 	self getAndResetCommentQueue.
 	constName := aReadableStream upTo: $=.
-	"We don't want to bloat the constants pool with a load of lexer defines that we don't need in Dolphin"
-	(lexerConstantPrefixes anySatisfy: [:each | constName beginsWith: each]) ifTrue: [^self].
+	(self isIgnoredConstant: constName) ifTrue: [^self].
 	value := aReadableStream upToEnd.
 	numberStream := value readStream.
 	radix := (numberStream skipWhileMatchAll: '0x') ifTrue: [16] ifFalse: [10].
@@ -1748,6 +1785,7 @@ sciCommands
 		add: 'SCI_DELLINERIGHT';
 		add: 'SCI_DELWORDLEFT';
 		add: 'SCI_DELWORDRIGHT';
+		add: 'SCI_DELWORDRIGHTEND';
 		add: 'SCI_DOCUMENTEND';
 		add: 'SCI_DOCUMENTENDEXTEND';
 		add: 'SCI_DOCUMENTSTART';
@@ -1797,9 +1835,9 @@ sciCommands
 		add: 'SCI_PARAUPEXTEND';
 		add: 'SCI_PASTE';
 		add: 'SCI_REDO';
-		add: 'SCI_SEARCHANCHOR';
 		add: 'SCI_SELECTALL';
-		add: 'SCI_SETSAVEPOINT';
+		add: 'SCI_SELECTIONDUPLICATE';
+		add: 'SCI_SETZOOM';
 		add: 'SCI_STARTRECORD';
 		add: 'SCI_STOPRECORD';
 		add: 'SCI_STUTTEREDPAGEDOWN';
@@ -1808,7 +1846,6 @@ sciCommands
 		add: 'SCI_STUTTEREDPAGEUPEXTEND';
 		add: 'SCI_TAB';
 		add: 'SCI_TARGETFROMSELECTION';
-		add: 'SCI_TOGGLECARETSTICKY';
 		add: 'SCI_UNDO';
 		add: 'SCI_UPPERCASE';
 		add: 'SCI_VCHOME';
@@ -1832,7 +1869,6 @@ sciCommands
 		add: 'SCI_WORDRIGHTEXTEND';
 		add: 'SCI_ZOOMIN';
 		add: 'SCI_ZOOMOUT';
-		add: 'SCI_SETZOOM';
 		add: 'SCI_MOVESELECTEDLINESUP';
 		add: 'SCI_MOVESELECTEDLINESDOWN';
 		add: 'SCI_SCROLLTOSTART';
@@ -1910,10 +1946,14 @@ updateLibVersion
 !ScintillaViewGenerator categoriesFor: #generateCommandMap!generating!private! !
 !ScintillaViewGenerator categoriesFor: #generateConstantsPool!operations!private! !
 !ScintillaViewGenerator categoriesFor: #generateEventHandler:!helpers!private! !
+!ScintillaViewGenerator categoriesFor: #generateFunction:!generating!private! !
+!ScintillaViewGenerator categoriesFor: #generateFunctions!accessing!generating!private! !
 !ScintillaViewGenerator categoriesFor: #generateNotificationMap!generating!private! !
 !ScintillaViewGenerator categoriesFor: #getAndResetCommentQueue!helpers!private! !
 !ScintillaViewGenerator categoriesFor: #ignoredMessages!constants!private! !
 !ScintillaViewGenerator categoriesFor: #initialize!helpers!initializing!public! !
+!ScintillaViewGenerator categoriesFor: #isIgnoredConstant:!helpers!private! !
+!ScintillaViewGenerator categoriesFor: #parseAlias:!helpers!private! !
 !ScintillaViewGenerator categoriesFor: #parseCategory:!helpers!private! !
 !ScintillaViewGenerator categoriesFor: #parseEnum:!helpers!private! !
 !ScintillaViewGenerator categoriesFor: #parseEvent:!helpers!private! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaDef subclass: #ScintillaFunctionDef
-	instanceVariableNames: 'funcType returnType wParamType wParamName lParamType lParamName'
+	instanceVariableNames: 'funcType returnType lParam wParam returnTypeName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,58 +10,47 @@ ScintillaFunctionDef comment: ''!
 !ScintillaFunctionDef categoriesForClass!Development! !
 !ScintillaFunctionDef methodsFor!
 
-buildParamName: nameString type: typeString 
-	^(String with: nameString first asLowercase) , (nameString copyFrom: 2) 
-		, typeString objectClass name!
-
 constPrefix
 	^'SCI_'!
 
 defaultReturnValue
 	^self hasReturnValue ifTrue: [self returnType default printString] ifFalse: ['self']!
 
-emitBasicNullLParamFunctionOn: aPuttableStream 
-	| lParam |
-	selector := self renamedFunctions at: constName
-				ifAbsent: [('sci' , self name capitalized , ':') asSymbol].
-	lParam := self buildParamName: self lParamName type: self lParamType.
-	aPuttableStream
-		nextPutAll: selector;
+displayOn: aStream
+	aStream nextPutAll: returnTypeName;
 		space;
-		nextPutAll: lParam;
-		crtab.
-	self 
-		emitMethodBodyOn: aPuttableStream
-		wParam: 0
-		lParam: lParam!
+		nextPutAll: name;
+		nextPut: $(.
+	wParam name ifNotNil: [
+		aStream display: wParam].
+	lParam name ifNotNil: [
+		aStream nextPutAll: ', '.
+		aStream display: lParam].
+	aStream nextPut: $)!
 
-emitBasicWParamLParamFunctionOn: aPuttableStream 
-	| keywords keyword1 keyword2 wParam lParam |
-	selector := self renamedFunctions at: constName ifAbsent: [].
-	selector isNil 
-		ifTrue: 
-			[keyword2 := lParamName copyWith: $:.
-			keyword1 := 'sci' , (name capitalized copyWith: $:).
-			selector := (keyword1 , keyword2) asSymbol]
-		ifFalse: 
-			[keywords := selector subStrings: $:.
-			keyword1 := keywords first copyWith: $:.
-			keyword2 := keywords second copyWith: $:].
-	wParam := self buildParamName: wParamName type: wParamType.
-	lParam := self buildParamName: lParamName type: lParamType.
+emitBasicNullLParamFunctionOn: aPuttableStream
 	aPuttableStream
-		nextPutAll: keyword1;
+		nextPutAll: self selector;
 		space;
-		nextPutAll: wParam;
-		space;
-		nextPutAll: keyword2;
-		space;
-		nextPutAll: lParam;
+		nextPutAll: lParam parameterName;
 		crtab.
-	self 
-		emitMethodBodyOn: aPuttableStream
-		wParam: wParam
-		lParam: lParam!
+	self emitMethodBodyOn: aPuttableStream!
+
+emitBasicWParamLParamFunctionOn: aPuttableStream
+	| keywords |
+	keywords := self selector subStrings: $:.
+	aPuttableStream
+		nextPutAll: keywords first;
+		nextPut: $:;
+		space;
+		nextPutAll: wParam parameterName;
+		space;
+		nextPutAll: keywords second;
+		nextPut: $:;
+		space;
+		nextPutAll: lParam parameterName;
+		crtab.
+	self emitMethodBodyOn: aPuttableStream!
 
 emitCommentOn: aPuttableStream 
 	| target |
@@ -81,39 +70,19 @@ emitCommentOn: aPuttableStream
 emitCommentString: aString on: aPuttableStream 
 	aString do: [:each | aPuttableStream nextPut: (each == $" ifTrue: [$'] ifFalse: [each])]!
 
-emitMethodBodyOn: aPuttableStream wParam: wParam lParam: lParam 
-	| retConversion |
+emitMethodBodyOn: aPuttableStream
 	self emitMethodPreambleOn: aPuttableStream.
-	self hasReturnValue 
+	self hasReturnValue
 		ifTrue: 
 			[aPuttableStream
 				nextPutAll: '^(this ifNil: [';
 				nextPutAll: self defaultReturnValue;
-				nextPutAll: '] ifNotNil: [']
-		ifFalse: [aPuttableStream nextPutAll: '(this ifNotNil: ['].
-	retConversion := self returnType fromMessage.
-	retConversion 
-		ifNotNil: 
-			[retConversion last == $: 
-				ifTrue: 
-					[aPuttableStream
-						print: self returnType objectClass;
-						space;
-						nextPutAll: retConversion;
-						nextPutAll: ' (']
-				ifFalse: [aPuttableStream nextPut: $(]].
-	self 
-		emitScintillaCallOn: aPuttableStream
-		wParam: wParam
-		lParam: lParam.
-	retConversion 
-		ifNotNil: 
-			[aPuttableStream nextPut: $).
-			retConversion last == $: 
-				ifFalse: 
-					[aPuttableStream
-						space;
-						nextPutAll: retConversion]].
+				nextPutAll: '] ifNotNil: ['.
+			self returnType emitReturnConversionAround: [self emitScintillaCallOn: aPuttableStream]
+				on: aPuttableStream]
+		ifFalse: 
+			[aPuttableStream nextPutAll: '(this ifNotNil: ['.
+			self emitScintillaCallOn: aPuttableStream].
 	aPuttableStream nextPutAll: '])'!
 
 emitMethodPreambleOn: aPuttableStream 
@@ -126,13 +95,13 @@ emitMethodPreambleOn: aPuttableStream
 				crtab]!
 
 emitMethodTextOn: aWriteStream
-	^(self isUnusedParameter: wParamName)
+	^wParam isUnused
 		ifTrue: 
-			[(self isUnusedParameter: lParamName)
+			[lParam isUnused
 				ifTrue: [self emitNullNullFunctionOn: aWriteStream]
 				ifFalse: [self emitNullLParamFunctionOn: aWriteStream]]
 		ifFalse: 
-			[(self isUnusedParameter: lParamName)
+			[lParam isUnused
 				ifTrue: [self emitWParamNullFunctionOn: aWriteStream]
 				ifFalse: [self emitWParamLParamFunctionOn: aWriteStream]]!
 
@@ -141,34 +110,23 @@ emitNullLParamFunctionOn: aWriteStream
 		ifTrue: [self emitStringResultFunctionOn: aWriteStream]
 		ifFalse: [self emitBasicNullLParamFunctionOn: aWriteStream]!
 
-emitNullNullFunctionOn: aWriteStream 
-	selector := self renamedFunctions at: constName ifAbsent: [('sci' , name capitalized) asSymbol].
+emitNullNullFunctionOn: aWriteStream
 	aWriteStream
-		nextPutAll: selector;
+		nextPutAll: self selector;
 		crtab.
-	self 
-		emitMethodBodyOn: aWriteStream
-		wParam: 0
-		lParam: 0!
+	self emitMethodBodyOn: aWriteStream!
 
-emitScintillaCallOn: aPuttableStream wParam: wParam lParam: lParam
+emitScintillaCallOn: aPuttableStream
 	aPuttableStream
 		nextPutAll: 'ScintillaLibrary default directFunction: this msg: ';
-		nextPutAll: constName;
-		nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
-		display: wParam;
-		space;
-		display: wParamType toScintilla;
-		nextPutAll: (lParamType byRef ifTrue: [' lpParam: '] ifFalse: [' lParam: ']);
-		display: lParam;
-		space;
-		display: lParamType toScintilla!
+		nextPutAll: constName.
+	wParam emitOutParam: $w on: aPuttableStream.
+	lParam emitOutParam: $l on: aPuttableStream!
 
 emitStringResultFunctionOn: aPuttableStream
 	| resultClassExpression |
-	selector := self renamedFunctions at: constName ifAbsent: [('sci' , name capitalized) asSymbol].
 	aPuttableStream
-		nextPutAll: selector;
+		nextPutAll: self selector;
 		crtab.
 	self emitMethodPreambleOn: aPuttableStream.
 	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
@@ -191,31 +149,21 @@ emitWParamLParamFunctionOn: aPuttableStream
 		ifTrue: [self emitWParamStringResultFunctionOn: aPuttableStream]
 		ifFalse: [self emitBasicWParamLParamFunctionOn: aPuttableStream]!
 
-emitWParamNullFunctionOn: aPuttableStream 
-	| wParam |
-	selector := self renamedFunctions at: constName
-				ifAbsent: [('sci' , name capitalized , ':') asSymbol].
-	wParam := self buildParamName: wParamName type: wParamType.
+emitWParamNullFunctionOn: aPuttableStream
 	aPuttableStream
-		nextPutAll: selector;
+		nextPutAll: self selector;
 		space;
-		nextPutAll: wParam;
+		nextPutAll: wParam parameterName;
 		crtab.
-	self 
-		emitMethodBodyOn: aPuttableStream
-		wParam: wParam
-		lParam: 0!
+	self emitMethodBodyOn: aPuttableStream!
 
 emitWParamStringResultFunctionOn: aWriteStream
-	| ignoreWParam wParam resultClassExpression |
-	selector := self renamedFunctions at: constName
-				ifAbsent: [('sci' , name capitalized , ':') asSymbol].
-	ignoreWParam := selector argumentCount = 0.
-	wParam := self buildParamName: self wParamName type: self wParamType.
+	| ignoreWParam resultClassExpression |
+	ignoreWParam := self selector argumentCount = 0.
 	aWriteStream
 		nextPutAll: self selector;
 		space.
-	ignoreWParam ifFalse: [aWriteStream nextPutAll: wParam].
+	ignoreWParam ifFalse: [aWriteStream nextPutAll: wParam parameterName].
 	aWriteStream crtab.
 	self emitMethodPreambleOn: aWriteStream.
 	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
@@ -224,12 +172,7 @@ emitWParamStringResultFunctionOn: aWriteStream
 		nextPutAll: self constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: 0']
-		ifFalse: 
-			[aWriteStream
-				nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
-				display: wParam;
-				space;
-				display: wParamType toScintilla].
+		ifFalse: [wParam emitOutParam: $w on: aWriteStream].
 	aWriteStream
 		nextPutAll: ' lpParam: nil]. ^len = 0 ifTrue: [';
 		display: resultClassExpression;
@@ -242,12 +185,7 @@ emitWParamStringResultFunctionOn: aWriteStream
 		nextPutAll: constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: len']
-		ifFalse: 
-			[aWriteStream
-				nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
-				display: wParam;
-				space;
-				display: wParamType toScintilla].
+		ifFalse: [wParam emitOutParam: $w on: aWriteStream].
 	aWriteStream nextPutAll: ' lpParam: result. result]'!
 
 fixedClassStringResults
@@ -269,12 +207,14 @@ hasReturnValue
 	^self returnType isVoid not!
 
 hasStringResult
-	^lParamType name = 'stringresult'!
+	^lParam typeName = 'stringresult'!
 
 isCommand
-	"void functions with no parameters are considered to be commands."
+	"void functions with no parameters that have been given a specific name are considered to be commands."
 
-	^self isFunction and: [self hasReturnValue not and: [wParamName isNil and: [lParamName isNil]]]!
+	^self isFunction and: 
+			[self hasReturnValue not
+				and: [wParam isUnused and: [lParam isUnused and: [(self selector beginsWith: 'sci') not]]]]!
 
 isFunction
 	^funcType = 'fun'!
@@ -290,26 +230,42 @@ isPropGet
 isPropSet
 	^funcType = 'set'!
 
-isUnusedParameter: aString
-	^aString isNil or: [aString = 'unused']!
+lParam: anArray
+	lParam := self makeParam: anArray!
 
-lParam: anArray 
-	lParamName := anArray last.
-	lParamType := ScintillaTypeRef named: anArray first!
-
-lParamName
-	^lParamName!
-
-lParamType
-	^lParamType!
+makeParam: anArray
+	| paramName paramTypeName |
+	paramName := anArray last.
+	paramTypeName := anArray first.
+	((paramTypeName = 'position' and: 
+			[(##(#('bytes' 'space' 'lines' 'columns' 'relative') asSet) includes: paramName)
+				or: [paramName beginsWith: 'length']])
+		or: [paramTypeName = 'line' and: [paramName = 'lines']]) ifTrue: [paramTypeName := 'int'].
+	^ScintillaParam newName: paramName typeName: paramTypeName!
 
 name
 	^name!
 
+printOn: aStream
+	super printOn: aStream.
+	aStream nextPut: $(; display: self; nextPut: $).!
+
+remappedReturnTypes
+	"As of Scintilla 4.20 there are some helpful new parameter and return types intended to more closely describe
+	usage in order to allow for better auto-generation of language bindings. However the 'position' type has been 
+	abused to also describe lengths/sizes. Since we want to map from Scintilla's zero-based positions to Smalltalk
+	1-based indexes, we need to distinguish between genuine positions, and misuses of the type."
+
+	^##(| remappedReturnTypes |
+	remappedReturnTypes := LookupTable new.
+	#('SCI_GETSTYLEDTEXT' 'SCI_COUNTCHARACTERS' 'SCI_COUNTCODEUNITS' 'SCI_GETLINECOUNT' 'SCI_GETTEXTRANGE' 'SCI_GETTEXTLENGTH' 'SCI_REPLACETARGET' 'SCI_REPLACETARGETRE' 'SCI_WRAPCOUNT' 'SCI_LINESONSCREEN' 'SCI_POSITIONRELATIVE' 'SCI_POSITIONRELATIVECODEUNITS' 'SCI_GETSELECTIONNCARETVIRTUALSPACE' 'SCI_GETSELECTIONNANCHORVIRTUALSPACE' 'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE' 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE')
+		do: [:each | remappedReturnTypes at: each put: 'int'].
+	remappedReturnTypes)!
+
 renamedFunctions
 	^##(| renamedMessages |
 	renamedMessages := LookupTable new.
-	"Indicators"
+"Indicators"
 	renamedMessages
 		at: 'SCI_GETINDICATORCURRENT' put: #currentIndicatorId;
 		at: 'SCI_SETINDICATORCURRENT' put: #currentIndicatorId:;
@@ -357,8 +313,6 @@ renamedFunctions
 		at: 'SCI_GETXOFFSET' put: #xOffset;
 		at: 'SCI_SETXOFFSET' put: #xOffset:;
 		at: 'SCI_BACKTAB' put: #unindent;
-		at: 'SCI_LINEFROMPOSITION' put: #basicLineFromPosition:;
-		at: 'SCI_POSITIONFROMLINE' put: #basicPositionAtLine:;
 		at: 'SCI_GETVIEWEOL' put: #hasVisibleLineEndings;
 		at: 'SCI_SETVIEWEOL' put: #hasVisibleLineEndings:;
 		at: 'SCI_GETHSCROLLBAR' put: #canHScroll;
@@ -390,8 +344,6 @@ renamedFunctions
 		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
 		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
 		at: 'SCI_GETMOVEEXTENDSSELECTION' put: #isInSelectionExtendMode;
-		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
-		at: 'SCI_GETSELECTIONEND' put: #selectionEnd;
 		yourself.
 	"Markers"
 	renamedMessages
@@ -476,7 +428,6 @@ renamedFunctions
 		at: 'SCI_LINESONSCREEN' put: #linesOnScreen;
 		at: 'SCI_GETMOUSEDOWNCAPTURES' put: #willCaptureMouse;
 		at: 'SCI_SETMOUSEDOWNCAPTURES' put: #willCaptureMouse:;
-		at: 'SCI_ADDTEXT' put: #insertText:from:;
 		at: 'SCI_GETWRAPSTARTINDENT' put: #hangingIndent;
 		at: 'SCI_SETWRAPSTARTINDENT' put: #hangingIndent:;
 		at: 'SCI_GETPOSITIONCACHE' put: #positionCacheSize;
@@ -722,227 +673,84 @@ renamedFunctions
 		at: 'SCI_GETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag;
 		at: 'SCI_SETDEFAULTFOLDDISPLAYTEXT' put: #defaultFoldTextTag:;
 		yourself.
+
+	"4.2 - introduces extra types allowing a number of functions to be generated in higher level form"
+	renamedMessages
+		at: 'SCI_GOTOLINE' put: #gotoLine:;
+		at: 'SCI_GETLINEENDPOSITION' put: #lineEndPosition:;
+		at: 'SCI_CALLTIPSETPOSSTART' put: #callTipPosition:;
+		at: 'SCI_VISIBLEFROMDOCLINE' put: #lineFromDocumentLine:;
+		at: 'SCI_DOCLINEFROMVISIBLE' put: #documentLineFromLine:;
+		at: 'SCI_SETFOLDLEVEL' put: #foldLine:level:;
+		at: 'SCI_GETFOLDLEVEL' put: #foldLevelOfLine:;
+		at: 'SCI_GETLASTCHILD' put: #lastChildLine:level:;
+		at: 'SCI_FOLDCHILDREN' put: #foldChildren:action:;
+		at: 'SCI_EXPANDCHILDREN' put: #expandChildren:level:;
+		at: 'SCI_GETFOLDPARENT' put: #parentOfFoldedLine:;
+		at: 'SCI_SHOWLINES' put: #showLinesFrom:to:;
+		at: 'SCI_HIDELINES' put: #hideLinesFrom:to:;
+		at: 'SCI_GETLINEVISIBLE' put: #isLineVisible:;
+		at: 'SCI_WRAPCOUNT' put: #wrapCount:;
+		at: 'SCI_SETFOLDEXPANDED' put: #isLine:folded:;
+		at: 'SCI_GETFOLDEXPANDED' put: #isLineFolded:;
+		at: 'SCI_TOGGLEFOLD' put: #toggleFold:;
+		at: 'SCI_TOGGLEFOLDSHOWTEXT' put: #toggleFold:showText:;
+		at: 'SCI_FOLDLINE' put: #foldLine:action:;
+		at: 'SCI_ENSUREVISIBLE' put: #ensureLineVisible:;
+		at: 'SCI_ENSUREVISIBLEENFORCEPOLICY' put: #ensureLineVisibleEnforcingPolicy:;
+		at: 'SCI_WORDSTARTPOSITION' put: #wordStartAt:onlyWordCharacters:;
+		at: 'SCI_WORDENDPOSITION' put: #wordEndAt:onlyWordCharacters:;
+		at: 'SCI_TEXTHEIGHT' put: #lineHeight:;
+		at: 'SCI_GETFIRSTVISIBLELINE' put: #lineScroll;
+		at: 'SCI_SETFIRSTVISIBLELINE' put: #lineScroll:;
+		at: 'SCI_GETEDGECOLUMN' put: #edgeColumn;
+		at: 'SCI_SETEDGECOLUMN' put: #edgeColumn:;
+		at: 'SCI_SEARCHNEXT' put: #searchNext:text:;
+		at: 'SCI_SEARCHPREV' put: #searchPrev:text:;
+		at: 'SCI_FINDCOLUMN' put: #indexOfLine:column:;
+		at: 'SCI_GETLINESTATE' put: #getLineState:;
+		at: 'SCI_GETLINEINDENTATION' put: #indentationOfLine:;
+		at: 'SCI_CLEARTABSTOPS' put: #clearTabStops:;
+		at: 'SCI_GETCOLUMN' put: #columnFromPosition:;
+		at: 'SCI_GETENDATLASTLINE' put: #canScrollPastEnd;
+		at: 'SCI_GETRECTANGULARSELECTIONANCHOR' put: #rectangularSelectionAnchor;
+		at: 'SCI_SETRECTANGULARSELECTIONCARET' put: #rectangularSelectionCaret:;
+		at: 'SCI_SETRECTANGULARSELECTIONANCHOR' put: #rectangularSelectionAnchor:;
+		at: 'SCI_GETRECTANGULARSELECTIONCARET' put: #rectangularSelectionCaret;
+		at: 'SCI_SETLINESTATE' put: #setLine:state:;
+		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
+		yourself.
 	renamedMessages
 		shrink;
-		yourself)
-	"Indicators"
+		yourself)!
 
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"Brace highlighting"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"
-
-	"4.1.5"
-	"Indicators"
-
-	"Zooming"
-	"Undo and Redo"
-	"Tabs & indents"
-	""
-	"Caret"
-	"Markers"
-	"Scrolling"
-	"Line wrapping"
-
-	"Whitespace"
-
-	"Selection and information"
-	"Text retrieval and modification"
-	"Styling"
-
-	"Miscellaneous"
-
-	"Hotspot"
-
-	"Autocompletion"
-
-	"Calltips"
-
-	"Macros"
-
-	"Commands - Cursor movement"
-
-	"Commands - Selection movement"
-
-	"Unsupported rectangular selection commands"
-
-	"Commands - Deletion"
-
-	"Commands - Insertion"
-
-	"Commands - Cut, Copy & Paste"
-
-	"Commands - Other"
-
-	"1.67"
-
-	"1.77"
-
-	"Annotations"
-
-	"2.01"
-	"3.6.3"
-	"3.7.0"!
-
-retType: aString 
-	returnType := ScintillaTypeRef named: aString!
+retType: aString
+	returnTypeName := self remappedReturnTypes at: constName ifAbsent: [aString]!
 
 returnType
-	^returnType!
+	^returnType ifNil: [returnType := ScintillaTypeRef named: returnTypeName]
+!
+
+selector
+	selector ifNotNil: [^selector].
+	selector := self renamedFunctions at: constName
+				ifAbsent: 
+					[| stream |
+					stream := String writeStream.
+					stream
+						nextPutAll: 'sci';
+						nextPutAll: name capitalized.
+					wParam isUnused
+						ifTrue: [(lParam isUnused or: [self hasStringResult]) ifFalse: [stream nextPut: $:]]
+						ifFalse: 
+							[stream nextPut: $:.
+							(lParam isUnused or: [self hasStringResult])
+								ifFalse: 
+									[stream
+										nextPutAll: lParam name;
+										nextPut: $:]].
+					stream contents asSymbol].
+	^selector!
 
 stringResultsCountNull
 	"Answer the set of all Scintilla control stringresult messages that include the null
@@ -957,28 +765,21 @@ stringResultsCountNull
 		shrink;
 		yourself)!
 
-wParam: anArray 
-	wParamName := anArray last.
-	wParamType := ScintillaTypeRef named: anArray first!
-
-wParamName
-	^wParamName!
-
-wParamType
-	^wParamType! !
-!ScintillaFunctionDef categoriesFor: #buildParamName:type:!helpers!private! !
+wParam: anArray
+	wParam := self makeParam: anArray! !
 !ScintillaFunctionDef categoriesFor: #constPrefix!initializing!private! !
 !ScintillaFunctionDef categoriesFor: #defaultReturnValue!accessing!private! !
+!ScintillaFunctionDef categoriesFor: #displayOn:!displaying!public! !
 !ScintillaFunctionDef categoriesFor: #emitBasicNullLParamFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitBasicWParamLParamFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitCommentOn:!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #emitCommentString:on:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #emitMethodBodyOn:wParam:lParam:!generating!private! !
+!ScintillaFunctionDef categoriesFor: #emitMethodBodyOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitMethodPreambleOn:!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #emitMethodTextOn:!generating!public! !
 !ScintillaFunctionDef categoriesFor: #emitNullLParamFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitNullNullFunctionOn:!generating!private! !
-!ScintillaFunctionDef categoriesFor: #emitScintillaCallOn:wParam:lParam:!generating!private! !
+!ScintillaFunctionDef categoriesFor: #emitScintillaCallOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitStringResultFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitWParamLParamFunctionOn:!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #emitWParamNullFunctionOn:!generating!private! !
@@ -992,18 +793,17 @@ wParamType
 !ScintillaFunctionDef categoriesFor: #isPrivate!private!testing! !
 !ScintillaFunctionDef categoriesFor: #isPropGet!public!testing! !
 !ScintillaFunctionDef categoriesFor: #isPropSet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isUnusedParameter:!generating!helpers!public! !
 !ScintillaFunctionDef categoriesFor: #lParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #lParamName!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #lParamType!accessing!public! !
+!ScintillaFunctionDef categoriesFor: #makeParam:!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #name!accessing!public! !
+!ScintillaFunctionDef categoriesFor: #printOn:!printing!public! !
+!ScintillaFunctionDef categoriesFor: #remappedReturnTypes!private! !
 !ScintillaFunctionDef categoriesFor: #renamedFunctions!constants!private! !
 !ScintillaFunctionDef categoriesFor: #retType:!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #returnType!accessing!public! !
+!ScintillaFunctionDef categoriesFor: #selector!generating!private! !
 !ScintillaFunctionDef categoriesFor: #stringResultsCountNull!constants!private! !
 !ScintillaFunctionDef categoriesFor: #wParam:!accessing!private! !
-!ScintillaFunctionDef categoriesFor: #wParamName!accessing!public! !
-!ScintillaFunctionDef categoriesFor: #wParamType!accessing!public! !
 
 !ScintillaFunctionDef class methodsFor!
 
