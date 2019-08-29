@@ -274,6 +274,7 @@ package methodNames
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
 	add: #HANDLEField -> #printAccessorExpressionSuffixOn:;
+	add: #Interval -> #debugPrintString;
 	add: #Interval -> #newBatchAccessor;
 	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LargeInteger -> #debugPrintString;
@@ -3774,8 +3775,12 @@ choose
 
 !Interval methodsFor!
 
+debugPrintString
+	^self printString!
+
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+!Interval categoriesFor: #debugPrintString!printing!public! !
 !Interval categoriesFor: #newBatchAccessor!public! !
 
 !KernelLibrary methodsFor!

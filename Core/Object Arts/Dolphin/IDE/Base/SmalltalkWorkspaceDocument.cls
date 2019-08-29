@@ -534,7 +534,7 @@ initialize
 	self wordWrap: true.
 	self canUseIdeaSpace: true.
 	self defaultExtent: 640 @ 480.
-	self variableTips: false.
+	self variableTips: true.
 	LanguageExtensions := (LookupTable new)
 				at: 'txt' put: #text;
 				at: 'xml' put: #xml;
