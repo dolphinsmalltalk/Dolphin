@@ -339,6 +339,21 @@ resetParseTimer
 		killParseTimer;
 		setParseTimer!
 
+resolveIdentifier: aString ifDefined: aMonadicValuable
+	| methodClass |
+	methodClass := self selectedMethod methodClass.
+	"In the debugger will have an evaluation context which is the receiver."
+	(self evaluationContext isKindOf: methodClass)
+		ifTrue: 
+			[
+			aString = 'self' ifTrue: [^aMonadicValuable value: self evaluationContext].
+			(self contextBindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
+			(methodClass indexOfInstVar: aString ifAbsent: [])
+				ifNotNil: [:i | ^aMonadicValuable value: (self evaluationContext instVarAt: i)]].
+	(methodClass fullBindingFor: aString)
+		ifNotNil: [:binding | binding value ifNotNil: [:value | ^aMonadicValuable value: value]].
+	^nil!
+
 selectedErrorRange
 	^self selectedNode sourceInterval!
 
@@ -399,24 +414,8 @@ targetOfMessage: aStMessageNode
 	receiver := aStMessageNode receiver.
 	receiver isVariable
 		ifTrue: 
-			[| methodClass identifier |
-			methodClass := self selectedMethod methodClass.
-			"Semantic analysis may not have been run, but special variables can be identified syntactically."
-			receiver isSpecialVariable ifTrue: [^receiver valueClassIn: methodClass].
-			identifier := receiver name.
-			(self isTempVariable: receiver)
-				ifTrue: 
-					["If hosted in the debugger can make a stab at these"
-					(self contextBindingFor: identifier)
-						ifNotNil: [:binding | binding value ifNotNil: [:value | ^value basicClass]].
-					^nil].
-			((self evaluationContext isKindOf: methodClass)
-				and: [methodClass allInstVarNames includes: identifier])
-					ifTrue: 
-						["In the debugger will have an evaluation context which is the receiver."
-						^(self evaluationContext instVarNamed: identifier) basicClass].
-			(methodClass fullBindingFor: identifier)
-				ifNotNil: [:binding | binding value ifNotNil: [:value | ^value basicClass]]]
+			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self selectedMethod methodClass].
+			^self resolveIdentifier: receiver name ifDefined: [:value | value basicClass]]
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!
 
@@ -488,6 +487,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #reformattedSource!helpers!private! !
 !MethodWorkspace categoriesFor: #repositionAtSourceLine:!operations!public! !
 !MethodWorkspace categoriesFor: #resetParseTimer!helpers!private! !
+!MethodWorkspace categoriesFor: #resolveIdentifier:ifDefined:!helpers!private! !
 !MethodWorkspace categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMessage!accessing!private! !
 !MethodWorkspace categoriesFor: #selectedMessageNode!accessing!private!refactoring! !

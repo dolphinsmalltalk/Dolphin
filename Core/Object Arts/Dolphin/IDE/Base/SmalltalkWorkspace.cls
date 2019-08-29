@@ -163,15 +163,13 @@ chooseEvaluationPools
 chunkFilerClass
 	^ChunkSourceFiler!
 
-classForIdentifier: aString 
+classForIdentifier: aString
 	aString = 'self' ifTrue: [^self selfClass].
 	aString = 'super' ifTrue: [^self selfClass superclass].
 	aString = 'thisContext' ifTrue: [^Integer].
 	"In the debugger the workspacePool will also contain any temps and args, so we'll get
 	sensible autocompletion on those too"
-	(self workspacePool bindingFor: aString) ifNotNil: [:var | ^var value basicClass].
-	^[(self evaluationContext instVarNamed: aString) basicClass] on: NotFoundError
-		do: [:ex | (self selfClass fullBindingFor: aString) ifNotNil: [:var | var value basicClass]]!
+	^self resolveIdentifier: aString ifDefined: [:value | value basicClass]!
 
 classForToken: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
@@ -745,7 +743,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	flags := 0.
+	flags := VariableTipsMask.
 	"Set up the pools for evaluations in the receiver"
 	self evaluationPools: {}.
 	self newVariablePool.
@@ -1147,6 +1145,12 @@ replaceSelection: aString
 	
 	^self view replaceSelection: aString!
 
+resolveIdentifier: aString ifDefined: aMonadicValuable
+	(self workspacePool bindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
+	^(self evaluationContext class indexOfInstVar: aString ifAbsent: [])
+		ifNil: [(self selfClass fullBindingFor: aString) ifNotNil: [:var | aMonadicValuable value: var value]]
+		ifNotNil: [:i | aMonadicValuable value: (self evaluationContext instVarAt: i)]!
+
 searchEnvironment
 	^searchEnvironment ifNil: [self systemModel systemEnvironment]!
 
@@ -1400,22 +1404,15 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	self showCompletionList: symbols prefixLength: prefixLength!
 
 showTipForIdentifier: anStIdentifierToken
-	| context name |
-	context := self evaluationContext.
+	| name |
 	name := anStIdentifierToken value.
-	
-	[(context basicClass compilerClass
-		evaluate: name
-		for: context
-		evaluationPools: self allPools)
-			ifNotNil: 
-				[:result |
-				| tip |
-				tip := result debugPrintString.
-				"Don't display the tip if it contains no useful information"
-				tip = name ifFalse: [self view showCallTip: result debugPrintString at: anStIdentifierToken stop]]]
-			on: Compiler notificationClass
-			do: [:ex | ]!
+	self resolveIdentifier: name
+		ifDefined: 
+			[:result |
+			| tip |
+			tip := [result debugPrintString] on: Error do: [:ex | name].
+			"Don't display the tip if it contains no useful information"
+			tip = name ifFalse: [self view showCallTip: tip at: anStIdentifierToken stop]]!
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
@@ -1637,6 +1634,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #reformatComment!commands!public! !
 !SmalltalkWorkspace categoriesFor: #reformatSource!commands!public! !
 !SmalltalkWorkspace categoriesFor: #replaceSelection:!operations!public! !
+!SmalltalkWorkspace categoriesFor: #resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #searchEnvironment!commands!public! !
 !SmalltalkWorkspace categoriesFor: #searchEnvironment:!accessing!public! !
 !SmalltalkWorkspace categoriesFor: #selectedWord!helpers!private! !
