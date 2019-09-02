@@ -341,8 +341,9 @@ resetParseTimer
 
 resolveIdentifier: aString ifDefined: aMonadicValuable
 	| methodClass |
-	methodClass := self selectedMethod methodClass.
-	"In the debugger will have an evaluation context which is the receiver."
+	methodClass := self parseContext.
+	methodClass ifNil: [^nil].
+ 	"In the debugger will have an evaluation context which is the receiver."
 	(self evaluationContext isKindOf: methodClass)
 		ifTrue: 
 			[
