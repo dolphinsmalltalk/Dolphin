@@ -98,7 +98,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 	}
 	else
 		// An old timer (which should have been cancelled) has fired
-		trace(L"Old timer %d fired, current %d\n", uID, timerID);
+		TRACE(L"Old timer %d fired, current %d\n", uID, timerID);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -150,7 +150,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
 		// timerID anyway, just that we're interested in it).
 		// N.B. We shouldn't need an interlocked operation here because, assuming no bugs in the Win32 MM
 		// timers, we've killed any outstanding timer, and the timer thread should be dormant
-		timerID = UINT(-1);		// -1 is not used as a timer ID.
+		InterlockedExchange(&timerID, static_cast<UINT>(-1));		// -1 is not used as a timer ID.
 
 		UINT newTimerID = ::timeSetEvent(nDelay, 0, TimeProc, 0, TIME_ONESHOT);
 		if (newTimerID && newTimerID != UINT(-1))
