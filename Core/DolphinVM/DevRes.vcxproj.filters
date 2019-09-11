@@ -574,9 +574,6 @@
     <Image Include="Res\StaticText.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\Status.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\StepInto.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -584,15 +581,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\StepOver.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\String.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\SUnitAbsBrowser.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\symbol.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\SystemBrowserShell.ico">
@@ -662,12 +650,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\UnitTestPluginPass.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\UnlockDialog.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Up.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ValueAdaptor.ico">
@@ -859,15 +841,6 @@
     <Image Include="Res\ViewLargeIcons.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\ViewReportMode.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\ViewThumbnails.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\ViewTileIcons.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Box.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -986,9 +959,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Toolbar.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Toolbox.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\UpArrow.ico">
