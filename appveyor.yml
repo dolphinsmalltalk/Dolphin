@@ -10,11 +10,11 @@ install:
     git submodule update --init --recursive
     
     git lfs pull
-build:
-  project: Core\DolphinVM\DolphinVM.sln
-  verbosity: minimal
-after_build:
-- cmd: Core\DolphinVM\AppVeyorZIPDolphinVM
+build_script:
+- cmd: >-
+    msbuild Core\DolphinVM\DolphinVM.sln /m /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+    Core\DolphinVM\AppVeyorZIPDolphinVM
 test_script:
 - cmd: AppVeyorBootAndTest
 artifacts:
