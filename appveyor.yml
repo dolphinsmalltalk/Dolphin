@@ -3,18 +3,18 @@ pull_requests:
   do_not_increment_build_number: true
 skip_tags: true
 skip_branch_with_pr: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration: Release
 install:
 - cmd: >-
     git submodule update --init --recursive
     
     git lfs pull
-build:
-  project: Core\DolphinVM\DolphinVM.sln
-  verbosity: minimal
-after_build:
-- cmd: Core\DolphinVM\AppVeyorZIPDolphinVM
+build_script:
+- cmd: >-
+    msbuild Core\DolphinVM\DolphinVM.sln /m /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+    Core\DolphinVM\AppVeyorZIPDolphinVM
 test_script:
 - cmd: AppVeyorBootAndTest
 artifacts:

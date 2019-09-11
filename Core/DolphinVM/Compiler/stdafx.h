@@ -48,10 +48,10 @@
 #else
 	#include <crtdbg.h>
 	#define DEBUG_ONLY(f)      ((void)0)
-	inline void __cdecl DolphinTrace(LPCTSTR, ...)  {}
 	#define TRACE				1 ? ((void)0) : ::DolphinTrace
 	#define VERIFY
 	#define INLINE				__forceinline
 #endif
 
 #include <vector>
+#include <iostream>

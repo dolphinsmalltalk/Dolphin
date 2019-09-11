@@ -11,13 +11,15 @@ Note: if you are just looking to install Dolphin and get going as quickly as pos
 
 ## Building the Virtual Machine
 
+It is not necessary to build the VM, since pre-built binaries are available for download from github using the FetchVM script in the repo. You can skip straight to building the product image if you wish.
+
 * First clone the [Dolphin](https://github.com/dolphinsmalltalk/Dolphin) repo to a `\Dolphin` directory on your machine. It can actually be any location but for convenience we'll call it `\Dolphin`.  Use a Git client tool to clone. Downloading the ZIP file won't work due to use of Git LFS.
 
 * _Versions prior to 7.1:_ You should also clone the separate VM repository (DolphinVM) into a `DolphinVM\` subdirectory of `\Dolphin\Core\`.
 
 * _Version 7.1 and later:_ The DolphinVM repository has been merged into the main Dolphin repository and can be found in the `Core\DolphinVM` folder. The history from the original repository has been retained. 
 
-* Install VS2017 Community Edition on your machine with the "Desktop development with C++" workload. You can use the Pro or Enterprise edition if you have it. It is possible to compile the VM with VS2015, but you will need to downgrade the solution to the v140 toolset and either retarget to the ealier Windows SDK that shipped with VS2015, or install the latest SDK standalone. Later VS versions (when they appear) may work too but we no longer support VS2013, sorry. The Dolphin VM is a set of C++ projects so make sure to install this option (it's not the default) or you'll end up only being able to compile C#.
+* Install the free VS2019 Community Edition on your machine with the "Desktop development with C++" workload. The Dolphin VM is a set of C++ projects so make sure to install this option (it's not the default) or you'll end up only being able to compile C#. You can use the Pro or Enterprise edition if you have it. It is possible to compile the VM with earlier versions of VS (certainly VS2017) but you will need to downgrade the solution to the appropriate toolset and either retarget to the ealier Windows SDK that shipped with VS, or install the latest SDK standalone.
 
 * Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly) and then _Build Solution_. A bunch of DLLs and `Dolphin7.exe` will have been copied to the `\Dolphin` root folder.
 
