@@ -81,21 +81,6 @@ deleteDirectory: aString
 deleteTestDirectories
 	File deleteDirectory: 'c:\FileTest1\'!
 
-hasShortFileNames
-	"Private - Answer whether 8.3 names are probably enabled. Not definitive if true because by default this is a per-volume setting.
-	Unfortunately this information does not seem to be available from the GetVolumeInformation API."
-
-	"Actual meanings of the registry value are:
-		0 - Enable 8dot3 name creation on all volumes on the system
-                1 - Disable 8dot3 name creation on all volumes on the system
-		2 - Set 8dot3 name creation on a per volume basis
-                3 - Disable 8dot3 name creation on all volumes except the system volume"
-
-	^(((RegKey localMachineRoot
-		mode: #read;
-		yourself) at: 'SYSTEM\CurrentControlSet\Control\FileSystem')
-		valueAt: 'NtfsDisable8dot3NameCreation') even!
-
 printFilenameOfLength: anInteger on: path
 	(1 to: anInteger) do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))].
 	path nextPut: $..
@@ -411,7 +396,8 @@ testRemovePathDelimiter
 
 testShortPath
 	| sysdir tmpDir tmpFile |
-	self hasShortFileNames ifFalse: [^self].
+	"This test will only work if short filenames are enabled for the volume on which temp files are stored, and we cannot guarantee this is the case on build machines, nor is there an API that provides a definite answer as to whether short filenames are enabled on a particular volume."
+	self skipIfCiBuild.
 	sysdir := SessionManager current systemDirectory.
 	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
 	tmpDir := File tempPath , GUID newUnique asString, Character dolphin asUtf8String.
@@ -560,7 +546,6 @@ testSplitStemFrom
 !FileTest categoriesFor: #createTestDirectories!helpers!private! !
 !FileTest categoriesFor: #deleteDirectory:!helpers!public! !
 !FileTest categoriesFor: #deleteTestDirectories!private!Running! !
-!FileTest categoriesFor: #hasShortFileNames!accessing!private! !
 !FileTest categoriesFor: #printFilenameOfLength:on:!helpers!private! !
 !FileTest categoriesFor: #relativePathOf:to:!helpers!public! !
 !FileTest categoriesFor: #removeDirectory:!helpers!private! !
