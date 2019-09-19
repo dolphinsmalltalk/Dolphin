@@ -51,9 +51,7 @@ package methodNames
 	add: #Rectangle -> #containsPointInclusive:;
 	add: #Rectangle -> #increaseCornerBy:;
 	add: #ScrollingDecorator -> #scroll:toNextIn:;
-	add: 'Color class' -> #caption;
 	add: 'RGB class' -> #dolphinYellow;
-	add: 'RGB class' -> #fromRGBQUAD:;
 	add: 'RGBQUAD class' -> #fromRGB:;
 	add: 'Toolbar class' -> #resource_ILEditorShell_tools;
 	add: 'Toolbar class' -> #resource_ILLibraryShell_tools;
@@ -251,13 +249,6 @@ View subclass: #ILLibraryWorkspace
 
 "Loose Methods"!
 
-!Color class methodsFor!
-
-caption
-	#idbAdded.
-	^self systemColor: COLOR_ACTIVECAPTION! !
-!Color class categoriesFor: #caption!idb goodies!instance creation!public! !
-
 !Rectangle methodsFor!
 
 containsPointInclusive: aPoint
@@ -283,16 +274,8 @@ dolphinYellow
 	^self 
 		r: 255
 		g: 255
-		b: 230!
-
-fromRGBQUAD: anRGBQUAD
-	#idbAdded.
-	^self 
-		red: anRGBQUAD rgbRed
-		green: anRGBQUAD rgbGreen
-		blue: anRGBQUAD rgbBlue! !
+		b: 230! !
 !RGB class categoriesFor: #dolphinYellow!idb goodies!instance creation!public! !
-!RGB class categoriesFor: #fromRGBQUAD:!idb goodies!instance creation!public! !
 
 !RGBQUAD class methodsFor!
 

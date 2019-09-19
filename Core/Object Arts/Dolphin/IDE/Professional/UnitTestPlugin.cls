@@ -436,25 +436,25 @@ defaultAutoSwitchDelay
 	^1 seconds!
 
 defaultFailColor
-	^RGB
+	^Color
 		r: 243
 		g: 27
 		b: 65!
 
 defaultNoTestsColor
-	^RGB 
+	^Color 
 		r: 111
 		g: 158
 		b: 238!
 
 defaultPassColor
-	^RGB 
+	^Color 
 		r: 100
 		g: 210
 		b: 103!
 
 defaultRunningColor
-	^RGB 
+	^Color 
 		r: 235
 		g: 201
 		b: 65!

@@ -14,8 +14,8 @@ setSample1
 	model := GdiplusLinearGradientBrush 
 				point1: 0 @ 0
 				point2: 255 @ 0
-				color1: ARGB red
-				color2: ARGB blue!
+				color1: Color red
+				color2: Color blue!
 
 testClone
 	"force realize"
@@ -35,8 +35,8 @@ testConstructor1
 testConstructor2
 	model := GdiplusLinearGradientBrush
 				rect: (0 @ 0 extent: 255 @ 255)
-				color1: (ARGB fromInteger: 16rFFFF0000)
-				color2: (ARGB fromInteger: 16rFF0000FF)
+				color1: (Color fromArgbCode: 16rFFFF0000)
+				color2: (Color fromArgbCode: 16rFF0000FF)
 				mode: 0.
 	model asParameter.
 	self assertPersistedValid!
@@ -49,9 +49,9 @@ testFillingHorizontal
 	self setSample1.
 	graphics fillRectangle: (0 @ 0 extent: 256 @ 256) brush: model.
 	graphics free.
-	self assert: (canvas pixelAt: 0 @ 0) equals: RGB red.
-	self assert: (canvas pixelAt: 128 @ 0) equals: RGB darkMagenta.
-	self assert: (canvas pixelAt: 255 @ 0) equals: RGB blue!
+	self assert: (canvas pixelAt: 0 @ 0) equals: Color red.
+	self assert: (canvas pixelAt: 128 @ 0) equals: Color purple.
+	self assert: (canvas pixelAt: 255 @ 0) equals: Color blue!
 
 testGetBlend
 	| args answer |
@@ -88,8 +88,8 @@ testPersistentArgument
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 255 @ 0
-				color1: ARGB red
-				color2: ARGB blue.
+				color1: Color red
+				color2: Color blue.
 	pen := GdiplusPen brush: brush width: nil.
 	"realize it"
 	pen asParameter.

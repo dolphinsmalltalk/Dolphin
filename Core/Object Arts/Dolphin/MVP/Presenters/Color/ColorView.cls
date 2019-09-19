@@ -13,7 +13,7 @@ ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. T
 basicActualBackcolor
 	| color |
 	color := super basicActualBackcolor.
-	^color isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [color asRGB]!
+	^color isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [color]!
 
 displayValue
 	"Answer the displayable contents of the receiver"
@@ -24,10 +24,18 @@ displayValue: aColor
 	"Private - Set the displayable contents of the receiver, the color"
 
 	self backcolor: aColor
-! !
+!
+
+paintTransparentBackgroundOn: aCanvas
+	"The purpose of a ColorView is to present a visual representation of a Color, so we need to choose a suitable way to show the completely transparent Color none. Although strictly it will be 'invisible', leaving the client area unpainted so that the previously painted content (whatever that is) shows through, would not be helpful."
+
+	aCanvas
+		brush: (HatchBrush diamond: Color whiteSmoke);
+		fillRectangle: self clientRectangle! !
 !ColorView categoriesFor: #basicActualBackcolor!accessing!private! !
 !ColorView categoriesFor: #displayValue!private!updating! !
 !ColorView categoriesFor: #displayValue:!private!updating! !
+!ColorView categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
 
 !ColorView class methodsFor!
 

@@ -111,7 +111,7 @@ backcolor
 
 	| color |
 	color := self ambientDispatch backColor.
-	^color = Color window asColorRef ifFalse: [color]!
+	^color = Color window ifFalse: [color]!
 
 backcolor: aColor
 	"Sets the background colour of the receiver to the <Color>, color.
@@ -376,7 +376,7 @@ forecolor
 
 	| color |
 	color := self ambientDispatch foreColor.
-	^color = Color windowText asColorRef ifFalse: [color]!
+	^color = Color windowText ifFalse: [color]!
 
 forecolor: aColor
 	"Sets the ambient foreground colour of the receiver to the <Color>, color.

@@ -130,7 +130,7 @@ icon
 	^##(TextTileIcon
 		text: $\x1F4CA
 		fontName: 'Segoe UI Emoji'
-		color: (ARGB named: #forestGreen))!
+		color: Color forestGreen)!
 
 new
 	"Private - Use default to get the Singleton instance"

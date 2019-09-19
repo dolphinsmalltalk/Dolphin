@@ -11,27 +11,23 @@ ARGBTest comment: ''!
 !ARGBTest methodsFor!
 
 assertComponents: anArray isCode: anInteger
-	"Test the multiple constructors"
+	"Private - Test the multiple constructors"
 
 	self
-		assert: (ARGB
+		assert: (Color
 				alpha: anArray first
 				red: anArray second
 				green: anArray third
-				blue: anArray fourth) asParameter
+				blue: anArray fourth) argbCode
 		equals: anInteger.
-	self assert: (ARGB fromArray: anArray) asParameter equals: anInteger.
+	self assert: (Color fromArray: anArray) argbCode equals: anInteger.
 	self
-		assert: (ARGB
+		assert: (Color
 				a: anArray first
 				r: anArray second
 				g: anArray third
-				b: anArray fourth) asParameter
+				b: anArray fourth) argbCode
 		equals: anInteger!
-
-testConstructionCommon
-	model := ARGB named: #red.
-	self assert: model asParameter equals: 16rFFFF0000!
 
 testConstructionValues
 	"#(
@@ -45,24 +41,42 @@ testConstructionValues
 	#(#(#(0 0 0 0) 0) #(#(255 0 0 0) 4278190080) #(#(255 255 0 0) 4294901760) #(#(255 255 255 0) 4294967040) #(#(255 255 255 255) 4294967295))
 		do: 
 			[:each |
-			| values |
+			| values subject |
 			values := each first.
 			self assertComponents: values isCode: each second.
-			self assert: (ARGB fromInteger: each second) red equals: values second.
-			self assert: (ARGB fromInteger: each second) green equals: values third.
-			self assert: (ARGB fromInteger: each second) blue equals: values fourth]!
+			subject := ARGB fromArgbCode: each second.
+			self assert: subject red equals: values second.
+			self assert: subject green equals: values third.
+			self assert: subject blue equals: values fourth]!
 
 testEquality
-	model := ARGB named: #red.
-	self assert: model equals: (ARGB named: #red).
-	self deny: model equals: (ARGB named: #blue).
+	model := ARGB r: 255 g: 0 b: 0.
+	self assert: model equals: (ARGB r: 255 g: 0 b: 0).
+	self deny: model equals: (ARGB a: 1 r: 255 g: 0 b: 0).
 	model hash!
 
 testPrintString
-	model := ARGB fromArray: #(1 2 3 4).
-	self assert: model printString equals: '(ARGB a: 1 r: 2 g: 3 b: 4)'! !
+	model := ARGB
+				a: 1
+				r: 2
+				g: 3
+				b: 4.
+	self assert: model printString equals: '(ARGB a: 1 r: 2 g: 3 b: 4)'.
+	model := ARGB
+				a: 255
+				r: 1
+				g: 2
+				b: 3.
+	self assert: model printString equals: '(ARGB r: 1 g: 2 b: 3)'.
+	model := ARGB
+				a: 255
+				r: 218
+				g: 165
+				b: 32.
+	self assert: model printString equals: '(Color named: #goldenrod)'.
+	model := ARGB red.
+	self assert: model printString equals: 'Color red'! !
 !ARGBTest categoriesFor: #assertComponents:isCode:!asserting!public! !
-!ARGBTest categoriesFor: #testConstructionCommon!public!unit tests! !
 !ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
 !ARGBTest categoriesFor: #testEquality!public!unit tests! !
 !ARGBTest categoriesFor: #testPrintString!public!unit tests! !

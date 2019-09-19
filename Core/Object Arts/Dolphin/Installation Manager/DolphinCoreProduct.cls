@@ -96,10 +96,10 @@ contents
 	^contents!
 
 defaultSystemFolderColor
-	"Private - Reference RGB indirectly to eliminate hard dependency on Dolphin MVP Base.
-	This method will only be called if SmalltalkSystemShell is loaded, in which case RGB will be as well."
+	"Private - Reference Color indirectly to eliminate hard dependency on Dolphin MVP Base.
+	This method will only be called if SmalltalkSystemShell is loaded, in which case Color will be as well."
 
-	^(Smalltalk at: #RGB)
+	^(Smalltalk at: #Color)
 		r: 41
 		g: 124
 		b: 182.!

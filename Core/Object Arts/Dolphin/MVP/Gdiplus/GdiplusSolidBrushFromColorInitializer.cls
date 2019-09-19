@@ -10,8 +10,8 @@ GdiplusSolidBrushFromColorInitializer comment: ''!
 !GdiplusSolidBrushFromColorInitializer categoriesForClass!Unclassified! !
 !GdiplusSolidBrushFromColorInitializer methodsFor!
 
-color: anARGB
-	color := anARGB asARGB!
+color: aColor
+	color := aColor!
 
 createHandle
 	"Private -  SolidBrush(IN const Color& color)
@@ -23,7 +23,7 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	(status := self library gdipCreateSolidFill: color asParameter brush: gpHandle) == Ok
+	(status := self library gdipCreateSolidFill: color argbCode brush: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
@@ -35,7 +35,7 @@ gdiplusConstructorErrorDescription
 
 !GdiplusSolidBrushFromColorInitializer class methodsFor!
 
-color: anARGB
-	^self new color: anARGB! !
+color: aColor
+	^self new color: aColor! !
 !GdiplusSolidBrushFromColorInitializer class categoriesFor: #color:!instance creation!public! !
 

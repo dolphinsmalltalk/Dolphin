@@ -238,7 +238,7 @@ resource_Horizontalvertical_splitter
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Splitter) 34 12 nil nil 34 2 8 1140850688 1 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 416 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 562 9 9 nil 576 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 562 3839 21 562 951 11 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 15 0 0 0] 8 #() 562 193 193 nil 27 )!
 
-stbConvertFromVersion12: anArray 
+stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds
 	inheritable background colours if the backcolor is nil (similar to the way fonts are
 	inherited). The special colour 'default' can be used to specify the control's default
@@ -246,11 +246,8 @@ stbConvertFromVersion12: anArray
 
 	| backcolor |
 	backcolor := anArray at: 6.
-	(backcolor = ##(RGB 
-				r: 225
-				g: 225
-				b: 225) 
-		or: [backcolor = Color face3d]) ifTrue: [anArray at: 6 put: Color default].
+	(backcolor = ##(Color brightness: 225 / 255) or: [backcolor = Color face3d])
+		ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
 !Splitter class categoriesFor: #icon!constants!public! !
 !Splitter class categoriesFor: #resource_Horizontalvertical_splitter!public!resources-views! !

@@ -32,7 +32,7 @@ struct tagRGBQUAD {
 asColor
 	"Answer the <Color> equivalent of the receiver."
 
-	^Color fromInteger: (bytes dwordAtOffset: 0)!
+	^Color fromRgbCode: (bytes dwordAtOffset: 0)!
 
 rgbBlue
 	"Answer the <Integer> value of the receiver's 'rgbBlue' field."
@@ -92,15 +92,11 @@ defineFields
 		defineField: #rgbRed type: BYTEField new;
 		defineField: #rgbReserved type: BYTEField filler!
 
-fromColor: aColor 
+fromColor: aColor
 	"Answer a new instance of the receiver equivalent to the <Color> argument."
 
-	| rgb |
-	rgb := aColor asRGB.
-	^(self new)
-		rgbRed: rgb red;
-		rgbGreen: rgb green;
-		rgbBlue: rgb blue;
+	^self new bytes
+		dwordAtOffset: 0 put: aColor rgbCode;
 		yourself!
 
 getFieldNames

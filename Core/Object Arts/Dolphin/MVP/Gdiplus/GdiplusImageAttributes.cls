@@ -22,8 +22,8 @@ colorKeys: aColorAdjustTypeConstant colorLow: lowARGB colorHigh: highARGB
 				gdipSetImageAttributesColorKeys: self asParameter
 				type: aColorAdjustTypeConstant
 				enableFlag: true asParameter
-				colorLow: lowARGB asParameter
-				colorHigh: highARGB asParameter) = Ok 
+				colorLow: lowARGB argbCode
+				colorHigh: highARGB argbCode) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesColorKeys failed' with: status]!
 
 colorMatrix: aColorMatrix
@@ -129,13 +129,13 @@ exampleColorBars2
 	bitmap := GdiplusBitmap extent: 160 @ 120.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.4 0.4 0.4)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.4 0.2 0.2)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.2 0.2)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.2 0.4 0.2)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0.4 0.2)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.4 0.4 0.8))).
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.8))).
 	^bitmap!
 
 exampleColorBars3
@@ -143,13 +143,13 @@ exampleColorBars3
 	bitmap := GdiplusBitmap extent: 160 @ 120.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.6 0.6 0.6)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.6 0.6 0.6)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0 1 1)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 1 1)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 1 1 0)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 1 0 1))).
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 0 1))).
 	^bitmap!
 
 exampleColorBars4
@@ -157,13 +157,13 @@ exampleColorBars4
 	bitmap := GdiplusBitmap extent: 160 @ 120.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0 0 1)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 0 1)));
 		fillRectangle: (40 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.5 1 0.5)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.5 1 0.5)));
 		fillRectangle: (80 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 1 1 0)));
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
 		fillRectangle: (120 @ 0 extent: 40 @ 120)
-			brush: (GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.4 0.4 0.4))).
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4))).
 	^bitmap!
 
 exampleColorKeyTest
@@ -171,11 +171,11 @@ exampleColorKeyTest
 	bitmap := GdiplusBitmap extent: 160 @ 120.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (ARGB fromArray: #(255 90 90 20)));
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 90 90 20)));
 		fillRectangle: (0 @ 40 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (ARGB fromArray: #(255 130 130 40)));
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 130 130 40)));
 		fillRectangle: (0 @ 80 extent: 160 @ 40)
-			brush: (GdiplusSolidBrush color: (ARGB fromArray: #(255 150 150 150))).
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 150 150 150))).
 	^bitmap!
 
 exampleGdipIAAlphaBlending
@@ -193,7 +193,7 @@ exampleGdipIAAlphaBlending
 	"Create an ImageAttributes object and set its color matrix. "
 	imageAtt := GdiplusImageAttributes new colorMatrix: colorMatrix.
 	"First draw a wide black line. "
-	pen := GdiplusPen color: (ARGB fromArray: #(255 0 0 0)) width: 5.
+	pen := GdiplusPen color: (Color fromArray: #(255 0 0 0)) width: 5.
 	graphics drawLine: (10 @ 55 corner: 200 @ 55) pen: pen.
 	"Now draw the semitransparent bitmap image"
 	graphics 
@@ -218,8 +218,8 @@ exampleGdipIAColorKey
 	image := GdiplusImageAttributes exampleColorKeyTest.
 	(imageAtt := GdiplusImageAttributes new) 
 		colorKeys: ColorAdjustTypeBitmap
-		colorLow: (ARGB fromArray: #(255 100 95 30))
-		colorHigh: (ARGB fromArray: #(255 250 245 60)).
+		colorLow: (Color fromArray: #(255 100 95 30))
+		colorHigh: (Color fromArray: #(255 250 245 60)).
 	graphics
 		drawImage: image at: 10 @ 70;
 		drawImage: image
@@ -243,7 +243,7 @@ exampleGdipIAColorMatrix
 	| bitmap image brush colorMatrix imageAttributes |
 	image := GdiplusBitmap extent: 160 @ 120.
 	"Create an image that's a solid color."
-	brush := GdiplusSolidBrush color: (ARGB fromNormalizedArray: #(1 0.2 0 0.4)).
+	brush := GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0 0.4)).
 	image graphics fillRectangle: (Point zero extent: image extent) brush: brush.
 	"Create a color matrix and draw the image unchanged and changed."
 	(colorMatrix := GpColorMatrix identity)
@@ -290,11 +290,11 @@ exampleGdipIAColorRemap
 	image := self exampleRemapInput.
 	table := StructureArray length: 1 elementClass: GpColorMap.
 	(table at: 1)
-		oldColor: ARGB red asParameter;
-		newColor: (ARGB fromArray: #(0 100 100 0))  asParameter.
+		oldColor: Color red argbCode;
+		newColor: Color blue argbCode.
 	imageAttributes := GdiplusImageAttributes new remapTable: table.
 	bitmap := GdiplusBitmap extent: 400 @ 200.
-	(bitmap graphics)
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
 			at: 200 @ 10
@@ -549,11 +549,11 @@ exampleRemapInput
 	| bitmap |
 	bitmap := GdiplusBitmap extent: 160 @ 120.
 	bitmap graphics
-		clear: ARGB red;
-		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (GdiplusSolidBrush color: (ARGB named: #yellow));
-		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (GdiplusSolidBrush color: (ARGB named: #cyan));
-		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (GdiplusSolidBrush color: ARGB green);
-		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (GdiplusSolidBrush color: (ARGB named: #magenta)).
+		clear: Color red;
+		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (GdiplusSolidBrush color: Color yellow);
+		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (GdiplusSolidBrush color: Color cyan);
+		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (GdiplusSolidBrush color: Color green);
+		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (GdiplusSolidBrush color: Color magenta).
 	^bitmap!
 
 new

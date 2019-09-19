@@ -89,11 +89,7 @@ icon
 
 initialize
 	WordWrap := true.
-	ThemeColor addNamed: #commentWorkspace
-		color: (RGB
-				r: 255
-				g: 255
-				b: 235)!
+	ThemeColor addNamed: #commentWorkspace color: Color ivory!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

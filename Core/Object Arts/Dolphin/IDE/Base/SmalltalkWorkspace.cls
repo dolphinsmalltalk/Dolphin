@@ -1760,40 +1760,40 @@ defaultFont: aFontOrNil
 defaultIndicatorStyles
 	"Answer the default indicators styles to be used in workspaces."
 
-	^(OrderedCollection new)
-		add: ((ScintillaIndicatorStyle new)
-					forecolor: Color darkGreen;
+	^OrderedCollection new
+		add: (ScintillaIndicatorStyle new
+					forecolor: Color commonGreen;
 					style: #hidden;
 					name: #Notification;
 					yourself);
-		add: ((ScintillaIndicatorStyle new)
+		add: (ScintillaIndicatorStyle new
 					forecolor: Color blue;
 					style: #squiggle;
 					name: #Warning;
 					yourself);
-		add: ((ScintillaIndicatorStyle new)
+		add: (ScintillaIndicatorStyle new
 					forecolor: Color red;
 					style: #squiggle;
 					name: #Error;
 					yourself);
-		add: ((ScintillaIndicatorStyle new)
+		add: (ScintillaIndicatorStyle new
 					alpha: 40;
 					foreAlpha: 65;
-					forecolor: (RGB 
+					forecolor: (Color
 								r: 0
 								g: 128
 								b: 192);
-					style: #straightBox ;
+					style: #straightBox;
 					name: #braceHighlight;
 					yourself);
-		add: ((ScintillaIndicatorStyle new)
+		add: (ScintillaIndicatorStyle new
 					alpha: 55;
 					foreAlpha: 128;
 					forecolor: Color red;
 					style: #straightBox;
 					name: #braceMismatch;
 					yourself);
-		add: ((ScintillaIndicatorStyle new)
+		add: (ScintillaIndicatorStyle new
 					alpha: 15;
 					style: #roundBox;
 					name: #secondarySelection;
@@ -1869,7 +1869,7 @@ defaultTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #comment)
 					description: 'Comments in method source';
-					forecolor: Color darkGreen;
+					forecolor: Color commonGreen;
 					isItalic: true;
 					yourself);
 		add: ((ScintillaTextStyle name: #identifier)
@@ -1917,27 +1917,27 @@ defaultTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #literalPseudo)
 					description: 'The literal constants true, false and nil';
-					forecolor: Color darkCyan;
+					forecolor: Color teal;
 					yourself);
 		add: ((ScintillaTextStyle name: #literalNumber)
 					description: 'Numeric literal constants, e.g. 1.2e6';
-					forecolor: Color darkRed;
+					forecolor: Color maroon;
 					yourself);
 		add: ((ScintillaTextStyle name: #literalString)
 					description: 'Literal string constants, e.g. ''abc''';
-					forecolor: Color darkMagenta;
+					forecolor: Color purple;
 					yourself);
 		add: ((ScintillaTextStyle name: #literalSymbol)
 					description: 'Literal symbol constants, e.g. #abc';
-					forecolor: Color darkBlue;
+					forecolor: Color navy;
 					yourself);
 		add: ((ScintillaTextStyle name: #literalCharacter)
 					description: 'Literal character constants, e.g. $A';
-					forecolor: Color darkBlue;
+					forecolor: Color navy;
 					yourself);
 		add: ((ScintillaTextStyle name: #literalBytes)
 					description: 'Literal byte arrays, e.g. #[0 1 2]';
-					forecolor: Color brown;
+					forecolor: Color olive;
 					yourself);
 		add: ((ScintillaTextStyle name: #assignment)
 					description: 'Assignment operation, i.e. :=';
@@ -1960,12 +1960,12 @@ defaultTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #tag)
 					description: 'Primitive or external call tag, e.g. <primitive: 1>';
-					forecolor: Color darkGray;
+					forecolor: Color gray;
 					isItalic: true;
 					yourself);
 		add: ((ScintillaTextStyle name: #whitespace)
 					description: 'Whitespace, when visible';
-					forecolor: Color gray;
+					forecolor: Color silver;
 					yourself);
 		yourself.
 	self assert: [answer size < 32].

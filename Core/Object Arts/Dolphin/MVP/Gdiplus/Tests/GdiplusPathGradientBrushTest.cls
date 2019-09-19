@@ -12,9 +12,9 @@ GdiplusPathGradientBrushTest comment: ''!
 
 rgb
 	^Array 
-		with: ARGB red
-		with: ARGB green
-		with: ARGB blue!
+		with: Color red
+		with: Color green
+		with: Color blue!
 
 setSample2Points
 	model := GdiplusPathGradientBrush points: (Array with: 100 @ 0 with: 200 @ 150)!
@@ -45,10 +45,10 @@ testBlendColors
 	| colors positions |
 	self setSampleEllipsePath.
 	colors := Array
-				with: ARGB red
-				with: ARGB green
-				with: ARGB blue
-				with: ARGB magenta.
+				with: Color red
+				with: Color green
+				with: Color blue
+				with: Color magenta.
 	positions := #(0 1.0e-001 0.5 1).
 	model blendColors: colors positions: positions.
 	self assert: model blendColorsCount equals: colors size.
@@ -71,8 +71,8 @@ testBounds
 
 testCenterColor
 	self setSampleEllipsePath.
-	model centerColor: ARGB red.
-	self assert: model centerColor equals: ARGB red!
+	model centerColor: Color red.
+	self assert: model centerColor equals: Color red!
 
 testCenterPoint
 	| point |
@@ -145,8 +145,8 @@ testScaleTransform
 
 testSurroundColors
 	self setSampleEllipsePath.
-	model surroundColor: ARGB green.
-	self assert: (model surroundColors allSatisfy: [:e | e = ARGB green]).
+	model surroundColor: Color green.
+	self assert: (model surroundColors allSatisfy: [:e | e = Color green]).
 	self setSample3Points.
 	model surroundColors: self rgb.
 	self assert: model surroundColors equals: self rgb!

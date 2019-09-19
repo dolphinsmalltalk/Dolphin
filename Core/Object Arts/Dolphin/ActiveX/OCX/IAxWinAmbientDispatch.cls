@@ -171,7 +171,7 @@ backColor
 	| answer |
 	answer := DWORD new.
 	self get_BackColor: answer.
-	^Color fromInteger: answer value!
+	^Color fromCOLORREF: answer value!
 
 backColor: aColor 
 	"Set the 'BackColor' property of the receiver to the <dword> value of the argument.
@@ -179,7 +179,7 @@ backColor: aColor
 
 	"Implementation Note: Modify auto-generated method to take a <Color> as the argument."
 
-	self put_BackColor: (aColor ifNil: [Color window]) asColorRef asParameter!
+	self put_BackColor: (aColor ifNil: [Color window]) asCOLORREF!
 
 displayAsDefault
 	"Answer the <varbool> value of the 'DisplayAsDefault' property of the receiver.
@@ -258,7 +258,7 @@ foreColor
 	| answer |
 	answer := DWORD new.
 	self get_ForeColor: answer.
-	^Color fromInteger: answer value!
+	^Color fromCOLORREF: answer value!
 
 foreColor: aColor 
 	"Set the 'ForeColor' property of the receiver to the <dword> value of the argument.
@@ -266,7 +266,7 @@ foreColor: aColor
 
 	"Implementation Note: Modify auto-generated method to take a <Color> as the argument."
 
-	self put_ForeColor: (aColor ifNil: [Color windowText]) asColorRef asParameter!
+	self put_ForeColor: (aColor ifNil: [Color windowText]) asCOLORREF!
 
 get_AllowContextMenu: pbAllowContextMenu
 	"Private - Get the value of the 'AllowContextMenu' property of the receiver.

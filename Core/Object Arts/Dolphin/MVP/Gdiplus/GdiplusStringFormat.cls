@@ -259,8 +259,8 @@ exampleGdipSFGenerics
 		brush: brush.
 	graphics drawRectangle: rect pen: pen.
 	rect moveBy: 0 @ 100.
-	pen color: ARGB red.
-	brush color: ARGB red.
+	pen color: Color red.
+	brush color: Color red.
 	stringFormat := GdiplusStringFormat genericTypographic.
 	graphics
 		drawString: 'This text was formatted by a typographic StringFormat object.'
@@ -270,8 +270,8 @@ exampleGdipSFGenerics
 		brush: brush.
 	graphics drawRectangle: rect pen: pen.
 	rect moveBy: 0 @ 100.
-	pen color: ARGB black.
-	brush color: ARGB black.
+	pen color: Color black.
+	brush color: Color black.
 	stringFormat := GdiplusStringFormat new.
 	graphics
 		drawString: 'This text was formatted by a new StringFormat object.'

@@ -70,7 +70,6 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus'
 	'IDB Common').
 
 package!

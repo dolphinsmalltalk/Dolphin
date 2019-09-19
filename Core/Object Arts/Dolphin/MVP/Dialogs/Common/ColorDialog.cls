@@ -30,22 +30,14 @@ basicShowModal
 defaultColor
 	^ColorRef defaultColorRepresentation!
 
-extractResult: aBoolean 
+extractResult: aBoolean
 	"Private - Extract and apply the result from the parameter structure passed to the Win32 API
 	associated with this common dialog, immediately after the call to that API."
 
 	| color |
 	aBoolean ifFalse: [^self checkError].
 	color := self winStruct color.
-	color = self defaultColor 
-		ifTrue: [self value: Color default]
-		ifFalse: 
-			[color isNone 
-				ifFalse: 
-					[| std |
-					std := color asIndexedColor.
-					std asRGB = color ifTrue: [color := std] ifFalse: [color]].
-			self value: color].
+	color = self defaultColor ifTrue: [self value: Color default] ifFalse: [self value: color].
 	self apply!
 
 initialize
@@ -60,11 +52,11 @@ prepareStruct
 
 	| customColors color |
 	customColors := self class customColors.
-	customColors at: customColors size put: self defaultColor asParameter.
+	customColors at: customColors size put: self defaultColor asCOLORREF.
 	color := self value isNil ifTrue: [self defaultColor] ifFalse: [self value].
 	(self winStruct)
 		hInstance: VMLibrary default applicationHandle;
-		rgbResult: color asColorRef asParameter;
+		rgbResult: color rgbCode;
 		maskIn: CC_RGBINIT;
 		lpCustColors: customColors!
 
@@ -112,7 +104,7 @@ customColors
 		ifTrue: 
 			[| white |
 			CustomColors := DWORDArray new: 16.
-			white := Color white asParameter.
+			white := Color white asCOLORREF.
 			1 to: 15 do: [:index | CustomColors at: index put: white]].
 	^CustomColors!
 

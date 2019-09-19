@@ -96,14 +96,10 @@ blue
 
 	^self color: Color blue!
 
-color: aColour
-	"Answer a new instance of the receiver with the specified colour."
-	
-	^self
-		withStyle: PS_SOLID
-		width: 1
-		color: aColour.
-!
+color: aColor
+	"Answer a new instance of the receiver for painting solid 1-pixel lines in the specified <Color>."
+
+	^aColor pen!
 
 dashDot
 	^self withStyleName: #dashDot!
@@ -139,6 +135,23 @@ icon
 insideFrame
 	^self withStyleName: #insideFrame!
 
+newColor: aColor 
+	"Private - Answer a new instance of the receiver for painting 1-pixel wide lines in the specified solid colour."
+
+	^self 
+		withStyle: BS_SOLID
+		width: 1
+		color: aColor!
+
+none
+	"Answer a null <Pen>"
+
+	^self
+		withStyle: PS_NULL
+		width: 1
+		color: Color none
+	!
+
 red
 	"Answer a red pen."
 
@@ -159,13 +172,11 @@ white
 withStyle: styleFlags width: anInteger color: aColour
 	"Answer a new instance of the receiver with the specified style, width and colour attributes."
 
-	^self fromLogPen:
-		((LOGPEN new)
-			style: styleFlags;
-			width: anInteger;
-			color: aColour;
-			yourself)
-!
+	^self fromLogPen: (LOGPEN newBuffer
+				style: styleFlags;
+				width: anInteger;
+				color: aColour;
+				yourself)!
 
 withStyleName: aString
 	^self
@@ -183,6 +194,8 @@ withStyleName: aString
 !Pen class categoriesFor: #green!instance creation!public! !
 !Pen class categoriesFor: #icon!constants!public! !
 !Pen class categoriesFor: #insideFrame!instance creation!public! !
+!Pen class categoriesFor: #newColor:!instance creation!private! !
+!Pen class categoriesFor: #none!instance creation!public! !
 !Pen class categoriesFor: #red!instance creation!public! !
 !Pen class categoriesFor: #solid!instance creation!public! !
 !Pen class categoriesFor: #styleNames!constants!private! !

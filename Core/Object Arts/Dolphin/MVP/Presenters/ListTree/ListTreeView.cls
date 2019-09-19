@@ -2330,7 +2330,7 @@ fillStateImageManager
 	smallBox := 5@5 corner: 12@12.
 	hLineF := 6@8. hLineT := 11@8.
 	vLineF := 8@6. vLineT := 8@11.
-	boxPen := Pen color: Color darkGray.
+	boxPen := Pen color: Color gray.
 	linePen := Pen color: Color black.
 
 	"NB: the order of insertion of images *must* match the output of:

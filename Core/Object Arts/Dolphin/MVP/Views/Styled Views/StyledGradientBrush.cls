@@ -37,7 +37,7 @@ endColor: aColorOrNil
 	endColor := aColorOrNil!
 
 endColorARGB
-	^(self endColor ifNotNil: [:c | c] ifNil: [Color none]) asARGB!
+	^(self endColor ifNotNil: [:c | c] ifNil: [Color none])!
 
 endPoint
 	^endPoint!
@@ -71,7 +71,7 @@ startColor: aColorOrNil
 	startColor := aColorOrNil!
 
 startColorARGB
-	^(self startColor ifNotNil: [:c | c] ifNil: [Color none]) asARGB!
+	^(self startColor ifNotNil: [:c | c] ifNil: [Color none])!
 
 startPoint
 	^startPoint!

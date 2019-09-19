@@ -14,13 +14,13 @@ VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an 
 actualColor
 	^self subclassResponsibility!
 
-asIndexedColor
-	"Answer the receiver as an IndexedColour."
+argbCode
+	"Answer the receiver's colour value in 32-bit ARGB encoding with 8-bits per component in alpha, red, green, blue order."
 
-	^self actualColor asIndexedColor!
+	^self actualColor argbCode!
 
 asParameter
-	"Answer the receiver in a form suitable for an API call."
+	"It is recommended not to use this conversion, as the result will vary depending on the colour encoding, and so may not work if the encoding is not that expected by the API being called. Rather you should use (for example) #rgbCode or #argbCode."
 
 	^self actualColor asParameter!
 
@@ -37,11 +37,17 @@ isDefault
 isNone
 	"Answer whether the <Color> to which the receiver resolves is 'Color none'"
 
-	^self actualColor isNone! !
+	^self actualColor isNone!
+
+rgbCode
+	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
+
+	^self actualColor rgbCode! !
 !VirtualColor categoriesFor: #actualColor!accessing!private! !
-!VirtualColor categoriesFor: #asIndexedColor!converting!public! !
+!VirtualColor categoriesFor: #argbCode!converting!public! !
 !VirtualColor categoriesFor: #asParameter!converting!public! !
 !VirtualColor categoriesFor: #asRGB!converting!public! !
 !VirtualColor categoriesFor: #isDefault!public!testing! !
 !VirtualColor categoriesFor: #isNone!public!testing! !
+!VirtualColor categoriesFor: #rgbCode!converting!public! !
 

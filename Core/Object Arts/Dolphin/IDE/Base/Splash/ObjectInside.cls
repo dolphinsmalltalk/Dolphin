@@ -59,8 +59,8 @@ drawOn: aGdiplusGraphics
 			| table |
 			table := StructureArray length: 1 elementClass: GpColorMap.
 			(table at: 1)
-				oldColor: self baseColor asARGB asParameter;
-				newColor: col asARGB asParameter.
+				oldColor: self baseColor argbCode;
+				newColor: col argbCode.
 			attributes remapTable: table].
 	self alpha 
 		ifNotNil: 
@@ -131,7 +131,7 @@ initialize
 	scale := 1.
 	rotation := 0.
 	alpha := 1.
-	baseColor := ARGB black.
+	baseColor := Color black.
 	position := Point zero
 !
 
@@ -176,10 +176,10 @@ setImage: aGdiplusImage
 !
 
 testCollisionIn: aGdiplusBitmap
-	| pts |
-	pts := self matrix transformPoints: self edgePoints.
-	^(pts asArray anySatisfy: [:each | 
-		([aGdiplusBitmap pixelAt: each] on: Error do: [:e | nil]) ~= ARGB white])!
+	| white |
+	white := Color white.
+	^(self matrix transformPoints: self edgePoints)
+		anySatisfy: [:each | ([aGdiplusBitmap pixelAt: each] on: Error do: [:e | nil]) ~= white]!
 
 transparentColor
 	^##(Color

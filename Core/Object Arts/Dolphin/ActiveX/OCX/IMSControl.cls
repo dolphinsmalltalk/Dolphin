@@ -47,7 +47,7 @@ backColor
 	| answer |
 	answer := DWORD new.
 	self get_BackColor: answer.
-	^Color fromInteger: answer value!
+	^Color fromCOLORREF: answer value!
 
 backColor: aColor
 	"Set the 'BackColor' property of the receiver to the <ColorRef> value of the argument.
@@ -71,10 +71,10 @@ borderStyle: psBorderStyle
 	self put_BorderStyle: psBorderStyle!
 
 convertToBackColorRef: aColor 
-	^(aColor ifNil: [Color window]) asColorRef asParameter!
+	^(aColor ifNil: [Color window]) asCOLORREF!
 
 convertToForeColorRef: aColor 
-	^(aColor ifNil: [Color windowText]) asColorRef asParameter!
+	^(aColor ifNil: [Color windowText]) asCOLORREF!
 
 enabled
 	"Answer the <varbool> value of the 'Enabled' property of the receiver.
@@ -113,7 +113,7 @@ foreColor
 	| answer |
 	answer := DWORD new.
 	self get_ForeColor: answer.
-	^Color fromInteger: answer value!
+	^Color fromCOLORREF: answer value!
 
 foreColor: aColor
 	"Set the 'ForeColor' property of the receiver to the <ColorRef> value of the argument.

@@ -54,7 +54,7 @@ icon
 
 redIcon
 	^##((TextTileIcon text: $\x1F3B1 fontName: 'Segoe UI Emoji')
-		textcolor: (ARGB named: #crimson);
+		textcolor: Color crimson;
 		yourself)!
 
 yellowIcon

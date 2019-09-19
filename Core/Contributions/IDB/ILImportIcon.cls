@@ -31,8 +31,8 @@ images
 						do: 
 							[:x | 
 							each useMaskBytes.
-							(self colorAtPoint: x @ y in: each) = RGB white 
-								ifTrue: [colors nextPut: RGB dolphinYellow]
+							(self colorAtPoint: x @ y in: each) = Color white 
+								ifTrue: [colors nextPut: Color dolphinYellow]
 								ifFalse: 
 									[each useColorBytes.
 									colors nextPut: (self colorAtPoint: x @ y in: each)]]].

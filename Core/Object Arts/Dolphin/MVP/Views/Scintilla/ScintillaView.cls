@@ -126,7 +126,7 @@ activeHotspotBackcolor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETHOTSPOTACTIVEBACK
 						wParam: 0
@@ -912,7 +912,7 @@ callTipForecolor: aColorOrNil
 	then the default colour (dark grey) is set."
 
 	| color |
-	color := aColorOrNil ifNil: [Color darkGray].
+	color := aColorOrNil ifNil: [Color gray].
 	self sciCallTipSetFore: color asRGB.
 	self callTipStyle backcolor: color!
 
@@ -1099,7 +1099,7 @@ caretForecolor
 caretForecolor: foreRGB 
 	"Set the foreground colour of the caret."
 
-	self sciSetCaretFore: (foreRGB ifNil: [RGB black]) asRGB!
+	self sciSetCaretFore: (foreRGB ifNil: [Color black]) asRGB!
 
 caretPeriod
 	"Get the time in milliseconds that the caret is on and off."
@@ -1446,7 +1446,7 @@ currentLineBackcolor: backRGB
 	#currentLineAlpha to some reasonable transparency value (100 or less), or the background
 	will obliterate the text."
 
-	self sciSetCaretLineBack: (backRGB ifNil: [RGB yellow]) asRGB!
+	self sciSetCaretLineBack: (backRGB ifNil: [Color yellow]) asRGB!
 
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
@@ -1819,7 +1819,7 @@ edgeColor
 edgeColor: aColorOrNil
 	"Set the edge colour used to highlight long lines (those longer than the #edgeColumn setting)."
 
-	self sciSetEdgeColour: (aColorOrNil ifNil: [RGB fromInteger: 16rC0C0C0]) asRGB!
+	self sciSetEdgeColour: (aColorOrNil ifNil: [Color fromRgbCode: 16rC0C0C0]) asRGB!
 
 edgeColumn
 	"Retrieve the column number which text should be kept within."
@@ -3245,7 +3245,7 @@ initialize
 	allTextStyles := IdentityDictionary new.
 	styles := self class defaultTextStyles.
 	self setCurrentTextStyles: styles.
-	selectionBackcolor := Color gray.
+	selectionBackcolor := Color silver.
 	codePage := scFlags := 0.
 	self initializeRegisteredImages.!
 
@@ -3275,7 +3275,7 @@ initializeControl
 	"Note that if any primary selection foreground/background colors are set, then any second
 	selection colours will also be set"
 	selectionForecolor ifNotNil: [self setSelectionForecolor].
-	selectionBackcolor = Color gray ifFalse: [self setSelectionBackcolor].
+	selectionBackcolor = Color silver ifFalse: [self setSelectionBackcolor].
 	callTipHighlightColor ifNotNil: [self setCallTipHighlightColor].
 	foldMarginColor ifNotNil: [self setFoldMarginColor].
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
@@ -9521,7 +9521,7 @@ secondaryCaretForecolor: foreRGB
 		sciSetAdditionalCaretFore: (foreRGB
 				ifNil: 
 					["Use default hardcoded in Scintilla"
-					RGB fromInteger: 16r7F7F7F]) asRGB!
+					Color fromRgbCode: 16r7F7F7F]) asRGB!
 
 secondarySelectionAlpha
 	"Get the alpha of the selection."
@@ -9803,7 +9803,7 @@ setCallTipHighlightColor
 		sciCallTipSetForeHlt: (callTipHighlightColor
 				ifNil: 
 					["Set to default hardcoded in the control"
-					RGB darkBlue]) asRGB!
+					Color navy]) asRGB!
 
 setCallTipTabWidth
 	self sciCallTipUseStyle: callTipTabWidth!
@@ -9982,7 +9982,7 @@ setSecondarySelectionBackcolor
 					selectionBackcolor
 						ifNil: 
 							["And if even that is not specified, use the hardcoded default in Scintilla"
-							RGB fromInteger: 16rD7D7D7]])
+							Color fromRgbCode: 16rD7D7D7]])
 					asRGB!
 
 setSecondarySelectionForecolor
@@ -9993,7 +9993,7 @@ setSecondarySelectionForecolor
 					selectionForecolor
 						ifNil: 
 							["And if even that is not specified use the hardcoded default in the control"
-							RGB red]])
+							Color red]])
 					asRGB!
 
 setSelectionBackcolor
@@ -10167,13 +10167,13 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(RGB
-		black)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(RGB fromInteger: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#currentLineBackcolor: #currentLineBackcolor ##(RGB
+	#(#(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color
+		black)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(Color fromRgbCode: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#currentLineBackcolor: #currentLineBackcolor ##(Color
 		yellow)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
 		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#targetRange: #targetRange ##(1
-		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0)  #(#edgeColumn: #edgeColumn 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(RGB
-		fromInteger: 16rC0C0C0)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(RGB
-		white)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(RGB blue)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
+		to: 0)) #(#sciSetViewWS: #sciGetViewWS ##(SCWS_INVISIBLE)) #(#autoCompletionSeparator: #autoCompletionSeparator $\x20) #(#autoCompletionImageIdSeparator: #autoCompletionImageIdSeparator $?) #(#isAutoCompletionCancelledAtStart: #isAutoCompletionCancelledAtStart true) #(#isAutoCompletionCaseInsensitive: #isAutoCompletionCaseInsensitive false) #(#isAutoCompletionCancelledWhenNoMatch: #isAutoCompletionCancelledWhenNoMatch true) #(#isAutoCompletionTruncating: #isAutoCompletionTruncating false) #(#maxCompletionListHeight: #maxCompletionListHeight 5) #(#maxCompletionListWidth: #maxCompletionListWidth 0)  #(#edgeColumn: #edgeColumn 0) #(#sciSetEdgeMode: #sciGetEdgeMode ##(EDGE_NONE)) #(#edgeColor: #edgeColor ##(Color
+		fromRgbCode: 16rC0C0C0)) #(#zoomLevel: #zoomLevel 0) #(#setLexerLanguage: #lexer #container) #(#controlCharacter: #controlCharacter nil) #(#selectionAlpha: #selectionAlpha ##(SC_ALPHA_NOALPHA)) #(#secondarySelectionAlpha: #secondarySelectionAlpha ##(SC_ALPHA_NOALPHA)) #(#positionCacheSize: #positionCacheSize 1024) #(#activeHotspotBackcolor: #activeHotspotBackcolor ##(Color
+		white)) #(#activeHotspotForecolor: #activeHotspotForecolor ##(Color blue)) #(#areHotspotsSingleLine: #areHotspotsSingleLine true) #(#sciAnnotationSetVisible: #sciAnnotationGetVisible ##(ANNOTATION_HIDDEN)) #(#setRawAnnotations: #getRawAnnotations ##(OrderedCollection
 		new)) #(#extraAscent: #extraAscent 0) #(#extraDescent: #extraDescent 0) #(#areAdditionalCaretsVisible: #areAdditionalCaretsVisible true) #(#sciSetTechnology: #sciGetTechnology ##(SC_TECHNOLOGY_DEFAULT)) #(#sciSetFontQuality: #sciGetFontQuality ##(SC_EFF_QUALITY_DEFAULT)) #(#whitespaceMarkerSize: #whitespaceMarkerSize 1) #(#sciSetMultiPaste: #sciGetMultiPaste ##(SC_MULTIPASTE_ONCE)) #(#sciSetIMEInteraction: #sciGetIMEInteraction ##(SC_IME_WINDOWED)) #(#sciAutoCSetOrder: #sciAutoCGetOrder ##(SC_ORDER_PRESORTED)) #(#sciSetPhasesDraw: #sciGetPhasesDraw ##(SC_PHASES_TWO)) #(#sciSetIdleStyling: #sciGetIdleStyling ##(SC_IDLESTYLING_NONE)) #(#isMouseWheelCaptured: #isMouseWheelCaptured true) #(#sciSetTabDrawMode: #sciGetTabDrawMode 0) #(#sciSetAccessibility: #sciGetAccessibility 0) #(#currentLineFrameWidth: #currentLineFrameWidth 0) #(#isAccessibilityEnabled: #isAccessibilityEnabled false) #(#sciSetWrapIndentMode: #sciGetWrapIndentMode ##(SC_WRAPINDENT_FIXED)) #(#sciFoldDisplayTextSetStyle: #sciFoldDisplayTextGetStyle 0) #(#defaultFoldTextTag: #defaultFoldTextTag '') #(#hasAdditionalSelectionTyping: #hasAdditionalSelectionTyping false))
 			do: 
 				[:each |
@@ -12057,7 +12057,7 @@ defaultAnnotationStyles
 defaultCallTipStyle
 	^(ScintillaTextStyle name: #callTip)
 		backcolor: Color white;
-		forecolor: Color darkGray;
+		forecolor: Color gray;
 		yourself!
 
 defaultKeyMap
@@ -12421,7 +12421,7 @@ smalltalkTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #symbol)
 					id: 4;
-					forecolor: Color darkMagenta;
+					forecolor: Color purple;
 					yourself);
 		add: ((ScintillaTextStyle name: #binary)
 					id: 5;
@@ -12462,7 +12462,7 @@ smalltalkTextStyles
 					yourself);
 		add: ((ScintillaTextStyle name: #keywordSend)
 					id: 13;
-					forecolor: Color darkGreen;
+					forecolor: Color commonGreen;
 					isBold: true;
 					yourself);
 		add: ((ScintillaTextStyle name: #assignment)
@@ -12483,7 +12483,7 @@ smalltalkTextStyles
 	"Add some standard styles"
 	answer
 		add: ((ScintillaTextStyle name: #indentGuide)
-					forecolor: Color gray;
+					forecolor: Color silver;
 					yourself);
 		add: ((ScintillaTextStyle name: #braceHighlight)
 					forecolor: Color blue;
@@ -12521,7 +12521,7 @@ stbConvertFromVersion13: anArray
 	callTipBackcolor ifNotNil: [:value | callTipStyle backcolor: value].
 	callTipForecolor ifNotNil: [:value | callTipStyle forecolor: value].
 	selectionBackcolor := instVars at: 30.
-	selectionBackcolor = Color darkGray ifTrue: [instVars at: 30 put: Color gray].
+	selectionBackcolor = IndexedColor darkGray ifTrue: [instVars at: 30 put: Color silver].
 	^instVars!
 
 stbConvertFromVersion9: anArray 
@@ -12588,106 +12588,106 @@ xmlTextStyles
 				yourself).
 	styles add: ((ScintillaTextStyle name: #tag)
 				id: 1;
-				forecolor: Color darkBlue;
+				forecolor: Color navy;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #unknownTag)
 				id: 2;
-				forecolor: Color darkBlue;
+				forecolor: Color navy;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #attribute)
 				id: 3;
-				forecolor: Color darkCyan;
+				forecolor: Color teal;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #unknownAttribute)
 				id: 4;
-				forecolor: Color darkCyan;
+				forecolor: Color teal;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #number)
 				id: 5;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 0
 							g: 127
 							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #doubleString)
 				id: 6;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 127
 							g: 0
 							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #singleString)
 				id: 7;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 127
 							g: 0
 							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #otherInsideTag)
 				id: 8;
-				forecolor: Color darkMagenta;
+				forecolor: Color purple;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #comment)
 				id: 9;
-				forecolor: Color brown;
+				forecolor: Color olive;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #entity)
 				id: 10;
-				forecolor: Color darkMagenta;
+				forecolor: Color purple;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #tagEnd)
 				id: 11;
-				forecolor: Color darkBlue;
+				forecolor: Color navy;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #identifierEnd)
 				id: 12;
-				forecolor: Color darkMagenta;
+				forecolor: Color purple;
 				isBold: true;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #identifierStart)
 				id: 13;
-				forecolor: Color darkMagenta;
+				forecolor: Color purple;
 				isBold: true;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #CDATA)
 				id: 17;
-				backcolor: (RGB
+				backcolor: (Color
 							r: 255
 							g: 240
 							b: 240);
-				forecolor: Color darkRed;
+				forecolor: Color maroon;
 				isBackcolorExtendedToEndOfLine: true;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #question)
 				id: 18;
-				forecolor: Color darkRed;
+				forecolor: Color maroon;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #unquotedValue)
 				id: 19;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 96
 							g: 128
 							b: 96);
 				yourself).
-	sgmlBackcolour := RGB
+	sgmlBackcolour := Color
 				r: 239
 				g: 239
 				b: 255.
 	styles add: ((ScintillaTextStyle name: #sgmlTag)
 				id: 21;
 				backcolor: sgmlBackcolour;
-				forecolor: Color darkBlue;
+				forecolor: Color navy;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlCommand)
 				id: 22;
 				backcolor: sgmlBackcolour;
-				forecolor: Color darkBlue;
+				forecolor: Color navy;
 				isBold: true;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlFirstParam)
 				id: 23;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 0
 							g: 102
 							b: 0);
@@ -12695,28 +12695,28 @@ xmlTextStyles
 	styles add: ((ScintillaTextStyle name: #sgmlDoubleString)
 				id: 24;
 				backcolor: sgmlBackcolour;
-				forecolor: Color darkRed;
+				forecolor: Color maroon;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlSingleString)
 				id: 25;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 153
 							g: 51
 							b: 0);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlError)
 				id: 26;
-				backcolor: (RGB
+				backcolor: (Color
 							r: 255
 							g: 102
 							b: 102);
-				forecolor: Color darkRed;
+				forecolor: Color maroon;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlSpecial)
 				id: 27;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 51
 							g: 102
 							b: 255);
@@ -12724,7 +12724,7 @@ xmlTextStyles
 	styles add: ((ScintillaTextStyle name: #sgmlEntity)
 				id: 28;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB
+				forecolor: (Color
 							r: 51
 							g: 51
 							b: 51);
@@ -12732,15 +12732,15 @@ xmlTextStyles
 	styles add: ((ScintillaTextStyle name: #sgmlComment)
 				id: 29;
 				backcolor: sgmlBackcolour;
-				forecolor: Color brown;
+				forecolor: Color olive;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlBlock)
 				id: 31;
-				backcolor: (RGB
+				backcolor: (Color
 							r: 204
 							g: 204
 							b: 224);
-				forecolor: (RGB
+				forecolor: (Color
 							r: 0
 							g: 0
 							b: 102);

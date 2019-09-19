@@ -22,8 +22,8 @@ testCreateHandle
 	model
 		point1: 1 @ 2
 		point2: 3 @ 4
-		color1: (ARGB fromInteger: 1)
-		color2: (ARGB fromInteger: 2).
+		color1: (Color fromArgbCode: 1)
+		color2: (Color fromArgbCode: 2).
 	model createHandle.
 	self assert: constructorArgs size equals: 6.
 	self assert: constructorArgs first class identicalTo: POINTL.

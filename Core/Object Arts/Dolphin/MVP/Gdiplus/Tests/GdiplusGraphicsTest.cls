@@ -58,11 +58,11 @@ testDrawImageRectRect
 		from: 0 @ 0
 		extent: 100 @ 100.
 	"what exactly am I testing?"
-	self assert: (canvas pixelAt: 0 @ 0) equals: RGB white.
-	self assert: (canvas pixelAt: 1 @ 1) equals: RGB blue.
+	self assert: (canvas pixelAt: 0 @ 0) equals: Color white.
+	self assert: (canvas pixelAt: 1 @ 1) equals: Color blue.
 	"mmm ... this edge has some kind of alaising?"
-	self assert: (canvas pixelAt: 199 @ 199) equals: RGB blue.
-	self assert: (canvas pixelAt: 202 @ 202) equals: RGB white!
+	self assert: (canvas pixelAt: 199 @ 199) equals: Color blue.
+	self assert: (canvas pixelAt: 202 @ 202) equals: Color white!
 
 testDrawLine1
 	"Kick the tyres test"
@@ -105,7 +105,7 @@ testFromImage
 	self assert: model handle class identicalTo: ExternalHandle.
 	"Can the next 2 lines replace those below them?"
 	pixelColor := image pixelAt: 50 @ 50.
-	self assert: pixelColor equals: ARGB blue
+	self assert: pixelColor equals: Color blue
 	"model doWithCanvas: [:aCanvas | pixel := aCanvas getPixel: 50 @ 50]."
 	"mmm ... format 'mismatch'?"
 	"pixelColor := RGB fromInteger: pixel.

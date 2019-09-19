@@ -2836,7 +2836,7 @@ initialize
 		self initialize
 	"
 
-	LooseMethodColor := Color darkMagenta.
+	LooseMethodColor := Color purple.
 	ShowInheritedMethodsMask := 1.
 	FilterObjectMethodsMask := 2.
 	GrayedMethodFadeFactor := 2.

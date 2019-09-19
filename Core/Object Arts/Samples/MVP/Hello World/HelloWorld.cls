@@ -56,7 +56,7 @@ onPaintRequired: aPaintEvent
 	"Draw the ellipse with a grey background and red border"
 	canvas
 		pen: (Pen red width: 4);
-		brush: Color gray brush;
+		brush: Color silver brush;
 		ellipse: rect.
 
 	"Now draw the text in white. We still have the correct font set from before

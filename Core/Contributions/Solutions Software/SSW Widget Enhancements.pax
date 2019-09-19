@@ -67,8 +67,6 @@ package methodNames
 	add: #VistaThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
 	add: #WinImageList -> #draw:on:at:extent:backcolor:forecolor:flags:;
 	add: 'Color class' -> #buttonShadow;
-	add: 'Color class' -> #grayText;
-	add: 'Color class' -> #highlightText;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -163,20 +161,8 @@ prefixTextDisabled: aString at: aPoint
 
 buttonShadow
 	#deprecated.
-	^self shadow3d!
-
-grayText
-	"Answer the Gray Text system color."
-
-	^self systemColor: COLOR_GRAYTEXT!
-
-highlightText
-	"Answer the Highlight Text system color."
-
-	^self systemColor: COLOR_HIGHLIGHTTEXT! !
+	^self shadow3d! !
 !Color class categoriesFor: #buttonShadow!constants!public! !
-!Color class categoriesFor: #grayText!constants!public! !
-!Color class categoriesFor: #highlightText!constants!public! !
 
 !ComboBox methodsFor!
 
@@ -636,8 +622,8 @@ draw: imageIndexInteger on: aCanvas at: aPoint extent: exPoint backcolor: backCo
 		y: aPoint y
 		dx: exPoint x
 		dy: exPoint y
-		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asParameter])
-		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asParameter])
+		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asCOLORREF])
+		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
 		fStyle: flagsInteger! !
 !WinImageList categoriesFor: #draw:on:at:extent:backcolor:forecolor:flags:!drawing-bitmaps!public! !
 

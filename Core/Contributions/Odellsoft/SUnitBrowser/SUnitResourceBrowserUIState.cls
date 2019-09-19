@@ -47,7 +47,7 @@ iconSymbolFor: aResource
 resultStateColorSymbol
 
 	^self model unavailableResources isEmpty
-		ifTrue: [#green]
+		ifTrue: [#commonGreen]
 		ifFalse: [#red]! !
 !SUnitResourceBrowserUIState categoriesFor: #colorSymbolFor:!color!public! !
 !SUnitResourceBrowserUIState categoriesFor: #detailState!public!strings! !

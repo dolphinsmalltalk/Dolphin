@@ -295,7 +295,7 @@ setControlBackcolor: aColor
 	self 
 		sendMessage: SB_SETBKCOLOR
 		wParam: 0
-		lParam: aColor asColorRef asParameter!
+		lParam: aColor asCOLORREF!
 
 setItem: aStatusBarItem tipText: aString 
 	"Private - Set the tool-tip text of the item, aStatusOwnerDraw, to the <readableString, aString."

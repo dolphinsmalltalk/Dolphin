@@ -31,7 +31,7 @@ colorTable
 	colorTable isNil 
 		ifTrue: 
 			[colorTable := (DeviceIndependentBitmap colorTableForDepth: 8) 
-						collect: [:each | RGB fromRGBQUAD: each]].
+						collect: [:each | each asColor]].
 	^colorTable!
 
 indexOf: aPoint

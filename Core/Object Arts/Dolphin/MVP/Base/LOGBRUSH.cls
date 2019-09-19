@@ -23,15 +23,15 @@ Instance Variables:
 color
 	"Answer the colour member of the receiver as a Colour"
 
-	^Color fromInteger: self lbColor!
+	^Color fromCOLORREF: self lbColor!
 
 color: aColor
 	"Sets the colour member of the receiver from  the <Color> argument."
 
-	self lbColor: aColor asParameter!
+	self lbColor: aColor asCOLORREF!
 
 hatch
-	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard integer constants."
+	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard <integer> constants."
 
 	^hatch 
 		ifNil: 
@@ -40,6 +40,12 @@ hatch
 hatch: aBitmapOrInteger 
 	hatch := aBitmapOrInteger.
 	self lbHatch: aBitmapOrInteger asParameter!
+
+hatchStyleName
+	"Answer the symbolic hatch style name, or if not a hatched brush"
+
+	^self lbStyle == BS_HATCHED
+		ifTrue: [#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) lookup: self lbHatch + 1]!
 
 lbColor
 	"Answer the <Integer> value of the receiver's 'lbColor' field."
@@ -80,6 +86,7 @@ style: anInteger
 !LOGBRUSH categoriesFor: #color:!accessing!public! !
 !LOGBRUSH categoriesFor: #hatch!accessing!public! !
 !LOGBRUSH categoriesFor: #hatch:!accessing!public! !
+!LOGBRUSH categoriesFor: #hatchStyleName!accessing!public! !
 !LOGBRUSH categoriesFor: #lbColor!**compiled accessors**!public! !
 !LOGBRUSH categoriesFor: #lbColor:!**compiled accessors**!public! !
 !LOGBRUSH categoriesFor: #lbHatch!**compiled accessors**!public! !

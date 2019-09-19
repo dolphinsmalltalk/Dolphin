@@ -214,10 +214,6 @@ setStatusColorsOn: aWidget
 
 	labelColor := Color perform: self model resultStateColorSymbol.
 
-	"a little hack - green on Dolphin is pretty yucky"
-	labelColor index = 16777230
-		ifTrue: [labelColor := IndexedColor darkGreen].
-
 	self model showStatusBackgroundColors
 		ifTrue: [
 			aWidget

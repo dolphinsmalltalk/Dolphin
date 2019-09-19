@@ -213,24 +213,6 @@ loadFromInstance: hModule
 
 	^nil!
 
-pixelData
-	"Answer a DWORDArray of the (A)RGB pixel data contained in the receiver. This simple but NOT FAST."
-
-	| pixData n canvas |
-	pixData := DWORDArray new: self extent x * self extent y.
-	n := 1.
-	canvas := self canvas.
-	0 to: self extent x-1
-		do: 
-			[:x | 
-			0 to: self extent y -1 
-				do: 
-					[:y | 
-					pixData at: n put: (canvas getPixel: x @ y).
-					n := n + 1]].
-	self freeDC.
-	^pixData!
-
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
 
@@ -281,7 +263,6 @@ printOn: aStream
 !Image categoriesFor: #isShared!private!testing! !
 !Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
 !Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Image categoriesFor: #pixelData!public! !
 !Image categoriesFor: #printOn:!printing!public! !
 
 Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!

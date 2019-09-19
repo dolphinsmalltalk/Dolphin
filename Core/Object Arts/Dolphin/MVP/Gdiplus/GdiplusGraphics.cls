@@ -34,10 +34,9 @@ clear
 clear: aColor
 	"Clear the receiver and (flood) fill it with the specified color."
 
-	| status argb |
-	argb := aColor asARGB.
-	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: argb asParameter) 
-		== Ok ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
+	| status |
+	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: aColor argbCode) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
 
 clipRectangle: aRectangle combineMode: aCombineModeConstant 
 	"Set the clipping region of the receiver to a region that is the combination of itself and 
@@ -529,7 +528,7 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 				x: aRectangle left asInteger
 				y: aRectangle top asInteger
 				width: aRectangle width asInteger
-				height: aRectangle height asInteger) = Ok 
+				height: aRectangle height asInteger) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipFillRectangleI failed' with: status]!
 
 fillRegion: aRegion brush: aBrush 
@@ -903,8 +902,8 @@ exampleGdipGAlphaBlending
 	"Create a Graphics object that we can use to draw on the bitmap."
 	graphics := bitmap graphics.
 	"Create a red brush and a green brush, each with an alpha value of 160."
-	redBrush := GdiplusSolidBrush color: (ARGB fromArray: #(210 255 0 0)).
-	greenBrush := GdiplusSolidBrush color: (ARGB fromArray: #(210 0 255 0)).
+	redBrush := GdiplusSolidBrush color: (Color fromArray: #(210 255 0 0)).
+	greenBrush := GdiplusSolidBrush color: (Color fromArray: #(210 0 255 0)).
 	"Set the compositing mode so that when we draw overlapping ellipses, 
 	the colors of the ellipses are not blended."
 	graphics compositingMode: CompositingModeSourceCopy.
@@ -915,15 +914,12 @@ exampleGdipGAlphaBlending
 	graphics fillEllipse: (30 @ 30 extent: 150 @ 70) brush: greenBrush.
 	"Prepare to draw on the screen."
 	bitmap2 := GdiplusBitmap extent: 400 @ 200.
-	graphics2 := bitmap2 graphics clear: ARGB white.
+	graphics2 := bitmap2 graphics clear: Color white.
 	graphics2 compositingQuality: CompositingQualityGammaCorrected.
 	"Draw a multicolored background."
-	graphics2 fillRectangle: (200 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB named: #aqua)).
-	graphics2 fillRectangle: (260 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB named: #yellow)).
-	graphics2 fillRectangle: (320 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB named: #fuchsia)).
+	graphics2 fillRectangle: (200 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color aqua).
+	graphics2 fillRectangle: (260 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color yellow).
+	graphics2 fillRectangle: (320 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color fuchsia).
 	"Display the bitmap on a white background."
 	graphics2 drawImage: bitmap at: 0 @ 0.
 	"Display the bitmap on a multicolored background."
@@ -1261,8 +1257,8 @@ exampleGdipNestedContainers
 	"Clipping in Nested Containers"
 	redPen := GdiplusPen red width: 2.
 	bluePen := GdiplusPen blue width: 2.
-	aquaBrush := GdiplusSolidBrush color: (ARGB named: #aqua).
-	greenBrush := GdiplusSolidBrush color: (ARGB fromArray: #(255 150 250 130)).
+	aquaBrush := GdiplusSolidBrush color: Color aqua.
+	greenBrush := GdiplusSolidBrush color: Color paleGreen.
 	graphics clipRectangle: (50 @ 65 extent: 150 @ 120) combineMode: nil.
 	graphics fillRectangle: (50 @ 65 extent: 150 @ 120) brush: aquaBrush.
 	container := graphics beginContainer.
@@ -1337,7 +1333,7 @@ exampleGdipState
 	bitmap := GdiplusBitmap extent: 175 @ 175.
 	graphics := bitmap graphics.
 	pen := GdiplusPen red width: 5.
-	brush := GdiplusSolidBrush color: (ARGB fromArray: #(255 180 255 255)).
+	brush := GdiplusSolidBrush color: (Color fromArray: #(255 180 255 255)).
 	"Create a plus-shaped region by forming the union of two rectangles."
 	region := GdiplusRegion fromRectangle: (50 @ 0 corner: 50 @ 150).
 	region combineRectangle: (0 @ 50 corner: 150 @ 50) mode: CombineModeUnion.

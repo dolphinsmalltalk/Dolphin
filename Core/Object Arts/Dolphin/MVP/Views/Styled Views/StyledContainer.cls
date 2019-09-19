@@ -270,7 +270,7 @@ paintParentBackgroundOn: aGdiplusGraphics
 	bkColor := self actualBackcolor.
 	bkColor isNone 
 		ifFalse: 
-			[brush := GdiplusSolidBrush color: bkColor asARGB.
+			[brush := GdiplusSolidBrush color: bkColor.
 			aGdiplusGraphics fillRectangle: self clientRectangle brush: brush.
 			brush free]!
 
@@ -283,7 +283,7 @@ paintStyledBackgroundOn: graphics
 				ifTrue: 
 					["if we have a styled  brush use that "
 					self styledBrush asBackgroundGdiplusBrushFor: self].
-	backcolorARGB := self actualBackcolor asARGB.
+	backcolorARGB := self actualBackcolor.
 	bbrush := backcolorARGB isNone ifFalse: [GdiplusSolidBrush color: backcolorARGB].
 
 	"We have to reduce our corner radii by the pen width"

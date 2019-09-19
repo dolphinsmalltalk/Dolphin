@@ -6,7 +6,13 @@ StockBrush subclass: #SysColorBrush
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SysColorBrush guid: (GUID fromString: '{87b4c63b-026e-11d3-9fd7-00a0cc3e4a32}')!
-SysColorBrush comment: ''!
+SysColorBrush comment: '`SysColorBrush` is type of `Brush` that paints in one of the current Windows theme colours.
+
+SysColorBrushes are not normally instantiated directly, but rather by sending the `#brush` message to a suitable system colour, for example `Color face3d brush`.
+
+## Instance Variables:
+  `id`		`<integer>` code identifying the theme colour, from the COLOR_xxxx enumeration
+'!
 !SysColorBrush categoriesForClass!Graphics-Tools! !
 !SysColorBrush methodsFor!
 
@@ -24,9 +30,12 @@ printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
 
 	aStream
-		basicPrint: self;
 		nextPut: $(;
-		display: self color name;
+		print: Brush;
+		space;
+		display: #color:;
+		space;
+		print: self color;
 		nextPut: $)! !
 !SysColorBrush categoriesFor: #color!accessing!public! !
 !SysColorBrush categoriesFor: #createHandle!private!realizing/unrealizing! !

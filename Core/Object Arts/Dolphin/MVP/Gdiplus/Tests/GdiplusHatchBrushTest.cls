@@ -11,10 +11,10 @@ GdiplusHatchBrushTest comment: ''!
 !GdiplusHatchBrushTest methodsFor!
 
 setSampleDiagCross
-	model := GdiplusHatchBrush 
+	model := GdiplusHatchBrush
 				style: HatchStyleDiagonalCross
-				forecolor: ARGB red
-				backcolor: ARGB blue!
+				forecolor: Color red
+				backcolor: Color blue!
 
 setUp
 	self setSampleDiagCross!

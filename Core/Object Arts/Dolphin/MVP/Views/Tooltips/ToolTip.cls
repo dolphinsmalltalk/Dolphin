@@ -31,14 +31,13 @@ defaultBackcolor
 endTracking
 	self sendMessage: TTM_TRACKACTIVATE wParam: false asParameter!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.
 	If aColorOrNil is nil then use the default color"
 
 	| clrref |
 	super forecolor: aColorOrNil.
-	clrref := (aColorOrNil isNil ifTrue: [Color tooltipText] ifFalse: [aColorOrNil]) 
-				asColorRef asParameter.
+	clrref := (aColorOrNil isNil ifTrue: [Color tooltipText] ifFalse: [aColorOrNil]) asCOLORREF.
 	self sendMessage: TTM_SETTIPTEXTCOLOR wParam: clrref!
 
 hasCloseButton
@@ -171,7 +170,7 @@ reshowDelay: anInteger
 	self ttmSetDelayTime: TTDT_RESHOW milliseconds: anInteger!
 
 setControlBackcolor: aColor 
-	self sendMessage: TTM_SETTIPBKCOLOR wParam: aColor asColorRef asParameter!
+	self sendMessage: TTM_SETTIPBKCOLOR wParam: aColor asCOLORREF!
 
 showDelay
 	"Answer the <integer> number of milliseconds that the mouse must remain stationary

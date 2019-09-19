@@ -2634,7 +2634,7 @@ overriddenIcon
 	"Private - Answers an Icon that can be used to represent an overridden instance of this class"
 
 	^##((TextTileIcon text: $\x25B4 fontName: 'Segoe UI')
-		textcolor: (ARGB named: #dodgerBlue);
+		textcolor: Color dodgerBlue;
 		yourself)!
 
 publishedAspectsOfInstances

@@ -1127,7 +1127,7 @@ changedIcon
 	^changedIcon
 		ifNil: 
 			[changedIcon := (TextTileIcon text: $\x2728)
-						textcolor: (ARGB named: #gold);
+						textcolor: Color gold;
 						yourself	"Sparkles"]!
 
 changedMethodCategory
@@ -3309,7 +3309,7 @@ publicMethodIcon
 	"Private - Answers an Icon that can be used to represent a public method"
 
 	^(TextTileIcon text: $\x25CF fontName: 'Segoe UI')
-		textcolor: (ARGB named: #limeGreen);
+		textcolor: Color limeGreen;
 		yourself!
 
 queryCommand: aCommandQuery 

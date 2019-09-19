@@ -107,7 +107,7 @@ loadPalettes
 					[:each | 
 					| palette |
 					palette := (each subStrings: $#) allButFirst.
-					palette := palette collect: [:each | RGB fromHTMLSpec: '#' , each]].
+					palette := palette collect: [:c | Color fromHTMLSpec: '#' , c]].
 	^palettes!
 
 maxPlimboles

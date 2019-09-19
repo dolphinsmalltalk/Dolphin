@@ -206,7 +206,7 @@ icon
 	^##(TextTileIcon
 		text: $\x1F310
 		fontName: 'Segoe UI Emoji'
-		color: (ARGB named: #forestGreen))!
+		color: Color forestGreen)!
 
 initialize
 	"Private - Initialize the receiver's class variables

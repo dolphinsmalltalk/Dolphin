@@ -717,7 +717,7 @@ setControlBackcolor: aColor
 	self 
 		sendMessage: EM_SETBKGNDCOLOR
 		wParam: 0
-		lParam: aColor asColorRef asParameter!
+		lParam: aColor asCOLORREF!
 
 setFont: aFont
 	"Private - Sets the font for the entire receiver text to be aFont. Overridden here because

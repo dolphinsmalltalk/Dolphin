@@ -146,7 +146,7 @@ setControlBackcolor: aColor
 	self 
 		sendMessage: MCM_SETCOLOR
 		wParam: MCSC_BACKGROUND
-		lParam: aColor asColorRef asParameter!
+		lParam: aColor asCOLORREF!
 
 setRangeMessage
 	^MCM_SETRANGE!

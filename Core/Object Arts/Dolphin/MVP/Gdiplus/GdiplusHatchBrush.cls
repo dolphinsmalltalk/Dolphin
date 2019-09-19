@@ -22,10 +22,7 @@ exampleGdipHBFillAShape
 	brush := GdiplusHatchBrush
 				style: HatchStyleHorizontal
 				forecolor: Color red
-				backcolor: (Color
-						r: 128
-						g: 255
-						b: 255).
+				backcolor: Color cyan.
 	bitmap graphics fillEllipse: (10 @ 10 extent: 200 @ 100) brush: brush.
 	^bitmap!
 

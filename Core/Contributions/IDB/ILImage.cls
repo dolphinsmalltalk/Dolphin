@@ -64,7 +64,7 @@ countColorsUsed
 	^2 + ((colorsUsedCount copyFrom: 4) inject: 0 into: [:sum :each | sum + each sign])!
 
 defaultColor
-	^RGB darkGray!
+	^Color darkGray!
 
 drawBitmapOn: aCanvas at: aPoint
 	aCanvas 
@@ -182,9 +182,9 @@ setExtent: aPoint
 	"Each image must always containg the following three colors and they
 	must be placed in the colorsUsed collection in this order"
 	colorsUsed := OrderedCollection 
-				with: RGB black
-				with: RGB white
-				with: RGB dolphinYellow
+				with: Color black
+				with: Color white
+				with: Color dolphinYellow
 				with: self defaultColor.
 
 	"We are also going to add this very shortly, so include it here"
@@ -267,7 +267,7 @@ width
 !ILImage class methodsFor!
 
 defaultTransparentRGB
-	^RGB white!
+	^Color white!
 
 extent: aPoint
 	^self new setExtent: aPoint!

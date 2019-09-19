@@ -60,12 +60,13 @@ testGetPixel
 	| bmp |
 	bmp := Bitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model := GdiplusBitmap fromBitmap: bmp.
-	self assert: (model pixelAt: 50 @ 50) equals: ARGB blue!
+	self assert: (model pixelAt: 50 @ 50) equals: Color blue!
 
 testPixelAfterSave
-	| bitmap baseFile extensions supportsAlpha toFile image |
+	| bitmap baseFile extensions supportsAlpha toFile image transparentBlack |
 	bitmap := GdiplusBitmap extent: 100 @ 100.
-	self assert: (bitmap pixelAt: 1 @ 1) equals: (ARGB fromArray: #(0 0 0 0)).
+	transparentBlack := (Color black alpha: 0).
+	self assert: (bitmap pixelAt: 1 @ 1) equals: transparentBlack .
 	baseFile := bitmap class fileResource fileLocator localFileSpecFor: 'testPixelAfterSave'.
 	extensions := #('bmp' 'jpeg' 'gif' 'tiff' 'png').
 	supportsAlpha := #(false false false true true).
@@ -75,7 +76,7 @@ testPixelAfterSave
 			toFile := File path: baseFile extension: ext.
 			bitmap saveToFile: toFile.
 			image := GdiplusBitmap fromFile: toFile.
-			self assert: (image pixelAt: 1 @ 1) = (ARGB fromArray: #(0 0 0 0)) equals: supported]! !
+			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported]! !
 !GdiplusBitmapTest categoriesFor: #setUp!public!setup! !
 !GdiplusBitmapTest categoriesFor: #testAsByteArrayRoundTripBmp!public!unit tests! !
 !GdiplusBitmapTest categoriesFor: #testFromBitmap!public!unit tests! !

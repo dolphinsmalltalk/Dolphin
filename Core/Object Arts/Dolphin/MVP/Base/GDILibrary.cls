@@ -181,6 +181,10 @@ createFontIndirectW: lplf
 	<stdcall: handle CreateFontIndirectW LOGFONTW*>
 	^self invalidCall: _failureCode!
 
+createHatchBrush: anInteger color: aCOLORREF
+	<stdcall: handle CreateHatchBrush sdword dword>
+	^self invalidCall: _failureCode!
+
 createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lpdvminit
 	"Invoke the CreateIC() function of the module wrapped by the receiver.
 	Helpstring: Creates an information context for the specified device
@@ -1226,6 +1230,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
 !GDILibrary categoriesFor: #createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #createHatchBrush:color:!**auto generated**!public!win32 functions-brush! !
 !GDILibrary categoriesFor: #createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createPalette:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #createPen:nWidth:crColor:!**auto generated**!public!win32 functions-pen! !

@@ -30,8 +30,8 @@ createHandle
 	status := self library
 				gdipCreateLineBrushI: point1 asParameter
 				point2: point2 asParameter
-				color1: color1 asParameter
-				color2: color2 asParameter
+				color1: color1 argbCode
+				color2: color2 argbCode
 				wrapMode: WrapModeTile
 				lineGradient: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
@@ -40,8 +40,8 @@ createHandle
 point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor
 	point1 := aPoint1.
 	point2 := aPoint2.
-	color1 := startColor asARGB.
-	color2 := endColor asARGB! !
+	color1 := startColor.
+	color2 := endColor! !
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesFor: #point1:point2:color1:color2:!initializing!private! !
 

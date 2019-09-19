@@ -240,7 +240,7 @@ buildPropertyMap
 		at: #backcolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #backcolor
-					defaultValue: RGB black
+					defaultValue: Color black
 					setMessage: SCI_SETMARGINBACKN
 					setSelector: #basicBackcolor:
 					getMessage: SCI_GETMARGINBACKN);
@@ -274,7 +274,7 @@ stbConvertFrom: anSTBClassFormat
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
 	instance backcolor
-		ifNotNil: [:int | instance basicBackcolor: (int isZero ifFalse: [Color fromInteger: int])].
+		ifNotNil: [:int | instance basicBackcolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
 	instance]!
 
 stbVersion

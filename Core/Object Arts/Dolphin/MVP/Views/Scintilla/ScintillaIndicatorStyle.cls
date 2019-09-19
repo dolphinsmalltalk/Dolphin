@@ -242,7 +242,7 @@ buildPropertyMap
 		at: #forecolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #forecolor
-					defaultValue: RGB black
+					defaultValue: Color black
 					setMessage: SCI_INDICSETFORE
 					setSelector: #basicForecolor:
 					getMessage: SCI_INDICGETFORE);
@@ -277,7 +277,7 @@ buildPropertyMap
 		at: #hoverForecolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #hoverForecolor
-					defaultValue: RGB black
+					defaultValue: Color black
 					setMessage: SCI_INDICSETHOVERFORE
 					setSelector: #basicHoverForecolor:
 					getMessage: SCI_INDICGETHOVERFORE);
@@ -321,9 +321,9 @@ stbConvertFrom: anSTBClassFormat
 	instance := self new.
 	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
 	instance forecolor
-		ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromInteger: int])].
+		ifNotNil: [:int | instance basicForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
 	instance hoverForecolor
-		ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromInteger: int])].
+		ifNotNil: [:int | instance basicHoverForecolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
 	instance]!
 
 stbVersion
