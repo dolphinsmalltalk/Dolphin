@@ -43,7 +43,7 @@ struct tagCHOOSECOLOR {
 color
 	"Answer the chosen colour."
 
-	^Color fromInteger: self rgbResult!
+	^Color fromCOLORREF: self rgbResult!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"

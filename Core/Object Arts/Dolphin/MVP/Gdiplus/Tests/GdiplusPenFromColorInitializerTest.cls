@@ -19,7 +19,7 @@ setUp
 	model := GdiplusPenFromColorInitializer new library: self!
 
 testCreateHandle
-	model color: (ARGB fromInteger: 1) width: 0.5.
+	model color: (Color fromArgbCode: 1) width: 0.5.
 	model createHandle.
 	self assert: constructorArgs size equals: 4.
 	self assert: constructorArgs first identicalTo: 1.
@@ -28,7 +28,7 @@ testCreateHandle
 	self assertLastArgIsHandle!
 
 testCreateHandleDefaultWidth
-	model color: (ARGB fromInteger: 1) width: nil.
+	model color: (Color fromArgbCode: 1) width: nil.
 	model createHandle.
 	self assert: constructorArgs size equals: 4.
 	self assert: constructorArgs first identicalTo: 1.

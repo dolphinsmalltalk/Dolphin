@@ -40,16 +40,16 @@ color8atColumn: columnInteger startingFrom: offsetInteger in: anILImportProxy
 	^anILImportProxy colorTable at: colorIndex + 1!
 
 colorAtColumn: columnInteger startingFrom: offsetInteger in: anILImportProxy
-	^RGB fromRGBQUAD: (self 
-				perform: (self columnAddressMethodFor: anILImportProxy colorDepth)
-				with: columnInteger
-				with: offsetInteger
-				with: anILImportProxy)!
+	^(self
+		perform: (self columnAddressMethodFor: anILImportProxy colorDepth)
+		with: columnInteger
+		with: offsetInteger
+		with: anILImportProxy) asColor!
 
 colorAtPoint: aPoint in: anILImportProxy
 	| rowSize rowStart |
 	aPoint x > anILImportProxy width | (aPoint y > anILImportProxy height) 
-		ifTrue: [^RGB darkGray].
+		ifTrue: [^Color darkGray].
 	rowSize := anILImportProxy imageBytes size / anILImportProxy height.
 	self assert: [rowSize \\ 4 = 0].	"Can't cope with bitmaps that are not DWORD aligned  - is it legal anyway?"
 	rowStart := anILImportProxy isTopDown 

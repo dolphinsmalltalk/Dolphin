@@ -40,8 +40,10 @@ package classNames
 	add: #AbstractDelegatingView;
 	add: #AbstractLOGFONT;
 	add: #AbstractNonReferenceDelegatingView;
+	add: #AbstractRGB;
 	add: #ACCEL;
 	add: #AcceleratorTable;
+	add: #ARGB;
 	add: #Bitmap;
 	add: #BITMAP;
 	add: #BITMAPINFO;
@@ -109,6 +111,7 @@ package classNames
 	add: #GroupBox;
 	add: #GuiInputState;
 	add: #GUISessionManager;
+	add: #HatchBrush;
 	add: #HistoryList;
 	add: #HTMLHelpLibrary;
 	add: #Icon;
@@ -130,7 +133,6 @@ package classNames
 	add: #LOGBRUSH;
 	add: #LOGFONT;
 	add: #LOGFONTW;
-	add: #LogicalColor;
 	add: #LOGPALETTE;
 	add: #LOGPEN;
 	add: #MARGINS;
@@ -228,8 +230,6 @@ package methodNames
 	add: #ResourceIdentifier -> #loadWithContext:;
 	add: #ResourceIdentifier -> #loadWithContext:forEdit:;
 	add: #ResourceIdentifier -> #show;
-	add: #ShlwapiLibrary -> #colorHLSToRGB:wLuminance:wSaturation:;
-	add: #ShlwapiLibrary -> #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:;
 	add: #String -> #copyToClipboard;
 	add: #String -> #setTextInto:;
 	add: #Symbol -> #copyToClipboard;
@@ -422,8 +422,8 @@ Object subclass: #Clipboard
 	classInstanceVariableNames: ''!
 Object subclass: #Color
 	instanceVariableNames: ''
-	classVariableNames: 'Black Default Face3d NamedColors None White Window WindowText'
-	poolDictionaries: 'Win32Constants'
+	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
@@ -545,17 +545,32 @@ Canvas subclass: #PrinterCanvas
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Color subclass: #ColorRef
+Color subclass: #AbstractRGB
 	instanceVariableNames: 'code'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Color subclass: #LogicalColor
+Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
-	classVariableNames: 'ColorsByIndex NamesByIndex'
+	classVariableNames: 'InstancesByIndex InstancesByName Names'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Color subclass: #SystemColor
+	instanceVariableNames: 'id'
+	classVariableNames: 'ColorsById NamesById'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
 Color subclass: #VirtualColor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractRGB subclass: #ARGB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractRGB subclass: #ColorRef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -571,16 +586,6 @@ ColorRef subclass: #ColorNone
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ColorRef subclass: #RGB
-	instanceVariableNames: ''
-	classVariableNames: 'StdColours'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-LogicalColor subclass: #IndexedColor
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-LogicalColor subclass: #SystemColor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1015,6 +1020,11 @@ GraphicsTool subclass: #WinImageList
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+Brush subclass: #HatchBrush
+	instanceVariableNames: 'id color'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
 	classVariableNames: ''
@@ -1420,36 +1430,6 @@ show
 !ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
 !ResourceIdentifier categoriesFor: #show!operations!public! !
-
-!ShlwapiLibrary methodsFor!
-
-colorHLSToRGB: wHue wLuminance: wLuminance wSaturation: wSaturation
-	"Invoke the ColorHLSToRGB() function of the module wrapped by the receiver.
-	Helpstring: Converts colors from hue-luminance-saturation (HLS) format to RGB format.
-
-	COLORREF ColorHLSToRGB(      
-		WORD wHue,
-		WORD wLuminance,
-		WORD wSaturation
-		);"
-
-	<stdcall: dword ColorHLSToRGB word word word>
-	^self invalidCall: _failureCode!
-
-colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSaturation
-	"Invoke the ColorRGBToHLS() function of the module wrapped by the receiver.
-	Helpstring: Converts colors from RGB to hue-luminance-saturation (HLS) format
-
-		void __stdcall ColorRGBToHLS(
-			COLORREF clrRGB,
-			WORD* pwHue,
-			WORD* pwLuminance,
-			WORD* pwSaturation);"
-
-	<stdcall: void ColorRGBToHLS dword word* word* word*>
-	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #colorHLSToRGB:wLuminance:wSaturation:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:!**auto generated**!public! !
 
 !String methodsFor!
 

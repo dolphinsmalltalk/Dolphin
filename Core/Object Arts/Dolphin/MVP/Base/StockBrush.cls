@@ -6,7 +6,16 @@ Brush subclass: #StockBrush
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StockBrush guid: (GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
-StockBrush comment: ''!
+StockBrush comment: '`StockBrush` is type of `Brush` that wraps one of the standard (aka ''stock'') Windows GDI Brush objects, for example black and white brushes.
+
+StockBrushes are normally instantiated using one of the relevant instance creation methods of the superclass, `Brush`. For example:
+
+	`Brush black`
+
+## Instance Variables:
+  `id`		`<integer>` code identifying the brush pattern and colour
+
+'!
 !StockBrush categoriesForClass!Graphics-Tools! !
 !StockBrush methodsFor!
 
@@ -21,16 +30,31 @@ id: anInteger
 	id := anInteger.
 	self basicRealize!
 
+name
+	"Answer the symbolic name of this stock brush."
+
+	^#(#white #silver #gray #darkGray #black #transparent) at: id + 1!
+
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by
 	the receiver to be the argument."
 
 	"Implementation Note: Stock objects should never be free'd"
 
-	self handle: aHandle! !
+	self handle: aHandle!
+
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver."
+
+	aPuttableStream
+		print: Brush;
+		space;
+		display: self name! !
 !StockBrush categoriesFor: #createHandle!private!realizing/unrealizing! !
 !StockBrush categoriesFor: #id:!private!realizing/unrealizing! !
+!StockBrush categoriesFor: #name!accessing!public! !
 !StockBrush categoriesFor: #ownedHandle:!accessing!private! !
+!StockBrush categoriesFor: #printOn:!printing!public! !
 
 !StockBrush class methodsFor!
 

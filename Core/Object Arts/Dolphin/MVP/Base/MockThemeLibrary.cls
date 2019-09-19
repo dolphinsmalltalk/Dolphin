@@ -445,7 +445,7 @@ getThemeSysColor: htheme iColorId: iColorId
 			[in]HTHEME HTHEME,
 			[in]int iColorId);"
 
-	^(SystemColor fromId: iColorId) asColorRef code!
+	^(SystemColor fromId: iColorId) asCOLORREF!
 
 getThemeSysColorBrush: htheme iColorId: iColorId 
 	"Invoke the GetThemeSysColorBrush() function of the module wrapped by the receiver.

@@ -125,7 +125,6 @@ package basicPackageVersion: '6.2'.
 
 
 package classNames
-	add: #ARGB;
 	add: #ENHMETAHEADER3;
 	add: #GdiplusAdjustableArrowCap;
 	add: #GdiplusAdjustableArrowCapInitializer;
@@ -222,16 +221,10 @@ package classNames
 package methodNames
 	add: #Bitmap -> #asColorKeyedBitmap;
 	add: #Bitmap -> #asColorKeyedBitmap:;
-	add: #Color -> #alpha:;
-	add: #Color -> #alphaMask;
-	add: #Color -> #asARGB;
-	add: #ColorNone -> #alphaMask;
-	add: #ColorNone -> #asARGB;
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
 	add: #Rectangle -> #asGdiplusRectangle;
 	add: #View -> #createThumbnailExtent:mask:;
-	add: 'Color class' -> #a:r:g:b:;
 	yourself.
 
 package globalNames
@@ -264,11 +257,6 @@ Object subclass: #GdiplusInitializer
 	instanceVariableNames: 'library'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
-Color subclass: #ARGB
-	instanceVariableNames: 'code'
-	classVariableNames: 'DefaultA StdColours'
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Error subclass: #GdiplusError
 	instanceVariableNames: 'win32Error'
@@ -732,16 +720,16 @@ asColorKeyedBitmap
 	^self asColorKeyedBitmap: (self canvas pixelAt: 0 @ 0).
 !
 
-asColorKeyedBitmap: aKeyColor 
+asColorKeyedBitmap: aKeyColor
 	| image table imageAttributes bitmap keyedBitmap |
 	table := StructureArray length: 1 elementClass: GpColorMap.
 	image := GdiplusBitmap fromBitmap: self.
 	(table at: 1)
-		oldColor: aKeyColor asARGB asParameter;
-		newColor: ARGB none asParameter.
+		oldColor: aKeyColor argbCode;
+		newColor: Color argbNoneCode.
 	imageAttributes := GdiplusImageAttributes new remapTable: table.
 	bitmap := GdiplusBitmap extent: self extent.
-	bitmap graphics 
+	bitmap graphics
 		drawImage: image
 		at: Point zero
 		extent: image extent
@@ -755,58 +743,6 @@ asColorKeyedBitmap: aKeyColor
 	^keyedBitmap! !
 !Bitmap categoriesFor: #asColorKeyedBitmap!public! !
 !Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
-
-!Color methodsFor!
-
-alpha: anAlphaInteger
-	"Answer an instance of ARGB which is the equivalent of the receiver with anAlphaInteger applied."
-
-	| bgr |
-	bgr := self asRGB code.
-	^ARGB
-		fromInteger: ((((bgr bitShift: -16) bitAnd: 16rFF)
-				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))
-					bitOr: ((anAlphaInteger asInteger clampBetween: 0 and: 255) bitShift: 24))!
-
-alphaMask
-	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
-
-	^16rFF000000!
-
-asARGB
-	"Answer an <ARGB> equivalent of the receiver."
-
-	| bgr |
-	bgr := self asRGB code.
-	"Note that the encoding is truly ARGB, as opposed to the BGR encoding used in a ColorRef."
-	^ARGB
-		fromInteger: ((((bgr bitShift: -16) bitAnd: 16rFF)
-				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16))) bitOr: self alphaMask)! !
-!Color categoriesFor: #alpha:!accessing!public! !
-!Color categoriesFor: #alphaMask!accessing!private! !
-!Color categoriesFor: #asARGB!converting!public! !
-
-!Color class methodsFor!
-
-a: alphaValue r: redValue g: greenValue b: blueValue
-	"Answer an instance whose four components are given.
-	 - Alternate constructor with no bounds checking"
-
-	^ARGB
-		a: alphaValue r: redValue g: greenValue b: blueValue! !
-!Color class categoriesFor: #a:r:g:b:!instance creation!public! !
-
-!ColorNone methodsFor!
-
-alphaMask
-	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
-
-	^0!
-
-asARGB
-	^ARGB none! !
-!ColorNone categoriesFor: #alphaMask!accessing!private! !
-!ColorNone categoriesFor: #asARGB!public! !
 
 !Point methodsFor!
 
@@ -848,13 +784,13 @@ createThumbnailExtent: extent mask: aColor
 	rect := Rectangle origin: Point zero extent: self extent.
 	crop := GdiplusBitmap extent: rect extent.
 	(crop graphics)
-		clear: aColor asARGB;
+		clear: aColor;
 		drawImage: image
 			at: 1 @ 1
 			extent: rect extent
 			from: rect topLeft
 			extent: rect extent;
-		drawRectangle: (rect translatedBy: 1 @ 1) pen: (GdiplusPen color: Color gray asARGB).
+		drawRectangle: (rect translatedBy: 1 @ 1) pen: (GdiplusPen color: Color silver).
 	image := crop.
 
 	"Work out scale to use"

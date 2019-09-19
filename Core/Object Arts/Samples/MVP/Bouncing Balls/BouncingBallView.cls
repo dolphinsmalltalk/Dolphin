@@ -31,7 +31,7 @@ initialize
 				with: Ball blueIcon
 				with: Ball yellowIcon.
 	super initialize.
-	self backcolor: (RGB r: 228 g: 219 b: 165).
+	self backcolor: (Color r: 228 g: 219 b: 165).
 	self numberOfBalls timesRepeat: 
 			[| ball |
 			ball := (Ball new)

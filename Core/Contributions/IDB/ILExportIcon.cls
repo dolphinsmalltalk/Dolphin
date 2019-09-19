@@ -50,7 +50,7 @@ createIconImages
 
 createMaskBitmapFor: anImage updating: aBitmap
 	| canvas colorCanvas |
-	self createColorTable: (Array with: RGB black with: RGB white) force256: false.
+	self createColorTable: (Array with: Color black with: Color white) force256: false.
 	self createBitmap: anImage extent.
 	canvas := bitmap canvas.
 	colorCanvas := aBitmap canvas.
@@ -62,9 +62,9 @@ createMaskBitmapFor: anImage updating: aBitmap
 					[:y | 
 					(anImage isTransparentAt: x @ y + 1) 
 						ifTrue: 
-							[colorCanvas pixelAt: x @ y put: RGB black.
-							canvas pixelAt: x @ y put: RGB white]
-						ifFalse: [canvas pixelAt: x @ y put: RGB black]]].
+							[colorCanvas pixelAt: x @ y put: Color black.
+							canvas pixelAt: x @ y put: Color white]
+						ifFalse: [canvas pixelAt: x @ y put: Color black]]].
 	^bitmap!
 
 exportTo: aStream

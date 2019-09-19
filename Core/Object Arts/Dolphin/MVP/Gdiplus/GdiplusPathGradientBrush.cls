@@ -29,9 +29,9 @@ blendColors
 				positions: positions
 				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlend failed' with: status].
-	^Array with: (blend asArray collect: [:e | ARGB fromInteger: e]) with: positions asArray!
+	^Array with: (blend asArray collect: [:e | Color fromArgbCode: e]) with: positions asArray!
 
-blendColors: colorsArray positions: positionsArray 
+blendColors: colorsArray positions: positionsArray
 	"Set the preset colors and the blend positions of this path gradient brush.  colorsArray
 	specifies the interpolation colors for the gradient. Each color in colorsArray 
 	corresponds to a blend position in positionsArray.  Each blend position is a number from
@@ -44,11 +44,11 @@ blendColors: colorsArray positions: positionsArray
 	self assert: [colorsArray size = positionsArray size].
 	self assert: [positionsArray size >= 2].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetPathGradientPresetBlend: self asParameter
-				blend: (DWORDArray withAll: (colorsArray collect: [:e | e asParameter]))
+				blend: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
 				positions: (FLOATArray withAll: positionsArray)
-				count: colorsArray size) = Ok 
+				count: colorsArray size) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientPresetBlend failed' with: status]!
 
 blendColorsCount
@@ -118,15 +118,15 @@ centerColor
 	| status color |
 	color := DWORD new.
 	(status := GdiplusLibrary default gdipGetPathGradientCenterColor: self asParameter colors: color)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterColor failed' with: status].
-	^ARGB fromInteger: color value!
+		== Ok ifFalse: [GdiplusError signal: 'GdipGetPathGradientCenterColor failed' with: status].
+	^Color fromArgbCode: color value!
 
-centerColor: anARGB 
+centerColor: aColor
 	"Set the color that appears at the receiver's center point."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetPathGradientCenterColor: self asParameter
-				colors: anARGB asParameter) = Ok 
+				colors: aColor argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientCenterColor failed' with: status]!
 
 centerPoint
@@ -254,23 +254,24 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipScalePathGradientTransform failed' with: status]!
 
-surroundColor: anARGB 
-	"Set anARGB as the single color that appears on the receiver's boundary."
+surroundColor: aColor
+	"Set the specified <Color> as the single color that appears on the receiver's boundary."
 
-	self surroundColors: (Array new: self pointCount withAll: anARGB)!
+	self surroundColors: (Array new: self pointCount withAll: aColor)!
 
 surroundColors
 	"Answer an Array of ARGB that are the receiver's boundary colors."
 
 	| status count colors |
-	count := DWORD new value: self surroundColorsCount.
-	colors := DWORDArray new: count value.
+	count := self surroundColorsCount.
+	colors := DWORDArray new: count.
+	count := DWORD fromInteger: count. 
 	(status := GdiplusLibrary default
 				gdipGetPathGradientSurroundColorsWithCount: self asParameter
 				color: colors
-				count: count) = Ok
+				count: count) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorsWithCount failed' with: status].
-	^colors asArray collect: [:e | ARGB fromInteger: e]!
+	^colors collect: [:e | Color fromArgbCode: e]!
 
 surroundColors: colorsArray
 	"Set the colors that appear on the receiver's boundaries."
@@ -278,15 +279,15 @@ surroundColors: colorsArray
 	| status |
 	(status := GdiplusLibrary default
 				gdipSetPathGradientSurroundColorsWithCount: self asParameter
-				color: (DWORDArray withAll: (colorsArray collect: [:e | e asParameter]))
-				count: (DWORD new value: colorsArray size)) = Ok
+				color: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
+				count: (DWORD new value: colorsArray size)) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientSurroundColorsWithCount failed' with: status]!
 
 surroundColorsCount
 	| status count |
 	count := SDWORD new.
 	(status := GdiplusLibrary default gdipGetPathGradientSurroundColorCount: self asParameter
-				count: count) = Ok
+				count: count) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientSurroundColorCount failed' with: status].
 	^count value!
 
@@ -426,8 +427,8 @@ exampleGdipPGBlendFactors
 	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 corner: 200 @ 150).
 	(brush := GdiplusPathGradientBrush path: path)
 		wrapMode: WrapModeTile;
-		centerColor: ARGB blue;
-		surroundColors: (Array new: brush pointCount withAll: ARGB red).
+		centerColor: Color blue;
+		surroundColors: (Array new: brush pointCount withAll: Color red).
 	graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
 	graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
@@ -436,8 +437,8 @@ exampleGdipPGBlendFactors
 	path := GdiplusGraphicsPath new addRectangle: (0 @ 0 corner: 200 @ 150).
 	(brush := GdiplusPathGradientBrush path: path)
 		wrapMode: WrapModeTile;
-		centerColor: ARGB blue;
-		surroundColors: (Array with: ARGB green with: ARGB red).
+		centerColor: Color blue;
+		surroundColors: (Array with: Color green with: Color red).
 	graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
 	graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
@@ -483,7 +484,7 @@ exampleGdipPGCenterColor
 	bitmap := GdiplusBitmap extent: 350 @ 250.
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
-	brush centerColor: ARGB blue.
+	brush centerColor: Color blue.
 	bitmap graphics fillRectangle: (10 @ 10 corner: 300 @ 200) brush: brush.
 	^bitmap!
 
@@ -498,9 +499,9 @@ exampleGdipPGCenterPoint
 	graphics := bitmap graphics.
 	path := GdiplusGraphicsPath new addEllipse: (Point zero extent: 300 @ 150).
 	(brush := GdiplusPathGradientBrush path: path)
-		centerColor: ARGB blue;
+		centerColor: Color blue;
 		wrapMode: WrapModeTile;
-		surroundColor: ARGB cyan.
+		surroundColor: Color cyan.
 	graphics fillEllipse: (0 @ 0 extent: 300 @ 150) brush: brush.
 	graphics drawString: 'Center Point - center' at: 0 @ 0 + 10.
 	brush centerPoint: 250 @ 75.
@@ -520,7 +521,7 @@ exampleGdipPGFocusScales
 	| bitmap brush focusBrush |
 	bitmap := GdiplusBitmap extent: 500 @ 250.
 	brush := GdiplusPathGradientBrush points: self triangle.
-	brush blendColors: (Array with: ARGB red with: ARGB blue) positions: #(0 1).
+	brush blendColors: (Array with: Color red with: Color blue) positions: #(0 1).
 	focusBrush := brush clone focusScales: 0.2 @ 0.6.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -553,19 +554,19 @@ exampleGdipPGGamma
 				yourself.
 	path := GdiplusGraphicsPath new addLines: points.
 	colors := (OrderedCollection new)
-				add: ARGB black;
-				add: ARGB green;
-				add: ARGB blue;
-				add: ARGB white;
-				add: ARGB black;
-				add: ARGB green;
-				add: ARGB blue;
-				add: ARGB white;
-				add: ARGB black;
-				add: ARGB green;
+				add: Color black;
+				add: Color green;
+				add: Color blue;
+				add: Color white;
+				add: Color black;
+				add: Color green;
+				add: Color blue;
+				add: Color white;
+				add: Color black;
+				add: Color green;
 				yourself.
 	(brush := GdiplusPathGradientBrush path: path)
-		centerColor: ARGB red;
+		centerColor: Color red;
 		surroundColors: colors.
 	bitmap graphics fillPath: path brush: brush.
 	brush isGammaCorrected: true.
@@ -614,7 +615,7 @@ exampleGdipPGScale
 	| bitmap points brush scaledBrush |
 	bitmap := GdiplusBitmap extent: 650 @ 350.
 	brush := GdiplusPathGradientBrush points: self triangle.
-	brush centerColor: ARGB red.
+	brush centerColor: Color red.
 	scaledBrush := brush copy scaleTransform: 3 @ 1.5.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -633,11 +634,11 @@ exampleGdipPGSurroundColors
 	bitmap := GdiplusBitmap extent: 400 @ 400.
 	brush := GdiplusPathGradientBrush points: self triangle.
 	brush wrapMode: WrapModeTile.
-	brush centerColor: ARGB yellow.
+	brush centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
-	brush surroundColor: ARGB red.
+	brush surroundColor: Color red.
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 200) brush: brush.
-	brush surroundColors: (Array with: ARGB red with: ARGB green).
+	brush surroundColors: (Array with: Color red with: Color green).
 	bitmap graphics fillRectangle: (0 @ 200 extent: 200 @ 200) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (200 @ 200 extent: 200 @ 200) brush: brush.
@@ -654,30 +655,30 @@ exampleGdipPGSurroundColors2
 	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 extent: 200 @ 150).
 	(brush := GdiplusPathGradientBrush path: path)
 		wrapMode: WrapModeTile;
-		centerColor: ARGB yellow.
+		centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: ARGB red).
+	brush surroundColors: (Array with: Color red).
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: ARGB red with: ARGB green).
+	brush surroundColors: (Array with: Color red with: Color green).
 	bitmap graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: ARGB cyan).
+	brush surroundColors: self rgb , (Array with: Color cyan).
 	bitmap graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: ARGB cyan with: ARGB magenta).
+	brush surroundColors: self rgb , (Array with: Color cyan with: Color magenta).
 	bitmap graphics fillRectangle: (400 @ 150 extent: 200 @ 150) brush: brush.
 	brush 
 		surroundColors: self rgb , (Array 
-						with: ARGB cyan
-						with: ARGB magenta
-						with: ARGB black).
+						with: Color cyan
+						with: Color magenta
+						with: Color black).
 	bitmap graphics fillRectangle: (0 @ 300 extent: 200 @ 150) brush: brush.
 	brush 
-		surroundColors: (Array new: 13 withAll: ARGB cyan) , (Array new: 13 withAll: ARGB magenta) 
-				, (Array new: 13 withAll: ARGB yellow) , (Array new: 13 withAll: ARGB red) 
-				, (Array new: 13 withAll: ARGB blue).
+		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta) 
+				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red) 
+				, (Array new: 13 withAll: Color blue).
 	bitmap graphics fillRectangle: (200 @ 300 extent: 200 @ 150) brush: brush.
-	brush surroundColor: ARGB red.
+	brush surroundColor: Color red.
 	bitmap graphics fillRectangle: (400 @ 300 extent: 200 @ 150) brush: brush.
 	^bitmap!
 
@@ -692,7 +693,7 @@ exampleGdipPGTransform
 	graphics := bitmap graphics.
 	brush := GdiplusPathGradientBrush points: self triangle.
 	brush wrapMode: WrapModeTile.
-	brush centerColor: ARGB yellow.
+	brush centerColor: Color yellow.
 	brush surroundColors: self rgb.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -714,7 +715,7 @@ exampleGdipPGTranslate
 	| bitmap brush translateBrush |
 	bitmap := GdiplusBitmap extent: 400 @ 300.
 	brush := GdiplusPathGradientBrush points: self triangle.
-	brush centerColor: ARGB blue.
+	brush centerColor: Color blue.
 	translateBrush := brush clone translateTransform: 125 @ 75.
 	(bitmap graphics)
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -749,7 +750,7 @@ exampleGdipPGWrapMode
 		do: 
 			[:assoc :point | 
 			brush := GdiplusPathGradientBrush points: pathPoints wrapMode: assoc value.
-			brush centerColor: ARGB red.
+			brush centerColor: Color red.
 			(bitmap graphics)
 				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
 				drawString: assoc key at: point].
@@ -768,8 +769,8 @@ examplesWorkspace
 	graphics := (bitmap := GdiplusBitmap new) graphics.
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
-	brush centerColor: ARGB red.
-	brush surroundColor: ARGB cyan.
+	brush centerColor: Color red.
+	brush surroundColor: Color cyan.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.3 0.7 1).
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
 	bitmap showExample.
@@ -778,8 +779,8 @@ examplesWorkspace
 	graphics := (bitmap := GdiplusBitmap new) graphics.
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
-	brush centerColor: ARGB red.
-	colors := Array with: ARGB blue.
+	brush centerColor: Color red.
+	colors := Array with: Color blue.
 	brush surroundColors: colors.
 	brush blendTriangularShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -789,8 +790,8 @@ examplesWorkspace
 	graphics := (bitmap := GdiplusBitmap new) graphics.
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
-	brush centerColor: ARGB red.
-	colors := Array with: ARGB blue.
+	brush centerColor: Color red.
+	colors := Array with: Color blue.
 	brush surroundColors: colors.
 	brush blendBellShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -831,12 +832,12 @@ points: points wrapMode: aWrapModeConstant
 				wrapMode: aWrapModeConstant)!
 
 rgb
-	"Private - Answer a 3-element Array containing red, green, and blue instances of ARGB."
+	"Private - Answer a 3-element Array containing red, green, and blue Colors."
 
 	^Array 
-		with: ARGB red
-		with: ARGB green
-		with: ARGB blue!
+		with: Color red
+		with: Color green
+		with: Color blue!
 
 triangle
 	^Array 

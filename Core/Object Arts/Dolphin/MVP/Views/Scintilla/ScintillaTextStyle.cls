@@ -407,12 +407,12 @@ buildPropertyMap
 		at: #forecolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #forecolor
-					defaultValue: RGB black
+					defaultValue: Color black
 					setMessage: SCI_STYLESETFORE);
 		at: #backcolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #backcolor
-					defaultValue: RGB white
+					defaultValue: Color white
 					setMessage: SCI_STYLESETBACK);
 		at: #fontName
 			put: (ScintillaPropertyDescriptor

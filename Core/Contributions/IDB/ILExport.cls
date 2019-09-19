@@ -29,19 +29,19 @@ createColorTable: aBag force256: aBoolean
 	colors := (aBag asSet 
 				asSortedCollection: [:a :b | (aBag occurrencesOf: a) > (aBag occurrencesOf: b)]) 
 					asOrderedCollection.
-	colors := (colors copyWithoutAll: (Array with: RGB white with: RGB black))
-				addFirst: RGB black;
-				addLast: RGB white;
+	colors := (colors copyWithoutAll: (Array with: Color white with: Color black))
+				addFirst: Color black;
+				addLast: Color white;
 				asArray.
 	aBoolean 
 		ifTrue: [colors := colors resize: 256]
 		ifFalse: 
 			[(colors size between: 3 and: 15) ifTrue: [colors := colors resize: 16].
 			(colors size between: 17 and: 255) ifTrue: [colors := colors resize: 256]].
-	colors := colors copyReplacing: nil withObject: RGB white.
+	colors := colors copyReplacing: nil withObject: Color white.
 	colorTable := StructureArray length: colors size elementClass: RGBQUAD.
 	1 to: colors size
-		do: [:index | colorTable at: index put: (RGBQUAD fromRGB: (colors at: index))]!
+		do: [:index | colorTable at: index put: (RGBQUAD fromColor: (colors at: index))]!
 
 setImages: aCollection
 	images := aCollection! !

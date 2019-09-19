@@ -27,7 +27,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library
-				gdipCreatePen1: color asParameter
+				gdipCreatePen1: color argbCode
 				width: (width ?? 1.0) asParameter
 				unit: UnitWorld
 				pen: gpHandle.

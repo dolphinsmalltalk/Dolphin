@@ -68,14 +68,14 @@ isGammaCorrected: aBoolean
 				useGammaCorrection: aBoolean asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetLineGammaCorrection failed' with: status]!
 
-startingColor: startARGB endingColor: endARGB 
+startingColor: startColor endingColor: endColor
 	"Set the receiver's starting and ending colors."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSetLineColors: self asParameter
-				color1: startARGB asParameter
-				color2: endARGB asParameter) = Ok 
+				color1: startColor argbCode
+				color2: endColor argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]! !
 !GdiplusLinearGradientBrush categoriesFor: #blendCount!accessing!private! !
 !GdiplusLinearGradientBrush categoriesFor: #blendFactors!accessing!public! !
@@ -104,12 +104,12 @@ exampleGdipLGChangingColors
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 0 @ 200
-				color1: (ARGB named: #blue)
-				color2: (ARGB named: #blue).
+				color1: Color blue
+				color2: Color blue.
 	points keysAndValuesDo: 
 			[:i :point |
-			brush startingColor: (ARGB named: (colors at: i))
-				endingColor: (ARGB named: (colors at: i + 1)).
+			brush startingColor: (Color named: (colors at: i))
+				endingColor: (Color named: (colors at: i + 1)).
 			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
 	^bitmap!
 
@@ -125,8 +125,8 @@ exampleGdipLGCustom
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 10
 				point2: 200 @ 10
-				color1: (ARGB named: #black)
-				color2: (ARGB named: #red).
+				color1: Color black
+				color2: Color red.
 	brush blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.2 1.0).
 	bitmap graphics
 		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
@@ -145,8 +145,8 @@ exampleGdipLGDiagonal
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 200 @ 100
-				color1: (ARGB named: #blue)
-				color2: (ARGB named: #green).
+				color1: Color blue
+				color2: Color green.
 	pen := GdiplusPen brush: brush width: 10.
 	bitmap graphics
 		drawLine: (0 @ 0 extent: 600 @ 300) pen: pen;
@@ -165,8 +165,8 @@ exampleGdipLGHorizontal
 	brush := GdiplusLinearGradientBrush 
 				point1: 0 @ 10
 				point2: 200 @ 10
-				color1: ARGB red
-				color2: ARGB blue.
+				color1: Color red
+				color2: Color blue.
 	pen := GdiplusPen brush: brush width: 3.
 	(bitmap graphics)
 		drawLine: (0 @ 10 corner: 200 @ 10) pen: pen;
@@ -193,8 +193,8 @@ exampleGdipLGModeConstants
 			enum := self enumsLinearGradientMode at: i.
 			brush := GdiplusLinearGradientBrush
 						rect: (0 @ 0 corner: 300 @ 200)
-						color1: (ARGB named: #red)
-						color2: (ARGB named: #yellow)
+						color1: Color red
+						color2: Color yellow
 						mode: enum value.
 			graphics
 				fillRectangle: (point extent: 300 @ 200) brush: brush;
@@ -220,8 +220,8 @@ exampleGdipLGTiling
 			enum := self enumsLinearGradientMode at: i.
 			brush := GdiplusLinearGradientBrush
 						rect: (0 @ 0 corner: 75 @ 50)
-						color1: (ARGB named: #blue)
-						color2: (ARGB named: #cyan)
+						color1: Color blue
+						color2: Color cyan
 						mode: enum value.
 			graphics
 				fillRectangle: (point extent: 300 @ 200) brush: brush;

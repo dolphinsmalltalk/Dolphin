@@ -177,7 +177,7 @@ menuFont
 	^SystemMetrics current menuFont!
 
 menuTextColor
-	^Color named: #menuText!
+	^Color menuText!
 
 offsetForSubmenu: anInteger canvas: aCanvas 
 	^self subclassResponsibility!
@@ -341,7 +341,7 @@ setHighlightColors: canvas
 	| txtHighlight |
 	txtHighlight := Color named: #highlightText.
 	canvas
-		backcolor: (Color named: #menuHilight);
+		backcolor: Color menuHilight;
 		forecolor: txtHighlight;
 		pen: txtHighlight pen;
 		brush: txtHighlight brush!

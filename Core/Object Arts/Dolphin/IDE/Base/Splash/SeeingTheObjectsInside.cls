@@ -55,13 +55,13 @@ dismiss
 	self topShell close!
 
 dolphinInsideBaseColor
-	^ARGB 
+	^Color 
 		r: 1
 		g: 1
 		b: 1!
 
 dolphinInsideIntensityColor
-	^ARGB 
+	^Color 
 		r: 215
 		g: 109
 		b: 10!
@@ -88,7 +88,7 @@ dolphinOutline
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
-	brush := GdiplusSolidBrush color: ARGB white.
+	brush := GdiplusSolidBrush color: Color white.
 	fontCopyright := GdiplusFont name: 'Arial' pointSize: 9.
 	stringFormat := GdiplusStringFormat genericDefault.
 	graphics
@@ -211,7 +211,7 @@ isPointInDolphin: aPoint
 
 	| pixel |
 	pixel := self backSurface pixelAt: aPoint.
-	^pixel = dolphinInside color asARGB!
+	^pixel = dolphinInside color!
 
 loadTextureMap: mapName
 	| textureFileName mapFileName texture map scale |
@@ -309,7 +309,7 @@ render
 	
 	[| graphics dolphin back |
 	graphics := self graphics.
-	graphics clear: ARGB white.
+	graphics clear: Color white.
 	self model do: 
 			[:each |
 			| existingScale |

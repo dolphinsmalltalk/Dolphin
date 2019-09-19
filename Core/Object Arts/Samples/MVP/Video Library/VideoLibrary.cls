@@ -98,8 +98,7 @@ icon
 	^##((TextTileIcon
 		text: $\x1F3AC
 		fontName: 'Segoe UI Emoji'
-		color: (ARGB named: #darkSlateBlue))
-		textcolor: ARGB white;
+		color: Color darkSlateBlue)
 		fontStyle: #bold;
 		yourself)!
 

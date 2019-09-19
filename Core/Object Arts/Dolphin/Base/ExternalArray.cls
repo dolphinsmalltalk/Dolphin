@@ -31,6 +31,15 @@ Instance Variables:
 			ifFalse: [^false]].
 	^true!
 
+anySatisfy: discriminator
+	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
+	any element of the receiver.
+	Implementation Note: The argument is evaluated for every element of the
+	receiver iff it evaluates to false for every element."
+
+	self do: [:e | (discriminator value: e) ifTrue: [^true]].
+	^false!
+
 appendToStream: puttableStream
 	"Private - Append the receiver's elements to the argument, puttableStream.
 	We can be able to do a fast block copy. Answer the receiver.
@@ -381,6 +390,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]! !
 !ExternalArray categoriesFor: #=!public! !
+!ExternalArray categoriesFor: #anySatisfy:!enumerating!public! !
 !ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
 !ExternalArray categoriesFor: #asArray!converting!public! !
 !ExternalArray categoriesFor: #asOrderedCollection!converting!public! !

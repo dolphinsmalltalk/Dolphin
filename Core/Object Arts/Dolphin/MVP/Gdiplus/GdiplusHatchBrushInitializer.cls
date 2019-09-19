@@ -15,8 +15,8 @@ createHandle
 	gpHandle := ExternalHandle new.
 	status := self library
 				gdipCreateHatchBrush: style
-				forecol: forecolor asParameter
-				backcol: backcolor asParameter
+				forecol: forecolor argbCode
+				backcol: backcolor argbCode
 				brush: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
@@ -26,8 +26,8 @@ gdiplusConstructorErrorDescription
 
 style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
-	forecolor := foreColor asARGB.
-	backcolor := backColor asARGB! !
+	forecolor := foreColor.
+	backcolor := backColor! !
 !GdiplusHatchBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusHatchBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !GdiplusHatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!initializing!private! !

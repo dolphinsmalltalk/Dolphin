@@ -76,18 +76,18 @@ lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
 	<stdcall: sdword GdipBitmapLockBits  handle RECT* dword sdword GpBitmapData*>
 	^self invalidCall"!
 
-pixelAt: aPoint 
+pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
 	| status color |
 	color := DWORD new.
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipBitmapGetPixel: self asParameter
 				x: aPoint x
 				y: aPoint y
 				color: color asParameter.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel  failed' with: status].
-	^ARGB fromInteger: color asInteger!
+	status == Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel  failed' with: status].
+	^Color fromArgbCode: color asInteger!
 
 pixelAt: aPoint put: anARGB 
 	"Set the pixel at aPoint to be anARGB"
@@ -97,7 +97,7 @@ pixelAt: aPoint put: anARGB
 				gdipBitmapSetPixel: self asParameter
 				x: aPoint x
 				y: aPoint y
-				color: anARGB asParameter.
+				color: anARGB argbCode.
 	status = Ok ifFalse: [GdiplusError signal: 'GdipBitmapSetPixel  failed' with: status]!
 
 unlockBits: lockedBitmapData

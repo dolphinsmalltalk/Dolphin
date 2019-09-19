@@ -135,10 +135,10 @@ exampleClippingSimple
 		self exampleClippingSimple showExample
 	"
 
-	| bitmap graphics brush rect1 rect2 region1 region2 presenter onLeftButtonPressed |
+	| bitmap graphics brush rect1 region1 |
 	bitmap := GdiplusBitmap extent: 350 @ 350.
 	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush color: ARGB blue.
+	brush := GdiplusSolidBrush color: Color blue.
 	rect1 := 100 @ 50 extent: 50 @ 150.
 	region1 := GdiplusRegion fromRectangle: rect1.
 	region1 handle.
@@ -155,7 +155,7 @@ exampleClippingSimple2
 
 	| bitmap brush rect1 region1 |
 	bitmap := GdiplusBitmap extent: 350 @ 350.
-	brush := GdiplusSolidBrush color: ARGB blue.
+	brush := GdiplusSolidBrush color: Color blue.
 	rect1 := 0 @ 0 extent: 50 @ 150.
 	region1 := GdiplusRegion fromRectangle: rect1.
 	(bitmap graphics)
@@ -228,8 +228,8 @@ exampleGdipRHitTesting
 	onLeftButtonPressed := 
 			[:aMouseEvent | 
 			(region1 isVisible: aMouseEvent x @ aMouseEvent y graphics: graphics) 
-				ifTrue: [brush color: ARGB green]
-				ifFalse: [brush color: ARGB red].
+				ifTrue: [brush color: Color green]
+				ifFalse: [brush color: Color red].
 			graphics fillRegion: region1 brush: brush.
 			presenter view invalidate].
 	presenter propertyAt: #clickHandler put: onLeftButtonPressed.

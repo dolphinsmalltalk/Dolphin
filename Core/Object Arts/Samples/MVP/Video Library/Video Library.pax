@@ -46,8 +46,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus').
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
 
 package!
 

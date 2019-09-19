@@ -25,19 +25,18 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Views\Control Bars\Dolphin Control Bars';
-	add: '..\Prompters\Dolphin Key-Value Prompter';
-	add: '..\..\Models\List\Dolphin List Models';
-	add: '..\List\Dolphin List Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\Prompters\Dolphin Prompter';
-	add: '..\..\Icons\Dolphin Text Tile Icons';
-	add: '..\..\Gdiplus\Gdiplus';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Views\Control Bars\Dolphin Control Bars'
+	'..\Prompters\Dolphin Key-Value Prompter'
+	'..\..\Models\List\Dolphin List Models'
+	'..\List\Dolphin List Presenter'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\Base\Dolphin MVP Base'
+	'..\Prompters\Dolphin Prompter'
+	'..\..\Icons\Dolphin Text Tile Icons').
 
 package!
 
@@ -79,7 +78,7 @@ resource_List_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_List_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil 721158 ##(Smalltalk.SystemColor) 31 nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1915204752 170 192 8 #() 170 192 34 12 48011 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #addItem 8 'New Item' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewThing.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 48011 48013 642 416 1 674 #removeItem 8 'Delete Item' 1 1 722 nil true 768 8 'EditClear.ico' 816 48013 48015 642 416 1 674 #moveFirst 8 'Move First' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x23EE 8 'Georgia' nil 262406 ##(Smalltalk.ARGB) 8 4281833960 nil nil 3 nil nil 48015 48017 642 416 1 674 #moveUp 8 'Move Up' 1 1 978 $\x25B2 8 'Segoe UI' nil 1026 8 4281833960 nil nil 1 nil nil 48017 48019 642 416 1 674 #moveDown 8 'Move Down' 1 1 978 $\x25BC nil nil 1026 8 4281833960 nil nil 1 nil nil 48019 48021 642 416 1 674 #moveLast 8 'Move Last' 1 1 978 $\x23ED 8 'Georgia' nil 1026 8 4281833960 nil nil 3 nil nil 48021 34 8 656 848 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 928 1072 1184 1280 1410 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1570 321 51 416 1522 #updateSizePosted 592 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 31 8 0 0 35 0 0 0] 8 #() 1570 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil 721158 ##(Smalltalk.SystemColor) 31 nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1882402160 170 192 8 #() 170 192 34 12 52071 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #moveLast 8 'Move Last' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x23ED 8 'Georgia' nil 482 27 nil nil 3 nil nil 52071 52067 642 416 1 674 #moveUp 8 'Move Up' 1 1 722 $\x25B2 8 'Segoe UI' nil 768 nil nil 1 nil nil 52067 52063 642 416 1 674 #removeItem 8 'Delete Item' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditClear.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 52063 52069 642 416 1 674 #moveDown 8 'Move Down' 1 1 722 $\x25BC nil nil 768 nil nil 1 nil nil 52069 52065 642 416 1 674 #moveFirst 8 'Move First' 1 1 722 $\x23EE 8 'Georgia' nil 768 nil nil 3 nil nil 52065 52061 642 416 1 674 #addItem 8 'New Item' 1 1 914 nil true 960 8 'NewThing.ico' 1008 52061 34 8 1184 864 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1104 784 1040 656 1282 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1442 321 51 416 1394 #updateSizePosted 592 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 31 8 0 0 35 0 0 0] 8 #() 1442 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #resource_List_tools!public!resources-views! !
 
 "End of package definition"!

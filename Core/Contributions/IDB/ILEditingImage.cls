@@ -55,7 +55,7 @@ draw: aDyadicBlock location: aRectangle with: anRGB
 	drawnRectangle := aDyadicBlock value: canvas value: (Point zero corner: aRectangle extent).
 	(self pixelPoints: drawnRectangle) do: 
 			[:each | 
-			(canvas pixelAt: each) = RGB black 
+			(canvas pixelAt: each) = Color black 
 				ifTrue: [self putRGB: anRGB at: each + aRectangle origin - drawnRectangle origin]].
 	self undoCommit.
 	self notifyChangedRectangle: aRectangle!
@@ -252,15 +252,15 @@ undoCommit
 usedRectangleIn: aCanvas within: aPoint
 	| left right top bottom |
 	left := (0 to: aPoint x) 
-				detect: [:across | (0 to: aPoint y) anySatisfy: [:down | (aCanvas pixelAt: across @ down) = RGB black]].
+				detect: [:across | (0 to: aPoint y) anySatisfy: [:down | (aCanvas pixelAt: across @ down) = Color black]].
 	right := (aPoint x to: 0 by: -1) 
-				detect: [:across | (0 to: aPoint y) anySatisfy: [:down | (aCanvas pixelAt: across @ down) = RGB black]].
+				detect: [:across | (0 to: aPoint y) anySatisfy: [:down | (aCanvas pixelAt: across @ down) = Color black]].
 	top := (0 to: aPoint y) detect: 
 					[:down | 
-					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = RGB black]].
+					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = Color black]].
 	bottom := (aPoint y to: 0 by: -1) detect: 
 					[:down | 
-					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = RGB black]].
+					(0 to: aPoint x) anySatisfy: [:across | (aCanvas pixelAt: across @ down) = Color black]].
 	^left @ top corner: right @ bottom! !
 !ILEditingImage categoriesFor: #beModified!accessing!public! !
 !ILEditingImage categoriesFor: #beNotModified!accessing!public! !

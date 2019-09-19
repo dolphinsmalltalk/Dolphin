@@ -27,13 +27,13 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [ColorRef fromInteger: clrTextBk]!
+	^clrTextBk = CLR_DEFAULT ifTrue: [Color window] ifFalse: [Color fromCOLORREF: clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>.
 	Implementation Note: We must convert to an RGB because a COLORREF is needed."
 
-	self clrTextBk: aColor asColorRef asParameter!
+	self clrTextBk: aColor asCOLORREF!
 
 clrText
 	"Answer the <Integer> value of the receiver's 'clrText' field."
@@ -76,12 +76,12 @@ forecolor
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [ColorRef fromInteger: clrText]!
+	^clrText = CLR_DEFAULT ifTrue: [Color windowText] ifFalse: [Color fromCOLORREF: clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."
 
-	self clrText: aColor asColorRef asParameter!
+	self clrText: aColor asCOLORREF!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."

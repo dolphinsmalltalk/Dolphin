@@ -11,7 +11,7 @@ StyledPen comment: 'A StyledPen holds persistent details for a GdiplusPen.'!
 !StyledPen methodsFor!
 
 asGdiplusPen
-	^(GdiplusPen color: self color asARGB width: self width)
+	^(GdiplusPen color: self color width: self width)
 		dashPattern: dashPattern;
 		yourself!
 

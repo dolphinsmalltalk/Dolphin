@@ -62,15 +62,15 @@ color
 
 	| status color |
 	color := DWORD new.
-	(status := GdiplusLibrary default gdipGetPenColor: self asParameter argb: color) = Ok
+	(status := GdiplusLibrary default gdipGetPenColor: self asParameter argb: color) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenColor failed' with: status].
-	^ARGB fromInteger: color value!
+	^Color fromArgbCode: color value!
 
-color: anARGB 
-	"Set the receiver's drawing color to anARGB."
+color: aColor
+	"Set the receiver's drawing color to the <Color> argument."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetPenColor: self asParameter argb: anARGB asParameter) = Ok 
+	(status := GdiplusLibrary default gdipSetPenColor: self asParameter argb: aColor argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetPenColor failed' with: status]!
 
 compoundArray
@@ -278,10 +278,10 @@ width: aNumber
 !GdiplusPen class methodsFor!
 
 black
-	^self color: ARGB black!
+	^self color: Color black!
 
 blue
-	^self color: ARGB blue!
+	^self color: Color blue!
 
 brush: aGdiplusBrush width: aFloat
 	"Creates a Pen object that uses the attributes of a brush and a real number to set the width of this Pen object"
@@ -289,10 +289,10 @@ brush: aGdiplusBrush width: aFloat
 	^self 
 		fromInitializer: (GdiplusPenFromBrushInitializer brush: aGdiplusBrush width: aFloat)!
 
-color: anARGB
+color: aColor
 	"Answer an instance of the receiver with the specified color and default width (1.0)."
 
-	^self color: anARGB width: nil!
+	^self color: aColor width: nil!
 
 color: anARGB width: aFloat
 	"Answer an instance of the receiver with the specified color and width."
@@ -541,7 +541,7 @@ examplesWorkspace
 	pen transform: matrix.
 	graphics drawRectangle: (210 @ 50 extent: 150 @ 100) pen: pen.
 	pen resetTransform.
-	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: (pen color: ARGB red).
+	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: (pen color: Color red).
 	bitmap showExample.
 
 	"#scaleTransform:"
@@ -561,7 +561,7 @@ examplesWorkspace
 	pen rotateTransform: 30 order: MatrixOrderPrepend.
 	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: pen.
 	pen resetTransform.
-	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: (pen color: ARGB red).
+	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: (pen color: Color red).
 	bitmap showExample.
 
 	"#dashStyle:"
@@ -581,8 +581,8 @@ examplesWorkspace
 	graphics := bitmap graphics.
 	brush := GdiplusHatchBrush 
 				style: HatchStyleVertical
-				forecolor: ARGB red
-				backcolor: ARGB blue.
+				forecolor: Color red
+				backcolor: Color blue.
 	pen := GdiplusPen green width: 10.
 	graphics drawLine: (10 @ 10 corner: 200 @ 50) pen: pen.
 	pen brush: brush.
@@ -590,7 +590,7 @@ examplesWorkspace
 	bitmap showExample!
 
 green
-	^self color: ARGB green!
+	^self color: Color green!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -601,7 +601,7 @@ new
 	^self black!
 
 red
-	^self color: ARGB red! !
+	^self color: Color red! !
 !GdiplusPen class categoriesFor: #black!instance creation!public! !
 !GdiplusPen class categoriesFor: #blue!instance creation!public! !
 !GdiplusPen class categoriesFor: #brush:width:!instance creation!public! !

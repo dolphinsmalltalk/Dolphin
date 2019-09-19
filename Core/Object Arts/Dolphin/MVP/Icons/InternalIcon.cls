@@ -75,12 +75,11 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 		at: dstOrigin
 		extent: dstExtent!
 
-drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt 
-	tileColor 
+drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
+	tileColor
 		ifNotNil: 
-			[aGraphics fillRectangle: (dstOrigin extent: dstExtent)
-				brush: (GdiplusSolidBrush color: tileColor asARGB)].
-	^self gdiplusBitmap 
+			[aGraphics fillRectangle: (dstOrigin extent: dstExtent) brush: (GdiplusSolidBrush color: tileColor)].
+	^self gdiplusBitmap
 		drawOnGraphics: aGraphics
 		at: dstOrigin
 		extent: dstExtent

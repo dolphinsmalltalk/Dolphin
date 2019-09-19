@@ -292,7 +292,7 @@ defaultGradientBackcolor
 
 	"This is the colour of the shadow at the bottom of a header control in the luna theme."
 
-	^RGB 
+	^Color 
 		r: 203
 		g: 199
 		b: 184!
@@ -302,7 +302,7 @@ defaultGradientForecolor
 
 	"This is Color light3d in the luna theme"
 
-	^RGB 
+	^Color 
 		r: 241
 		g: 239
 		b: 226!

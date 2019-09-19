@@ -120,7 +120,7 @@ exampleGdipMShadows
 		translateTransform: 180 @ 86.
 	graphics transform: matrix.
 	font := GdiplusFont name: 'Times New Roman' pointSize: 100.
-	brush := GdiplusSolidBrush color: ARGB gray.
+	brush := GdiplusSolidBrush color: Color gray.
 	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
 		do: 
 			[:num :char |
@@ -131,7 +131,7 @@ exampleGdipMShadows
 				format: nil
 				brush: brush].
 	graphics resetTransform.
-	brush color: ARGB blue.
+	brush color: Color blue.
 	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
 		do: 
 			[:num :char |

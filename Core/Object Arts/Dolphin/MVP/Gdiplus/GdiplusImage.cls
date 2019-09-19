@@ -1409,6 +1409,7 @@ exampleGdipIPrinting3
 	image2 := GdiplusGraphics exampleGdipGDrawingShapes rotateLeft.
 	image3 := GdiplusHatchBrush exampleGdipHBStyles.
 	printer := PrinterCanvas choose.
+	printer ifNil: [^self].
 	graphics := GdiplusGraphics fromCanvas: printer.
 	"Calculate 1/4 of page in hundredths of inches."
 	res := graphics resolution.

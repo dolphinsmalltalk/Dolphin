@@ -36,7 +36,7 @@ paintShadowOf: path on: graphics
 	brush := GdiplusPathGradientBrush path: path.
 	brush wrapMode: WrapModeClamp.
 	colorBlendColors := Array 
-				with: Color none asARGB
+				with: Color none
 				with: self shadowColor
 				with: self shadowColor.
 	colorBlendPositions := #(0.0 0.2 1.0).

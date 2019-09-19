@@ -33,10 +33,7 @@ struct tagPALETTEENTRY {
 asColor
 	"Answer a new Colour based on the receiver's data"
 
-	^Color
-		r: self peRed
-		g: self peGreen
-		b: self peBlue!
+	^Color fromRgbCode: self rgbCode!
 
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."
@@ -76,7 +73,10 @@ peRed
 peRed: anInteger
 	"Set the receiver's 'peRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_peRed put: anInteger! !
+	bytes byteAtOffset: _OffsetOf_peRed put: anInteger!
+
+rgbCode
+	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
 !PALETTEENTRY categoriesFor: #asColor!converting!public! !
 !PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
 !PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !
@@ -86,6 +86,7 @@ peRed: anInteger
 !PALETTEENTRY categoriesFor: #peGreen:!**compiled accessors**!public! !
 !PALETTEENTRY categoriesFor: #peRed!**compiled accessors**!public! !
 !PALETTEENTRY categoriesFor: #peRed:!**compiled accessors**!public! !
+!PALETTEENTRY categoriesFor: #rgbCode!accessing!public! !
 
 !PALETTEENTRY class methodsFor!
 

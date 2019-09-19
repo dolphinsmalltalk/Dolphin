@@ -48,7 +48,7 @@ addBitmap: aBitmap mask: aColorOrNil
 	^CommCtrlLibrary default 
 		imageList_AddMasked: hImgList
 		hbmImage: bmp asParameter
-		crMask: (aColorOrNil isNil ifTrue: [CLR_NONE] ifFalse: [aColorOrNil asColorRef asParameter])!
+		crMask: (aColorOrNil isNil ifTrue: [CLR_NONE] ifFalse: [aColorOrNil asCOLORREF])!
 
 addIcon: anIcon
 	"Append an icon to the receiver and return the zero-based <integer> index at which it was added. 
@@ -79,16 +79,16 @@ backcolor
 
 	| colorref |
 	colorref := CommCtrlLibrary default imageList_GetBkColor: handle.
-	^colorref = CLR_NONE ifFalse: [Color fromInteger: colorref]!
+	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
-backcolor: aColor 
+backcolor: aColor
 	"Set the receiver's background color to the <Color>, aColor.
 	Answers the previous background <Color>, or nil if there was none."
 
 	| colorref |
 	colorref := CommCtrlLibrary default imageList_SetBkColor: self asParameter
-				clrBk: (aColor isNil ifTrue: [CLR_NONE] ifFalse: [aColor asColorRef asParameter]).
-	^colorref = CLR_NONE ifFalse: [Color fromInteger: colorref]!
+				clrBk: (aColor isNil ifTrue: [CLR_NONE] ifFalse: [aColor asCOLORREF]).
+	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
 basicFree
 	"Private - Free external resources held by the receiver"
@@ -164,12 +164,12 @@ draw: anInteger on: aCanvas at: aPoint
 		at: aPoint
 		flags: 0!
 
-draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: foreColor flags: flagsInteger 
+draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: foreColor flags: flagsInteger
 	"Draw the image at one-based <integer> index, imageIndexInteger, in the receiver onto the
 	<Canvas>, aCanvas, at the <Point> position, aPoint, using the foreground and background
 	<Color>s foreColor and backColor respectively, with <integer> style flags, flagsInteger."
 
-	^CommCtrlLibrary default 
+	^CommCtrlLibrary default
 		imageList_DrawEx: self asParameter
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
@@ -177,8 +177,8 @@ draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: f
 		y: aPoint y
 		dx: 0
 		dy: 0
-		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asParameter])
-		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asParameter])
+		rgbBk: (backColor isNil ifTrue: [CLR_NONE] ifFalse: [backColor asCOLORREF])
+		rgbFg: (foreColor isNil ifTrue: [CLR_DEFAULT] ifFalse: [foreColor asCOLORREF])
 		fStyle: flagsInteger!
 
 draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger 

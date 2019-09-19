@@ -22,7 +22,7 @@ bitmapOfPrintView: aContainerView
 borderColor
 	"Private - Answer the standard border color. This may have to be changed depending on the Windows theme settings"
 
-	^RGB fromInteger: 6579300!
+	^Color fromRgbCode: 16r646464!
 
 borderRectangleOf: aView 
 	"Private - Answer the Rectangle for the non-client border of aView in the coordinate system of the NC area. Note that this is not the same as the

@@ -87,7 +87,7 @@ notYetRunColorSymbol
 
 passedColorSymbol
 
-	^#green!
+	^#commonGreen!
 
 resultStateColorSymbol
 

@@ -329,11 +329,11 @@ forecolor: aColorOrNil
 
 	| clrref |
 	super forecolor: aColorOrNil.
-	clrref := (aColorOrNil ifNil: [Color windowText]) asColorRef.
+	clrref := (aColorOrNil ifNil: [Color windowText]) asCOLORREF.
 	self 
 		sendMessage: TVM_SETTEXTCOLOR
 		wParam: 0
-		lParam: clrref asParameter!
+		lParam: clrref!
 
 getIndent
 	"Private - Answer the pixel indentation of child items relative to their
@@ -973,7 +973,7 @@ setControlBackcolor: aColor
 	self 
 		sendMessage: TVM_SETBKCOLOR
 		wParam: 0
-		lParam: aColor asColorRef asParameter!
+		lParam: aColor asCOLORREF!
 
 setSingleSelection: itemHandle 
 	^(self 

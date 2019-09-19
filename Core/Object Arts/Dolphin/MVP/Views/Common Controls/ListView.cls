@@ -602,7 +602,7 @@ forecolor: aColorOrNil
 	super forecolor: aColorOrNil.
 	clrref := (aColorOrNil isNil 
 			ifTrue: [Color windowText]
-			ifFalse: [aColorOrNil]) asColorRef asParameter.
+			ifFalse: [aColorOrNil]) asCOLORREF.
 	self sendMessage: LVM_SETTEXTCOLOR wParam: 0 lParam: clrref.
 
 !
@@ -2027,7 +2027,7 @@ setColumnIcon: anImage atIndex: anInteger
 
 setControlBackcolor: aColor 
 	| clrref |
-	clrref := aColor asColorRef asParameter.
+	clrref := aColor asCOLORREF.
 	self 
 		sendMessage: LVM_SETBKCOLOR
 		wParam: 0

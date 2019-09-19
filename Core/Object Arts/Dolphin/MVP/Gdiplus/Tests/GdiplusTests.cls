@@ -51,8 +51,8 @@ getSampleLinearGradientBrush
 	^GdiplusLinearGradientBrush 
 		point1: 0 @ 0
 		point2: 255 @ 0
-		color1: ARGB red
-		color2: ARGB red!
+		color1: Color red
+		color2: Color red!
 
 getSamplePen
 	^GdiplusPen red!

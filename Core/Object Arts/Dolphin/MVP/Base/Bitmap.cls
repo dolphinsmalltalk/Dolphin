@@ -492,6 +492,24 @@ loadFromInstance: hModule
 		cyDesired: 0
 		fuLoad: self loadFlags!
 
+pixelData
+	"Answer a DWORDArray of the (A)RGB pixel data contained in the receiver. This simple but NOT FAST."
+
+	| pixData n canvas |
+	pixData := DWORDArray new: self extent x * self extent y.
+	n := 1.
+	canvas := self canvas.
+	0 to: self extent x-1
+		do: 
+			[:x | 
+			0 to: self extent y -1 
+				do: 
+					[:y | 
+					pixData at: n put: (canvas getPixel: x @ y).
+					n := n + 1]].
+	self freeDC.
+	^pixData!
+
 setMap3DColors: aBoolean
 	"Set whether the receivers colours will be mapped to suitable 3D ones
 	when loaded in."
@@ -553,6 +571,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 !Bitmap categoriesFor: #loadFlags!private!realizing/unrealizing! !
 !Bitmap categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
 !Bitmap categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
+!Bitmap categoriesFor: #pixelData!accessing!public! !
 !Bitmap categoriesFor: #setMap3DColors:!accessing!public! !
 !Bitmap categoriesFor: #stbFixup:at:!binary filing!public! !
 

@@ -29,10 +29,10 @@ CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog 
 !CHOOSEFONTW methodsFor!
 
 color
-	^Color fromInteger: self rgbColors!
+	^Color fromCOLORREF: self rgbColors!
 
 color: aColor 
-	self rgbColors: aColor asRGB asParameter!
+	self rgbColors: aColor asCOLORREF!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"

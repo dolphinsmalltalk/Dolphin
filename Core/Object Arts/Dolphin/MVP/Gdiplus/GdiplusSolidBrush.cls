@@ -15,11 +15,11 @@ color
 	color := DWORD new.
 	(status := GdiplusLibrary default gdipGetSolidFillColor: self asParameter color: color) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetSolidFillColor failed' with: status].
-	^ARGB fromInteger: color value!
+	^Color fromArgbCode: color value!
 
-color: anARGB 
+color: aColor
 	| status |
-	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: anARGB asParameter) 
+	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode)
 		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
 !GdiplusSolidBrush categoriesFor: #color!accessing!public! !
 !GdiplusSolidBrush categoriesFor: #color:!accessing!public! !
@@ -27,15 +27,15 @@ color: anARGB
 !GdiplusSolidBrush class methodsFor!
 
 black
-	^self color: ARGB black!
+	^self color: Color black!
 
 blue
-	^self color: ARGB blue!
+	^self color: Color blue!
 
-color: anARGB
+color: aColor
 	"Creates a SolidBrush object based on a color."
 
-	^self fromInitializer: (GdiplusSolidBrushFromColorInitializer color: anARGB)!
+	^self fromInitializer: (GdiplusSolidBrushFromColorInitializer color: aColor)!
 
 exampleGdipDropShadow
 	"
@@ -78,13 +78,13 @@ exampleGdipSBFillAShape
 	^bitmap!
 
 green
-	^self color: ARGB green!
+	^self color: Color green!
 
 new
 	^self black!
 
 red
-	^self color: ARGB red! !
+	^self color: Color red! !
 !GdiplusSolidBrush class categoriesFor: #black!instance creation!public! !
 !GdiplusSolidBrush class categoriesFor: #blue!instance creation!public! !
 !GdiplusSolidBrush class categoriesFor: #color:!instance creation!public! !

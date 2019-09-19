@@ -22,8 +22,8 @@ testCreateHandle
 	| rectangle |
 	model
 		rect: (rectangle := 1 @ 2 corner: 3 @ 4)
-		color1: (ARGB fromInteger: 1)
-		color2: (ARGB fromInteger: 2)
+		color1: (Color fromArgbCode: 1)
+		color2: (Color fromArgbCode: 2)
 		mode: LinearGradientModeBackwardDiagonal.
 	model createHandle.
 	self assert: constructorArgs size equals: 6.

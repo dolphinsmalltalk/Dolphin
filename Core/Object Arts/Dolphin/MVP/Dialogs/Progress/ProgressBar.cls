@@ -67,7 +67,7 @@ forecolor: aColorOrNil
 	self 
 		sendMessage: PBM_SETBARCOLOR
 		wParam: 0
-		lParam: (self forecolor ifNil: [CLR_DEFAULT] ifNotNil: [:color | color asColorRef asParameter]).
+		lParam: (self forecolor ifNil: [CLR_DEFAULT] ifNotNil: [:color | color asCOLORREF]).
 	[self invalidate] postToMessageQueue!
 
 incrementBy: anInteger
@@ -121,7 +121,7 @@ setControlBackcolor: aColor
 	self 
 		sendMessage: CCM_SETBKCOLOR
 		wParam: 0
-		lParam: aColor asColorRef asParameter!
+		lParam: aColor asCOLORREF!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 

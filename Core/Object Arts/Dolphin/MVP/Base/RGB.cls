@@ -2,15 +2,11 @@
 
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
-	classVariableNames: 'StdColours'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RGB guid: (GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGB comment: '`RGB` is the class of colour values specified as red, green and blue levels. The magnitude of each the primary colour components can be specified in the range from 0 to 255 inclusive, with 0 indicating minimum intensity.
-
-## Class Variables:
-  `StdColours`		`IdentityDictionary` of `Symbol` colour names to instances, e.g. `RGB red`
-
+RGB comment: '`RGB` is the class of colour values specified as individual 8-bit red, green and blue levels encoded as a 32-bit integer with components in B,G,R order (aka a COLORREF). The RGB encoding is used with the older GDI and common control APIs, and cannot represent alpha/translucency, except for the special case of complete transparency (see `ColorNone`).
 
 
 
@@ -18,219 +14,68 @@ RGB comment: '`RGB` is the class of colour values specified as red, green and bl
 !RGB categoriesForClass!Drawing! !
 !RGB methodsFor!
 
-asIndexedColorUsingPalette: hPalette 
-	"Answer the receiver as an IndexedColour using hPalette"
+alpha: anAlphaInteger
+	"Answer an <Color> that has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
+	The alpha component is expected to be in the range [0,255], but is clamped to that if not."
 
-	| index |
-	index := GDILibrary default getNearestPaletteIndex: hPalette crColor: self asParameter.
-	^index < 0 
-		ifTrue: [GDILibrary default systemError]
-		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]!
+	| alpha |
+	alpha := anAlphaInteger asInteger clampBetween: 0 and: 255.
+	^alpha == 255
+		ifTrue: [self]
+		ifFalse: 
+			[self argbClass
+				fromArgbCode: ((((code bitShift: -16) bitAnd: 16rFF)
+						bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16)))
+							bitOr: (alpha bitShift: 24))]!
 
 asRGB
 	"Answer the <RGB> colour equivalent to the receiver."
 
 	^self!
 
-basicHls
-	| hls base |
-	hls := ByteArray newFixed: 6.
-	base := hls yourAddress.
-	ShlwapiLibrary default
-		colorRGBToHLS: code
-		pwHue: base
-		pwLuminance: base + 2
-		pwSaturation: base + 4.
-	^hls!
+rgbCode
+	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
-blue
-	"Answer the receiver's blue component (a SmallInteger in the range 0..255)."
-
-	^(code bitShift: -16) bitAnd: 16rFF!
-
-green
-	"Answer the receiver's green component (a SmallInteger in the range 0..255)."
-
-	^(code bitShift: -8) bitAnd: 16rFF!
-
-hls
-	"Answer the hue, luminance, and saturation values that correspond to the receiver."
-
-	| hls |
-	hls := self basicHls.
-	^{hls wordAtOffset: 0. hls wordAtOffset: 2. hls wordAtOffset: 4}!
-
-hue
-	"Answer the hue of the receiver."
-
-	^self basicHls wordAtOffset: 0!
-
-luminance
-	"Answer the luminance of the receiver."
-
-	^self basicHls wordAtOffset: 2!
-
-printOn: aStream
-	"Put an ASCII representation of receiver onto aStream."
-
-	aStream
-		nextPut: $(;
-		display: self class;
-		display: ' r: ';
-		print: self red;
-		display: ' g: ';
-		print: self green;
-		display: ' b: ';
-		print: self blue;
-		nextPut: $)!
-
-red
-	"Answer the receiver's red component (a SmallInteger in the range 0..255)."
-
-	^code bitAnd: 16rFF!
-
-saturation
-	"Answer the saturation of the receiver."
-
-	^self basicHls wordAtOffset: 4!
+	^code!
 
 setCode: anInteger
-	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls
-	to represent the color)."
+	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls to represent the color)."
 
 	code := anInteger bitAnd: 16rFFFFFF! !
-!RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
+!RGB categoriesFor: #alpha:!accessing!public! !
 !RGB categoriesFor: #asRGB!converting!public! !
-!RGB categoriesFor: #basicHls!converting!private! !
-!RGB categoriesFor: #blue!accessing!public! !
-!RGB categoriesFor: #green!accessing!public! !
-!RGB categoriesFor: #hls!converting!public! !
-!RGB categoriesFor: #hue!accessing!public! !
-!RGB categoriesFor: #luminance!accessing!public! !
-!RGB categoriesFor: #printOn:!printing!public! !
-!RGB categoriesFor: #red!accessing!public! !
-!RGB categoriesFor: #saturation!accessing!public! !
+!RGB categoriesFor: #rgbCode!accessing!public! !
 !RGB categoriesFor: #setCode:!accessing!private! !
 
 !RGB class methodsFor!
 
-fromInteger: anInteger 
-	"Answer an instance whose three component colour values are embedded in anInteger."
+fromInteger: anInteger
+	"Answer an instance whose three component colour values are embedded in anInteger. The Integer is expected to be an integer encoding the red, green and blue components of the colour in BGR order, with each component represented by 8-bits."
 
-	^(self basicNew)
+	Notification deprecated.
+	^self basicNew
 		setCode: anInteger;
-		yourself
-!
+		yourself!
 
-initialize
-	"Private - Initialise the map of standard colour names to constant instances.
-		self initialize
-	"
+fromRgbCode: anInteger
+	"Answer an instance whose three component colour values are embedded in anInteger. The Integer is expected to be an integer encoding the red, green and blue components of the colour in BGR order, with each component represented by 8-bits."
 
-	| namedColors |
-	namedColors := IdentityDictionary new.
-	namedColors
-		at: #red
-			put: (self
-					r: 255
-					g: 0
-					b: 0);
-		at: #darkRed
-			put: (self
-					r: 128
-					g: 0
-					b: 0);
-		at: #blue
-			put: (self
-					r: 0
-					g: 0
-					b: 255);
-		at: #darkBlue
-			put: (self
-					r: 0
-					g: 0
-					b: 128);
-		at: #green
-			put: (self
-					r: 0
-					g: 255
-					b: 0);
-		at: #darkGreen
-			put: (self
-					r: 0
-					g: 128
-					b: 0);
-		at: #yellow
-			put: (self
-					r: 255
-					g: 255
-					b: 0);
-		at: #brown
-			put: (self
-					r: 128
-					g: 128
-					b: 0);
-		at: #magenta
-			put: (self
-					r: 255
-					g: 0
-					b: 255);
-		at: #darkMagenta
-			put: (self
-					r: 128
-					g: 0
-					b: 128);
-		at: #cyan
-			put: (self
-					r: 0
-					g: 255
-					b: 255);
-		at: #darkCyan
-			put: (self
-					r: 0
-					g: 128
-					b: 128);
-		at: #white
-			put: (self
-					r: 255
-					g: 255
-					b: 255);
-		at: #gray
-			put: (self
-					r: 204
-					g: 204
-					b: 204);
-		at: #darkGray
-			put: (self
-					r: 128
-					g: 128
-					b: 128);
-		at: #black
-			put: (self
-					r: 0
-					g: 0
-					b: 0);
-		shrink.
-	namedColors do: [:each | each isImmutable: true].
-	self addClassConstant: 'StdColours' value: namedColors!
+	^self basicNew
+		setCode: anInteger;
+		yourself!
 
-named: aSymbol
-	"Answer an instance whose name is aSymbol."
+r: redInteger g: greenInteger b: blueInteger
+	"Answer a new instance whose red, green and blue components are specified as the arguments, which are expected to be in the range 0..255. The result is undefined if any of the arguments are out of range.See also #red:green:blue:"
 
-	^StdColours at: aSymbol!
+	^self
+		fromRgbCode: (redInteger bitOr: ((greenInteger bitShift: 8) bitOr: (blueInteger bitShift: 16)))!
 
-r: redValue g: greenValue b: blueValue
-	"Answer a new instance whose red, green and blue components are specified as the
-	arguments, which are expected to be in the range 0..255. See also #red:green:blue:"
+red: redInteger green: greenInteger blue: blueInteger
+	"Answer an instance whose three component colour values are given by the <integer> arguments. These are expected to be in the range [0,255], but are clamped to that if not."
 
-	^self fromInteger: (redValue bitOr: ((greenValue bitShift: 8) bitOr: (blueValue bitShift: 16)))!
-
-red: redValue green: greenValue blue: blueValue
-	"Answer an instance whose three component colour values are given."
-
-	^self fromInteger: ((redValue asInteger clampBetween: 0 and: 255)
-				bitOr: (((greenValue asInteger clampBetween: 0 and: 255) bitShift: 8)
-						bitOr: ((blueValue asInteger clampBetween: 0 and: 255) bitShift: 16)))!
+	^self fromRgbCode: ((redInteger asInteger clampBetween: 0 and: 255)
+				bitOr: (((greenInteger asInteger clampBetween: 0 and: 255) bitShift: 8)
+						bitOr: ((blueInteger asInteger clampBetween: 0 and: 255) bitShift: 16)))!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier version models.
@@ -262,8 +107,7 @@ stbVersion
 
 	^1! !
 !RGB class categoriesFor: #fromInteger:!instance creation!public! !
-!RGB class categoriesFor: #initialize!development!initializing!private! !
-!RGB class categoriesFor: #named:!instance creation!public! !
+!RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
 !RGB class categoriesFor: #r:g:b:!instance creation!public! !
 !RGB class categoriesFor: #red:green:blue:!instance creation!public! !
 !RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !

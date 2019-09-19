@@ -16,7 +16,7 @@ lParamFromAttributeValue: aColor
 	^aColor asRGB asInteger!
 
 valueFromLResult: anInteger
-	^Color fromInteger: anInteger! !
+	^Color fromCOLORREF: anInteger! !
 !ScintillaColorPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
 !ScintillaColorPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
 

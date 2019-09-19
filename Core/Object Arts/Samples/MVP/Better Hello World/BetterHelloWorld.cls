@@ -33,14 +33,9 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon
-		text: $\x1F389
-		color: (ARGB named: #crimson))
+	^##((TextTileIcon text: $\x1F389 color: Color crimson)
 		fontStyle: #bold;
-		yourself)
-
-
-!
+		yourself)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

@@ -226,10 +226,7 @@ boxTree
 
 	| forecolor backcolor |
 	forecolor := Color white.
-	backcolor := RGB 
-				r: 16r80
-				g: 16r80
-				b: 16r80.
+	backcolor := Color brightness: 16r80/16rFF. 
 	^(OrderedCollection new)
 		add: ((self new)
 					name: #folderOpen;
@@ -280,12 +277,12 @@ buildPropertyMap
 		at: #backcolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #backcolor
-					defaultValue: RGB white
+					defaultValue: Color white
 					setMessage: SCI_MARKERSETBACK);
 		at: #forecolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #forecolor
-					defaultValue: RGB black
+					defaultValue: Color black
 					setMessage: SCI_MARKERSETFORE);
 		at: #glyphName
 			put: (ScintillaPropertyDescriptor
@@ -300,7 +297,7 @@ buildPropertyMap
 		at: #selectionBackcolor
 			put: (ScintillaColorPropertyDescriptor
 					getSelector: #selectionBackcolor
-					defaultValue: RGB red
+					defaultValue: Color red
 					setMessage: SCI_MARKERSETBACKSELECTED);
 		shrink;
 		yourself!
@@ -311,10 +308,7 @@ circleTree
 
 	| forecolor backcolor |
 	forecolor := Color white.
-	backcolor := RGB 
-				r: 16r40
-				g: 16r40
-				b: 16r40.
+	backcolor := Color brightness: 16r40/16rFF.
 	^(OrderedCollection new)
 		add: ((self new)
 					name: #folderOpen;
@@ -486,20 +480,20 @@ stbConvertFrom: anSTBClassFormat
 		ifNotNil: 
 			[:color |
 			| forecolor |
-			forecolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
-			instance basicForecolor: (forecolor asRGB asInteger == 0 ifFalse: [forecolor])].
+			forecolor := color isInteger ifTrue: [Color fromCOLORREF: color] ifFalse: [color].
+			instance basicForecolor: (forecolor rgbCode == 0 ifFalse: [forecolor])].
 	instance backcolor
 		ifNotNil: 
 			[:color |
 			| backcolor |
-			backcolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
-			instance basicBackcolor: (backcolor asRGB asInteger == 16rFFFFFF ifFalse: [backcolor])].
+			backcolor := color isInteger ifTrue: [Color fromCOLORREF: color] ifFalse: [color].
+			instance basicBackcolor: (backcolor rgbCode == 16rFFFFFF ifFalse: [backcolor])].
 	instance selectionBackcolor
 		ifNotNil: 
 			[:color |
 			| backcolor |
-			backcolor := color isInteger ifTrue: [Color fromInteger: color] ifFalse: [color].
-			instance basicSelectionBackcolor: (backcolor asRGB asInteger == 16rFF ifFalse: [backcolor])].
+			backcolor := color isInteger ifTrue: [Color fromCOLORREF: color] ifFalse: [color].
+			instance basicSelectionBackcolor: (backcolor rgbCode == 16rFF ifFalse: [backcolor])].
 	instance]!
 
 stbVersion

@@ -140,13 +140,13 @@ characterSet: anIntegerOrNil
 color
 	"Answer the character colour."
 
-	^Color fromInteger: self crTextColor!
+	^Color fromCOLORREF: self crTextColor!
 
-color: aColor 
+color: aColor
 	"Set the character colour."
 
 	self maskIn: CFM_COLOR.
-	self crTextColor: (aColor ifNil: [Color windowText]) asColorRef asParameter!
+	self crTextColor: (aColor ifNil: [Color windowText]) asCOLORREF!
 
 crBackColor
 	"Answer the <Integer> value of the receiver's 'crBackColor' field."

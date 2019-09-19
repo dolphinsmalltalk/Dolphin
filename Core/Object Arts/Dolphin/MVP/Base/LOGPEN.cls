@@ -29,12 +29,12 @@ struct tagLOGPEN {
 color
 	"Answer the <Color> of the pen described by the receiver."
 
-	^Color fromInteger: self lopnColor!
+	^Color fromCOLORREF: self lopnColor!
 
 color: aColor 
 	"Set the <Color> of the pen described by the receiver."
 
-	self lopnColor: aColor asParameter!
+	self lopnColor: aColor asCOLORREF!
 
 lopnColor
 	"Answer the <Integer> value of the receiver's 'lopnColor' field."

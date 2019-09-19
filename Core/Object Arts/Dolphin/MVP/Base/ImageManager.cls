@@ -125,13 +125,13 @@ maskcolor
 
 	^maskcolor!
 
-maskcolor: aColorOrNil 
+maskcolor: aColorOrNil
 	"Set <Color> used as the mask colour when loading bitmaps 
 	into the receiver's image lists (i.e. the transparent colour).
 	This must be set before any image lists are created, or they
 	will not have the requisite masking capability."
 
-	maskcolor := aColorOrNil asParameter = CLR_NONE ifFalse: [aColorOrNil]!
+	maskcolor := aColorOrNil asCOLORREF = CLR_NONE ifFalse: [aColorOrNil]!
 
 newImageLists
 	imageLists := LookupTable new!

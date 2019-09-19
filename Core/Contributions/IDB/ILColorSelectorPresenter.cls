@@ -23,7 +23,7 @@ createComponents
 defaultColor
 	"Answer the colour selected by default when the view is opened"
 
-	^RGB red!
+	^Color red!
 
 displayOn: aStream
 	aStream

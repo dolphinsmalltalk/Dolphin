@@ -116,8 +116,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
-	'Dolphin Text Tile Icons'
-	'..\Gdiplus\Gdiplus').
+	'Dolphin Text Tile Icons').
 
 package!
 
@@ -138,7 +137,7 @@ icon
 		text: $\x1F5C2
 		fontName: 'Segoe UI Emoji'
 		color: nil)
-		textcolor: (ARGB named: #royalBlue);
+		textcolor: Color royalBlue;
 		yourself)! !
 !AbstractCardContainer class categoriesFor: #icon!constants!public! !
 
@@ -228,7 +227,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
-		textcolor: (ARGB named: #forestGreen);
+		textcolor: Color forestGreen;
 		yourself)! !
 !BooleanPresenter class categoriesFor: #icon!constants!public! !
 
@@ -267,8 +266,7 @@ icon
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji')
-		textcolor: ((ARGB r: 0 g: 102 b: 204)))! !
+	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
 !CheckButton class categoriesFor: #icon!constants!public! !
 
 !Collection class methodsFor!
@@ -715,7 +713,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##((TextTileIcon text: $\x2116 fontName: 'Cambria')
-		textcolor: RGB darkBlue;
+		textcolor: Color darkBlue;
 		yourself)! !
 !Number class categoriesFor: #icon!constants!public! !
 

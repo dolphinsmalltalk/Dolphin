@@ -39,7 +39,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
 	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').

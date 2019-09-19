@@ -19,7 +19,7 @@ setUp
 	model := GdiplusSolidBrushFromColorInitializer new library: self!
 
 testCreateHandle
-	model color: (ARGB fromInteger: 1).
+	model color: (Color fromArgbCode: 1).
 	model createHandle.
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: 1.

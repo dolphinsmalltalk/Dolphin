@@ -27,7 +27,7 @@ canFillAll
 	^self view isZoomed!
 
 defaultBackcolor
-	^RGB white!
+	^Color white!
 
 defaultZoom
 	^16!

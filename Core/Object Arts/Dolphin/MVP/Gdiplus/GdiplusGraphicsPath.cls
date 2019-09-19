@@ -184,7 +184,7 @@ exampleGdipGPCreatingFigures
 	graphics drawPath: path pen: pen.
 	"Create and draw a path that has two figures. The first is an arc followed by a line. The second 
 	is a line followed by a curve, followed by a line. The first is left open, and the second is closed."
-	pen color: ARGB blue.
+	pen color: Color blue.
 	path := GdiplusGraphicsPath new.
 	graphics translateTransform: 100 @ 0 order: nil.
 	path addArc: (175 @ 50 extent: 50 @ 50) angles: 0 @ 180.
@@ -201,8 +201,8 @@ exampleGdipGPCreatingFigures
 	"Create, draw and fill a path that has two lines, a rectangle, and an ellipse."
 	path := GdiplusGraphicsPath new.
 	graphics translateTransform: -100 @ 100 order: nil.
-	pen color: ARGB red.
-	brush := GdiplusSolidBrush color: ARGB darkGreen.
+	pen color: Color red.
+	brush := GdiplusSolidBrush color: Color darkGreen.
 	path addLineFrom: 10 @ 10 to: 100 @ 40.
 	path addLineFrom: 100 @ 60 to: 30 @ 60.
 	path addRectangle: (50 @ 35 extent: 20 @ 40).

@@ -29,8 +29,8 @@ createHandle
 	gpHandle := ExternalHandle new.
 	status := self library
 				gdipCreateLineBrushFromRectI: rect asParameter
-				color1: color1 asParameter
-				color2: color2 asParameter
+				color1: color1 argbCode
+				color2: color2 argbCode
 				mode: mode
 				wrapMode: WrapModeTile
 				lineGradient: gpHandle.
@@ -39,8 +39,8 @@ createHandle
 
 rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	rect := aRectangle.
-	color1 := startColor asARGB.
-	color2 := endColor asARGB.
+	color1 := startColor.
+	color2 := endColor.
 	mode := aLinearGradientMode! !
 !GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
