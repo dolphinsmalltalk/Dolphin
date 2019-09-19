@@ -145,7 +145,7 @@ activeHotspotForecolor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETHOTSPOTACTIVEFORE
 						wParam: 0
@@ -1090,7 +1090,7 @@ caretForecolor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETCARETFORE
 						wParam: 0
@@ -1434,7 +1434,7 @@ currentLineBackcolor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETCARETLINEBACK
 						wParam: 0
@@ -1810,7 +1810,7 @@ edgeColor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETEDGECOLOUR
 						wParam: 0
@@ -5804,7 +5804,7 @@ sciBraceMatch: posInteger maxReStyle: maxReStyleInteger
 				wParam: posInteger - 1
 				lParam: maxReStyleInteger) + 1]!
 
-sciCallTipSetBack: backRGB
+sciCallTipSetBack: backColor
 	"Private - Set the background colour for the call tip."
 
 	this
@@ -5812,10 +5812,10 @@ sciCallTipSetBack: backRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETBACK
-				wParam: backRGB asParameter
+				wParam: backColor rgbCode
 				lParam: 0]!
 
-sciCallTipSetFore: foreRGB
+sciCallTipSetFore: foreColor
 	"Private - Set the foreground colour for the call tip."
 
 	this
@@ -5823,10 +5823,10 @@ sciCallTipSetFore: foreRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETFORE
-				wParam: foreRGB asParameter
+				wParam: foreColor rgbCode
 				lParam: 0]!
 
-sciCallTipSetForeHlt: foreRGB
+sciCallTipSetForeHlt: foreColor
 	"Private - Set the foreground colour for the highlighted part of the call tip."
 
 	this
@@ -5834,7 +5834,7 @@ sciCallTipSetForeHlt: foreRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CALLTIPSETFOREHLT
-				wParam: foreRGB asParameter
+				wParam: foreColor rgbCode
 				lParam: 0]!
 
 sciCallTipSetHlt: highlightStartInteger highlightEnd: highlightEndInteger
@@ -7579,7 +7579,7 @@ sciMarkerSymbolDefined: markerNumberInteger
 				wParam: markerNumberInteger
 				lParam: 0]!
 
-sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourRGB
+sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourColor
 	"Private - Add a new vertical edge to the view."
 
 	this
@@ -7588,7 +7588,7 @@ sciMultiEdgeAddLine: columnInteger edgeColour: edgeColourRGB
 				directFunction: this
 				msg: SCI_MULTIEDGEADDLINE
 				wParam: columnInteger - 1
-				lParam: edgeColourRGB asParameter]!
+				lParam: edgeColourColor rgbCode]!
 
 sciMultipleSelectAddEach
 	"Private - Add each occurrence of the main selection in the target to the set of selections.
@@ -7978,7 +7978,7 @@ sciSetAccessibility: accessibilityInteger
 				wParam: accessibilityInteger
 				lParam: 0]!
 
-sciSetAdditionalCaretFore: foreRGB
+sciSetAdditionalCaretFore: foreColor
 	"Private - Set the foreground colour of additional carets."
 
 	this
@@ -7986,10 +7986,10 @@ sciSetAdditionalCaretFore: foreRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALCARETFORE
-				wParam: foreRGB asParameter
+				wParam: foreColor rgbCode
 				lParam: 0]!
 
-sciSetAdditionalSelBack: backRGB
+sciSetAdditionalSelBack: backColor
 	"Private - Set the background colour of additional selections. Must have previously called
 	SetSelBack with non-zero first argument for this to have an effect."
 
@@ -7998,10 +7998,10 @@ sciSetAdditionalSelBack: backRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELBACK
-				wParam: backRGB asParameter
+				wParam: backColor rgbCode
 				lParam: 0]!
 
-sciSetAdditionalSelFore: foreRGB
+sciSetAdditionalSelFore: foreColor
 	"Private - Set the foreground colour of additional selections. Must have previously called
 	SetSelFore with non-zero first argument for this to have an effect."
 
@@ -8010,7 +8010,7 @@ sciSetAdditionalSelFore: foreRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETADDITIONALSELFORE
-				wParam: foreRGB asParameter
+				wParam: foreColor rgbCode
 				lParam: 0]!
 
 sciSetAutomaticFold: automaticFoldInteger
@@ -8035,7 +8035,7 @@ sciSetBidirectional: bidirectionalInteger
 				wParam: bidirectionalInteger
 				lParam: 0]!
 
-sciSetCaretFore: foreRGB
+sciSetCaretFore: foreColor
 	"Private - Set the foreground colour of the caret."
 
 	this
@@ -8043,10 +8043,10 @@ sciSetCaretFore: foreRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETFORE
-				wParam: foreRGB asParameter
+				wParam: foreColor rgbCode
 				lParam: 0]!
 
-sciSetCaretLineBack: backRGB
+sciSetCaretLineBack: backColor
 	"Private - Set the colour of the background of the line containing the caret."
 
 	this
@@ -8054,7 +8054,7 @@ sciSetCaretLineBack: backRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETCARETLINEBACK
-				wParam: backRGB asParameter
+				wParam: backColor rgbCode
 				lParam: 0]!
 
 sciSetCaretSticky: useCaretStickyBehaviourInteger
@@ -8150,7 +8150,7 @@ sciSetDocPointer: docExternalAddress
 				wParam: 0
 				lpParam: docExternalAddress]!
 
-sciSetEdgeColour: edgeColourRGB
+sciSetEdgeColour: edgeColourColor
 	"Private - Change the colour used in edge indication."
 
 	this
@@ -8158,7 +8158,7 @@ sciSetEdgeColour: edgeColourRGB
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETEDGECOLOUR
-				wParam: edgeColourRGB asParameter
+				wParam: edgeColourColor rgbCode
 				lParam: 0]!
 
 sciSetEdgeColumn: columnInteger
@@ -8199,7 +8199,7 @@ sciSetFoldFlags: flagsInteger
 				wParam: flagsInteger
 				lParam: 0]!
 
-sciSetFoldMarginColour: useSettingBoolean back: backRGB
+sciSetFoldMarginColour: useSettingBoolean back: backColor
 	"Private - Set one of the colours used as a chequerboard pattern in the fold margin"
 
 	this
@@ -8208,9 +8208,9 @@ sciSetFoldMarginColour: useSettingBoolean back: backRGB
 				directFunction: this
 				msg: SCI_SETFOLDMARGINCOLOUR
 				wParam: useSettingBoolean asParameter
-				lParam: backRGB asParameter]!
+				lParam: backColor rgbCode]!
 
-sciSetFoldMarginHiColour: useSettingBoolean fore: foreRGB
+sciSetFoldMarginHiColour: useSettingBoolean fore: foreColor
 	"Private - Set the other colour used as a chequerboard pattern in the fold margin"
 
 	this
@@ -8219,7 +8219,7 @@ sciSetFoldMarginHiColour: useSettingBoolean fore: foreRGB
 				directFunction: this
 				msg: SCI_SETFOLDMARGINHICOLOUR
 				wParam: useSettingBoolean asParameter
-				lParam: foreRGB asParameter]!
+				lParam: foreColor rgbCode]!
 
 sciSetFontQuality: fontQualityInteger
 	"Private - Choose the quality level for text from the FontQuality enumeration."
@@ -8232,7 +8232,7 @@ sciSetFontQuality: fontQualityInteger
 				wParam: fontQualityInteger
 				lParam: 0]!
 
-sciSetHotspotActiveBack: useSettingBoolean back: backRGB
+sciSetHotspotActiveBack: useSettingBoolean back: backColor
 	"Private - Set a back colour for active hotspots."
 
 	this
@@ -8241,9 +8241,9 @@ sciSetHotspotActiveBack: useSettingBoolean back: backRGB
 				directFunction: this
 				msg: SCI_SETHOTSPOTACTIVEBACK
 				wParam: useSettingBoolean asParameter
-				lParam: backRGB asParameter]!
+				lParam: backColor rgbCode]!
 
-sciSetHotspotActiveFore: useSettingBoolean fore: foreRGB
+sciSetHotspotActiveFore: useSettingBoolean fore: foreColor
 	"Private - Set a fore colour for active hotspots."
 
 	this
@@ -8252,7 +8252,7 @@ sciSetHotspotActiveFore: useSettingBoolean fore: foreRGB
 				directFunction: this
 				msg: SCI_SETHOTSPOTACTIVEFORE
 				wParam: useSettingBoolean asParameter
-				lParam: foreRGB asParameter]!
+				lParam: foreColor rgbCode]!
 
 sciSetHScrollBar: visibleBoolean
 	"Private - Show or hide the horizontal scroll bar."
@@ -8592,7 +8592,7 @@ sciSetSearchFlags: searchFlagsInteger
 				wParam: searchFlagsInteger
 				lParam: 0]!
 
-sciSetSelBack: useSettingBoolean back: backRGB
+sciSetSelBack: useSettingBoolean back: backColor
 	"Private - Set the background colour of the main and additional selections and whether to
 	use this setting."
 
@@ -8602,7 +8602,7 @@ sciSetSelBack: useSettingBoolean back: backRGB
 				directFunction: this
 				msg: SCI_SETSELBACK
 				wParam: useSettingBoolean asParameter
-				lParam: backRGB asParameter]!
+				lParam: backColor rgbCode]!
 
 sciSetSelection: caretInteger anchor: anchorInteger
 	"Private - Set a simple selection"
@@ -8693,7 +8693,7 @@ sciSetSelectionNStart: selectionInteger anchor: anchorInteger
 				wParam: selectionInteger
 				lParam: anchorInteger - 1]!
 
-sciSetSelFore: useSettingBoolean fore: foreRGB
+sciSetSelFore: useSettingBoolean fore: foreColor
 	"Private - Set the foreground colour of the main and additional selections and whether to
 	use this setting."
 
@@ -8703,7 +8703,7 @@ sciSetSelFore: useSettingBoolean fore: foreRGB
 				directFunction: this
 				msg: SCI_SETSELFORE
 				wParam: useSettingBoolean asParameter
-				lParam: foreRGB asParameter]!
+				lParam: foreColor rgbCode]!
 
 sciSetStylingEx: lengthInteger styles: stylesString
 	"Private - Set the styles for a segment of the document."
@@ -8795,7 +8795,7 @@ sciSetVisiblePolicy: visiblePolicyInteger visibleSlop: visibleSlopInteger
 				wParam: visiblePolicyInteger
 				lParam: visibleSlopInteger]!
 
-sciSetWhitespaceBack: useSettingBoolean back: backRGB
+sciSetWhitespaceBack: useSettingBoolean back: backColor
 	"Private - Set the background colour of all whitespace and whether to use this setting."
 
 	this
@@ -8804,7 +8804,7 @@ sciSetWhitespaceBack: useSettingBoolean back: backRGB
 				directFunction: this
 				msg: SCI_SETWHITESPACEBACK
 				wParam: useSettingBoolean asParameter
-				lParam: backRGB asParameter]!
+				lParam: backColor rgbCode]!
 
 sciSetWhitespaceChars: charactersString
 	"Private - Set the set of characters making up whitespace for when moving or selecting by
@@ -8818,7 +8818,7 @@ sciSetWhitespaceChars: charactersString
 				wParam: 0
 				lpParam: charactersString]!
 
-sciSetWhitespaceFore: useSettingBoolean fore: foreRGB
+sciSetWhitespaceFore: useSettingBoolean fore: foreColor
 	"Private - Set the foreground colour of all whitespace and whether to use this setting."
 
 	this
@@ -8827,7 +8827,7 @@ sciSetWhitespaceFore: useSettingBoolean fore: foreRGB
 				directFunction: this
 				msg: SCI_SETWHITESPACEFORE
 				wParam: useSettingBoolean asParameter
-				lParam: foreRGB asParameter]!
+				lParam: foreColor rgbCode]!
 
 sciSetWordChars: charactersString
 	"Private - Set the set of characters making up words for when moving or selecting by word.
@@ -9508,7 +9508,7 @@ secondaryCaretForecolor
 	^this
 		ifNil: [nil]
 		ifNotNil: 
-			[RGB fromInteger: (ScintillaLibrary default
+			[Color fromRgbCode: (ScintillaLibrary default
 						directFunction: this
 						msg: SCI_GETADDITIONALCARETFORE
 						wParam: 0
