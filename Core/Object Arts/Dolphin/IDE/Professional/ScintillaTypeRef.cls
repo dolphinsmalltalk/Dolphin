@@ -184,10 +184,10 @@ resetTypeMap
 				at: 'colour'
 					put: ((self
 							name: 'colour'
-							objectClass: RGB
+							objectClass: Color
 							byRef: false)
-							toMessage: #asParameter;
-							fromMessage: #fromInteger:;
+							toMessage: #rgbCode;
+							fromMessage: #fromRgbCode:;
 							yourself);
 				at: 'keymod'
 					put: (self
