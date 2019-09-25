@@ -53,21 +53,21 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\Registry\Dolphin Registry Access';
-	add: '..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
+	'..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 

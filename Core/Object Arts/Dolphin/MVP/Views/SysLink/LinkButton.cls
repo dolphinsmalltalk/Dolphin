@@ -115,7 +115,7 @@ resource_Link_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Link_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.LinkButton) 34 15 nil nil 34 2 8 1140916224 1 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 517 nil nil nil 416 nil 8 1915775360 1180998 4 ##(Smalltalk.CommandDescription) #close 8 'Click to Close' 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 31 706 111 71 416 658 #text: 34 1 8 '<a>Click to Close</a>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 15 0 0 0 65 0 0 0 50 0 0 0] 8 #() 706 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.LinkButton) 34 15 nil nil 34 2 8 1140916224 1 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil nil nil 416 nil 8 1904508208 1180998 4 ##(Smalltalk.CommandDescription) #close 8 'Click to Close' 1 1 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 690 111 71 416 642 #text: 34 1 8 '<a>Click to Close</a>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 45 0 0 0] 8 #() 690 193 193 nil 27 )!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

@@ -21,17 +21,16 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Radio\Dolphin Radio Buttons';
-	add: '..\..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	add: '..\..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models'
+	'..\..\..\ActiveX\Components\VBScript\VBScript Regular Expressions').
 
 package!
 

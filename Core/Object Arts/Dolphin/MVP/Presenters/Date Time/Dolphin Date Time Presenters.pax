@@ -26,6 +26,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters').

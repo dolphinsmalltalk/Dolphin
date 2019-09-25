@@ -72,12 +72,9 @@ welcome
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: $\x1F393
-		color: (Color
-				r: 221
-				g: 84
-				b: 140))
+	^##((TextTileIcon text: $\x1F393
+		color: Color orchid)
 		textcolor: Color white;
-		yourself! !
+		yourself)! !
 !AbstractTutorial class categoriesFor: #icon!constants!public! !
 
