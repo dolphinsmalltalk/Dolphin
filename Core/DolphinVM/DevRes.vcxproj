@@ -197,7 +197,6 @@
     <Image Include="Res\Box.ico" />
     <Image Include="Res\BrowseFolderDialog.ico" />
     <Image Include="Res\Brush.ico" />
-    <Image Include="Res\ByteArray.ico" />
     <Image Include="Res\Canvas.ico" />
     <Image Include="Res\Category.ico" />
     <Image Include="Res\CategoryDelete.ico" />
@@ -227,6 +226,7 @@
     <Image Include="Res\ContainerView.ico" />
     <Image Include="Res\ControlBarAbstract.ico" />
     <Image Include="Res\Date.ico" />
+    <Image Include="Res\DateAndTime.ico" />
     <Image Include="Res\DatePresenter.ico" />
     <Image Include="Res\DateTimePicker.ico" />
     <Image Include="Res\DeadObject.ico" />
@@ -284,6 +284,7 @@
     <Image Include="Res\Game controller.ico" />
     <Image Include="Res\Globe.ico" />
     <Image Include="Res\GotoFolder.ico" />
+    <Image Include="Res\Guid.ico" />
     <Image Include="Res\Help.ico" />
     <Image Include="Res\HistoryErase.ico" />
     <Image Include="Res\HistoryList.ico" />

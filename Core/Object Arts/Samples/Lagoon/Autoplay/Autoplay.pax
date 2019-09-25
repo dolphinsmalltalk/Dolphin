@@ -54,19 +54,18 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
-	add: '..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
-	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
+	'..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 

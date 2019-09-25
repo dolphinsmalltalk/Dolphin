@@ -51,8 +51,7 @@ package methodNames
 	add: #Rectangle -> #containsPointInclusive:;
 	add: #Rectangle -> #increaseCornerBy:;
 	add: #ScrollingDecorator -> #scroll:toNextIn:;
-	add: 'RGB class' -> #dolphinYellow;
-	add: 'RGBQUAD class' -> #fromRGB:;
+	add: 'Color class' -> #dolphinYellow;
 	add: 'Toolbar class' -> #resource_ILEditorShell_tools;
 	add: 'Toolbar class' -> #resource_ILLibraryShell_tools;
 	yourself.
@@ -249,6 +248,18 @@ View subclass: #ILLibraryWorkspace
 
 "Loose Methods"!
 
+!Color class methodsFor!
+
+dolphinYellow
+	"Private - Answer the color used in the ILLibray to denote transparent areas"
+
+	#idbAdded.
+	^self 
+		r: 255
+		g: 255
+		b: 230! !
+!Color class categoriesFor: #dolphinYellow!idb goodies!instance creation!public! !
+
 !Rectangle methodsFor!
 
 containsPointInclusive: aPoint
@@ -264,28 +275,6 @@ increaseCornerBy: delta
 	^origin corner: corner + delta! !
 !Rectangle categoriesFor: #containsPointInclusive:!idb goodies!public!testing! !
 !Rectangle categoriesFor: #increaseCornerBy:!idb goodies!public!rectangle functions! !
-
-!RGB class methodsFor!
-
-dolphinYellow
-	"Private - Answer the color used in the ILLibray to denote transparent areas"
-
-	#idbAdded.
-	^self 
-		r: 255
-		g: 255
-		b: 230! !
-!RGB class categoriesFor: #dolphinYellow!idb goodies!instance creation!public! !
-
-!RGBQUAD class methodsFor!
-
-fromRGB: anRGB
-	#idbAdded.
-	^(self new)
-		rgbRed: anRGB red;
-		rgbGreen: anRGB green;
-		rgbBlue: anRGB blue! !
-!RGBQUAD class categoriesFor: #fromRGB:!idb goodies!instance creation!public! !
 
 !ScrollingDecorator methodsFor!
 
@@ -316,7 +305,7 @@ resource_ILEditorShell_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ILEditorShell_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853548 131137 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 517 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 496 8 1915204752 170 192 8 #() 170 192 34 42 47949 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #exit 8 'Exit' 1 1 nil 47949 657990 3 ##(Smalltalk.DIBSection) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Ian Bartholomew\Resources\ImageEditor.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 610 1 1 1 nil 7 47951 722 416 1 754 #replaceImage 8 'Replace in Library' 1 1 nil 47951 816 1 47953 722 416 1 754 #addImage 8 'Add to Library' 1 1 nil 47953 816 3 47955 722 416 1 754 #reloadImage 8 'Reload from Library' 1 1 nil 47955 816 5 47957 722 416 1 754 459270 ##(Smalltalk.Message) #zoom: 8 #(1) 8 'Zoom x1' 1 1 nil 47957 816 9 47959 722 416 1 754 1122 #zoom: 8 #(8) 8 'Zoom x8' 1 1 nil 47959 816 11 47961 722 416 1 754 1122 #zoom: 8 #(16) 8 'Zoom x16' 1 1 nil 47961 816 13 47963 722 416 1 754 1122 #zoom: 8 #(24) 8 'Zoom x24' 1 1 nil 47963 816 15 47965 722 416 1 754 1122 #zoomBy: 8 #(-1) 8 'Zoom Down' 1 1 nil 47965 816 17 47967 722 416 1 754 1122 #zoomBy: 8 #(1) 8 'Zoom Up' 1 1 nil 47967 816 19 47969 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 754 #editCut 8 'Cut' 1 1 nil 47969 1 1 47971 1586 416 1 754 #editCopy 8 'Copy' 1 1 nil 47971 1 3 47973 1586 416 1 754 #editPaste 8 'Paste' 1 1 nil 47973 1 5 47975 1586 416 1 754 #editUndo 8 'Undo' 1 1 nil 47975 1 7 47977 1586 416 1 754 #editRedo 8 'Redo' 1 1 nil 47977 1 9 47979 722 416 1 754 #drawEllipse 8 'Ellipse' 1 1 nil 47979 816 21 47981 722 416 1 754 #drawFill 8 'Fill Zone' 1 1 nil 47981 816 23 47983 722 416 1 754 #drawLineTlBr 8 'Line TopLeft to BottomRight' 1 1 nil 47983 816 25 47985 722 416 1 754 #drawLineTrBl 8 'Line TopRight BottomLeft' 1 1 nil 47985 816 27 47987 722 416 1 754 #drawRectangle 8 'Rectangle' 1 1 nil 47987 816 29 47989 722 416 1 754 #drawText 8 'Text' 1 1 nil 47989 816 31 34 24 736 944 992 1040 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1088 1184 1264 1344 1424 1504 2146 416 1 1600 1648 1696 1744 1792 2146 416 1 1840 1888 1936 1984 2032 2080 nil nil 1 nil 610 33 33 610 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 610 11 11 610 1021 51 416 2338 #updateSizePosted 672 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 3 2 0 0 30 0 0 0] 8 #() 610 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853548 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 496 8 1903898080 170 192 8 #() 170 192 34 42 49849 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #drawText 8 'Text' 1 1 nil 49849 657990 3 ##(Smalltalk.DIBSection) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Ian Bartholomew\Resources\ImageEditor.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 594 1 1 1 nil 31 49833 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 738 #editPaste 8 'Paste' 1 1 nil 49833 1 5 49817 706 416 1 738 459270 ##(Smalltalk.Message) #zoom: 8 #(1) 8 'Zoom x1' 1 1 nil 49817 800 9 49843 706 416 1 738 #drawLineTlBr 8 'Line TopLeft to BottomRight' 1 1 nil 49843 800 25 49827 706 416 1 738 1026 #zoomBy: 8 #(1) 8 'Zoom Up' 1 1 nil 49827 800 19 49811 706 416 1 738 #replaceImage 8 'Replace in Library' 1 1 nil 49811 800 1 49837 930 416 1 738 #editRedo 8 'Redo' 1 1 nil 49837 1 9 49821 706 416 1 738 1026 #zoom: 8 #(16) 8 'Zoom x16' 1 1 nil 49821 800 13 49847 706 416 1 738 #drawRectangle 8 'Rectangle' 1 1 nil 49847 800 29 49831 930 416 1 738 #editCopy 8 'Copy' 1 1 nil 49831 1 3 49815 706 416 1 738 #reloadImage 8 'Reload from Library' 1 1 nil 49815 800 5 49841 706 416 1 738 #drawFill 8 'Fill Zone' 1 1 nil 49841 800 23 49825 706 416 1 738 1026 #zoomBy: 8 #(-1) 8 'Zoom Down' 1 1 nil 49825 800 17 49809 706 416 1 738 #exit 8 'Exit' 1 1 nil 49809 800 7 49835 930 416 1 738 #editUndo 8 'Undo' 1 1 nil 49835 1 7 49819 706 416 1 738 1026 #zoom: 8 #(8) 8 'Zoom x8' 1 1 nil 49819 800 11 49845 706 416 1 738 #drawLineTrBl 8 'Line TopRight BottomLeft' 1 1 nil 49845 800 27 49829 930 416 1 738 #editCut 8 'Cut' 1 1 nil 49829 1 1 49813 706 416 1 738 #addImage 8 'Add to Library' 1 1 nil 49813 800 3 49839 706 416 1 738 #drawEllipse 8 'Ellipse' 1 1 nil 49839 800 21 49823 706 416 1 738 1026 #zoom: 8 #(24) 8 'Zoom x24' 1 1 nil 49823 800 15 34 24 1664 1216 1936 1488 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 992 1760 1312 2032 1584 1136 2130 416 1 1888 1440 944 1712 1264 2130 416 1 1984 1536 1088 1840 1392 720 nil nil 1 nil 594 33 33 594 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 594 3839 21 594 1021 51 416 2322 #updateSizePosted 656 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 125 9 0 0 35 0 0 0] 8 #() 594 193 193 nil 27 )!
 
 resource_ILLibraryShell_tools
 	"Answer the literal data from which the 'ILLibraryShell tools' resource can be reconstituted.
@@ -326,7 +315,7 @@ resource_ILLibraryShell_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_ILLibraryShell_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853548 131137 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 517 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 496 8 1915204752 170 192 8 #() 170 192 34 18 47991 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #openLibrary 8 'Open Library' 1 1 nil 47991 1 15 47993 722 416 1 754 #saveLibrary 8 'Save Library' 1 1 nil 47993 1 17 47995 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 754 #addImage 8 'New Image' 1 1 nil 47995 657990 3 ##(Smalltalk.DIBSection) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Ian Bartholomew\Resources\ImageLibrary.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 610 1 1 1 nil 1 47997 850 416 1 754 #editImage 8 'Edit Image' 1 1 nil 47997 928 3 47999 850 416 1 754 #deleteImage 8 'Delete Image' 1 1 nil 47999 928 13 48001 850 416 1 754 #moveToStart 8 'Move to Start' 1 1 nil 48001 928 5 48003 850 416 1 754 #moveUp 8 'Move Up' 1 1 nil 48003 928 7 48005 850 416 1 754 #moveDown 8 'Move Down' 1 1 nil 48005 928 9 48007 850 416 1 754 #moveToEnd 8 'Move to End' 1 1 nil 48007 928 11 34 11 736 800 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 864 1056 1104 1362 416 1 1152 1200 1248 1296 nil nil 1 nil 610 33 33 610 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 610 11 11 610 451 51 416 1538 #updateSizePosted 672 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 230 0 0 0 30 0 0 0] 8 #() 610 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1140853548 131137 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 496 8 1903898080 170 192 8 #() 170 192 34 18 53533 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #editImage 8 'Edit Image' 1 1 nil 53533 657990 3 ##(Smalltalk.DIBSection) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Ian Bartholomew\Resources\ImageLibrary.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 594 1 1 1 nil 3 53529 1246790 1 ##(Smalltalk.ToolbarSystemButton) 416 1 738 #saveLibrary 8 'Save Library' 1 1 nil 53529 1 17 53543 706 416 1 738 #moveToEnd 8 'Move to End' 1 1 nil 53543 800 11 53539 706 416 1 738 #moveUp 8 'Move Up' 1 1 nil 53539 800 7 53535 706 416 1 738 #deleteImage 8 'Delete Image' 1 1 nil 53535 800 13 53531 706 416 1 738 #addImage 8 'New Image' 1 1 nil 53531 800 1 53527 930 416 1 738 #openLibrary 8 'Open Library' 1 1 nil 53527 1 15 53541 706 416 1 738 #moveDown 8 'Move Down' 1 1 nil 53541 800 9 53537 706 416 1 738 #moveToStart 8 'Move to Start' 1 1 nil 53537 800 5 34 11 1184 944 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1136 720 1088 1346 416 1 1280 1040 1232 992 nil nil 1 nil 594 33 33 594 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 594 3839 21 594 451 51 416 1522 #updateSizePosted 656 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 96 8 0 0 35 0 0 0] 8 #() 594 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #resource_ILEditorShell_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_ILLibraryShell_tools!public!resources-views! !
 

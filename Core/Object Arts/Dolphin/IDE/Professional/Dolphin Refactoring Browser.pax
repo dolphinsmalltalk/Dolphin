@@ -246,7 +246,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'

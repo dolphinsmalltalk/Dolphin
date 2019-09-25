@@ -236,7 +236,7 @@ resource_Horizontalvertical_splitter
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Horizontalvertical_splitter)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Splitter) 34 12 nil nil 34 2 8 1140850688 1 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 416 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 562 9 9 nil 576 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 562 3839 21 562 951 11 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 15 0 0 0] 8 #() 562 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Splitter) 34 12 nil nil 34 2 8 1140850688 1 416 nil 327686 ##(Smalltalk.Color) #default nil 519 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 416 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 546 9 9 nil 560 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 3839 21 546 951 11 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 15 0 0 0] 8 #() 546 193 193 nil 27 )!
 
 stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds

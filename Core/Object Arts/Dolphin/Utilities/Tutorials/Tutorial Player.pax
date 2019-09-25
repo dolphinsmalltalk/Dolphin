@@ -27,7 +27,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Gdiplus\Gdiplus ImageView').
 
 package!

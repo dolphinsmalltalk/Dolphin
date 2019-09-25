@@ -348,7 +348,7 @@ ticks
 	ticks := Array writeStream.
 	ticks nextPut: range start.
 	pdw := self sendMessage: TBM_GETPTICS.
-	pdw isNull ifFalse: [ticks nextPutAll: (DWORDArray fromAddress: pdw length: count - 2) asArray].
+	pdw isNull ifFalse: [ticks nextPutAll: (DWORDArray fromAddress: pdw asExternalAddress length: count - 2) asArray].
 	ticks nextPut: range stop.
 	^ticks contents!
 

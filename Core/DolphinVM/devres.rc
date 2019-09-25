@@ -225,6 +225,8 @@ GRAYEDCLASSCOMMENT.ICO  ICON                    "res\\GrayedClassComment.ico"
 
 GROUPBOX.ICO            ICON                    "Res\\GroupBox.ico"
 
+GUID.ICO				ICON                    "Res\\Guid.ico"
+
 HELP.ICO                ICON                    "Res\\Help.ico"
 
 HISTORYLIST.ICO         ICON                    "Res\\HistoryList.ico"

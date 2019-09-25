@@ -37,9 +37,6 @@
     <Image Include="Res\Brush.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\ByteArray.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Canvas.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -986,6 +983,12 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ViewTiles.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DateAndTime.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Guid.ico">
       <Filter>Icons</Filter>
     </Image>
   </ItemGroup>

@@ -28,6 +28,9 @@ asFILETIME
 
 	^FILETIME fromSYSTEMTIME: self!
 
+asSYSTEMTIME
+	^self!
+
 dayOfMonth
 	^self wDay!
 
@@ -143,6 +146,7 @@ year
 	^self wYear! !
 !SYSTEMTIME categoriesFor: #asDateAndTime!converting!public! !
 !SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
+!SYSTEMTIME categoriesFor: #asSYSTEMTIME!public! !
 !SYSTEMTIME categoriesFor: #dayOfMonth!accessing!public! !
 !SYSTEMTIME categoriesFor: #dayOfWeek!accessing!public! !
 !SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !

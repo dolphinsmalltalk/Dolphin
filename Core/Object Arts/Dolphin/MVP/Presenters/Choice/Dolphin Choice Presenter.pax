@@ -17,14 +17,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Models\List\Dolphin List Models';
-	add: '..\List\Dolphin List Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Models\List\Dolphin List Models'
+	'..\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin MVP Base').
 
 package!
 

@@ -320,7 +320,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
 !SortedCollection categoriesFor: #addFirst:!adding!public! !
 !SortedCollection categoriesFor: #addLast:!adding!public! !
-!SortedCollection categoriesFor: #algorithm!accessing!public! !
+!SortedCollection categoriesFor: #algorithm!accessing!non browsable!public! !
 !SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
 !SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
 !SortedCollection categoriesFor: #asOrderedCollection!converting!public! !

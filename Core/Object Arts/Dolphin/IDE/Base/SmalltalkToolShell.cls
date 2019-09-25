@@ -156,7 +156,7 @@ ideaSpace
 inspectSystemOptions
 	"Open a <PropertyInspector> on the system options."
 
-	^(self model inspectSystemOptions)
+	^(self systemModel inspectSystemOptions)
 		selectionOrNil: self class;
 		yourself!
 
