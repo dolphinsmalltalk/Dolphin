@@ -73,6 +73,13 @@ testNextInto
 	stream reset.
 	self readOperationNotImplemented: [stream nextInto: (Array new: 3)]!
 
+testNextPutAllArray
+	| subject array |
+	subject := Array writeStream.
+	array := #(10 20 30 40 50).
+	subject nextPutAll: array.
+	self assert: subject contents equals: array!
+
 testNextWord
 	| stream |
 	stream := self streamWith: 'abc'.
@@ -127,6 +134,7 @@ testUpToUtf
 !WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextPutAllArray!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !WriteStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !WriteStreamTest categoriesFor: #testSetToEnd!public!testing! !

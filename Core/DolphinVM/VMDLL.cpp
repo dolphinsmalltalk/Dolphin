@@ -53,7 +53,7 @@ HRESULT CDolphinVMModule::RegisterAsEventSource() const
 	return hr;
 }
 
-HRESULT CDolphinVMModule::RegisterServer(BOOL bRegTypeLib)
+HRESULT CDolphinVMModule::RegisterServer(BOOL bRegTypeLib) throw()
 {
 	HRESULT hr = CAtlModuleT<CDolphinVMModule>::RegisterServer(bRegTypeLib);
 

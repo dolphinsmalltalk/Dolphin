@@ -689,7 +689,6 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 	MWORD value = *sp;
 	if (ObjectMemoryIsIntegerObject(value))
 	{
-		value = ObjectMemoryIntegerValueOf(value);
 		Oop* newSp = sp - 1;
 		WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*newSp);		// Access receiver under argument
 		WriteStream* writeStream = streamPointer->m_location;
@@ -703,6 +702,8 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, unsigned)
 
 			if (oteBuf->isBytes())
 			{
+				value = ObjectMemoryIntegerValueOf(value);
+
 				switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteBuf)))
 				{
 				case 1:
