@@ -11,7 +11,6 @@ Float addClassConstant: 'EMin' value: -16r3FE!
 Float addClassConstant: 'EMinDenormalized' value: -16r432!
 Float addClassConstant: 'FMax' value: 1.7976931348623157e308!
 Float addClassConstant: 'FMin' value: 2.2250738585072014e-308!
-Float addClassConstant: 'FMinDenormalized' value: 5.0e-324!
 Float addClassConstant: 'FpClassDenormal' value: 16r90!
 Float addClassConstant: 'FpClassFinite' value: 16r1F8!
 Float addClassConstant: 'FpClassInfinite' value: 16r204!
@@ -1203,7 +1202,7 @@ initialize
 	fmax := 1.7976931348623157e308.
 	self addClassConstant: 'FMax' value: fmax.
 	self addClassConstant: 'FMin' value: (1.0 timesTwoPower: emin).
-	self addClassConstant: 'FMinDenormalized' value: (1.0 timesTwoPower: eminDenorm).
+	self addClassVariable: 'FMinDenormalized' value: (1.0 timesTwoPower: eminDenorm).
 	"Mask out overflow/invalid while we generate the infinity/NaN constants."
 	fpeMask := self exceptionMask.
 	self exceptionMask: (fpeMask maskSet: CRTConstants._EM_OVERFLOW | CRTConstants._EM_INVALID).
