@@ -18,15 +18,31 @@ PluggableColor comment: '`PluggableColor` is the class of `Color`s that dynamica
 actualColor
 	^valuable value!
 
+printOn: aPuttableStream
+	self basicPrintOn: aPuttableStream!
+
 setValuable: aNiladicValuable 
-	valuable := aNiladicValuable! !
+	valuable := aNiladicValuable!
+
+stbSaveOn: anSTBOutFiler
+	"Override back to default implementation"
+
+	anSTBOutFiler saveObject: self! !
 !PluggableColor categoriesFor: #actualColor!private!testing! !
+!PluggableColor categoriesFor: #printOn:!printing!public! !
 !PluggableColor categoriesFor: #setValuable:!initializing!private! !
+!PluggableColor categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !PluggableColor class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+	"Override back to default implementation"
+
+	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
 
 with: aNiladicValuable 
 	<primitive: 157>
 	^self basicNew setValuable: aNiladicValuable! !
+!PluggableColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !PluggableColor class categoriesFor: #with:!instance creation!public! !
 

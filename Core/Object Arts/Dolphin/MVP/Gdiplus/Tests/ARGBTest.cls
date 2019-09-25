@@ -61,19 +61,19 @@ testPrintString
 				r: 2
 				g: 3
 				b: 4.
-	self assert: model printString equals: '(ARGB a: 1 r: 2 g: 3 b: 4)'.
+	self assert: model printString equals: '(Color a: 1 r: 2 g: 3 b: 4)'.
 	model := ARGB
 				a: 255
 				r: 1
 				g: 2
 				b: 3.
-	self assert: model printString equals: '(ARGB r: 1 g: 2 b: 3)'.
+	self assert: model printString equals: '(Color r: 1 g: 2 b: 3)'.
 	model := ARGB
 				a: 255
 				r: 218
 				g: 165
 				b: 32.
-	self assert: model printString equals: '(Color named: #goldenrod)'.
+	self assert: model printString equals: 'Color goldenrod'.
 	model := ARGB red.
 	self assert: model printString equals: 'Color red'! !
 !ARGBTest categoriesFor: #assertComponents:isCode:!asserting!public! !

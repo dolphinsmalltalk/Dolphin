@@ -168,15 +168,6 @@ silver
 
 	^StockBrush fromId: LTGRAY_BRUSH!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
-	^anSTBClassConversion version < 1
-		ifTrue: 
-			[anSTBInFiler
-				next;
-				next.	"Skip the nil handle and ownsHandle flag as these relate to realized brushes"
-			self fromLogBrush: anSTBInFiler next]
-		ifFalse: [super stbReadFrom: anSTBInFiler format: anSTBClassConversion]!
-
 sysColorBrushClass
 	^SysColorBrush!
 
@@ -228,7 +219,6 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 !Brush class categoriesFor: #reverseDiagonal!instance creation!public! !
 !Brush class categoriesFor: #reverseDiagonal:!instance creation!public! !
 !Brush class categoriesFor: #silver!instance creation!public! !
-!Brush class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Brush class categoriesFor: #sysColorBrushClass!instance creation!public! !
 !Brush class categoriesFor: #transparent!instance creation!public! !
 !Brush class categoriesFor: #vertical!instance creation!public! !
