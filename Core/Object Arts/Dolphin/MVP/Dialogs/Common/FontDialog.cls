@@ -68,6 +68,9 @@ defaultModel
 	^Font system asValue
 !
 
+icon
+	^##(self) defaultIcon!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -76,5 +79,6 @@ initialize
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
 !FontDialog class categoriesFor: #defaultModel!models!public! !
+!FontDialog class categoriesFor: #icon!constants!public! !
 !FontDialog class categoriesFor: #initialize!development!initializing!private! !
 

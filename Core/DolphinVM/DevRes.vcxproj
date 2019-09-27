@@ -188,6 +188,7 @@
     <Image Include="Res\Application.ico" />
     <Image Include="Res\ApplicationDeploymentWizard.ico" />
     <Image Include="Res\AspectBuffer.ico" />
+    <Image Include="Res\AXControlSite.ico" />
     <Image Include="Res\Bag.ico" />
     <Image Include="Res\BasicInspector.ico" />
     <Image Include="Res\Behavior.ico" />
@@ -397,7 +398,6 @@
     <Image Include="Res\ListControlView.ico" />
     <Image Include="Res\ListModel.ico" />
     <Image Include="Res\ListPresenter.ico" />
-    <Image Include="Res\ListValuePresenter.ico" />
     <Image Include="Res\ListViewColumn.ico" />
     <Image Include="Res\Locale.ico" />
     <Image Include="Res\MemoryManager.ico" />

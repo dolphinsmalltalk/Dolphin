@@ -340,9 +340,6 @@
     <Image Include="Res\ListPresenter.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\ListValuePresenter.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\ListViewColumn.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -991,6 +988,7 @@
     <Image Include="Res\Guid.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\AXControlSite.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

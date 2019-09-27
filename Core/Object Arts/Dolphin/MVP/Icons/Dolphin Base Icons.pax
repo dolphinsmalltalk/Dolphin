@@ -81,6 +81,7 @@ package methodNames
 	add: 'Process class' -> #icon;
 	add: 'ProcessorScheduler class' -> #icon;
 	add: 'RadioButton class' -> #icon;
+	add: 'RadioButtonSetPresenter class' -> #icon;
 	add: 'Rectangle class' -> #icon;
 	add: 'ResourceIdentifier class' -> #icon;
 	add: 'ScaledDecimal class' -> #icon;
@@ -99,6 +100,7 @@ package methodNames
 	add: 'UtfEncodedString class' -> #icon;
 	add: 'Warning class' -> #icon;
 	add: 'WarningSignal class' -> #icon;
+	add: 'WeakArray class' -> #icon;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -765,6 +767,14 @@ icon
 	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
 !RadioButton class categoriesFor: #icon!constants!public! !
 
+!RadioButtonSetPresenter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: $\x29BF fontName: 'Cambria') textcolor: Color forestGreen; yourself)! !
+!RadioButtonSetPresenter class categoriesFor: #icon!constants!public! !
+
 !Rectangle class methodsFor!
 
 icon
@@ -939,6 +949,16 @@ icon
 
 	^Warning icon! !
 !WarningSignal class categoriesFor: #icon!constants!public! !
+
+!WeakArray class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#()' fontName: 'Arial')
+		textcolor: Color skyBlue;
+		yourself)! !
+!WeakArray class categoriesFor: #icon!constants!public! !
 
 "End of package definition"!
 

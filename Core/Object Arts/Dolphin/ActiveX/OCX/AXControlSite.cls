@@ -1062,6 +1062,11 @@ getHostMsg
 
 	^WM_ATLGETHOST!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 initialize
 	"Private - Initialize the receiver's class variable
 		self initialize
@@ -1186,6 +1191,7 @@ winClassName
 !AXControlSite class categoriesFor: #example2!examples!public! !
 !AXControlSite class categoriesFor: #example3!examples!public! !
 !AXControlSite class categoriesFor: #getHostMsg!initializing!public! !
+!AXControlSite class categoriesFor: #icon!constants!public! !
 !AXControlSite class categoriesFor: #initialize!initializing!private! !
 !AXControlSite class categoriesFor: #onStartup!events-session!public! !
 !AXControlSite class categoriesFor: #progId:!accessing!instance creation!public! !

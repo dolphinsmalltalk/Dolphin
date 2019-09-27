@@ -376,7 +376,7 @@ displayOn: aStream
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^AXTypeLibraryAnalyzer icon!
+	^AXControlSite icon!
 
 initialize
 	"Private - Initialize the receiver. Register the tools folder icon with SmalltalkSystem.

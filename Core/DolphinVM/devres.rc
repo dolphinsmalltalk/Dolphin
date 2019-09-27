@@ -37,6 +37,8 @@ APPLICATIONDEPLOYMENTWIZARD.ICO ICON            "Res\\ApplicationDeploymentWizar
 
 ASPECTBUFFER.ICO        ICON                    "Res\\AspectBuffer.ico"
 
+AXCONTROLSITE.ICO       ICON                    "Res\\AXControlSite.ico"
+
 BASICINSPECTOR.ICO      ICON                    "Res\\BasicInspector.ico"
 
 LISTCONTROLVIEW.ICO     ICON                    "Res\\ListControlView.ico"
@@ -211,6 +213,8 @@ FOLDERUP.ICO            ICON                    "Res\\FolderUp.ico"
 
 FONT.ICO                ICON                    "res\\font.ico"
 
+FONTDIALOG.ICO          ICON                    "Res\\FontDialog.ico"
+
 FONTPRESENTER.ICO       ICON                    "Res\\FontPresenter.ico"
 
 FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
@@ -290,8 +294,6 @@ LINTWARNING.ICO         ICON                    "Res\\LintWarning.ico"
 LISTMODEL.ICO           ICON                    "Res\\ListModel.ico"
 
 LISTPRESENTER.ICO       ICON                    "Res\\ListPresenter.ico"
-
-LISTVALUEPRESENTER.ICO  ICON                    "Res\\ListValuePresenter.ico"
 
 LISTVIEW.ICO            ICON					"Res\\ListView.ico"
 
