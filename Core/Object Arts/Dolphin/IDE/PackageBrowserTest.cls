@@ -19,12 +19,9 @@ addRemoveRenameClasses
 		createMethods.
 	self assertCurrentCardInSync.
 	self renameClass.
-	dolphinTestC removeFromSystem.
-	self assertCurrentCardInSync.
-	dolphinTestB removeFromSystem.
-	self assertCurrentCardInSync.
-	dolphinTestA removeFromSystem.
-	self assertCurrentCardInSync!
+	self removeClass: dolphinTestC.
+	self removeClass: dolphinTestB.
+	self removeClass: dolphinTestA!
 
 assertClassesInSync
 	| classes |
@@ -99,7 +96,7 @@ create: aClassSymbol subclassOf: aClass inPackage: aPackage
 createClassesABC
 	dolphinTestA := self 
 				create: 'DolphinTestA' asSymbol
-				subclassOf: Object
+				subclassOf: ProtoObject
 				inPackage: packageA.
 	dolphinTestB := self 
 				create: 'DolphinTestB' asSymbol
@@ -161,6 +158,10 @@ createMethods
 
 currentCard
 	^shell instVarAt: (shell class indexOfInstVar: 'currentCard')!
+
+removeClass: aClass
+	ClassBuilder removeClass: aClass ignoreInstances: true.
+	self assertCurrentCardInSync!
 
 removeClasses
 	(Array 
@@ -506,6 +507,7 @@ testRepackageMethods
 !PackageBrowserTest categoriesFor: #createGlobals!helpers!private! !
 !PackageBrowserTest categoriesFor: #createMethods!helpers!private! !
 !PackageBrowserTest categoriesFor: #currentCard!public!unit tests! !
+!PackageBrowserTest categoriesFor: #removeClass:!private!unit tests! !
 !PackageBrowserTest categoriesFor: #removeClasses!public!Running! !
 !PackageBrowserTest categoriesFor: #removeGlobals!public!Running! !
 !PackageBrowserTest categoriesFor: #renameClass!private!unit tests! !

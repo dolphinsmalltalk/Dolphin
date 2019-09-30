@@ -2,7 +2,7 @@
 
 Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
-	classVariableNames: ''
+	classVariableNames: 'SelectorPrefix'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ResourceIdentifier guid: (GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
@@ -202,7 +202,7 @@ allResourceIdentifiers
 	^rids!
 
 allResourceIdentifiersDo: aMonadicValuable
-	Object withAllSubclassesDo: [:each | each resourceIdentifiersDo: aMonadicValuable]!
+	Class allClassesDo: [:each | each resourceIdentifiersDo: aMonadicValuable]!
 
 class: aClass 
 	^self class: aClass name: 'Default view'!
@@ -217,7 +217,7 @@ class: aClass name: aString
 		yourself!
 
 class: aClass selector: aSymbol
-	(aSymbol beginsWith: self selectorPrefix)
+	(aSymbol beginsWith: SelectorPrefix)
 		ifFalse: [self error: 'Invalid resource selector ' , aSymbol printString].
 	^super new
 		owningClass: aClass;
@@ -236,11 +236,16 @@ forMethod: aCompiledMethod
 	thisName isNil ifTrue: [^nil].
 	^self class: aCompiledMethod methodClass instanceClass name: thisName!
 
+initialize
+	SelectorPrefix := 'resource_' asUtf8String
+				isImmutable: true;
+				yourself!
+
 nameFromSelector: aSymbol
 	| resname prefixSize nameSize |
 	aSymbol isNil ifTrue: [^nil].
-	(aSymbol beginsWith: self selectorPrefix) ifFalse: [^nil].
-	prefixSize := self selectorPrefix size.
+	(aSymbol beginsWith: SelectorPrefix) ifFalse: [^nil].
+	prefixSize := SelectorPrefix size.
 	resname := String new: (nameSize := aSymbol size - prefixSize).
 	1 to: nameSize
 		do: 
@@ -262,7 +267,7 @@ removeResource: aResourceIdentifier
 selectorFromName: aString
 	| selector prefix |
 	aString isNil ifTrue: [^nil].
-	prefix := self selectorPrefix.
+	prefix := SelectorPrefix.
 	selector := WriteStream on: (aString copyEmpty: prefix size + aString size).
 	selector nextPutAll: prefix.
 	aString do: 
@@ -271,9 +276,6 @@ selectorFromName: aString
 				ifTrue: [selector nextPut: $_]
 				ifFalse: [each isAlphaNumeric ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
-
-selectorPrefix
-	^'resource_'!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from previous version resource. 
@@ -309,11 +311,11 @@ viewResourceCategoryName
 !ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !
 !ResourceIdentifier class categoriesFor: #exportFileExtension!constants!public! !
 !ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
+!ResourceIdentifier class categoriesFor: #initialize!class initialization!public! !
 !ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
 !ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
 !ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
-!ResourceIdentifier class categoriesFor: #selectorPrefix!constants!private! !
 !ResourceIdentifier class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ResourceIdentifier class categoriesFor: #stbVersion!binary filing!public! !
 !ResourceIdentifier class categoriesFor: #value:value:!helpers!private! !

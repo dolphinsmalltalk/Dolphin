@@ -398,7 +398,7 @@ loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIn
 			int nBufferMax 		// size of buffer
 		);"
 
-	<stdcall: sdword LoadStringW handle dword lpwstr sdword>
+	<stdcall: sdword LoadStringW handle dword lpvoid sdword>
 	^self invalidCall: _failureCode!
 
 mapVirtualKey: keyCode uMapType: mapType

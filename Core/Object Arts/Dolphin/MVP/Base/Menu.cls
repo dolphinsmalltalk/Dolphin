@@ -78,8 +78,8 @@ allMenus
 
 applyFlags
 	| struct |
-	(flags isNil or: [flags = 0]) ifTrue: [^self].
-	struct := MENUINFO new.
+	(flags isNil or: [flags == 0]) ifTrue: [^self].
+	struct := MENUINFO newBuffer.
 	struct style: flags.
 	(UserLibrary default setMenuInfo: self asParameter lpcmi: struct) ifFalse: [Sound errorBeep]!
 
@@ -103,7 +103,7 @@ basicRealize
 	| info |
 	super basicRealize.
 	self applyFlags.
-	info := MENUITEMINFOW new.
+	info := MENUITEMINFOW newBuffer.
 	items keysAndValuesDo: 
 			[:i :each |
 			each
@@ -339,20 +339,20 @@ insertIntoMenu: aMenuItem at: anInteger
 				at: anInteger - 1
 				info: MENUITEMINFOW new]!
 
-insertIntoMenu: parentMenu at: position info: aMENUITEMINFO 
+insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the <Menu>, parentMenu, which can be nil if this is to be a 
 	top-level menu."
 
 	| hParent |
 	hParent := parentMenu asParameter.
-	self handle.
+	self realize.
 	hParent isNull ifTrue: [^self].
 	aMENUITEMINFO subMenu: self text: self text.
-	(UserLibrary default 
+	(UserLibrary default
 		insertMenuItem: hParent
 		uItem: position
 		fByPosition: true
-		lpmii: aMENUITEMINFO) 
+		lpmii: aMENUITEMINFO)
 			ifFalse: [Win32Error signal: ('Unable to realize <1p> in >2p' expandMacrosWith: self with: parentMenu)]!
 
 insertItem: item after: predecessor

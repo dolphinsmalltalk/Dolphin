@@ -79,7 +79,7 @@ browseDefinitionsCommand
 							[(self variableClassification: node) == #classGlobal 
 								ifTrue: 
 									[^Message selector: #browseClass:
-										argument: (self selectedMethod methodClass environment bindingFor: node name) value]]]
+										argument: (self parseContext environment bindingFor: node name) value]]]
 				ifNotNil: 
 					[:selector | 
 					^Message selector: #browseDefinitionsOfSelector:in:
@@ -107,7 +107,7 @@ browseReferencesCommand
 							(varClass == #classGlobal or: [varClass == #global]) 
 								ifTrue: 
 									[^Message selector: #browseGlobalReferences:in:
-										arguments: (Array with: (self selectedMethod methodClass environment bindingFor: node name)
+										arguments: (Array with: (self parseContext environment bindingFor: node name)
 												with: self searchEnvironment)]]]
 				ifNotNil: 
 					[:literal | 
@@ -415,7 +415,7 @@ targetOfMessage: aStMessageNode
 	receiver := aStMessageNode receiver.
 	receiver isVariable
 		ifTrue: 
-			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self selectedMethod methodClass].
+			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self parseContext].
 			^self resolveIdentifier: receiver name ifDefined: [:value | value basicClass]]
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!

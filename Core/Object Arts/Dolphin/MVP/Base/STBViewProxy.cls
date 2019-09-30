@@ -10,18 +10,6 @@ STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to r
 !STBViewProxy categoriesForClass!System-Binary storage! !
 !STBViewProxy methodsFor!
 
-beNotChild
-	"Ensure that the receiver's represented object does not have the WS_CHILD style.
-	The main user of this will be the ViewComposer which sets the WS_CHILD style
-	of Shells in order to edit them."
-
-	| styleArray style |
-	styleArray := instVars at: CreationStyleIndex.
-	style := styleArray at: 1.
-	(style allMask: WS_CHILD) ifFalse: [^self].
-	style := style maskClear: WS_CHILD.
-	instVars at: CreationStyleIndex put: {style. styleArray at: 2}!
-
 beTopView
 	"Make the receiver's represented object appear as a top view, ie. one with an unspecified parent.
 	This will be detected on input and it will be assigned the parent stored in the STBInFiler context."
@@ -167,12 +155,14 @@ setView: aView
 	This is a case of storing the Smalltalk class of aView, an Array containing its instance variables,
 	its state sequence, placement info and subViews."
 
+	| size |
 	viewClass := aView class.
 	version := viewClass stbVersion.
-	instVars := Array new: viewClass instSize.
-	1 to: instVars size do: [:i | instVars at: i put: (aView instVarAt: i)].
+	size := viewClass instSize.
+	instVars := Array new: size.
+	1 to: size do: [:i | instVars at: i put: (aView instVarAt: i)].
 	self state: aView state.
-	aView isOpen 
+	aView isOpen
 		ifTrue: 
 			[placement := aView placement.
 			subViews := aView subViews asArray.
@@ -233,7 +223,6 @@ viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
 	viewClass := aClass! !
-!STBViewProxy categoriesFor: #beNotChild!accessing!public! !
 !STBViewProxy categoriesFor: #beTopView!accessing!public! !
 !STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
 !STBViewProxy categoriesFor: #connectModel!models!public! !

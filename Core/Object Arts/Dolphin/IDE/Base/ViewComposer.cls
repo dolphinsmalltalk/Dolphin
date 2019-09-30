@@ -1,11 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #ViewComposer
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList isUndoRedoInProgress'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
+	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ViewComposer guid: (GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
+ViewComposer addClassConstant: 'AdornmentModifiedFlag' value: 16r4!
+ViewComposer addClassConstant: 'ModifiedFlag' value: 16r1!
+ViewComposer addClassConstant: 'MouseClickFlag' value: 16r2!
+ViewComposer addClassConstant: 'RefreshFlag' value: 16r8!
+ViewComposer addClassConstant: 'UndoRedoFlag' value: 16r10!
 ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
 The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.
@@ -69,20 +74,33 @@ adjustScroll
 		invalidateLayout;
 		validateLayout!
 
-adornmentRectanglesFor: aView 
+adornmentRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the edges of the secondary
 	selection adornments of aView."
 
-	| aspects viewRects |
-	aspects := #(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter).
-	viewRects := aspects collect: 
-					[:eachAspect | 
-					| center extent |
-					extent := Grabber defaultExtent.
-					center := (aView rectangle insetBy: extent // 2 negated) perform: eachAspect.
-					center := self mapPoint: center toArenaFromView: aView.
+	| viewRects extent rect |
+	extent := Grabber defaultExtent.
+	rect := aView rectangle insetBy: extent // 2 negated.
+	viewRects := #(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter)
+				collect: 
+					[:eachAspect |
+					| center |
+					center := self mapPoint: (rect perform: eachAspect) toArenaFromView: aView.
 					Rectangle center: center extent: extent].
 	^viewRects!
+
+adornmentRectanglesFor: aView do: aMonadicValuable
+	"Private - Evaluate the monadic valuable argument for a collection of rectangles that mark the edges of the secondary
+	selection adornments of aView."
+
+	| grabberExt viewRect |
+	grabberExt := Grabber defaultExtent.
+	viewRect := aView rectangle insetBy: grabberExt // 2 negated.
+	viewRect
+		origin: (self mapPoint: viewRect origin toArenaFromView: aView);
+		corner: (self mapPoint: viewRect corner toArenaFromView: aView).
+	#(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter)
+		do: [:eachAspect | aMonadicValuable value: (Rectangle center: (viewRect perform: eachAspect) extent: grabberExt)]!
 
 adornmentRegion
 	"Private - Answers a Region occupied by all the selection adornments"
@@ -90,13 +108,14 @@ adornmentRegion
 	(adornmentRegion isNil or: [adornmentRegion isRealized not]) ifTrue: [self saveAdornmentRegion].
 	^adornmentRegion!
 
-adornmentRegionFor: aView 
+adornmentRegionFor: aView
 	"Private - Answers a Region occupied by the selection adornments for aView"
 
 	| region1 |
 	region1 := Region empty.
-	(self adornmentRectanglesFor: aView) do: 
-			[:each | 
+	self adornmentRectanglesFor: aView
+		do: 
+			[:each |
 			| region2 temp |
 			region2 := Region rectangle: (each insetBy: -1).
 			temp := region1 union: region2.
@@ -690,11 +709,6 @@ defaultSelectionWidth
 
 !
 
-deferImageUpdate
-	
-	[self refreshImage.
-	self invalidateUserInterface] postToMessageQueue!
-
 deleteSelections
 	self selections copy do: [:each | self removeView: each].
 	self setModified.
@@ -778,12 +792,12 @@ drawAdornment
 drawSelectionFor: aView
 	"Private - Paint the selection border for aView."
 
-	| canvas |
+	| canvas aMonadicValuable |
 	canvas := self arena canvas.
 	canvas pen: (Pen color: Color highlight).
-	(self adornmentRectanglesFor: aView) do: [:each | canvas rectangle: each].
-	canvas free.
-!
+	aMonadicValuable := [:each | canvas rectangle: each].
+	self adornmentRectanglesFor: aView do: aMonadicValuable.
+	canvas free!
 
 drawTrackingAt: pointOffset 
 	"Private - Draws the tracking for the current selections when offset by pointOffset."
@@ -971,9 +985,7 @@ grabberHitBy: aPoint
 grabbers
 	"Private - Answers the collection of grabbers currently in operation"
 
-	grabbers isNil ifTrue: [ grabbers := IdentitySet new ].
-	^grabbers
-!
+	^grabbers ifNil: [grabbers := IdentitySet new: 8]!
 
 grid
 	"Private - Answers the Grid associated with the receiver."
@@ -1079,7 +1091,6 @@ initialize
 
 	self grid: (Grid resolution: self class defaultGridResolution).
 	undoList := HistoryList new: self maxUndoStates.
-	isUndoRedoInProgress := false.
 	selections := OrderedCollection new.
 	vcFlags := 0.
 	ownsComposingView := false.
@@ -1112,19 +1123,25 @@ isAdornmentModified: aBoolean
 	vcFlags := vcFlags mask: AdornmentModifiedFlag set: aBoolean
 !
 
+isImageDirty
+	^vcFlags anyMask: RefreshFlag!
+
+isImageDirty: aBoolean
+	vcFlags := vcFlags mask: RefreshFlag set: aBoolean!
+
 isModified
 	"Answer true if the view being composed has been modified"
 
 	^vcFlags allMask: ModifiedFlag
 !
 
-isModified: aBoolean 
+isModified: aBoolean
 	"Private - Set the modifiaction flag for the view being composed to aBoolean"
 
-	aBoolean 
+	aBoolean
 		ifTrue: 
 			[self
-				deferImageUpdate;
+				refreshImage;
 				saveUndoState].
 	self isModified == aBoolean ifTrue: [^self].
 	vcFlags := vcFlags mask: ModifiedFlag set: aBoolean.
@@ -1153,6 +1170,9 @@ isSelected: aView
 
 	^self selections includes: aView
 !
+
+isUndoRedoInProgress
+	^vcFlags anyMask: UndoRedoFlag!
 
 mapPoint: aPoint toArenaFromView: aView 
 	^(aView parentView mapPoint: aPoint to: View desktop) - self hidingOffset+self defaultComposingPosition!
@@ -1539,21 +1559,8 @@ onIdleEntered
 	"Private - Idle has been entered. Ensure the adornment is displayed correctly"
 
 	super onIdleEntered.
-	(image notNil and: [image handle isNull]) 
-		ifTrue: 
-			["After image reload the saved image will be invalid so recreate it"
-			self refreshImage].
-	self isAdornmentModified 
-		ifTrue: 
-			[self eraseAdornment.
-			self drawAdornment.
-			self primarySelection notNil 
-				ifTrue: 
-					[| rect |
-					rect := self primarySelection rectangle.
-					self primarySelection = self composingView ifTrue: [rect moveBy: self hidingOffset negated].
-					status value: rect].
-			self isAdornmentModified: false]!
+	self validateImage.
+	self validateAdornment!
 
 onImageSaveCompleted
 	self ownsComposingView 
@@ -1660,10 +1667,12 @@ openOn: aResourceIdentifier
 	position := self pasteContext == View desktop 
 				ifTrue: [self initialComposingPosition]
 				ifFalse: [self incrementAddPositionOffset].
-	self 
-		pasteResource: aResourceIdentifier resource
-		context: self pasteContext
-		position: position.
+	"Pretend performing an undo/redo operation to suppress capture of undo history"
+	self performUndoRedo: [
+		self 
+			pasteResource: aResourceIdentifier resource
+			context: self pasteContext
+			position: position].
 
 	"The paste will have set the modified flag. We clear it here,
 	because we know the view has simply been opened."
@@ -1758,6 +1767,10 @@ performCommand: aCommand
 	self drawAdornment.
 	^result
 !
+
+performUndoRedo: aNiladicValuable
+	vcFlags := vcFlags maskSet: UndoRedoFlag.
+	aNiladicValuable ensure: [vcFlags := vcFlags maskClear: UndoRedoFlag]!
 
 primarySelection
 	"Private - Answer the primary selection or nil if there is none."
@@ -1895,14 +1908,7 @@ queryCommand: aCommandQuery
 refreshImage
 	" Re-render the composing view and display it in the arenaPresenter."
 
-	"self ownsComposingView 
-		ifTrue: 
-			[(self composingView)
-				position: self hidingOffset;
-				showWithStyle: SW_SHOWNA]."
-
-	image := self composingView notNil ifTrue: [Bitmap fromView: self composingView].
-	arenaPresenter value: image!
+	self isImageDirty: true!
 
 refreshPublishedAspects
 	inspector refresh!
@@ -1910,10 +1916,10 @@ refreshPublishedAspects
 removeGrabbers
 	"Private - Destroy all the grabbers"
 
-	self grabbers do: [ :each | each invalidate ].
-	grabbers := nil.
-
-!
+	grabbers
+		ifNotNil: 
+			[grabbers do: [:each | each invalidate].
+			grabbers := nil]!
 
 removeHorizontalGaps
 	"Remove any vertical spacing between the selected controls."
@@ -2056,7 +2062,7 @@ saveStateOn: aWriteStream
 	aWriteStream nextPutAll: ']'!
 
 saveUndoState
-	isUndoRedoInProgress ifTrue: [^self].
+	self isUndoRedoInProgress ifTrue: [^self].
 	undoList addLast: self undoState!
 
 secondarySelections
@@ -2223,6 +2229,27 @@ updatePrimarySelection
 	actualPrimarySelection := self selections notEmpty ifTrue: [self selections first ].
 	self primarySelection: actualPrimarySelection!
 
+validateAdornment
+	self isAdornmentModified ifFalse: [^self].
+	self eraseAdornment.
+	self drawAdornment.
+	self primarySelection notNil
+		ifTrue: 
+			[| rect |
+			rect := self primarySelection rectangle.
+			self primarySelection = self composingView ifTrue: [rect moveBy: self hidingOffset negated].
+			status value: rect].
+	self isAdornmentModified: false!
+
+validateImage
+	"Private - Re-render the composing view and display it in the arenaPresenter."
+
+	((image notNil and: [image handle isNull]) or: [self isImageDirty]) ifFalse: [^self].
+	self isImageDirty: false.
+	image := self composingView notNil
+				ifTrue: [Bitmap fromView: self composingView background: self arena actualBackcolor brush].
+	arenaPresenter value: image!
+
 validateLayout
 	"Private - Validate the layout for the view being composed"
 
@@ -2325,10 +2352,7 @@ viewOpen
 			(rid := ChoicePrompter choices: viewResources caption: 'Open') notNil ifTrue: [self openOn: rid]]!
 
 viewRedo
-	
-	[isUndoRedoInProgress := true.
-	self restoreUndoState: (undoList goForward: 1)] 
-			ensure: [isUndoRedoInProgress := false]!
+	self performUndoRedo: [self restoreUndoState: (undoList goForward: 1)]!
 
 viewRevert
 	"Revert the contents of the receiver's document to those in the
@@ -2380,10 +2404,7 @@ viewTest
 	testView show!
 
 viewUndo
-	
-	[isUndoRedoInProgress := true.
-	self restoreUndoState: (undoList goBack: 1)] 
-			ensure: [isUndoRedoInProgress := false]!
+	self performUndoRedo: [self restoreUndoState: (undoList goBack: 1)]!
 
 widenSelection
 	"Widen the selection to encompass the parent of the current primary selection."
@@ -2450,6 +2471,7 @@ zOrderChangedFor: aView
 !ViewComposer categoriesFor: #addSelectionFor:!adornments!private! !
 !ViewComposer categoriesFor: #adjustScroll!geometry!private! !
 !ViewComposer categoriesFor: #adornmentRectanglesFor:!adornments!private! !
+!ViewComposer categoriesFor: #adornmentRectanglesFor:do:!adornments!private! !
 !ViewComposer categoriesFor: #adornmentRegion!adornments!private! !
 !ViewComposer categoriesFor: #adornmentRegionFor:!adornments!private! !
 !ViewComposer categoriesFor: #alignBottoms!commands!public! !
@@ -2511,7 +2533,6 @@ zOrderChangedFor: aView
 !ViewComposer categoriesFor: #defaultGridResolution!constants!private! !
 !ViewComposer categoriesFor: #defaultHelpId!public! !
 !ViewComposer categoriesFor: #defaultSelectionWidth!constants!private! !
-!ViewComposer categoriesFor: #deferImageUpdate!accessing!private! !
 !ViewComposer categoriesFor: #deleteSelections!commands!public! !
 !ViewComposer categoriesFor: #dereference!commands!private! !
 !ViewComposer categoriesFor: #distributeHorizontally!commands!public! !
@@ -2560,12 +2581,15 @@ zOrderChangedFor: aView
 !ViewComposer categoriesFor: #invalidateAdornmentFor:!adornments!private! !
 !ViewComposer categoriesFor: #isAdornmentModified!operations!private! !
 !ViewComposer categoriesFor: #isAdornmentModified:!operations!private! !
+!ViewComposer categoriesFor: #isImageDirty!private! !
+!ViewComposer categoriesFor: #isImageDirty:!private! !
 !ViewComposer categoriesFor: #isModified!public!testing! !
 !ViewComposer categoriesFor: #isModified:!accessing!private! !
 !ViewComposer categoriesFor: #isMouseClick!private!testing! !
 !ViewComposer categoriesFor: #isMouseClick:!accessing!private! !
 !ViewComposer categoriesFor: #isMouseTarget!private!testing! !
 !ViewComposer categoriesFor: #isSelected:!private!testing! !
+!ViewComposer categoriesFor: #isUndoRedoInProgress!private! !
 !ViewComposer categoriesFor: #mapPoint:toArenaFromView:!helpers!private! !
 !ViewComposer categoriesFor: #mapPoint:toViewFromArena:!private! !
 !ViewComposer categoriesFor: #mapRectangle:toArenaFromView:!private! !
@@ -2621,6 +2645,7 @@ zOrderChangedFor: aView
 !ViewComposer categoriesFor: #pasteResource:context:position:!operations!public! !
 !ViewComposer categoriesFor: #pasteResourceLink:context:position:!operations!public! !
 !ViewComposer categoriesFor: #performCommand:!commands!public! !
+!ViewComposer categoriesFor: #performUndoRedo:!helpers!private! !
 !ViewComposer categoriesFor: #primarySelection!adornments!private! !
 !ViewComposer categoriesFor: #primarySelection:!adornments!private! !
 !ViewComposer categoriesFor: #printShortCaptionOn:!private!updating! !
@@ -2665,6 +2690,8 @@ zOrderChangedFor: aView
 !ViewComposer categoriesFor: #updateAdornment!operations!private! !
 !ViewComposer categoriesFor: #updateCaption!private!updating! !
 !ViewComposer categoriesFor: #updatePrimarySelection!adornments!private! !
+!ViewComposer categoriesFor: #validateAdornment!operations!private! !
+!ViewComposer categoriesFor: #validateImage!private! !
 !ViewComposer categoriesFor: #validateLayout!geometry!private! !
 !ViewComposer categoriesFor: #validateUserInterface!operations!private! !
 !ViewComposer categoriesFor: #viewClose!commands!public! !
@@ -2735,6 +2762,11 @@ defaultGridResolution
 
 	^DefaultGridResolution!
 
+defaultGridResolution: anInteger
+	"Set the default grid resolution to use in the receiver."
+
+	DefaultGridResolution := anInteger!
+
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it."
@@ -2759,9 +2791,12 @@ initialize
 	Smalltalk developmentSystem
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	ModifiedFlag := 16r1.
-	MouseClickFlag := 16r2.
-	AdornmentModifiedFlag := 16r4.
+	self
+		addClassConstant: 'ModifiedFlag' value: 16r1;
+		addClassConstant: 'MouseClickFlag' value: 16r2;
+		addClassConstant: 'AdornmentModifiedFlag' value: 16r4;
+		addClassConstant: 'RefreshFlag' value: 16r8;
+		addClassConstant: 'UndoRedoFlag' value: 16r10.
 	self canUseIdeaSpace: true.
 	self defaultSlideyPinsMap: ##(IdentityDictionary new
 				at: #toolsSlidey put: false;
@@ -2808,6 +2843,7 @@ toolsFolderHelpId
 !ViewComposer class categoriesFor: #copyToClipboard:!clipboard operations!public! !
 !ViewComposer class categoriesFor: #defaultDefaultView!initializing!private! !
 !ViewComposer class categoriesFor: #defaultGridResolution!constants!public! !
+!ViewComposer class categoriesFor: #defaultGridResolution:!constants!public! !
 !ViewComposer class categoriesFor: #displayOn:!displaying!public! !
 !ViewComposer class categoriesFor: #extentImage!constants!private! !
 !ViewComposer class categoriesFor: #icon!constants!public! !

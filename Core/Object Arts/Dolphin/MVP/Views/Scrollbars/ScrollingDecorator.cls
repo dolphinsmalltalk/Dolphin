@@ -261,14 +261,20 @@ scrollPages: anInteger
 	pageHeight := (self getScrollPage: SB_VERT) max: 1.
 	^self verticalScrollTo: self scrollOffset y + (anInteger * pageHeight)!
 
-setScrollInfo: barInteger position: posInteger
-	| scrollinfo |
-	scrollinfo := (SCROLLINFO new)
-				pos: posInteger;
-				yourself.
-	UserLibrary default
+setScrollInfo: aPoint
+	| lib scrollinfo |
+	lib := UserLibrary default.
+	scrollinfo := SCROLLINFO newBuffer.
+	scrollinfo pos: aPoint x.
+	lib
 		setScrollInfo: handle
-		fnBar: barInteger
+		fnBar: SB_HORZ
+		lpsi: scrollinfo
+		fRedraw: true.
+	scrollinfo pos: aPoint y.
+	lib
+		setScrollInfo: handle
+		fnBar: SB_VERT
 		lpsi: scrollinfo
 		fRedraw: true!
 
@@ -287,7 +293,7 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 		lpsi: scrollinfo
 		fRedraw: true!
 
-updateScrollBarOffsets: aLayoutContext 
+updateScrollBarOffsets: aLayoutContext
 	"Private - Update the state of the receivers standard scroll bars to reflect the current
 	relationship between the receiver and its subview."
 
@@ -295,8 +301,7 @@ updateScrollBarOffsets: aLayoutContext
 	clientExtent := aLayoutContext clientExtentOf: self.
 	viewExtent := self layoutManager preferredLayoutExtentOf: self context: aLayoutContext.
 	viewExtent isZero ifTrue: [viewExtent := clientExtent].
-	self setScrollInfo: SB_HORZ position: self scrollOffset x.
-	self setScrollInfo: SB_VERT position: self scrollOffset y!
+	self setScrollInfo: self scrollOffset!
 
 updateScrollBars: aLayoutContext 
 	"Private - Update the state of the receivers standard scroll bars to reflect the current
@@ -364,7 +369,7 @@ wheelScrollLines
 !ScrollingDecorator categoriesFor: #scrollOffset:context:!operations!public! !
 !ScrollingDecorator categoriesFor: #scrollPage!accessing!private! !
 !ScrollingDecorator categoriesFor: #scrollPages:!operations!public! !
-!ScrollingDecorator categoriesFor: #setScrollInfo:position:!accessing!private! !
+!ScrollingDecorator categoriesFor: #setScrollInfo:!private!updating! !
 !ScrollingDecorator categoriesFor: #setScrollInfo:position:range:page:!accessing!private! !
 !ScrollingDecorator categoriesFor: #updateScrollBarOffsets:!private!updating! !
 !ScrollingDecorator categoriesFor: #updateScrollBars:!private!updating! !

@@ -1136,22 +1136,6 @@ onDestroyed
 
 	^ super onDestroyed.!
 
-onDisplayDetailsRequired: lvitem
-	"private -- Windows wants the display details for the item identified by lvitem.
-	Overriden to handle LVIF_STATE too"
-
-	| object mask |
-
-	object := self objectFromHandle: lvitem handle ifAbsent: [^ nil].
-	mask := lvitem mask.
-
-	(self systemDrawsStateImages
-		and: [lvitem iSubItem isZero
-			and: [lvitem mask allMask: LVIF_STATE]])
-		ifTrue: [lvitem stateImageIndex: (self stateIndexFromRow: object)].
-
-	^ super onDisplayDetailsRequired: lvitem.!
-
 onItem: aChildObject addedInParent: aParentObject
 	"notification received when aChildObject has been added to the list of
 	children of aParentObject.  We assume that aChildObject is not already
@@ -2159,7 +2143,6 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #notifyNodeExpanded:!do copy!events!private! !
 !ListTreeView categoriesFor: #notifyNodeRemoved:!do copy!events!private! !
 !ListTreeView categoriesFor: #onDestroyed!do copy!event handling!models!private! !
-!ListTreeView categoriesFor: #onDisplayDetailsRequired:!do copy!event handling!private! !
 !ListTreeView categoriesFor: #onItem:addedInParent:!do copy!event handling!public! !
 !ListTreeView categoriesFor: #onItem:movedToParent:!do copy!event handling!public! !
 !ListTreeView categoriesFor: #onItem:removedFromParent:!do copy!event handling!public! !

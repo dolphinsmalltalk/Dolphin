@@ -838,7 +838,7 @@ looseResourceIdentifiers
 looseResourceIdentifiersDo: aMonadicValuable
 	self methodNames do: 
 			[:each |
-			(each value beginsWith: ResourceIdentifier selectorPrefix)
+			(each value beginsWith: ResourceIdentifier.SelectorPrefix)
 				ifTrue: 
 					[(self behaviorFromName: each key ifAbsent: [])
 						ifNotNil: 

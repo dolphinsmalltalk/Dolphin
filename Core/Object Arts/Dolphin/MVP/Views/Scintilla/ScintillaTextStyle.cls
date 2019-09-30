@@ -157,7 +157,7 @@ forecolor: aColorOrNil
 	forecolor := aColorOrNil!
 
 getThreeStateFlag: anInteger
-	^#(nil true false) at: ((flags bitAnd: anInteger) >> (anInteger lowBit - 1)) + 1!
+	^#(nil true false) at: ((flags bitAnd: anInteger) bitShift: 1 - anInteger lowBit) + 1!
 
 initialize
 	super initialize.

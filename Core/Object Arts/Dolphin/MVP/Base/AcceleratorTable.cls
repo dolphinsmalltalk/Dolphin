@@ -183,24 +183,22 @@ keyStringFromCode: keyCode
 	"Private - Answer an accelerator string corresponding to the accelerator
 	key code, keyCode, as described by the current keyboard layout."
 
-	| split |
-	split := self splitKeyCode: keyCode.
-	^self keyStringFromCode: split first modifiers: split last!
+	^self keyStringFromCode: (keyCode bitAnd: 16r1FF) modifiers: (keyCode bitShift: -9)!
 
-keyStringFromCode: vkInteger modifiers: maskInteger 
+keyStringFromCode: vkInteger modifiers: maskInteger
 	"Private - Answer an accelerator string constructed for the specified virtual key and
 	modifiers."
 
 	| keyString |
-	keyString := String writeStream: 8.
+	keyString := String writeStream: 12.
 	self keyModifierNames: maskInteger
 		do: 
-			[:each | 
+			[:each |
 			keyString
 				nextPutAll: each;
 				nextPut: self keySeparator].
-	keyString nextPutAll: (Keyboard 
-				keyNameFromVKey: ((vkInteger bitAnd: 16r1FF) maskSet: (maskInteger maskClear: 16rFF))
+	keyString nextPutAll: (Keyboard
+				keyNameFromVKey: ((vkInteger bitAnd: 16r1FF) bitOr: (maskInteger bitAnd: -16r100))
 				ifNone: ['']).
 	^keyString contents!
 

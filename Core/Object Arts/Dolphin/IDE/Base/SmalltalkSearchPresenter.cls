@@ -92,10 +92,10 @@ maybeShowCompletionList
 	self view selectionRange isEmpty ifFalse: [^self].
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
-	(self 
+	self
 		autoComplete: styleName
 		at: last
-		maxItems: self maxAutoCompletionListSize) ifNil: []!
+		maxItems: self maxAutoCompletionListSize!
 
 onAutoComplete: aString startingAt: anInteger accept: aValueHolder 
 	"Private - "

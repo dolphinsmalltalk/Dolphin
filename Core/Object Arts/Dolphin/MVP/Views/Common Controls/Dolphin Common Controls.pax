@@ -212,7 +212,7 @@ ListControlView subclass: #IconicListAbstract
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes NoImageIndex RevertSelMessage UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #TabView

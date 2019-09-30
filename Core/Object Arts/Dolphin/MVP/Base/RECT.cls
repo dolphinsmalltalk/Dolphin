@@ -16,6 +16,15 @@ The `RECT` structure is used in many places in the Windows API to represent a re
 !RECT categoriesForClass!Win32-Structs! !
 !RECT methodsFor!
 
+asRectangle
+	"Answer a new Rectangle that matches the receiver."
+
+	"Implementation Note: This is used so much during layout, that it is worth providing an inlined implementation as an optimization."
+
+	^Rectangle
+		origin: (Point x: (bytes sdwordAtOffset: _OffsetOf_left) y: (bytes sdwordAtOffset: _OffsetOf_top))
+		corner: (Point x: (bytes sdwordAtOffset: _OffsetOf_right) y: (bytes sdwordAtOffset: _OffsetOf_bottom))!
+
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
 
@@ -55,6 +64,7 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
+!RECT categoriesFor: #asRectangle!converting!public! !
 !RECT categoriesFor: #bottom!**compiled accessors**!public! !
 !RECT categoriesFor: #bottom:!**compiled accessors**!public! !
 !RECT categoriesFor: #left!**compiled accessors**!public! !

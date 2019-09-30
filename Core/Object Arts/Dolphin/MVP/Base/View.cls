@@ -1479,7 +1479,7 @@ getWindowRect
 	"Private - Answer a raw (unmapped) RECT containing the bounding rectangle of the receiver's non-client window."
 
 	| rect |
-	rect := RECT new.
+	rect := RECT newBuffer.
 	UserLibrary default getWindowRect: handle lpRect: rect.
 	^rect!
 

@@ -276,14 +276,14 @@ keyNameFromVKey: anInteger
 	^self keyNameFromVKey: anInteger
 		ifNone: [self error: ('invalid virtual key <1d>' expandMacrosWith: anInteger)]!
 
-keyNameFromVKey: anInteger ifNone: exceptionHandler 
+keyNameFromVKey: anInteger ifNone: exceptionHandler
 	"Private - Answer the name of the specified virtual key code,
 	or evaluate the exceptionHandler block if none."
 
 	| scanCode |
 	scanCode := self vKeyToScanCode: anInteger.
 	scanCode == 0 ifTrue: [^exceptionHandler value].
-	^(self keyNameFromScanCode: (scanCode bitOr: (anInteger maskClear: 16rFF))) 
+	^(self keyNameFromScanCode: (scanCode bitOr: (anInteger bitAnd: -16r100)))
 		ifNil: [exceptionHandler value]!
 
 onPreStripImage

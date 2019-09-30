@@ -116,8 +116,9 @@ encodeClass: aClass locator: aString
 	| code |
 	code := dword
 				bitOr: (ClassPrefixMask bitOr: ((aString size bitShift: 16) bitOr: (aClass instSize bitShift: 8))).
-	aClass isBytes ifTrue: [code := code bitOr: BytesMask].
-	aClass isVariable ifTrue: [code := code bitOr: VariableMask].
+	aClass isVariable
+		ifTrue: 
+			[code := code bitOr: (aClass isBytes ifTrue: [##(BytesMask | VariableMask)] ifFalse: [VariableMask])].
 	aClass stbVersion ~= 0 ifTrue: [code := code bitOr: NonZeroVersionMask].
 	^code!
 
@@ -226,7 +227,7 @@ smallInteger
 !STBPrefix class methodsFor!
 
 encodeCharacter: aCharacter
-	^(aCharacter asInteger bitShift: IndexShift negated) bitOr: CharacterMask!
+	^(aCharacter codePoint bitShift: ##(IndexShift negated)) bitOr: CharacterMask!
 
 encodeObjectRef: anInteger
 	^anInteger bitShift: 4!

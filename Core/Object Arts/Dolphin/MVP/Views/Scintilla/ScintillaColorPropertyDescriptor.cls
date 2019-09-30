@@ -13,10 +13,10 @@ Scintilla always uses the RGB format for colors, and does not expect to receive 
 !ScintillaColorPropertyDescriptor methodsFor!
 
 lParamFromAttributeValue: aColor
-	^aColor asRGB asInteger!
+	^aColor rgbCode!
 
 valueFromLResult: anInteger
-	^Color fromCOLORREF: anInteger! !
+	^Color fromRgbCode: anInteger! !
 !ScintillaColorPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
 !ScintillaColorPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
 

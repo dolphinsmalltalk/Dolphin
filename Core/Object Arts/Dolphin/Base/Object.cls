@@ -475,7 +475,7 @@ binaryStoreBytes
 	This can be reconstituted using Object class>>fromBinaryStoreBytes:"
 
 	| stream |
-	stream := ByteArray writeStream: 128.
+	stream := ByteArray writeStream: 256.
 	self binaryStoreOn: stream.
 	^stream contents!
 

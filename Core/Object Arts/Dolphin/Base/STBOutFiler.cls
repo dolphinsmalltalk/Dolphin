@@ -21,7 +21,7 @@ Instance Variables:
 basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
-	| class |
+	| class objectToSave |
 	anObject isNil ifTrue: [^self writeNil].
 	"If anObject has been registered as a global then we wrap it up as an STBGlobalObjectProxy
 	and output that instead."
@@ -37,15 +37,12 @@ basicNextPut: anObject
 		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix encodeObjectRef: refIndex)].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
-	proxyOverrides at: anObject
-		ifPresent: 
-			[:objectToSave |
-			objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
-			^self saveObject: anObject as: objectToSave].
-	(self tryPutLiteral: anObject)
+	objectToSave := proxyOverrides at: anObject ifAbsent: [Collection.AbsentCookie].
+	objectToSave == Collection.AbsentCookie
+		ifTrue: [self serializeObject: anObject]
 		ifFalse: 
-			["Let anObject output itself."
-			anObject stbSaveOn: self]!
+			[objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
+			self saveObject: anObject as: objectToSave]!
 
 nextPut: anObject
 	"Write anObject to the stream in STB format."
@@ -140,7 +137,7 @@ saveObject: aNonImmediateObject
 	This is a low-level method, and is not intended for normal binary object streaming - 
 	use #nextPut: instead."
 
-	self writeObject: aNonImmediateObject as: aNonImmediateObject withPrefix: STBPrefix forData!
+	self writeObject: aNonImmediateObject as: aNonImmediateObject withPrefix: STBPrefix.DataPrefix !
 
 saveObject: anObject as: anObjectToSave
 	"Write anObject to the stream in STB format as anObjectToSave."
@@ -157,16 +154,13 @@ saveObject: anObject as: anObjectToSave
 	knows to do a #fixup:to on input."
 	self writeObject: anObject as: anObjectToSave withPrefix: STBPrefix forProxy!
 
+serializeObject: anObject
+	"Let anObject output itself."
+
+	anObject stbSaveOn: self!
+
 setRefOffset: anInteger
 	refOffset := anInteger - writeMap size + 1!
-
-tryPutLiteral: anObject
-	"Private - Emit the <Object> argument to the stream in literal form, answering whether or
-	not this was possible."
-
-	"Override hook for the STL filter"
-
-	^false!
 
 writeClass: anObject withLocator: locatorString 
 	stream nextPutAll: locatorString asByteArray!
@@ -189,19 +183,20 @@ writeClass: class withPrefix: anSTBPrefix
 			self writeClass: class withLocator: locatorString.
 			self register: class]!
 
-writeInstanceVariables: objectToSave 
+writeInstanceVariables: objectToSave
 	"Private - Dump the instance variables of the <Object> argument to the binary stream."
 
-	| class basicSize |
+	| class |
 	class := objectToSave basicClass.
-	basicSize := objectToSave basicSize.
-	class isVariable ifTrue: [self writeInteger: basicSize].
-	class isBytes 
+	class isVariable
 		ifTrue: 
-			["#1132: Temp patch for rare 4-byte STB corruption"
-			1 to: basicSize do: [:i | stream nextPut: (objectToSave basicAt: i)]
-			"stream next: basicSize putAll: objectToSave yourAddress asExternalAddress startingAt: 1"]
-		ifFalse: [1 to: class instSize + basicSize do: [:i | self basicNextPut: (objectToSave instVarAt: i)]]!
+			[| basicSize |
+			basicSize := objectToSave basicSize.
+			self writeInteger: basicSize.
+			class isPointers
+				ifFalse: [1 to: basicSize do: [:i | stream nextPut: (objectToSave basicAt: i)]]
+				ifTrue: [1 to: class instSize + basicSize do: [:i | self basicNextPut: (objectToSave instVarAt: i)]]]
+		ifFalse: [1 to: class instSize do: [:i | self basicNextPut: (objectToSave instVarAt: i)]]!
 
 writeInteger: anInteger
 	"Private - Write anInteger to the stream."
@@ -241,8 +236,8 @@ writePreambleFor: anObject
 !STBOutFiler categoriesFor: #resetStream!initializing!private! !
 !STBOutFiler categoriesFor: #saveObject:!operations!public! !
 !STBOutFiler categoriesFor: #saveObject:as:!operations!public! !
+!STBOutFiler categoriesFor: #serializeObject:!operations!private! !
 !STBOutFiler categoriesFor: #setRefOffset:!accessing!private! !
-!STBOutFiler categoriesFor: #tryPutLiteral:!helpers!private! !
 !STBOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
 !STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !

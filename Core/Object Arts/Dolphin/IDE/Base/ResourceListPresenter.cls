@@ -161,7 +161,7 @@ onDragResource: aDragDropSession
 		defaultOperation: #copy!
 
 onMethodAdded: aCompilationResult 
-	(aCompilationResult method selector beginsWith: ResourceIdentifier selectorPrefix) 
+	(aCompilationResult method selector beginsWith: ResourceIdentifier.SelectorPrefix) 
 		ifTrue: 
 			[| rid |
 			rid := ResourceIdentifier class: aCompilationResult method methodClass instanceClass
@@ -169,7 +169,7 @@ onMethodAdded: aCompilationResult
 			(self passesFilter: rid) ifTrue: [self model add: rid]]!
 
 onMethodRemoved: aCompiledMethod 
-	(aCompiledMethod selector beginsWith: ResourceIdentifier selectorPrefix) 
+	(aCompiledMethod selector beginsWith: ResourceIdentifier.SelectorPrefix) 
 		ifTrue: 
 			[self model remove: (ResourceIdentifier class: aCompiledMethod methodClass instanceClass
 						selector: aCompiledMethod selector)

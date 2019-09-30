@@ -2,7 +2,7 @@
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes NoImageIndex RevertSelMessage UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -151,42 +151,49 @@ applyImageLists
 
 autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
-	columns. This only has a visible effect in #report mode."
+	columns. This only has a visible effect in #report mode, or if the list is subsequently switched to report mode."
 
-	self autoResizeColumns: self clientWidth!
+	self isReportMode ifTrue: [self autoResizeColumns: self clientWidth]!
 
-autoResizeColumns: anInteger 
+autoResizeColumns: anInteger
 	"Private - Attempt to share the specified <integer> width between all automagically
 	resizeable columns in the receiver. This only has a visible effect in #report mode."
 
-	| fixedWidth idealWidth remainingWidth clientWidth actualAccum idealAccum autoCols |
+	| cols autoCols fixedWidth idealWidth remainingWidth clientWidth |
 	fixedWidth := 0.
-	autoCols := OrderedCollection new.
-	self allColumns keysAndValuesDo: 
-			[:eachIndex :eachCol | 
-			eachCol isAutoResize 
-				ifTrue: [autoCols addLast: eachIndex - 1 -> eachCol]
-				ifFalse: [fixedWidth := fixedWidth + eachCol width]].
-	autoCols isEmpty ifTrue: [^self].
-	clientWidth := anInteger-4.
+	autoCols := 0.
+	cols := self allColumns.
+	cols keysAndValuesDo: 
+			[:eachKey :eachValue |
+			eachValue isAutoResize
+				ifTrue: [autoCols := autoCols + 1]
+				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: eachKey - 1)]].
+	autoCols == 0 ifTrue: [^self].
+	"Not sure where the magic number 4 comes from, but it doesn't appear to be correct any more"
+	clientWidth := anInteger - 4.
 	"#1063: ListView doesn't seem to report its actual client width correctly if it has a static edge
 	but not one of the other border styles, hence we must 'adjust' it a little in this case."
-	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not]) 
+	(self hasStaticEdge and: [(self hasClientEdge or: [self hasBorder]) not])
 		ifTrue: [clientWidth := clientWidth - 2].
 	remainingWidth := clientWidth - fixedWidth.
 	remainingWidth <= 0 ifTrue: [^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
-	idealWidth := remainingWidth / autoCols size.
-	idealAccum := 0.
-	actualAccum := 0.
-	autoCols do: 
-			[:each | 
-			| thisWidth |
-			idealAccum := idealAccum + idealWidth.
-			thisWidth := (idealAccum - actualAccum) rounded.
-			each value basicWidth: thisWidth.
-			self lvmSetColumnWidth: each key to: thisWidth.
-			actualAccum := actualAccum + thisWidth]!
+	idealWidth := remainingWidth / autoCols.
+	"Suppress painting while changing the columns widths as, if there are multiple auto-resize columns, there is no point repainting the intermediate states"
+	self noRedrawDo: 
+			[| actualAccum idealAccum |
+			idealAccum := 0.
+			actualAccum := 0.
+			cols keysAndValuesDo: 
+					[:eachKey :eachValue |
+					eachValue isAutoResize
+						ifTrue: 
+							[| thisWidth |
+							idealAccum := idealAccum + idealWidth.
+							thisWidth := (idealAccum - actualAccum) rounded.
+							eachValue basicWidth: thisWidth.
+							self lvmSetColumnWidth: eachKey - 1 to: thisWidth.
+							actualAccum := actualAccum + thisWidth]]]!
 
 backcolorChanged
 	super backcolorChanged.
@@ -303,16 +310,16 @@ basicItemFromPoint: aPoint
 
 basicRefreshContents
 	| count |
-	self isVirtual 
+	self isVirtual
 		ifTrue: 
 			[count := self size.
 			self
 				basicResetSelection;
 				lvmSetItemCount: count.
-			count > 0 
+			count > 0
 				ifTrue: 
 					["If virtual, then don't need to actually add the items (hooray!!)"
-					self viewMode == #report ifTrue: [self autoResizeColumns]]]
+					self autoResizeColumns]]
 		ifFalse: [self refreshNonVirtual]!
 
 basicRemoveAtIndex: anInteger
@@ -842,14 +849,7 @@ imageFromRow: item
 	where the list does not have images."
 
 	self hasLargeImages ifTrue: [^self getThumbnailOf: item].
-	NTLibrary isWine
-		ifTrue: 
-			["Wine ListViews seem to expect image indices to always be set in
-			ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
-			Normally, we answer nil here if no image is required. In Wine we must answer
-			an image index of 0"
-			getImageBlock ifNil: [^0]].
-	^self getImageBlock isNil ifFalse: [getImageBlock value: item]!
+	^self getImageBlock ifNil: [NoImageIndex] ifNotNil: [:getImage | getImage value: item]!
 
 indentFromRow: item
 	"Private - Answer the number of image widths to indent the row associated with 
@@ -1319,14 +1319,13 @@ lvmSetIconSpacing: aPoint
 
 lvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
-	 Answer the receiver's previous WinImagelist."
+	Answer the handle of the previous image list."
 
-	^WinImageList
-		fromHandle: (UserLibrary default
-				sendMessageU: handle
-				msg: LVM_SETIMAGELIST
-				wParam: anIntegerImageType
-				lParam: aWinImageList asParameter) asParameter!
+	^UserLibrary default
+		sendMessageU: handle
+		msg: LVM_SETIMAGELIST
+		wParam: anIntegerImageType
+		lParam: aWinImageList asParameter!
 
 lvmSetItem: anLvItem
 	"Private - Set some or all of the receivers default attributes as 
@@ -1360,7 +1359,7 @@ lvmSetItem: index state: anLvItem
 			^self errorInCommonControlCall: index]!
 
 lvmSetItemCount: size
-	"Private - Prepare a list view for adding a large number of items."
+	"Private - Prepare a list view for adding a large number of items, or set the number of items in a virtual list."
 
 	self sendMessage: LVM_SETITEMCOUNT wParam: size!
 
@@ -1655,7 +1654,7 @@ onButtonPressed: aMouseEvent
 					["Suppress the mouse down so not received by control"
 					0]].!
 
-onDisplayDetailsRequired: lvitem 
+onDisplayDetailsRequired: lvitem
 	"Private - Get the display info for the receiver's row identified by the <LVITEM>, lvitem."
 
 	"N.B. This is a callback request from the ListView's paint handler so setting an
@@ -1668,38 +1667,39 @@ onDisplayDetailsRequired: lvitem
 	primary column if the application requires that the view be dynamically switchable between
 	#report mode and the other modes."
 
-	| rowObject mask column columnIdx |
+	| rowObject mask column subItem |
 	rowObject := self objectFromHandle: lvitem handle ifAbsent: [UnknownItem].
 	"List sometimes asks for lvitem we no longer have, answer nil to accept default processing"
 	rowObject == UnknownItem ifTrue: [^nil].
-	self isReportMode 
-		ifTrue: 
-			[columnIdx := lvitem iSubItem + 1.
-			column := self columnAtIndex: columnIdx].
+	subItem := lvitem iSubItem.
+	self isReportMode ifTrue: [column := self columnAtIndex: subItem + 1].
 	mask := lvitem mask.
 
 	"Image Request?"
-	(mask allMask: LVIF_IMAGE) 
+	(mask allMask: LVIF_IMAGE)
 		ifTrue: 
 			[| imgIdx |
-			imgIdx := ((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self]) 
+			imgIdx := ((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self])
 						imageFromRow: rowObject.
 			imgIdx notNil ifTrue: [lvitem image: imgIdx - 1]].
 
 	"Text request?"
-	(mask allMask: LVIF_TEXT) 
+	(mask allMask: LVIF_TEXT)
 		ifTrue: 
 			["If in report mode the column's get text block is used unless the request
 			 is for the primary column and its text block is nil, in which case the view
 			 level block is used"
-			lvitem 
-				textInBuffer: (((column notNil and: [columnIdx > 1 or: [column getTextBlock notNil]]) 
+			lvitem
+				textInBuffer: (((column notNil and: [subItem > 0 or: [column getTextBlock notNil]])
 						ifTrue: [column]
 						ifFalse: [self]) textFromRow: rowObject)].
-	(mask allMask: LVIF_INDENT) 
+	(mask allMask: LVIF_INDENT)
 		ifTrue: 
 			["Indenting is only supported for the whole row, not on a per-column basis"
 			lvitem indent: (self indentFromRow: rowObject)].
+	"State image"
+	((mask allMask: LVIF_STATE) and: [self systemDrawsStateImages and: [subItem == 0]])
+		ifTrue: [lvitem stateImageIndex: (self stateIndexFromRow: rowObject)].
 	^0	"suppress default processing"!
 
 onDropDown: aToolbarButton 
@@ -2124,6 +2124,11 @@ stateImageList: aWinImageList
 
 	^self lvmSetImageList: aWinImageList type: LVSIL_STATE!
 
+stateIndexFromRow: anObject
+	"Private -- Answer the index of the state image that is appropriate for the row <Object> argument, or zero if none."
+
+	^0!
+
 subItemRectRow: rowInteger column: colInteger
 	"Answer a <Rectangle> representing the bounds of the sub-item at the specified row and column."
 
@@ -2145,6 +2150,13 @@ subItemRectRow: rowInteger column: colInteger
 						bounding: LVIR_ICON.
 			iconRect right: iconRect right + 4.
 			fullRect subtract: iconRect]!
+
+systemDrawsStateImages
+	"Private -- Answer whether we can let Windows draw our state image (normally we can)"
+
+	"In point of fact, the only case where Window's doesn't get it right is when we are a multi-line EditableListTreeView"
+
+	^true!
 
 text: aString
 	"Sets the title text for the receiver. We also set the primary
@@ -2265,6 +2277,7 @@ viewModeChanged
 		baseStyle: style
 		maskedBy: LVS_TYPEMASK
 		recreateIfChanged: false.
+	self autoResizeColumns.
 	self isVirtual ifTrue: [self invalidate] ifFalse: [self updateAll].
 	self trigger: #viewModeChanged!
 
@@ -2511,7 +2524,9 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #sortOnColumn:!columns!public!sorting! !
 !ListView categoriesFor: #state!accessing!private! !
 !ListView categoriesFor: #stateImageList:!image management!private! !
+!ListView categoriesFor: #stateIndexFromRow:!private! !
 !ListView categoriesFor: #subItemRectRow:column:!geometry!public! !
+!ListView categoriesFor: #systemDrawsStateImages!public!testing! !
 !ListView categoriesFor: #text:!accessing!public! !
 !ListView categoriesFor: #textFromRow:!adapters!private! !
 !ListView categoriesFor: #thumbnailExtent!accessing!public! !
@@ -2568,7 +2583,10 @@ onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after
 	the fact."
 
-	RevertSelMessage := self registerMessage: 'RevertSelection'!
+	RevertSelMessage := self registerMessage: 'RevertSelection'.
+	"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
+	Normally, we use a nil value to indicate that no image is required. In Wine we must use an image index of 0."
+	NoImageIndex := NTLibrary isWine ifTrue: [0]!
 
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,

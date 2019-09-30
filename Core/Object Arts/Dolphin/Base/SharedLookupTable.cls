@@ -127,6 +127,13 @@ at: key ifAbsentPut: exceptionHandler
 
 	^mutex critical: [super at: key ifAbsentPut: exceptionHandler]!
 
+at: key ifAbsentPutValue: valueObject
+	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
+	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
+	at keyObject, and answer valueObject."
+
+	^mutex critical: [super at: key ifAbsentPutValue: valueObject]!
+
 at: key put: newElement
 	"Store the argument, newElement, with the external key, key,
 	in the receiver. Answer newElement."
@@ -253,6 +260,9 @@ printOn: aStream
 
 	mutex critical: [super printOn: aStream]!
 
+removeAllKeys: keys
+	^mutex critical: [super removeAllKeys: keys]!
+
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
 	not in the receiver, answer the result of evaluating the niladic valuable
@@ -290,6 +300,7 @@ stbSaveOn: anSTBOutFiler
 !SharedLookupTable categoriesFor: #asByteArray!converting!public! !
 !SharedLookupTable categoriesFor: #at:ifAbsent:!accessing!public! !
 !SharedLookupTable categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!SharedLookupTable categoriesFor: #at:ifAbsentPutValue:!accessing!public! !
 !SharedLookupTable categoriesFor: #at:put:!accessing!public! !
 !SharedLookupTable categoriesFor: #changeKey:to:!accessing!private! !
 !SharedLookupTable categoriesFor: #do:!enumerating!public! !
@@ -307,6 +318,7 @@ stbSaveOn: anSTBOutFiler
 !SharedLookupTable categoriesFor: #postCopy!copying!public! !
 !SharedLookupTable categoriesFor: #preResize:!adding!public! !
 !SharedLookupTable categoriesFor: #printOn:!printing!public! !
+!SharedLookupTable categoriesFor: #removeAllKeys:!public!removing! !
 !SharedLookupTable categoriesFor: #removeKey:ifAbsent:!accessing!public! !
 !SharedLookupTable categoriesFor: #resize:!mutating!private! !
 !SharedLookupTable categoriesFor: #shrink!operations!public! !

@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
@@ -85,7 +86,7 @@ DolphinTest subclass: #CodeMentorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #DebuggerTest
-	instanceVariableNames: 'process savedShowWalkbacks'
+	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!

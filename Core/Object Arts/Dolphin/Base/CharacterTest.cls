@@ -426,7 +426,13 @@ testPrintString
 
 testSize
 	self assert: $a size equals: 0.
-	self assert: Character dolphin size equals: 0! !
+	self assert: Character dolphin size equals: 0!
+
+testStb
+	| bytes rehydrated |
+	bytes := Character dolphin binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated equals: Character dolphin! !
 !CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
 !CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
 !CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
@@ -449,4 +455,5 @@ testSize
 !CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
 !CharacterTest categoriesFor: #testPrintString!public!unit tests! !
 !CharacterTest categoriesFor: #testSize!public!unit tests! !
+!CharacterTest categoriesFor: #testStb!public!unit tests! !
 

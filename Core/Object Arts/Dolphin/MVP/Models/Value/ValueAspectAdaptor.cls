@@ -74,8 +74,7 @@ hash
 putSelector
 	"Private - Answers the selector used for setting the aspect value into the subject"
 
-	^putSelector
-!
+	^putSelector ifNil: [putSelector := (aspect , ':') asSymbol]!
 
 setValue: anObject
 	"Private - Assigns the value for the receiver without notifying 
@@ -89,8 +88,7 @@ subject: anObject aspect: aSymbol
 
 	self subject: anObject.
 	aspect := aSymbol.
-	getSelector := aspect.
-	putSelector := (aspect , ':') asSymbol!
+	getSelector := aspect!
 
 value
 	"Answers the <Object> value of the receiver, obtained

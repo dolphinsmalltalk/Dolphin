@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #DebuggerTest
-	instanceVariableNames: 'process savedShowWalkbacks'
+	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -13,14 +13,19 @@ DebuggerTest comment: ''!
 setUp
 	CompiledCode initializeInfoCache.
 	savedShowWalkbacks := Debugger showWalkbacks.
-	Debugger showWalkbacks: false!
+	savedView := Debugger defaultView.
+	Debugger
+		showWalkbacks: false;
+		defaultView: 'Basic debugger'!
 
 tearDown
-	process isNil 
+	process isNil
 		ifFalse: 
 			[process terminate.
 			process := nil].
-	Debugger showWalkbacks: savedShowWalkbacks!
+	Debugger
+		showWalkbacks: savedShowWalkbacks;
+		defaultView: savedView!
 
 testNoShowWalkbacks
 	| start |
