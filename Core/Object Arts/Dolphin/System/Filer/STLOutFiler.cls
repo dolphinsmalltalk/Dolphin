@@ -30,27 +30,20 @@ resetStream
 		nextPut: self class signature;
 		nextPut: self class version!
 
-tryPutLiteral: anObject
-	"Private - Emit the <Object> argument to the stream in literal form, answering whether or
-	not this was possible."
-
+serializeObject: anObject
 	(anObject isAtomic or: [anObject class == PoolConstantsDictionary])
-		ifTrue: 
-			[stream nextPut: anObject.
-			^true].
-	"Certain other objects with literal representations can also be saved to the stream
-	directly, but need to be registered in case they are shared in the object graph being
-	serialized. Note that with the exception of LargeInteger, these are literal collections of
-	atomic objects (e.g. Strings are collections of Characters)."
-	(anObject isString or: 
-			[anObject class == LargeInteger or: 
-					[anObject class == ByteArray
-						or: [anObject class == Array and: [anObject allSatisfy: [:each | each isAtomic]]]]])
-		ifTrue: 
-			[self putLiteral: anObject.
-			^true].
-	^false
-!
+		ifTrue: [stream nextPut: anObject]
+		ifFalse: 
+			["Certain other objects with literal representations can also be saved to the stream directly, but need to be registered in case they are shared in the object graph being serialized. Note that with the exception of LargeInteger, these are literal collections of atomic objects (e.g. Strings are collections of Characters)."
+			(anObject isString or: 
+					[| class |
+					class := anObject class.
+					class == LargeInteger
+						or: [class == ByteArray or: [class == Array and: [anObject allSatisfy: [:each | each isAtomic]]]]])
+				ifTrue: [self putLiteral: anObject]
+				ifFalse: 
+					["No literal form, need to break it down"
+					anObject stbSaveOn: self]]!
 
 writeClass: aClass withLocator: locatorString 
 	stream nextPut: aClass!
@@ -66,7 +59,7 @@ writeNil
 !STLOutFiler categoriesFor: #putLiteral:!private! !
 !STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
 !STLOutFiler categoriesFor: #resetStream!initializing!private! !
-!STLOutFiler categoriesFor: #tryPutLiteral:!private! !
+!STLOutFiler categoriesFor: #serializeObject:!operations!private! !
 !STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
 !STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
 !STLOutFiler categoriesFor: #writeNil!operations!private! !

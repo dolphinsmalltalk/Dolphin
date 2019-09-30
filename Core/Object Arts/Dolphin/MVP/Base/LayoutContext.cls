@@ -93,7 +93,9 @@ rectangleOf: aView
 	^aView rectangle!
 
 repositionSubViewsOf: aView 
-	"Private - Recursively reposition the sub-views of the argument."
+	"Private - Recursively reposition the sub-views of the argument.
+	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches,
+	rather than accumulating all the positions and then applying one large deferred update."
 
 	| pairs |
 	pairs := OrderedCollection new.

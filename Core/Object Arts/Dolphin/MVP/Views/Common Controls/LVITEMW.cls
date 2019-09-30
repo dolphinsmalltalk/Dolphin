@@ -281,7 +281,9 @@ textPointerOffset
 !LVITEMW class methodsFor!
 
 allCallbacks
-	^self fromBytes: CallbackPrototype!
+	^self basicNew
+		bytes: CallbackPrototype shallowCopy;
+		yourself!
 
 defineFields
 	"Define the fields of the LVITEMW structure.

@@ -65,7 +65,7 @@ addBitmap: aBitmap index: anIntegerIndex
 					be a blank image in the list. This won't damage the bitmap in any way because the canvas
 			`		can always be lazily recreated."
 					gdiBitmap freeDC.
-					self tbAddBitmap: (TBADDBITMAP new
+					self tbAddBitmap: (TBADDBITMAP newBuffer
 								nID: gdiBitmap asParameter;
 								yourself)
 						size: size].
@@ -577,6 +577,7 @@ onViewCreated
 	Finish the job and install the known ToolbarItems"
 
 	super onViewCreated.
+	self tbButtonStructSize: TBBUTTON byteSize.
 	bitmapsStart := LookupTable new.
 	self changeButtonSize: [self tbSetBitmapSize: self actualBitmapSize].
 	#todo.	"Store extended style in an inst. var (appear to be some unused?) and provide accessors/mode settings"
@@ -660,6 +661,12 @@ tbButtonCount
 	"Private - Answer number of buttons in the toolbar."
 
 	^self sendMessage: TB_BUTTONCOUNT!
+
+tbButtonStructSize: anInteger
+	^self
+		sendMessage: TB_BUTTONSTRUCTSIZE
+		wParam: anInteger
+		lParam: 0!
 
 tbCheckButton: anIntegerId state: checkBoolean
 	"Private - Set whether the button with anIntegerId is checked or not.
@@ -1123,6 +1130,7 @@ wmNotify: message wParam: wParam lParam: lParam
 !Toolbar categoriesFor: #tbAddString:!adding!private! !
 !Toolbar categoriesFor: #tbAutoSize!operations!private! !
 !Toolbar categoriesFor: #tbButtonCount!geometry!private! !
+!Toolbar categoriesFor: #tbButtonStructSize:!helpers!private! !
 !Toolbar categoriesFor: #tbCheckButton:state:!operations!private! !
 !Toolbar categoriesFor: #tbCustomize!operations!private! !
 !Toolbar categoriesFor: #tbDeleteButton:!helpers!private! !

@@ -26,7 +26,7 @@ server
 	may implement interfaces on behalf of other objects in order that any particular
 	server object can support any number of interfaces with different implementors."
 
-	^server ifNil: [self]!
+	^server ?? self!
 
 server: anObject
 	"Set the server object on behalf of which the receiver is implementing an

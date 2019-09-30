@@ -256,9 +256,8 @@ drawMenuBar
 	^UserLibrary default drawMenuBar: self asParameter!
 
 ensureSubViewVisible: aSubView 
-	self parentView == View desktop ifTrue: [super ensureSubViewVisible: aSubView]
-
-	"If the shell is not a direct child of the desktop, then terminate the recursion so that where shells are embedded in a card container (e.g. in the Idea Space) they don't cause the tab to change just because a sub-tab inside the shell has changed to make a sub-card visible."
+	"Terminate the recursion as making a sub-view visible should not change the z-order of the Windows on the desktop (or indeed in an idea space).
+	Sending #ensureVisible to a ShellView that is a direct child of the desktop will bring it to the top of the z-order, however sending #ensureVisible to one of its direct or indirect children will not."
 	!
 
 exit
@@ -1433,7 +1432,10 @@ stbConvertFromVersion9: anArray
 			to: newSize
 			with: array
 			startingAt: 25;
-		yourself! !
+		yourself!
+
+themePartName
+	^'WINDOW'! !
 !ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
 !ShellView class categoriesFor: #createHookBlock!accessing!private!realizing/unrealizing! !
 !ShellView class categoriesFor: #createHookBlock:!accessing!private!realizing/unrealizing! !
@@ -1446,4 +1448,5 @@ stbConvertFromVersion9: anArray
 !ShellView class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
 !ShellView class categoriesFor: #stbConvertFromVersion8:!binary filing!private! !
 !ShellView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!ShellView class categoriesFor: #themePartName!constants!public!theming! !
 

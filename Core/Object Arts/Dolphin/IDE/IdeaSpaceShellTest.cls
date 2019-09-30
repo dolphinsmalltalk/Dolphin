@@ -20,9 +20,9 @@ createThreeCards
 	| tools |
 	tools := Array new: 3.
 	ideaShell view noRedrawDo: 
-			[tools at: 1 put: self newWorkspaceCard.
-			tools at: 2 put: self newWorkspaceCard.
-			tools at: 3 put: self newWorkspaceCard].
+			[tools at: 1 put: self newInspectorShellCard.
+			tools at: 2 put: self newInspectorShellCard.
+			tools at: 3 put: self newInspectorShellCard].
 	self assert: ideaShell cards size equals: 3.
 	tools do: 
 			[:each |
@@ -35,6 +35,9 @@ newClassBrowserCard
 
 newEnvironmentBrowserCard
 	^ideaShell newEmbeddedCardOfClass: EnvironmentBrowserShell!
+
+newInspectorShellCard
+	^ideaShell newEmbeddedCardOfClass: InspectorShell!
 
 newSystemBrowserCard
 	^ideaShell newEmbeddedCardOfClass: SystemBrowserShell!
@@ -71,30 +74,30 @@ tearDown
 	super tearDown!
 
 testAbsorbCard
-	| vc tool2 vcToolbar cardLayout |
+	| tool1 tool2 vcToolbar cardLayout |
 	SmalltalkSystemShell default setFocus.
-	vc := ViewComposer show.
+	tool1 := InspectorShell show.
 	self assert: ideaShell cards isEmpty.
 
 	"Find the original VC toolbar"
-	vcToolbar := vc view viewNamed: 'toolbar'.
+	vcToolbar := tool1 view viewNamed: 'toolbar'.
 	self assert: vcToolbar isOpen.
 
 	"Absorb the VC into the IdeaSpace"
-	ideaShell absorbCard: vc.
+	ideaShell absorbCard: tool1.
 	self assert: ideaShell cards size equals: 1.
 
 	"Check view and presenter hierarchy"
-	self assert: vc view parentView identicalTo: ideaShell cardsPresenter view.
-	self assert: vc parentPresenter identicalTo: ideaShell cardsPresenter.
-	self assert: (ideaShell cardsPresenter subPresenters includes: vc).
-	self assert: (ideaShell cardsPresenter view subViews includes: vc view).
+	self assert: tool1 view parentView identicalTo: ideaShell cardsPresenter view.
+	self assert: tool1 parentPresenter identicalTo: ideaShell cardsPresenter.
+	self assert: (ideaShell cardsPresenter subPresenters includes: tool1).
+	self assert: (ideaShell cardsPresenter view subViews includes: tool1 view).
 	cardLayout := ideaShell cardsPresenter view layoutManager.
-	self assert: (cardLayout cards includes: vc view).
-	self assert: (cardLayout cardViews includes: vc view).
+	self assert: (cardLayout cards includes: tool1 view).
+	self assert: (cardLayout cardViews includes: tool1 view).
 
 	"Original menu bar should have gone, IdeaSpace should now show this"
-	self assert: ideaShell view menuBar identicalTo: vc view menuBar.
+	self assert: ideaShell view menuBar identicalTo: tool1 view menuBar.
 
 	"Add another card and make sure it goes at the right place"
 	SmalltalkSystemShell default setFocus.
@@ -104,17 +107,17 @@ testAbsorbCard
 	self assert: ideaShell isCurrentCardLast!
 
 testAbsorbedCardRemoval
-	| vc |
+	| tool |
 	SmalltalkSystemShell default setFocus.
-	vc := ViewComposer show.
+	tool := InspectorShell show.
 	self assert: ideaShell cards isEmpty.
 
 	"Absorb the VC into the IdeaSpace"
-	ideaShell absorbCard: vc.
+	ideaShell absorbCard: tool.
 	self assert: ideaShell cards size equals: 1.
 
 	"Test card removal"
-	ideaShell removeCard: vc.
+	ideaShell removeCard: tool.
 	self assert: ideaShell cards isEmpty!
 
 testBreakoutCard
@@ -332,6 +335,7 @@ testSaveRestoreErrors
 !IdeaSpaceShellTest categoriesFor: #createThreeCards!helpers!private! !
 !IdeaSpaceShellTest categoriesFor: #newClassBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newEnvironmentBrowserCard!private!unit tests! !
+!IdeaSpaceShellTest categoriesFor: #newInspectorShellCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newSystemBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newViewBrowserCard!private!unit tests! !
 !IdeaSpaceShellTest categoriesFor: #newViewComposerCard!private!unit tests! !

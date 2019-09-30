@@ -142,8 +142,9 @@ setSubject: anObject aspectDescriptor: anAspectDescriptor
 	"Private - Sets the subject object and its aspect that is being interfaced
 	to by the receiver"
 
-	self subject: anObject.
-	self aspectDescriptor: anAspectDescriptor!
+	self initialize.
+	subject := anObject.
+	aspectDescriptor := anAspectDescriptor!
 
 setValue: anObject
 	"Private - Assigns the value for the receiver without notifying 
@@ -251,7 +252,7 @@ subject: anObject aspect: anAspect
 	"Answers an instance of the receiver that is an interface onto
 	aAspect of anObject"
 
-	^(super new)
+	^self basicNew
 		setSubject: anObject aspectDescriptor: anAspect;
 		yourself! !
 !AspectAccessor class categoriesFor: #new!instance creation!private! !

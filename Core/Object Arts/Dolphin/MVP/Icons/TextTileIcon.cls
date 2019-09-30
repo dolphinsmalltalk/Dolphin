@@ -45,7 +45,7 @@ actualFontName
 	^fontName ifNil: [self defaultFontName]!
 
 actualFontStyle
-	^fontStyle ifNil: [FontStyleRegular]!
+	^fontStyle ?? FontStyleRegular!
 
 actualTextcolor
 	"Private - Answer the colour used to draw the text. If unspecified this will default to either black

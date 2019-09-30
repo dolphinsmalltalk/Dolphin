@@ -81,9 +81,7 @@ printOn: target
 		nextPut: $)!
 
 scintillaKeyCode
-	| codes |
-	codes := AcceleratorTable splitKeyCode: self acceleratorKey.
-	^(self translateVirtualKey: codes first) + ((codes last bitAnd: 16r1C) << 14)!
+	^(self translateVirtualKey: acceleratorKey) + ((acceleratorKey bitAnd: 16r3800) bitShift: 5)!
 
 translateVirtualKey: vkInteger 
 	"Private - Translate from a Windows Virtual Key code (VK_xxx) to the corresponding Scintilla

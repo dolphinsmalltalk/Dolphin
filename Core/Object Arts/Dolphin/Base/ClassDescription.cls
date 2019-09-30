@@ -688,7 +688,7 @@ resources
 
 resourceSelectorsDo: aMonadicValuable
 	| prefix |
-	prefix := ResourceIdentifier selectorPrefix.
+	prefix := ResourceIdentifier.SelectorPrefix.
 	self instanceClass class
 		selectorsDo: [:each | (each beginsWith: prefix) ifTrue: [aMonadicValuable value: each]]!
 

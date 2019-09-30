@@ -73,7 +73,11 @@ asParameter
 	"Answer the receiver in a form suitable for passing to an external function, in this case as
 	a Win32 RECT structure."
 
-	^RECT fromRectangle: self!
+	^RECT
+		left: origin x
+		top: origin y
+		right: corner x
+		bottom: corner y!
 
 bottom
 	"Answer the y coordinate of the receiver's bottom edge."

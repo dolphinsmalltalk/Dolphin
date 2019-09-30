@@ -81,10 +81,11 @@ tearDown
 	vc := nil!
 
 testBasicEdit
-	| sampleResourceIdentifier |
-	"Test open something reasonably complex"
-	self openTestSubjectOn: (ResourceIdentifier class: MethodBrowserShell).
-	self assert: vc caption equals: 'MethodBrowserShell.Default view(ShellView)'.
+	| sampleResourceIdentifier rid |
+	"Test open a default view that is reasonably complex"
+	rid := ResourceIdentifier class: ViewComposer.
+	self openTestSubjectOn: rid.
+	self assert: vc caption equals: rid displayString, '(ShellView)'.
 	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	"Test saving"
@@ -101,8 +102,7 @@ testBasicEdit
 	"Test we can reload what we saved"
 	vc openOn: sampleResourceIdentifier.
 	self assert: vc composingView class identicalTo: ShellView.
-	self assert: vc primarySelection equals: vc composingView.
-	vc viewCloseNoPrompt!
+	self assert: vc primarySelection equals: vc composingView!
 
 testCutCopyPaste
 	| shell container button |
@@ -238,20 +238,20 @@ testPasteToArena
 	vc viewCloseNoPrompt!
 
 testWidenSelection
-	| chb classTree |
-	self openTestSubjectOn: (ResourceIdentifier class: ClassBrowserShell name: 'Default view').
-	chb := vc composingView.
-	classTree := chb viewNamed: 'classes'.
-	vc selection: classTree.
-	self assert: vc primarySelection identicalTo: classTree.
+	| shell browser |
+	self openTestSubjectOn: (ResourceIdentifier class: MethodHistoryBrowser name: 'Default view').
+	shell := vc composingView.
+	browser := shell viewNamed: 'slider'.
+	vc selection: browser.
+	self assert: vc primarySelection identicalTo: browser.
 	vc widenSelection.
-	self assert: vc primarySelection identicalTo: classTree parentView.
+	self assert: vc primarySelection identicalTo: browser parentView.
 	vc widenSelection.
-	self assert: vc primarySelection identicalTo: classTree parentView parentView.
+	self assert: vc primarySelection identicalTo: browser parentView parentView.
 	vc widenSelection.
-	self assert: vc primarySelection identicalTo: chb.
+	self assert: vc primarySelection identicalTo: shell.
 	vc widenSelection.
-	self assert: vc primarySelection identicalTo: chb!
+	self assert: vc primarySelection identicalTo: shell!
 
 testZOrderPreservedByMutate
 	| shell |

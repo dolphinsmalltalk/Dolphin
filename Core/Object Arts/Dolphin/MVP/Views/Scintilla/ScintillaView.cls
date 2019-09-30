@@ -132,12 +132,12 @@ activeHotspotBackcolor
 						wParam: 0
 						lParam: 0)]!
 
-activeHotspotBackcolor: aColorOrNil 
+activeHotspotBackcolor: aColorOrNil
 	"Set the back colour for active hotspots."
 
-	aColorOrNil 
+	aColorOrNil
 		ifNil: [self sciSetHotspotActiveBack: false back: 0]
-		ifNotNil: [self sciSetHotspotActiveBack: true back: aColorOrNil asRGB]!
+		ifNotNil: [self sciSetHotspotActiveBack: true back: aColorOrNil]!
 
 activeHotspotForecolor
 	"Get the fore colour for active hotspots."
@@ -151,12 +151,12 @@ activeHotspotForecolor
 						wParam: 0
 						lParam: 0)]!
 
-activeHotspotForecolor: aColorOrNil 
+activeHotspotForecolor: aColorOrNil
 	"Set the foreground colour for active hotspots."
 
-	aColorOrNil 
+	aColorOrNil
 		ifNil: [self sciSetHotspotActiveFore: false fore: 0]
-		ifNotNil: [self sciSetHotspotActiveFore: true fore: aColorOrNil asRGB]!
+		ifNotNil: [self sciSetHotspotActiveFore: true fore: aColorOrNil]!
 
 addAnnotation: aScintillaAnnotation 
 	"Append the specified <ScintillaAnnotation> to the current annotations (if any) for the line
@@ -657,6 +657,9 @@ basicClearSelection
 				wParam: 0
 				lParam: 0]!
 
+basicKeyBindings
+	^keyBindings ifNil: [self defaultKeyBindings]!
+
 basicLineFromPosition: posInteger
 	"Private - Retrieve the line containing a position."
 
@@ -898,7 +901,7 @@ callTipBackcolor: aColorOrNil
 
 	| color |
 	color := aColorOrNil ifNil: [Color white].
-	self sciCallTipSetBack: color asRGB.
+	self sciCallTipSetBack: color.
 	self callTipStyle backcolor: color!
 
 callTipForecolor
@@ -913,7 +916,7 @@ callTipForecolor: aColorOrNil
 
 	| color |
 	color := aColorOrNil ifNil: [Color gray].
-	self sciCallTipSetFore: color asRGB.
+	self sciCallTipSetFore: color.
 	self callTipStyle backcolor: color!
 
 callTipHighlightColor
@@ -1096,10 +1099,10 @@ caretForecolor
 						wParam: 0
 						lParam: 0)]!
 
-caretForecolor: foreRGB 
+caretForecolor: foreRGB
 	"Set the foreground colour of the caret."
 
-	self sciSetCaretFore: (foreRGB ifNil: [Color black]) asRGB!
+	self sciSetCaretFore: (foreRGB ifNil: [Color black])!
 
 caretPeriod
 	"Get the time in milliseconds that the caret is on and off."
@@ -1257,13 +1260,14 @@ clearTabStops: lineInteger
 codePage
 	"Answer a <Symbol> naming the code page currently in use. Note that the multi-byte code
 	pages supported by Scintilla such as 932, or 936, will not work correctly in Dolphin as
-	there is basic support for multi-byte strings other than in UTF representations. Where
+	there is no basic support for multi-byte strings other than in UTF representations. Where
 	international character support is desired, the UTF-8 mode should be used."
 
 	^CodePages lookup: codePage!
 
 codePage: aSymbol
-	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8, #ansi)."
+	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8, #ansi).
+	It is recommended not to change this from the default value, #utf8. #ansi mode will not work correctly for multi-byte code pages such as Shift-JIS (932)."
 
 	codePage := aSymbol ifNil: [CP_ACP] ifNotNil: [CodePages keyAtValue: aSymbol].
 	self sciSetCodePage: codePage!
@@ -1446,7 +1450,7 @@ currentLineBackcolor: backRGB
 	#currentLineAlpha to some reasonable transparency value (100 or less), or the background
 	will obliterate the text."
 
-	self sciSetCaretLineBack: (backRGB ifNil: [Color yellow]) asRGB!
+	self sciSetCaretLineBack: (backRGB ifNil: [Color yellow])!
 
 currentLineFrameWidth
 	"Retrieve the caret line frame width. Width = 0 means this option is disabled."
@@ -1819,7 +1823,7 @@ edgeColor
 edgeColor: aColorOrNil
 	"Set the edge colour used to highlight long lines (those longer than the #edgeColumn setting)."
 
-	self sciSetEdgeColour: (aColorOrNil ifNil: [Color fromRgbCode: 16rC0C0C0]) asRGB!
+	self sciSetEdgeColour: (aColorOrNil ifNil: [Color fromRgbCode: 16rC0C0C0])!
 
 edgeColumn
 	"Retrieve the column number which text should be kept within."
@@ -3960,21 +3964,17 @@ joinTarget
 keyBindings
 	"Answer the collection of key bindings currently assigned in the receiver."
 
-	^(keyBindings ifNil: [self defaultKeyBindings]) 
-		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]
-	" asArray"!
+	^self basicKeyBindings asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
 
-keyBindings: aCollectionOfScintillaKeyBindings 
-	keyBindings := nil.
-	aCollectionOfScintillaKeyBindings 
+keyBindings: aCollectionOfScintillaKeyBindings
+	aCollectionOfScintillaKeyBindings
+		ifNil: [keyBindings ifNotNil: [self resetKeyBindings]]
 		ifNotNil: 
 			[| set |
 			set := aCollectionOfScintillaKeyBindings asSet.
-			(set noDifference: DefaultKeyBindings values) 
-				ifFalse: 
-					[keyBindings := LookupTable new.
-					set do: [:each | keyBindings at: each acceleratorKey put: each]]].
-	self updateKeyBindings!
+			(set noDifference: DefaultKeyBindings values)
+				ifTrue: [keyBindings ifNotNil: [self resetKeyBindings]]
+				ifFalse: [self setKeyBindings: set]]!
 
 keyboardCommands
 	^self keyBindings collect: 
@@ -5294,6 +5294,12 @@ replaceTarget: aString
 
 requiredLineMarginWidth
 	^self widthOfText: '_' , (self lineCount max: 999) displayString inStyle: #lineNumber!
+
+resetKeyBindings
+	"Reset to the default Scintilla key bindings"
+	
+	keyBindings := nil.
+	self updateKeyBindings!
 
 resetMarkers
 	markers do: [:each | each removedFromView].
@@ -9517,11 +9523,10 @@ secondaryCaretForecolor
 secondaryCaretForecolor: foreRGB
 	"Set the foreground colour of the secondary carets."
 
-	self
-		sciSetAdditionalCaretFore: (foreRGB
+	self sciSetAdditionalCaretFore: (foreRGB
 				ifNil: 
 					["Use default hardcoded in Scintilla"
-					Color fromRgbCode: 16r7F7F7F]) asRGB!
+					Color fromRgbCode: 16r7F7F7F])!
 
 secondarySelectionAlpha
 	"Get the alpha of the selection."
@@ -9799,11 +9804,10 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lpParam
 				lpParam: lpParam yourAddress]!
 
 setCallTipHighlightColor
-	self
-		sciCallTipSetForeHlt: (callTipHighlightColor
+	self sciCallTipSetForeHlt: (callTipHighlightColor
 				ifNil: 
 					["Set to default hardcoded in the control"
-					Color navy]) asRGB!
+					Color navy])!
 
 setCallTipTabWidth
 	self sciCallTipUseStyle: callTipTabWidth!
@@ -9855,14 +9859,14 @@ setFoldFlags
 	self sciSetFoldFlags: foldFlags!
 
 setFoldMarginColor
-	foldMarginColor 
+	foldMarginColor
 		ifNil: [self sciSetFoldMarginColour: false back: nil]
-		ifNotNil: [self sciSetFoldMarginColour: true back: foldMarginColor asRGB]!
+		ifNotNil: [self sciSetFoldMarginColour: true back: foldMarginColor]!
 
 setFoldMarginHiColor
-	foldMarginHiColor 
+	foldMarginHiColor
 		ifNil: [self sciSetFoldMarginHiColour: false fore: nil]
-		ifNotNil: [self sciSetFoldMarginHiColour: true fore: foldMarginHiColor asRGB]!
+		ifNotNil: [self sciSetFoldMarginHiColour: true fore: foldMarginHiColor]!
 
 setFoldProperty: aBoolean
 	self isOpen
@@ -9917,6 +9921,11 @@ setIndicatorStyles: aCollection
 			newStylesByName at: each name put: each].
 	indicatorStyles := newStylesByName.
 	self updateIndicatorStyles!
+
+setKeyBindings: aCollectionOfScintillaKeyBindings
+	keyBindings := LookupTable new: aCollectionOfScintillaKeyBindings size.
+	aCollectionOfScintillaKeyBindings do: [:each | keyBindings at: each acceleratorKey put: each].
+	^self updateKeyBindings!
 
 setLexerLanguage: aSymbol
 	aSymbol == #container
@@ -9975,39 +9984,35 @@ setReadOnly: readOnlyBoolean
 				lParam: 0]!
 
 setSecondarySelectionBackcolor
-	self
-		sciSetAdditionalSelBack: (secondarySelectionBackcolor
+	self sciSetAdditionalSelBack: (secondarySelectionBackcolor
 				ifNil: 
 					["Default to same as primary selection backcolor"
 					selectionBackcolor
 						ifNil: 
 							["And if even that is not specified, use the hardcoded default in Scintilla"
-							Color fromRgbCode: 16rD7D7D7]])
-					asRGB!
+							Color fromRgbCode: 16rD7D7D7]])!
 
 setSecondarySelectionForecolor
-	self
-		sciSetAdditionalSelFore: (secondarySelectionForecolor
+	self sciSetAdditionalSelFore: (secondarySelectionForecolor
 				ifNil: 
 					["Default to primary selection forecolor"
 					selectionForecolor
 						ifNil: 
 							["And if even that is not specified use the hardcoded default in the control"
-							Color red]])
-					asRGB!
+							Color red]])!
 
 setSelectionBackcolor
-	selectionBackcolor 
+	selectionBackcolor
 		ifNil: [self sciSetSelBack: false back: nil]
 		ifNotNil: 
-			[self sciSetSelBack: true back: selectionBackcolor asRGB.
+			[self sciSetSelBack: true back: selectionBackcolor.
 			self setSecondarySelectionBackcolor]!
 
 setSelectionForecolor
 	selectionForecolor 
 		ifNil: [self sciSetSelFore: false fore: nil]
 		ifNotNil: 
-			[self sciSetSelFore: true fore: selectionForecolor asRGB.
+			[self sciSetSelFore: true fore: selectionForecolor.
 			self setSecondarySelectionForecolor]!
 
 setTabStops: anInteger 
@@ -10031,12 +10036,12 @@ setText: aString
 
 	| text |
 	text := self stringClass coerceString: aString.
-	"We use SCI_APPENDTEXT because SCI_SETTEXT assumes the string is null terminated and will
-	therefore stop on the first of any embedded nulls."
+	"We don't use SCI_SETTEXT because it assumes that the string is null terminated and will therefore stop on the first of any embedded nulls.
+	Of other text insertion options, SCI_REPLACETARGET is preferable because it avoids the need to first clear the document, and therefore we only get one modification event."
 	self
 		cancelModes;
-		clearAll;
-		sciAppendText: text size text: text.
+		targetAll;
+		sciReplaceTarget: text size text: text.
 	"Setting the text removes all current markers - we still tell Scintilla to delete them
 	though, since it seems that setting empty text may not remove any markers on line 0."
 	self
@@ -10047,14 +10052,14 @@ setText: aString
 	indicators := nil!
 
 setWhitespaceBackcolor
-	whitespaceBackcolor 
+	whitespaceBackcolor
 		ifNil: [self sciSetWhitespaceBack: false back: nil]
-		ifNotNil: [self sciSetWhitespaceBack: true back: whitespaceBackcolor asRGB]!
+		ifNotNil: [self sciSetWhitespaceBack: true back: whitespaceBackcolor]!
 
 setWhitespaceForecolor
-	whitespaceForecolor 
+	whitespaceForecolor
 		ifNil: [self sciSetWhitespaceFore: false fore: nil]
-		ifNotNil: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
+		ifNotNil: [self sciSetWhitespaceFore: true fore: whitespaceForecolor]!
 
 showAutoCompletionList: aCollection prefixLength: anInteger
 	"Display a auto-completion list built from the displayStrings of the elements of the
@@ -10663,7 +10668,7 @@ updateKeyBindings
 	its default command key assignments."
 
 	self sciClearAllCmdKeys.
-	self keyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]!
+	self basicKeyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]!
 
 updateMarkers
 	self deleteMarkers: 0.
@@ -10680,7 +10685,8 @@ updateTextStyles
 	"Because we have reset all styles, we need only send across non-default properties to the control."
 	currentTextStyles do: [:each | each applyToView: self initializing: true].
 	self annotationStylesOffset: AnnotationStylesOffset.
-	self annotationStyles do: [:each | each applyToView: self initializing: true]!
+	self ensureHasAnnotationStyles.
+	annotationStyles do: [:each | each applyToView: self initializing: true]!
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
@@ -11075,6 +11081,7 @@ zoomOut
 !ScintillaView categoriesFor: #basicAnnotateLine:withText:inStyles:!annotations!helpers!private! !
 !ScintillaView categoriesFor: #basicClearContainerIndicators!indicators!private! !
 !ScintillaView categoriesFor: #basicClearSelection!**auto generated**!private!scintilla interface!selection! !
+!ScintillaView categoriesFor: #basicKeyBindings!key bindings!public! !
 !ScintillaView categoriesFor: #basicLineFromPosition:!accessing!private! !
 !ScintillaView categoriesFor: #basicPositionAtLine:!accessing!private! !
 !ScintillaView categoriesFor: #basicRemoveAllAnnotations!**auto generated**!annotations!private!removing!scintilla interface! !
@@ -11529,6 +11536,7 @@ zoomOut
 !ScintillaView categoriesFor: #removeStylingFrom:to:!public!styling! !
 !ScintillaView categoriesFor: #replaceTarget:!public!searching & replacing! !
 !ScintillaView categoriesFor: #requiredLineMarginWidth!enquiries!helpers!margins!private! !
+!ScintillaView categoriesFor: #resetKeyBindings!helpers!key bindings!private! !
 !ScintillaView categoriesFor: #resetMarkers!helpers!markers!private! !
 !ScintillaView categoriesFor: #resetZoom!commands!public!zooming! !
 !ScintillaView categoriesFor: #restyleAll!public!styling! !
@@ -11910,6 +11918,7 @@ zoomOut
 !ScintillaView categoriesFor: #setIndicator:range:!indicators!public! !
 !ScintillaView categoriesFor: #setIndicators:!indicators!private! !
 !ScintillaView categoriesFor: #setIndicatorStyles:!helpers!private! !
+!ScintillaView categoriesFor: #setKeyBindings:!key bindings!private! !
 !ScintillaView categoriesFor: #setLexerLanguage:!lexer!private! !
 !ScintillaView categoriesFor: #setLine:state:!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #setMarginWidths:!helpers!margins!private! !
@@ -12058,6 +12067,9 @@ defaultCallTipStyle
 		backcolor: Color white;
 		forecolor: Color gray;
 		yourself!
+
+defaultKeyBindings
+	^DefaultKeyBindings!
 
 defaultKeyMap
 	"Private - This key map is built (using editor macros) from the source code of the Scintilla control.
@@ -12738,6 +12750,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #caretStyles!constants!public! !
 !ScintillaView class categoriesFor: #defaultAnnotationStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #defaultCallTipStyle!constants!public!style definition! !
+!ScintillaView class categoriesFor: #defaultKeyBindings!constants!private! !
 !ScintillaView class categoriesFor: #defaultKeyMap!constants!private! !
 !ScintillaView class categoriesFor: #defaultTextStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #drawingPhases!constants!private! !

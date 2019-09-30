@@ -53,31 +53,25 @@ buildNewAspectTree
 	| aspectTreeModel rootAccessor value publishedAspects roots |
 	value := self value.
 	publishedAspects := self getAspectsFor: value.
-	self isRootAspectVisible 
+	self isRootAspectVisible
 		ifTrue: 
 			[rootAccessor := (publishedAspects at: #yourself ifAbsent: [Aspect name: #yourself])
 						beMutable;
 						beReadOnly;
-						accessorFor: value]
+						accessorFor: value.
+			roots := {rootAccessor}]
 		ifFalse: 
-			["If the value is nil and we are not showing the root then show nothing"
-			publishedAspects := value 
-						ifNil: [publishedAspects := LookupTable new]
-						ifNotNil: 
-							[:v | 
-							publishedAspects removeKey: #yourself.
-							publishedAspects]].
-	roots := rootAccessor notNil 
-				ifTrue: [Array with: rootAccessor]
-				ifFalse: [self sortAspects: (publishedAspects asArray collect: [:each | each accessorFor: value])].
+			[value
+				ifNil: 
+					["If the value is nil and we are not showing the root then show nothing"
+					roots := #()]
+				ifNotNil: 
+					[publishedAspects removeKey: #yourself.
+					roots := (self sortAspects: publishedAspects) collect: [:each | each accessorFor: value]]].
 	aspectTreeModel := ExpandingTreeModel withRoots: roots.
-	aspectTreeModel getChildrenBlock: (self isSingleLevelOnly 
+	aspectTreeModel getChildrenBlock: (self isSingleLevelOnly
 				ifTrue: [[:each | #()]]
 				ifFalse: [[:each | self getSubAspectAccessorsFor: each]]).
-	"(self sortAspects: publishedAspects) do: 
-			[:each | 
-			each name == #yourself 
-				ifFalse: [aspectTreeModel add: (each accessorFor: value) asChildOf: rootAccessor]]."
 	aspectTreePresenter model: aspectTreeModel.
 	rootAccessor notNil ifTrue: [aspectTreePresenter expand: rootAccessor]!
 
@@ -141,11 +135,12 @@ getSubAspectAccessorsFor: anAspectAccessor
 			do: [:ex | subValue := subject := ex].
 	^(self getSubAspectsFor: subValue) collect: [:each | each accessorFor: subject]!
 
-getSubAspectsFor: anObject 
+getSubAspectsFor: anObject
 	"Private - Answer a <sequencedReadableCollection> of the published aspects of the argument."
 
 	| aspects |
-	aspects := (self getAspectsFor: anObject) reject: [:each | each name == #yourself].
+	aspects := self getAspectsFor: anObject.
+	aspects removeKey: #yourself ifAbsent: [].
 	^self sortAspects: aspects!
 
 initialize

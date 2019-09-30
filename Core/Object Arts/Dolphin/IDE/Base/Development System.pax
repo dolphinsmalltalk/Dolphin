@@ -284,6 +284,7 @@ package methodNames
 	add: #LOGPEN -> #printFieldsOn:limit:;
 	add: #LPVOIDField -> #newAspect:class:;
 	add: #LPVOIDField -> #printAccessorExpressionSuffixOn:;
+	add: #LVITEMW -> #printableFields;
 	add: #Menu -> #edit;
 	add: #Menu -> #painterClass;
 	add: #MenuBar -> #painterClass;
@@ -973,7 +974,7 @@ Presenter subclass: #SmalltalkSearchPresenter
 	classInstanceVariableNames: ''!
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
 Presenter subclass: #TwinLevelInspector
@@ -1147,8 +1148,8 @@ SmalltalkToolShell subclass: #SmalltalkSystemShell
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #ViewComposer
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList isUndoRedoInProgress'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
+	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ClassBrowserAbstract subclass: #ClassBrowserShell
@@ -2692,12 +2693,12 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	| applicableLayoutManagers choices categories |
-	applicableLayoutManagers := Set new.
 	categories := self applicableLayoutManagerCategories.
-	categories do: [:each | applicableLayoutManagers addAll: each classes].
+	applicableLayoutManagers := LayoutManager allSubclasses
+				select: [:each | categories anySatisfy: [:cat | cat includesClass: each]].
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection do: [:each | choices addLast: each name , ' new'].
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect rectangle: #insets) beImmutable;
 		add: (Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
 		add: (Aspect boolean: #clipChildren);
@@ -4030,6 +4031,23 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: #asExternalAddress! !
 !LPVOIDField categoriesFor: #newAspect:class:!adapters!private! !
 !LPVOIDField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+
+!LVITEMW methodsFor!
+
+printableFields
+	| mask fields |
+	false ifTrue: [^super printableFields].
+	mask := self mask.
+	fields := OrderedCollection with: #iItem.
+	self iSubItem == 0 ifFalse: [fields addLast: #iSubItem].
+	#(##(LVIF_TEXT) #text ##(LVIF_IMAGE) #iImage ##(LVIF_INDENT) #iIndent ##(LVIF_PARAM) #lParam)
+		pairsDo: [:flag :symbol | (mask allMask: flag) ifTrue: [fields addLast: symbol]].
+	(mask allMask: LVIF_STATE)
+		ifTrue: [
+			(self stateMask allMask: LVIS_STATEIMAGEMASK) 
+				ifTrue: [fields add: #iStateImage]].
+	^fields! !
+!LVITEMW categoriesFor: #printableFields!printing!private! !
 
 !Menu methodsFor!
 
@@ -5511,7 +5529,6 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ScintillaIndicatorStyle name , ' new')) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
 					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
-		add: (Aspect choice: #codePage from: CodePages values);
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
 		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
@@ -5622,7 +5639,7 @@ alternateInspectorClass
 	^SequenceableCollectionInspector!
 
 newBatchAccessor
-	^AnonymousKeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !SequenceableCollection categoriesFor: #alternateInspectorClass!constants!public! !
 !SequenceableCollection categoriesFor: #newBatchAccessor!public! !
 

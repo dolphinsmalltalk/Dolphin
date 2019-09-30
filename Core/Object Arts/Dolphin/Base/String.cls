@@ -1405,15 +1405,15 @@ fromId: anInteger
 fromId: resourceId in: anExternalLibraryOrHandle
 	"Answer a new String loaded from the resources of the module with handle, anExternalLibraryOrHandle."
 
-	| answer len |
-	answer := Utf16String newFixed: 256.
+	| len pch |
+	pch := ExternalAddress new.
 	(len := UserLibrary default
 				loadString: anExternalLibraryOrHandle asParameter
 				uID: resourceId asResourceId
-				lpBuffer: answer
-				nBufferMax: answer size) isZero
+				lpBuffer: pch basicYourAddress
+				nBufferMax: 0) isZero
 		ifTrue: [UserLibrary default systemError].
-	^answer leftString: len!
+	^Utf16String fromAddress: pch length: len!
 
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the argument, aString."

@@ -332,25 +332,25 @@ viewMode: aSymbol
 
 	tabs viewMode: aSymbol!
 
-wmPrint: message wParam: wParam lParam: lParam 
+wmPrint: message wParam: wParam lParam: lParam
 	"Private - Handle WM_PRINT."
 
 	"Implementation Note: For some reason the DefWindowProc implementation seems to paint the
 	TabView over the top of the current card (even though at the back in the z-order), so we
 	need to take control."
 
-	| result canvas insetRect prev |
+	| result canvas insetRect prev card |
 	self ensureLayoutValid.
-	result := self 
+	result := self
 				defaultWindowProcessing: message
 				wParam: wParam
 				lParam: lParam.
-	self currentCard isNil ifTrue: [^result].
-	(false or: [lParam noMask: PRF_CHILDREN]) ifTrue: [^result].
+	card := self currentCard.
+	(card isNil or: [lParam noMask: PRF_CHILDREN]) ifTrue: [^result].
 	insetRect := self actualInsets: (LayoutContext forContainer: self parentView).
 	canvas := Canvas withNonOwnedDC: wParam.
 	prev := canvas offsetWindowOrigin: (insetRect topLeft + (0 @ 0)) * -1.
-	self currentCard 
+	card
 		sendMessage: message
 		wParam: wParam
 		lParam: lParam.

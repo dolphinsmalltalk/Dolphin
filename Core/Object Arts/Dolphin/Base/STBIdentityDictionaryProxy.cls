@@ -13,12 +13,12 @@ STBIdentityDictionaryProxy comment: ''!
 value
 	"Answer a new IdentityDictionary from the key-value pairs held by the receiver."
 
-	| inst |
-	inst := class new: (array size) / 2.
-	1 to: array size by: 2 do: [:i |
-		inst
-			at:  (array at: i)
-			put: (array at: i + 1)].
+	| inst count |
+	count := array size.
+	inst := class new: count // 2.
+	1 to: count
+		by: 2
+		do: [:i | inst at: (array at: i) put: (array at: i + 1)].
 	^inst! !
 !STBIdentityDictionaryProxy categoriesFor: #value!converting!public! !
 

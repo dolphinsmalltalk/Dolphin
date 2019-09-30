@@ -25,7 +25,7 @@ forwardTo: anObject withArguments: triggerArguments
 	of arguments is greater than that required, then the arguments supplied at trigger time take precedence."
 
 	^anObject perform: selector
-		withArguments: (expectedArgCount = triggerArguments basicSize 
+		withArguments: (expectedArgCount == triggerArguments basicSize 
 				ifTrue: [triggerArguments]
 				ifFalse: [self mergeArguments: triggerArguments])!
 
@@ -67,7 +67,6 @@ setSelector: aSymbol arguments: argArray
 
 	selector := aSymbol.
 	expectedArgCount := aSymbol argumentCount.
-	self assert: [argArray size <= expectedArgCount].
 	args := argArray!
 
 value

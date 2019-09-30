@@ -25,10 +25,10 @@ createHandle
 	^self getStockObject: id!
 
 id: anInteger
-	"Private - Set receiver's stock brush id to anInteger and obtain the handle."
+	"Private - Set receiver's stock brush id to anInteger."
 
 	id := anInteger.
-	self basicRealize!
+	ownsHandle := false!
 
 name
 	"Answer the symbolic name of this stock brush."
@@ -61,8 +61,7 @@ printOn: aPuttableStream
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock brush id anInteger."
 
-	^super new
-		ownsHandle: false;
+	^self basicNew
 		id: anInteger;
 		yourself!
 

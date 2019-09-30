@@ -44,7 +44,7 @@ refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument."
 
 	self = anObject ifTrue: [^true].
-	1 to: self size do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
+	1 to: self size do: [:i | ((self basicAt: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger

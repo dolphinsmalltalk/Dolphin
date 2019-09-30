@@ -181,15 +181,6 @@ type: anInteger
 		fType: anInteger;
 		fMask: MIIM_FTYPE!
 
-type: flagsInteger text: aString id: idInteger
-	"Private - Set insertion details for a normal menu item (i.e. the text, type flags, and id)."
-
-	self
-		fType: flagsInteger;
-		basicText: aString;
-		wID: idInteger;
-		fMask: ##(MIIM_FTYPE | MIIM_STRING | MIIM_ID)!
-
 wID
 	"Answer the <Integer> value of the receiver's 'wID' field."
 
@@ -221,7 +212,6 @@ wID: anInteger
 !MENUITEMINFOW categoriesFor: #setImage:!helpers!private! !
 !MENUITEMINFOW categoriesFor: #subMenu:text:!accessing!private! !
 !MENUITEMINFOW categoriesFor: #type:!accessing!private! !
-!MENUITEMINFOW categoriesFor: #type:text:id:!initializing!public! !
 !MENUITEMINFOW categoriesFor: #wID!**compiled accessors**!public! !
 !MENUITEMINFOW categoriesFor: #wID:!**compiled accessors**!public! !
 

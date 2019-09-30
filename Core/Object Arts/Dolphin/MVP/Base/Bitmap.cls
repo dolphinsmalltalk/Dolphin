@@ -633,20 +633,25 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 	icon instanceHandle: reslib handle.
 	^icon!
 
-fromView: aView 
+fromView: aView
 	"Answer a new bitmap instance of the receiver containing a dump of the current state of the 
 	<View> argument."
 
-	| answer canvas |
-	answer := self displayCompatibleWithExtent: aView extent.
+	^self fromView: aView background: Brush white!
+
+fromView: aView background: aBrush
+	"Answer a new bitmap instance of the receiver containing a dump of the current state of the <View> argument, painted over the top of a bitmap erased with the specified background brush.
+	In most cases Views are opaque and the background pattern will not be visible at all, but for transparent views with any transparency this will show through."
+
+	| answer canvas ext |
+	ext := aView extent.
+	answer := self displayCompatibleWithExtent: ext.
 	canvas := answer canvas.
-	canvas
-		brush: Brush white;
-		erase.
-	aView 
+	canvas fillRectangle: (RECT extent: ext) brush: aBrush.
+	aView
 		sendMessage: WM_PRINT
 		wParam: canvas handle
-		lParam: PRF_CLIENT | PRF_ERASEBKGND | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED.
+		lParam: ##(PRF_CLIENT | PRF_ERASEBKGND | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED).
 	answer freeDC.
 	^answer!
 
@@ -725,6 +730,7 @@ width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bp
 !Bitmap class categoriesFor: #fromId:inFile:!instance creation!public! !
 !Bitmap class categoriesFor: #fromId:inFile:flags:!instance creation!public! !
 !Bitmap class categoriesFor: #fromView:!instance creation!public! !
+!Bitmap class categoriesFor: #fromView:background:!instance creation!public! !
 !Bitmap class categoriesFor: #initialize!development!initializing!private! !
 !Bitmap class categoriesFor: #sharedCopyOf:!instance creation!public! !
 !Bitmap class categoriesFor: #stbConvertFrom:!binary filing!public! !

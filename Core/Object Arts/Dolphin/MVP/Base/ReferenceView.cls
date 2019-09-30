@@ -23,8 +23,7 @@ clearReferee
 
 configureReferee
 	referee
-		position: Point zero;
-		extent: self extent;
+		rectangle: (Point zero extent: self extent);
 		isManaged: false;
 		isTabStop: self isTabStop;
 		isGroupStop: self isGroupStop;

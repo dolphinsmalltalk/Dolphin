@@ -257,7 +257,7 @@ Object subclass: #PropertyManager
 	classInstanceVariableNames: ''!
 Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
-	classVariableNames: ''
+	classVariableNames: 'SelectorPrefix'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SearchPolicy

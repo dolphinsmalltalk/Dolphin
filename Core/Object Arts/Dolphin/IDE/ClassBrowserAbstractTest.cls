@@ -241,8 +241,8 @@ testEvaluationContext
 	self assert: methodsPresenter evaluationContext equals: browserClass.
 	browser actualClass: Behavior.
 	self assert: methodsPresenter evaluationContext identicalTo: Behavior.
-	browser method: (Association compiledMethodAt: #key).
-	self assert: methodsPresenter evaluationContext identicalTo: Association.
+	browser method: (Message compiledMethodAt: #arguments).
+	self assert: methodsPresenter evaluationContext identicalTo: Message.
 	browser actualClass: nil.
 	self assertIsNil: methodsPresenter evaluationContext!
 

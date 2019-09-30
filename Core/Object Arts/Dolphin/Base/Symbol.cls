@@ -23,12 +23,19 @@ Symbol complies with the following ANSI protocols:
 !Symbol methodsFor!
 
 argumentCount
-	"Answer the <integer> number of arguments required by a method with the
-	receiver as its selector."
+	"Answer the <integer> number of arguments required by a method with the receiver as its selector."
 
-	| ch |
-	self basicSize == 0 ifTrue: [^0].
-	^((ch := self at: 1) isLetter or: [ch == $_]) not ifTrue: [1] ifFalse: [self occurrencesOf: $:]!
+	| len ch |
+	len := self basicSize.
+	len == 0 ifTrue: [^0].
+	ch := self at: 1.
+	^(ch isLetter or: [ch == $_])
+		ifTrue: 
+			[self
+				occurrencesOf: $:
+				from: 1
+				to: len]
+		ifFalse: [1]!
 
 asString
 	"Answer a new <String> containing the characters of the receiver."

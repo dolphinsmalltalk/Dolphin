@@ -214,7 +214,7 @@ ellipse: aRectangle
 !
 
 erase
-	"Erase the receiver to the current background colour"
+	"Erase the receiver to the current background colour (not the current brush)."
 
 	self fillRectangle: (RECT 
 				left: 0
