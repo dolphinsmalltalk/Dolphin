@@ -95,6 +95,7 @@ package methodNames
 	add: 'Symbol class' -> #icon;
 	add: 'SystemDictionary class' -> #icon;
 	add: 'Time class' -> #icon;
+	add: 'TIME_ZONE_INFORMATION class' -> #icon;
 	add: 'True class' -> #icon;
 	add: 'UndefinedObject class' -> #icon;
 	add: 'UtfEncodedString class' -> #icon;
@@ -899,6 +900,14 @@ icon
 
 	^##(self) defaultIcon! !
 !Time class categoriesFor: #icon!constants!public! !
+
+!TIME_ZONE_INFORMATION class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!TIME_ZONE_INFORMATION class categoriesFor: #icon!constants!public! !
 
 !True class methodsFor!
 
