@@ -367,6 +367,8 @@ PRESENTER.ICO           ICON                    "Res\\Presenter.ico"
 
 PRINTERCANVAS.ICO       ICON                    "Res\\PrinterCanvas.ico"
 
+PRINTIT.ICO             ICON                    "Res\\PrintIt.ico"
+
 PROCESS.ICO             ICON                    "Res\\PROCESS.ICO"
 
 PROCESSMONITOR.ICO      ICON                    "res\\ProcessMonitor.ico"
@@ -496,6 +498,8 @@ TEXTPRESENTER.ICO       ICON                    "Res\\TextPresenter.ico"
 TIME.ICO                ICON                    "Res\\Time.ico"
 
 TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
+
+TIME_ZONE_INFORMATION.ICO ICON                  "Res\\TimeZone.ico"
 
 DATEANDTIME.ICO         ICON                    "Res\\DateAndTime.ico"
 
