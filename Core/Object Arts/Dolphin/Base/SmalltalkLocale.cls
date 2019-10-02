@@ -99,6 +99,11 @@ displayName
 
 	^'Smalltalk'!
 
+displayOn: aStream
+	"Append a displayable representation of the receiver to aStream."
+
+	aStream nextPutAll: self displayName!
+
 durationFormat
 	"Answer the format <String> used in this Locale (by default) for printing a <Duration>.
 	See superclass method for a description of the available format characters."
@@ -331,6 +336,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #displayDuration:on:!printing!public! !
 !SmalltalkLocale categoriesFor: #displayFloat:on:!printing!public! !
 !SmalltalkLocale categoriesFor: #displayName!displaying!public! !
+!SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
 !SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
 !SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !

@@ -447,8 +447,11 @@ displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
-	#todo. "Should use #displayString (but see #printIt)"
-	^self printIt!
+	self evaluateAndDisplay: 
+			[:obj |
+			| locale |
+			locale := Locale userDefault: Locale smalltalk.
+			[obj displayString] ensure: [Locale userDefault: locale]]!
 
 dragOver: aDragDropSession 
 	"The drag operation described by the <DragDropSession> argument has moved to a new position
@@ -513,6 +516,12 @@ errorModel: aValueModel
 	"Set the receivers errorModel."
 
 	errorModel := aValueModel!
+
+evaluateAndDisplay: aMonadicValuable
+	| result evalRange |
+	evalRange := self selectEvaluationRange.
+	result := self evaluateRange: evalRange ifFail: [^self].
+	self showResult: (aMonadicValuable value: result) at: evalRange stop + 1!
 
 evaluateIt
 	"Evaluate the currently selected text (or the current line if there is no selection) within
@@ -994,10 +1003,7 @@ printIt
 	(i.e. show the printString of) the result at the current insert point (i.e. immediately
 	after the selection)."
 
-	| result evalRange |
-	evalRange := self selectEvaluationRange.
-	result := self evaluateRange: evalRange ifFail: [^self].
-	self showResult: result printString at: evalRange stop + 1!
+	self evaluateAndDisplay: [:obj | obj printString]!
 
 prompt: aString toSaveChanges: aSelectionChangingEvent 
 	self isModified == true 
@@ -1566,6 +1572,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #dropObjectRef:!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #errorModel!accessing!public! !
 !SmalltalkWorkspace categoriesFor: #errorModel:!accessing!public! !
+!SmalltalkWorkspace categoriesFor: #evaluateAndDisplay:!commands!public! !
 !SmalltalkWorkspace categoriesFor: #evaluateIt!commands!public! !
 !SmalltalkWorkspace categoriesFor: #evaluateItIfFail:!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #evaluateItIfFail:debug:!helpers!private! !

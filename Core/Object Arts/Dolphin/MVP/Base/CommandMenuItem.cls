@@ -36,10 +36,10 @@ acceleratorKeyString
 
 	^self commandDescription acceleratorKeyString!
 
-acceleratorKeyString: key
-	"Sets the accelerator key to the <Integer> accelerator key description, key."
+acceleratorKeyString: aString
+	"Sets the accelerator key to the chord determined by parsing the accelerator key <String> argument."
 
-	self commandDescription acceleratorKeyString: key!
+	self commandDescription acceleratorKeyString: aString!
 
 command: aCommandSelectorOrMessage
 	"Sets the command symbol or message held by the receiver"
