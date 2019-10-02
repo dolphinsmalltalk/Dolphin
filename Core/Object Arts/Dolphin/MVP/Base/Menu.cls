@@ -305,6 +305,9 @@ image: anIcon
 imageManager
 	^imageManager ifNil: [Icon imageManager]!
 
+includesCommand: command
+	^(self indexOfCommand: command ifAbsent: []) notNil!
+
 indexOfCommand: target
 	"Private - Answer the index of the first <MenuItem> in the receiver
 	whose command symbol matches the <Command>, target."
@@ -706,6 +709,7 @@ updateItem: indexInteger id: idInteger text: newText
 !Menu categoriesFor: #image!accessing!public! !
 !Menu categoriesFor: #image:!accessing!public! !
 !Menu categoriesFor: #imageManager!accessing!private! !
+!Menu categoriesFor: #includesCommand:!public!testing! !
 !Menu categoriesFor: #indexOfCommand:!accessing!private! !
 !Menu categoriesFor: #indexOfCommand:ifAbsent:!accessing!private! !
 !Menu categoriesFor: #initialize!initializing!private! !

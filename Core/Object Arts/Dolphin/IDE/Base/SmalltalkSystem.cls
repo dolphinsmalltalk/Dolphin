@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
+	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -1746,6 +1746,16 @@ disassembleMethod: aCompiledCode
 
 disassemblyStylerClass
 	^nil!
+
+displayItLocale
+	"Answer the Locale to be used when generating the displayString for the evaluated result in Display-It commands."
+
+	^displayItLocale ifNil: [Locale smalltalk]!
+
+displayItLocale: aLocale
+	"Answer the Locale to be used when generating the displayString for the evaluated result in Display-It commands."
+
+	displayItLocale := aLocale!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -4378,6 +4388,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #deprecatedIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #disassembleMethod:!public! !
 !SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
+!SmalltalkSystem categoriesFor: #displayItLocale!options!public! !
+!SmalltalkSystem categoriesFor: #displayItLocale:!options!public! !
 !SmalltalkSystem categoriesFor: #displayOn:!displaying!public! !
 !SmalltalkSystem categoriesFor: #dolphinNewsgroup!commands!public! !
 !SmalltalkSystem categoriesFor: #dolphinNewsgroupUrl!public! !
@@ -4689,6 +4701,7 @@ publishedAspectsOfInstances
 					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
 					andNil: nil);
 		add: (Aspect choice: #defaultMaxStack from: #(32 64 96 128));
+		add: (Aspect choice: #displayItLocale from: {Locale smalltalk. Locale userDefault. Locale invariant});
 		yourself!
 
 publishedEventsOfInstances

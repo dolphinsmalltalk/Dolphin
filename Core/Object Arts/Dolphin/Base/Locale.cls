@@ -795,7 +795,10 @@ userDefault
 	^UserDefault ifNil: [UserDefault := self lcid: KernelLibrary default getUserDefaultLCID]!
 
 userDefault: aLocale
-	UserDefault := aLocale! !
+	| oldDefault |
+	oldDefault := UserDefault.
+	UserDefault := aLocale.
+	^oldDefault! !
 !Locale class categoriesFor: #default!accessing!public! !
 !Locale class categoriesFor: #getTimeZoneInfo!enquiries!public! !
 !Locale class categoriesFor: #initialize!class initialization!public! !
