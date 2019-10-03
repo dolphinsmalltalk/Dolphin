@@ -11,6 +11,10 @@ package basicPackageVersion: '6.1.1'.
 package basicScriptAt: #postinstall put: 'Package binaryPacLoader: [:package :stream | package loadLegacyPAC: stream]'.
 package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 
+package classNames
+	add: #MethodContext;
+	yourself.
+
 package methodNames
 	add: #Package -> #basicLoadVersion4:filer:;
 	add: #Package -> #errorUnknownFileVersion:;
@@ -44,6 +48,11 @@ package!
 
 "Class Definitions"!
 
+Object variableSubclass: #MethodContext
+	instanceVariableNames: 'frame method receiver'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
