@@ -16,7 +16,6 @@ package classNames
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
 	add: #MEMORY_BASIC_INFORMATION;
-	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
 	add: #SymbolStringSearchPolicy;
@@ -186,11 +185,6 @@ package!
 
 "Class Definitions"!
 
-Object variableSubclass: #MethodContext
-	instanceVariableNames: 'frame method receiver'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ArrayField subclass: #ConformantArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
