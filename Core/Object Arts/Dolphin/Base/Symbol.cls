@@ -33,17 +33,6 @@ argumentCount
 asString
 	"Answer a new <String> containing the characters of the receiver."
 
-	^self asUtf8String!
-
-asSymbol
-	"Answer the <symbol> containing the characters of the receiver
-	(i.e. the receiver, since <symbol>s are unique)."
-
-	^self!
-
-asUtf8String
-	"Answer a <UTF8String> containing the same character as the receiver."
-
 	| len string |
 	len := self size.
 	string := Utf8String new: len.
@@ -53,6 +42,12 @@ asUtf8String
 		to: len
 		startingAt: 1.
 	^string!
+
+asSymbol
+	"Answer the <symbol> containing the characters of the receiver
+	(i.e. the receiver, since <symbol>s are unique)."
+
+	^self!
 
 copyFrom: startInteger to: stopInteger
 	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
@@ -82,7 +77,7 @@ displayString
 	return self (for better performance), we must override back to a suitable
 	implementation for Symbols which does not include the hash prefix."
 
-	^self asUtf8String!
+	^self asString!
 
 forwardTo: anObject
 	"Send the <Object> argument the receiver as a niladic message,
@@ -120,7 +115,7 @@ keywords
 mutableCopy
 	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."
 
-	^self asUtf8String!
+	^self asString!
 
 numArgs
 	^self argumentCount!
@@ -173,7 +168,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
-!Symbol categoriesFor: #asUtf8String!converting!public! !
 !Symbol categoriesFor: #copyFrom:to:!copying!public! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
