@@ -57,24 +57,11 @@ allRoots
 	allRoots isNil ifTrue: [allRoots := Class allRoots].
 	^allRoots!
 
-associationAt: key ifAbsent: exceptionHandler
-	"Answer the association named by the argument, key. If key is not found,
-	answer the result of evaluating the niladic valuable, exceptionHandler."
-
-	^(self basicAt: (self findKeyOrNil: key asSymbol)) ifNil: [exceptionHandler value]!
-
 associationClass
 	"Private - Answer the class of association to be used for holding
 	key-value pairs in the receiver. Must respond to the Association protocol."
 	
 	^VariableBinding!
-
-at: key ifAbsent: exceptionHandler
-	"Answer the value named by the argument, key.  If key is not found,
-	answer the result of evaluating the niladic valuable, exceptionHandler.
-	The keys of pools are Strings."
-
-	^super at: key asSymbol ifAbsent: exceptionHandler!
 
 at: key put: anObject
 	"Store the argument anObject with the external key, aKey,
@@ -82,12 +69,6 @@ at: key put: anObject
 
 	key isEmpty ifTrue: [self error: 'Invalid global name'].
 	^super at: key asSymbol put: anObject!
-
-bindingFor: aString 
-	"Answer the association whose key is equal to the argument in
-	the receiver, or nil if the key is not present. Used by the Compiler."
-
-	^super bindingFor: aString asSymbol!
 
 classAdded: class
 	"Private - The new <Class>, class, has been added to the receiver.
@@ -130,12 +111,6 @@ getEvents
 
 	^events!
 
-includesKey: key
-	"Answer whether the receiver has a key equal to the argument, key.
-	Override superclass to permit symbolic/string keys."
-
-	^super includesKey: key asSymbol!
-
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that can
 	represents its value."
@@ -143,11 +118,6 @@ isAtomic
 	"There can only be one ProcessorScheduler instance."
 
 	^true!
-
-lookup: keyObject
-	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
-
-	^super lookup: keyObject asSymbol!
 
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
@@ -182,17 +152,16 @@ removeKey: key ifAbsent: exceptionHandler
 	removed. Also #unitialize it if it directly implements #uninitialize and
 	is not a class (or alias for a class)."
 
-	| index element globalName |
-	globalName := key asSymbol.
-	index := self findKeyOrNil: globalName.
-	^(element := self basicAt: index) isNil 
+	| index element |
+	index := self findKeyOrNil: key.
+	^(element := self basicAt: index) isNil
 		ifTrue: [exceptionHandler value]
 		ifFalse: 
 			[| global isClass |
 			self removeIndex: index.
 			global := element value.
 			isClass := global class isMeta.
-			(isClass not or: [global name ~~ globalName]) 
+			(isClass not or: [global name ~= key])
 				ifTrue: 
 					[self trigger: #globalRemoved: with: element.
 					"Uninitialize any global which is not a class name alias"
@@ -225,20 +194,15 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
 !SystemDictionary categoriesFor: #allClasses!accessing!public! !
 !SystemDictionary categoriesFor: #allRoots!accessing!public! !
-!SystemDictionary categoriesFor: #associationAt:ifAbsent:!accessing!public! !
 !SystemDictionary categoriesFor: #associationClass!constants!private! !
-!SystemDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !SystemDictionary categoriesFor: #at:put:!accessing!public! !
-!SystemDictionary categoriesFor: #bindingFor:!binding!public! !
 !SystemDictionary categoriesFor: #classAdded:!event handling!private! !
 !SystemDictionary categoriesFor: #classRemoved:!private!removing! !
 !SystemDictionary categoriesFor: #classUpdated:!event handling!private! !
 !SystemDictionary categoriesFor: #clearCachedClasses!accessing!private! !
 !SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
 !SystemDictionary categoriesFor: #getEvents!events!private! !
-!SystemDictionary categoriesFor: #includesKey:!public!searching! !
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
-!SystemDictionary categoriesFor: #lookup:!accessing!public! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !

@@ -69,17 +69,6 @@ fileOutName
 		path := File replacePath:  path with: package path ].
 	^path!
 
-findKeyOrNil: anObject 
-	"Private - Answer the index of the given key in the receiver, or, if not found,
-	the index of the first empty slot including and after that to which 
-	the key hashes."
-
-	"Implementation Note: By overriding this to convert the key to a string we
-	can avoid the need to override all the key lookup methods such as #at:ifAbsent:,
-	#includesKey:, etc ."
-
-	^super findKeyOrNil: anObject asString!
-
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -175,7 +164,6 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #displayOn:!displaying!public! !
 !PoolConstantsDictionary categoriesFor: #environment!constants!public! !
 !PoolConstantsDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !PoolConstantsDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolConstantsDictionary categoriesFor: #isChanged:!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
