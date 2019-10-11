@@ -7,6 +7,8 @@ Shell subclass: #SmalltalkToolShell
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalAccelerators commandQueryHandlers'!
 SmalltalkToolShell guid: (GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkToolShell isAbstract: true!
+SmalltalkToolShell addClassConstant: 'CanUseIdeaSpaceMask' value: 16r2!
+SmalltalkToolShell addClassConstant: 'ReuseIfOpenMask' value: 16r1!
 SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 
 
 All of the tools have the singleton instance of SmalltalkSystem as their model. This makes sense because the SmalltalkSystem is effectively a Facade onto the Smalltalk development image; all user interface modifications to the image should go through this central point. In this way, a tool is effectively acting as a view onto the development image. It is also convenient since all <model>s are also <commandTarget>s. This means that some user interface commands can be directly picked up and acted upon by the SmalltalkSystem without any intervention being required from the tool itself.
@@ -523,8 +525,8 @@ initialize
 	self initialize
 	"
 
-	ReuseIfOpenMask := 1.	"Flags up to 16r80000 are reserved for common flags"
-	CanUseIdeaSpaceMask := 2!
+	self addClassConstant: 'ReuseIfOpenMask' value: 1.	"Flags up to 16r80000 are reserved for common flags"
+	self addClassConstant: 'CanUseIdeaSpaceMask' value: 2!
 
 initializeAfterLoad
 	"Perform any post-load initialisation for the class.
@@ -559,6 +561,7 @@ publishedAspects
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: (Aspect integer: #historyDwellTime);
 		add: (Aspect integer: #searchFieldFlashes);
+		add: (Aspect boolean: #reuseIfOpen);
 		yourself!
 
 reuseIfOpen
@@ -633,7 +636,6 @@ showExistingInstanceOf: aClass
 			[| tool |
 			tool := openInstances first.
 			tool topShell view zOrderTop.
-			tool ensureVisible.
 			tool]!
 
 toolDescription

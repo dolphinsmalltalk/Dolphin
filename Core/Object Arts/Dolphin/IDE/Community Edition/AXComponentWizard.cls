@@ -459,13 +459,6 @@ initialize
 		registerTool: self.
 	self reuseIfOpen: true!
 
-publishedAspects
-	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
-
-	^(super publishedAspects)
-		add: (Aspect boolean: #reuseIfOpen);
-		yourself!
-
 registerServer
 	"Browse for a DLL, and register it as a COM component
 		self registerServer
@@ -517,7 +510,6 @@ toolsFolderHelpId
 !AXComponentWizard class categoriesFor: #displayOn:!displaying!public! !
 !AXComponentWizard class categoriesFor: #icon!constants!public! !
 !AXComponentWizard class categoriesFor: #initialize!initializing!private! !
-!AXComponentWizard class categoriesFor: #publishedAspects!constants!public! !
 !AXComponentWizard class categoriesFor: #registerServer!operations!public! !
 !AXComponentWizard class categoriesFor: #resource_Default_view!public!resources-views! !
 !AXComponentWizard class categoriesFor: #toolsFolderHelpId!public! !

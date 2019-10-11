@@ -427,17 +427,14 @@ initialize
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	self reuseIfOpen: true.
-	self canUseIdeaSpace: true
-	"BaseOnlyMask := 1"!
+	self canUseIdeaSpace: true!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| aspects |
-	aspects := super publishedAspects.
-	aspects add: (Aspect boolean: #reuseIfOpen).
-	aspects add: (Aspect boolean: #canUseIdeaSpace).
-	^aspects!
+	^super publishedAspects
+		add: (Aspect boolean: #canUseIdeaSpace);
+		yourself!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

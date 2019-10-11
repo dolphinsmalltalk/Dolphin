@@ -144,12 +144,19 @@ compareSmalltalkMethod: aSmalltalkMethod1 with: aSmalltalkMethod2
 
 	^self show
 		styler: SmalltalkMethodStyler new;
-		textStyles: SmalltalkWorkspace textStyles;
+		textStyles: MethodWorkspace textStyles;
 		compare: aSmalltalkMethod1 id: 'A' and: aSmalltalkMethod2 id: 'B';
 		yourself!
 
 displayOn: aStream
 	aStream nextPutAll: 'Difference Browser'!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	^(super publishedAspects)
+		removeKey: #reuseIfOpen;
+		yourself!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -176,6 +183,7 @@ resource_Vertical_view
 !DiffBrowser class categoriesFor: #compareSmalltalkExpression:with:!public! !
 !DiffBrowser class categoriesFor: #compareSmalltalkMethod:with:!public! !
 !DiffBrowser class categoriesFor: #displayOn:!operations!public! !
+!DiffBrowser class categoriesFor: #publishedAspects!operations!public! !
 !DiffBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !DiffBrowser class categoriesFor: #resource_Vertical_view!public!resources-views! !
 

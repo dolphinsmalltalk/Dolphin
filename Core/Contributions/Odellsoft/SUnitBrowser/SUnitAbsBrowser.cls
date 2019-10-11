@@ -301,7 +301,6 @@ publishedAspects
 	aspects := super publishedAspects.
 	aspects
 		add: (Aspect boolean: #useDisplayNames);
-		add: (Aspect boolean: #reuseIfOpen);
 		add: (Aspect boolean: #canUseIdeaSpace).
 	^aspects!
 

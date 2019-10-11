@@ -52,10 +52,18 @@ initialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) addCommandQueryHandler: #queryMethodHistoryCommand:]!
 
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	^(super publishedAspects)
+		removeKey: #reuseIfOpen;
+		yourself!
+
 uninitialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryMethodHistoryCommand:]! !
 !HistoryBrowser class categoriesFor: #icon!public! !
 !HistoryBrowser class categoriesFor: #initialize!initializing!private! !
+!HistoryBrowser class categoriesFor: #publishedAspects!operations!public! !
 !HistoryBrowser class categoriesFor: #uninitialize!initializing!private! !
 

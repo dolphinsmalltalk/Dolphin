@@ -379,8 +379,7 @@ displayOn: aStream
 	aStream nextPutAll: 'Method Explorer'!
 
 historyListSize
-	HistoryListSize isNil ifTrue: [HistoryListSize := self defaultHistoryListSize].
-	^HistoryListSize!
+	^HistoryListSize ifNil: [self defaultHistoryListSize]!
 
 historyListSize: anInteger 
 	HistoryListSize := anInteger!
@@ -392,7 +391,8 @@ initialize
 	"
 
 	Smalltalk developmentSystem registerTool: self.
-	self canUseIdeaSpace: true!
+	self canUseIdeaSpace: true.
+	self historyListSize: nil!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

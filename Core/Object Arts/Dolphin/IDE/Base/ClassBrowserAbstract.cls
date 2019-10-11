@@ -2825,8 +2825,7 @@ grayedMethodFadeFactor: aNumber
 	GrayedMethodFadeFactor := aNumber!
 
 historyListSize
-	HistoryListSize isNil ifTrue: [HistoryListSize := self defaultHistoryListSize].
-	^HistoryListSize!
+	^HistoryListSize ifNil: [self defaultHistoryListSize]!
 
 historyListSize: anInteger 
 	HistoryListSize := anInteger!
@@ -2836,11 +2835,11 @@ initialize
 		self initialize
 	"
 
-	LooseMethodColor := Color purple.
-	ShowInheritedMethodsMask := 1.
-	FilterObjectMethodsMask := 2.
-	GrayedMethodFadeFactor := 2.
-	HistoryListSize := self defaultHistoryListSize.
+	self looseMethodColor: Color purple.
+	self addClassConstant: 'ShowInheritedMethodsMask' value: 1.
+	self addClassConstant: 'FilterObjectMethodsMask' value: 2.
+	self grayedMethodFadeFactor: 2.
+	self historyListSize: nil.
 	self historyDwellTime: nil.
 	self wordWrapDefinition: true.
 !
@@ -2874,7 +2873,6 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^(super publishedAspects)
-		add: (Aspect boolean: #reuseIfOpen);
 		add: (Aspect boolean: #canUseIdeaSpace);
 		add: (Aspect boolean: #wordWrapSource);
 		add: (Aspect boolean: #wordWrapDefinition);

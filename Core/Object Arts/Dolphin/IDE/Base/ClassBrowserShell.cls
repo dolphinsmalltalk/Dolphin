@@ -6,6 +6,7 @@ ClassBrowserAbstract subclass: #ClassBrowserShell
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBrowserShell guid: (GUID fromString: '{5655079d-fa03-4ca0-85c5-73cd64654603}')!
+ClassBrowserShell addClassConstant: 'LocalHierarchyMask' value: 16r10!
 ClassBrowserShell comment: 'ClassBrowserShell is a <SmalltalkToolShell> implementing the Class Hierarchy Browser development tool.
 
 Instance Variables:
@@ -135,7 +136,7 @@ initialize
 		self initialize
 	"
 
-	LocalHierarchyMask := 16r10.
+	self addClassConstant: 'LocalHierarchyMask' value: 16r10.
 	self defaultShowInheritedMethods: false.
 	self defaultFilterObjectMethods: true.
 	self canUseIdeaSpace: true.

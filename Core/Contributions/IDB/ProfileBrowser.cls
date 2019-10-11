@@ -55,11 +55,11 @@ createSchematicWiring
 		to: self.
 	(self presenterNamed: 'sampleSets') model: ProfilerSampleSetManager default sampleSets.
 	((self presenterNamed: 'sampleSets') model)
-		when: #itemUpdatedAtIndex:
-			send: #onSampleSetUpdated:
+		when: #item:updatedAtIndex:
+			send: #onSampleSetUpdated:atIndex:
 			to: self;
-		when: #itemRemovedAtIndex:
-			send: #onSampleSetUpdated:
+		when: #item:removedAtIndex:
+			send: #onSampleSetUpdated:atIndex:
 			to: self!
 
 deleteAllSampleSets
@@ -122,10 +122,9 @@ onSampleSetSelectionChanged
 	self resetSelectorFilter.
 	self caption: 'Profiler Browser - ' , sampleSet name!
 
-onSampleSetUpdated: anInteger 
+onSampleSetUpdated: aSampleSet atIndex: anInteger 
 	"This is the target for a triggered event that says that one of the current sample sets
-	has been changed in some way. We just update the complete sample set list.
-	anInteger is the index of the sample set that changed but we don't need to use it here"
+	has been changed in some way. We just update the complete sample set list."
 
 	self sampleSetUpdated!
 
@@ -255,7 +254,7 @@ updateIndicatorLimit
 !ProfileBrowser categoriesFor: #filterSelector!commands!public! !
 !ProfileBrowser categoriesFor: #isSampleSetSelected!public!testing! !
 !ProfileBrowser categoriesFor: #onSampleSetSelectionChanged!event handling!public! !
-!ProfileBrowser categoriesFor: #onSampleSetUpdated:!event handling!public! !
+!ProfileBrowser categoriesFor: #onSampleSetUpdated:atIndex:!event handling!public! !
 !ProfileBrowser categoriesFor: #onSelectorSelectionChanged!event handling!public! !
 !ProfileBrowser categoriesFor: #onUpdateIndicator:of:!event handling!public! !
 !ProfileBrowser categoriesFor: #onViewOpened!event handling!public! !
