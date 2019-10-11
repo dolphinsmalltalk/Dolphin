@@ -62,7 +62,7 @@ display: aValue in: aRectangle on: aCanvas forecolor: fColor backcolor: bColor e
 
 	text := self typeconverter convertFromLeftToRight: aValue.
 
-	color := fColor.
+	color := fColor ifNil: [Color black].
 	(text isEmpty and: [self hasCueBanner]) ifTrue: 
 		[text := self cueBanner.
 		color := Color grayText].
