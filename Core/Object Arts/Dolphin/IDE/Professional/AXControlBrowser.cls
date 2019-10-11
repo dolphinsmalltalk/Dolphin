@@ -6,6 +6,7 @@ SmalltalkToolShell subclass: #AXControlBrowser
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXControlBrowser guid: (GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
+AXControlBrowser addClassConstant: 'TraceMask' value: 16r1!
 AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 
 AXControlBrowser show
@@ -384,7 +385,7 @@ initialize
 		self initialize.
 	"
 
-	TraceMask := 16r1.
+	self addClassConstant: 'TraceMask' value: 16r1.
 	
 	Smalltalk developmentSystem
 		addAdditionalToolsFolderIcon: (SmalltalkSystemIcon show: self description: self displayString helpId: self toolsFolderHelpId );
@@ -394,7 +395,6 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^(super publishedAspects)
-		add: (Aspect boolean: #reuseIfOpen);
 		add: (Aspect choice: #defaultView from: self resourceNames);
 		yourself!
 

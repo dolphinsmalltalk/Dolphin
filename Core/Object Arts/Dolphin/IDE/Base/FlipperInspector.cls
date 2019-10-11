@@ -169,7 +169,6 @@ publishedAspects
 		add: ((Aspect sequenceableCollection: #renderers)
 					isNullable: false;
 					yourself);
-		add: (Aspect boolean: #reuseIfOpen);
 		add: (Aspect boolean: #canUseIdeaSpace);
 		yourself!
 

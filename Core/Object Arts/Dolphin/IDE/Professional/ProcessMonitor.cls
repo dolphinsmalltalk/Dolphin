@@ -306,7 +306,6 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^(super publishedAspects)
-		add: (Aspect boolean: #reuseIfOpen);
 		add: ((Aspect integer: #defaultUpdateInterval)
 					isNullable: false;
 					yourself);

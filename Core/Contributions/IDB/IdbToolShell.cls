@@ -27,6 +27,12 @@ initializeAfterLoad
 			[(Smalltalk developmentSystem)
 				addAdditionalToolsFolderIcon: self toolsFolderIcon;
 				registerTool: self].
-	super initializeAfterLoad! !
+	super initializeAfterLoad!
+
+initializeOptionFlags
+	"Private - Set the default option flags."
+
+	optionFlags := ReuseIfOpenMask! !
 !IdbToolShell class categoriesFor: #initializeAfterLoad!initializing!public! !
+!IdbToolShell class categoriesFor: #initializeOptionFlags!initializing!private! !
 

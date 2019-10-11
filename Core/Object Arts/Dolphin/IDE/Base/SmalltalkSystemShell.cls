@@ -480,6 +480,7 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published the receiver."
 
 	^(super publishedAspects)
+		removeKey: #reuseIfOpen;
 		add: (Aspect color: #backcolor);
 		add: (Aspect color: #textcolor);
 		add: (Aspect bitmap: #backImage);

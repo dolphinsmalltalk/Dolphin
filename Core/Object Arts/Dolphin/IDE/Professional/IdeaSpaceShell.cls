@@ -647,6 +647,13 @@ openOn: openFilename
 		openOn: openFilename;
 		yourself!
 
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	^(super publishedAspects)
+		removeKey: #reuseIfOpen;
+		yourself!
+
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -668,6 +675,7 @@ toolsFolderHelpId
 !IdeaSpaceShell class categoriesFor: #initialize!initializing!private! !
 !IdeaSpaceShell class categoriesFor: #open!instance creation!public! !
 !IdeaSpaceShell class categoriesFor: #openOn:!instance creation!public! !
+!IdeaSpaceShell class categoriesFor: #publishedAspects!operations!public! !
 !IdeaSpaceShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !IdeaSpaceShell class categoriesFor: #toolsFolderHelpId!constants!public! !
 
