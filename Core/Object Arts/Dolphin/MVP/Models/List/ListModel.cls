@@ -241,8 +241,6 @@ removeAtIndex: anInteger
 	| elem |
 	elem := self list removeAtIndex: anInteger.
 	self trigger: #item:removedAtIndex: with: elem with: anInteger.
-	"Trigger the old event too for backwards compatibility"
-	self trigger: #itemRemovedAtIndex: with: anInteger.
 	^elem!
 
 resize: anInteger

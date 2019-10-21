@@ -39,6 +39,11 @@ newLookupTable
 
 	^LookupTable new!
 
+newSet
+	"Answer a new <Set> with the receiver as its search policy."
+
+	^Set new!
+
 nextIndexOf: anElement in: collection from: start to: stop
 	"Answer the index of the next occurrence of anElement in the <sequencedReadableCollection>
 	argument,  collection, between startIndex and stopIndex inclusive. If there are no such occurrences, 
@@ -49,5 +54,6 @@ nextIndexOf: anElement in: collection from: start to: stop
 !EqualitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
 !EqualitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !EqualitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!EqualitySearchPolicy categoriesFor: #newSet!operations!public! !
 !EqualitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 

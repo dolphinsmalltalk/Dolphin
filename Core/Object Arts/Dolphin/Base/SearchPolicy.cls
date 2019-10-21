@@ -59,6 +59,11 @@ newLookupTable
 
 	^PluggableLookupTable searchPolicy: self!
 
+newSet
+	"Answer a new <Set> with a search policy equivalent to the receiver."
+
+	^PluggableSet searchPolicy: self!
+
 nextIndexOf: anElement in: sequence from: start to: stop
 	"Answer the index of the next occurrence of anElement in the <sequencedReadableCollection>
 	argument,  collection, between startIndex and stopIndex inclusive. If there are no such occurrences, 
@@ -71,6 +76,7 @@ nextIndexOf: anElement in: sequence from: start to: stop
 !SearchPolicy categoriesFor: #hash:max:!comparing!public! !
 !SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !SearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!SearchPolicy categoriesFor: #newSet!operations!public! !
 !SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 
 SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!

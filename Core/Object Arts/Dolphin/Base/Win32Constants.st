@@ -387,6 +387,8 @@ Win32Constants at: 'HWND_MESSAGE' put: -16r3!
 Win32Constants at: 'HWND_NOTOPMOST' put: -16r2!
 Win32Constants at: 'HWND_TOP' put: 16r0!
 Win32Constants at: 'HWND_TOPMOST' put: -16r1!
+Win32Constants at: 'I_IMAGECALLBACK' put: -16r1!
+Win32Constants at: 'I_IMAGENONE' put: -16r2!
 Win32Constants at: 'ICON_BIG' put: 16r1!
 Win32Constants at: 'ICON_SMALL' put: 16r0!
 Win32Constants at: 'IDABORT' put: 16r3!

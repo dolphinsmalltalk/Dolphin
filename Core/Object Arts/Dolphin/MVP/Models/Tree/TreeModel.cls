@@ -100,6 +100,15 @@ collapse: anObject ifAbsent: exceptionHandler
 			node beChildless.
 			self refreshTree: anObject]!
 
+depthOf: anObject
+	"Answer the depth of anObject in the tree. Roots are at depth 0, and then immediate children at depth 1, and so on."
+
+	| answer ancestor |
+	answer := 0.
+	ancestor := self parentNodeOf: anObject.
+	[(ancestor := ancestor parent) notNil] whileTrue: [answer := answer + 1].
+	^answer!
+
 forgetChildrenOfNode: aTreeNode
 	"Private - Note that we access the children collection directly as we merely want to 
 	remove existing children from the objectNodeMap."
@@ -186,10 +195,7 @@ nodeClass
 	^TreeNode!
 
 parentNodeOf: anObject
-	| node parentNode |
-	node := self getNodeFor: anObject.
-	parentNode := node parent.
-	^parentNode!
+	^(self getNodeFor: anObject) parent!
 
 parentOf: anObject
 	"Answer the parent of anObject within the hierarchy managed by the
@@ -247,6 +253,7 @@ size
 !TreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
 !TreeModel categoriesFor: #clear!public!removing! !
 !TreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
+!TreeModel categoriesFor: #depthOf:!hierarchy!public! !
 !TreeModel categoriesFor: #forgetChildrenOfNode:!operations!private! !
 !TreeModel categoriesFor: #forgetNode:!operations!private! !
 !TreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !

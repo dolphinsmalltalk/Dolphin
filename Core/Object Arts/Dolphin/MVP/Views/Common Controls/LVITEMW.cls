@@ -144,6 +144,16 @@ indent: widths
 	self iIndent: widths.
 	self maskIn: LVIF_INDENT!
 
+iStateImage
+	^self dwState bitShift: -12!
+
+iStateImage: anInteger
+	"Set contents' state image index to anInteger. Any other state is discarded."
+
+	self
+		dwState: (anInteger bitShift: 12);
+		stateMask: LVIS_STATEIMAGEMASK!
+
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
@@ -202,30 +212,42 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 		iItem: rowInteger - 1;
 		pszText: (text := aString asUtf16String).
 	mask := LVIF_TEXT.
-	imageInteger notNil ifTrue: [iImage := imageInteger - 1].
-	indentInteger notNil
-		ifTrue: 
+	iImage := imageInteger.
+	indentInteger == 0
+		ifFalse:
 			[self iIndent: indentInteger.
 			mask := mask bitOr: LVIF_INDENT.
-			indentInteger < 0 ifTrue: [iImage := -1]].
-	iImage notNil
-		ifTrue: 
-			[self iImage: iImage.
+			indentInteger < 0 ifTrue: [iImage := ListView.NoImageIndex]].
+	iImage
+		ifNotNil: 
+			[self iImage: iImage - 1.
 			mask := mask bitOr: LVIF_IMAGE].
 	self mask: mask!
 
-stateImageIndex
-	"Answer contents' state image index."
-
-	self dwState bitShift: -12.!
+row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger stateImageIndex: stateImageInteger
+	| mask iImage |
+	self
+		iItem: rowInteger - 1;
+		pszText: (text := aString asUtf16String).
+	mask := LVIF_TEXT.
+	iImage := imageInteger.
+	indentInteger == 0
+		ifFalse: 
+			[self iIndent: indentInteger.
+			mask := mask bitOr: LVIF_INDENT.
+			indentInteger < 0 ifTrue: [iImage := 0]].
+	iImage
+		ifNotNil: 
+			[self iImage: iImage - 1.
+			mask := mask bitOr: LVIF_IMAGE].
+	self mask: mask!
 
 stateImageIndex: anInteger
-	"Set contents' state image index to anInteger."
+	"Set contents' state image index to anInteger. Any other state is discarded."
 
 	self
-		dwState: ((anInteger bitShift: 12) bitOr: self dwState);
-		maskIn: self stateValidMask;
-		stateMask: (LVIS_STATEIMAGEMASK bitOr: self stateMask).!
+		iStateImage: anInteger;
+		maskIn: LVIF_STATE!
 
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
@@ -261,6 +283,8 @@ textPointerOffset
 !LVITEMW categoriesFor: #iItem!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #iItem:!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #indent:!accessing!public! !
+!LVITEMW categoriesFor: #iStateImage!accessing!public! !
+!LVITEMW categoriesFor: #iStateImage:!accessing!public! !
 !LVITEMW categoriesFor: #iSubItem!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #iSubItem:!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #lParam!**compiled accessors**!public! !
@@ -272,7 +296,7 @@ textPointerOffset
 !LVITEMW categoriesFor: #puColumns!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #puColumns:!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #row:text:imageIndex:indent:!accessing!private! !
-!LVITEMW categoriesFor: #stateImageIndex!accessing!public! !
+!LVITEMW categoriesFor: #row:text:imageIndex:indent:stateImageIndex:!accessing!private! !
 !LVITEMW categoriesFor: #stateImageIndex:!accessing!public! !
 !LVITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
 !LVITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
