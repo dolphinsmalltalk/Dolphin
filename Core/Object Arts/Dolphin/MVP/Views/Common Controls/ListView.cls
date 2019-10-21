@@ -2,10 +2,11 @@
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes NoImageIndex RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
+ListView addClassConstant: 'NoImageIndex' value: -16r1!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -93,6 +94,7 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 				text: (primaryTextSupplier textFromRow: each)
 				imageIndex: (primaryImageSupplier imageFromRow: each)
 				indent: (self indentFromRow: each).
+			(self stateImageFromRow: each) ifNotNil: [:state | lvItem stateImageIndex: state].
 			self
 				sendMessage: msg
 				wParam: 0
@@ -108,7 +110,7 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 						row: i + anInteger
 						text: (eachCol textFromRow: eachRow)
 						imageIndex: (colImageBlock value: eachRow value: eachCol)
-						indent: nil.
+						indent: 0.
 					self lvmSetItem: lvItem]]!
 
 allColumns
@@ -139,15 +141,17 @@ anchorIndex: anInteger
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
-	| largeImList smallImList |
+	| largeImList smallImList stateImList |
 	largeImList := self customImageExtent
 				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext]
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager ifNotNil: [:im | im imageListWithExtent: self largeIconExtent]].
-	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: Icon smallExtent].
+	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: self smallImageExtent].
+	stateImList := self stateImageManager ifNotNil: [:stateImages | stateImages imageListWithExtent: self smallImageExtent].
 	self lvmSetImageList: smallImList type: LVSIL_SMALL.
-	self lvmSetImageList: largeImList type: LVSIL_NORMAL!
+	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
+	self lvmSetImageList: stateImList type: LVSIL_STATE!
 
 autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
@@ -668,6 +672,11 @@ hasBorderSelect: aBoolean
 
 	^self listViewStyleMask: LVS_EX_BORDERSELECT set: aBoolean!
 
+hasButtons
+	"Answer whether the receiver has state images (usually used for expand/contract buttons)."
+
+	^false!
+
 hasCheckBoxes
 	"Answer whether the receiver has check-boxes associated with its items."
 
@@ -981,7 +990,13 @@ isVirtual: aBoolean
 	self 
 		baseStyleMask: LVS_OWNERDATA
 		set: aBoolean
-		recreateIfChanged: true!
+		recreateIfChanged: true.
+
+	self isOpen ifTrue: [
+		| mask |
+		mask := self lvmGetCallbackMask.
+		mask := mask mask: LVIS_STATEIMAGEMASK set: (aBoolean and: [self stateImageManager notNil]).
+		self lvmSetCallbackMask: mask]!
 
 itemCount
 	"Answer the total number of items in the view."
@@ -1654,7 +1669,7 @@ onButtonPressed: aMouseEvent
 					["Suppress the mouse down so not received by control"
 					0]].!
 
-onDisplayDetailsRequired: lvitem
+onDisplayDetailsRequired: anLVITEM
 	"Private - Get the display info for the receiver's row identified by the <LVITEM>, lvitem."
 
 	"N.B. This is a callback request from the ListView's paint handler so setting an
@@ -1668,20 +1683,21 @@ onDisplayDetailsRequired: lvitem
 	#report mode and the other modes."
 
 	| rowObject mask column subItem |
-	rowObject := self objectFromHandle: lvitem handle ifAbsent: [UnknownItem].
+	rowObject := self objectFromHandle: anLVITEM handle ifAbsent: [UnknownItem].
 	"List sometimes asks for lvitem we no longer have, answer nil to accept default processing"
 	rowObject == UnknownItem ifTrue: [^nil].
-	subItem := lvitem iSubItem.
+	subItem := anLVITEM iSubItem.
 	self isReportMode ifTrue: [column := self columnAtIndex: subItem + 1].
-	mask := lvitem mask.
+	mask := anLVITEM mask.
 
 	"Image Request?"
 	(mask allMask: LVIF_IMAGE)
 		ifTrue: 
 			[| imgIdx |
-			imgIdx := ((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self])
-						imageFromRow: rowObject.
-			imgIdx notNil ifTrue: [lvitem image: imgIdx - 1]].
+			imgIdx := ((((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self])
+						imageFromRow: rowObject) ?? NoImageIndex)
+						- 1.
+			anLVITEM iImage: imgIdx].
 
 	"Text request?"
 	(mask allMask: LVIF_TEXT)
@@ -1689,17 +1705,20 @@ onDisplayDetailsRequired: lvitem
 			["If in report mode the column's get text block is used unless the request
 			 is for the primary column and its text block is nil, in which case the view
 			 level block is used"
-			lvitem
+			anLVITEM
 				textInBuffer: (((column notNil and: [subItem > 0 or: [column getTextBlock notNil]])
 						ifTrue: [column]
 						ifFalse: [self]) textFromRow: rowObject)].
 	(mask allMask: LVIF_INDENT)
 		ifTrue: 
 			["Indenting is only supported for the whole row, not on a per-column basis"
-			lvitem indent: (self indentFromRow: rowObject)].
+			anLVITEM iIndent: (self indentFromRow: rowObject)].
 	"State image"
-	((mask allMask: LVIF_STATE) and: [self systemDrawsStateImages and: [subItem == 0]])
-		ifTrue: [lvitem stateImageIndex: (self stateIndexFromRow: rowObject)].
+	((mask allMask: LVIF_STATE) and: [subItem == 0])
+		ifTrue: 
+			[| stateImage |
+			stateImage := self stateImageFromRow: rowObject.
+			stateImage == NoImageIndex ifFalse: [anLVITEM iStateImage: stateImage]].
 	^0	"suppress default processing"!
 
 onDropDown: aToolbarButton 
@@ -1849,7 +1868,8 @@ onViewCreated
 	self viewMode: self viewMode.
 	self lvmSetExtendedListViewStyle: -1 dwExStyle: lvStyle.
 	self refreshContents.
-	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing]!
+	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing].
+	(self isVirtual and: [self stateImageManager notNil]) ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK]!
 
 primaryColumn
 	"Private - Answer the primary column for the report view mode"
@@ -1970,20 +1990,10 @@ selectIndex: anInteger set: aBoolean
 	"Private - Set/reset the selection state of the object at the specified one-based <integer>
 	index within the receiver according to the <boolean> argument."
 
-	| anLvItem mask |
-	anLvItem := LVITEMW new.
-	mask := NTLibrary isWine
-				ifTrue: 
-					["Having autoSelectPackages option turned on in System
-					 Browser gives unpleasant scrolling effect when many
-					 multiple packages are selected. This also happens in
-					 Package Browser. Problem under Wine traced to LVIS_FOCUSED
-					 option in ListView>>selectIndex:. Not sure what overall
-					 effect it will have turning this off."
-					LVIS_SELECTED]
-				ifFalse: [##(LVIS_SELECTED | LVIS_FOCUSED)].
-	anLvItem stateMask: mask.
-	aBoolean ifTrue: [anLvItem dwState: mask].
+	| anLvItem |
+	anLvItem := LVITEMW newBuffer.
+	anLvItem stateMask: SelectionStateMask.
+	aBoolean ifTrue: [anLvItem dwState: SelectionStateMask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable
@@ -2119,15 +2129,10 @@ state
 		ifTrue: [sequence add: (MessageSend receiver: self selector: #backImageChanged)].
 	^sequence!
 
-stateImageList: aWinImageList
-	"Private - Set the receiver's state image list to aWinImageList."
+stateImageFromRow: anObject
+	"Private - Answer the index of the state image for the row <Object> argument, or NoImageIndex if none."
 
-	^self lvmSetImageList: aWinImageList type: LVSIL_STATE!
-
-stateIndexFromRow: anObject
-	"Private -- Answer the index of the state image that is appropriate for the row <Object> argument, or zero if none."
-
-	^0!
+	^NoImageIndex!
 
 subItemRectRow: rowInteger column: colInteger
 	"Answer a <Rectangle> representing the bounds of the sub-item at the specified row and column."
@@ -2150,13 +2155,6 @@ subItemRectRow: rowInteger column: colInteger
 						bounding: LVIR_ICON.
 			iconRect right: iconRect right + 4.
 			fullRect subtract: iconRect]!
-
-systemDrawsStateImages
-	"Private -- Answer whether we can let Windows draw our state image (normally we can)"
-
-	"In point of fact, the only case where Window's doesn't get it right is when we are a multi-line EditableListTreeView"
-
-	^true!
 
 text: aString
 	"Sets the title text for the receiver. We also set the primary
@@ -2356,6 +2354,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #getThumbnailOf:!helpers!private! !
 !ListView categoriesFor: #hasBorderSelect!accessing-styles!public! !
 !ListView categoriesFor: #hasBorderSelect:!accessing-styles!public! !
+!ListView categoriesFor: #hasButtons!accessing-styles!do copy!public!testing! !
 !ListView categoriesFor: #hasCheckBoxes!accessing-styles!public! !
 !ListView categoriesFor: #hasCheckBoxes:!accessing-styles!public! !
 !ListView categoriesFor: #hasColumnHeaders!accessing!public! !
@@ -2523,10 +2522,8 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #smallIconMode!commands!public! !
 !ListView categoriesFor: #sortOnColumn:!columns!public!sorting! !
 !ListView categoriesFor: #state!accessing!private! !
-!ListView categoriesFor: #stateImageList:!image management!private! !
-!ListView categoriesFor: #stateIndexFromRow:!private! !
+!ListView categoriesFor: #stateImageFromRow:!private! !
 !ListView categoriesFor: #subItemRectRow:column:!geometry!public! !
-!ListView categoriesFor: #systemDrawsStateImages!public!testing! !
 !ListView categoriesFor: #text:!accessing!public! !
 !ListView categoriesFor: #textFromRow:!adapters!private! !
 !ListView categoriesFor: #thumbnailExtent!accessing!public! !
@@ -2564,7 +2561,8 @@ initialize
 	"Private - Initialise the receiver's class variables.
 		self initialize
 	"
-
+	
+	self addClassConstant: 'NoImageIndex' value: 0.
 	self addClassConstant: 'LvModes'
 		value: (IdentityDictionary new
 				at: #thumbnails put: LVS_ICON;
@@ -2584,9 +2582,11 @@ onStartup
 	the fact."
 
 	RevertSelMessage := self registerMessage: 'RevertSelection'.
-	"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
-	Normally, we use a nil value to indicate that no image is required. In Wine we must use an image index of 0."
-	NoImageIndex := NTLibrary isWine ifTrue: [0]!
+	NTLibrary isWine
+		ifTrue: 
+			["Having autoSelectPackages option turned on in System  Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."
+			SelectionStateMask := LVIS_SELECTED]
+		ifFalse: [SelectionStateMask := ##(LVIS_SELECTED | LVIS_FOCUSED)]!
 
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,
@@ -2629,6 +2629,10 @@ stbConvertFromVersion5: anArray
 
 	^(super stbConvertFromVersion5: anArray) copyWith: 0!
 
+themePartName
+
+	^#ListView!
+
 viewModes
 	^LvModes!
 
@@ -2644,6 +2648,7 @@ winClassName
 !ListView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
+!ListView class categoriesFor: #themePartName!constants!public! !
 !ListView class categoriesFor: #viewModes!accessing!public! !
 !ListView class categoriesFor: #winClassName!constants!private! !
 

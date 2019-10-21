@@ -42,6 +42,11 @@ newLookupTable
 
 	^IdentityDictionary new!
 
+newSet
+	"Answer a new <Set> with the receiver as its search policy."
+
+	^IdentitySet new!
+
 nextIndexOf: anElement in: collection from: start to: stop
 	"Answer the index of the next occurrence of anElement in the <sequencedReadableCollection>
 	argument,  collection, between startIndex and stopIndex inclusive. If there are no such occurrences, 
@@ -53,5 +58,6 @@ nextIndexOf: anElement in: collection from: start to: stop
 !IdentitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
 !IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
 !IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
+!IdentitySearchPolicy categoriesFor: #newSet!operations!public! !
 !IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
 

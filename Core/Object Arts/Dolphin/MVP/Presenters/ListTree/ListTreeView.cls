@@ -2,10 +2,19 @@
 
 ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
-	classVariableNames: ''
-	poolDictionaries: 'ListTreeConstants'
+	classVariableNames: 'ClosedImageIndex DisableExpandAllMask DoSortRootsMask HasButtonsMask HasLinesAtRootMask HasLinesMask LeafImageIndex OpenImageIndex UseSmartRefreshMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
 ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
+ListTreeView addClassConstant: 'ClosedImageIndex' value: 16r3!
+ListTreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
+ListTreeView addClassConstant: 'DoSortRootsMask' value: 16r10!
+ListTreeView addClassConstant: 'HasButtonsMask' value: 16r2!
+ListTreeView addClassConstant: 'HasLinesAtRootMask' value: 16r4!
+ListTreeView addClassConstant: 'HasLinesMask' value: 16r8!
+ListTreeView addClassConstant: 'LeafImageIndex' value: 16r1!
+ListTreeView addClassConstant: 'OpenImageIndex' value: 16r2!
+ListTreeView addClassConstant: 'UseSmartRefreshMask' value: 16r20!
 ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
@@ -102,11 +111,6 @@ addItem: anObject afterIndex: anIndex
 	"add the object to the 'real' model"
 	self model add: anObject afterIndex: anIndex.
 
-	"NB: this would be unecessary, but the superclass's handling of raw element insertion is too much of
-	a minefield for me to mess with it.  See ListView>>addNonVirtualItems:atIndex: for why I'd rather not try
-	to override it to ensure that the state is set directly as a side-effect of adding the item"
-	self setItem: anObject openState: ((self hasChildren: anObject) ifTrue: [self closedState] ifFalse: [#Leaf]).
-
 	self notifyNodeAdded: anObject.
 !
 
@@ -134,17 +138,16 @@ additem: aChildObject toParent: aParentObject withSiblings: aCollection
 	themselves)"
 
 	| index sibling |
-
 	"try to find the correct position to insert it -- initial assumption is just after the parent (if any)"
-	index := self displayIndexOf: aParentObject ifAbsent: [0].
+	index := self handleFromObject: aParentObject ifAbsent: [0].
 
 	"or better, just after the previous displayed sibling (if any) and its children (if any)"
 	sibling := self previousDisplayedSiblingOf: aChildObject in: aCollection.
-	sibling isNil ifFalse:
-		[index := (self displayIndexOf: sibling) + (self countDisplayedChildrenOf: sibling)].
+	sibling isNil
+		ifFalse: [index := (self handleFromObject: sibling) + (self countDisplayedChildrenOf: sibling)].
 
 	"add the object to the 'real' model"
-	self addItem: aChildObject afterIndex: index.!
+	self addItem: aChildObject afterIndex: index!
 
 allDisplayedItems
 	"answer an OrderedCollection of all the items that are currently displayed.
@@ -170,22 +173,6 @@ allHiddenExpandedItems
 
 	^ all.!
 
-applyImageLists
-	"private -- set the receiver's image lists from the image managers.
-	Overridden to do the state Image list too"
-
-	| images |
-
-	super applyImageLists.
-
-	"note that we don't use the state image list instvar; there's no need since the
-	image list is always the same systemwide, and this avoids having to mess with
-	STBing images"
-	images := self hasButtons
-			ifTrue: [self class stateImageList]
-			ifFalse: [nil].
-	self stateImageList: images.!
-
 basicCollapse: anObject
 	"private -- collapse the displayed hierarchy below anObject, and refresh its display.
 	NB: assumes none of the children of anObject are selected.
@@ -193,15 +180,15 @@ basicCollapse: anObject
 
 	"collapse the node and collapse and remove any children.
 	Someday I may activate the redraw-suppression code configurably"
-		"self disableRedraw. [ Cursor wait showWhile: ["
+
+	"self disableRedraw. [ Cursor wait showWhile: ["
 	self veryBasicCollapse: anObject.
-		"] ] ensure: [self enableRedraw]."
+	"] ] ensure: [self enableRedraw]."
 
 	"as with #expand: we allow the tree model to say that an object has children even if
 	the actual set thereof is zero-sized, hence we display a #Closed image even if there
 	were no actual children to remove"
-	self setItem: anObject openState: (self closedState).
-	self invalidateItem: anObject.!
+	self setItemAt: (self handleFromObject: anObject) stateImage: ClosedImageIndex!
 
 basicOnItem: aChildObject movedToParent: aParentObject
 	"private -- implementation of #onItem:movedToParent:  This is factored
@@ -254,6 +241,16 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	self isVirtual ifFalse: [self unorderedTreeOf: aChildObject do: [:each | self setItemIndentation: each]].
 !
 
+basicSetItemAt: indexInteger stateImage: stateImageInteger
+	"private -- update the 'state' image for anObject"
+
+	| lvItem |
+	lvItem := LVITEMW newBuffer
+				iItem: indexInteger - 1;
+				stateImageIndex: stateImageInteger;
+				yourself.	"a 1-based index in Windows !!"
+	self lvmSetItem: indexInteger - 1 state: lvItem!
+
 beNoIcons
 	"supplied for consistancy with TreeView"
 
@@ -298,12 +295,6 @@ childrenOf: anObject
 	^ self
 		inOrder: (self unorderedChildrenOf: anObject)
 		parent: anObject.!
-
-closedState
-	"private -- answer the Symbol name of the 'open' state"
-
-	^ self hasIcons ifTrue: [#Closed] ifFalse: [#SmallClosed].
-!
 
 collapse
 	"collapse the tree view to ensure that the immediate children of the current selection,
@@ -439,19 +430,6 @@ defaultIndentSeparation
 
 	^ 0.!
 
-depthOf: anObject
-	"answer our TreeModel's idea of how many generations anObject is descended
-	from a root"
-
-	| depth it |
-
-	"why recurse when we can iterate, eh?"
-	depth := 0.
-	it := anObject.
-	[(it := self parentOf: it) notNil] whileTrue: [depth := depth + 1].
-
-	^ depth.!
-
 disableExpandAll
 	"answer whether the abiliity to expand the whole tree with one keypress is enabled"
 
@@ -528,17 +506,6 @@ displayedTreeOf: aParent do: a1Block
 	a1Block value: aParent.
 	self displayedTreeBelow: aParent do: a1Block.!
 
-displayIndexOf: anObject
-	"private -- answer the index of anObject in our list display"
-
-	^ self model indexOf: anObject.!
-
-displayIndexOf: anObject ifAbsent: a0Block
-	"private -- answer the index of anObject in our list display, or, if it is
-	not displayed, the result of evaluating a0Block"
-
-	^ self model indexOf: anObject ifAbsent: a0Block.!
-
 doSortChildrenBlock
 	"answer the <monadicValuable> that, if it is not nil, will be evaluted with a parent
 	node as its parameter in order to decide whether to use the #sortBlock when sorting
@@ -604,9 +571,8 @@ expand: anObject
 	Note that this is considered to be program-initiated and so does not generate
 	vetoable #selectionChanging: events"
 
-	| children |
-
-	(self isItemExpandable: anObject) ifFalse: [^ self].
+	| children index |
+	(self isItemExpandable: anObject) ifFalse: [^self].
 
 	"ensure it is actually displayed, but remove any hidden-expanded record first, or we'll
 	end up in an infinite recursion (eek!!)"
@@ -617,20 +583,18 @@ expand: anObject
 	"note that this may cause an object with no children to show an open flag; that's by design
 	so that TreeModels that distinguish between having a zero-sized set of children and not having
 	children will display properly"
-	self setItem: anObject openState: (self openState).
-	self invalidateItem: anObject.
+	index := self handleFromObject: anObject.
+	self setItemAt: index stateImage: OpenImageIndex.
 
-	"add any children"
+	"Insert the children"
 	children := self childrenOf: anObject.
-	self addAll: children afterIndex: (self displayIndexOf: anObject).
+	self addAll: children afterIndex: index.
 	self addExpanded: anObject.
 
 	"apply our record of which children were expanded when this node was last closed"
-	hiddenExpanded notNil ifTrue:
-		[children do: [:each | (hiddenExpanded includes: each) ifTrue: [self expand: each]]].
-
-	self notifyNodeExpanded: anObject.
-!
+	hiddenExpanded notNil
+		ifTrue: [children do: [:each | (hiddenExpanded includes: each) ifTrue: [self expand: each]]].
+	self notifyNodeExpanded: anObject!
 
 expand: anObject because: aSymbol
 	"private -- expand/collapse the given Object's node.
@@ -880,28 +844,18 @@ includesItem: arg1
 
 	^Error notYetImplemented!
 
-indentationFor: anObject
-	"private -- answer the number of image widths to indent the row by.
-	We use this to hack an approximation to a tree"
-
-	| depth |
-	depth := self depthOf: anObject.
-
-	"try to adjust to take #indentSeparation into account"
-	depth := depth * (1 + (indentSeparation / self class stateImageWidth) rounded).
-
-	"if we have buttons then Windows'll add indent for the (possibly blank) state icon too,
-	so if we don't want #linesAtRoot (really #buttonsAtRoot) then reduce the depth by one
-	to hide any buttons in the first column"
-	(self hasButtons and: [self hasLinesAtRoot not]) ifTrue: [depth := depth - 1].
-
-	^ depth.!
-
 indentFromRow: anObject
 	"private -- answer the number of image widths to indent the row by.
 	We use this to hack an approximation to a tree"
 
-	^ self indentationFor: anObject.!
+	| depth |
+	depth := treeModel depthOf: anObject.	"try to adjust to take #indentSeparation into account"
+	depth := depth * (1 + (indentSeparation / self class stateImageExtent x) rounded).	
+	"if we have buttons then Windows'll add indent for the (possibly blank) state icon too,
+	so if we don't want #linesAtRoot (really #buttonsAtRoot) then reduce the depth by one
+	to hide any buttons in the first column"
+	(self hasButtons and: [self hasLinesAtRoot not]) ifTrue: [depth := depth - 1].
+	^depth!
 
 indentSeparation
 	"answer the pixel identation of child items from their parents excluding
@@ -945,19 +899,10 @@ inRootOrder: aCollection
 		ifTrue: [aCollection]
 		ifFalse: [(aCollection asSortedCollection: sortBlock) asOrderedCollection].!
 
-invalidateItem: anObject
-	"private -- invalidate the rectangle of the item for anObject"
-
-	| index |
-
-	index := self displayIndexOf: anObject ifAbsent: [^ self].
-	self invalidateItemIndex: index.!
-
-invalidateItemIndex: anInteger
+invalidateItemAt: anInteger
 	"private -- envalidate the item with the 1-based integer index"
 
-	self invalidateRect: (self itemRect: anInteger textOnly: false).
-!
+	self invalidateRect: (self itemRect: anInteger textOnly: false)!
 
 isItemDisplayed: anObject
 	"answer whether anObject is currently displayed (i.e. either it is a root or
@@ -1020,17 +965,6 @@ isSmallIcons
 	^ self viewMode == #report.
 !
 
-isVirtual: aBoolean
-	"overridden to request the state update requests"
-
-	| mask |
-
-	mask := self lvmGetCallbackMask.
-	mask := mask mask: LVIS_STATEIMAGEMASK set: aBoolean.
-	self lvmSetCallbackMask: mask.
-
-	^ super isVirtual: aBoolean.!
-
 listModel: aListModel
 	"private -- set the ListModel for us to use.  This is invoked indirectly from #model: if the supplied
 	model is a ListModel.  We generate a VirtualTreeModel and initialise its pluggable blocks
@@ -1078,7 +1012,7 @@ makeInternalTreeModel: aCollection searchPolicy: aSearchPolicy
 makeSet
 	"private -- answer a new Set using our current search policy"
 
-	^ self class setClass searchPolicy: self searchPolicy.
+	^self searchPolicy newSet
 !
 
 makeSetFrom: aCollection
@@ -1142,14 +1076,14 @@ onItem: aChildObject addedInParent: aParentObject
 	present in the tree as a child of some other object"
 
 	"if the child is currently displayed then ignore it"
-	(self isItemDisplayed: aChildObject) ifTrue: [^ self].
+
+	(self isItemDisplayed: aChildObject) ifTrue: [^self].
 
 	"if the parent, if any, is not currently expanded then ignore it except for (possibly) updating
 	the state image, otherwise insert the new child amongst its brothers and sisters"
 	(aParentObject notNil and: [(self isItemExpanded: aParentObject) not])
-		ifTrue: [self setItemState: aParentObject]
-		ifFalse: [self additem: aChildObject toParent: aParentObject].
-!
+		ifTrue: [self refreshItemState: aParentObject]
+		ifFalse: [self additem: aChildObject toParent: aParentObject]!
 
 onItem: aChildObject movedToParent: aParentObject
 	"notification received when aChildObject has been moved to the list of 	children of aParentObject.
@@ -1175,14 +1109,16 @@ onItem: aChildObject removedFromParent: aParentObject
 	children of aParentObject."
 
 	(self isItemDisplayed: aChildObject) ifTrue: [self removeZombies].
-	self setItemState: aParentObject.
-!
+	self refreshItemState: aParentObject!
 
-onItemUpdated: anObject 
+onItemUpdated: anObject
 	"notification received when one of our elements has been changed"
 
-	self onItem: anObject updatedAtIndex: (self displayIndexOf: anObject ifAbsent: [^self]).
-	self setItemState: anObject!
+	(self handleFromObject: anObject)
+		ifNotNil: 
+			[:index |
+			self onItem: anObject updatedAtIndex: index.
+			self refreshItemState: anObject]!
 
 onKeyPressed: aKeyEvent
 	"handler for key press events.
@@ -1308,14 +1244,7 @@ onViewCreated
 	it should have"
 
 	super onViewCreated.
-	self isVirtual ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK].
 	self viewMode: #report.!
-
-openState
-	"private -- answer the Symbol name of the 'open' state"
-
-	^ self hasIcons ifTrue: [#Open] ifFalse: [#SmallOpen].
-!
 
 parentOf: anObject
 	"answer our TreeModel's idea of anObject's parent"
@@ -1436,17 +1365,14 @@ refreshFromModelBelow: anObject
 		ifTrue: [self presenter noEventsDo: [self selections: newSels]]
 		ifFalse: [self selections: newSels].!
 
-refreshNonVirtual
-	"private -- overridden to refresh the 'state' too"
+refreshItemState: anObject
+	"private -- update the 'state' image for anObject"
 
-	super refreshNonVirtual.
-
-	"NB: this should be unecessary, but the superclasses handling of raw element insertion is too
-	much of a minefield for me to mess with it.  See ListView>>addNonVirtualItems:atIndex: for
-	why I'd rather not try to override it to set the state directly"
-	self unorderedRoots do: [:each | self setItemState: each].
-
-!
+	| index |
+	index := self handleFromObject: anObject.
+	self isVirtual
+		ifTrue: [self invalidateItemAt: index]
+		ifFalse: [self setItemAt: index stateImage: (self stateImageFromRow: anObject)]!
 
 removeAllExcept: aSet
 	"private -- remove all the items that are not in aSet. The set is assumed to have the
@@ -1473,11 +1399,11 @@ removeExpanded: anObject
 removeFromDisplay: anObject
 	"private -- ensure that anObject is not displayed"
 
-	self model removeAtIndex: (self displayIndexOf: anObject ifAbsent: [^ self]).
-
-	self notifyNodeRemoved: anObject.
-
-!
+	(self handleFromObject: anObject)
+		ifNotNil: 
+			[:index |
+			self model removeAtIndex: index.
+			self notifyNodeRemoved: anObject]!
 
 removeHiddenExpanded: anObject
 	"private -- ensure that anObject is not on our hidden expanded list (if we have one). 
@@ -1704,43 +1630,26 @@ setItem: anObject indentation: anInteger
 	"private -- update the indentation for anObject.
 	Note: this causes a Windows error if our control is virtual"
 
-	| objectIndex anLvItem |
-	objectIndex := self displayIndexOf: anObject ifAbsent: [^self].
-	anLvItem := LVITEMW new
-				iItem: objectIndex - 1;
-				indent: anInteger;
-				yourself.
-	self lvmSetItem: anLvItem.
-	self invalidateItemIndex: objectIndex!
+	| anLvItem |
+	(self handleFromObject: anObject)
+		ifNotNil: 
+			[:objectIndex |
+			anLvItem := LVITEMW new
+						iItem: objectIndex - 1;
+						indent: anInteger;
+						yourself.
+			self lvmSetItem: anLvItem.
+			self invalidateItemAt: objectIndex]!
 
-setItem: anObject openState: aSymbol
-	"private -- update the 'state' image for anObject"
-
-	| objectIndex stateIndex anLvItem |
-	(self systemDrawsStateImages not
-		or: [(objectIndex := self displayIndexOf: anObject ifAbsent: []) isNil]) ifTrue: [^self].
-	stateIndex := self stateImageIndex: aSymbol.
-	anLvItem := LVITEMW new
-				iItem: objectIndex - 1;
-				stateImageIndex: stateIndex;
-				yourself.	"a 1-based index in Windows !!"
-	self lvmSetItem: objectIndex - 1 state: anLvItem.
-	self invalidateItemIndex: objectIndex!
+setItemAt: indexInteger stateImage: stateImageInteger
+	self basicSetItemAt: indexInteger stateImage: stateImageInteger.
+	self invalidateItemAt: indexInteger!
 
 setItemIndentation: anObject
 	"private -- update the indent for anObject.
 	Note: this causes a Windows error if our control is virtual"
 
-	self
-		setItem: anObject
-		indentation: (self indentationFor: anObject).!
-
-setItemState: anObject
-	"private -- update the 'state' image for anObject"
-
-	self
-		setItem: anObject
-		openState: (self stateFor: anObject).!
+	self setItem: anObject indentation: (self indentFromRow: anObject)!
 
 setModel: aListOrTreeModel
 	"private -- called to set our model.  Since we play games with the model (the one we hold may
@@ -1783,33 +1692,19 @@ sortOnColumn: aListViewColumn
 
 	Cursor wait showWhile: [sorter beSorted: aListViewColumn rowSortBlock].!
 
-stateFor: anObject
-	"private -- answer the 'state' identifier for anObject"
-
-	^ (self isItemExpanded: anObject)
-			ifTrue: [self openState]
-			ifFalse: [(self hasChildren: anObject)
-				ifTrue: [self closedState]
-				ifFalse: [#Leaf]].!
-
-stateImageIndex: aSymbol
-	"private -- answer the state image index corresponding to aSymbol"
-
-	^ self class stateNames indexOf: aSymbol ifAbsent: [0].
-
-!
-
-stateIndexFromRow: anObject
+stateImageFromRow: anObject
 	"private -- answer the index of the state image that is appropriate for anObject"
 
-	^ self stateImageIndex: (self stateFor: anObject).!
+	^(self isItemExpanded: anObject)
+		ifTrue: [OpenImageIndex]
+		ifFalse: [(self hasChildren: anObject) ifTrue: [ClosedImageIndex] ifFalse: [LeafImageIndex]]!
 
-systemDrawsStateImages
-	"private -- answer whether we can let Windows draw our state image (normally we can)"
+stateImageManager
+	"note that we don't use the state image manager instvar; there's no need since the
+	image list is always the same systemwide, and this avoids having to mess with
+	STBing images"
 
-	"in point of fact, the only case where Window's doesn't get it right is
-	when we are a multi-line EditableListTreeView"
-	^ true.!
+	^self hasButtons ifTrue: [self class stateImageManager]!
 
 toggleExpandAll: anObject
 	"expand/collapse the entire tree below anObject.
@@ -1974,7 +1869,11 @@ updateMode: aSymbol
 updateStates
 	"private -- update the 'state' images all objects"
 
-	self model do: [:each | self setItemState: each].!
+	self isVirtual
+		ifFalse: 
+			[self model
+				keysAndValuesDo: [:index :each | self basicSetItemAt: index stateImage: (self stateImageFromRow: each)]].
+	self invalidate!
 
 useSmartRefresh
 	"set whether we attempt to preserve open subbranches of the tree when we
@@ -2043,15 +1942,14 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #allDisplayedItems!accessing!do copy!public! !
 !ListTreeView categoriesFor: #allExpandedItems!accessing!do copy!public! !
 !ListTreeView categoriesFor: #allHiddenExpandedItems!accessing!do copy!public! !
-!ListTreeView categoriesFor: #applyImageLists!do copy!image management!private! !
 !ListTreeView categoriesFor: #basicCollapse:!do copy!expanding/collapsing!private! !
 !ListTreeView categoriesFor: #basicOnItem:movedToParent:!do copy!event handling!private! !
+!ListTreeView categoriesFor: #basicSetItemAt:stateImage:!do copy!private!states! !
 !ListTreeView categoriesFor: #beNoIcons!do copy!modes!public! !
 !ListTreeView categoriesFor: #beSorted:!accessing!do copy!public!sorting! !
 !ListTreeView categoriesFor: #checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
 !ListTreeView categoriesFor: #checkSelectAll:because:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #childrenOf:!accessing!do copy!public!sorting! !
-!ListTreeView categoriesFor: #closedState!do copy!private!states! !
 !ListTreeView categoriesFor: #collapse!commands!do copy!public! !
 !ListTreeView categoriesFor: #collapse:!do copy!expanding/collapsing!public! !
 !ListTreeView categoriesFor: #collapse:because:!do copy!private!user initiated actions! !
@@ -2063,7 +1961,6 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #connectTreeModel!do copy!initializing!models!private! !
 !ListTreeView categoriesFor: #countDisplayedChildrenOf:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #defaultIndentSeparation!constants!do copy!private! !
-!ListTreeView categoriesFor: #depthOf:!accessing!do copy!public! !
 !ListTreeView categoriesFor: #disableExpandAll!accessing-styles!do copy!public!testing! !
 !ListTreeView categoriesFor: #disableExpandAll:!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #discardAllExpanded!do copy!helpers!private! !
@@ -2075,8 +1972,6 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #displayedTreeBelow:do:!do copy!enumerating!public! !
 !ListTreeView categoriesFor: #displayedTreeDo:!do copy!enumerating!public! !
 !ListTreeView categoriesFor: #displayedTreeOf:do:!do copy!enumerating!public! !
-!ListTreeView categoriesFor: #displayIndexOf:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #displayIndexOf:ifAbsent:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #doSortChildrenBlock!accessing!do copy!public!sorting! !
 !ListTreeView categoriesFor: #doSortChildrenBlock:!accessing!do copy!public!sorting! !
 !ListTreeView categoriesFor: #doSortRoots!accessing!do copy!public!sorting! !
@@ -2113,15 +2008,13 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #hasLinesAtRoot!accessing-styles!do copy!public!testing! !
 !ListTreeView categoriesFor: #hasLinesAtRoot:!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #includesItem:!public! !
-!ListTreeView categoriesFor: #indentationFor:!do copy!private!states! !
 !ListTreeView categoriesFor: #indentFromRow:!adapters!do copy!private! !
 !ListTreeView categoriesFor: #indentSeparation!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #indentSeparation:!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #initialize!do copy!initializing!private! !
 !ListTreeView categoriesFor: #inOrder:parent:!do copy!private!sorting! !
 !ListTreeView categoriesFor: #inRootOrder:!do copy!private!sorting! !
-!ListTreeView categoriesFor: #invalidateItem:!do copy!helpers!private! !
-!ListTreeView categoriesFor: #invalidateItemIndex:!do copy!helpers!private! !
+!ListTreeView categoriesFor: #invalidateItemAt:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #isItemDisplayed:!do copy!public!testing! !
 !ListTreeView categoriesFor: #isItemExpandable:!do copy!public!testing! !
 !ListTreeView categoriesFor: #isItemExpanded:!do copy!public!testing! !
@@ -2131,7 +2024,6 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #isMonoExpandable:!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #isSelected:!do copy!public!testing! !
 !ListTreeView categoriesFor: #isSmallIcons!do copy!public!testing! !
-!ListTreeView categoriesFor: #isVirtual:!accessing-styles!do copy!public! !
 !ListTreeView categoriesFor: #listModel:!accessing!do copy!models!private! !
 !ListTreeView categoriesFor: #makeInternalListModel:searchPolicy:!accessing!do copy!models!private! !
 !ListTreeView categoriesFor: #makeInternalTreeModel:searchPolicy:!accessing!do copy!models!private! !
@@ -2152,14 +2044,13 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #onLeftButtonPressed:!do copy!event handling!public!user initiated actions! !
 !ListTreeView categoriesFor: #onTreeChanged:!do copy!event handling!public! !
 !ListTreeView categoriesFor: #onViewCreated!do copy!event handling!public! !
-!ListTreeView categoriesFor: #openState!do copy!private!states! !
 !ListTreeView categoriesFor: #parentOf:!accessing!do copy!public! !
 !ListTreeView categoriesFor: #parentsOf:includesAny:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #previousDisplayedSiblingOf:in:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #refreshContents!do copy!public!updating! !
 !ListTreeView categoriesFor: #refreshFromModel!do copy!public!updating! !
 !ListTreeView categoriesFor: #refreshFromModelBelow:!do copy!public!updating! !
-!ListTreeView categoriesFor: #refreshNonVirtual!do copy!private!updating! !
+!ListTreeView categoriesFor: #refreshItemState:!do copy!private!states! !
 !ListTreeView categoriesFor: #removeAllExcept:!do copy!expanding/collapsing!private!updating! !
 !ListTreeView categoriesFor: #removeExpanded:!do copy!helpers!private! !
 !ListTreeView categoriesFor: #removeFromDisplay:!do copy!private! !
@@ -2182,17 +2073,14 @@ wantExtendedSelection
 !ListTreeView categoriesFor: #selectionsAsSet!accessing!do copy!public!selection! !
 !ListTreeView categoriesFor: #selectParentOf:because:!do copy!private!selection!user initiated actions! !
 !ListTreeView categoriesFor: #setItem:indentation:!do copy!private!states! !
-!ListTreeView categoriesFor: #setItem:openState:!do copy!private!states! !
+!ListTreeView categoriesFor: #setItemAt:stateImage:!do copy!expanding/collapsing!private! !
 !ListTreeView categoriesFor: #setItemIndentation:!do copy!private!states! !
-!ListTreeView categoriesFor: #setItemState:!do copy!private!states! !
 !ListTreeView categoriesFor: #setModel:!accessing!do copy!models!private! !
 !ListTreeView categoriesFor: #sortBlock!accessing!do copy!public!sorting! !
 !ListTreeView categoriesFor: #sortBlock:!accessing!do copy!public!sorting! !
 !ListTreeView categoriesFor: #sortOnColumn:!columns!do copy!public!sorting! !
-!ListTreeView categoriesFor: #stateFor:!do copy!private!states! !
-!ListTreeView categoriesFor: #stateImageIndex:!do copy!private!states! !
-!ListTreeView categoriesFor: #stateIndexFromRow:!adapters!do copy!private! !
-!ListTreeView categoriesFor: #systemDrawsStateImages!do not copy!private!states!testing! !
+!ListTreeView categoriesFor: #stateImageFromRow:!adapters!do copy!private! !
+!ListTreeView categoriesFor: #stateImageManager!do copy!image management!private! !
 !ListTreeView categoriesFor: #toggleExpandAll:!do copy!expanding/collapsing!public! !
 !ListTreeView categoriesFor: #toggleExpanded:!do copy!expanding/collapsing!public! !
 !ListTreeView categoriesFor: #treeModel!accessing!do copy!models!public! !
@@ -2220,51 +2108,6 @@ ListTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#co
 
 !ListTreeView class methodsFor!
 
-configureExampleView: aListTreeView
-	"private -- helper for the examples"
-
-	aListTreeView
-		addColumn: ListViewColumn new;
-		addColumn: ListViewColumn new;
-		addColumn: ListViewColumn new;
-		yourself.
-
-	(aListTreeView allColumns at: 1)
-		text: 'Name';
-		width: 250;
-		getImageBlock: IconicListAbstract.
-
-	(aListTreeView allColumns at: 2)
-		text: 'Changed';
-		width: 20;
-		getContentsBlock: [:it | it owningPackage ifNil: [false] ifNotNil: [:pg | pg isChanged]];
-		getTextBlock: nil;
-		getImageBlock: [:it | it ifTrue: [Package changedIcon imageIndex]];
-		sortBlock: [:e1 :e2 | e1 or: [e2 not]].
-
-	(aListTreeView allColumns at: 3)
-		text: 'Package';
-		width: 200;
-		getContentsBlock: (Message selector: #owningPackage);
-		getImageBlock: IconicListAbstract;
-		sortBlock: [:e1 :e2 | e1 displayString <= e2 displayString].
-
-	"this will be the first column in the actual display"
-	(aListTreeView allColumns at: 4)
-		text: 'Changed';
-		width: 20;
-		getContentsBlock: [:it | it notNil and: [it isChanged]];
-		getTextBlock: nil;
-		getImageBlock: [:it | it ifTrue: [Package changedIcon imageIndex]];
-		sortBlock: [:e1 :e2 | e1 or: [e2 not]].
-
-	aListTreeView
-		hasLinesAtRoot: true;
-		hasFullRowSelect: false;
-		hasColumnImages: true;
-		columnOrder: #(4 1 2 3);
-		yourself.!
-
 convertToLocalVersion0: anArray from: anInteger
 	"private -- answer a version of anArray that represents at least version 0 of our instances'
 	layout"
@@ -2277,22 +2120,19 @@ convertToLocalVersion1: anArray from: anInteger
 	layout"
 
 	| array index |
-
-	anInteger >= 1 ifTrue: [^ anArray].
-
+	anInteger >= 1 ifTrue: [^anArray].
 	array := self convertToLocalVersion0: anArray from: anInteger.
 
 	"going from 0 to 1 changed the types of expanded and hiddenExpanded to PluggableSet"
 	index := self indexOfInstVar: 'expanded'.
-	array at: index put: (self setClass withAll: (array at: index)).
+	array at: index put: (PluggableSet withAll: (array at: index)).
 	index := self indexOfInstVar: 'hiddenExpanded'.
-	(array at: index) isNil ifFalse: [array at: index put: (self setClass withAll: (array at: index))].
+	(array at: index) isNil ifFalse: [array at: index put: (PluggableSet withAll: (array at: index))].
 
 	"and 'dummy3' (nee 'selChangeCause') is no longer used"
 	index := self indexOfInstVar: 'dummy3'.
 	array at: index put: nil.
-
-	^ array.!
+	^array!
 
 defaultOptions
 	"answer the bitmap of options that instances have by default"
@@ -2303,34 +2143,32 @@ fillStateImageManager
 	"private -- [re]fill in the shared ImageMaster that contains the image lists for the
 	leaf/expanded/not-expanded images"
 
-	| extent box smallBox hLineF hLineT vLineF vLineT boxPen linePen image |
-
+	| extent box hLineF hLineT vLineF vLineT boxPen linePen image |
 	"there *just has* to be a better way than this grubbing around"
+	#todo.	"Yes, we should use the theme images from the tree view."
 
 	"I should factor this stuff out"
 	extent := self stateImageExtent.
-	box := 4@4 corner: 13@13.
-	smallBox := 5@5 corner: 12@12.
-	hLineF := 6@8. hLineT := 11@8.
-	vLineF := 8@6. vLineT := 8@11.
+	box := 4 @ 4 corner: 13 @ 13.
+	hLineF := 6 @ 8.
+	hLineT := 11 @ 8.
+	vLineF := 8 @ 6.
+	vLineT := 8 @ 11.
 	boxPen := Pen color: Color gray.
 	linePen := Pen color: Color black.
 
-	"NB: the order of insertion of images *must* match the output of:
-		self stateNames.
-	"
+	"NB: the order of insertion of images *must* match the indices stored as class constants."
 	stateImageManager maskcolor: Color white.
 
 	"image for state #Leaf"
-	image := (Bitmap displayCompatibleWithExtent: extent).
-	(image canvas)
-		erase.
+	image := Bitmap displayCompatibleWithExtent: extent.
+	image canvas erase.
 	stateImageManager addImage: image.
 	image freeDC.
 
 	"image for state #Open"
-	image := (Bitmap displayCompatibleWithExtent: extent).
-	(image canvas)
+	image := Bitmap displayCompatibleWithExtent: extent.
+	image canvas
 		erase;
 		pen: boxPen;
 		rectangle: box;
@@ -2340,8 +2178,8 @@ fillStateImageManager
 	image freeDC.
 
 	"image for state #Closed"
-	image := (Bitmap displayCompatibleWithExtent: extent).
-	(image canvas)
+	image := Bitmap displayCompatibleWithExtent: extent.
+	image canvas
 		erase;
 		pen: boxPen;
 		rectangle: box;
@@ -2350,32 +2188,8 @@ fillStateImageManager
 		lineFrom: vLineF to: vLineT.
 	stateImageManager addImage: image.
 	image freeDC.
-
-	"image for state #SmallOpen"
-	image := (Bitmap displayCompatibleWithExtent: extent).
-	(image canvas)
-		erase;
-		pen: boxPen;
-		rectangle: smallBox;
-		pen: linePen;
-		lineFrom: hLineF to: hLineT.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	"image for state #SmallClosed"
-	image := (Bitmap displayCompatibleWithExtent: extent).
-	(image canvas)
-		erase;
-		pen: boxPen;
-		rectangle: smallBox;
-		pen: linePen;
-		lineFrom: hLineF to: hLineT;
-		lineFrom: vLineF to: vLineT.
-	stateImageManager addImage: image.
-	image freeDC.
-
 	boxPen free.
-	linePen free.!
+	linePen free!
 
 fillStateImageManagerFrom: anImage
 	"private -- [re]fill in the shared ImageMaster that contains the image lists for the
@@ -2402,17 +2216,50 @@ fillStateImageManagerFrom: anImage
 		srcOrigin x: (srcOrigin x + extent x)].
 !
 
-installViewResources
-	"private -- install instances as named resources associated
-	with various Presenter classes.
+fillStateImageManagerThemed
 
-		self installViewResources.
-	"
+	| extent theme image rect canvas |
+	extent := self stateImageExtent.
+	rect := RECT extent: extent.
 
-	ListTreePresenter addView: self asResource: 'Default view'.
-	ListPresenter addView: self asResource: 'ListTree view'.			"NB: don't forget to repackage this"
-	TreePresenter addView: self asResource: 'ListTree view'.			"or this"
-!
+	theme := (ThemeLibrary default openThemeData: nil pszClassList: #TreeView).
+
+	stateImageManager maskcolor: Color white.
+
+	"image for state leaf"
+	image := Bitmap displayCompatibleWithExtent: extent.
+	image canvas erase.
+	stateImageManager addImage: image.
+	image freeDC.
+
+	"image for state expanded"
+	image := Bitmap displayCompatibleWithExtent: extent.
+	canvas := image canvas.
+	ThemeLibrary default 
+		drawThemeBackground: theme
+		hdc: canvas asParameter
+		iPartId: ThemeConstants.TVP_GLYPH
+		iStateId: ThemeConstants.GLPS_OPENED
+		pRect: rect
+		pClipRect: nil.
+	stateImageManager addImage: image.
+	image freeDC.
+
+	"image for state collapsed"
+	image := Bitmap displayCompatibleWithExtent: extent.
+	canvas := image canvas.
+	ThemeLibrary default 
+		drawThemeBackground: theme
+		hdc: canvas asParameter
+		iPartId: ThemeConstants.TVP_GLYPH
+		iStateId: ThemeConstants.GLPS_CLOSED
+		pRect: rect
+		pClipRect: nil.
+	stateImageManager addImage: image.
+	image freeDC.
+
+	ThemeLibrary default closeThemeData: theme.
+	!
 
 internalListModelClass
 	"answer the factory object to use for our instances' internally
@@ -2437,31 +2284,6 @@ onStartup
 	old session"
 
 	stateImageManager := nil.!
-
-rebuildPoolConstants
-	"private -- rebuild the pool constants dictionary.  We use a constants dict rather than class vars so that
-	we can share them with MultipleSelectionListTreeView.
-
-		self rebuildPoolConstants.
-	"
-
-	(Smalltalk at: #ListTreeConstants ifAbsentPut: [PoolConstantsDictionary new])
-
-		at: 'DisableExpandAllMask'		put: 16r0001;
-		at: 'HasButtonsMask'		put: 16r0002;
-		at: 'HasLinesAtRootMask'		put: 16r0004;
-		at: 'HasLinesMask'			put: 16r0008;
-		at: 'DoSortRootsMask'		put: 16r0010;
-		at: 'UseSmartRefreshMask'		put: 16r0020;
-
-		shrink.
-!
-
-setClass
-	"answer the factory object to use to create instances' lists of
-	which objects satisfy some condition"
-
-	^ PluggableSet.!
 
 stateImageBlock: a0Block
 	"set the <niladicValueable> that can optionally be used to supply bitmaps for
@@ -2489,20 +2311,7 @@ stateImageExtent
 	"answer a Point indicating the size we use for state images.
 	Note that the state images don't visibly fill the extent"
 
-	^ self stateImageWidth @ self stateImageHeight.!
-
-stateImageHeight
-	"answer the height in pixels of our 'state' images.
-	Note that the state images don't visibly fill the extent"
-
-	^ 16.!
-
-stateImageList
-	"answer an ImageMaster that contains the image lists for the
-	leaf/expanded/not-expanded images"
-
-	^ self stateImageManager imageListWithExtent: self stateImageExtent.
-!
+	^SystemMetrics current smallIconExtent!
 
 stateImageManager
 	"answer the shared ImageMaster that contains the image lists for the
@@ -2516,23 +2325,11 @@ stateImageManager
 			on: Exception
 			do: [:ex | ex notify. ex return: nil].
 		image isNil
-			ifTrue: [self fillStateImageManager]
+			ifTrue: [
+				ThemeLibrary isAppThemed ifTrue: [self fillStateImageManagerThemed] ifFalse: [self fillStateImageManager]]
 			ifFalse: [self fillStateImageManagerFrom: image]].
 
 	^ stateImageManager.!
-
-stateImageWidth
-	"answer the width in pixels of our 'state' images.
-	Note that the state images don't visibly fill the extent"
-
-	^ 16.!
-
-stateNames
-	"answer an Array of Symbol names of states, these are in the same order
-	as the corresponding images in the stateImageList"
-
-	"#SmallOpen and #SmallClosed are not actually used yet"
-	^ #(#Leaf #Open #Closed #SmallOpen #SmallClosed).!
 
 stbConvert: anArray fromLocalVersion: anInteger
 	"private -- answer a version of anArray that represents the current version of our instances'
@@ -2575,26 +2372,19 @@ stbVersion
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
 	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
-!ListTreeView class categoriesFor: #configureExampleView:!do not copy!examples!must strip!private! !
 !ListTreeView class categoriesFor: #convertToLocalVersion0:from:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #convertToLocalVersion1:from:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #defaultOptions!constants!do copy!public! !
 !ListTreeView class categoriesFor: #fillStateImageManager!do not copy!initializing!private! !
 !ListTreeView class categoriesFor: #fillStateImageManagerFrom:!do not copy!initializing!private! !
-!ListTreeView class categoriesFor: #installViewResources!development!do not copy!must strip!private! !
+!ListTreeView class categoriesFor: #fillStateImageManagerThemed!do not copy!initializing!private! !
 !ListTreeView class categoriesFor: #internalListModelClass!constants!do not copy!public! !
 !ListTreeView class categoriesFor: #internalTreeModelClass!constants!do copy!public! !
 !ListTreeView class categoriesFor: #localStbVersion!binary filing!constants!do copy!private! !
 !ListTreeView class categoriesFor: #onStartup!do not copy!events!public! !
-!ListTreeView class categoriesFor: #rebuildPoolConstants!constants!development!do not copy!initializing!must strip!private! !
-!ListTreeView class categoriesFor: #setClass!constants!do copy!public! !
 !ListTreeView class categoriesFor: #stateImageBlock:!accessing!do not copy!public! !
 !ListTreeView class categoriesFor: #stateImageExtent!constants!do copy!public! !
-!ListTreeView class categoriesFor: #stateImageHeight!constants!do copy!public! !
-!ListTreeView class categoriesFor: #stateImageList!accessing!do copy!public! !
 !ListTreeView class categoriesFor: #stateImageManager!accessing!do not copy!public! !
-!ListTreeView class categoriesFor: #stateImageWidth!constants!do copy!public! !
-!ListTreeView class categoriesFor: #stateNames!constants!do copy!public! !
 !ListTreeView class categoriesFor: #stbConvert:fromLocalVersion:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #stbConvert:fromVersion:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #stbEncodingPrime!binary filing!constants!do copy!private! !

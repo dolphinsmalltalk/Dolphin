@@ -160,6 +160,15 @@ countElements
 	self do: [ :each | tally := tally + 1].
 	^tally!
 
+depthOf: anObject
+	"Answer the depth of anObject in the tree. Roots are at depth 0, and then immediate children at depth 1, and so on."
+
+	| answer current |
+	answer := 0.
+	current := anObject.
+	[(current := self parentOf: current) notNil] whileTrue: [answer := answer + 1].
+	^answer!
+
 detect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
 	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
@@ -433,6 +442,7 @@ withAllParents: anObject
 !TreeModelAbstract categoriesFor: #collapse:!public!removing! !
 !TreeModelAbstract categoriesFor: #collapse:ifAbsent:!public!removing! !
 !TreeModelAbstract categoriesFor: #countElements!accessing!private! !
+!TreeModelAbstract categoriesFor: #depthOf:!hierarchy!public! !
 !TreeModelAbstract categoriesFor: #detect:ifNone:!converting!public! !
 !TreeModelAbstract categoriesFor: #do:!enumerating!public! !
 !TreeModelAbstract categoriesFor: #endOrderDo:!enumerating!public! !
