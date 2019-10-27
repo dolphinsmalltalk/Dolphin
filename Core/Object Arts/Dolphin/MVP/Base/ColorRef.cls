@@ -84,7 +84,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 			anSTBInFiler stream skip: 4].
 	"Make a placeholder for the Color"
 	ref := anSTBInFiler register: nil.
-	answer := self fromInteger: anSTBInFiler basicNext.
+	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
 !ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
