@@ -187,6 +187,10 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 					else
 						nMaxUnmarked = nMaxUnmarked << 1;
 					pUnmarked = static_cast<OTE**>(realloc(pUnmarked, nMaxUnmarked*sizeof(OTE*)));
+					if (pUnmarked == nullptr)
+					{
+						::RaiseException(E_OUTOFMEMORY, EXCEPTION_NONCONTINUABLE, 0, nullptr);
+					}
 				}
 				pUnmarked[nUnmarked++] = ote;
 

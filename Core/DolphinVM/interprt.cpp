@@ -242,7 +242,7 @@ HRESULT Interpreter::initializeCharMaps()
 	// If either assumption is not true, the implementation will not work correctly, so we switch to Windows 1252
 	if (cpInfo.MaxCharSize != 1 || ::MultiByteToWideChar(cpInfo.CodePage, 0, byteCharSet, 256, nullptr, 0) > 256)
 	{
-		trace(IDP_UNSUPPORTED_ACP, m_ansiCodePage);
+		trace(IDP_UNSUPPORTED_ACP, cpInfo.CodePage);
 		::GetCPInfoExW(1252, 0, &cpInfo);
 	}
 
@@ -257,7 +257,12 @@ HRESULT Interpreter::initializeCharMaps()
 
 	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
 	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
-	WCHAR wideChars[65536];
+	WCHAR* wideChars = reinterpret_cast<WCHAR*>(_malloca(65536*sizeof(WCHAR)));
+	if (wideChars == nullptr)
+	{
+		return E_OUTOFMEMORY;
+	}
+
 	unsigned i = 0;
 	for (; i < 0xd800; i++)
 		wideChars[i] = static_cast<WCHAR>(i);
@@ -267,6 +272,7 @@ HRESULT Interpreter::initializeCharMaps()
 		wideChars[i] = static_cast<WCHAR>(i);
 	
 	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, m_unicodeToAnsiCharMap, 65536, "\0", nullptr) == 65536);
+	_freea(wideChars);
 
 	return S_OK;
 }

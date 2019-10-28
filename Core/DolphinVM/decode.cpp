@@ -549,11 +549,6 @@ void DumpStackEntry(Oop* sp, Process* pProc, wostream& stream)
 	}
 }
 
-// determine number of elements in an array (not bytes)
-#ifndef _countof
-#define _countof(array) (sizeof(array)/sizeof(array[0]))
-#endif
-
 /////////////////////////////////////////////////////////////////////////////
 // Formatted output
 

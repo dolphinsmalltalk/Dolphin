@@ -87,7 +87,7 @@ typedef INT_PTR 	SMALLINTEGER;	// Optimized SmallInteger; same size as MWORD
 typedef MWORD		SMALLUNSIGNED;	// Unsigned optimized SmallInteger; same size as MWORD	
 typedef MWORD		Oop;
 
-typedef SDWORD		NTSTATUS;
+typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
 
 // Define this is using a 16-bit word
 // as it conditionally compiles in MethodHeaderExtension which
@@ -127,6 +127,7 @@ extern CMonitor traceMonitor;
 
 LPCWSTR __stdcall GetErrorText(DWORD win32ErrorCode);
 LPCWSTR __stdcall GetLastErrorText();
+std::wstring GetResourceString(HMODULE hMod, int resId);
 int __cdecl DolphinMessageBox(int idPrompt, UINT flags, ...);
 void __cdecl trace(const wchar_t* szFormat, ...);
 void __cdecl trace(int nPrompt, ...);
@@ -175,5 +176,10 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 
 #if defined(_DEBUG)
 #include <crtdbg.h>
+#endif
+
+// determine number of elements in an array (not bytes)
+#ifndef _countof
+#define _countof(array) (sizeof(array)/sizeof(array[0]))
 #endif
 

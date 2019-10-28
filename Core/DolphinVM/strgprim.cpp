@@ -581,7 +581,7 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 							{
 							case StringEncoding::Ansi:
 								// Non-ascii Ansi char into Utf16 string. Will always go.
-								psz[index] = m_ansiToUnicodeCharMap[codeUnit];
+								psz[index] = m_ansiToUnicodeCharMap[codeUnit & 0xFF];
 								*newSp = oopValue;
 								return newSp;
 
@@ -1072,10 +1072,11 @@ Utf16StringOTE* __fastcall Utf16String::New(const WCHAR* value, size_t cwch)
 template <UINT CP, class T> Utf16StringOTE * ST::Utf16String::New(const T* psz, size_t cch)
 {
 	// A UTF16 encoded string can never require more code units than a byte encoding (though it will usually require more bytes)
-	int cwch = ::MultiByteToWideChar(CP, 0, reinterpret_cast<LPCCH>(psz), cch, nullptr, 0);
+	const UINT cp = CP == CP_ACP ? Interpreter::m_ansiCodePage : CP;
+	int cwch = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, nullptr, 0);
 	Utf16StringOTE* stringPointer = New(cwch);
 	Utf16String::CU* pwsz = stringPointer->m_location->m_characters;
-	int cwch2 = ::MultiByteToWideChar(CP, 0, reinterpret_cast<LPCCH>(psz), cch, (LPWSTR)pwsz, cwch);
+	int cwch2 = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, (LPWSTR)pwsz, cwch);
 	pwsz[cwch] = L'\0';
 	return stringPointer;
 }

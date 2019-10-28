@@ -173,11 +173,18 @@ LRESULT CALLBACK Interpreter::DolphinDlgProc(HWND /*hWnd*/, UINT /*uMsg*/, WPARA
 
 int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 {
-	wchar_t szCaption[512];
 	HMODULE hExe = GetModuleHandle(NULL);
-	if (!::LoadStringW(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
-		::GetModuleFileNameW(hExe, szCaption, sizeof(szCaption));
-	return  ::MessageBoxW(NULL, msg, szCaption, flags|MB_TASKMODAL);
+	std::wstring appTitle = GetResourceString(hExe, IDS_APP_TITLE);
+	if (!appTitle.empty())
+	{
+		return ::MessageBoxW(NULL, msg, appTitle.c_str(), flags | MB_TASKMODAL);
+	}
+	else
+	{
+		WCHAR filename[_MAX_PATH + 1];
+		GetModuleFileNameW(hExe, filename, _countof(filename));
+		return  ::MessageBoxW(NULL, msg, filename, flags | MB_TASKMODAL);
+	}
 }
 
 #pragma code_seg(INIT_SEG)

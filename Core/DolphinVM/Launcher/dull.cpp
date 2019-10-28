@@ -165,7 +165,10 @@ static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 int APIENTRY 
 wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-	::CoInitialize(NULL);
+	HRESULT hr = ::CoInitialize(NULL);
+	if (FAILED(hr))
+		return hr;
+
  	int nRet = StartDevSys(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 	::CoUninitialize();
 	return nRet;
