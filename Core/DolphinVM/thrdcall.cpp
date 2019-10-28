@@ -30,14 +30,17 @@ void __cdecl DebugDump(LPCWSTR szMsg);
 // Static data members
 ///////////////////////////////////////////////////////////////////////////////
 
+// Note that this static must only be accessed from the main interpreter thread
+// Its purpose is to maintain a list of all overlapped calls objects for admin
+// of same.
+OverlappedCallList OverlappedCall::s_activeList;
+
 // Time permitted for threads to complete before main thread gives up
 static DWORD s_dwTerminateTimeout;
 static bool bIsNT;
 
 const DWORD SE_VMTERMINATETHREAD = MAKE_CUST_SCODE(SEVERITY_ERROR, FACILITY_NULL, 0x300);
 
-//bool inPrim = false;
-//bool completed = false;
 
 inline void Process::NewOverlapSemaphore()
 {
@@ -85,7 +88,9 @@ OverlappedCallPtr OverlappedCall::New(ProcessOTE* oteProcess)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	return new OverlappedCall(oteProcess);
+	OverlappedCall* answer = new OverlappedCall(oteProcess);
+	s_activeList.AddFirst(answer);
+	return answer;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -125,15 +130,23 @@ void OverlappedCall::TerminateThread()
 	#endif
 }
 
-//OverlappedCallPtr OverlappedCall::RemoveFirstFromList(OverlappedCallList& list)
-//{
-//	return list.RemoveFirst();
-//}
+OverlappedCallPtr OverlappedCall::RemoveFirstFromList(OverlappedCallList& list)
+{
+	return list.RemoveFirst();
+}
 
 // Static clean up async call support on shutdown
 void OverlappedCall::Uninitialize()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
+
+	// Terminate all overlapped call threads
+	OverlappedCallPtr next = RemoveFirstFromList(s_activeList);
+	while (next)
+	{
+		next->TerminateThread();
+		next = RemoveFirstFromList(s_activeList);
+	}
 }
 
 
@@ -164,9 +177,37 @@ static HANDLE NewAutoResetEvent()
 void OverlappedCall::OnCompact()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	HARDASSERT((POTE)m_oteProcess != Pointers.Nil);
 
+	// A compact is in progress, we need to ask the ObjectMemory to update
+	// our instances which might have stored down process Oops (i.e. any
+	// active or pending termination/completion).
+
+#if TRACING == 1
+	{
+		tracelock lock(::thinDump);
+		::thinDump << L"Compacting outstanding overlapped calls..." << std::endl;
+	}
+#endif
+	{
+		CompactCallsOnList(s_activeList);
+	}
+}
+
+void OverlappedCall::CompactCallsOnList(OverlappedCallList& list)
+{
+	OverlappedCall* next = list.First();
+	while (next)
+	{
+		next->compact();
+		next = next->Next();
+	}
+}
+
+void OverlappedCall::compact()
+{
+	HARDASSERT((POTE)m_oteProcess != Pointers.Nil);
 	ObjectMemory::compactOop(m_oteProcess);
+
 	#if TRACING == 1
 	{
 		TRACELOCK();
@@ -281,6 +322,7 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 	}
 	#endif
 
+	oteProcess->countUp();
 	Init();
 }
 
@@ -508,9 +550,6 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
 	}
 	#endif
 
-	// Note that the callDepth member examined by IsInCall() method is only  accessed 
-	// from the main thread, or when the main thread is blocked waiting for call 
-	// completion on the worker thread, therefore it needs no synchronisation
 	if (IsInCall())
 		// Nested overlapped calls are not currently supported
 		return false;
@@ -519,6 +558,7 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
 	m_pMethod = pMethod;
 	m_nArgCount = argCount;
 	ASSERT(m_oteProcess == Interpreter::actualActiveProcessPointer());
+
 	// Copy context from Interpreter
 	// ?? Not sure we'll need all this
 	m_interpContext = Interpreter::GetRegisters();
@@ -580,6 +620,8 @@ void OverlappedCall::OnActivateProcess()
 
 	if (CanComplete())
 	{
+		ASSERT(IsInCall());
+
 		// Let the overlapped thread continue
 		::SetEvent(m_hEvtGo);
 
@@ -895,7 +937,10 @@ void OverlappedCall::RemoveFromPendingTerminations()
 		HARDASSERT(oteProc->isNil());
 	}
 
-	m_oteProcess = (ProcessOTE*)Pointers.Nil;
+	NilOutPointer(m_oteProcess);
+
+	// Remove the call from the active list as it is being destroyed
+	Unlink();
 }
 
 // Let the interpreter know that this thread has completed the call, and is ready to finish
@@ -913,14 +958,14 @@ void OverlappedCall::NotifyInterpreterOfCallReturn()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << std::hex << GetCurrentThreadId() << L": NotifyInterpreterOfCallReturn(), failure code = " << m_primitiveFailureCode << std::endl;
+		TRACESTREAM << std::hex << GetCurrentThreadId() << L": NotifyInterpreterOfCallReturn(), failure code = " << (SMALLINTEGER)m_primitiveFailureCode << std::endl;
 	}
 	#endif
 
 	InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Returned, Calling);
 	Process* myProc = GetProcess();
 	Interpreter::asynchronousSignal(myProc->OverlapSemaphore());
-	//completed = true;
+
 	// We must set this event in case the main thread has quiesced
 	Interpreter::SetWakeupEvent();
 }
@@ -938,7 +983,7 @@ void OverlappedCall::WaitForInterpreter()
 		if (dwRet == WAIT_ABANDONED)
 		{
 			// Event deleted, etc, so terminate the thread
-			RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
+			::RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
 		}
 
 		// Interrupted to process an APC (probably a suspend/terminate) or due to a timeout
@@ -1014,6 +1059,34 @@ OverlappedCallPtr OverlappedCall::Do(CompiledMethod* pMethod, unsigned argCount)
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive helpers
 
+void OverlappedCall::MarkRoots()
+{
+	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
+
+	OverlappedCallPtr next = s_activeList.First();
+	while (next)
+	{
+		if (next->IsInCall())
+		{
+			ObjectMemory::MarkObjectsAccessibleFromRoot(reinterpret_cast<POTE>(next->m_oteProcess));
+		}
+		next = next->Next();
+	}
+}
+
+#ifdef _DEBUG
+void OverlappedCall::ReincrementProcessReferences()
+{
+	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
+
+	OverlappedCallPtr next = s_activeList.First();
+	while (next)
+	{
+		next->m_oteProcess->countUp();
+		next = next->Next();
+	}
+}
+#endif
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter methods related to overlapped calls
 ///////////////////////////////////////////////////////////////////////////////
