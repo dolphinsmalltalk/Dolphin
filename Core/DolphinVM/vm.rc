@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "rc_vm.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -17,7 +19,6 @@
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -40,7 +41,6 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -51,12 +51,6 @@ HSPLIT                  CURSOR                  "res\\hsplit.cur"
 
 VSPLIT                  CURSOR                  "res\\vsplit.cur"
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +60,6 @@ VSPLIT                  CURSOR                  "res\\vsplit.cur"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
-#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -170,7 +163,7 @@ STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
     IDP_NOHIRESCLOCK        "Unable to establish high-resolution clock frequency (%!1d!: %2)"
-    IDP_UNSUPPORTED_ACP     "Unsupported code page %1!d!"
+    IDP_UNSUPPORTED_ACP     "Unsupported multi-byte ANSI code page %d, using 1252 instead"
 END
 
 STRINGTABLE

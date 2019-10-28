@@ -730,16 +730,14 @@ inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
 
 inline void ObjectMemory::nilOutPointer(Oop& objectPointer)
 {
-	Oop oldValue = objectPointer;
-	objectPointer = reinterpret_cast<Oop>(Pointers.Nil);
 	countDown(objectPointer);
+	objectPointer = reinterpret_cast<Oop>(Pointers.Nil);
 }
 
 inline void ObjectMemory::nilOutPointer(OTE*& ote)
 {
-	OTE* oldValue = ote;
-	ote = reinterpret_cast<OTE*>(Pointers.Nil);
 	ote->countDown();
+	ote = reinterpret_cast<OTE*>(Pointers.Nil);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

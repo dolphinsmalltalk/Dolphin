@@ -868,6 +868,11 @@ void InitializeVtbl()
 	ASSERT(sizeof(VTblThunk) == 10);
 
 	aVtblThunks = static_cast<VTblThunk*>(::VirtualAlloc(NULL, NUMVTBLENTRIES*sizeof(VTblThunk), MEM_COMMIT, PAGE_READWRITE));
+	if (aVtblThunks == nullptr)
+	{
+		RaiseFatalError(IDP_OUTOFVIRTUALMEMORY, 0);
+		return;
+	}
 
 	for (unsigned i=0;i<NUMVTBLENTRIES;i++)
 	{

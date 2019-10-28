@@ -672,7 +672,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerAt(Oop* const sp, unsigned)
 		SMALLINTEGER value = abs(ObjectMemoryIntegerValueOf(*(sp - 1)));
 		if (index > 0 && index <= 4)
 		{
-			uint8_t byte = value >> (index - 1) * 8;
+			uint8_t byte = (value >> (index - 1) * 8) & 0xff;
 			*(sp - 1) = ObjectMemoryIntegerObjectOf(byte);
 			return sp - 1;
 		}

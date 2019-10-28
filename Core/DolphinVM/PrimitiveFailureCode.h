@@ -3,7 +3,7 @@
 #include <ntstatus.h>
 #include <winerror.h>
 
-typedef long NTSTATUS;
+typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
 
 // Define a macro that packs an HRESULT. Then use these for the primitive failure codes. There is already image code to unpack
 #define PFC_FROM_HRESULT(hr) ((SMALLINTEGER)(((hr) & 0x7ffffff) << 1 | ((hr) & 0xf0000000) | 1))
@@ -14,7 +14,7 @@ typedef long NTSTATUS;
 // the use of the error out of its domain, but the message is relevant.
 // Some codes are commented out because they are not currently used.
 
-typedef enum _PrimitiveFailureCode : SMALLINTEGER 
+enum class _PrimitiveFailureCode : SMALLINTEGER 
 {
 	NoError = 0,
 	//AccessDenied = PFC_FROM_WIN32(ERROR_ACCESS_DENIED),								// Access is denied.
@@ -86,4 +86,4 @@ typedef enum _PrimitiveFailureCode : SMALLINTEGER
 	WrongNumberOfArgs = PFC_FROM_HRESULT(TYPE_E_OUTOFBOUNDS),						// Invalid number of arguments
 	DebugStep = PFC_FROM_NT(STATUS_SINGLE_STEP),									// A single step or trace operation has just been completed.
 
-} _PrimitiveFailureCode;
+};

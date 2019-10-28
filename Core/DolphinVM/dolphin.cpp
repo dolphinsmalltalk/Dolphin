@@ -52,20 +52,25 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 	DWORD dwHandle;
 
 	wchar_t vmFileName[MAX_PATH+1];
-	::GetModuleFileNameW(GetVMModule(), vmFileName, sizeof(vmFileName) - 1);
+	::GetModuleFileNameW(GetVMModule(), vmFileName, _countof(vmFileName) - 1);
 
-	DWORD dwLen = ::GetFileVersionInfoSize(vmFileName, &dwHandle);
+	DWORD dwLen = ::GetFileVersionInfoSizeW(vmFileName, &dwHandle);
 	if (dwLen)
 	{
-		LPVOID lpData = alloca(dwLen);
-		if (::GetFileVersionInfoW(vmFileName, dwHandle, dwLen, lpData))
+		LPVOID lpData = _malloca(dwLen);
+		if (lpData != nullptr)
 		{
-			void* lpFixedInfo=0;
-			UINT uiBytes=0;
-			VERIFY(::VerQueryValue(lpData, TEXT("\\"), &lpFixedInfo, &uiBytes)); 
-			ASSERT(uiBytes == sizeof(VS_FIXEDFILEINFO));
-			memcpy(lpInfoOut, lpFixedInfo, sizeof(VS_FIXEDFILEINFO));
-			bRet = TRUE;
+			if (::GetFileVersionInfoW(vmFileName, 0, dwLen, lpData))
+			{
+				void* lpFixedInfo = 0;
+				UINT uiBytes = 0;
+				VERIFY(::VerQueryValueW(lpData, L"\\", &lpFixedInfo, &uiBytes));
+				ASSERT(uiBytes == sizeof(VS_FIXEDFILEINFO));
+				memcpy(lpInfoOut, lpFixedInfo, sizeof(VS_FIXEDFILEINFO));
+				bRet = TRUE;
+			}
+
+			_freea(lpData);
 		}
 		else
 			TRACESTREAM << L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << std::endl;

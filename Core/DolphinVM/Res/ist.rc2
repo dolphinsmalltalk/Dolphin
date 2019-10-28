@@ -1,11 +1,11 @@
 //
 // IST.RC2 - resources Microsoft Visual C++ does not edit directly
 //
+#pragma code_page(65001)
 
 #ifdef APSTUDIO_INVOKED
 	#error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Add manually edited resources here...
@@ -36,7 +36,7 @@ BEGIN
             VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
             VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
             VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2018."
+            VALUE "LegalCopyright", "Copyright Â© Object Arts Ltd 1997-2018."
             VALUE "OriginalFilename", "DolphinVM7.DLL"
             VALUE "PrivateBuild", "11192015"
             VALUE "ProductName", "Dolphin Smalltalk 7"

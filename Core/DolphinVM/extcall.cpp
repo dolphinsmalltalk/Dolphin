@@ -9,7 +9,6 @@
 
 ******************************************************************************/
 #include "Ist.h"
-typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
 
 #pragma code_seg(FFI_SEG)
 
@@ -153,9 +152,9 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		switch (strClass->Encoding)
 		{
 		case StringEncoding::Ansi:
-			return NewBSTR<AnsiString::CodePage, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR<CP_ACP, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf8:
-			return NewBSTR<Utf8String::CodePage, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR<CP_UTF8, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf16:
 			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
 		case StringEncoding::Utf32:

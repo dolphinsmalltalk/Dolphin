@@ -1,4 +1,4 @@
-/******************************************************************************
+ï»¿/******************************************************************************
 
 	File: Timer.cpp
 
@@ -242,7 +242,7 @@ HRESULT Interpreter::initializeTimer()
 {
 	if (::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&m_clockFrequency)) == 0)
 	{
-		// MSDN says this shouldn't happen: "On systems that run Windows XP or later, the function will always succeed and will thus never return zero."
+		// MSDN says this shouldn't happen: "On systems that run Windows XP or later, the function will always succeed and will thus never return zero."
 		return ReportWin32Error(IDP_NOHIRESCLOCK, ::GetLastError());
 	}
 

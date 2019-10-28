@@ -703,7 +703,7 @@ public:
 		stream << L"Push " << std::dec << value;
 		if (byteSize > 0)
 		{
-			stream << L" (" << std::hex << L"0x" << setfill(L'0') << setw(byteSize * 2) << value << L')' << setfill(L' ');
+			stream << L" (" << std::hex << L"0x" << setfill(L'0') << setw(static_cast<streamsize>(byteSize) * 2) << value << L')' << setfill(L' ');
 		}
 	}
 };

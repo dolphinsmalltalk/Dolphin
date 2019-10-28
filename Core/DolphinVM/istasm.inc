@@ -740,11 +740,11 @@ GetIPOffsetUsing MACRO tempRegister
 		mov		tempRegister, (OTE PTR[tempRegister]).m_location	;; Include the object header
 	.ENDIF
 	sub		_IP, tempRegister								;; Convert _IP to offset into object
-	IFDEF _DEBUG
-		.IF (_IP > 8192)
-			int	3											;; Probably a bug - _IP index very large
-		.ENDIF
-	ENDIF
+;	IFDEF _DEBUG
+;		.IF (_IP > 8192)
+;			int	3											;; Probably a bug - _IP index very large
+;		.ENDIF
+;	ENDIF
 ENDM
 
 PrimitiveFailureInvalidParameter1 EQU 0680000EFh
