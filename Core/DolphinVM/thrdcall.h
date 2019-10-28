@@ -116,7 +116,75 @@ public:
 class OverlappedCall;
 typedef SmartPtr<OverlappedCall> OverlappedCallPtr;
 
-class OverlappedCall
+template <class T> class DoubleLink
+{
+	T* prev;
+	T* next;
+
+public:
+	DoubleLink() : prev(NULL), next(NULL) {}
+
+	T* Next() const { return next; }
+
+	T* Unlink()
+	{
+		// next null if last link in list
+		if (next)
+			next->prev = prev;
+		// prev pointer normally valid because there is an anchor node, but when shutting
+		// down will already have been unlinked from the list
+		if (prev)
+			prev->next = next;
+		next = prev = NULL;
+
+		return static_cast<T*>(this);
+	}
+
+	void LinkAfter(T* prevArg)
+	{
+		T* pThis = static_cast<T*>(this);
+		this->next = prevArg->next;
+		if (this->next)
+			this->next->prev = pThis;
+		this->prev = prevArg;
+		prevArg->next = pThis;
+	}
+};
+
+template <class T> class DoublyLinkedList
+{
+	DoubleLink<T> anchor;
+public:
+	T* First() const
+	{
+		return anchor.Next();
+	}
+
+	bool IsEmpty() const
+	{
+		return First() == NULL;
+	}
+
+	T* RemoveFirst()
+	{
+		T* node = First();
+		if (node != NULL)
+			node->Unlink();
+		return node;
+	}
+
+	void AddFirst(T* node)
+	{
+		// Slightly nasty thing is that anchor node is not actually the same type as
+		// the other nodes, so we need a cast here.
+		node->LinkAfter(reinterpret_cast<T*>(&anchor));
+	}
+};
+
+class OverlappedCall;
+typedef DoublyLinkedList<OverlappedCall> OverlappedCallList;
+
+class OverlappedCall : public DoubleLink<OverlappedCall>
 {
 public:
 	// Allocate/free methods for maintaining pool of available blocks
@@ -195,15 +263,21 @@ public:
 
 	static Semaphore* pendingTerms();
 
+	static void MarkRoots();
+	static void OnCompact();
+
 	void OnActivateProcess();
-	void OnCompact();
+
+#ifdef _DEBUG
+	static void ReincrementProcessReferences();
+#endif
 
 	bool IsInCall();
 
 private:
 	// Low-level management routines
 	static OverlappedCallPtr New(ProcessOTE*);
-	//static OverlappedCallPtr RemoveFirstFromList(OverlappedCallList&);
+	static OverlappedCallPtr RemoveFirstFromList(OverlappedCallList&);
 
 	// Thread entry point function
 	static unsigned __stdcall ThreadMain(void* pThis);
@@ -215,13 +289,14 @@ private:
 	static OverlappedCallPtr BeginAPC(DWORD dwParam);
 	static OverlappedCallPtr BeginMainThreadAPC(DWORD dwParam);
 
-	//static void CompactCallsOnList(OverlappedCallList& list);
+	static void CompactCallsOnList(OverlappedCallList& list);
+	void compact();
 
 	///////////////////////////////////////////////////////////////////////////
 	// Static data members
 private:
 
-	//static OverlappedCallList s_activeList;
+	static OverlappedCallList s_activeList;
 	
 	static bool s_bShutdown;
 

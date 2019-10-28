@@ -1077,6 +1077,34 @@ testMustBeBoolean
 	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 1 + 2 + 3 + 4.
 	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
 
+testOverlappedCallGC
+	| kernel event finished delay1 delay2 |
+	kernel := KernelLibrary default.
+	event := kernel
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	finished := false.
+	delay1 := Delay forDuration: 50 milliseconds.
+	delay2 := Delay forDuration: 20 milliseconds.
+	
+	[delay1 signal.
+	kernel waitForSingleObject: event dwMilliseconds: -1.
+	finished := true.
+	delay2 signal]
+			forkAt: Processor userInterruptPriority.
+	self deny: finished.
+	delay1 wait.
+	1 timesRepeat: 
+			[MemoryManager current
+				collectGarbage;
+				administerLastRites].
+	self deny: finished.
+	kernel setEvent: event.
+	delay2 wait.
+	self assert: finished!
+
 testOverlappedCallInvalidArguments
 	"Invalid arguments should be detected and handled as for a non-overlapped call."
 	self
@@ -3166,6 +3194,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
+!VMTest categoriesFor: #testOverlappedCallGC!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallInvalidArguments!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !
