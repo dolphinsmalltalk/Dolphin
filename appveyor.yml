@@ -12,7 +12,7 @@ install:
     git lfs pull
 build_script:
 - cmd: >-
-    msbuild Core\DolphinVM\DolphinVM.sln /m /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    msbuild Core\DolphinVM\DolphinVM.sln /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
     Core\DolphinVM\AppVeyorZIPDolphinVM
 test_script:
