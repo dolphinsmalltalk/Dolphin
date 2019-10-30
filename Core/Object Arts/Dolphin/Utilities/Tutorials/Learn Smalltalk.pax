@@ -19,11 +19,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\IDE\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: 'Tutorial Player';
-	yourself).
+package setPrerequisites: #(
+	'..\..\IDE\Base\Development System'
+	'..\..\Base\Dolphin'
+	'Tutorial Player').
 
 package!
 

@@ -25,11 +25,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: 'SSW EditableListView';
-	add: 'SSW Widget Enhancements';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'SSW EditableListView'
+	'SSW Widget Enhancements').
 
 package!
 

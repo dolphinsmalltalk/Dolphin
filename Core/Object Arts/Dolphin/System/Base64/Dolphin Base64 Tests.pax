@@ -14,12 +14,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: 'Dolphin Base64';
-	add: '..\Random\Dolphin Random Stream';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'Dolphin Base64'
+	'..\Random\Dolphin Random Stream').
 
 package!
 

@@ -32,10 +32,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Database Connection Base';
-	add: '..\IDE\Base\Development System';
-	yourself).
+package setPrerequisites: #(
+	'Database Connection Base'
+	'..\IDE\Base\Development System').
 
 package!
 

@@ -19,11 +19,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Lagoon\Product Protection';
-	add: '..\..\..\Dolphin\Lagoon\Product Protection Base';
-	add: '..\..\MVP\Scribble\Scribble';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Lagoon\Product Protection'
+	'..\..\..\Dolphin\Lagoon\Product Protection Base'
+	'..\..\MVP\Scribble\Scribble').
 
 package!
 

@@ -34,9 +34,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'Dolphin').
 
 package!
 

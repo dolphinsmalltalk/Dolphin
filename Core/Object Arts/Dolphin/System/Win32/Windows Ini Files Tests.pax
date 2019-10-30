@@ -16,12 +16,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: 'Windows Ini Files';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'Windows Ini Files').
 
 package!
 

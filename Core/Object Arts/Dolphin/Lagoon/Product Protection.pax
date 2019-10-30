@@ -36,12 +36,12 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: '..\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\Registry\Dolphin Registry Access';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Message Box'
+	'..\MVP\Base\Dolphin MVP Base'
+	'..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\Registry\Dolphin Registry Access').
 
 package!
 

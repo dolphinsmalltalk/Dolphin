@@ -20,10 +20,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings').
 
 package!
 

@@ -17,10 +17,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: 'Dolphin Document Presenter';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'Dolphin Document Presenter').
 
 package!
 
