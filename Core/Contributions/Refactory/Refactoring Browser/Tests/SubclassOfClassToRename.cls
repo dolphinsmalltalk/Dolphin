@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
