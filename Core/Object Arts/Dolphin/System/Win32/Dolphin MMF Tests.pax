@@ -18,12 +18,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: 'Dolphin Memory-Mapped Files';
-	add: '..\Random\Dolphin Random Stream';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'Dolphin Memory-Mapped Files'
+	'..\Random\Dolphin Random Stream').
 
 package!
 

@@ -19,11 +19,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Dolphin Announcements';
-	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Announcements'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
 
 package!
 

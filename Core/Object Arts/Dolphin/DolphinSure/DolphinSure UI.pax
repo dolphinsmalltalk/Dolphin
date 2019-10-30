@@ -28,17 +28,17 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\MVP\Presenters\Image\Dolphin Image Presenter';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: '..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\MVP\Models\Value\Dolphin Value Models';
-	add: 'DolphinSure';
-	add: '..\ActiveX\Components\Picture\OLE Picture';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin Basic Geometry'
+	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\MVP\Base\Dolphin MVP Base'
+	'..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\MVP\Type Converters\Dolphin Type Converters'
+	'..\MVP\Models\Value\Dolphin Value Models'
+	'DolphinSure'
+	'..\ActiveX\Components\Picture\OLE Picture').
 
 package!
 

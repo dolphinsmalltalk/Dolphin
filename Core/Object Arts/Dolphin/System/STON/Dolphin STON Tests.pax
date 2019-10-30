@@ -34,6 +34,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Random\Dolphin Random Stream'
 	'..\..\..\..\Contributions\svenc\STON\STON-Core'
 	'..\..\..\..\Contributions\svenc\STON\STON-Tests').

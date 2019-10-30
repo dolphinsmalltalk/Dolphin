@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Windows Data Protection API Tests'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -14,11 +14,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: 'Windows Data Protection API';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'Windows Data Protection API').
 
 package!
 
