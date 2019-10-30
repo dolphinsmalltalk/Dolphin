@@ -1,16 +1,15 @@
-version: v7.1.7.{build}
+version: v7.1.9
 skip_non_tags: true
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration: Release
 install:
 - cmd: "git submodule update --init --recursive\n   \ngit lfs pull"
 before_build:
-- cmd: choco install innosetup -y -version 5.5.2 --allow-empty-checksums
-build:
-  project: Core\DolphinVM\DolphinVM.sln
-  verbosity: minimal
-after_build:
+- cmd: choco install innosetup -y -version 6.0.3 --allow-empty-checksums
+build_script:
 - cmd: >-
+    msbuild Core\DolphinVM\DolphinVM.sln /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
     Core\DolphinVM\AppVeyorZIPDolphinVM
 
     BootDPRO
