@@ -183,11 +183,15 @@ initialize
 				isImmutable: true;
 				yourself)!
 
+themePartName
+	^'BUTTON'!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'! !
 !CheckButton class categoriesFor: #defaultModel!models!public! !
 !CheckButton class categoriesFor: #initialize!development!initializing!private! !
+!CheckButton class categoriesFor: #themePartName!accessing!public! !
 !CheckButton class categoriesFor: #winClassName!constants!private! !
 

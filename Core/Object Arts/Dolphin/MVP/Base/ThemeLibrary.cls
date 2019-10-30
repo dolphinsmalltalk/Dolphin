@@ -2,7 +2,7 @@
 
 ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'IsAppThemed'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 ThemeLibrary guid: (GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
@@ -1043,6 +1043,9 @@ fileName
 	^'UXTHEME'
 !
 
+isAppThemed
+	^IsAppThemed!
+
 new
 	^(SystemMetrics current hasThemes 
 		ifTrue: [SystemMetrics current hasEnhancedThemes ifTrue: [VistaThemeLibrary] ifFalse: [self]]
@@ -1051,8 +1054,10 @@ new
 onStartup2
 	"Private - Perform session startup processing for the receiver and its subclasses."
 
-	default := nil! !
+	default := nil.
+	IsAppThemed := self default isThemeActive and: [default isAppThemed]! !
 !ThemeLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
+!ThemeLibrary class categoriesFor: #isAppThemed!private!testing! !
 !ThemeLibrary class categoriesFor: #new!instance creation!public! !
 !ThemeLibrary class categoriesFor: #onStartup2!event handling!private! !
 

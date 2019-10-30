@@ -4,7 +4,7 @@ Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: 'theme'!
 View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 View addClassConstant: 'CreateCenteredMask' value: 16r40!
 View addClassConstant: 'DragSourceMask' value: 16r4!
@@ -1104,8 +1104,8 @@ ensureSubViewVisible: aSubView
 	!
 
 ensureVisible
-	"Ensures that the receiver is visible in it's parent if the parent has
-	this level of control"
+	"Ensures that the receiver is visible in it's parent if the parent has this level of control.
+	Note that this is not expected to bring the containing shell window to the top of the z-order."
 
 	self parentView ensureSubViewVisible: self
 
@@ -1362,9 +1362,10 @@ frameWidths
 	^self class frameWidths: self baseStyle!
 
 freeTheme
-	"Private - Override point to free any theme related resources"
-
-	!
+	"Private - Override point to free any theme related resources. Additional action is not generally required but may be needed if the instance:
+		- holds theme handles or resource
+		- caches theme metrics or colours that would be wrong if the Windows theme is changed by the user."
+!
 
 getDC
 	"Answer a device context to enable drawing on the receiver."
@@ -1991,7 +1992,7 @@ isTabStop: aBoolean
 !
 
 isThemed
-	^ThemeLibrary default isThemeActive and: [ThemeLibrary default isAppThemed]!
+	^self theme notNull!
 
 isTopView
 	"Answer whether the receiver is child of the Desktop."
@@ -2643,9 +2644,7 @@ onZOrderChanged
 !
 
 openTheme
-	"Private - Override point to allocate any theme related resources and query theme metrics"
-
-	!
+	"Generally the theme handle is common to the class and is opened lazily on demand. Generally no instance specific action is required."!
 
 parentPresenter
 	"Answer the presenter that can be considered the parent of the receiver.
@@ -3535,6 +3534,9 @@ textLength
 
 	^UserLibrary default getWindowTextLength: handle!
 
+theme
+	^self class theme!
+
 themeSubAppName
 	"Answer the theme class name to use for the view, or nil to use the default."
 
@@ -3732,6 +3734,7 @@ winFinalize
 	nil the handle at this stage because it may be required to complete processing of the
 	destroy message that caused this finalization."
 
+	self freeTheme.
 	self isStateRestoring ifFalse: [self release].
 	SessionManager inputState removeWindowAt: handle!
 
@@ -4333,12 +4336,12 @@ wmSysKeyUp: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam)!
 
-wmThemeChanged: message wParam: wParam lParam: lParam 
+wmThemeChanged: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_THEMECHANGED message from Windows."
 
-	self
-		freeTheme;
-		openTheme.
+	self freeTheme.
+	self class freeTheme.
+	self openTheme.
 	"Let the control see the theme change event too, otherwise it will not change style"
 	^nil!
 
@@ -4611,7 +4614,7 @@ zOrderTop
 !View categoriesFor: #forecolorChanged!private!updating! !
 !View categoriesFor: #frameChanged!helpers!private! !
 !View categoriesFor: #frameWidths!accessing!public! !
-!View categoriesFor: #freeTheme!helpers!private! !
+!View categoriesFor: #freeTheme!private!theming! !
 !View categoriesFor: #getDC!accessing!public! !
 !View categoriesFor: #getEvents!events!private! !
 !View categoriesFor: #getFileLocator!accessing!private! !
@@ -4793,7 +4796,7 @@ zOrderTop
 !View categoriesFor: #onXButtonPressed:!event handling!public! !
 !View categoriesFor: #onXButtonReleased:!event handling!public! !
 !View categoriesFor: #onZOrderChanged!event handling!public! !
-!View categoriesFor: #openTheme!helpers!private! !
+!View categoriesFor: #openTheme!private!theming! !
 !View categoriesFor: #parentPresenter!presenter!public! !
 !View categoriesFor: #parentView!hierarchy!public! !
 !View categoriesFor: #parentView:!hierarchy!private! !
@@ -4886,6 +4889,7 @@ zOrderTop
 !View categoriesFor: #text!accessing!public! !
 !View categoriesFor: #text:!accessing!public! !
 !View categoriesFor: #textLength!accessing!private! !
+!View categoriesFor: #theme!public!theming! !
 !View categoriesFor: #themeSubAppName!constants!private! !
 !View categoriesFor: #toolTipWindow!accessing!private! !
 !View categoriesFor: #toolTipWindow:!accessing!not an aspect!private! !
@@ -5227,6 +5231,10 @@ frameWidths: anInteger
 				ifTrue: [SystemMetrics current sizingFrameExtent]
 				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [SystemMetrics current borderExtent] ifFalse: [0 @ 0]]]!
 
+freeTheme
+	theme notNull ifTrue: [ThemeLibrary default closeThemeData: theme].
+	theme := nil!
+
 fromHandle: aHandle 
 	"Answers a <View> that has a handle of aHandle (an Integer or
 	ExternalHandle). This method answers a View whether or not
@@ -5304,6 +5312,7 @@ new
 onExit
 	"Clean up the residue on Dolphin exit."
 
+	self allSubclassesDo: [:c | c freeTheme].
 	ThemeLibrary default onExit.
 	self destroyAll.	"Destroy rather than close as more forcible and avoids save prompts"
 	self unregisterClass!
@@ -5312,7 +5321,9 @@ onStartup
 	"Perform post startup processing to initialize the View system"
 
 	WndClassAtom := nil.
-	self allSubclassesDo: [:c | (c class includesSelector: #onStartup) ifTrue: [c onStartup]].
+	self allSubclassesDo: [:c | 
+		c resetTheme.
+		(c class includesSelector: #onStartup) ifTrue: [c onStartup]].
 
 	"Load the Common Control Library."
 	CommCtrlLibrary openDefault.
@@ -5325,6 +5336,11 @@ onStartup
 		fsModifiers: MOD_CONTROL
 		vk: VK_CANCEL.
 	ThemeLibrary default onStartup!
+
+openTheme
+	^(self themePartName isNil or: [ThemeLibrary isAppThemed not])
+		ifTrue: [##(ExternalHandle new)]
+		ifFalse: [ThemeLibrary default openThemeData: nil pszClassList: self themePartName asUtf16String]!
 
 registerClass
 	"Private - Register the receivers corresponding Win32 class - answer the class atom.
@@ -5365,6 +5381,9 @@ reregisterClass
 		unregisterClass;
 		registerClass
 !
+
+resetTheme
+	theme := nil!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -5519,6 +5538,15 @@ stbVersion
 
 	^13!
 
+theme
+	^theme ifNil: [theme := self openTheme]!
+
+themePartName
+	"Answer the <string> name of the Windows theme part that might be used for rendering this view."
+
+	^nil
+	!
+
 topLevelViews
 	"Answer a Collection containing all top level Dolphin Views.
 	Note that this will include Views which are not Shells (e.g. tool tips)."
@@ -5616,6 +5644,7 @@ wndClassName
 !View class categoriesFor: #foreground!accessing!public! !
 !View class categoriesFor: #foregroundHandle!accessing!private! !
 !View class categoriesFor: #frameWidths:!constants!public! !
+!View class categoriesFor: #freeTheme!private!theming! !
 !View class categoriesFor: #fromHandle:!instance creation!public! !
 !View class categoriesFor: #fromPoint:!instance creation!private! !
 !View class categoriesFor: #icon!constants!public! !
@@ -5624,11 +5653,13 @@ wndClassName
 !View class categoriesFor: #new!instance creation!public! !
 !View class categoriesFor: #onExit!event handling!public! !
 !View class categoriesFor: #onStartup!event handling!public! !
+!View class categoriesFor: #openTheme!private!theming! !
 !View class categoriesFor: #registerClass!operations!private! !
 !View class categoriesFor: #registerMessage:!dispatching!public! !
 !View class categoriesFor: #registerMessageMappings:!class initialization!public! !
 !View class categoriesFor: #releaseCapture!operations!public! !
 !View class categoriesFor: #reregisterClass!operations!private! !
+!View class categoriesFor: #resetTheme!private!theming! !
 !View class categoriesFor: #resource_Default_view!public!resources-views! !
 !View class categoriesFor: #selectorForMessage:!dispatching!private! !
 !View class categoriesFor: #show!instance creation!public! !
@@ -5648,6 +5679,8 @@ wndClassName
 !View class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !View class categoriesFor: #stbConvertProxy:!binary filing!public! !
 !View class categoriesFor: #stbVersion!binary filing!public! !
+!View class categoriesFor: #theme!public!theming! !
+!View class categoriesFor: #themePartName!constants!public!theming! !
 !View class categoriesFor: #topLevelViews!accessing!public! !
 !View class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !View class categoriesFor: #unregisterClass!operations!private! !

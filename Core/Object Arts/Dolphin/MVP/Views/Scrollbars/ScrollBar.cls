@@ -220,6 +220,9 @@ icon
 
 	^##(self) defaultIcon!
 
+themePartName
+	^#ScrollBar!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -229,5 +232,6 @@ winClassName
 !ScrollBar class categoriesFor: #defaultModel!models!public! !
 !ScrollBar class categoriesFor: #defaultWidth!constants!public! !
 !ScrollBar class categoriesFor: #icon!constants!public! !
+!ScrollBar class categoriesFor: #themePartName!constants!private! !
 !ScrollBar class categoriesFor: #winClassName!constants!private! !
 

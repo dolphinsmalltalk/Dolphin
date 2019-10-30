@@ -260,10 +260,6 @@ textRectIn: aRectangle on: aCanvas iStateId: iStateId
 
 	^aRectangle insetBy: 0@((aRectangle height - formatRect height) // 2)!
 
-themePartName
-
-	^#BUTTON!
-
 totalExtent
 
 	^(self buttonExtent x + self textOffset x + self textExtent x)@(self buttonExtent y max: self textExtent y).
@@ -304,7 +300,6 @@ uStateFor: aValue enabled: aBoolean
 !EmbeddedCheckButton categoriesFor: #textExtent:!accessing!public! !
 !EmbeddedCheckButton categoriesFor: #textOffset!accessing!public! !
 !EmbeddedCheckButton categoriesFor: #textRectIn:on:iStateId:!drawing!private! !
-!EmbeddedCheckButton categoriesFor: #themePartName!accessing!public! !
 !EmbeddedCheckButton categoriesFor: #totalExtent!accessing!public! !
 !EmbeddedCheckButton categoriesFor: #uStateFor:enabled:!drawing!private! !
 

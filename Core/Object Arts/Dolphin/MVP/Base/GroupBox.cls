@@ -75,6 +75,9 @@ resource_Static_group_box
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GroupBox) 34 14 nil nil 34 2 8 1140850695 65 416 nil 327686 ##(Smalltalk.Color) #transparent nil 7 nil nil nil 416 nil 8 1903885040 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 642 299 201 416 594 #text: 34 1 8 'Text here' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 20 8 0 0 110 0 0 0] 8 #() 642 193 193 nil 27 )!
 
+themePartName
+	^'BUTTON'!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver.
 	Why Microsoft chose to make the GroupBox a button is a mystery beyond possible
@@ -84,5 +87,6 @@ winClassName
 !GroupBox class categoriesFor: #icon!constants!public! !
 !GroupBox class categoriesFor: #resource_Default_view!public!resources-views! !
 !GroupBox class categoriesFor: #resource_Static_group_box!public!resources-views! !
+!GroupBox class categoriesFor: #themePartName!constants!public!theming! !
 !GroupBox class categoriesFor: #winClassName!constants!private! !
 

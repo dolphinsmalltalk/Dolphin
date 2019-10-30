@@ -23,12 +23,6 @@ package methodNames
 	add: #ComboBox -> #droppedWidth;
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
-	add: #ControlView -> #freeTheme;
-	add: #ControlView -> #hasTheme;
-	add: #ControlView -> #onViewDestroyed;
-	add: #ControlView -> #openTheme;
-	add: #ControlView -> #theme;
-	add: #ControlView -> #themePartName;
 	add: #Date -> #shortString;
 	add: #GDILibrary -> #getClipRgn:hrgn:;
 	add: #Icon -> #asSmallIcon;
@@ -41,7 +35,6 @@ package methodNames
 	add: #PushButton -> #alignment:;
 	add: #PushButton -> #isRightButton;
 	add: #PushButton -> #isRightButton:;
-	add: #PushButton -> #themePartName;
 	add: #PushButton -> #tipText;
 	add: #PushButton -> #tipText:;
 	add: #PushButton -> #ttnGetDispInfo:;
@@ -188,52 +181,6 @@ hasCueBanner
 !ComboBox categoriesFor: #droppedWidth:!hierarchy!public!sub views! !
 !ComboBox categoriesFor: #hasCueBanner!public!testing! !
 
-!ControlView methodsFor!
-
-freeTheme
-
-	self hasTheme ifTrue:
-		[ThemeLibrary default closeThemeData: self theme.
-		self removePropertyAt: #themeHandle]!
-
-hasTheme
-
-	^(self propertyAt: #themeHandle ifAbsent: [nil]) notNull!
-
-onViewDestroyed
-
-	self hasTheme ifTrue: [self freeTheme].
-
-	super onViewDestroyed!
-
-openTheme
-	^self themePartName
-		ifNotNil: 
-			[:themePartName |
-			self propertyAt: #themeHandle
-				put: (ThemeLibrary default openThemeData: self asParameter pszClassList: themePartName)]!
-
-theme
-
-	| theme |
-
-	theme := self propertyAt: #themeHandle ifAbsent: [nil].
-	^theme isNull 
-		ifTrue: [self openTheme. self propertyAt: #themeHandle ifAbsent: [nil]]
-		ifFalse: [theme]!
-
-themePartName
-
-	"Subclasses should override to enable theme support"
-
-	^nil! !
-!ControlView categoriesFor: #freeTheme!helpers!public! !
-!ControlView categoriesFor: #hasTheme!public!testing! !
-!ControlView categoriesFor: #onViewDestroyed!public!realizing/unrealizing! !
-!ControlView categoriesFor: #openTheme!helpers!public! !
-!ControlView categoriesFor: #theme!accessing!public! !
-!ControlView categoriesFor: #themePartName!constants!public! !
-
 !Date methodsFor!
 
 shortString
@@ -370,10 +317,6 @@ isRightButton: aBoolean
 
 	self baseStyleMask: BS_RIGHTBUTTON set: aBoolean!
 
-themePartName
-
-	^#BUTTON!
-
 tipText
 
 	^self propertyAt: #tipText ifAbsent: [nil]!
@@ -412,7 +355,6 @@ wmNotify: message wParam: wParam lParam: lParam
 !PushButton categoriesFor: #alignment:!accessing-styles!public! !
 !PushButton categoriesFor: #isRightButton!accessing-styles!public! !
 !PushButton categoriesFor: #isRightButton:!accessing-styles!public! !
-!PushButton categoriesFor: #themePartName!constants!public! !
 !PushButton categoriesFor: #tipText!accessing!public! !
 !PushButton categoriesFor: #tipText:!accessing!public! !
 !PushButton categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !

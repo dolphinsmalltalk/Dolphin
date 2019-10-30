@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 TabView subclass: #TabViewXP
-	instanceVariableNames: 'theme lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
+	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
@@ -26,16 +26,8 @@ createVerticalFont
 	lf lfEscapement: (self isInverted ifTrue: [2700] ifFalse: [900]).
 	^Font fromLogFont: lf!
 
-freeTheme
-	theme notNull ifFalse: [^self].
-	ThemeLibrary default closeThemeData: theme.
-	theme := nil!
-
 imageTextGap
 	^6!
-
-isThemed
-	^theme notNull!
 
 onEraseRequired: aColorEvent 
 	"Private - Handler for erase background event - allow the control to take care of this, unless
@@ -130,17 +122,9 @@ onSelectionChanging: aSelectionChangingEvent
 	lastSelection := self getSingleSelection.
 	super onSelectionChanging: aSelectionChangingEvent!
 
-onViewCreated
-	self openTheme.
-	super onViewCreated!
-
 onViewDestroyed
 	super onViewDestroyed.
 	self freeTheme!
-
-openTheme
-	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'TAB']!
 
 paintLabel: anInteger on: aCanvas in: aRectangle 
 	| inverted rcItem textExtent labelRect textOffset text tcItem imageIndex |
@@ -213,7 +197,7 @@ paintTabLabelsOn: aCanvas
 paintThemedBackgroundOn: aCanvas in: aRectangle 
 	| bkColor |
 	ThemeLibrary default 
-		drawThemeBackground: theme
+		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
 		iStateId: 0
@@ -226,7 +210,7 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
 
 paintThemedTabsOn: aCanvas offset: aMonadicValuable
-	| selected hot numItems themeLib dc part rcItem |
+	| selected hot numItems themeLib dc part rcItem hTheme |
 	numItems := self itemCount.
 	numItems <= 0 ifTrue: [^self].
 	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
@@ -234,10 +218,11 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	selected := self getSingleSelection.
 	themeLib := ThemeLibrary default.
 	dc := aCanvas asParameter.
+	hTheme := self theme.
 	selected == 1
 		ifFalse: 
 			[themeLib
-				drawThemeBackground: theme
+				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEMLEFTEDGE
 				iStateId: (1 == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
@@ -247,7 +232,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		do: 
 			[:i |
 			themeLib
-				drawThemeBackground: theme
+				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
 				iStateId: (i == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
@@ -257,7 +242,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		do: 
 			[:i |
 			themeLib
-				drawThemeBackground: theme
+				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: TABP_TABITEM
 				iStateId: (i == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
@@ -268,7 +253,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 			[| anInteger |
 			anInteger := TABP_TABITEMRIGHTEDGE.
 			themeLib
-				drawThemeBackground: theme
+				drawThemeBackground: hTheme
 				hdc: dc
 				iPartId: anInteger
 				iStateId: (numItems == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
@@ -289,7 +274,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 					"selected == numItems ifTrue: [TABP_TABITEMRIGHTEDGE] ifFalse: [TABP_TABITEM]"
 					TABP_TABITEM].
 	themeLib
-		drawThemeBackground: theme
+		drawThemeBackground: hTheme
 		hdc: dc
 		iPartId: part
 		iStateId: TIS_SELECTED
@@ -373,9 +358,6 @@ selExtra
 supportsThemedVertical
 	^true!
 
-themeHandle
-	^theme!
-
 wmPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting. By default we use the internal painting
 	 dispatch."
@@ -410,16 +392,12 @@ wmPrintClient: message wParam: wParam lParam: lParam
 						paintStruct: nil)]! !
 !TabViewXP categoriesFor: #calcClientRectangleFromRectangle:!geometry!private! !
 !TabViewXP categoriesFor: #createVerticalFont!event handling!private! !
-!TabViewXP categoriesFor: #freeTheme!helpers!private! !
 !TabViewXP categoriesFor: #imageTextGap!constants!private! !
-!TabViewXP categoriesFor: #isThemed!private!testing! !
 !TabViewXP categoriesFor: #onEraseRequired:!event handling!private! !
 !TabViewXP categoriesFor: #onPaintRequired:!event handling!private! !
 !TabViewXP categoriesFor: #onSelChanged:!event handling!private! !
 !TabViewXP categoriesFor: #onSelectionChanging:!event handling!private! !
-!TabViewXP categoriesFor: #onViewCreated!event handling!private! !
 !TabViewXP categoriesFor: #onViewDestroyed!event handling!private! !
-!TabViewXP categoriesFor: #openTheme!helpers!private! !
 !TabViewXP categoriesFor: #paintLabel:on:in:!painting!private! !
 !TabViewXP categoriesFor: #paintTabLabelsOn:!event handling!private! !
 !TabViewXP categoriesFor: #paintThemedBackgroundOn:in:!painting!private! !
@@ -428,7 +406,12 @@ wmPrintClient: message wParam: wParam lParam: lParam
 !TabViewXP categoriesFor: #paintVerticalTabLabelsOn:!event handling!private! !
 !TabViewXP categoriesFor: #selExtra!constants!private! !
 !TabViewXP categoriesFor: #supportsThemedVertical!constants!private! !
-!TabViewXP categoriesFor: #themeHandle!accessing!private! !
 !TabViewXP categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
 !TabViewXP categoriesFor: #wmPrintClient:wParam:lParam:!event handling-win32!private! !
+
+!TabViewXP class methodsFor!
+
+themePartName
+	^'TAB'! !
+!TabViewXP class categoriesFor: #themePartName!public! !
 

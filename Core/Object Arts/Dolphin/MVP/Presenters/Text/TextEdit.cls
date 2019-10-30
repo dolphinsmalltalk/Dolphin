@@ -1464,6 +1464,10 @@ onStartup
 	FindDialogMessage := self registerMessage: 'commdlg_FindReplace'
 !
 
+themePartName
+	^'EDIT'
+!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -1472,5 +1476,6 @@ winClassName
 !TextEdit class categoriesFor: #icon!constants!public! !
 !TextEdit class categoriesFor: #initialize!development!initializing!private! !
 !TextEdit class categoriesFor: #onStartup!event handling!public! !
+!TextEdit class categoriesFor: #themePartName!constants!private!theming! !
 !TextEdit class categoriesFor: #winClassName!constants!private! !
 

@@ -563,6 +563,10 @@ listboxMessageMappings
 selectionModes
 	^SelectionModes!
 
+themePartName
+	^#ListBox
+!
+
 uninitialize
 	self unregisterMessageMappings: {WM_BEGINDRAG}!
 
@@ -574,6 +578,7 @@ winClassName
 !ListBox class categoriesFor: #initialize!development!initializing!private! !
 !ListBox class categoriesFor: #listboxMessageMappings!constants!must not strip!private! !
 !ListBox class categoriesFor: #selectionModes!constants!public! !
+!ListBox class categoriesFor: #themePartName!constants!private! !
 !ListBox class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !ListBox class categoriesFor: #winClassName!constants!private! !
 

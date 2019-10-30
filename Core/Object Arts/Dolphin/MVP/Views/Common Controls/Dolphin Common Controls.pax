@@ -212,7 +212,7 @@ ListControlView subclass: #IconicListAbstract
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes NoImageIndex RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #TabView
@@ -226,7 +226,7 @@ IconicListAbstract subclass: #TreeView
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TabView subclass: #TabViewXP
-	instanceVariableNames: 'theme lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
+	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!

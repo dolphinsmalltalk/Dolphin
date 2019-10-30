@@ -54,7 +54,7 @@ Link subclass: #MoenLink
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #MoenTreeView
-	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset theme _mtvReserved1 _mtvReserved2'
+	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
 	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!

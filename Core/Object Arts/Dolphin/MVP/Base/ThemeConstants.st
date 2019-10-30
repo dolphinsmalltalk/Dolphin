@@ -206,7 +206,12 @@ ThemeConstants at: 'LIS_HOT' put: 16r2!
 ThemeConstants at: 'LIS_NORMAL' put: 16r1!
 ThemeConstants at: 'LIS_SELECTED' put: 16r3!
 ThemeConstants at: 'LIS_SELECTEDNOTFOCUS' put: 16r5!
+ThemeConstants at: 'LVEB_HOVER' put: 16r2!
+ThemeConstants at: 'LVEB_NORMAL' put: 16r1!
+ThemeConstants at: 'LVEB_PUSHED' put: 16r3!
+ThemeConstants at: 'LVP_COLLAPSEBUTTON' put: 16r9!
 ThemeConstants at: 'LVP_EMPTYTEXT' put: 16r5!
+ThemeConstants at: 'LVP_EXPANDBUTTON' put: 16r8!
 ThemeConstants at: 'LVP_LISTDETAIL' put: 16r3!
 ThemeConstants at: 'LVP_LISTGROUP' put: 16r2!
 ThemeConstants at: 'LVP_LISTITEM' put: 16r1!

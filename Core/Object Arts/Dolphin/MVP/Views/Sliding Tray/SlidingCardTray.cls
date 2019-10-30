@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 CardContainer subclass: #SlidingCardTray
-	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'
+	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
 	classInstanceVariableNames: ''!
@@ -38,11 +38,6 @@ captionGeometryChanged
 
 edgeExtent
 	^2 @ 2!
-
-freeTheme
-	theme notNull ifFalse: [^self].
-	ThemeLibrary default closeThemeData: theme.
-	theme := nil!
 
 headerBackgroundPart
 	^EBP_HEADERBACKGROUND!
@@ -85,9 +80,6 @@ isPinPressed
 
 isResizable
 	^slider notNil and: [slider isTrayResizable]!
-
-isThemed
-	^theme notNull!
 
 onLeftButtonPressed: aMouseEvent 
 	| hit |
@@ -146,16 +138,6 @@ onResize
 							bottom: rect bottom)].
 	self captionGeometryChanged!
 
-onViewCreated
-	"Private - The receiver has just been fully created. This is a suitable place to perform initialization
-	of the window from the receiver's instance variables. Note that this message is sent via
-	a WM_PARENTNOTIFY Windows message to the Window's parent, and thus will not be 
-	available for views that use the WS_EXNOPARENTNOTIFY extended style, or which are 
-	created as immediate children of the desktop or any other Windows not subclassed by Dolphin."
-
-	super onViewCreated.
-	self openTheme!
-
 onViewDestroyed
 	"Private - Handler for view final view destruction."
 
@@ -163,13 +145,11 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR'].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
-	theme isNull
-		ifFalse: 
+	self isThemed
+		ifTrue: 
 			[ThemeLibrary default
-				getThemePartSize: theme
+				getThemePartSize: self theme
 				hdc: nil
 				iPartId: EBP_HEADERPIN
 				iStateId: EBHP_NORMAL
@@ -209,7 +189,7 @@ paintEdgesOn: aCanvas
 
 paintThemedBackgroundOn: aCanvas 
 	ThemeLibrary default 
-		drawThemeBackground: theme
+		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: self headerBackgroundPart
 		iStateId: 0
@@ -219,7 +199,7 @@ paintThemedBackgroundOn: aCanvas
 paintThemedEdgesOn: aCanvas 
 	self isPinned ifTrue: [^nil].
 	ThemeLibrary default 
-		drawThemeBackground: tabs themeHandle
+		drawThemeBackground: tabs theme
 		hdc: aCanvas asParameter
 		iPartId: TABP_PANE
 		iStateId: 0
@@ -232,7 +212,7 @@ paintThemedOn: aCanvas
 
 paintThemedPinOn: aCanvas 
 	ThemeLibrary default 
-		drawThemeBackground: theme
+		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: EBP_HEADERPIN
 		iStateId: self pinStateId
@@ -280,7 +260,6 @@ pinStateId
 setSlider: aSlideyInneyOuteyThing 
 	slider := aSlideyInneyOuteyThing.
 	tabs := slider tabs.
-	self openTheme.
 	pinInteractor := (ButtonInteractor forPresenter: self)
 				buttonRectangle: self pinRectangle;
 				commandDescription: (CommandDescription command: #togglePin description: 'Pin or Unpin the tray');
@@ -372,7 +351,6 @@ wmPrint: message wParam: wParam lParam: lParam
 !SlidingCardTray categoriesFor: #calculateExtent:!geometry!private! !
 !SlidingCardTray categoriesFor: #captionGeometryChanged!event handling!private! !
 !SlidingCardTray categoriesFor: #edgeExtent!constants!private! !
-!SlidingCardTray categoriesFor: #freeTheme!helpers!private! !
 !SlidingCardTray categoriesFor: #headerBackgroundPart!constants!private! !
 !SlidingCardTray categoriesFor: #headerHeight!constants!private! !
 !SlidingCardTray categoriesFor: #headerRectangle!painting!private! !
@@ -382,13 +360,11 @@ wmPrint: message wParam: wParam lParam: lParam
 !SlidingCardTray categoriesFor: #isPinned!private!testing! !
 !SlidingCardTray categoriesFor: #isPinPressed!private!testing! !
 !SlidingCardTray categoriesFor: #isResizable!private!testing! !
-!SlidingCardTray categoriesFor: #isThemed!private!testing! !
 !SlidingCardTray categoriesFor: #onLeftButtonPressed:!event handling!private! !
 !SlidingCardTray categoriesFor: #onMouseMoved:!event handling!private! !
 !SlidingCardTray categoriesFor: #onPaintRequired:!event handling!private! !
 !SlidingCardTray categoriesFor: #onPositionChanged:!event handling!private! !
 !SlidingCardTray categoriesFor: #onResize!helpers!private! !
-!SlidingCardTray categoriesFor: #onViewCreated!event handling!private! !
 !SlidingCardTray categoriesFor: #onViewDestroyed!event handling!private! !
 !SlidingCardTray categoriesFor: #openTheme!helpers!private! !
 !SlidingCardTray categoriesFor: #paintClassicBackgroundOn:!painting!private! !
@@ -417,6 +393,10 @@ wmPrint: message wParam: wParam lParam: lParam
 !SlidingCardTray class methodsFor!
 
 initialize
-	PinImageList := nil! !
+	PinImageList := nil!
+
+themePartName
+	^'EXPLORERBAR'! !
 !SlidingCardTray class categoriesFor: #initialize!initializing!private! !
+!SlidingCardTray class categoriesFor: #themePartName!constants!public!theming! !
 
