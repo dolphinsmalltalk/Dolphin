@@ -1266,6 +1266,10 @@ stbConvertFromVersion12: anArray
 	(anArray at: 6) = Color face3d ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray!
 
+themePartName
+	^#Toolbar
+!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -1279,5 +1283,6 @@ winClassName
 !Toolbar class categoriesFor: #resource_History_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Tool_bar!public!resources-views! !
 !Toolbar class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!Toolbar class categoriesFor: #themePartName!constants!private! !
 !Toolbar class categoriesFor: #winClassName!constants!private! !
 

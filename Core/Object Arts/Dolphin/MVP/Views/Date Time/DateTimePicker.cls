@@ -216,10 +216,14 @@ defaultModel
 
 	^Date today asValue!
 
+themePartName
+	^'DATEPICKER'!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysDateTimePick32'! !
 !DateTimePicker class categoriesFor: #defaultModel!models!public! !
+!DateTimePicker class categoriesFor: #themePartName!constants!private!theming! !
 !DateTimePicker class categoriesFor: #winClassName!constants!private! !
 

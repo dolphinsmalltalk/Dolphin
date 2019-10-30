@@ -1370,6 +1370,10 @@ stbConvertFromVersion10: anArray
 	newArray at: size + 1 put: 0.
 	^newArray!
 
+themePartName
+
+	^#TreeView!
+
 updateModes
 	^UpdateModes!
 
@@ -1381,6 +1385,7 @@ winClassName
 !TreeView class categoriesFor: #icon!constants!public! !
 !TreeView class categoriesFor: #initialize!development!initializing!private! !
 !TreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
+!TreeView class categoriesFor: #themePartName!constants!public! !
 !TreeView class categoriesFor: #updateModes!accessing!private! !
 !TreeView class categoriesFor: #winClassName!constants!private! !
 

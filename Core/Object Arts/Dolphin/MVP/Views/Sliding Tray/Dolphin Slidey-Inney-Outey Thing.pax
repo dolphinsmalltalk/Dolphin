@@ -42,7 +42,7 @@ ContainerView subclass: #SlideyInneyOuteyThing
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 CardContainer subclass: #SlidingCardTray
-	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'
+	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
 	classInstanceVariableNames: ''!

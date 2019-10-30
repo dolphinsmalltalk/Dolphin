@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #MoenTreeView
-	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset theme _mtvReserved1 _mtvReserved2'
+	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
 	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
@@ -468,12 +468,6 @@ fontChanged
 
 	self invalidateGeometry!
 
-freeTheme
-	theme notNull 
-		ifTrue: 
-			[ThemeLibrary default closeThemeData: theme.
-			theme := nil]!
-
 generateAbsolutes
 	"Private - Generate the absolute positions of each tree and the preferred view extent.
 	Also cache clip rectangles which enclose a node and all its sub-nodes."
@@ -726,9 +720,6 @@ isAutoExpanding
 
 isAutoExpanding: aBoolean
 	mtvFlags := mtvFlags mask: AutoExpandingMask set: aBoolean!
-
-isThemed
-	^theme notNull!
 
 itemFromPoint: aPoint 
 	"Private - Answer the node of the receiver under the <Point> argument or nil if none."
@@ -1330,24 +1321,6 @@ onTreeChanged: anObjectOrNil
 	anObjectOrNil isNil ifTrue: [ ^self refreshContents].
 	self onItemUpdated: anObjectOrNil; collapse: anObjectOrNil !
 
-onViewCreated
-	"The receiver has just been fully created. This is a suitable place to perform initialization
-	of the window from the receiver's instance variables. Note that this message is sent via
-	a WM_PARENTNOTIFY Windows message to the Window's parent, and thus will not be 
-	available for views that use the WS_EXNOPARENTNOTIFY extended style, or which are 
-	created as immediate children of the desktop or any other Windows not subclassed by Dolphin."
-
-	self openTheme!
-
-onViewDestroyed
-	"Handler for view final view destruction."
-
-	self freeTheme!
-
-openTheme
-	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: #TreeView]!
-
 paint: aMoenTreeNode on: aCanvas fromPoint: aPoint 
 	"Private - Paint the tree object onto the canvas together with all its children."
 
@@ -1437,7 +1410,7 @@ paintNode: aMoenTreeNode on: aCanvas
 
 paintThemeButton: aRectangle on: aCanvas isExpanded: aBoolean 
 	ThemeLibrary default 
-		drawThemeBackground: theme
+		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
 		iPartId: TVP_GLYPH
 		iStateId: (aBoolean ifTrue: [GLPS_OPENED] ifFalse: [GLPS_CLOSED])
@@ -1843,7 +1816,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #expandSubtree:!operations!private! !
 !MoenTreeView categoriesFor: #findNodeForObject:!private!searching! !
 !MoenTreeView categoriesFor: #fontChanged!private!updating! !
-!MoenTreeView categoriesFor: #freeTheme!helpers!private! !
 !MoenTreeView categoriesFor: #generateAbsolutes!geometry!private! !
 !MoenTreeView categoriesFor: #generateNodeClipRects!private!tree layout! !
 !MoenTreeView categoriesFor: #generatePosition:absolute:!geometry!private! !
@@ -1874,7 +1846,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #invalidateTree:imagesOnly:!painting!private! !
 !MoenTreeView categoriesFor: #isAutoExpanding!accessing-styles!public!testing! !
 !MoenTreeView categoriesFor: #isAutoExpanding:!accessing!public! !
-!MoenTreeView categoriesFor: #isThemed!private!testing! !
 !MoenTreeView categoriesFor: #itemFromPoint:!helpers!private! !
 !MoenTreeView categoriesFor: #join:!private!tree layout! !
 !MoenTreeView categoriesFor: #layoutLeaf:!private!tree layout! !
@@ -1919,9 +1890,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #onSelectionChanged!event handling!public! !
 !MoenTreeView categoriesFor: #onSelectionChanging:!event handling!public! !
 !MoenTreeView categoriesFor: #onTreeChanged:!event handling!public! !
-!MoenTreeView categoriesFor: #onViewCreated!event handling!public! !
-!MoenTreeView categoriesFor: #onViewDestroyed!event handling!public! !
-!MoenTreeView categoriesFor: #openTheme!helpers!private! !
 !MoenTreeView categoriesFor: #paint:on:fromPoint:!painting!private! !
 !MoenTreeView categoriesFor: #paintButton:on:isExpanded:!painting!private! !
 !MoenTreeView categoriesFor: #paintClassicButton:on:isExpanded:!painting!private! !
@@ -2041,6 +2009,9 @@ stbConvertFromVersion9: anArray
 		at: 16 put: AutoExpandingMask;
 		yourself!
 
+themePartName
+	^#TreeView!
+
 value: anObject
 	"Private - Implement this message from the monadic valuable to support the default
 	'get image' functionality for an iconic list.  By default we assume icons can be used
@@ -2060,6 +2031,7 @@ viewModes
 !MoenTreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
 !MoenTreeView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
 !MoenTreeView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!MoenTreeView class categoriesFor: #themePartName!constants!public!theming! !
 !MoenTreeView class categoriesFor: #value:!evaluating!private! !
 !MoenTreeView class categoriesFor: #viewModes!constants!public! !
 

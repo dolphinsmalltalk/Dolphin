@@ -375,11 +375,16 @@ icon
 
 	^##(self) defaultIcon!
 
+themePartName
+	^#Tooltip
+!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'tooltips_class32'
 ! !
 !Tooltip class categoriesFor: #icon!constants!public! !
+!Tooltip class categoriesFor: #themePartName!constants!private! !
 !Tooltip class categoriesFor: #winClassName!constants!private! !
 

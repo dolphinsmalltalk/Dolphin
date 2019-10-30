@@ -117,8 +117,10 @@ ensureSubView: aView rectangleVisible: aRectangle
 	is visible in the receiver if the parent has this level of control."
 !
 
-ensureSubViewVisible: aSubView
-	aSubView zOrderTop!
+ensureSubViewVisible: aShellView
+	"Sending #ensureVisible to a ShellView that is a direct child of the desktop is expected to bring it to the top of the z-order."
+
+	aShellView zOrderTop!
 
 ensureVisible
 	"Ensures that the receiver is visible. 

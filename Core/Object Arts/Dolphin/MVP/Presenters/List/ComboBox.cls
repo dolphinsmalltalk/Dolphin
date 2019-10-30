@@ -386,6 +386,10 @@ initialize
 
 	self addClassConstant: 'Modes' value: #(#simple #dropDown #dropDownList)!
 
+themePartName
+	^#ComboBox
+!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -393,5 +397,6 @@ winClassName
 ! !
 !ComboBox class categoriesFor: #icon!constants!public! !
 !ComboBox class categoriesFor: #initialize!development!initializing!private! !
+!ComboBox class categoriesFor: #themePartName!constants!private! !
 !ComboBox class categoriesFor: #winClassName!constants!private! !
 

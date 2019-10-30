@@ -28,7 +28,6 @@ package methodNames
 	add: #ListView -> #maxTipWidth:;
 	add: #ListView -> #rowPixelHeight;
 	add: #ListView -> #smallImageExtent;
-	add: #ListView -> #themePartName;
 	add: #ListView -> #vertScrollBy:;
 	add: #ListView -> #vertScrollPos;
 	add: #ListView -> #vertScrollPos:;
@@ -171,10 +170,6 @@ smallImageExtent
 
 	^Icon smallExtent!
 
-themePartName
-
-	^#LISTVIEW!
-
 vertScrollBy: anInteger
 
 	self sendMessage: LVM_SCROLL wParam: 0 lParam: anInteger!
@@ -206,7 +201,6 @@ vertScrollPos: anInteger
 !ListView categoriesFor: #maxTipWidth:!helpers!public! !
 !ListView categoriesFor: #rowPixelHeight!helpers!public! !
 !ListView categoriesFor: #smallImageExtent!accessing!private! !
-!ListView categoriesFor: #themePartName!constants!public! !
 !ListView categoriesFor: #vertScrollBy:!enquiries!public! !
 !ListView categoriesFor: #vertScrollPos!enquiries!public! !
 !ListView categoriesFor: #vertScrollPos:!enquiries!public! !

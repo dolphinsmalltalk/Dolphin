@@ -134,7 +134,11 @@ initialize
 				at: #ignore put: IDCONTINUE;
 				shrink;
 				isImmutable: true;
-				yourself)! !
+				yourself)!
+
+themePartName
+	^'BUTTON'! !
 !CommandButton class categoriesFor: #icon!constants!public! !
 !CommandButton class categoriesFor: #initialize!development!initializing!private! !
+!CommandButton class categoriesFor: #themePartName!constants!public!theming! !
 
