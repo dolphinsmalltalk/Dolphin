@@ -1,12 +1,17 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_UDPSTATS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwInDatagrams _OffsetOf_dwInErrors _OffsetOf_dwNoPorts _OffsetOf_dwNumAddrs _OffsetOf_dwOutDatagrams'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_UDPSTATS guid: (GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
-MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_UDPSTATS addClassConstant: '_OffsetOf_dwInDatagrams' value: 16r0!
+MIB_UDPSTATS addClassConstant: '_OffsetOf_dwInErrors' value: 16r8!
+MIB_UDPSTATS addClassConstant: '_OffsetOf_dwNoPorts' value: 16r4!
+MIB_UDPSTATS addClassConstant: '_OffsetOf_dwNumAddrs' value: 16r10!
+MIB_UDPSTATS addClassConstant: '_OffsetOf_dwOutDatagrams' value: 16rC!
+MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,29 +32,29 @@ struct tagMIB_UDPSTATS {
 !MIB_UDPSTATS methodsFor!
 
 dwInDatagrams
-	"Answer the receiver's dwInDatagrams field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInDatagrams' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwInDatagrams!
 
 dwInErrors
-	"Answer the receiver's dwInErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInErrors' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwInErrors!
 
 dwNoPorts
-	"Answer the receiver's dwNoPorts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNoPorts' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwNoPorts!
 
 dwNumAddrs
-	"Answer the receiver's dwNumAddrs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumAddrs' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumAddrs!
 
 dwOutDatagrams
-	"Answer the receiver's dwOutDatagrams field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutDatagrams' field."
 
-	^(bytes dwordAtOffset: 12)! !
+	^bytes dwordAtOffset: _OffsetOf_dwOutDatagrams! !
 !MIB_UDPSTATS categoriesFor: #dwInDatagrams!**compiled accessors**!public! !
 !MIB_UDPSTATS categoriesFor: #dwInErrors!**compiled accessors**!public! !
 !MIB_UDPSTATS categoriesFor: #dwNoPorts!**compiled accessors**!public! !
@@ -78,6 +83,10 @@ defineFields
 		defineField: #dwInErrors type: DWORDField readOnly offset: 8;
 		defineField: #dwOutDatagrams type: DWORDField readOnly offset: 12;
 		defineField: #dwNumAddrs type: DWORDField readOnly offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+getFieldNames
+	^#(#dwInDatagrams #dwNoPorts #dwInErrors #dwOutDatagrams #dwNumAddrs)! !
 !MIB_UDPSTATS class categoriesFor: #defineFields!initializing!public! !
+!MIB_UDPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

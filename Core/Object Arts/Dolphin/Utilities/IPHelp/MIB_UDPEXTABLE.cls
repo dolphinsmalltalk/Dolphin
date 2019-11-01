@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_UDPEXTABLE guid: (GUID fromString: '{dde2b010-360d-4715-9804-4e3d4982296f}')!
-MIB_UDPEXTABLE comment: '<MIB_UDPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_UDPEXTABLE comment: '<MIB_UDPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +24,12 @@ struct tagMIB_UDPEXTABLE {
 !MIB_UDPEXTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_UDPEXROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_UDPEXROW! !
 !MIB_UDPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_UDPEXTABLE class methodsFor!
@@ -47,7 +50,7 @@ defineFields
 			type: DWORDField readOnly
 			offset: 0;
 		defineField: #table
-			type: ((ConformantStructureArrayField type: MIB_UDPEXROW length: #dwNumEntries)
+			type: ((StructureArrayField type: MIB_UDPEXROW lengthField: #dwNumEntries)
 					beOverride;
 					beReadOnly;
 					yourself)

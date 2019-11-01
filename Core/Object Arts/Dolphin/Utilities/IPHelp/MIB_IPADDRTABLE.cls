@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPADDRTABLE guid: (GUID fromString: '{cffa7131-3c9d-4864-9a6a-cfe3ff42a661}')!
-MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPADDRTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +25,12 @@ struct tagMIB_IPADDRTABLE {
 !MIB_IPADDRTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_IPADDRROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_IPADDRROW! !
 !MIB_IPADDRTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_IPADDRTABLE class methodsFor!
@@ -45,10 +49,14 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #table
-		type: ((ConformantStructureArrayField type: MIB_IPADDRROW length: #dwNumEntries)
+		type: ((StructureArrayField type: MIB_IPADDRROW lengthField: #dwNumEntries)
 				beReadOnly;
 				yourself)
 		offset: 4.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#dwNumEntries #table)! !
 !MIB_IPADDRTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPADDRTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

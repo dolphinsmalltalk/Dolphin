@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IpHlpApiTableStruct subclass: #MIB_IFTABLE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IFTABLE guid: (GUID fromString: '{2ba815fb-13d2-4ab7-a138-15332adeb3bf}')!
-MIB_IFTABLE comment: '<MIB_IFTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IFTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+MIB_IFTABLE comment: '<MIB_IFTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +25,12 @@ struct tagMIB_IFTABLE {
 !MIB_IFTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_IFROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_IFROW! !
 !MIB_IFTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_IFTABLE class methodsFor!
@@ -45,10 +49,14 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #table
-		type: ((ConformantStructureArrayField type: MIB_IFROW length: #dwNumEntries)
+		type: ((StructureArrayField type: MIB_IFROW lengthField: #dwNumEntries)
 				beReadOnly;
 				yourself)
 		offset: 4.
-	self byteSize: 864! !
+	self byteSize: 864!
+
+getFieldNames
+	^#(#dwNumEntries #table)! !
 !MIB_IFTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_IFTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

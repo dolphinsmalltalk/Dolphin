@@ -1,12 +1,35 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IPSTATS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwDefaultTTL _OffsetOf_dwForwarding _OffsetOf_dwForwDatagrams _OffsetOf_dwFragCreates _OffsetOf_dwFragFails _OffsetOf_dwFragOks _OffsetOf_dwInAddrErrors _OffsetOf_dwInDelivers _OffsetOf_dwInDiscards _OffsetOf_dwInHdrErrors _OffsetOf_dwInReceives _OffsetOf_dwInUnknownProtos _OffsetOf_dwNumAddr _OffsetOf_dwNumIf _OffsetOf_dwNumRoutes _OffsetOf_dwOutDiscards _OffsetOf_dwOutNoRoutes _OffsetOf_dwOutRequests _OffsetOf_dwReasmFails _OffsetOf_dwReasmOks _OffsetOf_dwReasmReqds _OffsetOf_dwReasmTimeout _OffsetOf_dwRoutingDiscards'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPSTATS guid: (GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
-MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwDefaultTTL' value: 16r4!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwarding' value: 16r0!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwDatagrams' value: 16r14!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragCreates' value: 16r4C!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragFails' value: 16r48!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragOks' value: 16r44!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInAddrErrors' value: 16r10!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInDelivers' value: 16r20!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInDiscards' value: 16r1C!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInHdrErrors' value: 16rC!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInReceives' value: 16r8!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwInUnknownProtos' value: 16r18!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumAddr' value: 16r54!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumIf' value: 16r50!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumRoutes' value: 16r58!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutDiscards' value: 16r2C!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutNoRoutes' value: 16r30!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutRequests' value: 16r24!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmFails' value: 16r40!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmOks' value: 16r3C!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmReqds' value: 16r38!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmTimeout' value: 16r34!
+MIB_IPSTATS addClassConstant: '_OffsetOf_dwRoutingDiscards' value: 16r28!
+MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -45,119 +68,119 @@ struct tagMIB_IPSTATS {
 !MIB_IPSTATS methodsFor!
 
 dwDefaultTTL
-	"Answer the receiver's dwDefaultTTL field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDefaultTTL' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwDefaultTTL!
 
 dwForwarding
-	"Answer the receiver's dwForwarding field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwarding' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwarding!
 
 dwForwDatagrams
-	"Answer the receiver's dwForwDatagrams field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwDatagrams' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwDatagrams!
 
 dwFragCreates
-	"Answer the receiver's dwFragCreates field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFragCreates' field."
 
-	^(bytes dwordAtOffset: 76)!
+	^bytes dwordAtOffset: _OffsetOf_dwFragCreates!
 
 dwFragFails
-	"Answer the receiver's dwFragFails field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFragFails' field."
 
-	^(bytes dwordAtOffset: 72)!
+	^bytes dwordAtOffset: _OffsetOf_dwFragFails!
 
 dwFragOks
-	"Answer the receiver's dwFragOks field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFragOks' field."
 
-	^(bytes dwordAtOffset: 68)!
+	^bytes dwordAtOffset: _OffsetOf_dwFragOks!
 
 dwInAddrErrors
-	"Answer the receiver's dwInAddrErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInAddrErrors' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwInAddrErrors!
 
 dwInDelivers
-	"Answer the receiver's dwInDelivers field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInDelivers' field."
 
-	^(bytes dwordAtOffset: 32)!
+	^bytes dwordAtOffset: _OffsetOf_dwInDelivers!
 
 dwInDiscards
-	"Answer the receiver's dwInDiscards field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInDiscards' field."
 
-	^(bytes dwordAtOffset: 28)!
+	^bytes dwordAtOffset: _OffsetOf_dwInDiscards!
 
 dwInHdrErrors
-	"Answer the receiver's dwInHdrErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInHdrErrors' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwInHdrErrors!
 
 dwInReceives
-	"Answer the receiver's dwInReceives field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInReceives' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwInReceives!
 
 dwInUnknownProtos
-	"Answer the receiver's dwInUnknownProtos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInUnknownProtos' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: _OffsetOf_dwInUnknownProtos!
 
 dwNumAddr
-	"Answer the receiver's dwNumAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumAddr' field."
 
-	^(bytes dwordAtOffset: 84)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumAddr!
 
 dwNumIf
-	"Answer the receiver's dwNumIf field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumIf' field."
 
-	^(bytes dwordAtOffset: 80)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumIf!
 
 dwNumRoutes
-	"Answer the receiver's dwNumRoutes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumRoutes' field."
 
-	^(bytes dwordAtOffset: 88)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumRoutes!
 
 dwOutDiscards
-	"Answer the receiver's dwOutDiscards field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutDiscards' field."
 
-	^(bytes dwordAtOffset: 44)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutDiscards!
 
 dwOutNoRoutes
-	"Answer the receiver's dwOutNoRoutes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutNoRoutes' field."
 
-	^(bytes dwordAtOffset: 48)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutNoRoutes!
 
 dwOutRequests
-	"Answer the receiver's dwOutRequests field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutRequests' field."
 
-	^(bytes dwordAtOffset: 36)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutRequests!
 
 dwReasmFails
-	"Answer the receiver's dwReasmFails field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwReasmFails' field."
 
-	^(bytes dwordAtOffset: 64)!
+	^bytes dwordAtOffset: _OffsetOf_dwReasmFails!
 
 dwReasmOks
-	"Answer the receiver's dwReasmOks field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwReasmOks' field."
 
-	^(bytes dwordAtOffset: 60)!
+	^bytes dwordAtOffset: _OffsetOf_dwReasmOks!
 
 dwReasmReqds
-	"Answer the receiver's dwReasmReqds field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwReasmReqds' field."
 
-	^(bytes dwordAtOffset: 56)!
+	^bytes dwordAtOffset: _OffsetOf_dwReasmReqds!
 
 dwReasmTimeout
-	"Answer the receiver's dwReasmTimeout field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwReasmTimeout' field."
 
-	^(bytes dwordAtOffset: 52)!
+	^bytes dwordAtOffset: _OffsetOf_dwReasmTimeout!
 
 dwRoutingDiscards
-	"Answer the receiver's dwRoutingDiscards field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
-	^(bytes dwordAtOffset: 40)! !
+	^bytes dwordAtOffset: _OffsetOf_dwRoutingDiscards! !
 !MIB_IPSTATS categoriesFor: #dwDefaultTTL!**compiled accessors**!public! !
 !MIB_IPSTATS categoriesFor: #dwForwarding!**compiled accessors**!public! !
 !MIB_IPSTATS categoriesFor: #dwForwDatagrams!**compiled accessors**!public! !
@@ -240,6 +263,10 @@ defineFields
 		defineField: #dwNumIf type: DWORDField readOnly offset: 80;
 		defineField: #dwNumAddr type: DWORDField readOnly offset: 84;
 		defineField: #dwNumRoutes type: DWORDField readOnly offset: 88.
-	self byteSize: 92! !
+	self byteSize: 92!
+
+getFieldNames
+	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
 !MIB_IPSTATS class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

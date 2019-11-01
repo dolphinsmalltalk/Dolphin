@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwProcessId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_UDPEXROW guid: (GUID fromString: '{fda0765b-395f-447b-881b-26155c88393a}')!
-MIB_UDPEXROW comment: '<MIB_UDPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_UDPEXROW addClassConstant: '_OffsetOf_dwProcessId' value: 16r8!
+MIB_UDPEXROW comment: '<MIB_UDPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -25,9 +26,9 @@ struct tagMIB_UDPEXROW {
 !MIB_UDPEXROW methodsFor!
 
 dwProcessId
-	"Answer the receiver's dwProcessId field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
-	^(bytes dwordAtOffset: 8)! !
+	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
 !MIB_UDPEXROW categoriesFor: #dwProcessId!**compiled accessors**!public! !
 
 !MIB_UDPEXROW class methodsFor!
@@ -49,6 +50,10 @@ defineFields
 		defineField: #dwProcessId
 		type: DWORDField readOnly
 		offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#dwLocalAddr #dwLocalPort #dwProcessId)! !
 !MIB_UDPEXROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_UDPEXROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

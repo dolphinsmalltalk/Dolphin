@@ -1,12 +1,19 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IPADDRROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwAddr _OffsetOf_dwBCastAddr _OffsetOf_dwIndex _OffsetOf_dwMask _OffsetOf_dwReasmSize _OffsetOf_Unused1 _OffsetOf_wType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPADDRROW guid: (GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
-MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPADDRROW addClassConstant: '_OffsetOf_dwAddr' value: 16r0!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_dwBCastAddr' value: 16rC!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_dwIndex' value: 16r4!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_dwMask' value: 16r8!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_dwReasmSize' value: 16r10!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_Unused1' value: 16r14!
+MIB_IPADDRROW addClassConstant: '_OffsetOf_wType' value: 16r16!
+MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -29,34 +36,34 @@ struct tagMIB_IPADDRROW {
 !MIB_IPADDRROW methodsFor!
 
 dwAddr
-	"Answer the receiver's dwAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAddr' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwAddr!
 
 dwBCastAddr
-	"Answer the receiver's dwBCastAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwBCastAddr' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwBCastAddr!
 
 dwIndex
-	"Answer the receiver's dwIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwIndex!
 
 dwMask
-	"Answer the receiver's dwMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwMask!
 
 dwReasmSize
-	"Answer the receiver's dwReasmSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwReasmSize' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwReasmSize!
 
 wType
-	"Answer the receiver's wType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wType' field."
 
-	^(bytes wordAtOffset: 22)! !
+	^bytes wordAtOffset: _OffsetOf_wType! !
 !MIB_IPADDRROW categoriesFor: #dwAddr!**compiled accessors**!public! !
 !MIB_IPADDRROW categoriesFor: #dwBCastAddr!**compiled accessors**!public! !
 !MIB_IPADDRROW categoriesFor: #dwIndex!**compiled accessors**!public! !
@@ -104,6 +111,10 @@ defineFields
 		defineField: #wType
 			type: WORDField readOnly
 			offset: 22.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#dwAddr #dwIndex #dwMask #dwBCastAddr #dwReasmSize #wType)! !
 !MIB_IPADDRROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPADDRROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
