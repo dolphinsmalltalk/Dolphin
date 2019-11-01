@@ -111,7 +111,7 @@ fromString: aString
 
 	| buf ret family |
 	buf := NET_ADDRESS_INFO newBuffer.
-	ret := IpHlpApiLibrary default
+	ret := IPHlpApiLibrary default
 				parseNetworkString: aString
 				types: ##(NET_STRING_IP_ADDRESS | NET_STRING_IP_SERVICE)
 				addressInfo: buf
