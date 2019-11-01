@@ -16,18 +16,10 @@ contents
 	| contents |
 	contents := super contents.
 
-	"ITC Gorisek & STS"
-	"Many of these have been broken by the addition of Unicode support any may require significant work to fix"
+	"ITC Gorisek"
 	contents
-		"add: #('Core\Contributions\ITC Gorisek\Dialect Abstraction Layer.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\OmniBase.pax' #plain #imageBased);"
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO Base.pax' #plain #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO DOM.pax' #plain #imageBased);
-		"add: #('Core\Contributions\ITC Gorisek\ZLib Interface.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\SMTP Support.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\MD5.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\Source Tracking System.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\Source Tracking System Administrator.pax' #encrypted #imageBased);"
 		yourself.
 
 	"Add-ons"
@@ -47,11 +39,8 @@ contents
 		addAll: #(#('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafile Records.pax' #encrypted #imageBased) #('Core\Object Arts\Dolphin\MVP\Metafiles\Dolphin Metafiles.pax' #encrypted #imageBased));
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Tutorial Player.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\Utilities\Tutorials\Learn Smalltalk.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\Utilities\IPHelp\IP Help API.pax' #encrypted #imageBased);
 		yourself.
-
-	"##(self paxesUnder: 'Core\Object Arts\Dolphin\System\Win32\' encrypted: true) asArray"
-
-	"##(self paxesUnder: 'Core\Object Arts\Dolphin\MVP\Metafiles\' encrypted: true) asArray"
 
 	"Samples"
 	contents
