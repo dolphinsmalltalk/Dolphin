@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPNETTABLE guid: (GUID fromString: '{4ab2727d-d1c0-4aa5-a48d-3c805e4f41bb}')!
-MIB_IPNETTABLE comment: '<MIB_IPNETTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPNETTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+MIB_IPNETTABLE comment: '<MIB_IPNETTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +25,12 @@ struct tagMIB_IPNETTABLE {
 !MIB_IPNETTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_IPNETROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_IPNETROW! !
 !MIB_IPNETTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_IPNETTABLE class methodsFor!
@@ -45,10 +49,14 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #table
-		type: ((ConformantStructureArrayField type: MIB_IPNETROW length: #dwNumEntries)
+		type: ((StructureArrayField type: MIB_IPNETROW lengthField: #dwNumEntries)
 				beReadOnly;
 				yourself)
 		offset: 4.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#dwNumEntries #table)! !
 !MIB_IPNETTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPNETTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

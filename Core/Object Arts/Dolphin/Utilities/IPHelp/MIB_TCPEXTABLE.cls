@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_TCPEXTABLE guid: (GUID fromString: '{3582e317-1c8d-46de-b0aa-21ada27c614f}')!
-MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_TCPEXTABLE comment: '<MIB_TCPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +24,12 @@ struct tagMIB_TCPEXTABLE {
 !MIB_TCPEXTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_TCPEXROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_TCPEXROW! !
 !MIB_TCPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_TCPEXTABLE class methodsFor!
@@ -47,7 +50,7 @@ defineFields
 			type: DWORDField readOnly
 			offset: 0;
 		defineField: #table
-			type: ((ConformantStructureArrayField type: MIB_TCPEXROW length: #dwNumEntries)
+			type: ((StructureArrayField type: MIB_TCPEXROW lengthField: #dwNumEntries)
 					beOverride;
 					beReadOnly;
 					yourself)

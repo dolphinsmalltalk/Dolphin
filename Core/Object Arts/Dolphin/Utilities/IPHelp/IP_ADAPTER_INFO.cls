@@ -1,12 +1,30 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_ADAPTER_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AdapterName _OffsetOf_Address _OffsetOf_AddressLength _OffsetOf_ComboIndex _OffsetOf_CurrentIpAddress _OffsetOf_Description _OffsetOf_DhcpEnabled _OffsetOf_DhcpServer _OffsetOf_GatewayList _OffsetOf_HaveWins _OffsetOf_index _OffsetOf_IpAddressList _OffsetOf_LeaseExpires _OffsetOf_LeaseObtained _OffsetOf_Next _OffsetOf_PrimaryWinsServer _OffsetOf_SecondaryWinsServer _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IP_ADAPTER_INFO guid: (GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
-IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_AdapterName' value: 16r8!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_Address' value: 16r194!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_AddressLength' value: 16r190!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_ComboIndex' value: 16r4!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_CurrentIpAddress' value: 16r1A8!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_Description' value: 16r10C!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_DhcpEnabled' value: 16r1A4!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_DhcpServer' value: 16r1FC!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_GatewayList' value: 16r1D4!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_HaveWins' value: 16r224!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_index' value: 16r19C!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_IpAddressList' value: 16r1AC!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_LeaseExpires' value: 16r27C!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_LeaseObtained' value: 16r278!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_Next' value: 16r0!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_PrimaryWinsServer' value: 16r228!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_SecondaryWinsServer' value: 16r250!
+IP_ADAPTER_INFO addClassConstant: '_OffsetOf_type' value: 16r1A0!
+IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -40,94 +58,94 @@ struct tagIP_ADAPTER_INFO {
 !IP_ADAPTER_INFO methodsFor!
 
 AdapterName
-	"Answer the receiver's AdapterName field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'AdapterName' field."
 
-	^String fromAddress: (bytes yourAddress + 8)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_AdapterName!
 
 Address
-	"Answer the receiver's Address field as a Smalltalk object."
+	"Answer the <ByteArray> value of the receiver's 'Address' field."
 
-	^ByteArray fromAddress: (bytes yourAddress + 404) length: 8!
+	^ByteArray fromAddress: bytes yourAddress + _OffsetOf_Address length: 8!
 
 AddressLength
-	"Answer the receiver's AddressLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'AddressLength' field."
 
-	^(bytes dwordAtOffset: 400)!
+	^bytes dwordAtOffset: _OffsetOf_AddressLength!
 
 ComboIndex
-	"Answer the receiver's ComboIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ComboIndex' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_ComboIndex!
 
 CurrentIpAddress
-	"Answer the receiver's CurrentIpAddress field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'CurrentIpAddress' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes sdwordAtOffset: 424)!
+	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_CurrentIpAddress)!
 
 Description
-	"Answer the receiver's Description field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'Description' field."
 
-	^String fromAddress: (bytes yourAddress + 268)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_Description!
 
 DhcpEnabled
-	"Answer the receiver's DhcpEnabled field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DhcpEnabled' field."
 
-	^(bytes dwordAtOffset: 420)!
+	^bytes dwordAtOffset: _OffsetOf_DhcpEnabled!
 
 DhcpServer
-	"Answer the receiver's DhcpServer field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'DhcpServer' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 508)!
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DhcpServer!
 
 GatewayList
-	"Answer the receiver's GatewayList field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'GatewayList' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 468)!
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_GatewayList!
 
 HaveWins
-	"Answer the receiver's HaveWins field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'HaveWins' field."
 
-	^(bytes sdwordAtOffset: 548)!
+	^bytes sdwordAtOffset: _OffsetOf_HaveWins!
 
 index
-	"Answer the receiver's index field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'index' field."
 
-	^(bytes dwordAtOffset: 412)!
+	^bytes dwordAtOffset: _OffsetOf_index!
 
 IpAddressList
-	"Answer the receiver's IpAddressList field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'IpAddressList' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 428)!
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_IpAddressList!
 
 LeaseExpires
-	"Answer the receiver's LeaseExpires field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'LeaseExpires' field."
 
-	^(bytes sdwordAtOffset: 636)!
+	^bytes sdwordAtOffset: _OffsetOf_LeaseExpires!
 
 LeaseObtained
-	"Answer the receiver's LeaseObtained field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'LeaseObtained' field."
 
-	^(bytes sdwordAtOffset: 632)!
+	^bytes sdwordAtOffset: _OffsetOf_LeaseObtained!
 
 Next
-	"Answer the receiver's Next field as a Smalltalk object."
+	"Answer the <IP_ADAPTER_INFO> value of the receiver's 'Next' field."
 
-	^IP_ADAPTER_INFO fromAddress: (bytes sdwordAtOffset: 0)!
+	^IP_ADAPTER_INFO fromAddress: (bytes intPtrAtOffset: _OffsetOf_Next)!
 
 PrimaryWinsServer
-	"Answer the receiver's PrimaryWinsServer field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'PrimaryWinsServer' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 552)!
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_PrimaryWinsServer!
 
 SecondaryWinsServer
-	"Answer the receiver's SecondaryWinsServer field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'SecondaryWinsServer' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 592)!
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_SecondaryWinsServer!
 
 type
-	"Answer the receiver's type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^(bytes dwordAtOffset: 416)! !
+	^bytes dwordAtOffset: _OffsetOf_type! !
 !IP_ADAPTER_INFO categoriesFor: #AdapterName!**compiled accessors**!public! !
 !IP_ADAPTER_INFO categoriesFor: #Address!**compiled accessors**!public! !
 !IP_ADAPTER_INFO categoriesFor: #AddressLength!**compiled accessors**!public! !
@@ -251,6 +269,10 @@ defineFields
 		defineField: #LeaseExpires
 			type: SDWORDField readOnly
 			offset: 636.
-	self byteSize: 640! !
+	self byteSize: 640!
+
+getFieldNames
+	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
 !IP_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
+!IP_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

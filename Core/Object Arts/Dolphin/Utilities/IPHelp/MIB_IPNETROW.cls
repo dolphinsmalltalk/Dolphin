@@ -1,12 +1,17 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bPhysAddr _OffsetOf_dwAddr _OffsetOf_dwIndex _OffsetOf_dwPhysAddrLen _OffsetOf_dwType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPNETROW guid: (GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
-MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPNETROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r8!
+MIB_IPNETROW addClassConstant: '_OffsetOf_dwAddr' value: 16r10!
+MIB_IPNETROW addClassConstant: '_OffsetOf_dwIndex' value: 16r0!
+MIB_IPNETROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r4!
+MIB_IPNETROW addClassConstant: '_OffsetOf_dwType' value: 16r14!
+MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -27,29 +32,29 @@ struct tagMIB_IPNETROW {
 !MIB_IPNETROW methodsFor!
 
 bPhysAddr
-	"Answer the receiver's bPhysAddr field as a Smalltalk object."
+	"Answer the <ByteArray> value of the receiver's 'bPhysAddr' field."
 
-	^ByteArray fromAddress: (bytes yourAddress + 8) length: 8!
+	^ByteArray fromAddress: bytes yourAddress + _OffsetOf_bPhysAddr length: 8!
 
 dwAddr
-	"Answer the receiver's dwAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAddr' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwAddr!
 
 dwIndex
-	"Answer the receiver's dwIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwIndex!
 
 dwPhysAddrLen
-	"Answer the receiver's dwPhysAddrLen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwPhysAddrLen' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwPhysAddrLen!
 
 dwType
-	"Answer the receiver's dwType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^(bytes dwordAtOffset: 20)! !
+	^bytes dwordAtOffset: _OffsetOf_dwType! !
 !MIB_IPNETROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
 !MIB_IPNETROW categoriesFor: #dwAddr!**compiled accessors**!public! !
 !MIB_IPNETROW categoriesFor: #dwIndex!**compiled accessors**!public! !
@@ -90,6 +95,10 @@ defineFields
 		defineField: #dwType
 			type: DWORDField readOnly
 			offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
 !MIB_IPNETROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPNETROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

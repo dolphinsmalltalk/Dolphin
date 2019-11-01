@@ -1,12 +1,16 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_ADDR_STRING
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Context _OffsetOf_IpAddress _OffsetOf_IpMask _OffsetOf_Next'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IP_ADDR_STRING guid: (GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
-IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+IP_ADDR_STRING addClassConstant: '_OffsetOf_Context' value: 16r24!
+IP_ADDR_STRING addClassConstant: '_OffsetOf_IpAddress' value: 16r4!
+IP_ADDR_STRING addClassConstant: '_OffsetOf_IpMask' value: 16r14!
+IP_ADDR_STRING addClassConstant: '_OffsetOf_Next' value: 16r0!
+IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,24 +30,24 @@ struct tagIP_ADDR_STRING {
 !IP_ADDR_STRING methodsFor!
 
 Context
-	"Answer the receiver's Context field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Context' field."
 
-	^(bytes dwordAtOffset: 36)!
+	^bytes dwordAtOffset: _OffsetOf_Context!
 
 IpAddress
-	"Answer the receiver's IpAddress field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'IpAddress' field."
 
-	^String fromAddress: (bytes yourAddress + 4)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_IpAddress!
 
 IpMask
-	"Answer the receiver's IpMask field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'IpMask' field."
 
-	^String fromAddress: (bytes yourAddress + 20)!
+	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_IpMask!
 
 Next
-	"Answer the receiver's Next field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'Next' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes sdwordAtOffset: 0)! !
+	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_Next)! !
 !IP_ADDR_STRING categoriesFor: #Context!**compiled accessors**!public! !
 !IP_ADDR_STRING categoriesFor: #IpAddress!**compiled accessors**!public! !
 !IP_ADDR_STRING categoriesFor: #IpMask!**compiled accessors**!public! !
@@ -83,6 +87,10 @@ defineFields
 		defineField: #Context
 			type: DWORDField readOnly
 			offset: 36.
-	self byteSize: 40! !
+	self byteSize: 40!
+
+getFieldNames
+	^#(#Next #IpAddress #IpMask #Context)! !
 !IP_ADDR_STRING class categoriesFor: #defineFields!initializing!public! !
+!IP_ADDR_STRING class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

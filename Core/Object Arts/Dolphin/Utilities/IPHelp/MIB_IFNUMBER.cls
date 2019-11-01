@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IFNUMBER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IFNUMBER guid: (GUID fromString: '{9f523fa1-99d3-4b73-83a1-fbf779a77e02}')!
-MIB_IFNUMBER comment: '<MIB_IFNUMBER> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFNUMBER'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IFNUMBER addClassConstant: '_OffsetOf_dwValue' value: 16r0!
+MIB_IFNUMBER comment: '<MIB_IFNUMBER> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFNUMBER'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,9 +24,9 @@ struct tagMIB_IFNUMBER {
 !MIB_IFNUMBER methodsFor!
 
 dwValue
-	"Answer the receiver's dwValue field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwValue' field."
 
-	^(bytes dwordAtOffset: 0)! !
+	^bytes dwordAtOffset: _OffsetOf_dwValue! !
 !MIB_IFNUMBER categoriesFor: #dwValue!**compiled accessors**!public! !
 
 !MIB_IFNUMBER class methodsFor!
@@ -42,6 +43,10 @@ defineFields
 
 	self
 		defineField: #dwValue type: DWORDField readOnly offset: 0.
-	self byteSize: 4! !
+	self byteSize: 4!
+
+getFieldNames
+	^#(#dwValue)! !
 !MIB_IFNUMBER class categoriesFor: #defineFields!initializing!public! !
+!MIB_IFNUMBER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

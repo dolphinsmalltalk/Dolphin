@@ -1,12 +1,14 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Address _OffsetOf_NumAdapters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
-IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_Address' value: 16r4!
+IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_NumAdapters' value: 16r0!
+IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,30 +26,28 @@ struct tagIP_UNIDIRECTIONAL_ADAPTER_ADDRESS {
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS methodsFor!
 
 Address
-	"Answer the receiver's Address field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'Address' field."
 
-	^DWORDArray fromAddress: (bytes yourAddress + 4) length: 1!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_Address length: 1!
 
-Address: anObject
-	"Set the receiver's Address field to the value of anObject."
+Address: aDWORDArray
+	"Set the receiver's 'Address' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: (1 * 4).
-	anObject replaceBytesOf: bytes from: 5 to: 4 + size startingAt: 1!
+	size := aDWORDArray byteSize min: ##(1 * DWORDArray elementSize).
+	aDWORDArray
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_Address + 1)
+		to: _OffsetOf_Address + size
+		startingAt: 1!
 
 NumAdapters
-	"Answer the receiver's NumAdapters field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
-	^(bytes dwordAtOffset: 0)!
-
-NumAdapters: anObject
-	"Set the receiver's NumAdapters field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject! !
+	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address!**compiled accessors**!public! !
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address:!**compiled accessors**!public! !
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters!**compiled accessors**!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters:!**compiled accessors**!public! !
 
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
 
@@ -65,6 +65,10 @@ defineFields
 	self
 		defineField: #NumAdapters type: DWORDField readOnly offset: 0;
 		defineField: #Address type: (ArrayField type: DWORDArray length: 1) offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#NumAdapters #Address)! !
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #defineFields!initializing!public! !
+!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,12 +1,16 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AutoconfigActive _OffsetOf_AutoconfigEnabled _OffsetOf_CurrentDnsServer _OffsetOf_DnsServerList'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IP_PER_ADAPTER_INFO guid: (GUID fromString: '{e2022105-d714-4780-a2dc-5db76307f035}')!
-IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_AutoconfigActive' value: 16r4!
+IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_AutoconfigEnabled' value: 16r0!
+IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_CurrentDnsServer' value: 16r8!
+IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_DnsServerList' value: 16rC!
+IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -26,24 +30,24 @@ struct tagIP_PER_ADAPTER_INFO {
 !IP_PER_ADAPTER_INFO methodsFor!
 
 AutoconfigActive
-	"Answer the receiver's AutoconfigActive field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'AutoconfigActive' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_AutoconfigActive!
 
 AutoconfigEnabled
-	"Answer the receiver's AutoconfigEnabled field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'AutoconfigEnabled' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_AutoconfigEnabled!
 
 CurrentDnsServer
-	"Answer the receiver's CurrentDnsServer field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'CurrentDnsServer' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes sdwordAtOffset: 8)!
+	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_CurrentDnsServer)!
 
 DnsServerList
-	"Answer the receiver's DnsServerList field as a Smalltalk object."
+	"Answer the <IP_ADDR_STRING> value of the receiver's 'DnsServerList' field."
 
-	^IP_ADDR_STRING fromAddress: (bytes yourAddress + 12)! !
+	^IP_ADDR_STRING fromAddress: bytes yourAddress + _OffsetOf_DnsServerList! !
 !IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigActive!**compiled accessors**!public! !
 !IP_PER_ADAPTER_INFO categoriesFor: #AutoconfigEnabled!**compiled accessors**!public! !
 !IP_PER_ADAPTER_INFO categoriesFor: #CurrentDnsServer!**compiled accessors**!public! !
@@ -81,6 +85,10 @@ defineFields
 					beReadOnly;
 					yourself)
 			offset: 12.
-	self byteSize: 52! !
+	self byteSize: 52!
+
+getFieldNames
+	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
 !IP_PER_ADAPTER_INFO class categoriesFor: #defineFields!initializing!public! !
+!IP_PER_ADAPTER_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

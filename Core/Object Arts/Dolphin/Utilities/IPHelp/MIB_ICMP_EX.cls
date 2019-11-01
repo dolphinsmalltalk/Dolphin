@@ -1,12 +1,14 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_ICMP_EX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_ICMP_EX guid: (GUID fromString: '{15e74798-3501-497b-a245-8dc4108fba87}')!
-MIB_ICMP_EX comment: '<MIB_ICMP_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_ICMP_EX addClassConstant: '_OffsetOf_icmpInStats' value: 16r0!
+MIB_ICMP_EX addClassConstant: '_OffsetOf_icmpOutStats' value: 16r408!
+MIB_ICMP_EX comment: '<MIB_ICMP_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,14 +26,14 @@ struct tagMIB_ICMP_EX {
 !MIB_ICMP_EX methodsFor!
 
 icmpInStats
-	"Answer the receiver's icmpInStats field as a Smalltalk object."
+	"Answer the <MIBICMPSTATS_EX> value of the receiver's 'icmpInStats' field."
 
-	^MIBICMPSTATS_EX fromAddress: (bytes yourAddress)!
+	^MIBICMPSTATS_EX fromAddress: bytes yourAddress!
 
 icmpOutStats
-	"Answer the receiver's icmpOutStats field as a Smalltalk object."
+	"Answer the <MIBICMPSTATS_EX> value of the receiver's 'icmpOutStats' field."
 
-	^MIBICMPSTATS_EX fromAddress: (bytes yourAddress + 1032)! !
+	^MIBICMPSTATS_EX fromAddress: bytes yourAddress + _OffsetOf_icmpOutStats! !
 !MIB_ICMP_EX categoriesFor: #icmpInStats!**compiled accessors**!public! !
 !MIB_ICMP_EX categoriesFor: #icmpOutStats!**compiled accessors**!public! !
 
@@ -59,6 +61,10 @@ defineFields
 					beReadOnly;
 					yourself)
 			offset: 1032.
-	self byteSize: 2064! !
+	self byteSize: 2064!
+
+getFieldNames
+	^#(#icmpInStats #icmpOutStats)! !
 !MIB_ICMP_EX class categoriesFor: #defineFields!initializing!public! !
+!MIB_ICMP_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

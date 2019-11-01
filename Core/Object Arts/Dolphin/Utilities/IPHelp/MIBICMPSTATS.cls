@@ -1,12 +1,25 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwAddrMaskReps _OffsetOf_dwAddrMasks _OffsetOf_dwDestUnreachs _OffsetOf_dwEchoReps _OffsetOf_dwEchos _OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_dwParmProbs _OffsetOf_dwRedirects _OffsetOf_dwSrcQuenchs _OffsetOf_dwTimeExcds _OffsetOf_dwTimestampReps _OffsetOf_dwTimestamps'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIBICMPSTATS guid: (GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
-MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMaskReps' value: 16r30!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMasks' value: 16r2C!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwDestUnreachs' value: 16r8!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwEchoReps' value: 16r20!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwEchos' value: 16r1C!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwErrors' value: 16r4!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwMsgs' value: 16r0!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwParmProbs' value: 16r10!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwRedirects' value: 16r18!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwSrcQuenchs' value: 16r14!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimeExcds' value: 16rC!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestampReps' value: 16r28!
+MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestamps' value: 16r24!
+MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -35,69 +48,69 @@ struct tagMIBICMPSTATS {
 !MIBICMPSTATS methodsFor!
 
 dwAddrMaskReps
-	"Answer the receiver's dwAddrMaskReps field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAddrMaskReps' field."
 
-	^(bytes dwordAtOffset: 48)!
+	^bytes dwordAtOffset: _OffsetOf_dwAddrMaskReps!
 
 dwAddrMasks
-	"Answer the receiver's dwAddrMasks field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAddrMasks' field."
 
-	^(bytes dwordAtOffset: 44)!
+	^bytes dwordAtOffset: _OffsetOf_dwAddrMasks!
 
 dwDestUnreachs
-	"Answer the receiver's dwDestUnreachs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDestUnreachs' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwDestUnreachs!
 
 dwEchoReps
-	"Answer the receiver's dwEchoReps field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwEchoReps' field."
 
-	^(bytes dwordAtOffset: 32)!
+	^bytes dwordAtOffset: _OffsetOf_dwEchoReps!
 
 dwEchos
-	"Answer the receiver's dwEchos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwEchos' field."
 
-	^(bytes dwordAtOffset: 28)!
+	^bytes dwordAtOffset: _OffsetOf_dwEchos!
 
 dwErrors
-	"Answer the receiver's dwErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwErrors' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwErrors!
 
 dwMsgs
-	"Answer the receiver's dwMsgs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwMsgs' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwMsgs!
 
 dwParmProbs
-	"Answer the receiver's dwParmProbs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwParmProbs' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwParmProbs!
 
 dwRedirects
-	"Answer the receiver's dwRedirects field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRedirects' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: _OffsetOf_dwRedirects!
 
 dwSrcQuenchs
-	"Answer the receiver's dwSrcQuenchs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwSrcQuenchs' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: _OffsetOf_dwSrcQuenchs!
 
 dwTimeExcds
-	"Answer the receiver's dwTimeExcds field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwTimeExcds' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwTimeExcds!
 
 dwTimestampReps
-	"Answer the receiver's dwTimestampReps field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwTimestampReps' field."
 
-	^(bytes dwordAtOffset: 40)!
+	^bytes dwordAtOffset: _OffsetOf_dwTimestampReps!
 
 dwTimestamps
-	"Answer the receiver's dwTimestamps field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
-	^(bytes dwordAtOffset: 36)! !
+	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
 !MIBICMPSTATS categoriesFor: #dwAddrMaskReps!**compiled accessors**!public! !
 !MIBICMPSTATS categoriesFor: #dwAddrMasks!**compiled accessors**!public! !
 !MIBICMPSTATS categoriesFor: #dwDestUnreachs!**compiled accessors**!public! !
@@ -176,6 +189,10 @@ defineFields
 		defineField: #dwAddrMaskReps
 			type: DWORDField readOnly
 			offset: 48.
-	self byteSize: 52! !
+	self byteSize: 52!
+
+getFieldNames
+	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
 !MIBICMPSTATS class categoriesFor: #defineFields!initializing!public! !
+!MIBICMPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

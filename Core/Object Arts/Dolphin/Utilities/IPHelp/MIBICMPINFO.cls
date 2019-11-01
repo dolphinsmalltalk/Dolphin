@@ -1,12 +1,14 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIBICMPINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIBICMPINFO guid: (GUID fromString: '{157140e6-8375-4377-ba3e-612acdb6f9f4}')!
-MIBICMPINFO comment: '<MIBICMPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPINFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIBICMPINFO addClassConstant: '_OffsetOf_icmpInStats' value: 16r0!
+MIBICMPINFO addClassConstant: '_OffsetOf_icmpOutStats' value: 16r34!
+MIBICMPINFO comment: '<MIBICMPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPINFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,14 +26,14 @@ struct tagMIBICMPINFO {
 !MIBICMPINFO methodsFor!
 
 icmpInStats
-	"Answer the receiver's icmpInStats field as a Smalltalk object."
+	"Answer the <MIBICMPSTATS> value of the receiver's 'icmpInStats' field."
 
-	^MIBICMPSTATS fromAddress: (bytes yourAddress)!
+	^MIBICMPSTATS fromAddress: bytes yourAddress!
 
 icmpOutStats
-	"Answer the receiver's icmpOutStats field as a Smalltalk object."
+	"Answer the <MIBICMPSTATS> value of the receiver's 'icmpOutStats' field."
 
-	^MIBICMPSTATS fromAddress: (bytes yourAddress + 52)! !
+	^MIBICMPSTATS fromAddress: bytes yourAddress + _OffsetOf_icmpOutStats! !
 !MIBICMPINFO categoriesFor: #icmpInStats!**compiled accessors**!public! !
 !MIBICMPINFO categoriesFor: #icmpOutStats!**compiled accessors**!public! !
 
@@ -59,6 +61,10 @@ defineFields
 					beReadOnly;
 					yourself)
 			offset: 52.
-	self byteSize: 104! !
+	self byteSize: 104!
+
+getFieldNames
+	^#(#icmpInStats #icmpOutStats)! !
 !MIBICMPINFO class categoriesFor: #defineFields!initializing!public! !
+!MIBICMPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

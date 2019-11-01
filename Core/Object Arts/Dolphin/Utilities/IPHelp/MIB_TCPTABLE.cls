@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_TCPTABLE guid: (GUID fromString: '{1308bd96-edb7-4030-85b1-a6651a737122}')!
-MIB_TCPTABLE comment: '<MIB_TCPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_TCPTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+MIB_TCPTABLE comment: '<MIB_TCPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,9 +25,12 @@ struct tagMIB_TCPTABLE {
 !MIB_TCPTABLE methodsFor!
 
 table
-	"Answer the receiver's table field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'table' field."
 
-	^StructureArray fromAddress: (bytes yourAddress + 4) length: self dwNumEntries elementClass: MIB_TCPROW! !
+	^StructureArray
+		fromAddress: bytes yourAddress + _OffsetOf_table
+		length: self dwNumEntries
+		elementClass: MIB_TCPROW! !
 !MIB_TCPTABLE categoriesFor: #table!**compiled accessors**!public! !
 
 !MIB_TCPTABLE class methodsFor!
@@ -45,10 +49,14 @@ defineFields
 	super defineFields.
 	self 
 		defineField: #table
-		type: ((ConformantStructureArrayField type: MIB_TCPROW length: #dwNumEntries)
+		type: ((StructureArrayField type: MIB_TCPROW lengthField: #dwNumEntries)
 				beReadOnly;
 				yourself)
 		offset: 4.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#dwNumEntries #table)! !
 !MIB_TCPTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_TCPTABLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

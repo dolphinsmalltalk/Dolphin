@@ -1,12 +1,26 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IPFORWARDROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwForwardAge _OffsetOf_dwForwardDest _OffsetOf_dwForwardIfIndex _OffsetOf_dwForwardMask _OffsetOf_dwForwardMetric1 _OffsetOf_dwForwardMetric2 _OffsetOf_dwForwardMetric3 _OffsetOf_dwForwardMetric4 _OffsetOf_dwForwardMetric5 _OffsetOf_dwForwardNextHop _OffsetOf_dwForwardNextHopAS _OffsetOf_dwForwardPolicy _OffsetOf_dwForwardProto _OffsetOf_dwForwardType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IPFORWARDROW guid: (GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
-MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardAge' value: 16r1C!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardDest' value: 16r0!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardIfIndex' value: 16r10!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMask' value: 16r4!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric1' value: 16r24!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric2' value: 16r28!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric3' value: 16r2C!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric4' value: 16r30!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric5' value: 16r34!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardNextHop' value: 16rC!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardNextHopAS' value: 16r20!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardPolicy' value: 16r8!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardProto' value: 16r18!
+MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardType' value: 16r14!
+MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -36,74 +50,74 @@ struct tagMIB_IPFORWARDROW {
 !MIB_IPFORWARDROW methodsFor!
 
 dwForwardAge
-	"Answer the receiver's dwForwardAge field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardAge' field."
 
-	^(bytes dwordAtOffset: 28)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardAge!
 
 dwForwardDest
-	"Answer the receiver's dwForwardDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardDest' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardDest!
 
 dwForwardIfIndex
-	"Answer the receiver's dwForwardIfIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardIfIndex' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardIfIndex!
 
 dwForwardMask
-	"Answer the receiver's dwForwardMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMask' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMask!
 
 dwForwardMetric1
-	"Answer the receiver's dwForwardMetric1 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMetric1' field."
 
-	^(bytes dwordAtOffset: 36)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric1!
 
 dwForwardMetric2
-	"Answer the receiver's dwForwardMetric2 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMetric2' field."
 
-	^(bytes dwordAtOffset: 40)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric2!
 
 dwForwardMetric3
-	"Answer the receiver's dwForwardMetric3 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMetric3' field."
 
-	^(bytes dwordAtOffset: 44)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric3!
 
 dwForwardMetric4
-	"Answer the receiver's dwForwardMetric4 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMetric4' field."
 
-	^(bytes dwordAtOffset: 48)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric4!
 
 dwForwardMetric5
-	"Answer the receiver's dwForwardMetric5 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardMetric5' field."
 
-	^(bytes dwordAtOffset: 52)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardMetric5!
 
 dwForwardNextHop
-	"Answer the receiver's dwForwardNextHop field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardNextHop' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardNextHop!
 
 dwForwardNextHopAS
-	"Answer the receiver's dwForwardNextHopAS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardNextHopAS' field."
 
-	^(bytes dwordAtOffset: 32)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardNextHopAS!
 
 dwForwardPolicy
-	"Answer the receiver's dwForwardPolicy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardPolicy' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardPolicy!
 
 dwForwardProto
-	"Answer the receiver's dwForwardProto field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardProto' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: _OffsetOf_dwForwardProto!
 
 dwForwardType
-	"Answer the receiver's dwForwardType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
-	^(bytes dwordAtOffset: 20)! !
+	^bytes dwordAtOffset: _OffsetOf_dwForwardType! !
 !MIB_IPFORWARDROW categoriesFor: #dwForwardAge!**compiled accessors**!public! !
 !MIB_IPFORWARDROW categoriesFor: #dwForwardDest!**compiled accessors**!public! !
 !MIB_IPFORWARDROW categoriesFor: #dwForwardIfIndex!**compiled accessors**!public! !
@@ -187,6 +201,10 @@ defineFields
 		defineField: #dwForwardMetric5
 			type: DWORDField readOnly
 			offset: 52.
-	self byteSize: 56! !
+	self byteSize: 56!
+
+getFieldNames
+	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
 !MIB_IPFORWARDROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_IPFORWARDROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

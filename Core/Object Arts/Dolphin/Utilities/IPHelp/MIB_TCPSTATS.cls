@@ -1,12 +1,27 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_TCPSTATS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwActiveOpens _OffsetOf_dwAttemptFails _OffsetOf_dwCurrEstab _OffsetOf_dwEstabResets _OffsetOf_dwInErrs _OffsetOf_dwInSegs _OffsetOf_dwMaxConn _OffsetOf_dwNumConns _OffsetOf_dwOutRsts _OffsetOf_dwOutSegs _OffsetOf_dwPassiveOpens _OffsetOf_dwRetransSegs _OffsetOf_dwRtoAlgorithm _OffsetOf_dwRtoMax _OffsetOf_dwRtoMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_TCPSTATS guid: (GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
-MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwActiveOpens' value: 16r10!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwAttemptFails' value: 16r18!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwCurrEstab' value: 16r20!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwEstabResets' value: 16r1C!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwInErrs' value: 16r30!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwInSegs' value: 16r24!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwMaxConn' value: 16rC!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwNumConns' value: 16r38!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwOutRsts' value: 16r34!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwOutSegs' value: 16r28!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwPassiveOpens' value: 16r14!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRetransSegs' value: 16r2C!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoAlgorithm' value: 16r0!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMax' value: 16r8!
+MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMin' value: 16r4!
+MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -37,79 +52,79 @@ struct tagMIB_TCPSTATS {
 !MIB_TCPSTATS methodsFor!
 
 dwActiveOpens
-	"Answer the receiver's dwActiveOpens field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwActiveOpens' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwActiveOpens!
 
 dwAttemptFails
-	"Answer the receiver's dwAttemptFails field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAttemptFails' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: _OffsetOf_dwAttemptFails!
 
 dwCurrEstab
-	"Answer the receiver's dwCurrEstab field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwCurrEstab' field."
 
-	^(bytes dwordAtOffset: 32)!
+	^bytes dwordAtOffset: _OffsetOf_dwCurrEstab!
 
 dwEstabResets
-	"Answer the receiver's dwEstabResets field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwEstabResets' field."
 
-	^(bytes dwordAtOffset: 28)!
+	^bytes dwordAtOffset: _OffsetOf_dwEstabResets!
 
 dwInErrs
-	"Answer the receiver's dwInErrs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInErrs' field."
 
-	^(bytes dwordAtOffset: 48)!
+	^bytes dwordAtOffset: _OffsetOf_dwInErrs!
 
 dwInSegs
-	"Answer the receiver's dwInSegs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInSegs' field."
 
-	^(bytes dwordAtOffset: 36)!
+	^bytes dwordAtOffset: _OffsetOf_dwInSegs!
 
 dwMaxConn
-	"Answer the receiver's dwMaxConn field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwMaxConn' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwMaxConn!
 
 dwNumConns
-	"Answer the receiver's dwNumConns field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwNumConns' field."
 
-	^(bytes dwordAtOffset: 56)!
+	^bytes dwordAtOffset: _OffsetOf_dwNumConns!
 
 dwOutRsts
-	"Answer the receiver's dwOutRsts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutRsts' field."
 
-	^(bytes dwordAtOffset: 52)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutRsts!
 
 dwOutSegs
-	"Answer the receiver's dwOutSegs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutSegs' field."
 
-	^(bytes dwordAtOffset: 40)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutSegs!
 
 dwPassiveOpens
-	"Answer the receiver's dwPassiveOpens field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwPassiveOpens' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: _OffsetOf_dwPassiveOpens!
 
 dwRetransSegs
-	"Answer the receiver's dwRetransSegs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRetransSegs' field."
 
-	^(bytes dwordAtOffset: 44)!
+	^bytes dwordAtOffset: _OffsetOf_dwRetransSegs!
 
 dwRtoAlgorithm
-	"Answer the receiver's dwRtoAlgorithm field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRtoAlgorithm' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwRtoAlgorithm!
 
 dwRtoMax
-	"Answer the receiver's dwRtoMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRtoMax' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwRtoMax!
 
 dwRtoMin
-	"Answer the receiver's dwRtoMin field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
-	^(bytes dwordAtOffset: 4)! !
+	^bytes dwordAtOffset: _OffsetOf_dwRtoMin! !
 !MIB_TCPSTATS categoriesFor: #dwActiveOpens!**compiled accessors**!public! !
 !MIB_TCPSTATS categoriesFor: #dwAttemptFails!**compiled accessors**!public! !
 !MIB_TCPSTATS categoriesFor: #dwCurrEstab!**compiled accessors**!public! !
@@ -198,6 +213,10 @@ defineFields
 		defineField: #dwNumConns
 			type: DWORDField readOnly
 			offset: 56.
-	self byteSize: 60! !
+	self byteSize: 60!
+
+getFieldNames
+	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
 !MIB_TCPSTATS class categoriesFor: #defineFields!initializing!public! !
+!MIB_TCPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

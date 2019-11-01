@@ -1,12 +1,17 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_TCPROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort _OffsetOf_dwRemoteAddr _OffsetOf_dwRemotePort _OffsetOf_dwState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_TCPROW guid: (GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
-MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalAddr' value: 16r4!
+MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalPort' value: 16r8!
+MIB_TCPROW addClassConstant: '_OffsetOf_dwRemoteAddr' value: 16rC!
+MIB_TCPROW addClassConstant: '_OffsetOf_dwRemotePort' value: 16r10!
+MIB_TCPROW addClassConstant: '_OffsetOf_dwState' value: 16r0!
+MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -33,29 +38,29 @@ displayOn: aStream
 		display: self portName!
 
 dwLocalAddr
-	"Answer the receiver's dwLocalAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwLocalAddr' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: _OffsetOf_dwLocalAddr!
 
 dwLocalPort
-	"Answer the receiver's dwLocalPort field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: _OffsetOf_dwLocalPort!
 
 dwRemoteAddr
-	"Answer the receiver's dwRemoteAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRemoteAddr' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: _OffsetOf_dwRemoteAddr!
 
 dwRemotePort
-	"Answer the receiver's dwRemotePort field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwRemotePort' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: _OffsetOf_dwRemotePort!
 
 dwState
-	"Answer the receiver's dwState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwState!
 
 port
 	^WS2_32Library default htons: self dwLocalPort lowWord!
@@ -105,6 +110,10 @@ defineFields
 		defineField: #dwRemotePort
 			type: DWORDField readOnly
 			offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+getFieldNames
+	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
 !MIB_TCPROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_TCPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,12 +1,36 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_IFROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bDescr _OffsetOf_bPhysAddr _OffsetOf_dwAdminStatus _OffsetOf_dwDescrLen _OffsetOf_dwIndex _OffsetOf_dwInDiscards _OffsetOf_dwInErrors _OffsetOf_dwInNUcastPkts _OffsetOf_dwInOctets _OffsetOf_dwInUcastPkts _OffsetOf_dwInUnknownProtos _OffsetOf_dwLastChange _OffsetOf_dwMtu _OffsetOf_dwOperStatus _OffsetOf_dwOutDiscards _OffsetOf_dwOutErrors _OffsetOf_dwOutNUcastPkts _OffsetOf_dwOutOctets _OffsetOf_dwOutQLen _OffsetOf_dwOutUcastPkts _OffsetOf_dwPhysAddrLen _OffsetOf_dwSpeed _OffsetOf_dwType _OffsetOf_wszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_IFROW guid: (GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
-MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_IFROW addClassConstant: '_OffsetOf_bDescr' value: 16r25C!
+MIB_IFROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r214!
+MIB_IFROW addClassConstant: '_OffsetOf_dwAdminStatus' value: 16r21C!
+MIB_IFROW addClassConstant: '_OffsetOf_dwDescrLen' value: 16r258!
+MIB_IFROW addClassConstant: '_OffsetOf_dwIndex' value: 16r200!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInDiscards' value: 16r234!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInErrors' value: 16r238!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInNUcastPkts' value: 16r230!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInOctets' value: 16r228!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInUcastPkts' value: 16r22C!
+MIB_IFROW addClassConstant: '_OffsetOf_dwInUnknownProtos' value: 16r23C!
+MIB_IFROW addClassConstant: '_OffsetOf_dwLastChange' value: 16r224!
+MIB_IFROW addClassConstant: '_OffsetOf_dwMtu' value: 16r208!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOperStatus' value: 16r220!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutDiscards' value: 16r24C!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutErrors' value: 16r250!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutNUcastPkts' value: 16r248!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutOctets' value: 16r240!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutQLen' value: 16r254!
+MIB_IFROW addClassConstant: '_OffsetOf_dwOutUcastPkts' value: 16r244!
+MIB_IFROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r210!
+MIB_IFROW addClassConstant: '_OffsetOf_dwSpeed' value: 16r20C!
+MIB_IFROW addClassConstant: '_OffsetOf_dwType' value: 16r204!
+MIB_IFROW addClassConstant: '_OffsetOf_wszName' value: 16r0!
+MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -46,124 +70,124 @@ struct tagMIB_IFROW {
 !MIB_IFROW methodsFor!
 
 bDescr
-	"Answer the receiver's bDescr field as a Smalltalk object."
+	"Answer the <ByteArray> value of the receiver's 'bDescr' field."
 
-	^ByteArray fromAddress: (bytes yourAddress + 604) length: 256!
+	^ByteArray fromAddress: bytes yourAddress + _OffsetOf_bDescr length: 256!
 
 bPhysAddr
-	"Answer the receiver's bPhysAddr field as a Smalltalk object."
+	"Answer the <ByteArray> value of the receiver's 'bPhysAddr' field."
 
-	^ByteArray fromAddress: (bytes yourAddress + 532) length: 8!
+	^ByteArray fromAddress: bytes yourAddress + _OffsetOf_bPhysAddr length: 8!
 
 dwAdminStatus
-	"Answer the receiver's dwAdminStatus field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwAdminStatus' field."
 
-	^(bytes dwordAtOffset: 540)!
+	^bytes dwordAtOffset: _OffsetOf_dwAdminStatus!
 
 dwDescrLen
-	"Answer the receiver's dwDescrLen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDescrLen' field."
 
-	^(bytes dwordAtOffset: 600)!
+	^bytes dwordAtOffset: _OffsetOf_dwDescrLen!
 
 dwIndex
-	"Answer the receiver's dwIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwIndex' field."
 
-	^(bytes dwordAtOffset: 512)!
+	^bytes dwordAtOffset: _OffsetOf_dwIndex!
 
 dwInDiscards
-	"Answer the receiver's dwInDiscards field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInDiscards' field."
 
-	^(bytes dwordAtOffset: 564)!
+	^bytes dwordAtOffset: _OffsetOf_dwInDiscards!
 
 dwInErrors
-	"Answer the receiver's dwInErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInErrors' field."
 
-	^(bytes dwordAtOffset: 568)!
+	^bytes dwordAtOffset: _OffsetOf_dwInErrors!
 
 dwInNUcastPkts
-	"Answer the receiver's dwInNUcastPkts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInNUcastPkts' field."
 
-	^(bytes dwordAtOffset: 560)!
+	^bytes dwordAtOffset: _OffsetOf_dwInNUcastPkts!
 
 dwInOctets
-	"Answer the receiver's dwInOctets field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInOctets' field."
 
-	^(bytes dwordAtOffset: 552)!
+	^bytes dwordAtOffset: _OffsetOf_dwInOctets!
 
 dwInUcastPkts
-	"Answer the receiver's dwInUcastPkts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInUcastPkts' field."
 
-	^(bytes dwordAtOffset: 556)!
+	^bytes dwordAtOffset: _OffsetOf_dwInUcastPkts!
 
 dwInUnknownProtos
-	"Answer the receiver's dwInUnknownProtos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwInUnknownProtos' field."
 
-	^(bytes dwordAtOffset: 572)!
+	^bytes dwordAtOffset: _OffsetOf_dwInUnknownProtos!
 
 dwLastChange
-	"Answer the receiver's dwLastChange field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwLastChange' field."
 
-	^(bytes dwordAtOffset: 548)!
+	^bytes dwordAtOffset: _OffsetOf_dwLastChange!
 
 dwMtu
-	"Answer the receiver's dwMtu field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwMtu' field."
 
-	^(bytes dwordAtOffset: 520)!
+	^bytes dwordAtOffset: _OffsetOf_dwMtu!
 
 dwOperStatus
-	"Answer the receiver's dwOperStatus field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOperStatus' field."
 
-	^(bytes dwordAtOffset: 544)!
+	^bytes dwordAtOffset: _OffsetOf_dwOperStatus!
 
 dwOutDiscards
-	"Answer the receiver's dwOutDiscards field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutDiscards' field."
 
-	^(bytes dwordAtOffset: 588)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutDiscards!
 
 dwOutErrors
-	"Answer the receiver's dwOutErrors field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutErrors' field."
 
-	^(bytes dwordAtOffset: 592)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutErrors!
 
 dwOutNUcastPkts
-	"Answer the receiver's dwOutNUcastPkts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutNUcastPkts' field."
 
-	^(bytes dwordAtOffset: 584)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutNUcastPkts!
 
 dwOutOctets
-	"Answer the receiver's dwOutOctets field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutOctets' field."
 
-	^(bytes dwordAtOffset: 576)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutOctets!
 
 dwOutQLen
-	"Answer the receiver's dwOutQLen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutQLen' field."
 
-	^(bytes dwordAtOffset: 596)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutQLen!
 
 dwOutUcastPkts
-	"Answer the receiver's dwOutUcastPkts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwOutUcastPkts' field."
 
-	^(bytes dwordAtOffset: 580)!
+	^bytes dwordAtOffset: _OffsetOf_dwOutUcastPkts!
 
 dwPhysAddrLen
-	"Answer the receiver's dwPhysAddrLen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwPhysAddrLen' field."
 
-	^(bytes dwordAtOffset: 528)!
+	^bytes dwordAtOffset: _OffsetOf_dwPhysAddrLen!
 
 dwSpeed
-	"Answer the receiver's dwSpeed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwSpeed' field."
 
-	^(bytes dwordAtOffset: 524)!
+	^bytes dwordAtOffset: _OffsetOf_dwSpeed!
 
 dwType
-	"Answer the receiver's dwType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^(bytes dwordAtOffset: 516)!
+	^bytes dwordAtOffset: _OffsetOf_dwType!
 
 wszName
-	"Answer the receiver's wszName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'wszName' field."
 
-	^UnicodeString fromAddress: (bytes yourAddress)! !
+	^Utf16String fromAddress: bytes yourAddress! !
 !MIB_IFROW categoriesFor: #bDescr!**compiled accessors**!public! !
 !MIB_IFROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
 !MIB_IFROW categoriesFor: #dwAdminStatus!**compiled accessors**!public! !
@@ -226,7 +250,7 @@ defineFields
 
 	self
 		defineField: #wszName
-			type: ((StringField type: UnicodeString length: 256)
+			type: ((StringField type: Utf16String length: 256)
 					beReadOnly;
 					yourself)
 			offset: 0;
@@ -303,6 +327,10 @@ defineFields
 					beReadOnly;
 					yourself)
 			offset: 604.
-	self byteSize: 860! !
+	self byteSize: 860!
+
+getFieldNames
+	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
 !MIB_IFROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_IFROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -1,12 +1,14 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_UDPROW guid: (GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
-MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_UDPROW addClassConstant: '_OffsetOf_dwLocalAddr' value: 16r0!
+MIB_UDPROW addClassConstant: '_OffsetOf_dwLocalPort' value: 16r4!
+MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -24,14 +26,14 @@ struct tagMIB_UDPROW {
 !MIB_UDPROW methodsFor!
 
 dwLocalAddr
-	"Answer the receiver's dwLocalAddr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwLocalAddr' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: _OffsetOf_dwLocalAddr!
 
 dwLocalPort
-	"Answer the receiver's dwLocalPort field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwLocalPort' field."
 
-	^(bytes dwordAtOffset: 4)! !
+	^bytes dwordAtOffset: _OffsetOf_dwLocalPort! !
 !MIB_UDPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
 !MIB_UDPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
 
@@ -55,6 +57,10 @@ defineFields
 		defineField: #dwLocalPort
 			type: DWORDField readOnly
 			offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#dwLocalAddr #dwLocalPort)! !
 !MIB_UDPROW class categoriesFor: #defineFields!initializing!public! !
+!MIB_UDPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

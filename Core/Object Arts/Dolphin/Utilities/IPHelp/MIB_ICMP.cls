@@ -1,12 +1,13 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #MIB_ICMP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_stats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MIB_ICMP guid: (GUID fromString: '{2ca8ee35-4b8c-48a7-bc4f-1bcbf2db2be2}')!
-MIB_ICMP comment: '<MIB_ICMP> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MIB_ICMP addClassConstant: '_OffsetOf_stats' value: 16r0!
+MIB_ICMP comment: '<MIB_ICMP> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,9 +24,9 @@ struct tagMIB_ICMP {
 !MIB_ICMP methodsFor!
 
 stats
-	"Answer the receiver's stats field as a Smalltalk object."
+	"Answer the <MIBICMPINFO> value of the receiver's 'stats' field."
 
-	^MIBICMPINFO fromAddress: (bytes yourAddress)! !
+	^MIBICMPINFO fromAddress: bytes yourAddress! !
 !MIB_ICMP categoriesFor: #stats!**compiled accessors**!public! !
 
 !MIB_ICMP class methodsFor!
@@ -46,6 +47,10 @@ defineFields
 				beReadOnly;
 				yourself)
 		offset: 0.
-	self byteSize: 104! !
+	self byteSize: 104!
+
+getFieldNames
+	^#(#stats)! !
 !MIB_ICMP class categoriesFor: #defineFields!initializing!public! !
+!MIB_ICMP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
