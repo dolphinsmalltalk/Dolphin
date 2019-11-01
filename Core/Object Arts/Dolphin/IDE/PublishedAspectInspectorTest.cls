@@ -46,7 +46,7 @@ repaint
 
 seqCollMoveDownTest: testClass
 	| inspectee collection |
-	inspectee := testClass withAll: (1 to: 5).
+	inspectee := testClass withAll: (1 to: 3).
 	self createInspectorOn: inspectee.
 	collection := inspectee.
 	treePresenter selection: treePresenter model roots first.
@@ -58,16 +58,16 @@ seqCollMoveDownTest: testClass
 			self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
 			listPresenter := self aspectPresenter listPresenter.
 			listPresenter selectionByIndex: 1.
-			2 to: 5
+			2 to: 3
 				do: 
 					[:i |
 					self aspectPresenter moveDown.
 					self repaint.
 					self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
 					self assert: listPresenter selectionByIndex equals: i.
-					self assert: collection asArray equals: (2 to: i) , {1} , (i + 1 to: 5)].
+					self assert: collection asArray equals: (2 to: i) , {1} , (i + 1 to: 3)].
 			"Repeat with a nested collection"
-			collection := testClass withAll: (1 to: 5).
+			collection := testClass withAll: (1 to: 3).
 			inspectee := {collection}.
 			inspector value: inspectee.
 			treePresenter selection: (treePresenter model childrenOf: treePresenter model roots first) first.
