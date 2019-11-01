@@ -1,12 +1,23 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Keyboard
-	instanceVariableNames: 'state'
-	classVariableNames: 'DefaultInstance VirtualKeys'
+	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
+	classVariableNames: 'DefaultInstance InvariantInstance'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Keyboard guid: (GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
-Keyboard comment: ''!
+Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and provides services to enquire and set the state of keys, and to map between key codes and the names of keys in the particular keyboard layout that the instance represents.
+
+## Instance Variables:
+  `state`			`<Array>`
+  `virtualKeys`		`<dictionary>` mapping from the names of the keys in the represented keyboard layout to the corresponding Windows virtual key code
+  `modifierKeys`	`<dictionary>` mapping from the names of the modifier keys in the represented keyboard layout to the corresponding Windows modifier flag
+  `keyNames`		`<dictionary>` mapping from Windows virtual key codes to the name of the corresponding key in the represented keyboard layout
+
+## Class Variables:
+  `DefaultInstance`		`Keyboard` instance representing the current input language
+  `InvariantInstance`		`Keyboard` instance represent the Dolphin invariant input language (UK English).
+'!
 !Keyboard categoriesForClass!System-Support! !
 !Keyboard methodsFor!
 
@@ -15,17 +26,38 @@ asyncKeyState: virtualKeyCodeInteger
 
 	^UserLibrary default getAsyncKeyState: virtualKeyCodeInteger!
 
+buildVKeyMaps
+	"Private - Answer a <dictionary> mapping from the localised key names in the current keyboard layout to the corresponding virtual key code."
+
+	| nameToVk vkToName |
+	nameToVk := SearchPolicy caseInsensitive newLookupTable.
+	vkToName := IdentityDictionary new.
+	self class invariant virtualKeys do: 
+			[:each |
+			(self getKeyNameFromVKey: each ifNone: [])
+				ifNotNil: 
+					[:name |
+					nameToVk at: name put: each.
+					vkToName at: each put: name]].
+	virtualKeys := nameToVk.
+	keyNames := vkToName!
+
+getKeyNameFromVKey: anInteger ifNone: exceptionHandler
+	"Private - Answer the <readableString> name of the specified virtual key code in this Keyboard layout, or evaluate the exceptionHandler block if none."
+
+	| scanCode |
+	scanCode := self vKeyToScanCode: anInteger.
+	scanCode == 0 ifTrue: [^exceptionHandler value].
+	^(self keyNameFromScanCode: (scanCode bitOr: (anInteger bitAnd: -16r100)))
+		ifNil: [exceptionHandler value]!
+
 getState
 	"Private - Refresh the cached Win32 asynchronous keyboard state ByteArray and answer it."
 
+	state ifNil: [state := ByteArray new: 256].
 	^(UserLibrary default getKeyboardState: state)
 		ifTrue: [state]
 		ifFalse: [UserLibrary default systemError]!
-
-initialize
-	"Private - Initialize the receiver."
-
-	state := ByteArray new: 256!
 
 isAltDown
 	"Answer whether the <ALT> key is down."
@@ -33,8 +65,7 @@ isAltDown
 	^self isKeyDown: VK_MENU!
 
 isButtonDown: aSymbol 
-	"Answer whether the mouse button identified by the symbolic name (either #left, #right, or #middle)
-	is currently pressed down."
+	"Answer whether the mouse button identified by the symbolic name (e.g. #left, #right, or #middle) is currently pressed down."
 
 	^self 
 		isKeyDown: (##((IdentityDictionary new)
@@ -83,10 +114,53 @@ isShiftDown
 
 	^self isKeyDown: VK_SHIFT!
 
+keyNameFromLParam: anInteger
+	"Private - Answer the <readableString> name of the specified key in this keyboard layout, or nil if the key cannot be translated."
+
+	| buf len |
+	buf := Utf16String newFixed: 32.
+	len := UserLibrary default
+				getKeyNameText: anInteger
+				lpString: buf
+				nSize: buf basicSize + 1.	"includes null term"
+	"Despite what the help says, the function does not call SetLastError(), so no point signalling a system error here"
+	^len == 0 ifFalse: [buf resize: len]!
+
+keyNameFromScanCode: anInteger 
+	"Private - Answer the <readableString> name of the specified key scan code in this Keyboard layout, or nil if not translatable."
+
+	^self keyNameFromLParam: (anInteger bitShift: 16)!
+
+keyNameFromVKey: anInteger ifNone: aNiladicValuable
+	"Private - Answer the <readableString> name of the specified virtual key code in this Keyboard layout, or evaluate the exception handler block, aNiladicValuable, if none."
+
+	^self keyNames at: anInteger ifAbsent: aNiladicValuable!
+
+keyNames
+	"Answer a <dictionary> mapping from the <integer> virtual key codes to the <readableString> names of the keys in this Keyboard layout."
+
+	^keyNames
+		ifNil: 
+			[self buildVKeyMaps.
+			keyNames]!
+
 keyState: virtualKeyCodeInteger
 	"Private - Answer the state of the specified virtual key."
 
 	^UserLibrary default getKeyState: virtualKeyCodeInteger!
+
+modifierKeys
+	"Answer a <dictionary> mapping from the <readableString> modifier key names (e.g. CTRL, ALT, SHIFT) in this keyboard layout, to the associated <integer> key modifier flag."
+
+	^modifierKeys
+		ifNil: 
+			[| vks |
+			vks := self keyNames.
+			modifierKeys := SearchPolicy caseInsensitive newLookupTable
+						at: (vks at: VK_SHIFT) put: FSHIFT;
+						at: (vks at: VK_CONTROL) put: FCONTROL;
+						at: (vks at: VK_MENU) put: FALT;
+						yourself]!
 
 resetCancel
 	"Reset the Cancel (CTRL+BREAK) key."
@@ -107,11 +181,36 @@ setKeyState: virtualKeyCodeInteger to: byteMask
 setState
 	"Private - Modify Win32's keyboard state to that currently cached."
 
-	UserLibrary default setKeyboardState: state
-! !
-!Keyboard categoriesFor: #asyncKeyState:!accessing!private! !
-!Keyboard categoriesFor: #getState!accessing!private! !
-!Keyboard categoriesFor: #initialize!initializing!private! !
+	state ifNotNil: [UserLibrary default setKeyboardState: state]
+!
+
+virtualKeyFromString: aString
+	"Answer the <integer> virtual key code for the named key from this keyboard layout."
+
+	^self virtualKeys at: aString
+		ifAbsent: [self error: ('Unrecognised virtual key: <1p>' expandMacrosWith: aString)]!
+
+virtualKeys
+	"Answer a <dictionary> mapping from the <readableString> key names in this layout to the associated <integer> virtual key code."
+
+	^virtualKeys
+		ifNil: 
+			[self buildVKeyMaps.
+			virtualKeys]!
+
+virtualKeys: aLookupTableOfInteger 
+	virtualKeys := aLookupTableOfInteger.
+	keyNames := IdentityDictionary new: virtualKeys size.
+	aLookupTableOfInteger keysAndValuesDo: [:name :vk | keyNames at: vk put: name]!
+
+vKeyToScanCode: anInteger 
+	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if there isn't one."
+
+	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
+!Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
+!Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
+!Keyboard categoriesFor: #getKeyNameFromVKey:ifNone:!helpers!private! !
+!Keyboard categoriesFor: #getState!helpers!private! !
 !Keyboard categoriesFor: #isAltDown!public!testing! !
 !Keyboard categoriesFor: #isButtonDown:!public!testing! !
 !Keyboard categoriesFor: #isCancelDown!public!testing! !
@@ -121,16 +220,59 @@ setState
 !Keyboard categoriesFor: #isKeyPressed:!private!testing! !
 !Keyboard categoriesFor: #isModifierDown!public!testing! !
 !Keyboard categoriesFor: #isShiftDown!public!testing! !
-!Keyboard categoriesFor: #keyState:!accessing!private! !
-!Keyboard categoriesFor: #resetCancel!accessing!public! !
-!Keyboard categoriesFor: #resetKey:!accessing!private! !
-!Keyboard categoriesFor: #setKeyState:to:!accessing!private! !
-!Keyboard categoriesFor: #setState!accessing!private! !
+!Keyboard categoriesFor: #keyNameFromLParam:!helpers!private! !
+!Keyboard categoriesFor: #keyNameFromScanCode:!helpers!private! !
+!Keyboard categoriesFor: #keyNameFromVKey:ifNone:!helpers!private! !
+!Keyboard categoriesFor: #keyNames!accessing!private! !
+!Keyboard categoriesFor: #keyState:!helpers!private! !
+!Keyboard categoriesFor: #modifierKeys!accessing!private! !
+!Keyboard categoriesFor: #resetCancel!operations!public! !
+!Keyboard categoriesFor: #resetKey:!helpers!private! !
+!Keyboard categoriesFor: #setKeyState:to:!helpers!private! !
+!Keyboard categoriesFor: #setState!helpers!private! !
+!Keyboard categoriesFor: #virtualKeyFromString:!enquiries!public! !
+!Keyboard categoriesFor: #virtualKeys!accessing!private! !
+!Keyboard categoriesFor: #virtualKeys:!initializing!private! !
+!Keyboard categoriesFor: #vKeyToScanCode:!helpers!private! !
 
 !Keyboard class methodsFor!
 
-buildVKeyMap
-	^(LookupTable new)
+default
+	"Answers the default Keyboard to use"
+
+	^DefaultInstance ifNil: [DefaultInstance := self new]!
+
+default: aKeyboard
+	"Assigns the default Keyboard"
+
+	DefaultInstance := aKeyboard!
+
+initialize
+	"Private - Initialize the receiver's class variables.
+		Keyboard initialize
+	"
+
+	InvariantInstance := DefaultInstance := nil.
+
+	SessionManager current
+		when: #settingChanged:
+		send: #onSettingChanged:
+		to: self!
+
+invariant
+	"Answers the Keyboard to use for invariant key names"
+
+	^InvariantInstance
+		ifNil: 
+			[InvariantInstance := self new
+						virtualKeys: self invariantVKeyMap;
+						yourself]!
+
+invariantVKeyMap
+	"Private - Answer a <dictionary> mapping from invariant (UK English) key names to the corresponding virtual key code.
+	These are the string names that should be used in code, as opposed to localised key names intended to be displayed to an end-user."
+
+	^SearchPolicy caseInsensitive newLookupTable
 		at: 'BACKSPACE' put: VK_BACK;
 		at: 'TAB' put: VK_TAB;
 		at: 'ENTER' put: VK_RETURN;
@@ -229,95 +371,56 @@ buildVKeyMap
 		isImmutable: true;
 		yourself!
 
-default
-	"Answers the default Keyboard to use"
+layoutName
+	"Answer the <readableString> name of the current keyboard layout."
 
-	DefaultInstance isNil ifTrue: [self default: self new initialize].
-	^DefaultInstance!
+	| buf |
+	buf := Utf16String newFixed: KL_NAMELENGTH.
+	^(UserLibrary default getKeyboardLayoutName: buf)
+		ifTrue: [buf trimNulls]
+		ifFalse: [UserLibrary default systemError]
 
-default: aKeyboard
-	"Assigns the default Keyboard"
+!
 
-	DefaultInstance := aKeyboard!
+layoutName: aString
+	"Set the current keyboard layout by <readableString> name, answering whether this was accepted.
+	Note that this will only work if the Dolphin process owns the window with keyboard focus."
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		Keyboard initialize
-	"
-
-	VirtualKeys := self buildVKeyMap!
-
-keyNameFromLParam: lParam
-	"Private - Answer the name of the specified key.
-	Answers nil if the key cannot be translated."
-
-	| buf len |
-	buf := Utf16String newFixed: 32.
-	len := UserLibrary default
-				getKeyNameText: lParam
-				lpString: buf
-				nSize: buf basicSize + 1.	"includes null term"
-	"Despite what the help says, the function does not call SetLastError(), so no
-	point signalling a system error here"
-	^len == 0 ifFalse: [buf resize: len]!
-
-keyNameFromScanCode: anInteger 
-	"Private - Answer the name of the specified key scan code.
-	Answers nil if not translatable.
-	"
-
-	^self keyNameFromLParam: (anInteger bitShift: 16)!
-
-keyNameFromVKey: anInteger
-	"Private - Answer the name of the specified virtual key code.
-		Keyboard keyNameFromVKey: 16r23
-	"
-
-	^self keyNameFromVKey: anInteger
-		ifNone: [self error: ('invalid virtual key <1d>' expandMacrosWith: anInteger)]!
-
-keyNameFromVKey: anInteger ifNone: exceptionHandler
-	"Private - Answer the name of the specified virtual key code,
-	or evaluate the exceptionHandler block if none."
-
-	| scanCode |
-	scanCode := self vKeyToScanCode: anInteger.
-	scanCode == 0 ifTrue: [^exceptionHandler value].
-	^(self keyNameFromScanCode: (scanCode bitOr: (anInteger bitAnd: -16r100)))
-		ifNil: [exceptionHandler value]!
+	^self layoutName = aString or: 
+			[(UserLibrary default loadKeyboardLayout: aString flags: ##(KLF_ACTIVATE | KLF_SETFORPROCESS))
+				notNil and: 
+						[DefaultInstance := nil.
+						true]]!
 
 onPreStripImage
 	"Private - The image is about to be stripped."
 
 	self uninitialize!
 
+onSettingChanged: anArray 
+	"Private - Respond to an OS settings change. Here we are only interested in a change of input language, and reset the default instance so that any subsequent access will pick up the new keyboard layout."
+
+	anArray first = 'InputLang' ifFalse: [^self].
+	DefaultInstance := nil!
+
 uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
-	DefaultInstance := nil.!
+	InvariantInstance := DefaultInstance := nil.!
 
 virtualKey: aString
-	"Answer the <integer> virtual key code corresponding to the key with
-	English name, aString."
+	"Answer the <integer> virtual key code corresponding to the key with invariant (UK English) name, aString."
 
-	^VirtualKeys at: aString asUppercase
-		ifAbsent: [self error: ('Unrecognised virtual key: <1p>' expandMacrosWith: aString)]!
-
-vKeyToScanCode: anInteger 
-	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if
-	there isn't one."
-
-	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
-!Keyboard class categoriesFor: #buildVKeyMap!**auto generated**!development!private! !
+	^self invariant virtualKeyFromString: aString! !
 !Keyboard class categoriesFor: #default!accessing!public! !
 !Keyboard class categoriesFor: #default:!accessing!public! !
 !Keyboard class categoriesFor: #initialize!development!initializing!private! !
-!Keyboard class categoriesFor: #keyNameFromLParam:!constants!private! !
-!Keyboard class categoriesFor: #keyNameFromScanCode:!constants!private! !
-!Keyboard class categoriesFor: #keyNameFromVKey:!constants!private! !
-!Keyboard class categoriesFor: #keyNameFromVKey:ifNone:!constants!private! !
+!Keyboard class categoriesFor: #invariant!accessing!public! !
+!Keyboard class categoriesFor: #invariantVKeyMap!constants!private! !
+!Keyboard class categoriesFor: #layoutName!accessing!public! !
+!Keyboard class categoriesFor: #layoutName:!accessing!public! !
 !Keyboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!Keyboard class categoriesFor: #onSettingChanged:!event handling-win32!private! !
 !Keyboard class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Keyboard class categoriesFor: #virtualKey:!constants!public! !
-!Keyboard class categoriesFor: #vKeyToScanCode:!constants!private! !
+!Keyboard class categoriesFor: #virtualKey:!enquiries!public! !
 

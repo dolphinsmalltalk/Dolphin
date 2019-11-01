@@ -171,8 +171,8 @@ Object subclass: #InstructionInterpreter
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Keyboard
-	instanceVariableNames: 'state'
-	classVariableNames: 'DefaultInstance VirtualKeys'
+	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
+	classVariableNames: 'DefaultInstance InvariantInstance'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Link

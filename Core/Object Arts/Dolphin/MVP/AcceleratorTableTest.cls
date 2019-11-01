@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AcceleratorTableTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -10,8 +10,21 @@ AcceleratorTableTest comment: ''!
 !AcceleratorTableTest categoriesForClass!Unclassified! !
 !AcceleratorTableTest methodsFor!
 
+setCurrentKeyboardLayout: aString
+	| current |
+	current := Keyboard layoutName.
+	^current = aString or: 
+			[(Keyboard layoutName: aString) and: 
+					[savedLayout ifNil: [savedLayout := current].
+					true]]!
+
+tearDown
+	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]!
+
 testKeycodeFromString
 	"for alphanumerics, the keycode corresponds with the ascii code point"
+
+	self skipUnless: [self setCurrentKeyboardLayout: '00000809'].
 
 	($A codePoint to: $Z codePoint) , ($0 codePoint to: $9 codePoint) do: 
 			[:each |
@@ -59,9 +72,30 @@ testKeycodeFromString
 				self assert: code | (FALT << 9) equals: (AcceleratorTable keyCodeFromString: 'Alt+' , keyString).
 				self assert: code | ((FSHIFT | FCONTROL) << 9)
 					equals: (AcceleratorTable keyCodeFromString: 'Ctrl+Shift+' , keyString)].
-	#(#('CTRL+NUM 1' 4705) #('PAUSE' 531)) do: 
+	#(#('CTRL+NUM 1' 4705)) do: 
 			[:each |
 			self assert: each last equals: (AcceleratorTable keyCodeFromString: each first).
-			self]! !
+			self]!
+
+testRoundTrippingInvariantKeyNames
+	| invariant |
+	invariant := AcceleratorTable invariantKeyStringFromCode: 8810.
+	self assert: invariant equals: 'ALT+NUMMULT'.
+	self assert: (AcceleratorTable keyCodeFromInvariantString: invariant) equals: 8810
+!
+
+testRoundTrippingKeyNames
+	"https://github.com/dolphinsmalltalk/Dolphin/issues/159."
+
+	| localised invariant |
+	"Fails with US keyboard in the presence of the bug"
+	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
+	localised := AcceleratorTable keyStringFromCode: 8810.
+	self assert: localised equals: 'Alt+Num *'.
+	self assert: (AcceleratorTable keyCodeFromString: localised) equals: 8810! !
+!AcceleratorTableTest categoriesFor: #setCurrentKeyboardLayout:!helpers!private! !
+!AcceleratorTableTest categoriesFor: #tearDown!private!Running! !
 !AcceleratorTableTest categoriesFor: #testKeycodeFromString!public!unit tests! !
+!AcceleratorTableTest categoriesFor: #testRoundTrippingInvariantKeyNames!public! !
+!AcceleratorTableTest categoriesFor: #testRoundTrippingKeyNames!public!unit tests! !
 

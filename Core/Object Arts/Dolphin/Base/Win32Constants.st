@@ -437,6 +437,15 @@ Win32Constants at: 'IS_TEXT_UNICODE_SIGNATURE' put: 16r8!
 Win32Constants at: 'IS_TEXT_UNICODE_STATISTICS' put: 16r2!
 Win32Constants at: 'IS_TEXT_UNICODE_UNICODE_MASK' put: 16rF!
 Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
+Win32Constants at: 'KL_NAMELENGTH' put: 16r9!
+Win32Constants at: 'KLF_ACTIVATE' put: 16r1!
+Win32Constants at: 'KLF_NOTELLSHELL' put: 16r80!
+Win32Constants at: 'KLF_REORDER' put: 16r8!
+Win32Constants at: 'KLF_REPLACELANG' put: 16r10!
+Win32Constants at: 'KLF_RESET' put: 16r40000000!
+Win32Constants at: 'KLF_SETFORPROCESS' put: 16r100!
+Win32Constants at: 'KLF_SHIFTLOCK' put: 16r10000!
+Win32Constants at: 'KLF_SUBSTITUTE_OK' put: 16r2!
 Win32Constants at: 'LCMAP_TITLECASE' put: 16r300!
 Win32Constants at: 'LF_FACESIZE' put: 16r20!
 Win32Constants at: 'LF_FULLFACESIZE' put: 16r40!

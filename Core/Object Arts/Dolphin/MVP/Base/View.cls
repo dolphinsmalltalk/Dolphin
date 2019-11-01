@@ -2361,6 +2361,12 @@ onIdleEntered
 
 	^true!
 
+onInputLanguageChanged: aWindowsEvent
+	SessionManager current onInputLanguageChanged: aWindowsEvent.
+	self presenter trigger: #inputLanguageChanged: with: aWindowsEvent.
+	^aWindowsEvent lResult
+!
+
 onInputMaskRequired: anEvent
 	"Handler for a WM_GETDLGCODE request from Windows.
 	The lParam is a pointer to the MSG that may be sent depending on the response.
@@ -3998,6 +4004,15 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 		ifTrue: [subMenu queryAllFromView: self].
 !
 
+wmInputLangChange: message wParam: wParam lParam: lParam
+	"Private - Handle the Win32 WM_INPUTLANGCHANGE message."
+
+	^self presenter onInputLanguageChanged: (WindowsEvent 
+				window: self
+				message: message
+				wParam: wParam
+				lParam: lParam)!
+
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYDOWN."
 
@@ -4756,6 +4771,7 @@ zOrderTop
 !View categoriesFor: #onHotKey:!event handling!public! !
 !View categoriesFor: #onHScroll:!event handling!public! !
 !View categoriesFor: #onIdleEntered!event handling!public! !
+!View categoriesFor: #onInputLanguageChanged:!event handling-win32!public! !
 !View categoriesFor: #onInputMaskRequired:!event handling!public! !
 !View categoriesFor: #onKeyPressed:!event handling!public! !
 !View categoriesFor: #onKeyReleased:!event handling!public! !
@@ -4944,6 +4960,7 @@ zOrderTop
 !View categoriesFor: #wmHScroll:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
+!View categoriesFor: #wmInputLangChange:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
@@ -5119,6 +5136,7 @@ buildMessageMap
 		at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
 		at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
 		at: WM_TIMECHANGE + 1 put: #wmTimeChange:wParam:lParam:;
+		at: WM_INPUTLANGCHANGE + 1 put: #wmInputLangChange:wParam:lParam:;
 		yourself!
 
 capture

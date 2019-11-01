@@ -613,6 +613,12 @@ onExit
 	self shutdown.
 	^true	"We don't allow cancel, but a subclass could answer false if it wanted"!
 
+onInputLanguageChanged: aWindowsEvent
+	"Private - The input language (keyboard) has been changed."
+
+	settingsChanged add: #('InputLang' 0).
+	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
+
 onPostSaveImage
 	"Private - Perform post-image save actions"
 
@@ -1211,6 +1217,7 @@ windowsDirectory
 !SessionManager categoriesFor: #onCloseConsole!event handling!private! !
 !SessionManager categoriesFor: #onConsoleCtrl:!event handling!private! !
 !SessionManager categoriesFor: #onExit!event handling!public! !
+!SessionManager categoriesFor: #onInputLanguageChanged:!event handling!private! !
 !SessionManager categoriesFor: #onPostSaveImage!event handling!private! !
 !SessionManager categoriesFor: #onPreSaveImage!event handling!private! !
 !SessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !

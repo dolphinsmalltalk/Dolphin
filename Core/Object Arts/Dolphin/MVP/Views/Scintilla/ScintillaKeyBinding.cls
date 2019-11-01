@@ -44,7 +44,7 @@ acceleratorKeyString: keys
 	"Sets the accelerator key to the key code generated from parsing the <readableString>
 	accelerator key description, keys. The string is assumed to be using UK English key names."
 
-	self acceleratorKey: (AcceleratorTable keyCodeFromString: keys)!
+	self acceleratorKey: (AcceleratorTable keyCodeFromInvariantString: keys)!
 
 commandSymbol
 	"Answers the <Symbol>ic command forwarded to a command target when the receiver's
