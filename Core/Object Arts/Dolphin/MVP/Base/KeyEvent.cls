@@ -41,11 +41,9 @@ isExtended
 	^self data isBitSet: 24!
 
 printLParamOn: aStream
-	"Append a textual representation of the receiver's lParam
-	to aStream, in a format appropriate for the type of event."
+	"Append a localised textual representation of the receiver's key name."
 
-	aStream
-		print: (Keyboard keyNameFromLParam: self lParam)!
+	aStream print: (Keyboard default keyNameFromLParam: self lParam)!
 
 repeatCount
 	"Answer the repeat count."

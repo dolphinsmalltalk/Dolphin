@@ -415,6 +415,9 @@ onIdleEntered
 
 	^true!
 
+onInputLanguageChanged: aWindowsEvent 
+	^self view onInputLanguageChanged: aWindowsEvent!
+
 onInputMaskRequired: anEvent
 	"Handler for an input event mask request from Windows.
 	Reflect back to the view for processing - it doesn't seem worthwhile
@@ -839,6 +842,7 @@ viewModel
 !Presenter categoriesFor: #onGetCursor:!event handling!public! !
 !Presenter categoriesFor: #onHotKey:!event handling!public! !
 !Presenter categoriesFor: #onIdleEntered!event handling!public! !
+!Presenter categoriesFor: #onInputLanguageChanged:!event handling!public! !
 !Presenter categoriesFor: #onInputMaskRequired:!event handling!public! !
 !Presenter categoriesFor: #onKeyPressed:!event handling!public! !
 !Presenter categoriesFor: #onKeyReleased:!event handling!public! !

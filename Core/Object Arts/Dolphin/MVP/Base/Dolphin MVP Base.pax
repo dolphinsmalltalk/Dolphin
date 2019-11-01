@@ -982,7 +982,7 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 	classInstanceVariableNames: ''!
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
-	classVariableNames: 'KeyNamesToModifiers NamesOfModifiers'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GraphicsTool subclass: #Brush

@@ -2021,7 +2021,7 @@ initialize
 	self defaultFont: (Font name: 'Segoe UI' pointSize: 10).
 
 	"Default break key for interrupting non-responding operations during development."
-	self interruptHotKey: (AcceleratorTable keyCodeFromString: 'CTRL+F12').
+	self interruptHotKey: (AcceleratorTable keyCodeFromInvariantString: 'CTRL+F12').
 	self initializeArgumentClasses.
 
 	"Choose a default maximum stack size that is a compromise between not being overly 

@@ -129,7 +129,7 @@ DolphinTest subclass: #AbstractContainerViewTest
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AcceleratorTableTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!

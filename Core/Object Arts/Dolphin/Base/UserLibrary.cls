@@ -200,7 +200,11 @@ getDlgItem: aWindowHandle nIDDlgItem: anIntegerId
 	^self invalidCall: _failureCode!
 
 getKeyboardLayout: anInteger
-	<stdcall: sdword GetKeyboardLayout sdword>
+	<stdcall: handle GetKeyboardLayout sdword>
+	^self invalidCall: _failureCode!
+
+getKeyboardLayoutName: pwszKLID
+	<stdcall: bool GetKeyboardLayoutNameW lpwstr>
 	^self invalidCall: _failureCode!
 
 getKeyboardState: a256ByteArray
@@ -385,6 +389,10 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 
 	<stdcall: handle LoadCursorW handle lpvoid>
 	^self invalidCall: _failureCode!
+
+loadKeyboardLayout: pwszKLID flags: flags
+	<stdcall: handle LoadKeyboardLayoutW lpwstr dword>
+	^self invalidCall!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
 	"Load a string resource from the executable file associated with 
@@ -755,6 +763,7 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #getDesktopWindow!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getDlgItem:nIDDlgItem:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #getKeyboardLayout:!public!win32 functions-keyboard input! !
+!UserLibrary categoriesFor: #getKeyboardLayoutName:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getKeyboardState:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getKeyNameText:lpString:nSize:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getKeyState:!public!win32 functions-keyboard input! !
@@ -774,6 +783,7 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #isWindowVisible:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #killTimer:uIDEvent:!public!win32 functions-timer! !
 !UserLibrary categoriesFor: #loadCursor:lpCursorName:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #loadKeyboardLayout:flags:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #loadString:uID:lpBuffer:nBufferMax:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #mapVirtualKey:uMapType:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #messageBeep:!public!win32 functions-error! !
