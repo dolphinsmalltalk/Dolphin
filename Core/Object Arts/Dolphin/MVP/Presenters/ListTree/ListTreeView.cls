@@ -2222,7 +2222,7 @@ fillStateImageManagerThemed
 	extent := self stateImageExtent.
 	rect := RECT extent: extent.
 
-	theme := (ThemeLibrary default openThemeData: nil pszClassList: #TreeView).
+	theme := (ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView').
 
 	stateImageManager maskcolor: Color white.
 
