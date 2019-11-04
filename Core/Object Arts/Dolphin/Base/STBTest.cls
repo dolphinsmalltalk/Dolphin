@@ -45,11 +45,17 @@ testCharacters
 				rehydrated := Object fromBinaryStoreBytes: dessicated.
 				self assert: rehydrated equals: each]!
 
+testEmptyStream
+	self should: [Object fromBinaryStoreBytes: #[]] raise: STBError!
+
 testExistentClass
 	| rehydrated dessicated |
 	dessicated := self class binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
 	self assert: rehydrated identicalTo: self class!
+
+testInvalidStream
+	self should: [Object fromBinaryStoreBytes: #[0 0 0 0 0]] raise: STBError!
 
 testNonExistentClass
 	| testClass |
@@ -132,7 +138,9 @@ testTranscript
 	self assert: t identicalTo: Transcript! !
 !STBTest categoriesFor: #testByteArray!public!unit tests! !
 !STBTest categoriesFor: #testCharacters!public!unit tests! !
+!STBTest categoriesFor: #testEmptyStream!public!unit tests! !
 !STBTest categoriesFor: #testExistentClass!public!unit tests! !
+!STBTest categoriesFor: #testInvalidStream!public!unit tests! !
 !STBTest categoriesFor: #testNonExistentClass!public!unit tests! !
 !STBTest categoriesFor: #testSortedCollection!public!unit tests! !
 !STBTest categoriesFor: #testStrings!public!unit tests! !
