@@ -277,7 +277,7 @@ peekForSignatureIn: aReadStream
 
 	| position |
 	position := aReadStream position.
-	^(aReadStream next: self signature size) asByteArray = self signature
+	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
 !STBInFiler class categoriesFor: #initialize!development!initializing!public! !
 !STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !

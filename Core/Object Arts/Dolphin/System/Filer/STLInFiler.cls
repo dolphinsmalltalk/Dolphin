@@ -62,7 +62,7 @@ peekForSignatureIn: aReadStream
 
 	| position |
 	position := aReadStream position.
-	^aReadStream next = self signature or: 
+	^aReadStream nextAvailable = self signature or: 
 			[aReadStream position: position.
 			false]!
 
