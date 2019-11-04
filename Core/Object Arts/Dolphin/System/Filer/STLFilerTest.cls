@@ -43,6 +43,9 @@ testClassReadWrite
 	self assert: answer first identicalTo: STLFilerTest.
 	self assert: answer first identicalTo: answer last!
 
+testEmptyStream
+	self should: [STLInFiler on: #() readStream] raise: STBError.!
+
 testIntegerReadWrite
 
 	| contents int |
@@ -56,7 +59,10 @@ testIntegerReadWrite
 
 testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
-	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError!
+	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError.
+	self should: [STLInFiler on: #('') readStream] raise: STBError.
+	self should: [STLInFiler on: #(#[]) readStream] raise: STBError.
+!
 
 testSymbolReadWrite
 	| contents deserialized data testSymbol |
@@ -95,6 +101,7 @@ writeLiteralsFor: value
 !STLFilerTest categoriesFor: #simpleReadWriteOf:!private!unit tests! !
 !STLFilerTest categoriesFor: #simpleReadWriteOf:context:!private!unit tests! !
 !STLFilerTest categoriesFor: #testClassReadWrite!public!unit tests! !
+!STLFilerTest categoriesFor: #testEmptyStream!public!unit tests! !
 !STLFilerTest categoriesFor: #testIntegerReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testInvalidStream!public!unit tests! !
 !STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
