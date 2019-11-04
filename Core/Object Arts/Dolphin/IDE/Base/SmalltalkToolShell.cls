@@ -623,19 +623,22 @@ showExistingInstanceOf: aClass
 	"Private - Show and answer an the existing, open, instance of this tool, if there is one."
 
 	"Force a collection and finalization cycle to clear avoidable zombies (#1936)"
+
 	| allInstances openInstances |
-	(MemoryManager current)
+	MemoryManager current
 		collectGarbage;
 		administerLastRites.
 	allInstances := aClass allInstances.
 	openInstances := allInstances select: [:e | e isOpen].
-	allInstances size > openInstances size 
+	allInstances size > openInstances size
 		ifTrue: [(allInstances difference: openInstances) do: [:e | e release]].
-	^openInstances size > 0 
+	^openInstances size > 0
 		ifTrue: 
 			[| tool |
 			tool := openInstances first.
-			tool topShell view zOrderTop.
+			tool topShell view
+				show;
+				zOrderTop.
 			tool]!
 
 toolDescription
