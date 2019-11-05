@@ -1,4 +1,4 @@
-version: 7.1.8.{build}
+﻿version: 8.0.0.{build}
 pull_requests:
   do_not_increment_build_number: true
 skip_tags: true
@@ -14,22 +14,15 @@ build_script:
 - cmd: >-
     msbuild Core\DolphinVM\DolphinVM.sln /verbosity:m /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
-    Core\DolphinVM\AppVeyorZIPDolphinVM
-test_script:
-- cmd: AppVeyorBootAndTest
-artifacts:
-- path: dpro.*
-  name: DPro
-- path: RegressionTests.xml
-  name: DPro
-- path: DolphinVM.zip
-  name: DolphinVM
-- path: DolphinPdbs.zip
-  name: DolphinPdbs
-notifications:
-- provider: Email
-  to:
-  - bower@object-arts.com
-  on_build_success: false
-  on_build_failure: true
-  on_build_status_changed: false
+#    Core\DolphinVM\AppVeyorZIPDolphinVM
+#test_script:
+#- cmd: AppVeyorBootAndTest
+#artifacts:
+#- path: dpro.*
+#  name: DPro
+#- path: RegressionTests.xml
+#  name: DPro
+#- path: DolphinVM.zip
+#  name: DolphinVM
+#- path: DolphinPdbs.zip
+#  name: DolphinPdbs
