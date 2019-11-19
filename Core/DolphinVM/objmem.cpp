@@ -460,11 +460,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 {
 	WeaknessMask = includeWeakRefs ? 0 : OTEFlags::WeakMask;
 
-	unsigned size;
-	if (!isIntegerObject(referencedObjectPointer))
-		size = reinterpret_cast<OTE*>(referencedObjectPointer)->m_count;
-	else
-		size = 32;
+	unsigned size = !isIntegerObject(referencedObjectPointer) ? max(reinterpret_cast<OTE*>(referencedObjectPointer)->m_count, 1) : 32;
 
 	ArrayOTE* arrayPointer = Array::New(size);
 	Array* pRefs = arrayPointer->m_location;
