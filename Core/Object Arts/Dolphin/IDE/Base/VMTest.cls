@@ -368,6 +368,26 @@ suspendAndTerminate
 
 	"2) Ditto, but resumed and so allowed to complete"!
 
+testAllReferences
+	| object refs weak |
+	object := Array new: 1.
+	refs := object allReferences.
+	self assert: refs equals: {Processor activeProcess}.
+	object at: 1 put: object.
+	refs := object allReferences.
+	self assert: (refs noDifference: {Processor activeProcess. object})!
+
+testAllReferencesWeak
+	| object refs weak |
+	object := Object new.
+	weak := WeakArray with: object.
+	refs := object allReferences.
+	self assert: (refs noDifference: {Processor activeProcess. weak}).
+	refs := object allReferences: false.
+	self assert: (refs noDifference: {Processor activeProcess}).
+
+!
+
 testBSTRArg
 	"#1377 - Make sure there is no problem in the VM's automatic conversion of a string to a BSTR.
 	In an unpatched VM this typically crashes the whole system."
@@ -3165,6 +3185,8 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
+!VMTest categoriesFor: #testAllReferences!public!unit tests! !
+!VMTest categoriesFor: #testAllReferencesWeak!public! !
 !VMTest categoriesFor: #testBSTRArg!public!unit tests! !
 !VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
