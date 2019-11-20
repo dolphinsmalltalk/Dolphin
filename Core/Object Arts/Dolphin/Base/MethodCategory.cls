@@ -167,7 +167,8 @@ initialize
 	to be correctly categorized. However during the booting of the system weakness is not operative so we must
 	repair the table by cleaning out the dead wood."
 
-	Table removeAllKeys: (Table keys select: [:k | k isKindOf: DeadObject])!
+	Table removeAllKeys: (Table keys select: [:k | k isKindOf: DeadObject]).
+	Table haveStrongKeys; haveWeakValues!
 
 name: categoryName
 	"Answer the subinstance of the receiver with the <readableString> name, categoryName."

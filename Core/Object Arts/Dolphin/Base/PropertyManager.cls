@@ -46,6 +46,9 @@ propertyOf: anObject at: aSymbol put: valueObject
 	^(register at: anObject ifAbsentPut: [IdentityDictionary new]) at: aSymbol
 		put: valueObject!
 
+register
+	^register!
+
 removeAllPropertiesOf: anObject
 	"Removes all properties for anObject"
 
@@ -72,6 +75,7 @@ removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 !PropertyManager categoriesFor: #propertyOf:at:ifAbsent:!adding!public! !
 !PropertyManager categoriesFor: #propertyOf:at:ifAbsentPut:!accessing!public! !
 !PropertyManager categoriesFor: #propertyOf:at:put:!adding!public! !
+!PropertyManager categoriesFor: #register!accessing!private! !
 !PropertyManager categoriesFor: #removeAllPropertiesOf:!public!removing! !
 !PropertyManager categoriesFor: #removePropertyOf:at:!public!removing! !
 !PropertyManager categoriesFor: #removePropertyOf:at:ifAbsent:!public!removing! !

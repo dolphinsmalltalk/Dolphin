@@ -78,8 +78,18 @@ testNilCoalesce
 	obj1 := nil.
 	self assert: obj1 ?? obj2 identicalTo: obj2!
 
+testObjectDependentsRegistry
+	self verifyWeakRegistry: _DependentsRegister.
+	_DependentsRegister keysAndValuesDo: [:key :value | self assert: value isWeak]!
+
 testObjectEventRegistry
-	self assert: _EventsRegister countElements equals: _EventsRegister size!
+	self verifyWeakRegistry: _EventsRegister!
+
+testObjectPropertyManager
+	| subject |
+	subject := Object._PropertyRegister.
+	self assert: subject register hasWeakKeys.
+	self deny: subject register hasWeakValues!
 
 testOneArgEvent
 	| source |
@@ -289,17 +299,25 @@ testZeroArgEvent
 			["zero args expected"
 
 			true]
-		against: source! !
+		against: source!
+
+verifyWeakRegistry: aWeakIdentitDictionary
+	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
+	self assert: aWeakIdentitDictionary hasWeakKeys.
+	self deny: aWeakIdentitDictionary hasWeakValues! !
 !ObjectTest categoriesFor: #newEventSource!helpers!private! !
 !ObjectTest categoriesFor: #testAssert!public!testing / error handling! !
 !ObjectTest categoriesFor: #testDeepCopy!public!unit tests! !
 !ObjectTest categoriesFor: #testEventCollectionWeakness!public!unit tests! !
 !ObjectTest categoriesFor: #testIfNilAndIfNotNil!public!unit tests! !
 !ObjectTest categoriesFor: #testNilCoalesce!public!unit tests! !
+!ObjectTest categoriesFor: #testObjectDependentsRegistry!public!unit tests! !
 !ObjectTest categoriesFor: #testObjectEventRegistry!public!unit tests! !
+!ObjectTest categoriesFor: #testObjectPropertyManager!public!unit tests! !
 !ObjectTest categoriesFor: #testOneArgEvent!public!unit tests! !
 !ObjectTest categoriesFor: #testRemoveEventsTriggeredFor!public!unit tests! !
 !ObjectTest categoriesFor: #testThreeArgEvent!public!unit tests! !
 !ObjectTest categoriesFor: #testTwoArgEvent!public!unit tests! !
 !ObjectTest categoriesFor: #testZeroArgEvent!public!unit tests! !
+!ObjectTest categoriesFor: #verifyWeakRegistry:!public!unit tests! !
 

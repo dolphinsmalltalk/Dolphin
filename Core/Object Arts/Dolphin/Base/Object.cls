@@ -1685,34 +1685,45 @@ initialize
 						otherwise cause a stack overflow).
 	_AssertionFailureSignal-	Signalled on #assert: argument evaluting to false."
 
-	_DependentsRegister isNil ifTrue: [self initializeDependencyMechanism].
-	_PropertyRegister isNil ifTrue: [self initializePropertyRegister].
-	_EventsRegister isNil ifTrue: [self initializeEventsRegister].
-	_AssertionFailureSignal isNil ifTrue: [
-		_AssertionFailureSignal := Signal resumableDescription: 'assertion failure']!
+	self
+		initializeDependencyMechanism;
+		initializePropertyRegister;
+		initializeEventsRegister.
+	_AssertionFailureSignal isNil
+		ifTrue: [_AssertionFailureSignal := Signal resumableDescription: 'assertion failure']!
 
 initializeDependencyMechanism
-	"Private - Initialize the dependency register provided for all objects
-	which do not have their own dependency register.
-	It is not advisable to send this message after booting, as it may make
-	the system perform unpredictably."
+	"Private - Initialize the dependency register provided for all objects which do not have their own dependency register."
 
-	_DependentsRegister := WeakIdentityDictionary newWithWeakKeys: 2!
+	_DependentsRegister
+		ifNil: [_DependentsRegister := WeakIdentityDictionary newWithWeakKeys: 2]
+		ifNotNil: 
+			[:register |
+			register
+				haveWeakKeys;
+				haveStrongValues]!
 
 initializeEventsRegister
-	"Private - Initialize the events register provided for all objects which don't
-	override #getEvents and #setEvents:.
-	It is not advisable to send this message after booting, as it may make
-	the system perform unpredictably."
+	"Private - Initialize the events register provided for all objects which don't override #getEvents and #setEvents:."
 
-	_EventsRegister := WeakIdentityDictionary newWithWeakKeys: 2!
+	_EventsRegister
+		ifNil: [_EventsRegister := WeakIdentityDictionary newWithWeakKeys: 2]
+		ifNotNil: 
+			[:register |
+			register
+				haveWeakKeys;
+				haveStrongValues]!
 
 initializePropertyRegister
-	"Private - Initialize the property register provided for all objects.
-	It is not advisable to send this message after booting, as it may make
-	the system perform unpredictably."
+	"Private - Initialize the property register provided for all objects."
 
-	_PropertyRegister := PropertyManager new!
+	_PropertyRegister
+		ifNil: [_PropertyRegister := PropertyManager new]
+		ifNotNil: 
+			[:properties |
+			properties register
+				haveWeakKeys;
+				haveStrongValues]!
 
 resourcesLocator
 	"Answer a default file locator that can be used to locate resource files for this class.

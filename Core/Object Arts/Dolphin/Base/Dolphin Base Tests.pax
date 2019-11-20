@@ -24,6 +24,7 @@ package classNames
 	add: #ClassBuilderTests;
 	add: #ClassTest;
 	add: #CollectionCombinator;
+	add: #CommandDescriptionTest;
 	add: #CommandLineTest;
 	add: #CommandLineTestRunner;
 	add: #DateAndTimeTest;
@@ -46,6 +47,7 @@ package classNames
 	add: #ExternalArrayTest;
 	add: #ExternalDescriptorTest;
 	add: #ExternalLibraryTest;
+	add: #ExternalResourceLibraryTest;
 	add: #ExternalStructureTest;
 	add: #FalseTest;
 	add: #FileLocatorTest;
@@ -79,6 +81,7 @@ package classNames
 	add: #PoolConstantsDictionaryTest;
 	add: #PositionableStreamTest;
 	add: #ProcessTest;
+	add: #PropertyManagerTest;
 	add: #QuicksortAlgorithmTest;
 	add: #ReadStreamTest;
 	add: #ReadWriteStreamTest;
@@ -217,6 +220,11 @@ DolphinTest subclass: #ClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #CommandDescriptionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #DateAndTimeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -263,6 +271,11 @@ DolphinTest subclass: #ExternalDescriptorTest
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ExternalLibraryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ExternalResourceLibraryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -333,6 +346,11 @@ DolphinTest subclass: #PackageTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ProcessTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PropertyManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
