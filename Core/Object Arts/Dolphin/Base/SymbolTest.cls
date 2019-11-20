@@ -116,7 +116,10 @@ testReplaceIdentityWith
 	self should: [super testReplaceIdentityWith] raise: Processor constWriteSignal!
 
 testResize
-	self should: [super testResize] raise: Processor constWriteSignal! !
+	self should: [super testResize] raise: Processor constWriteSignal!
+
+testSymbolTable
+	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
 !SymbolTest categoriesFor: #assimilateString:!helpers!private! !
 !SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
@@ -131,4 +134,5 @@ testResize
 !SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
 !SymbolTest categoriesFor: #testResize!public!unit tests! !
+!SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
 

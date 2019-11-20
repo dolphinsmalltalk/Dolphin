@@ -267,10 +267,14 @@ initialize
 		CommandDescription initialize
 	"
 
-	CommandDescriptionRegistry isNil 
+	CommandDescriptionRegistry isNil
 		ifTrue: 
 			[CommandDescriptionRegistry := WeakIdentityDictionary newWithWeakKeys: 150.
-			CurrentId := self startingId].
+			CurrentId := self startingId]
+		ifFalse: 
+			[CommandDescriptionRegistry
+				haveStrongValues;
+				haveWeakKeys].
 	DefaultMask := 1.
 	ModalMask := 2!
 

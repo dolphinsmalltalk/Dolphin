@@ -290,7 +290,7 @@ initialize
 onShutdown
 	"Private - Perform any image shutdown operations."
 
-	self allSockets values do: [:each | each onShutdown]!
+	AllSockets ifNotNil: [:all | all values do: [:each | each onShutdown]]!
 
 onStartup
 	"Private - Perform any startup operations."
@@ -299,7 +299,7 @@ onStartup
 	semaphores will be garbage collected if they are not otherwise referenced"
 
 	WaitingSemaphores := nil.
-	self allSockets values do: [:each | each onStartup]!
+	AllSockets ifNotNil: [:all | all values do: [:each | each onStartup]]!
 
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered

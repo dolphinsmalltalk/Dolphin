@@ -118,6 +118,10 @@ testIndirections
 			source := source , '*'.
 			self should: [self newDescriptor: source] raise: Error]!
 
+testSharedRegister
+	self deny: ExternalDescriptor.Shared hasWeakKeys.
+	self assert: ExternalDescriptor.Shared hasWeakValues!
+
 testSmokeTest
 	"Verify that the compiler is parsing the descriptors in the same way as ExternalDescriptor by
 	checking the descriptor of every ExternalMethod."
@@ -159,6 +163,7 @@ testStructs
 !ExternalDescriptorTest categoriesFor: #parseStructArg:valueType:refType:!private!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testBuiltins!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testIndirections!public!unit tests! !
+!ExternalDescriptorTest categoriesFor: #testSharedRegister!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testSmokeTest!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testStruct4!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testStruct8!public!unit tests! !
