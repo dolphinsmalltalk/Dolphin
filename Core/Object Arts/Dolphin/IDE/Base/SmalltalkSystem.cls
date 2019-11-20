@@ -4079,6 +4079,14 @@ unregisterTool: aToolClass
 
 	self class unregisterTool: aToolClass!
 
+upgradeAllResourcesReferencingClassNamed: aSymbol
+	"Load and resave all view resources referencing the named class. This will apply any pending STB version upgrade."
+
+	| var refs |
+	var := self globalVariableNamed: aSymbol.
+	refs := self referencesToVariable: var in: BrowserEnvironment new.
+	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
+
 userPreferencesIcon
 	^Icon fromId: 'SMALLTALKOPTIONSFOLDER.ICO'!
 
@@ -4626,6 +4634,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #unimplementedSelectorsIn:!enquiries!public! !
 !SmalltalkSystem categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !SmalltalkSystem categoriesFor: #unregisterTool:!accessing!public! !
+!SmalltalkSystem categoriesFor: #upgradeAllResourcesReferencingClassNamed:!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #userPreferencesIcon!initializing!private! !
 !SmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
 !SmalltalkSystem categoriesFor: #viewComposerClass!constants!public! !
