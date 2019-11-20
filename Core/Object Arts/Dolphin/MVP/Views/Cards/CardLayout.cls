@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #CardLayout
-	instanceVariableNames: 'names currentCard'
+	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -89,6 +89,12 @@ firstCard
 	self showCard: card.
 	^card!
 
+getEvents
+	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
+	has no events registered for it"
+
+	^events!
+
 initialize
 	"Private - Initialize the state of the receiver."
 
@@ -175,6 +181,9 @@ removeSubView: aView
 	^aView
 !
 
+setEvents: anEventsCollectionOrNil
+	events := anEventsCollectionOrNil!
+
 showCard: aView
 	"Show the card, aView and make this the current card. This is after hiding the existing current card"
 
@@ -195,7 +204,14 @@ showCardWithArrangement: anObject
 	| view |
 	view := (names detect: [ :each | each key = anObject ]) value.
 	self showCard: view.
-	^view! !
+	^view!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
+	is NOT saved to the filer"
+
+	anSTBOutFiler override: events with: nil.
+	super stbSaveOn: anSTBOutFiler.! !
 !CardLayout categoriesFor: #arrangementOf:!accessing!public! !
 !CardLayout categoriesFor: #arrangementOf:put:!accessing!public! !
 !CardLayout categoriesFor: #cards!accessing!private! !
@@ -204,6 +220,7 @@ showCardWithArrangement: anObject
 !CardLayout categoriesFor: #cycleNextCard!operations!public! !
 !CardLayout categoriesFor: #cyclePreviousCard!operations!public! !
 !CardLayout categoriesFor: #firstCard!operations!public! !
+!CardLayout categoriesFor: #getEvents!events!private! !
 !CardLayout categoriesFor: #initialize!initializing!private! !
 !CardLayout categoriesFor: #lastCard!operations!public! !
 !CardLayout categoriesFor: #layoutContainer:context:!geometry!private! !
@@ -211,6 +228,25 @@ showCardWithArrangement: anObject
 !CardLayout categoriesFor: #preferredLayoutExtentOf:context:!public! !
 !CardLayout categoriesFor: #previousCard!operations!public! !
 !CardLayout categoriesFor: #removeSubView:!public!removing! !
+!CardLayout categoriesFor: #setEvents:!events!private! !
 !CardLayout categoriesFor: #showCard:!operations!public! !
 !CardLayout categoriesFor: #showCardWithArrangement:!operations!public! !
+!CardLayout categoriesFor: #stbSaveOn:!binary filing!public! !
+
+!CardLayout class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Version 1 adds event instance variable and two spares."
+
+	^
+	[:data |
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+	newInstance]!
+
+stbVersion
+	^1! !
+!CardLayout class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!CardLayout class categoriesFor: #stbVersion!binary filing!public! !
 

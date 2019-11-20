@@ -4373,7 +4373,7 @@ publicAccessorAspects
 	aspects := LookupTable new
 				add: (self newAspect: #yourself class: Aspect);
 				yourself.
-	hidden := #hidden asMethodCategory.
+	hidden := #'non browsable' asMethodCategory.
 	self class allGetters do: 
 			[:each |
 			(each isPublic and: [(hidden includesMethod: each) not])

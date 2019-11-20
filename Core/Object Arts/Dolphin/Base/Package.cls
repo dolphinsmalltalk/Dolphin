@@ -1182,6 +1182,18 @@ privateUninstall
 		uninstallClasses;
 		uninstallMethods!
 
+propertyAt: aSymbol ifAbsent: aBlock
+	"Answers a property value of the receiver whose name matches aSymbol. If the object
+	does not have such a property then aBlock is evaluated."
+
+	^properties
+		ifNil: [aBlock value]
+		ifNotNil: 
+			[properties
+				propertyOf: self
+				at: aSymbol
+				ifAbsent: aBlock]!
+
 propertyManager
 	^properties ifNil: [properties := PropertyManager new]!
 
@@ -1332,6 +1344,9 @@ setPrerequisites: aCollectionOfStrings
 	and should not be deleted**."
 
 	prerequisiteNames := aCollectionOfStrings!
+
+shrink
+	properties ifNotNil: [properties register isEmpty ifTrue: [properties := nil]]!
 
 sourceDescriptor
 	^comment isInteger ifTrue: [comment]!
@@ -1837,6 +1852,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #prerequisites!enumerating!public! !
 !Package categoriesFor: #printOn:!printing!public! !
 !Package categoriesFor: #privateUninstall!private!removing! !
+!Package categoriesFor: #propertyAt:ifAbsent:!properties!public! !
 !Package categoriesFor: #propertyManager!private!properties! !
 !Package categoriesFor: #rebaseTo:!public!testing! !
 !Package categoriesFor: #remainingClasses!accessing!public! !
@@ -1859,6 +1875,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #setManualPrerequisites:!accessing!private! !
 !Package categoriesFor: #setPackageFileName:!accessing!private! !
 !Package categoriesFor: #setPrerequisites:!accessing!private! !
+!Package categoriesFor: #shrink!private! !
 !Package categoriesFor: #sourceDescriptor!accessing!private! !
 !Package categoriesFor: #sourceDescriptor:!accessing!private! !
 !Package categoriesFor: #sourceGlobalNames!accessing!private! !

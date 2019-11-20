@@ -74,29 +74,6 @@ History:
 
 package basicPackageVersion: '7.01'.
 
-package basicScriptAt: #postinstall put: '(Package manager packageNamed: ''Dolphin List Tree Presenter'')
-	propertyAt: #ExternalResourceFileNames
-	put: #(
-		''Resources\ListTreeIconsForXP.bmp''
-	).
-!!'.
-package basicScriptAt: #preinstall put: '(Smalltalk at: #CommCtrlConstants)
-"	at: ''CDRF_NOTIFYPOSTPAINT''	put: 16r00000010;
-	at: ''CDRF_NOTIFYPOSTERASE''	put: 16r00000040;
-	at: ''CDDS_PREPAINT''		put: 16r00000001;
-	at: ''CDDS_POSTPAINT''		put: 16r00000002;
-	at: ''CDDS_PREERASE''		put: 16r00000003;
-	at: ''CDDS_POSTERASE''		put: 16r00000004;
-	at: ''CDDS_ITEM''			put: 16r00010000;
-	at: ''CDDS_ITEMPREPAINT''	put: 16r00010001;
-	at: ''CDDS_ITEMPOSTPAINT''	put: 16r00010002;
-	at: ''CDDS_ITEMPREERASE''	put: 16r00010003;
-	at: ''CDDS_ITEMPOSTERASE''	put: 16r00010004;
-	at: ''CDDS_SUBITEM''		put: 16r00020000;
-	at: ''LVS_EX_UNDERLINEHOT''	put: 16r00000800;
-	at: ''LVS_EX_UNDERLINECOLD''	put: 16r00001000;
-"	yourself.
-!!'.
 
 package classNames
 	add: #ListTreePresenter;

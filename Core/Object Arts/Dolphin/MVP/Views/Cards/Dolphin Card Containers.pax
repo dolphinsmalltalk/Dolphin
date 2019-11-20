@@ -44,7 +44,7 @@ Object subclass: #CardLabel
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LayoutManager subclass: #CardLayout
-	instanceVariableNames: 'names currentCard'
+	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
