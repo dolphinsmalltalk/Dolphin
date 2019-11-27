@@ -90,6 +90,7 @@ range
 
 	| array gd |
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
+	array beUnfinalizable.
 	gd := self 
 				sendMessage: self getRangeMessage
 				wParam: 0
@@ -105,6 +106,7 @@ range: interval
 	| array gd |
 	gd := 0.
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
+	array beUnfinalizable.
 	interval first notNil 
 		ifTrue: 
 			[array at: 1 put: interval first asSYSTEMTIME.

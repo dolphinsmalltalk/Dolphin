@@ -82,7 +82,7 @@ remapTable: aColorMapArray type: aColorAdjustTypeConstant
 				type: aColorAdjustTypeConstant
 				enableFlag: true asParameter
 				mapSize: aColorMapArray size
-				map: aColorMapArray) = Ok 
+				map: aColorMapArray) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesRemapTable failed' with: status]!
 
 threshold: aFloat

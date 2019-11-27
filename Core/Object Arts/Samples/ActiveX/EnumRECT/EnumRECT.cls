@@ -30,13 +30,18 @@ initialize
 	"Initialize the array of rectangles."
 
 	m_iCur := 0.
-	m_rgrc := StructureArray length: CRECTS elementClass: RECT.
-	(0 to: CRECTS-1) with: m_rgrc do: [:i :rect |
-		rect
-			top: i;
-			left: i*2;
-			bottom: i*3;
-			right: i*4]!
+	m_rgrc := StructureArray
+				length: CRECTS
+				elementClass: RECT
+				initializer: 
+					[:rect :index |
+					| i |
+					i := index - 1.
+					rect
+						top: i;
+						left: i * 2;
+						bottom: i * 3;
+						right: i * 4]!
 
 Next: next rgelt: rgelt pceltFetched: pdwRects 
 	"Implement the IEnumXXXX::Next() interface function.

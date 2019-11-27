@@ -409,6 +409,7 @@ getPaletteEntries
 	colors := self getColorTable ?? #().
 	len := colors size.
 	palEntries := StructureArray length: len elementClass: PALETTEENTRY.
+	palEntries beUnfinalizable.
 	palEntries
 		replaceFrom: 1
 		to: len

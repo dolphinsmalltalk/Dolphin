@@ -113,10 +113,8 @@ Each call to the GetHDC method of a Graphics object should be paired with a call
 Any state changes you make to the device context between GetHDC and ReleaseHDC will be ignored by GDI+ and will not be reflected in rendering done by GDI+."
 
 	| hdc |
-	
-	[hdc := self getHDC.
-	anOperation value: hdc] 
-			ensure: [hdc notNil ifTrue: [self releaseHDC: hdc]]!
+	hdc := self getHDC.
+	[anOperation value: hdc] ensure: [self releaseHDC: hdc]!
 
 drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle 
 	"Draw an arc on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
@@ -778,21 +776,25 @@ transform: aGdiplusMatrix
 				matrix: aGdiplusMatrix asParameter) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetWorldTransform failed' with: status]!
 
-transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace 
+transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 	"Convert aPointsCollection from one coordinate space to another. The conversion 
 	is based on the current world and page transformations of the receiver."
 
-	| status points |
-	points := StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-				elementClass: POINTL.
-	(status := GdiplusLibrary default 
+	| status points count |
+	points := StructureArray
+				withAll: aPointsCollection
+				elementClass: POINTL
+				initializer: [:pointl :point | pointl x: point x y: point y].
+	points beUnfinalizable.
+	count := points size.
+	(status := GdiplusLibrary default
 				gdipTransformPointsI: self asParameter
 				destSpace: destSpace
 				srcSpace: srcSpace
 				points: points
-				count: points size) = Ok 
+				count: count) == Ok
 		ifFalse: [GdiplusError signal: 'GdipTransformPointsI failed' with: status].
-	points keysAndValuesDo: [:key :value | aPointsCollection at: key put: value asPoint]!
+	points with: (1 to: count) do: [:pointl :i | aPointsCollection at: i put: pointl asPoint]!
 
 translateTransform: aRealPoint 
 	"Translate (shift) the receiver's transformation matrix by aRealPoint."

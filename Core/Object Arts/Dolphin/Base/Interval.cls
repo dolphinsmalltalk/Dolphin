@@ -106,6 +106,23 @@ includes: anObject
 		ifTrue: [(anObject - start) \\ step = 0]
 		ifFalse: [start + (step * ((anObject - start) / step) rounded) = anObject]!
 
+inject: anObject into: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
+	receiver, passing the elements as the second argument, and passing the value of the previous
+	evaluation as the first argument, starting with the <Object> argument, initialValue. The
+	operation must answer the value it wishes to have passed as its first argument the next time
+	it is evaluated. The traversal is in the #do: order. Answer the final value of the
+	operation. This enumeration is particularly useful for performing summations and other
+	statistical operations."
+
+	"Implementation Note: Override superclass implementation for efficiency. By inlining the do:
+	implementation we can avoid requiring a full block."
+
+	| nextValue |
+	nextValue := anObject.
+	1 to: self size do: [:i | nextValue := aDyadicValuable value: nextValue value: start + (step * (i - 1))].
+	^nextValue!
+
 isEmpty
 	"Answer whether the receiver contains any elements.
 	Implementation note: Override superclass for improved performance."
@@ -221,6 +238,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !Interval categoriesFor: #first!accessing!public! !
 !Interval categoriesFor: #hash!comparing!public! !
 !Interval categoriesFor: #includes:!public!testing! !
+!Interval categoriesFor: #inject:into:!enumerating!public! !
 !Interval categoriesFor: #isEmpty!public!testing! !
 !Interval categoriesFor: #last!accessing!public! !
 !Interval categoriesFor: #printOn:!printing!public! !

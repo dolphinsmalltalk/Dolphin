@@ -118,21 +118,17 @@ threeThreeTwo
 	"Answer a packed array palette entries to specify a default 332 palette."
 
 	| palette |
-	palette := StructureArray length: 256 elementClass: self.
-	0 to: 255
-		do: 
-			[:i | 
-			| pe |
-			pe := palette at: i + 1.
-			pe peRed: ((i bitShift: -5) bitAnd: 2r111) * 255 // 7.
-			pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
-			pe peBlue: (i bitAnd: 2r11) * 255 // 3].
-	^palette
-
-
-	"
-Time millisecondsToRun: [PALETTEENTRY threeThreeTwo]
-"! !
+	palette := StructureArray
+				length: 256
+				elementClass: self
+				initializer: 
+					[:pe :index |
+					| i |
+					i := index - 1.
+					pe peRed: ((i bitShift: -5) bitAnd: 2r111) * 255 // 7.
+					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
+					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
+	^palette! !
 !PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !

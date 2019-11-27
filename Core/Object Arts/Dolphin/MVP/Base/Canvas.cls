@@ -682,14 +682,15 @@ plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPo
 polygon: collectionOfPoints
 	"Draw a filled polygon from the collection of points."
 
-	| points count |
-	count := collectionOfPoints size.
-	points := StructureArray length: count elementClass: POINTL.
-	points with: collectionOfPoints do: [:pointl :point | pointl x: point x; y: point y].
 	^GDILibrary default
 		polygon: self asParameter
-		lpPoints: points
-		nCount: count!
+		lpPoints: ((StructureArray
+				withAll: collectionOfPoints
+				elementClass: POINTL
+				initializer: [:pointl :point | pointl x: point x y: point y])
+				beUnfinalizable;
+				yourself)
+		nCount: collectionOfPoints size!
 
 realizePalette
 	"Realizes the current logical palette of the receiver into the system palette"

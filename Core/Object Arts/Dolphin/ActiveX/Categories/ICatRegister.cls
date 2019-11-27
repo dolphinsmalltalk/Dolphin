@@ -17,12 +17,9 @@ buildCatIdArray: catids
 	"Private - Build an answer an <ExternalArray> of <GUID>s from the 
 	<collection> of <GUID>s, catids.."
 
-	| rgcatid i cCategories |
-	cCategories := catids size.
-	rgcatid := StructureArray length: cCategories elementClass: GUID.
-	i := 1.
-	catids do: [:catid | rgcatid at: i put: catid. i := i + 1].
-	^rgcatid!
+	^(StructureArray withAll: catids elementClass: GUID)
+		beUnfinalizable;
+		yourself!
 
 registerCategories: categoryInfos
 	"Register the specified <collection> of <CATEGORYINFO>, rgCategoryInfo."

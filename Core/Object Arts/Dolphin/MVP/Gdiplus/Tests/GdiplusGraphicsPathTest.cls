@@ -16,7 +16,7 @@ setSample3Points
 						with: 100 @ 0
 						with: 200 @ 150
 						with: 0 @ 150)
-				types: (Array new: 3 withAll: PathPointTypeLine)
+				types: (ByteArray new: 3 withAll: PathPointTypeLine)
 				fillMode: nil!
 
 setSampleEllipse

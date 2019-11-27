@@ -31,6 +31,12 @@ x: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
+x: xInteger y: yInteger
+
+	bytes
+		sdwordAtOffset: _OffsetOf_x put: xInteger;
+		sdwordAtOffset: _OffsetOf_y put: yInteger!
+
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
@@ -43,6 +49,7 @@ y: anInteger
 !POINTL categoriesFor: #asUIntPtr!converting!public! !
 !POINTL categoriesFor: #x!**compiled accessors**!public! !
 !POINTL categoriesFor: #x:!**compiled accessors**!public! !
+!POINTL categoriesFor: #x:y:!initializing!public! !
 !POINTL categoriesFor: #y!**compiled accessors**!public! !
 !POINTL categoriesFor: #y:!**compiled accessors**!public! !
 

@@ -66,17 +66,19 @@ shearTransform: aPoint order: aMatrixOrderConstant
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipShearMatrix failed' with: status]!
 
-transformPoints: aPointsCollection 
-	| status pts|
-	pts := (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL).
-	(status := GdiplusLibrary default 
+transformPoints: aPointsCollection
+	| pts status |
+	pts := (StructureArray
+				withAll: aPointsCollection
+				elementClass: POINTL
+				initializer: [:pointl :point | pointl x: point x y: point y]).
+	pts beUnfinalizable.
+	(status := GdiplusLibrary default
 				gdipTransformMatrixPointsI: self handle
 				pts: pts
-				count: aPointsCollection size) = Ok 
+				count: aPointsCollection size) == Ok
 		ifFalse: [GdiplusError signal: 'GdipTransformMatrixPoints: failed' with: status].
-	^pts
-	!
+	^pts!
 
 translateTransform: aPoint
 	self translateTransform: aPoint order: MatrixOrderPrepend!

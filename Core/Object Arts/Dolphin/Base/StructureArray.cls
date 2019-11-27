@@ -80,25 +80,19 @@ uncheckedAt: anInteger put: anObject
 		startingAt: 1.
 	^anObject!
 
-with: otherCollection do: operation
-	"Private - Evaluate the <dyadicValuable> argument, operation, with each of 
-	the receiver's elements along with the corresponding element from the 
-	<sequencedReadableCollection> argument, otherCollection.
-	N.B. This is private because the element passed to the operation must
-	not be captured since it is shared. StructureArrays are often initialized
-	from Smalltalk arrays, and the elements passed are only transient references
-	anyway."
+with: aCollection do: aDyadicValuable
+	"Private - Evaluate the <dyadicValuable> argument with each of the receiver's elements along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order.
+	N.B. This is private because the element passed to the operation must not be captured since it is shared. StructureArrays are often initialized from Smalltalk arrays, and the elements passed are only transient references anyway."
 
-	| elem addr spacing |
-	addr := self yourAddress.
+	| elem spacing |
 	spacing := self packing.
 	elem := elementClass newPointer.
-	1 to: self size do: [:i |
-		elem initializeAtAddress: addr.
-		operation
-			value: elem
-			value: (otherCollection at: i).
-		addr := addr + spacing]! !
+	aCollection inject: self yourAddress
+		into: 
+			[:addr :each |
+			elem initializeAtAddress: addr.
+			aDyadicValuable value: elem value: each.
+			addr + spacing]! !
 !StructureArray categoriesFor: #alignment!constants!public! !
 !StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
 !StructureArray categoriesFor: #elementClass:!accessing!private! !
@@ -132,6 +126,12 @@ length: anInteger elementClass: elementClass
 	^(self length: anInteger elementSize: elementClass elementSize)
 		elementClass: elementClass!
 
+length: anInteger elementClass: anExternalStructureClass initializer: aDyadicValuable
+	| answer |
+	answer := self length: anInteger elementClass: anExternalStructureClass.
+	answer with: (1 to: anInteger) do: aDyadicValuable.
+	^answer!
+
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 		1: Added 'owner' instance variable, default to nil."
@@ -151,10 +151,20 @@ stbVersion
 with: anExternalStructure
 	^(self length: 1 elementClass: anExternalStructure class)
 		at: 1 put: anExternalStructure;
-		yourself! !
+		yourself!
+
+withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadicValuable
+	"Answer a new <StructureArray> containing all of the elements of the <collection> argument, converted to the format of the <ExternalStructure> class argument by the <dyadicValuable> initializer block, aDyadicValuable."
+
+	| answer |
+	answer := self length: aCollection size elementClass: anExternalStructureClass.
+	answer with: aCollection do: aDyadicValuable.
+	^answer! !
 !StructureArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
 !StructureArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!StructureArray class categoriesFor: #length:elementClass:initializer:!instance creation!public! !
 !StructureArray class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !StructureArray class categoriesFor: #stbVersion!binary filing!public! !
-!StructureArray class categoriesFor: #with:!public! !
+!StructureArray class categoriesFor: #with:!instance creation!public! !
+!StructureArray class categoriesFor: #withAll:elementClass:initializer:!instance creation!public! !
 

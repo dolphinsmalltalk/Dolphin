@@ -2,10 +2,11 @@
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
-	classVariableNames: ''
+	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 ObjectInside guid: (GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
+ObjectInside addClassConstant: 'EdgePointResolution' value: 16rA!
 ObjectInside comment: ''!
 !ObjectInside categoriesForClass!Kernel-Objects! !
 !ObjectInside methodsFor!
@@ -82,9 +83,6 @@ drawOn: aGdiplusGraphics
 		resetTransform.
 	attributes free!
 
-edgePointResolution
-	^10!
-
 edgePoints
 	^edgePoints ifNil: [edgePoints := self findEdgePoints]!
 
@@ -95,32 +93,33 @@ extent
 	^self image extent!
 
 findEdgePoints
-	| pts transparent |
-	transparent := self transparentColor.
-	pts := OrderedCollection new.
-	0 to: self extent y + self edgePointResolution
-		by: self edgePointResolution
+	| width argb gdipluslib imageHandle height pts |
+	pts := OrderedCollection new: 50.
+	height := image height.
+	width := image width.
+	argb := ByteArray new: 4.
+	gdipluslib := GdiplusLibrary default.
+	imageHandle := image asParameter.
+	0 to: height + EdgePointResolution
+		by: EdgePointResolution
 		do: 
-			[:y | 
-			| found |
+			[:y |
+			| found ym |
+			ym := y min: height - 1.
 			found := false.
-			0 to: self extent x + self edgePointResolution
-				by: self edgePointResolution
+			0 to: width + EdgePointResolution
+				by: EdgePointResolution
 				do: 
-					[:x | 
-					| pixel |
-					pixel := self image pixelAt: (x min: self extent x-1) @ (y min: self extent y-1).
-					found 
-						ifFalse: 
-							[pixel ~= transparent 
-								ifTrue: 
-									[pts add: x @ y.
-									found := true]]
+					[:x |
+					gdipluslib
+						gdipBitmapGetPixel: imageHandle
+						x: (x min: width - 1)
+						y: ym
+						color: argb.
+					(argb dwordAtOffset: 0) == 0 == found
 						ifTrue: 
-							[pixel = transparent 
-								ifTrue: 
-									[pts add: x @ y.
-									found := false]]]].
+							[pts addLast: x @ y.
+							found := found not]]].
 	^pts!
 
 image
@@ -176,17 +175,19 @@ setImage: aGdiplusImage
 !
 
 testCollisionIn: aGdiplusBitmap
-	| white |
-	white := Color white.
-	^(self matrix transformPoints: self edgePoints)
-		anySatisfy: [:each | ([aGdiplusBitmap pixelAt: each] on: Error do: [:e | nil]) ~= white]!
-
-transparentColor
-	^##(Color
-		a: 0
-		r: 0
-		g: 0
-		b: 0)!
+	| white color1 gdiplusLib bitmapHandle |
+	white := Color white argbCode asSDword.
+	color1 := ByteArray new: 4.
+	gdiplusLib := GdiplusLibrary default.
+	bitmapHandle := aGdiplusBitmap asParameter.
+	^(self matrix transformPoints: self edgePoints) anySatisfy: 
+			[:each |
+			(gdiplusLib
+				gdipBitmapGetPixel: bitmapHandle
+				x: each x
+				y: each y
+				color: color1) == Ok
+				and: [(color1 sdwordAtOffset: 0) ~= white]]!
 
 x
 	^self position x!
@@ -209,7 +210,6 @@ y: aNumber
 !ObjectInside categoriesFor: #copy!copying!public! !
 !ObjectInside categoriesFor: #drawEdgePointsOn:!operations!public! !
 !ObjectInside categoriesFor: #drawOn:!operations!public! !
-!ObjectInside categoriesFor: #edgePointResolution!constants!private! !
 !ObjectInside categoriesFor: #edgePoints!accessing!public! !
 !ObjectInside categoriesFor: #edgePoints:!accessing!public! !
 !ObjectInside categoriesFor: #extent!accessing!public! !
@@ -226,7 +226,6 @@ y: aNumber
 !ObjectInside categoriesFor: #scale:!accessing!public! !
 !ObjectInside categoriesFor: #setImage:!private! !
 !ObjectInside categoriesFor: #testCollisionIn:!accessing!public! !
-!ObjectInside categoriesFor: #transparentColor!private! !
 !ObjectInside categoriesFor: #x!accessing!public! !
 !ObjectInside categoriesFor: #x:!accessing!public! !
 !ObjectInside categoriesFor: #y!accessing!public! !

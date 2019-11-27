@@ -251,6 +251,7 @@ setStep: anInteger
 	prevStep := accels isEmpty 
 				ifTrue: 
 					[accels := StructureArray length: 1 elementClass: UDACCEL.
+					accels beUnfinalizable.
 					1]
 				ifFalse: [accels first nInc].
 	(accels first)
@@ -282,6 +283,7 @@ udmGetAccel
 	| answer count |
 	count := self sendMessage: UDM_GETACCEL.
 	answer := StructureArray length: count elementClass: UDACCEL.
+	answer beUnfinalizable.
 	self 
 		sendMessage: UDM_GETACCEL
 		wParam: count

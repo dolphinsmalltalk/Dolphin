@@ -314,7 +314,11 @@ hasThumbnailData
 height
 	"Answer an <Integer> specifying the height of the receiver in pixels."
 
-	^self extent y!
+	| buf status |
+	buf := DWORDBytes new.
+	(status := GdiplusLibrary default gdipGetImageHeight: self asParameter height: buf) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetImageHeight failed' with: status].
+	^buf asInteger!
 
 isLandscape
 	"Answer whether the receiver is wider than its height."
@@ -526,23 +530,22 @@ saveFramesToFiles: directoryString
 	from the receiver's filename and the frame index (e.g., file00.gif, file01.gif, etc).  
 	Use the image encoder associated with the file's extension."
 
-	| frameCount stem str strm toFile ext |
+	| frameCount stem digits toFile ext |
 	(frameCount := self frameCount) = 1 ifTrue: [^nil].
 	stem := File splitStemFrom: self filename.
 	ext := File splitExtensionFrom: self filename.
+	digits := frameCount numberOfDigitsInBase: 10.
 	0 to: frameCount - 1
 		do: 
-			[:i | 
-			str := i displayString.
-			(strm := String new writeStream)
-				next: frameCount displayString size - str size put: $0;
-				display: str.
-			toFile := File 
+			[:i |
+			toFile := File
 						composePath: directoryString
-						stem: stem , strm contents
+						stem: (String writeStream
+								nextPutAll: stem;
+								nextPutAll: (i printStringBase: 10 nDigits: digits);
+								yourself) contents
 						extension: ext.
 			self selectActiveFrame: i.
-			Processor sleep: 10.
 			self saveToFile: toFile]!
 
 saveToFile: pathString
@@ -710,7 +713,11 @@ thumbnailWithHeight: anInteger
 width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
-	^self extent x! !
+	| buf status |
+	buf := DWORDBytes new.
+	(status := GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
+	^buf asInteger! !
 !GdiplusImage categoriesFor: #asBitmap!public! !
 !GdiplusImage categoriesFor: #asByteArray:!converting!public! !
 !GdiplusImage categoriesFor: #asByteArray:compression:!converting!public! !
@@ -795,10 +802,11 @@ width
 decoderFileExtensions
 	"Answer a list of strings that represent the supported decoder file extensions."
 
-	| extensions strm |
+	| extensions |
 	extensions := OrderedCollection new.
 	self decoders do: 
-			[:decoder | 
+			[:decoder |
+			| strm |
 			strm := decoder FilenameExtension readStream.
 			[strm atEnd] whileFalse: [(strm skipTo: $.) ifTrue: [extensions add: (strm upTo: $;)]]].
 	^extensions!
@@ -836,10 +844,11 @@ encoderClsidForExtension: aString
 encoderFileExtensions
 	"Answer a list of strings that represent the supported encoder file extensions."
 
-	| extensions strm |
+	| extensions |
 	extensions := OrderedCollection new.
 	self encoders do: 
-			[:encoder | 
+			[:encoder |
+			| strm |
 			strm := encoder FilenameExtension readStream.
 			[strm atEnd] whileFalse: [(strm skipTo: $.) ifTrue: [extensions add: (strm upTo: $;)]]].
 	^extensions!
@@ -1756,11 +1765,9 @@ mimeTypeForExtension: aString
 		self mimeTypeForExtension: 'jpg'
 	"
 
-	^(self encoders detect: 
-			[:e | 
-			(e FilenameExtension asString asLowercase indexOfSubCollection: aString asLowercase) > 0]
-		ifNone: [^nil]) MimeType 
-		asString!
+	^(self encoders
+		detect: [:e | (e FilenameExtension asString asLowercase indexOfSubCollection: aString asLowercase) > 0]
+		ifNone: []) ifNotNil: [:encoder | encoder MimeType asString]!
 
 prompt
 	"Prompt for an image file.  Answer an Image created from that file or nil."

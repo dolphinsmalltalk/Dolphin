@@ -133,6 +133,13 @@ maskcolor: aColorOrNil
 
 	maskcolor := aColorOrNil asCOLORREF = CLR_NONE ifFalse: [aColorOrNil]!
 
+maximumImageIndex
+	| max |
+	max := images size.
+	"#1315: The images may not be contiguous due to some Windows oddity, so we must find the max index"
+	images do: [:each | each > max ifTrue: [max := each]].
+	^max!
+
 newImageLists
 	imageLists := LookupTable new!
 
@@ -154,12 +161,10 @@ newImages
 	images := LookupTable new!
 
 orderedImages
-	| ordered max |
-	max := 0.
+	| ordered |
 	"#1315: The images may not be contiguous due to some Windows oddity, so we must find the max index"
-	images do: [:each | each > max ifTrue: [max := each]].
-	ordered := Array new: max.
-	images 
+	ordered := Array new: self maximumImageIndex.
+	images
 		keysAndValuesDo: [:eachKey :eachValue | eachValue == 0 ifFalse: [ordered at: eachValue put: eachKey]].
 	^ordered!
 
@@ -211,6 +216,7 @@ stbSaveOn: anSTBOutFiler
 !ImageManager categoriesFor: #initialize!initializing!private! !
 !ImageManager categoriesFor: #maskcolor!accessing!public! !
 !ImageManager categoriesFor: #maskcolor:!accessing!public! !
+!ImageManager categoriesFor: #maximumImageIndex!helpers!private! !
 !ImageManager categoriesFor: #newImageLists!private!removing! !
 !ImageManager categoriesFor: #newImageListWithExtent:!helpers!private! !
 !ImageManager categoriesFor: #newImages!private!removing! !

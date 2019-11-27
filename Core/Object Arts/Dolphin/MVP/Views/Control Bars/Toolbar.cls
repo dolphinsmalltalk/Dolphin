@@ -141,29 +141,29 @@ basicActualForecolor
 
 	^self forecolor ifNil: [self parentView ambientBackcolor]!
 
-basicAddItems: tools 
+basicAddItems: tools
 	"Private - Add the specified  <sequencedReadableCollection> of tools to the receiver
 	positioning them beyond the present right most item. The tools are NOT added to the tools 
 	collection but they are added to the Id map. Answers the argument."
 
-	| buttons hasLabels size |
-	size := tools size.
-	size == 0 ifTrue: [^tools	"It is an error to set zero buttons on IE5/NT5"].
-	buttons := StructureArray length: size elementClass: TBBUTTON.
-	buttons beUnfinalizable.	"Nothing to free here"
+	| buttons hasLabels |
+	tools isEmpty ifTrue: [^tools	"It is an error to set zero buttons on IE5/NT5"].
 	hasLabels := self hasLabels.
-	buttons with: tools
-		do: 
-			[:tb :aToolbarItem | 
-			| cmd |
-			cmd := aToolbarItem getCommandId.
-			cmd == 0 ifFalse: [idMap at: cmd put: aToolbarItem].
-			tb
-				iBitmap: (aToolbarItem imageIndexIn: self);
-				idCommand: cmd;
-				fsState: TB_STATEENABLED;
-				fsStyle: aToolbarItem style;
-				iString: (hasLabels ifTrue: [aToolbarItem textIndexIn: self] ifFalse: [-1])].
+	buttons := StructureArray
+				withAll: tools
+				elementClass: TBBUTTON
+				initializer: 
+					[:tbButton :toolbarItem |
+					| cmd |
+					cmd := toolbarItem getCommandId.
+					cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
+					tbButton
+						iBitmap: (toolbarItem imageIndexIn: self);
+						idCommand: cmd;
+						fsState: TB_STATEENABLED;
+						fsStyle: toolbarItem style;
+						iString: (hasLabels ifTrue: [toolbarItem textIndexIn: self] ifFalse: [-1])].
+	buttons beUnfinalizable.	"Nothing to free here"
 	self tbAddButtons: buttons.
 	^tools!
 

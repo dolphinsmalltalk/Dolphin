@@ -11,12 +11,16 @@ GdiplusGraphicsPathFromPointsInitializer comment: ''!
 !GdiplusGraphicsPathFromPointsInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle status points |
 	gpHandle := ExternalHandle new.
+	points := StructureArray
+				withAll: pathPoints
+				elementClass: POINTL
+				initializer: [:pointl :point | pointl x: point x y: point y].
+	points beUnfinalizable.
 	status := self library
-				gdipCreatePath2I: (StructureArray withAll: (pathPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				types: (ByteArray withAll: pathTypes)
+				gdipCreatePath2I: points
+				types: pathTypes
 				count: pathPoints size
 				fillMode: fillMode
 				path: gpHandle.
@@ -28,11 +32,11 @@ gdiplusConstructorErrorDescription
 
 points: points types: types fillMode: aFillModeConstant 
 	pathPoints := points.
-	pathTypes := types.
+	pathTypes := types asByteArray.
 	fillMode := aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!private! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!public! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #points:types:fillMode:!public! !
+!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #points:types:fillMode:!initializing!private! !
 
 !GdiplusGraphicsPathFromPointsInitializer class methodsFor!
 

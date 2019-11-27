@@ -38,11 +38,9 @@ buildGuidArray: guids
 	"Private - Answer an <ExternalArray> of <GUID> built from the <collection> of <GUID>s, 
 	guids."
 
-	| array i |
-	array := StructureArray length: guids size elementClass: GUID.
-	i := 1.
-	guids do: [:g | array at: i put: g. i := i + 1].
-	^guids!
+	^(StructureArray withAll: guids elementClass: GUID)
+		beUnfinalizable;
+		yourself!
 
 categoriesOfClass: rclsid 
 	"Answer a <collection> of <GUID>s identifying all categories implemented by the COM

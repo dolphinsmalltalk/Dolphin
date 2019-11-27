@@ -11,11 +11,15 @@ GdiplusPathGradientFromPointsInitializer comment: ''!
 !GdiplusPathGradientFromPointsInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle status points |
 	gpHandle := ExternalHandle new.
+	points := StructureArray
+				withAll: pathPoints
+				elementClass: POINTL
+				initializer: [:pointl :point | pointl x: point x y: point y].
+	points beUnfinalizable.
 	status := self library
-				gdipCreatePathGradientI: (StructureArray withAll: (pathPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				gdipCreatePathGradientI: points
 				count: pathPoints size
 				wrapMode: wrapMode
 				polyGradient: gpHandle.
