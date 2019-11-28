@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-LookupTable variableSubclass: #PoolConstantsDictionary
+PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -10,11 +10,12 @@ PoolConstantsDictionary comment: ''!
 !PoolConstantsDictionary categoriesForClass!Collections-Unordered!System-Support! !
 !PoolConstantsDictionary methodsFor!
 
-associationClass
-	"Private - Answer the class of association to be used for holding
-	key-value pairs in the receiver. Must respond to the Association protocol."
-	
-	^VariableBinding!
+add: anAssociation
+	"Add the key/value pair provided in the <Association> argument to the receiver.
+	The actual <Association> is not added as there are many constraints so it is safe to add a newly formed constant VariableBinding."
+
+	self at: anAssociation key put: anAssociation value.
+	^anAssociation!
 
 at: key ifAbsentPut: operation 
 	"Answer the value of the receiver keyed by the <Object> argument, key.
@@ -46,61 +47,12 @@ at: key put: anObject
 classesReferencing
 	^self environment allClasses select: [:c | c allSharedPools includes: self]!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
-
-	self name displayOn: aStream
-!
-
-environment
-	"Answer the receiver's controlling name space."
-
-	^Smalltalk
-!
-
-fileOutName
-	"Answer the receiver's default file name for file outs (<name>.st)."
-
-	| path package |
-	path := File composeStem: self name extension: Package sourceGlobalExtension.
-	package := Package manager packageOfGlobalNamed: self name asSymbol.
-	package notNil ifTrue: [
-		path := File replacePath:  path with: package path ].
-	^path!
-
-isChanged
-	"Answer true if the receiver or any of it's contents have been changed since
-	their changed flag was last reset."
-
-	^self propertyAt: #isChanged ifAbsent: [false]!
-
-isChanged: aBoolean
-	"Flag the receiver as changed or not changed, according to the value 
-	of the <Boolean> argument. If the receiver is marked as changed, then
-	its owning package (if any) is also so marked."
-
-	"Note that we don't test the existing value of the change flag here, because
-	 we want to inform the package regardless (in case it isn't currently changed
-	 for some reason)"
-	aBoolean 
-		ifTrue: [ | package |
-			self propertyAt: #isChanged put: true.
-			(package := self owningPackage) notNil ifTrue: [
-				package isChanged: true]]
-		ifFalse: [self removePropertyAt: #isChanged ifAbsent: []]!
-
-isValidKey: aString 
-	| initial |
-	initial := true.
+isValidKey: aString
 	^aString notEmpty and: 
-			[aString allSatisfy: 
-					[:each | 
-					initial 
-						ifTrue: 
-							[initial := false.
-							each == $_ or: [each isLetter]]
-						ifFalse: [each == $_ or: [each isAlphaNumeric]]]]!
+			[| initial |
+			initial := aString first.
+			(initial == $_ or: [initial isLetter])
+				and: [aString allSatisfy: [:each | each == $_ or: [each isAlphaNumeric]]]]!
 
 keyString: anObject
 	| answer |
@@ -121,17 +73,6 @@ newAssociation: keyObject value: valueObject
 		isImmutable: true;
 		yourself!
 
-owningPackage
-	"Answers the package that owns the receiver or nil if it is not yet owned
-	by any package"
-
-	^Package manager packageOfGlobalNamed: self name!
-
-owningPackage: aPackage
-	"Set the receiver's <Package> to be the argument. Any current package association is lost."
-
-	aPackage addGlobalNamed: self name!
-
 preResize: newMe 
 	"Private - This message is sent by the receiver when resizing, before the
 	receiver's elements are added to newMe. We must assign across the
@@ -143,13 +84,14 @@ recompileReferencesToVarNamed: keyString
 	"Private - Recompile any methods which references the named key, assumed to
 	be a variable name from the receiver."
 
+	| var |
 	Notification
 		signal: ('Recompiling references to <1p> in <2s>' expandMacrosWith: keyString with: self name).
-	(self environment allClasses select: [:c | c allSharedPools includes: self]) do: 
+	var := self associationAt: keyString.
+	self classesReferencing do: 
 			[:c |
-			c recompileReferencesToVarNamed: keyString.
-			c class recompileReferencesToVarNamed: keyString.
-			self]!
+			c recompileReferencesToLiteral: var.
+			c class recompileReferencesToLiteral: var]!
 
 removeIndex: anInteger
 	"Private - Remove the element at index, anInteger, in the receiver. Does not
@@ -157,22 +99,15 @@ removeIndex: anInteger
 
 	super removeIndex: anInteger.
 	self isChanged: true! !
-!PoolConstantsDictionary categoriesFor: #associationClass!constants!private! !
+!PoolConstantsDictionary categoriesFor: #add:!adding!public! !
 !PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #at:put:!adding!development!public! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
-!PoolConstantsDictionary categoriesFor: #displayOn:!displaying!public! !
-!PoolConstantsDictionary categoriesFor: #environment!constants!public! !
-!PoolConstantsDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
-!PoolConstantsDictionary categoriesFor: #isChanged:!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #isValidKey:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #keyString:!adding!development!private! !
 !PoolConstantsDictionary categoriesFor: #name!accessing!public! !
 !PoolConstantsDictionary categoriesFor: #name:!accessing!private! !
 !PoolConstantsDictionary categoriesFor: #newAssociation:value:!helpers!private! !
-!PoolConstantsDictionary categoriesFor: #owningPackage!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #owningPackage:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
 !PoolConstantsDictionary categoriesFor: #recompileReferencesToVarNamed:!development!private! !
 !PoolConstantsDictionary categoriesFor: #removeIndex:!development!private!removing! !

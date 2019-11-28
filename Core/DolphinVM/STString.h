@@ -55,14 +55,6 @@ public:
 
 namespace ST
 {
-	enum class StringEncoding
-	{
-		Ansi,
-		Utf8,
-		Utf16,
-		Utf32
-	};
-
 	class String : public ArrayedCollection
 	{
 	public:

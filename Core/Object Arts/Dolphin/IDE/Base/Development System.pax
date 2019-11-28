@@ -323,7 +323,6 @@ package methodNames
 	add: #PackageManager -> #sourceControl;
 	add: #PointerField -> #printAccessorExpression:on:;
 	add: #PointerField -> #printMutatorBody:on:;
-	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
 	add: #PoolConstantsDictionary -> #errorModify:value:;
 	add: #PoolConstantsDictionary -> #referencesTo:;
@@ -4702,15 +4701,6 @@ printMutatorBody: aSymbol on: aWriteStream
 
 !PoolConstantsDictionary methodsFor!
 
-aspectDisplayOn: aStream
-	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
-  	argument in a form that a user viewing the receiver as the value of a published aspect would 
-  	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats. In this case we override back to the Object implementation.
-  	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	self displayOn: aStream!
-
 browse
     	"Open a browser on the receiver"
     
@@ -4719,29 +4709,31 @@ browse
 errorModify: key value: value
 	"Private - An attempt was made to modify the value of the constant named, key."
 
-	| recompile |
+	| recompile var |
 	recompile := ConfirmationRequiredWarning
 				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
 						expandMacrosWith: key
 						with: value
 						with: (self at: key)).
 	recompile isNil ifTrue: [^self].
-	super at: key put: value.
+	var := self associationAt: key.
+	var whileMutableDo: [var value: value].
 	self isChanged: true.
-	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
+	recompile ifTrue: [self recompileReferencesToVarNamed: key]
 
-referencesTo: keyString 
+!
+
+referencesTo: keyString
 	"Answer the collection of any methods which references the named key, assumed to
 	be a variable name from the receiver."
 
-	| refs |
-	refs := OrderedCollection new.
-	self classesReferencing do: 
-			[:c | 
-			c methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]].
-			c class methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]]].
-	^refs! !
-!PoolConstantsDictionary categoriesFor: #aspectDisplayOn:!private! !
+	| env var classes |
+	var := self associationAt: keyString.
+	classes := self classesReferencing.
+	env := BrowserEnvironment new forClasses: classes , (classes collect: [:each | each class]).
+	^(env referencesTo: var)
+		label: ('Methods referencing <1d>.<2s>' expandMacrosWith: self with: keyString);
+		yourself! !
 !PoolConstantsDictionary categoriesFor: #browse!operations-browsing!public! !
 !PoolConstantsDictionary categoriesFor: #errorModify:value:!exceptions!private! !
 !PoolConstantsDictionary categoriesFor: #referencesTo:!private! !

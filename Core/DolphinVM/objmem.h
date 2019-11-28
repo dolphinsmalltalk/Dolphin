@@ -13,7 +13,6 @@
 #include "Ist.h"
 #include "STObject.h"
 #include "STVirtualObject.h"
-#include "STString.h"
 #include "STBehavior.h"
 #include "STMemoryManager.h"
 #include "ImageHeader.h"

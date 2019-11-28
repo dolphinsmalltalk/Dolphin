@@ -55,6 +55,14 @@ namespace ST
 	public:
 		Oop				m_fields[];
 	};
+
+	enum class StringEncoding
+	{
+		Ansi,
+		Utf8,
+		Utf16,
+		Utf32
+	};
 }
 
 typedef ST::Object* POBJECT;

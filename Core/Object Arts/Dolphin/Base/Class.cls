@@ -41,14 +41,14 @@ addClassConstant: aString value: anObject
 							["Wasn't constant, recompile if it can be inlined"
 							VMLibrary hasBytecodeRepresentation: anObject]
 						ifTrue: 
-							["Was constant, recompile if changed and was inlined, or can be inlined"
-							| oldValue |
+							[| oldValue |
+							"Was constant, recompile if changed and was inlined, or can be inlined"
 							oldValue := binding value.
 							oldValue ~~ anObject and: 
 									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
 	binding isImmutable: false.
 	[binding value: anObject] ensure: [binding isImmutable: true].
-	requiresRecompile ifTrue: [self recompileAllReferencesToVarNamed: aString].
+	requiresRecompile ifTrue: [self recompileAllReferencesToLiteral: binding].
 	^binding!
 
 addClassVariable: aString value: anObject

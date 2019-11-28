@@ -552,14 +552,13 @@ realMethodCategories
 		add: 'private' asMethodCategory;
 		yourself!
 
-recompileAllReferencesToVarNamed: aString
-	"Private - Recompile any methods in the receiver's hierarchy which appear to reference the
-	named variable."
+recompileAllReferencesToLiteral: anObject
+	"Private - Recompile any methods in the receiver's hierarchy that reference the specified object from their literal frame."
 
 	self instanceClass withAllSubclassesDo: 
 			[:each |
-			each recompileReferencesToVarNamed: aString.
-			each class recompileReferencesToVarNamed: aString]!
+			each recompileReferencesToLiteral: anObject.
+			each class recompileReferencesToLiteral: anObject]!
 
 removeCategory: category
 	"Remove the Category from the receiver. N.B. All the methods belonging to the
@@ -866,7 +865,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #protocols!private!protocols! !
 !ClassDescription categoriesFor: #protocols:!private!protocols! !
 !ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
-!ClassDescription categoriesFor: #recompileAllReferencesToVarNamed:!development!private! !
+!ClassDescription categoriesFor: #recompileAllReferencesToLiteral:!development!private! !
 !ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
 !ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
 !ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !

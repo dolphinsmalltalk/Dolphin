@@ -15,6 +15,7 @@
 #include "STExternal.h"
 #include "STBehavior.h"
 #include "STClassDesc.h"
+#include "STBlockClosure.h"
 #include "InterpRegisters.h"
 
 #include "DolphinX.h"

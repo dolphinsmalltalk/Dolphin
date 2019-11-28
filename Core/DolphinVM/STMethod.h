@@ -14,7 +14,14 @@
 #pragma once
 
 #include "STObject.h"
+#include "STBehavior.h"
 #include "DolphinSmalltalk_i.h"
+
+#ifdef VM
+#include "STString.h"
+#else
+typedef OTE SymbolOTE;
+#endif
 
 // Turn off warning about zero length arrays
 #pragma warning ( disable : 4200)

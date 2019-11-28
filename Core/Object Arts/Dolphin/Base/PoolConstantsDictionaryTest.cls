@@ -19,10 +19,27 @@ key3Value
 makeKey: anObject
 	^'_' , anObject displayString!
 
+testAddExisting
+	| dictionary |
+	dictionary := self newDictionary.
+	dictionary add: #a -> 1.
+	[dictionary add: #a -> 2] on: ConfirmationRequiredWarning do: [:ex | ex confirm].
+	self assert: (dictionary at: #a) equals: 2!
+
 testAtIfAbsentString
 	| dictionary |
 	dictionary := self newDictionary.
 	self assert: (dictionary at: 'key' ifAbsent: [2]) identicalTo: 1!
+
+testAtPutExisting
+	| dictionary |
+	dictionary := self newDictionary.
+	dictionary at: #a put: 1.
+	[dictionary at: #a put: 2] on: ConfirmationRequiredWarning do: [:ex | ex confirm].
+	self assert: (dictionary at: #a) equals: 2!
+
+testChangeConstant
+	!
 
 testIncludesKey
 	| dictionary |
@@ -41,7 +58,10 @@ testRemoveKeyString
 !PoolConstantsDictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
 !PoolConstantsDictionaryTest categoriesFor: #makeKey:!helpers!private! !
+!PoolConstantsDictionaryTest categoriesFor: #testAddExisting!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
+!PoolConstantsDictionaryTest categoriesFor: #testAtPutExisting!public!unit tests! !
+!PoolConstantsDictionaryTest categoriesFor: #testChangeConstant!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testRemoveKeyString!public!unit tests! !
 
