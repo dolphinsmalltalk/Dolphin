@@ -16,7 +16,11 @@ displayOn: aStream
 	aStream display: key!
 
 displayString
-	^key! !
+	^key!
+
+refersToLiteral: anObject
+	^self == anObject! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
+!VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
 

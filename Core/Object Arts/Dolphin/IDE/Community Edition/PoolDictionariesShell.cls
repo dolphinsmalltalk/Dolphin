@@ -43,9 +43,7 @@ addPool
 	self selectionOrNil: newPool!
 
 browseEntryReferences
-	| methods |
-	methods := self methodsReferencingSelectedEntry.
-	self systemModel browseMethodsIn: (self systemModel systemEnvironment forMethods: methods)!
+	self systemModel browseMethodsIn: self methodsReferencingSelectedEntry!
 
 classesReferencingSelectedPool
 	^self selectionOrNil classesReferencing!
@@ -96,7 +94,7 @@ queryCommand: aCommandQuery
 
 removeEntry
 	| refs key confirmationMsg ok |
-	refs := self methodsReferencingSelectedEntry.
+	refs := self methodsReferencingSelectedEntry allMethods.
 	key := self selectedItemKey.
 	confirmationMsg := refs notEmpty 
 				ifTrue: ['''' , key , ''' has references.

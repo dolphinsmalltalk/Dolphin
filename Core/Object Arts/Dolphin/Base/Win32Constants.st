@@ -4,8 +4,6 @@ Smalltalk at: #Win32Constants put: (PoolConstantsDictionary named: #Win32Constan
 Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!
 Win32Constants at: 'AC_SRC_ALPHA' put: 16r1!
 Win32Constants at: 'AC_SRC_OVER' put: 16r0!
-Win32Constants at: 'ANSI_FIXED_FONT' put: 16rB!
-Win32Constants at: 'ANSI_VAR_FONT' put: 16rC!
 Win32Constants at: 'ASPECTX' put: 16r28!
 Win32Constants at: 'ASPECTXY' put: 16r2C!
 Win32Constants at: 'ASPECTY' put: 16r2A!

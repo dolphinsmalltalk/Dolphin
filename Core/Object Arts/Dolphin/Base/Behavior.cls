@@ -767,15 +767,15 @@ recompileAll
 			each class compileAll.
 			each compileAll]!
 
-recompileReferencesToVarNamed: aString
-	"Private - Recompile any of the receiver's methods which appear to reference the named variable."
+recompileReferencesToLiteral: aVariableBinding
+	"Private - Recompile any of the receiver's methods that reference the specified object from their literal frame."
 
 	self methodDictionary do: 
-			[:m |
-			(m containsSource: aString)
+			[:each |
+			(each refersToLiteral: aVariableBinding)
 				ifTrue: 
-					[Notification signal: 'Recompiling ' , m printString.
-					m recompile]]!
+					[Notification signal: 'Recompiling ' , each printString.
+					each recompile]]!
 
 referenceFilterFor: anObject
 	"Private - Answer a <monadicValuable> that when evaluated for a <CompiledMethod> answers
@@ -786,21 +786,7 @@ referenceFilterFor: anObject
 			[| index |
 			index := VMLibrary default indexOfSpecialSelector: anObject ifAbsent: [].
 			index notNil
-				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]]
-		ifFalse: 
-			[(anObject isKindOf: VariableBinding)
-				ifTrue: 
-					[| value |
-					value := anObject value.
-					"In the case of constant bindings the value may be inlined in the byte codes if there is a representation."
-					(anObject isImmutable and: [VMLibrary hasBytecodeRepresentation: value])
-						ifTrue: 
-							[| constName |
-							constName := anObject key asString.
-							^[:each | (each refersToLiteral: anObject) or: [each containsSource: constName]]]
-						ifFalse: 
-							["For normal const/var bindings, search for both the binding and the current value of the binding"
-							^[:each | (each refersToLiteral: anObject) or: [each refersToLiteral: value]]]]].
+				ifTrue: [^[:each | (each refersToLiteral: anObject) or: [each sendsSpecialSelector: index]]]].
 	^[:each | each refersToLiteral: anObject]!
 
 removeFromSuper
@@ -1179,7 +1165,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
-!Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
+!Behavior categoriesFor: #recompileReferencesToLiteral:!development!private! !
 !Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !

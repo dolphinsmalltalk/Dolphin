@@ -641,10 +641,18 @@ void Compiler::GenPushStaticConstant(POTE oteStatic, const TEXTRANGE& range)
 {
 	STVariableBinding& var = *(STVariableBinding*)GetObj(oteStatic);
 	Oop literal = var.value;
-	if (!GenPushImmediate(literal, range))
+	if (GenPushImmediate(literal, range))
 	{
-		// If it doesn't have an immediate form, may as well push the variable binding as this is better for ref searches in the IDE
-		// and means we don't need to recompile if the value changes.
+		// We still want the variable added to the literal frame so that it can be used to accurately
+		// identify references to the constant.
+		AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+	}
+	else
+	{
+		// If it doesn't have an immediate form, may as well push just the variable binding:
+		// - there is little perf difference in the indirection 
+		// - we need the variable for accurate reference searches, so storing just it saves the space required to 
+		// store references to both variable and value
 		GenStatic(oteStatic, range);
 	}
 }

@@ -18,6 +18,12 @@
 
 namespace ST
 {
+	class BlockClosure;
+};
+typedef TOTE<ST::BlockClosure> BlockOTE;
+
+namespace ST
+{
 	#include "STBlockInfo.h"
 
 	class BlockClosure : public Object

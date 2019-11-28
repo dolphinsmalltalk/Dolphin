@@ -48,10 +48,6 @@
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);$(SolutionDir);$(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <Midl>
-      <TargetEnvironment>Win32</TargetEnvironment>
-      <GenerateStublessProxies>true</GenerateStublessProxies>
-    </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>

@@ -78,8 +78,7 @@ initialize
 	Unclassified := self newNamed: self unclassifiedName.
 	Table 
 		at: self unclassifiedName put: Unclassified;
-		removeKey: 'No category' ifAbsent: [].
-	Table haveStrongKeys; haveWeakValues!
+		removeKey: 'No category' ifAbsent: []!
 
 name: cat
 	"Answer a new or existing class category with the specified name."

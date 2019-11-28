@@ -720,11 +720,6 @@ LookupTable variableSubclass: #PluggableLookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LookupTable variableSubclass: #PoolConstantsDictionary
-	instanceVariableNames: 'name'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 LookupTable variableSubclass: #SharedLookupTable
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
@@ -762,6 +757,11 @@ EventsCollection variableSubclass: #NullEventsCollection
 	classInstanceVariableNames: ''!
 WeakLookupTable variableSubclass: #WeakIdentityDictionary
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+PoolDictionary variableSubclass: #PoolConstantsDictionary
+	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

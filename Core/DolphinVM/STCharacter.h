@@ -14,7 +14,6 @@
 #pragma once
 
 #include "STMagnitude.h"
-#include "STString.h"
 
 namespace ST { class Character; }
 typedef TOTE<ST::Character> CharOTE;

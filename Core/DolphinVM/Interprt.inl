@@ -13,7 +13,6 @@
 	#error You'll need to include interprt.h
 #endif
 
-#include "STString.h"
 #include "STExternal.h"
 #include "STFloat.h"
 #include "STInteger.h"
