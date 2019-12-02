@@ -75,15 +75,19 @@
 #pragma warning(pop)
 #include <functional>
 
+typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
+#define NTSTATUS_DEFINED
+#define _NTDEF_
+
 #include "Environ.h"
 
-typedef signed char		SBYTE;
-typedef short			SWORD;
-typedef long			SDWORD;
+typedef int8_t		SBYTE;
+typedef int16_t		SWORD;
+typedef int32_t		SDWORD;
 
 // The basic word size of the machine
-typedef UINT_PTR	MWORD;
-typedef INT_PTR 	SMALLINTEGER;	// Optimized SmallInteger; same size as MWORD
+typedef uintptr_t	MWORD;
+typedef intptr_t 	SMALLINTEGER;	// Optimized SmallInteger; same size as MWORD
 typedef MWORD		SMALLUNSIGNED;	// Unsigned optimized SmallInteger; same size as MWORD	
 typedef MWORD		Oop;
 

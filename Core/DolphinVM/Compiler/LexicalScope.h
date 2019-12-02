@@ -8,20 +8,30 @@ LexicalScope.h
 #include "Str.h"
 #include <vector>
 #include <map>
+#include "bytecode.h"
+#include "textrange.h"
 
 #define TEMPORARYLIMIT 		255		// maximum number of temporaries permitted (ditto)
 #define MAXBLOCKNESTING		255		// maximum depth to which blocks (actually contexts) can be nested
 
 
-enum TempVarType { 
-	tvtUnaccessed=0,	// Temp variable which is not accessed at all
-	tvtStack,			// Temp variable accessed only from local scope (or optimized blocks)
-	tvtCopied,			// Temp variable which is closed over, but only read after closure
-	tvtShared,			// Temp variable which is written after being closed over
-	tvtCopy,			// Temp variable decl created to represent a copied temp in the closure
+enum class TempVarType { 
+	Unaccessed=0,	// Temp variable which is not accessed at all
+	Stack,			// Temp variable accessed only from local scope (or optimized blocks)
+	Copied,			// Temp variable which is closed over, but only read after closure
+	Shared,			// Temp variable which is written after being closed over
+	Copy,			// Temp variable decl created to represent a copied temp in the closure
 	};		
 
-enum VarRefType { vrtUnknown = 0, vrtRead=1, vrtWrite=2, vrtReadWrite=3};
+enum class VarRefType 
+{
+	Unknown = 0, 
+	Read=1, 
+	Write=2, 
+	ReadWrite=3 
+};
+ENABLE_BITMASK_OPERATORS(VarRefType)
+
 class LexicalScope;
 class TempVarRef;
 class Compiler;
@@ -34,15 +44,15 @@ class TempVarDecl
 	TempVarType		m_varType;
 	VarRefType		m_refType;
 	TempVarDecl*	m_pOuter;
-	int				m_nIndex;
+	size_t			m_nIndex;
 	bool			m_bInvisible;	// Not visible in this scope (used for real declarations of temps in optimized blocks)
 	bool			m_bIsArgument;
 	bool			m_bIsReadOnly;
 
 public:
 	TempVarDecl(const Str& strName, const TEXTRANGE& range) : 
-			m_strName(strName), m_pScope(NULL), m_range(range),
-			m_varType(tvtUnaccessed), m_refType(vrtUnknown), m_pOuter(NULL),
+			m_strName(strName), m_pScope(nullptr), m_range(range),
+			m_varType(TempVarType::Unaccessed), m_refType(VarRefType::Unknown), m_pOuter(nullptr),
 			m_nIndex(-1),
 			m_bInvisible(false), m_bIsArgument(false), m_bIsReadOnly(false)
 	{
@@ -61,93 +71,89 @@ public:
 	/////////////////////////
 	// Accessing
 
-	TempVarType GetVarType() const
+	__declspec(property(get = get_VarType, put = put_VarType)) TempVarType VarType;
+	TempVarType get_VarType() const
 	{
 		return m_varType;
 	}
-
-	void SetVarType(TempVarType varType)
+	void put_VarType(TempVarType varType)
 	{
 		m_varType = varType;
 	}
 
-	VarRefType GetRefType() const
+	__declspec(property(get = get_RefType)) VarRefType RefType;
+	VarRefType get_RefType() const
 	{
 		return m_refType;
 	}
 
-	int GetIndex() const
+	__declspec(property(get = get_Index, put=put_Index)) size_t Index;
+	size_t get_Index() const
 	{
-		return m_varType == tvtCopy || GetOuter() == NULL
+		return m_varType == TempVarType::Copy || Outer == nullptr
 					? m_nIndex
-					: GetOuter()->GetIndex();
+					: Outer->Index;
 	}
-
-	void SetIndex(int index)
+	void put_Index(size_t index)
 	{
-		_ASSERTE(m_varType == tvtCopy || GetOuter() == NULL);
+		_ASSERTE(m_varType == TempVarType::Copy || Outer == nullptr);
 		m_nIndex = index;
 	}
 
-	const Str& GetName() const
+	__declspec(property(get = get_Name, put = put_Name)) const Str& Name;
+	const Str& get_Name() const
 	{
 		return m_strName;
 	}
-
-	void SetName(const Str& strName)
+	void put_Name(const Str& strName)
 	{
 		m_strName = strName;
 	}
 
-	LexicalScope* GetScope() const
+	__declspec(property(get = get_Scope, put = put_Scope)) LexicalScope* Scope;
+	LexicalScope* get_Scope() const
 	{
 		return m_pScope;
 	}
-
-	void SetScope(LexicalScope* pScope)
+	void put_Scope(LexicalScope* pScope)
 	{
 		m_pScope = pScope;
 	}
 
-	LexicalScope* GetActualScope() const
+	__declspec(property(get = get_ActualScope)) LexicalScope* ActualScope;
+	LexicalScope* get_ActualScope() const
 	{
-		return GetActualDecl()->GetScope();
+		return ActualDecl->Scope;
 	}
 
-	TempVarDecl* GetOuter() const
+	__declspec(property(get = get_Outer, put = put_Outer)) TempVarDecl* Outer;
+	TempVarDecl* get_Outer() const
 	{
 		return m_pOuter;
 	}
-
-	void SetOuter(TempVarDecl* pOuter)
+	void put_Outer(TempVarDecl* pOuter)
 	{
 		m_pOuter = pOuter;
 	}
 
-	const TEXTRANGE& GetTextRange() const
+	__declspec(property(get = get_TextRange, put = put_TextRange)) const TEXTRANGE& TextRange;
+	const TEXTRANGE& get_TextRange() const
 	{
 		return m_range;
 	}
-
-	void SetTextRange(const TEXTRANGE& range)
+	void put_TextRange(const TEXTRANGE& range)
 	{
 		m_range = range;
 	}
 
-	TempVarDecl* GetActualDecl() const
+	__declspec(property(get = get_ActualDecl)) TempVarDecl* ActualDecl;
+	TempVarDecl* get_ActualDecl() const
 	{
 		TempVarDecl* pDecl = const_cast<TempVarDecl*>(this);
-		while (pDecl->m_pOuter != NULL)
+		while (pDecl->m_pOuter != nullptr)
 			pDecl = pDecl->m_pOuter;
 
 		return pDecl;
-	}
-
-	void SetIsArgument(bool bIsArgument)
-	{
-		m_bIsArgument = bIsArgument;
-		if (bIsArgument)
-			BeReadOnly();
 	}
 
 	void BeReadOnly()
@@ -164,40 +170,51 @@ public:
 	void MergeRef(const TempVarRef*, Compiler* pCompiler);
 
 	// Testing
-	bool IsArgument() const
+	__declspec(property(get = get_IsArgument, put = put_IsArgument)) bool IsArgument;
+	bool get_IsArgument() const
 	{
 		return m_bIsArgument;
 	}
+	void put_IsArgument(bool bIsArgument)
+	{
+		m_bIsArgument = bIsArgument;
+		if (bIsArgument)
+			BeReadOnly();
+	}
 
-	bool IsStack() const
+	__declspec(property(get = get_IsStack)) bool IsStack;
+	bool get_IsStack() const
 	{
 		switch (m_varType)
 		{
-		case tvtCopy:
+		case TempVarType::Copy:
 //			break;
-		case tvtStack:
-		case tvtCopied:
+		case TempVarType::Stack:
+		case TempVarType::Copied:
 			return true;
-		case tvtUnaccessed:
+		case TempVarType::Unaccessed:
 			return m_bIsReadOnly;
-		case tvtShared:
+		case TempVarType::Shared:
 		default:
 			break;
 		}
 		return false;
 	}
 
-	bool IsReferenced() const
+	__declspec(property(get = get_IsReferenced)) bool IsReferenced;
+	bool get_IsReferenced() const
 	{
-		return m_varType != tvtUnaccessed || m_bIsReadOnly;
+		return m_varType != TempVarType::Unaccessed || m_bIsReadOnly;
 	}
 
-	bool IsVisible() const
+	__declspec(property(get = get_IsVisible)) bool IsVisible;
+	bool get_IsVisible() const
 	{
 		return !m_bInvisible;
 	}
 
-	bool IsReadOnly() const
+	__declspec(property(get = get_IsReadOnly)) bool IsReadOnly;
+	bool get_IsReadOnly() const
 	{
 		return m_bIsReadOnly;
 	}
@@ -219,48 +236,53 @@ public:
 	//////////////////////////////////////////////
 	// Accessing
 
-	int GetEstimatedDistance() const;
-	int GetActualDistance() const;
+	unsigned GetEstimatedDistance() const;
+	unsigned GetActualDistance() const;
 
-	VarRefType GetRefType() const
+	__declspec(property(get = get_RefType, put = put_RefType)) VarRefType RefType;
+	VarRefType get_RefType() const
 	{
 		return m_refType;
 	}
-
-	void SetRefType(VarRefType refType)
+	void put_RefType(VarRefType refType)
 	{
 		_ASSERTE(refType >= m_refType);
 		m_refType = refType;
 	}
 
-	TempVarDecl* GetDecl() const
+	__declspec(property(get = get_Decl, put = put_Decl)) TempVarDecl* Decl;
+	TempVarDecl* get_Decl() const
 	{
 		return m_pDecl;
 	}
-
-	void SetDecl(TempVarDecl* pDecl)
+	void put_Decl(TempVarDecl* pDecl)
 	{
 		m_pDecl = pDecl;
 	}
 
-	TempVarType GetVarType() const
+	__declspec(property(get = get_VarType)) TempVarType VarType;
+	TempVarType get_VarType() const
 	{
-		return m_pDecl->GetVarType();
+		return m_pDecl->VarType;
 	}
 
-	LexicalScope* GetScope() const
+	__declspec(property(get = get_Scope)) LexicalScope* Scope;
+	LexicalScope* get_Scope() const
 	{
 		return m_pScope;
 	}
 
-	LexicalScope* GetRealScope() const;
+	__declspec(property(get = get_RealScope)) LexicalScope* RealScope;
+	LexicalScope* get_RealScope() const;
 
-	const Str& GetName() const
+	__declspec(property(get = get_Name)) const Str& Name;
+	const Str& get_Name() const
 	{
-		return GetDecl()->GetName();
+		return Decl->Name;
 	}
 
-	const TEXTRANGE& GetTextRange() const
+	__declspec(property(get = get_TextRange)) const TEXTRANGE& TextRange;
+	const TEXTRANGE& get_TextRange() const
 	{
 		return m_range;
 	}
@@ -268,14 +290,16 @@ public:
 	//////////////////////////////////////////////
 	// Testing
 
-	bool IsShared() const
+	__declspec(property(get = get_IsShared)) bool IsShared;
+	bool get_IsShared() const
 	{
-		return GetVarType() == tvtShared;
+		return VarType == TempVarType::Shared;
 	}
 
-	bool IsStack() const
+	__declspec(property(get = get_IsStack)) bool IsStack;
+	bool get_IsStack() const
 	{
-		return GetDecl()->IsStack();
+		return Decl->IsStack;
 	}
 
 	/////////////////////////////////////////////
@@ -290,6 +314,9 @@ typedef std::vector<TempVarRef*> REFLIST;
 typedef std::map<Str, REFLIST> REFLISTMAP;
 typedef std::vector<Oop> OOPVECTOR;
 
+typedef size_t tempcount_t;
+typedef size_t argcount_t;
+
 class LexicalScope
 {
 	LexicalScope*	m_pOuter;
@@ -300,11 +327,11 @@ class LexicalScope
 
 	TEXTRANGE		m_textRange;		// Range of text this scope represents
 
-	int				m_nArgs;
-	int				m_nStackSize;
-	int				m_nSharedTemps;
-	int				m_initialIP;
-	int				m_finalIP;
+	argcount_t		m_nArgs;
+	tempcount_t		m_nStackSize;
+	tempcount_t		m_nSharedTemps;
+	ip_t			m_initialIP;
+	ip_t			m_finalIP;
 
 	POTE			m_oteBlockLiteral;
 
@@ -320,70 +347,78 @@ private:
 	LexicalScope(const LexicalScope&);
 
 public:
-	LexicalScope(LexicalScope* pOuter, int nStart, bool bOptimized) : m_pOuter(pOuter), 
+	LexicalScope(LexicalScope* pOuter, textpos_t nStart, bool bOptimized) : m_pOuter(pOuter), 
 				m_nArgs(0), m_nStackSize(0), m_nSharedTemps(0),
-				m_initialIP(-1), m_finalIP(-2),
+				m_initialIP(ip_t::npos), m_finalIP(ip_t::npos),
 				m_bIsEmptyBlock(false), m_bIsOptimizedBlock(bOptimized), m_bHasFarReturn(false),
 				m_bRefersToSelf(false),	m_bRefsOuterTemps(false),
-				m_textRange(nStart, -1), m_oteBlockLiteral(NULL)
+				m_textRange(nStart, textpos_t::npos), m_oteBlockLiteral(nullptr)
 	{
 	}
 
 	~LexicalScope();
 
-	int GetCopiedValuesCount() const
+	__declspec(property(get = get_CopiedValuesCount)) tempcount_t CopiedValuesCount;
+	tempcount_t get_CopiedValuesCount() const
 	{
-		return m_copiedTemps.size();
+		return static_cast<tempcount_t>(m_copiedTemps.size());
 	}
 
-	int GetStackTempCount() const
+	__declspec(property(get = get_StackTempCount)) tempcount_t StackTempCount;
+	tempcount_t get_StackTempCount() const
 	{
-		return m_nStackSize - GetArgumentCount() - GetCopiedValuesCount();
+		return m_nStackSize - ArgumentCount - CopiedValuesCount;
 	}
 
-	int GetTempCount() const
+	__declspec(property(get = get_TempCount)) tempcount_t TempCount;
+	tempcount_t get_TempCount() const
 	{
-		return m_tempVarDecls.size();
+		return static_cast<tempcount_t>(m_tempVarDecls.size());
 	}
 
-	int GetArgumentCount() const
+	__declspec(property(get = get_ArgumentCount)) argcount_t ArgumentCount;
+	argcount_t get_ArgumentCount() const
 	{
 		return m_nArgs;
 	}
 
-	int GetSharedTempsCount() const
+	__declspec(property(get = get_SharedTempsCount)) tempcount_t SharedTempsCount;
+	tempcount_t get_SharedTempsCount() const
 	{
-		_ASSERTE(!IsOptimizedBlock() || m_nSharedTemps == 0);
+		_ASSERTE(!IsOptimizedBlock || m_nSharedTemps == 0);
 		return m_nSharedTemps;
 	}
 
-	LexicalScope* GetOuter() const
+	__declspec(property(get = get_Outer, put = put_Outer)) LexicalScope* Outer;
+	LexicalScope* get_Outer() const
 	{
 		return m_pOuter;
 	}
 
-	LexicalScope* GetRealOuter() const
+	__declspec(property(get = get_RealOuter)) LexicalScope* RealOuter;
+	LexicalScope* get_RealOuter() const
 	{
-		return GetOuter()->GetRealScope();
+		return Outer->RealScope;
 	}
 
 	// Answer the nearest real (non-optimized) scope. If the scope
 	// is itself unoptimized, then this will be the receiver. The
 	// actual scope is the scope in which any variables declared in the
 	// receiver will actually be allocated.
-	LexicalScope* GetRealScope() const
+	__declspec(property(get = get_RealScope)) LexicalScope* RealScope;
+	LexicalScope* get_RealScope() const
 	{
 		LexicalScope* pScope = const_cast<LexicalScope*>(this);
-		while (pScope != NULL && pScope->IsOptimizedBlock())
+		while (pScope != nullptr && pScope->IsOptimizedBlock)
 		{
-			pScope = pScope->GetOuter();
+			pScope = pScope->Outer;
 		}
 
 		return pScope;
 	}
 
 private:
-	void SetOuter(LexicalScope* pOuter)
+	void put_Outer(LexicalScope* pOuter)
 	{
 		m_pOuter = pOuter;
 	}
@@ -394,7 +429,8 @@ public:
 		return m_copiedTemps;
 	}
 
-	int GetStackSize() const
+	__declspec(property(get = get_StackSize)) tempcount_t StackSize;
+	tempcount_t get_StackSize() const
 	{
 		return m_nStackSize;
 	}
@@ -404,30 +440,30 @@ public:
 
 	void ArgumentAdded(TempVarDecl* pArg)
 	{
-		pArg->SetIsArgument(true);
-		pArg->SetIndex(m_nArgs++);
+		pArg->IsArgument = true;
+		pArg->Index = m_nArgs++;
 	}
 
-	int GetDepth() const
+	unsigned GetDepth() const
 	{
-		int depth = 0;
+		unsigned depth = 0;
 		const LexicalScope* current = this;
 		const LexicalScope* outer;
-		while ((outer = current->GetOuter()) != NULL)
+		while ((outer = current->Outer) != nullptr)
 		{
-			if (!current->IsOptimizedBlock())
+			if (!current->IsOptimizedBlock)
 				depth++;
 			current = outer;
 		}
 		return depth;
 	}
 
-	int GetLogicalDepth() const
+	unsigned GetLogicalDepth() const
 	{
-		int depth = 0;
+		unsigned depth = 0;
 		const LexicalScope* current = this;
 		const LexicalScope* outer;
-		while ((outer = current->GetOuter()) != NULL)
+		while ((outer = current->Outer) != nullptr)
 		{
 			depth++;
 			current = outer;
@@ -435,17 +471,17 @@ public:
 		return depth;
 	}
 
-	int GetActualDistance(LexicalScope* pDeclScope) const
+	unsigned GetActualDistance(LexicalScope* pDeclScope) const
 	{
-		const LexicalScope* pScope = GetRealScope();
-		int distance = 0;
+		const LexicalScope* pScope = RealScope;
+		unsigned distance = 0;
 		while (pScope != pDeclScope)
 		{
-			_ASSERTE(pScope != NULL);
-			pScope = pScope->GetOuter();
-			if (pScope->GetSharedTempsCount() != 0)
+			_ASSERTE(pScope != nullptr);
+			pScope = pScope->Outer;
+			if (pScope->SharedTempsCount != 0)
 			{
-				_ASSERTE(!pScope->IsOptimizedBlock());
+				_ASSERTE(!pScope->IsOptimizedBlock);
 				distance++;
 				_ASSERTE(distance <= MAXBLOCKNESTING);
 			}
@@ -454,12 +490,13 @@ public:
 		return distance;
 	}
 
-	const TEXTRANGE& GetTextRange() const
+	__declspec(property(get = get_TextRange)) const TEXTRANGE& TextRange;
+	const TEXTRANGE& get_TextRange() const
 	{
 		return m_textRange;
 	}
 
-	void SetTextStop(int stop)
+	void SetTextStop(textpos_t stop)
 	{
 		m_textRange.m_stop = stop;
 	}
@@ -471,11 +508,11 @@ public:
 
 	void MarkFarReturner()
 	{
-		if (m_bHasFarReturn) return;
+		if (HasFarReturn) return;
 
 		m_bHasFarReturn = true;
-		LexicalScope* outer = GetOuter();
-		if (outer != NULL)
+		LexicalScope* outer = Outer;
+		if (outer != nullptr)
 		{
 			outer->MarkFarReturner();
 		}
@@ -489,66 +526,74 @@ public:
 		while (pScope != pDeclScope)
 		{
 			pScope->m_bRefsOuterTemps = true;
-			pScope = pScope->GetOuter();
-			_ASSERTE(pScope != NULL);
+			pScope = pScope->Outer;
+			_ASSERTE(pScope != nullptr);
 		}
 	}
 
-	void SetInitialIP(int ip)
+	void MaybeSetInitialIP(ip_t ip)
 	{
-		m_initialIP = ip;
-	}
-
-	void MaybeSetInitialIP(int ip)
-	{
-		if (GetInitialIP() < 0)
+		if (InitialIP == ip_t::npos)
 		{
-			SetInitialIP(ip);
+			InitialIP = ip;
 			// If an optimized block, such as a repeat loop, may need to chain out 
 			// to the outer scope so that cases such as the following are handled
 			// correctly: [[.,..] repeat] value
-			if (IsOptimizedBlock())
+			if (IsOptimizedBlock)
 			{
-				GetOuter()->MaybeSetInitialIP(ip);
+				Outer->MaybeSetInitialIP(ip);
 			}
 		}
 	}
 
-	int GetInitialIP() const
+	__declspec(property(get = get_InitialIP, put=put_InitialIP)) ip_t InitialIP;
+	ip_t get_InitialIP() const
 	{
 		return m_initialIP;
 	}
+	void put_InitialIP(ip_t ip)
+	{
+		_ASSERTE(ip >= ip_t::zero);
+		m_initialIP = ip;
+	}
 
-	int GetFinalIP() const
+	__declspec(property(get = get_FinalIP, put=put_FinalIP)) ip_t FinalIP;
+	ip_t get_FinalIP() const
 	{
 		return m_finalIP;
 	}
 
-	void SetFinalIP(int ip)
+	void put_FinalIP(ip_t ip)
 	{
 		if (m_finalIP < ip)
 		{
 			m_finalIP = ip;
-			if (GetOuter())
+			if (Outer != nullptr)
 			{
-				GetOuter()->SetFinalIP(ip);
+				Outer->FinalIP = ip;
 			}
 		}
 	}
 
+	__declspec(property(get = get_CodeLength)) intptr_t CodeLength;
+	intptr_t get_CodeLength() const
+	{
+		return m_initialIP == ip_t::npos ? 0 : static_cast<intptr_t>(m_finalIP - m_initialIP + 1);
+	}
+
 	void IncrementIPs()
 	{
-		if (m_initialIP >= 0)
+		if (m_initialIP != ip_t::npos)
 		{
-			_ASSERTE(m_finalIP >= 0);
-			m_initialIP++;
-			m_finalIP++;
+			_ASSERTE(m_finalIP != ip_t::npos);
+			++m_initialIP;
+			++m_finalIP;
 
 			// If associated with a clean block, we need to update it's initialIP too
 			// Note that the initialIP of the block is 1-based, whereas the m_initialIP
 			// of this object is zero-based.
 			//STBlockClosure* pBlock = GetBlock();
-			//if (pBlock != NULL)
+			//if (pBlock != nullptr)
 			//{
 			//	_ASSERTE(IntegerValueOf(pBlock->m_initialIP) == m_initialIP);
 			//	pBlock->m_initialIP = IntegerObjectOf(m_initialIP + 1);
@@ -561,59 +606,68 @@ public:
 		m_oteBlockLiteral = block;
 	}
 
-	STBlockClosure* GetBlock()
+	__declspec(property(get = get_Block)) STBlockClosure* Block;
+	STBlockClosure* get_Block()
 	{
-		return m_oteBlockLiteral ? reinterpret_cast<STBlockClosure*>(GetObj(m_oteBlockLiteral)) : NULL;
+		return m_oteBlockLiteral ? reinterpret_cast<STBlockClosure*>(GetObj(m_oteBlockLiteral)) : nullptr;
 	}
+
 	///////////////////////////////////////////////////////////////////////////
 	// Testing
 
-	bool HasFarReturn() const
+	__declspec(property(get = get_HasFarReturn)) bool HasFarReturn;
+	bool get_HasFarReturn() const
 	{
 		return m_bHasFarReturn;
 	}
 
-	bool NeedsSelf() const
+	__declspec(property(get = get_NeedsSelf)) bool NeedsSelf;
+	bool get_NeedsSelf() const
 	{
 		return m_bRefersToSelf;
 	}
 
-	bool NeedsOuter() const
+	__declspec(property(get = get_NeedsOuter)) bool NeedsOuter;
+	bool get_NeedsOuter() const
 	{
-		return HasFarReturn() || m_bRefsOuterTemps;
+		return HasFarReturn || m_bRefsOuterTemps;
 	}
 
-	bool IsOptimizedBlock() const
+	__declspec(property(get = get_IsOptimizedBlock)) bool IsOptimizedBlock;
+	bool get_IsOptimizedBlock() const
 	{
 		return m_bIsOptimizedBlock;
 	}
 
-	bool IsEmptyBlock() const
+	__declspec(property(get = get_IsEmptyBlock)) bool IsEmptyBlock;
+	bool get_IsEmptyBlock() const
 	{
-		return m_bIsEmptyBlock && GetArgumentCount() == 0;
+		return m_bIsEmptyBlock && ArgumentCount == 0;
 	}
 
-	bool IsInBlock() const
+	__declspec(property(get = get_IsInBlock)) bool IsInBlock;
+	bool get_IsInBlock() const
 	{
-		return GetOuter() != NULL 
-				&& (!IsOptimizedBlock() || GetOuter()->IsInBlock());
+		return Outer != nullptr && (!IsOptimizedBlock || Outer->IsInBlock);
 	}
 
-	bool IsBlock() const
+	__declspec(property(get = get_IsBlock)) bool IsBlock;
+	bool get_IsBlock() const
 	{
-		return GetOuter() != NULL && !IsOptimizedBlock();
+		return Outer != nullptr && !IsOptimizedBlock;
 	}
 
 
 	// Clean blocks can be allocated statically as they don't close over any
 	// of their creation time environment and don't contain a ^-return
-	bool IsCleanBlock() const
+	__declspec(property(get = get_IsCleanBlock)) bool IsCleanBlock;
+	bool get_IsCleanBlock() const
 	{
-		return IsBlock() 
-				&& !NeedsSelf() 
-				&& !NeedsOuter() 
-				&& GetSharedTempsCount() == 0
-				&& GetCopiedValuesCount() == 0;
+		return IsBlock 
+				&& !NeedsSelf
+				&& !NeedsOuter
+				&& SharedTempsCount == 0
+				&& CopiedValuesCount == 0;
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -644,10 +698,10 @@ private:
 	void CopyDownOptimizedDecls(Compiler*);
 };
 
-inline int TempVarRef::GetEstimatedDistance() const
+inline unsigned TempVarRef::GetEstimatedDistance() const
 {
 	// Note that this will be an overestimate until the optimized scopes have been
 	// unlinked.
-	return GetRealScope()->GetDepth() - GetDecl()->GetScope()->GetDepth();
+	return RealScope->GetDepth() - Decl->Scope->GetDepth();
 }
 

@@ -14,7 +14,7 @@ be thrown away eventually, or perhaps compiled into a separate DLL.
 
 #include "..\VMPointers.h"
 
-POTE Compiler::NewCompiledMethod(POTE classPointer, unsigned numBytes, const STMethodHeader& hdr)
+POTE Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr)
 {
 	//_ASSERTE(ObjectMemory::inheritsFrom(classPointer, GetVMPointers().ClassCompiledMethod));
 	// Note we subtract
@@ -22,7 +22,7 @@ POTE Compiler::NewCompiledMethod(POTE classPointer, unsigned numBytes, const STM
 		((sizeof(STCompiledMethod)
 			- sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)
 //			-sizeof(ObjectHeader)	// Deduct size of head which NewObjectWithPointers includes implicitly
-) / sizeof(Oop)) + GetLiteralCount());
+) / sizeof(Oop)) + LiteralCount);
 	STCompiledMethod* method = reinterpret_cast<STCompiledMethod*>(GetObj(methodPointer));
 	POTE bytes = m_piVM->NewByteArray(numBytes);
 	m_piVM->StorePointerWithValue((Oop*)&method->byteCodes, Oop(bytes));

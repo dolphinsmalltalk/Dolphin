@@ -71,47 +71,41 @@ LPUTF8 s_restrictedSelectors[] =
 ///////////////////////
 
 
-Compiler::LibCallType Compiler::callTypes[DolphinX::NumCallConventions] = 
+Compiler::LibCallType Compiler::callTypes[4] =
 {
-	(LPUTF8)"stdcall:", DolphinX::ExtCallStdCall,
-	(LPUTF8)"cdecl:", DolphinX::ExtCallCDecl,
-	(LPUTF8)"thiscall:", DolphinX::ExtCallThisCall,
-	(LPUTF8)"fastcall:", DolphinX::ExtCallFastCall
+	(LPUTF8)"stdcall:", DolphinX::ExtCallDeclSpec::StdCall,
+	(LPUTF8)"cdecl:", DolphinX::ExtCallDeclSpec::CDecl,
+	(LPUTF8)"thiscall:", DolphinX::ExtCallDeclSpec::ThisCall,
+	(LPUTF8)"fastcall:", DolphinX::ExtCallDeclSpec::FastCall
 };
 
 ///////////////////////
 
 Compiler::Compiler() :
-		m_allScopes(NULL),
-		m_bytecodes(NULL),
 		m_class(0),
-		m_codePointer(0),
-		m_compiledMethodClass(NULL),
+		m_codePointer((ip_t)0),
+		m_compiledMethodClass(nullptr),
 		m_compilerObject(0),
 		m_context(0),
-		m_flags(Default),
-		m_instVars(NULL),
+		m_flags(CompilerFlags::Default),
 		m_instVarsInitialized(false),
-		m_literalFrame(NULL),
 		m_literalLimit(LITERALLIMIT),
 		m_notifier(0),
 		m_ok(true),
-		m_oopWorkspacePools(NULL),
-		m_pCurrentScope(NULL),
+		m_oopWorkspacePools(nullptr),
+		m_pCurrentScope(nullptr),
 		m_primitiveIndex(0),
 		m_selector(),
-		m_sendType(SendOther),
-		m_textMaps(NULL)
+		m_sendType(SendType::SendOther)
 {
-	m_bytecodes.reserve(128);
 }
 	
 Compiler::~Compiler()
 {
 	// Free scopes
 	{
-		const int count = m_allScopes.size();
-		for (int i = 0; i < count ; i++)
+		const size_t count = m_allScopes.size();
+		for (size_t i = 0; i < count ; i++)
 		{
 			LexicalScope* pScope = m_allScopes[i];
 			delete pScope;
@@ -120,22 +114,22 @@ Compiler::~Compiler()
 
 	// Free literal frame
 	{
-		const int count = m_literalFrame.size();
-		for (int i = 0; i < count; i++)
+		const size_t count = m_literalFrame.size();
+		for (size_t i = 0; i < count; i++)
 		{
 			m_piVM->RemoveReference(m_literalFrame[i]);
 		}
 	}
 }
 
-inline void Compiler::SetFlagsAndText(FLAGS flags, LPUTF8 text, int offset)
+inline void Compiler::SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset)
 {
 	m_flags=flags;
 	SetText(text, offset);
 	NextToken();
 }
 	
-void Compiler::PrepareToCompile(FLAGS flags, LPUTF8 compiletext, int offset, POTE aClass, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context)
+void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos_t offset, POTE aClass, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context)
 {
 	// Prepare to compile methods for the given class.
 	// This gets the list of instance variable names for this class
@@ -187,40 +181,40 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	}
 }
 
-POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int exprStart)
+POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t exprStart)
 {
 	POTE classPointer = m_piVM->FetchClassOf(contextOop);
 	PrepareToCompile(flags, compiletext, exprStart, classPointer, compiler, notifier, Nil(), GetVMPointers().ClassCompiledExpression, contextOop);
 	POTE oteMethod;
 	if (m_ok)
 	{
-		oteMethod = ParseEvalExpression(CloseParen);
+		oteMethod = ParseEvalExpression(TokenType::CloseParen);
 	}
 	else
 		oteMethod = Nil();
 
-	len = GetParsedLength();
+	len = ParsedLength;
 
 	return oteMethod;
 }
 
-POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags)
+POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, CompilerFlags flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
 	__try
 	{
-		if (flags & ScanOnly)
+		if (!(flags & CompilerFlags::ScanOnly))
 		{
-			while (!AtEnd())
-				NextToken();
-		}
-		else
-		{
-			PrepareToCompile(flags, compiletext, 0, aClass, compiler, notifier, Nil(), GetVMPointers().ClassCompiledMethod);
+			PrepareToCompile(flags, compiletext, textpos_t::start, aClass, compiler, notifier, Nil(), GetVMPointers().ClassCompiledMethod);
 			if (m_ok)
 				// Do the compile
 				method=ParseMethod();
+		}
+		else
+		{
+			while (!AtEnd)
+				NextToken();
 		}
 	}
 	__finally
@@ -230,17 +224,17 @@ POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notif
 	return method;
 }
 
-POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE aWorkspacePool, FLAGS flags)
+POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE aWorkspacePool, CompilerFlags flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
 	__try
 	{
-		PrepareToCompile(flags, compiletext, 0, aBehavior, compiler, notifier,  aWorkspacePool, GetVMPointers().ClassCompiledExpression);
+		PrepareToCompile(flags, compiletext, textpos_t::start, aBehavior, compiler, notifier,  aWorkspacePool, GetVMPointers().ClassCompiledExpression);
 		if (m_ok)
 		{
-			method = ParseEvalExpression(Eof);
-			if (m_ok && ThisToken() != Eof)		
+			method = ParseEvalExpression(TokenType::Eof);
+			if (m_ok && ThisToken != TokenType::Eof)
 				CompileError(CErrNonsenseAtMethodEnd);
 		}
 	}
@@ -260,25 +254,25 @@ Str Compiler::GetClassName()
 ///////////////////////////////////
 
 
-inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
+inline uint8_t Compiler::FindNameAsSpecialMessage(const Str& name) const
 {
 	// Returns true and an appropriate (index) if (name) is a
 	// special message
 	//
 	
 	const VMPointers& pointers = GetVMPointers();
-	for (int i = 0; i < NumSpecialSelectors; i++)
+	for (uint8_t i = 0; i < NumSpecialSelectors; i++)
 	{
 		const POTE stringPointer = pointers.specialSelectors[i];
 		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassSymbol));
 		LPUTF8 psz = (LPUTF8)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
-			return i + ShortSpecialSend;
+			return ShortSpecialSend + i;
 		}
 	}
 
-	for (int i = 0; i < NumExSpecialSends; i++)
+	for (uint8_t i = 0; i < NumExSpecialSends; i++)
 	{
 		const POTE stringPointer = pointers.exSpecialSelectors[i];
 		if (stringPointer != pointers.Nil)
@@ -292,10 +286,10 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 		}
 	}
 
-	return -1;
+	return 0;
 }
 
-inline int Compiler::FindNameAsInstanceVariable(const Str& name) const
+inline size_t Compiler::FindNameAsInstanceVariable(const Str& name) const
 {
 	// Search for an instance variable if (name) and return true and its
 	// (index) if one is found. We go through the list backwards for speed
@@ -303,16 +297,15 @@ inline int Compiler::FindNameAsInstanceVariable(const Str& name) const
 	//
 	if (!m_instVarsInitialized) const_cast<Compiler*>(this)->GetInstVars();
 
-	int i;
-	for (i=m_instVars.size()-1; i>=0; i--)
+	for (size_t i=m_instVars.size(); i>0; i--)
 	{
-		if (name == m_instVars[i])
-			break;
+		if (name == m_instVars[i-1])
+			return i - 1;
 	}
-	return i;
+	return -1;
 }
 
-TempVarRef* Compiler::AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& range, int expressionEnd)
+TempVarRef* Compiler::AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& range, textpos_t expressionEnd)
 {
 	// Search for a temporary variable of (name) and return true and its
 	// (index) if one is found. We MUST look through the list backwards to
@@ -321,15 +314,15 @@ TempVarRef* Compiler::AddTempRef(const Str& strName, VarRefType refType, const T
 	LexicalScope* pScope = m_pCurrentScope;
 
 	TempVarDecl* pDecl = pScope->FindTempDecl(strName);
-	if (pDecl == NULL)
+	if (pDecl == nullptr)
 		// Undeclared
-		return NULL;
+		return nullptr;
 
-	if (pDecl->IsReadOnly() && refType > vrtRead)
+	if (pDecl->IsReadOnly && refType > VarRefType::Read)
 	{
 		CompileError(TEXTRANGE(range.m_start, expressionEnd), CErrAssignmentToArgument, 
 						(Oop)NewUtf8String(strName));
-		return NULL;
+		return nullptr;
 	}
 
 	// Create a new usage ref and return it
@@ -346,13 +339,13 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().ClassUndefinedObject : m_class);
 	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol, 
 												reinterpret_cast<Oop>(NewUtf8String(name))));
-	STVarObject* pools = NULL;
+	STVarObject* pools = nullptr;
 	// Look in Workspace pools (if any) next
 	if (oteBinding == nil && m_oopWorkspacePools != nil)
 	{
 		pools = (STVarObject*)GetObj(m_oopWorkspacePools);
-		const MWORD poolsSize = FetchWordLengthOf(m_oopWorkspacePools);
-		for (MWORD i=0; i<poolsSize; i++)
+		const size_t poolsSize = FetchWordLengthOf(m_oopWorkspacePools);
+		for (size_t i=0; i<poolsSize; i++)
 		{
 			POTE pool = reinterpret_cast<POTE>(pools->fields[i]);
 			if (pool != nil)
@@ -368,7 +361,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	{
 		if (IsCharUpper(name[0]))
 		{
-			if (IsInteractive())
+			if (IsInteractive)
 			{
 				char szPrompt[256];
 				::LoadString(GetResLibHandle(), IDP_AUTO_DEFINE_GLOBAL, szPrompt, sizeof(szPrompt)-1);
@@ -376,7 +369,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 				::wsprintf(msg, szPrompt, name.c_str());
 				char szCaption[256];
 				::LoadString(GetResLibHandle(), IDR_COMPILER, szCaption, sizeof(szCaption)-1);
-				int answer = ::MessageBox(NULL, msg, szCaption, MB_YESNOCANCEL|MB_ICONQUESTION|MB_TASKMODAL);
+				int answer = ::MessageBox(nullptr, msg, szCaption, MB_YESNOCANCEL|MB_ICONQUESTION|MB_TASKMODAL);
 				delete[] msg;
 				
 				switch(answer)
@@ -388,7 +381,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 					}
 					break;
 				case IDCANCEL:
-					return STATICCANCEL;
+					return StaticType::STATICCANCEL;
 					
 				case IDNO:
 				default:
@@ -398,7 +391,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 		}
 		else
 		{
-			if (!WantSyntaxCheckOnly() && pools != NULL)
+			if (!WantSyntaxCheckOnly && pools != nullptr)
 			{
 				POTE pool = reinterpret_cast<POTE>(pools->fields[0]);
 				if (pool != nil)
@@ -412,12 +405,12 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	
 	if (oteBinding != nil)
 	{
-		StaticType sharedType = m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)) ? STATICCONSTANT : STATICVARIABLE;
+		StaticType sharedType = m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)) ? StaticType::STATICCONSTANT : StaticType::STATICVARIABLE;
 		oteStatic = oteBinding;
 		return sharedType;
 	}
 	else
-		return STATICNOTFOUND;
+		return StaticType::STATICNOTFOUND;
 }
 
 //////////////////////////////////////////////////////////////
@@ -425,7 +418,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 // Add a new temporary at the top of the temporaries stack
 TempVarDecl* Compiler::AddTemporary(const Str& name, const TEXTRANGE& range, bool isArg)
 {
-	TempVarDecl* pVar = NULL;
+	TempVarDecl* pVar = nullptr;
 
 	CheckTemporaryName(name, range, isArg);
 	if (m_ok)
@@ -437,15 +430,15 @@ TempVarDecl* Compiler::AddTemporary(const Str& name, const TEXTRANGE& range, boo
 TempVarDecl* Compiler::AddArgument(const Str& name, const TEXTRANGE& range)
 {
 	TempVarDecl* pNewVar = AddTemporary(name, range, true);
-	if (pNewVar == NULL)
-		return NULL;
+	if (pNewVar == nullptr)
+		return nullptr;
 	
 	m_pCurrentScope->ArgumentAdded(pNewVar);
 	return pNewVar;
 }
 
 // Rename the temporary at location "temporary" to the name "newName"
-void Compiler::RenameTemporary(int temporary, LPUTF8 newName, const TEXTRANGE& range)
+void Compiler::RenameTemporary(size_t temporary, LPUTF8 newName, const TEXTRANGE& range)
 {
 	CheckTemporaryName(newName, range, false);
 	m_pCurrentScope->RenameTemporary(temporary, newName, range);
@@ -463,27 +456,27 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 	}
 
 	TempVarDecl* pDecl = m_pCurrentScope->FindTempDecl(name);
-	if (pDecl && pDecl->GetScope() == m_pCurrentScope)
+	if (pDecl && pDecl->Scope == m_pCurrentScope)
 	{
 		if (isArg)
 		{
-			_ASSERTE(pDecl->IsArgument());
+			_ASSERTE(pDecl->IsArgument);
 			CompileError(range, CErrDuplicateArgName);
 		}
 		else
-			CompileError(range, pDecl->IsArgument() ? CErrRedefiningArg : CErrDuplicateTempName);
+			CompileError(range, pDecl->IsArgument ? CErrRedefiningArg : CErrDuplicateTempName);
 	}
 
-	if (IsInteractive())
+	if (IsInteractive)
 	{
 		if (pDecl)
-			Warning(range, pDecl->IsArgument() ? CWarnRedefiningArg : CWarnRedefiningTemp);
-		else if (FindNameAsInstanceVariable(name) >= 0)
+			Warning(range, pDecl->IsArgument ? CWarnRedefiningArg : CWarnRedefiningTemp);
+		else if (FindNameAsInstanceVariable(name) != -1)
 			Warning(range, CWarnRedefiningInstVar);
 		else
 		{
 			POTE oteStatic;
-			if (FindNameAsStatic(name, oteStatic) > STATICNOTFOUND)
+			if (FindNameAsStatic(name, oteStatic) > StaticType::STATICNOTFOUND)
 			{
 				m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 				Warning(range, CWarnRedefiningStatic);
@@ -494,66 +487,63 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 
 //////////////////////////////////////////////////
 
-int Compiler::GenByte(BYTE value, BYTE flags, LexicalScope* pScope)
+ip_t Compiler::GenByte(uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope)
 {
- 	_ASSERTE(m_pCurrentScope != NULL);
+ 	_ASSERTE(m_pCurrentScope != nullptr);
 	InsertByte(m_codePointer, value, flags, pScope);
-	int ip = m_codePointer;
-	m_codePointer++;
+	ip_t ip = m_codePointer;
+	m_codePointer = (ip_t)((intptr_t)m_codePointer + 1);
 	return ip;
 }
 
 // Insert an extended instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstructionExtended(BYTE basic, BYTE extension)
+inline ip_t Compiler::GenInstructionExtended(uint8_t basic, uint8_t extension)
 {
-	int pos=GenInstruction(basic);
+	ip_t pos=GenInstruction(basic);
 	GenData(extension);
 	return pos;
 }
 
 // Insert an extended instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-int Compiler::GenLongInstruction(BYTE basic, WORD extension)
+ip_t Compiler::GenLongInstruction(uint8_t basic, uint16_t extension)
 {
 	// Generate a double extended instruction.
 	//
-	int pos=GenInstruction(basic);
-	GenData(extension & 0xFF);
+	ip_t pos=GenInstruction(basic);
+	GenData(extension & UINT8_MAX);
 	GenData(extension >> 8);
 	return pos;
 }
 
-void Compiler::UngenInstruction(int pos)
+void Compiler::UngenInstruction(ip_t pos)
 {
-	_ASSERTE(pos < GetCodeSize());
 	BYTECODE& bc = m_bytecodes[pos];
-	_ASSERTE(bc.isOpCode());
+	_ASSERTE(bc.IsOpCode);
 	_ASSERTE(FindTextMapEntry(pos) == m_textMaps.end());
 	
 	// Marks the byte at pos as being unwanted by changing it to a Nop
-	if (bc.isJumpSource())
+	if (bc.IsJumpSource)
 	{
-		_ASSERTE(bc.target < GetCodeSize());
-		_ASSERTE(static_cast<SWORD>(bc.target) >= 0);
 		m_bytecodes[bc.target].removeJumpTo();
 		bc.makeNonJump();
 	}
 	
-	const int len = bc.instructionLength();
+	const size_t len = bc.InstructionLength;
 	// Nop-out the instruction (N.B. doesn't remove it!)
 	bc.byte = Nop;
 	// Also nop-out any data bytes associated with the instruction
-	for (int i=1;i<len;i++)
+	for (size_t i=1;i<len;i++)
 		UngenData(pos+i, bc.pScope);
 }
 
 // Opens up a space at pos in the code array
 // Adjusts any jumps that occur over the boundary
 
-void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
+void Compiler::InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope)
 {
-	const int codeSize = GetCodeSize();
+	const ip_t codeSize = static_cast<ip_t>(CodeSize);
 
 	if (pos == codeSize)
 	{
@@ -561,18 +551,18 @@ void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
 	}
 	else
 	{
-		_ASSERTE(pos >= 0 && pos < codeSize);
-		m_bytecodes.insert(m_bytecodes.begin()+pos, BYTECODE(value, flags, pScope));
+		_ASSERTE(pos < codeSize);
+		m_bytecodes.insert(m_bytecodes.begin()+(size_t)pos, BYTECODE(value, flags, pScope));
 
 		// New byte may become jump target
 		// Adjust the jumps providing we are not appending to the end of the code.
 		// Note use of <= because we have inserted an additional bytecode
-		for (int i=0; i <= codeSize; i++)
+		for (ip_t i=ip_t::zero; i <= codeSize; i++)
 		{
 			BYTECODE& bc = m_bytecodes[i];
-			if (bc.isJumpSource())
+			if (bc.IsJumpSource)
 			{
-				_ASSERTE(bc.target < GetCodeSize() - 1);
+				_ASSERTE((size_t)bc.target < CodeSize - 1);
 
 				// This is a jump. Does it cross the boundary?
 				if (bc.target >= pos)
@@ -583,8 +573,8 @@ void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
 		}
 	
 		// Adjust ip of any TextMaps
-		const int textMapCount = m_textMaps.size();
-		for (int i = 0; i < textMapCount; i++)
+		const size_t textMapCount = m_textMaps.size();
+		for (size_t i = 0; i < textMapCount; i++)
 		{
 			TEXTMAP& textMap = m_textMaps[i];
 			if (textMap.ip >= pos)
@@ -594,12 +584,12 @@ void Compiler::InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope)
 }
 
 
-int Compiler::GenPushTemp(TempVarRef* pTemp)
+ip_t Compiler::GenPushTemp(TempVarRef* pTemp)
 {
 	return GenTempRefInstruction(LongPushOuterTemp, pTemp);
 }
 
-inline int Compiler::GenPushInstVar(BYTE index)
+inline ip_t Compiler::GenPushInstVar(uint8_t index)
 {
 	m_pCurrentScope->MarkNeedsSelf();
 
@@ -614,19 +604,19 @@ inline void Compiler::GenPushStaticVariable(const Str& strName, const TEXTRANGE&
 	POTE oteStatic;
 	switch (FindNameAsStatic(strName, oteStatic))
 	{
-	case STATICCONSTANT:
+	case StaticType::STATICCONSTANT:
 		GenPushStaticConstant(oteStatic, range);
 		break;
 
-	case STATICVARIABLE:
+	case StaticType::STATICVARIABLE:
 		GenStatic(oteStatic, range);
 		break;
 		
-	case STATICCANCEL:
+	case StaticType::STATICCANCEL:
 		m_ok = false;
 		return;
 		
-	case STATICNOTFOUND:
+	case StaticType::STATICNOTFOUND:
 	default:
 		CompileError(range, CErrUndeclared, (Oop)NewUtf8String(strName));
 		return;
@@ -668,7 +658,7 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 	if (strName == VarSelf)
 	{
 		GenPushSelf();
-		m_sendType = SendSelf;
+		m_sendType = SendType::SendSelf;
 	}
 	else if (strName == VarSuper &&	// Cannot supersend from class with no superclass
 		((STBehavior*)GetObj(m_class))->superclass != Nil())
@@ -677,24 +667,24 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 		// that messages must be sent to superclass of self.
 		//
 		GenPushSelf();
-		m_sendType = SendSuper;
+		m_sendType = SendType::SendSuper;
 	}
 	else if (strName == VarThisContext)
 		GenInstruction(PushActiveFrame);
 	else
 	{
-		TempVarRef* pRef = AddTempRef(strName, vrtRead, range, range.m_stop);
+		TempVarRef* pRef = AddTempRef(strName, VarRefType::Read, range, range.m_stop);
 
-		if (pRef != NULL)
+		if (pRef != nullptr)
 			GenPushTemp(pRef);
 		else 
 		{
-			int index = FindNameAsInstanceVariable(strName);
+			ptrdiff_t index = FindNameAsInstanceVariable(strName);
 			if (index >= 0)
 			{
 				// Only 255 inst vars recognised, so index should not be > 255
 				_ASSERTE(index < 256);
-				GenPushInstVar(static_cast<BYTE>(index));
+				GenPushInstVar(static_cast<uint8_t>(index & 0xff));
 			}
 			else 
 				GenPushStaticVariable(strName, range);
@@ -702,53 +692,55 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 	}
 }
 
-void Compiler::GenInteger(int val, const TEXTRANGE& range)
+void Compiler::GenInteger(intptr_t val, const TEXTRANGE& range)
 {
 	// Generates code to push a small integer constant.
 	if (val >= -1 && val <= 2)
-		GenInstruction(ShortPushZero + val);
-	else if (val >= -128 && val <= 127)
-		GenInstructionExtended(PushImmediate, static_cast<BYTE>(val));
-	else if (val >= -32768 && val <= 32767)
-		GenLongInstruction(LongPushImmediate, static_cast<WORD>(val));
-	else if (IsIntegerValue(val))
+		GenInstruction((ShortPushZero + val) & 0xff);
+	else if (val >= _I8_MIN && val <= _I8_MAX)
+		GenInstructionExtended(PushImmediate, static_cast<uint8_t>(val));
+	else if (val >= _I16_MIN && val <= _I16_MAX)
+		GenLongInstruction(LongPushImmediate, static_cast<uint16_t>(val));
+	else if (val >= _I32_MIN && val <= _I32_MAX && IsIntegerValue(val))
 	{
 		// Note that although there is sufficient space in the instruction to represent the full range of
 		// 32-bit integers, we don't bother with those outside the SmallInteger range since those would
 		// then need to be allocated each time, rather than read from a constant in the literal frame.
 
 		GenInstruction(ExLongPushImmediate);
-		GenData(val & 0xFF);
-		GenData((val >> 8) & 0xFF);
-		GenData((val >> 16) & 0xFF);
-		GenData((val >> 24) & 0xFF);
+		GenData(val & UINT8_MAX);
+		GenData((val >> 8) & UINT8_MAX);
+		GenData((val >> 16) & UINT8_MAX);
+		GenData((val >> 24) & UINT8_MAX);
 	}
 	else
+	{
 		GenLiteralConstant(m_piVM->NewSignedInteger(val), range);
+	}
 }
 
-template <bool ignoreNops> int Compiler::PriorInstruction() const
+template <bool ignoreNops> ip_t Compiler::PriorInstruction() const
 {
-	int priorIndex = m_codePointer-1;
-	while (priorIndex >= 0 && (m_bytecodes[priorIndex].isData() || (m_bytecodes[priorIndex].byte == Nop && ignoreNops)))
-		priorIndex--;
+	ip_t priorIndex = m_codePointer-1;
+	while (priorIndex >= ip_t::zero && (m_bytecodes[priorIndex].IsData || (m_bytecodes[priorIndex].byte == Nop && ignoreNops)))
+		--priorIndex;
 	return priorIndex;
 }
 
 bool Compiler::LastIsPushNil() const
 {
-	int priorIndex = PriorInstruction<true>();
-	if (priorIndex < 0)
+	ip_t priorIndex = PriorInstruction<true>();
+	if (priorIndex == ip_t::npos)
 		return false;
-	return m_bytecodes[priorIndex].byte == ShortPushNil;
+	return const_cast<Compiler*>(this)->m_bytecodes[priorIndex].byte == ShortPushNil;
 }
 
 // Answer whether the previous instruction is a push SmallInteger
 // There are a number of possibilities
-bool Compiler::LastIsPushSmallInteger(int& value) const
+bool Compiler::LastIsPushSmallInteger(intptr_t& value) const
 {
-	int priorIndex = PriorInstruction<false>();
-	if (priorIndex < 0)
+	ip_t priorIndex = PriorInstruction<false>();
+	if (priorIndex == ip_t::npos)
 		return false;
 	
 	Oop literal = IsPushLiteral(priorIndex);
@@ -763,8 +755,8 @@ bool Compiler::LastIsPushSmallInteger(int& value) const
 
 Oop Compiler::LastIsPushNumber() const
 {
-	int priorIndex = PriorInstruction<false>();
-	if (priorIndex < 0)
+	ip_t priorIndex = PriorInstruction<false>();
+	if (priorIndex == ip_t::npos)
 		return NULL;
 
 	Oop literal = IsPushLiteral(priorIndex);
@@ -780,9 +772,9 @@ Oop Compiler::LastIsPushNumber() const
 	}
 }
 
-Oop Compiler::IsPushLiteral(int pos) const
+Oop Compiler::IsPushLiteral(ip_t pos) const
 {
-	BYTE opCode = m_bytecodes[pos].byte;
+	uint8_t opCode = m_bytecodes[pos].byte;
 
 	switch(opCode)
 	{
@@ -793,14 +785,14 @@ Oop Compiler::IsPushLiteral(int pos) const
 		return IntegerObjectOf(opCode - ShortPushZero);
 
 	case PushImmediate:
-		return IntegerObjectOf(SBYTE(m_bytecodes[pos+1].byte));
+		return IntegerObjectOf(static_cast<int8_t>(m_bytecodes[pos+1].byte));
 
 	case LongPushImmediate:
 		// Remember x86 is little endian
-		return IntegerObjectOf(SWORD(m_bytecodes[pos+1].byte | (m_bytecodes[pos+2].byte << 8)));
+		return IntegerObjectOf(static_cast<int16_t>(m_bytecodes[pos+1].byte | (m_bytecodes[pos+2].byte << 8)));
 
 	case ExLongPushImmediate:
-		return IntegerObjectOf(static_cast<SDWORD>((m_bytecodes[pos+ExLongPushImmediateInstructionSize-1].byte) << 24
+		return IntegerObjectOf(static_cast<int32_t>((m_bytecodes[pos+ExLongPushImmediateInstructionSize-1].byte) << 24
 			| (m_bytecodes[pos + ExLongPushImmediateInstructionSize - 2].byte << 16)
 			| (m_bytecodes[pos + ExLongPushImmediateInstructionSize - 3].byte << 8)
 			| m_bytecodes[pos + ExLongPushImmediateInstructionSize - 4].byte));
@@ -824,13 +816,13 @@ Oop Compiler::IsPushLiteral(int pos) const
 	case ShortPushConst+13:
 	case ShortPushConst+14:
 	case ShortPushConst+15:
-		_ASSERTE(m_bytecodes[pos].isShortPushConst());
+		_ASSERTE(m_bytecodes[pos].IsShortPushConst);
 		return m_literalFrame[opCode - ShortPushConst];
 
 	default:
 		// If this assertion fires, then the above case may need updating to reflect the
 		// change in the bytecode set, i.e. more or less ShortPushConst instructions
-		_ASSERTE(!m_bytecodes[pos].isShortPushConst());
+		_ASSERTE(!m_bytecodes[pos].IsShortPushConst);
 		break;
 	}
 
@@ -864,49 +856,51 @@ void Compiler::GenNumber(Oop numPointer, const TEXTRANGE& range)
 		GenLiteralConstant(numPointer, range);
 }
 
-int Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
+size_t Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
 {
 	// Adds (object) to the literal frame even if it is already there.
 	// Returns the index to the object in the literal frame.
 	//
 	_ASSERTE(object);
-	_ASSERTE(!IsIntegerObject(object) || IntegerValueOf(object) < -32768 || IntegerValueOf(object) > 32767 || errRange.span() <= 0);
-	int index=-1;
-	int count = GetLiteralCount();
-	if (count < m_literalLimit)
+	_ASSERTE(!IsIntegerObject(object) || IntegerValueOf(object) < INT16_MIN || IntegerValueOf(object) > INT16_MAX || errRange.Span <= 0);
+	size_t index = LiteralCount;
+	if (index < m_literalLimit)
 	{
-		index = count;
 		m_literalFrame.push_back(object);
 		m_piVM->AddReference(object);
 		CHECKREFERENCES
 	}
 	else
+	{
+		index = -1;
 		CompileError(errRange, CErrTooManyLiterals, object);
+	}
 
 	return index;
 }
 
-int Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange)
+size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange)
 {
 	// Adds (object) to the literal frame if it is not already there.
 	// Returns the index to the object in the literal frame.
 	//
-	for (int i=GetLiteralCount()-1;i>=0;i--)
+	for (size_t i=LiteralCount;i>0;i--)
 	{
-		Oop literalPointer = m_literalFrame[i];
+		Oop literalPointer = m_literalFrame[i-1];
 		_ASSERTE(literalPointer);
 
 		if (literalPointer == object)
 		{
 			CHECKREFERENCES
-			return i;
+			return i-1;
 		}
 	}
 	
 	return AddToFrameUnconditional(object, errRange);
 }
 
-int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
+
+size_t Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 {
 	// Adds (object) to the literal frame if it is not already there.
 	// Returns the index to the object in the literal frame.
@@ -915,22 +909,22 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 	POTE classPointer = m_piVM->FetchClassOf(Oop(stringPointer));
 	LPUTF8 szValue = (LPUTF8)FetchBytesOf(stringPointer);
 
-	for (int i=GetLiteralCount()-1;i>=0;i--)
+	for (size_t i=LiteralCount;i>0;i--)
 	{
-		Oop literalPointer = m_literalFrame[i];
+		Oop literalPointer = m_literalFrame[i - 1];
 		_ASSERTE(literalPointer);
 
 		if ((m_piVM->FetchClassOf(literalPointer) == classPointer) &&
 			strcmp((LPCSTR)FetchBytesOf(POTE(literalPointer)), (LPCSTR)szValue) == 0)
 		{
 			m_piVM->RemoveReference((Oop)stringPointer);
-			return i;
+			return i - 1;
 		}
 	}
 	
 	Oop oopString = reinterpret_cast<Oop>(stringPointer);
 	m_piVM->MakeImmutable(oopString, TRUE);
-	int i = AddToFrameUnconditional(oopString, range);
+	size_t i = AddToFrameUnconditional(oopString, range);
 	m_piVM->RemoveReference((Oop)stringPointer);
 	return i;
 }
@@ -963,12 +957,12 @@ bool Compiler::GenPushImmediate(Oop objectPointer, const TEXTRANGE& range)
 			STVarObject* pChar = GetObj((POTE)objectPointer);
 			Oop asciiValue = pChar->fields[0];
 			_ASSERT(IsIntegerObject(asciiValue));
-			MWORD codePoint = IntegerValueOf(asciiValue);
+			char32_t codePoint = IntegerValueOf(asciiValue) & UINT32_MAX;
 			if (codePoint > 127)
 			{
 				return false;
 			}
-			GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+			GenInstructionExtended(PushChar, static_cast<uint8_t>(codePoint));
 		}
 		else
 		{
@@ -990,25 +984,24 @@ void Compiler::GenPushConstant(Oop objectPointer, const TEXTRANGE& range)
 
 
 // Generates code to push a literal constant
-void Compiler::GenConstant(int index)
+void Compiler::GenConstant(size_t index)
 {
 	if (m_ok)
 	{
-		// Index should be >=0 if no error detected
-		_ASSERTE(index >= 0);
-
 		// Generate the push
 		if (index < NumShortPushConsts)		// In range of short instructions ?
-			GenInstruction(ShortPushConst, index);
+			GenInstruction(ShortPushConst, static_cast<uint8_t>(index));
 		else if (index < 256)				// In range of single extended instructions ?
 		{
-			GenInstructionExtended(PushConst, static_cast<BYTE>(index));
+			GenInstructionExtended(PushConst, static_cast<uint8_t>(index));
 		}
 		else
 		{
 			// Too many literals detected when adding to frame, so index should be in range
-			_ASSERTE(index < 65536);
-			GenLongInstruction(LongPushConst, static_cast<WORD>(index));
+			if (index >= 65536)
+				InternalError(__FILE__, __LINE__, ThisTokenRange, "Literal index out of range %Iu", index);
+
+			GenLongInstruction(LongPushConst, static_cast<uint16_t>(index));
 		}
 	}
 }		
@@ -1016,44 +1009,46 @@ void Compiler::GenConstant(int index)
 // Generates code to push a literal variable.
 void Compiler::GenStatic(const POTE oteStatic, const TEXTRANGE& range)
 {
-	int index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+	size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
 
 	if (m_ok)
 	{
 		// Index should be >=0 if no error detected
-		_ASSERT(index >= 0);
+		_ASSERT(index != -1);
 
 		// Generate the push
 		if (index < NumShortPushStatics)	// In range of short instructions ?
-			GenInstruction(ShortPushStatic, index);
-		else if (index < 256)				// In range of single extended instructions ?
 		{
-			GenInstructionExtended(PushStatic, static_cast<BYTE>(index));
+			GenInstruction(ShortPushStatic, static_cast<uint8_t>(index));
+		}
+		else if (index <= UINT8_MAX)				// In range of single extended instructions ?
+		{
+			GenInstructionExtended(PushStatic, static_cast<uint8_t>(index));
 		}
 		else
 		{
 			// Too many literals detected when adding to frame, so index should be in range
-			_ASSERTE(index < 65536);
-			GenLongInstruction(LongPushStatic, static_cast<WORD>(index));
+			_ASSERTE(index <= UINT16_MAX);
+			GenLongInstruction(LongPushStatic, static_cast<uint16_t>(index));
 		}
 	}
 }		
 
-int Compiler::GenReturn(BYTE retOp)
+ip_t Compiler::GenReturn(uint8_t retOp)
 {
 	BreakPoint();
 	return GenInstruction(retOp);
 }
 
-int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
+ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t messageStart)
 {
 	BreakPoint();
 	// Generates code to send a message (pattern) with (argCount) arguments
-	if (m_sendType != SendSuper)
+	if (m_sendType != SendType::SendSuper)
 	{
 		// Look for special or arithmetic messages
-		int bytecode = FindNameAsSpecialMessage(pattern);
-		if (bytecode > 0)
+		uint8_t bytecode = FindNameAsSpecialMessage(pattern);
+		if (bytecode !=  0)
 		{
 			return GenInstruction(bytecode);
 		}
@@ -1062,23 +1057,23 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 	// It wasn't that simple so we'll need a literal 
 	// symbol in the frame.
 	POTE oteSelector = InternSymbol(pattern);
-	TEXTRANGE errRange = TEXTRANGE(messageStart, argCount == 0 ? ThisTokenRange().m_stop : LastTokenRange().m_stop);
-	int symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
-	if (symbolIndex < 0)
-		return 0;
+	TEXTRANGE errRange = TEXTRANGE(messageStart, argCount == 0 ? ThisTokenRange.m_stop : LastTokenRange.m_stop);
+	size_t symbolIndex=AddToFrame(reinterpret_cast<Oop>(oteSelector), errRange);
+	if (symbolIndex == -1)
+		return ip_t::npos;
 
-	if (m_sendType == SendSuper)
+	if (m_sendType == SendType::SendSuper)
 	{
 		// Warn if supersends a message which is not implemented - be sure not to wrongly flag 
 		// recursive self send first time the method is compiled
 		POTE superclass = ((STBehavior*)GetObj(m_class))->superclass;
-		if (IsInteractive() && !CanUnderstand(superclass, oteSelector))
+		if (IsInteractive && !CanUnderstand(superclass, oteSelector))
 			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("super"), superclass, 0);
 	}
 	else
 	{
 		// Warn if self-sends a message which is not implemented
-		if (m_sendType == SendSelf && IsInteractive() 
+		if (m_sendType == SendType::SendSelf && IsInteractive
 				&& pattern != m_selector && !CanUnderstand(m_class,  oteSelector))
 			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("self"), m_class, 0);
 
@@ -1090,19 +1085,19 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 		case 0:
 			if (symbolIndex < NumShortSendsWithNoArgs)
 			{
-				return GenInstruction(ShortSendWithNoArgs, static_cast<BYTE>(symbolIndex));
+				return GenInstruction(ShortSendWithNoArgs, static_cast<uint8_t>(symbolIndex));
 			}
 			break;
 		case 1:
 			if (symbolIndex < NumShortSendsWith1Arg)
 			{
-				return GenInstruction(ShortSendWith1Arg, static_cast<BYTE>(symbolIndex));
+				return GenInstruction(ShortSendWith1Arg, static_cast<uint8_t>(symbolIndex));
 			}
 			break;
 		case 2:
 			if (symbolIndex < NumShortSendsWith2Args)
 			{
-				return GenInstruction(ShortSendWith2Args, static_cast<BYTE>(symbolIndex));
+				return GenInstruction(ShortSendWith2Args, static_cast<uint8_t>(symbolIndex));
 			}
 			break;
 		default:
@@ -1111,20 +1106,20 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 		}
 	}
 	
-	int sendIP;
+	ip_t sendIP;
 	// Ok, so its got to be longwinded but how long
 	if (symbolIndex <= SendXMaxLiteral && argCount <= SendXMaxArgs)
 	{
 		// Single extended send (2 bytes) will do
-		BYTE part2 = static_cast<BYTE>((argCount << SendXLiteralBits) | (symbolIndex & SendXMaxLiteral));
-		BYTE code = m_sendType == SendSuper ? Supersend : Send;
+		uint8_t part2 = static_cast<uint8_t>((argCount << SendXLiteralBits) | (symbolIndex & SendXMaxLiteral));
+		uint8_t code = m_sendType == SendType::SendSuper ? Supersend : Send;
 		sendIP = GenInstructionExtended(code, part2);
 	}
 	else if (symbolIndex <= Send2XMaxLiteral && argCount <= Send2XMaxArgs)
 	{
-		BYTE code = m_sendType == SendSuper ? LongSupersend : LongSend;
-		sendIP = GenInstructionExtended(code, static_cast<BYTE>(argCount));
-		GenData(static_cast<BYTE>(symbolIndex));
+		uint8_t code = m_sendType == SendType::SendSuper ? LongSupersend : LongSend;
+		sendIP = GenInstructionExtended(code, static_cast<uint8_t>(argCount));
+		GenData(static_cast<uint8_t>(symbolIndex));
 	}
 	else
 	{
@@ -1143,46 +1138,46 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 			symbolIndex = Send3XMaxLiteral;
 		}
 
-		BYTE code = m_sendType == SendSuper ? ExLongSupersend : ExLongSend;
-		sendIP = GenInstructionExtended(code, static_cast<BYTE>(argCount));
-		GenData(symbolIndex & 0xFF);
-		GenData(symbolIndex >> 8);
+		uint8_t code = m_sendType == SendType::SendSuper ? ExLongSupersend : ExLongSend;
+		sendIP = GenInstructionExtended(code, static_cast<uint8_t>(argCount));
+		GenData(symbolIndex & UINT8_MAX);
+		GenData((symbolIndex >> 8) & UINT8_MAX);
 	}
 
 	return sendIP;
 }
 
 // Basic generation of jump instruction for when target not yet known
-int Compiler::GenJumpInstruction(BYTE basic)
+ip_t Compiler::GenJumpInstruction(BYTE basic)
 {
 	// IT MUST be one of the long jump instructions
 	_ASSERTE(basic == LongJump || basic == LongJumpIfTrue || basic == LongJumpIfFalse || basic == LongJumpIfNil || basic == LongJumpIfNotNil);
 	
-	int pos = GenInstruction(basic);
+	ip_t pos = GenInstruction(basic);
 	GenData(0);						// Long jumps have two byte extension
 	GenData(0);
-	m_bytecodes[pos].target = static_cast<WORD>(-1);
+	m_bytecodes[pos].target = ip_t::npos;
 	// So that we know the target hasn't been set yet, we leave the jump flag turned off
-	_ASSERTE(!m_bytecodes[pos].isJumpSource());
+	_ASSERTE(!m_bytecodes[pos].IsJumpSource);
 	return pos;
 }
 
 // N.B. Assumes no previously established jump target
-inline void Compiler::SetJumpTarget(int pos, int target)
+inline void Compiler::SetJumpTarget(ip_t pos, ip_t target)
 {
 	_ASSERT(pos != target);
-	_ASSERTE(target >= 0 && target < GetCodeSize());
-	_ASSERTE(pos >= 0 && pos < GetCodeSize()-2);
+	_ASSERTE(static_cast<size_t>(target) < CodeSize);
+	_ASSERTE(static_cast<size_t>(pos) < CodeSize-2);
 	BYTECODE& bytecode = m_bytecodes[pos];
-	_ASSERTE(bytecode.isOpCode());
-	_ASSERTE(bytecode.isJumpInstruction());
+	_ASSERTE(bytecode.IsOpCode);
+	_ASSERTE(bytecode.IsJumpInstruction);
 
 	bytecode.makeJumpTo(target);
 	// Mark the target location as being jumped to
 	m_bytecodes[target].addJumpTo();
 }
 
-int Compiler::GenJump(BYTE basic, int location)
+ip_t Compiler::GenJump(BYTE basic, ip_t location)
 {
 	// Generate a first pass (long) jump instruction.
 	// Make no attempt to shorten the instruction or to compute the real 
@@ -1194,16 +1189,15 @@ int Compiler::GenJump(BYTE basic, int location)
 	if (location > m_codePointer)
 		location += 3;
 	
-	int pos = GenJumpInstruction(basic);
+	ip_t pos = GenJumpInstruction(basic);
 	
-	_ASSERTE(location < GetCodeSize());					// Jumping off the end of the code
-	_ASSERTE(m_bytecodes[location].isOpCode());		// Attempting to jump to a data item!
+	_ASSERTE(m_bytecodes[location].IsOpCode);		// Attempting to jump to a data item!
 	
 	SetJumpTarget(pos, location);
 	return pos;
 }
 
-int Compiler::GenStoreInstVar(BYTE index)
+ip_t Compiler::GenStoreInstVar(uint8_t index)
 {
 	m_pCurrentScope->MarkNeedsSelf();
 	return GenInstructionExtended(StoreInstVar, index);
@@ -1214,22 +1208,22 @@ bool Compiler::IsPseudoVariable(const Str& name) const
 	return name == VarSelf || name == VarSuper || name == VarThisContext;
 }
 
-int Compiler::GenStore(const Str& name, const TEXTRANGE& range, int assignmentEnd)
+ip_t Compiler::GenStore(const Str& name, const TEXTRANGE& range, textpos_t assignmentEnd)
 {
-	TempVarRef* pRef = AddTempRef(name, vrtWrite, range, assignmentEnd);
-	int storeIP = -1;
-	if (pRef != NULL)
+	TempVarRef* pRef = AddTempRef(name, VarRefType::Write, range, assignmentEnd);
+	ip_t storeIP = ip_t::npos;
+	if (pRef != nullptr)
 	{
 		storeIP = GenStoreTemp(pRef);
 	}
 	else if (m_ok)
 	{
-		int index = FindNameAsInstanceVariable(name);
-		if (index >= 0)
+		ptrdiff_t index = FindNameAsInstanceVariable(name);
+		if (index != -1)
 		{
 			// Maximum of 255 inst vars recognised
-			_ASSERTE(index < 256);
-			storeIP = GenStoreInstVar(static_cast<BYTE>(index));
+			_ASSERTE(index <= UINT8_MAX);
+			storeIP = GenStoreInstVar(static_cast<uint8_t>(index));
 		}
 		else 
 			storeIP = GenStaticStore(name, range, assignmentEnd);
@@ -1237,30 +1231,30 @@ int Compiler::GenStore(const Str& name, const TEXTRANGE& range, int assignmentEn
 	return storeIP;
 }
 
-int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assignmentEnd)
+ip_t Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, textpos_t assignmentEnd)
 {
 	POTE oteStatic;
-	int storeIP = 0;
+	ip_t storeIP = ip_t::npos;
 	switch(FindNameAsStatic(name, oteStatic, true))
 	{
-	case STATICCONSTANT:
+	case StaticType::STATICCONSTANT:
 		m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 		CompileError(TEXTRANGE(range.m_start, assignmentEnd),
 						CErrAssignConstant, (Oop)NewUtf8String(name));
 		break;
 
-	case STATICVARIABLE:
+	case StaticType::STATICVARIABLE:
 		{
-			int index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
-			_ASSERTE(index >= 0 && index < 65536);
-			storeIP = index < 255 
-							? GenInstructionExtended(StoreStatic, static_cast<BYTE>(index)) 
-							: GenLongInstruction(LongStoreStatic, static_cast<WORD>(index));
+			size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
+			_ASSERTE(index <= UINT16_MAX);
+			storeIP = index <= UINT8_MAX
+							? GenInstructionExtended(StoreStatic, static_cast<uint8_t>(index)) 
+							: GenLongInstruction(LongStoreStatic, static_cast<uint16_t>(index));
 			m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 		}
 		break;
 
-	case STATICNOTFOUND:
+	case StaticType::STATICNOTFOUND:
 	default:
 		if (IsPseudoVariable(name))
 			CompileError(TEXTRANGE(range.m_start, assignmentEnd), 
@@ -1276,9 +1270,9 @@ int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assign
 
 void Compiler::GenPopAndStoreTemp(TempVarRef* pRef)
 {
-	int depth = m_pCurrentScope->GetDepth();
+	uint8_t depth = m_pCurrentScope->GetDepth();
 	_ASSERTE(depth >= 0 && depth < 256);
-	int pos = GenInstructionExtended(LongStoreOuterTemp, static_cast<BYTE>(depth));
+	ip_t pos = GenInstructionExtended(LongStoreOuterTemp, static_cast<uint8_t>(depth));
 	m_bytecodes[pos].pVarRef = pRef;
 	// Placeholder for index, not yet known
 	GenData(0);
@@ -1288,10 +1282,10 @@ void Compiler::GenPopAndStoreTemp(TempVarRef* pRef)
 POTE Compiler::ParseMethod()
 {
 	// Method is outermost scope
-	_ASSERTE(m_pCurrentScope == NULL);
+	_ASSERTE(m_pCurrentScope == nullptr);
 	_ASSERTE(m_allScopes.empty());
 
-	PushNewScope(0);
+	PushNewScope(textpos_t::start);
 
 	ParseMessagePattern();
 	if (ThisTokenIsBinary('<'))
@@ -1302,30 +1296,30 @@ POTE Compiler::ParseMethod()
 	
 	if (m_ok)
 	{
-		ParseStatements(Eof);
+		ParseStatements(TokenType::Eof);
 	}
 
 	if (m_ok) 
 	{
-		int last = PriorInstruction<false>();
+		ip_t last = PriorInstruction<false>();
 
 		// If the method doesn't already end in a return, return the receiver.
-		if (last < 0 || m_bytecodes[last].byte != ReturnMessageStackTop)
+		if (last == ip_t::npos || m_bytecodes[last].byte != ReturnMessageStackTop)
 		{
-			if (last >= 0)
+			if (last != ip_t::npos)
 				GenPopStack();
-			const int returnIP = GenReturn(ReturnSelf);
+			const ip_t returnIP = GenReturn(ReturnSelf);
 			// Generate text map entry with empty interval for the implicit return
-			int textPos = ThisTokenRange().m_start;
+			textpos_t textPos = ThisTokenRange.m_start;
 			AddTextMap(returnIP, textPos, textPos-1);
 		}
 
-		if (!AtEnd())
-			CompileError(TEXTRANGE(LastTokenRange().m_stop, GetTextLength()), CErrNonsenseAtMethodEnd);
+		if (!AtEnd)
+			CompileError(TEXTRANGE(LastTokenRange.m_stop, EndOfText), CErrNonsenseAtMethodEnd);
 	}
 
-	PopScope(GetTextLength()-1);
-	_ASSERTE(m_pCurrentScope == NULL);
+	PopScope(EndOfText);
+	_ASSERTE(m_pCurrentScope == nullptr);
 	return NewMethod();
 }
 
@@ -1335,7 +1329,7 @@ POTE Compiler::ParseEvalExpression(TokenType closingToken)
 	// We may be called from an evaluation in a workspace window or
 	// perhaps from a previous compiler evaluating a constant expression.
 
-	PushNewScope(0);
+	PushNewScope(textpos_t::start);
 
 	// In either case we are always compiling "doit"
 	m_selector= (LPUTF8)"doIt";
@@ -1350,12 +1344,12 @@ POTE Compiler::ParseEvalExpression(TokenType closingToken)
 
 	if (m_ok) 
 	{
-		if (GetCodeSize() == 0)
+		if (CodeSize == 0)
 			GenPushSelf();
 		// Implicit return
-		const int returnIP = GenReturn(ReturnMessageStackTop);
+		const ip_t returnIP = GenReturn(ReturnMessageStackTop);
 		// Generate empty text map entry for the implicit return - debugger may need to map from release to debug method
-		const int textPos = ThisTokenRange().m_start;
+		const textpos_t textPos = ThisTokenRange.m_start;
 		AddTextMap(returnIP, textPos, textPos-1);
 		
 		// We don't complain about junk at the end of the method as we do
@@ -1363,19 +1357,19 @@ POTE Compiler::ParseEvalExpression(TokenType closingToken)
 		// expression the trailing text is valid.
 	}
 
-	PopScope(GetTextLength()-1);
+	PopScope(EndOfText);
 
 	return NewMethod();
 }
 
-void Compiler::WarnIfRestrictedSelector(int start)
+void Compiler::WarnIfRestrictedSelector(textpos_t start)
 {
-	if (!IsInteractive()) return;
+	if (!IsInteractive) return;
 
 	for (int i=0; i < NumRestrictedSelectors; i++)
 		if (m_selector == s_restrictedSelectors[i])
 		{
-			Warning(TEXTRANGE(start, LastTokenRange().m_stop), CWarnRestrictedSelector);
+			Warning(TEXTRANGE(start, LastTokenRange.m_stop), CWarnRestrictedSelector);
 			return;
 		}
 }
@@ -1383,34 +1377,34 @@ void Compiler::WarnIfRestrictedSelector(int start)
 void Compiler::ParseMessagePattern()
 {
 	// Parse the message selector and arguments for this method.
-	int start = ThisTokenRange().m_start;
+	textpos_t start = ThisTokenRange.m_start;
 
-	switch(ThisToken())
+	switch(ThisToken)
 	{
-	case NilConst:
-	case TrueConst:
-	case FalseConst:
-	case NameConst:
+	case TokenType::NilConst:
+	case TokenType::TrueConst:
+	case TokenType::FalseConst:
+	case TokenType::NameConst:
 		// Unary message pattern
-		m_selector=ThisTokenText();
+		m_selector=ThisTokenText;
 		NextToken();
 		break;
 
-	case NameColon:
+	case TokenType::NameColon:
 		// Keyword message pattern
-		while (m_ok && (ThisToken()==NameColon)) 
+		while (m_ok && (ThisToken== TokenType::NameColon))
 		{
-			m_selector+=ThisTokenText();
+			m_selector+=ThisTokenText;
 			NextToken();
 			ParseArgument();
 		}
 		break;
 
-	case Binary:
+	case TokenType::Binary:
 		// Binary message pattern
 		while (isAnsiBinaryChar(PeekAtChar()))
 			Step();
-		m_selector = ThisTokenText();
+		m_selector = ThisTokenText;
 		NextToken();
 		ParseArgument();
 		break;
@@ -1428,10 +1422,10 @@ void Compiler::ParseArgument()
 	// Parse an argument name and add it to the
 	// array of arguments.
 	//
-	if (ThisToken()==NameConst) 
+	if (ThisToken == TokenType::NameConst)
 	{
 		// Get argument name
-		AddArgument(ThisTokenText(), ThisTokenRange());
+		AddArgument(ThisTokenText, ThisTokenRange);
 		NextToken();
 	}
 	else
@@ -1439,30 +1433,34 @@ void Compiler::ParseArgument()
 }
 
 // Parse a block of temporaries between delimiters. Answer the number parsed.
-int Compiler::ParseTemporaries()
+tempcount_t Compiler::ParseTemporaries()
 {
-	int nTempsAdded = 0;
+	tempcount_t nTempsAdded = 0;
 	if (m_ok && ThisTokenIsBinary(TEMPSDELIMITER)) 
 	{
-		int start = ThisTokenRange().m_start;
+		textpos_t start = ThisTokenRange.m_start;
 
-		while (m_ok && NextToken()==NameConst)
+		while (m_ok && NextToken() == TokenType::NameConst)
 		{
-			AddTemporary(ThisTokenText(), ThisTokenRange(), false);
+			AddTemporary(ThisTokenText, ThisTokenRange, false);
 			nTempsAdded++;
 		}
 		if (ThisTokenIsBinary(TEMPSDELIMITER))
+		{
 			NextToken();
+		}
 		else
+		{
 			if (m_ok)
-				CompileError(TEXTRANGE(start, ThisTokenRange().m_start-1), CErrTempListNotClosed);
+				CompileError(TEXTRANGE(start, ThisTokenRange.m_start - 1), CErrTempListNotClosed);
+		}
 	}
 	return nTempsAdded;
 }
 
-int Compiler::ParseStatements(TokenType closingToken, bool popResults)
+unsigned Compiler::ParseStatements(TokenType closingToken, bool popResults)
 {
-	if (!m_ok || ThisToken() == closingToken || AtEnd())
+	if (!m_ok || ThisToken == closingToken || AtEnd)
 		return 0;
 
 	// TEMPORARY: This nop may later be used as an insertion point for copying arguments from the
@@ -1474,10 +1472,10 @@ int Compiler::ParseStatements(TokenType closingToken, bool popResults)
 	int count = 0;
 	while (m_ok)
 	{
-		int statementStart = ThisTokenRange().m_start;
+		textpos_t statementStart = ThisTokenRange.m_start;
 		ParseStatement();
 		bool foundPeriod = false;
-		if (ThisToken() == CloseStatement)
+		if (ThisToken == TokenType::CloseStatement)
 		{
 			// Statements are to be concatenated and previous
 			// result ignored (except for brace arrays)
@@ -1485,15 +1483,15 @@ int Compiler::ParseStatements(TokenType closingToken, bool popResults)
 			NextToken();
 		}
 
-		count = count + 1;
+		count++;
 
-		if (ThisToken() == closingToken)
+		if (ThisToken == closingToken)
 			break;
-		else if (AtEnd())
+		else if (AtEnd)
 			break;
 
 		if (m_ok && !foundPeriod)
-			CompileError(TEXTRANGE(statementStart, LastTokenRange().m_stop), CErrUnterminatedStatement);
+			CompileError(TEXTRANGE(statementStart, LastTokenRange.m_stop), CErrUnterminatedStatement);
 
 		if (popResults)
 		{
@@ -1508,9 +1506,9 @@ int Compiler::ParseStatements(TokenType closingToken, bool popResults)
 // test and different valid terminators
 void Compiler::ParseBlockStatements()
 {
-	_ASSERTE(IsInOptimizedBlock() || IsInBlock());
+	_ASSERTE(IsInOptimizedBlock || IsInBlock);
 
-	if (ThisToken() == CloseSquare)
+	if (ThisToken == TokenType::CloseSquare)
 	{
 		// We're compiling a block but it's empty.
 		// This returns a nil
@@ -1519,16 +1517,16 @@ void Compiler::ParseBlockStatements()
 	}
 	else
 	{
-		if (AtEnd() || ThisToken() == CloseParen)
+		if (AtEnd || ThisToken == TokenType::CloseParen)
 			return;
 
-		int start = m_codePointer;
+		ip_t start = m_codePointer;
 		while (m_ok)
 		{
-			int statementStart = ThisTokenRange().m_start;
+			textpos_t statementStart = ThisTokenRange.m_start;
 			ParseStatement();
 			bool foundClosing = false;
-			if (ThisToken() == CloseStatement)
+			if (ThisToken == TokenType::CloseStatement)
 			{
 				// Statements are to be concatenated and previous
 				// result ignored.
@@ -1536,7 +1534,7 @@ void Compiler::ParseBlockStatements()
 				foundClosing = true;
 			}
 
-			if (ThisTokenIsClosing())
+			if (ThisTokenIsClosing)
 			{
 				// Some other closing character so we break but
 				// leaving result on stack
@@ -1544,20 +1542,20 @@ void Compiler::ParseBlockStatements()
 			}
 
 			if (m_ok && !foundClosing)
-				CompileError(TEXTRANGE(statementStart, LastTokenRange().m_stop), CErrUnterminatedStatement);
+				CompileError(TEXTRANGE(statementStart, LastTokenRange.m_stop), CErrUnterminatedStatement);
 			GenPopStack();
 		}
 		// If the block contains only one real instruction, and that is Push Nil, then the block is effectively empty
-		if (m_bytecodes[start].byte == ShortPushNil && PriorInstruction<true>() == start)
+		if (m_ok && m_bytecodes[start].byte == ShortPushNil && PriorInstruction<true>() == start)
 		{
 			m_pCurrentScope->BeEmptyBlock();
 		}
 	}
 }
 
-int Compiler::GenFarReturn()
+ip_t Compiler::GenFarReturn()
 {
-	_ASSERTE(IsInBlock());
+	_ASSERTE(IsInBlock);
 	// It is easiest to set the far return mark later, when patching up the blocks. That
 	// way it is based on whether a FarReturn instruction actually exists in the instruction
 	// stream, rather than attemping to keep the flags in sync as the optimized blocks are 
@@ -1568,15 +1566,15 @@ int Compiler::GenFarReturn()
 
 void Compiler::ParseStatement()
 {
-	if (ThisTokenIsReturn()) 
+	if (ThisTokenIsReturn) 
 	{
-		int textPosition = ThisTokenRange().m_start;
+		textpos_t textPosition = ThisTokenRange.m_start;
 		NextToken();
 		ParseExpression();
 		if (m_ok)
 		{
-			const int returnIP = IsInBlock() ? GenFarReturn() : GenReturn(ReturnMessageStackTop);
-			AddTextMap(returnIP, textPosition, LastTokenRange().m_stop);
+			const ip_t returnIP = IsInBlock ? GenFarReturn() : GenReturn(ReturnMessageStackTop);
+			AddTextMap(returnIP, textPosition, LastTokenRange.m_stop);
 		}
 	}
 	else 
@@ -1589,8 +1587,8 @@ inline void Compiler::ParseAssignment(const Str& lvalueName, const TEXTRANGE& ra
 	// a shared variable.
 	ParseExpression();
 	BreakPoint();
-	int expressionEnd = LastTokenRange().m_stop;
-	int storeIP = GenStore(lvalueName, range, expressionEnd);
+	textpos_t expressionEnd = LastTokenRange.m_stop;
+	ip_t storeIP = GenStore(lvalueName, range, expressionEnd);
 	AddTextMap(storeIP, range.m_start, expressionEnd);
 }
 
@@ -1598,18 +1596,18 @@ void Compiler::ParseExpression()
 {
 	// Stack the last expression type
 	SendType lastSend = m_sendType;
-	m_sendType = SendOther;
+	m_sendType = SendType::SendOther;
 	
 	// We may need to know the mark of the current expression
-	int exprMark = m_codePointer;
-	TEXTRANGE tokenRange = ThisTokenRange();
+	ip_t exprMark = m_codePointer;
+	TEXTRANGE tokenRange = ThisTokenRange;
 	
-	if (ThisToken() == NameConst) 
+	if (ThisToken == TokenType::NameConst)
 	{	
 		// Possibly assignment
-		Str name = ThisTokenText();
+		Str name = ThisTokenText;
 		NextToken();
-		if (ThisTokenIsAssignment()) 
+		if (ThisTokenIsAssignment) 
 		{
 			// This is an assignment
 			NextToken();
@@ -1633,9 +1631,9 @@ void Compiler::ParseExpression()
 	m_sendType = lastSend;
 }
 
-void Compiler::ParseBinaryTerm(int textPosition)
+void Compiler::ParseBinaryTerm(textpos_t textPosition)
 {
-	LPUTF8 szTok = ThisTokenText();
+	LPUTF8 szTok = ThisTokenText;
 	if (strlen((LPCSTR)szTok) != 1)
 	{
 		CompileError(CErrInvalExprStart);
@@ -1647,16 +1645,16 @@ void Compiler::ParseBinaryTerm(int textPosition)
 	case '(': 
 		{
 			// Nested expression
-			int nExprStart = ThisTokenRange().m_start;
+			textpos_t nExprStart = ThisTokenRange.m_start;
 			
 			NextToken();
 			ParseExpression();
 			if (m_ok)
 			{
-				if (ThisToken() == CloseParen)
+				if (ThisToken == TokenType::CloseParen)
 					NextToken();
 				else					
-					CompileError(TEXTRANGE(nExprStart, LastTokenRange().m_stop), CErrParenNotClosed);
+					CompileError(TEXTRANGE(nExprStart, LastTokenRange.m_stop), CErrParenNotClosed);
 			}
 		}
 		break;
@@ -1675,149 +1673,149 @@ void Compiler::ParseBinaryTerm(int textPosition)
 	};
 }
 
-void Compiler::ParseBraceArray(int textPosition)
+void Compiler::ParseBraceArray(textpos_t textPosition)
 {
 	NextToken();
 
-	int count = ParseStatements(CloseBrace, false);
+	int count = ParseStatements(TokenType::CloseBrace, false);
 
 	if (m_ok)
 	{
 		GenPushStaticVariable((LPUTF8)"Smalltalk.Array", TEXTRANGE(textPosition, textPosition));
-		GenInteger(count, ThisTokenRange());
+		GenInteger(count, ThisTokenRange);
 		GenMessage((LPUTF8)"newFromStack:", 1, textPosition);
 	}
 
-	if (ThisToken() == CloseBrace)
+	if (ThisToken == TokenType::CloseBrace)
 	{
 		NextToken();
 	}
 	else
 	{
 		if (m_ok)
-			CompileError(TEXTRANGE(textPosition, ThisTokenRange().m_stop), CErrBraceNotClosed);
+			CompileError(TEXTRANGE(textPosition, ThisTokenRange.m_stop), CErrBraceNotClosed);
 	}
 }
 
-void Compiler::ParseTerm(int textPosition)
+void Compiler::ParseTerm(textpos_t textPosition)
 {
-	TokenType tokenType = ThisToken();
+	TokenType tokenType = ThisToken;
 	
 	switch(tokenType)
 	{
-	case NameConst:
-		GenPushVariable(ThisTokenText(), ThisTokenRange());
+	case TokenType::NameConst:
+		GenPushVariable(ThisTokenText, ThisTokenRange);
 		NextToken();
 		break;
 
-	case SmallIntegerConst:
-		GenInteger(ThisTokenInteger(), ThisTokenRange());
+	case TokenType::SmallIntegerConst:
+		GenInteger(ThisTokenInteger, ThisTokenRange);
 		NextToken();
 		break;
 
-	case LargeIntegerConst:
-	case ScaledDecimalConst:
+	case TokenType::LargeIntegerConst:
+	case TokenType::ScaledDecimalConst:
 		{
-			GenNumber(ThisTokenText(), ThisTokenRange());
+			GenNumber(ThisTokenText, ThisTokenRange);
             NextToken();
 		}
 		break;
 
-	case FloatingConst:
-		GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewFloat(ThisTokenFloat())), ThisTokenRange());
+	case TokenType::FloatingConst:
+		GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewFloat(ThisTokenFloat)), ThisTokenRange);
 		NextToken();
 		break;
 
-	case CharConst:
+	case TokenType::CharConst:
 		{
-			long codePoint = ThisTokenInteger();
+			intptr_t codePoint = ThisTokenInteger;
 			if (__isascii(codePoint))
 			{
 				// We only generate the PushChar instruction for ASCII code points
-				GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+				GenInstructionExtended(PushChar, static_cast<uint8_t>(codePoint));
 			}
 			else
 			{
-				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(codePoint))), ThisTokenRange());
+				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<char32_t>(codePoint))), ThisTokenRange);
 			}
 			NextToken();
 		}
 		break;
 
-	case SymbolConst:
-		GenConstant(AddToFrame(reinterpret_cast<Oop>(InternSymbol(ThisTokenText())), ThisTokenRange()));
+	case TokenType::SymbolConst:
+		GenConstant(AddToFrame(reinterpret_cast<Oop>(InternSymbol(ThisTokenText)), ThisTokenRange));
 		NextToken();
 		break;
 
-	case TrueConst:
+	case TokenType::TrueConst:
 		GenInstruction(ShortPushTrue);
 		NextToken();
 		break;
 
-	case FalseConst:
+	case TokenType::FalseConst:
 		GenInstruction(ShortPushFalse);
 		NextToken();
 		break;
 
-	case NilConst:
+	case TokenType::NilConst:
 		GenInstruction(ShortPushNil);
 		NextToken();
 		break;
 
-	case AnsiStringConst:
+	case TokenType::AnsiStringConst:
 		{
-			LPUTF8 szLiteral = ThisTokenText();
+			LPUTF8 szLiteral = ThisTokenText;
 			POTE oteString = *szLiteral
 				? NewAnsiString(szLiteral)
 				: GetVMPointers().EmptyString;
-            GenConstant(AddStringToFrame(oteString, ThisTokenRange()));
+            GenConstant(AddStringToFrame(oteString, ThisTokenRange));
 			NextToken();
 		}
 		break;
 
-	case Utf8StringConst:
+	case TokenType::Utf8StringConst:
 	{
-		LPUTF8 szLiteral = ThisTokenText();
+		LPUTF8 szLiteral = ThisTokenText;
 		POTE oteString = *szLiteral
 			? NewUtf8String(szLiteral)
 			: GetVMPointers().EmptyString;
-		GenConstant(AddStringToFrame(oteString, ThisTokenRange()));
+		GenConstant(AddStringToFrame(oteString, ThisTokenRange));
 		NextToken();
 	}
 	break;
 
-	case ExprConstBegin:
+	case TokenType::ExprConstBegin:
 		{
-			int start = ThisTokenRange().m_start;
+			textpos_t start = ThisTokenRange.m_start;
 			Oop literal=ParseConstExpression();
 			if (m_ok)
 			{
-				GenPushConstant(literal, TEXTRANGE(start, LastTokenRange().m_stop));
+				GenPushConstant(literal, TEXTRANGE(start, LastTokenRange.m_stop));
 			}
 			m_piVM->RemoveReference(literal);
 			NextToken();
 		}
 		break;
 
-	case ArrayBegin:
+	case TokenType::ArrayBegin:
 		{
-			int start = ThisTokenRange().m_start;
+			textpos_t start = ThisTokenRange.m_start;
 			POTE array=ParseArray();
 			if (m_ok)
-				GenLiteralConstant(reinterpret_cast<Oop>(array), TEXTRANGE(start, LastTokenRange().m_stop));
+				GenLiteralConstant(reinterpret_cast<Oop>(array), TEXTRANGE(start, LastTokenRange.m_stop));
 		}
 		break;
 
-	case ByteArrayBegin:
+	case TokenType::ByteArrayBegin:
 		{
-			int start = ThisTokenRange().m_start;
+			textpos_t start = ThisTokenRange.m_start;
 			POTE array=ParseByteArray();
 			if (m_ok)
-				GenLiteralConstant(reinterpret_cast<Oop>(array), TEXTRANGE(start, LastTokenRange().m_stop));
+				GenLiteralConstant(reinterpret_cast<Oop>(array), TEXTRANGE(start, LastTokenRange.m_stop));
 		}
 		break;
 
-	case Binary:
+	case TokenType::Binary:
 		ParseBinaryTerm(textPosition);
 		break;
 
@@ -1827,25 +1825,25 @@ void Compiler::ParseTerm(int textPosition)
 	};
 }
 
-void Compiler::ParseContinuation(int exprMark, int textPosition)
+void Compiler::ParseContinuation(ip_t exprMark, textpos_t textPosition)
 {
-	int continuationPointer = ParseKeyContinuation(exprMark, textPosition);
-	int currentPos = m_codePointer;
+	ip_t continuationPointer = ParseKeyContinuation(exprMark, textPosition);
+	ip_t currentPos = m_codePointer;
 	m_codePointer = continuationPointer;
 	GenDup();
 	_ASSERTE(lengthOfByteCode(DuplicateStackTop) == 1);
 	m_codePointer = currentPos + 1;
 	
-	while (m_ok && ThisToken() == Cascade)
+	while (m_ok && ThisToken == TokenType::Cascade)
 	{
 		TokenType tok = NextToken();
-		int continueTextPosition = ThisTokenRange().m_start;
+		textpos_t continueTextPosition = ThisTokenRange.m_start;
 		continuationPointer= GenInstruction(PopDup);
 		switch(tok)
 		{
-		case NameConst:
-		case Binary:
-		case NameColon:
+		case TokenType::NameConst:
+		case TokenType::Binary:
+		case TokenType::NameColon:
 			ParseKeyContinuation(exprMark, continueTextPosition);
 			break;
 		default:
@@ -1867,24 +1865,24 @@ void Compiler::ParseContinuation(int exprMark, int textPosition)
 	}
 }
 
-int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
+ip_t Compiler::ParseKeyContinuation(ip_t exprMark, textpos_t textPosition)
 {
-	int continuationPointer = ParseBinaryContinuation(exprMark, textPosition);
-	if (ThisToken()!=NameColon) 
+	ip_t continuationPointer = ParseBinaryContinuation(exprMark, textPosition);
+	if (ThisToken!=TokenType::NameColon) 
 	{
-		if (m_sendType == SendSuper)
+		if (m_sendType == SendType::SendSuper)
 			CompileError(CErrExpectMessage);
 		return continuationPointer;
 	}
 
-	int argumentCount=1;
+	size_t argumentCount=1;
 	bool specialCase=false;
 	
 	continuationPointer = m_codePointer;
 	
-	Str strPattern = ThisTokenText();
-	TEXTRANGE range = ThisTokenRange();
-	TEXTRANGE receiverRange = TEXTRANGE(textPosition, LastTokenRange().m_stop);
+	Str strPattern = ThisTokenText;
+	TEXTRANGE range = ThisTokenRange;
+	TEXTRANGE receiverRange = TEXTRANGE(textPosition, LastTokenRange.m_stop);
 	NextToken();
 	
 	// There are some special cases to deal with optimized
@@ -1948,13 +1946,13 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 	if (!specialCase)
 	{
 		// For to:[by:]do: optimization. Messy...
-		int toPointer = 0;
-		int byPointer = 0;
+		ip_t toPointer = ip_t::zero;
+		ip_t byPointer = ip_t::zero;
 		while (m_ok) 
 		{
 			// Otherwise just handle normally
 			SendType lastSend=m_sendType;
-			m_sendType=SendOther;
+			m_sendType=SendType::SendOther;
 			
 			// to:[by:]do: interface
 			if (strPattern == (LPUTF8)"to:")
@@ -1980,14 +1978,14 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 				}
 			}
 			
-			int newExprMark = m_codePointer;
-			int newTextPosition = ThisTokenRange().m_start;
+			ip_t newExprMark = m_codePointer;
+			textpos_t newTextPosition = ThisTokenRange.m_start;
 			ParseTerm(newTextPosition);
 			ParseBinaryContinuation(newExprMark, newTextPosition);
 			m_sendType = lastSend;
-			if (ThisToken() == NameColon)
+			if (ThisToken == TokenType::NameColon)
 			{
-				strPattern += ThisTokenText();
+				strPattern += ThisTokenText;
 				argumentCount++;
 				NextToken();
 			}
@@ -1997,8 +1995,8 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 
 		if (!specialCase)
 		{
-			int sendIP = GenMessage(strPattern, argumentCount, textPosition);
-			AddTextMap(sendIP, textPosition, LastTokenRange().m_stop);
+			ip_t sendIP = GenMessage(strPattern, argumentCount, textPosition);
+			AddTextMap(sendIP, textPosition, LastTokenRange.m_stop);
 		}
 	}
 
@@ -2007,19 +2005,19 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 
 void Compiler::MaybePatchNegativeNumber()
 {
-	if (ThisTokenIsNumber() && ThisTokenText()[0] == '-')
+	if (ThisTokenIsNumber && ThisTokenText[0] == '-')
 	{
-		StepBack(strlen((LPCSTR)ThisTokenText())-1);
-		SetTokenType(Binary);
+		StepBack(strlen((LPCSTR)ThisTokenText)-1);
+		ThisToken = TokenType::Binary;
 		_ASSERTE(ThisTokenIsBinary('-'));
 	}
 }
 
-int Compiler::ParseBinaryContinuation(int exprMark, int textPosition)
+ip_t Compiler::ParseBinaryContinuation(ip_t exprMark, textpos_t textPosition)
 {
-	int continuationPointer = ParseUnaryContinuation(exprMark, textPosition);
+	ip_t continuationPointer = ParseUnaryContinuation(exprMark, textPosition);
 	MaybePatchNegativeNumber();
-	while (m_ok && (ThisToken()==Binary)) 
+	while (m_ok && (ThisToken== TokenType::Binary))
 	{
 		continuationPointer = m_codePointer;
 		uint8_t ch;
@@ -2030,83 +2028,83 @@ int Compiler::ParseBinaryContinuation(int exprMark, int textPosition)
 			else
 				Step();
 		}
-		Str pattern = ThisTokenText();
+		Str pattern = ThisTokenText;
 		
 		NextToken();
 		
 		SendType lastSend = m_sendType;
-		m_sendType = SendOther;
-		int newExprMark = m_codePointer;
-		int newTextPosition = ThisTokenRange().m_start;
+		m_sendType = SendType::SendOther;
+		ip_t newExprMark = m_codePointer;
+		textpos_t newTextPosition = ThisTokenRange.m_start;
 		ParseTerm(newTextPosition);
 		ParseUnaryContinuation(newExprMark, newTextPosition);
-		if (m_sendType == SendSuper)
+		if (m_sendType == SendType::SendSuper)
 			CompileError(CErrExpectMessage);
 		m_sendType = lastSend;
 		MaybePatchNegativeNumber();
 
 		TODO("See if m_sendsToSuper can be reset inside GenMessage");
-		int sendIP = GenMessage(pattern, 1, textPosition);
-		AddTextMap(sendIP, textPosition, LastTokenRange().m_stop);
-		m_sendType = SendOther;
+		ip_t sendIP = GenMessage(pattern, 1, textPosition);
+		AddTextMap(sendIP, textPosition, LastTokenRange.m_stop);
+		m_sendType = SendType::SendOther;
 	}
 	return continuationPointer;
 }
 
 void Compiler::MaybePatchLiteralMessage()
 {
-	switch (ThisToken())
+	switch (ThisToken)
 	{
-	case NilConst:
-	case FalseConst:
-	case TrueConst:
-		SetTokenType(NameConst);
+	case TokenType::NilConst:
+	case TokenType::FalseConst:
+	case TokenType::TrueConst:
+		ThisToken = TokenType::NameConst;
 		break;
 	default:
 		break;
 	}
 }
 
-int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
+ip_t Compiler::ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition)
 {
-	int continuationPointer = m_codePointer;
+	ip_t continuationPointer = m_codePointer;
 	MaybePatchLiteralMessage();
-	while (m_ok && (ThisToken()==NameConst)) 
+	while (m_ok && (ThisToken==TokenType::NameConst)) 
 	{
 		bool isSpecialCase=false;
 		continuationPointer = m_codePointer;
 
-		Str strToken = ThisTokenText();
+		Str strToken = ThisTokenText;
 		// Check for some optimizations
 		if (strToken == (LPUTF8)"whileTrue")
 		{
-			if (ParseWhileLoop<true>(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
+			if (ParseWhileLoop<true>(exprMark, TEXTRANGE(textPosition, LastTokenRange.m_stop)))
 				isSpecialCase=true;
 		}
 		else if (strToken == (LPUTF8)"whileFalse")
 		{
-			if (ParseWhileLoop<false>(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
+			if (ParseWhileLoop<false>(exprMark, TEXTRANGE(textPosition, LastTokenRange.m_stop)))
 				isSpecialCase=true;
 		}
 		else if (strToken == (LPUTF8)"repeat")
 		{
-			if (ParseRepeatLoop(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
+			if (ParseRepeatLoop(exprMark, TEXTRANGE(textPosition, LastTokenRange.m_stop)))
 				isSpecialCase=true;
 		}
-		else if (strToken == (LPUTF8)"yourself" && !(m_flags & SendYourself))
+		else if (strToken == (LPUTF8)"yourself" && !(m_flags & CompilerFlags::SendYourself))
 		{
-			AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
+			AddSymbolToFrame(ThisTokenText, ThisTokenRange);
 			// We don't send yourself, since it is a Nop
 			isSpecialCase=true;
 		}
 		
 		if (!isSpecialCase)
 		{
-			int sendIP = GenMessage(ThisTokenText(), 0, textPosition);
-			AddTextMap(sendIP, textPosition, ThisTokenRange().m_stop);
+			ip_t sendIP = GenMessage(ThisTokenText, 0, textPosition);
+			AddTextMap(sendIP, textPosition, ThisTokenRange.m_stop);
 		}
 		
-		m_sendType = SendOther;
+		m_sendType = SendType::SendOther;
 		NextToken();
 		MaybePatchLiteralMessage();
 	}
@@ -2116,40 +2114,40 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 void Compiler::ParsePrimitive()
 {
 	TokenType next = NextToken();
-	Str strToken = ThisTokenText();
+	Str strToken = ThisTokenText;
 
 	// Declare the implicit _failureCode temporary - this will always be the first temp of the method after the arguments
-	TempVarDecl* pErrorCodeDecl = AddTemporary((LPUTF8)"_failureCode", ThisTokenRange(), false);
-	TempVarRef* pErrorTempRef = m_pCurrentScope->AddTempRef(pErrorCodeDecl, vrtWrite, ThisTokenRange());
+	TempVarDecl* pErrorCodeDecl = AddTemporary((LPUTF8)"_failureCode", ThisTokenRange, false);
+	TempVarRef* pErrorTempRef = m_pCurrentScope->AddTempRef(pErrorCodeDecl, VarRefType::Write, ThisTokenRange);
 	// Implicitly written to by the primitive itself, but is then read-only and cannot be assigned
 	pErrorCodeDecl->BeReadOnly();
 
-	if (next == NameColon)
+	if (next == TokenType::NameColon)
 	{
 		if (strToken == (LPUTF8)"primitive:")
 		{
-			if (NextToken() != SmallIntegerConst)
+			if (NextToken() != TokenType::SmallIntegerConst)
 				CompileError(CErrExpectPrimIdx);
 			else
 			{
-				m_primitiveIndex=ThisTokenInteger();
-				if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & Boot))
-					CompileError(ThisTokenRange(), CErrBadPrimIdx);
+				m_primitiveIndex = static_cast<uintptr_t>(ThisTokenInteger);
+				if (m_primitiveIndex > PRIMITIVE_MAX && !(m_flags & CompilerFlags::Boot))
+					CompileError(ThisTokenRange, CErrBadPrimIdx);
 				
 				next = NextToken();
-				if (next == TokenType::NameColon && Str(ThisTokenText()) == (LPUTF8)"error:")
+				if (next == TokenType::NameColon && Str(ThisTokenText) == (LPUTF8)"error:")
 				{
 					if (NextToken() == TokenType::NameConst)
 					{
 						// Rename the _failureCode temporary
-						Str errorCodeName = ThisTokenText();
-						CheckTemporaryName(errorCodeName, ThisTokenRange(), false);
-						pErrorCodeDecl->SetName(errorCodeName);
-						pErrorCodeDecl->SetTextRange(ThisTokenRange());
+						Str errorCodeName = ThisTokenText;
+						CheckTemporaryName(errorCodeName, ThisTokenRange, false);
+						pErrorCodeDecl->Name = errorCodeName;
+						pErrorCodeDecl->TextRange = ThisTokenRange;
 						NextToken();
 					}
 					else
-						CompileError(ThisTokenRange(), CErrExpectVariable);
+						CompileError(ThisTokenRange, CErrExpectVariable);
 				}
 
 				if (ThisTokenIsBinary('>'))
@@ -2166,20 +2164,20 @@ void Compiler::ParsePrimitive()
 			LibCallType* callType = ParseCallingConvention(strToken);
 			if (callType)
 			{
-				ParseLibCall(callType->nCallType, DolphinX::LibCallPrim);
+				ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::LibCall);
 				return;
 			}
 		}
 	}
 	else
 	{
-		if (next == NameConst)
+		if (next == TokenType::NameConst)
 		{
 			if (strToken == (LPUTF8)"virtual")
 			{
-				if (NextToken() == NameColon)
+				if (NextToken() == TokenType::NameColon)
 				{
-					LibCallType* callType = ParseCallingConvention(ThisTokenText());
+					LibCallType* callType = ParseCallingConvention(ThisTokenText);
 					if (callType)
 					{
 						ParseVirtualCall(callType->nCallType);
@@ -2189,12 +2187,12 @@ void Compiler::ParsePrimitive()
 			}
 			else if (strToken == (LPUTF8)"overlap")
 			{
-				if (NextToken() == NameColon)
+				if (NextToken() == TokenType::NameColon)
 				{
-					LibCallType* callType = ParseCallingConvention(ThisTokenText());
+					LibCallType* callType = ParseCallingConvention(ThisTokenText);
 					if (callType)
 					{
-						ParseLibCall(callType->nCallType, DolphinX::AsyncLibCallPrim);
+						ParseLibCall(callType->nCallType, DolphinX::ExtCallPrimitive::AsyncLibCall);
 						return;
 					}
 				}
@@ -2208,7 +2206,7 @@ void Compiler::ParsePrimitive()
 
 Compiler::LibCallType* Compiler::ParseCallingConvention(const Str& strToken)
 {
-	for (int i=0; i<DolphinX::NumCallConventions; i++)
+	for (int i=0; i<(int)DolphinX::ExtCallDeclSpec::NumCallConventions; i++)
 		if (strToken == callTypes[i].szCallType)
 		{
 			m_literalLimit = 256;		// Literal limit is reduced because only byte available in descriptor
@@ -2220,19 +2218,19 @@ Compiler::LibCallType* Compiler::ParseCallingConvention(const Str& strToken)
 
 
 
-int Compiler::ParseExtCallArgs(TypeDescriptor args[])
+argcount_t Compiler::ParseExtCallArgs(TypeDescriptor args[])
 {
-	int argcount=0;
+	argcount_t argcount=0;
 	NextToken();
-	int nArgsStart = ThisTokenRange().m_start;
+	textpos_t nArgsStart = ThisTokenRange.m_start;
 	
-	while (m_ok && !ThisTokenIsBinary('>') && !AtEnd())
+	while (m_ok && !ThisTokenIsBinary('>') && !AtEnd)
 	{
-		TEXTRANGE typeRange = ThisTokenRange();
+		TEXTRANGE typeRange = ThisTokenRange;
 		ParseExtCallArgument(args[argcount]);
 		if (m_ok)
 		{
-			if (args[argcount].type != DolphinX::ExtCallArgVOID)
+			if (args[argcount].type != DolphinX::ExtCallArgType::Void)
 				argcount++;
 			else
 				CompileError(typeRange, CErrArgTypeCannotBeVoid);
@@ -2241,11 +2239,11 @@ int Compiler::ParseExtCallArgs(TypeDescriptor args[])
 	
 	if (m_ok)
 	{
-		if (argcount < GetArgumentCount())
-			CompileError(TEXTRANGE(nArgsStart, LastTokenRange().m_stop), CErrInsufficientArgTypes);
+		if (argcount < ArgumentCount)
+			CompileError(TEXTRANGE(nArgsStart, LastTokenRange.m_stop), CErrInsufficientArgTypes);
 		else
-			if (argcount > GetArgumentCount())
-				CompileError(TEXTRANGE(nArgsStart, LastTokenRange().m_stop), CErrTooManyArgTypes);
+			if (argcount > ArgumentCount)
+				CompileError(TEXTRANGE(nArgsStart, LastTokenRange.m_stop), CErrTooManyArgTypes);
 	}
 	
 	if (m_ok)
@@ -2259,24 +2257,24 @@ int Compiler::ParseExtCallArgs(TypeDescriptor args[])
 	return argcount;
 }
 
-void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpecs decl)
+void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpec decl)
 {
 	// Parse a C++ virtual function call
-	_ASSERTE(GetLiteralCount() == 0);
+	_ASSERTE(LiteralCount == 0);
 	_ASSERTE(m_literalLimit <= 256);
 	
 	NextToken();
 	
 	TypeDescriptor args[ARGLIMIT];
-	TEXTRANGE retTypeRange = ThisTokenRange();
+	TEXTRANGE retTypeRange = ThisTokenRange;
 	ParseExtCallArgument(args[0]);
 	if (!m_ok)
 		return;
 
 	// Temporary bodge until VM call prim can handle variant return type correctly
-	if (args[0].type == DolphinX::ExtCallArgVARIANT)
+	if (args[0].type == DolphinX::ExtCallArgType::Variant)
 	{
-		args[0].type = DolphinX::ExtCallArgSTRUCT;
+		args[0].type = DolphinX::ExtCallArgType::Struct;
 
 		// Because VARIANT is not in the base image, cannot be used as a return type
 		// until ActiveX Automation Package has been loaded
@@ -2290,23 +2288,23 @@ void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpecs decl)
 		args[0].parm = Oop(structClass);
 	}
 	
-	m_primitiveIndex=DolphinX::VirtualCallPrim;
+	m_primitiveIndex = static_cast<uintptr_t>(DolphinX::ExtCallPrimitive::VirtualCall);
 	m_compiledMethodClass=GetVMPointers().ClassExternalMethod;
 	
-	int argcount;
-	long vfnIndex;
+	argcount_t argcount;
+	intptr_t vfnIndex;
 	
-	if (ThisToken() != SmallIntegerConst)
+	if (ThisToken != TokenType::SmallIntegerConst)
 		CompileError(CErrExpectVfn);
 	else
 	{
 		// Virtual function number
-		vfnIndex = ThisTokenInteger();
+		vfnIndex = ThisTokenInteger;
 		if (vfnIndex < 1 || vfnIndex > 1024)
 			CompileError(CErrBadVfn);
 		
 		// Implicit arg for this pointer (the receiver)
-		args[1].type = DolphinX::ExtCallArgLPVOID;
+		args[1].type = DolphinX::ExtCallArgType::LPVoid;
 		args[1].parm = 0;
 		
 		// Now create an array of argument types
@@ -2326,7 +2324,7 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 {
 	if (retType.parm)
 	{
-		if (retType.type == DolphinX::ExtCallArgSTRUCT)
+		if (retType.type == DolphinX::ExtCallArgType::Struct)
 		{
 			// We can save the interpreter work by compiling down this info now, thereby allowing
 			// for improved run-time performance
@@ -2335,9 +2333,9 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 			if (byteSize != 0)
 			{
 				if (byteSize <= 4)
-					retType.type = DolphinX::ExtCallArgSTRUCT4;
+					retType.type = DolphinX::ExtCallArgType::Struct32;
 				else if (byteSize <= 8)
-					retType.type = DolphinX::ExtCallArgSTRUCT8;
+					retType.type = DolphinX::ExtCallArgType::Struct64;
 			}
 		}
 	}
@@ -2349,35 +2347,34 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 	}
 }
 
-DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescriptor types[], int argcount, DolphinX::ExtCallDeclSpecs decl, LPUTF8 szProcName)
+DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescriptor types[], argcount_t argcount, DolphinX::ExtCallDeclSpec decl, LPUTF8 szProcName)
 {
 	_ASSERTE(szProcName);
-	_ASSERTE(argcount >= 0 && argcount < 256);
-	int argsLen=argcount;
+	argcount_t argsLen=argcount;
 	{
-		for (int i=1;i<=argcount;i++)
+		for (size_t i=1;i<=argcount;i++)
 		{
 			if (types[i].parm)
 				argsLen++;
 		}
 	}
 	
-	unsigned procNameSize = strlen((LPCSTR)szProcName)+1;
-	unsigned size = sizeof(DolphinX::ExternalMethodDescriptor) + argsLen + procNameSize;
-	int index=AddToFrameUnconditional(Oop(m_piVM->NewByteArray(size)), LastTokenRange());
+	size_t procNameSize = strlen((LPCSTR)szProcName)+1;
+	size_t size = sizeof(DolphinX::ExternalMethodDescriptor) + argsLen + procNameSize;
+	size_t index=AddToFrameUnconditional(Oop(m_piVM->NewByteArray(size)), LastTokenRange);
 	
 	// This must be the first literal in the frame!
 	_ASSERTE(index==0);
 	
 	POTE argArray=(POTE)m_literalFrame[index];
-	BYTE* pb = FetchBytesOf(argArray);
+	uint8_t* pb = FetchBytesOf(argArray);
 	DolphinX::ExternalMethodDescriptor& argsEtc = *(DolphinX::ExternalMethodDescriptor*)pb;
 	//memset(&argsEtc, 0xFF, size);
 	
-	argsEtc.m_descriptor.m_callConv = decl;
+	argsEtc.m_descriptor.m_callConv = (uint8_t)decl;
 	mangleDescriptorReturnType(types[0], types[0].range);
-	argsEtc.m_descriptor.m_return = types[0].type;
-	argsEtc.m_descriptor.m_returnParm = types[0].parm;
+	argsEtc.m_descriptor.m_return = (uint8_t)types[0].type;
+	argsEtc.m_descriptor.m_returnParm = (uint8_t)types[0].parm;
 	
 	
 	// At the moment we build the descriptor in argument order, but the literal
@@ -2386,49 +2383,49 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 	// the reverse order that they are on the Smalltalk stack - i.e. pop from
 	// Smalltalk, push onto machine stack)
 	argsLen=0;
-	for (int i=1; m_ok && i<=argcount; i++)
+	for (size_t i=1; m_ok && i<=argcount; i++)
 	{
 		// Any types with a literal argument are added to frame (only ExtCallArgSTRUCT at present)
 		if (types[i].parm)
 		{
-			int frameIndex = AddToFrame(types[i].parm, types[i].range);
+			size_t frameIndex = AddToFrame(types[i].parm, types[i].range);
 			_ASSERTE(frameIndex < 256);
-			argsEtc.m_descriptor.m_args[argsLen++] = frameIndex;
+			argsEtc.m_descriptor.m_args[argsLen++] = static_cast<uint8_t>(frameIndex);
 		}
-		argsEtc.m_descriptor.m_args[argsLen++] = types[i].type;
+		argsEtc.m_descriptor.m_args[argsLen++] = (uint8_t)types[i].type;
 	}
 	_ASSERTE(argsLen < 256 && argsLen >= argcount);
-	argsEtc.m_descriptor.m_argsLen = argsLen;
+	argsEtc.m_descriptor.m_argsLen = static_cast<uint8_t>(argsLen);
 	
 	// Shove the procName (store ordinal as string too) on the end
 	strcpy_s((char*)argsEtc.m_descriptor.m_args+argsLen, procNameSize, (LPCSTR)szProcName);
 	return argsEtc;
 }
 
-void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpecs decl, int callPrim)
+void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPrimitive callPrim)
 {
-	if (decl > DolphinX::ExtCallCDecl)
+	if (decl > DolphinX::ExtCallDeclSpec::CDecl)
 	{
 		CompileError(CErrUnsupportedCallConv);
 		return;
 	}
 	
-	_ASSERTE(decl == DolphinX::ExtCallStdCall || decl == DolphinX::ExtCallCDecl);
+	_ASSERTE(decl == DolphinX::ExtCallDeclSpec::StdCall || decl == DolphinX::ExtCallDeclSpec::CDecl);
 	
 	// Parse an external library call
-	_ASSERTE(GetLiteralCount()==0);
+	_ASSERTE(LiteralCount==0);
 	NextToken();
 	
 	TypeDescriptor args[ARGLIMIT];
-	TEXTRANGE retTypeRange = ThisTokenRange();
+	TEXTRANGE retTypeRange = ThisTokenRange;
 	ParseExtCallArgument(args[0]);
 	if (!m_ok)
 		return;
 
 	// Temporary bodge until VM call prim can handle variant return type correctly
-	if (args[0].type == DolphinX::ExtCallArgVARIANT)
+	if (args[0].type == DolphinX::ExtCallArgType::Variant)
 	{
-		args[0].type = DolphinX::ExtCallArgSTRUCT;
+		args[0].type = DolphinX::ExtCallArgType::Struct;
 
 		// Because VARIANT is not in the base image, cannot be used as a return type
 		// until ActiveX Automation Package has been loaded
@@ -2443,18 +2440,18 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpecs decl, int callPrim)
 	}
 	
 	// Function name or ordinal
-	m_primitiveIndex=callPrim;
+	m_primitiveIndex = static_cast<uintptr_t>(callPrim);
 	m_compiledMethodClass=GetVMPointers().ClassExternalMethod;
 	
-	int argcount;
+	argcount_t argcount;
 	
-	TokenType tok = ThisToken();
+	TokenType tok = ThisToken;
 	// Function names must be ASCII, or an ordinal
-	if (tok != AnsiStringConst && tok != NameConst && tok != SmallIntegerConst)
+	if (tok != TokenType::AnsiStringConst && tok != TokenType::NameConst && tok != TokenType::SmallIntegerConst)
 		CompileError(CErrExpectFnName);
 	else
 	{
-		Str procName = ThisTokenText();
+		Str procName = ThisTokenText;
 		// Now create an array of argument types
 		
 		// Now create an array of argument types
@@ -2483,20 +2480,20 @@ POTE Compiler::FindExternalClass(const Str& strClass, const TEXTRANGE& range)
 	if (structClass == Nil())
 	{
 		CompileError(range, CErrUndefinedClass);
-		return NULL;
+		return nullptr;
 	}
 
 	if (!m_piVM->IsAClass(structClass))
 	{
 		CompileError(range, CErrInvalidStructArg);
-		return NULL;
+		return nullptr;
 	}
 
 	STBehavior& behavior = *(STBehavior*)GetObj(structClass);
 	if (behavior.instSpec.pointers && behavior.instSpec.fixedFields < 1)
 	{
 		CompileError(range, CErrInvalidStructArg);
-		return NULL;
+		return nullptr;
 	}
 
 	return structClass;
@@ -2510,11 +2507,11 @@ void Compiler::ParseExternalClass(const Str& strClass, TypeDescriptor& descripto
 		STBehavior& behavior = *(STBehavior*)GetObj(structClass);
 		if (ThisTokenIsBinary('*'))
 		{
-			descriptor.range.m_stop = ThisTokenRange().m_stop;
+			descriptor.range.m_stop = ThisTokenRange.m_stop;
 			NextToken();
 			if (ThisTokenIsBinary('*'))
 			{
-				descriptor.range.m_stop = ThisTokenRange().m_stop;
+				descriptor.range.m_stop = ThisTokenRange.m_stop;
 				NextToken();
 				if (behavior.instSpec.indirect)
 					// One level of indirection implied, cannot have 3
@@ -2522,7 +2519,7 @@ void Compiler::ParseExternalClass(const Str& strClass, TypeDescriptor& descripto
 				else
 				{
 					// Double indirections always use LPPVOID type
-					descriptor.type = DolphinX::ExtCallArgLPPVOID;
+					descriptor.type = DolphinX::ExtCallArgType::LPPVoid;
 					descriptor.parm = 0;
 				}
 			}
@@ -2531,7 +2528,7 @@ void Compiler::ParseExternalClass(const Str& strClass, TypeDescriptor& descripto
 				if (behavior.instSpec.indirect)
 				{
 					// One level of indirection already implied, totalling two
-					descriptor.type = DolphinX::ExtCallArgLPPVOID;
+					descriptor.type = DolphinX::ExtCallArgType::LPPVoid;
 					descriptor.parm = 0;
 				}
 				else
@@ -2549,135 +2546,135 @@ void Compiler::ParseExternalClass(const Str& strClass, TypeDescriptor& descripto
 			
 			// No explicit indirection, but there may be implicit
 			if (behavior.instSpec.indirect)
-				descriptor.type = DolphinX::ExtCallArgLP;
+				descriptor.type = DolphinX::ExtCallArgType::LPStruct;
 			else
-				descriptor.type = DolphinX::ExtCallArgSTRUCT;
+				descriptor.type = DolphinX::ExtCallArgType::Struct;
 			descriptor.parm = Oop(structClass);
 		}
 	}
 }
 
-DolphinX::ExtCallArgTypes Compiler::TypeForStructPointer(POTE oteStructClass)
+DolphinX::ExtCallArgType Compiler::TypeForStructPointer(POTE oteStructClass)
 {
 	const VMPointers& pointers = GetVMPointers();
 	POTE oteUnkClass = pointers.ClassIUnknown;
 	return (oteUnkClass != pointers.Nil && m_piVM->InheritsFrom(oteStructClass, oteUnkClass))
-		? DolphinX::ExtCallArgCOMPTR
-		: DolphinX::ExtCallArgLP;
+		? DolphinX::ExtCallArgType::ComPtr
+		: DolphinX::ExtCallArgType::LPStruct;
 }
 
 // Answers true if an argument type was parsed, else false. Advances over argument if parsed.
 void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 {
-	switch(ThisToken())
+	switch(ThisToken)
 	{
-	case NameConst:
+	case TokenType::NameConst:
 		{
 			// Table of arg types
 			// N.B. THIS SHOULD MATCH THE DolphinX::ExtCallArgTypes ENUM...
 			struct ArgTypeDefn 
 			{
 				LPUTF8						m_szName;
-				DolphinX::ExtCallArgTypes	m_type;
+				DolphinX::ExtCallArgType	m_type;
 				LPUTF8						m_szIndirectClass;
 			};
 			
 			static ArgTypeDefn argTypes[] =	{
-				{ (LPUTF8)"sdword", DolphinX::ExtCallArgSDWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"dword", DolphinX::ExtCallArgDWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"intptr", DolphinX::ExtCallArgINTPTR, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"uintptr", DolphinX::ExtCallArgUINTPTR, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"lpvoid", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"handle", DolphinX::ExtCallArgHANDLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"lppvoid", DolphinX::ExtCallArgLPPVOID, NULL },
-				{ (LPUTF8)"lpstr", DolphinX::ExtCallArgLPSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"bool", DolphinX::ExtCallArgBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"void", DolphinX::ExtCallArgVOID, (LPUTF8)DolphinX::ExtCallArgLPVOID},
-				{ (LPUTF8)"double", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"float", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"hresult", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"ntstatus", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"char", DolphinX::ExtCallArgCHAR, (LPUTF8)DolphinX::ExtCallArgLPSTR},
-				{ (LPUTF8)"byte", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
-				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
-				{ (LPUTF8)"word", DolphinX::ExtCallArgWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"sword", DolphinX::ExtCallArgSWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"oop", DolphinX::ExtCallArgOOP, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"lpwstr", DolphinX::ExtCallArgLPWSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"bstr", DolphinX::ExtCallArgBSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID },
-				{ (LPUTF8)"qword", DolphinX::ExtCallArgQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"sqword", DolphinX::ExtCallArgSQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"ote", DolphinX::ExtCallArgOTE, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"variant", DolphinX::ExtCallArgVARIANT, (LPUTF8)"VARIANT" },
-				{ (LPUTF8)"varbool", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"guid", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"date", DolphinX::ExtCallArgDATE, (LPUTF8)"DATE" },
+				{ (LPUTF8)"sdword", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"dword", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"intptr", DolphinX::ExtCallArgType::IntPtr, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"uintptr", DolphinX::ExtCallArgType::UIntPtr, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"lpvoid", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"handle", DolphinX::ExtCallArgType::Handle, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"lppvoid", DolphinX::ExtCallArgType::LPPVoid, nullptr },
+				{ (LPUTF8)"lpstr", DolphinX::ExtCallArgType::LPStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"bool", DolphinX::ExtCallArgType::Bool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"void", DolphinX::ExtCallArgType::Void, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ (LPUTF8)"double", DolphinX::ExtCallArgType::Double, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"float", DolphinX::ExtCallArgType::Float, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"hresult", DolphinX::ExtCallArgType::HResult, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"ntstatus", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"char", DolphinX::ExtCallArgType::Char, (LPUTF8)DolphinX::ExtCallArgType::LPStr},
+				{ (LPUTF8)"byte", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ (LPUTF8)"word", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"sword", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"oop", DolphinX::ExtCallArgType::Oop, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"lpwstr", DolphinX::ExtCallArgType::LPWStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"bstr", DolphinX::ExtCallArgType::Bstr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid },
+				{ (LPUTF8)"qword", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"sqword", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"ote", DolphinX::ExtCallArgType::Ote, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"variant", DolphinX::ExtCallArgType::Variant, (LPUTF8)"VARIANT" },
+				{ (LPUTF8)"varbool", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"guid", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"date", DolphinX::ExtCallArgType::Date, (LPUTF8)"DATE" },
 				//(LPUTF8) Convert a few class types to the special types to save space and time
-				{ (LPUTF8)"ExternalAddress", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"ExternalHandle", DolphinX::ExtCallArgHANDLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"BSTR", DolphinX::ExtCallArgBSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"VARIANT", DolphinX::ExtCallArgVARIANT, (LPUTF8)"VARIANT" },
-				{ (LPUTF8)"SDWORD", DolphinX::ExtCallArgSDWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"DWORD", DolphinX::ExtCallArgDWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"LPVOID", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"DOUBLE", DolphinX::ExtCallArgDOUBLE, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"FLOAT", DolphinX::ExtCallArgFLOAT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"HRESULT", DolphinX::ExtCallArgHRESULT, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"NTSTATUS", DolphinX::ExtCallArgNTSTATUS, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"BYTE", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
-				{ (LPUTF8)"SBYTE", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
-				{ (LPUTF8)"WORD", DolphinX::ExtCallArgWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"SWORD", DolphinX::ExtCallArgSWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"LPWSTR", DolphinX::ExtCallArgLPWSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
-				{ (LPUTF8)"QWORD", DolphinX::ExtCallArgQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"ULARGE_INTEGER", DolphinX::ExtCallArgQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"SQWORD", DolphinX::ExtCallArgSQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"LARGE_INTEGER", DolphinX::ExtCallArgSQWORD, (LPUTF8)DolphinX::ExtCallArgLPVOID },
-				{ (LPUTF8)"GUID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"IID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
-				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)DolphinX::ExtCallArgLPVOID },
+				{ (LPUTF8)"ExternalAddress", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"ExternalHandle", DolphinX::ExtCallArgType::Handle, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"BSTR", DolphinX::ExtCallArgType::Bstr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"VARIANT", DolphinX::ExtCallArgType::Variant, (LPUTF8)"VARIANT" },
+				{ (LPUTF8)"SDWORD", DolphinX::ExtCallArgType::Int32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"DWORD", DolphinX::ExtCallArgType::UInt32, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"LPVOID", DolphinX::ExtCallArgType::LPVoid, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"DOUBLE", DolphinX::ExtCallArgType::Double, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"FLOAT", DolphinX::ExtCallArgType::Float, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"HRESULT", DolphinX::ExtCallArgType::HResult, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"NTSTATUS", DolphinX::ExtCallArgType::NTStatus, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"BYTE", DolphinX::ExtCallArgType::UInt8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ (LPUTF8)"SBYTE", DolphinX::ExtCallArgType::Int8, (LPUTF8)DolphinX::ExtCallArgType::LPVoid},
+				{ (LPUTF8)"WORD", DolphinX::ExtCallArgType::UInt16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"SWORD", DolphinX::ExtCallArgType::Int16, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"LPWSTR", DolphinX::ExtCallArgType::LPWStr, (LPUTF8)DolphinX::ExtCallArgType::LPPVoid},
+				{ (LPUTF8)"QWORD", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"ULARGE_INTEGER", DolphinX::ExtCallArgType::UInt64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"SQWORD", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"LARGE_INTEGER", DolphinX::ExtCallArgType::Int64, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
+				{ (LPUTF8)"GUID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"IID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgType::Guid, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgType::VarBool, (LPUTF8)DolphinX::ExtCallArgType::LPVoid },
 			};
 
-			answer.range = ThisTokenRange();
-			Str strToken = ThisTokenText();
+			answer.range = ThisTokenRange;
+			Str strToken = ThisTokenText;
 			NextToken();
 
 			// Scan the table
-			for (int i=0; i < sizeof(argTypes)/sizeof(ArgTypeDefn);i++)
+			for (size_t i=0; i < sizeof(argTypes)/sizeof(ArgTypeDefn);i++)
 			{
 				if (strToken == argTypes[i].m_szName)
 				{
 					answer.type = argTypes[i].m_type;
 					answer.parm = 0;
 
-					if (ThisToken() == Binary && !ThisTokenIsBinary('>'))
+					if (ThisToken == TokenType::Binary && !ThisTokenIsBinary('>'))
 					{
 						// At least a single indirection to a standard type
 						uint8_t ch;
 						while ((ch = PeekAtChar()) != '>' && isAnsiBinaryChar(ch))
 							Step();
 
-						Str strModifier = ThisTokenText();
+						Str strModifier = ThisTokenText;
 						int indirections = strModifier == (LPUTF8)"**" ? 2 : strModifier == (LPUTF8)"*" ? 1 : 0;
 						if (indirections == 0)
 						{
-							CompileError(TEXTRANGE(ThisTokenRange().m_start, CharPosition()), CErrBadExtTypeQualifier);
+							CompileError(TEXTRANGE(ThisTokenRange.m_start, CharPosition), CErrBadExtTypeQualifier);
 						}
-						answer.range.m_stop = ThisTokenRange().m_stop;
+						answer.range.m_stop = ThisTokenRange.m_stop;
 						NextToken();
 						LPUTF8 szClass = argTypes[i].m_szIndirectClass;
 						// Indirection to a built-in type?
-						if (szClass <= LPUTF8(DolphinX::ExtCallArgSTRUCT))
+						if (szClass <= LPUTF8(DolphinX::ExtCallArgType::Struct))
 						{
-							if (!szClass || (indirections > 1 && szClass == LPUTF8(DolphinX::ExtCallArgLPPVOID)))
+							if (!szClass || (indirections > 1 && szClass == LPUTF8(DolphinX::ExtCallArgType::LPPVoid)))
 								// Cannot indirect this type
-								CompileError(TEXTRANGE(answer.range.m_start, LastTokenRange().m_stop), CErrNotIndirectable, (Oop)NewUtf8String(strToken));
+								CompileError(TEXTRANGE(answer.range.m_start, LastTokenRange.m_stop), CErrNotIndirectable, (Oop)NewUtf8String(strToken));
 
 							if (indirections > 1)
-								answer.type = DolphinX::ExtCallArgLPPVOID;
+								answer.type = DolphinX::ExtCallArgType::LPPVoid;
 							else
-								answer.type = DolphinX::ExtCallArgTypes(int(szClass));
+								answer.type = DolphinX::ExtCallArgType(reinterpret_cast<uintptr_t>(szClass) & UINT8_MAX);
 							answer.parm = 0;
 						}
 						else
@@ -2689,7 +2686,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 								// Indirection to a recognised struct class
 								if (indirections > 1)
 								{
-									answer.type = DolphinX::ExtCallArgLPPVOID;
+									answer.type = DolphinX::ExtCallArgType::LPPVoid;
 									answer.parm = 0;
 								}
 								else
@@ -2722,7 +2719,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 		NextToken();
 }
 
-void Compiler::ParseBlock(int textPosition)
+void Compiler::ParseBlock(textpos_t textPosition)
 {
 	PushNewScope(textPosition);
 
@@ -2733,16 +2730,16 @@ void Compiler::ParseBlock(int textPosition)
 	GenNop();
 	
 	// Parse the block arguments
-	int nArgs = ParseBlockArguments(textPosition);
+	argcount_t nArgs = ParseBlockArguments(textPosition);
 	
-	int stop = -1;
+	textpos_t stop = textpos_t::npos;
 	if (m_ok)
 	{
 		// Block copy instruction has an implicit jump
-		int blockCopyMark = GenInstruction(BlockCopy);
+		ip_t blockCopyMark = GenInstruction(BlockCopy);
 		m_bytecodes[blockCopyMark].pScope = m_pCurrentScope;
 		// Block copy has 6 extension bytes, most filled in later
-		GenData(nArgs);
+		GenData(static_cast<uint8_t>(nArgs));
 		GenData(0);
 		GenData(0);
 		GenData(0);
@@ -2753,41 +2750,41 @@ void Compiler::ParseBlock(int textPosition)
 		
 		// Generate the block's body
 		ParseBlockStatements();
-		int endOfBlockPos = GenReturn(ReturnBlockStackTop);
+		ip_t endOfBlockPos = GenReturn(ReturnBlockStackTop);
 		m_bytecodes[endOfBlockPos].pScope = m_pCurrentScope;
 		// Generate text map entry for the Return
-		AddTextMap(endOfBlockPos, textPosition, ThisTokenRange().m_stop);
+		AddTextMap(endOfBlockPos, textPosition, ThisTokenRange.m_stop);
 		
 		// Fill in the target of the block copy's implicit jump (which will be the following Nop)
-		const int endOfBlockNopPos = GenNop();
+		const ip_t endOfBlockNopPos = GenNop();
 		m_bytecodes[endOfBlockNopPos].addJumpTo();
 		m_bytecodes[blockCopyMark].makeJumpTo(endOfBlockNopPos);
 
-		if (ThisToken() == CloseSquare)
+		if (ThisToken == TokenType::CloseSquare)
 		{
-			stop = ThisTokenRange().m_stop;
+			stop = ThisTokenRange.m_stop;
 			NextToken();
 		}
 		else
 		{
-			stop = LastTokenRange().m_stop;
+			stop = LastTokenRange.m_stop;
 			if (m_ok)
 				CompileError(TEXTRANGE(textPosition, stop), CErrBlockNotClosed);
 		}
 	}
 
-	PopScope(stop < 0 ? LastTokenRange().m_stop : stop);
+	PopScope(stop != textpos_t::npos ? LastTokenRange.m_stop : stop);
 }
 
-int Compiler::ParseBlockArguments(const int blockStart)
+argcount_t Compiler::ParseBlockArguments(const textpos_t blockStart)
 {
-	int argcount=0;
+	argcount_t argcount=0;
 	while (m_ok && ThisTokenIsSpecial(':'))
 	{
-		if (NextToken()==NameConst)
+		if (NextToken()== TokenType::NameConst)
 		{
 			// Get temporary name
-			AddArgument(ThisTokenText(), ThisTokenRange());
+			AddArgument(ThisTokenText, ThisTokenRange);
 			argcount++;
 		}
 		else
@@ -2799,7 +2796,7 @@ int Compiler::ParseBlockArguments(const int blockStart)
 		if (ThisTokenIsBinary(TEMPSDELIMITER))
 			NextToken();
 		else
-			CompileError(TEXTRANGE(blockStart, LastTokenRange().m_stop), CErrBlockArgListNotClosed);
+			CompileError(TEXTRANGE(blockStart, LastTokenRange.m_stop), CErrBlockArgListNotClosed);
 	}
 	return argcount;
 }
@@ -2813,16 +2810,16 @@ POTE Compiler::ParseArray()
 	OOPVECTOR elems;
 	elems.reserve(16);
 
-	int arrayStart = ThisTokenRange().m_start;
+	textpos_t arrayStart = ThisTokenRange.m_start;
 
 	NextToken();
-	while (m_ok && !ThisTokenIsClosing())
+	while (m_ok && !ThisTokenIsClosing)
 	{
-		switch(ThisToken()) 
+		switch(ThisToken) 
 		{
-		case SmallIntegerConst:
+		case TokenType::SmallIntegerConst:
 			{
-				Oop oopElement = m_piVM->NewSignedInteger(ThisTokenInteger());
+				Oop oopElement = m_piVM->NewSignedInteger(ThisTokenInteger);
 				elems.push_back(oopElement);
 				m_piVM->AddReference(oopElement);
 				m_piVM->MakeImmutable(oopElement, TRUE);
@@ -2830,20 +2827,20 @@ POTE Compiler::ParseArray()
 			}
 			break;
 
-		case LargeIntegerConst:
-		case ScaledDecimalConst:
+		case TokenType::LargeIntegerConst:
+		case TokenType::ScaledDecimalConst:
 			{
 				// Result of NewNumber already has ref. count
-				Oop oopElem = NewNumber(ThisTokenText());
+				Oop oopElem = NewNumber(ThisTokenText);
 				m_piVM->MakeImmutable(oopElem, TRUE);
 				elems.push_back(oopElem);
 				NextToken();
 			}
 			break;
 
-		case FloatingConst:
+		case TokenType::FloatingConst:
 			{
-				Oop oopFloat = reinterpret_cast<Oop>(m_piVM->NewFloat(ThisTokenFloat()));
+				Oop oopFloat = reinterpret_cast<Oop>(m_piVM->NewFloat(ThisTokenFloat));
 				elems.push_back(oopFloat);
 				m_piVM->AddReference(oopFloat);
 				m_piVM->MakeImmutable(oopFloat, TRUE);
@@ -2851,24 +2848,24 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case NilConst:
+		case TokenType::NilConst:
 				elems.push_back(reinterpret_cast<Oop>(Nil()));
 				NextToken();
 				break;
 
-		case TrueConst:
+		case TokenType::TrueConst:
 				elems.push_back(reinterpret_cast<Oop>(GetVMPointers().True));
 				NextToken();
 				break;
 
-		case FalseConst:
+		case TokenType::FalseConst:
 				elems.push_back(reinterpret_cast<Oop>(GetVMPointers().False));
 				NextToken();
 				break;
 
-		case NameConst:
+		case TokenType::NameConst:
 			{
-				POTE oteElement = InternSymbol(ThisTokenText());
+				POTE oteElement = InternSymbol(ThisTokenText);
 				Oop oopElement = reinterpret_cast<Oop>(oteElement);
 				elems.push_back(oopElement);
 				m_piVM->AddReference(oopElement);
@@ -2876,14 +2873,14 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case SymbolConst:
-		case NameColon:
+		case TokenType::SymbolConst:
+		case TokenType::NameColon:
 			{
-				Str name = ThisTokenText();
+				Str name = ThisTokenText;
 				while (isIdentifierFirst(PeekAtChar()))
 				{
 					NextToken();
-					name += ThisTokenText();
+					name += ThisTokenText;
 				}
 				Oop oopSymbol = reinterpret_cast<Oop>(InternSymbol(name));
 				elems.push_back(oopSymbol);
@@ -2892,10 +2889,10 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case ArrayBegin:
-		case Binary:
+		case TokenType::ArrayBegin:
+		case TokenType::Binary:
 			{
-				if (ThisToken()==ArrayBegin || ThisTokenIsBinary('(')) 
+				if (ThisToken== TokenType::ArrayBegin || ThisTokenIsBinary('('))
 				{
 					POTE array = ParseArray();
 					if (m_ok)
@@ -2922,37 +2919,37 @@ POTE Compiler::ParseArray()
 							Step();
 						}
 						while (isAnsiBinaryChar(PeekAtChar()));
-						oopElement = reinterpret_cast<Oop>(InternSymbol(ThisTokenText()));
+						oopElement = reinterpret_cast<Oop>(InternSymbol(ThisTokenText));
 						NextToken();
 					}
 					else if (isdigit(ch))
 					{
 						NextToken();
-						TokenType tokenType = ThisToken();
-						if (tokenType == SmallIntegerConst)
+						TokenType tokenType = ThisToken;
+						if (tokenType == TokenType::SmallIntegerConst)
 						{
-							oopElement = m_piVM->NewSignedInteger(-ThisTokenInteger());
+							oopElement = m_piVM->NewSignedInteger(-ThisTokenInteger);
 							NextToken();
 						}
-						else if (tokenType == LargeIntegerConst || tokenType == ScaledDecimalConst) 
+						else if (tokenType == TokenType::LargeIntegerConst || tokenType == TokenType::ScaledDecimalConst)
 						{
 							Str valuetext = (LPUTF8)"-";
-							valuetext += ThisTokenText();
+							valuetext += ThisTokenText;
 							oopElement = NewNumber(valuetext.c_str());
 							// Return value has an elevated ref. count which we assume here
 							elems.push_back(oopElement);
 							NextToken();
 							break;
 						}
-						else if (tokenType == FloatingConst) 
+						else if (tokenType == TokenType::FloatingConst)
 						{
-							oopElement = reinterpret_cast<Oop>(m_piVM->NewFloat(-ThisTokenFloat()));
+							oopElement = reinterpret_cast<Oop>(m_piVM->NewFloat(-ThisTokenFloat));
 							NextToken();
 						}
 					}
 					else
 					{
-						oopElement = reinterpret_cast<Oop>(InternSymbol(ThisTokenText()));
+						oopElement = reinterpret_cast<Oop>(InternSymbol(ThisTokenText));
 						NextToken();
 					}
 					
@@ -2963,25 +2960,25 @@ POTE Compiler::ParseArray()
 				
 				while (isAnsiBinaryChar(PeekAtChar()))
 					Step();
-				Oop oopSymbol = reinterpret_cast<Oop>(InternSymbol(ThisTokenText()));
+				Oop oopSymbol = reinterpret_cast<Oop>(InternSymbol(ThisTokenText));
 				elems.push_back(oopSymbol);
 				m_piVM->AddReference(oopSymbol);
 				NextToken();
 				break;
 			}
 			
-		case CharConst:
+		case TokenType::CharConst:
 			{
-				Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(ThisTokenInteger())));
+				Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(ThisTokenInteger)));
 				m_piVM->AddReference(oopChar);
 				elems.push_back(oopChar);
 				NextToken();
 			}
 			break;
 			
-		case AnsiStringConst:
+		case TokenType::AnsiStringConst:
 			{
-				LPUTF8 szLiteral = ThisTokenText();
+				LPUTF8 szLiteral = ThisTokenText;
 				POTE oteString = *szLiteral
 					? NewAnsiString(szLiteral)
 					: GetVMPointers().EmptyString;
@@ -2993,9 +2990,9 @@ POTE Compiler::ParseArray()
 			}
 			break;
 
-		case Utf8StringConst:
+		case TokenType::Utf8StringConst:
 			{
-				LPUTF8 szLiteral = ThisTokenText();
+				LPUTF8 szLiteral = ThisTokenText;
 				POTE oteString = *szLiteral
 					? NewUtf8String(szLiteral)
 					: GetVMPointers().EmptyString;
@@ -3007,7 +3004,7 @@ POTE Compiler::ParseArray()
 			}
 			break;
 
-		case ExprConstBegin:
+		case TokenType::ExprConstBegin:
 			{
 				Oop oopConst = ParseConstExpression();
 				elems.push_back(oopConst);
@@ -3018,7 +3015,7 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case ByteArrayBegin:
+		case TokenType::ByteArrayBegin:
 			{
 				Oop oopBytes = reinterpret_cast<Oop>(ParseByteArray());
 				if (m_ok)
@@ -3039,7 +3036,7 @@ POTE Compiler::ParseArray()
 	
 	if (m_ok)
 	{
-		if (ThisToken() == CloseParen)
+		if (ThisToken == TokenType::CloseParen)
 		{
 			POTE arrayPointer;
 
@@ -3050,10 +3047,10 @@ POTE Compiler::ParseArray()
 			else
 			{
 				// Gather new literals into a new array
-				const int elemcount = elems.size();
+				const size_t elemcount = elems.size();
 				arrayPointer = m_piVM->NewArray(elemcount);
 				STVarObject& array = *(STVarObject*)GetObj(arrayPointer);
-				for (int i=0; i < elemcount; i++)
+				for (size_t i=0; i < elemcount; i++)
 				{
 					Oop object = elems[i];
 					// We've already inc'd ref count of the elements
@@ -3069,7 +3066,7 @@ POTE Compiler::ParseArray()
 			return arrayPointer;
 		}
 		else
-			CompileError(TEXTRANGE(arrayStart, LastTokenRange().m_stop), CErrArrayNotClosed);
+			CompileError(TEXTRANGE(arrayStart, LastTokenRange.m_stop), CErrArrayNotClosed);
 	}
 	
 	// It failed, so destroy all the new bits and pieces
@@ -3086,48 +3083,38 @@ POTE Compiler::ParseByteArray()
 	// to the frame itself.
 	// A byte array may be any length.
 	//
-	int maxelemcount=128; // A convenient start size though we can expand beyond this if necessary
-	BYTE* elems=static_cast<BYTE*>(malloc(maxelemcount*sizeof(BYTE)));
-	int elemcount=0;
-
-	int start = ThisTokenRange().m_start;
+	std::vector<uint8_t> elems;
+	textpos_t start = ThisTokenRange.m_start;
 
 	NextToken();
-	while (m_ok && !ThisTokenIsClosing())
+	while (m_ok && !ThisTokenIsClosing)
 	{
-		if (elemcount>=maxelemcount)
+		switch(ThisToken) 
 		{
-			_ASSERTE(maxelemcount > 0);
-			maxelemcount *= 2;
-			elems = (BYTE*)realloc(elems, maxelemcount*sizeof(BYTE));
-		}
-		
-		switch(ThisToken()) 
-		{
-		case SmallIntegerConst:
+		case TokenType::SmallIntegerConst:
 			{
-				long intVal = ThisTokenInteger();
-				if (intVal < 0 || intVal > 255)
+				intptr_t intVal = ThisTokenInteger;
+				if (intVal < 0 || intVal > UINT8_MAX)
 				{
 					CompileError(CErrBadValueInByteArray);
 					NextToken();
 					break;
 				}
-				elems[elemcount++] = static_cast<BYTE>(intVal);
+				elems.push_back(static_cast<uint8_t>(intVal));
 				NextToken();
 			}
 			break;
 			
-		case LargeIntegerConst:
+		case TokenType::LargeIntegerConst:
 			{
-				Oop li = NewNumber(ThisTokenText());
+				Oop li = NewNumber(ThisTokenText);
 				if (IsIntegerObject(li))
 				{
-					int nVal = IntegerValueOf(li);
-					if (nVal < 0 || nVal > 255)
+					intptr_t nVal = IntegerValueOf(li);
+					if (nVal < 0 || nVal > UINT8_MAX)
 						CompileError(CErrBadValueInByteArray);
 					else
-						elems[elemcount++] = static_cast<BYTE>(ThisTokenInteger());
+						elems.push_back(static_cast<uint8_t>(ThisTokenInteger));
 					NextToken();
 					break;
 				}
@@ -3149,17 +3136,16 @@ POTE Compiler::ParseByteArray()
 	POTE arrayPointer=0;
 	if (m_ok)
 	{
-		if (ThisToken() == CloseSquare)
+		if (ThisToken == TokenType::CloseSquare)
 		{
-			arrayPointer=m_piVM->NewByteArray(elemcount);
-			BYTE* pb = FetchBytesOf(arrayPointer);
-			memcpy(pb, elems, elemcount);
+			arrayPointer = m_piVM->NewByteArray(elems.size());
+			uint8_t* pb = FetchBytesOf(arrayPointer);
+			memcpy(pb, elems.data(), elems.size());
 			NextToken();
 		}
 		else
-			CompileError(TEXTRANGE(start, LastTokenRange().m_stop), CErrByteArrayNotClosed);
+			CompileError(TEXTRANGE(start, LastTokenRange.m_stop), CErrByteArrayNotClosed);
 	}
-	free(elems);
 	return arrayPointer;
 }
 
@@ -3180,17 +3166,17 @@ Oop Compiler::ParseConstExpression()
 	pCompiler->SetVMInterface(m_piVM);
 
 	Oop result;
-	unsigned len;
+	size_t len;
 	__try
 	{
 		_ASSERTE(m_compilerObject && m_notifier);
-		DWORD flags = m_flags & ~DebugMethod;
+		CompilerFlags flags = m_flags & ~CompilerFlags::DebugMethod;
 
 		POTE oteSelf = m_piVM->IsAMetaclass(m_class) ? reinterpret_cast<STMetaclass*>(GetObj(m_class))->instanceClass: m_class;
 		Oop contextOop = Oop(oteSelf);
-		TEXTRANGE tokRange = ThisTokenRange();
-		POTE oteMethod = pCompiler->CompileExpression(GetText(), m_compilerObject, m_notifier, contextOop, FLAGS(flags), len, tokRange.m_stop+1);
-		if (pCompiler->m_ok && pCompiler->ThisToken() != CloseParen)
+		TEXTRANGE tokRange = ThisTokenRange;
+		POTE oteMethod = pCompiler->CompileExpression(Text, m_compilerObject, m_notifier, contextOop, flags, len, tokRange.m_stop+1);
+		if (pCompiler->m_ok && pCompiler->ThisToken != TokenType::CloseParen)
 		{
 			CompileError(TEXTRANGE(tokRange.m_start, tokRange.m_stop+len), CErrStaticExprNotClosed);
 		}
@@ -3201,8 +3187,8 @@ Oop Compiler::ParseConstExpression()
 
 			// Add all the literals in the expression to the literal frame of this method as this
 			// allows normal references search to work in IDE
-			const int loopEnd = pCompiler->GetLiteralCount();
-			for (int i=0; i < loopEnd;i++)
+			const size_t loopEnd = pCompiler->LiteralCount;
+			for (size_t i=0; i < loopEnd;i++)
 			{
 				Oop oopLiteral = exprMethod.aLiterals[i];
 				_ASSERTE(oopLiteral);
@@ -3213,12 +3199,12 @@ Oop Compiler::ParseConstExpression()
 							m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassArray)))
 
 				{
-					AddToFrame(oopLiteral, LastTokenRange());
+					AddToFrame(oopLiteral, LastTokenRange);
 				}
 			}
 
 			m_piVM->AddReference((Oop)oteMethod);
-			result = this->EvaluateExpression(GetText(), tokRange.m_stop+1, tokRange.m_stop + len - 1, oteMethod, contextOop, Nil());
+			result = this->EvaluateExpression(Text, tokRange.m_stop+1, tokRange.m_stop + len - 1, oteMethod, contextOop, Nil());
 			m_piVM->RemoveReference((Oop)oteMethod);
 		}
 		else
@@ -3226,7 +3212,7 @@ Oop Compiler::ParseConstExpression()
 	}
 	__finally
 	{
-		m_ok = pCompiler->Ok();
+		m_ok = pCompiler->Ok;
 		pCompiler->Release();
 	}
 	
@@ -3235,9 +3221,9 @@ Oop Compiler::ParseConstExpression()
 	return result;
 }
 
-Oop Compiler::EvaluateExpression(LPUTF8 source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(LPUTF8 source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools)
 {
-	Str exprSource(source, start, end - start + 1);
+	Str exprSource(source, static_cast<size_t>(start), static_cast<size_t>(end - start + 1));
 	return EvaluateExpression(exprSource.c_str(), oteMethod, contextOop, pools);
 }
 
@@ -3266,18 +3252,18 @@ void Compiler::GetInstVars()
 		// instance variable names.
 		//
 		STVarObject& array=*(STVarObject*)GetObj(arrayPointer);
-		const int len=FetchWordLengthOf(arrayPointer);
+		const size_t len=FetchWordLengthOf(arrayPointer);
 		// Too many inst vars?
-		if (len > 255)
+		if (len > UINT8_MAX)
 			CompileError(CompileTextRange(), CErrBadContext);
 		// We know how many inst vars there are in advance of compilation, and this
 		// array does not, therefore, need to be dynamic
 		m_instVars.resize(len);
-		for (int i=0; i<len; i++)
+		for (size_t i=0; i<len; i++)
 		{
 			// Copy the names from the Array into our m_instVars array.
 			POTE ote = (POTE)array.fields[i];
-			BYTE *pb = FetchBytesOf(ote);
+			uint8_t *pb = FetchBytesOf(ote);
 			m_instVars[i] = reinterpret_cast<LPUTF8>(pb);
 		}
 		
@@ -3307,11 +3293,11 @@ void Compiler::GetContext(POTE workspacePools)
 			else
 			{
 				STVarObject& pools = *(STVarObject*)GetObj(m_oopWorkspacePools);
-				const MWORD len=FetchWordLengthOf(m_oopWorkspacePools);
+				const size_t len=FetchWordLengthOf(m_oopWorkspacePools);
 				if (len == 0)
 					m_oopWorkspacePools = Nil();
 				else
-					for (MWORD i=0;i<len;i++)
+					for (size_t i=0;i<len;i++)
 					{
 						Oop oopPool = pools.fields[i];
 						if (IsIntegerObject(oopPool))
@@ -3339,56 +3325,56 @@ bool Compiler::IsBlock(Oop oop)
 	return m_piVM->IsKindOf(Oop(oop), GetVMPointers().ClassBlockClosure) != 0;
 }
 
-void Compiler::AssertValidIpForTextMapEntry(int ip, bool bFinal)
+void Compiler::AssertValidIpForTextMapEntry(ip_t ip, bool bFinal)
 {
-	if (ip == -1) return;
-	_ASSERTE(ip >= 0 && ip < GetCodeSize());
+	if (ip == ip_t::npos) return;
+	_ASSERTE(ip <= LastIp);
 	const BYTECODE& bc = m_bytecodes[ip];
-	if (bc.isData())
+	if (bc.IsData)
 	{
-		_ASSERTE(ip > 0);
+		_ASSERTE(ip > ip_t::zero);
 		const BYTECODE& prev = m_bytecodes[ip-1];
-		_ASSERTE(prev.isOpCode());
+		_ASSERTE(prev.IsOpCode);
 		_ASSERTE((bc.byte == PopStoreTemp && (prev.byte == IncrementTemp || prev.byte == DecrementTemp))
 			|| (bc.byte == StoreTemp && (prev.byte == IncrementPushTemp || prev.byte == DecrementPushTemp)));
 	}
 	else
 	{
-		_ASSERTE(bc.byte == Nop || bc.pScope != NULL);
+		_ASSERTE(bc.byte == Nop || bc.pScope != nullptr);
 
 		// Must be a message send, store (assignment), return, push of the empty block,
 		// or the first instruction in a block
-		int prevIP = ip - 1;
-		while (prevIP >= 0 && (m_bytecodes[prevIP].isData() || m_bytecodes[prevIP].byte == Nop))
-			prevIP--;
-		const BYTECODE* prev = prevIP < 0 ? NULL : &m_bytecodes[prevIP];
-		bool isFirstInBlock = prev != NULL && (prev->byte == BlockCopy 
-								|| (bc.pScope == NULL 
-										? bc.byte == Nop && prev != NULL && prev->isUnconditionalJump()
-										: bc.pScope->GetRealScope()->IsBlock() 
-											&& (bc.pScope->GetRealScope()->GetInitialIP() == ip
+		ip_t prevIP = ip - 1;
+		while (prevIP >= ip_t::zero && (m_bytecodes[prevIP].IsData || m_bytecodes[prevIP].byte == Nop))
+			--prevIP;
+		const BYTECODE* prev = prevIP < ip_t::zero ? nullptr : &m_bytecodes[prevIP];
+		bool isFirstInBlock = prev != nullptr && (prev->byte == BlockCopy 
+								|| (bc.pScope == nullptr 
+										? bc.byte == Nop && prev != nullptr && prev->IsUnconditionalJump
+										: bc.pScope->RealScope->IsBlock 
+											&& (bc.pScope->RealScope->InitialIP == ip
 											|| bc.pScope != prev->pScope 
-											|| bc.pScope->GetRealScope() != prev->pScope->GetRealScope())));
-		if (bFinal && WantDebugMethod())
+											|| bc.pScope->RealScope != prev->pScope->RealScope)));
+		if (bFinal && WantDebugMethod)
 		{
 			// If not at the start of a method or block, then a text map entry should only occur after a Break
 			// or (when stripping unreachable code) if the byte immediately follows an unconditional return/jump
-			_ASSERTE(ip == 0 
+			_ASSERTE(ip == ip_t::zero 
 				|| isFirstInBlock 
-				|| bc.isConditionalJump()
-				|| (bc.isShortPushConst() && IsBlock(m_literalFrame[bc.indexOfShortPushConst()]))
+				|| bc.IsConditionalJump
+				|| (bc.IsShortPushConst && IsBlock(m_literalFrame[bc.indexOfShortPushConst()]))
 				|| (bc.byte == PushConst && IsBlock(m_literalFrame[m_bytecodes[ip + 1].byte]))
-				|| (prev->isBreak() || (!bc.isJumpTarget() && (prev->isReturn() || prev->isLongJump()))));
+				|| (prev->IsBreak || (!bc.IsJumpTarget && (prev->IsReturn || prev->IsLongJump))));
 		}
 
-		_ASSERTE(bc.isSend()
-			|| bc.isConditionalJump()
-			|| bc.isStore()
-			|| bc.isReturn()
-			|| (bc.isShortPushConst() && IsBlock(m_literalFrame[bc.indexOfShortPushConst()]))
-			|| (bc.byte == PushConst && IsBlock(m_literalFrame[m_bytecodes[ip+1].byte]))
+		_ASSERTE(bc.IsSend
+			|| bc.IsConditionalJump
+			|| bc.IsStore
+			|| bc.IsReturn
+			|| (bc.IsShortPushConst && IsBlock(m_literalFrame[bc.indexOfShortPushConst()]))
+			|| (bc.byte == PushConst && IsBlock(m_literalFrame[m_bytecodes[ip + 1].byte]))
 			|| (isFirstInBlock)
-			|| (bc.isConditionalJump())
+			|| (bc.IsConditionalJump)
 			|| (bc.byte == IncrementTemp || bc.byte == DecrementTemp)
 			|| (bc.byte == IncrementStackTop || bc.byte == DecrementStackTop)
 			|| (bc.byte == IncrementPushTemp|| bc.byte == DecrementPushTemp)
@@ -3400,27 +3386,27 @@ void Compiler::AssertValidIpForTextMapEntry(int ip, bool bFinal)
 void Compiler::VerifyTextMap(bool bFinal)
 {
 	//_CrtCheckMemory();
-	const int size = m_textMaps.size();
-	for (int i=0; i<size; i++)
+	const size_t size = m_textMaps.size();
+	for (size_t i=0; i<size; i++)
 	{
 		const TEXTMAP& textMap = m_textMaps[i];
-		int ip = textMap.ip;
+		ip_t ip = textMap.ip;
 		AssertValidIpForTextMapEntry(ip, bFinal);
 	}
 }
 
 void Compiler::VerifyJumps()
 {
-	const int size = GetCodeSize();
-	for (int i = 0; i<size; i++)
+	const ip_t end = LastIp;
+	for (ip_t i = ip_t::zero; i<=end; i++)
 	{
 		const BYTECODE& bc = m_bytecodes[i];
-		if (bc.isJumpSource())
+		if (bc.IsJumpSource)
 		{
-			_ASSERTE(bc.isJumpInstruction());
-			_ASSERTE(bc.target >= 0 && bc.target < size);
+			_ASSERTE(bc.IsJumpInstruction);
+			_ASSERTE(bc.target <= end);
 			const BYTECODE& target = m_bytecodes[bc.target];
-			_ASSERTE(!target.isData());
+			_ASSERTE(!target.IsData);
 			_ASSERTE(target.jumpsTo > 0);
 		}
 	}
@@ -3429,53 +3415,53 @@ void Compiler::VerifyJumps()
 
 POTE Compiler::GetTextMapObject()
 {
-	const int size = m_textMaps.size();
+	const size_t size = m_textMaps.size();
 	POTE arrayPointer=m_piVM->NewArray(size*3);
 	STVarObject& array = *(STVarObject*)GetObj(arrayPointer);
-	int arrayIndex = 0;
-	for (int i=0; i<size; i++)
+	size_t arrayIndex = 0;
+	for (size_t i=0; i<size; i++)
 	{
 		const TEXTMAP& textMap = m_textMaps[i];
-		int ip = textMap.ip;
-		array.fields[arrayIndex++] = IntegerObjectOf(ip + 1);
-		array.fields[arrayIndex++] = IntegerObjectOf(textMap.start + 1);
-		array.fields[arrayIndex++] = IntegerObjectOf(textMap.stop + 1);
+		ip_t ip = textMap.ip;
+		array.fields[arrayIndex++] = IntegerObjectOf(static_cast<intptr_t>(ip) + 1);
+		array.fields[arrayIndex++] = IntegerObjectOf(static_cast<intptr_t>(textMap.start) + 1);
+		array.fields[arrayIndex++] = IntegerObjectOf(static_cast<intptr_t>(textMap.stop) + 1);
 	}
 	return arrayPointer;
 }
 
 inline void Compiler::BreakPoint()
 {
-	if (WantDebugMethod())
+	if (WantDebugMethod)
 		GenInstruction(Break);
 }
 
 
-int Compiler::AddTextMap(int ip, const TEXTRANGE& range)
+size_t Compiler::AddTextMap(ip_t ip, const TEXTRANGE& range)
 {
 	return AddTextMap(ip, range.m_start, range.m_stop);
 }
 
 // Add a new TEXTMAP encoding the current char position and code position
 // These need to be added in IP order.
-int Compiler::AddTextMap(int ip, int textStart, int textStop)
+size_t Compiler::AddTextMap(ip_t ip, const textpos_t textStart, const textpos_t textStop)
 {
 	if (!m_ok) return -1;
-	_ASSERTE(ip < GetCodeSize());
+	_ASSERTE(ip <= LastIp);
 	// textStart can be equal to text length in order to specify an empty interval at the end of the method
-	_ASSERTE(textStart >= 0 && textStart <= GetTextLength());
-	_ASSERTE(textStop >= -1 && textStop < GetTextLength());
-	if (!WantTextMap()) return -1;
-	_ASSERTE(m_bytecodes[ip].isOpCode());
+	_ASSERTE((intptr_t)textStart >= 0 && static_cast<size_t>(textStart) <= TextLength);
+	_ASSERTE((intptr_t)textStop >= -1 && static_cast<size_t>(textStop) < TextLength);
+	if (!WantTextMap) return -1;
+	_ASSERTE(m_bytecodes[ip].IsOpCode);
 	_ASSERTE(m_bytecodes[ip].byte != Nop);
 	m_textMaps.push_back(TEXTMAP(ip, textStart, textStop));
 	VerifyTextMap();
 	return m_textMaps.size() - 1;
 }
 
-void Compiler::InsertTextMapEntry(int ip, int textStart, int textStop)
+void Compiler::InsertTextMapEntry(ip_t ip, textpos_t textStart, textpos_t textStop)
 {
-	if (!WantTextMap()) return;
+	if (!WantTextMap) return;
 
 	const TEXTMAPLIST::const_iterator end = m_textMaps.end();
 	TEXTMAPLIST::iterator it = m_textMaps.begin();
@@ -3488,7 +3474,7 @@ void Compiler::InsertTextMapEntry(int ip, int textStart, int textStop)
 	m_textMaps.insert(it, TEXTMAP(ip, textStart, textStop));
 }
 
-Compiler::TEXTMAPLIST::iterator Compiler::FindTextMapEntry(int ip)
+Compiler::TEXTMAPLIST::iterator Compiler::FindTextMapEntry(ip_t ip)
 {
 	const TEXTMAPLIST::const_iterator end = m_textMaps.end();
 	for (TEXTMAPLIST::iterator it = m_textMaps.begin(); it != end; it++)
@@ -3501,16 +3487,16 @@ Compiler::TEXTMAPLIST::iterator Compiler::FindTextMapEntry(int ip)
 	return m_textMaps.end();
 }
 
-bool Compiler::RemoveTextMapEntry(int ip)
+bool Compiler::RemoveTextMapEntry(ip_t ip)
 {
-	if (!WantTextMap()) return true;
+	if (!WantTextMap) return true;
 
 	TEXTMAPLIST::iterator it = FindTextMapEntry(ip);
 	if (it != m_textMaps.end())
 	{
 		const TEXTMAP& tm = (*it);
 		const BYTECODE& bc = m_bytecodes[ip];
-		int i = it - m_textMaps.begin();
+		ptrdiff_t i = it - m_textMaps.begin();
 
 		m_textMaps.erase(it);
 		return true;
@@ -3519,15 +3505,15 @@ bool Compiler::RemoveTextMapEntry(int ip)
 		return false;
 }
 
-bool Compiler::VoidTextMapEntry(int ip)
+bool Compiler::VoidTextMapEntry(ip_t ip)
 {
-	if (!WantTextMap()) return true;
+	if (!WantTextMap) return true;
 
 	TEXTMAPLIST::iterator it = FindTextMapEntry(ip);
 	if (it != m_textMaps.end())
 	{
 		TEXTMAP& tm = (*it);
-		tm.ip = -1;
+		tm.ip = ip_t::npos;
 		return true;
 	}
 	else
@@ -3537,15 +3523,14 @@ bool Compiler::VoidTextMapEntry(int ip)
 
 POTE Compiler::GetTempsMapObject()
 {
-	int nScopes = m_allScopes.size();
+	const size_t nScopes = m_allScopes.size();
 	POTE arrayPointer=m_piVM->NewArray(nScopes);
 	STVarObject& array = *(STVarObject*)GetObj(arrayPointer);
-	int arrayIndex = 0;
-	const int loopEnd = nScopes;
-	for (int i=0; i<loopEnd; i++)
+	size_t arrayIndex = 0;
+	for (size_t i=0; i<nScopes; i++)
 	{
 		LexicalScope* pScope = m_allScopes[i];
-		m_piVM->StorePointerWithValue(array.fields+i, Oop(pScope->BuildTempMapEntry(m_piVM)));
+		m_piVM->StorePointerWithValue(array.fields+i, reinterpret_cast<Oop>(pScope->BuildTempMapEntry(m_piVM)));
 	}
 	return arrayPointer;
 }
@@ -3569,7 +3554,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 	m_piVM = (IDolphin*)piVM;
 
 	// Check argument types are correct
-	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == NULL)
+	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == nullptr)
 		return Nil();
 
 	POTE resultPointer = Nil();
@@ -3581,17 +3566,17 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 		
 		__try
 		{
-			POTE methodPointer = CompileForClassHelper((LPUTF8)szSource, compilerOop, notifier, aClass, flags);
+			POTE methodPointer = CompileForClassHelper((LPUTF8)szSource, compilerOop, notifier, aClass, static_cast<CompilerFlags>(flags));
 
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
 			
 			m_piVM->StorePointerWithValue(&(result.fields[0]), Oop(methodPointer));
 			
-			if (WantTextMap())
+			if (WantTextMap)
 				m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
 			
-			if (WantTempsMap())
+			if (WantTempsMap)
 				m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
 		}
 		__except(DolphinExceptionFilter(m_piVM, GetExceptionInformation()))
@@ -3619,7 +3604,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 	m_piVM = (IDolphin*)piVM; 
 
 	// Check argument types are correct
-	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == NULL)
+	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == nullptr)
 		return Nil();
 	
 	POTE resultPointer = Nil();
@@ -3628,14 +3613,14 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 	CHECKREFERENCES
 #endif
 
-	wchar_t* prevLocale = NULL;
+	wchar_t* prevLocale = nullptr;
 	__try
 	{
 #ifdef USE_VM_DLL
 		prevLocale = _wsetlocale(LC_ALL, L"C");
 		if (prevLocale[0] == L'C' && prevLocale[1] == 0)
 		{
-			prevLocale = NULL;
+			prevLocale = nullptr;
 		}
 		else
 		{
@@ -3645,17 +3630,17 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		
 		__try
 		{
-			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aClass, aWorkspacePool, flags);
+			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aClass, aWorkspacePool, static_cast<CompilerFlags>(flags));
 			
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
 			
 			m_piVM->StorePointerWithValue(&(result.fields[0]), Oop(methodPointer));
 			
-			if (WantTextMap())
+			if (WantTextMap)
 				m_piVM->StorePointerWithValue(&(result.fields[1]), Oop(GetTextMapObject()));
 			
-			if (WantTempsMap())
+			if (WantTempsMap)
 				m_piVM->StorePointerWithValue(&(result.fields[2]), Oop(GetTempsMapObject()));
 		}
 		__except(DolphinExceptionFilter(m_piVM, GetExceptionInformation()))
@@ -3672,7 +3657,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 	__finally
 	{
 #ifdef USE_VM_DLL
-		if (prevLocale != NULL)
+		if (prevLocale != nullptr)
 		{
 			_wsetlocale(LC_ALL, prevLocale);
 			free(prevLocale);
@@ -3701,14 +3686,14 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	POTE argsPointer = m_piVM->NewArray(10);
 	STVarObject& args = *(STVarObject*)GetObj(argsPointer);
 	args.fields[0] = IntegerObjectOf(errorCode);
-	args.fields[1] = IntegerObjectOf(GetLineNo());
+	args.fields[1] = IntegerObjectOf(LineNo);
 
-	args.fields[2] = IntegerObjectOf(range.m_start);
-	args.fields[3] = IntegerObjectOf(range.m_stop);
-	int offset = GetTextOffset();
-	args.fields[4] = IntegerObjectOf(offset);
+	args.fields[2] = IntegerObjectOf(static_cast<intptr_t>(range.m_start));
+	args.fields[3] = IntegerObjectOf(static_cast<intptr_t>(range.m_stop));
+	textpos_t offset = TextOffset;
+	args.fields[4] = IntegerObjectOf(static_cast<intptr_t>(offset));
 
-	POTE sourceString = NewUtf8String(GetText());
+	POTE sourceString = NewUtf8String(Text);
 	m_piVM->StorePointerWithValue(&args.fields[5], Oop(sourceString));
 
 	LPUTF8 selector = m_selector.c_str();
@@ -3748,27 +3733,26 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 {
 	m_ok=false;
-	if (!WantSyntaxCheckOnly())	
+	if (!WantSyntaxCheckOnly)	
 	{
-		if (m_flags & Boot)
-		{	
-			Str erroneousText = GetTextRange(range);
-			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%d..%d): %s\n\r", code, GetClassName().c_str(), m_selector.c_str(), GetLineNo(), range.m_start, range.m_stop,
-				erroneousText.c_str());
-			fprintf(stdout, (LPCSTR)GetText());
+		if (!(m_flags & CompilerFlags::Boot))
+		{
+			_ASSERTE(m_compilerObject && m_notifier);
+			Notification(code, range, extras);
 		}
 		else
 		{
-			_ASSERTE(m_compilerObject && m_notifier);
-
-			Notification(code, range, extras);
+			Str erroneousText = GetTextRange(range);
+			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, GetClassName().c_str(), m_selector.c_str(), LineNo, range.m_start, range.m_stop,
+				erroneousText.c_str());
+			fprintf(stdout, (LPCSTR)Text);
 		}
 	}
 }
 
 void Compiler::Warning(int code, Oop extra)
 {
-	WarningV(ThisTokenRange(), code, extra, 0);
+	WarningV(ThisTokenRange, code, extra, 0);
 }
 
 void Compiler::Warning(const TEXTRANGE& range, int code, Oop extra)
@@ -3778,24 +3762,24 @@ void Compiler::Warning(const TEXTRANGE& range, int code, Oop extra)
 
 void Compiler::WarningV(const TEXTRANGE& range, int code, ...)
 {
-	if (!WantSyntaxCheckOnly())	
+	if (!WantSyntaxCheckOnly)	
 	{
-		if (m_flags & Boot)
-		{
-			char buf[1024];
-			VERIFY(wsprintf(buf, "WARNING %s>>%s line %d: %d\n", GetClassName().c_str(), m_selector.c_str(), GetLineNo(), code)>=0);
-			OutputDebugString(buf);
-			//((CIstApp*)AfxGetApp())->OutputErrorStringToCurrentDoc(buf);
-			OutputDebugString((LPCSTR)GetText());
-			OutputDebugString("\n\r");
-		}
-		else
+		if (!(m_flags & CompilerFlags::Boot))
 		{
 			_ASSERTE(m_compilerObject);
 			va_list extras;
 			va_start(extras, code);
 			Notification(code, range, extras);
 			va_end(extras);
+		}
+		else
+		{
+			char buf[1024];
+			VERIFY(wsprintf(buf, "WARNING %s>>%s line %d: %d\n", GetClassName().c_str(), m_selector.c_str(), LineNo, code) >= 0);
+			OutputDebugString(buf);
+			//((CIstApp*)AfxGetApp())->OutputErrorStringToCurrentDoc(buf);
+			OutputDebugString((LPCSTR)Text);
+			OutputDebugString("\n\r");
 		}
 	}
 }
@@ -3830,16 +3814,16 @@ TempVarDecl* Compiler::DeclareTemp(const Str& strName, const TEXTRANGE& range)
 	return pNewVar;
 }
 
-void Compiler::PopScope(int textStop)
+void Compiler::PopScope(textpos_t textStop)
 {
-	_ASSERTE(m_pCurrentScope != NULL);
+	_ASSERTE(m_pCurrentScope != nullptr);
 	m_pCurrentScope->SetTextStop(textStop);
-	m_pCurrentScope = m_pCurrentScope->GetOuter();
+	m_pCurrentScope = m_pCurrentScope->Outer;
 }
 
-void Compiler::PushNewScope(int textStart, bool bOptimized)
+void Compiler::PushNewScope(textpos_t textStart, bool bOptimized)
 {
-	int start = textStart < 0 ? ThisTokenRange().m_start : textStart;
+	textpos_t start = textStart < (textpos_t)0 ? ThisTokenRange.m_start : textStart;
 	LexicalScope* pNewScope = new LexicalScope(m_pCurrentScope, start, bOptimized);
 	m_allScopes.push_back(pNewScope);
 	m_pCurrentScope = pNewScope;
@@ -3853,23 +3837,23 @@ void Compiler::PushNewScope(int textStart, bool bOptimized)
 	}
 }
 
-void Compiler::PushOptimizedScope(int textStart)
+void Compiler::PushOptimizedScope(textpos_t textStart)
 {
 	PushNewScope(textStart, true);
 }
 
-inline BYTE MakeOuterTempRef(int blockDepth, int index)
+inline BYTE MakeOuterTempRef(size_t blockDepth, int index)
 {
 	_ASSERTE(index < OuterTempMaxIndex);
 	_ASSERTE(blockDepth <= OuterTempMaxDepth);
-	return static_cast<BYTE>((blockDepth << 5) | index);
+	return static_cast<uint8_t>((blockDepth << 5) | index);
 }
 
-int Compiler::GenTempRefInstruction(int instruction, TempVarRef* pRef)
+ip_t Compiler::GenTempRefInstruction(uint8_t instruction, TempVarRef* pRef)
 {
-	int scopeDepth = pRef->GetEstimatedDistance();
-	_ASSERTE(scopeDepth >= 0 && scopeDepth < 256);
-	int pos = GenInstructionExtended(instruction, static_cast<BYTE>(scopeDepth));
+	unsigned scopeDepth = pRef->GetEstimatedDistance();
+	_ASSERTE(scopeDepth <= UINT8_MAX);
+	ip_t pos = GenInstructionExtended(instruction, static_cast<uint8_t>(scopeDepth));
 	// Placeholder for index (not yet known)
 	GenData(0);
 	m_bytecodes[pos].pVarRef = pRef;
@@ -3877,46 +3861,46 @@ int Compiler::GenTempRefInstruction(int instruction, TempVarRef* pRef)
 	return pos;
 }
 
-int Compiler::GenPushCopiedValue(TempVarDecl* pDecl)
+size_t Compiler::GenPushCopiedValue(TempVarDecl* pDecl)
 {
-	int index = pDecl->GetIndex();
-	_ASSERTE(index >= 0);
-	int bytesGenerated = 0;
+	size_t index = pDecl->Index;
+	_ASSERTE(index != -1);
+	size_t bytesGenerated = 0;
 
-	switch(pDecl->GetVarType())
+	switch(pDecl->VarType)
 	{
-	case tvtUnaccessed:
-		InternalError(__FILE__, __LINE__, pDecl->GetTextRange(), 
-						"Unaccessed copied value '%s'", pDecl->GetName().c_str());
+	case TempVarType::Unaccessed:
+		InternalError(__FILE__, __LINE__, pDecl->TextRange, 
+						"Unaccessed copied value '%s'", pDecl->Name.c_str());
 		break;
 
-	case tvtCopy:	// Copies are pushed back on the stack on block activation
-	case tvtStack:	// A stack variable accessed only from its local scope
-	case tvtCopied:	// This is the type of a stack variable that has been copied
+	case TempVarType::Copy:	// Copies are pushed back on the stack on block activation
+	case TempVarType::Stack:	// A stack variable accessed only from its local scope
+	case TempVarType::Copied:	// This is the type of a stack variable that has been copied
 	{
-		int insertedAt;
+		ip_t insertedAt;
 		if (index < NumShortPushTemps)
 		{
-			insertedAt = GenInstruction(ShortPushTemp, static_cast<BYTE>(index));
+			insertedAt = GenInstruction(ShortPushTemp, static_cast<uint8_t>(index));
 			bytesGenerated = 1;
 		}
 		else
 		{
-			insertedAt = GenInstructionExtended(PushTemp, static_cast<BYTE>(index));
+			insertedAt = GenInstructionExtended(PushTemp, static_cast<uint8_t>(index));
 			bytesGenerated = 2;
 		}
 
 #ifdef _DEBUG
 		// This fake temp ref is only needed for diagnostic purposes (the refs having been processed already)
-		TempVarRef* pVarRef = pDecl->GetScope()->AddTempRef(pDecl, vrtRead, pDecl->GetTextRange());
+		TempVarRef* pVarRef = pDecl->Scope->AddTempRef(pDecl, VarRefType::Read, pDecl->TextRange);
 		m_bytecodes[insertedAt].pVarRef = pVarRef;
 #endif
 		break;
 	}
 
-	case tvtShared:
-		InternalError( __FILE__, __LINE__, pDecl->GetTextRange(), 
-						"Can't copy shared temp '%s'", pDecl->GetName().c_str());
+	case TempVarType::Shared:
+		InternalError( __FILE__, __LINE__, pDecl->TextRange, 
+						"Can't copy shared temp '%s'", pDecl->Name.c_str());
 		break;
 
 	default:

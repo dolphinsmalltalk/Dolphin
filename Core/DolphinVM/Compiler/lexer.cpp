@@ -27,17 +27,17 @@ static const uint8_t LITERAL = '#';
 
 Lexer::Lexer()
 {
-	m_base = 0;
+	m_base = textpos_t::start;
 	m_buffer = (LPUTF8)"";
 	m_cc = '\0';
-	m_cp = NULL;
+	m_cp = nullptr;
 	m_integer = 0;
-	m_lastTokenRange = { 0, 0 };
+	m_lastTokenRange = { textpos_t::start, textpos_t::start };
 	m_lineno = 0;
-	m_thisTokenRange = { 0, 0 };
-	m_token = NULL;
-	m_tokenType = None;
-	tp = NULL;
+	m_thisTokenRange = { textpos_t::start, textpos_t::start };
+	m_token = nullptr;
+	m_tokenType = TokenType::None;
+	tp = nullptr;
 	m_locale = _create_locale(LC_ALL, "C");
 	m_piVM = nullptr;
 }
@@ -50,7 +50,7 @@ Lexer::~Lexer()
 
 void Lexer::CompileError(int code, Oop extra)
 {
-	CompileErrorV(ThisTokenRange(), code, extra, 0);
+	CompileErrorV(ThisTokenRange, code, extra, 0);
 }
 
 void Lexer::CompileError(const TEXTRANGE& range, int code, Oop extra)
@@ -66,15 +66,15 @@ void Lexer::CompileErrorV(const TEXTRANGE& range, int code, ...)
 	va_end(extras);
 }
 
-void Lexer::SetText(const uint8_t* compiletext, int offset)
+void Lexer::SetText(const uint8_t* compiletext, textpos_t offset)
 {
-	m_tokenType = None;
+	m_tokenType = TokenType::None;
 	m_buffer = compiletext;
 	m_cp = m_buffer.c_str();
 	m_token = new uint8_t[m_buffer.size() + 1];
 	m_lineno = 1;
 	m_base = offset;
-	AdvanceCharPtr(offset);
+	AdvanceCharPtr(static_cast<size_t>(offset));
 }
 
 // ANSI Binary chars are ...
@@ -131,7 +131,7 @@ inline void Lexer::SkipBlanks()
 
 void Lexer::SkipComments()
 {
-	int commentStart = CharPosition();
+	textpos_t commentStart = CharPosition;
 	while (m_cc == COMMENTDELIM)
 	{
 		uint8_t ch;
@@ -143,7 +143,7 @@ void Lexer::SkipComments()
 		if (!ch)
 		{
 			// Break out at EOF 
-			CompileError(TEXTRANGE(commentStart, CharPosition()), LErrCommentNotClosed);
+			CompileError(TEXTRANGE(commentStart, CharPosition), LErrCommentNotClosed);
 		}
 
 		const uint8_t* ep = m_cp;
@@ -157,7 +157,7 @@ inline bool issign(uint8_t ch)
 	return ch == '-' || ch == '+';
 }
 
-double Lexer::ThisTokenFloat() const
+double Lexer::get_ThisTokenFloat() const
 {
 	_CRT_DOUBLE result;
 	int retval = _atodbl_l(&result, (LPSTR)m_token, m_locale);
@@ -175,7 +175,7 @@ void Lexer::ScanFloat()
 	uint8_t ch = NextChar();
 	if (isdigit(PeekAtChar()))
 	{
-		m_tokenType = FloatingConst;
+		m_tokenType = TokenType::FloatingConst;
 
 		do
 		{
@@ -231,7 +231,7 @@ int Lexer::DigitValue(uint8_t ch) const
 void Lexer::ScanInteger(int radix)
 {
 	m_integer = 0;
-	m_tokenType = SmallIntegerConst;
+	m_tokenType = TokenType::SmallIntegerConst;
 	int digit = DigitValue(PeekAtChar());
 
 	int maxval = INT_MAX / radix;
@@ -240,7 +240,7 @@ void Lexer::ScanInteger(int radix)
 	{
 		*tp++ = NextChar();
 
-		if (m_tokenType == SmallIntegerConst)
+		if (m_tokenType == TokenType::SmallIntegerConst)
 		{
 			if (m_integer < maxval || (m_integer == maxval && digit <= INT_MAX % radix))
 			{
@@ -249,7 +249,7 @@ void Lexer::ScanInteger(int radix)
 			}
 			else
 				// It will have to be left to Smalltalk to calc the large integer value
-				m_tokenType = LargeIntegerConst;
+				m_tokenType = TokenType::LargeIntegerConst;
 		}
 
 		digit = DigitValue(PeekAtChar());
@@ -276,7 +276,7 @@ void Lexer::ScanExponentInteger()
 		{
 			*tp++ = NextChar();
 		} while (isdigit(PeekAtChar()));
-		m_tokenType = LargeIntegerConst;
+		m_tokenType = TokenType::LargeIntegerConst;
 	}
 	else
 	{
@@ -304,7 +304,7 @@ void Lexer::ScanNumber()
 	{
 	case 'r':
 	{
-		if (m_tokenType != SmallIntegerConst)
+		if (m_tokenType != TokenType::SmallIntegerConst)
 			return;
 
 		if (m_integer >= 2 && m_integer <= 36)
@@ -333,7 +333,7 @@ void Lexer::ScanNumber()
 		while (isdigit(PeekAtChar()))
 			*tp++ = NextChar();
 
-		m_tokenType = ScaledDecimalConst;
+		m_tokenType = TokenType::ScaledDecimalConst;
 		break;
 
 	case '.':
@@ -349,7 +349,7 @@ void Lexer::ScanNumber()
 			while (isdigit(PeekAtChar()))
 				*tp++ = NextChar();
 
-			m_tokenType = ScaledDecimalConst;
+			m_tokenType = TokenType::ScaledDecimalConst;
 		}
 		break;
 
@@ -365,7 +365,7 @@ void Lexer::ScanNumber()
 }
 
 // Read string up to terminating quote, ignoring embedded double quotes
-Lexer::TokenType Lexer::ScanString(int stringStart)
+Lexer::TokenType Lexer::ScanString(textpos_t stringStart)
 {
 	uint8_t ch;
 	bool isAscii = true;
@@ -374,7 +374,7 @@ Lexer::TokenType Lexer::ScanString(int stringStart)
 		ch = NextChar();
 		if (!ch)
 		{
-			CompileError(TEXTRANGE(stringStart, CharPosition()), LErrStringNotClosed);
+			CompileError(TEXTRANGE(stringStart, CharPosition), LErrStringNotClosed);
 		}
 		else
 		{
@@ -393,7 +393,7 @@ Lexer::TokenType Lexer::ScanString(int stringStart)
 		}
 	} while (ch);
 
-	return isAscii ? AnsiStringConst : Utf8StringConst;
+	return isAscii ? TokenType::AnsiStringConst : TokenType::Utf8StringConst;
 }
 
 void Lexer::ScanName()
@@ -401,13 +401,13 @@ void Lexer::ScanName()
 	while (isIdentifierSubsequent(NextChar()))
 		*tp++ = m_cc;
 	*tp = 0;
-	LPUTF8 tok = ThisTokenText();
+	LPUTF8 tok = ThisTokenText;
 	if (!strcmp((LPCSTR)tok, "true"))
-		m_tokenType = TrueConst;
+		m_tokenType = TokenType::TrueConst;
 	else if (!strcmp((LPCSTR)tok, "false"))
-		m_tokenType = FalseConst;
+		m_tokenType = TokenType::FalseConst;
 	else if (!strcmp((LPCSTR)tok, "nil"))
-		m_tokenType = NilConst;
+		m_tokenType = TokenType::NilConst;
 }
 
 void Lexer::ScanQualifiedName()
@@ -415,9 +415,9 @@ void Lexer::ScanQualifiedName()
 	LPUTF8 endLastWord = tp;
 	*tp++ = m_cc;
 	ScanName();
-	if (m_tokenType != NameConst)
+	if (m_tokenType != TokenType::NameConst)
 	{
-		m_tokenType = NameConst;
+		m_tokenType = TokenType::NameConst;
 	}
 	else
 	{
@@ -430,9 +430,9 @@ void Lexer::ScanQualifiedName()
 
 void Lexer::ScanIdentifierOrKeyword()
 {
-	m_tokenType = NameConst;
+	m_tokenType = TokenType::NameConst;
 	ScanName();
-	if (m_tokenType == NameConst && m_cc == '.' && isLetter(PeekAtChar()))
+	if (m_tokenType == TokenType::NameConst && m_cc == '.' && isLetter(PeekAtChar()))
 		ScanQualifiedName();
 	else
 	{
@@ -441,7 +441,7 @@ void Lexer::ScanIdentifierOrKeyword()
 		if (m_cc == ':' && PeekAtChar() != '=')
 		{
 			*tp++ = m_cc;
-			m_tokenType = NameColon;
+			m_tokenType = TokenType::NameColon;
 		}
 		else
 		{
@@ -452,7 +452,7 @@ void Lexer::ScanIdentifierOrKeyword()
 
 void Lexer::ScanSymbol()
 {
-	uint8_t* lastColon = NULL;
+	uint8_t* lastColon = nullptr;
 	while (isIdentifierFirst(m_cc))
 	{
 		*tp++ = m_cc;
@@ -470,7 +470,7 @@ void Lexer::ScanSymbol()
 		}
 	}
 
-	if (lastColon != NULL && *(tp - 1) != ':')
+	if (lastColon != nullptr && *(tp - 1) != ':')
 	{
 		m_cp = m_cp - (tp - lastColon);
 		tp = lastColon + 1;
@@ -499,30 +499,30 @@ void Lexer::ScanLiteral()
 	if (isIdentifierFirst(m_cc))
 	{
 		ScanSymbol();
-		m_tokenType = SymbolConst;
+		m_tokenType = TokenType::SymbolConst;
 	}
 
 	else if (isAnsiBinaryChar(m_cc))
 	{
 		ScanBinary();
-		m_tokenType = SymbolConst;
+		m_tokenType = TokenType::SymbolConst;
 	}
 
 	else if (m_cc == STRINGDELIM)
 	{
 		// Quoted Symbol
-		ScanString(CharPosition());
-		m_tokenType = SymbolConst;
+		ScanString(CharPosition);
+		m_tokenType = TokenType::SymbolConst;
 	}
 
 	else if (m_cc == '(')
 	{
-		m_tokenType = ArrayBegin;
+		m_tokenType = TokenType::ArrayBegin;
 	}
 
 	else if (m_cc == '[')
 	{
-		m_tokenType = ByteArrayBegin;
+		m_tokenType = TokenType::ByteArrayBegin;
 	}
 
 	else if (m_cc == LITERAL)
@@ -530,13 +530,13 @@ void Lexer::ScanLiteral()
 		// Second hash, so should be a constant expression ##(xxx)
 		NextChar();
 		if (m_cc != '(')
-			CompileError(TEXTRANGE(CharPosition(), CharPosition()), LErrExpectExtendedLiteral);
-		m_tokenType = ExprConstBegin;
+			CompileError(TEXTRANGE(CharPosition, CharPosition), LErrExpectExtendedLiteral);
+		m_tokenType = TokenType::ExprConstBegin;
 	}
 
 	else
 	{
-		m_thisTokenRange.m_stop = CharPosition();
+		m_thisTokenRange.m_stop = CharPosition;
 		CompileError(LErrExpectConst);
 	}
 }
@@ -551,7 +551,7 @@ Lexer::TokenType Lexer::NextToken()
 	SkipComments();
 
 	// Start remembering this token
-	int start = CharPosition();
+	textpos_t start = CharPosition;
 	m_thisTokenRange.m_start = start;
 
 	tp = m_token;
@@ -563,7 +563,7 @@ Lexer::TokenType Lexer::NextToken()
 	{
 		// Hit EOF straightaway - so be careful not to write another Null term into the token
 		// as this would involve writing off the end of the token buffer
-		m_tokenType = Eof;
+		m_tokenType = TokenType::Eof;
 		m_thisTokenRange.m_stop = start;
 		m_thisTokenRange.m_start = start + 1;
 	}
@@ -583,7 +583,7 @@ Lexer::TokenType Lexer::NextToken()
 		{
 			Step();
 			ScanNumber();
-			if (m_tokenType == SmallIntegerConst)
+			if (m_tokenType == TokenType::SmallIntegerConst)
 				m_integer *= -1;
 		}
 		else if (ch == LITERAL)
@@ -593,7 +593,7 @@ Lexer::TokenType Lexer::NextToken()
 
 		else if (ch == STRINGDELIM)
 		{
-			int stringStart = CharPosition();
+			textpos_t stringStart = CharPosition;
 			// String constant; remove quote
 			tp--;
 			m_tokenType = ScanString(stringStart);
@@ -606,58 +606,58 @@ Lexer::TokenType Lexer::NextToken()
 
 		else if (ch == '^')
 		{
-			m_tokenType = Return;
+			m_tokenType = TokenType::Return;
 		}
 
 		else if (ch == ':')
 		{
 			if (PeekAtChar() == '=')
 			{
-				m_tokenType = Assignment;
+				m_tokenType = TokenType::Assignment;
 				*tp++ = NextChar();
 			}
 			else
-				m_tokenType = Special;
+				m_tokenType = TokenType::Special;
 		}
 
 		else if (ch == ')')
 		{
-			m_tokenType = CloseParen;
+			m_tokenType = TokenType::CloseParen;
 		}
 
 		else if (ch == '.')
 		{
-			m_tokenType = CloseStatement;
+			m_tokenType = TokenType::CloseStatement;
 		}
 
 		else if (ch == ']')
 		{
-			m_tokenType = CloseSquare;
+			m_tokenType = TokenType::CloseSquare;
 		}
 
 		else if (ch == '}')
 		{
-			m_tokenType = CloseBrace;
+			m_tokenType = TokenType::CloseBrace;
 		}
 
 		else if (ch == ';')
 		{
-			m_tokenType = Cascade;
+			m_tokenType = TokenType::Cascade;
 		}
 
 		else if (IsASingleBinaryChar(ch))
 		{
 			// Single binary expressions
-			m_tokenType = Binary;
+			m_tokenType = TokenType::Binary;
 		}
 
 		else if (isAnsiBinaryChar(ch))
 		{
-			m_tokenType = Binary;
+			m_tokenType = TokenType::Binary;
 		}
 		else
 		{
-			int pos = CharPosition();
+			textpos_t pos = CharPosition;
 			int cp = ReadUtf8(ch);
 			CompileError(TEXTRANGE(pos, pos), LErrBadChar, (Oop)m_piVM->NewCharacter(cp < 0 ? 0xFFFD : cp));
 		}
@@ -665,7 +665,7 @@ Lexer::TokenType Lexer::NextToken()
 		*tp = '\0';
 	}
 
-	m_thisTokenRange.m_stop = CharPosition();
+	m_thisTokenRange.m_stop = CharPosition;
 	return m_tokenType;
 }
 
@@ -720,7 +720,7 @@ int Lexer::ReadUtf8(uint8_t ch)
 
 void Lexer::ScanLiteralCharacter()
 {
-	m_tokenType = CharConst;
+	m_tokenType = TokenType::CharConst;
 	m_integer = 0;
 
 	// This is one of the few places we need to be aware of UTF-8 encoding. Generally the only chars that are significant to the compiler are
@@ -732,7 +732,7 @@ void Lexer::ScanLiteralCharacter()
 	if (codePoint == 0)
 	{
 		// Reached EOF
-		int pos = CharPosition();
+		textpos_t pos = CharPosition;
 		m_thisTokenRange.m_stop = pos;
 		CompileError(LErrExpectChar);
 		return;
@@ -779,7 +779,7 @@ void Lexer::ScanLiteralCharacter()
 			codePoint = ReadHexCodePoint();
 			if (codePoint < 0)
 			{
-				int pos = CharPosition();
+				textpos_t pos = CharPosition;
 				m_thisTokenRange.m_stop = pos;
 				CompileError(LErrExpectCodePoint);
 				return;
@@ -792,7 +792,7 @@ void Lexer::ScanLiteralCharacter()
 
 	if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
 	{
-		int pos = CharPosition();
+		textpos_t pos = CharPosition;
 		m_thisTokenRange.m_stop = pos;
 		CompileError(LErrBadCodePoint);
 	}
@@ -1025,7 +1025,7 @@ unsigned long Lexer::strtoxl(
 			number = LONG_MAX;
 	}
 
-	if (endptr != NULL)
+	if (endptr != nullptr)
 		/* store pointer to char that stopped the scan */
 		*endptr = p;
 

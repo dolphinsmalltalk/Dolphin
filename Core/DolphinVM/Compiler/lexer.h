@@ -8,6 +8,7 @@ The Smalltalk lexical analyser
 
 ///////////////////////
 #include "Str.h"
+#include "textrange.h"
 
 ///////////////////////
 
@@ -33,7 +34,7 @@ class Lexer
 	
 protected:
 	// The current lexical token
-	enum TokenType 
+	enum class TokenType 
 	{ 
 		// Type for parsing
 		None, NameConst, NameColon, 
@@ -49,9 +50,9 @@ public:
 	
 	uint8_t Step();
 	void PushBack(uint8_t ch);
-	VOID StepBack(int n);
+	void StepBack(size_t n);
 	TokenType NextToken();
-	TokenType ScanString(int);
+	TokenType ScanString(textpos_t);
 	void ScanNumber();
 	int DigitValue(uint8_t ch) const;
 	void ScanInteger(int radix);
@@ -65,19 +66,65 @@ public:
 	void ScanSymbol();
 	void ScanBinary();
 	
-	TokenType ThisToken() const;
-	void SetTokenType(TokenType tok);
-	bool AtEnd() const;
-	LPUTF8 ThisTokenText() const;
-	long ThisTokenInteger() const;
-	double ThisTokenFloat() const;
+	__declspec(property(get = get_ThisToken, put=put_ThisToken)) TokenType ThisToken;
+	Lexer::TokenType get_ThisToken() const
+	{
+		return m_tokenType;
+	}
+	void put_ThisToken(TokenType tok)
+	{
+		m_tokenType = tok;
+	}
+
+	__declspec(property(get = get_AtEnd)) bool AtEnd;
+	bool get_AtEnd() const
+	{
+		return m_tokenType == TokenType::Eof;
+	}
+
+	__declspec(property(get = get_ThisTokenText)) LPUTF8 ThisTokenText;
+	LPUTF8 get_ThisTokenText() const
+	{
+		return m_token;
+	}
+
+	__declspec(property(get = get_ThisTokenInteger)) intptr_t ThisTokenInteger;
+	intptr_t get_ThisTokenInteger() const
+	{
+		return m_integer;
+	}
+
+	__declspec(property(get = get_ThisTokenFloat)) double ThisTokenFloat;
+	double get_ThisTokenFloat() const;
+
 	bool ThisTokenIsBinary(const char) const;
 	bool ThisTokenIsSpecial(const char) const;
-	bool ThisTokenIsClosing() const;
-	bool ThisTokenIsAssignment() const;
-	bool ThisTokenIsReturn() const;
-	bool ThisTokenIsNumber() const;
-	
+
+	__declspec(property(get = get_ThisTokenIsClosing)) bool ThisTokenIsClosing;
+  	bool get_ThisTokenIsClosing() const
+	{
+		return m_tokenType >= TokenType::CloseParen && m_tokenType <= TokenType::Eof;
+	}
+
+	__declspec(property(get = get_ThisTokenIsAssignment)) bool ThisTokenIsAssignment;
+	bool get_ThisTokenIsAssignment() const
+	{
+		return m_tokenType == TokenType::Assignment;
+	}
+
+	__declspec(property(get = get_ThisTokenIsReturn)) bool ThisTokenIsReturn;
+	bool get_ThisTokenIsReturn() const
+	{
+		return m_tokenType == TokenType::Return;
+	}
+
+	__declspec(property(get = get_ThisTokenIsNumber)) bool ThisTokenIsNumber;
+	bool get_ThisTokenIsNumber() const
+	{
+		return m_tokenType >= TokenType::SmallIntegerConst && m_tokenType <= TokenType::ScaledDecimalConst;
+	}
+
+
 	void CompileError(const TEXTRANGE& range, int code, Oop extra=0);
 	void CompileError(int code, Oop extra=0);	
 	void CompileErrorV(const TEXTRANGE& range, int code, ...);
@@ -86,16 +133,13 @@ protected:
 	enum { MaxCodePoint = 0x10FFFF };
 
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
-
 	
 	uint8_t PeekAtChar(int lookAhead=0) const;
-	//bool CanBeSmallInteger(long valueLong) const;
 	bool IsASingleBinaryChar(uint8_t ch) const;
-	//bool IsDigitInRadix(char ch, int radix) const;
 	
 	TEXTRANGE CompileTextRange() const
 	{
-		return TEXTRANGE(0, GetTextLength()-1);
+		return TEXTRANGE(textpos_t::start, EndOfText);
 	}
 
 	//******************************************************************************
@@ -115,69 +159,83 @@ protected:
 	void SkipBlanks();
 	void SkipComments();
 
-	void SetText(const uint8_t* compiletext, int offset);
+	void SetText(const uint8_t* compiletext, textpos_t offset);
 
-	LPUTF8 GetText() const
+	__declspec(property(get = get_Text)) LPUTF8 Text;
+	LPUTF8 get_Text() const
 	{
 		return m_buffer.c_str();
 	}
 
 	Str GetTextRange(const TEXTRANGE& r)
 	{
-		return m_buffer.substr(r.m_start, r.m_stop - r.m_start + 1);
+		return m_buffer.substr(static_cast<size_t>(r.m_start), r.Span);
 	}
 
-	int GetTextOffset() const
+	__declspec(property(get = get_TextOffset)) textpos_t TextOffset;
+	textpos_t get_TextOffset() const
 	{
 		return m_base;
 	}
 
-	int GetParsedLength() const
+	__declspec(property(get = get_ParsedLength)) size_t ParsedLength;
+	size_t get_ParsedLength() const
 	{
-		return m_cp - GetText() - GetTextOffset();
+		return m_cp - Text - static_cast<size_t>(TextOffset);
 	}
 
-	const TEXTRANGE& ThisTokenRange() const
+	__declspec(property(get = get_ThisTokenRange)) const TEXTRANGE& ThisTokenRange;
+	const TEXTRANGE& get_ThisTokenRange() const
 	{
 		return m_thisTokenRange;
 	}
 
-	const TEXTRANGE& LastTokenRange() const
+	__declspec(property(get = get_LastTokenRange)) const TEXTRANGE& LastTokenRange;
+	const TEXTRANGE& get_LastTokenRange() const
 	{
 		return m_lastTokenRange;
 	}
 
-	int ErrorPosition() const
+	__declspec(property(get = get_ErrorPosition)) textpos_t ErrorPosition;
+	textpos_t get_ErrorPosition() const
 	{
-		return AtEnd() ? ThisTokenRange().m_stop : LastTokenRange().m_stop;
+		return AtEnd ? ThisTokenRange.m_stop : LastTokenRange.m_stop;
 	}
 
-	int GetTextLength() const
+	__declspec(property(get=get_TextLength)) size_t TextLength;
+	size_t get_TextLength() const
 	{
 		return m_buffer.size();
 	}
 
-	const uint8_t* GetCharPtr() const
+	__declspec(property(get = get_EndOfText)) textpos_t EndOfText;
+	textpos_t get_EndOfText() const
+	{
+		return static_cast<textpos_t>(m_buffer.size() - 1);
+	}
+
+	__declspec(property(get = get_CharPtr)) const uint8_t* CharPtr;
+	const uint8_t* get_CharPtr() const
 	{
 		return m_cp;
 	}
 
-	char GetNextChar() const
-	{
-		return *m_cp;
-	}
-
-	int GetLineNo() const
+	__declspec(property(get = get_LineNo)) int LineNo;
+	int get_LineNo() const
 	{
 		return m_lineno;
 	}
 
-	void AdvanceCharPtr(int offset)
+	void AdvanceCharPtr(size_t offset)
 	{
 		m_cp += offset;
 	}
 
-	int CharPosition() const;
+	__declspec(property(get = get_CharPosition)) textpos_t CharPosition;
+	textpos_t get_CharPosition() const
+	{
+		return static_cast<textpos_t>((m_cp - m_buffer.c_str()) - 1);
+	}
 
 	IDolphin* m_piVM;
 
@@ -190,7 +248,7 @@ private:
 private:
 	// The current token
 	TokenType m_tokenType;
-	long m_integer;
+	intptr_t m_integer;
 	uint8_t* m_token;
 	uint8_t* tp;
 	
@@ -199,7 +257,7 @@ private:
 	const uint8_t* m_cp;
 	uint8_t m_cc;
 	int m_lineno;
-	int m_base;
+	textpos_t m_base;
 	
 	TEXTRANGE m_thisTokenRange;
 	TEXTRANGE m_lastTokenRange;
@@ -210,59 +268,14 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // Inlines
 
-inline Lexer::TokenType Lexer::ThisToken() const
-{
-	return m_tokenType;
-}
-
-inline bool Lexer::AtEnd() const
-{
-	return m_tokenType == Eof;
-}
-
-inline LPUTF8 Lexer::ThisTokenText() const
-{
-	return m_token;
-}
-
-inline long Lexer::ThisTokenInteger() const
-{
-	return m_integer; 
-}
-
-inline bool Lexer::ThisTokenIsAssignment() const
-{
-	return m_tokenType == Assignment;
-}
-
-inline bool Lexer::ThisTokenIsReturn() const
-{
-	return m_tokenType == Return;
-}
-
 inline bool Lexer::ThisTokenIsBinary(const char match) const
 {
-	return m_tokenType==Binary && m_token[0] == match && m_token[1] == 0;
+	return m_tokenType== TokenType::Binary && m_token[0] == match && m_token[1] == 0;
 }
 
 inline bool Lexer::ThisTokenIsSpecial(const char match) const
 {
-	return m_tokenType==Special && m_token[0] == match && m_token[1] == 0;
-}
-
-inline bool Lexer::ThisTokenIsClosing() const
-{
-	return m_tokenType >= CloseParen && m_tokenType <= Eof;
-}
-
-inline bool Lexer::ThisTokenIsNumber() const
-{
-	return m_tokenType >= SmallIntegerConst && m_tokenType <= ScaledDecimalConst; 
-}
-
-inline void Lexer::SetTokenType(TokenType tok)
-{
-	m_tokenType = tok;
+	return m_tokenType== TokenType::Special && m_token[0] == match && m_token[1] == 0;
 }
 
 inline uint8_t Lexer::NextChar()
@@ -280,7 +293,7 @@ inline uint8_t Lexer::Step()
 	{
 		*tp++ = ch;
 		*tp = 0;
-		m_thisTokenRange.m_stop++;
+		++m_thisTokenRange.m_stop;
 	}
 	return ch;
 }
@@ -288,11 +301,6 @@ inline uint8_t Lexer::Step()
 inline uint8_t Lexer::PeekAtChar(int lookAhead) const
 {
 	return m_cp[lookAhead];
-}
-
-inline int Lexer::CharPosition() const
-{
-	return (m_cp - m_buffer.c_str()) - 1;
 }
 
 inline void Lexer::PushBack(uint8_t ch)
@@ -312,12 +320,12 @@ inline void Lexer::PushBack(uint8_t ch)
 }
 
 // N.B. This routine assumes it is not stepping back over line ends
-inline void Lexer::StepBack(int n)
+inline void Lexer::StepBack(size_t n)
 {
 	m_cp -= n;
 	m_cc = *m_cp;
 	m_thisTokenRange.m_stop -= n;
-	m_token[m_thisTokenRange.m_stop - m_thisTokenRange.m_start + 1] = 0;
+	m_token[m_thisTokenRange.Span] = 0;
 }
 
 //******************************************************************************

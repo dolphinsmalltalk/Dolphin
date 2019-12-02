@@ -227,146 +227,146 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 	{
 		BYTE arg = types->m_args[i++];
 		// Similar to primitiveDLL32Call return values, but VOID is not supported as a parameter type
-		switch(ExtCallArgTypes(arg))
+		switch(ExtCallArgType(arg))
 		{
-			case ExtCallArgVOID:					// Not a valid argument
+			case ExtCallArgType::Void:					// Not a valid argument
 				HARDASSERT(FALSE);
 				pushNil();
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgLPVOID:
+			case ExtCallArgType::LPVoid:
 				pushNewObject((OTE*)ExternalAddress::New(*(BYTE**)lpParms));
 				lpParms += sizeof(BYTE*);
 				break;
 
-			case ExtCallArgCHAR:
+			case ExtCallArgType::Char:
 				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<MWORD*>(lpParms)));
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgBYTE:
+			case ExtCallArgType::UInt8:
 				pushSmallInteger(*lpParms);
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgSBYTE:
+			case ExtCallArgType::Int8:
 				pushSmallInteger(*reinterpret_cast<char*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 			
-			case ExtCallArgWORD:
+			case ExtCallArgType::UInt16:
 				pushSmallInteger(*reinterpret_cast<WORD*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgSWORD:
+			case ExtCallArgType::Int16:
 				pushSmallInteger(*reinterpret_cast<SWORD*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgDWORD:
+			case ExtCallArgType::UInt32:
 				pushUnsigned32(*reinterpret_cast<DWORD*>(lpParms));
 				lpParms += sizeof(DWORD);
 				break;
 
-			case ExtCallArgSDWORD:
-			case ExtCallArgHRESULT:
-			case ExtCallArgNTSTATUS:
+			case ExtCallArgType::Int32:
+			case ExtCallArgType::HResult:
+			case ExtCallArgType::NTStatus:
 				pushSigned32(*reinterpret_cast<SDWORD*>(lpParms));
 				lpParms += sizeof(SDWORD);
 				break;
 
-			case ExtCallArgBOOL:
+			case ExtCallArgType::Bool:
 				pushBool(*reinterpret_cast<BOOL*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 
-			case ExtCallArgHANDLE:
+			case ExtCallArgType::Handle:
 				pushHandle(*reinterpret_cast<HANDLE*>(lpParms));
 				lpParms += sizeof(HANDLE);
 				break;
 
-			case ExtCallArgDOUBLE:
+			case ExtCallArgType::Double:
 				push(*reinterpret_cast<double*>(lpParms));
 				// Yup, even doubles passed on main stack
 				lpParms += sizeof(DOUBLE);
 				break;
 
-			case ExtCallArgLPSTR:
+			case ExtCallArgType::LPStr:
 				push(*reinterpret_cast<LPCSTR*>(lpParms));
 				lpParms += sizeof(LPCSTR);
 				break;
 
-			case ExtCallArgOOP:
-			case ExtCallArgOTE:
+			case ExtCallArgType::Oop:
+			case ExtCallArgType::Ote:
 				push(*reinterpret_cast<Oop*>(lpParms));
 				lpParms += sizeof(Oop);
 				break;
 
-			case ExtCallArgFLOAT:
+			case ExtCallArgType::Float:
 				push(static_cast<double>(*reinterpret_cast<float*>(lpParms)));
 				// Yup, even doubles passed on main stack
 				lpParms += sizeof(FLOAT);
 				break;
 
-			case ExtCallArgLPPVOID:
+			case ExtCallArgType::LPPVoid:
 				// Push an LPVOID* instance onto the stack
 				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(BYTE**)lpParms));
 				lpParms += sizeof(BYTE*);
 				break;
 
-			case ExtCallArgLPWSTR:
+			case ExtCallArgType::LPWStr:
 				push(*reinterpret_cast<LPWSTR*>(lpParms));
 				lpParms += sizeof(LPWSTR);
 				break;
 				
-			case ExtCallArgQWORD:
+			case ExtCallArgType::UInt64:
 				push(Integer::NewUnsigned64(*reinterpret_cast<ULONGLONG*>(lpParms)));
 				lpParms += sizeof(ULARGE_INTEGER);
 				break;
 				
-			case ExtCallArgSQWORD:
+			case ExtCallArgType::Int64:
 				push(Integer::NewSigned64(*reinterpret_cast<LONGLONG*>(lpParms)));
 				lpParms += sizeof(LONGLONG);
 				break;
 			
-			case ExtCallArgBSTR:
+			case ExtCallArgType::Bstr:
 				push(*reinterpret_cast<LPWSTR*>(lpParms));
 				lpParms += sizeof(BSTR);
 				break;
 				
-			case ExtCallArgVARIANT:
+			case ExtCallArgType::Variant:
 				pushNewObject(ExternalStructure::New(Pointers.ClassVARIANT, lpParms));
 				lpParms += sizeof(VARIANT);
 				break;
 
-			case ExtCallArgDATE:
+			case ExtCallArgType::Date:
 				pushNewObject(ExternalStructure::New(Pointers.ClassDATE, lpParms));
 				lpParms += sizeof(DATE);
 				break;
 
-			case ExtCallArgVARBOOL:
+			case ExtCallArgType::VarBool:
 				pushBool(*reinterpret_cast<VARIANT_BOOL*>(lpParms));
 				lpParms += sizeof(MWORD);				// Note passes as 32-bit
 				break;
 
-			case ExtCallArgGUID:
+			case ExtCallArgType::Guid:
 				pushNewObject((OTE*)NewGUID(reinterpret_cast<GUID*>(lpParms)));
 				lpParms += sizeof(GUID);
 				break;
 
-			case ExtCallArgUINTPTR:
+			case ExtCallArgType::UIntPtr:
 				pushUIntPtr(*reinterpret_cast<UINT_PTR*>(lpParms));
 				lpParms += sizeof(UINT_PTR);
 				break;
 
-			case ExtCallArgINTPTR:
+			case ExtCallArgType::IntPtr:
 				pushIntPtr(*reinterpret_cast<INT_PTR*>(lpParms));
 				lpParms += sizeof(INT_PTR);
 				break;
 
-			case ExtCallArgSTRUCT:
+			case ExtCallArgType::Struct:
 				{
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
@@ -375,7 +375,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				}
 				break;
 
-			case ExtCallArgSTRUCT4:
+			case ExtCallArgType::Struct32:
 				{
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
@@ -384,7 +384,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				}
 				break;
 
-			case ExtCallArgSTRUCT8:
+			case ExtCallArgType::Struct64:
 				{
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
@@ -393,7 +393,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				}
 				break;
 
-			case ExtCallArgLP:
+			case ExtCallArgType::LPStruct:
 				{
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
@@ -402,13 +402,13 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				}
 				break;
 
-			case ExtCallArgLPP:							// Not a valid argument
+			case ExtCallArgType::LPPStruct:							// Not a valid argument
 				arg = types->m_args[i++];
 				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(BYTE**)lpParms));
 				lpParms += sizeof(BYTE*);
 				break;
 
-			case ExtCallArgCOMPTR:
+			case ExtCallArgType::ComPtr:
 				{
 					arg = types->m_args[i++];
 					IUnknown* punk = *(IUnknown**)lpParms;

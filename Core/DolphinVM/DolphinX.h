@@ -9,45 +9,45 @@ namespace DolphinX {
 	enum { LibCallArgArray };
 
 	// External call primitives
-	enum { CallbackPrim=0, VirtualCallPrim=80, AsyncLibCallPrim=48, LibCallPrim=96 };
+	enum class ExtCallPrimitive : uint8_t { Callback=0, VirtualCall=80, AsyncLibCall=48, LibCall=96 };
 
 	// Calling conventions (fastcall not supported)
-	enum ExtCallDeclSpecs { ExtCallStdCall, ExtCallCDecl, ExtCallThisCall, ExtCallFastCall, NumCallConventions };
+	enum class ExtCallDeclSpec : uint8_t { StdCall, CDecl, ThisCall, FastCall, NumCallConventions };
 
 	// Argument types
 	// Note that differentiation between signed and unsigned types is only
 	// really relevant to return values if using SmallIntegers
 	// VOID is only supported as a return type 
-	enum ExtCallArgTypes {
-		ExtCallArgVOID			=0,
-		ExtCallArgLPVOID,		//1
-		ExtCallArgCHAR,			//2
-		ExtCallArgBYTE,			//3
-		ExtCallArgSBYTE,		//4
-		ExtCallArgWORD,			//5
-		ExtCallArgSWORD,		//6
-		ExtCallArgDWORD,		//7
-		ExtCallArgSDWORD,		//8
-		ExtCallArgBOOL,			//9
-		ExtCallArgHANDLE,		//10
-		ExtCallArgDOUBLE,		//11
-		ExtCallArgLPSTR,		//12
-		ExtCallArgOOP,			//13
-		ExtCallArgFLOAT,		//14
-		ExtCallArgLPPVOID,		//15
-		ExtCallArgHRESULT,		//16
-		ExtCallArgLPWSTR,		//17		OLECHAR*, Unicode string
-		ExtCallArgQWORD,		//18		Unsigned 64-bit LARGE_INTEGER
-		ExtCallArgSQWORD,		//19		Signed 64-bit LARGE_INTEGER
-		ExtCallArgOTE,			//20		Same as Oop, but disallows immediate objects
-		ExtCallArgBSTR,			//21		VB String
-		ExtCallArgVARIANT,		//22		VB Variant type
-		ExtCallArgDATE,			//23		VB Date type
-		ExtCallArgVARBOOL,		//24		VB Boolean type
-		ExtCallArgGUID,			//25		GUID (128-bit unique number)
-		ExtCallArgUINTPTR,		//26
-		ExtCallArgINTPTR,		//27
-		ExtCallArgNTSTATUS,		//28
+	enum class ExtCallArgType : uint8_t {
+		Void			=0,
+		LPVoid,		//1
+		Char,			//2
+		UInt8,			//3
+		Int8,		//4
+		UInt16,			//5
+		Int16,		//6
+		UInt32,		//7
+		Int32,		//8
+		Bool,			//9
+		Handle,		//10
+		Double,		//11
+		LPStr,		//12
+		Oop,			//13
+		Float,		//14
+		LPPVoid,		//15
+		HResult,		//16
+		LPWStr,		//17		OLECHAR*, Unicode string
+		UInt64,		//18		Unsigned 64-bit LARGE_INTEGER
+		Int64,		//19		Signed 64-bit LARGE_INTEGER
+		Ote,			//20		Same as Oop, but disallows immediate objects
+		Bstr,			//21		VB String
+		Variant,		//22		VB Variant type
+		Date,			//23		VB Date type
+		VarBool,		//24		VB Boolean type
+		Guid,			//25		GUID (128-bit unique number)
+		UIntPtr,		//26
+		IntPtr,		//27
+		NTStatus,		//28
 								//29
 								//30
 								//31
@@ -69,12 +69,12 @@ namespace DolphinX {
 								//47
 								//48
 								//49
-		ExtCallArgSTRUCT=50,	//50	Was 26
-		ExtCallArgSTRUCT4,		//51	Was 27
-		ExtCallArgSTRUCT8,		//52	Was 28
-		ExtCallArgLP,			//53	Was 29
-		ExtCallArgLPP,			//54	Was 30
-		ExtCallArgCOMPTR,		//55	Was 31
+		Struct=50,	//50	Was 26
+		Struct32,		//51	Was 27
+		Struct64,		//52	Was 28
+		LPStruct,			//53	Was 29
+		LPPStruct,			//54	Was 30
+		ComPtr,		//55	Was 31
 		ExtCallArgMax=63
 	};
 
@@ -86,11 +86,11 @@ namespace DolphinX {
 
 	struct CallDescriptor
 	{
-		BYTE			m_callConv;
-		BYTE			m_argsLen;
-		BYTE			m_returnParm;
-		BYTE			m_return;
-		BYTE			m_args[];
+		uint8_t			m_callConv;
+		uint8_t			m_argsLen;
+		uint8_t			m_returnParm;
+		uint8_t			m_return;
+		uint8_t			m_args[];
 	};
 
 	struct ExternalMethodDescriptor

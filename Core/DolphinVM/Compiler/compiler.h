@@ -29,6 +29,9 @@ typedef std::valarray<POTE> POTEARRAY;
 	#include "..\disassembler.h"
 #endif
 
+#include "EnumHelpers.h"
+ENABLE_BITMASK_OPERATORS(CompilerFlags)
+
 ///////////////////////
 
 #define LITERALLIMIT		65536	// maximum number of literals permitted. Limited by the byte code set, but in
@@ -71,41 +74,66 @@ public:
 
 	void SetVMInterface(IDolphin* piVM) { m_piVM = piVM; }
 
-	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int startAt);
+	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t startAt);
 	Oop EvaluateExpression(LPUTF8 text, POTE method, Oop contextOop, POTE pools);
-	Oop EvaluateExpression(LPUTF8 source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools);
+	Oop EvaluateExpression(LPUTF8 source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools);
 
 	// External interface requirements
 	void GetContext(POTE workspacePools);
 	void GetInstVars();
 
 	POTE NewMethod();
-	POTE __stdcall NewCompiledMethod(POTE classPointer, unsigned numBytes, const STMethodHeader& hdr);
-	Str GetSelector() const;
+	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
+	
+	__declspec(property(get = get_Selector)) Str Selector;
+	Str get_Selector() const { return m_selector; }
+
 	POTE GetTextMapObject();
 	POTE GetTempsMapObject();
-	bool Ok() const;
 
-	int GetLiteralCount() const;
+	__declspec(property(get = get_Ok)) bool Ok;
+	bool get_Ok() const { return m_ok; }
+
+	__declspec(property(get = get_LiteralCount)) size_t LiteralCount;
+	size_t get_LiteralCount() const { return m_literalFrame.size(); }
 
 	void Warning(int code, Oop extra=0);
 	void Warning(const TEXTRANGE& range, int code, Oop extra=0);
 	void WarningV(const TEXTRANGE& range, int code, ...);
-	bool IsInteractive() const;
+
+	__declspec(property(get = get_IsInteractive)) bool IsInteractive;
+	bool get_IsInteractive() const { return (!!(m_flags & CompilerFlags::Interactive)) && !WantSyntaxCheckOnly; }
 
 private:
 	// Flags
-	bool WantSyntaxCheckOnly() const;
-	bool WantOptimize() const;
-	bool WantTextMap() const;
-	bool WantTempsMap() const;
-	bool WantDebugMethod() const;
+	__declspec(property(get= get_WantOptimize)) bool WantOptimize;
+	bool get_WantOptimize() const { return !(m_flags & CompilerFlags::NoOptimize); }
+	__declspec(property(get= get_WantTextMap)) bool WantTextMap;
+	bool get_WantTextMap() const { return !!(m_flags & CompilerFlags::TextMap); }
+	__declspec(property(get= get_WantTempsMap)) bool WantTempsMap;
+	bool get_WantTempsMap() const { return !!(m_flags & CompilerFlags::TempsMap); }
+	__declspec(property(get= get_WantDebugMethod)) bool WantDebugMethod;
+	bool get_WantDebugMethod() const { return !!(m_flags & CompilerFlags::DebugMethod); }
+	__declspec(property(get= get_WantSyntaxCheckOnly)) bool WantSyntaxCheckOnly;
+	bool get_WantSyntaxCheckOnly() const { return !!(m_flags & CompilerFlags::SyntaxCheckOnly); }
 
-	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags=Default);
-	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, FLAGS flags=Default);
+	__declspec(property(get = get_CodeSize)) size_t CodeSize;
+	size_t Compiler::get_CodeSize() const
+	{
+		return m_bytecodes.size();
+	}
 
-	void SetFlagsAndText(FLAGS flags, LPUTF8 text, int offset);
-	void PrepareToCompile(FLAGS flags, LPUTF8 text, int offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
+	__declspec(property(get = get_ArgumentCount)) argcount_t ArgumentCount;
+	argcount_t get_ArgumentCount() const
+	{
+		return GetMethodScope()->ArgumentCount;
+	}
+
+	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, CompilerFlags flags= CompilerFlags::Default);
+	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
+
+	void SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset);
+	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
@@ -123,59 +151,58 @@ private:
 	POTE InternSymbol(const Str&) const;
 
 	// Lookup
-	int FindNameAsSpecialMessage(const Str&) const;
+	uint8_t FindNameAsSpecialMessage(const Str&) const;
 	bool IsPseudoVariable(const Str&) const;
-	int FindNameAsInstanceVariable(const Str&) const;
-	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, int expressionEnd);
+	size_t FindNameAsInstanceVariable(const Str&) const;
+	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
 
-	enum StaticType { STATICCANCEL=-1, STATICNOTFOUND, STATICVARIABLE, STATICCONSTANT };
+	enum class StaticType { STATICCANCEL=-1, STATICNOTFOUND, STATICVARIABLE, STATICCONSTANT };
 	StaticType FindNameAsStatic(const Str&, POTE&, bool autoDefine=false);
 
-	void WarnIfRestrictedSelector(int start);
+	void WarnIfRestrictedSelector(textpos_t start);
 
 	// Code generation
-	int GetCodeSize() const;
-	int AddToFrameUnconditional(Oop object, const TEXTRANGE&);
-	int AddToFrame(Oop object, const TEXTRANGE&);
-	int AddStringToFrame(POTE string, const TEXTRANGE&);
+	size_t AddToFrameUnconditional(Oop object, const TEXTRANGE&);
+	size_t AddToFrame(Oop object, const TEXTRANGE&);
+	size_t AddStringToFrame(POTE string, const TEXTRANGE&);
 	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&);
 	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
-	void InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
-	void RemoveByte(int pos);
-	void RemoveBytes(int start, int stop);
-	int RemoveInstruction(int pos);
-	int GenByte(BYTE value, BYTE flags, LexicalScope* pScope);
-	int GenData(BYTE value);
-	int GenInstruction(BYTE basic, BYTE offset=0);
-	int GenInstructionExtended(BYTE basic, BYTE extension);
-	int GenLongInstruction(BYTE basic, WORD extension);
-	void UngenInstruction(int pos);
-	void UngenData(int pos, LexicalScope* pScope);
+	void InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope);
+	void RemoveByte(ip_t pos);
+	void RemoveBytes(ip_t start, size_t count);
+	size_t RemoveInstruction(ip_t pos);
+	ip_t GenByte(uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope);
+	ip_t GenData(uint8_t value);
+	ip_t GenInstruction(uint8_t basic, uint8_t offset=0);
+	ip_t GenInstructionExtended(uint8_t basic, uint8_t extension);
+	ip_t GenLongInstruction(uint8_t basic, uint16_t extension);
+	void UngenInstruction(ip_t pos);
+	void UngenData(ip_t pos, LexicalScope* pScope);
 	
-	int GenNop();
-	int GenDup();
-	int GenPopStack();
+	ip_t GenNop();
+	ip_t GenDup();
+	ip_t GenPopStack();
 	
-	void GenInteger(int val, const TEXTRANGE&);
+	void GenInteger(intptr_t val, const TEXTRANGE&);
 	Oop GenNumber(LPUTF8 textvalue, const TEXTRANGE&);
 	void GenNumber(Oop, const TEXTRANGE&);
-	void GenConstant(int index);
+	void GenConstant(size_t index);
 	void GenLiteralConstant(Oop object, const TEXTRANGE&);
 	void GenStatic(const POTE oteStatic, const TEXTRANGE&);
 	
-	int GenMessage(const Str& pattern, int argumentCount, int messageStart);
+	ip_t GenMessage(const Str& pattern, argcount_t argumentCount, textpos_t messageStart);
 
-	int GenJumpInstruction(BYTE basic);
-	int GenJump(BYTE basic, int location);
-	void SetJumpTarget(int jump, int target);
+	ip_t GenJumpInstruction(uint8_t basic);
+	ip_t GenJump(uint8_t basic, ip_t location);
+	void SetJumpTarget(ip_t jump, ip_t target);
 
-	int GenTempRefInstruction(int instruction, TempVarRef* pRef);
-	int GenPushCopiedValue(TempVarDecl*);
+	ip_t GenTempRefInstruction(uint8_t instruction, TempVarRef* pRef);
+	size_t GenPushCopiedValue(TempVarDecl*);
 
 	void GenPushSelf();
 	void GenPushVariable(const Str&, const TEXTRANGE&);
-	int GenPushTemp(TempVarRef*);
-	int GenPushInstVar(BYTE index);
+	ip_t GenPushTemp(TempVarRef*);
+	ip_t GenPushInstVar(uint8_t index);
 	void GenPushStaticVariable(const Str&, const TEXTRANGE&);
 	void GenPushStaticConstant(POTE oteBinding, const TEXTRANGE& range);
 	void GenPushConstant(Oop objectPointer, const TEXTRANGE& range);
@@ -183,47 +210,47 @@ private:
 
 	void GenPopAndStoreTemp(TempVarRef*);
 
-	int GenStore(const Str&, const TEXTRANGE&, int assignedExpressionStop);
-	int GenStoreTemp(TempVarRef*);
-	int GenStoreInstVar(BYTE index);
-	int GenStaticStore(const Str&, const TEXTRANGE&, int assignedExpressionStop);
+	ip_t GenStore(const Str&, const TEXTRANGE&, textpos_t assignedExpressionStop);
+	ip_t GenStoreTemp(TempVarRef*);
+	ip_t GenStoreInstVar(uint8_t index);
+	ip_t GenStaticStore(const Str&, const TEXTRANGE&, textpos_t assignedExpressionStop);
 
-	int GenReturn(BYTE retOp);
-	int GenFarReturn();
+	ip_t GenReturn(uint8_t retOp);
+	ip_t GenFarReturn();
 
 
 	// Pass 2 and optimization
-	int Pass2();
+	unsigned Pass2();
 	void RemoveNops();
 	void Optimize();
-	int CombinePairs();
-	int CombinePairs1();
-	int CombinePairs2();
-	int OptimizePairs();
-	int OptimizeJumps();
-	int InlineReturns();
-	int ShortenJumps();
+	unsigned CombinePairs();
+	unsigned CombinePairs1();
+	unsigned CombinePairs2();
+	unsigned OptimizePairs();
+	unsigned OptimizeJumps();
+	unsigned InlineReturns();
+	unsigned ShortenJumps();
 	void FixupJumps();
-	void FixupJump(int);
+	void FixupJump(ip_t);
 
 	// Recursive Decent Parsing
 	POTE  ParseMethod();
 	POTE  ParseEvalExpression(TokenType);
 	void ParseMessagePattern();
 	void ParseArgument();
-	int ParseTemporaries();
-	int ParseStatements(TokenType, bool popResults = true);
+	tempcount_t ParseTemporaries();
+	unsigned ParseStatements(TokenType, bool popResults = true);
 	void ParseBlockStatements();
 	void ParseStatement();
 	void ParseExpression();
 	void ParseAssignment(const Str&, const TEXTRANGE&);
-	void ParseTerm(int textPosition);
-	void ParseBinaryTerm(int textPosition);
-	void ParseBraceArray(int textPosition);
-	void ParseContinuation(int exprMark, int textPosition);
-	int ParseKeyContinuation(int exprMark, int textPosition);
-	int ParseBinaryContinuation(int exprMark, int textPosition);
-	int ParseUnaryContinuation(int exprMark, int textPosition);
+	void ParseTerm(textpos_t textPosition);
+	void ParseBinaryTerm(textpos_t textPosition);
+	void ParseBraceArray(textpos_t textPosition);
+	void ParseContinuation(ip_t exprMark, textpos_t textPosition);
+	ip_t ParseKeyContinuation(ip_t exprMark, textpos_t textPosition);
+	ip_t ParseBinaryContinuation(ip_t exprMark, textpos_t textPosition);
+	ip_t ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition);
 	void MaybePatchNegativeNumber();
 	void MaybePatchLiteralMessage();
 
@@ -233,99 +260,113 @@ private:
 	struct LibCallType
 	{
 		LPUTF8 szCallType;
-		DolphinX::ExtCallDeclSpecs nCallType;
+		DolphinX::ExtCallDeclSpec nCallType;
 	};
-	static LibCallType callTypes[DolphinX::NumCallConventions];
+	static LibCallType callTypes[4];
 
 	LibCallType* ParseCallingConvention(const Str&);
-	void ParseLibCall(DolphinX::ExtCallDeclSpecs decl, int callPrim);
-	void ParseVirtualCall(DolphinX::ExtCallDeclSpecs decl);
+	void ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPrimitive callPrim);
+	void ParseVirtualCall(DolphinX::ExtCallDeclSpec decl);
 
 	struct TypeDescriptor
 	{
-		DolphinX::ExtCallArgTypes	type;
+		DolphinX::ExtCallArgType	type;
 		Oop							parm;
 		TEXTRANGE					range;
 	};
 
-	int ParseExtCallArgs(TypeDescriptor args[]);
+	argcount_t ParseExtCallArgs(TypeDescriptor args[]);
 	void ParseExtCallArgument(TypeDescriptor& out);
 	void ParseExternalClass(const Str&, TypeDescriptor&);
 	POTE FindExternalClass(const Str&, const TEXTRANGE&);
-	DolphinX::ExtCallArgTypes TypeForStructPointer(POTE oteStructClass);
-	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], int argcount, DolphinX::ExtCallDeclSpecs decl, LPUTF8 procName);
+	DolphinX::ExtCallArgType TypeForStructPointer(POTE oteStructClass);
+	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], argcount_t argcount, DolphinX::ExtCallDeclSpec decl, LPUTF8 procName);
 	void mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRANGE&);
 
-	bool IsAtMethodScope() const;
-	bool IsInBlock() const;
-	bool IsInOptimizedBlock() const;
+	__declspec(property(get=get_IsAtMethodScope)) bool IsAtMethodScope;
+	bool get_IsAtMethodScope() const
+	{
+		_ASSERTE(m_pCurrentScope != nullptr);
+		return m_pCurrentScope == GetMethodScope();
+	}
 
-	void ParseBlock(const int textPosition);
-	int  ParseBlockArguments(const int textPosition);
+	__declspec(property(get = get_IsInBlock)) bool IsInBlock;
+	bool get_IsInBlock() const
+	{
+		return m_pCurrentScope->IsInBlock;
+	}
+
+	__declspec(property(get = get_IsInOptimizedBlock)) bool IsInOptimizedBlock;
+	bool get_IsInOptimizedBlock() const
+	{
+		return m_pCurrentScope->IsOptimizedBlock;
+	}
+
+	void ParseBlock(const textpos_t textPosition);
+	argcount_t  ParseBlockArguments(const textpos_t textPosition);
 	bool ParseIfTrue(const TEXTRANGE&);
 	bool ParseIfFalse(const TEXTRANGE&);
 	bool ParseAndCondition(const TEXTRANGE&);
 	bool ParseOrCondition(const TEXTRANGE&);
 	bool ParseIfNilBlock(bool noPop);
-	int ParseIfNotNilBlock();
-	bool ParseIfNil(const TEXTRANGE&, int);
-	bool ParseIfNotNil(const TEXTRANGE&, int);
-	template<bool WhileTrue> bool ParseWhileLoop(const int mark, const TEXTRANGE& receiverRange);
-	template<bool> bool ParseWhileLoopBlock(const int mark, const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange);
-	bool ParseRepeatLoop(const int mark, const TEXTRANGE& receiverRange);
-	bool ParseTimesRepeatLoop(const TEXTRANGE&, const int textStart);
-	void ParseToByNumberDo(int toPointer, Oop oopStep, bool bNegativeStep);
-	bool ParseToDoBlock(int, int toPointer);
-	bool ParseToByDoBlock(int, int toPointer, int byPointer=0);
+	bool ParseIfNotNilBlock();
+	bool ParseIfNil(const TEXTRANGE&, textpos_t);
+	bool ParseIfNotNil(const TEXTRANGE&, textpos_t);
+	template<bool WhileTrue> bool ParseWhileLoop(const ip_t mark, const TEXTRANGE& receiverRange);
+	template<bool> bool ParseWhileLoopBlock(const ip_t mark, const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange);
+	bool ParseRepeatLoop(const ip_t mark, const TEXTRANGE& receiverRange);
+	bool ParseTimesRepeatLoop(const TEXTRANGE&, const textpos_t textStart);
+	void ParseToByNumberDo(ip_t toPointer, Oop oopStep, bool bNegativeStep);
+	bool ParseToDoBlock(textpos_t, ip_t toPointer);
+	bool ParseToByDoBlock(textpos_t, ip_t toPointer, ip_t byPointer=ip_t::zero);
 	bool ParseZeroArgOptimizedBlock();
-	int ParseOptimizeBlock(int argc);
+	void ParseOptimizeBlock(argcount_t argc);
 
-	void InlineOptimizedBlock(int nStart, int nStop);
+	void InlineOptimizedBlock(ip_t nStart, ip_t nStop);
 	enum class LoopReceiverType { NiladicBlock, NonNiladicBlock, EmptyBlock, Other };
-	LoopReceiverType InlineLoopBlock(const int loopmark, const TEXTRANGE&);
-	int PatchBlocks();
-	int PatchBlockAt(int i);
-	void MakeCleanBlockAt(int i);
+	LoopReceiverType InlineLoopBlock(const ip_t loopmark, const TEXTRANGE&);
+	unsigned PatchBlocks();
+	size_t PatchBlockAt(ip_t i);
+	void MakeCleanBlockAt(ip_t i);
 
 	POTE ParseArray();
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
 
-	template <bool ignoreNops> int PriorInstruction() const;
+	template <bool ignoreNops> ip_t PriorInstruction() const;
 	bool LastIsPushNil() const;
-	bool LastIsPushSmallInteger(int& value) const;
+	bool LastIsPushSmallInteger(intptr_t& value) const;
 	Oop LastIsPushNumber() const;
-	Oop IsPushLiteral(int pos) const;
+	Oop IsPushLiteral(ip_t pos) const;
 
 	// Temporaries
 	TempVarDecl* AddTemporary(const Str& name, const TEXTRANGE& range, bool isArg);
 	TempVarDecl* AddArgument(const Str& name, const TEXTRANGE& range);
 	TempVarRef* AddOptimizedTemp(const Str& name, const TEXTRANGE& range=TEXTRANGE());
-	void RenameTemporary(int temporary, LPUTF8 newName, const TEXTRANGE& range);
+	void RenameTemporary(size_t temporary, LPUTF8 newName, const TEXTRANGE& range);
 	void CheckTemporaryName(const Str&, const TEXTRANGE&, bool isArg);
-	void PushNewScope(int textStart, bool bOptimized=false);
-	void PushOptimizedScope(int textStart=-1);
-	void PopScope(int textStop);
-	void PopOptimizedScope(int textStop);
+	void PushNewScope(textpos_t textStart, bool bOptimized=false);
+	void PushOptimizedScope(textpos_t textStart=textpos_t::npos);
+	void PopScope(textpos_t textStop);
+	void PopOptimizedScope(textpos_t textStop);
 	LexicalScope* GetMethodScope() const;
 	void DetermineTempUsage();
 	TempVarDecl* DeclareTemp(const Str& strName, const TEXTRANGE& range);
-	void FixupTempRef(int i);
-	int FixupTempRefs();
+	void FixupTempRef(ip_t i);
+	unsigned FixupTempRefs();
 	int FixupTempsAndBlocks();
 	void PatchOptimizedScopes();
 	void PatchCleanBlockLiterals(POTE oteMethod);
-	int GetArgumentCount() const;
 
 	// text map
-	int AddTextMap(int ip, const TEXTRANGE&);
-	int AddTextMap(int ip, int textStart, int textStop);
-	bool AdjustTextMapEntry(int ip, int newIP);
-	void InsertTextMapEntry(int ip, int textStart, int textStop);
-	bool RemoveTextMapEntry(int ip);
-	bool VoidTextMapEntry(int ip);
+	size_t AddTextMap(ip_t ip, const TEXTRANGE&);
+	size_t AddTextMap(ip_t ip, textpos_t textStart, textpos_t textStop);
+	bool AdjustTextMapEntry(ip_t ip, ip_t newIP);
+	void InsertTextMapEntry(ip_t ip, textpos_t textStart, textpos_t textStop);
+	bool RemoveTextMapEntry(ip_t ip);
+	bool VoidTextMapEntry(ip_t ip);
 #ifdef _DEBUG
-	void AssertValidIpForTextMapEntry(int ip, bool bFinal);
+	void AssertValidIpForTextMapEntry(ip_t ip, bool bFinal);
 	void VerifyTextMap(bool bFinal = false);
 	void VerifyJumps();
 	bool IsBlock(Oop oop);
@@ -335,7 +376,7 @@ private:
 
 public:
 	// Methods required by Disassembler
-	BYTE GetBytecode(size_t ip) { return m_bytecodes[ip].byte; }
+	BYTE GetBytecode(ip_t ip) const { return m_bytecodes[ip].byte; }
 	Str GetSpecialSelector(size_t index);
 	std::wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
 	Str GetInstVar(size_t index) { return m_instVars[index]; }
@@ -383,19 +424,25 @@ private:
 	// Parse state
 	bool m_ok;								// Parse still ok? 
 	bool m_instVarsInitialized;
-	enum SendType { SendOther, SendSelf, SendSuper };
-	FLAGS m_flags;							// Compiler flags
+	enum class SendType { SendOther, SendSelf, SendSuper };
+	CompilerFlags m_flags;							// Compiler flags
 
 	SendType m_sendType;					// true if current message is to super
 
 	// Dynamic array of bytecodes
 	BYTECODES m_bytecodes;
-	int m_codePointer;						// Code insert position
+	ip_t m_codePointer;						// Code insert position
+
+	__declspec(property(get = GetLastIp)) ip_t LastIp;
+	ip_t GetLastIp() const
+	{
+		return static_cast<ip_t>(CodeSize - 1);
+	}
 
 	// Dynamic array of literals
 	typedef std::vector<Oop> OOPVECTOR;
 	OOPVECTOR m_literalFrame;					// Literal frame
-	int m_literalLimit;
+	size_t m_literalLimit;
 
 	// Fixed size array of instance vars (determined from class)
 	typedef std::valarray<Str> STRINGARRAY;
@@ -411,23 +458,23 @@ private:
 
 	Str m_selector;							// The current message selector
 
-	unsigned m_primitiveIndex;				// Index of primitive or zero
+	uintptr_t m_primitiveIndex;				// Index of primitive or zero
 	Oop m_compilerObject;					// The object which was the receiver of the primCompile:... message to start compilation
 
 	struct TEXTMAP
 	{
-		int ip;
-		int start;
-		int stop;
+		ip_t ip;
+		textpos_t start;
+		textpos_t stop;
 
-		TEXTMAP(int ip, int start, int stop) { this->ip = ip; this->start = start; this->stop = stop; }
-		TEXTMAP() { ip = start = stop = -1; }
+		TEXTMAP(const ip_t ip, const textpos_t start, const textpos_t stop) { this->ip = ip; this->start = start; this->stop = stop; }
+		TEXTMAP() : ip((ip_t)-1), start((textpos_t)-1), stop((textpos_t)-1) { }
 	};
 
 	typedef std::vector<TEXTMAP> TEXTMAPLIST;
 	TEXTMAPLIST m_textMaps;
 
-	TEXTMAPLIST::iterator FindTextMapEntry(int ip);
+	TEXTMAPLIST::iterator FindTextMapEntry(ip_t ip);
 
 	POTE m_compiledMethodClass;				// Class of compiled method to generate
 	Oop m_notifier;							// Notifier object to send compilerError:... callbacks to
@@ -438,43 +485,21 @@ OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
 ///////////////////////
 
 // Inlines
-inline bool Compiler::WantSyntaxCheckOnly() const { return (m_flags & SyntaxCheckOnly)!=0; }
-inline bool Compiler::IsInteractive() const { return ((m_flags & Interactive)!=0) && !WantSyntaxCheckOnly(); }
-inline bool Compiler::WantOptimize() const { return (m_flags & NoOptimize)==0; }
-inline bool Compiler::WantTextMap() const { return (m_flags & TextMap)!=0; }
-inline bool Compiler::WantDebugMethod() const { return (m_flags & DebugMethod)!=0; }
-inline bool Compiler::WantTempsMap() const { return (m_flags & TempsMap)!=0; }
-inline Str Compiler::GetSelector() const { return m_selector; }
-inline bool Compiler::Ok() const { return m_ok; }
-inline int Compiler::GetLiteralCount() const { return m_literalFrame.size(); }
-
-inline int Compiler::GetCodeSize() const 
-{ 
-	return m_bytecodes.size();
-}
-
-inline int Compiler::GetArgumentCount() const
-{
-	return GetMethodScope()->GetArgumentCount();
-}
-
-///////////////////////////////////////////////////////////////////////////////
 
 // Insert a data byte at the code pointer, returning the position at which
 // the date byte was inserted.
-inline int Compiler::GenData(BYTE value)
+inline ip_t Compiler::GenData(uint8_t value)
 {
-	return GenByte(value, BYTECODE::IsData, NULL);
+	return GenByte(value, BYTECODE::FLAGS::IsData, nullptr);
 }
 
-inline void Compiler::UngenData(int pos, LexicalScope* pScope)
+inline void Compiler::UngenData(ip_t pos, LexicalScope* pScope)
 {
-	_ASSERTE(pos < GetCodeSize());
 	#ifdef _DEBUG
 	{
 		BYTECODE& bc = m_bytecodes[pos];
-		_ASSERTE(bc.isData());
-		_ASSERTE(!bc.isJumpSource());
+		_ASSERTE(bc.IsData);
+		_ASSERTE(!bc.IsJumpSource);
 	}
 	#endif
 	m_bytecodes[pos].makeNop(pScope);
@@ -482,50 +507,34 @@ inline void Compiler::UngenData(int pos, LexicalScope* pScope)
 
 // Insert an instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline int Compiler::GenInstruction(BYTE basic, BYTE offset)
+inline ip_t Compiler::GenInstruction(uint8_t basic, uint8_t offset)
 {
 	_ASSERTE(offset == 0 || ((int)basic+offset) < FirstDoubleByteInstruction);
-	_ASSERTE(m_pCurrentScope != NULL);
-	return GenByte(basic + offset, BYTECODE::IsOpCode, m_pCurrentScope);
+	_ASSERTE(m_pCurrentScope != nullptr);
+	return GenByte(basic + offset, BYTECODE::FLAGS::IsOpCode, m_pCurrentScope);
 }
 
-inline int Compiler::GenNop()
+inline ip_t Compiler::GenNop()
 {
 	return GenInstruction(Nop);
 }
 
-inline int Compiler::GenDup()
+inline ip_t Compiler::GenDup()
 {
 	return GenInstruction(DuplicateStackTop);
 }
 
-inline int Compiler::GenPopStack()
+inline ip_t Compiler::GenPopStack()
 {
 	return GenInstruction(PopStackTop);
 }
 
-inline int Compiler::GenStoreTemp(TempVarRef* pTemp)
+inline ip_t Compiler::GenStoreTemp(TempVarRef* pTemp)
 {
 	return GenTempRefInstruction(LongStoreOuterTemp, pTemp);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-
-inline bool Compiler::IsInBlock() const
-{
-	return m_pCurrentScope->IsInBlock();
-}
-
-inline bool Compiler::IsAtMethodScope() const
-{
-	_ASSERTE(m_pCurrentScope != NULL);
-	return m_pCurrentScope == GetMethodScope();
-}
-
-inline bool Compiler::IsInOptimizedBlock() const
-{
-	return m_pCurrentScope->IsOptimizedBlock();
-}
 
 inline LexicalScope* Compiler::GetMethodScope() const
 {
@@ -565,9 +574,9 @@ inline POTE Compiler::InternSymbol(const Str& str) const
 	return InternSymbol(str.c_str());
 }
 
-inline void Compiler::RemoveByte(int ip)
+inline void Compiler::RemoveByte(ip_t ip)
 {
-	_ASSERTE(m_bytecodes[ip].isData());	// Should be using RemoveInstruction for op code bytes
+	_ASSERTE(m_bytecodes[ip].IsData);	// Should be using RemoveInstruction for op code bytes
 	RemoveBytes(ip, 1);
 }
 

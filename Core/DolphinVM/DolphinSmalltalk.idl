@@ -13,16 +13,31 @@ import "ocidl.idl";
 //typedef unsigned int        *PUINT;
 //#include "winver.h"
 
-typedef signed char		SBYTE;
-typedef unsigned char	BYTE;
-typedef short			SWORD;
-typedef long			SDWORD;
-typedef SDWORD			NTSTATUS;
+// Unfortunately we can't include stdint.h without getting a lot of errors from definitions we don't need
+//#define _VCRUNTIME_H
+//#include <stdint.h>
 
-typedef UINT_PTR	MWORD;
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef signed short int16_t;
+typedef signed int	int32_t;
+typedef unsigned int uint32_t;
+typedef signed long long int64_t;
+typedef unsigned long long uint64_t;
+
+#ifdef _M_X64
+typedef int64_t intptr_t;
+typedef uint64_t uintptr_t;
+#else
+typedef int32_t intptr_t;
+typedef uint32_t uintptr_t;
+#endif
+
+// SDWORD is used in the definition of the original Dolphin COM interfaces. We can't change this now.
+typedef int32_t		SDWORD;
 
 cpp_quote("#if !defined(POTE_DEFINED)")
-typedef MWORD Oop;
+typedef uintptr_t Oop;
 typedef void* POTE;
 cpp_quote("#define POTE_DEFINED")
 cpp_quote("#endif")
@@ -221,6 +236,15 @@ library DolphinVM
 		POTE NewUtf8String([in]LPCSTR szValue, [in, defaultvalue(-1)]int len);
 	};
 
+	cpp_quote("#ifndef INTPTR_MAX")
+	cpp_quote("#define DEFINED_INTPTR_MAX")
+#ifdef _M_X64
+	cpp_quote("#define INTPTR_MAX 9223372036854775807i64")
+#else
+	cpp_quote("#define INTPTR_MAX 2147483647i32")
+#endif
+	cpp_quote("#endif")
+
 	// Please do not rely on any of the internal representation exposed by these inline
 	// functions, as it may change in future.
 	cpp_quote("__inline STVarObject* GetObj(POTE ote)")
@@ -233,18 +257,18 @@ library DolphinVM
 	cpp_quote("	return objectPointer & 1;")
 	cpp_quote("}")
 
-	cpp_quote("__inline SDWORD IntegerValueOf(Oop objectPointer)")
+	cpp_quote("__inline intptr_t IntegerValueOf(Oop objectPointer)")
 	cpp_quote("{")
 	cpp_quote("	// Use cast to ensure shift is signed arithmetic")
-	cpp_quote("	return ((SDWORD)(objectPointer)) >> 1;")
+	cpp_quote("	return ((intptr_t)(objectPointer)) >> 1;")
 	cpp_quote("}")
 
-	cpp_quote("__inline Oop IntegerObjectOf(SDWORD value) 			")
+	cpp_quote("__inline Oop IntegerObjectOf(intptr_t value) 			")
 	cpp_quote("{")
 	cpp_quote("	return (Oop)(((value) << 1) | 1);")
 	cpp_quote("}")
 
-	cpp_quote("__inline BOOL IsIntegerValue(SDWORD valueWord)")
+	cpp_quote("__inline BOOL IsIntegerValue(intptr_t valueWord)")
 	cpp_quote("{")
 	cpp_quote("	return (valueWord >= MinSmallInteger && valueWord <= MaxSmallInteger);")
 	cpp_quote("}")
@@ -255,20 +279,25 @@ library DolphinVM
 	cpp_quote("	return pObj->fields;")
 	cpp_quote("}")
 
-	cpp_quote("__inline MWORD FetchByteLengthOf(POTE ote)")
+	cpp_quote("__inline size_t FetchByteLengthOf(POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return (((MWORD*)ote)[2]) & 0x7FFFFFFF;")
+	cpp_quote("	return (((size_t*)ote)[2]) & INTPTR_MAX;")
 	cpp_quote("}")
 
-	cpp_quote("__inline MWORD FetchWordLengthOf(POTE ote)")
+	cpp_quote("__inline size_t FetchWordLengthOf(POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return FetchByteLengthOf(ote)/sizeof(MWORD);")
+	cpp_quote("	return FetchByteLengthOf(ote)/sizeof(uintptr_t);")
 	cpp_quote("}")
 
 	cpp_quote("__inline BOOL IsAString(const POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return (((MWORD*)ote)[3] & 0x12) == 0x10;")
+	cpp_quote("	return (((uintptr_t*)ote)[3] & 0x12) == 0x10;")
 	cpp_quote("}")
+
+	cpp_quote("#ifdef DEFINED_INTPTR_MAX")
+	cpp_quote("	#undef INTPTR_MAX")
+	cpp_quote("	#undef DEFINED_INTPTR_MAX")
+	cpp_quote("#endif")
 
 	[
 		object,
@@ -406,3 +435,4 @@ library DolphinVM
 		interface IDolphinStart;
 	};
 };
+

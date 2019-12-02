@@ -28,10 +28,10 @@ typedef enum {
 
 typedef struct STMethodHeader
 {
-	BYTE isInt 				: 1;	// MUST be 1 (to avoid treatment as object)
-	BYTE isPrivate			: 1;
-	BYTE envTempCount		: 6;	// Note that this is actually count+1
-	BYTE stackTempCount;
-	BYTE argumentCount;
-	BYTE primitiveIndex;
+	uint8_t isInt 				: 1;	// MUST be 1 (to avoid treatment as object)
+	uint8_t isPrivate			: 1;
+	uint8_t envTempCount		: 6;	// Note that this is actually count+1
+	uint8_t stackTempCount;
+	uint8_t argumentCount;
+	uint8_t primitiveIndex;
 } STMethodHeader;
