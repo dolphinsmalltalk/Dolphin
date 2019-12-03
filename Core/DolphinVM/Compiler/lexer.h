@@ -56,7 +56,7 @@ public:
 	void ScanNumber();
 	int DigitValue(uint8_t ch) const;
 
-	enum class radix_t { Min = 2, Decimal=10, Hex=16, Max = 26 };
+	enum class radix_t { Min = 2, Decimal=10, Hex=16, Max = 36 };
 	void ScanInteger(radix_t radix);
 	void ScanFloat();
 	void ScanExponentInteger();
