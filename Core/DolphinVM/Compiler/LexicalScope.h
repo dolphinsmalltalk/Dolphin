@@ -678,7 +678,7 @@ public:
 	////////////////////////////////////////////////////////////////
 	// Operations
 
-	void RenameTemporary(int, const Str&, const TEXTRANGE&);
+	void RenameTemporary(tempcount_t, const Str&, const TEXTRANGE&);
 	TempVarDecl* CopyTemp(TempVarDecl* pTemp, Compiler*);
 	TempVarRef* AddTempRef(TempVarDecl*, VarRefType, const TEXTRANGE&);
 	void CopyTemps(Compiler*);

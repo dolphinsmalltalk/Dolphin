@@ -228,24 +228,24 @@ int Lexer::DigitValue(uint8_t ch) const
 }
 
 // Note that the first digit has already been placed in the token buffer
-void Lexer::ScanInteger(int radix)
+void Lexer::ScanInteger(radix_t radix)
 {
 	m_integer = 0;
 	m_tokenType = TokenType::SmallIntegerConst;
 	int digit = DigitValue(PeekAtChar());
 
-	int maxval = INT_MAX / radix;
+	intptr_t maxval = INTPTR_MAX / static_cast<intptr_t>(radix);
 
-	while (digit >= 0 && digit < radix)
+	while (digit >= 0 && digit < static_cast<int>(radix))
 	{
 		*tp++ = NextChar();
 
 		if (m_tokenType == TokenType::SmallIntegerConst)
 		{
-			if (m_integer < maxval || (m_integer == maxval && digit <= INT_MAX % radix))
+			if (m_integer < maxval || (m_integer == maxval && digit <= INT_MAX % static_cast<int>(radix)))
 			{
 				// we won't overflow, go ahead 
-				m_integer = (m_integer * radix) + digit;
+				m_integer = (m_integer * static_cast<int>(radix)) + digit;
 			}
 			else
 				// It will have to be left to Smalltalk to calc the large integer value
@@ -292,7 +292,7 @@ void Lexer::ScanNumber()
 {
 	PushBack(*--tp);
 
-	ScanInteger(10);
+	ScanInteger(radix_t::Decimal);
 
 	uint8_t ch = PeekAtChar();
 
@@ -307,17 +307,18 @@ void Lexer::ScanNumber()
 		if (m_tokenType != TokenType::SmallIntegerConst)
 			return;
 
-		if (m_integer >= 2 && m_integer <= 36)
+		if (m_integer >= static_cast<int>(radix_t::Min) && m_integer <= static_cast<int>(radix_t::Max))
 		{
 			// Probably a short or long integer with a leading radix.
 
 			*tp++ = NextChar();
 			uint8_t* startSuffix = tp;
-			int radix = m_integer;
+			intptr_t radixCandidate = m_integer;
+			radix_t radix = static_cast<radix_t>(radixCandidate);
 			ScanInteger(radix);
 			if (tp == startSuffix)
 			{
-				m_integer = radix;
+				m_integer = radixCandidate;
 				tp--;
 				PushBack(ch);
 			}
@@ -658,7 +659,7 @@ Lexer::TokenType Lexer::NextToken()
 		else
 		{
 			textpos_t pos = CharPosition;
-			int cp = ReadUtf8(ch);
+			int32_t cp = ReadUtf8(ch);
 			CompileError(TEXTRANGE(pos, pos), LErrBadChar, (Oop)m_piVM->NewCharacter(cp < 0 ? 0xFFFD : cp));
 		}
 
@@ -669,13 +670,13 @@ Lexer::TokenType Lexer::NextToken()
 	return m_tokenType;
 }
 
-int Lexer::ReadUtf8()
+int32_t Lexer::ReadUtf8()
 {
 	uint8_t ch = Step();
 	return ReadUtf8(ch);
 }
 
-int Lexer::ReadUtf8(uint8_t ch)
+int32_t Lexer::ReadUtf8(uint8_t ch)
 {
 	if (__isascii(ch))
 	{
@@ -727,7 +728,7 @@ void Lexer::ScanLiteralCharacter()
 	// ascii. This would change if we decided to allow multi-lingual characters in identifiers, for example. But at present we parse only
 	// the ANSI X3J20 lexicon, which only recognises English letters, digits, and some ascii symbols and whitespace characters. That doesn't
 	// prevent the compiler successfully reading multi-lingual characters in literal strings, as they are opaque to the compiler.
-	int codePoint = ReadUtf8();
+	int32_t codePoint = ReadUtf8();
 
 	if (codePoint == 0)
 	{
@@ -790,7 +791,7 @@ void Lexer::ScanLiteralCharacter()
 		}
 	}
 
-	if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
+	if (static_cast<char32_t>(codePoint) > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
 	{
 		textpos_t pos = CharPosition;
 		m_thisTokenRange.m_stop = pos;
@@ -802,7 +803,7 @@ void Lexer::ScanLiteralCharacter()
 	}
 }
 
-inline int Lexer::ReadHexCodePoint()
+inline int32_t Lexer::ReadHexCodePoint()
 {
 	int digit = DigitValue(PeekAtChar());
 	if (digit < 0 || digit >= 16)
@@ -811,7 +812,7 @@ inline int Lexer::ReadHexCodePoint()
 		return -1;
 	}
 
-	int codePoint = 0;
+	int32_t codePoint = 0;
 
 	do
 	{

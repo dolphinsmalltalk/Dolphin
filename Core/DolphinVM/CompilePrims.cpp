@@ -64,7 +64,7 @@ extern "C" Oop __stdcall PrimCompileForClass(Oop compilerOop, const char* szSour
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-	return (Oop)piCompiler->CompileForClass(GetVM(), compilerOop, szSource, (POTE)aClass, FLAGS(flags), notifier);
+	return (Oop)piCompiler->CompileForClass(GetVM(), compilerOop, szSource, (POTE)aClass, static_cast<FLAGS>(flags), notifier);
 }
 
 extern "C" Oop __stdcall PrimCompileForEval(Oop compilerOop, const char* szSource, Oop aClass, Oop aWorkspacePool, int flags, Oop notifier)
@@ -73,7 +73,7 @@ extern "C" Oop __stdcall PrimCompileForEval(Oop compilerOop, const char* szSourc
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-	return (Oop)piCompiler->CompileForEval(GetVM(), compilerOop, szSource, (POTE)aClass, (POTE)aWorkspacePool, FLAGS(flags), notifier);
+	return (Oop)piCompiler->CompileForEval(GetVM(), compilerOop, szSource, (POTE)aClass, (POTE)aWorkspacePool, static_cast<FLAGS>(flags), notifier);
 }
 
 

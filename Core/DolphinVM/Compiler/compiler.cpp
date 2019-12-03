@@ -83,7 +83,7 @@ Compiler::LibCallType Compiler::callTypes[4] =
 
 Compiler::Compiler() :
 		m_class(0),
-		m_codePointer((ip_t)0),
+		m_codePointer(ip_t::zero),
 		m_compiledMethodClass(nullptr),
 		m_compilerObject(0),
 		m_context(0),
@@ -96,7 +96,7 @@ Compiler::Compiler() :
 		m_pCurrentScope(nullptr),
 		m_primitiveIndex(0),
 		m_selector(),
-		m_sendType(SendType::SendOther)
+		m_sendType(SendType::Other)
 {
 }
 	
@@ -381,7 +381,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 					}
 					break;
 				case IDCANCEL:
-					return StaticType::STATICCANCEL;
+					return StaticType::Cancel;
 					
 				case IDNO:
 				default:
@@ -405,12 +405,12 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	
 	if (oteBinding != nil)
 	{
-		StaticType sharedType = m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)) ? StaticType::STATICCONSTANT : StaticType::STATICVARIABLE;
+		StaticType sharedType = m_piVM->IsImmutable(reinterpret_cast<Oop>(oteBinding)) ? StaticType::Constant : StaticType::Variable;
 		oteStatic = oteBinding;
 		return sharedType;
 	}
 	else
-		return StaticType::STATICNOTFOUND;
+		return StaticType::NotFound;
 }
 
 //////////////////////////////////////////////////////////////
@@ -438,7 +438,7 @@ TempVarDecl* Compiler::AddArgument(const Str& name, const TEXTRANGE& range)
 }
 
 // Rename the temporary at location "temporary" to the name "newName"
-void Compiler::RenameTemporary(size_t temporary, LPUTF8 newName, const TEXTRANGE& range)
+void Compiler::RenameTemporary(tempcount_t temporary, LPUTF8 newName, const TEXTRANGE& range)
 {
 	CheckTemporaryName(newName, range, false);
 	m_pCurrentScope->RenameTemporary(temporary, newName, range);
@@ -476,7 +476,7 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 		else
 		{
 			POTE oteStatic;
-			if (FindNameAsStatic(name, oteStatic) > StaticType::STATICNOTFOUND)
+			if (FindNameAsStatic(name, oteStatic) > StaticType::NotFound)
 			{
 				m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 				Warning(range, CWarnRedefiningStatic);
@@ -487,12 +487,12 @@ void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool 
 
 //////////////////////////////////////////////////
 
-ip_t Compiler::GenByte(uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope)
+ip_t Compiler::GenByte(uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope)
 {
  	_ASSERTE(m_pCurrentScope != nullptr);
 	InsertByte(m_codePointer, value, flags, pScope);
 	ip_t ip = m_codePointer;
-	m_codePointer = (ip_t)((intptr_t)m_codePointer + 1);
+	m_codePointer++;
 	return ip;
 }
 
@@ -541,7 +541,7 @@ void Compiler::UngenInstruction(ip_t pos)
 // Opens up a space at pos in the code array
 // Adjusts any jumps that occur over the boundary
 
-void Compiler::InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope)
+void Compiler::InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope)
 {
 	const ip_t codeSize = static_cast<ip_t>(CodeSize);
 
@@ -552,7 +552,7 @@ void Compiler::InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, Lexica
 	else
 	{
 		_ASSERTE(pos < codeSize);
-		m_bytecodes.insert(m_bytecodes.begin()+(size_t)pos, BYTECODE(value, flags, pScope));
+		m_bytecodes.insert(m_bytecodes.begin()+static_cast<size_t>(pos), BYTECODE(value, flags, pScope));
 
 		// New byte may become jump target
 		// Adjust the jumps providing we are not appending to the end of the code.
@@ -562,7 +562,7 @@ void Compiler::InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, Lexica
 			BYTECODE& bc = m_bytecodes[i];
 			if (bc.IsJumpSource)
 			{
-				_ASSERTE((size_t)bc.target < CodeSize - 1);
+				_ASSERTE(static_cast<size_t>(bc.target) < CodeSize - 1);
 
 				// This is a jump. Does it cross the boundary?
 				if (bc.target >= pos)
@@ -604,19 +604,19 @@ inline void Compiler::GenPushStaticVariable(const Str& strName, const TEXTRANGE&
 	POTE oteStatic;
 	switch (FindNameAsStatic(strName, oteStatic))
 	{
-	case StaticType::STATICCONSTANT:
+	case StaticType::Constant:
 		GenPushStaticConstant(oteStatic, range);
 		break;
 
-	case StaticType::STATICVARIABLE:
+	case StaticType::Variable:
 		GenStatic(oteStatic, range);
 		break;
 		
-	case StaticType::STATICCANCEL:
+	case StaticType::Cancel:
 		m_ok = false;
 		return;
 		
-	case StaticType::STATICNOTFOUND:
+	case StaticType::NotFound:
 	default:
 		CompileError(range, CErrUndeclared, (Oop)NewUtf8String(strName));
 		return;
@@ -658,7 +658,7 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 	if (strName == VarSelf)
 	{
 		GenPushSelf();
-		m_sendType = SendType::SendSelf;
+		m_sendType = SendType::Self;
 	}
 	else if (strName == VarSuper &&	// Cannot supersend from class with no superclass
 		((STBehavior*)GetObj(m_class))->superclass != Nil())
@@ -667,7 +667,7 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 		// that messages must be sent to superclass of self.
 		//
 		GenPushSelf();
-		m_sendType = SendType::SendSuper;
+		m_sendType = SendType::Super;
 	}
 	else if (strName == VarThisContext)
 		GenInstruction(PushActiveFrame);
@@ -679,8 +679,8 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 			GenPushTemp(pRef);
 		else 
 		{
-			ptrdiff_t index = FindNameAsInstanceVariable(strName);
-			if (index >= 0)
+			size_t index = FindNameAsInstanceVariable(strName);
+			if (index != -1)
 			{
 				// Only 255 inst vars recognised, so index should not be > 255
 				_ASSERTE(index < 256);
@@ -704,8 +704,11 @@ void Compiler::GenInteger(intptr_t val, const TEXTRANGE& range)
 	else if (val >= _I32_MIN && val <= _I32_MAX && IsIntegerValue(val))
 	{
 		// Note that although there is sufficient space in the instruction to represent the full range of
-		// 32-bit integers, we don't bother with those outside the SmallInteger range since those would
-		// then need to be allocated each time, rather than read from a constant in the literal frame.
+		// 32-bit integers, in a 32-bit VM we don't bother with those outside the SmallInteger range since 
+		// those would then need to be allocated each time, rather than read from a constant in the literal 
+		// frame. In a 64-bit VM the full range will be used. Both cases are covered by the condition
+		// above: In a 32-bit VM the value may be in the 32-bit range, but IsIntegerValue may be false.
+		// In a 64-bit VM IsIntegerValue will never be false when evaluated.
 
 		GenInstruction(ExLongPushImmediate);
 		GenData(val & UINT8_MAX);
@@ -732,7 +735,7 @@ bool Compiler::LastIsPushNil() const
 	ip_t priorIndex = PriorInstruction<true>();
 	if (priorIndex == ip_t::npos)
 		return false;
-	return const_cast<Compiler*>(this)->m_bytecodes[priorIndex].byte == ShortPushNil;
+	return m_bytecodes[priorIndex].byte == ShortPushNil;
 }
 
 // Answer whether the previous instruction is a push SmallInteger
@@ -774,7 +777,7 @@ Oop Compiler::LastIsPushNumber() const
 
 Oop Compiler::IsPushLiteral(ip_t pos) const
 {
-	uint8_t opCode = m_bytecodes[pos].byte;
+	auto opCode = m_bytecodes[pos].byte;
 
 	switch(opCode)
 	{
@@ -998,7 +1001,7 @@ void Compiler::GenConstant(size_t index)
 		else
 		{
 			// Too many literals detected when adding to frame, so index should be in range
-			if (index >= 65536)
+			if (index > UINT16_MAX)
 				InternalError(__FILE__, __LINE__, ThisTokenRange, "Literal index out of range %Iu", index);
 
 			GenLongInstruction(LongPushConst, static_cast<uint16_t>(index));
@@ -1028,7 +1031,8 @@ void Compiler::GenStatic(const POTE oteStatic, const TEXTRANGE& range)
 		else
 		{
 			// Too many literals detected when adding to frame, so index should be in range
-			_ASSERTE(index <= UINT16_MAX);
+			if (index > UINT16_MAX)
+				InternalError(__FILE__, __LINE__, ThisTokenRange, "Literal index out of range %Iu", index);
 			GenLongInstruction(LongPushStatic, static_cast<uint16_t>(index));
 		}
 	}
@@ -1044,7 +1048,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 {
 	BreakPoint();
 	// Generates code to send a message (pattern) with (argCount) arguments
-	if (m_sendType != SendType::SendSuper)
+	if (m_sendType != SendType::Super)
 	{
 		// Look for special or arithmetic messages
 		uint8_t bytecode = FindNameAsSpecialMessage(pattern);
@@ -1062,7 +1066,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	if (symbolIndex == -1)
 		return ip_t::npos;
 
-	if (m_sendType == SendType::SendSuper)
+	if (m_sendType == SendType::Super)
 	{
 		// Warn if supersends a message which is not implemented - be sure not to wrongly flag 
 		// recursive self send first time the method is compiled
@@ -1073,7 +1077,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	else
 	{
 		// Warn if self-sends a message which is not implemented
-		if (m_sendType == SendType::SendSelf && IsInteractive
+		if (m_sendType == SendType::Self && IsInteractive
 				&& pattern != m_selector && !CanUnderstand(m_class,  oteSelector))
 			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("self"), m_class, 0);
 
@@ -1112,12 +1116,12 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	{
 		// Single extended send (2 bytes) will do
 		uint8_t part2 = static_cast<uint8_t>((argCount << SendXLiteralBits) | (symbolIndex & SendXMaxLiteral));
-		uint8_t code = m_sendType == SendType::SendSuper ? Supersend : Send;
+		uint8_t code = m_sendType == SendType::Super ? Supersend : Send;
 		sendIP = GenInstructionExtended(code, part2);
 	}
 	else if (symbolIndex <= Send2XMaxLiteral && argCount <= Send2XMaxArgs)
 	{
-		uint8_t code = m_sendType == SendType::SendSuper ? LongSupersend : LongSend;
+		uint8_t code = m_sendType == SendType::Super ? LongSupersend : LongSend;
 		sendIP = GenInstructionExtended(code, static_cast<uint8_t>(argCount));
 		GenData(static_cast<uint8_t>(symbolIndex));
 	}
@@ -1138,7 +1142,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 			symbolIndex = Send3XMaxLiteral;
 		}
 
-		uint8_t code = m_sendType == SendType::SendSuper ? ExLongSupersend : ExLongSend;
+		uint8_t code = m_sendType == SendType::Super ? ExLongSupersend : ExLongSend;
 		sendIP = GenInstructionExtended(code, static_cast<uint8_t>(argCount));
 		GenData(symbolIndex & UINT8_MAX);
 		GenData((symbolIndex >> 8) & UINT8_MAX);
@@ -1148,7 +1152,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 }
 
 // Basic generation of jump instruction for when target not yet known
-ip_t Compiler::GenJumpInstruction(BYTE basic)
+ip_t Compiler::GenJumpInstruction(uint8_t basic)
 {
 	// IT MUST be one of the long jump instructions
 	_ASSERTE(basic == LongJump || basic == LongJumpIfTrue || basic == LongJumpIfFalse || basic == LongJumpIfNil || basic == LongJumpIfNotNil);
@@ -1177,7 +1181,7 @@ inline void Compiler::SetJumpTarget(ip_t pos, ip_t target)
 	m_bytecodes[target].addJumpTo();
 }
 
-ip_t Compiler::GenJump(BYTE basic, ip_t location)
+ip_t Compiler::GenJump(uint8_t basic, ip_t location)
 {
 	// Generate a first pass (long) jump instruction.
 	// Make no attempt to shorten the instruction or to compute the real 
@@ -1218,7 +1222,7 @@ ip_t Compiler::GenStore(const Str& name, const TEXTRANGE& range, textpos_t assig
 	}
 	else if (m_ok)
 	{
-		ptrdiff_t index = FindNameAsInstanceVariable(name);
+		size_t index = FindNameAsInstanceVariable(name);
 		if (index != -1)
 		{
 			// Maximum of 255 inst vars recognised
@@ -1237,13 +1241,13 @@ ip_t Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, textpos_t
 	ip_t storeIP = ip_t::npos;
 	switch(FindNameAsStatic(name, oteStatic, true))
 	{
-	case StaticType::STATICCONSTANT:
+	case StaticType::Constant:
 		m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 		CompileError(TEXTRANGE(range.m_start, assignmentEnd),
 						CErrAssignConstant, (Oop)NewUtf8String(name));
 		break;
 
-	case StaticType::STATICVARIABLE:
+	case StaticType::Variable:
 		{
 			size_t index = AddToFrame(reinterpret_cast<Oop>(oteStatic), range);
 			_ASSERTE(index <= UINT16_MAX);
@@ -1254,7 +1258,7 @@ ip_t Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, textpos_t
 		}
 		break;
 
-	case StaticType::STATICNOTFOUND:
+	case StaticType::NotFound:
 	default:
 		if (IsPseudoVariable(name))
 			CompileError(TEXTRANGE(range.m_start, assignmentEnd), 
@@ -1366,7 +1370,7 @@ void Compiler::WarnIfRestrictedSelector(textpos_t start)
 {
 	if (!IsInteractive) return;
 
-	for (int i=0; i < NumRestrictedSelectors; i++)
+	for (size_t i=0; i < NumRestrictedSelectors; i++)
 		if (m_selector == s_restrictedSelectors[i])
 		{
 			Warning(TEXTRANGE(start, LastTokenRange.m_stop), CWarnRestrictedSelector);
@@ -1458,7 +1462,7 @@ tempcount_t Compiler::ParseTemporaries()
 	return nTempsAdded;
 }
 
-unsigned Compiler::ParseStatements(TokenType closingToken, bool popResults)
+size_t Compiler::ParseStatements(TokenType closingToken, bool popResults)
 {
 	if (!m_ok || ThisToken == closingToken || AtEnd)
 		return 0;
@@ -1469,7 +1473,7 @@ unsigned Compiler::ParseStatements(TokenType closingToken, bool popResults)
 	// instruction becomes the jump target.
 	GenNop();
 
-	int count = 0;
+	size_t count = 0;
 	while (m_ok)
 	{
 		textpos_t statementStart = ThisTokenRange.m_start;
@@ -1596,7 +1600,7 @@ void Compiler::ParseExpression()
 {
 	// Stack the last expression type
 	SendType lastSend = m_sendType;
-	m_sendType = SendType::SendOther;
+	m_sendType = SendType::Other;
 	
 	// We may need to know the mark of the current expression
 	ip_t exprMark = m_codePointer;
@@ -1677,7 +1681,7 @@ void Compiler::ParseBraceArray(textpos_t textPosition)
 {
 	NextToken();
 
-	int count = ParseStatements(TokenType::CloseBrace, false);
+	size_t count = ParseStatements(TokenType::CloseBrace, false);
 
 	if (m_ok)
 	{
@@ -1728,7 +1732,7 @@ void Compiler::ParseTerm(textpos_t textPosition)
 
 	case TokenType::CharConst:
 		{
-			intptr_t codePoint = ThisTokenInteger;
+			int32_t codePoint = ThisTokenInteger;
 			if (__isascii(codePoint))
 			{
 				// We only generate the PushChar instruction for ASCII code points
@@ -1870,7 +1874,7 @@ ip_t Compiler::ParseKeyContinuation(ip_t exprMark, textpos_t textPosition)
 	ip_t continuationPointer = ParseBinaryContinuation(exprMark, textPosition);
 	if (ThisToken!=TokenType::NameColon) 
 	{
-		if (m_sendType == SendType::SendSuper)
+		if (m_sendType == SendType::Super)
 			CompileError(CErrExpectMessage);
 		return continuationPointer;
 	}
@@ -1952,7 +1956,7 @@ ip_t Compiler::ParseKeyContinuation(ip_t exprMark, textpos_t textPosition)
 		{
 			// Otherwise just handle normally
 			SendType lastSend=m_sendType;
-			m_sendType=SendType::SendOther;
+			m_sendType=SendType::Other;
 			
 			// to:[by:]do: interface
 			if (strPattern == (LPUTF8)"to:")
@@ -2033,12 +2037,12 @@ ip_t Compiler::ParseBinaryContinuation(ip_t exprMark, textpos_t textPosition)
 		NextToken();
 		
 		SendType lastSend = m_sendType;
-		m_sendType = SendType::SendOther;
+		m_sendType = SendType::Other;
 		ip_t newExprMark = m_codePointer;
 		textpos_t newTextPosition = ThisTokenRange.m_start;
 		ParseTerm(newTextPosition);
 		ParseUnaryContinuation(newExprMark, newTextPosition);
-		if (m_sendType == SendType::SendSuper)
+		if (m_sendType == SendType::Super)
 			CompileError(CErrExpectMessage);
 		m_sendType = lastSend;
 		MaybePatchNegativeNumber();
@@ -2046,7 +2050,7 @@ ip_t Compiler::ParseBinaryContinuation(ip_t exprMark, textpos_t textPosition)
 		TODO("See if m_sendsToSuper can be reset inside GenMessage");
 		ip_t sendIP = GenMessage(pattern, 1, textPosition);
 		AddTextMap(sendIP, textPosition, LastTokenRange.m_stop);
-		m_sendType = SendType::SendOther;
+		m_sendType = SendType::Other;
 	}
 	return continuationPointer;
 }
@@ -2104,7 +2108,7 @@ ip_t Compiler::ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition)
 			AddTextMap(sendIP, textPosition, ThisTokenRange.m_stop);
 		}
 		
-		m_sendType = SendType::SendOther;
+		m_sendType = SendType::Other;
 		NextToken();
 		MaybePatchLiteralMessage();
 	}
@@ -2206,7 +2210,7 @@ void Compiler::ParsePrimitive()
 
 Compiler::LibCallType* Compiler::ParseCallingConvention(const Str& strToken)
 {
-	for (int i=0; i<(int)DolphinX::ExtCallDeclSpec::NumCallConventions; i++)
+	for (size_t i=0; i < static_cast<size_t>(DolphinX::ExtCallDeclSpec::NumCallConventions); i++)
 		if (strToken == callTypes[i].szCallType)
 		{
 			m_literalLimit = 256;		// Literal limit is reduced because only byte available in descriptor
@@ -2328,13 +2332,13 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 		{
 			// We can save the interpreter work by compiling down this info now, thereby allowing
 			// for improved run-time performance
-			unsigned byteSize = ((STBehavior*)GetObj(POTE(retType.parm)))->instSpec.extraSpec;
+			size_t byteSize = ((STBehavior*)GetObj(POTE(retType.parm)))->instSpec.extraSpec;
 			
 			if (byteSize != 0)
 			{
-				if (byteSize <= 4)
+				if (byteSize <= sizeof(int32_t))
 					retType.type = DolphinX::ExtCallArgType::Struct32;
-				else if (byteSize <= 8)
+				else if (byteSize <= sizeof(int64_t))
 					retType.type = DolphinX::ExtCallArgType::Struct64;
 			}
 		}
@@ -2367,14 +2371,13 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 	_ASSERTE(index==0);
 	
 	POTE argArray=(POTE)m_literalFrame[index];
-	uint8_t* pb = FetchBytesOf(argArray);
+	auto pb = FetchBytesOf(argArray);
 	DolphinX::ExternalMethodDescriptor& argsEtc = *(DolphinX::ExternalMethodDescriptor*)pb;
-	//memset(&argsEtc, 0xFF, size);
 	
-	argsEtc.m_descriptor.m_callConv = (uint8_t)decl;
+	argsEtc.m_descriptor.m_callConv = static_cast<uint8_t>(decl);
 	mangleDescriptorReturnType(types[0], types[0].range);
-	argsEtc.m_descriptor.m_return = (uint8_t)types[0].type;
-	argsEtc.m_descriptor.m_returnParm = (uint8_t)types[0].parm;
+	argsEtc.m_descriptor.m_return = static_cast<uint8_t>(types[0].type);
+	argsEtc.m_descriptor.m_returnParm = static_cast<uint8_t>(types[0].parm);
 	
 	
 	// At the moment we build the descriptor in argument order, but the literal
@@ -2389,10 +2392,10 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 		if (types[i].parm)
 		{
 			size_t frameIndex = AddToFrame(types[i].parm, types[i].range);
-			_ASSERTE(frameIndex < 256);
+			_ASSERTE(frameIndex <= UINT8_MAX);
 			argsEtc.m_descriptor.m_args[argsLen++] = static_cast<uint8_t>(frameIndex);
 		}
-		argsEtc.m_descriptor.m_args[argsLen++] = (uint8_t)types[i].type;
+		argsEtc.m_descriptor.m_args[argsLen++] = static_cast<uint8_t>(types[i].type);
 	}
 	_ASSERTE(argsLen < 256 && argsLen >= argcount);
 	argsEtc.m_descriptor.m_argsLen = static_cast<uint8_t>(argsLen);
@@ -2656,7 +2659,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 							Step();
 
 						Str strModifier = ThisTokenText;
-						int indirections = strModifier == (LPUTF8)"**" ? 2 : strModifier == (LPUTF8)"*" ? 1 : 0;
+						unsigned indirections = strModifier == (LPUTF8)"**" ? 2 : strModifier == (LPUTF8)"*" ? 1 : 0;
 						if (indirections == 0)
 						{
 							CompileError(TEXTRANGE(ThisTokenRange.m_start, CharPosition), CErrBadExtTypeQualifier);
@@ -3263,7 +3266,7 @@ void Compiler::GetInstVars()
 		{
 			// Copy the names from the Array into our m_instVars array.
 			POTE ote = (POTE)array.fields[i];
-			uint8_t *pb = FetchBytesOf(ote);
+			auto pb = FetchBytesOf(ote);
 			m_instVars[i] = reinterpret_cast<LPUTF8>(pb);
 		}
 		
@@ -3709,7 +3712,7 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	Oop notifier = m_notifier == Oop(Nil()) ? m_compilerObject : m_notifier;
 	m_piVM->StorePointerWithValue(&args.fields[8], notifier);
 
-	int extrasCount = 0;
+	size_t extrasCount = 0;
 	va_list copy = extras;
 	while (va_arg(copy, Oop) != 0)
 		extrasCount++;
@@ -3717,7 +3720,7 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	POTE oopExtras = m_piVM->NewArray(extrasCount);
 	m_piVM->StorePointerWithValue(&args.fields[9], Oop(oopExtras));
 	STVarObject& arrayExtras = *(STVarObject*)GetObj(oopExtras);
-	for (int i=0;i<extrasCount;i++)
+	for (size_t i=0;i<extrasCount;i++)
 	{
 		Oop oopExtra = va_arg(extras, Oop);
 		_ASSERTE(oopExtra != 0);
@@ -3823,7 +3826,7 @@ void Compiler::PopScope(textpos_t textStop)
 
 void Compiler::PushNewScope(textpos_t textStart, bool bOptimized)
 {
-	textpos_t start = textStart < (textpos_t)0 ? ThisTokenRange.m_start : textStart;
+	textpos_t start = textStart < textpos_t::start ? ThisTokenRange.m_start : textStart;
 	LexicalScope* pNewScope = new LexicalScope(m_pCurrentScope, start, bOptimized);
 	m_allScopes.push_back(pNewScope);
 	m_pCurrentScope = pNewScope;
@@ -3840,13 +3843,6 @@ void Compiler::PushNewScope(textpos_t textStart, bool bOptimized)
 void Compiler::PushOptimizedScope(textpos_t textStart)
 {
 	PushNewScope(textStart, true);
-}
-
-inline BYTE MakeOuterTempRef(size_t blockDepth, int index)
-{
-	_ASSERTE(index < OuterTempMaxIndex);
-	_ASSERTE(blockDepth <= OuterTempMaxDepth);
-	return static_cast<uint8_t>((blockDepth << 5) | index);
 }
 
 ip_t Compiler::GenTempRefInstruction(uint8_t instruction, TempVarRef* pRef)

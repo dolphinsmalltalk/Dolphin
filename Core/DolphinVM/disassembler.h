@@ -658,7 +658,7 @@ public:
 
 
 		default:
-			stream << L"UNHANDLED BYTE CODE " << opcode << L"!!!";
+			stream << L"UNHANDLED BYTECODE " << opcode << L"!!!";
 			break;
 		}
 		stream << std::endl;

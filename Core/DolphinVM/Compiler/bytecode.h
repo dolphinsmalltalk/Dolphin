@@ -27,10 +27,10 @@ ENABLE_INT_OPERATORS(ip_t)
 
 struct BYTECODE
 {
-	enum class FLAGS : uint8_t { IsOpCode=0x00, IsData=0x01, IsJump=0x02 };
+	enum class Flags : uint8_t { IsOpCode = 0x00, IsData = 0x01, IsJump = 0x02 };
 
 	uint8_t		byte;
-	FLAGS		flags;
+	Flags		flags;
 	uint16_t	jumpsTo;		// count of the number of other byte codes using this as a jump target
 
 	union
@@ -41,23 +41,21 @@ struct BYTECODE
 
 	LexicalScope*	pScope;
 
-	bool isInstruction(BYTE b) const
-							{ return byte == b && IsOpCode; };
+	bool isInstruction(uint8_t b) const
+	{
+		return byte == b && IsOpCode; 
+	};
 	
 	__declspec(property(get = get_IsData)) bool IsData;
-	bool get_IsData() const		{ return ((uint8_t)flags & (uint8_t)FLAGS::IsData) != 0; }
+	bool get_IsData() const;
 
-	void makeData()			
-	{ 
-		flags = (FLAGS)((uint8_t)flags | (uint8_t)FLAGS::IsData);
-		pScope = nullptr;
-	}
+	void makeData();
 
 	// A byte code is either instruction or data, not both
 	__declspec(property(get = get_IsOpCode)) bool IsOpCode;
-	bool get_IsOpCode()	const	{ return !get_IsData(); }
+	bool get_IsOpCode()	const	{ return !IsData; }
 
-	void makeOpCode(BYTE b, LexicalScope* pScope)	
+	void makeOpCode(uint8_t b, LexicalScope* pScope)	
 	{ 
 		_ASSERTE(pScope != nullptr);
 		byte = b; 
@@ -71,14 +69,11 @@ struct BYTECODE
 	}
 
 	__declspec(property(get = get_IsJumpSource)) bool IsJumpSource;
-	bool get_IsJumpSource() const
-	{	
-		return ((uint8_t)flags & (uint8_t)FLAGS::IsJump) != 0; 
-	}
+	bool get_IsJumpSource() const;
 
-	void makeNonData() { flags = (FLAGS)((uint8_t)flags & ~(uint8_t)FLAGS::IsData); }
-	void makeNonJump()		{ flags = (FLAGS)((uint8_t)flags & ~(uint8_t)FLAGS::IsJump); }
-	void makeJump()			{ flags = (FLAGS)((uint8_t)flags | (uint8_t)FLAGS::IsJump); }
+	void makeNonData();
+	void makeNonJump();
+	void makeJump();
 	void makeJumpTo(ip_t pos)
 	{ 
 		target = pos; 
@@ -111,7 +106,7 @@ struct BYTECODE
 		return lengthOfByteCode(byte); 
 	}
 
-	BYTECODE(uint8_t b=0, FLAGS f=FLAGS::IsOpCode, LexicalScope* s=nullptr) : pVarRef(nullptr), jumpsTo(0), byte(b), flags(f), pScope(s) {}
+	BYTECODE(uint8_t b=0, Flags f=Flags::IsOpCode, LexicalScope* s=nullptr) : pVarRef(nullptr), jumpsTo(0), byte(b), flags(f), pScope(s) {}
 
 	__declspec(property(get = get_IsBreak)) bool IsBreak;
 	INLINE bool get_IsBreak() const
@@ -182,7 +177,7 @@ struct BYTECODE
 	}
 
 
-	INLINE BYTE indexOfShortPushTemp() const
+	INLINE uint8_t indexOfShortPushTemp() const
 	{
 		_ASSERTE(IsShortPushTemp);
 		return byte - ShortPushTemp;
@@ -212,7 +207,7 @@ struct BYTECODE
 		return byte >= ShortPopStoreTemp && byte < ShortPopStoreTemp + NumShortPopStoreTemps;
 	}
 
-	INLINE BYTE indexOfShortPopStoreTemp() const
+	INLINE uint8_t indexOfShortPopStoreTemp() const
 	{
 		_ASSERTE(IsShortPopStoreTemp);
 		return byte - ShortPopStoreTemp;
@@ -224,7 +219,7 @@ struct BYTECODE
 		return byte >= ShortStoreTemp && byte < ShortStoreTemp + NumShortStoreTemps;
 	}
 
-	INLINE BYTE indexOfShortStoreTemp() const
+	INLINE uint8_t indexOfShortStoreTemp() const
 	{
 		_ASSERTE(IsShortStoreTemp);
 		return byte - ShortStoreTemp;
@@ -236,7 +231,7 @@ struct BYTECODE
 		return byte >= ShortSendWithNoArgs && byte < ShortSendWithNoArgs + NumShortSendsWithNoArgs;
 	}
 
-	INLINE int indexOfShortSendNoArgs() const
+	INLINE uint8_t indexOfShortSendNoArgs() const
 	{
 		_ASSERTE(IsShortSendWithNoArgs);
 		return byte - ShortSendWithNoArgs;
@@ -248,7 +243,7 @@ struct BYTECODE
 		return byte >= ShortPushMinusOne && byte <= ShortPushTwo;
 	}
 
-	INLINE BYTE indexOfPushInstVar() const
+	INLINE uint8_t indexOfPushInstVar() const
 	{
 		_ASSERTE(IsShortPushInstVar);
 		return byte - ShortPushInstVar;
@@ -452,6 +447,28 @@ struct BYTECODE
 	}
 };
 
+ENABLE_BITMASK_OPERATORS(BYTECODE::Flags)
+
+inline bool BYTECODE::get_IsData() const 
+{ 
+	return !!(flags & Flags::IsData); 
+}
+
+inline void BYTECODE::makeData()
+{
+	flags = flags | Flags::IsData;
+	pScope = nullptr;
+}
+
+inline bool BYTECODE::get_IsJumpSource() const
+{
+	return !!(flags & Flags::IsJump);
+}
+
+inline void BYTECODE::makeNonData() { flags = flags & ~Flags::IsData; }
+inline void BYTECODE::makeNonJump() { flags = flags & ~Flags::IsJump; }
+inline void BYTECODE::makeJump() { flags = flags | Flags::IsJump; }
+
 class BYTECODES : public std::vector<BYTECODE>
 {
 public:
@@ -470,12 +487,7 @@ public:
 	}
 };
 
-INLINE static int indexOfPushX(BYTE /*b1*/, BYTE b2)
-{
-	return b2;
-}
-
-INLINE static bool isPushInstVarX(BYTE b1, BYTE /*b2*/)
+INLINE static bool isPushInstVarX(uint8_t b1, uint8_t /*b2*/)
 {
 	return b1 == PushInstVar;
 }

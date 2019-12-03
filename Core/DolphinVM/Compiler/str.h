@@ -20,7 +20,7 @@ inline Str MakeString(IDolphin* piVM, const POTE stringPointer)
 	{
 		_ASSERTE(IsAString(stringPointer));
 		size_t stringLen=FetchByteLengthOf(stringPointer);
-		BYTE* bytes = FetchBytesOf(stringPointer);
+		auto bytes = FetchBytesOf(stringPointer);
 		return Str((const uint8_t*)bytes, stringLen);
 	}
 }

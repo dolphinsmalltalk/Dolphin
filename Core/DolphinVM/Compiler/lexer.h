@@ -55,7 +55,9 @@ public:
 	TokenType ScanString(textpos_t);
 	void ScanNumber();
 	int DigitValue(uint8_t ch) const;
-	void ScanInteger(int radix);
+
+	enum class radix_t { Min = 2, Decimal=10, Hex=16, Max = 26 };
+	void ScanInteger(radix_t radix);
 	void ScanFloat();
 	void ScanExponentInteger();
 	void ScanIdentifierOrKeyword();
@@ -130,11 +132,11 @@ public:
 	void CompileErrorV(const TEXTRANGE& range, int code, ...);
 
 protected:
-	enum { MaxCodePoint = 0x10FFFF };
+	static constexpr char32_t MaxCodePoint = MAX_UCSCHAR;
 
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
 	
-	uint8_t PeekAtChar(int lookAhead=0) const;
+	uint8_t PeekAtChar(size_t lookAhead=0) const;
 	bool IsASingleBinaryChar(uint8_t ch) const;
 	
 	TEXTRANGE CompileTextRange() const
@@ -240,9 +242,9 @@ protected:
 	IDolphin* m_piVM;
 
 private:
-	int ReadUtf8();
-	int ReadUtf8(uint8_t ch);
-	int ReadHexCodePoint();
+	int32_t ReadUtf8();
+	int32_t ReadUtf8(uint8_t ch);
+	int32_t ReadHexCodePoint();
 	uint8_t NextChar();
 
 private:
@@ -298,7 +300,7 @@ inline uint8_t Lexer::Step()
 	return ch;
 }
 
-inline uint8_t Lexer::PeekAtChar(int lookAhead) const
+inline uint8_t Lexer::PeekAtChar(size_t lookAhead) const
 {
 	return m_cp[lookAhead];
 }

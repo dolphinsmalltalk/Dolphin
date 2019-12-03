@@ -24,15 +24,15 @@ void Compiler::disassemble()
 
 void Compiler::disassemble(wostream& stream)
 {
-	int maxDepth = 0;
+	unsigned maxDepth = 0;
 	for (size_t i = 0; i < m_allScopes.size(); i++)
 	{
-		int depth = m_allScopes[i]->GetLogicalDepth();
+		unsigned depth = m_allScopes[i]->GetLogicalDepth();
 		if (depth > maxDepth) maxDepth = depth;
 	}
 
 	LexicalScope* currentScope = m_allScopes[0];
-	int currentDepth = 0;
+	unsigned currentDepth = 0;
 	stream << std::endl;
 	ip_t ip=ip_t::zero;
 	const ip_t last = LastIp;
@@ -50,7 +50,7 @@ void Compiler::disassemble(wostream& stream)
 		// If new nested scope, want to print opening bracket
 		if (currentScope != newScope)
 		{
-			int newDepth = newScope->GetLogicalDepth();
+			unsigned newDepth = newScope->GetLogicalDepth();
 			if (!(newDepth < currentDepth))
 			{
 				padChar = '-';
@@ -61,7 +61,7 @@ void Compiler::disassemble(wostream& stream)
 
 		// If next is in outer scope, want to print closing bracket now
 		bool lastInstr = ip + len > last;
-		int nextDepth = lastInstr ? 0 : m_bytecodes[ip + len].pScope->GetLogicalDepth();
+		unsigned nextDepth = lastInstr ? 0 : m_bytecodes[ip + len].pScope->GetLogicalDepth();
 
 		// If not on last bytecode, and scope will change, close the bracket
 		if (nextDepth < currentDepth)
@@ -69,7 +69,7 @@ void Compiler::disassemble(wostream& stream)
 			padChar = '-';
 		}
 
-		int j;
+		unsigned j;
 		for (j = 0; j < currentDepth; j++)
 		{
 			stream<< L"|";

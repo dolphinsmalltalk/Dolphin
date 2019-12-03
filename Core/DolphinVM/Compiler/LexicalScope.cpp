@@ -32,7 +32,7 @@ void TempVarDecl::MergeRef(const TempVarRef* pRef, Compiler* pCompiler)
 	if (pCompiler->IsInteractive && m_refType == VarRefType::Unknown && pRef->RefType == VarRefType::Read && !IsReadOnly)
 		pCompiler->Warning(pRef->TextRange, CWarnReadBeforeWritten);
 
-	m_refType = static_cast<VarRefType>((int)m_refType | (int)pRef->RefType);
+	m_refType = m_refType | pRef->RefType;
 
 	LexicalScope* pRefScope = pRef->RealScope;
 
@@ -266,8 +266,8 @@ TempVarDecl* LexicalScope::CopyTemp(TempVarDecl* pTemp, Compiler* pCompiler)
 
 	// We must update any ref in this scope to use the new local declaration
 	REFLIST& refs = m_tempVarRefs[pTemp->Name];
-	const int refcount = refs.size();
-	for (int i = 0; i < refcount; i++)
+	const size_t refcount = refs.size();
+	for (size_t i = 0; i < refcount; i++)
 	{ 
 		TempVarRef* pRef = refs[i];
 		if (pRef->Decl == pTemp)
@@ -316,8 +316,8 @@ void LexicalScope::CopyDownOptimizedDecls(Compiler* pCompiler)
 	_ASSERTE(pActualScope != this);
 	_ASSERTE(m_bIsOptimizedBlock);
 
-	const int count = m_tempVarDecls.size();
-	for (int i = 0; i < count; i++)
+	const size_t count = m_tempVarDecls.size();
+	for (size_t i = 0; i < count; i++)
 	{
 		TempVarDecl* pDecl = m_tempVarDecls[i];
 		_ASSERTE(pDecl->Scope == this);
@@ -370,8 +370,8 @@ void LexicalScope::AllocTempIndices(Compiler* pCompiler)
 	const tempcount_t nCopiedValues = CopiedValuesCount;
 	// We must allow sufficient space for the copied values before the other temps
 	m_nStackSize = m_nArgs + nCopiedValues;
-	const int count = m_tempVarDecls.size();
-	for (int i = 0; i < count; i++)
+	const size_t count = m_tempVarDecls.size();
+	for (size_t i = 0; i < count; i++)
 	{
 		TempVarDecl* pDecl = m_tempVarDecls[i];
 		if (pDecl->IsArgument)
@@ -499,8 +499,8 @@ void LexicalScope::AddVisibleDeclsTo(DECLMAP& allVisibleDecls) const
 	}
 	
 	// Now add any locally declared, or copied, temps
-	const int count = m_tempVarDecls.size();
-	for (int i = 0; i < count; i++)
+	const size_t count = m_tempVarDecls.size();
+	for (size_t i = 0; i < count; i++)
 	{
 		TempVarDecl* pDecl = m_tempVarDecls[i];
 		TempVarDecl* pRealDecl = isOptimized ? pDecl->Outer : pDecl;
@@ -533,14 +533,14 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 	DECLMAP allVisibleDecls;
 	AddVisibleDeclsTo(allVisibleDecls);
 
-	int numTemps = allVisibleDecls.size();
+	size_t numTemps = allVisibleDecls.size();
 	POTE tempsPointer = piVM->NewArray(numTemps);
 	piVM->StorePointerWithValue(scopeTuple.fields+2, Oop(tempsPointer));
 
 	STVarObject& temps = *(STVarObject*)GetObj(tempsPointer);
 
 	DECLMAP::const_iterator it = allVisibleDecls.begin();
-	for (int i = 0;i < numTemps; i++, it++)
+	for (size_t i = 0;i < numTemps; i++, it++)
 	{
 		_ASSERTE(it != allVisibleDecls.end());
 
@@ -553,7 +553,7 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 		STVarObject& temp = *(STVarObject*)GetObj(tempPointer);
 		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewUtf8String(reinterpret_cast<LPCSTR>(pDecl->Name.c_str()))));
 
-		int nDepth = pDecl->IsStack 
+		unsigned nDepth = pDecl->IsStack 
 			? 0
 			: GetActualDistance(pDecl->Scope) + 1;
 
@@ -575,9 +575,9 @@ void LexicalScope::AddTempDecl(TempVarDecl* pDecl, Compiler* pCompiler)
 		pCompiler->CompileError(pDecl->TextRange, CErrTooManyTemps);
 }
 
-void LexicalScope::RenameTemporary(int temporary, const Str& newName, const TEXTRANGE& range)
+void LexicalScope::RenameTemporary(tempcount_t temporary, const Str& newName, const TEXTRANGE& range)
 {
-	_ASSERTE(temporary >= 0 && (unsigned)temporary < m_tempVarDecls.size());
+	_ASSERTE(temporary < m_tempVarDecls.size());
 #ifdef _DEBUG
 //	TRACE("Renaming temp '%s' (%d..%d) to '%s'\n", m_tempVarDecls[temporary]->GetName().c_str(), range.m_start, range.m_stop, newName.c_str());
 #endif
@@ -625,8 +625,8 @@ void LexicalScope::BeOptimizedBlock()
 	m_bHasFarReturn = false;
 
 	// Any apparent arguments are not really arguments from the point of view of the enclosing scope
-	const int count = m_tempVarDecls.size();
-	for (int i = 0; i < count; i++)
+	const size_t count = m_tempVarDecls.size();
+	for (size_t i = 0; i < count; i++)
 	{
 		TempVarDecl* pDecl = m_tempVarDecls[i];
 		pDecl->IsArgument = false;

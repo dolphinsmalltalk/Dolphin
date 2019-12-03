@@ -16,7 +16,7 @@ Smalltalk compiler bytecode optimizer.
 #define CHECKREFERENCES
 
 #ifdef _DEBUG
-static int compilationTrace = 1;
+static int compilationTrace = 0;
 
 #elif !defined(USE_VM_DLL)
 #undef NDEBUG
@@ -32,10 +32,10 @@ const size_t BlockCopyInstructionLength = 7;
 
 //////////////////////////////////////////////////
 
-inline unsigned Compiler::Pass2()
+inline size_t Compiler::Pass2()
 {
 	// Optimise generated code
-	unsigned blockCount = FixupTempsAndBlocks();
+	size_t blockCount = FixupTempsAndBlocks();
 	RemoveNops();
 	if (WantOptimize)
 		Optimize();
@@ -83,7 +83,7 @@ void Compiler::Optimize()
 	// optimisations. There may be other optimisations enabled by the macro
 	// instructions too.
 
-	int count;
+	size_t count;
 	do
 	{
 		do
@@ -223,7 +223,7 @@ void Compiler::RemoveBytes(ip_t ip, size_t count)
 	}
 }
 
-inline int decodeOuterTempRef(BYTE byte, int& index)
+inline int decodeOuterTempRef(uint8_t byte, int& index)
 {
 	index = byte & OuterTempMaxIndex;
 	return byte >> OuterTempIndexBits;
@@ -246,11 +246,11 @@ bool Compiler::AdjustTextMapEntry(ip_t ip, ip_t newIP)
 	return false;
 }
 
-unsigned Compiler::OptimizePairs()
+size_t Compiler::OptimizePairs()
 {
 	// Optimize pairs of instructions.
 	// Returns a count of the optimizations done.
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i = ip_t::zero;
 	while (i <= LastIp)
 	{
@@ -267,8 +267,8 @@ unsigned Compiler::OptimizePairs()
 		// We can't perform any of these optimizations if the second byte code is a jump target
 		if (!bytecode2.IsJumpTarget)
 		{
-			BYTE byte1 = bytecode1.byte;
-			BYTE byte2 = bytecode2.byte;
+			auto byte1 = bytecode1.byte;
+			auto byte2 = bytecode2.byte;
 
 			// If the first is a push of a special and the second
 			// is a return from message then we may be able to replace
@@ -533,7 +533,7 @@ unsigned Compiler::OptimizePairs()
 						_ASSERTE(m_bytecodes[i+1].IsData);
 						
 						_ASSERTE(i+1 <= LastIp);
-						int index = m_bytecodes[i+1].byte;
+						unsigned index = m_bytecodes[i+1].byte;
 						if (bytecode1.byte == PopStoreInstVar && index < NumShortPopStoreInstVars)
 						{
 							bytecode1.byte = ShortPopStoreInstVar + index;
@@ -557,7 +557,7 @@ unsigned Compiler::OptimizePairs()
 				 if (byte2 == PopStackTop)
 				 {
 					_ASSERTE(NumShortStoreTemps <= NumShortPopStoreTemps);
-					int index = byte1 - ShortStoreTemp;
+					auto index = byte1 - ShortStoreTemp;
 					bytecode1.byte = ShortPopStoreTemp + index;
 					RemoveInstruction(next);
 					count++;
@@ -655,7 +655,7 @@ unsigned Compiler::OptimizePairs()
 				// This commonly occurs in code that assigns a temp and then 
 				// uses the temp immediately, such as for a condition.
 				
-				int index = bytecode2.indexOfShortPushTemp();
+				auto index = bytecode2.indexOfShortPushTemp();
 				if (index < NumShortStoreTemps)
 				{
 					bytecode1.byte = ShortStoreTemp + index;
@@ -736,16 +736,16 @@ unsigned Compiler::OptimizePairs()
 // here generates incorrect code for CombinePairs1 and it fails to spot Push Temp;Send Zero Args pairs.
 #pragma optimize("g", off)
 
-unsigned Compiler::CombinePairs()
+size_t Compiler::CombinePairs()
 {
 	return CombinePairs1() + CombinePairs2();
 }
 
 // Combine pairs of instructions into the more favoured macro instructions. This should be done
 // before CombinePairs2(). Returns a count of the optimizations done.
-unsigned Compiler::CombinePairs1()
+size_t Compiler::CombinePairs1()
 {
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i=ip_t::zero;
 	while (i <= LastIp)
 	{
@@ -763,8 +763,8 @@ unsigned Compiler::CombinePairs1()
 		// We can't perform any of these optimizations if the second byte code is a jump target
 		if (!bytecode2.IsJumpTarget)
 		{
-			const BYTE byte1 = bytecode1.byte;
-			const BYTE byte2 = bytecode2.byte;
+			auto byte1 = bytecode1.byte;
+			auto byte2 = bytecode2.byte;
 
 			// We introduce this macro instruction here rather than in CombinePairs2()
 			// because we wan't it to take precedent over PopPushSelf, which would otherwise get
@@ -775,9 +775,9 @@ unsigned Compiler::CombinePairs1()
 				if (byte2 == Send)
 				{
 					_ASSERTE(m_bytecodes[next+1].IsData);
-					uint8_t m = m_bytecodes[next+1].byte;
+					auto m = m_bytecodes[next+1].byte;
 					_ASSERTE(SendXLiteralBits == 5);
-					uint8_t argCount = m >> SendXLiteralBits;
+					auto argCount = m >> SendXLiteralBits;
 					if (argCount == 0)
 					{
 						// Push Self will become the Send Self instruction
@@ -794,7 +794,7 @@ unsigned Compiler::CombinePairs1()
 					_ASSERTE(len1 == 1);
 					VERIFY(AdjustTextMapEntry(next, i));
 
-					int n = bytecode2.indexOfShortSendNoArgs();
+					auto n = bytecode2.indexOfShortSendNoArgs();
 					if (n < NumShortSendSelfWithNoArgs)
 					{
 						bytecode1.byte = ShortSendSelfWithNoArgs+n;
@@ -813,14 +813,14 @@ unsigned Compiler::CombinePairs1()
 			// Look for opportunities to combine push temp with subsequent zero arg send
 			else if (bytecode1.IsShortPushTemp)
 			{
-				int n = bytecode1.indexOfShortPushTemp();
+				auto n = bytecode1.indexOfShortPushTemp();
 
 				if (bytecode2.IsShortSendWithNoArgs)
 				{
 					// Push Temp has become the Send Temp instruction
 					VERIFY(AdjustTextMapEntry(next, i));
 
-					int m = bytecode2.indexOfShortSendNoArgs();
+					auto m = bytecode2.indexOfShortSendNoArgs();
 					_ASSERTE(m <= MAXFORBITS(5));
 					_ASSERTE(n <= MAXFORBITS(3));
 
@@ -832,9 +832,9 @@ unsigned Compiler::CombinePairs1()
 				else if (byte2 == Send)
 				{
 					_ASSERTE(m_bytecodes[next+1].IsData);
-					uint8_t m = m_bytecodes[next+1].byte;
+					auto m = m_bytecodes[next+1].byte;
 					_ASSERTE(SendXLiteralBits <= 5);
-					uint8_t argCount = m >> SendXLiteralBits;
+					auto argCount = m >> SendXLiteralBits;
 					if (argCount == 0)
 					{
 						// Push Temp will become the Send Temp instruction
@@ -862,7 +862,7 @@ unsigned Compiler::CombinePairs1()
 					{
 						if (bytecode3.IsShortPopStoreTemp)
 						{
-							uint8_t m = bytecode3.indexOfShortPopStoreTemp();
+							auto m = bytecode3.indexOfShortPopStoreTemp();
 							if (m == n)
 							{
 								VERIFY(AdjustTextMapEntry(next, i));
@@ -877,7 +877,7 @@ unsigned Compiler::CombinePairs1()
 						}
 						else if (bytecode3.IsShortStoreTemp)
 						{
-							uint8_t m = bytecode3.indexOfShortStoreTemp();
+							auto m = bytecode3.indexOfShortStoreTemp();
 							if (m == n)
 							{
 								bytecode1.byte = byte2 == IncrementStackTop ? IncrementPushTemp : DecrementPushTemp;
@@ -893,7 +893,7 @@ unsigned Compiler::CombinePairs1()
 						}
 						else if (bytecode3.byte == PopStoreTemp || bytecode3.byte == StoreTemp)
 						{
-							uint8_t m = m_bytecodes[next+2].byte;
+							auto m = m_bytecodes[next+2].byte;
 							if (m == n)
 							{
 								bytecode1.byte = bytecode3.byte == PopStoreTemp 
@@ -913,7 +913,7 @@ unsigned Compiler::CombinePairs1()
 			else if (byte1 == PushTemp)
 			{
 				_ASSERTE(m_bytecodes[i+1].IsData);
-				uint8_t n = m_bytecodes[i+1].byte;
+				auto n = m_bytecodes[i+1].byte;
 
 				if (byte2 == Send)
 				{
@@ -921,8 +921,8 @@ unsigned Compiler::CombinePairs1()
 					 {
 						_ASSERTE(m_bytecodes[next+1].IsData);
 						_ASSERTE(SendXLiteralBits <= 5);
-						uint8_t m = m_bytecodes[next+1].byte;
-						uint8_t argCount = m >> SendXLiteralBits;
+						auto m = m_bytecodes[next+1].byte;
+						auto argCount = m >> SendXLiteralBits;
 						if (argCount == 0)
 						{
 							DebugBreak();
@@ -956,7 +956,7 @@ unsigned Compiler::CombinePairs1()
 					{
 						if (bytecode3.byte == PopStoreTemp || bytecode3.byte == StoreTemp)
 						{
-							int m = m_bytecodes[next+2].byte;
+							auto m = m_bytecodes[next+2].byte;
 							if (m == n)
 							{
 								// The [Inc|Dec][Push]Temp instructions are unusual in having a first data byte that is
@@ -982,17 +982,16 @@ unsigned Compiler::CombinePairs1()
 		
 		// m_bytecodes may have been replaced, so move to next based on the one there now
 		_ASSERTE(m_bytecodes[i].IsOpCode);
-		const size_t len = m_bytecodes[i].InstructionLength;
-		i += len;
+		i += m_bytecodes[i].InstructionLength;
 	}
 	return count;
 }
 
 // Combine pairs of instructions into the less favoured macro instructions. This should be done
 // after CombinePairs1(). Returns a count of the optimizations done.
-unsigned Compiler::CombinePairs2()
+size_t Compiler::CombinePairs2()
 {
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i = ip_t::zero;
 	while (i <= LastIp)
 	{
@@ -1007,8 +1006,8 @@ unsigned Compiler::CombinePairs2()
 		
 		_ASSERTE(bytecode1.IsOpCode && bytecode2.IsOpCode);
 
-		BYTE byte1 = bytecode1.byte;
-		BYTE byte2 = bytecode2.byte;
+		auto byte1 = bytecode1.byte;
+		auto byte2 = bytecode2.byte;
 
 		// We can't perform any of these optimizations if the second byte code is a jump target
 		if (!bytecode2.IsJumpTarget)
@@ -1074,7 +1073,7 @@ unsigned Compiler::CombinePairs2()
 					else
 					{
 						// If short push, overwrite it with a data byte containing the temp index
-						int i = bytecode2.indexOfShortPushTemp();
+						auto i = bytecode2.indexOfShortPushTemp();
 						if (i < NumShortPushSelfAndTemps)
 						{
 							bytecode1.byte = ShortPushSelfAndTemp+i;
@@ -1096,12 +1095,12 @@ unsigned Compiler::CombinePairs2()
 			// Pairs of temp pushes are common before sending 1 or more argument messages
 			else if (bytecode1.IsShortPushTemp)
 			{
-				int n = bytecode1.indexOfShortPushTemp();
+				auto n = bytecode1.indexOfShortPushTemp();
 
 				if (byte2 == PushTemp)
 				{
 					_ASSERTE(m_bytecodes[next+1].IsData);
-					uint8_t m = m_bytecodes[next+1].byte;
+					auto m = m_bytecodes[next+1].byte;
 					if (m < MAXFORBITS(4))
 					{
 						bytecode1.byte = PushTempPair;
@@ -1113,7 +1112,7 @@ unsigned Compiler::CombinePairs2()
 				}
 				else if (bytecode2.IsShortPushTemp)
 				{
-					int m = bytecode2.indexOfShortPushTemp();
+					auto m = bytecode2.indexOfShortPushTemp();
 					_ASSERTE(n <= MAXFORBITS(4));
 					_ASSERTE(m <= MAXFORBITS(4));
 					bytecode1.byte = PushTempPair;
@@ -1126,7 +1125,7 @@ unsigned Compiler::CombinePairs2()
 			else if (byte1 == PushTemp)
 			{
 				_ASSERTE(m_bytecodes[i+1].IsData);
-				int n = m_bytecodes[i+1].byte;
+				auto n = m_bytecodes[i+1].byte;
 
 				if (bytecode2.IsPushTemp)
 				{
@@ -1135,7 +1134,7 @@ unsigned Compiler::CombinePairs2()
 						if (byte2 == PushTemp)
 						{
 							_ASSERTE(m_bytecodes[next+1].IsData);
-							int m = m_bytecodes[next+1].byte;
+							auto m = m_bytecodes[next+1].byte;
 							if (m <= MAXFORBITS(4))
 							{
 								bytecode1.byte = PushTempPair;
@@ -1147,7 +1146,7 @@ unsigned Compiler::CombinePairs2()
 						else
 						{
 							_ASSERTE(bytecode2.IsShortPushTemp);
-							int m = bytecode2.indexOfShortPushTemp();
+							auto m = bytecode2.indexOfShortPushTemp();
 							_ASSERTE(n <= MAXFORBITS(4));
 							_ASSERTE(m <= MAXFORBITS(4));
 							bytecode1.byte = PushTempPair;
@@ -1215,12 +1214,12 @@ void Compiler::FixupJumps()
 	_ASSERTE(GetMethodScope()->FinalIP == LastIp);
 }
 
-unsigned Compiler::OptimizeJumps()
+size_t Compiler::OptimizeJumps()
 {
 	// Run through seeing if any jumps can be removed or retargeted.
 	// Return a count of the number of jumps replaced.
 	//
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i = ip_t::zero;
 	while (i<=LastIp)
 	{
@@ -1240,7 +1239,7 @@ unsigned Compiler::OptimizeJumps()
 			_ASSERTE(currentTarget <= LastIp);
 			BYTECODE& target = m_bytecodes[currentTarget];
 			_ASSERTE(target.IsJumpTarget);
-			BYTE targetByte = target.byte;
+			auto targetByte = target.byte;
 
 			intptr_t distance = static_cast<intptr_t>(currentTarget) - static_cast<intptr_t>(i);
 			intptr_t offset = distance - len;
@@ -1331,13 +1330,13 @@ unsigned Compiler::OptimizeJumps()
 	return count;
 }
 
-unsigned Compiler::InlineReturns()
+size_t Compiler::InlineReturns()
 {
 	// Jumps to return instructions can be replaced by the return instruction
 	// Note that this is done last in optimisation as quite often such jumps
 	// can be removed altogether due to elimination of unreachable/redundant code.
 	//
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i = ip_t::zero;
 	while (i<=LastIp)
 	{
@@ -1357,7 +1356,7 @@ unsigned Compiler::InlineReturns()
 			_ASSERTE(currentTarget <= LastIp);
 			BYTECODE& target = m_bytecodes[currentTarget];
 			_ASSERTE(target.IsJumpTarget);
-			BYTE targetByte = target.byte;
+			auto targetByte = target.byte;
 
 			// Unconditional Jumps to return instructions can be replaced with the return instruction
 			if (bytecode.byte == LongJump)
@@ -1510,7 +1509,7 @@ unsigned Compiler::InlineReturns()
 		else if (bytecode.IsReturn && i + len <= LastIp && bytecode.byte == m_bytecodes[i+len].byte)
 		{
 			VERIFY(VoidTextMapEntry(i));
-			BYTE duplicateReturn = bytecode.byte;
+			auto duplicateReturn = bytecode.byte;
 			LexicalScope* pScope = bytecode.pScope;
 			RemoveInstruction(i);
 			_ASSERTE(m_bytecodes[i].byte == duplicateReturn);
@@ -1569,12 +1568,12 @@ inline static bool isInLongJumpRange(intptr_t distance)
 	return offset >= MaxBackwardsLongJump && offset <= MaxForwardsLongJump;
 }
 
-unsigned Compiler::ShortenJumps()
+size_t Compiler::ShortenJumps()
 {
 	// Run through seeing if any shorter jumps can be used. Return a count
 	// of the number of jumps shortened.
 	//
-	unsigned count = 0;
+	size_t count = 0;
 	ip_t i = ip_t::zero;
 	while (i<=LastIp)
 	{
@@ -1590,7 +1589,7 @@ unsigned Compiler::ShortenJumps()
 			_ASSERTE(bytecode.target >= ip_t::zero && bytecode.target <= LastIp);
 			BYTECODE& target = m_bytecodes[bytecode.target];
 			_ASSERTE(target.IsJumpTarget);
-			uint8_t targetByte = target.byte;
+			auto targetByte = target.byte;
 			intptr_t distance = static_cast<intptr_t>(bytecode.target) - static_cast<intptr_t>(i);
 			switch (bytecode.byte)
 			{
@@ -1772,7 +1771,7 @@ void Compiler::FixupJump(ip_t pos)
 #endif
 			// Unconditional jump
 			_ASSERTE(!WantOptimize || !isInNearJumpRange(distance,2));	// Why not optimized?
-			ptrdiff_t offset = distance - 3;				// IP inc'd for instruction, and extension bytes
+			intptr_t offset = distance - 3;				// IP inc'd for instruction, and extension bytes
 			if (offset < MaxBackwardsLongJump || offset > MaxForwardsLongJump)
 			{
 				CompileError(CErrMethodTooLarge);
@@ -1817,7 +1816,7 @@ POTE Compiler::NewMethod()
 	if (!m_ok || WantSyntaxCheckOnly)
 		return m_piVM->NilPointer();
 
-	int blockCount = Pass2();
+	size_t blockCount = Pass2();
 	
 	_ASSERTE(sizeof(STMethodHeader) == sizeof(uintptr_t));
 	_ASSERTE(LiteralCount<=LITERALLIMIT);
@@ -1845,7 +1844,7 @@ POTE Compiler::NewMethod()
 	bool bHasFarReturn = pMethodScope->HasFarReturn;
 	bool bNeedsContext = bHasFarReturn || numEnvTemps > 0;
 
-	uint8_t byte0=m_bytecodes[ip_t::zero].byte;
+	auto byte0=m_bytecodes[ip_t::zero].byte;
 	uint8_t byte1=Nop;
 	uint8_t byte2=Nop;
 	size_t len = CodeSize;
@@ -1891,7 +1890,7 @@ POTE Compiler::NewMethod()
 		// Primitive return of literal zero from a ##() expression that generated literal frame entries
 		_ASSERTE(!bNeedsContext);
 		_ASSERTE(LiteralCount>1);
-		int index = m_bytecodes[ip_t::zero].indexOfShortPushConst();
+		auto index = m_bytecodes[ip_t::zero].indexOfShortPushConst();
 		Oop tmp = m_literalFrame[0];
 		m_literalFrame[0] = m_literalFrame[index];
 		m_literalFrame[index] = tmp;
@@ -1914,7 +1913,7 @@ POTE Compiler::NewMethod()
 		// Primitive return of literal zero from a ##() expression that generated literal frame entries
 		_ASSERTE(!bNeedsContext);
 		_ASSERTE(LiteralCount>1);
-		int index = m_bytecodes[ip_t::zero].indexOfShortPushStatic();
+		auto index = m_bytecodes[ip_t::zero].indexOfShortPushStatic();
 		Oop tmp = m_literalFrame[0];
 		m_literalFrame[0] = m_literalFrame[index];
 		m_literalFrame[index] = tmp;
@@ -2087,7 +2086,7 @@ POTE Compiler::NewMethod()
 			|| (CodeSize == sizeof(uintptr_t) && ((byte0 & 1) != 0))))
 	{
 		Oop bytes = IntegerObjectOf(0);
-		BYTE* pByteCodes = (BYTE*)&bytes;
+		auto pByteCodes = (uint8_t*)&bytes;
 		// IX86 is a little endian machine, so first must be odd for SmallInteger flag
 		if ((byte0 & 1) == 0)
 		{
@@ -2117,7 +2116,7 @@ POTE Compiler::NewMethod()
 	}
 	else
 	{
-		BYTE* pByteCodes = FetchBytesOf(POTE(cmpldMethod.byteCodes));
+		auto pByteCodes = FetchBytesOf(POTE(cmpldMethod.byteCodes));
 		const ip_t loopEnd = LastIp;
 		for (ip_t i=ip_t::zero; i<=loopEnd; i++)
 			pByteCodes[static_cast<size_t>(i)] = m_bytecodes[i].byte;
@@ -2176,7 +2175,7 @@ void Compiler::PatchCleanBlockLiterals(POTE oteMethod)
 	}
 }
 
-int Compiler::FixupTempsAndBlocks()
+size_t Compiler::FixupTempsAndBlocks()
 {
 	VerifyTextMap(false);
 
@@ -2275,9 +2274,9 @@ void Compiler::DetermineTempUsage()
 	}
 }
 
-unsigned Compiler::FixupTempRefs()
+size_t Compiler::FixupTempRefs()
 {
-	unsigned fixed=0;
+	size_t fixed=0;
 	const ip_t last = LastIp;
 	for (ip_t i = ip_t::zero; i <= last;)
 	{
@@ -2403,10 +2402,10 @@ void Compiler::FixupTempRef(ip_t i)
 	};
 }
 
-unsigned Compiler::PatchBlocks()
+size_t Compiler::PatchBlocks()
 {
 	ip_t i=ip_t::zero;
-	unsigned blockCount = 0;
+	size_t blockCount = 0;
 	while (i <= LastIp)
 	{
 		VerifyTextMap(true);

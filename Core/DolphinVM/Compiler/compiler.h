@@ -34,11 +34,11 @@ ENABLE_BITMASK_OPERATORS(CompilerFlags)
 
 ///////////////////////
 
-#define LITERALLIMIT		65536	// maximum number of literals permitted. Limited by the byte code set, but in
-									// practice this limit would not be reached because the byte code limit would
-									// be reached first.
-#define ARGLIMIT			255		// maximum number of arguments (VM limit)
-#define	ENVTEMPLIMIT		63		// (2^6)-1. Note that actual limit is 62, since value of 1 indicates that a context with 0 slots is required for a far ^-return 
+#define LITERALLIMIT		UINT16_MAX+1	// maximum number of literals permitted. Limited by the byte code set, but in
+											// practice this limit would not be reached because the byte code limit would
+											// be reached first.
+#define ARGLIMIT			UINT8_MAX		// maximum number of arguments (VM limit)
+#define	ENVTEMPLIMIT		63				// (2^6)-1. Note that actual limit is 62, since value of 1 indicates that a context with 0 slots is required for a far ^-return 
 
 #define GENERATEDTEMPSTART " "
 #define TEMPSDELIMITER '|'
@@ -156,7 +156,7 @@ private:
 	size_t FindNameAsInstanceVariable(const Str&) const;
 	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
 
-	enum class StaticType { STATICCANCEL=-1, STATICNOTFOUND, STATICVARIABLE, STATICCONSTANT };
+	enum class StaticType { Cancel=-1, NotFound, Variable, Constant };
 	StaticType FindNameAsStatic(const Str&, POTE&, bool autoDefine=false);
 
 	void WarnIfRestrictedSelector(textpos_t start);
@@ -167,11 +167,11 @@ private:
 	size_t AddStringToFrame(POTE string, const TEXTRANGE&);
 	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&);
 	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
-	void InsertByte(ip_t pos, uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope);
+	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	void RemoveByte(ip_t pos);
 	void RemoveBytes(ip_t start, size_t count);
 	size_t RemoveInstruction(ip_t pos);
-	ip_t GenByte(uint8_t value, BYTECODE::FLAGS flags, LexicalScope* pScope);
+	ip_t GenByte(uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	ip_t GenData(uint8_t value);
 	ip_t GenInstruction(uint8_t basic, uint8_t offset=0);
 	ip_t GenInstructionExtended(uint8_t basic, uint8_t extension);
@@ -220,16 +220,16 @@ private:
 
 
 	// Pass 2 and optimization
-	unsigned Pass2();
+	size_t Pass2();
 	void RemoveNops();
 	void Optimize();
-	unsigned CombinePairs();
-	unsigned CombinePairs1();
-	unsigned CombinePairs2();
-	unsigned OptimizePairs();
-	unsigned OptimizeJumps();
-	unsigned InlineReturns();
-	unsigned ShortenJumps();
+	size_t CombinePairs();
+	size_t CombinePairs1();
+	size_t CombinePairs2();
+	size_t OptimizePairs();
+	size_t OptimizeJumps();
+	size_t InlineReturns();
+	size_t ShortenJumps();
 	void FixupJumps();
 	void FixupJump(ip_t);
 
@@ -239,7 +239,7 @@ private:
 	void ParseMessagePattern();
 	void ParseArgument();
 	tempcount_t ParseTemporaries();
-	unsigned ParseStatements(TokenType, bool popResults = true);
+	size_t ParseStatements(TokenType, bool popResults = true);
 	void ParseBlockStatements();
 	void ParseStatement();
 	void ParseExpression();
@@ -325,7 +325,7 @@ private:
 	void InlineOptimizedBlock(ip_t nStart, ip_t nStop);
 	enum class LoopReceiverType { NiladicBlock, NonNiladicBlock, EmptyBlock, Other };
 	LoopReceiverType InlineLoopBlock(const ip_t loopmark, const TEXTRANGE&);
-	unsigned PatchBlocks();
+	size_t PatchBlocks();
 	size_t PatchBlockAt(ip_t i);
 	void MakeCleanBlockAt(ip_t i);
 
@@ -343,7 +343,7 @@ private:
 	TempVarDecl* AddTemporary(const Str& name, const TEXTRANGE& range, bool isArg);
 	TempVarDecl* AddArgument(const Str& name, const TEXTRANGE& range);
 	TempVarRef* AddOptimizedTemp(const Str& name, const TEXTRANGE& range=TEXTRANGE());
-	void RenameTemporary(size_t temporary, LPUTF8 newName, const TEXTRANGE& range);
+	void RenameTemporary(tempcount_t temporary, LPUTF8 newName, const TEXTRANGE& range);
 	void CheckTemporaryName(const Str&, const TEXTRANGE&, bool isArg);
 	void PushNewScope(textpos_t textStart, bool bOptimized=false);
 	void PushOptimizedScope(textpos_t textStart=textpos_t::npos);
@@ -353,8 +353,8 @@ private:
 	void DetermineTempUsage();
 	TempVarDecl* DeclareTemp(const Str& strName, const TEXTRANGE& range);
 	void FixupTempRef(ip_t i);
-	unsigned FixupTempRefs();
-	int FixupTempsAndBlocks();
+	size_t FixupTempRefs();
+	size_t FixupTempsAndBlocks();
 	void PatchOptimizedScopes();
 	void PatchCleanBlockLiterals(POTE oteMethod);
 
@@ -376,7 +376,7 @@ private:
 
 public:
 	// Methods required by Disassembler
-	BYTE GetBytecode(ip_t ip) const { return m_bytecodes[ip].byte; }
+	uint8_t GetBytecode(ip_t ip) const { return m_bytecodes[ip].byte; }
 	Str GetSpecialSelector(size_t index);
 	std::wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
 	Str GetInstVar(size_t index) { return m_instVars[index]; }
@@ -424,7 +424,7 @@ private:
 	// Parse state
 	bool m_ok;								// Parse still ok? 
 	bool m_instVarsInitialized;
-	enum class SendType { SendOther, SendSelf, SendSuper };
+	enum class SendType { Other, Self, Super };
 	CompilerFlags m_flags;							// Compiler flags
 
 	SendType m_sendType;					// true if current message is to super
@@ -490,7 +490,7 @@ OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
 // the date byte was inserted.
 inline ip_t Compiler::GenData(uint8_t value)
 {
-	return GenByte(value, BYTECODE::FLAGS::IsData, nullptr);
+	return GenByte(value, BYTECODE::Flags::IsData, nullptr);
 }
 
 inline void Compiler::UngenData(ip_t pos, LexicalScope* pScope)
@@ -511,7 +511,7 @@ inline ip_t Compiler::GenInstruction(uint8_t basic, uint8_t offset)
 {
 	_ASSERTE(offset == 0 || ((int)basic+offset) < FirstDoubleByteInstruction);
 	_ASSERTE(m_pCurrentScope != nullptr);
-	return GenByte(basic + offset, BYTECODE::FLAGS::IsOpCode, m_pCurrentScope);
+	return GenByte(basic + offset, BYTECODE::Flags::IsOpCode, m_pCurrentScope);
 }
 
 inline ip_t Compiler::GenNop()
