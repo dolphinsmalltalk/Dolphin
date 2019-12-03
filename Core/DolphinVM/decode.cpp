@@ -63,6 +63,14 @@ static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 	//	stream.unlock();
 }
 
+
+std::wostream& __stdcall operator<<(std::wostream& stream, const std::string& str)
+{
+	Utf16StringBuf buf(CP_UTF8, str.c_str(), str.size());
+	printChars(stream, buf, buf.Count);
+	return stream;
+}
+
 // Helper to dump characters to the tracestream
 // Unprintable characters are printed in hex
 wostream& operator<<(wostream& stream, const StringOTE* oteChars)
@@ -246,19 +254,19 @@ wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 
 	LargeInteger* li = ote->m_location;
 	st << L"a LargeInteger(" << std::hex << setfill(L'0');
-	const int size = ote->getWordSize();
+	const size_t size = ote->getWordSize();
 	if (size < MaxWords)
 	{
-		for (int i = size - 1; i >= 0; i--)
+		for (ptrdiff_t i = size - 1; i >= 0; i--)
 			st << setw(8) << li->m_digits[i] << L' ';
 	}
 	else
 	{
 		// Dump only the top and bottom 10 words with middle ellipsis
-		for (int i = size - 1; i >= size - (MaxWords/2); i--)
+		for (size_t i = size - 1; i >= size - (MaxWords/2); i--)
 			st << setw(8) << li->m_digits[i] << L' ';
 		st << L"... ";
-		for (int i = (MaxWords/2)-1; i >= 0; i--)
+		for (ptrdiff_t i = (MaxWords/2)-1; i >= 0; i--)
 			st << setw(8) << li->m_digits[i] << L' ';
 	}
 
@@ -327,7 +335,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 
 	st << L'$';
 	SMALLINTEGER code = ObjectMemoryIntegerValueOf(ch->m_code);
-	MWORD codeUnit = code & 0xffffff;
+	char32_t codeUnit = code & 0xffffff;
 	if (__isascii(codeUnit))
 	{
 		if (isgraph(codeUnit))
@@ -341,17 +349,17 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		{
 		case StringEncoding::Ansi:
 		{
-			MWORD codePoint = Interpreter::m_ansiToUnicodeCharMap[code & 0xFF];
+			char16_t codePoint = Interpreter::m_ansiToUnicodeCharMap[codeUnit & 0xff];
 			if (iswgraph(codePoint))
 			{
-				return st << static_cast<wint_t>(codePoint);
+				return st << static_cast<char16_t>(codePoint);
 			}
 			break;
 		}
 		case StringEncoding::Utf16:
-			if (iswgraph(codeUnit))
+			if (iswgraph(static_cast<char16_t>(codeUnit)))
 			{
-				return st << static_cast<WCHAR>(codeUnit);
+				return st << static_cast<char16_t>(codeUnit);
 			}
 			break;
 
@@ -359,9 +367,9 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 			break;
 
 		case StringEncoding::Utf32:
-			if (U_IS_BMP(codeUnit) && iswgraph(codeUnit))
+			if (U_IS_BMP(codeUnit) && iswgraph(static_cast<char16_t>(codeUnit)))
 			{
-				return st << static_cast<WCHAR>(codeUnit);
+				return st << static_cast<char16_t>(codeUnit);
 			}
 			break;
 
@@ -409,7 +417,7 @@ wostream& operator<<(wostream& st, const HandleOTE* ote)
 wostream& operator<<(wostream& st, const ArrayOTE* ote)
 {
 	if (ote->isNil()) return st << L"nil";
-	int size = ote->pointersSize();
+	size_t size = ote->pointersSize();
 	st << L"#(";
 	if (size > 0)
 	{
@@ -418,9 +426,9 @@ wostream& operator<<(wostream& st, const ArrayOTE* ote)
 			return st << L"***Bad Array: " << (void*)array;
 		else
 		{
-			int size = ote->pointersSize();
-			int end = min(40, size);
-			for (int i = 0; i < end; i++)
+			size_t size = ote->pointersSize();
+			size_t end = min(40, size);
+			for (size_t i = 0; i < end; i++)
 				st << reinterpret_cast<OTE*>(array->m_elements[i]) << L" ";
 			if (end < size)
 				st << L"...";
@@ -629,14 +637,14 @@ static void DumpIP(BYTE* ip, CompiledMethod* pMethod, wostream& logStream)
 		}
 		else
 		{
-			int offsetFromBeginningOfByteCodesObject = ip - ObjectMemory::ByteAddressOfObject(pMethod->m_byteCodes);
+			ptrdiff_t offsetFromBeginningOfByteCodesObject = ip - ObjectMemory::ByteAddressOfObject(pMethod->m_byteCodes);
 			logStream << LPVOID(ip) << L" (" << std::dec << offsetFromBeginningOfByteCodesObject << L')';
 		}
 	}
 	logStream << std::endl;
 }
 
-static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned nDepth)
+static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, size_t nDepth)
 {
 	if (IsBadReadPtr(sp, sizeof(Oop)))
 		logStream << L"***Bad stack pointer: " << PVOID(sp) << std::endl;
@@ -650,11 +658,11 @@ static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned 
 		else
 		{
 			// A short stack trace
-			unsigned i = 0;
-			unsigned nSlots = sp - pProcess->m_stack;
-			if (nSlots > nDepth)
+			size_t i = 0;
+			ptrdiff_t nSlots = sp - pProcess->m_stack;
+			if (static_cast<size_t>(nSlots) > nDepth)
 			{
-				unsigned nHalfDepth = nDepth / 2;
+				size_t nHalfDepth = nDepth / 2;
 				while (sp >= pProcess->m_stack && i < nHalfDepth)
 				{
 					DumpStackEntry(sp, pProcess, logStream);
@@ -674,11 +682,13 @@ static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned 
 				}
 			}
 			else
+			{
 				while (sp >= pProcess->m_stack)
 				{
 					DumpStackEntry(sp, pProcess, logStream);
 					sp--;
 				}
+			}
 
 			logStream << L"<Bottom of stack>" << std::endl;
 		}
@@ -698,7 +708,7 @@ static void DumpBP(Oop* bp, Process* pProcess, wostream& logStream)
 		}
 		else
 		{
-			int index = pProcess->indexOfSP(bp);
+			SMALLUNSIGNED index = pProcess->indexOfSP(bp);
 			logStream << bp << L" (" << std::dec << index << L')';
 		}
 	}
@@ -714,7 +724,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 		Oop* bp = pFrame->basePointer();
 		MethodOTE* oteMethod = pFrame->m_method;
 		CompiledMethod* method = oteMethod->m_location;
-		int ip = ObjectMemoryIntegerValueOf(pFrame->m_ip);
+		SMALLINTEGER ip = ObjectMemoryIntegerValueOf(pFrame->m_ip);
 		if (ip != 0)
 			ip += isIntegerObject(method->m_byteCodes) ? 1 : -(int(ObjectByteSize) - 1);
 
@@ -787,7 +797,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 
 		if (ctx != NULL)
 		{
-			const unsigned envTempCount = oteContext->pointersSize() - Context::FixedSize;
+			const size_t envTempCount = oteContext->pointersSize() - Context::FixedSize;
 			for (i = 0; i < envTempCount; i++)
 				stream << L"	env temp[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << std::endl;
 		}
@@ -1006,7 +1016,7 @@ void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<string>& i
 		{
 			ArrayOTE* oteNamesArray = pClass->m_instanceVariables;
 			Array* pNames = oteNamesArray->m_location;
-			for (MWORD i = 0; i < oteNamesArray->pointersSize(); i++)
+			for (size_t i = 0; i < oteNamesArray->pointersSize(); i++)
 			{
 				// TODO: Use Utf8String
 				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassAnsiString));
@@ -1065,7 +1075,7 @@ public:
 
 private:
 	CompiledMethod* method;
-	unsigned cBytes;
+	size_t cBytes;
 	BYTE* pBytes;
 	Oop* literalFrame;
 	vector<string> instVarNames;
@@ -1095,7 +1105,7 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 	stream << std::endl;
 
 	DisassemblyContext info(method);
-	BytecodeDisassembler<DisassemblyContext> disassembler(info);
+	BytecodeDisassembler<DisassemblyContext, size_t> disassembler(info);
 
 	const size_t size = ObjectMemoryIsIntegerObject(method->m_byteCodes)
 		? sizeof(SMALLINTEGER)
@@ -1111,7 +1121,7 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, wostream& stream)
 {
 	DisassemblyContext info(method);
-	BytecodeDisassembler<DisassemblyContext> disassembler(info);
+	BytecodeDisassembler<DisassemblyContext, unsigned> disassembler(info);
 	disassembler.DisassembleAt(ip, stream);
 	stream.flush();
 }
@@ -1149,7 +1159,7 @@ void Interpreter::checkStack(Oop* sp)
 		*/		if (abs(executionTrace) > 3)
 		{
 			ProcessOTE* oteActive = m_registers.m_oteActiveProcess;
-			MWORD size = oteActive->getSize();
+			size_t size = oteActive->getSize();
 			m_registers.ResizeProcess();
 			ObjectMemory::checkReferences();
 			oteActive->setSize(size);

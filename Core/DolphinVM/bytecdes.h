@@ -33,8 +33,10 @@ enum { NumShortSendsWith2Args = 8 };
 
 // N.B. These sizes are offsets from the instruction FOLLOWING the jump (the IP is assumed to
 // have advanced to the next instruction by the time the offset is added to IP)
-enum { MaxBackwardsLongJump = -32768, MaxForwardsLongJump = 32767 };
-enum { MaxBackwardsNearJump = -128, MaxForwardsNearJump = 127 };
+static constexpr int MaxBackwardsLongJump = INT16_MIN;
+static constexpr int MaxForwardsLongJump = INT16_MAX;
+static constexpr int MaxBackwardsNearJump = INT8_MIN;
+static constexpr int MaxForwardsNearJump = INT8_MAX;
 
 enum { 
 	FirstSingleByteInstruction = 0, 
@@ -274,17 +276,17 @@ enum { OuterTempMaxDepth	= MAXFORBITS(OuterTempDepthBits) };
 #pragma warning(disable:4201)
 struct BlockCopyExtension
 {
-	BYTE	argCount;
-	BYTE	stackTempsCount;
-	BYTE	needsOuter:1;
-	BYTE	envTempsCount:7;
-	BYTE	needsSelf:1;
-	BYTE	copiedValuesCount:7;
+	uint8_t	argCount;
+	uint8_t	stackTempsCount;
+	uint8_t	needsOuter:1;
+	uint8_t	envTempsCount:7;
+	uint8_t	needsSelf:1;
+	uint8_t	copiedValuesCount:7;
 };
 
 enum { ExLongPushImmediateInstructionSize = 5, BlockCopyInstructionSize = 7 };
 
-inline int lengthOfByteCode(BYTE opCode)
+inline int lengthOfByteCode(uint8_t opCode)
 {
 	return opCode < FirstDoubleByteInstruction ? 1 : 
 				opCode < FirstTripleByteInstruction ? 2 : 

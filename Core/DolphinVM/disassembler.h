@@ -8,9 +8,9 @@ enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-std::wostream& operator<<(std::wostream& stream, const std::string& str);
+std::wostream& __stdcall operator<<(std::wostream& stream, const std::string& str);
 
-template <class T> class BytecodeDisassembler
+template <class T, class I> class BytecodeDisassembler
 {
 	T& context;
 public:
@@ -19,7 +19,7 @@ public:
 	{}
 
 	//void Disassemble(T context, std::wostream& stream);
-	size_t DisassembleAt(size_t ip, std::wostream& stream)
+	size_t DisassembleAt(I ip, std::wostream& stream)
 	{
 		EmitIp(ip, stream);
 		size_t len = EmitRawBytes(ip, stream);
@@ -31,25 +31,25 @@ private:
 	size_t GetCodeSize() { 
 		return context.GetCodeSize(); 
 	}
-	BYTE GetBytecode(size_t ip) {
+	uint8_t GetBytecode(I ip) {
 		return context.GetBytecode(ip);
 	}
 
 public:
-	void EmitIp(size_t ip, std::wostream& stream)
+	void EmitIp(I ip, std::wostream& stream)
 	{
 		// Print one-based ip as this is how they are disassembled in the image
-		stream << std::dec << setw(5) << (ip + 1) << L":";
+		stream << std::dec << setw(5) << static_cast<uintptr_t>(ip + 1) << L":";
 	}
 
-	size_t EmitRawBytes(size_t ip, std::wostream& stream)
+	size_t EmitRawBytes(I ip, std::wostream& stream)
 	{
-		int len = lengthOfByteCode(GetBytecode(ip));
+		size_t len = lengthOfByteCode(GetBytecode(ip));
 		stream << std::hex << uppercase << setfill(L'0');
-		int j;
+		size_t j;
 		for (j = 0; j < min(len, 3); j++)
 		{
-			stream << L' ' << setw(2) << static_cast<unsigned>(GetBytecode(ip + j));
+			stream << L' ' << setw(2) << static_cast<uint32_t>(GetBytecode(ip + j));
 		}
 		if (len > 3)
 		{
@@ -64,9 +64,9 @@ public:
 		return len;
 	}
 
-	void BytecodeDisassembler::EmitDecodedInstructionAt(size_t ip, std::wostream& stream)
+	void BytecodeDisassembler::EmitDecodedInstructionAt(I ip, std::wostream& stream)
 	{
-		const BYTE opcode = GetBytecode(ip);
+		const uint8_t opcode = GetBytecode(ip);
 
 		switch (opcode)
 		{
@@ -307,8 +307,8 @@ public:
 		case  ShortJump + 6:
 		case  ShortJump + 7:
 		{
-			BYTE offset = opcode - ShortJump;
-			PrintJumpInstruction(ip, stream, Jump, offset, offset + ip + 1 + 1);
+			int8_t offset = opcode - ShortJump;
+			PrintJumpInstruction(ip, stream, Jump, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
@@ -321,8 +321,8 @@ public:
 		case  ShortJumpIfFalse + 6:
 		case  ShortJumpIfFalse + 7:
 		{
-			BYTE offset = opcode - ShortJumpIfFalse;
-			PrintJumpInstruction(ip, stream, JumpIfFalse, offset, offset + ip + 1 + 1);
+			int8_t offset = opcode - ShortJumpIfFalse;
+			PrintJumpInstruction(ip, stream, JumpIfFalse, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
@@ -355,11 +355,10 @@ public:
 		case ShortSpecialSend + 26:
 		case ShortSpecialSend + 27:
 		case ShortSpecialSend + 28:
-		case ShortSpecialSend + 29:
 		case ShortSpecialSend + 30:
 		case ShortSpecialSend + 31:
 		{
-			stream << L"Special Send #" << context.GetSpecialSelector(opcode - ShortSpecialSend).c_str();
+			stream << L"Special Send #" << context.GetSpecialSelector(opcode - ShortSpecialSend);
 		}
 		break;
 
@@ -439,7 +438,7 @@ public:
 
 		case PushOuterTemp:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			stream << L"Push Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", (operand & 0x1F));
 		}
@@ -463,7 +462,7 @@ public:
 
 		case StoreOuterTemp:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			stream << L"Store Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", (operand & 0x1F));
 		}
@@ -483,7 +482,7 @@ public:
 
 		case PopStoreOuterTemp:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			stream << L"Pop Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", operand & 0x1F);
 		}
@@ -494,7 +493,7 @@ public:
 			break;
 
 		case PushImmediate:
-			PrintPushImmediate(ip, stream, static_cast<SBYTE>(GetBytecode(ip + 1)), 1);
+			PrintPushImmediate(ip, stream, static_cast<int8_t>(GetBytecode(ip + 1)), 1);
 			break;
 
 		case PushChar:
@@ -503,14 +502,14 @@ public:
 
 		case Send:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			PrintSendInstruction(ip, stream, operand & SendXMaxLiteral, operand >> SendXLiteralBits);
 		}
 		break;
 
 		case Supersend:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			stream << L"Super ";
 			PrintSendInstruction(ip, stream, operand & SendXMaxLiteral, operand >> SendXLiteralBits);
 		}
@@ -522,14 +521,14 @@ public:
 		case NearJumpIfNil:
 		case NearJumpIfNotNil:
 		{
-			SBYTE offset = static_cast<SBYTE>(GetBytecode(ip + 1));
-			PrintJumpInstruction(ip, stream, (JumpType)(opcode - NearJump), offset, ip + offset + 2);
+			int8_t offset = static_cast<int8_t>(GetBytecode(ip + 1));
+			PrintJumpInstruction(ip, stream, (JumpType)(opcode - NearJump), offset, static_cast<intptr_t>(ip) + offset + 2);
 		}
 		break;
 
 		case SendTempWithNoArgs:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			PrintTempInstruction(ip, stream, "Push", operand >> SendXLiteralBits);
 			stream << L"; ";
 			PrintSendInstruction(ip, stream, operand & SendXMaxLiteral, 0);
@@ -546,7 +545,7 @@ public:
 
 		case PushTempPair:
 		{
-			BYTE operand = GetBytecode(ip + 1);
+			uint8_t operand = GetBytecode(ip + 1);
 			PrintTempInstruction(ip, stream, "Push", operand >> 4);
 			PrintTempInstruction(ip + 1, stream, "; Push", operand & 0xF);
 		}
@@ -554,19 +553,19 @@ public:
 
 		// Three bytes from here on ...
 		case LongPushConst:
-			PrintStaticInstruction(ip, stream, "Push Const", (GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1));
+			PrintStaticInstruction(ip, stream, "Push Const", (static_cast<size_t>(GetBytecode(ip + 2)) << 8) + GetBytecode(ip + 1));
 			break;
 
 		case LongPushStatic:
-			PrintStaticInstruction(ip, stream, "Push Static", (GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1));
+			PrintStaticInstruction(ip, stream, "Push Static", (static_cast<size_t>(GetBytecode(ip + 2)) << 8) + GetBytecode(ip + 1));
 			break;
 
 		case LongStoreStatic:
-			PrintStaticInstruction(ip, stream, "Store Static", (GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1));
+			PrintStaticInstruction(ip, stream, "Store Static", (static_cast<size_t>(GetBytecode(ip + 2)) << 8) + GetBytecode(ip + 1));
 			break;
 
 		case LongPushImmediate:
-			PrintPushImmediate(ip, stream, (SWORD)((GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1)), 2);
+			PrintPushImmediate(ip, stream, static_cast<int16_t>((GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1)), 2);
 			break;
 
 		case LongSend:
@@ -585,8 +584,8 @@ public:
 		case LongJumpIfNil:
 		case LongJumpIfNotNil:
 		{
-			SWORD offset = (SWORD)((GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1));
-			PrintJumpInstruction(ip, stream, (JumpType)(opcode - LongJump), offset, ip + 3 + offset);
+			int16_t offset = static_cast<int16_t>((GetBytecode(ip + 2) << 8ui32) + GetBytecode(ip + 1));
+			PrintJumpInstruction(ip, stream, static_cast<JumpType>(opcode - LongJump), offset, static_cast<intptr_t>(ip) + 3 + offset);
 		}
 		break;
 
@@ -639,34 +638,34 @@ public:
 				stream << L"needs self, ";
 			if (GetBytecode(ip + 3) & 1)
 				stream << L"needs outer, ";
-			int length = (GetBytecode(ip + 6) << 8) + GetBytecode(ip + 5);
+			int length = (GetBytecode(ip + 6) << 8ui32) + GetBytecode(ip + 5);
 			stream << L"length: " << length;
 		}
 		break;
 
 		case ExLongSend:
-			PrintSendInstruction(ip, stream, (GetBytecode(ip + 3) << 8) + GetBytecode(ip + 2), GetBytecode(ip + 1));
+			PrintSendInstruction(ip, stream, (GetBytecode(ip + 3) << 8ui32) + GetBytecode(ip + 2), GetBytecode(ip + 1));
 			break;
 
 		case ExLongSupersend:
 			stream << L"Super ";
-			PrintSendInstruction(ip, stream, (GetBytecode(ip + 3) << 8) + GetBytecode(ip + 2), GetBytecode(ip + 1));
+			PrintSendInstruction(ip, stream, (GetBytecode(ip + 3) << 8ui32) + GetBytecode(ip + 2), GetBytecode(ip + 1));
 			break;
 
 		case ExLongPushImmediate:
-			PrintPushImmediate(ip, stream, (GetBytecode(ip + 4) << 24) + (GetBytecode(ip + 3) << 16) + (GetBytecode(ip + 2) << 8) + GetBytecode(ip + 1), 4);
+			PrintPushImmediate(ip, stream, (GetBytecode(ip + 4) << 24ui32) + (GetBytecode(ip + 3) << 16ui32) + (GetBytecode(ip + 2) << 8ui32) + GetBytecode(ip + 1), 4);
 			break;
 
 
 		default:
-			stream << L"UNHANDLED BYTE CODE " << opcode << L"!!!";
+			stream << L"UNHANDLED BYTECODE " << opcode << L"!!!";
 			break;
 		}
 		stream << std::endl;
 		stream.flush();
 	}
 
-	void BytecodeDisassembler::PrintJumpInstruction(size_t ip, std::wostream& stream, JumpType jumpType, SWORD offset, size_t target)
+	void BytecodeDisassembler::PrintJumpInstruction(I ip, std::wostream& stream, JumpType jumpType, int16_t offset, size_t target)
 	{
 		const char* JumpNames[] = { "Jump", "Jump If True", "Jump If False", "Jump If Nil", "Jump If Not Nil" };
 		stream << JumpNames[jumpType] << L' ';
@@ -677,28 +676,28 @@ public:
 		stream << std::dec << static_cast<int>(offset) << L" to " << (target + 1);
 	}
 
-	void BytecodeDisassembler::PrintStaticInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
+	void BytecodeDisassembler::PrintStaticInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
 		stream << type << L" [" << std::dec << index << L"]: " << context.GetLiteralAsString(index);
 	}
 
-	void BytecodeDisassembler::PrintInstVarInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
+	void BytecodeDisassembler::PrintInstVarInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
 		stream << type << L" InstVar[" << std::dec << index << L"]: " << context.GetInstVar(index).c_str();
 	}
 
-	void BytecodeDisassembler::PrintSendInstruction(size_t ip, std::wostream& stream, int index, int argumentCount)
+	void BytecodeDisassembler::PrintSendInstruction(I ip, std::wostream& stream, int index, int argumentCount)
 	{
 		wstring selector = context.GetLiteralAsString(index);
 		stream << L"Send[" << std::dec << index << L"]: #" << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
 	}
 
-	void BytecodeDisassembler::PrintTempInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
+	void BytecodeDisassembler::PrintTempInstruction(I ip, std::wostream& stream, const char* type, size_t index)
 	{
 		stream << type << L" Temp[" << std::dec << index << L"]";
 	}
 
-	void BytecodeDisassembler::PrintPushImmediate(size_t ip, std::wostream& stream, int value, int byteSize)
+	void BytecodeDisassembler::PrintPushImmediate(I ip, std::wostream& stream, int value, int byteSize)
 	{
 		stream << L"Push " << std::dec << value;
 		if (byteSize > 0)

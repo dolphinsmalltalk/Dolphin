@@ -13,8 +13,10 @@
 #define _ATL_DEBUG_INTERFACES
 #endif
 
+#include <stdint.h>
+
 #define UMDF_USING_NTSTATUS
-typedef long NTSTATUS;
+typedef int32_t NTSTATUS;
 #include <ntstatus.h>
 
 #include <atlbase.h>

@@ -24,44 +24,44 @@ void Compiler::disassemble()
 
 void Compiler::disassemble(wostream& stream)
 {
-	int maxDepth = 0;
+	unsigned maxDepth = 0;
 	for (size_t i = 0; i < m_allScopes.size(); i++)
 	{
-		int depth = m_allScopes[i]->GetLogicalDepth();
+		unsigned depth = m_allScopes[i]->GetLogicalDepth();
 		if (depth > maxDepth) maxDepth = depth;
 	}
 
 	LexicalScope* currentScope = m_allScopes[0];
-	int currentDepth = 0;
+	unsigned currentDepth = 0;
 	stream << std::endl;
-	size_t i=0;
-	const size_t size = GetCodeSize();
-	BytecodeDisassembler<Compiler> disassembler(*this);
-	while (i < size)
+	ip_t ip=ip_t::zero;
+	const ip_t last = LastIp;
+	BytecodeDisassembler<Compiler, ip_t> disassembler(*this);
+	while (ip <= LastIp)
 	{
-		disassembler.EmitIp(i, stream);
-		size_t len = disassembler.EmitRawBytes(i, stream);
+		disassembler.EmitIp(ip, stream);
+		size_t len = disassembler.EmitRawBytes(ip, stream);
 
 		// Scope changing, and getting deeper?
-		LexicalScope* newScope = m_bytecodes[i].pScope;
+		LexicalScope* newScope = m_bytecodes[ip].pScope;
 		stream << newScope << L' ';
 
 		char padChar = ' ';
 		// If new nested scope, want to print opening bracket
 		if (currentScope != newScope)
 		{
-			int newDepth = newScope->GetLogicalDepth();
+			unsigned newDepth = newScope->GetLogicalDepth();
 			if (!(newDepth < currentDepth))
 			{
 				padChar = '-';
 			}
-			currentScope = m_bytecodes[i].pScope;
+			currentScope = m_bytecodes[ip].pScope;
 			currentDepth = newDepth;
 		}
 
 		// If next is in outer scope, want to print closing bracket now
-		bool lastInstr = i + len >= size;
-		int nextDepth = lastInstr ? 0 : m_bytecodes[i + len].pScope->GetLogicalDepth();
+		bool lastInstr = ip + len > last;
+		unsigned nextDepth = lastInstr ? 0 : m_bytecodes[ip + len].pScope->GetLogicalDepth();
 
 		// If not on last bytecode, and scope will change, close the bracket
 		if (nextDepth < currentDepth)
@@ -69,7 +69,7 @@ void Compiler::disassemble(wostream& stream)
 			padChar = '-';
 		}
 
-		int j;
+		unsigned j;
 		for (j = 0; j < currentDepth; j++)
 		{
 			stream<< L"|";
@@ -79,14 +79,14 @@ void Compiler::disassemble(wostream& stream)
 			stream << padChar;
 		}
 
-		const TEXTMAPLIST::iterator it = FindTextMapEntry(i);
+		const TEXTMAPLIST::iterator it = FindTextMapEntry(ip);
 		if (it != m_textMaps.end())
 			stream << L'`';
 		else
 			stream << L' ';
 
-		disassembler.EmitDecodedInstructionAt(i, stream);
-		i += len;
+		disassembler.EmitDecodedInstructionAt(ip, stream);
+		ip += len;
 	}
 	stream << std::endl;
 }
@@ -105,3 +105,9 @@ std::wstring Compiler::DebugPrintString(Oop oop)
 	return result;
 }
 
+
+std::wostream& __stdcall operator<<(std::wostream& stream, const std::string& str)
+{
+	USES_CONVERSION;
+	return stream << static_cast<LPCWSTR>(A2W(str.c_str()));
+}
