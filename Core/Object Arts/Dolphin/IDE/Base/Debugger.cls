@@ -1616,6 +1616,17 @@ stepInto
 	self debugState: 'Step Into'.
 	self step!
 
+stepIntoBlock
+	"Private - Step to the next expression in the currently selected frame, or a block homed within that frame."
+
+	| frame |
+	self debugState: 'Step Into Block'.
+	frame := self frame.
+	"Break when encountering a block homed in the current method, or when returning to the current frame without encountering one"
+	self
+		breakWhen: [:iFrame | iFrame index = frame index or: [iFrame isBlockFrame and: [iFrame method = frame method]]].
+	self runDebuggedProcess!
+
 stepOut
 	"Private - Step out of the currently selected frame (i.e. return to its sender)."
 
@@ -1974,6 +1985,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #step!operations!private! !
 !Debugger categoriesFor: #stepInFrame:!operations!private! !
 !Debugger categoriesFor: #stepInto!commands!private! !
+!Debugger categoriesFor: #stepIntoBlock!commands!private! !
 !Debugger categoriesFor: #stepOut!commands!private! !
 !Debugger categoriesFor: #stepOver!commands!private! !
 !Debugger categoriesFor: #stubTextFor:inClass:!helpers!private! !
