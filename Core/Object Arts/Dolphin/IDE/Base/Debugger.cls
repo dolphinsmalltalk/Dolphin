@@ -437,7 +437,7 @@ cursorIPRange
 	self makeDebugFrame: frame.	"first make sure it is a debug frame."
 	pos := sourcePresenter view caretPosition.
 	map := frame textMap.
-	i := map findFirst: [:a | a value includes: pos].
+	i := map findFirst: [:a | a value stop > pos].
 	i == 0 
 		ifTrue: 
 			[pos < map first value first 
