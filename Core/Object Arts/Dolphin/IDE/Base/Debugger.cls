@@ -753,7 +753,7 @@ onBreak: pFrame
 	self break: interruptFrame
 	"N.B. There must be no further code after this point"!
 
-onCloseRequested: boolValueHolder 
+onCloseRequested: boolValueHolder
 	"Private - A request to close the view onto this presenter has occurred. The close will
 	proceed unless we set the value holder argument to false. The debugged process will be
 	terminated depending on the setting of the user response."
@@ -763,10 +763,14 @@ onCloseRequested: boolValueHolder
 	(boolValueHolder value not or: [process isNil]) ifTrue: [^self].
 	process debugger == self ifFalse: [^self].
 	response := self terminateOnClose.
-	response == #yes 
-		ifTrue: [process terminate]
+	response == #yes
+		ifTrue: 
+			["Detach from the process before closing so that, if an #ensure: block encounters an error,
+			the process will open a new walkback rather than informing us after our view is already destroyed."
+			process debugger: nil.
+			process terminate]
 		ifFalse: 
-			[response == #no 
+			[response == #no
 				ifTrue: 
 					[Transcript
 						display: 'Detaching from debugged process ';
