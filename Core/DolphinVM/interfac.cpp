@@ -710,7 +710,7 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 	return 0;	// The best we can do is to answer 0
 }
 
-Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, primargcount_t)
 {
 	// Raise a special exception caught by the callback entry point routine - the result will still be on top
 	// of the stack
@@ -760,7 +760,7 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, primargcount_t)
 {
 	// Don't want to do anything if callbackDepth = 0
 	if (m_registers.m_pActiveProcess->m_callbackDepth != ZeroPointer)

@@ -140,7 +140,7 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 	return copyPointer;
 }
 
-Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp, primargcount_t)
 {
 	OTE* receiver = reinterpret_cast<OTE*>(*sp);
 	ASSERT(!isIntegerObject(receiver));
@@ -248,7 +248,7 @@ Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned arg
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveNew(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveNew(Oop* const sp, primargcount_t)
 {
 	// This form of C code results in something very close to the hand-coded assembler original for primitiveNew
 
@@ -267,7 +267,7 @@ Oop* __fastcall Interpreter::primitiveNew(Oop* const sp, unsigned)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
 	Oop oopArg = (*sp);
@@ -439,7 +439,7 @@ template BytesOTE* ObjectMemory::newByteObject<false, true>(BehaviorOTE*, MWORD)
 template BytesOTE* ObjectMemory::newByteObject<true, false>(BehaviorOTE*, MWORD);
 template BytesOTE* ObjectMemory::newByteObject<true, true>(BehaviorOTE*, MWORD);
 
-Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
 	Oop oopArg = (*sp);
@@ -533,7 +533,7 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, MWORD startingAt, MWORD count)
 	return nullptr;
 }
 
-Oop* Interpreter::primitiveCopyFromTo(Oop* const sp, unsigned)
+Oop* Interpreter::primitiveCopyFromTo(Oop* const sp, primargcount_t)
 {
 	Oop oopToArg = *sp;
 	Oop oopFromArg = *(sp - 1);
@@ -612,7 +612,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 
 // Answer a new process with an initial stack size specified by the first argument, and a maximum
 // stack size specified by the second argument.
-Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp, primargcount_t)
 {
 	Oop maxArg = *sp;
 	SMALLINTEGER maxSize;

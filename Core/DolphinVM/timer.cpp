@@ -107,7 +107,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 // Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
 // If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
-Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, primargcount_t)
 {
 	Oop tickPointer = *sp;
 	SMALLINTEGER nDelay;
@@ -201,7 +201,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, primargcount_t)
 {
 	Oop result = Integer::NewUnsigned64(GetMicrosecondClock()/1000);
 	*sp = result;
@@ -209,7 +209,7 @@ Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, unsig
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp, primargcount_t)
 {
 	Oop result = Integer::NewUnsigned64(GetMicrosecondClock());
 	*sp = result;

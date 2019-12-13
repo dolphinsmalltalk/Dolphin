@@ -55,21 +55,21 @@ Oop* __fastcall Interpreter::unusedPrimitive(Oop* const, unsigned)
 
 #pragma code_seg(MEM_SEG)
 
-Oop* __fastcall Interpreter::primitiveBasicIdentityHash(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveBasicIdentityHash(Oop* const sp, primargcount_t)
 {
 	OTE* ote = (OTE*)*sp;
 	*sp = ObjectMemoryIntegerObjectOf(ote->identityHash());
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveIdentityHash(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveIdentityHash(Oop* const sp, primargcount_t)
 {
 	OTE* ote = (OTE*)*sp;
 	*sp = ObjectMemoryIntegerObjectOf(ote->identityHash() << 14);
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveClass(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveClass(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *sp;
 	*sp = reinterpret_cast<Oop>(!ObjectMemoryIsIntegerObject(receiver) 
@@ -77,7 +77,7 @@ Oop* __fastcall Interpreter::primitiveClass(Oop* const sp, unsigned)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp-1);
 	Oop arg = *sp;
@@ -87,7 +87,7 @@ Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp, unsigned)
 
 // This primitive is unusual(like primitiveClass) in that it cannot fail
 // Essentially same code as shortSpecialSendBasicSize
-Oop* __fastcall Interpreter::primitiveSize(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveSize(Oop* const sp, primargcount_t)
 {
 	// The primitive assumes it is never called for SmallIntegers.
 	OTE* oteReceiver = reinterpret_cast<OTE*>(*sp);
@@ -127,7 +127,7 @@ Oop* __fastcall Interpreter::primitiveSize(Oop* const sp, unsigned)
 
 // Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
 // which are nasty, requiring a change to Object for each).
-Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	// Nothing can be a kind of SmallInteger instance
@@ -158,7 +158,7 @@ Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp, unsigned)
 
 // Does not use successFlag, and returns a clean stack because can only succeed if
 // argument is a positive SmallInteger
-Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	
@@ -225,7 +225,7 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, unsigned)
 	return sp - 1;
 }
 
-Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, primargcount_t)
 {
 	// Receiver becomes an instance of the class specified as the argument - neither
 	// receiver or arg may be SmallIntegers, and the shape of the receivers current class
@@ -304,7 +304,7 @@ Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, unsigned)
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*sp);
 	*sp = (oteClass->m_location->m_instanceSpec.m_value >> 15) | 1;
@@ -319,7 +319,7 @@ Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp, unsigned)
 // The primitive ensures that the current values of bits which may affect the stability of the
 // system cannot be modified.
 // To query the current value of the special bits, pass in 16rFF00.
-Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, primargcount_t)
 {
 	Oop oopMask = *sp;
 	if (ObjectMemoryIsIntegerObject(oopMask))
@@ -366,7 +366,7 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, unsigned
 // Remove a request from the last request queue, nil if none pending. Fails if argument is not an
 // array of the correct length to receiver the popped Queue entry (currently 2 objects)
 // Answers nil if the queue is empty, or the argument if an entry was successfully popped into it
-Oop* __fastcall Interpreter::primitiveDeQBereavement(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveDeQBereavement(Oop* const sp, primargcount_t)
 {
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
@@ -405,7 +405,7 @@ void Interpreter::flushCaches()
 	ZeroMemory(methodCache, sizeof(methodCache));
 }
 
-Oop* __fastcall Interpreter::primitiveFlushCache(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveFlushCache(Oop* const sp, primargcount_t)
 {
 #ifdef _DEBUG
 	DumpCacheStats();
@@ -416,7 +416,7 @@ Oop* __fastcall Interpreter::primitiveFlushCache(Oop* const sp, unsigned)
 
 // Separate atPut primitive is needed to write to the stack because the active process
 // stack is not reference counted.
-Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, primargcount_t)
 {
 	Oop indexPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(indexPointer))
@@ -448,7 +448,7 @@ Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, unsigned)
 	return sp-2;
 }
 
-Oop* __fastcall Interpreter::primitiveIndexOfSP(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveIndexOfSP(Oop* const sp, primargcount_t)
 {
 	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(*(sp - 1));
 	Oop oopArg = *sp;
@@ -464,13 +464,13 @@ Oop* __fastcall Interpreter::primitiveIndexOfSP(Oop* const sp, unsigned)
 }
 
 // Don't care what effect on stack is!!
-[[noreturn]] void __fastcall Interpreter::primitiveQuit(Oop* const sp, unsigned)
+[[noreturn]] void __fastcall Interpreter::primitiveQuit(Oop* const sp, primargcount_t)
 {
 	Oop argPointer = *sp;
 	exitSmalltalk(ObjectMemoryIntegerValueOf(argPointer));
 }
 
-Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -629,7 +629,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argC
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 {
 	Oop* const newSp = sp - 2;
 	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
@@ -744,7 +744,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, unsigned)
 }
 
 
-Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 {
 	Oop* const newSp = sp - 1;
 	Oop oopIndex = *sp;
@@ -811,7 +811,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, unsigned)
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t)
 {
 	Oop* const newSp = sp - 2;
 	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
@@ -921,14 +921,14 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* __fastcall Interpreter::primitiveGetImmutable(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveGetImmutable(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *sp;
 	*sp = reinterpret_cast<Oop>(ObjectMemoryIsIntegerObject(receiver) || reinterpret_cast<OTE*>(receiver)->isImmutable() ? Pointers.True : Pointers.False);
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, primargcount_t)
 {
 	if (*sp == reinterpret_cast<Oop>(Pointers.True))
 	{
@@ -955,7 +955,7 @@ Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, unsigned)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveDeQForFinalize(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveDeQForFinalize(Oop* const sp, primargcount_t)
 {
 	// Dequeue an entry from the finalization queue, and answer it.Answers nil if the queue is empty
 	OTE* ote = dequeueForFinalization();
@@ -964,7 +964,7 @@ Oop* __fastcall Interpreter::primitiveDeQForFinalize(Oop* const sp, unsigned)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveBecome(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveBecome(Oop* const sp, primargcount_t)
 {
 	Oop	arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))

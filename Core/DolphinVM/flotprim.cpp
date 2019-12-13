@@ -60,7 +60,7 @@ inline FloatOTE* __stdcall Float::New(double fValue)
 ///////////////////////////////////////////////////////////////////////////////
 //	Float conversion primitives
 
-Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteResult = Float::New(ObjectMemoryIntegerValueOf(*sp));
 	*sp = reinterpret_cast<Oop>(oteResult);
@@ -68,7 +68,7 @@ Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp, unsigned)
 	return sp;
 }
 
-Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, unsigned)
+Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 
@@ -91,7 +91,7 @@ Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, unsigned)
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
@@ -100,7 +100,7 @@ Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, unsigned)
 	return sp;
 }
 
-Oop* Interpreter::primitiveFloatClassify(Oop* const sp, unsigned)
+Oop* Interpreter::primitiveFloatClassify(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
@@ -109,7 +109,7 @@ Oop* Interpreter::primitiveFloatClassify(Oop* const sp, unsigned)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))

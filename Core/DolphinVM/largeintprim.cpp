@@ -1384,7 +1384,7 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 //	Invert the bits of the 2's complement LargeInteger argument
 //	The result may not be normalized!
 //
-Oop* __fastcall Interpreter::primitiveLargeIntegerBitInvert(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerBitInvert(Oop* const sp, primargcount_t)
 {
 	LargeIntegerOTE* oteLI = reinterpret_cast<LargeIntegerOTE*>(*sp);
 
@@ -1460,7 +1460,7 @@ static LargeIntegerOTE* liMul32(uint32_t *const outer, MWORD outerSize, uint32_t
 */
 
 // N.B. Only produces a result if division is exact, otherwise fails
-Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, primargcount_t)
 {
 	Oop oopV = *sp;
 	LargeIntegerOTE* oteU = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
@@ -1507,7 +1507,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, unsigned
 }
 
 // Integer division with truncation towards zero
-Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, primargcount_t)
 {
 	Oop oopV = *sp;
 	LargeIntegerOTE* oteU = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));
@@ -1550,7 +1550,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, unsigned)
 //
 // Mainly defined using the primitiveLargeIntegerCmp functin template, but #= is a special case.
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp, primargcount_t)
 {
 	// We Implement this specially, because the generic comparison template does more work than necessary for equality comparison - this is about 20% faster
 	Oop argPointer = *sp;
@@ -1945,7 +1945,7 @@ LargeIntegerOTE* LargeInteger::BitXor(const LargeIntegerOTE* oteA, SMALLINTEGER 
 ///////////////////////////////////////////////////////////////////////////////
 //	Bit shifting 
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, primargcount_t)
 {
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
@@ -1985,7 +1985,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, unsign
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerHighBit(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerHighBit(Oop* const sp, primargcount_t)
 {
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
 
@@ -2017,7 +2017,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerHighBit(Oop* const sp, unsigne
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat(Oop* const sp, primargcount_t)
 {
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
 	LargeInteger* liReceiver = oteReceiver->m_location;

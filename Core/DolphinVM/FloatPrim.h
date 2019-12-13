@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncationOp(Oop* const sp, unsigned)
+template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncationOp(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = Op()(oteFloat->m_location->m_fValue);
@@ -34,7 +34,7 @@ struct Truncate { double operator() (const double& x) const { return x; } };
 struct Floor { double operator() (const double& x) const { return floor(x); } };
 struct Ceiling { double operator() (const double& x) const { return ceil(x); } };
 
-template <typename Pred> static Oop* __fastcall Interpreter::primitiveFloatCompare(Oop* const sp, unsigned)
+template <typename Pred> static Oop* __fastcall Interpreter::primitiveFloatCompare(Oop* const sp, primargcount_t)
 {
 	Float* receiver = reinterpret_cast<FloatOTE*>(*(sp - 1))->m_location;
 	// NaN's never compare <, <=, =, >= or > to anything, even another NaN
@@ -98,7 +98,7 @@ template <typename Pred> static Oop* __fastcall Interpreter::primitiveFloatCompa
 // together, are compliant options.
 //
 
-template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatBinaryOp(Oop* const sp, unsigned)
+template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatBinaryOp(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
@@ -129,7 +129,7 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatBinaryO
 	}
 }
 
-template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatUnaryOp(Oop* const sp, unsigned)
+template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatUnaryOp(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	Float* receiver = oteReceiver->m_location;

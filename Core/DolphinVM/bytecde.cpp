@@ -37,7 +37,7 @@
 // is important to overall system performance, so it is worth retaining assembler implementations, although 
 // the carefully ordered C++ versions are not too bad.
 #ifdef _M_IX86
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -52,7 +52,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp
 
 using namespace ST;
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -72,7 +72,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* c
 	}
 }
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -94,7 +94,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* co
 	}
 }
 #else
-Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
 	// This arrangement avoids any conditional jumps, although there is no guarantee a new version 
 	// of the compiler won't optimize it differently, hence the _asm block above as the performance 
@@ -103,7 +103,7 @@ Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, unsigned argCoun
 	return m_bStepping ? primitiveFailure(_PrimitiveFailureCode::DebugStep) : newSp;
 }
 
-Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
 {
 	Oop literalZero = m_registers.m_oopNewMethod->m_location->m_aLiterals[0];
 	Oop* newSp = sp - argCount;
@@ -118,7 +118,7 @@ Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, unsigned 
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
 {
 	auto staticZero = reinterpret_cast<VariableBindingOTE*>(m_registers.m_oopNewMethod->m_location->m_aLiterals[0]);
 	if (!m_bStepping)
@@ -864,7 +864,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 
 //	Primitive to duplicate the VM's method lookup. Useful for fast #respondsTo:/
 //	#canUnderstand:.Uses, but does not update, the method cache.
-Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*(sp - 1));

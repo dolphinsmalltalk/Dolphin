@@ -126,7 +126,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
+Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, primargcount_t argCount)
 {
 	SymbolOTE* performSelector = m_oopMessageSelector;	// Save in case we need to restore
 
@@ -184,7 +184,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 	}
 }
 
-Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcount_t)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
@@ -263,7 +263,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 }
 
 
-Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, primargcount_t)
 {
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)

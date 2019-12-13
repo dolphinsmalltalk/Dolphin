@@ -139,7 +139,7 @@ template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnySt
 	}
 }
 
-template <class OpA, class OpW> static Oop* __fastcall Interpreter::primitiveStringComparison(Oop* const sp, unsigned)
+template <class OpA, class OpW> static Oop* __fastcall Interpreter::primitiveStringComparison(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));

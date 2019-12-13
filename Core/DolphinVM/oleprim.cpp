@@ -46,7 +46,7 @@ static Oop* AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t)
 {
 	StructureOTE* oteReceiver = reinterpret_cast<StructureOTE*>(*sp);
 	ExternalStructure* objVariant = oteReceiver->m_location;

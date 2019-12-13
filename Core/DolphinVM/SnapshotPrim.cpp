@@ -28,7 +28,7 @@
 
 #if defined(CANSAVEIMAGE)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 {
 	Oop arg = *(sp-3);
 	if (ObjectMemoryIsIntegerObject(arg))

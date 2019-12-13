@@ -434,7 +434,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargcount_t)
 {
 	Oop oopDescriptor = *sp;
 	if (ObjectMemoryIsIntegerObject(oopDescriptor))
@@ -481,7 +481,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, unsigned)
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, unsigned)
+Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcount_t)
 {
 	Oop oopDescriptor = *sp;
 	if (ObjectMemoryIsIntegerObject(oopDescriptor))
@@ -666,7 +666,7 @@ void doBlah()
 #ifndef _M_IX86
 	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual);
 
-	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, primargcount_t argCount)
 	{
 		// Calling out may initiate a callback to Smalltalk
 		// We need to ensure that this primitive is reentrant so we
@@ -729,7 +729,7 @@ void doBlah()
 	// This primitive does not check that enough types are specified, because it
 	// assumes that the compiler does this.
 	//
-	BOOL __fastcall Interpreter::primitiveDLL32Call(Oop* const sp, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveDLL32Call(Oop* const sp, primargcount_t argCount)
 	{
 		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
 
