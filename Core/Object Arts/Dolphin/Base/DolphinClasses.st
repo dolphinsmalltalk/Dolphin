@@ -825,11 +825,6 @@ Error subclass: #ArithmeticError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Error subclass: #BoundsError
-	instanceVariableNames: 'receiver'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Error subclass: #ClassRemovalError
 	instanceVariableNames: 'originalError'
 	classVariableNames: ''
@@ -926,6 +921,11 @@ Win32Error subclass: #Win32Fault
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Fault subclass: #GPFault
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NotFoundError subclass: #BoundsError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Error subclass: #BoundsError
-	instanceVariableNames: 'receiver'
+NotFoundError subclass: #BoundsError
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -13,18 +13,6 @@ BoundsError comment: ''!
 _descriptionFormat
 	"Answer the description format string for the receiver."
 
-	^'Index %2 is out of bounds'!
-
-receiver
-	"Answer the object which generated the bounds error."
-	
-	^receiver!
-
-receiver: anObject
-	"Set the object which generated the bounds error to be anObject"
-	
-	receiver := anObject! !
+	^'Index %2 is out of bounds'! !
 !BoundsError categoriesFor: #_descriptionFormat!displaying!public! !
-!BoundsError categoriesFor: #receiver!accessing!public! !
-!BoundsError categoriesFor: #receiver:!accessing!public! !
 
