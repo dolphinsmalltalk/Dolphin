@@ -830,6 +830,11 @@ Error subclass: #BoundsError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Error subclass: #CannotReturnError
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Error subclass: #ClassRemovalError
 	instanceVariableNames: 'originalError'
 	classVariableNames: ''
