@@ -157,8 +157,7 @@ cannotReturn: anObject
 	stack frame) then it is advisable to Kill the offending process, as further walkbacks
 	will occur if it is terminated normally."
 
-	^self error: ('Cannot return <1s> to expired context or across Processes'
-				expandMacrosWith: anObject basicPrintString)!
+	^CannotReturnError signalWith: anObject!
 
 constWrite: exceptionRecordBytes 
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
