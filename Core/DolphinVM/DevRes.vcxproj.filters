@@ -571,6 +571,9 @@
     <Image Include="Res\StepInto.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\StepIntoBlock.ico">
+      <Filter>Icons</Filter>
+    </Image>
     <Image Include="Res\StepOut.ico">
       <Filter>Icons</Filter>
     </Image>

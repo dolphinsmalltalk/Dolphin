@@ -472,6 +472,7 @@
     <Image Include="Res\StaticImage.ico" />
     <Image Include="Res\StaticText.ico" />
     <Image Include="Res\StepInto.ico" />
+    <Image Include="Res\StepIntoBlock.ico" />
     <Image Include="Res\StepOut.ico" />
     <Image Include="Res\StepOver.ico" />
     <Image Include="Res\SystemBrowserShell.ico" />
