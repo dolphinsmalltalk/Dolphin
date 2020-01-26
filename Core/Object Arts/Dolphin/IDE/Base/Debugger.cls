@@ -2,7 +2,7 @@
 
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
-	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask ShowWalkbacks SkipTable StackDepthIncrement'
+	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
 Debugger guid: (GUID fromString: '{87b4c6bd-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -437,10 +437,12 @@ cursorIPRange
 	self makeDebugFrame: frame.	"first make sure it is a debug frame."
 	pos := sourcePresenter view caretPosition.
 	map := frame textMap.
-	i := map findFirst: [:a | a value stop > pos].
-	i == 0 
+	i := map findFirst: (self class runToCursorBehavior == #precise
+						ifTrue: [[:each | each value includes: pos]]
+						ifFalse: [[:each | each value stop > pos]]).
+	i == 0
 		ifTrue: 
-			[pos < map first value first 
+			[pos < map first value first
 				ifTrue: 
 					[start := 1.
 					end := map first key]
@@ -2076,6 +2078,7 @@ initialize
 	self restartOnMethodSave: true.
 	self enableDynamicMenus: true.
 	self showWalkbacks: true.
+	self runToCursorBehavior: #precise.
 	Smalltalk developmentSystem registerTool: self.
 	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: each second].
 	self initializeSkipTable.
@@ -2083,7 +2086,8 @@ initialize
 	VMLibrary default primRegistryAt: 8 put: nil.
 	debugEmptyBlock := VMLibrary default emptyBlock method asDebugMethod value.
 	debugEmptyBlock method isImmutable: true.
-	VMLibrary default primRegistryAt: 8 put: debugEmptyBlock!
+	VMLibrary default primRegistryAt: 8 put: debugEmptyBlock.
+!
 
 initializeSkipTable
 	"Initialize the table of methods to be skipped (in one way or another) when debugging.
@@ -2116,7 +2120,7 @@ interrupts
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
+	^super publishedAspects
 		removeKey: #reuseIfOpen;
 		add: (Aspect boolean: #showWalkbacks);
 		add: (Aspect boolean: #restartOnMethodSave);
@@ -2124,6 +2128,7 @@ publishedAspects
 		add: ((Aspect integer: #animatePause)
 					isNullable: false;
 					yourself);
+		add: (Aspect choice: #runToCursorBehavior from: #(#precise #conservative));
 		yourself!
 
 resource_Basic_debugger
@@ -2157,6 +2162,23 @@ restartOnMethodSave: aBoolean
 	modified and saved."
 
 	RestartOnMethodSave := aBoolean!
+
+runToCursorBehavior
+	"The #runToCursorBehavior option controls how the debugger determines the IP closest to the cursor at which the debugger will break.
+		- #precise		- stops at the start of the first expression containing the cursor.
+		- #conservative	- tries to avoid advancing past any code lexically after the cursor
+	The default is #precise, because this is the long established run-to-cursor behaviour, however you may find #conservative less
+	likely to step past where you expect particularly if you are used to line-oriented debuggers. For example #precise may run past 
+	the point you are expecting if you run to a cursor that is not actually over some code (e.g. in whitespace at the start or end of a line).
+	On the other hand the #conservative mode may not run far as far as the cursor in some circumstances, for example in an assignment
+	statement if you run-to-cursor with the cursor over the left hand side the expected behaviour would be for the debugger to stop just
+	before the assignment of the value to the variable on the LHS, i.e. after evaluating the right hand side, which is indeed what will happen 
+	in #precise mode. In #conservative mode, however, the debugger will stop before evaluating the RHS."
+
+	^RunToCursorBehavior!
+
+runToCursorBehavior: aSymbol 
+	RunToCursorBehavior := aSymbol!
 
 show: titleString process: aProcess topFrame: aStackFrame resumable: aBoolean
 	"Private - Show an instance of the receiver on the <Process>, aProcess, configured appropriately
@@ -2239,6 +2261,8 @@ unskipSelector: aSymbol of: aClass
 !Debugger class categoriesFor: #resource_Default_view!public!resources-views! !
 !Debugger class categoriesFor: #restartOnMethodSave!options!public! !
 !Debugger class categoriesFor: #restartOnMethodSave:!options!public! !
+!Debugger class categoriesFor: #runToCursorBehavior!options!public! !
+!Debugger class categoriesFor: #runToCursorBehavior:!options!public! !
 !Debugger class categoriesFor: #show:process:topFrame:resumable:!instance creation!private! !
 !Debugger class categoriesFor: #showWalkbacks!options!public! !
 !Debugger class categoriesFor: #showWalkbacks:!options!public! !

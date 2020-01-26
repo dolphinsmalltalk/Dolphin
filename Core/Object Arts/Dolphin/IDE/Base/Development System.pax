@@ -1113,7 +1113,7 @@ SmalltalkToolShell subclass: #ClassBrowserAbstract
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
-	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask ShowWalkbacks SkipTable StackDepthIncrement'
+	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #FlipperInspector
