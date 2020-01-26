@@ -460,7 +460,7 @@ testFarReturnFromBlock
 	self
 		should: [block value]
 		raise: Error
-		matching: [:ex | ex messageText beginsWith: 'Cannot return'].
+		matching: [:ex | ex description beginsWith: 'Cannot return'].
 	method := (self compileExpression: '[^self]' in: self class) method.
 	self assert: method needsContext.
 	block := method value: self withArguments: #().
@@ -469,7 +469,7 @@ testFarReturnFromBlock
 	self
 		should: [block value]
 		raise: Error
-		matching: [:ex | ex messageText beginsWith: 'Cannot return'].
+		matching: [:ex | ex description beginsWith: 'Cannot return'].
 	method := (self compileExpression: '[[^true] whileTrue]') method.
 	self assert: method needsContext.
 	block := method value: nil withArguments: #().
@@ -477,7 +477,7 @@ testFarReturnFromBlock
 	self
 		should: [block value]
 		raise: Error
-		matching: [:ex | ex messageText beginsWith: 'Cannot return']!
+		matching: [:ex | ex description beginsWith: 'Cannot return']!
 
 testFloatScanning
 	Float reset.
