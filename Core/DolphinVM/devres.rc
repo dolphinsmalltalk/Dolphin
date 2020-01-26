@@ -475,6 +475,8 @@ STATUSBAR.ICO           ICON                    "Res\\StatusBar.ico"
 
 STEPINTO.ICO            ICON                    "Res\\StepInto.ico"
 
+STEPINTOBLOCK.ICO       ICON                    "Res\\StepIntoBlock.ico"
+
 STEPOVER.ICO            ICON                    "Res\\StepOver.ico"
 
 STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
