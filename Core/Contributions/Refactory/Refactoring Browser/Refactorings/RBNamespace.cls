@@ -319,26 +319,26 @@ rootClasses
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
-!RBNamespace categoriesFor: #addChangeToClass:!private/changes!public! !
-!RBNamespace categoriesFor: #addClassVariable:to:!private/changes!public! !
-!RBNamespace categoriesFor: #addInstanceVariable:to:!private/changes!public! !
-!RBNamespace categoriesFor: #addPool:to:!private/changes!public! !
+!RBNamespace categoriesFor: #addChangeToClass:!changes!private! !
+!RBNamespace categoriesFor: #addClassVariable:to:!changes!private! !
+!RBNamespace categoriesFor: #addInstanceVariable:to:!changes!private! !
+!RBNamespace categoriesFor: #addPool:to:!changes!private! !
 !RBNamespace categoriesFor: #allClassesDo:!accessing!public! !
 !RBNamespace categoriesFor: #allImplementorsOf:!accessing!public! !
 !RBNamespace categoriesFor: #allReferencesTo:do:!accessing!public! !
 !RBNamespace categoriesFor: #allReferencesToClass:do:!accessing!public! !
-!RBNamespace categoriesFor: #changeClass:!private/changes!public! !
+!RBNamespace categoriesFor: #changeClass:!changes!private! !
 !RBNamespace categoriesFor: #changes!accessing!public! !
 !RBNamespace categoriesFor: #changes:!accessing!public! !
 !RBNamespace categoriesFor: #classFor:!accessing/classes!public! !
 !RBNamespace categoriesFor: #classNamed:!accessing/classes!public! !
 !RBNamespace categoriesFor: #classNameFor:!helpers!private! !
-!RBNamespace categoriesFor: #compile:in:classified:!private/changes!public! !
+!RBNamespace categoriesFor: #compile:in:classified:!changes!private! !
 !RBNamespace categoriesFor: #createNewClassFor:!accessing/classes!public! !
 !RBNamespace categoriesFor: #defineClass:!changes!public! !
 !RBNamespace categoriesFor: #environment!accessing!public! !
 !RBNamespace categoriesFor: #environment:!accessing!public! !
-!RBNamespace categoriesFor: #flushCaches!private/changes!public! !
+!RBNamespace categoriesFor: #flushCaches!changes!private! !
 !RBNamespace categoriesFor: #hasCreatedClassFor:!helpers!private! !
 !RBNamespace categoriesFor: #hasRemoved:!public!testing! !
 !RBNamespace categoriesFor: #includesClassNamed:!public!testing! !
@@ -347,18 +347,18 @@ whichCategoryIncludes: aSymbol
 !RBNamespace categoriesFor: #metaclassNamed:!accessing/classes!public! !
 !RBNamespace categoriesFor: #name!accessing!public! !
 !RBNamespace categoriesFor: #name:!accessing!public! !
-!RBNamespace categoriesFor: #performChange:around:!private/changes!public! !
+!RBNamespace categoriesFor: #performChange:around:!changes!private! !
 !RBNamespace categoriesFor: #privateImplementorsOf:!helpers!private! !
 !RBNamespace categoriesFor: #removeClass:!changes!public! !
 !RBNamespace categoriesFor: #removeClassNamed:!changes!public! !
-!RBNamespace categoriesFor: #removeClassVariable:from:!private/changes!public! !
-!RBNamespace categoriesFor: #removeInstanceVariable:from:!private/changes!public! !
-!RBNamespace categoriesFor: #removeMethod:from:!private/changes!public! !
+!RBNamespace categoriesFor: #removeClassVariable:from:!changes!private! !
+!RBNamespace categoriesFor: #removeInstanceVariable:from:!changes!private! !
+!RBNamespace categoriesFor: #removeMethod:from:!changes!private! !
 !RBNamespace categoriesFor: #renameClass:to:around:!changes!public! !
-!RBNamespace categoriesFor: #renameClassVariable:to:in:around:!private/changes!public! !
-!RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!private/changes!public! !
+!RBNamespace categoriesFor: #renameClassVariable:to:in:around:!changes!private! !
+!RBNamespace categoriesFor: #renameInstanceVariable:to:in:around:!changes!private! !
 !RBNamespace categoriesFor: #reparentClasses:to:!changes!public! !
-!RBNamespace categoriesFor: #replaceClassNameIn:to:!private/changes!public! !
+!RBNamespace categoriesFor: #replaceClassNameIn:to:!changes!private! !
 !RBNamespace categoriesFor: #rootClasses!accessing!public! !
 !RBNamespace categoriesFor: #whichCategoryIncludes:!accessing/classes!public! !
 

@@ -46,7 +46,7 @@ preconditions
 transform
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]! !
-!ProtectInstanceVariableRefactoring categoriesFor: #getterSetterMethods!private/accessing!public! !
+!ProtectInstanceVariableRefactoring categoriesFor: #getterSetterMethods!accessing!private! !
 !ProtectInstanceVariableRefactoring categoriesFor: #inline:!public!transforming! !
 !ProtectInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
 !ProtectInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !

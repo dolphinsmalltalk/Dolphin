@@ -30,6 +30,6 @@ transform
 	subclass removeClassVariable: variableName.
 	class addClassVariable: variableName! !
 !PullUpClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!private/accessing!public! !
+!PullUpClassVariableRefactoring categoriesFor: #subclassDefiningVariable!accessing!private! !
 !PullUpClassVariableRefactoring categoriesFor: #transform!public!transforming! !
 

@@ -20,7 +20,7 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
-!RefactoringWarning categoriesFor: #defaultAction!private / actions!public! !
+!RefactoringWarning categoriesFor: #defaultAction!actions!private! !
 !RefactoringWarning categoriesFor: #refactoring!accessing!public! !
 !RefactoringWarning categoriesFor: #refactoring:!accessing!private! !
 
