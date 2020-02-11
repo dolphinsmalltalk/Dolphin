@@ -250,7 +250,7 @@ updateIndicatorLimit
 !ProfileBrowser categoriesFor: #deleteAllSampleSets!commands!public! !
 !ProfileBrowser categoriesFor: #deleteSampleSet!commands!public! !
 !ProfileBrowser categoriesFor: #filterDolphinXXX!commands!public! !
-!ProfileBrowser categoriesFor: #filterPercentage:symbol:!private helpers!public! !
+!ProfileBrowser categoriesFor: #filterPercentage:symbol:!helpers!private! !
 !ProfileBrowser categoriesFor: #filterSelector!commands!public! !
 !ProfileBrowser categoriesFor: #isSampleSetSelected!public!testing! !
 !ProfileBrowser categoriesFor: #onSampleSetSelectionChanged!event handling!public! !
@@ -260,10 +260,10 @@ updateIndicatorLimit
 !ProfileBrowser categoriesFor: #onViewOpened!event handling!public! !
 !ProfileBrowser categoriesFor: #queryCommand:!commands!public! !
 !ProfileBrowser categoriesFor: #refreshSampleSets!commands!public! !
-!ProfileBrowser categoriesFor: #refreshTabsFor:!private helpers!public! !
+!ProfileBrowser categoriesFor: #refreshTabsFor:!helpers!private! !
 !ProfileBrowser categoriesFor: #report!commands!public! !
-!ProfileBrowser categoriesFor: #resetSelectorFilter!private helpers!public! !
-!ProfileBrowser categoriesFor: #sampleSetUpdated!private helpers!public! !
+!ProfileBrowser categoriesFor: #resetSelectorFilter!helpers!private! !
+!ProfileBrowser categoriesFor: #sampleSetUpdated!helpers!private! !
 !ProfileBrowser categoriesFor: #startProfiler!commands!public! !
 !ProfileBrowser categoriesFor: #updateIndicatorLimit!constants!public! !
 

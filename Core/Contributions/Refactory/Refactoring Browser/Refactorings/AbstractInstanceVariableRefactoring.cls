@@ -47,7 +47,7 @@ transform
 	self createAccessors.
 	self abstractReferences! !
 !AbstractInstanceVariableRefactoring categoriesFor: #abstractReferences!public!transforming! !
-!AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!private/accessing!public! !
+!AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
 !AbstractInstanceVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
 !AbstractInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
 !AbstractInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !

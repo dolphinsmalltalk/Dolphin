@@ -160,7 +160,7 @@ printOn: aStream
 !ClassLocator categoriesFor: #errorClassNotFound!exceptions!private! !
 !ClassLocator categoriesFor: #findAvailableClass!operations!public! !
 !ClassLocator categoriesFor: #findResidentClass!operations!private! !
-!ClassLocator categoriesFor: #fullClassKey!private helpers!public! !
+!ClassLocator categoriesFor: #fullClassKey!helpers!private! !
 !ClassLocator categoriesFor: #fullPackageKey!accessing!public! !
 !ClassLocator categoriesFor: #hasPackageName!accessing!private! !
 !ClassLocator categoriesFor: #initialize!initializing!private! !

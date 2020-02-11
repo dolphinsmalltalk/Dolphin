@@ -300,12 +300,12 @@ verifyTemporaryVariableDoesNotOverride
 !MoveMethodRefactoring categoriesFor: #checkTemporaryVariableNames!preconditions!public! !
 !MoveMethodRefactoring categoriesFor: #compileDelagatorMethod!public!transforming! !
 !MoveMethodRefactoring categoriesFor: #compileNewMethods!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!private/accessing!public! !
+!MoveMethodRefactoring categoriesFor: #getAllClassesForGlobalOrClassVariable!accessing!private! !
 !MoveMethodRefactoring categoriesFor: #getArgumentNameForSelf!public!transforming! !
-!MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!private/accessing!public! !
-!MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!private/accessing!public! !
-!MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!private/accessing!public! !
-!MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!private/accessing!public! !
+!MoveMethodRefactoring categoriesFor: #getClassesForInstanceVariable!accessing!private! !
+!MoveMethodRefactoring categoriesFor: #getClassesForTemporaryVariable!accessing!private! !
+!MoveMethodRefactoring categoriesFor: #getClassesToMoveTo!accessing!private! !
+!MoveMethodRefactoring categoriesFor: #getClassForGlobalOrClassVariable!accessing!private! !
 !MoveMethodRefactoring categoriesFor: #getNewMethodName!public!transforming! !
 !MoveMethodRefactoring categoriesFor: #hasOnlySelfReturns!public!transforming! !
 !MoveMethodRefactoring categoriesFor: #hasSelfReferences!public!testing! !

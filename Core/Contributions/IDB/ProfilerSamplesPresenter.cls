@@ -198,10 +198,10 @@ showSample
 !ProfilerSamplesPresenter categoriesFor: #onSampleIndexChanged!event handling!public! !
 !ProfilerSamplesPresenter categoriesFor: #onViewOpened!event handling!public! !
 !ProfilerSamplesPresenter categoriesFor: #parseContext!public! !
-!ProfilerSamplesPresenter categoriesFor: #sampleIndicator:!private helpers!public! !
+!ProfilerSamplesPresenter categoriesFor: #sampleIndicator:!helpers!private! !
 !ProfilerSamplesPresenter categoriesFor: #selectedMethod!public! !
-!ProfilerSamplesPresenter categoriesFor: #setSampleRange!private helpers!public! !
-!ProfilerSamplesPresenter categoriesFor: #showSample!private helpers!public! !
+!ProfilerSamplesPresenter categoriesFor: #setSampleRange!helpers!private! !
+!ProfilerSamplesPresenter categoriesFor: #showSample!helpers!private! !
 
 !ProfilerSamplesPresenter class methodsFor!
 

@@ -714,8 +714,8 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
-!StLiteralNode categoriesFor: #replaceSourceFrom:!private-replacing!public! !
-!StLiteralNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
+!StLiteralNode categoriesFor: #replaceSourceFrom:!private!replacing! !
+!StLiteralNode categoriesFor: #replaceSourceWith:!private!replacing! !
 
 !StLiteralValueNode methodsFor!
 
@@ -825,12 +825,12 @@ replaceSourceWithMessageNode: aNode
 											ifFalse: [new value]))]]! !
 !StMessageNode categoriesFor: #copyInContext:!matching!public! !
 !StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
-!StMessageNode categoriesFor: #isContainmentReplacement:!private-replacing!public! !
+!StMessageNode categoriesFor: #isContainmentReplacement:!private!replacing! !
 !StMessageNode categoriesFor: #match:inContext:!matching!public! !
-!StMessageNode categoriesFor: #replaceContainmentSourceWith:!private-replacing!public! !
+!StMessageNode categoriesFor: #replaceContainmentSourceWith:!private!replacing! !
 !StMessageNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StMessageNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
-!StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private-replacing!public! !
+!StMessageNode categoriesFor: #replaceSourceWith:!private!replacing! !
+!StMessageNode categoriesFor: #replaceSourceWithMessageNode:!private!replacing! !
 
 !StMethodNode methodsFor!
 
@@ -1168,8 +1168,8 @@ superMessages
 !StProgramNode categoriesFor: #removeDeadCode!public!replacing! !
 !StProgramNode categoriesFor: #replaceMethodSource:!public!replacing! !
 !StProgramNode categoriesFor: #replaceNode:withNode:!public!replacing! !
-!StProgramNode categoriesFor: #replaceSourceFrom:!private-replacing!public! !
-!StProgramNode categoriesFor: #replaceSourceWith:!private-replacing!public! !
+!StProgramNode categoriesFor: #replaceSourceFrom:!private!replacing! !
+!StProgramNode categoriesFor: #replaceSourceWith:!private!replacing! !
 !StProgramNode categoriesFor: #replaceWith:!public!replacing! !
 !StProgramNode categoriesFor: #selfMessages!public!querying! !
 !StProgramNode categoriesFor: #superMessages!public!querying! !

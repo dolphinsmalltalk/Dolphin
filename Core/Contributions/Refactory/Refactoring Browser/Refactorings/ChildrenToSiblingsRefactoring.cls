@@ -179,28 +179,28 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
-!ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!private/accessing!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #abstractSuperclass!accessing!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #addSuperclass!public!transforming! !
 !ChildrenToSiblingsRefactoring categoriesFor: #changeIsKindOfReferences!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!private/methods!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!private/methods!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #computeSubclassSupersOf:!methods!private! !
+!ChildrenToSiblingsRefactoring categoriesFor: #createSubclassResponsibilityFor:in:!methods!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #name:class:subclasses:!initialize/release!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private/variables!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private/variables!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private/variables!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pullUpPoolVariables!private/variables!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!private/methods!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassInstanceVariables!private!variables! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pullUpClassVariables!private!variables! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pullUpInstanceVariables!private!variables! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pullUpPoolVariables!private!variables! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pushUp:in:!methods!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!private/methods!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #pushUpMethodsFrom:!methods!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #pushUpVariables!public!transforming! !
 !ChildrenToSiblingsRefactoring categoriesFor: #reparentSubclasses!public!transforming! !
-!ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!private/methods!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!private/methods!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #selectorsToPushUpFrom:!methods!private! !
+!ChildrenToSiblingsRefactoring categoriesFor: #shouldPushUp:from:!methods!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #storeOn:!printing!public! !
 !ChildrenToSiblingsRefactoring categoriesFor: #subclasses!accessing!public! !
 !ChildrenToSiblingsRefactoring categoriesFor: #subclasses:!accessing!public! !
-!ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!private/methods!public! !
+!ChildrenToSiblingsRefactoring categoriesFor: #subclassResponsibilityFor:in:!methods!private! !
 !ChildrenToSiblingsRefactoring categoriesFor: #transform!public!transforming! !
 
 !ChildrenToSiblingsRefactoring class methodsFor!

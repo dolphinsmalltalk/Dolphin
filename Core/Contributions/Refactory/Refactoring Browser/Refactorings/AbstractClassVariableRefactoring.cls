@@ -64,7 +64,7 @@ transform
 	self abstractClassReferences! !
 !AbstractClassVariableRefactoring categoriesFor: #abstractClassReferences!public!transforming! !
 !AbstractClassVariableRefactoring categoriesFor: #abstractInstanceReferences!public!transforming! !
-!AbstractClassVariableRefactoring categoriesFor: #accessorsRefactoring!private/accessing!public! !
+!AbstractClassVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
 !AbstractClassVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
 !AbstractClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
 !AbstractClassVariableRefactoring categoriesFor: #transform!public!transforming! !

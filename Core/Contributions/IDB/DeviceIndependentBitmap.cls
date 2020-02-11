@@ -190,8 +190,8 @@ width: widthInteger height: heightInteger depth: depthInteger
 !DeviceIndependentBitmap categoriesFor: #baseLoadFlags!constants!public! !
 !DeviceIndependentBitmap categoriesFor: #bitmapInfoStruct!accessing!public! !
 !DeviceIndependentBitmap categoriesFor: #bitmapStruct!accessing!public! !
-!DeviceIndependentBitmap categoriesFor: #cacheInfo!private helpers!public! !
-!DeviceIndependentBitmap categoriesFor: #clearCached!private!private helpers! !
+!DeviceIndependentBitmap categoriesFor: #cacheInfo!helpers!private! !
+!DeviceIndependentBitmap categoriesFor: #clearCached!helpers!private! !
 !DeviceIndependentBitmap categoriesFor: #copyToClipboard!copying!public! !
 !DeviceIndependentBitmap categoriesFor: #createHandle!public!realizing/unrealizing! !
 !DeviceIndependentBitmap categoriesFor: #depth!accessing!public! !

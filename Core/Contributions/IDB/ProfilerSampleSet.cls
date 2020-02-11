@@ -223,7 +223,7 @@ update
 	samplingTimeStamp := DateAndTime now.
 	samplesElapsedTime := nil.
 	self trigger: #sampleSetUpdated: with: self! !
-!ProfilerSampleSet categoriesFor: #addItem:to:elapsedTime:!private helpers!public! !
+!ProfilerSampleSet categoriesFor: #addItem:to:elapsedTime:!helpers!private! !
 !ProfilerSampleSet categoriesFor: #addSample:elapsedTime:!profiling!public! !
 !ProfilerSampleSet categoriesFor: #clearCaches!operations!public! !
 !ProfilerSampleSet categoriesFor: #duration!accessing!public! !

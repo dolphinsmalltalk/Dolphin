@@ -111,9 +111,9 @@ verifySelectedInterval
 !ExtractToTemporaryRefactoring categoriesFor: #constructAssignmentFrom:!public!transforming! !
 !ExtractToTemporaryRefactoring categoriesFor: #extract:to:from:in:!initialize/release!public! !
 !ExtractToTemporaryRefactoring categoriesFor: #insertTemporary!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #parseTree!private/accessing!public! !
+!ExtractToTemporaryRefactoring categoriesFor: #parseTree!accessing!private! !
 !ExtractToTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #selectedSource!private/accessing!public! !
+!ExtractToTemporaryRefactoring categoriesFor: #selectedSource!accessing!private! !
 !ExtractToTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
 !ExtractToTemporaryRefactoring categoriesFor: #transform!public!transforming! !
 !ExtractToTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !

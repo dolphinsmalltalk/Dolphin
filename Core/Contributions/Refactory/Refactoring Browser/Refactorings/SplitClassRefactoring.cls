@@ -98,10 +98,10 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
-!SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private/transforming!public! !
+!SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private!transforming! !
 !SplitClassRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!SplitClassRefactoring categoriesFor: #addClass!private/transforming!public! !
-!SplitClassRefactoring categoriesFor: #addInstanceVariables!private/transforming!public! !
+!SplitClassRefactoring categoriesFor: #addClass!private!transforming! !
+!SplitClassRefactoring categoriesFor: #addInstanceVariables!private!transforming! !
 !SplitClassRefactoring categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
 !SplitClassRefactoring categoriesFor: #createNewClass!public!transforming! !
 !SplitClassRefactoring categoriesFor: #createReference!public!transforming! !
