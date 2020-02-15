@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #InternetAddressTest
 	instanceVariableNames: ''
@@ -17,19 +17,17 @@ testAllForHost
 	"Microsoft should have more than one IP associated with microsoft.com"
 	addresses := InternetAddress allForHost: 'microsoft.com'.
 	self assert: addresses size > 1.
-	self assert: (addresses anySatisfy: [:each | each ipAddress beginsWith: #[191 239]]).
 
 	"OA central"
 	addresses := InternetAddress allForHost: 'object-arts.com'.
-	self assert: addresses size = 1.
-	self assert: (addresses first host endsWith: 'cable.virginm.net')!
+	self assert: addresses size = 1!
 
 testHost
 	| name ip |
 	self isOnline ifFalse: [^self].
 	name := InternetAddress host: 'uk2.net'.
 	ip := InternetAddress ipAddress: name ipAddress.
-	self assert: ip host = name host!
+	self assert: (ip host endsWith: name host)!
 
 testIsIPString
 	self deny: (InternetAddress isIPString: '').
