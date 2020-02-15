@@ -49,7 +49,7 @@ testPathToInstance
 	self assert: path first identicalTo: Smalltalk! !
 !ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
 !ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
-!ReferenceFinderTest categoriesFor: #testFound!*-RB fixes!public!tests! !
+!ReferenceFinderTest categoriesFor: #testFound!public!tests! !
 !ReferenceFinderTest categoriesFor: #testNotFound!public!tests! !
 !ReferenceFinderTest categoriesFor: #testPathToInstance!public!tests! !
 

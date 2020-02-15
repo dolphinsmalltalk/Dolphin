@@ -106,7 +106,7 @@ subscriptionsOf: aSubscriber do: aBlock
 !SubscriptionRegistry categoriesFor: #deliver:!announcing!public! !
 !SubscriptionRegistry categoriesFor: #deliver:to:!private! !
 !SubscriptionRegistry categoriesFor: #deliver:to:startingAt:!private! !
-!SubscriptionRegistry categoriesFor: #glmSubscriptions!*glamour/tests/core!public! !
+!SubscriptionRegistry categoriesFor: #glmSubscriptions!public! !
 !SubscriptionRegistry categoriesFor: #initialize!initialization!public! !
 !SubscriptionRegistry categoriesFor: #numberOfSubscriptions!accessing!public! !
 !SubscriptionRegistry categoriesFor: #protected:!private! !

@@ -43,12 +43,12 @@ writeHandle
 writeStream
 	streams isNil ifTrue: [self connectStreams].
 	^streams at: 2! !
-!ExternalPipe categoriesFor: #connectStreams!*-in class package!private! !
-!ExternalPipe categoriesFor: #createPipe!*-in class package!helpers!initializing!private! !
-!ExternalPipe categoriesFor: #readHandle!*-in class package!accessing!private! !
-!ExternalPipe categoriesFor: #readStream!*-in class package!accessing!public! !
-!ExternalPipe categoriesFor: #writeHandle!*-in class package!accessing!private! !
-!ExternalPipe categoriesFor: #writeStream!*-in class package!accessing!public! !
+!ExternalPipe categoriesFor: #connectStreams!private! !
+!ExternalPipe categoriesFor: #createPipe!helpers!initializing!private! !
+!ExternalPipe categoriesFor: #readHandle!accessing!private! !
+!ExternalPipe categoriesFor: #readStream!accessing!public! !
+!ExternalPipe categoriesFor: #writeHandle!accessing!private! !
+!ExternalPipe categoriesFor: #writeStream!accessing!public! !
 
 !ExternalPipe class methodsFor!
 
@@ -137,7 +137,7 @@ example2
 
 new
 	^super new createPipe; yourself! !
-!ExternalPipe class categoriesFor: #example1!*-in class package!must strip!public! !
-!ExternalPipe class categoriesFor: #example2!*-in class package!must strip!public! !
-!ExternalPipe class categoriesFor: #new!*-in class package!instance creation!public! !
+!ExternalPipe class categoriesFor: #example1!must strip!public! !
+!ExternalPipe class categoriesFor: #example2!must strip!public! !
+!ExternalPipe class categoriesFor: #new!instance creation!public! !
 

@@ -109,7 +109,7 @@ when: anAnnouncementClass send: aSelector to: anObject
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
 !Announcer categoriesFor: #announce:!announce!public! !
 !Announcer categoriesFor: #basicSubscribe:!private! !
-!Announcer categoriesFor: #hasSubscriber:!*RPackage/core!public! !
+!Announcer categoriesFor: #hasSubscriber:!public! !
 !Announcer categoriesFor: #initialize!initialization!public! !
 !Announcer categoriesFor: #numberOfSubscriptions!public!statistics! !
 !Announcer categoriesFor: #on:do:!public! !
@@ -118,7 +118,7 @@ when: anAnnouncementClass send: aSelector to: anObject
 !Announcer categoriesFor: #replace:with:!private! !
 !Announcer categoriesFor: #subscribe:do:!public!subscription! !
 !Announcer categoriesFor: #subscribe:send:to:!public!subscription! !
-!Announcer categoriesFor: #subscriptions!*RPackage/core!public! !
+!Announcer categoriesFor: #subscriptions!public! !
 !Announcer categoriesFor: #unsubscribe:!public!subscription! !
 !Announcer categoriesFor: #weak!public!weak! !
 !Announcer categoriesFor: #when:do:!convenience!public! !

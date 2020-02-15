@@ -247,9 +247,9 @@ testResult: aTestResult
 !SUnitBrowserResult categoriesFor: #add:to:!actions!private! !
 !SUnitBrowserResult categoriesFor: #areAllTestsCompleted!public!querying! !
 !SUnitBrowserResult categoriesFor: #areAnyTestsCompleted!public!querying! !
-!SUnitBrowserResult categoriesFor: #basicErrors!*-unreferenced selectors!accessing!private! !
-!SUnitBrowserResult categoriesFor: #basicFailures!*-unreferenced selectors!accessing!private! !
-!SUnitBrowserResult categoriesFor: #basicPassed!*-unreferenced selectors!accessing!private! !
+!SUnitBrowserResult categoriesFor: #basicErrors!accessing!private! !
+!SUnitBrowserResult categoriesFor: #basicFailures!accessing!private! !
+!SUnitBrowserResult categoriesFor: #basicPassed!accessing!private! !
 !SUnitBrowserResult categoriesFor: #clear!actions!public! !
 !SUnitBrowserResult categoriesFor: #defects!accessing!public! !
 !SUnitBrowserResult categoriesFor: #errorCount!public!statistics! !
@@ -257,13 +257,13 @@ testResult: aTestResult
 !SUnitBrowserResult categoriesFor: #errors:!accessing!private! !
 !SUnitBrowserResult categoriesFor: #failureCount!public!statistics! !
 !SUnitBrowserResult categoriesFor: #failures!accessing!public! !
-!SUnitBrowserResult categoriesFor: #failures:!*-unreferenced selectors!accessing!private! !
+!SUnitBrowserResult categoriesFor: #failures:!accessing!private! !
 !SUnitBrowserResult categoriesFor: #hasErrors!public!statistics! !
 !SUnitBrowserResult categoriesFor: #hasFailures!public!statistics! !
 !SUnitBrowserResult categoriesFor: #hasPassed!public!statistics! !
 !SUnitBrowserResult categoriesFor: #initialize!initializing!private! !
 !SUnitBrowserResult categoriesFor: #initializeModel:!initializing!private! !
-!SUnitBrowserResult categoriesFor: #isDefect:!*-unreferenced selectors!public!statistics! !
+!SUnitBrowserResult categoriesFor: #isDefect:!public!statistics! !
 !SUnitBrowserResult categoriesFor: #isError:!public!statistics! !
 !SUnitBrowserResult categoriesFor: #isFailure:!public!statistics! !
 !SUnitBrowserResult categoriesFor: #isPassed:!public!statistics! !
@@ -278,9 +278,9 @@ testResult: aTestResult
 !SUnitBrowserResult categoriesFor: #numberNotYetRunFor:!public!statistics! !
 !SUnitBrowserResult categoriesFor: #numberOfTests!accessing!private! !
 !SUnitBrowserResult categoriesFor: #passed!accessing!public! !
-!SUnitBrowserResult categoriesFor: #passed:!*-unreferenced selectors!accessing!private! !
+!SUnitBrowserResult categoriesFor: #passed:!accessing!private! !
 !SUnitBrowserResult categoriesFor: #passedCount!public!statistics! !
-!SUnitBrowserResult categoriesFor: #remove:!*-unimplemented selector refs!actions!public! !
+!SUnitBrowserResult categoriesFor: #remove:!actions!public! !
 !SUnitBrowserResult categoriesFor: #removeAll:!actions!public! !
 !SUnitBrowserResult categoriesFor: #removeAt:!actions!private! !
 !SUnitBrowserResult categoriesFor: #runCount!public!statistics! !

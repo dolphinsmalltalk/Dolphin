@@ -448,7 +448,7 @@ wrapTest: aTest
 !SUnitBrowser categoriesFor: #testCaseListModel:!accessing!private! !
 !SUnitBrowser categoriesFor: #testCaseListPresenter!accessing!private! !
 !SUnitBrowser categoriesFor: #testCaseListPresenter:!accessing!private! !
-!SUnitBrowser categoriesFor: #updateListStateFor:with:!*-unreferenced selectors!model callbacks!private! !
+!SUnitBrowser categoriesFor: #updateListStateFor:with:!model callbacks!private! !
 !SUnitBrowser categoriesFor: #wrapAllSelectedTestsFromModel!model callbacks!private! !
 !SUnitBrowser categoriesFor: #wrapAllTests:!model callbacks!private! !
 !SUnitBrowser categoriesFor: #wrapAllTestsFromModel!model callbacks!private! !

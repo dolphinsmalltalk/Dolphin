@@ -70,11 +70,11 @@ toggleShowStatusBackgroundColors
 !SUnitBrowserConfig categoriesFor: #showAll!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #showAll:!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #showRunningStatusInList!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #showRunningStatusInList:!*-unreferenced selectors!configuring!public! !
+!SUnitBrowserConfig categoriesFor: #showRunningStatusInList:!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #showStatusBackgroundColors!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #showStatusBackgroundColors:!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #toggleShouldInitializeResources!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #toggleShowAll!configuring!public! !
-!SUnitBrowserConfig categoriesFor: #toggleShowRunningStatusInList!*-unreferenced selectors!configuring!public! !
+!SUnitBrowserConfig categoriesFor: #toggleShowRunningStatusInList!configuring!public! !
 !SUnitBrowserConfig categoriesFor: #toggleShowStatusBackgroundColors!configuring!public! !
 
