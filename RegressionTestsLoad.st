@@ -18,6 +18,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Lagoon\Lagoon Tests.pax';
+	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
 	yourself.
 !
