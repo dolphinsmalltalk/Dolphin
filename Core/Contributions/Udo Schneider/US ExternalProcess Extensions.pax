@@ -85,7 +85,7 @@ convertWinStdHandle: stdHandle toCRTFileMode: modeString
 	fd2 < 0 ifTrue: [CRTError signal].
 	hFile := CRTLibrary default _fdopen: fd2 mode: modeString.
 	^hFile! !
-!CRTLibrary categoriesFor: #convertWinStdHandle:toCRTFileMode:!*-not in class package!private! !
+!CRTLibrary categoriesFor: #convertWinStdHandle:toCRTFileMode:!private! !
 
 !ExternalProcess methodsFor!
 
@@ -147,16 +147,16 @@ waitForInputIdle: milliseconds
 	^UserLibrary default waitForInputIdle: pi hProcess milliseconds: milliseconds! !
 !ExternalProcess categoriesFor: #showWindow!public! !
 !ExternalProcess categoriesFor: #showWindow:!public! !
-!ExternalProcess categoriesFor: #startupFlags:!*-in class package!initialize/release!public! !
-!ExternalProcess categoriesFor: #stderrPipe!*-not in class package!public! !
-!ExternalProcess categoriesFor: #stderrPipe:!*-not in class package!private! !
-!ExternalProcess categoriesFor: #stderrStream!*-not in class package!public! !
-!ExternalProcess categoriesFor: #stdinPipe!*-not in class package!public! !
-!ExternalProcess categoriesFor: #stdinPipe:!*-not in class package!private! !
-!ExternalProcess categoriesFor: #stdinStream!*-not in class package!public! !
-!ExternalProcess categoriesFor: #stdoutPipe!*-not in class package!public! !
-!ExternalProcess categoriesFor: #stdoutPipe:!*-not in class package!private! !
-!ExternalProcess categoriesFor: #stdoutStream!*-not in class package!public! !
+!ExternalProcess categoriesFor: #startupFlags:!initialize/release!public! !
+!ExternalProcess categoriesFor: #stderrPipe!public! !
+!ExternalProcess categoriesFor: #stderrPipe:!private! !
+!ExternalProcess categoriesFor: #stderrStream!public! !
+!ExternalProcess categoriesFor: #stdinPipe!public! !
+!ExternalProcess categoriesFor: #stdinPipe:!private! !
+!ExternalProcess categoriesFor: #stdinStream!public! !
+!ExternalProcess categoriesFor: #stdoutPipe!public! !
+!ExternalProcess categoriesFor: #stdoutPipe:!private! !
+!ExternalProcess categoriesFor: #stdoutStream!public! !
 !ExternalProcess categoriesFor: #waitForInputIdle:!public! !
 
 !InheritableFile methodsFor!
@@ -170,7 +170,7 @@ handle := aHandle! !
 createPipe: hReadPipe hWritePipe: hWritePipe lpPipeAttributes: lpPipeAttributes nSize: nSize
 	<stdcall: bool CreatePipe handle* handle* lpvoid dword>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #createPipe:hWritePipe:lpPipeAttributes:nSize:!*-not in class package!public! !
+!KernelLibrary categoriesFor: #createPipe:hWritePipe:lpPipeAttributes:nSize:!public! !
 
 !UserLibrary methodsFor!
 
