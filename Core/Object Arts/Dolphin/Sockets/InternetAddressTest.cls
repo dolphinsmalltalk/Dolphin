@@ -11,23 +11,26 @@ InternetAddressTest comment: ''!
 !InternetAddressTest methodsFor!
 
 testAllForHost
-	| addresses oacom |
+	| addresses |
 	self isOnline ifFalse: [^self].
 
-	"Microsoft should have more than one IP associated with microsoft.com"
-	addresses := InternetAddress allForHost: 'microsoft.com'.
-	self assert: addresses size > 1.
+	"dns.google has two fixed and well-known IP addresses"
+	addresses := InternetAddress allForHost: 'dns.google'.
+	self assert: addresses size equals: 2.
+	self assert: (addresses collect: [:each | each ipAddress]) asSet
+		equals: #(#[8 8 4 4] #[8 8 8 8]) asSet.
 
-	"OA central"
-	addresses := InternetAddress allForHost: 'object-arts.com'.
-	self assert: addresses size = 1!
+	"google.com has only one"
+	addresses := InternetAddress allForHost: 'google.com'.
+	self assert: addresses size = 1.
+	self assert: (addresses first host endsWith: '1e100.net')!
 
 testHost
 	| name ip |
 	self isOnline ifFalse: [^self].
-	name := InternetAddress host: 'uk2.net'.
+	name := InternetAddress host: 'dns.google'.
 	ip := InternetAddress ipAddress: name ipAddress.
-	self assert: (ip host endsWith: name host)!
+	self assert: ip host equals: name host!
 
 testIsIPString
 	self deny: (InternetAddress isIPString: '').
@@ -48,9 +51,9 @@ testLocalHost
 	| local computerName |
 	computerName := SessionManager current computerName asLowercase.
 	local := InternetAddress localHost.
-	self assert: local host asUppercase = computerName asUppercase.
-	self assert: (((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first 
-				sameAs: computerName)! !
+	self assert: local host asLowercase equals: computerName.
+	self assert: ((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first asLowercase
+		equals: computerName! !
 !InternetAddressTest categoriesFor: #testAllForHost!public!unit tests! !
 !InternetAddressTest categoriesFor: #testHost!public!unit tests! !
 !InternetAddressTest categoriesFor: #testIsIPString!public!unit tests! !
