@@ -3453,7 +3453,7 @@ size_t Compiler::AddTextMap(ip_t ip, const textpos_t textStart, const textpos_t 
 	_ASSERTE(ip <= LastIp);
 	// textStart can be equal to text length in order to specify an empty interval at the end of the method
 	_ASSERTE((intptr_t)textStart >= 0 && static_cast<size_t>(textStart) <= TextLength);
-	_ASSERTE((intptr_t)textStop >= -1 && static_cast<size_t>(textStop) < TextLength);
+	_ASSERTE(static_cast<size_t>(textStop) < TextLength || textStop == textpos_t::npos);
 	if (!WantTextMap) return -1;
 	_ASSERTE(m_bytecodes[ip].IsOpCode);
 	_ASSERTE(m_bytecodes[ip].byte != Nop);
