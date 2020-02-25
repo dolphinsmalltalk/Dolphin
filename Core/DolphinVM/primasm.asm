@@ -201,7 +201,7 @@ ALIGNPRIMITIVE
 @callPrimitiveValue@8 ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; int __fastcall Interpreter::primitiveValue(void*, unsigned argCount)
+; int __fastcall Interpreter::primitiveValue(void*, primargcount_t argCount)
 ;
 BEGINPRIMITIVE primitiveValue
 	mov		eax, edx								; Get argument count into EAX

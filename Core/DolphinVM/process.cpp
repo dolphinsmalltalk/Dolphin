@@ -1404,7 +1404,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, primargcount_t argumentCount)
 {
 #ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
@@ -1446,7 +1446,7 @@ Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, unsigned argumentCou
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, primargcount_t argumentCount)
 {
 	SMALLINTEGER steps;
 	switch (argumentCount)

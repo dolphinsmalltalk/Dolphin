@@ -2,7 +2,7 @@
 #pragma once
 
 // Template for operations where the result is zero if the argument is SmallInteger zero
-template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiveLargeIntegerOpZ(Oop* const sp, unsigned argc)
+template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiveLargeIntegerOpZ(Oop* const sp, primargcount_t argc)
 {
 	Oop oopArg = *sp;
 	const LargeIntegerOTE* oteReceiver = reinterpret_cast<const LargeIntegerOTE*>(*(sp - 1));

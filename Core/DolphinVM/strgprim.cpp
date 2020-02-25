@@ -748,7 +748,7 @@ Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t
 
 // primitiveStringEqual does not use the comparison template because the result is a Boolean, not an Integer
 // 
-Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, unsigned argc)
+Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
 {
 	struct EqualA
 	{

@@ -193,7 +193,7 @@ Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* const stackPointer, unsi
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, primargcount_t argCount)
 {
 	Oop oopReceiver = *(sp - argCount);
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(oopReceiver);

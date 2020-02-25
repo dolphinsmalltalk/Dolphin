@@ -91,7 +91,7 @@ void Interpreter::asyncGC(DWORD gcFlags)
 
 
 // This has been usurped for GC primitive
-Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t argCount)
 {
 	CHECKREFERENCESSP(sp);
 
