@@ -14,13 +14,13 @@
 #include "Interprt.h"
 #include "ExternalBuf.h"
 
-Oop * __fastcall Interpreter::primitiveAddressOf(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveAddressOf(Oop * const sp, primargcount_t argCount)
 {
 	StoreUIntPtr()(sp, reinterpret_cast<uintptr_t>(reinterpret_cast<OTE*>(*sp)->m_location));
 	return sp;
 }
 
-Oop * __fastcall Interpreter::primitiveBytesIsNull(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveBytesIsNull(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(*sp);
 	MWORD size = oteBytes->bytesSize();
@@ -33,7 +33,7 @@ Oop * __fastcall Interpreter::primitiveBytesIsNull(Oop * const sp, unsigned argC
 		return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
-Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, primargcount_t argCount)
 {
 	StructureOTE* oteStruct = reinterpret_cast<StructureOTE*>(*sp);
 
@@ -80,7 +80,7 @@ Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, unsigned 
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, primargcount_t argCount)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -138,7 +138,7 @@ Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, unsigned argCo
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectDWORDAtPut(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveIndirectDWORDAtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -246,7 +246,7 @@ Oop * __fastcall Interpreter::primitiveSDWORDAtPut(Oop * const sp, unsigned)
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectSDWORDAtPut(Oop * const sp, unsigned argCount)
+Oop * __fastcall Interpreter::primitiveIndirectSDWORDAtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);

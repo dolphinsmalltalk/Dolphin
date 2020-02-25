@@ -492,7 +492,7 @@ public:
 	static Oop* __fastcall unusedPrimitive(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveActivateMethod(Oop* const sp, primargcount_t argCount);
 
-	template<int Index> static Oop * __fastcall primitiveReturnConst(Oop * const sp, unsigned argCount);
+	template<int Index> static Oop * __fastcall primitiveReturnConst(Oop * const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveReturnSelf(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveReturnInstVar(Oop* const sp, primargcount_t argCount);
@@ -636,7 +636,7 @@ public:
 	static Oop* __fastcall primitiveNew(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNewWithArg(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNewPinned(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewInitializedObject(Oop* sp, unsigned argCount);
+	static Oop* __fastcall primitiveNewInitializedObject(Oop* sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNewFromStack(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNewVirtual(Oop* const sp, primargcount_t argCount);
 
@@ -658,11 +658,11 @@ public:
 	static Oop* __fastcall primitiveInstanceCounts(Oop* const sp, primargcount_t argCount);
 	
 	// Control Primitives
-	static Oop* __fastcall primitiveValue(Oop* const sp, unsigned argumentCount);
+	static Oop* __fastcall primitiveValue(Oop* const sp, primargcount_t argumentCount);
 	static Oop* __fastcall primitiveValueWithArgs(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveValueWithArgsThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerform(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitivePerformThunk(Oop* const sp, unsigned argumentCount);
+	static Oop* __fastcall primitivePerform(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitivePerformThunk(Oop* const sp, primargcount_t argumentCount);
 	static Oop* __fastcall primitivePerformWithArgs(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitivePerformWithArgsThunk(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitivePerformMethod(Oop* const sp, primargcount_t argCount);
@@ -678,12 +678,12 @@ public:
 	static Oop* __fastcall primitiveSignalThunk(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveWait(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveWaitThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveResume(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitiveResumeThunk(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitiveYield(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitiveYieldThunk(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitiveSingleStep(Oop* const sp, unsigned argumentCount);
-	static Oop* __fastcall primitiveSingleStepThunk(Oop* const sp, unsigned argumentCount);
+	static Oop* __fastcall primitiveResume(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitiveResumeThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitiveYield(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitiveYieldThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitiveSingleStep(Oop* const sp, primargcount_t argumentCount);
+	static Oop* __fastcall primitiveSingleStepThunk(Oop* const sp, primargcount_t argumentCount);
 	static Oop* __fastcall primitiveSuspend(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveSuspendThunk(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveSetSignals(Oop* const sp, primargcount_t argCount);
