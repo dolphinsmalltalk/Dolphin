@@ -90,7 +90,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 		savedContext.m_stackPointer = m_registers.m_stackPointer-argCount;
 
 		int lastTrace=executionTrace;
-		if (traceFlag==TraceOff && unsigned(executionTrace) < 2)
+		if (traceFlag==TRACEFLAG::TraceOff && unsigned(executionTrace) < 2)
 			executionTrace=0;
 	#endif
 
@@ -188,7 +188,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 	m_registers.m_oopNewMethod = savedNewMethod;
 
 	#ifdef _DEBUG
-		if (traceFlag==TraceOff && executionTrace < 2)
+		if (traceFlag==TRACEFLAG::TraceOff && executionTrace < 2)
 			executionTrace=lastTrace;
 		ASSERT(actualActiveProcess() == callbackProcess);
 		ASSERT(returnFrame == m_registers.activeFrameOop());
@@ -406,7 +406,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 
 	pushObject((OTE*)Pointers.ClassSymbol);
 	pushNewObject((OTE*)Utf8String::New(name));
-	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
+	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TRACEFLAG::TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
 	ASSERT(symbolPointer->isNullTerminated());
@@ -530,7 +530,7 @@ LRESULT CALLBACK Interpreter::DolphinWndProc(HWND hWnd, UINT uMsg, WPARAM wParam
 		pushUnsigned32(lParam);
 
 		disableInterrupts(true);
-		Oop lResultOop = callback(Pointers.wndProcSelector, 4 TRACEARG(TraceOff));
+		Oop lResultOop = callback(Pointers.wndProcSelector, 4 TRACEARG(TRACEFLAG::TraceOff));
 
 		#ifdef _DEBUG
 			// Sanity check - remember that activeContext may be unwind block if error occurred
@@ -622,7 +622,7 @@ inline DWORD __stdcall Interpreter::GenericCallbackMain(SMALLINTEGER id, BYTE* l
 		// Add sizeof(DWORD*) to the stack pointer as it includes the return address for
 		// the call which invoked the function
 		pushUIntPtr(reinterpret_cast<UINT_PTR>(reinterpret_cast<DWORD*>(lpArgs)+1));
-		Oop oopAnswer = callback(Pointers.genericCallbackSelector, 2 TRACEARG(TraceOff));
+		Oop oopAnswer = callback(Pointers.genericCallbackSelector, 2 TRACEARG(TRACEFLAG::TraceOff));
 		result = callbackResultFromOop(oopAnswer);
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))
@@ -825,7 +825,7 @@ DWORD __fastcall Interpreter::VirtualCallbackMain(SMALLINTEGER offset, COMThunk*
 		pushSmallInteger(thisPtr->subId);
 		// Arguments are underneath thisPtr on stack
 		pushUIntPtr(reinterpret_cast<UINT_PTR>(args+1));
-		Oop oopAnswer = callback(Pointers.virtualCallbackSelector, 4 TRACEARG(Interpreter::TraceOff));
+		Oop oopAnswer = callback(Pointers.virtualCallbackSelector, 4 TRACEARG(TRACEFLAG::TraceOff));
 		result = callbackResultFromOop(oopAnswer);
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))

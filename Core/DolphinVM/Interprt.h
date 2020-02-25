@@ -34,7 +34,7 @@ using namespace ST;
 #ifdef _DEBUG
 	#define TRACEARG(x)	,(x)
 	#define	TRACEPARM	,TRACEFLAG traceFlag
-	#define TRACEDEFAULT	TRACEPARM=TraceOff
+	#define TRACEDEFAULT	TRACEPARM=TRACEFLAG::TraceOff
 	#define CHECKREFERENCESSP(sp)	Interpreter::checkReferences(sp)
 	#define CHECKREFERENCES	Interpreter::checkReferences(Interpreter::GetRegisters());
 	#define CHECKREFERENCESIF(x) { if (x) CHECKREFERENCES }
@@ -66,16 +66,16 @@ typedef volatile LONG SHAREDLONG;
 #define pop(number) (Interpreter::m_registers.m_stackPointer -=(number))
 #define popStack()	(*Interpreter::m_registers.m_stackPointer--)
 
+#ifdef _DEBUG
+enum class TRACEFLAG { TraceInherit, TraceOff, TraceForce };
+#endif
+
 class Interpreter
 {
 	friend class ObjectMemory; 
 	friend class BootLoader;
 
 public:
-	#ifdef _DEBUG
-		enum TRACEFLAG { TraceInherit, TraceOff, TraceForce };
-	#endif
-
 	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
 
 	// Fire off the startup message
