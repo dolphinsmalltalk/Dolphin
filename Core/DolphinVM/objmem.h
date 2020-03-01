@@ -122,7 +122,7 @@ public:
 	static void __fastcall oneWayBecome(OTE* firstPointer, OTE* secondPointer);
 
 	// GC support
-	static SMALLINTEGER OopsLeft();
+	static SmallInteger OopsLeft();
 	static int __fastcall OopsUsed();
 	static unsigned GetOTSize();
 	static size_t compact(Oop* const sp);
@@ -182,7 +182,7 @@ public:
 	static Oop* rootObjectPointers[];
 
 	enum GCFlags { GCNormal, GCNoWeakness };
-	static void asyncGC(DWORD flags, Oop* const sp);
+	static void asyncGC(uintptr_t flags, Oop* const sp);
 
 	static void markObject(OTE* ote);
 	static void MarkObjectsAccessibleFromRoot(OTE* ote);
@@ -213,7 +213,7 @@ public:
 #endif
 
 	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
-	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
+	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, size_t imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
@@ -254,8 +254,8 @@ public:
 		OTE*	m_pFreeList;
 
 #ifdef MEMSTATS
-		DWORD	m_nFree;
-		DWORD	m_nAllocated;
+		size_t	m_nFree;
+		size_t	m_nAllocated;
 
 		void	DumpStats();
 		void	registerNew(OTE* newOTE, BehaviorOTE* classPointer);
@@ -269,7 +269,7 @@ public:
 #endif
 		}
 
-		DWORD FreeCount();
+		size_t FreeCount();
 
 		void clear();
 
@@ -419,7 +419,7 @@ private:
 	// Garbage collection/Ref count checking
 	static BYTE WeaknessMask;
 	static MWORD lastStrongPointerOf(OTE* ote);
-	static void reclaimInaccessibleObjects(DWORD flags);
+	static void reclaimInaccessibleObjects(uintptr_t flags);
 	static void markObjectsAccessibleFrom(OTE* ote);
 	static void ClearGCInfo();
 	static OTEFlags nextMark();
@@ -463,8 +463,8 @@ public:			// Public Data
 
 	enum { dwOopsPerPage = dwPageSize/sizeof(Oop) };
 
-	static DWORD m_imageVersionMajor;	// MS part of image version number
-	static DWORD m_imageVersionMinor;	// LS part of image version number
+	static uint32_t m_imageVersionMajor;	// MS part of image version number
+	static uint32_t m_imageVersionMinor;	// LS part of image version number
 
 private:		// Private Data
 
@@ -898,12 +898,12 @@ inline void ObjectMemory::FixedSizePool::terminate()
 	m_pFreeChunks = 0;
 }
 
-inline DWORD ObjectMemory::OTEPool::FreeCount()
+inline size_t ObjectMemory::OTEPool::FreeCount()
 {
 	#ifdef MEMSTATS
 		return m_nFree;
 	#else
-		DWORD nFree = 0;
+		size_t nFree = 0;
 		OTE* ote = m_pFreeList;
 		while (ote)
 		{

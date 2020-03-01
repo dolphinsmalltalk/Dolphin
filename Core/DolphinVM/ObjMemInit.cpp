@@ -59,7 +59,7 @@ void ObjectMemory::FixedSizePool::Initialize()
 HRESULT ObjectMemory::Initialize()
 {
 	// Assembler will need to be modified if these are not the case
-	ASSERT(sizeof(MWORD) == sizeof(DWORD));
+	ASSERT(sizeof(MWORD) == sizeof(uint32_t));
 	ASSERT(sizeof(InstanceSpecification) == sizeof(MWORD));
 	ASSERT(sizeof(OTE) == 16);
 	ASSERT(sizeof(OTEFlags) == 1);
@@ -69,15 +69,15 @@ HRESULT ObjectMemory::Initialize()
 	ASSERT(OTEFlags::NumSpaces <= 8);
 	ASSERT(Context::FixedSize == 2);
 	ASSERT(BlockClosure::FixedSize == 5);
-	ASSERT(sizeof(BlockCopyExtension) == sizeof(DWORD));
-	ASSERT(PoolGranularity >= sizeof(DWORD));
-	ASSERT(_ROUND2(PoolGranularity,sizeof(DWORD)) == PoolGranularity);
+	ASSERT(sizeof(BlockCopyExtension) == sizeof(uint32_t));
+	ASSERT(PoolGranularity >= sizeof(MWORD));
+	ASSERT(_ROUND2(PoolGranularity,sizeof(MWORD)) == PoolGranularity);
 	//ASSERT(sizeof(Object) == ObjectHeaderSize*sizeof(MWORD));
 	ASSERT(sizeof(VMPointers) == (150*sizeof(Oop)+ObjectByteSize));
 	// Check that the const objects segment is still exactly one page
 	ASSERT((sizeof(VMPointers)
 			+ ((FirstCharacterIdx - FirstBuiltInIdx) * ObjectByteSize)
-			+ (sizeof(DWORD)*2)	// To round up the strings
+			+ (sizeof(uint32_t)*2)	// To round up the strings
 			+ (256 * sizeof(Character))
 			+ 2464	// Padding allocated in the assembler, see constobj.asm
 			) == dwPageSize);

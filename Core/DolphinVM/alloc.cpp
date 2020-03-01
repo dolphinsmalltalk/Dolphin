@@ -51,7 +51,7 @@ POBJECT ObjectMemory::allocLargeObject(MWORD objectSize, OTE*& ote)
 	++m_nLargeAllocated;
 #endif
 
-	POBJECT pObj = static_cast<POBJECT>(allocChunk(_ROUND2(objectSize, sizeof(DWORD))));
+	POBJECT pObj = static_cast<POBJECT>(allocChunk(_ROUND2(objectSize, sizeof(Oop))));
 
 	// allocateOop expects crit section to be used
 	ote = allocateOop(pObj);
@@ -62,7 +62,7 @@ POBJECT ObjectMemory::allocLargeObject(MWORD objectSize, OTE*& ote)
 
 inline POBJECT ObjectMemory::allocObject(MWORD objectSize, OTE*& ote)
 {
-	// Callers are expected to round requests to DWORD granularity
+	// Callers are expected to round requests to Oop granularity
 	if (objectSize > MaxSmallObjectSize)
 		return allocLargeObject(objectSize, ote);
 
@@ -165,7 +165,7 @@ Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* const stackPointer, unsi
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(stackPointer - 1));
 
 	Oop oopArg = (*stackPointer);
-	SMALLINTEGER count;
+	SmallInteger count;
 	if (isIntegerObject(oopArg) && (count = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
 	{
 		// Note that instantiateClassWithPointers counts up the class,
@@ -273,7 +273,7 @@ Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t)
 	Oop oopArg = (*sp);
 	// Unfortunately the compiler can't be persuaded to perform this using just the sar and conditional jumps on no-carry and signed;
 	// it generates both the bit test and the shift.
-	SMALLINTEGER size;
+	SmallInteger size;
 	if (isIntegerObject(oopArg) && (size = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
 	{
 		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
@@ -330,9 +330,6 @@ PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer
 
 PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD oops)
 {
-	// Total size must fit in a DWORD bits
-	ASSERT(oops < ((DWORD(1) << 30) - ObjectHeaderSize));
-
 	// Don't worry, compiler will not really use multiply instruction here
 	MWORD objectSize = SizeOfPointers(oops);
 	OTE* ote;
@@ -370,9 +367,8 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		if (Initialized)
 		{
 			// Byte objects are initialized to zeros (but not the header)
-			// Note that we round up to initialize to the next DWORD
-			// This can be useful when working on a 32-bit word machine
-			ZeroMemory(newBytes->m_fields, _ROUND2(elementCount, sizeof(DWORD)));
+			// Note that we round up to initialize to the next machine word
+			ZeroMemory(newBytes->m_fields, _ROUND2(elementCount, sizeof(Oop)));
 			classPointer->countUp();
 		}
 
@@ -414,9 +410,8 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		if (Initialized)
 		{
 			// Byte objects are initialized to zeros (but not the header)
-			// Note that we round up to initialize to the next DWORD
-			// This can be useful when working on a 32-bit word machine
-			ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(DWORD)));
+			// Note that we round up to initialize to the next machine word
+			ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(Oop)));
 			classPointer->countUp();
 		}
 		else
@@ -445,7 +440,7 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, primargcount_t)
 	Oop oopArg = (*sp);
 	if (isIntegerObject(oopArg))
 	{
-		SMALLINTEGER size = ObjectMemoryIntegerValueOf(oopArg);
+		SmallInteger size = ObjectMemoryIntegerValueOf(oopArg);
 		if (size >= 0)
 		{
 			InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
@@ -542,12 +537,12 @@ Oop* Interpreter::primitiveCopyFromTo(Oop* const sp, primargcount_t)
 	{
 		if (ObjectMemoryIsIntegerObject(oopFromArg))
 		{
-			SMALLINTEGER from = ObjectMemoryIntegerValueOf(oopFromArg);
-			SMALLINTEGER to = ObjectMemoryIntegerValueOf(oopToArg);
+			SmallInteger from = ObjectMemoryIntegerValueOf(oopFromArg);
+			SmallInteger to = ObjectMemoryIntegerValueOf(oopToArg);
 
 			if (from > 0)
 			{
-				SMALLINTEGER count = to - from + 1;
+				SmallInteger count = to - from + 1;
 				if (count >= 0)
 				{
 					OTE* oteAnswer = ObjectMemory::CopyElements(oteReceiver, from - 1, count);
@@ -615,11 +610,11 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp, primargcount_t)
 {
 	Oop maxArg = *sp;
-	SMALLINTEGER maxSize;
+	SmallInteger maxSize;
 	if (ObjectMemoryIsIntegerObject(maxArg) && (maxSize = ObjectMemoryIntegerValueOf(maxArg)) >= 0)
 	{
 		Oop initArg = *(sp - 1);
-		SMALLINTEGER initialSize;
+		SmallInteger initialSize;
 		if (ObjectMemoryIsIntegerObject(initArg) && (initialSize = ObjectMemoryIntegerValueOf(initArg)) >= 0)
 		{
 			BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp - 2));

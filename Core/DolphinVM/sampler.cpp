@@ -50,7 +50,7 @@ HRESULT Interpreter::InitializeSampler()
 	return S_OK;
 }
 
-HRESULT Interpreter::SetSampleTimer(SMALLINTEGER newInterval)
+HRESULT Interpreter::SetSampleTimer(SmallInteger newInterval)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 

@@ -37,7 +37,7 @@ template <typename Cmp, bool Lt> static Oop* __fastcall Interpreter::primitiveIn
 	{
 		Oop receiver = *(sp - 1);
 		// We can perform the comparisons without shifting away the SmallInteger bit since it always 1
-		*(sp - 1) = reinterpret_cast<Oop>(Cmp()(static_cast<SMALLINTEGER>(receiver), static_cast<SMALLINTEGER>(arg)) ? Pointers.True : Pointers.False);
+		*(sp - 1) = reinterpret_cast<Oop>(Cmp()(static_cast<SmallInteger>(receiver), static_cast<SmallInteger>(arg)) ? Pointers.True : Pointers.False);
 		return sp - 1;
 	}
 }

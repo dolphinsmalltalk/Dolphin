@@ -59,27 +59,27 @@ inline void Interpreter::pushNil()
 	push(Oop(Pointers.Nil));
 }
 
-inline void Interpreter::pushSmallInteger(SMALLINTEGER n)
+inline void Interpreter::pushSmallInteger(SmallInteger n)
 {
 	push(ObjectMemoryIntegerObjectOf(n));
 }
 
-inline void Interpreter::pushUnsigned32(DWORD dwValue)
+inline void Interpreter::pushUint32(uint32_t dwValue)
 {
 	pushNewObject(Integer::NewUnsigned32(dwValue));
 }
 
-inline void Interpreter::pushUIntPtr(UINT_PTR uptrValue)
+inline void Interpreter::pushUintPtr(uintptr_t uptrValue)
 {
 	pushNewObject(Integer::NewUIntPtr(uptrValue));
 }
 
-inline void Interpreter::pushSigned32(SDWORD lValue)
+inline void Interpreter::pushInt32(int32_t lValue)
 {
 	pushNewObject(Integer::NewSigned32(lValue));
 }
 
-inline void Interpreter::pushIntPtr(INT_PTR ptrValue)
+inline void Interpreter::pushIntPtr(intptr_t ptrValue)
 {
 	pushNewObject(Integer::NewIntPtr(ptrValue));
 }
@@ -157,7 +157,7 @@ struct StoreUnsigned32
 	// Intel version in assembler (see primitiv.cpp)
 	inline int __fastcall smalltalkMod(int numerator, int denominator)
 	{
-		SMALLINTEGER quotient = numerator/denominator;
+		SmallInteger quotient = numerator/denominator;
 		quotient = quotient - (quotient < 0 && quotient*denominator!=numerator);
 		return numerator - (quotient * denominator);
 	}
@@ -257,12 +257,12 @@ inline void Interpreter::queueForBereavementOf(OTE* ote, Oop argPointer)
 
 inline AddressOTE* ST::ExternalAddress::New(void* ptr)
 {
-	return reinterpret_cast<AddressOTE*>(Interpreter::NewDWORD(DWORD(ptr), Pointers.ClassExternalAddress));
+	return reinterpret_cast<AddressOTE*>(Interpreter::NewUint32(reinterpret_cast<uint32_t>(ptr), Pointers.ClassExternalAddress));
 }
 
 inline HandleOTE* ST::ExternalHandle::New(HANDLE hValue)
 {
-	return reinterpret_cast<HandleOTE*>(Interpreter::NewDWORD(DWORD(hValue), Pointers.ClassExternalHandle));
+	return reinterpret_cast<HandleOTE*>(Interpreter::NewUint32(reinterpret_cast<uint32_t>(hValue), Pointers.ClassExternalHandle));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

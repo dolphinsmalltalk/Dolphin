@@ -112,7 +112,7 @@ OTEFlags ObjectMemory::nextMark()
 	return oldMark;
 }
 
-void ObjectMemory::asyncGC(DWORD gcFlags, Oop* const sp)
+void ObjectMemory::asyncGC(uintptr_t gcFlags, Oop* const sp)
 {
 	EmptyZct(sp);
 	reclaimInaccessibleObjects(gcFlags);
@@ -121,7 +121,7 @@ void ObjectMemory::asyncGC(DWORD gcFlags, Oop* const sp)
 	Interpreter::scheduleFinalization();
 }
 
-void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
+void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 {
 	// Assign flags to static, as we use some deeply recursive routines
 	// and we don't want to pass down to the depths. When we want to turn off
@@ -220,7 +220,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			if (((oteFlags & (OTEFlags::WeakMask | OTEFlags::FreeMask)) == OTEFlags::WeakMask)
 				&& (((oteFlags ^ curMark) & (OTEFlags::MarkMask | OTEFlags::FinalizeMask)) != OTEFlags::MarkMask))
 			{
-				SMALLINTEGER losses = 0;
+				SmallInteger losses = 0;
 				PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 				const MWORD size = otePointers->pointersSize();
 				VariantObject* weakObj = otePointers->m_location;
@@ -237,7 +237,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 						{
 #if defined(_DEBUG) && 0
 							TRACESTREAM<< L"Weakling " << ote<< L" loses reference to freed object " <<
-								(UINT)fieldOTE<< L"/" << indexOfObject(fieldOTE) << std::endl;
+								(uintptr_t)fieldOTE<< L"/" << indexOfObject(fieldOTE) << std::endl;
 #endif
 
 							weakObj->m_fields[j] = corpse;
@@ -250,7 +250,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 							// just in case it is in (or will be in) the finalization queue
 #if defined(_DEBUG) && 0
 							TRACESTREAM<< L"Weakling " << ote<< L" loses reference to " <<
-								fieldOTE<< L"(" << (UINT)fieldOTE<< L"/" << indexOfObject(fieldOTE)<< L" refs " <<
+								fieldOTE<< L"(" << (uintptr_t)fieldOTE<< L"/" << indexOfObject(fieldOTE)<< L" refs " <<
 								int(ote->m_flags.m_count)<< L")" << std::endl;
 #endif	
 							fieldOTE->decRefs();
@@ -268,7 +268,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 #ifdef _DEBUG
 					{
 						tracelock lock(TRACESTREAM);
-						TRACESTREAM<< L"Weakling: " << ote<< L" (" << std::hex << UINT(ote)<< L") lost " << std::dec << losses << L" elements" << std::endl;
+						TRACESTREAM<< L"Weakling: " << ote<< L" (" << std::hex << reinterpret_cast<uintptr_t>(ote)<< L") lost " << std::dec << losses << L" elements" << std::endl;
 					}
 #endif
 					// We must also ensure that it and its referenced objects are marked since we're

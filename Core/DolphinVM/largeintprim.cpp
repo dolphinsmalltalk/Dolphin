@@ -78,7 +78,7 @@ inline static uint32_t highBit(uint32_t value)
 // value would fit in a SmallInteger, this routine will still answer a LargeInteger).
 LargeIntegerOTE* __fastcall LargeInteger::liNewSigned32(int32_t value)
 {
-	LargeIntegerOTE* oteR = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewDWORD(value, Pointers.ClassLargeInteger));
+	LargeIntegerOTE* oteR = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewUint32(value, Pointers.ClassLargeInteger));
 	oteR->beImmutable();
 	return oteR;
 }
@@ -103,7 +103,7 @@ LargeIntegerOTE* __fastcall LargeInteger::liNewUnsigned(uint32_t value)
 		large->m_digits[0] = value;
 	}
 	else
-		oteLarge = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewDWORD(value, Pointers.ClassLargeInteger));
+		oteLarge = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewUint32(value, Pointers.ClassLargeInteger));
 
 	oteLarge->beImmutable();
 	return oteLarge;
@@ -402,7 +402,7 @@ Oop __stdcall negateIntermediateResult(Oop oopInteger)
 {
 	if (ObjectMemoryIsIntegerObject(oopInteger))
 	{
-		SMALLINTEGER intValue = ObjectMemoryIntegerValueOf(oopInteger);
+		SmallInteger intValue = ObjectMemoryIntegerValueOf(oopInteger);
 		return Integer::NewSigned32(-intValue);
 	}
 	else
@@ -425,7 +425,7 @@ Oop __stdcall negateIntermediateResult(Oop oopInteger)
 // liAddSingle - LargeInteger Single-precision Add
 //	Add a 32-bit Integer to a multi-limbed integer
 //
-LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand)
+LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteLI, const SmallInteger operand)
 {
 	ASSERT(operand != 0);
 
@@ -530,7 +530,7 @@ LargeIntegerOTE* LargeInteger::Add(const LargeIntegerOTE* oteOp1, const LargeInt
 //	This is easy and fast (a ripple carry with special treatment for the sign digit)
 //
 
-LargeIntegerOTE* LargeInteger::Sub(const LargeIntegerOTE* oteLI, SMALLINTEGER operand)
+LargeIntegerOTE* LargeInteger::Sub(const LargeIntegerOTE* oteLI, SmallInteger operand)
 {
 	const uint32_t* const digits = oteLI->m_location->m_digits;
 	const MWORD differenceSize = oteLI->getWordSize();
@@ -631,7 +631,7 @@ LargeIntegerOTE* LargeInteger::Sub(const LargeIntegerOTE* oteLI, const LargeInte
 //
 // Multiply a LargeInteger by a SmallInteger. Optimized for this most common case
 //
-Oop LargeInteger::Mul(const LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit)
+Oop LargeInteger::Mul(const LargeIntegerOTE* oteInner, SmallInteger outerDigit)
 {
 	ASSERT(outerDigit != 0);
 
@@ -819,7 +819,7 @@ Oop LargeInteger::Mul(const LargeInteger* liOuter, const MWORD outerSize, const 
 //	Answer the quotient and remainder resulting from dividing the first LargeInteger argument
 //	by the seond single precision integer argument
 
-liDiv_t __stdcall liDivSingleUnsigned(const LargeIntegerOTE* oteLI, SMALLUNSIGNED v)
+liDiv_t __stdcall liDivSingleUnsigned(const LargeIntegerOTE* oteLI, SmallUinteger v)
 {
 	// v could be 1 greater than MaxSmallInteger as may be negated MinSmallInteger
 	_ASSERTE(v <= 0x40000000);
@@ -852,7 +852,7 @@ liDiv_t __stdcall liDivSingleUnsigned(const LargeIntegerOTE* oteLI, SMALLUNSIGNE
 }
 
 
-liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
+liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SmallInteger v)
 {
 	// Remainder will be SmallInteger, quotient is (potentially) unnormalized LI
 
@@ -872,8 +872,8 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 		// 32-bit / 32-bit, optimized case
 		int32_t ui = liU->m_digits[0];
 		// VS2017 compiler recognises divide and mod sequence as needing only a single idiv
-		SMALLINTEGER quot = ui / v;
-		SMALLINTEGER rem = ui % v;
+		SmallInteger quot = ui / v;
+		SmallInteger rem = ui % v;
 		Oop oopQuo = LargeInteger::NewSigned32(quot);
 		_ASSERTE(ObjectMemoryIsIntegerValue(rem));
 		return { oopQuo, ObjectMemoryIntegerObjectOf(rem) };
@@ -921,7 +921,7 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 				// is one less than absolute value of minimum SmallInteger, i.e. 
 				// maximum SmallInteger.
 				_ASSERTE(ObjectMemoryIsIntegerObject(quoAndRem.rem));
-				SMALLINTEGER rem = ObjectMemoryIntegerValueOf(quoAndRem.rem);
+				SmallInteger rem = ObjectMemoryIntegerValueOf(quoAndRem.rem);
 				quoAndRem.rem = ObjectMemoryIntegerObjectOf(-rem);
 			}
 			else
@@ -935,7 +935,7 @@ liDiv_t LargeInteger::Divide(const LargeIntegerOTE* oteU, SMALLINTEGER v)
 				Oop oopRem = quoAndRem.rem;
 				_ASSERTE(ObjectMemoryIsIntegerObject(oopRem));
 
-				SMALLINTEGER intValue = ObjectMemoryIntegerValueOf(oopRem);
+				SmallInteger intValue = ObjectMemoryIntegerValueOf(oopRem);
 				// As negative SmallInteger range is larger, negated must still be small
 				intValue = -intValue;
 				_ASSERTE(ObjectMemoryIsIntegerValue(intValue));
@@ -1468,7 +1468,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp, primargc
 
 	if (ObjectMemoryIsIntegerObject(oopV))
 	{
-		SMALLINTEGER v = ObjectMemoryIntegerValueOf(oopV);
+		SmallInteger v = ObjectMemoryIntegerValueOf(oopV);
 		quoAndRem = LargeInteger::Divide(oteU, v);
 	}
 	else
@@ -1515,7 +1515,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuo(Oop* const sp, primargcoun
 
 	if (ObjectMemoryIsIntegerObject(oopV))
 	{
-		SMALLINTEGER v = ObjectMemoryIntegerValueOf(oopV);
+		SmallInteger v = ObjectMemoryIntegerValueOf(oopV);
 		quoAndRem = LargeInteger::Divide(oteU, v);
 	}
 	else
@@ -1685,7 +1685,7 @@ Oop LargeInteger::BitAnd(const LargeIntegerOTE* oteA, const LargeIntegerOTE* ote
 }
 
 // Optimized version for common case of multi-precision receiver and single-precision mask.
-Oop LargeInteger::BitAnd(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
+Oop LargeInteger::BitAnd(const LargeIntegerOTE* oteA, SmallInteger mask)
 {
 	if (mask >= 0)
 	{
@@ -1694,7 +1694,7 @@ Oop LargeInteger::BitAnd(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
 		// bitAnd with positive SmallInteger
 		// Only the low-limb need be considered and the result must be a positive SmallInteger
 
-		SMALLINTEGER result = oteA->m_location->m_digits[0] & static_cast<uint32_t>(mask);
+		SmallInteger result = oteA->m_location->m_digits[0] & static_cast<uint32_t>(mask);
 		ASSERT(ObjectMemoryIsIntegerValue(result));
 		return ObjectMemoryIntegerObjectOf(result);
 	}
@@ -1800,7 +1800,7 @@ LargeIntegerOTE* LargeInteger::BitOr(const LargeIntegerOTE* oteA, const LargeInt
 
 
 // Optimized version for common case of multi-precision receiver and single-precision mask.
-LargeIntegerOTE* LargeInteger::BitOr(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
+LargeIntegerOTE* LargeInteger::BitOr(const LargeIntegerOTE* oteA, SmallInteger mask)
 {
 	const uint32_t* digitsA = oteA->m_location->m_digits;
 	const MWORD aSize = oteA->getWordSize();
@@ -1904,7 +1904,7 @@ LargeIntegerOTE* LargeInteger::BitXor(const LargeIntegerOTE* oteA, const LargeIn
 }
 
 // Optimized version for common case of multi-precision receiver and single-precision mask.
-LargeIntegerOTE* LargeInteger::BitXor(const LargeIntegerOTE* oteA, SMALLINTEGER mask)
+LargeIntegerOTE* LargeInteger::BitXor(const LargeIntegerOTE* oteA, SmallInteger mask)
 {
 	const uint32_t* digitsA = oteA->m_location->m_digits;
 	const MWORD aSize = oteA->getWordSize();
@@ -1950,7 +1950,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp, primar
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 	{
-		SMALLINTEGER shift = ObjectMemoryIntegerValueOf(argPointer);
+		SmallInteger shift = ObjectMemoryIntegerValueOf(argPointer);
 		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));
 
 		if (shift < 0)

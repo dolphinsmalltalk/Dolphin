@@ -31,8 +31,8 @@ enum {
 OTE** ObjectMemory::m_pZct;
 int ObjectMemory::m_nZctEntries;
 int ObjectMemory::m_nZctHighWater;
-static DWORD ZctMinSize;
-static DWORD ZctReserve;
+static uint32_t ZctMinSize;
+static uint32_t ZctReserve;
 bool ObjectMemory::m_bIsReconcilingZct;
 
 #ifdef _DEBUG
@@ -59,7 +59,7 @@ HRESULT ObjectMemory::InitializeZct()
 		DWORD dwValue;
 		if (rkDump.QueryDWORDValue(L"ZMax", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINRESERVE)
 			ZctReserve = dwValue;
-		if (rkDump.QueryDWORDValue(L"ZMin", ZctMinSize) == ERROR_SUCCESS && dwValue > ZCTMINSIZE &&
+		if (rkDump.QueryDWORDValue(L"ZMin", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINSIZE &&
 			dwValue < ZctReserve)
 			ZctMinSize = dwValue;
 	}
@@ -302,7 +302,7 @@ void ObjectMemory::DumpZct()
 	TRACESTREAM<< L"===========================================================" << std::endl;
 
 	for (int i = 0; i < m_nZctEntries; i++)
-		TRACESTREAM << std::dec << i<< L": " << std::hex << (DWORD)m_pZct[i]<< L": " << m_pZct[i] << std::endl;
+		TRACESTREAM << std::dec << i<< L": " << std::hex << (uintptr_t)m_pZct[i]<< L": " << m_pZct[i] << std::endl;
 
 	TRACESTREAM<< L"===========================================================" << std::endl;
 }

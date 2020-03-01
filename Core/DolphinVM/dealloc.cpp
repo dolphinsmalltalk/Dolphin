@@ -74,7 +74,7 @@ void ObjectMemory::deallocate(OTE* ote)
 		if (Interpreter::executionTrace)
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << ote<< L" (" << std::hex << (UINT)ote<< L"), refs " << std::dec << (int)ote->m_count<< L", is being deallocated" << std::endl;
+			TRACESTREAM << ote<< L" (" << std::hex << (uintptr_t)ote<< L"), refs " << std::dec << (int)ote->m_count<< L", is being deallocated" << std::endl;
 		}
 	#endif
 

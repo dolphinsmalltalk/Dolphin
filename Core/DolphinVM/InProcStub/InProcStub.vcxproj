@@ -263,7 +263,6 @@
       <PrecompiledHeader />
       <ObjectFileName>$(IntDir)%(Filename)1.obj</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="CoWait.cpp" />
     <ClCompile Include="InProcPlugHole.cpp" />
     <ClCompile Include="InProcStub.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -286,7 +285,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\regkey.h" />
-    <ClInclude Include="CoWait.h" />
     <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />
     <ClInclude Include="resource.h" />

@@ -184,9 +184,9 @@ public:
 };
 
 #define isIntegerObject(objectPointer)	(Oop(objectPointer) & 1)
-#define integerObjectOf(value) 			(Oop(((SMALLINTEGER)(value) << 1) | 1))
-#define integerValueOf(objectPointer) 	(SMALLINTEGER(objectPointer) >> 1)
-#define isIntegerValue(valueWord)		((SMALLINTEGER(valueWord) ^ (SMALLINTEGER(valueWord)<<1)) >= 0)
+#define integerObjectOf(value) 			(Oop(((SmallInteger)(value) << 1) | 1))
+#define integerValueOf(objectPointer) 	(SmallInteger(objectPointer) >> 1)
+#define isIntegerValue(valueWord)		((SmallInteger(valueWord) ^ (SmallInteger(valueWord)<<1)) >= 0)
 //#define isIntegerValue(valueWord)		(SMALLINTEGER(valueWord) >= MinSmallInteger && SMALLINTEGER(valueWord) <= MaxSmallInteger)
 #define isPositiveIntegerValue(valueWord) ((MWORD)(valueWord) <= MaxSmallInteger)
 

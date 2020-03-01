@@ -4,7 +4,6 @@
 #include "InprocStub.h"
 #include "InProcPlugHole.h"
 #include "..\startVM.h"
-#include "cowait.h"
 
 #ifdef _DEBUG
 	const int SecondsToWait = IsDebuggerPresent() ? 300 : 60;
@@ -46,7 +45,7 @@ void CInProcPlugHole::WaitForPeerToStart() const
 	// New Win2000 CoWaitForMultipleHandles is ideal here...
 
 	DWORD dwIndex;
-	HRESULT hr = MyCoWaitForMultipleHandles(0, SecondsToWait*1000, numHandles, aHandles, &dwIndex);
+	HRESULT hr = ::CoWaitForMultipleHandles(0, SecondsToWait*1000, numHandles, aHandles, &dwIndex);
 
 	#ifdef _DEBUG
 	{
@@ -167,7 +166,7 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 	if (m_hDolphinThread)
 	{
 		DWORD dwDummy;
-		HRESULT hr = MyCoWaitForMultipleHandles(0, SecondsToWait*1000, 1, &m_hDolphinThread, &dwDummy);
+		HRESULT hr = ::CoWaitForMultipleHandles(0, SecondsToWait*1000, 1, &m_hDolphinThread, &dwDummy);
 		if (SUCCEEDED(hr))
 		{
 			::GetExitCodeThread(m_hDolphinThread, &dwExitCode);
@@ -187,7 +186,7 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 	return dwExitCode;
 }
 
-void CInProcPlugHole::SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, DWORD imageSize)
+void CInProcPlugHole::SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, size_t imageSize)
 {
 	wcscpy(achImagePath, szImagePath);
 	m_pImageData = imageData;
@@ -213,12 +212,12 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 			wchar_t szKey[5+1+38+1+5+1] = L"CLSID\\";
 			wcscat(szKey, wszCLSID);
 			wcscat(szKey, L"\\Image");
-			_ASSERTE(wcslen(szKey) < sizeof(szKey));
+			_ASSERTE(wcslen(szKey) < _countof(szKey));
 			CRegKey rKey;
 			if (ERROR_SUCCESS == rKey.Open(HKEY_CLASSES_ROOT, szKey))
 			{
-				DWORD dwChars = _MAX_PATH;
-				rKey.QueryStringValue(L"", achImagePath, &dwChars);
+				ULONG nChars = _MAX_PATH;
+				rKey.QueryStringValue(L"", achImagePath, &nChars);
 			}
 			CoTaskMemFree(wszCLSID);
 		}

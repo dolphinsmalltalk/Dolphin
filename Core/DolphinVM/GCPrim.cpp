@@ -58,13 +58,13 @@ void Interpreter::NotifyOTOverflow()
 	}
 }
 
-void Interpreter::syncGC(DWORD gcFlags)
+void Interpreter::syncGC(uintptr_t gcFlags)
 {
 	asyncGC(gcFlags);
 	CheckProcessSwitch();
 }
 
-void Interpreter::asyncGC(DWORD gcFlags)
+void Interpreter::asyncGC(uintptr_t gcFlags)
 {
 	if (m_bAsyncGCDisabled)
 	{
@@ -95,7 +95,7 @@ Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t ar
 {
 	CHECKREFERENCESSP(sp);
 
-	DWORD gcFlags = 0;
+	uintptr_t gcFlags = 0;
 	if (argCount)
 	{
 		ASSERT(argCount == 1);
@@ -175,7 +175,7 @@ Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp, primargcount_t)
 	// so any that are saved down in Smalltalk will be invalidated.
 	GrabAsyncProtect();
 	// It is OK for compact to perform additional GrabAsyncProtects()
-	SMALLINTEGER oopsLeft = ObjectMemory::compact(sp);
+	SmallInteger oopsLeft = ObjectMemory::compact(sp);
 	RelinquishAsyncProtect();
 
 	// compact() returns -1 if unable to reserve space for a new OT. This can happen

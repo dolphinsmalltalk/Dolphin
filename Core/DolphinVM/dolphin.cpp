@@ -127,7 +127,7 @@ static long __stdcall unhandledExceptionFilter(EXCEPTION_POINTERS *pExceptionInf
 	return lpTopFilter ? lpTopFilter(pExceptionInfo) : EXCEPTION_CONTINUE_SEARCH;
 }
 
-static HRESULT DolphinInit(LPCWSTR szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
+static HRESULT DolphinInit(LPCWSTR szFileName, LPVOID imageData, size_t imageSize, bool isDevSys)
 {
 	// Find the fileName of the image to load by the VM
 	wcsncpy_s(achImagePath, szFileName, _MAX_PATH);
@@ -176,9 +176,9 @@ static void __cdecl invalidParameterHandler(
 
 #ifndef BOOT
 
-void DolphinRun(DWORD dwArg)
+void DolphinRun(uintptr_t arg)
 {
-	Interpreter::sendStartup(achImagePath, dwArg);
+	Interpreter::sendStartup(achImagePath, arg);
 
 	// Start the interpreter (should not return here)
 	__try
@@ -210,7 +210,7 @@ static inline void DolphinInitInstance()
 	InitializeVtbl();
 }
 HRESULT APIENTRY VMInit(LPCWSTR szImageName,
-					LPVOID imageData, UINT imageSize,
+					LPVOID imageData, size_t imageSize,
 					DWORD flags)
 {
 	if (imageData == NULL || imageSize == 0)
@@ -228,9 +228,9 @@ HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 
 #endif
 
-int APIENTRY VMRun(DWORD dwArg)
+int APIENTRY VMRun(uintptr_t arg)
 {
-	extern void DolphinRun(DWORD dwArg);
+	extern void DolphinRun(uintptr_t arg);
 
 	int exitCode = 0;
 	EXCEPTION_RECORD exRec = { 0 };
@@ -240,7 +240,7 @@ int APIENTRY VMRun(DWORD dwArg)
 
 	__try
 	{
-		DolphinRun(dwArg);
+		DolphinRun(arg);
 	}
 	__except (vmmainFilter(GetExceptionInformation(), exRec))
 	{

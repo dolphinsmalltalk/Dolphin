@@ -686,7 +686,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 					lpszHTMLText = buf;
 				}
 
-				UINT nCreateSize = ocslen(lpszHTMLText) * sizeof(OLECHAR);
+				size_t nCreateSize = ocslen(lpszHTMLText) * sizeof(OLECHAR);
 				HGLOBAL hGlobal = GlobalAlloc(GHND, nCreateSize);
 				if (hGlobal)
 				{

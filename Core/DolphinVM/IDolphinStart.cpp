@@ -38,7 +38,7 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 	LPCWSTR fileName, LPVOID imageData, UINT imageSize,
 	DWORD dwFlags)
 {
-	HRESULT APIENTRY VMInit(LPCWSTR szImageName, LPVOID, UINT, DWORD);
+	HRESULT APIENTRY VMInit(LPCWSTR szImageName, LPVOID, size_t, DWORD);
 
 	if (hInstance == NULL)
 		return E_INVALIDARG;
@@ -56,13 +56,13 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 }
 STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
 {
-	extern int APIENTRY VMRun(DWORD);
+	extern int APIENTRY VMRun(uintptr_t);
 
 	piVM = this;
 	
 	Lock();
 
-	HRESULT hr = VMRun(reinterpret_cast<DWORD>(punkOuter));
+	HRESULT hr = VMRun(reinterpret_cast<uintptr_t>(punkOuter));
 
 	Unlock();
 

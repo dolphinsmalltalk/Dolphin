@@ -11,9 +11,9 @@
 #include "ImageFileResource.h"
 
 HRESULT __stdcall VMEntry(HINSTANCE hInstance, 
-					LPVOID imageData, UINT imageSize, LPCWSTR fileName, IUnknown* punkOuter, CLSCTX dwClsContext,
+					LPVOID imageData, UINT imageSize, LPCWSTR fileName, IUnknown* punkOuter, CLSCTX clsContext,
 					HANDLE& hThread);
-HRESULT __stdcall CreateVM(DWORD, const CLSID*, LPCWSTR, const IID&, void**);
+HRESULT __stdcall CreateVM(CLSCTX, const CLSID*, LPCWSTR, const IID&, void**);
 
 // To start an application from an embedded image
 HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId);

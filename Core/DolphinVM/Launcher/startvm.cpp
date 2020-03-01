@@ -55,7 +55,7 @@ static HRESULT LoadAndCreateVM(const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& 
 
 /////////////////////////////////////////////////////////////////////
 
-HRESULT __stdcall CreateVM(DWORD dwClsContext, const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& iid, void** ppiDolphin)
+HRESULT __stdcall CreateVM(CLSCTX clsContext, const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& iid, void** ppiDolphin)
 {
 	HRESULT hr;
 
@@ -82,7 +82,7 @@ HRESULT __stdcall CreateVM(DWORD dwClsContext, const CLSID* pVMCLSID, LPCWSTR ps
 		}
 	}
 
-	hr = ::CoCreateInstance(pVMCLSID?*pVMCLSID:__uuidof(DolphinSmalltalk), NULL, dwClsContext, 
+	hr = ::CoCreateInstance(pVMCLSID?*pVMCLSID:__uuidof(DolphinSmalltalk), NULL, clsContext, 
 							iid, ppiDolphin);
 	if (SUCCEEDED(hr))
 		return hr;

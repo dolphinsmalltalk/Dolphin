@@ -44,8 +44,8 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 	if (ObjectMemoryIsIntegerObject(readStream->m_index) && ObjectMemoryIsIntegerObject(readStream->m_readLimit))
 	{
 
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(readStream->m_index);
-		SMALLINTEGER limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
+		SmallInteger index = ObjectMemoryIntegerValueOf(readStream->m_index);
+		SmallInteger limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
 
 		if (index >= 0 && index < limit)
 		{
@@ -78,9 +78,9 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 					{
 						const Utf8String::CU* psz = reinterpret_cast<Utf8StringOTE*>(oteBuf)->m_location->m_characters;
 
-						SMALLINTEGER codePoint;
+						SmallInteger codePoint;
 						// The macro (from icucommon.h) advances the index as well as calculating the code point
-						U8_NEXT(psz, index, static_cast<SMALLINTEGER>(size), codePoint);
+						U8_NEXT(psz, index, static_cast<SmallInteger>(size), codePoint);
 
 						if (U_IS_UNICODE_CHAR(codePoint))
 						{
@@ -105,7 +105,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 					if (MWORD(index) < size / sizeof(Utf16String::CU))
 					{
 						const Utf16String::CU* pwsz = oteString->m_location->m_characters;
-						SMALLINTEGER codePoint;
+						SmallInteger codePoint;
 						// The macro (from icucommon.h) advances the index as well as calculating the code point
 						U16_NEXT(pwsz, index, size, codePoint);
 
@@ -198,8 +198,8 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 	// Ensure valid stream
 	if (ObjectMemoryIsIntegerObject(writeStream->m_index) && ObjectMemoryIsIntegerObject(writeStream->m_writeLimit))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(writeStream->m_index);
-		SMALLINTEGER limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
+		SmallInteger index = ObjectMemoryIntegerValueOf(writeStream->m_index);
+		SmallInteger limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
 
 		// Within the bounds of the limit?
 		if (index >= 0 && index < limit)
@@ -608,8 +608,8 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 	if (ObjectMemoryIsIntegerObject(readStream->m_index) && ObjectMemoryIsIntegerObject(readStream->m_readLimit))
 	{
 
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(readStream->m_index);
-		SMALLINTEGER limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
+		SmallInteger index = ObjectMemoryIntegerValueOf(readStream->m_index);
+		SmallInteger limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
 
 		if (index >= 0 && index < limit)
 		{
@@ -696,8 +696,8 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, primargcount_t
 		// If the position or limits have overflowed SmallInteger range, then the primitive can't handle the request
 		if (ObjectMemoryIsIntegerObject(writeStream->m_index) && ObjectMemoryIsIntegerObject(writeStream->m_writeLimit))
 		{
-			SMALLINTEGER index = ObjectMemoryIntegerValueOf(writeStream->m_index);
-			SMALLINTEGER limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
+			SmallInteger index = ObjectMemoryIntegerValueOf(writeStream->m_index);
+			SmallInteger limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
 			OTE* oteBuf = writeStream->m_array;
 
 			if (oteBuf->isBytes())
@@ -790,8 +790,8 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 	// If the position or limits have overflowed SmallInteger range, then the primitive can't handle the request
 	if (ObjectMemoryIsIntegerObject(writeStream->m_index) && ObjectMemoryIsIntegerObject(writeStream->m_writeLimit))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(writeStream->m_index);
-		SMALLINTEGER limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
+		SmallInteger index = ObjectMemoryIntegerValueOf(writeStream->m_index);
+		SmallInteger limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
 
 		if (index >= 0)
 		{
@@ -889,7 +889,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						// UTF-8, Utf16 => UTF-8
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
-						MWORD cwchArg = oteStringArg->getSize() / sizeof(WCHAR);
+						MWORD cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
 						int cbArg = ::WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)pArgChars, cwchArg, nullptr, 0, nullptr, nullptr);
 						ASSERT(cbArg >= 0);
 						MWORD valueSize = cbArg;
@@ -955,7 +955,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteUtf16String = reinterpret_cast<Utf16StringOTE*>(oteStringArg);
 						auto str = oteUtf16String->m_location;
 
-						MWORD valueSize = oteUtf16String->bytesSize()/sizeof(WCHAR);
+						MWORD valueSize = oteUtf16String->bytesSize()/sizeof(Utf16String::CU);
 						newIndex = MWORD(index) + valueSize;
 
 						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
@@ -965,7 +965,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
-						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(WCHAR));
+						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(Utf16String::CU));
 					}
 					break;
 					default:
@@ -1072,7 +1072,7 @@ Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp, primargcount_t)
 
 // This primitive handles PositionableStream>>nextSDWORD, but only for byte-arrays
 // Unary message, so does not modify stack pointer
-Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp, primargcount_t)
+Oop* __fastcall Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
 {
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	PositionableStream* readStream = streamPointer->m_location;
@@ -1083,8 +1083,8 @@ Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp, primargcount_t)
 		!ObjectMemoryIsIntegerObject(readStream->m_readLimit))
 		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);	// Receiver fails invariant check
 
-	SMALLINTEGER index = ObjectMemoryIntegerValueOf(readStream->m_index);
-	SMALLINTEGER limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
+	SmallInteger index = ObjectMemoryIntegerValueOf(readStream->m_index);
+	SmallInteger limit = ObjectMemoryIntegerValueOf(readStream->m_readLimit);
 
 	// Is the current index within the limits of the collection?
 	// Remember that the index is 1 based (it's a Smalltalk index), and we're 0 based,

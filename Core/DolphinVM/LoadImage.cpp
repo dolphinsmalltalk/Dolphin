@@ -55,7 +55,7 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 		: ReportError(IDP_UNKNOWNIMAGEERROR);
 }
 
-HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
+HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, size_t imageSize, bool isDevSys)
 {
 #ifdef PROFILE_IMAGELOADSAVE
 	TRACESTREAM<< L"Loading image '" << szImageName << std::endl;
@@ -68,7 +68,7 @@ HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UI
 
 	BYTE* pImageBytes = static_cast<BYTE*>(imageData);
 	ImageHeader* pHeader = reinterpret_cast<ImageHeader*>(pImageBytes + sizeof(ISTHDRTYPE));
-	int offset = sizeof(ISTHDRTYPE) + sizeof(ImageHeader);
+	ptrdiff_t offset = sizeof(ISTHDRTYPE) + sizeof(ImageHeader);
 
 	if (pHeader->flags.bIsCompressed)
 	{
@@ -382,10 +382,10 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 		VariantObject* obj = otePointers->m_location;
 
-		const SMALLUNSIGNED numFields = ote->pointersSize();
-		ASSERT(SMALLINTEGER(numFields) >= 0);
+		const SmallUinteger numFields = ote->pointersSize();
+		ASSERT(SmallInteger(numFields) >= 0);
 		// Fixup all the Oops
-		for (SMALLUNSIGNED i = 0; i < numFields; i++)
+		for (SmallUinteger i = 0; i < numFields; i++)
 		{
 			Oop instPointer = obj->m_fields[i];
 			if (!isIntegerObject(instPointer))
@@ -506,8 +506,8 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		// The size of the process should exactly correspond with that required to
 		// hold up to the SP of the suspended frame
 		StackFrame* pFrame = StackFrame::FromFrameOop(framePointer);
-		int size = (pFrame->m_sp - 1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
-		if (size > 0 && unsigned(size) < oteThis->getSize())
+		ptrdiff_t size = (pFrame->m_sp - 1) - reinterpret_cast<uintptr_t>(this) + sizeof(Oop);
+		if (size > 0 && static_cast<size_t>(size) < oteThis->getSize())
 		{
 			TRACE(L"WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
 			oteThis->setSize(size);

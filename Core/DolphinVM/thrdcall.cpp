@@ -219,10 +219,10 @@ void OverlappedCall::compact()
 }
 
 // Queue an APC to the main interpreter thread
-bool Interpreter::QueueAPC(PAPCFUNC pfnAPC, DWORD dwClosure)
+bool Interpreter::QueueAPC(PAPCFUNC pfnAPC, ULONG_PTR closure)
 {
 	HANDLE hMain = MainThreadHandle();
-	if (hMain && ::QueueUserAPC(pfnAPC, hMain, dwClosure))
+	if (hMain && ::QueueUserAPC(pfnAPC, hMain, closure))
 	{
 		InterlockedIncrement(&m_nAPCsPending);
 
@@ -244,23 +244,23 @@ void Interpreter::BeginAPC()
 	InterlockedDecrement(&m_nAPCsPending);
 }
 
-OverlappedCallPtr OverlappedCall::BeginMainThreadAPC(DWORD dwParam)
+OverlappedCallPtr OverlappedCall::BeginMainThreadAPC(ULONG_PTR param)
 {
 	Interpreter::BeginAPC();
-	return BeginAPC(dwParam);
+	return BeginAPC(param);
 }
 
-OverlappedCallPtr OverlappedCall::BeginAPC(DWORD dwParam)
+OverlappedCallPtr OverlappedCall::BeginAPC(ULONG_PTR param)
 {
 	// Assume ref. from the APC queue, will Release() when goes out of scope
-	return OverlappedCallPtr(reinterpret_cast<OverlappedCall*>(dwParam), false);
+	return OverlappedCallPtr(reinterpret_cast<OverlappedCall*>(param), false);
 }
 
 // Queue an APC to the main interpreter thread
 bool OverlappedCall::QueueForInterpreter(PAPCFUNC pfnAPC)
 {
 	AddRef();	// Reference we are about to create from main threads APC queue
-	if (Interpreter::QueueAPC(pfnAPC, reinterpret_cast<DWORD>(this)))
+	if (Interpreter::QueueAPC(pfnAPC, reinterpret_cast<ULONG_PTR>(this)))
 		return true;
 	else
 	{
@@ -273,7 +273,7 @@ bool OverlappedCall::QueueForInterpreter(PAPCFUNC pfnAPC)
 bool OverlappedCall::QueueForMe(PAPCFUNC pfnAPC)
 {
 	AddRef();	// Ref we are about to create from the APC queue
-	if (m_hThread && ::QueueUserAPC(pfnAPC, m_hThread, reinterpret_cast<DWORD>(this)))
+	if (m_hThread && ::QueueUserAPC(pfnAPC, m_hThread, reinterpret_cast<ULONG_PTR>(this)))
 		return true;
 	else
 	{
@@ -294,7 +294,7 @@ std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc)
 		<< L", suspend:" << oc.m_nSuspendCount 
 		<< L", process: " << oc.m_oteProcess
 #ifdef _DEBUG
-		<< L", refs: " << oc.m_dwRefs 
+		<< L", refs: " << oc.m_nRefs 
 #endif
 		<< L")";
 }
@@ -305,7 +305,7 @@ std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc)
 
 OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) : 
 			// Initial ref of 1 for the associated thread, released by smart pointer in ThreadMain
-			m_dwRefs(1),
+			m_nRefs(1),
 			m_hThread(0), m_dwThreadId(0),
 			m_hEvtGo(0), m_hEvtCompleted(0),
 			m_oteProcess(oteProcess),
@@ -360,7 +360,7 @@ bool OverlappedCall::BeginThread()
 							/*start_address*/	ThreadMain,
 							/*arglist=*/		this,
 							/*initflag=*/		0, //CREATE_SUSPENDED,
-							/*thrdaddr=*/		reinterpret_cast<UINT*>(&m_dwThreadId));
+							/*thrdaddr=*/		reinterpret_cast<unsigned int*>(&m_dwThreadId));
 	return m_hThread != 0;
 }
 
@@ -513,7 +513,7 @@ bool OverlappedCall::PerformCall()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << std::hex << GetCurrentThreadId() << L": Call failed: " << static_cast<DWORD>(m_primitiveFailureCode) << L": " << *this << std::endl;
+			TRACESTREAM << std::hex << GetCurrentThreadId() << L": Call failed: " << static_cast<uint32_t>(m_primitiveFailureCode) << L": " << *this << std::endl;
 		}
 		#endif
 
@@ -706,10 +706,10 @@ bool OverlappedCall::QueueTerminate()
 
 // Handler for suspend message from the main thread. The overlapped thread suspends itself
 // to avoid being suspended inside a critical section
-void __stdcall OverlappedCall::SuspendAPC(DWORD dwParam)
+void __stdcall OverlappedCall::SuspendAPC(ULONG_PTR param)
 {
 	// Assume ref. from the APC queue
-	OverlappedCallPtr pThis = BeginAPC(dwParam);
+	OverlappedCallPtr pThis = BeginAPC(param);
 
 	#if TRACING == 1
 	{
@@ -896,12 +896,12 @@ bool OverlappedCall::NotifyInterpreterOfTermination()
 
 // APC fired off to main thread when an overlapped thread has actually terminated as requested,
 // i.e. the overlapped call thread is no longer running (or as good as dead)
-void __stdcall OverlappedCall::TerminatedAPC(DWORD dwParam)
+void __stdcall OverlappedCall::TerminatedAPC(ULONG_PTR param)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
 	// Message queued from overlapped thread to main thread
-	OverlappedCallPtr pThis = BeginMainThreadAPC(dwParam);
+	OverlappedCallPtr pThis = BeginMainThreadAPC(param);
 
 	#if TRACING == 1
 	{
@@ -958,7 +958,7 @@ void OverlappedCall::NotifyInterpreterOfCallReturn()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << std::hex << GetCurrentThreadId() << L": NotifyInterpreterOfCallReturn(), failure code = " << (SMALLINTEGER)m_primitiveFailureCode << std::endl;
+		TRACESTREAM << std::hex << GetCurrentThreadId() << L": NotifyInterpreterOfCallReturn(), failure code = " << (SmallInteger)m_primitiveFailureCode << std::endl;
 	}
 	#endif
 

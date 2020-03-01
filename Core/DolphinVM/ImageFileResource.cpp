@@ -15,7 +15,7 @@ int ImageFileResource::Open(HMODULE hModule, int resId)
 	if (m_pData == NULL)
 		return -3;
 
-	m_dwSize = ::SizeofResource(hModule, m_hFind);
+	m_size = ::SizeofResource(hModule, m_hFind);
 
 	return 0;
 }

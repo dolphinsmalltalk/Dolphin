@@ -74,7 +74,7 @@ Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, primargcount_t)
 
 	if (ObjectMemoryIsIntegerObject(oopArg))
 	{
-		SMALLINTEGER arg = ObjectMemoryIntegerValueOf(oopArg);
+		SmallInteger arg = ObjectMemoryIntegerValueOf(oopArg);
 
 		FloatOTE* oteResult = Float::New();
 		FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp-1));
@@ -95,7 +95,7 @@ Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, primargcount_
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
-	SMALLINTEGER exponent = ilogb(fValue);
+	SmallInteger exponent = ilogb(fValue);
 	*sp = ObjectMemoryIntegerObjectOf(exponent);
 	return sp;
 }
@@ -104,7 +104,7 @@ Oop* Interpreter::primitiveFloatClassify(Oop* const sp, primargcount_t)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
-	SMALLINTEGER classification = _fpclass(fValue);
+	SmallInteger classification = _fpclass(fValue);
 	*sp = ObjectMemoryIntegerObjectOf(classification);
 	return sp;
 }
@@ -118,7 +118,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, primargcount_t
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Index not an integer
 	}
 
-	SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallUinteger offset = ObjectMemoryIntegerValueOf(integerPointer);
 	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));

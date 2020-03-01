@@ -7,20 +7,20 @@ class ImageFileMapping
 	HANDLE m_hFile;
 	HANDLE m_hMapping;
 	LPVOID m_pData;
-	DWORD  m_dwSize;
+	size_t  m_size;
 
 public:
-	ImageFileMapping() : m_hFile(0), m_hMapping(0), m_pData(NULL), m_dwSize(0) {}
+	ImageFileMapping() : m_hFile(0), m_hMapping(0), m_pData(NULL), m_size(0) {}
 	~ImageFileMapping() { Close(); }
 
 	int Open(LPCWSTR imageFileName);
 	void Close();
 
 	LPVOID GetRawData() { return m_pData; }
-	DWORD GetRawSize() { return m_dwSize; }
+	size_t GetRawSize() { return m_size; }
 
 	BYTE* GetData() { return static_cast<BYTE*>(GetRawData()) + sizeof(ISTImageHeader); }
-	DWORD GetSize() { return m_dwSize - sizeof(ISTImageHeader); }
+	size_t GetSize() { return m_size - sizeof(ISTImageHeader); }
 	IMAGETYPE GetType() { return reinterpret_cast<ISTImageHeader*>(m_pData)->imageType; }
 	ImageHeader* GetHeader() { return &(reinterpret_cast<ISTImageHeader*>(m_pData)->header); }
 

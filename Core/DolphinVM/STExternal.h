@@ -50,7 +50,7 @@ namespace ST
 	class DWORDBytes : public Object
 	{
 	public:
-		DWORD m_dwValue;
+		uint32_t m_dwValue;
 	};
 
 	class ExternalHandle : public Object

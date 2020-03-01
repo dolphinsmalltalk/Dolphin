@@ -98,7 +98,7 @@ extern SENDVMINTERRUPT:near32
 FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@SGPAUMethodCacheEntry@1@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
 extern FINDNEWMETHODNOCACHE:near32
 
-BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@ST@@@@K@Z
+BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@ST@@@@I@Z
 extern BLOCKCOPY:near32											; See bytecde.cpp
 
 INPUTPOLLCOUNTER		EQU		?m_nInputPollCounter@Interpreter@@0JC
@@ -133,7 +133,7 @@ extern NEWBLOCK:near32		; See bytecde.cpp
 
 IFDEF _DEBUG
 	extern ?executionTrace@Interpreter@@2HA:DWORD
-	CACHEHITS EQU ?cacheHits@@3KA
+	CACHEHITS EQU ?cacheHits@@3IA
 	extern CACHEHITS:DWORD
 	DEBUGEXECTRACE EQU ?debugExecTrace@Interpreter@@SIXPAEPAI@Z
 	extern DEBUGEXECTRACE:near32

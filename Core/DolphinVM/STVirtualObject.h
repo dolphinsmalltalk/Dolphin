@@ -20,18 +20,18 @@ namespace ST
 {
 	class VirtualObjectHeader
 	{
-		MWORD	m_dwMaxAlloc;
-		MWORD	m_reserved1;
-		MWORD	m_reserved2;
-		BOOL	m_bFxSaved;
-		BYTE	m_fxSaveArea[512];
+		uintptr_t	m_maxAlloc;
+		uintptr_t	m_reserved1;
+		uintptr_t	m_reserved2;
+		BOOL		m_bFxSaved;
+		BYTE		m_fxSaveArea[512];
 
 	public:
-		void	setCurrentAllocation(MWORD size) { ASSERT(size == getCurrentAllocation()); size; }
-		MWORD	getCurrentAllocation();
+		void		setCurrentAllocation(uintptr_t size) { ASSERT(size == getCurrentAllocation()); size; }
+		uintptr_t	getCurrentAllocation();
 		
-		MWORD	getMaxAllocation() { return m_dwMaxAlloc; }
-		void	setMaxAllocation(MWORD dwSize) { m_dwMaxAlloc = dwSize; }
+		uintptr_t	getMaxAllocation() { return m_maxAlloc; }
+		void	setMaxAllocation(MWORD dwSize) { m_maxAlloc = dwSize; }
 
 		void	fxSave() 
 		{ 
@@ -51,7 +51,7 @@ namespace ST
 		}
 	};
 
-	inline MWORD VirtualObjectHeader::getCurrentAllocation()
+	inline uintptr_t VirtualObjectHeader::getCurrentAllocation()
 	{
 		MEMORY_BASIC_INFORMATION mbi;
 		VERIFY(::VirtualQuery(this, &mbi, sizeof(mbi)) == sizeof(mbi));

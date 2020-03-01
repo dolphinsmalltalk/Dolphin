@@ -23,17 +23,17 @@ typedef struct _ThreadExceptionInfoBlock
     DWORD dwExceptionCode;
     DWORD dwExceptionFlags;
     DWORD nNumberOfArguments;
-    CONST DWORD lpArguments[];
+    CONST ULONG_PTR lpArguments[];
 } ThreadExceptionInfoBlock;
 
-static void __stdcall APCFunc(DWORD dwParam)
+static void __stdcall APCFunc(ULONG_PTR param)
 {
-	ThreadExceptionInfoBlock* pBlock = (ThreadExceptionInfoBlock*)dwParam;
+	ThreadExceptionInfoBlock* pBlock = (ThreadExceptionInfoBlock*)param;
 	DWORD dwExceptionCode = pBlock->dwExceptionCode;
 	DWORD dwExceptionFlags = pBlock->dwExceptionFlags;
 	DWORD nNumberOfArguments = pBlock->nNumberOfArguments;
-	DWORD argsSize = nNumberOfArguments*sizeof(DWORD);
-	DWORD* lpArguments = (DWORD*)alloca(argsSize);
+	DWORD argsSize = nNumberOfArguments*sizeof(ULONG_PTR);
+	ULONG_PTR* lpArguments = (ULONG_PTR*)alloca(argsSize);
 	memcpy(lpArguments, pBlock->lpArguments, argsSize);
 	free(pBlock);
 	RaiseException(dwExceptionCode, dwExceptionFlags, nNumberOfArguments, lpArguments);
@@ -45,7 +45,7 @@ void __stdcall RaiseThreadException(
     DWORD dwExceptionCode,
     DWORD dwExceptionFlags,
     DWORD nNumberOfArguments,
-    CONST DWORD *lpArguments)
+    CONST ULONG_PTR *lpArguments)
 {
 	DWORD argsSize = nNumberOfArguments*sizeof(DWORD);
 	ThreadExceptionInfoBlock* pBlock = (ThreadExceptionInfoBlock*)malloc(sizeof(ThreadExceptionInfoBlock)+argsSize);
@@ -53,5 +53,5 @@ void __stdcall RaiseThreadException(
 	pBlock->dwExceptionFlags = dwExceptionFlags;
 	pBlock->nNumberOfArguments = nNumberOfArguments;
 	memcpy((void*)pBlock->lpArguments, lpArguments, argsSize);
-	QueueUserAPC(APCFunc, hThread, (DWORD)pBlock);
+	QueueUserAPC(APCFunc, hThread, (ULONG_PTR)pBlock);
 }
