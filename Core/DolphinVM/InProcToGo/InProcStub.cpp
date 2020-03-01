@@ -96,7 +96,7 @@ BOOL CIPDolphinModule::OnProcessAttach()
 	TRACE(L"%#x: OnProcessAttach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
 
 	// Get the plugin DLL name and split off the directory component
-	::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), achModulePath, sizeof(achModulePath));
+	::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), achModulePath, _countof(achModulePath));
 	
 	LPCWSTR szImagePath = achModulePath;
 
@@ -115,7 +115,7 @@ BOOL CIPDolphinModule::OnProcessAttach()
 	s_pPlugHole->AddRef();
 
 	if (ret >= 0)
-	s_pPlugHole->SetImageInfo(szImagePath, imageFile.GetRawData(), imageFile.GetRawSize());
+		s_pPlugHole->SetImageInfo(szImagePath, imageFile.GetRawData(), imageFile.GetRawSize());
 
 	return TRUE;
 }

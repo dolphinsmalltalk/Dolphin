@@ -194,8 +194,8 @@ public:
 
 	friend std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc);
 
-	DWORD AddRef();
-	DWORD Release();
+	uint32_t AddRef();
+	uint32_t Release();
 
 	enum States { Starting, Resting, Terminated, Calling, Returned };
 
@@ -284,10 +284,10 @@ private:
 	static int MainExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
 	// APC functions (APCs are used to queue messages between threads)
-	static void __stdcall SuspendAPC(DWORD dwParam);
-	static void __stdcall TerminatedAPC(DWORD dwParam);
-	static OverlappedCallPtr BeginAPC(DWORD dwParam);
-	static OverlappedCallPtr BeginMainThreadAPC(DWORD dwParam);
+	static void __stdcall SuspendAPC(ULONG_PTR param);
+	static void __stdcall TerminatedAPC(ULONG_PTR param);
+	static OverlappedCallPtr BeginAPC(ULONG_PTR param);
+	static OverlappedCallPtr BeginMainThreadAPC(ULONG_PTR param);
 
 	static void CompactCallsOnList(OverlappedCallList& list);
 	void compact();
@@ -310,7 +310,7 @@ public:
 	// Context of the process for which we are running
 	InterpreterRegisters	m_interpContext;
 	ProcessOTE*				m_oteProcess;	// paired Smalltalk Process
-	SHAREDLONG				m_dwRefs;
+	SHAREDLONG				m_nRefs;
 
 	HANDLE					m_hThread;		// thread handle (returned by _beginthread(ex))
 	DWORD					m_dwThreadId;	// thread's ID
@@ -329,17 +329,17 @@ private:
 
 std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc);
 
-inline DWORD OverlappedCall::AddRef()
+inline uint32_t OverlappedCall::AddRef()
 {
-	return InterlockedIncrement(&m_dwRefs);
+	return InterlockedIncrement(&m_nRefs);
 }
 
-inline DWORD OverlappedCall::Release()
+inline uint32_t OverlappedCall::Release()
 {
-	DWORD dwRefs = InterlockedDecrement(&m_dwRefs);
-	if (dwRefs == 0)
+	uint32_t nRefs = InterlockedDecrement(&m_nRefs);
+	if (nRefs == 0)
 		delete this;
-	return dwRefs;
+	return nRefs;
 }
 
 inline bool OverlappedCall::IsInCall()

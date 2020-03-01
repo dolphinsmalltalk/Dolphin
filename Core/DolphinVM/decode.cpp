@@ -46,7 +46,7 @@ static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 	size_t end = min(len, 80);
 	for (size_t i = 0; i < end; i++)
 	{
-		WCHAR ch = pwsz[i];
+		char16_t ch = pwsz[i];
 		if (!iswprint(ch))
 		{
 			stream << L"\\x" << std::hex << (unsigned)ch;
@@ -100,7 +100,7 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 			break;
 		}
 		case StringEncoding::Utf16:
-			printChars(stream, reinterpret_cast<const Utf16StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize() / sizeof(WCHAR));
+			printChars(stream, reinterpret_cast<const Utf16StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize() / sizeof(Utf16String::CU));
 			break;
 		default:
 		case StringEncoding::Utf32:
@@ -185,7 +185,7 @@ wostream& operator<<(wostream& st, const Utf16StringOTE* ote)
 	else
 	{
 		st << L"L'";
-		printChars(st, ote->m_location->m_characters, ote->bytesSize()/sizeof(WCHAR));
+		printChars(st, ote->m_location->m_characters, ote->bytesSize()/sizeof(Utf16String::CU));
 		st << L"'";
 
 	}
@@ -334,7 +334,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		return st << L"***Bad Character: " << ch;
 
 	st << L'$';
-	SMALLINTEGER code = ObjectMemoryIntegerValueOf(ch->m_code);
+	SmallInteger code = ObjectMemoryIntegerValueOf(ch->m_code);
 	char32_t codeUnit = code & 0xffffff;
 	if (__isascii(codeUnit))
 	{
@@ -532,7 +532,7 @@ wostream& operator<<(wostream& stream, const OTE* ote)
 	return stream;
 }
 
-SMALLUNSIGNED Interpreter::indexOfSP(Oop* sp)
+SmallUinteger Interpreter::indexOfSP(Oop* sp)
 {
 	return actualActiveProcess()->indexOfSP(sp);
 }
@@ -708,7 +708,7 @@ static void DumpBP(Oop* bp, Process* pProcess, wostream& logStream)
 		}
 		else
 		{
-			SMALLUNSIGNED index = pProcess->indexOfSP(bp);
+			SmallUinteger index = pProcess->indexOfSP(bp);
 			logStream << bp << L" (" << std::dec << index << L')';
 		}
 	}
@@ -724,7 +724,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 		Oop* bp = pFrame->basePointer();
 		MethodOTE* oteMethod = pFrame->m_method;
 		CompiledMethod* method = oteMethod->m_location;
-		SMALLINTEGER ip = ObjectMemoryIntegerValueOf(pFrame->m_ip);
+		SmallInteger ip = ObjectMemoryIntegerValueOf(pFrame->m_ip);
 		if (ip != 0)
 			ip += isIntegerObject(method->m_byteCodes) ? 1 : -(int(ObjectByteSize) - 1);
 
@@ -1036,7 +1036,7 @@ public:
 		this->method = method;
 		if (ObjectMemoryIsIntegerObject(method->m_byteCodes))
 		{
-			cBytes = sizeof(SMALLINTEGER);
+			cBytes = sizeof(SmallInteger);
 			pBytes = reinterpret_cast<BYTE*>(&(method->m_byteCodes));
 		}
 		else
@@ -1108,7 +1108,7 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 	BytecodeDisassembler<DisassemblyContext, size_t> disassembler(info);
 
 	const size_t size = ObjectMemoryIsIntegerObject(method->m_byteCodes)
-		? sizeof(SMALLINTEGER)
+		? sizeof(SmallInteger)
 		: reinterpret_cast<ByteArrayOTE*>(method->m_byteCodes)->bytesSize();
 
 	size_t i = 0;

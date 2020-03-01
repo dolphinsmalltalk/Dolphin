@@ -110,7 +110,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, primargcount_t)
 {
 	Oop tickPointer = *sp;
-	SMALLINTEGER nDelay;
+	SmallInteger nDelay;
 
 	if (ObjectMemoryIsIntegerObject(tickPointer))
 		nDelay = ObjectMemoryIntegerValueOf(tickPointer);
@@ -140,7 +140,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, primargcount_t
 	if (nDelay > 0)
 	{
 		// Clamp the requested delay to the maximum if it is too large. This simplifies the Delay code in the image a little.
-		if (nDelay > SMALLINTEGER(wTimerMax))
+		if (nDelay > SmallInteger(wTimerMax))
 		{
 			nDelay = wTimerMax;
 		}

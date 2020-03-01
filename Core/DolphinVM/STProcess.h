@@ -68,17 +68,17 @@ namespace ST
 	public:
 		void sizeToSP(ProcessOTE*, Oop* sp) const;
 
-		SMALLUNSIGNED stackSize(ProcessOTE* oteMe)
+		SmallUinteger stackSize(ProcessOTE* oteMe)
 		{
 			return (oteMe->getSize() - offsetof(Process, m_stack[0])) / sizeof(MWORD);
 		}
 
-		SMALLUNSIGNED indexOfSP(Oop* sp)
+		SmallUinteger indexOfSP(Oop* sp)
 		{
-			return SMALLUNSIGNED(sp - m_stack) + 1;
+			return SmallUinteger(sp - m_stack) + 1;
 		}
 
-		SMALLUNSIGNED indexOfFramePointer(Oop framePointer)
+		SmallUinteger indexOfFramePointer(Oop framePointer)
 		{
 			return indexOfSP(reinterpret_cast<Oop*>(framePointer - 1));
 		}
@@ -128,7 +128,7 @@ namespace ST
 		}
 		void ClearSuspendedFrame();
 
-		DWORD FpControl() const
+		unsigned int FpControl() const
 		{
 			ASSERT(isIntegerObject(m_fpControl));
 			return integerValueOf(m_fpControl);
@@ -157,16 +157,16 @@ namespace ST
 			getHeader()->fxSave();
 		}
 
-		SMALLUNSIGNED Priority() const
+		SmallUinteger Priority() const
 		{
 			HARDASSERT(isIntegerObject(m_priority));
 			return integerValueOf(m_priority);
 		}
-		void SetPriority(SMALLUNSIGNED priority)
+		void SetPriority(SmallUinteger priority)
 		{
 			m_priority = integerObjectOf(priority);
 		}
-		SMALLUNSIGNED CallbackDepth() const { return integerValueOf(m_callbackDepth); }
+		SmallUinteger CallbackDepth() const { return integerValueOf(m_callbackDepth); }
 		void IncrementCallbackDepth()
 		{
 			HARDASSERT(isIntegerObject(m_callbackDepth));

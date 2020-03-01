@@ -257,14 +257,14 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp, primargcount_t
 
 		case VT_UI1:
 			{
-				DWORD ui1 = V_UI1(pVar);
+				SmallUinteger ui1 = V_UI1(pVar);
 				value = ObjectMemoryIntegerObjectOf(ui1);
 			}
 			break;
 		
 		case VT_UI2:
 			{
-				DWORD ui2 = V_UI2(pVar);
+				SmallUinteger ui2 = V_UI2(pVar);
 				value = ObjectMemoryIntegerObjectOf(ui2);
 			}
 			break;

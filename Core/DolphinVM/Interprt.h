@@ -76,10 +76,10 @@ class Interpreter
 	friend class BootLoader;
 
 public:
-	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
+	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, size_t imageSize, bool isDevSys);
 
 	// Fire off the startup message
-	static void sendStartup(const wchar_t* szImagePath, DWORD dwArg);
+	static void sendStartup(const wchar_t* szImagePath, uintptr_t arg);
 
 	// Clear down current image, etc
 	static void ShutDown();
@@ -130,7 +130,7 @@ public:
 	
 	// Private helpers
 	
-	static BytesOTE* __fastcall NewDWORD(DWORD dwValue, BehaviorOTE* classPointer);
+	static BytesOTE* __fastcall NewUint32(uint32_t value, BehaviorOTE* classPointer);
 
 	// Users of callback(), or any routine which invokes it (basically, anything which sends
 	// a message into Smalltalk for evaluation), needs to be prepared to catch the SE code
@@ -147,7 +147,7 @@ public:
 	static LRESULT CALLBACK CbtFilterHook(int code, WPARAM wParam, LPARAM lParam);
 	static void subclassWindow(OTE* window, HWND hWnd);
 
-	static DWORD callbackResultFromOop(Oop objectPointer);
+	static uintptr_t callbackResultFromOop(Oop objectPointer);
 
 	enum
 	{
@@ -155,19 +155,19 @@ public:
 		SyncCallbackMsg,
 		SyncVirtualMsg
 	};
-	static DWORD __stdcall GenericCallbackMain(SMALLINTEGER id, BYTE* lpArgs);
-	static DWORD __stdcall GenericCallback(SMALLINTEGER id, BYTE* lpArgs);
+	static uintptr_t __stdcall GenericCallbackMain(SmallInteger id, BYTE* lpArgs);
+	static uintptr_t __stdcall GenericCallback(SmallInteger id, BYTE* lpArgs);
 
 	struct COMThunk
 	{
-		PROC*	vtbl;
-		DWORD*	argSizes;
-		DWORD	id;
-		DWORD	subId;
+		PROC*		vtbl;
+		uint32_t*	argSizes;
+		uint32_t	id;
+		uint32_t	subId;
 	};
 
-	static DWORD __fastcall VirtualCallback(SMALLINTEGER id, COMThunk** thisPtr);
-	static DWORD __fastcall VirtualCallbackMain(SMALLINTEGER id, COMThunk** thisPtr);
+	static uintptr_t __fastcall VirtualCallback(SmallInteger offset, COMThunk** thisPtr);
+	static uintptr_t __fastcall VirtualCallbackMain(SmallInteger offset, COMThunk** thisPtr);
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)
@@ -189,11 +189,11 @@ public:
 	static void pushNewObject(Oop);					// Push newly created objects (add to Zct)
 	static void pushUnknown(Oop);					// Push an object that might be new, might be old
 	static void pushBool(BOOL bValue);				// Push the appropriate Smalltalk boolean object
-	static void pushSmallInteger(SMALLINTEGER n);	// Store a gtd SmallInteger (no overflow check)
-	static void pushUnsigned32(DWORD value);
-	static void pushSigned32(SDWORD value);
-	static void pushUIntPtr(UINT_PTR value);
-	static void pushIntPtr(INT_PTR value);
+	static void pushSmallInteger(SmallInteger n);	// Store a gtd SmallInteger (no overflow check)
+	static void pushUint32(uint32_t value);
+	static void pushInt32(int32_t value);
+	static void pushUintPtr(uintptr_t value);
+	static void pushIntPtr(intptr_t value);
 	static void push(LPCSTR psz);					// Push ANSI string
 	static void push(LPCWSTR pwsz);					// Push Wide string
 	static void pushNil();
@@ -220,7 +220,7 @@ public:
 	// N.B. pop() merely adjusts the stackPointer, remember that
 	// it is necessary to ensure that no ref. counted objects
 	// remain above the stackPointer (this is why there's no unPop)
-	static SMALLUNSIGNED indexOfSP(Oop* sp);
+	static SmallUinteger indexOfSP(Oop* sp);
 
 	// Method lookup
 
@@ -245,8 +245,8 @@ public:
 	//Misc
 
 	// Garbage collection and Finalization/Bereavement Queue management
-	static void syncGC(DWORD gcFlags);
-	static void asyncGC(DWORD gcFlags);
+	static void syncGC(uintptr_t gcFlags);
+	static void asyncGC(uintptr_t gcFlags);
 
 #ifdef PROFILING
 	static void StartProfiling();
@@ -357,7 +357,7 @@ private:
 	static void __fastcall nonLocalReturnValueTo(Oop resultPointer, Oop contextPointer);
 	static void __fastcall invalidReturn(Oop resultPointer);
 
-	static BlockOTE* __fastcall blockCopy(DWORD ext);
+	static BlockOTE* __fastcall blockCopy(uint32_t ext);
 
 public:
 	static void basicQueueForFinalization(OTE* ote);
@@ -399,7 +399,7 @@ public:
 	static void GrabAsyncProtect();
 	static void RelinquishAsyncProtect();
 	static void NotifyAsyncPending();
-	static bool QueueAPC(PAPCFUNC pfnAPC, DWORD dwClosure);
+	static bool QueueAPC(PAPCFUNC pfnAPC, ULONG_PTR closure);
 	static void BeginAPC();
 	static BOOL SetWakeupEvent();
 	static void NotifyOTOverflow();
@@ -459,7 +459,7 @@ private:
 
 	static HRESULT InitializeSampler();
 	static void TerminateSampler();
-	static HRESULT SetSampleTimer(SMALLINTEGER newInterval);
+	static HRESULT SetSampleTimer(SmallInteger newInterval);
 	static void CancelSampleTimer();
 	static VOID CALLBACK SamplerProc(PVOID lpParam, BOOLEAN TimerOrWaitFired);
 	static void ResetInputPollCounter();
@@ -573,14 +573,14 @@ public:
 
 	template<typename T, typename P> static Oop * __fastcall primitiveIndirectIntegerAtOffset(Oop * const sp, unsigned);
 	template<typename T, typename P> static Oop * __fastcall primitiveIntegerAtOffset(Oop * const sp, unsigned);
-	template<typename T, SMALLINTEGER MinVal, SMALLINTEGER MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, unsigned);
-	template<typename T, SMALLINTEGER MinVal, SMALLINTEGER MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, unsigned);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, unsigned);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, unsigned);
 
 	// These have specialised implementations as they accept other than just SmallInteger values to 'put'
-	static Oop* __fastcall primitiveDWORDAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndirectDWORDAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSDWORDAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndirectSDWORDAtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveUint32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveIndirectUint32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveInt32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveIndirectInt32AtPut(Oop* const sp, primargcount_t argCount);
 
 	// Floating point number accessors
 	template<typename T> static Oop * __fastcall primitiveFloatAtOffset(Oop * const sp, unsigned);
@@ -625,7 +625,7 @@ public:
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBasicNext(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveNextInt32(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNextPut(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBasicNextPut(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveNextPutAll(Oop* const sp, primargcount_t argCount);
@@ -857,7 +857,7 @@ private:
 	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
 public:
-	static UINT			m_ansiCodePage;
+	static codepage_t	m_ansiCodePage;
 	static WCHAR		m_unicodeReplacementChar;
 	static char			m_ansiReplacementChar;
 	static WCHAR		m_ansiToUnicodeCharMap[256];

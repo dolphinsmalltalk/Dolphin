@@ -33,7 +33,7 @@ union InstanceSpecification
 
 		WORD m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
 	};
-	DWORD m_value;
+	MWORD m_value;
 
 	enum
 	{

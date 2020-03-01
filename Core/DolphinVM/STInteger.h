@@ -39,8 +39,8 @@ namespace ST
 		static Oop __fastcall NewUnsigned32WithRef(uint32_t value);
 		static Oop __stdcall NewSigned64(int64_t value);
 		static Oop __stdcall NewUnsigned64(uint64_t value);
-		static Oop __fastcall NewIntPtr(INT_PTR value);
-		static Oop __fastcall NewUIntPtr(UINT_PTR value);
+		static Oop __fastcall NewIntPtr(intptr_t value);
+		static Oop __fastcall NewUIntPtr(uintptr_t value);
 	};
 
 	// Large integer is a variable byte subclass of Integer (it contains
@@ -69,23 +69,23 @@ namespace ST
 
 		static Oop Negate(const LargeIntegerOTE* oteLI);
 
-		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
+		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, SmallInteger op2);
 		static LargeIntegerOTE* Add(const LargeIntegerOTE* oteOp1, const LargeIntegerOTE* oteOp2);
 
-		static LargeIntegerOTE* Sub(const LargeIntegerOTE * oteLI, SMALLINTEGER operand);
+		static LargeIntegerOTE* Sub(const LargeIntegerOTE * oteLI, SmallInteger operand);
 		static LargeIntegerOTE* Sub(const LargeIntegerOTE * oteLI, const LargeIntegerOTE * oteOperand);
 
-		static liDiv_t Divide(const LargeIntegerOTE* oteOp1, SMALLINTEGER op2);
+		static liDiv_t Divide(const LargeIntegerOTE* oteOp1, SmallInteger op2);
 
-		static Oop Mul(const LargeIntegerOTE * oteInner, SMALLINTEGER outerDigit);
+		static Oop Mul(const LargeIntegerOTE * oteInner, SmallInteger outerDigit);
 		static Oop Mul(const LargeInteger* liOuter, const MWORD outerSize, const LargeInteger* liInner, const MWORD innerSize);
 
 		static Oop BitAnd(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
-		static Oop BitAnd(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
+		static Oop BitAnd(const LargeIntegerOTE * oteA, SmallInteger mask);
 		static LargeIntegerOTE * BitOr(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
-		static LargeIntegerOTE * BitOr(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
+		static LargeIntegerOTE * BitOr(const LargeIntegerOTE * oteA, SmallInteger mask);
 		static LargeIntegerOTE * BitXor(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
-		static LargeIntegerOTE * BitXor(const LargeIntegerOTE * oteA, SMALLINTEGER mask);
+		static LargeIntegerOTE * BitXor(const LargeIntegerOTE * oteA, SmallInteger mask);
 	};
 
 
@@ -143,9 +143,9 @@ namespace ST
 
 	// Answer a Large or SmallInteger, whichever is the smallest representation
 	// for the specified unsigned value
-	inline Oop __fastcall Integer::NewUIntPtr(UINT_PTR value)
+	inline Oop __fastcall Integer::NewUIntPtr(uintptr_t value)
 	{
-#ifdef _WIN64
+#ifdef _M_X64
 		return NewUnsigned64(value);
 #else
 		return NewUnsigned32(static_cast<uint32_t>(value));
@@ -154,9 +154,9 @@ namespace ST
 
 	// Answer a Large or SmallInteger, whichever is the smallest representation
 	// for the specified signed value
-	inline Oop __fastcall Integer::NewIntPtr(INT_PTR value)
+	inline Oop __fastcall Integer::NewIntPtr(intptr_t value)
 	{
-#ifdef _WIN64
+#ifdef _M_X64
 		return NewSigned64(value);
 #else
 		return NewSigned32(static_cast<int32_t>(value));

@@ -42,7 +42,7 @@ class ATL_NO_VTABLE CInProcPlugHole :
 
 	wchar_t	achImagePath[_MAX_PATH+1];
 	LPVOID	m_pImageData;
-	DWORD	m_cImageSize;
+	size_t	m_cImageSize;
 
 private:
 	void ReleasePeer();
@@ -80,7 +80,7 @@ BEGIN_COM_MAP(CInProcPlugHole)
 END_COM_MAP()
 
 public:
-	void SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, DWORD imageSize);
+	void SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, size_t imageSize);
 
 	// Handle incoming from Windows/COM - mostly these just forward to the peer object
 	HRESULT Initialize(REFCLSID rclsid, CLSCTX ctx);

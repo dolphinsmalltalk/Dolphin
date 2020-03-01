@@ -16,7 +16,7 @@ struct VMEntryArgs
 {
 	HINSTANCE hInstance;
 	LPVOID imageData;
-	DWORD imageSize;
+	size_t imageSize;
 	LPCWSTR fileName;
 	IStream* piMarshalledOuter;
 	CLSCTX clsctx;
@@ -28,7 +28,7 @@ static VMEntryArgs argBlock;
 #pragma warning(disable:4509)
 
 int __stdcall StartVM(HMODULE hModule, 
-			LPVOID imageData, DWORD imageSize, LPCWSTR fileName, 
+			LPVOID imageData, size_t imageSize, LPCWSTR fileName, 
 			IUnknown* punkOuter, CLSCTX clsctx)
 {
 	IDolphinStart* piDolphin = NULL;
@@ -106,7 +106,7 @@ static UINT __stdcall DolphinMain(void* pArgs)
 // Spawn off the main Dolphin thread and return its handle
 // Note the caller must make sure that the two strings don't go out of scope
 HRESULT __stdcall VMEntry(HINSTANCE hInstance, 
-						 LPVOID imageData, UINT imageSize, LPCWSTR fileName, IUnknown* punkOuter, CLSCTX ctx,
+						 LPVOID imageData, size_t imageSize, LPCWSTR fileName, IUnknown* punkOuter, CLSCTX ctx,
 						HANDLE& hThread)
 {
 	argBlock.hInstance = hInstance;
@@ -114,8 +114,6 @@ HRESULT __stdcall VMEntry(HINSTANCE hInstance,
 	argBlock.imageSize = imageSize;
 	argBlock.fileName = fileName;
 	argBlock.clsctx = ctx;
-
-	UINT dwThreadId;
 
 	if (punkOuter)
 	{
@@ -126,7 +124,8 @@ HRESULT __stdcall VMEntry(HINSTANCE hInstance,
 	else 
 		argBlock.piMarshalledOuter = NULL;
 
-	hThread = (HANDLE)_beginthreadex(NULL, 0, &DolphinMain, &argBlock, 0, &dwThreadId);
+	unsigned int threadId;
+	hThread = (HANDLE)_beginthreadex(NULL, 0, &DolphinMain, &argBlock, 0, &threadId);
 
 	if (hThread == (HANDLE)-1)
 		return ReportError(IDP_FAILTOSTARTTHREAD);

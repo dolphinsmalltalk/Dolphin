@@ -136,10 +136,10 @@ AddressOTE* __fastcall NewBSTR(const char16_t* pChars, size_t len)
 }
 
 // Answer a new BSTR converted from the a byte string with the specified encoding
-template <UINT CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* szContents, size_t len)
+template <codepage_t CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* szContents, size_t len)
 {
 	Utf16StringOTE* utf16 = Utf16String::New<CP>(szContents, len);
-	AddressOTE* answer = NewBSTR(utf16->m_location->m_characters, utf16->getSize() / sizeof(WCHAR));
+	AddressOTE* answer = NewBSTR(utf16->m_location->m_characters, utf16->getSize() / sizeof(Utf16String::CU));
 	ObjectMemory::deallocateByteObject((OTE*)utf16);
 	return answer;
 }
@@ -266,15 +266,15 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgType::UInt32:
-				pushUnsigned32(*reinterpret_cast<DWORD*>(lpParms));
-				lpParms += sizeof(DWORD);
+				pushUint32(*reinterpret_cast<uint32_t*>(lpParms));
+				lpParms += sizeof(uint32_t);
 				break;
 
 			case ExtCallArgType::Int32:
 			case ExtCallArgType::HResult:
 			case ExtCallArgType::NTStatus:
-				pushSigned32(*reinterpret_cast<SDWORD*>(lpParms));
-				lpParms += sizeof(SDWORD);
+				pushInt32(*reinterpret_cast<int32_t*>(lpParms));
+				lpParms += sizeof(int32_t);
 				break;
 
 			case ExtCallArgType::Bool:
@@ -357,7 +357,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgType::UIntPtr:
-				pushUIntPtr(*reinterpret_cast<UINT_PTR*>(lpParms));
+				pushUintPtr(*reinterpret_cast<UINT_PTR*>(lpParms));
 				lpParms += sizeof(UINT_PTR);
 				break;
 
@@ -595,7 +595,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 
 	extern "C" {
 
-		__declspec(dllexport) DWORD __stdcall answerArg(DWORD intParm)
+		__declspec(dllexport) uint32_t __stdcall answerArg(uint32_t intParm)
 		{
 			return intParm;
 		}
@@ -610,7 +610,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 			return fParm;
 		}
 
-		__declspec(dllexport) double __stdcall answerDoubleFromInt(SDWORD intParm)
+		__declspec(dllexport) double __stdcall answerDoubleFromInt(int32_t intParm)
 		{
 			return intParm;
 		}
@@ -635,12 +635,12 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 // Debug example for returning struct by value
 struct Blah
 {
-	DWORD a;
-	DWORD b;
-	DWORD c;
+	int32_t a;
+	int32_t b;
+	int32_t c;
 };
 
-extern "C" __declspec(dllexport) Blah __stdcall makeBlah(int a, int b, int c)
+extern "C" __declspec(dllexport) Blah __stdcall makeBlah(int32_t a, int32_t b, int32_t c)
 {
 	Blah answer;
 	answer.a = a;
@@ -713,7 +713,7 @@ void doBlah()
 		// Compiler should have generated a literal array of argument types
 		ASSERT(arrayPointer->isNil() || argTypes->m_class == Pointers.ClassByteArray);
 
-		FARPROC pVirtualProc = reinterpret_cast<FARPROC*>(reinterpret_cast<DWORD*>(thisPointer)->[argTypes->m_elements[VirtualCallOffset]]);
+		FARPROC pVirtualProc = reinterpret_cast<FARPROC*>(reinterpret_cast<uintptr_t*>(thisPointer)->[argTypes->m_elements[VirtualCallOffset]]);
 			
 		return ::callExternalFunction(pVirtualProc, argCount, argTypes->m_elements, TRUE);
 	}
@@ -790,7 +790,7 @@ void doBlah()
 	BOOL __stdcall Interpreter::callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual)
 	{
 		Oop arg;
-		DWORD dwValue;
+		uintptr_t retValue;
 
 		TODO("Rewrite the whole lot in assembler for speed")
 		TODO("Fix all the sign extension stuff")
@@ -1127,7 +1127,7 @@ void doBlah()
 		// Note that the arguments are left on the stack for the duration of the call
 		// to prevent a recursive invocation overwriting them and causing them to be
 		// deallocated and also in case of a GP fault in the library procedure
-		dwValue = (*pProc)();
+		retValue = (*pProc)();
 
 		// Reset the stack
 		_asm
@@ -1171,44 +1171,44 @@ void doBlah()
 					// Compiler should not generate as a return type, but if it does, treat as lpvoid
 				case ExtCallArgLPVOID:
 					pop(argCount);
-					replaceStackTopObjectWithNewObject(NewExternalAddress(reinterpret_cast<BYTE*>(dwValue));
+					replaceStackTopObjectWithNewObject(NewExternalAddress(reinterpret_cast<BYTE*>(retValue));
 					break;
 
 				case ExtCallArgCHAR:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char>(dwValue)));
+					replaceStackTopObjectNoRefCnt(NewChar(static_cast<char>(retValue)));
 					break;
 
 				case ExtCallArgBYTE:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<BYTE>(dwValue));
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<BYTE>(retValue));
 					break;
 
 				case ExtCallArgSBYTE:
 				{
 					pop(argCount);
-					char signedChar = static_cast<char>(dwValue);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SMALLINTEGER>(signedChar)));
+					char signedChar = static_cast<char>(retValue);
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SmallInteger>(signedChar)));
 					break;
 				}
 
 				case ExtCallArgWORD:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<WORD>(dwValue));
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<WORD>(retValue));
 					break;
 
 				case ExtCallArgSWORD:
 				{
 					pop(argCount);
-					SWORD signedWord = static_cast<SWORD>(dwValue);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SMALLINTEGER>(signedWord)));
+					SWORD signedWord = static_cast<SWORD>(retValue);
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SmallInteger>(signedWord)));
 					break;
 				}
 
 				case ExtCallArgHRESULT:
 				case ExtCallArgNTSTATUS:
 				{
-					HRESULT hresult = static_cast<HRESULT>(dwValue);
+					HRESULT hresult = static_cast<HRESULT>(retValue);
 					if (FAILED(hresult))
 						return primitiveFailure(NewSigned(hresult));	// Fail it, leaving stack as it was
 				}
@@ -1216,17 +1216,17 @@ void doBlah()
 
 				case ExtCallArgDWORD:
 					pop(argCount);
-					replaceObjectAtStackTopWith(NewUnsigned(dwValue));
+					replaceObjectAtStackTopWith(NewUnsigned(retValue));
 					break;
 
 				case ExtCallArgSDWORD:
 					pop(argCount);
-					replaceObjectAtStackTopWith(NewSigned(dwValue));
+					replaceObjectAtStackTopWith(NewSigned(retValue));
 					break;
 
 				case ExtCallArgBOOL:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(dwValue ? Pointers.True : Pointers.False);
+					replaceStackTopObjectNoRefCnt(retValue ? Pointers.True : Pointers.False);
 					break;
 
 				case ExtCallArgHANDLE:
@@ -1234,7 +1234,7 @@ void doBlah()
 					if (!dwValue)
 						replaceStackTopObjectNoRefCnt(Pointers.Nil);
 					else
-						replaceStackTopObjectWithNewObject(NewExternalHandle(static_cast<HANDLE>(dwValue)));
+						replaceStackTopObjectWithNewObject(NewExternalHandle(static_cast<HANDLE>(retValue)));
 					break;
 
 				case ExtCallArgDATE:
@@ -1253,13 +1253,13 @@ void doBlah()
 					if (!dwValue)
 						replaceStackTopObjectNoRefCnt(Pointers.Nil);
 					else
-						replaceStackTopObjectWithNewObject(NewString((const char*)dwValue));
+						replaceStackTopObjectWithNewObject(NewString((const char*)retValue));
 					break;
 
 				// For future use with User Primitive Kit
 				case ExtCallArgOOP:
 					pop(argCount);
-					ASSERT(!ObjectMemoryIsIntegerObject(dwValue));
+					ASSERT(!ObjectMemoryIsIntegerObject(retValue));
 					*m_registers.m_stackPointer = dwValue;
 					break;
 

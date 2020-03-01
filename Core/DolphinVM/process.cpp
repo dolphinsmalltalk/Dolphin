@@ -400,7 +400,7 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 		if (sem->isEmpty())
 		{
 			// There are no processes waiting on the semaphore - record the excess signal
-			SMALLINTEGER excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals) + 1;
+			SmallInteger excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals) + 1;
 #if defined(_DEBUG)
 			{
 				if ((excessSignals % 1000) == 0)
@@ -679,7 +679,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 	BYTE* pProc = reinterpret_cast<BYTE*>(actualActiveProcess());
 	BYTE* pFrame = reinterpret_cast<BYTE*>(m_registers.m_pActiveFrame);
 	HARDASSERT(pFrame > pProc);
-	SMALLUNSIGNED nOffset = pFrame - pProc;
+	SmallUinteger nOffset = pFrame - pProc;
 	pushSmallInteger(nOffset);
 
 	push(oopListArg);
@@ -1031,8 +1031,8 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 	if (proc->SuspendedFrame() == Oop(Pointers.Nil))
 		return NULL;
 
-	SMALLINTEGER newPriority = proc->Priority();
-	SMALLINTEGER activePriority = 0;
+	SmallInteger newPriority = proc->Priority();
+	SmallInteger activePriority = 0;
 	// It is important that this answer the newProcess if there is one, as it can be called
 	// repeatedly during the same primitive, and so must find the newProcess with the highest
 	// priority, so we use the activeProcessPointer() which returns either the activeProcess
@@ -1230,7 +1230,7 @@ Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp, primargcount_t)
 	SemaphoreOTE* oteSem = reinterpret_cast<SemaphoreOTE*>(semaphorePointer);
 	Semaphore* sem = oteSem->m_location;
 
-	SMALLINTEGER signals = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger signals = ObjectMemoryIntegerValueOf(integerPointer);
 	HARDASSERT(ObjectMemoryIsIntegerObject(sem->m_excessSignals));
 
 	if (!sem->isEmpty())
@@ -1261,7 +1261,7 @@ Oop* __fastcall Interpreter::primitiveWait(Oop* const sp, primargcount_t)
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Must be a SmallInteger
 	}
 
-	SMALLINTEGER timeout = ObjectMemoryIntegerValueOf(oopTimeout);
+	SmallInteger timeout = ObjectMemoryIntegerValueOf(oopTimeout);
 	if (timeout != INFINITE && timeout != 0)
 		return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 
@@ -1320,13 +1320,13 @@ BOOL Interpreter::FastYield()
 	ProcessorScheduler* processor = scheduler();
 	Process* activeProc = actualActiveProcess();
 
-	SMALLINTEGER activePriority = activeProc->Priority();
+	SmallInteger activePriority = activeProc->Priority();
 
 	HARDASSERT(processor->m_processLists->m_oteClass == Pointers.ClassArray);
 	ArrayOTE* oteLists = processor->m_processLists;
 	Array* processLists = oteLists->m_location;
 
-	HARDASSERT(activePriority >= 1 && activePriority <= static_cast<SMALLINTEGER>(oteLists->pointersSize()));
+	HARDASSERT(activePriority >= 1 && activePriority <= static_cast<SmallInteger>(oteLists->pointersSize()));
 
 	LinkedListOTE* oteList = reinterpret_cast<LinkedListOTE*>(processLists->m_elements[activePriority - 1]);
 	LinkedList* processList = oteList->m_location;
@@ -1371,7 +1371,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 		m_excessSignals = ZeroPointer;
 	}
 
-	SMALLINTEGER excessSignals = ObjectMemoryIntegerValueOf(m_excessSignals);
+	SmallInteger excessSignals = ObjectMemoryIntegerValueOf(m_excessSignals);
 
 	DWORD dwAnswer;
 	if (excessSignals > 0)
@@ -1448,7 +1448,7 @@ Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, primargcount_t argum
 // Does not modify pHome or pMethod
 Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, primargcount_t argumentCount)
 {
-	SMALLINTEGER steps;
+	SmallInteger steps;
 	switch (argumentCount)
 	{
 	case 0:
@@ -1657,7 +1657,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp, primargcoun
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Must be a SmallInteger
 	}
 
-	SMALLUNSIGNED newPriority = ObjectMemoryIntegerValueOf(argPointer);
+	SmallUinteger newPriority = ObjectMemoryIntegerValueOf(argPointer);
 	ProcessorScheduler* sched = scheduler();
 	ArrayOTE* listsArrayPointer = sched->m_processLists;
 	if (newPriority > listsArrayPointer->pointersSize())
@@ -1672,7 +1672,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp, primargcoun
 	ProcessOTE* receiverPointer = reinterpret_cast<ProcessOTE*>(*(sp-1));
 
 	Process* process = receiverPointer->m_location;
-	SMALLUNSIGNED oldPriority = process->Priority();
+	SmallUinteger oldPriority = process->Priority();
 	process->SetPriority(newPriority);
 
 	// Answer the previous priority (we do this now in case a Process switch occurs
@@ -1723,7 +1723,7 @@ Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp, primargcount
 	if (!ObjectMemoryIsIntegerObject(oopIndex))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
-	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(oopIndex);
+	SmallUinteger which = ObjectMemoryIntegerValueOf(oopIndex);
 	if (which <= 0 || which > NumPointers)
 		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// out of bounds
 
@@ -1757,7 +1757,7 @@ Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp, primargcount
 	}
 
 	Oop oldInterval = ObjectMemoryIntegerObjectOf(m_nInputPollInterval);
-	SMALLINTEGER newInterval = ObjectMemoryIntegerValueOf(argPointer);
+	SmallInteger newInterval = ObjectMemoryIntegerValueOf(argPointer);
 
 	if (newInterval < 0)
 		CancelSampleTimer();

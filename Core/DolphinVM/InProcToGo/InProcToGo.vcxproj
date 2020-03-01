@@ -255,9 +255,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="..\InProcStub\CoWait.cpp">
-      <PrecompiledHeader />
-    </ClCompile>
     <ClCompile Include="dlldatax.c">
       <PrecompiledHeader />
     </ClCompile>
@@ -288,7 +285,6 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CoWait.h" />
     <ClInclude Include="dlldatax.h" />
     <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />

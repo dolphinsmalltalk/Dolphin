@@ -156,8 +156,8 @@ extern "C" void __fastcall callPrimitiveValue(unsigned, unsigned numArgs);
 
 #ifdef _DEBUG
 	#define MAXCACHEMISSES 100000
-	DWORD cacheHits = 0;
-	static DWORD cacheMisses = 0;
+	uintptr_t cacheHits = 0;
+	static uintptr_t cacheMisses = 0;
 
 #endif	
 
@@ -196,7 +196,7 @@ inline BOOL Interpreter::sampleInput()
 	// Prevent further sampling by resetting the poll counter
 	ResetInputPollCounter();
 
-	if ((SDWORD)m_nInputPollInterval > 0)
+	if (m_nInputPollInterval > 0)
 	{
 		// Look for any input in the queue, not just for new stuff
 		if (((::GetQueueStatus(m_dwQueueStatusMask) >> 16) & m_dwQueueStatusMask) != 0)
@@ -351,7 +351,7 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 	// Here we manually inline the lookup method for performance reasons as compiler
 	// will not inline everything we need from separate routines.
 	const BehaviorOTE* currentClass = classPointer;
-	const SMALLUNSIGNED targetSelectorHash = targetSelector->m_idHash;
+	const SmallUinteger targetSelectorHash = targetSelector->m_idHash;
 	const Oop nil = Oop(Pointers.Nil);
 	do
 	{
@@ -362,8 +362,8 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 			// mask is the number of keys in the dictionary (which is pointer size - header - 2) minus 1
 			// as the size is a power of 2, thus we can avoid a modulus operation which is relatively slow
 			// requiring a division instruction
-			SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
-			SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
+			SmallUinteger lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
+			SmallUinteger index = targetSelectorHash & lastKeyIndex;
 			MethodDictionary* dict = methodDictionary->m_location;
 
 			bool wrapped = false;
@@ -460,7 +460,7 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(Beha
 
 	// Check for recursive not understood error
 	if (m_oopMessageSelector == Pointers.DoesNotUnderstandSelector)
-		RaiseFatalError(IDP_RECURSIVEDNU, 2, reinterpret_cast<DWORD>(classPointer), reinterpret_cast<DWORD>(m_oopMessageSelector->m_location));
+		RaiseFatalError(IDP_RECURSIVEDNU, 2, reinterpret_cast<uintptr_t>(classPointer), reinterpret_cast<uintptr_t>(m_oopMessageSelector->m_location));
 
 	createActualMessage(argCount);
 	m_oopMessageSelector = Pointers.DoesNotUnderstandSelector;
@@ -671,7 +671,7 @@ void Interpreter::nonLocalReturnValueTo(Oop resultPointer, Oop framePointer)
 				*(sp+1) = resultPointer;
 				
 				// Push the destination return context
-				SMALLUNSIGNED frameIndex = pProcess->indexOfSP(reinterpret_cast<Oop*>(pFrame));
+				SmallUinteger frameIndex = pProcess->indexOfSP(reinterpret_cast<Oop*>(pFrame));
 				*(sp+2) = ObjectMemoryIntegerObjectOf(frameIndex); // pushNoRefCnt(framePointer);
 				m_registers.m_stackPointer = sp+2;
 
@@ -706,7 +706,7 @@ void Interpreter::nonLocalReturnValueTo(Oop resultPointer, Oop framePointer)
 #pragma code_seg(INTERP_SEG)
 
 // Create a new Block from the current active frame with the specified number of arguments
-BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
+BlockOTE* __fastcall Interpreter::blockCopy(uint32_t ext)
 {
 	BlockCopyExtension extension = *reinterpret_cast<BlockCopyExtension*>(&ext);
 
@@ -816,7 +816,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 	// Here we manually inline the lookup method for performance reasons as compiler
 	// will not inline both lookupMethodInClass and lookupMethodInDictionary
 	const BehaviorOTE* currentClass=classPointer;
-	const SMALLUNSIGNED targetSelectorHash = targetSelector->m_idHash;
+	const SmallUinteger targetSelectorHash = targetSelector->m_idHash;
 	const Oop nil = Oop(Pointers.Nil);
 	do
 	{
@@ -824,9 +824,9 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 		const MethodDictOTE* methodDictionary = current->m_methodDictionary;
 		if ((Oop)methodDictionary != nil)
 		{
-			SMALLUNSIGNED lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
+			SmallUinteger lastKeyIndex = methodDictionary->pointersSize() - (ObjectHeaderSize + MethodDictionary::FixedSize + 1);
 			ASSERT((((lastKeyIndex + 1) >> 1) << 1) == (lastKeyIndex + 1));
-			SMALLUNSIGNED index = targetSelectorHash & lastKeyIndex;
+			SmallUinteger index = targetSelectorHash & lastKeyIndex;
 
 			const MethodDictionary* dict = methodDictionary->m_location;
 

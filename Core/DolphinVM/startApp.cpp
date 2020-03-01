@@ -22,7 +22,7 @@ HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)
 
 	// retrieve the file name of this process, ie this .exe
 	wchar_t fileName[MAX_PATH] = L"";
-	GetModuleFileName(hModule, fileName, sizeof(fileName) - 1);
+	::GetModuleFileName(hModule, fileName, _countof(fileName));
 
 	hr = piDolphin->Initialise(hModule, fileName, imageFile.GetRawData(), imageFile.GetRawSize(), /*IsDevSys*/0);
 	if (FAILED(hr))

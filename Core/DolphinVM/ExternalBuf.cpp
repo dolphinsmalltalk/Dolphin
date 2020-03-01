@@ -80,7 +80,7 @@ Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, primargco
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, primargcount_t argCount)
+Oop * __fastcall Interpreter::primitiveUint32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -88,7 +88,7 @@ Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, primargcount_t
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		const int size = oteReceiver->bytesSizeForUpdate();
-		SMALLINTEGER offset = ObjectMemoryIntegerValueOf(oopOffset);
+		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 		if (offset >= 0 && static_cast<int>(offset + sizeof(uint32_t)) <= size)
 		{
 			// Store into byte object
@@ -138,7 +138,7 @@ Oop * __fastcall Interpreter::primitiveDWORDAtPut(Oop * const sp, primargcount_t
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectDWORDAtPut(Oop * const sp, primargcount_t argCount)
+Oop * __fastcall Interpreter::primitiveIndirectUint32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -148,7 +148,7 @@ Oop * __fastcall Interpreter::primitiveIndirectDWORDAtPut(Oop * const sp, primar
 		// When storing into a buffer through a pointer, any offset is allowed. Note that this is unsafe, just like manipulating memory
 		// through pointers in C/C++.
 
-		SMALLINTEGER offset = ObjectMemoryIntegerValueOf(oopOffset);
+		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 		// Store into byte object
 		Oop oopValue = *sp;
 		uint32_t* pBuf = reinterpret_cast<uint32_t*>(static_cast<uint8_t*>(oteReceiver->m_location->m_pointer) + offset);
@@ -190,7 +190,7 @@ Oop * __fastcall Interpreter::primitiveIndirectDWORDAtPut(Oop * const sp, primar
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveSDWORDAtPut(Oop * const sp, unsigned)
+Oop * __fastcall Interpreter::primitiveInt32AtPut(Oop * const sp, primargcount_t)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -198,7 +198,7 @@ Oop * __fastcall Interpreter::primitiveSDWORDAtPut(Oop * const sp, unsigned)
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		const int size = oteReceiver->bytesSizeForUpdate();
-		SMALLINTEGER offset = ObjectMemoryIntegerValueOf(oopOffset);
+		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 		if (offset >= 0 && static_cast<int>(offset + sizeof(int32_t)) <= size)
 		{
 			// Store into byte object
@@ -246,7 +246,7 @@ Oop * __fastcall Interpreter::primitiveSDWORDAtPut(Oop * const sp, unsigned)
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectSDWORDAtPut(Oop * const sp, primargcount_t argCount)
+Oop * __fastcall Interpreter::primitiveIndirectInt32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -256,7 +256,7 @@ Oop * __fastcall Interpreter::primitiveIndirectSDWORDAtPut(Oop * const sp, prima
 		// When storing into a buffer through a pointer, any offset is allowed. Note that this is unsafe, just like manipulating memory
 		// through pointers in C/C++.
 
-		SMALLINTEGER offset = ObjectMemoryIntegerValueOf(oopOffset);
+		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 		// Store into byte object
 		Oop oopValue = *sp;
 		int32_t* pBuf = reinterpret_cast<int32_t*>(static_cast<uint8_t*>(oteReceiver->m_location->m_pointer) + offset);

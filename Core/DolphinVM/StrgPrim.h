@@ -79,7 +79,7 @@ template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnySt
 	{
 		Utf16StringBuf receiverW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
 		return OpW()(receiverW, receiverW.Count,
-			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(WCHAR));
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
 	}
 
 	case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):
@@ -111,27 +111,27 @@ template <typename T, class OpA, class OpW, bool Utf8OpA = false> static T AnySt
 	{
 		Utf16StringBuf receiverW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
 		return OpW()(receiverW, receiverW.Count,
-			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(WCHAR));
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
 	}
 
 	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
 	{
 		Utf16StringBuf argW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
 		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters,
-			oteReceiver->getSize() / sizeof(WCHAR), argW, argW.Count);
+			oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
 	}
 
 	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
 	{
 		Utf16StringBuf argW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
-		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(WCHAR), argW, argW.Count);
+		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
 	}
 
 	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf16):
 	{
 		return OpW()(
-			reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(WCHAR),
-			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(WCHAR));
+			reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU),
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
 	}
 	default:
 		return OpA()(reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize(),

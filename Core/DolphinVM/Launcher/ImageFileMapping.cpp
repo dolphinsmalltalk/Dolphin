@@ -33,7 +33,15 @@ int ImageFileMapping::Open(LPCWSTR szImageName)
 	if (m_pData == NULL)
 		return -3;
 
-	m_dwSize = GetFileSize(m_hFile, NULL);
+	ULARGE_INTEGER fileSize;
+	fileSize.LowPart = GetFileSize(m_hFile, &fileSize.HighPart);
+#ifdef _M_X64
+	m_size = fileSize.QuadPart;
+#else
+	if (fileSize.HighPart != 0)
+		return -4;
+	m_size = fileSize.LowPart;
+#endif
 
 	return 0;
 }

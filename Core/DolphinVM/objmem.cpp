@@ -54,8 +54,8 @@ OTE* 	ObjectMemory::m_pOT;					// The Object Table itself
 OTE*	ObjectMemory::m_pFreePointerList;		// Head of list of free Object Table Entries
 OTEFlags ObjectMemory::m_spaceOTEBits[OTEFlags::NumSpaces];
 
-DWORD ObjectMemory::m_imageVersionMajor;
-DWORD ObjectMemory::m_imageVersionMinor;
+uint32_t ObjectMemory::m_imageVersionMajor;
+uint32_t ObjectMemory::m_imageVersionMinor;
 
 // The number of OT pages to be allocated each time an OT overflow occurs
 // Higher numbers could waste more space, but will reduce the frequency of the overflows
@@ -376,9 +376,9 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 			oteClass->countUp();
 			classStats->m_elements[i] = reinterpret_cast<Oop>(oteClass);
 			const InstStats& stats = (*it).second;
-			SMALLINTEGER count = stats.count;
+			SmallInteger count = stats.count;
 			classStats->m_elements[i+1] = integerObjectOf(count);
-			SMALLINTEGER bytesUsed = stats.bytes;
+			SmallInteger bytesUsed = stats.bytes;
 			classStats->m_elements[i+2] = integerObjectOf(bytesUsed);
 		}
 	}
@@ -400,9 +400,9 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 			if (isBehavior(obj) && (it = counts.find(reinterpret_cast<BehaviorOTE*>(obj))) != end)
 			{
 				const InstStats& stats = (*it).second;
-				SMALLINTEGER count = stats.count;
+				SmallInteger count = stats.count;
 				classStats->m_elements[j+1] = integerObjectOf(count);
-				SMALLINTEGER bytesUsed = stats.bytes;
+				SmallInteger bytesUsed = stats.bytes;
 				classStats->m_elements[j+2] = integerObjectOf(bytesUsed);
 			}
 			else
@@ -713,9 +713,9 @@ void ObjectMemory::Reset()
 
 #pragma code_seg(GC_SEG)
 
-SMALLINTEGER ObjectMemory::OopsLeft()
+SmallInteger ObjectMemory::OopsLeft()
 {
-	SMALLINTEGER count = 0;
+	SmallInteger count = 0;
 	const OTE* pEnd = m_pOT+m_nOTSize;
 	for (OTE* ote=m_pOT+OTBase; ote < pEnd; ote++)
 		if (ote->isFree())

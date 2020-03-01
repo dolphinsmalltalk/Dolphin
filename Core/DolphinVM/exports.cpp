@@ -19,7 +19,7 @@ Exports from the VM (mainly used by the image)
 // This little function allows us to make use of the powerful external
 // call type conversion facilities!
 //
-__declspec(naked) DWORD __stdcall AnswerDWORD(DWORD /*arg*/)
+__declspec(naked) uint32_t __stdcall AnswerDWORD(uint32_t /*arg*/)
 {
 	_asm
 	{
@@ -32,7 +32,7 @@ __declspec(naked) DWORD __stdcall AnswerDWORD(DWORD /*arg*/)
 // does too much work, or returns the structure in the WRONG way (which it does if we
 // add a constructor by attempting to return as a >8 byte structure rather than in EAX/EDX)
 
-__declspec(naked) __int64 __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
+__declspec(naked) uint64_t __stdcall AnswerQWORD(uint32_t /*dw1*/, uint32_t /*dw2*/)
 {
 	// In fact the compiler generates such crap code, we'll just do the job oursel
 	_asm 
@@ -48,16 +48,16 @@ __declspec(naked) __int64 __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
 // how to return it.
 struct DQWORD
 {
-	DWORD	m_dw1;
-	DWORD	m_dw2;
-	DWORD	m_dw3;
-	DWORD	m_dw4;
+	uint32_t	m_dw1;
+	uint32_t	m_dw2;
+	uint32_t	m_dw3;
+	uint32_t	m_dw4;
 
-	DQWORD(DWORD dw1, DWORD dw2, DWORD dw3, DWORD dw4) :
+	DQWORD(uint32_t dw1, uint32_t dw2, uint32_t dw3, uint32_t dw4) :
 		m_dw1(dw1), m_dw2(dw2), m_dw3(dw3), m_dw4(dw4) {}
 };
 
-DQWORD __stdcall AnswerDQWORD(DWORD dw1, DWORD dw2, DWORD dw3, DWORD dw4)
+DQWORD __stdcall AnswerDQWORD(uint32_t dw1, uint32_t dw2, uint32_t dw3, uint32_t dw4)
 {
 	return DQWORD(dw1, dw2, dw3, dw4);
 }
@@ -124,7 +124,7 @@ extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 									(KEY_READ|KEY_WRITE)) == ERROR_SUCCESS)
 		{
 			wchar_t vmFileName[MAX_PATH+1];
-			::GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), vmFileName, sizeof(vmFileName) - 1);
+			::GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), vmFileName, _countof(vmFileName) - 1);
 			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
 			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
 												EVENTLOG_WARNING_TYPE|EVENTLOG_INFORMATION_TYPE));

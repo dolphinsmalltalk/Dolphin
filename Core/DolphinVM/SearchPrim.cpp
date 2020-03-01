@@ -25,12 +25,12 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter3);				// to not an integer
-	const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
+	const SmallInteger to = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);				// from not an integer
-	SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger from = ObjectMemoryIntegerValueOf(integerPointer);
 
 	Oop valuePointer = *(sp - 2);
 	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 3));
@@ -53,7 +53,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 				const MWORD byteValue = ObjectMemoryIntegerValueOf(valuePointer);
 				if (byteValue < 256)	// Only worth looking for 0..255
 				{
-					const SMALLINTEGER length = oteBytes->bytesSize();
+					const SmallInteger length = oteBytes->bytesSize();
 					// We can only be in here if to>=from, so if to>=1, then => from >= 1
 					// furthermore if to <= length then => from <= length
 					if (from < 1 || to > length)
@@ -174,7 +174,7 @@ Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t
 	Oop integerPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(integerPointer))
 	{
-		const SMALLINTEGER startingAt = ObjectMemoryIntegerValueOf(integerPointer);
+		const SmallInteger startingAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 		Oop oopSubString = *(sp - 1);
 		BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));

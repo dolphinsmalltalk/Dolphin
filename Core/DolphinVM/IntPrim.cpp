@@ -75,7 +75,7 @@ Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, primargcount_t)
 		{
 			// If receiver -ve allMask could be true, depending on comparison with bottom limb
 			// If receiver +ve, can never be true
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			uint32_t* digits = oteArg->m_location->m_digits;
 			if ((r & digits[0]) != 0)
 			{
@@ -123,7 +123,7 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, primargcount_t)
 		{
 			// If receiver -ve allMask could be true, depending on comparison with bottom limb
 			// If receiver +ve, can never be true
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			uint32_t argLow = oteArg->m_location->m_digits[0];
 			*(sp - 1) = reinterpret_cast<Oop>(r < 0 && ((static_cast<uint32_t>(r) & argLow) == argLow) ? Pointers.True : Pointers.False);
 			return sp - 1;
@@ -135,7 +135,7 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, primargcount_t)
 
 Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, primargcount_t)
 {
-	SMALLINTEGER value = *(sp) ^ 1;
+	SmallInteger value = *(sp) ^ 1;
 	unsigned long index;
 	_BitScanForward(&index, value);
 	*sp = ObjectMemoryIntegerObjectOf(index);
@@ -145,7 +145,7 @@ Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, primargcount_t)
 Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, primargcount_t)
 {
 	Oop oopInteger = *sp;
-	SMALLINTEGER value = static_cast<SMALLINTEGER>(oopInteger);
+	SmallInteger value = static_cast<SmallInteger>(oopInteger);
 	if (value >= 0)
 	{
 		unsigned long index;
@@ -243,7 +243,7 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, primargcount_t)
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			if (r != 0)
 			{
 				LargeIntegerOTE* oteResult = LargeInteger::Add(oteArg, r);
@@ -277,8 +277,8 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, primargcount_t)
 		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>+
 		// Usually SmallInteger addition is performed inline in the bytecode interpreter
 
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 
 		StoreSigned32()(sp - 1, r + a);
 		return sp - 1;
@@ -297,9 +297,9 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
 			Oop oopNegatedArg = LargeInteger::Negate(reinterpret_cast<LargeIntegerOTE*>(oteArg));
 			if (ObjectMemoryIsIntegerObject(oopNegatedArg))
 			{
-				SMALLINTEGER a = ObjectMemoryIntegerValueOf(oopNegatedArg);
-				SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-				SMALLINTEGER result = a + r;
+				SmallInteger a = ObjectMemoryIntegerValueOf(oopNegatedArg);
+				SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+				SmallInteger result = a + r;
 
 				if (ObjectMemoryIsIntegerValue(result))
 				{
@@ -317,7 +317,7 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
 			}
 			else
 			{
-				SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+				SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 				if (r != 0)
 				{
 					LargeIntegerOTE* oteNegatedArg = reinterpret_cast<LargeIntegerOTE*>(oopNegatedArg);
@@ -356,8 +356,8 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
 		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>+
 		// Usually SmallInteger addition is performed inline in the bytecode interpreter
 
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 		StoreSigned32()(sp - 1, r - a);
 		return sp - 1;
 	}
@@ -372,7 +372,7 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, primargcount_t)
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			if (r != 0)
 			{
 				Oop oopResult = LargeInteger::Mul(oteArg, r);
@@ -405,8 +405,8 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, primargcount_t)
 		// However this doesn't matter much because this code path is only ever used when #perform'ing SmallInteger>>*
 		// Usually SmallInteger multiplication is performed inline in the bytecode interpreter
 
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 		int64_t result = __emul(r, a);
 
 		Oop oopResult = Integer::NewSigned64(result);
@@ -464,12 +464,12 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, primargcount_t)
 		// However this doesn't matter to much because this code path is used when #perform'ing SmallInteger>>/, or 
 		// when attempted division was inexact
 
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 		// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction, so this is better 
 		// than calling a function written in inline assembler or the CRT DLL ldiv function.
-		SMALLINTEGER quot = r / a;
-		SMALLINTEGER rem = r % a;
+		SmallInteger quot = r / a;
+		SmallInteger rem = r % a;
 
 		if (rem == 0)
 		{
@@ -531,12 +531,12 @@ Oop* __fastcall Interpreter::primitiveMod(Oop* const sp, primargcount_t)
 	Oop arg = *sp;
 	if (ObjectMemoryIsIntegerObject(arg))
 	{
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 		// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction, so this is better 
 		// than calling a function written in inline assembler or the CRT DLL ldiv function.
-		SMALLINTEGER quot = r / a;
-		SMALLINTEGER rem = r % a;
+		SmallInteger quot = r / a;
+		SmallInteger rem = r % a;
 
 		if (quot > 0 || rem == 0 || !((a ^ rem) < 0))
 		{
@@ -567,11 +567,11 @@ Oop* __fastcall Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
 	Oop arg = *sp;
 	if (ObjectMemoryIsIntegerObject(arg))
 	{
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 		// It seems that the VC++ compiler is finally (as of VS2017) able to recognise this sequence as requiring only a single division instruction
-		SMALLINTEGER quo = r / a;
-		SMALLINTEGER rem = r % a;
+		SmallInteger quo = r / a;
+		SmallInteger rem = r % a;
 
 		if (quo > 0 || rem == 0 || !((a ^ rem) < 0))
 		{
@@ -589,7 +589,7 @@ Oop* __fastcall Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(arg);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			// Result must be either zero or -1, depending on signs of the operands
 			*(sp - 1) = r == 0 || (r ^ oteArg->m_location->sign(oteArg)) >= 0
 				? ZeroPointer
@@ -611,8 +611,8 @@ Oop* __fastcall Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
 	Oop arg = *sp;
 	if (ObjectMemoryIsIntegerObject(arg))
 	{
-		SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
-		SMALLINTEGER a = ObjectMemoryIntegerValueOf(arg);
+		SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
+		SmallInteger a = ObjectMemoryIntegerValueOf(arg);
 
 		StoreSigned32()(sp - 1, r / a);
 		return sp - 1;
@@ -624,7 +624,7 @@ Oop* __fastcall Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
 		{
 			// Aside from the one case of `SmallInteger minimum quo: SmallInteger maximum + 1` the result is always zero because
 			// every other LargeInteger is larger in magnitude than every other SmallInteger.
-			SMALLINTEGER r = ObjectMemoryIntegerValueOf(receiver);
+			SmallInteger r = ObjectMemoryIntegerValueOf(receiver);
 			*(sp - 1) = !(r == MinSmallInteger && oteArg->getWordSize() == 1 && oteArg->m_location->m_digits[0] == MaxSmallInteger+1)
 							? ZeroPointer
 							: MinusOnePointer;
@@ -667,9 +667,9 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerAt(Oop* const sp, primargcount
 	Oop oopIndex = *sp;
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex);
+		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex);
 
-		SMALLINTEGER value = abs(ObjectMemoryIntegerValueOf(*(sp - 1)));
+		SmallInteger value = abs(ObjectMemoryIntegerValueOf(*(sp - 1)));
 		if (index > 0 && index <= 4)
 		{
 			uint8_t byte = (value >> (index - 1) * 8) & 0xff;

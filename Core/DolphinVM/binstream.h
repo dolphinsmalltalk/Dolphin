@@ -39,16 +39,16 @@ class imbinstream : public ibinstream
 {
 protected:
 	BYTE*	m_pBytes;
-	UINT	m_nPosition;
-	UINT	m_cBytes;
+	size_t	m_nPosition;
+	size_t	m_cBytes;
 
 public:
-	imbinstream(void* pBytes=NULL, UINT cBytes=0) : m_nPosition(0)
+	imbinstream(void* pBytes=NULL, size_t cBytes=0) : m_nPosition(0)
 	{
 		initialize(pBytes, cBytes);
 	}
 
-	void initialize(void* pBytes, UINT cBytes)
+	void initialize(void* pBytes, size_t cBytes)
 	{
 		m_pBytes = static_cast<BYTE*>(pBytes);
 		m_cBytes = cBytes;
@@ -81,7 +81,7 @@ public:
 
 	virtual bool read(void* pbOut, size_t cRequested)
 	{
-		UINT available = m_cBytes - m_nPosition;
+		size_t available = m_cBytes - m_nPosition;
 		size_t cRead = (cRequested > available) ? available: cRequested;
         memcpy(pbOut, m_pBytes+m_nPosition, cRead);
 		m_nPosition += cRead;

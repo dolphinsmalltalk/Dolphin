@@ -428,7 +428,7 @@ EXTERN ZCTHIGHWATER:near32
 
 ASYNCPENDING			EQU		?m_bAsyncPending@Interpreter@@0JC
 EXTERN ASYNCPENDING:DWORD
-NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@KPAV?$TOTE@VBehavior@ST@@@@@Z
+NEWDWORD				EQU		?NewUint32@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@IPAV?$TOTE@VBehavior@ST@@@@@Z
 extern NEWDWORD:near32
 LINEWSIGNED				EQU		?liNewSigned32@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
 extern LINEWSIGNED:near32

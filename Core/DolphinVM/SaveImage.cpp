@@ -107,7 +107,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 	memset(&header, 0, sizeof(header));
 
 	header.versionMS = versionInfo.dwProductVersionMS;
-	SMALLINTEGER imageVersionMinor = isIntegerObject(_Pointers.ImageVersionMinor) ? integerValueOf(_Pointers.ImageVersionMinor) : 0;
+	SmallInteger imageVersionMinor = isIntegerObject(_Pointers.ImageVersionMinor) ? integerValueOf(_Pointers.ImageVersionMinor) : 0;
 	header.versionLS = imageVersionMinor == 0 ? LOWORD(versionInfo.dwProductVersionLS) << 16 : imageVersionMinor;
 
 	header.flags.bIsCompressed = nCompressionLevel != 0;
@@ -217,7 +217,7 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 		unsigned nFree = 0;
 	#endif
 
-	DWORD dwDataSize = 0;
+	size_t dataSize = 0;
 	const OTE* pEnd = m_pOT+pHeader->nTableSize;	// Loop invariant
 	for (OTE* ote=m_pOT; ote < pEnd; ote++)
 	{
@@ -236,7 +236,7 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 
 				// We only write the max allocation size from the header. The rest of the info (fxstate) is not preserved across image saves.
 				imageFile.write(pObjHeader, sizeof(MWORD));
-				dwDataSize += sizeof(MWORD);
+				dataSize += sizeof(MWORD);
 			}
 
 			MWORD bytesToWrite = ote->getSize() + (ote->isNullTerminated() * ImageNullTerms);
@@ -244,7 +244,7 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 
 			if (imageFile.good() == 0)
 				return false;
-			dwDataSize += bytesToWrite;
+			dataSize += bytesToWrite;
 		}
 		else
 		{
@@ -255,7 +255,7 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 	}
 
 	#ifdef _DEBUG
-		TRACESTREAM << numObjects<< L" objects saved totalling " << std::dec << dwDataSize 
+		TRACESTREAM << numObjects<< L" objects saved totalling " << std::dec << dataSize 
 				<< L" bytes, " << nFree<< L" free OTEs"
 				// Compressed stream does not support seeking and sets to bad state
 				//<< L", writing checksum at offset " << imageFile.tellp() 
@@ -263,7 +263,7 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 	#endif
 
 	// Append the amount of data written as a checksum.
-	return imageFile.write(&dwDataSize, sizeof(DWORD));
+	return imageFile.write(&dataSize, sizeof(size_t));
 }
 
 #endif

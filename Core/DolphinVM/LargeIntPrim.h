@@ -10,7 +10,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 
 	if (ObjectMemoryIsIntegerObject(oopArg))
 	{
-		SMALLINTEGER arg = ObjectMemoryIntegerValueOf(oopArg);
+		SmallInteger arg = ObjectMemoryIntegerValueOf(oopArg);
 		if (arg != 0)
 		{
 			result = OpSingle()(oteReceiver, arg);
@@ -49,7 +49,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 
 	if (ObjectMemoryIsIntegerObject(oopArg))
 	{
-		SMALLINTEGER arg = ObjectMemoryIntegerValueOf(oopArg);
+		SmallInteger arg = ObjectMemoryIntegerValueOf(oopArg);
 		if (arg != 0)
 		{
 			auto result = OpSingle()(oteReceiver, arg);
@@ -189,7 +189,7 @@ namespace Li
 
 	struct MulSingle
 	{
-		__forceinline Oop operator()(const LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit) const
+		__forceinline Oop operator()(const LargeIntegerOTE* oteInner, SmallInteger outerDigit) const
 		{
 			return LargeInteger::Mul(oteInner, outerDigit);
 		}
@@ -197,7 +197,7 @@ namespace Li
 
 	struct AddSingle
 	{
-		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, const SMALLINTEGER operand) const
+		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, const SmallInteger operand) const
 		{
 			return LargeInteger::Add(oteLI, operand);
 		}
@@ -213,7 +213,7 @@ namespace Li
 
 	struct SubSingle
 	{
-		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, SMALLINTEGER operand) const
+		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteLI, SmallInteger operand) const
 		{
 			return LargeInteger::Sub(oteLI, operand);
 		}
@@ -237,7 +237,7 @@ namespace Li
 
 	struct BitAndSingle
 	{
-		__forceinline Oop operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
+		__forceinline Oop operator()(const LargeIntegerOTE* oteA, SmallInteger mask) const
 		{
 			return LargeInteger::BitAnd(oteA, mask);
 		}
@@ -256,7 +256,7 @@ namespace Li
 	// mask.
 	struct BitOrSingle
 	{
-		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
+		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SmallInteger mask) const
 		{
 			return LargeInteger::BitOr(oteA, mask);
 		}
@@ -274,7 +274,7 @@ namespace Li
 	// mask.
 	struct BitXorSingle
 	{
-		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SMALLINTEGER mask) const
+		__forceinline LargeIntegerOTE* operator()(const LargeIntegerOTE* oteA, SmallInteger mask) const
 		{
 			return LargeInteger::BitXor(oteA, mask);
 

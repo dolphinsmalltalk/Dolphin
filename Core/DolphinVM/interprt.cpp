@@ -102,7 +102,7 @@ DWORD Interpreter::m_dwQueueStatusMask;
 #endif
 
 #pragma code_seg(INIT_SEG)
-HRESULT Interpreter::initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
+HRESULT Interpreter::initialize(const wchar_t* szFileName, LPVOID imageData, size_t imageSize, bool isDevSys)
 {
 	HRESULT hr = initializeBeforeLoad();
 	if (FAILED(hr))
@@ -406,18 +406,18 @@ void Interpreter::interpret()
 #pragma warning(pop)
 	{
 		// Using Win32 structured exception handling here NOT C++
-		DWORD dwCode;
+		DWORD exceptionCode;
 		__try
 		{
 			_asm jmp byteCodeLoop
 		}
 		// I'd like to just test for IS_ERROR() here, but due to some macro nastiness
 		// it GPFs in a release build
-		__except ((dwCode = GetExceptionCode()) > SE_VMCALLBACKUNWIND
+		__except ((exceptionCode = GetExceptionCode()) > SE_VMCALLBACKUNWIND
 			? interpreterExceptionFilter(GetExceptionInformation())
 			: EXCEPTION_CONTINUE_SEARCH)
 		{
-			TRACE(L"interpret: Looping after exception %#x\n\r", dwCode);
+			TRACE(L"interpret: Looping after exception %#x\n\r", exceptionCode);
 		}
 	}
 	// We don't tend to get here as callback returns go to the enclosing exception handler
@@ -681,20 +681,20 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	// Determine if the fault is a stack overflow, and if so try
 	// growing the stack. If the stack has reached max. size, then
 	// pass control to the exception handler
-	DWORD dwAddress = pExRec->ExceptionInformation[1];
+	ULONG_PTR address = pExRec->ExceptionInformation[1];
 
 	VirtualObjectHeader* pBase = actualActiveProcess()->getHeader();
-	MWORD activeProcAlloc = pBase->getCurrentAllocation();
-	DWORD dwNext = DWORD(pBase) + activeProcAlloc;
+	uintptr_t activeProcAlloc = pBase->getCurrentAllocation();
+	uintptr_t dwNext = reinterpret_cast<uintptr_t>(pBase) + activeProcAlloc;
 
 #ifdef OAD
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"Access violation: " << LPVOID(dwAddress)<< L", stack top " << LPVOID(dwNext) << std::endl;
+		TRACESTREAM<< L"Access violation: " << reinterpret_cast<LPVOID>(address)<< L", stack top " << reinterpret_cast<LPVOID>(dwNext) << std::endl;
 	}
 #endif
 
-	if (dwAddress >= dwNext && dwAddress <= dwNext + sizeof(StackFrame))
+	if (address >= dwNext && address <= dwNext + sizeof(StackFrame))
 	{
 #ifdef OAD
 		{
@@ -744,7 +744,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		else
 		{
 			// A crash will soon result, and there's nowt we can do but to terminate
-			RaiseFatalError(IDP_STACKOVERFLOW, 4, actualActiveProcessPointer()->getWordSize(), dwNext, dwAddress, activeProcAlloc);
+			RaiseFatalError(IDP_STACKOVERFLOW, 4, actualActiveProcessPointer()->getWordSize(), dwNext, address, activeProcAlloc);
 		}
 	}
 	else

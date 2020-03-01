@@ -165,7 +165,7 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Size not a positive SmallInteger
 
-	SMALLINTEGER newSize = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger newSize = ObjectMemoryIntegerValueOf(integerPointer);
 	if (newSize < 0)
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
@@ -262,7 +262,7 @@ Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, primargcount
 
 				// We must check class shapes the same, so compare instance spec. of receivers class with that of new class by xor'ing together
 				// and then checking if any of the important shape bits are different
-				DWORD diff = receiverClass->m_instanceSpec.m_value ^ argClass->m_instanceSpec.m_value;
+				MWORD diff = receiverClass->m_instanceSpec.m_value ^ argClass->m_instanceSpec.m_value;
 				if ((diff & ~InstanceSpecification::IndirectMask) == 0)
 				{
 
@@ -324,7 +324,7 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, primargc
 	Oop oopMask = *sp;
 	if (ObjectMemoryIsIntegerObject(oopMask))
 	{
-		SMALLINTEGER mask = ObjectMemoryIntegerValueOf(oopMask);
+		SmallInteger mask = ObjectMemoryIntegerValueOf(oopMask);
 		Oop oopReceiver = *(sp - 1);
 		if (!ObjectMemoryIsIntegerObject(oopReceiver))
 		{
@@ -422,7 +422,7 @@ Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, primargcount_t)
 	if (!ObjectMemoryIsIntegerObject(indexPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
-	SMALLINTEGER index = ObjectMemoryIntegerValueOf(indexPointer);
+	SmallInteger index = ObjectMemoryIntegerValueOf(indexPointer);
 	if (index < 1)
 		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
@@ -475,17 +475,17 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, primargcoun
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter4);	// startAt is not an integer
-	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter3);	// stop is not an integer
-	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger stop = ObjectMemoryIntegerValueOf(integerPointer);
 
 	integerPointer = *(sp-2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);	// start is not an integer
-	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger start = ObjectMemoryIntegerValueOf(integerPointer);
 
 	PointersOTE* argPointer = reinterpret_cast<PointersOTE*>(*(sp-3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isPointers())
@@ -563,7 +563,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argC
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
 		if (oteReceiver->m_flags.m_pointer)
 		{
 			MWORD size = oteReceiver->pointersSize();
@@ -637,7 +637,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
 		if (index >= 0)
 		{
 			if (oteReceiver->m_flags.m_pointer)
@@ -752,7 +752,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 	
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
 		if (oteReceiver->m_flags.m_pointer)
 		{
 			MWORD size = oteReceiver->pointersSize();
@@ -819,7 +819,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
-		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		SmallInteger index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
 		if (index >= 0)
 		{
 			if (oteReceiver->m_flags.m_pointer)

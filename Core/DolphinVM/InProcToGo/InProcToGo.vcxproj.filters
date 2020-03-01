@@ -2,14 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\InProcStart.cpp" />
-    <ClCompile Include="..\InProcStub\CoWait.cpp" />
     <ClCompile Include="dlldatax.c" />
     <ClCompile Include="InProcPlugHole.cpp" />
     <ClCompile Include="InProcStub.cpp" />
     <ClCompile Include="InProcStub_p.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CoWait.h" />
     <ClInclude Include="dlldatax.h" />
     <ClInclude Include="InProcPlugHole.h" />
     <ClInclude Include="InProcStub.h" />

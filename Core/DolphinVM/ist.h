@@ -87,8 +87,8 @@ typedef int32_t		SDWORD;
 
 // The basic word size of the machine
 typedef uintptr_t	MWORD;
-typedef intptr_t 	SMALLINTEGER;	// Optimized SmallInteger; same size as MWORD
-typedef MWORD		SMALLUNSIGNED;	// Unsigned optimized SmallInteger; same size as MWORD	
+typedef intptr_t 	SmallInteger;	// Optimized SmallInteger; same size as machine word. Known to be representable as a Smalltalk SmallInteger (i.e. 31-bits 2's complement)
+typedef uintptr_t	SmallUinteger;	// Unsigned optimized SmallInteger; same size as machine word
 typedef MWORD		Oop;
 
 typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
@@ -96,8 +96,7 @@ typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
 // Define this is using a 16-bit word
 // as it conditionally compiles in MethodHeaderExtension which
 // can otherwise be held in the MethodHeader itself
-//#define SMALLWORD
-#define MWORDBITS	(sizeof(MWORD)*8)		// Number of bits in an MWORD
+#define MWORDBITS	(sizeof(uintptr_t)*8)		// Number of bits in a machine word
 
 class ObjectMemory;
 class Interpreter;
@@ -187,3 +186,8 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #define _countof(array) (sizeof(array)/sizeof(array[0]))
 #endif
 
+#ifdef _M_X64
+#define PORT64(s) #error(s)
+#else
+#define PORT64(s)
+#endif

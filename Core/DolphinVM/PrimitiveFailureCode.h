@@ -6,7 +6,7 @@
 typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
 
 // Define a macro that packs an HRESULT. Then use these for the primitive failure codes. There is already image code to unpack
-#define PFC_FROM_HRESULT(hr) ((SMALLINTEGER)(((hr) & 0x7ffffff) << 1 | ((hr) & 0xf0000000) | 1))
+#define PFC_FROM_HRESULT(hr) ((SmallInteger)(((hr) & 0x7ffffff) << 1 | ((hr) & 0xf0000000) | 1))
 #define PFC_FROM_NT(nt) PFC_FROM_HRESULT(HRESULT_FROM_NT(nt))
 #define PFC_FROM_WIN32(err) PFC_FROM_HRESULT(__HRESULT_FROM_WIN32(err))
 
@@ -14,7 +14,7 @@ typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
 // the use of the error out of its domain, but the message is relevant.
 // Some codes are commented out because they are not currently used.
 
-enum class _PrimitiveFailureCode : SMALLINTEGER 
+enum class _PrimitiveFailureCode : SmallInteger 
 {
 	NoError = 0,
 	//AccessDenied = PFC_FROM_WIN32(ERROR_ACCESS_DENIED),								// Access is denied.
