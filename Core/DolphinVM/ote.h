@@ -128,21 +128,21 @@ public:
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
 	__forceinline void beImmutable()						{ m_size |= ImmutabilityBit; }
 	__forceinline void beMutable()							{ m_size &= SizeMask; }
-	__forceinline BOOL isFree() const						{ return m_dwFlags & OTEFlags::FreeMask; /*m_flags.m_free;*/ }
-	__forceinline void beFree()								{ m_dwFlags |= OTEFlags::FreeMask; }
+	__forceinline BOOL isFree() const						{ return m_flagsWord & OTEFlags::FreeMask; /*m_flags.m_free;*/ }
+	__forceinline void beFree()								{ m_flagsWord |= OTEFlags::FreeMask; }
 	__forceinline void setFree(bool bFree)					{ m_flags.m_free = bFree; }
-	__forceinline void beAllocated()						{ m_dwFlags &= ~OTEFlags::FreeMask; }
+	__forceinline void beAllocated()						{ m_flagsWord &= ~OTEFlags::FreeMask; }
 	__forceinline BOOL isPointers() const					{ return m_flags.m_pointer; }
-	__forceinline void bePointers()							{ m_dwFlags |= OTEFlags::PointerMask; }
+	__forceinline void bePointers()							{ m_flagsWord |= OTEFlags::PointerMask; }
 	__forceinline BOOL isBytes() const						{ return !m_flags.m_pointer; }
-	__forceinline void beBytes()							{ m_dwFlags &= ~OTEFlags::PointerMask; }
+	__forceinline void beBytes()							{ m_flagsWord &= ~OTEFlags::PointerMask; }
 	__forceinline BOOL isFinalizable()	const				{ return m_flags.m_finalize; }
-	__forceinline void beFinalizable()						{ m_dwFlags |= OTEFlags::FinalizeMask; }
-	__forceinline void beUnfinalizable()					{ m_dwFlags &= ~OTEFlags::FinalizeMask; }
-	__forceinline bool isWeak() const						{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakMask; }
-	__forceinline bool isNullTerminated() const				{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakOrZMask; }
+	__forceinline void beFinalizable()						{ m_flagsWord |= OTEFlags::FinalizeMask; }
+	__forceinline void beUnfinalizable()					{ m_flagsWord &= ~OTEFlags::FinalizeMask; }
+	__forceinline bool isWeak() const						{ return (m_flagsWord & OTEFlags::WeakMask) == OTEFlags::WeakMask; }
+	__forceinline bool isNullTerminated() const				{ return (m_flagsWord & OTEFlags::WeakMask) == OTEFlags::WeakOrZMask; }
 	__forceinline void beNullTerminated()					{ ASSERT(!isImmutable()); setNullTerminated(); m_size -= NULLTERMSIZE; }
-	__forceinline void setNullTerminated()					{ m_dwFlags = (m_dwFlags & ~OTEFlags::PointerMask) | OTEFlags::WeakOrZMask; }
+	__forceinline void setNullTerminated()					{ m_flagsWord = (m_flagsWord & ~OTEFlags::PointerMask) | OTEFlags::WeakOrZMask; }
 
 	__forceinline bool isBehavior() const					{ return isMetaclass() || m_oteClass->isMetaclass(); }
 	__forceinline bool isMetaclass() const					{ return m_oteClass == Pointers.ClassMetaclass; }
@@ -179,7 +179,7 @@ public:
 			count_t		m_count;
 			hash_t		m_idHash;					// identity hash value (16-bit)
 		};
-		DWORD m_dwFlags;
+		MWORD m_flagsWord;
 	};
 };
 
@@ -187,8 +187,8 @@ public:
 #define integerObjectOf(value) 			(Oop(((SmallInteger)(value) << 1) | 1))
 #define integerValueOf(objectPointer) 	(SmallInteger(objectPointer) >> 1)
 #define isIntegerValue(valueWord)		((SmallInteger(valueWord) ^ (SmallInteger(valueWord)<<1)) >= 0)
-//#define isIntegerValue(valueWord)		(SMALLINTEGER(valueWord) >= MinSmallInteger && SMALLINTEGER(valueWord) <= MaxSmallInteger)
-#define isPositiveIntegerValue(valueWord) ((MWORD)(valueWord) <= MaxSmallInteger)
+//#define isIntegerValue(valueWord)		(SmallInteger(valueWord) >= MinSmallInteger && SmallInteger(valueWord) <= MaxSmallInteger)
+#define isPositiveIntegerValue(valueWord) ((SmallUinteger)(valueWord) <= MaxSmallInteger)
 
 // SmallInteger constants
 #define MinusOnePointer -1 /*(integerObjectOf(-1))*/

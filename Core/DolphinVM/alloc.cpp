@@ -590,7 +590,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 	// This set does not want to copy over the immutability bit - i.e. even if the original was immutable, the 
 	// copy will never be.
 	copyPointer->setSize(ote->getSize());
-	copyPointer->m_dwFlags = (copyPointer->m_dwFlags & ~OTEFlags::WeakMask) | (ote->m_dwFlags & OTEFlags::WeakMask);
+	copyPointer->m_flagsWord = (copyPointer->m_flagsWord & ~OTEFlags::WeakMask) | (ote->m_flagsWord & OTEFlags::WeakMask);
 	ASSERT(copyPointer->isBytes());
 	copyPointer->m_oteClass = classPointer;
 	classPointer->countUp();

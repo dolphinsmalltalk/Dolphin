@@ -81,8 +81,6 @@ typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 
 #include "Environ.h"
 
-typedef int8_t		SBYTE;
-
 // The basic word size of the machine
 typedef uintptr_t	MWORD;
 typedef intptr_t 	SmallInteger;	// Optimized SmallInteger; same size as machine word. Known to be representable as a Smalltalk SmallInteger (i.e. 31-bits 2's complement)
