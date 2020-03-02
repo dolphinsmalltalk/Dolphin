@@ -1100,7 +1100,7 @@ Oop* __fastcall Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
 
 	ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(oteBuf);
 
-	const int newIndex = index + sizeof(SDWORD);
+	const int newIndex = index + sizeof(int32_t);
 	if (MWORD(newIndex) > oteBytes->bytesSize())
 		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
@@ -1115,7 +1115,7 @@ Oop* __fastcall Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
 	// Receiver is overwritten
 	ByteArray* byteArray = oteBytes->m_location;
 
-	*sp = Integer::NewSigned32(*reinterpret_cast<SDWORD*>(byteArray->m_elements + index));
+	*sp = Integer::NewSigned32(*reinterpret_cast<int32_t*>(byteArray->m_elements + index));
 	ObjectMemory::AddOopToZct(*sp);
 	return sp;
 }

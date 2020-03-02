@@ -83,7 +83,6 @@ typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 
 typedef int8_t		SBYTE;
 typedef int16_t		SWORD;
-typedef int32_t		SDWORD;
 
 // The basic word size of the machine
 typedef uintptr_t	MWORD;
@@ -91,7 +90,7 @@ typedef intptr_t 	SmallInteger;	// Optimized SmallInteger; same size as machine 
 typedef uintptr_t	SmallUinteger;	// Unsigned optimized SmallInteger; same size as machine word
 typedef MWORD		Oop;
 
-typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
+typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 
 // Define this is using a 16-bit word
 // as it conditionally compiles in MethodHeaderExtension which

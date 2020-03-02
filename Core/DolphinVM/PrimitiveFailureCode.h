@@ -3,7 +3,7 @@
 #include <ntstatus.h>
 #include <winerror.h>
 
-typedef _Return_type_success_(return >= 0) SDWORD NTSTATUS;
+typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 
 // Define a macro that packs an HRESULT. Then use these for the primitive failure codes. There is already image code to unpack
 #define PFC_FROM_HRESULT(hr) ((SmallInteger)(((hr) & 0x7ffffff) << 1 | ((hr) & 0xf0000000) | 1))
