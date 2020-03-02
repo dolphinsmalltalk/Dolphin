@@ -256,12 +256,12 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 			
 			case ExtCallArgType::UInt16:
-				pushSmallInteger(*reinterpret_cast<WORD*>(lpParms));
+				pushSmallInteger(*reinterpret_cast<uint16_t*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 
 			case ExtCallArgType::Int16:
-				pushSmallInteger(*reinterpret_cast<SWORD*>(lpParms));
+				pushSmallInteger(*reinterpret_cast<int16_t*>(lpParms));
 				lpParms += sizeof(MWORD);
 				break;
 
@@ -1194,13 +1194,13 @@ void doBlah()
 
 				case ExtCallArgWORD:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<WORD>(retValue));
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<uint16_t>(retValue));
 					break;
 
 				case ExtCallArgSWORD:
 				{
 					pop(argCount);
-					SWORD signedWord = static_cast<SWORD>(retValue);
+					int16_t signedWord = static_cast<int16_t>(retValue);
 					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<SmallInteger>(signedWord)));
 					break;
 				}

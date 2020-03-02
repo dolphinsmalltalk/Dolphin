@@ -20,6 +20,7 @@ import "ocidl.idl";
 typedef signed char int8_t;
 typedef unsigned char uint8_t;
 typedef signed short int16_t;
+typedef unsigned short uint16_t;
 typedef signed int	int32_t;
 typedef unsigned int uint32_t;
 typedef signed long long int64_t;
@@ -67,16 +68,16 @@ typedef struct STVariableBinding
 
 typedef struct STInstSpec
 {
-	WORD isInt 			: 1;	// MUST be 1 (to avoid treatment as object)
-	WORD fixedFields 	: 8;	// Number of instance variables (must be zero for byte objects)
-	WORD unusedSpecBits	: 2;	// 2 free bits for other nice things
-	WORD mourner		: 1;	// Notify weak instances of the receiver when they suffer bereavements
-	WORD indirect		: 1;	// Byte object containing address of another object/external structure?
-	WORD indexable 		: 1;	// variable or variableByte subclass?
-	WORD pointers 		: 1;	// Pointers or bytes?
-	WORD nullTerminated : 1;	// Null terminated byte object?
+	uint16_t isInt 			: 1;	// MUST be 1 (to avoid treatment as object)
+	uint16_t fixedFields 	: 8;	// Number of instance variables (must be zero for byte objects)
+	uint16_t unusedSpecBits	: 2;	// 2 free bits for other nice things
+	uint16_t mourner		: 1;	// Notify weak instances of the receiver when they suffer bereavements
+	uint16_t indirect		: 1;	// Byte object containing address of another object/external structure?
+	uint16_t indexable 		: 1;	// variable or variableByte subclass?
+	uint16_t pointers 		: 1;	// Pointers or bytes?
+	uint16_t nullTerminated : 1;	// Null terminated byte object?
 
-	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size, string encoding)
+	uint16_t extraSpec;				// High word for class specific purposes (e.g. structure byte size, string encoding)
 } STInstSpec;
 
 typedef struct STBehavior

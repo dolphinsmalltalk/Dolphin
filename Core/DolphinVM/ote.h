@@ -29,7 +29,7 @@ namespace ST
 typedef TOTE<ST::Behavior> BehaviorOTE;
 
 typedef	BYTE count_t;
-typedef WORD hash_t;						// Identity hash value, assigned on object creation
+typedef uint16_t hash_t;						// Identity hash value, assigned on object creation
 
 union OTEFlags
 {

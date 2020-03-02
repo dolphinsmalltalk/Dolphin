@@ -82,7 +82,6 @@ typedef _Return_type_success_(return >= 0) int32_t NTSTATUS;
 #include "Environ.h"
 
 typedef int8_t		SBYTE;
-typedef int16_t		SWORD;
 
 // The basic word size of the machine
 typedef uintptr_t	MWORD;
