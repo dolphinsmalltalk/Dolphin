@@ -347,7 +347,7 @@ private:
 		int getPages() { return m_nPages; }
 		int getFree();
 		void**		m_pages;
-		unsigned	m_nPages;
+		size_t	m_nPages;
 	#endif
 
 	int getSize() { return m_nChunkSize; }
@@ -367,15 +367,15 @@ private:
 	private:
 
 		Link*		m_pFreeChunks;
-		unsigned	m_nChunkSize;
+		size_t		m_nChunkSize;
 
 		static	Link*		m_pFreePages;
 		static	void**		m_pAllocations;
 	public:
-		static	unsigned	m_nAllocations;
+		static	size_t		m_nAllocations;
 	};
 
-	static HRESULT __stdcall allocateOT(unsigned reserve, unsigned commit);
+	static HRESULT __stdcall allocateOT(size_t reserve, size_t commit);
 
 	// Answer the index of the last occuppied OT entry
 	static unsigned __stdcall lastOTEntry();

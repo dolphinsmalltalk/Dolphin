@@ -94,6 +94,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinSmalltalk.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinX.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ExternalBuf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\FloatPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImageFileResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h" />

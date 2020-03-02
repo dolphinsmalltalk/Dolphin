@@ -47,8 +47,8 @@ extern "C" { HANDLE _crtheap; }
 
 uint32_t ObjectMemory::m_nNextIdHash;
 
-unsigned ObjectMemory::m_nOTSize;
-unsigned ObjectMemory::m_nOTMax;
+size_t ObjectMemory::m_nOTSize;
+size_t ObjectMemory::m_nOTMax;
 
 OTE* 	ObjectMemory::m_pOT;					// The Object Table itself
 OTE*	ObjectMemory::m_pFreePointerList;		// Head of list of free Object Table Entries
@@ -561,7 +561,7 @@ HRESULT ObjectMemory::allocateOT(unsigned reserve, unsigned commit)
 	ASSERT(sizeof(OTE) == 16);
 
 	m_nOTMax = _ROUND2(reserve, dwAllocationGranularity);
-	const unsigned reserveBytes = m_nOTMax * sizeof(OTE);
+	const size_t reserveBytes = m_nOTMax * sizeof(OTE);
 	
 	OTE* pOTReserve = reinterpret_cast<OTE*>(::VirtualAlloc(NULL, reserveBytes, MEM_RESERVE, PAGE_NOACCESS));
 	if (!pOTReserve)
@@ -569,7 +569,7 @@ HRESULT ObjectMemory::allocateOT(unsigned reserve, unsigned commit)
 
 	// Can use _ROUND2 if dwPageSize is a power of 2
 	m_nOTSize = _ROUND2(commit, dwAllocationGranularity);
-	const unsigned commitBytes = m_nOTSize*sizeof(OTE);
+	const size_t commitBytes = m_nOTSize*sizeof(OTE);
 
 	OTE* pNewOT = reinterpret_cast<OTE*>(::VirtualAlloc(pOTReserve, commitBytes, MEM_COMMIT, PAGE_READWRITE));
 	if (!pNewOT)
@@ -626,8 +626,8 @@ void ObjectMemory::HeapCompact()
 
 void ObjectMemory::FixedSizePool::Terminate()
 {
-	const unsigned loopEnd = m_nAllocations;
-	for (unsigned i=0;i<loopEnd;i++)
+	const size_t loopEnd = m_nAllocations;
+	for (size_t i=0;i<loopEnd;i++)
 		VERIFY(::VirtualFree(m_pAllocations[i], 0, MEM_RELEASE));
 
 	free(m_pAllocations);
@@ -790,8 +790,8 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 					m_nSmallAllocated, m_nSmallFreed, m_nLargeAllocated, m_nLargeFreed);
 			m_nLargeAllocated = m_nLargeFreed = m_nSmallAllocated = m_nSmallFreed = 0;
 		#endif
-		const unsigned extraBytes = OTPagesAllocatedPerOverflow*dwPageSize;
-		const unsigned extraOTEs = extraBytes/sizeof(OTE);
+		const size_t extraBytes = OTPagesAllocatedPerOverflow*dwPageSize;
+		const size_t extraOTEs = extraBytes/sizeof(OTE);
 		// Note we can't allocate right up to the end, as we need at least one guard page, hence < rather than <=
 		if ((m_nOTSize + extraOTEs) < m_nOTMax)
 		{

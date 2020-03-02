@@ -559,7 +559,7 @@ public:
 	static Oop* __fastcall primitiveSize(Oop* const sp, primargcount_t argCount);
    	
 	// Object Indexing Primitives
-	static Oop* __fastcall primitiveBasicAt(Oop* const sp, const unsigned argCount);
+	static Oop* __fastcall primitiveBasicAt(Oop* const sp, const primargcount_t argCount);
 	static Oop* __fastcall primitiveBasicAtPut(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveInstVarAt(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveInstVarAtPut(Oop* const sp, primargcount_t argCount);
