@@ -166,7 +166,7 @@ void Compiler::RemoveBytes(ip_t ip, size_t count)
 	const ip_t next = ip + count;
 	_ASSERTE(next <= last+1);
 	const BYTECODE& bc = m_bytecodes[ip];
-	WORD jumpsTo = bc.jumpsTo;
+	auto jumpsTo = bc.jumpsTo;
 
 	const BYTECODES::iterator begin = m_bytecodes.begin();
 	m_bytecodes.erase(begin + static_cast<size_t>(ip), begin + static_cast<size_t>(next));

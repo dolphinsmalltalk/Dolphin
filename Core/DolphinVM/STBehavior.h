@@ -21,17 +21,17 @@ union InstanceSpecification
 {
 	struct
 	{
-		WORD m_isInt : 1;	// MUST be 1 (to avoid treatment as object)
-		WORD m_fixedFields : 8;	// Number of instance variables (must be zero for byte objects)
-		WORD m_unusedSpecBits : 1;
-		WORD m_nonInstantiable : 1;	// The Behavior should not be instantiated, e.g. it is abstract
-		WORD m_mourner : 1;	// Notify weak instances of the receiver when they suffer bereavements
-		WORD m_indirect : 1;	// Byte object containing address of another object/external structure?
-		WORD m_indexable : 1;	// variable or variableByte subclass?
-		WORD m_pointers : 1;	// Pointers or bytes?
-		WORD m_nullTerminated : 1;	// Null terminated byte object?
+		uint16_t m_isInt : 1;	// MUST be 1 (to avoid treatment as object)
+		uint16_t m_fixedFields : 8;	// Number of instance variables (must be zero for byte objects)
+		uint16_t m_unusedSpecBits : 1;
+		uint16_t m_nonInstantiable : 1;	// The Behavior should not be instantiated, e.g. it is abstract
+		uint16_t m_mourner : 1;	// Notify weak instances of the receiver when they suffer bereavements
+		uint16_t m_indirect : 1;	// Byte object containing address of another object/external structure?
+		uint16_t m_indexable : 1;	// variable or variableByte subclass?
+		uint16_t m_pointers : 1;	// Pointers or bytes?
+		uint16_t m_nullTerminated : 1;	// Null terminated byte object?
 
-		WORD m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+		uint16_t m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
 	};
 	MWORD m_value;
 
@@ -73,7 +73,7 @@ namespace ST
 		BOOL isBytes() const { return !m_instanceSpec.m_pointers; }
 		BOOL isIndexable() const { return m_instanceSpec.m_indexable; }
 		BOOL isMourner() const { return m_instanceSpec.m_mourner; }
-		WORD extraSpec() const { return m_instanceSpec.m_extraSpec; }
+		uint16_t extraSpec() const { return m_instanceSpec.m_extraSpec; }
 		BOOL isIndirect() const { return m_instanceSpec.m_indirect; }
 
 		enum {
