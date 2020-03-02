@@ -175,8 +175,8 @@ public:
 
 	// Sadly, this is not legal, since operator[] cannot be static
 	// static POBJECT operator[](Oop objectPointer);
-	static BYTE* ByteAddressOfObject(Oop& objectPointer);			// pointer to header (or SmallInteger)
-	static BYTE* ByteAddressOfObjectContents(Oop& objectPointer);	// pointer to body (or SmallInteger)
+	static uint8_t* ByteAddressOfObject(Oop& objectPointer);			// pointer to header (or SmallInteger)
+	static uint8_t* ByteAddressOfObjectContents(Oop& objectPointer);	// pointer to body (or SmallInteger)
 
 	// Recalc. ref. counts, perform consistency check, and clean up
 	static Oop* rootObjectPointers[];
@@ -355,7 +355,7 @@ private:
 	private:
 		void moreChunks();
 		static void morePages();
-		static BYTE* allocatePage();
+		static uint8_t* allocatePage();
 
 	public:
 		static void Initialize();
@@ -417,7 +417,7 @@ private:
 	static void releasePointer(OTE* ote);
 
 	// Garbage collection/Ref count checking
-	static BYTE WeaknessMask;
+	static uint8_t WeaknessMask;
 	static MWORD lastStrongPointerOf(OTE* ote);
 	static void reclaimInaccessibleObjects(uintptr_t flags);
 	static void markObjectsAccessibleFrom(OTE* ote);
@@ -778,16 +778,16 @@ inline bool ObjectMemory::isAContext(const OTE* ote)
 ///////////////////////////////////////////////////////////////////////////////
 // Extension methods added during C++ class conversion
 
-inline BYTE* ObjectMemory::ByteAddressOfObject(Oop& objectPointer)
+inline uint8_t* ObjectMemory::ByteAddressOfObject(Oop& objectPointer)
 {
 	if (!isIntegerObject(objectPointer))
 	{
 		OTE* ote = reinterpret_cast<OTE*>(objectPointer);
-		return reinterpret_cast<BYTE*>(ote->m_location);
+		return reinterpret_cast<uint8_t*>(ote->m_location);
 	}
 	else
 	{
-		return reinterpret_cast<BYTE*>(&objectPointer);
+		return reinterpret_cast<uint8_t*>(&objectPointer);
 	}
 }
 
@@ -796,7 +796,7 @@ inline BYTE* ObjectMemory::ByteAddressOfObject(Oop& objectPointer)
 // address of the first after the low byte (which holds the SmallInteger flag and
 // is therefore unusable). For non-SmallIntegers, it is the address of the first
 // byte after the header.
-inline BYTE* ObjectMemory::ByteAddressOfObjectContents(Oop& objectPointer)
+inline uint8_t* ObjectMemory::ByteAddressOfObjectContents(Oop& objectPointer)
 {
 	if (!isIntegerObject(objectPointer))
 	{
@@ -805,7 +805,7 @@ inline BYTE* ObjectMemory::ByteAddressOfObjectContents(Oop& objectPointer)
 	}
 	else
 	{
-		return reinterpret_cast<BYTE*>(&objectPointer);
+		return reinterpret_cast<uint8_t*>(&objectPointer);
 	}
 }
 
@@ -832,7 +832,7 @@ inline void ObjectMemory::markObject(OTE* ote)
 // lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
 inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
 {
-	BYTE flags = ote->m_ubFlags;
+	uint8_t flags = ote->m_ubFlags;
 	return (flags & OTEFlags::PointerMask)
 		? (flags & WeaknessMask) == OTEFlags::WeakMask 
 				? ObjectHeaderSize + ote->m_oteClass->m_location->m_instanceSpec.m_fixedFields 
@@ -1074,7 +1074,7 @@ inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointe
 
 inline bool ObjectMemory::IsConstObj(void* ptr)
 {
-	return ptr >= m_pConstObjs && ptr < static_cast<BYTE*>(m_pConstObjs)+dwPageSize;
+	return ptr >= m_pConstObjs && ptr < static_cast<uint8_t*>(m_pConstObjs)+dwPageSize;
 }
 
 inline hash_t ObjectMemory::nextIdentityHash()

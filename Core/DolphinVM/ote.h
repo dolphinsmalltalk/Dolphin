@@ -13,7 +13,7 @@
 ******************************************************************************/
 #pragma once
 
-#define COUNTBITS	(sizeof(BYTE)*8)
+#define COUNTBITS	(sizeof(uint8_t)*8)
 #define SPACEBITS	3
 #define NULLTERMTYPE WCHAR
 //#define NULLTERMTYPE char
@@ -28,7 +28,7 @@ namespace ST
 }
 typedef TOTE<ST::Behavior> BehaviorOTE;
 
-typedef	BYTE count_t;
+typedef	uint8_t count_t;
 typedef uint16_t hash_t;						// Identity hash value, assigned on object creation
 
 union OTEFlags
@@ -38,14 +38,14 @@ union OTEFlags
 
 	struct
 	{
-		BYTE	m_free : 1;				// Is the object in use?
-		BYTE	m_pointer : 1; 			// Pointer bit?
-		BYTE	m_mark : 1;				// Garbage collector mark
-		BYTE	m_finalize : 1;			// Should the object be finalized
-		BYTE 	m_weakOrZ : 1;			// weak references if pointers, null term if bytes
-		BYTE 	m_space : SPACEBITS;	// Memory space in which the object resides (used when deallocating)
+		uint8_t	m_free : 1;				// Is the object in use?
+		uint8_t	m_pointer : 1; 			// Pointer bit?
+		uint8_t	m_mark : 1;				// Garbage collector mark
+		uint8_t	m_finalize : 1;			// Should the object be finalized
+		uint8_t 	m_weakOrZ : 1;			// weak references if pointers, null term if bytes
+		uint8_t 	m_space : SPACEBITS;	// Memory space in which the object resides (used when deallocating)
 	};
-	BYTE m_value;
+	uint8_t m_value;
 
 	// Often it is more efficient to use masking to avoid a 16-bit load operation
 	enum
@@ -93,7 +93,7 @@ public:
 	__forceinline void beSticky()							{ m_count = MAXCOUNT; }
 
 	// Answer whether the receiver has the current mark
-	__forceinline void setMark(BYTE mark)					{ m_flags.m_mark = mark; }
+	__forceinline void setMark(uint8_t mark)					{ m_flags.m_mark = mark; }
 
 	__forceinline MWORD getIndex()	const					{ return this - reinterpret_cast<const TOTE<T>*>(ObjectMemory::m_pOT); }
 
@@ -149,7 +149,7 @@ public:
 
 	__forceinline bool isNil() const						{ return Oop(this) == Oop(Pointers.Nil); }
 	__forceinline OTEFlags::Spaces heapSpace() const		{ return static_cast<OTEFlags::Spaces>(m_flags.m_space); }
-	__forceinline bool flagsAllMask(BYTE mask) const		{ return (m_ubFlags & mask) == mask; }
+	__forceinline bool flagsAllMask(uint8_t mask) const		{ return (m_ubFlags & mask) == mask; }
 
 	__forceinline hash_t identityHash()
 	{
@@ -174,7 +174,7 @@ public:
 			union
 			{
 				OTEFlags	m_flags;					// 8-bits of flags
-				BYTE		m_ubFlags;
+				uint8_t		m_ubFlags;
 			};
 			count_t		m_count;
 			hash_t		m_idHash;					// identity hash value (16-bit)

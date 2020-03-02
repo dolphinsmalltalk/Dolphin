@@ -91,7 +91,7 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 	// Maintain the last used garbage collector mark to speed up collections
 	// Doing this will also reset the free bit and set the pointer bit
 	// so byte allocations will need to reset it
-	ote->m_dwFlags = *reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::PoolSpace]);
+	ote->m_dwFlags = *reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::PoolSpace]);
 
 	return ote;
 }

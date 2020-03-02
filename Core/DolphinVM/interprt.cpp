@@ -443,9 +443,9 @@ void Interpreter::interpret()
 #pragma code_seg(INTERPMISC_SEG)
 bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 {
-	BYTE* ip = reinterpret_cast<BYTE*>(info->ContextRecord->Edi);
+	uint8_t* ip = reinterpret_cast<uint8_t*>(info->ContextRecord->Edi);
 	Oop byteCodes = m_registers.m_pMethod->m_byteCodes;
-	BYTE* pBytes = ObjectMemory::ByteAddressOfObjectContents(byteCodes);
+	uint8_t* pBytes = ObjectMemory::ByteAddressOfObjectContents(byteCodes);
 	int numByteCodes = ObjectMemoryIsIntegerObject(byteCodes) ?
 		sizeof(MWORD) : reinterpret_cast<BytesOTE*>(byteCodes)->bytesSize();
 	if (ip >= pBytes && ip < pBytes + numByteCodes)
@@ -464,7 +464,7 @@ bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 			VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pProc);
 			VirtualObjectHeader* pBase = pVObj->getHeader();
 			unsigned cbCurrent = pBase->getCurrentAllocation();
-			if (sp < reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pBase) + cbCurrent))
+			if (sp < reinterpret_cast<Oop*>(reinterpret_cast<uint8_t*>(pBase) + cbCurrent))
 				m_registers.m_stackPointer = sp;
 		}
 	}

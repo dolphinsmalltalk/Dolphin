@@ -45,7 +45,7 @@ cpp_quote("#endif")
 
 typedef struct STVarByteObject
 {
-	BYTE		fields[];
+	uint8_t		fields[];
 } STVariantByteObject;
 
 typedef struct STVarCharObject
@@ -274,7 +274,7 @@ library DolphinVM
 	cpp_quote("	return (valueWord >= MinSmallInteger && valueWord <= MaxSmallInteger);")
 	cpp_quote("}")
 
-	cpp_quote("__inline BYTE* FetchBytesOf(POTE ote)")
+	cpp_quote("__inline uint8_t* FetchBytesOf(POTE ote)")
 	cpp_quote("{")
 	cpp_quote("	STVariantByteObject* pObj = (STVariantByteObject*)(GetObj(ote));")
 	cpp_quote("	return pObj->fields;")

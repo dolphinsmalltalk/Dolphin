@@ -612,7 +612,7 @@ int __stdcall Interpreter::callbackExceptionFilter(LPEXCEPTION_POINTERS info)
 }
 
 
-inline uintptr_t __stdcall Interpreter::GenericCallbackMain(SmallInteger id, BYTE* lpArgs)
+inline uintptr_t __stdcall Interpreter::GenericCallbackMain(SmallInteger id, uint8_t* lpArgs)
 {
 	uintptr_t result;
 	__try
@@ -650,7 +650,7 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 		return DolphinWndProc(hWnd, uMsg, wParam, lParam);
 		break;
 	case SyncCallbackMsg:
-		return GenericCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<BYTE*>(lParam));
+		return GenericCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<uint8_t*>(lParam));
 		break;
 	case SyncVirtualMsg:
 		return VirtualCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<COMThunk**>(lParam));
@@ -663,7 +663,7 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 ///////////////////////////////////////////////////////////////////////////////
 // GenericCallback is the routine used for constructing function pointers for passing to external
 // libraries as callback functions.
-uintptr_t __stdcall Interpreter::GenericCallback(SmallInteger id, BYTE* lpArgs)
+uintptr_t __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArgs)
 {
 	uintptr_t result;
 	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
@@ -887,8 +887,8 @@ void InitializeVtbl()
 		aVtblThunks[i].jmp = 0xE9;	// Near jump to relative location
 		// Offset is relative to next instruction
 		aVtblThunks[i].commonVfnEntryPoint = 
-				reinterpret_cast<BYTE*>(_commonVfnEntryPoint) 
-					- reinterpret_cast<BYTE*>(&aVtblThunks[i+1]);
+				reinterpret_cast<uint8_t*>(_commonVfnEntryPoint) 
+					- reinterpret_cast<uint8_t*>(&aVtblThunks[i+1]);
 	}
 
 	DWORD dwOldProtect;

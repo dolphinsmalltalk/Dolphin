@@ -546,7 +546,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 
 							if (index < limit && index < oteByteArray->sizeForUpdate())
 							{
-								oteByteArray->m_location->m_elements[index] = static_cast<BYTE>(intValue);
+								oteByteArray->m_location->m_elements[index] = static_cast<uint8_t>(intValue);
 
 								// Increment the stream index
 								writeStream->m_index = Integer::NewSigned32WithRef(index + 1);

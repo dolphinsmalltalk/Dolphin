@@ -49,7 +49,7 @@ public:
 		return m_fp != NULL;
 	}
 
-	bool setbuf(BYTE*, size_t)
+	bool setbuf(uint8_t*, size_t)
 	{
 		return false;
 	}

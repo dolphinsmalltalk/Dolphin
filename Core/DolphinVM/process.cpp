@@ -676,8 +676,8 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 	HARDASSERT(actualActiveProcess()->Next()->isNil());
 
 	pushObject(reinterpret_cast<POTE>(Pointers.Scheduler));
-	BYTE* pProc = reinterpret_cast<BYTE*>(actualActiveProcess());
-	BYTE* pFrame = reinterpret_cast<BYTE*>(m_registers.m_pActiveFrame);
+	uint8_t* pProc = reinterpret_cast<uint8_t*>(actualActiveProcess());
+	uint8_t* pFrame = reinterpret_cast<uint8_t*>(m_registers.m_pActiveFrame);
 	HARDASSERT(pFrame > pProc);
 	SmallUinteger nOffset = pFrame - pProc;
 	pushSmallInteger(nOffset);

@@ -105,7 +105,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		{
 			uintptr_t parm = pExRec->ExceptionInformation[i];
 			*pStream << setw(sizeof(uintptr_t)<<1) << parm<< L"	";
-			BYTE* pBytes = reinterpret_cast<BYTE*>(parm);
+			uint8_t* pBytes = reinterpret_cast<uint8_t*>(parm);
 			if (!IsBadReadPtr(pBytes, MAXDUMPPARMCHARS))
 			{
 				wchar_t buf[MAXDUMPPARMCHARS+1];

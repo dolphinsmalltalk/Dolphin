@@ -105,7 +105,7 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 	if (newCount > OTE::MAXCOUNT)
 		ote2->beSticky();
 	else
-		ote2->m_count = static_cast<BYTE>(newCount);
+		ote2->m_count = static_cast<uint8_t>(newCount);
 
 	// The old object must be placed in the ZCT since all references have been lost
 	// (we place it in the ZCT rather than free it, since it may reference other objects

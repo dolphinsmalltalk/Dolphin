@@ -560,7 +560,7 @@ void DumpStackEntry(Oop* sp, Process* pProc, wostream& stream)
 /////////////////////////////////////////////////////////////////////////////
 // Formatted output
 
-void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
+void HexDump(tracestream out, LPCTSTR lpszLine, uint8_t* pby,
 	int nBytes, int nWidth)
 	// do a simple hex-dump (8 per line) to a tracestream
 	//  the "lpszLine" is a string to print at the start of each line
@@ -624,7 +624,7 @@ static void DumpProcess(ProcessOTE* oteProc, wostream& logStream)
 //////////////////////////////////////////////////////////
 // Current Method info.
 
-static void DumpIP(BYTE* ip, CompiledMethod* pMethod, wostream& logStream)
+static void DumpIP(uint8_t* ip, CompiledMethod* pMethod, wostream& logStream)
 {
 	if (IsBadReadPtr(ip, 1))
 		logStream << L"(Bad pointer: " << PVOID(ip) << L")";
@@ -1037,7 +1037,7 @@ public:
 		if (ObjectMemoryIsIntegerObject(method->m_byteCodes))
 		{
 			cBytes = sizeof(SmallInteger);
-			pBytes = reinterpret_cast<BYTE*>(&(method->m_byteCodes));
+			pBytes = reinterpret_cast<uint8_t*>(&(method->m_byteCodes));
 		}
 		else
 		{
@@ -1050,7 +1050,7 @@ public:
 		instVarNamesInitialized = false;
 	}
 
-	BYTE GetBytecode(size_t ip) {
+	uint8_t GetBytecode(size_t ip) {
 		_ASSERTE(ip < cBytes);
 		return pBytes[ip];
 	}
@@ -1076,7 +1076,7 @@ public:
 private:
 	CompiledMethod* method;
 	size_t cBytes;
-	BYTE* pBytes;
+	uint8_t* pBytes;
 	Oop* literalFrame;
 	vector<string> instVarNames;
 	bool instVarNamesInitialized;
@@ -1184,14 +1184,14 @@ void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 
 }
 
-void __fastcall Interpreter::debugExecTrace(BYTE* ip, Oop* sp)
+void __fastcall Interpreter::debugExecTrace(uint8_t* ip, Oop* sp)
 {
 	//for (unsigned i=0;i<contextDepth;i++)
 	//	TRACESTREAM << L".";
 
 	// To avoid covering bugs, we make sure we don't update the
 	// context for longer than the duration of the trace
-	BYTE* oldIP = m_registers.m_instructionPointer;
+	uint8_t* oldIP = m_registers.m_instructionPointer;
 	Oop* oldSP = m_registers.m_stackPointer;
 	m_registers.m_stackPointer = sp;
 	m_registers.m_instructionPointer = ip;
