@@ -136,7 +136,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 	
 	bool bSaved;
 	{
-		BYTE buf[dwAllocationGranularity];
+		uint8_t buf[dwAllocationGranularity];
 		if (header.flags.bIsCompressed)
 		{
 			zfbinstream stream;

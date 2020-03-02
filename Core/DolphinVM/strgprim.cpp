@@ -75,7 +75,7 @@ uint32_t Character::getCodePoint() const
 ///////////////////////////////////////////////////////////////////////////////
 //	String Primitives
 
-void Interpreter::memmove(BYTE* dst, const BYTE* src, size_t count)
+void Interpreter::memmove(uint8_t* dst, const uint8_t* src, size_t count)
 {
     if (dst <= src || dst >= src + count) 
 		memcpy(dst, src, count);
@@ -133,7 +133,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t
 
 		// We still permit the argument to be an address to cut down on the number of primitives
 		// and double dispatch methods we must implement (2 rather than 4)
-		BYTE* pTo;
+		uint8_t* pTo;
 
 		Behavior* behavior = argPointer->m_oteClass->m_location;
 		if (behavior->isIndirect())
@@ -141,7 +141,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t
 			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(argPointer);
 			// We don't know how big the object is the argument points at, so cannot check length
 			// against stop point
-			pTo = static_cast<BYTE*>(oteBytes->m_location->m_pointer);
+			pTo = static_cast<uint8_t*>(oteBytes->m_location->m_pointer);
 		}
 		else
 		{
@@ -176,7 +176,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t
 		ASSERT(receiverPointer->isBytes());
 		VariantByteObject* receiverBytes = receiverPointer->m_location;
 
-		BYTE* pFrom = receiverBytes->m_fields;
+		uint8_t* pFrom = receiverBytes->m_fields;
 
 		memmove(pTo+start-1, pFrom+startAt-1, stop-start+1);
 	}
@@ -232,17 +232,17 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, primar
 
 		// Because the receiver is an address, we do not know the size of the object
 		// it points at, and so cannot perform any bounds checks - BEWARE
-		BYTE* pFrom = static_cast<BYTE*>(receiverBytes->m_pointer);
+		uint8_t* pFrom = static_cast<uint8_t*>(receiverBytes->m_pointer);
 
 		// We still permit the argument to be an address to cut down on the double dispatching
 		// required.
-		BYTE* pTo;
+		uint8_t* pTo;
 		Behavior* behavior = argPointer->m_oteClass->m_location;
 		if (behavior->isIndirect())
 		{
 			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(argPointer);
 			// Cannot check length 
-			pTo = static_cast<BYTE*>(oteBytes->m_location->m_pointer);
+			pTo = static_cast<uint8_t*>(oteBytes->m_location->m_pointer);
 		}
 		else
 		{
@@ -819,8 +819,8 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 				Oop answer = reinterpret_cast<Oop>(Pointers.False);
 				if (argSize == oteReceiver->bytesSize())
 				{
-					BYTE* pbReceiver = oteReceiver->m_location->m_fields;
-					BYTE* pbArg = oteArg->m_location->m_fields;
+					uint8_t* pbReceiver = oteReceiver->m_location->m_fields;
+					uint8_t* pbArg = oteArg->m_location->m_fields;
 					if (memcmp(pbReceiver, pbArg, argSize) == 0)
 						answer = reinterpret_cast<Oop>(Pointers.True);
 				}
@@ -914,7 +914,7 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
 	}
 }
 
-extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
+extern "C" MWORD __cdecl HashBytes(const uint8_t* bytes, MWORD size)
 {
 	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
@@ -1245,7 +1245,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 				MWORD cbPrefix = oteReceiver->getSize();
 				MWORD cbSuffix = oteArg->getSize();
 				Utf16StringOTE* oteAnswer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf16String>(cbPrefix + cbSuffix));
-				auto pbAnswer = reinterpret_cast<BYTE*>(oteAnswer->m_location->m_characters);
+				auto pbAnswer = reinterpret_cast<uint8_t*>(oteAnswer->m_location->m_characters);
 				memcpy(pbAnswer, reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
 				memcpy(pbAnswer+cbPrefix, reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(Utf16String::CU));
 				*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);

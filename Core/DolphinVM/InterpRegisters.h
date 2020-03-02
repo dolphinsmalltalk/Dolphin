@@ -19,7 +19,7 @@ struct InterpreterRegisters
 {
 	ST::Process*		m_pActiveProcess;
 	ST::CompiledMethod* m_pMethod;
-	BYTE*				m_instructionPointer;
+	uint8_t*				m_instructionPointer;
 	StackFrame*			m_pActiveFrame;
 	Oop*				m_stackPointer;
 	Oop*				m_basePointer;

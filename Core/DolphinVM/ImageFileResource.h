@@ -21,7 +21,7 @@ public:
 	LPVOID GetRawData() { return m_pData; }
 	size_t GetRawSize() { return m_size; }
 
-	BYTE* GetData() { return static_cast<BYTE*>(m_pData) + sizeof(ISTImageHeader); }
+	uint8_t* GetData() { return static_cast<uint8_t*>(m_pData) + sizeof(ISTImageHeader); }
 	size_t GetSize() { return m_size - sizeof(ISTImageHeader); }
 	IMAGETYPE GetType() { return *reinterpret_cast<IMAGETYPE*>(GetRawData()); }
 	ImageHeader* GetHeader() { return &(reinterpret_cast<ISTImageHeader*>(m_pData)->header); }

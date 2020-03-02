@@ -24,7 +24,7 @@ namespace ST
 		uintptr_t	m_reserved1;
 		uintptr_t	m_reserved2;
 		BOOL		m_bFxSaved;
-		BYTE		m_fxSaveArea[512];
+		uint8_t		m_fxSaveArea[512];
 
 	public:
 		void		setCurrentAllocation(uintptr_t size) { ASSERT(size == getCurrentAllocation()); size; }

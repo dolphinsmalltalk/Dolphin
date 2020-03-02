@@ -88,11 +88,11 @@ namespace ST
 	class DescriptorBytes : public Object
 	{
 	public:
-		BYTE	m_callingConvention;
-		BYTE	m_argumentCount;
-		BYTE	m_returnType;
-		BYTE	m_returnClass;
-		BYTE	m_args[];
+		uint8_t	m_callingConvention;
+		uint8_t	m_argumentCount;
+		uint8_t	m_returnType;
+		uint8_t	m_returnClass;
+		uint8_t	m_args[];
 
 		static unsigned argsLen(DescriptorOTE* ote) { return ote->getSize() - offsetof(DescriptorBytes, m_args); }
 	};

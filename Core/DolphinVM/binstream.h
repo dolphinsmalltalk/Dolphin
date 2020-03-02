@@ -38,7 +38,7 @@ public:
 class imbinstream : public ibinstream
 {
 protected:
-	BYTE*	m_pBytes;
+	uint8_t*	m_pBytes;
 	size_t	m_nPosition;
 	size_t	m_cBytes;
 
@@ -50,7 +50,7 @@ public:
 
 	void initialize(void* pBytes, size_t cBytes)
 	{
-		m_pBytes = static_cast<BYTE*>(pBytes);
+		m_pBytes = static_cast<uint8_t*>(pBytes);
 		m_cBytes = cBytes;
 	}
 

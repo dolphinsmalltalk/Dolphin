@@ -69,7 +69,7 @@ OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* p
 	{
 		if (behavior.isIndirect())
 		{
-			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(classPointer, sizeof(BYTE*)));
+			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(classPointer, sizeof(uint8_t*)));
 			ExternalAddress* extAddress = static_cast<ExternalAddress*>(oteBytes->m_location);
 			extAddress->m_pointer = ptr;
 			resultPointer = reinterpret_cast<OTE*>(oteBytes);
@@ -123,11 +123,11 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 
 AddressOTE* __fastcall NewBSTR(const char16_t* pChars, size_t len)
 {
-	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(Pointers.ClassBSTR, sizeof(BYTE*)));
+	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(Pointers.ClassBSTR, sizeof(uint8_t*)));
 	ExternalAddress* extAddress = resultPointer->m_location;
 	if (len > 0)
 	{
-		extAddress->m_pointer = reinterpret_cast<BYTE*>(::SysAllocStringLen((const OLECHAR*)pChars, len));
+		extAddress->m_pointer = reinterpret_cast<uint8_t*>(::SysAllocStringLen((const OLECHAR*)pChars, len));
 		resultPointer->beFinalizable();
 	}
 	else
@@ -217,7 +217,7 @@ BytesOTE* __fastcall NewGUID(GUID* rguid)
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpParms)
+unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)
 {
 	DescriptorOTE* oteTypes = descriptor->m_descriptor;
 	const DescriptorBytes* types = oteTypes->m_location;
@@ -225,7 +225,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 	unsigned i=0;
 	while (i<argsLen)
 	{
-		BYTE arg = types->m_args[i++];
+		uint8_t arg = types->m_args[i++];
 		// Similar to primitiveDLL32Call return values, but VOID is not supported as a parameter type
 		switch(ExtCallArgType(arg))
 		{
@@ -236,8 +236,8 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgType::LPVoid:
-				pushNewObject((OTE*)ExternalAddress::New(*(BYTE**)lpParms));
-				lpParms += sizeof(BYTE*);
+				pushNewObject((OTE*)ExternalAddress::New(*(uint8_t**)lpParms));
+				lpParms += sizeof(uint8_t*);
 				break;
 
 			case ExtCallArgType::Char:
@@ -312,8 +312,8 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 			case ExtCallArgType::LPPVoid:
 				// Push an LPVOID* instance onto the stack
-				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(BYTE**)lpParms));
-				lpParms += sizeof(BYTE*);
+				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(uint8_t**)lpParms));
+				lpParms += sizeof(uint8_t*);
 				break;
 
 			case ExtCallArgType::LPWStr:
@@ -397,15 +397,15 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				{
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
-					pushNewObject(ExternalStructure::NewPointer(behaviorPointer, *(BYTE**)lpParms));
-					lpParms += sizeof(BYTE*);
+					pushNewObject(ExternalStructure::NewPointer(behaviorPointer, *(uint8_t**)lpParms));
+					lpParms += sizeof(uint8_t*);
 				}
 				break;
 
 			case ExtCallArgType::LPPStruct:							// Not a valid argument
 				arg = types->m_args[i++];
-				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(BYTE**)lpParms));
-				lpParms += sizeof(BYTE*);
+				pushNewObject(ExternalStructure::NewPointer(Pointers.ClassLPVOID, *(uint8_t**)lpParms));
+				lpParms += sizeof(uint8_t*);
 				break;
 
 			case ExtCallArgType::ComPtr:
@@ -451,9 +451,9 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargco
 
 	// Decode the address argument
 	Oop oopAddress = *(sp-1);
-	BYTE* lpParms;
+	uint8_t* lpParms;
 	if (ObjectMemoryIsIntegerObject(oopAddress))
-		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(oopAddress));
+		lpParms = reinterpret_cast<uint8_t*>(ObjectMemoryIntegerValueOf(oopAddress));
 	else
 	{
 		OTE* args = reinterpret_cast<OTE*>(oopAddress);
@@ -461,7 +461,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargco
 			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
 		else
 		{
-			lpParms = static_cast<BYTE*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
+			lpParms = static_cast<uint8_t*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
 		}
 	}
 
@@ -491,16 +491,16 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
 
 	Oop argPointer = *(sp-1);
-	BYTE* lpParms;
+	uint8_t* lpParms;
 	if (ObjectMemoryIsIntegerObject(argPointer))
-		lpParms = reinterpret_cast<BYTE*>(ObjectMemoryIntegerValueOf(argPointer));
+		lpParms = reinterpret_cast<uint8_t*>(ObjectMemoryIntegerValueOf(argPointer));
 	else
 	{
 		OTE* args = reinterpret_cast<OTE*>(argPointer);
 		if (args->isPointers())
 			return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 		else
-			lpParms = static_cast<BYTE*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
+			lpParms = static_cast<uint8_t*>(static_cast<ExternalAddress*>(args->m_location)->m_pointer);
 	}
 
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(sp-2));
@@ -550,7 +550,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 	// Stack frame follows args...
 	StackFrame* pFrame = reinterpret_cast<StackFrame*>(localSp);
 
-	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pFrame)+sizeof(StackFrame)) - 1;
+	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<uint8_t*>(pFrame)+sizeof(StackFrame)) - 1;
 
 	pFrame->m_caller = m_registers.activeFrameOop();	// This overwrites receiver in stack, ref. count used for m_base
 	// We don't need to store down correct IP and SP into the frame until it is suspended,
@@ -664,7 +664,7 @@ void doBlah()
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef _M_IX86
-	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual);
+	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, uint8_t* argTypes, BOOL isVirtual);
 
 	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, primargcount_t argCount)
 	{
@@ -695,7 +695,7 @@ void doBlah()
 		if (ObjectMemory::fetchByteLengthOf(receiverBytes) < 4)
 			return primitiveFailure(0);			// invalid receiver
 
-		BYTE* thisPointer;
+		uint8_t* thisPointer;
 		if (ObjectMemory::isIndirect(receiverBytes.m_class))
 		{
 			thisPointer = static_cast<ExternalAddress*>(receiverBytes)->m_pointer;
@@ -787,7 +787,7 @@ void doBlah()
 	}
 
 	// Returns true/false for success/failure. Also sets the failure code.
-	BOOL __stdcall Interpreter::callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual)
+	BOOL __stdcall Interpreter::callExternalFunction(FARPROC pProc, unsigned argCount, uint8_t* argTypes, BOOL isVirtual)
 	{
 		Oop arg;
 		uintptr_t retValue;
@@ -1171,7 +1171,7 @@ void doBlah()
 					// Compiler should not generate as a return type, but if it does, treat as lpvoid
 				case ExtCallArgLPVOID:
 					pop(argCount);
-					replaceStackTopObjectWithNewObject(NewExternalAddress(reinterpret_cast<BYTE*>(retValue));
+					replaceStackTopObjectWithNewObject(NewExternalAddress(reinterpret_cast<uint8_t*>(retValue));
 					break;
 
 				case ExtCallArgCHAR:
@@ -1181,7 +1181,7 @@ void doBlah()
 
 				case ExtCallArgBYTE:
 					pop(argCount);
-					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<BYTE>(retValue));
+					replaceStackTopObjectNoRefCnt(ObjectMemoryIntegerObjectOf(static_cast<uint8_t>(retValue));
 					break;
 
 				case ExtCallArgSBYTE:

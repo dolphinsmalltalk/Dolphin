@@ -155,8 +155,8 @@ public:
 		SyncCallbackMsg,
 		SyncVirtualMsg
 	};
-	static uintptr_t __stdcall GenericCallbackMain(SmallInteger id, BYTE* lpArgs);
-	static uintptr_t __stdcall GenericCallback(SmallInteger id, BYTE* lpArgs);
+	static uintptr_t __stdcall GenericCallbackMain(SmallInteger id, uint8_t* lpArgs);
+	static uintptr_t __stdcall GenericCallback(SmallInteger id, uint8_t* lpArgs);
 
 	struct COMThunk
 	{
@@ -601,7 +601,7 @@ public:
 	static Oop* __fastcall primitiveStringAtPut(Oop* const sp, primargcount_t argCount);
 
 	// Helper for memory moves
-	static void memmove(BYTE* dst, const BYTE* src, size_t count);
+	static void memmove(uint8_t* dst, const uint8_t* src, size_t count);
 	static Oop* __fastcall primitiveReplaceBytes(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveIndirectReplaceBytes(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveReplacePointers(Oop* const sp, primargcount_t argCount);
@@ -751,8 +751,8 @@ private:
 	static BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, DolphinX::CallDescriptor* argTypes, BOOL isVirtual);
 	
 	// Pushs object on stack instantiated from address, and returns size of object pushed
-	static void pushArgsAt(CallbackDescriptor* descriptor, unsigned argCount, BYTE* lpParms);
-	static unsigned pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpParms);
+	static void pushArgsAt(CallbackDescriptor* descriptor, unsigned argCount, uint8_t* lpParms);
+	static unsigned pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms);
 	
 	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException);
 
@@ -762,7 +762,7 @@ public:
 	#ifdef _DEBUG
 		// Execution trace
 		static int executionTrace;
-		static void __fastcall debugExecTrace(BYTE* ip, Oop* sp);
+		static void __fastcall debugExecTrace(uint8_t* ip, Oop* sp);
 		static void __fastcall debugMethodActivated(Oop* sp);
 		static void __fastcall debugReturnToMethod(Oop* sp);
 		static void checkStack(Oop* sp);
@@ -831,7 +831,7 @@ private:
 	// Interpreter referenced objects (roots as may have no other refs)
 	static OTE** m_roots[];
 
-	// Process Switching - these are used with InterlockedExchange, so must be longs (not BYTE sized bool)
+	// Process Switching - these are used with InterlockedExchange, so must be longs (not uint8_t sized bool)
 	static SHAREDLONG	m_bAsyncPending;			// Set when interrupts or async signals are pending.
 	static SHAREDLONG	m_bAsyncPendingIOff;		// Ditto, used to buffer when interrupts are off
 	static SHAREDLONG*	m_pbAsyncPending; 

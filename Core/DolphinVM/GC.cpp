@@ -46,7 +46,7 @@ extern VMPointers _Pointers;
 #endif
 
 enum { NoWeakMask = 0, GCNoWeakness = 1 };
-BYTE ObjectMemory::WeaknessMask = static_cast<BYTE>(OTEFlags::WeakMask);
+uint8_t ObjectMemory::WeaknessMask = static_cast<uint8_t>(OTEFlags::WeakMask);
 
 void ObjectMemory::ClearGCInfo()
 {
@@ -61,7 +61,7 @@ inline Oop ObjectMemory::corpsePointer()
 
 void ObjectMemory::MarkObjectsAccessibleFromRoot(OTE* rootOTE)
 {
-	BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
 	if ((rootOTE->m_ubFlags ^ curMark) & OTEFlags::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(rootOTE);
 }
@@ -74,7 +74,7 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 	// First toggle the mark bit to the new mark
 	markObject(ote);
 
-	BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
 
 	// The class is always visited, but is now in the OTE which means we may not need
 	// to visit the object body at all
@@ -127,7 +127,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	// and we don't want to pass down to the depths. When we want to turn off
 	// weakness we mask with the free bit, which obviously can't be set on any
 	// live object so the test will always fail
-	WeaknessMask = static_cast<BYTE>(gcFlags & GCNoWeakness ? 0 : OTEFlags::WeakMask);
+	WeaknessMask = static_cast<uint8_t>(gcFlags & GCNoWeakness ? 0 : OTEFlags::WeakMask);
 
 	// Get the Oop to use for corpses from the interpreter (it's a global)
 	Oop corpse = corpsePointer();
@@ -168,10 +168,10 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	OTE**		pUnmarked = 0;
 
 	const OTE* pEnd = m_pOT+m_nOTSize;							// Loop invariant
-	const BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	const uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
 	for (OTE* ote=m_pOT+OTBase; ote < pEnd; ote++)
 	{
-		BYTE oteFlags = ote->m_ubFlags;
+		uint8_t oteFlags = ote->m_ubFlags;
 		if (!(oteFlags & OTEFlags::FreeMask))								// Already free'd?
 		{
 			// By Xoring current mark mask with existing one we should only get > 1 if they
@@ -214,7 +214,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	{
 		for (OTE* ote = m_pOT + OTBase; ote < pEnd; ote++)
 		{
-			const BYTE oteFlags = ote->m_ubFlags;
+			const uint8_t oteFlags = ote->m_ubFlags;
 			// Is it a non-free'd, weak pointer object, and does it either have the current mark or is finalizable?
 			// If so it's losses are replaced with references to the corpse object, and it may be sent a loss notification
 			if (((oteFlags & (OTEFlags::WeakMask | OTEFlags::FreeMask)) == OTEFlags::WeakMask)
@@ -232,7 +232,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 					if (!ObjectMemoryIsIntegerObject(fieldPointer))
 					{
 						OTE* fieldOTE = reinterpret_cast<OTE*>(fieldPointer);
-						const BYTE fieldFlags = fieldOTE->m_ubFlags;
+						const uint8_t fieldFlags = fieldOTE->m_ubFlags;
 						if (fieldFlags & OTEFlags::FreeMask)
 						{
 #if defined(_DEBUG) && 0
@@ -296,7 +296,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	for (unsigned i=0;i<loopEnd;i++)
 	{
 		OTE* ote = pUnmarked[i];
-		const BYTE oteFlags = ote->m_ubFlags;
+		const uint8_t oteFlags = ote->m_ubFlags;
 		HARDASSERT(!(oteFlags & OTEFlags::FreeMask));
 		if ((oteFlags ^ curMark) & OTEFlags::MarkMask)	// Still unmarked?
 		{
@@ -539,7 +539,7 @@ void ObjectMemory::addVMRefs()
 		}
 	
 		int errors=0;
-		BYTE* currentRefs = new BYTE[m_nOTSize];
+		uint8_t* currentRefs = new uint8_t[m_nOTSize];
 		{
 			const unsigned loopEnd = m_nOTSize;
 			for (unsigned i=OTBase; i < loopEnd; i++)

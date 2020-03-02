@@ -66,7 +66,7 @@ HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, si
 
 	ASSERT(imageSize > sizeof(ImageHeader));
 
-	BYTE* pImageBytes = static_cast<BYTE*>(imageData);
+	uint8_t* pImageBytes = static_cast<uint8_t*>(imageData);
 	ImageHeader* pHeader = reinterpret_cast<ImageHeader*>(pImageBytes + sizeof(ISTHDRTYPE));
 	ptrdiff_t offset = sizeof(ISTHDRTYPE) + sizeof(ImageHeader);
 
@@ -179,7 +179,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& i
 	::ZeroMemory(m_pConstObjs, CONSTSPACESIZE);
 
 	size_t cbPerm = 0;
-	BYTE* pNextConst = reinterpret_cast<BYTE*>(m_pConstObjs);
+	uint8_t* pNextConst = reinterpret_cast<uint8_t*>(m_pConstObjs);
 	int i;
 	for (i = 0; i < NumPermanent; i++)
 	{
@@ -446,7 +446,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 	Oop* pFramePointer = &m_suspendedFrame;
 	Oop framePointer = *pFramePointer;
 	const void* stackBase = m_stack;
-	const void* stackEnd = reinterpret_cast<BYTE*>(this) + oteThis->getSize() - 1;
+	const void* stackEnd = reinterpret_cast<uint8_t*>(this) + oteThis->getSize() - 1;
 
 	// Wind down the stack adjusting references to self as we go
 	// Start with the suspended context

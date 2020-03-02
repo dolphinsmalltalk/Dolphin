@@ -131,7 +131,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, primargcount_t
 	if (behavior->isIndirect())
 	{
 		ExternalAddress* ptr = static_cast<ExternalAddress*>(receiver->m_location);
-		pLongDbl = reinterpret_cast<_FP80*>(static_cast<BYTE*>(ptr->m_pointer)+offset);
+		pLongDbl = reinterpret_cast<_FP80*>(static_cast<uint8_t*>(ptr->m_pointer)+offset);
 	}
 	else
 	{

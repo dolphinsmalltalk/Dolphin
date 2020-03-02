@@ -120,7 +120,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 											block->initialIP() - 1;
 
 	// New stack pointer points at last field of stack frame
-	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pFrame)+sizeof(StackFrame)) - 1;
+	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<uint8_t*>(pFrame)+sizeof(StackFrame)) - 1;
 	ASSERT(m_registers.m_stackPointer == &pFrame->m_bp);
 
 	return primitiveSuccess(0);

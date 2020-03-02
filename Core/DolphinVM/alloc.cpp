@@ -772,7 +772,7 @@ void ObjectMemory::FixedSizePool::morePages()
 	UNREFERENCED_PARAMETER(nPages);
 	ASSERT(dwPageSize*nPages == dwAllocationGranularity);
 
-	BYTE* pStart = static_cast<BYTE*>(::VirtualAlloc(NULL, dwAllocationGranularity, MEM_COMMIT, PAGE_READWRITE));
+	uint8_t* pStart = static_cast<uint8_t*>(::VirtualAlloc(NULL, dwAllocationGranularity, MEM_COMMIT, PAGE_READWRITE));
 	if (!pStart)
 		::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, NULL);	// Fatal - we must exit Dolphin
 
@@ -795,14 +795,14 @@ void ObjectMemory::FixedSizePool::morePages()
 		memset(pStart, 0xCD, dwAllocationGranularity);
 	#endif
 
-	BYTE* pLast = pStart + dwAllocationGranularity - dwPageSize;
+	uint8_t* pLast = pStart + dwAllocationGranularity - dwPageSize;
 
 	#ifdef _DEBUG
 		// ASSERT that pLast is correct by causing a GPF if it isn't!
-		memset(reinterpret_cast<BYTE*>(pLast), 0xCD, dwPageSize);
+		memset(reinterpret_cast<uint8_t*>(pLast), 0xCD, dwPageSize);
 	#endif
 
-	for (BYTE* p = pStart; p < pLast; p += dwPageSize)
+	for (uint8_t* p = pStart; p < pLast; p += dwPageSize)
 		reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + dwPageSize);
 
 	reinterpret_cast<Link*>(pLast)->next = 0;
@@ -813,7 +813,7 @@ void ObjectMemory::FixedSizePool::morePages()
 	#endif
 }
 
-inline BYTE* ObjectMemory::FixedSizePool::allocatePage()
+inline uint8_t* ObjectMemory::FixedSizePool::allocatePage()
 {
 	if (!m_pFreePages)
 	{
@@ -824,7 +824,7 @@ inline BYTE* ObjectMemory::FixedSizePool::allocatePage()
 	Link* pPage = m_pFreePages;
 	m_pFreePages = pPage->next;
 	
-	return reinterpret_cast<BYTE*>(pPage);
+	return reinterpret_cast<uint8_t*>(pPage);
 }
 
 // Allocate another page for a fixed size pool
@@ -834,7 +834,7 @@ void ObjectMemory::FixedSizePool::moreChunks()
 	const int nBlockSize = dwPageSize - nOverhead;
 	const int nChunks = nBlockSize / m_nChunkSize;
 
-	BYTE* pStart = allocatePage();
+	uint8_t* pStart = allocatePage();
 
 	#ifdef _DEBUG
 		if (abs(Interpreter::executionTrace) > 0)
@@ -852,15 +852,15 @@ void ObjectMemory::FixedSizePool::moreChunks()
 		// We don't know whether the chunks are to contain zeros or nils, so we don't bother to init the space
 	#endif
 
-	BYTE* pLast = &pStart[(nChunks-1) * m_nChunkSize];
+	uint8_t* pLast = &pStart[(nChunks-1) * m_nChunkSize];
 
 	#ifdef _DEBUG
 		// ASSERT that pLast is correct by causing a GPF if it isn't!
-		memset(static_cast<BYTE*>(pLast), 0xCD, m_nChunkSize);
+		memset(static_cast<uint8_t*>(pLast), 0xCD, m_nChunkSize);
 	#endif
 
 	const unsigned chunkSize = m_nChunkSize;			// Loop invariant
-	for (BYTE* p = pStart; p < pLast; p += chunkSize)
+	for (uint8_t* p = pStart; p < pLast; p += chunkSize)
 		reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + chunkSize);
 
 	reinterpret_cast<Link*>(pLast)->next = 0;
@@ -1034,7 +1034,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 		for (unsigned i=0;i<loopEnd;i++)
 		{
 			void* pPage = m_pages[i];
-			if (pChunk >= pPage && static_cast<BYTE*>(pChunk) <= (static_cast<BYTE*>(pPage)+dwPageSize))
+			if (pChunk >= pPage && static_cast<uint8_t*>(pChunk) <= (static_cast<uint8_t*>(pPage)+dwPageSize))
 				return true;
 		}
 		return false;

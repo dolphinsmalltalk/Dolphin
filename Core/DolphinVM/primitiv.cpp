@@ -328,19 +328,19 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp, primargc
 		Oop oopReceiver = *(sp - 1);
 		if (!ObjectMemoryIsIntegerObject(oopReceiver))
 		{
-			static const BYTE criticalPointerObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
-			static const BYTE criticalByteObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask | OTEFlags::WeakOrZMask);
+			static const uint8_t criticalPointerObjectFlags = static_cast<uint8_t>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
+			static const uint8_t criticalByteObjectFlags = static_cast<uint8_t>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask | OTEFlags::WeakOrZMask);
 
 			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
 
 			// Ensure the masks cannot affect the critical bits of the flags
 			// the AND mask, must have the pointer, mark, and free bits set, to keep these bits
 			// the OR mask, must have those bits reset so as not to add them
-			BYTE criticalFlags = oteReceiver->m_flags.m_pointer ? criticalPointerObjectFlags : criticalByteObjectFlags;
-			BYTE andMask = (mask >> 8) | criticalFlags;
-			BYTE orMask = mask & static_cast<BYTE>(~criticalFlags);
+			uint8_t criticalFlags = oteReceiver->m_flags.m_pointer ? criticalPointerObjectFlags : criticalByteObjectFlags;
+			uint8_t andMask = (mask >> 8) | criticalFlags;
+			uint8_t orMask = mask & static_cast<uint8_t>(~criticalFlags);
 
-			BYTE oldFlags = oteReceiver->m_ubFlags;
+			uint8_t oldFlags = oteReceiver->m_ubFlags;
 			oteReceiver->m_ubFlags = (oldFlags & andMask) | orMask;
 
 			ASSERT(oteReceiver->isNullTerminated() == oteReceiver->m_oteClass->m_location->m_instanceSpec.m_nullTerminated);
@@ -589,7 +589,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argC
 			case 1:
 				if (static_cast<MWORD>(index) < oteReceiver->bytesSize())
 				{
-					BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
+					uint8_t value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
 					*newSp = ObjectMemoryIntegerObjectOf(value);
 					return newSp;
 				}
@@ -685,7 +685,7 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp, primargcount_t)
 						{
 							if (index < size)
 							{
-								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
+								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint8_t>(newValue);
 								*newSp = oopValue;
 								return newSp;
 							}
@@ -774,7 +774,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 			case 1:
 				if (static_cast<MWORD>(index) < oteReceiver->bytesSize())
 				{
-					BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
+					uint8_t value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
 					*newSp = ObjectMemoryIntegerObjectOf(value);
 					return newSp;
 				}
@@ -862,7 +862,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, primargcount_t
 						{
 							if (index < size)
 							{
-								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
+								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint8_t>(newValue);
 								*newSp = oopValue;
 								return newSp;
 							}

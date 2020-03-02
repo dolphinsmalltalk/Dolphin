@@ -150,7 +150,7 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
 		ASSERT(newByteSize <= maxByteSize);
 		unsigned allocSize = newTotalByteSize - currentTotalByteSize;
 		ASSERT(_ROUND2(allocSize, dwPageSize) == allocSize);
-		if (!::VirtualAlloc(reinterpret_cast<BYTE*>(pBase) + currentTotalByteSize, allocSize, MEM_COMMIT, PAGE_READWRITE))
+		if (!::VirtualAlloc(reinterpret_cast<uint8_t*>(pBase) + currentTotalByteSize, allocSize, MEM_COMMIT, PAGE_READWRITE))
 			return 0;	// Request to resize failed
 	}
 	else if (newTotalByteSize < currentTotalByteSize)
@@ -159,7 +159,7 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
 		// The object is shrinking - decommit some memory
 		ASSERT(newByteSize > (ObjectHeaderSize+behavior->fixedFields())*sizeof(MWORD));
 
-		MWORD* pCeiling = reinterpret_cast<MWORD*>(reinterpret_cast<BYTE*>(pBase) + newTotalByteSize);
+		MWORD* pCeiling = reinterpret_cast<MWORD*>(reinterpret_cast<uint8_t*>(pBase) + newTotalByteSize);
 
 		// Determine the size of the committed region above shrinkTo
 		MEMORY_BASIC_INFORMATION mbi;
@@ -208,7 +208,7 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, MWORD newByteSize)
 	if (pByteObj && totalByteSize > oldByteSize)
 	{
 		// The object grew, so ensure it is properly initialized
-		memset(reinterpret_cast<BYTE*>(pByteObj)+oldByteSize, 0, totalByteSize-oldByteSize);
+		memset(reinterpret_cast<uint8_t*>(pByteObj)+oldByteSize, 0, totalByteSize-oldByteSize);
 	}
 
 	return pByteObj;
