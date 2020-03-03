@@ -164,7 +164,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 
 	// Now locate all the unmarked objects, and visit any object referenced from finalizable
 	// unmarked objects. Also nil the corpses of any weak objects, and queue them for finalization
-	unsigned	nMaxUnmarked = 0, nUnmarked = 0;
+	size_t	nMaxUnmarked = 0, nUnmarked = 0;
 	OTE**		pUnmarked = 0;
 
 	const OTE* pEnd = m_pOT+m_nOTSize;							// Loop invariant
@@ -292,8 +292,8 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	// unmarked
 	unsigned deletions=0;
 	unsigned queuedForFinalize=0;
-	const unsigned loopEnd = nUnmarked;
-	for (unsigned i=0;i<loopEnd;i++)
+	const size_t loopEnd = nUnmarked;
+	for (size_t i=0;i<loopEnd;i++)
 	{
 		OTE* ote = pUnmarked[i];
 		const uint8_t oteFlags = ote->m_ubFlags;
@@ -435,8 +435,8 @@ void ObjectMemory::addVMRefs()
 
 	void ObjectMemory::checkPools()
 	{
-		const unsigned loopEnd = m_nOTSize;
-		for (unsigned i=OTBase;i<loopEnd;i++)
+		const size_t loopEnd = m_nOTSize;
+		for (size_t i=OTBase;i<loopEnd;i++)
 		{
 			OTE& ote = m_pOT[i];
 			if (!ote.isFree())
@@ -541,8 +541,8 @@ void ObjectMemory::addVMRefs()
 		int errors=0;
 		uint8_t* currentRefs = new uint8_t[m_nOTSize];
 		{
-			const unsigned loopEnd = m_nOTSize;
-			for (unsigned i=OTBase; i < loopEnd; i++)
+			const size_t loopEnd = m_nOTSize;
+			for (size_t i=OTBase; i < loopEnd; i++)
 			{
 				// Count and free bit should both be zero, or both non-zero
 				/*if (m_pOT[i].m_flags.m_free ^ (m_pOT[i].m_flags.m_count == 0))
@@ -586,8 +586,8 @@ void ObjectMemory::addVMRefs()
 		Interpreter::ReincrementVMReferences();
 
 		int refCountTooSmall = 0;
-		const unsigned loopEnd = m_nOTSize;
-		for (unsigned i=OTBase; i < loopEnd; i++)
+		const size_t loopEnd = m_nOTSize;
+		for (size_t i=OTBase; i < loopEnd; i++)
 		{
 			OTE* ote = &m_pOT[i];
 			if (currentRefs[i] < OTE::MAXCOUNT)

@@ -313,6 +313,9 @@
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ExternalBuf.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ExternalBuf.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

@@ -340,7 +340,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned argCount)
+Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t argCount)
 {
 	Oop* newSp = sp - argCount;
 	SmallInteger oopIndex = *(newSp + 1);

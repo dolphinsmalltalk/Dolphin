@@ -555,7 +555,7 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp, primargcoun
 	return sp-4;
 }
 
-Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argCount)
+Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const primargcount_t argCount)
 {
 	Oop* newSp = sp - argCount;
 	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);

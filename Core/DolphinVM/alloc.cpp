@@ -39,7 +39,7 @@
 ObjectMemory::FixedSizePool	ObjectMemory::m_pools[MaxPools];
 ObjectMemory::FixedSizePool::Link* ObjectMemory::FixedSizePool::m_pFreePages;
 void** ObjectMemory::FixedSizePool::m_pAllocations;
-unsigned ObjectMemory::FixedSizePool::m_nAllocations;
+size_t ObjectMemory::FixedSizePool::m_nAllocations;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Public object allocation routines
@@ -746,8 +746,8 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 
 		// Fill space with nils for initial values
 		const Oop nil = Oop(Pointers.Nil);
-		const unsigned loopEnd = initialSize;
-		for (unsigned i = 0; i < loopEnd; i++)
+		const size_t loopEnd = initialSize;
+		for (size_t i = 0; i < loopEnd; i++)
 			pLocation->m_fields[i] = nil;
 
 		OTE* ote = ObjectMemory::allocateOop(static_cast<POBJECT>(pLocation));
@@ -859,7 +859,7 @@ void ObjectMemory::FixedSizePool::moreChunks()
 		memset(static_cast<uint8_t*>(pLast), 0xCD, m_nChunkSize);
 	#endif
 
-	const unsigned chunkSize = m_nChunkSize;			// Loop invariant
+	const size_t chunkSize = m_nChunkSize;			// Loop invariant
 	for (uint8_t* p = pStart; p < pLast; p += chunkSize)
 		reinterpret_cast<Link*>(p)->next = reinterpret_cast<Link*>(p + chunkSize);
 
@@ -1030,8 +1030,8 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 
 	bool ObjectMemory::FixedSizePool::isMyChunk(void* pChunk)
 	{
-		const unsigned loopEnd = m_nPages;
-		for (unsigned i=0;i<loopEnd;i++)
+		const size_t loopEnd = m_nPages;
+		for (size_t i=0;i<loopEnd;i++)
 		{
 			void* pPage = m_pages[i];
 			if (pChunk >= pPage && static_cast<uint8_t*>(pChunk) <= (static_cast<uint8_t*>(pPage)+dwPageSize))
