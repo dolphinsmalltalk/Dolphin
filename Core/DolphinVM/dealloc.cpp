@@ -18,7 +18,7 @@
 #include "STVirtualObject.h"
 
 #ifdef MEMSTATS
-	extern unsigned m_nLargeFreed;
+	extern size_t m_nLargeFreed;
 #endif
 
 #pragma code_seg(MEM_SEG)
@@ -116,7 +116,7 @@ void ObjectMemory::deallocate(OTE* ote)
 
 		case OTEFlags::PoolSpace:
 		{
-			MWORD size = ote->sizeOf();
+			size_t size = ote->sizeOf();
 			HARDASSERT(size <= MaxSmallObjectSize);
 			freeSmallChunk(ote->m_location, size);
 			releasePointer(ote);

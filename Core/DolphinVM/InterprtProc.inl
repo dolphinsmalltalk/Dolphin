@@ -74,13 +74,13 @@ inline void InterpreterRegisters::StoreIPInFrame()
 	ASSERT(m_pMethod == m_pActiveFrame->m_method->m_location);
 
 	// Convert address to an offset
-	int offsetFromBeginningOfByteCodesObject = m_instructionPointer - ObjectMemory::ByteAddressOfObject(m_pMethod->m_byteCodes);
+	ptrdiff_t offsetFromBeginningOfByteCodesObject = m_instructionPointer - ObjectMemory::ByteAddressOfObject(m_pMethod->m_byteCodes);
 	m_pActiveFrame->setInstructionPointer(offsetFromBeginningOfByteCodesObject);
 }
 
 inline void InterpreterRegisters::LoadIPFromFrame()
 {
-	int offsetFromBeginningOfByteCodesObject = ObjectMemoryIntegerValueOf(m_pActiveFrame->m_ip);
+	SmallInteger offsetFromBeginningOfByteCodesObject = ObjectMemoryIntegerValueOf(m_pActiveFrame->m_ip);
 	//ASSERT(offsetFromBeginningOfByteCodesObject >= 0 && offsetFromBeginningOfByteCodesObject < 1024);
 	m_instructionPointer = ObjectMemory::ByteAddressOfObject(m_pMethod->m_byteCodes) + offsetFromBeginningOfByteCodesObject;
 }

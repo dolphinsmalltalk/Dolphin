@@ -98,9 +98,9 @@ template <typename T, typename Store> Oop* __fastcall Interpreter::primitiveInte
 		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 
 		BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 1));
-		const int size = oteReceiver->bytesSize();
+		const size_t size = oteReceiver->bytesSize();
 
-		if (offset >= 0 && static_cast<int>(offset + sizeof(T)) <= size)
+		if (offset >= 0 && static_cast<size_t>(offset) + sizeof(T) <= size)
 		{
 			T value = *reinterpret_cast<T*>(oteReceiver->m_location->m_fields + offset);
 			Store()(sp - 1, value);
@@ -125,9 +125,9 @@ template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall 
 
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
-		const int size = oteReceiver->bytesSizeForUpdate();
+		const ptrdiff_t size = oteReceiver->bytesSizeForUpdate();
 		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
-		if (offset >= 0 && static_cast<int>(offset + sizeof(T)) <= size)
+		if (offset >= 0 && offset + static_cast<ptrdiff_t>(sizeof(T)) <= size)
 		{
 			// Store into byte object
 			Oop oopValue = *sp;
@@ -172,7 +172,7 @@ template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall 
 
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
-		const int size = oteReceiver->bytesSizeForUpdate();
+		const ptrdiff_t size = oteReceiver->bytesSizeForUpdate();
 		SmallInteger offset = ObjectMemoryIntegerValueOf(oopOffset);
 		// Store into byte object
 		Oop oopValue = *sp;
@@ -240,7 +240,7 @@ template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffsetPut(Oop
 			fValue = oteValue->m_location->m_fValue;
 		}
 
-		SmallUinteger offset = ObjectMemoryIntegerValueOf(integerPointer);
+		SmallInteger offset = ObjectMemoryIntegerValueOf(integerPointer);
 
 		OTE* receiver = reinterpret_cast<OTE*>(*(sp - 2));
 		ASSERT(!ObjectMemoryIsIntegerObject(receiver));
@@ -261,8 +261,8 @@ template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffsetPut(Oop
 			BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(receiver);
 
 			// We can check that the offset is in bounds
-			int size = oteBytes->bytesSizeForUpdate();
-			if (static_cast<int>(offset) >= 0 && static_cast<int>(offset + sizeof(T)) <= size)
+			ptrdiff_t size = oteBytes->bytesSizeForUpdate();
+			if (offset >= 0 && offset + static_cast<ptrdiff_t>(sizeof(T)) <= size)
 			{
 				T* pBuf = reinterpret_cast<T*>(oteBytes->m_location->m_fields + offset);
 				*pBuf = static_cast<T>(fValue);
@@ -303,7 +303,7 @@ template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffset(Oop* c
 			BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(receiver);
 
 			// We can check that the offset is in bounds
-			if (offset >= 0 && offset + sizeof(T) <= oteBytes->bytesSize())
+			if (offset >= 0 && static_cast<size_t>(offset) + sizeof(T) <= oteBytes->bytesSize())
 			{
 				pValue = reinterpret_cast<T*>(oteBytes->m_location->m_fields + offset);
 			}

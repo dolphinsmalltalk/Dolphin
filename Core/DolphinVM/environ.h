@@ -120,8 +120,8 @@
 		#define	HARDASSERT(e)		((void)0)
 	#endif
 
-	enum { dwPageSize = 0x1000 };						// 4Kb
-	enum { dwAllocationGranularity = 0x10000 };			// 64Kb
+	constexpr size_t dwPageSize = 0x1000;						// 4Kb
+	constexpr size_t dwAllocationGranularity = 0x10000;			// 64Kb
 
 #else
 	#error "Not implemented for other platforms yet"

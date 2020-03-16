@@ -40,7 +40,7 @@ void CInProcPlugHole::WaitForPeerToStart() const
 
 	// Wait until either the peer is available or the Dolphin thread terminates
 	HANDLE aHandles[] = {m_hPeerAvailable, m_hDolphinThread};
-	const int numHandles = sizeof(aHandles)/sizeof(HANDLE);
+	const ULONG numHandles = sizeof(aHandles)/sizeof(HANDLE);
 
 	// New Win2000 CoWaitForMultipleHandles is ideal here...
 

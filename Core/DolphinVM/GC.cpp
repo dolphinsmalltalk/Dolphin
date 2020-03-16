@@ -82,9 +82,9 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 	if ((oteClass->m_ubFlags ^ curMark) & OTEFlags::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(reinterpret_cast<POTE>(oteClass));
 
-	const MWORD lastPointer = lastStrongPointerOf(ote);
+	const size_t lastPointer = lastStrongPointerOf(ote);
 	Oop* pFields = reinterpret_cast<Oop*>(ote->m_location);
-	for (MWORD i = ObjectHeaderSize; i < lastPointer; i++)
+	for (auto i = ObjectHeaderSize; i < lastPointer; i++)
 	{
 		// This will get nicely optimised by the Compiler
 		Oop fieldPointer = pFields[i];
@@ -107,7 +107,7 @@ OTEFlags ObjectMemory::nextMark()
 	OTEFlags oldMark = m_spaceOTEBits[OTEFlags::NormalSpace];
 	// Toggle the "visited" mark - all objects will then have previous mark
 	BOOL newMark = oldMark.m_mark ? FALSE : TRUE;
-	for (unsigned i=0;i<OTEFlags::NumSpaces;i++)
+	for (auto i=0u;i<OTEFlags::NumSpaces;i++)
 		m_spaceOTEBits[i].m_mark = newMark;
 	return oldMark;
 }
@@ -209,7 +209,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	// Another scan to nil out weak references. This has to be a separate scan from the finalization
 	// candidate scan so that we don't end up nilling out weak references to objects that are accessible
 	// from finalizable objects
-	unsigned queuedForBereavement=0;
+	size_t queuedForBereavement=0;
 	if (WeaknessMask != 0)
 	{
 		for (OTE* ote = m_pOT + OTBase; ote < pEnd; ote++)
@@ -222,11 +222,11 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 			{
 				SmallInteger losses = 0;
 				PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
-				const MWORD size = otePointers->pointersSize();
+				const size_t size = otePointers->pointersSize();
 				VariantObject* weakObj = otePointers->m_location;
 				const Behavior* weakObjClass = ote->m_oteClass->m_location;
-				const MWORD fixedFields = weakObjClass->fixedFields();
-				for (MWORD j = fixedFields; j < size; j++)
+				const auto fixedFields = weakObjClass->fixedFields();
+				for (size_t j = fixedFields; j < size; j++)
 				{
 					Oop fieldPointer = weakObj->m_fields[j];
 					if (!ObjectMemoryIsIntegerObject(fieldPointer))
@@ -290,10 +290,10 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 
 	// Now sweep through the unmarked objects, and finalize/deallocate any objects which are STILL
 	// unmarked
-	unsigned deletions=0;
-	unsigned queuedForFinalize=0;
-	const size_t loopEnd = nUnmarked;
-	for (size_t i=0;i<loopEnd;i++)
+	size_t deletions=0;
+	size_t queuedForFinalize=0;
+	const auto loopEnd = nUnmarked;
+	for (auto i=0u;i<loopEnd;i++)
 	{
 		OTE* ote = pUnmarked[i];
 		const uint8_t oteFlags = ote->m_ubFlags;
@@ -340,9 +340,9 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 				if (ote->isPointers())
 				{
 					PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
-					const MWORD lastPointer = otePointers->pointersSize();
+					const size_t lastPointer = otePointers->pointersSize();
 					VariantObject* varObj = otePointers->m_location;
-					for (unsigned f = 0; f < lastPointer; f++)
+					for (auto f = 0u; f < lastPointer; f++)
 					{
 						Oop fieldPointer = varObj->m_fields[f];
 						if (!isIntegerObject(fieldPointer))
@@ -422,8 +422,8 @@ void ObjectMemory::addVMRefs()
 	// Deliberately max out ref. counts of VM ref'd objects so that ref. counting ops 
 	// not needed
 	Array* globalPointers = (Array*)&_Pointers;
-	const unsigned loopEnd = NumPointers;
-	for (unsigned i=0;i<loopEnd;i++)
+	const auto loopEnd = NumPointers;
+	for (auto i=0u;i<loopEnd;i++)
 	{
 		Oop obj = globalPointers->m_elements[i];
 		if (!isIntegerObject(obj))
@@ -444,7 +444,7 @@ void ObjectMemory::addVMRefs()
 				OTEFlags::Spaces space = ote.heapSpace();
 				if (space == OTEFlags::PoolSpace)
 				{
-					unsigned size = ote.sizeOf();
+					size_t size = ote.sizeOf();
 					if (size > MaxSizeOfPoolObject)
 					{
 						if (size <= MaxSmallObjectSize)
@@ -463,14 +463,14 @@ void ObjectMemory::addVMRefs()
 				}
 			}
 		}
-		for (int j=0;j<NumPools;j++)
+		for (auto j=0;j<NumPools;j++)
 			HARDASSERT(m_pools[j].isValid());
 	}
 
-	int ObjectMemory::CountFreeOTEs()
+	size_t ObjectMemory::CountFreeOTEs()
 	{
 		OTE*	p = m_pFreePointerList;
-		int		count = 0;
+		size_t	count = 0;
 		OTE*	offEnd= m_pOT + m_nOTSize;
 		while (p < offEnd)
 		{
@@ -482,7 +482,7 @@ void ObjectMemory::addVMRefs()
 
 	void ObjectMemory::checkStackRefs(Oop* const sp)
 	{
-		int zeroCountNotInZct = 0;
+		size_t zeroCountNotInZct = 0;
 		Process* pProcess = Interpreter::m_registers.m_pActiveProcess;
 		for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
 		{
@@ -538,7 +538,7 @@ void ObjectMemory::addVMRefs()
 			Interpreter::IncStackRefs(sp);
 		}
 	
-		int errors=0;
+		auto errors=0;
 		uint8_t* currentRefs = new uint8_t[m_nOTSize];
 		{
 			const size_t loopEnd = m_nOTSize;
@@ -564,7 +564,7 @@ void ObjectMemory::addVMRefs()
 
 		// Recalc the references
 		const OTE* pEnd = m_pOT+m_nOTSize;
-		int nFree = 0;
+		size_t nFree = 0;
 		for (OTE* ote=m_pOT; ote < pEnd; ote++)
 		{
 			if (!ote->isFree())
@@ -574,7 +574,7 @@ void ObjectMemory::addVMRefs()
 		}
 
 		POTE poteFree = m_pFreePointerList;
-		int cFreeList = 0;
+		size_t cFreeList = 0;
 		while (poteFree < pEnd)
 		{
 			++cFreeList;
@@ -585,7 +585,7 @@ void ObjectMemory::addVMRefs()
 
 		Interpreter::ReincrementVMReferences();
 
-		int refCountTooSmall = 0;
+		auto refCountTooSmall = 0;
 		const size_t loopEnd = m_nOTSize;
 		for (size_t i=OTBase; i < loopEnd; i++)
 		{
@@ -617,7 +617,7 @@ void ObjectMemory::addVMRefs()
 							TRACESTREAM<< L" Referenced From:" << std::endl;
 							ArrayOTE* oteRefs = ObjectMemory::referencesTo(reinterpret_cast<Oop>(ote), true);
 							Array* refs = oteRefs->m_location;
-							for (unsigned i=0;i<oteRefs->pointersSize();i++)
+							for (auto i=0u;i<oteRefs->pointersSize();i++)
 								TRACESTREAM<< L"  " << reinterpret_cast<OTE*>(refs->m_elements[i]) << std::endl;
 							deallocate(reinterpret_cast<OTE*>(oteRefs));
 						}
@@ -653,8 +653,8 @@ void ObjectMemory::addVMRefs()
 				if (ote->isPointers())
 				{
 					VariantObject* obj = reinterpret_cast<PointersOTE*>(ote)->m_location;
-					int size = ote->pointersSize();
-					for (int i = 0; i < size; i++)
+					size_t size = ote->pointersSize();
+					for (size_t i = 0; i < size; i++)
 					{
 						HARDASSERT(isValidOop(obj->m_fields[i]));
 					}
@@ -697,8 +697,8 @@ void ObjectMemory::addVMRefs()
 		{
 			PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 			VariantObject* varObj = otePointers->m_location;
-			const MWORD lastPointer = otePointers->pointersSize();
-			for (MWORD i = 0; i < lastPointer; i++)
+			const size_t lastPointer = otePointers->pointersSize();
+			for (size_t i = 0; i < lastPointer; i++)
 			{
 				Oop fieldPointer = varObj->m_fields[i];
 				// The reason we don't use an ASSERT here is that, ASSERT throws

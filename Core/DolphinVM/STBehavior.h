@@ -33,7 +33,7 @@ union InstanceSpecification
 
 		uint16_t m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
 	};
-	MWORD m_value;
+	SmallUinteger m_value;
 
 	enum
 	{
@@ -59,6 +59,8 @@ typedef TOTE<ST::MethodDictionary> MethodDictOTE;
 
 namespace ST
 {
+	typedef uint8_t instvarcount_t;
+
 	class Behavior //: public Object
 	{
 	public:
@@ -68,7 +70,7 @@ namespace ST
 		ArrayOTE*				m_subclasses;
 
 	public:
-		unsigned fixedFields() const { return (m_instanceSpec.m_value >> 1) & 0xFF; }
+		instvarcount_t fixedFields() const { return (m_instanceSpec.m_value >> 1) & UINT8_MAX; }
 		BOOL isPointers() const { return m_instanceSpec.m_pointers; }
 		BOOL isBytes() const { return !m_instanceSpec.m_pointers; }
 		BOOL isIndexable() const { return m_instanceSpec.m_indexable; }

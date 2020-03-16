@@ -32,25 +32,25 @@ typedef TOTE<ST::Symbol> SymbolOTE;
 class AnsiStringOTE : public TOTE<ST::AnsiString>
 {
 public:
-	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
 };
 
 class Utf8StringOTE : public TOTE<ST::Utf8String>
 {
 public:
-	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
 };
 
 class Utf16StringOTE : public TOTE<ST::Utf16String>
 {
 public:
-	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size) / static_cast<int>(sizeof(char16_t)); }
+	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size) / static_cast<ptrdiff_t>(sizeof(char16_t)); }
 };
 
 class Utf32StringOTE : public TOTE<ST::Utf32String>
 {
 public:
-	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size) / static_cast<int>(sizeof(char32_t)); }
+	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size) / static_cast<ptrdiff_t>(sizeof(char32_t)); }
 };
 
 typedef UINT codepage_t;

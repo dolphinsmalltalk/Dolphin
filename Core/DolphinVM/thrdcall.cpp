@@ -413,7 +413,7 @@ OverlappedCall::States OverlappedCall::beTerminated()
 ///////////////////////////////////////////////////////////////////////////////
 // Thread loop
 
-extern "C" Oop* __fastcall asyncDLL32Call(CompiledMethod* pMethod, unsigned argCount, OverlappedCall* pThis, InterpreterRegisters* pContext);
+extern "C" Oop* __fastcall asyncDLL32Call(CompiledMethod* pMethod, size_t argCount, OverlappedCall* pThis, InterpreterRegisters* pContext);
 
 DWORD OverlappedCall::WaitForRequest()
 {
@@ -539,7 +539,7 @@ bool OverlappedCall::PerformCall()
 	return stayAlive;
 }
 
-bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
+bool OverlappedCall::Initiate(CompiledMethod* pMethod, argcount_t argCount)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
@@ -1049,7 +1049,7 @@ void OverlappedCall::OnCallReturned()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive helpers
 
-OverlappedCallPtr OverlappedCall::Do(CompiledMethod* pMethod, unsigned argCount)
+OverlappedCallPtr OverlappedCall::Do(CompiledMethod* pMethod, argcount_t argCount)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 	OverlappedCallPtr pCall = GetActiveProcessOverlappedCall();

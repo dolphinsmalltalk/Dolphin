@@ -41,7 +41,7 @@ void ObjectMemory::finalize(OTE* ote)
 	#endif
 		
 	MemoryManager* memMan = memoryManager();
-	Interpreter::queueForFinalization(ote, (unsigned)integerValueOf(memMan->m_hospiceHighWater));
+	Interpreter::queueForFinalization(ote, (SmallUinteger)integerValueOf(memMan->m_hospiceHighWater));
 }
 
 void Interpreter::scheduleFinalization()
@@ -80,9 +80,9 @@ void Interpreter::scheduleFinalization()
 	}
 
 	MemoryManager* memMan = ObjectMemory::memoryManager();
-	unsigned count = m_qForFinalize.Count();
+	size_t count = m_qForFinalize.Count();
 	// Raise interrupt when at or above high water mark
-	if (count >= (unsigned)integerValueOf(memMan->m_hospiceHighWater))
+	if (count >= (SmallUinteger)integerValueOf(memMan->m_hospiceHighWater))
 		queueInterrupt(VMI_HOSPICECRISIS, integerObjectOf(count));
 }
 
@@ -102,7 +102,7 @@ OTE* Interpreter::dequeueBereaved(VariantObject* out)
 		answer = Pointers.False;
 	else
 	{
-		for (unsigned i = 0; i < OopsPerBereavementQEntry; i++)
+		for (auto i = 0u; i < OopsPerBereavementQEntry; i++)
 		{
 			ObjectMemory::countDown(out->m_fields[i]);
 			out->m_fields[i] = m_qBereavements.Pop();

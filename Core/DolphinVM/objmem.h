@@ -41,12 +41,12 @@ using namespace ST;
 #define MaxSmallInteger 0x3FFFFFFF
 #endif
 
-#define PoolGranularity 8
+constexpr size_t PoolGranularity = 8;
 
 class ibinstream;
 class obinstream;
 
-#define pointerFromIndex(index)	(m_pOT+int(index))
+#define pointerFromIndex(index)	(m_pOT+static_cast<ptrdiff_t>(index))
 
 ///////////////////////////////////////////////////////////////////////////////
 // Class of Object Memory Managers
@@ -62,8 +62,8 @@ public:
 	static void Terminate();
 
 	// Object Pointer access
-	static Oop fetchPointerOfObject(MWORD fieldIndex, PointersOTE* ote);
-	static Oop storePointerOfObjectWithValue(MWORD fieldIndex, PointersOTE* ote, Oop valuePointer);
+	static Oop fetchPointerOfObject(size_t fieldIndex, PointersOTE* ote);
+	static Oop storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer);
 	static Oop storePointerWithValue(Oop& oopSlot, Oop oopValue);
 	static OTE* storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
 	static Oop storePointerWithValue(Oop& oopSlot, OTE* oteValue);
@@ -72,11 +72,11 @@ public:
 
 	// Use these versions to store values which are not themselves ref. counted
 	static Oop storePointerWithUnrefCntdValue(Oop&, Oop);
-	static void __fastcall storePointerOfObjectWithUnrefCntdValue(MWORD fieldIndex, PointersOTE* ote, Oop value);
+	static void __fastcall storePointerOfObjectWithUnrefCntdValue(size_t fieldIndex, PointersOTE* ote, Oop value);
 
 	// Word Access
-	static MWORD fetchWordOfObject(MWORD fieldIndex, Oop objectPointer);
-	static MWORD storeWordOfObjectWithValue(MWORD fieldIndex, Oop objectPointer, MWORD valueWord);
+	static uintptr_t fetchWordOfObject(size_t fieldIndex, Oop objectPointer);
+	static uintptr_t storeWordOfObjectWithValue(size_t fieldIndex, Oop objectPointer, uintptr_t valueWord);
 
 	// Formerly Private reference count management
 	static void  __fastcall countUp(Oop objectPointer);
@@ -93,27 +93,27 @@ public:
 	static size_t GetBytesElementSize(BytesOTE* ote);
 
 	// Use CRT Small block heap OR pool if size <= this threshold
-	enum { MaxSmallObjectSize = 0x3f8 };
-	enum { PoolObjectSizeLimit = 144 };
-	enum { MinObjectSize = /*sizeof(Object)+*/PoolGranularity };
-	enum { MaxPools = (PoolObjectSizeLimit - MinObjectSize) / PoolGranularity + 1 };
+	static constexpr size_t MaxSmallObjectSize = 0x3f8;
+	static constexpr size_t PoolObjectSizeLimit = 144;
+	static constexpr size_t MinObjectSize = /*sizeof(Object)+*/PoolGranularity;
+	static constexpr size_t MaxPools = (PoolObjectSizeLimit - MinObjectSize) / PoolGranularity + 1;
 
-	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, MWORD initialSize, MWORD maxSize);
+	static VirtualOTE* __fastcall newVirtualObject(BehaviorOTE* classPointer, size_t initialSize, size_t maxSize);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
-	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
-	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
-	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
-	template <class T> static TOTE<T>* newUninitializedNullTermObject(MWORD instanceByteSize);
-	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
-	static OTE* CopyElements(OTE* oteObj, MWORD startingAt, MWORD countfrom);
+	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
+	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
+	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize);
+	template <class T> static TOTE<T>* newUninitializedNullTermObject(size_t instanceByteSize);
+	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize, const void* pBytes);
+	static OTE* CopyElements(OTE* oteObj, size_t startingAt, size_t countfrom);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
 	template <size_t extra> static POBJECT basicResize(OTE* ote, size_t byteSize /*should include header*/);
-	static POBJECT resizeVirtual(OTE* ote, MWORD byteSize /*ditto*/);
+	static POBJECT resizeVirtual(OTE* ote, size_t byteSize /*ditto*/);
 
 	// More useful (and safe) entry points from Interpreter
-	static VariantObject* resize(PointersOTE* objectPointer, MWORD newPointers, bool bRefCount);
-	static VariantByteObject* resize(BytesOTE* objectPointer, MWORD newBytes);
+	static VariantObject* resize(PointersOTE* objectPointer, size_t newPointers, bool bRefCount);
+	static VariantByteObject* resize(BytesOTE* objectPointer, size_t newBytes);
 
 	static BytesOTE* __fastcall shallowCopy(BytesOTE* ote);
 	static PointersOTE* __fastcall shallowCopy(PointersOTE* ote);
@@ -123,8 +123,8 @@ public:
 
 	// GC support
 	static SmallInteger OopsLeft();
-	static int __fastcall OopsUsed();
-	static unsigned GetOTSize();
+	static size_t __fastcall OopsUsed();
+	static size_t GetOTSize();
 	static size_t compact(Oop* const sp);
 	static void HeapCompact();
 
@@ -140,7 +140,7 @@ public:
 		}
 	}
 
-	static OTE* PointerFromIndex(int index)
+	static OTE* PointerFromIndex(size_t index)
 	{
 		return pointerFromIndex(index);
 	}
@@ -212,7 +212,7 @@ public:
 	static void CheckPoint();
 #endif
 
-	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
+	static _PrimitiveFailureCode __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, size_t nMaxObjects);
 	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, size_t imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
@@ -220,12 +220,10 @@ public:
 	static MemoryManager* memoryManager();
 
 public:
-	enum {
-		OTMinHeadroom = 16384,
-		OTDefaultSize = 65536,
-		OTDefaultMax = 24 * 1024 * 1024,
-		OTMaxLimit = 64 * 1024 * 1024
-	};
+	static constexpr size_t OTMinHeadroom = 16384;
+	static constexpr size_t OTDefaultSize = 65536;
+	static constexpr size_t OTDefaultMax = 24 * 1024 * 1024;
+	static constexpr size_t OTMaxLimit = 64 * 1024 * 1024;
 
 	enum { registryIndex, FirstBuiltInIdx };
 
@@ -242,11 +240,9 @@ public:
 		emptyArrayOOPIndex,
 		FirstCharacterIdx
 	};
-	enum {
-		NumCharacters = 256,
-		NumPermanent = FirstCharacterIdx + NumCharacters
-	};
-	enum { OTBase = NumPermanent };
+	static constexpr size_t NumCharacters = 256;
+	static constexpr size_t NumPermanent = FirstCharacterIdx + NumCharacters;
+	static constexpr size_t OTBase = NumPermanent;
 
 	class OTEPool
 	{
@@ -276,8 +272,8 @@ public:
 		OTE* allocate();
 		void deallocate(OTE* ote);
 
-		BytesOTE* newByteObject(BehaviorOTE* classPointer, unsigned bytes, OTEFlags::Spaces space);
-		PointersOTE* newPointerObject(BehaviorOTE* classPointer, unsigned pointers, OTEFlags::Spaces space);
+		BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t bytes, OTEFlags::Spaces space);
+		PointersOTE* newPointerObject(BehaviorOTE* classPointer, size_t pointers, OTEFlags::Spaces space);
 
 		void terminate()
 		{
@@ -296,8 +292,8 @@ private:
 	// newly allocated, or who's count has dropped to zero
 
 	static OTE** m_pZct;
-	static int m_nZctEntries;		// Current no. of Zct entries
-	static int m_nZctHighWater;		// High water mark at which ZCT reconciled
+	static ptrdiff_t m_nZctEntries;		// Current no. of Zct entries
+	static ptrdiff_t m_nZctHighWater;	// High water mark at which ZCT reconciled
 	static bool m_bIsReconcilingZct;
 
 	static HRESULT InitializeZct();
@@ -330,12 +326,12 @@ private:
 	__declspec(align(8)) class FixedSizePool
 	{
 	public:
-		FixedSizePool(unsigned nChunkSize=MinObjectSize);
+		FixedSizePool(size_t nChunkSize=MinObjectSize);
 
 		POBJECT allocate();
 		void deallocate(POBJECT pChunk);
 		
-		void setSize(unsigned nChunkSize);
+		void setSize(size_t nChunkSize);
 		void terminate();
 
 	#ifdef _DEBUG
@@ -344,13 +340,13 @@ private:
 	#endif
 
 	#ifdef MEMSTATS
-		int getPages() { return m_nPages; }
-		int getFree();
+		size_t getPages() { return m_nPages; }
+		size_t getFree();
 		void**		m_pages;
 		size_t	m_nPages;
 	#endif
 
-	int getSize() { return m_nChunkSize; }
+	size_t getSize() { return m_nChunkSize; }
 
 	private:
 		void moreChunks();
@@ -378,7 +374,7 @@ private:
 	static HRESULT __stdcall allocateOT(size_t reserve, size_t commit);
 
 	// Answer the index of the last occuppied OT entry
-	static unsigned __stdcall lastOTEntry();
+	static size_t __stdcall lastOTEntry();
 
 	static OTE* __fastcall allocateOop(POBJECT pLocation);
 public:
@@ -386,18 +382,18 @@ public:
 private:
 	// Memory allocators - these are very thin layers of C/Win32 heap
 	static void freeChunk(POBJECT pChunk);
-	static void freeSmallChunk(POBJECT pObj, MWORD size);
-	static POBJECT reallocChunk(POBJECT pChunk, MWORD newChunkSize);
+	static void freeSmallChunk(POBJECT pObj, size_t size);
+	static POBJECT reallocChunk(POBJECT pChunk, size_t newChunkSize);
 #ifdef _DEBUG
-	static MWORD chunkSize(void* pChunk);
+	static size_t chunkSize(void* pChunk);
 #endif
 
-	static POBJECT allocSmallChunk(MWORD chunkSize);
-	static POBJECT allocChunk(MWORD chunkSize);
-	static POBJECT allocObject(MWORD objectSize, OTE*& ote);
-	static POBJECT allocLargeObject(MWORD objectSize, OTE*& ote);
+	static POBJECT allocSmallChunk(size_t chunkSize);
+	static POBJECT allocChunk(size_t chunkSize);
+	static POBJECT allocObject(size_t objectSize, OTE*& ote);
+	static POBJECT allocLargeObject(size_t objectSize, OTE*& ote);
 
-	static FixedSizePool& spacePoolForSize(MWORD objectSize);
+	static FixedSizePool& spacePoolForSize(size_t objectSize);
 
 	static void decRefs(Oop);
 
@@ -418,7 +414,7 @@ private:
 
 	// Garbage collection/Ref count checking
 	static uint8_t WeaknessMask;
-	static MWORD lastStrongPointerOf(OTE* ote);
+	static size_t lastStrongPointerOf(OTE* ote);
 	static void reclaimInaccessibleObjects(uintptr_t flags);
 	static void markObjectsAccessibleFrom(OTE* ote);
 	static void ClearGCInfo();
@@ -443,20 +439,20 @@ private:
 	static const char ISTHDRTYPE[4];
 
 	static bool __stdcall SaveObjectTable(obinstream& imageFile, const ImageHeader*);
-	template <MWORD ImageNullTerms> static bool __stdcall SaveObjects(obinstream& imageFile, const ImageHeader*);
-	static bool __stdcall SaveImage(obinstream& imageFile, const ImageHeader*, int);
+	template <size_t ImageNullTerms> static bool __stdcall SaveObjects(obinstream& imageFile, const ImageHeader*);
+	static bool __stdcall SaveImage(obinstream& imageFile, const ImageHeader*, int nRet);
 
 	static HRESULT __stdcall LoadImage(ibinstream& imageFile, ImageHeader*);
 
 	static OTE* __fastcall FixupPointer(OTE* pSavedPointer, OTE* pSavedBase);
 	static HRESULT __stdcall LoadObjectTable(ibinstream& imageFile, const ImageHeader*);
-	template <MWORD ImageNullTerms> static HRESULT LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead);
-	template <MWORD ImageNullTerms> static HRESULT __stdcall LoadPointers(ibinstream& imageFile, const ImageHeader*, size_t&);
-	template <MWORD ImageNullTerms> static HRESULT __stdcall LoadObjects(ibinstream& imageFile, const ImageHeader*, size_t&);
+	template <size_t ImageNullTerms> static HRESULT LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead);
+	template <size_t ImageNullTerms> static HRESULT __stdcall LoadPointers(ibinstream& imageFile, const ImageHeader*, size_t&);
+	template <size_t ImageNullTerms> static HRESULT __stdcall LoadObjects(ibinstream& imageFile, const ImageHeader*, size_t&);
 
-	static ST::Object* AllocObj(OTE * ote, MWORD allocSize);
+	static ST::Object* AllocObj(OTE * ote, size_t allocSize);
 
-	static void __stdcall FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader*);
+	static void __stdcall FixupObject(OTE* ote, uintptr_t* oldLocation, const ImageHeader*);
 	static void __stdcall PostLoadFix();
 
 public:			// Public Data
@@ -475,19 +471,19 @@ private:		// Private Data
 	static uint32_t m_nNextIdHash;					// Next identity hash value to use
 
 	// These are to be used for collecting statistics in future
-	static unsigned	m_nObjectsAllocated;
-	static unsigned m_nObjectsFreed;
-	static unsigned m_nBytesAllocated;
-	static unsigned m_nBytesFreed;
+	static size_t	m_nObjectsAllocated;
+	static size_t	m_nObjectsFreed;
+	static size_t	m_nBytesAllocated;
+	static size_t	m_nBytesFreed;
 #ifdef _DEBUG
-	static int		m_nFreeOTEs;
-	static int		CountFreeOTEs();
+	static size_t	m_nFreeOTEs;
+	static size_t	CountFreeOTEs();
 #endif
 
 	static OTEFlags m_spaceOTEBits[OTEFlags::NumSpaces];
 
-	static unsigned m_nOTMax;
-	static unsigned m_nOTSize;						// The size (in Oops, not bytes) of the object table
+	static size_t m_nOTMax;
+	static size_t m_nOTSize;						// The size (in Oops, not bytes) of the object table
 public:
 	static OTE*		m_pOT;							// The Object Table itself
 private:
@@ -500,7 +496,7 @@ private:
 // Lower level object creation
 // Note that we deliberately do not make this a member fn, so that we are sure it is not
 // touching any of the static member vars
-MWORD* __stdcall AllocateVirtualSpace(MWORD maxBytes, MWORD initialBytes);
+Oop* __stdcall AllocateVirtualSpace(size_t maxBytes, size_t initialBytes);
 
 
 // Globally accessible pointers, but please don't write to them!
@@ -538,7 +534,7 @@ inline bool ObjectMemory::isValidOop(Oop objectPointer)
 #define roundUpTo(n, to) ((((n)+(to)-1)/(to)) * (to))
 
 // Macro to calculate the byte size of an object with N pointers
-#define SizeOfPointers(N) (((N)+ObjectHeaderSize)*sizeof(MWORD))
+#define SizeOfPointers(N) ((static_cast<size_t>(N)+ObjectHeaderSize)*sizeof(Oop))
 
 inline void ObjectMemory::decRefs(Oop oop)
 {
@@ -546,7 +542,7 @@ inline void ObjectMemory::decRefs(Oop oop)
 		reinterpret_cast<OTE*>(oop)->decRefs();
 }
 
-inline unsigned ObjectMemory::GetOTSize()
+inline size_t ObjectMemory::GetOTSize()
 {
 	return m_nOTSize;
 }
@@ -623,7 +619,7 @@ inline void __fastcall ObjectMemory::AddToZct(TOTE<Object>* ote)
 	HARDASSERT(m_nZctEntries >= 0);
 
 	// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
-	int zctEntries = m_nZctEntries;
+	auto zctEntries = m_nZctEntries;
 	m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
 	m_nZctEntries = zctEntries;
 
@@ -642,7 +638,7 @@ inline void __fastcall ObjectMemory::AddStackRefToZct(TOTE<Object>* ote)
 	HARDASSERT(m_nZctEntries >= 0);
 
 	// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
-	int zctEntries = m_nZctEntries;
+	auto zctEntries = m_nZctEntries;
 	m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
 	m_nZctEntries = zctEntries;
 
@@ -662,14 +658,14 @@ inline bool ObjectMemory::IsReconcilingZct()
 ///////////////////////////////////////////////////////////////////////////////
 // Machine Word Access
 
-inline Oop ObjectMemory::fetchPointerOfObject(MWORD fieldIndex, PointersOTE* ote)
+inline Oop ObjectMemory::fetchPointerOfObject(size_t fieldIndex, PointersOTE* ote)
 {
 	ASSERT(fieldIndex < ote->pointersSize());
 	return ote->m_location->m_fields[fieldIndex];
 }
 
 // SmallIntegers and some special objects are not ref. counted, so this saves a little time
-inline void __fastcall ObjectMemory::storePointerOfObjectWithUnrefCntdValue(MWORD fieldIndex, PointersOTE* ote, Oop nonRefCountedPointer)
+inline void __fastcall ObjectMemory::storePointerOfObjectWithUnrefCntdValue(size_t fieldIndex, PointersOTE* ote, Oop nonRefCountedPointer)
 {
 	ASSERT(fieldIndex < ote->pointersSize());
 	VariantObject* obj = ote->m_location;
@@ -677,7 +673,7 @@ inline void __fastcall ObjectMemory::storePointerOfObjectWithUnrefCntdValue(MWOR
 	obj->m_fields[fieldIndex] = nonRefCountedPointer;
 }
 
-inline Oop ObjectMemory::storePointerOfObjectWithValue(MWORD fieldIndex, PointersOTE* ote, Oop valuePointer)
+inline Oop ObjectMemory::storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer)
 {
 	ASSERT(fieldIndex < ote->pointersSize());
 	countUp(valuePointer);
@@ -742,14 +738,14 @@ inline void ObjectMemory::nilOutPointer(OTE*& ote)
 ///////////////////////////////////////////////////////////////////////////////
 // Machine Word Access
 
-inline MWORD ObjectMemory::fetchWordOfObject(MWORD wordIndex, Oop objectPointer)
+inline uintptr_t ObjectMemory::fetchWordOfObject(size_t wordIndex, Oop objectPointer)
 {
 	PointersOTE* ote = reinterpret_cast<PointersOTE*>(objectPointer);
 	VariantObject* obj = ote->m_location;
 	return obj->m_fields[wordIndex];
 }
 
-inline MWORD ObjectMemory::storeWordOfObjectWithValue(MWORD wordIndex, Oop objectPointer, MWORD valueWord)
+inline uintptr_t ObjectMemory::storeWordOfObjectWithValue(size_t wordIndex, Oop objectPointer, uintptr_t valueWord)
 {
 	PointersOTE* ote = reinterpret_cast<PointersOTE*>(objectPointer);
 	VariantObject* obj = ote->m_location;
@@ -830,7 +826,7 @@ inline void ObjectMemory::markObject(OTE* ote)
 }
 
 // lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
-inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
+inline size_t ObjectMemory::lastStrongPointerOf(OTE* ote)
 {
 	uint8_t flags = ote->m_ubFlags;
 	return (flags & OTEFlags::PointerMask)
@@ -844,9 +840,9 @@ inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
 ///////////////////////////////////////////////////////////////////////////////
 // Memory pool routines
 
-inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(MWORD objectSize)
+inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(size_t objectSize)
 {
-	int nPool = (_ROUND2(objectSize, PoolGranularity) - MinObjectSize) / PoolGranularity;
+	auto nPool = (_ROUND2(objectSize, PoolGranularity) - MinObjectSize) / PoolGranularity;
 	ASSERT(nPool < MaxPools);
 	ASSERT(nPool * PoolGranularity + (DWORD)MinObjectSize >= objectSize);
 	return m_pools[nPool];
@@ -971,7 +967,7 @@ inline void ObjectMemory::OTEPool::deallocate(OTE* ote)
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer, unsigned bytes, OTEFlags::Spaces space)
+inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer, size_t bytes, OTEFlags::Spaces space)
 {
 	BytesOTE* ote = reinterpret_cast<BytesOTE*>(m_pFreeList);
 	if (ote)
@@ -1011,7 +1007,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer, unsigned pointers, OTEFlags::Spaces space)
+inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer, size_t pointers, OTEFlags::Spaces space)
 {
 	PointersOTE* ote = reinterpret_cast<PointersOTE*>(m_pFreeList);
 	if (ote)
@@ -1050,7 +1046,7 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	return ote;
 }
 
-template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObject(MWORD byteSize)
+template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObject(size_t byteSize)
 {
 	OTE* ote;
 	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
@@ -1060,7 +1056,7 @@ template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObj
 	return reinterpret_cast<TOTE<T>*>(ote);
 }
 
-inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD cBytes, const void* pBytes)
+inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, size_t cBytes, const void* pBytes)
 {
 	ASSERT((OTE*)classPointer != Pointers.Nil);
 	ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
@@ -1092,12 +1088,12 @@ inline hash_t ObjectMemory::nextIdentityHash()
 ///////////////////////////////////////////////////////////////////////////////
 // ST::Array allocators
 
-inline ArrayOTE* ST::Array::New(unsigned size)
+inline ArrayOTE* ST::Array::New(size_t size)
 {
 	return reinterpret_cast<ArrayOTE*>(ObjectMemory::newPointerObject(Pointers.ClassArray, size));
 }
 
-inline ArrayOTE* ST::Array::NewUninitialized(unsigned size)
+inline ArrayOTE* ST::Array::NewUninitialized(size_t size)
 {
 	return reinterpret_cast<ArrayOTE*>(ObjectMemory::newUninitializedPointerObject(Pointers.ClassArray, size));
 }

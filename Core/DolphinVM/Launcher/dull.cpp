@@ -33,7 +33,7 @@ static const wchar_t* FindImageNameArg()
 	LPCWSTR szImage = L"DPRO.img7";
 	static wchar_t achImageName[_MAX_PATH];
 
-	for (int i=1;i<__argc;i++)
+	for (auto i=1;i<__argc;i++)
 	{
 		const wchar_t* arg = __wargv[i];
 		wchar_t ch = *arg;

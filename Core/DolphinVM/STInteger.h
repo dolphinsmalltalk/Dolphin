@@ -54,7 +54,7 @@ namespace ST
 		int32_t	sign(const LargeIntegerOTE* oteLI) const { return 1 | (signDigit(oteLI) >> 31); }
 		int32_t	signBit(const LargeIntegerOTE* oteLI) const { return signDigit(oteLI) >> 31; }
 
-		static LargeIntegerOTE* NewWithLimbs(MWORD limbs);
+		static LargeIntegerOTE* NewWithLimbs(size_t limbs);
 
 		// Answer a signed 32 or 64-bit LargeInteger from the unsigned 32-bit argument
 		static LargeIntegerOTE* __fastcall liNewUnsigned(uint32_t value);
@@ -78,7 +78,7 @@ namespace ST
 		static liDiv_t Divide(const LargeIntegerOTE* oteOp1, SmallInteger op2);
 
 		static Oop Mul(const LargeIntegerOTE * oteInner, SmallInteger outerDigit);
-		static Oop Mul(const LargeInteger* liOuter, const MWORD outerSize, const LargeInteger* liInner, const MWORD innerSize);
+		static Oop Mul(const LargeInteger* liOuter, const size_t outerSize, const LargeInteger* liInner, const size_t innerSize);
 
 		static Oop BitAnd(const LargeIntegerOTE * oteA, const LargeIntegerOTE * oteB);
 		static Oop BitAnd(const LargeIntegerOTE * oteA, SmallInteger mask);

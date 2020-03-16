@@ -34,8 +34,7 @@ Implementation of Smalltalk interpreter
 #ifdef _DEBUG
 	// Execution trace
 BOOL Interpreter::executionTrace = 0;
-//extern unsigned contextDepth;
-static unsigned nTotalBlocksAllocated = 0;
+static size_t nTotalBlocksAllocated = 0;
 #endif
 #define VMWNDCLASS L"_VMWnd"
 
@@ -62,9 +61,9 @@ ProcessorScheduler* Interpreter::m_pProcessor;
 
 // Number of failed callback exits which have occurred since last successful callback
 // These get signalled when a successful callback occurs to try again
-unsigned Interpreter::m_nCallbacksPending;
+size_t Interpreter::m_nCallbacksPending;
 
-unsigned Interpreter::m_nOTOverflows;
+size_t Interpreter::m_nOTOverflows;
 
 // Pools of reusable objects (just linked list of previously allocated and free'd objects of
 // correct size and class)
@@ -229,7 +228,7 @@ HRESULT Interpreter::initializeAfterLoad()
 HRESULT Interpreter::initializeCharMaps()
 {
 	char byteCharSet[256];
-	for (unsigned i = 0; i < 256; i++)
+	for (auto i = 0u; i < 256; i++)
 		byteCharSet[i] = static_cast<char>(i);
 
 	CPINFOEX cpInfo;
@@ -263,7 +262,7 @@ HRESULT Interpreter::initializeCharMaps()
 		return E_OUTOFMEMORY;
 	}
 
-	unsigned i = 0;
+	auto i = 0u;
 	for (; i < 0xd800; i++)
 		wideChars[i] = static_cast<WCHAR>(i);
 	for (; i <= 0xdfff; i++)
@@ -332,10 +331,10 @@ inline void Interpreter::initializeCaches()
 #ifdef _DEBUG
 #pragma code_seg(DEBUG_SEG)
 
-static MWORD ResizeProcInContext(InterpreterRegisters& reg)
+static size_t ResizeProcInContext(InterpreterRegisters& reg)
 {
 	ProcessOTE* oteProc = reg.m_oteActiveProcess;
-	MWORD size = oteProc->getSize();
+	size_t size = oteProc->getSize();
 	reg.ResizeProcess();
 	if (size != oteProc->getSize() && Interpreter::executionTrace)
 	{
@@ -357,11 +356,11 @@ void Interpreter::checkReferences(Oop* const sp)
 void Interpreter::checkReferences(InterpreterRegisters& reg)
 {
 	HARDASSERT(ObjectMemory::isKindOf(m_registers.m_oteActiveProcess, Pointers.ClassProcess));
-	MWORD oldProcSize = ResizeProcInContext(reg);
+	size_t oldProcSize = ResizeProcInContext(reg);
 	if (reg.m_pActiveProcess != m_registers.m_pActiveProcess)
 	{
 		// Resize active process as well as the one in the context passed
-		MWORD oldActiveProcSize = ResizeProcInContext(m_registers);
+		size_t oldActiveProcSize = ResizeProcInContext(m_registers);
 		ObjectMemory::checkReferences();
 		m_registers.m_oteActiveProcess->setSize(oldActiveProcSize);
 	}
@@ -446,8 +445,8 @@ bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 	uint8_t* ip = reinterpret_cast<uint8_t*>(info->ContextRecord->Edi);
 	Oop byteCodes = m_registers.m_pMethod->m_byteCodes;
 	uint8_t* pBytes = ObjectMemory::ByteAddressOfObjectContents(byteCodes);
-	int numByteCodes = ObjectMemoryIsIntegerObject(byteCodes) ?
-		sizeof(MWORD) : reinterpret_cast<BytesOTE*>(byteCodes)->bytesSize();
+	size_t numByteCodes = ObjectMemoryIsIntegerObject(byteCodes) ?
+		sizeof(Oop) : reinterpret_cast<BytesOTE*>(byteCodes)->bytesSize();
 	if (ip >= pBytes && ip < pBytes + numByteCodes)
 	{
 		m_registers.m_instructionPointer = ip;
@@ -463,7 +462,7 @@ bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 		{
 			VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pProc);
 			VirtualObjectHeader* pBase = pVObj->getHeader();
-			unsigned cbCurrent = pBase->getCurrentAllocation();
+			size_t cbCurrent = pBase->getCurrentAllocation();
 			if (sp < reinterpret_cast<Oop*>(reinterpret_cast<uint8_t*>(pBase) + cbCurrent))
 				m_registers.m_stackPointer = sp;
 		}

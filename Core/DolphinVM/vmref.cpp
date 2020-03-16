@@ -27,8 +27,8 @@ TODO("Replace with hash table implementation")
 #ifdef _DEBUG		// JGFoster
 
 Oop* Interpreter::m_pVMRefs = 0;
-int Interpreter::m_nMaxVMRefs = 0;
-int	Interpreter::m_nFreeVMRef = -1;
+SmallInteger Interpreter::m_nMaxVMRefs = 0;
+SmallInteger Interpreter::m_nFreeVMRef = -1;
 
 // Add a reference to an object in use by the VM by storing it in an array reserved
 // for the purpose, which is itself reference from the special VMPointers root object
@@ -51,13 +51,13 @@ void Interpreter::AddVMReference(OTE* pOTE)
 			m_nFreeVMRef = m_nMaxVMRefs;
 			m_nMaxVMRefs += VMREFSGROWTH;
 			m_pVMRefs = ((Array*)ObjectMemory::resize((PointersOTE*)Pointers.VMReferences, m_nMaxVMRefs, false))->m_elements;
-			for (int i=m_nFreeVMRef;i<m_nMaxVMRefs;i++)
+			for (SmallInteger i=m_nFreeVMRef;i<m_nMaxVMRefs;i++)
 				m_pVMRefs[i] = ObjectMemoryIntegerObjectOf(i+1);
 		}
-		const int empty = m_nFreeVMRef;
+		const SmallInteger empty = m_nFreeVMRef;
 		const Oop oopNextEmpty = m_pVMRefs[empty];
 		HARDASSERT(ObjectMemoryIsIntegerObject(oopNextEmpty));
-		m_nFreeVMRef = (int)ObjectMemoryIntegerValueOf(oopNextEmpty);
+		m_nFreeVMRef = ObjectMemoryIntegerValueOf(oopNextEmpty);
 		m_pVMRefs[empty] = Oop(pOTE);
 		pOTE->countUp();
 	}
@@ -78,7 +78,7 @@ void Interpreter::RemoveVMReference(OTE* pOTE)
 {
 	if (!ObjectMemory::isPermanent(pOTE))
 	{
-		for (int i=0;i<m_nMaxVMRefs;i++)
+		for (auto i=0;i<m_nMaxVMRefs;i++)
 		{
 			if (m_pVMRefs[i] == Oop(pOTE))
 			{

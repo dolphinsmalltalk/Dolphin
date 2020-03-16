@@ -21,29 +21,27 @@
 // Smalltalk classes
 #include "STVirtualObject.h"
 
-enum {
-	ZCTMINSIZE = 64,		// Minimum size, and initial high water mark, of the ZCT.
-	ZCTINITIALSIZE = 2048,	// Benchmarking shows this to be the best size at present.
-	ZCTMINRESERVE = 16 * 1024,
-	ZCTRESERVE = 512 * 1024   // Allow up to 0.5 million objects to be ref'd only from stack of active process
-};
+constexpr size_t ZCTMINSIZE = 64;			// Minimum size, and initial high water mark, of the ZCT.
+constexpr size_t ZCTINITIALSIZE = 2048;		// Benchmarking shows this to be the best size at present.
+constexpr size_t ZCTMINRESERVE = 16 * 1024;
+constexpr size_t ZCTRESERVE = 512 * 1024;   // Allow up to 0.5 million objects to be ref'd only from stack of active process
 
 OTE** ObjectMemory::m_pZct;
-int ObjectMemory::m_nZctEntries;
-int ObjectMemory::m_nZctHighWater;
+ptrdiff_t ObjectMemory::m_nZctEntries;
+ptrdiff_t ObjectMemory::m_nZctHighWater;
 static uint32_t ZctMinSize;
 static uint32_t ZctReserve;
 bool ObjectMemory::m_bIsReconcilingZct;
 
 #ifdef _DEBUG
-static int nDeleted;
+static size_t nDeleted;
 static DWORD dwLastReconcileTicks;
 bool ObjectMemory::alwaysReconcileOnAdd = true;
 
 bool ObjectMemory::IsInZct(OTE* ote)
 {
 	// Expensive serial search needed because we don't have a flag free in the OTE at present
-	for (int i = 0; i < m_nZctEntries; i++)
+	for (auto i = 0; i < m_nZctEntries; i++)
 		if (m_pZct[i] == ote) return true;
 	return false;
 }
@@ -117,7 +115,7 @@ Oop* ObjectMemory::ReconcileZct()
 		TRACESTREAM << L"..." << std::endl;
 	}
 	dwLastReconcileTicks = dwTicksNow;
-	const int nOldZctEntries = m_nZctEntries;
+	const auto nOldZctEntries = m_nZctEntries;
 #endif
 
 	Oop* const sp = Interpreter::m_registers.m_stackPointer;
@@ -159,10 +157,10 @@ void ObjectMemory::EmptyZct(Oop* const sp)
 	OTE** pZct = m_pZct;
 	// This tells us that we are in the process of reconcilation
 	m_bIsReconcilingZct = true;
-	const int nOldZctEntries = m_nZctEntries;
+	const auto nOldZctEntries = m_nZctEntries;
 	m_nZctEntries = -1;
 
-	for (int i = 0; i < nOldZctEntries; i++)
+	for (auto i = 0; i < nOldZctEntries; i++)
 	{
 		OTE* ote = pZct[i];
 		if (!ote->isFree() && ote->m_count == 0)
@@ -208,10 +206,10 @@ OTE* __fastcall ObjectMemory::recursiveFree(OTE* rootOTE)
 		if (rootOTE->isPointers())
 		{
 			// Recurse through referenced objects as necessary
-			const MWORD lastPointer = rootOTE->getWordSize();
+			const auto lastPointer = rootOTE->getWordSize();
 			Oop* pFields = reinterpret_cast<Oop*>(rootOTE->m_location);
 			// Start after the header (only includes size now, which is not an Oop)
-			for (MWORD i = ObjectHeaderSize; i < lastPointer; i++)
+			for (auto i = ObjectHeaderSize; i < lastPointer; i++)
 			{
 				Oop fieldPointer = pFields[i];
 				if (!isIntegerObject(fieldPointer))
@@ -284,7 +282,7 @@ void ObjectMemory::PopulateZct(Oop* const sp)
 		// More than 75% full, then grow it
 		GrowZct();
 	}
-	else if ((m_nZctHighWater > (int)ZctMinSize) && (m_nZctEntries < (m_nZctHighWater >> 2)))
+	else if ((m_nZctHighWater > (ptrdiff_t)ZctMinSize) && (m_nZctEntries < (m_nZctHighWater >> 2)))
 	{
 		// Less than 25% full, so shrink it
 		ShrinkZct();
@@ -301,7 +299,7 @@ void ObjectMemory::DumpZct()
 	TRACESTREAM<< L"ZCT @ " << std::hex << m_pZct<< L", size: " << std::dec << m_nZctEntries << std::endl;
 	TRACESTREAM<< L"===========================================================" << std::endl;
 
-	for (int i = 0; i < m_nZctEntries; i++)
+	for (auto i = 0; i < m_nZctEntries; i++)
 		TRACESTREAM << std::dec << i<< L": " << std::hex << (uintptr_t)m_pZct[i]<< L": " << m_pZct[i] << std::endl;
 
 	TRACESTREAM<< L"===========================================================" << std::endl;

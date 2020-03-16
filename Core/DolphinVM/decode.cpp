@@ -46,7 +46,7 @@ static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 	size_t end = min(len, 80);
 	for (size_t i = 0; i < end; i++)
 	{
-		char16_t ch = pwsz[i];
+		wchar_t ch = pwsz[i];
 		if (!iswprint(ch))
 		{
 			stream << L"\\x" << std::hex << (unsigned)ch;
@@ -561,7 +561,7 @@ void DumpStackEntry(Oop* sp, Process* pProc, wostream& stream)
 // Formatted output
 
 void HexDump(tracestream out, LPCTSTR lpszLine, uint8_t* pby,
-	int nBytes, int nWidth)
+	size_t nBytes, size_t nWidth)
 	// do a simple hex-dump (8 per line) to a tracestream
 	//  the "lpszLine" is a string to print at the start of each line
 	//    (%lx should be used to expand the current address)
@@ -726,7 +726,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 		CompiledMethod* method = oteMethod->m_location;
 		SmallInteger ip = ObjectMemoryIntegerValueOf(pFrame->m_ip);
 		if (ip != 0)
-			ip += isIntegerObject(method->m_byteCodes) ? 1 : -(int(ObjectByteSize) - 1);
+			ip += isIntegerObject(method->m_byteCodes) ? 1 : -(static_cast<int>(ObjectByteSize) - 1);
 
 		stream << L'{' << LPVOID(pFrame)	// otherwise would be recursive!
 			<< L": cf " << LPVOID(pFrame->m_caller)
@@ -748,8 +748,8 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 			ctx = NULL;
 		}
 
-		unsigned argc;
-		unsigned stackTempCount;
+		methodargcount_t argc;
+		stacktempcount_t stackTempCount;
 		if (ctx != NULL && ctx->isBlockContext())
 		{
 			stream << L"[] in ";
@@ -789,16 +789,15 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 			<< '}' << std::endl;
 
 		stream << L"	receiver: " << reinterpret_cast<OTE*>(receiver) << std::endl;
-		unsigned i = 0;
-		for (i = 0; i < argc; i++)
+		for (auto i = 0u; i < argc; i++)
 			stream << L"	arg[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i)) << std::endl;
-		for (i = 0; i < stackTempCount; i++)
+		for (auto i = 0u; i < stackTempCount; i++)
 			stream << L"	stack temp[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i + argc)) << std::endl;
 
 		if (ctx != NULL)
 		{
-			const size_t envTempCount = oteContext->pointersSize() - Context::FixedSize;
-			for (i = 0; i < envTempCount; i++)
+			const auto envTempCount = oteContext->pointersSize() - Context::FixedSize;
+			for (auto i = 0u; i < envTempCount; i++)
 				stream << L"	env temp[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << std::endl;
 		}
 
@@ -891,7 +890,7 @@ void Interpreter::DumpContext(wostream& logStream)
 
 /////////////////////////////////////////////////////////////////////////////
 
-void Interpreter::DumpStack(wostream& logStream, unsigned nStackDepth)
+void Interpreter::DumpStack(wostream& logStream, size_t nStackDepth)
 {
 	if (nStackDepth == 0)
 		return;
@@ -907,7 +906,7 @@ void Interpreter::DumpStack(wostream& logStream, unsigned nStackDepth)
 	}
 }
 
-void Interpreter::StackTraceOn(wostream& dc, StackFrame* pFrame, unsigned depth)
+void Interpreter::StackTraceOn(wostream& dc, StackFrame* pFrame, size_t depth)
 {
 	if (!pFrame)
 		pFrame = m_registers.m_pActiveFrame;
@@ -1090,11 +1089,11 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 	STMethodHeader hdr = method->m_header;
 	stream << L"Method " << method;
 	if (hdr.primitiveIndex > 7)
-		stream << L", primitive=" << std::dec << int(hdr.primitiveIndex);
+		stream << L", primitive=" << std::dec << static_cast<int>(hdr.primitiveIndex);
 	if (hdr.argumentCount > 0)
-		stream << L"; args=" << std::dec << int(hdr.argumentCount);
+		stream << L"; args=" << std::dec << static_cast<int>(hdr.argumentCount);
 	if (hdr.stackTempCount > 0)
-		stream << L"; stack temps=" << std::dec << int(hdr.stackTempCount);
+		stream << L"; stack temps=" << std::dec << static_cast<int>(hdr.stackTempCount);
 	int envTemps = hdr.envTempCount;
 	if (envTemps > 0)
 	{
@@ -1118,10 +1117,10 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 	}
 }
 
-void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, wostream& stream)
+void Interpreter::decodeMethodAt(CompiledMethod* method, size_t ip, wostream& stream)
 {
 	DisassemblyContext info(method);
-	BytecodeDisassembler<DisassemblyContext, unsigned> disassembler(info);
+	BytecodeDisassembler<DisassemblyContext, size_t> disassembler(info);
 	disassembler.DisassembleAt(ip, stream);
 	stream.flush();
 }
@@ -1147,7 +1146,7 @@ void DumpObject(const POTE pote)
 // interpreter
 void Interpreter::checkStack(Oop* sp)
 {
-	/*		for (unsigned i=1;i<=50;i++)
+	/*		for (auto i=1;i<=50;i++)
 	{
 	Oop objectPointer = sp[i];
 	if (!ObjectMemoryIsIntegerObject(objectPointer) &&
@@ -1186,9 +1185,6 @@ void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 
 void __fastcall Interpreter::debugExecTrace(uint8_t* ip, Oop* sp)
 {
-	//for (unsigned i=0;i<contextDepth;i++)
-	//	TRACESTREAM << L".";
-
 	// To avoid covering bugs, we make sure we don't update the
 	// context for longer than the duration of the trace
 	uint8_t* oldIP = m_registers.m_instructionPointer;
@@ -1205,12 +1201,10 @@ void __fastcall Interpreter::debugExecTrace(uint8_t* ip, Oop* sp)
 		DumpStackEntry(sp, m_registers.m_pActiveProcess, TRACESTREAM);
 		TODO("Get rid of this bodge by changing the way decode works")
 			CompiledMethod* method = m_registers.m_pMethod;
-		int ipIndex = int(ip - ObjectMemory::ByteAddressOfObjectContents(method->m_byteCodes));
+		ptrdiff_t ipIndex = ip - ObjectMemory::ByteAddressOfObjectContents(method->m_byteCodes);
 		HARDASSERT(ipIndex >= 0 && ipIndex < 1024);
-		//for (i=0;i<contextDepth;i++)
-		//	TRACESTREAM << L".";
 		TRACESTREAM << L"{" << method << L"} ";
-		decodeMethodAt(method, unsigned(ipIndex), TRACESTREAM);
+		decodeMethodAt(method, ipIndex, TRACESTREAM);
 
 		if (false)
 			decodeMethod(method);
@@ -1251,14 +1245,14 @@ void DumpMethod(OTE* oteMethod)
 	DumpMethod(static_cast<CompiledMethod*>(oteMethod->m_location));
 }
 
-extern "C" unsigned byteCodeCounters[];
-extern "C" unsigned byteCodePairs[];
+extern "C" size_t byteCodeCounters[];
+extern "C" size_t byteCodePairs[];
 
 void DumpBytecodeCounts(bool bClear)
 {
 
 	TRACESTREAM << std::endl << L"Bytecode invocation counts" << std::endl << L"-----------------------------" << std::endl;
-	for (int i = 0; i < 256; i++)
+	for (auto i = 0; i < 256; i++)
 	{
 		TRACESTREAM << std::dec << i << L": " << byteCodeCounters[i] << std::endl;
 		if (bClear) byteCodeCounters[i] = 0;
@@ -1266,9 +1260,9 @@ void DumpBytecodeCounts(bool bClear)
 	TRACESTREAM << L"-----------------------------" << std::endl << std::endl;
 
 	TRACESTREAM << std::endl << L"Bytecode pair counts" << std::endl << L"-----------------------------" << std::endl;
-	for (int i = 0; i < 256; i++)
+	for (auto i = 0; i < 256; i++)
 	{
-		for (int j = 0; j < 256; j++)
+		for (auto j = 0; j < 256; j++)
 		{
 			TRACESTREAM << byteCodePairs[i * 256 + j] << L' ';
 			if (bClear) byteCodePairs[i * 256 + j] = 0;
@@ -1279,12 +1273,12 @@ void DumpBytecodeCounts(bool bClear)
 
 }
 
-extern "C" unsigned primitiveCounters[];
+extern "C" size_t primitiveCounters[];
 
 void DumpPrimitiveCounts(bool bClear)
 {
 	TRACESTREAM << std::endl << L"Primitive invocation counts" << std::endl << L"-----------------------------" << std::endl;
-	for (int i = 0; i <= PRIMITIVE_MAX; i++)
+	for (auto i = 0; i <= PRIMITIVE_MAX; i++)
 	{
 		TRACESTREAM << std::dec << i << L": " << primitiveCounters[i] << std::endl;
 		if (bClear) primitiveCounters[i] = 0;

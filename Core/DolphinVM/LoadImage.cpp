@@ -127,9 +127,9 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 	// and a bit extra for working space - can grow to at least the maximum size in m_nOTMax
 	ASSERT(sizeof(OTE) == 16); // If not change the page size multiple
 #ifdef NO_GPF_TRAP
-	const int otSlop = 500;
+	constexpr int otSlop = 500;
 #else
-	const int otSlop = 3;
+	constexpr int otSlop = 3;
 #endif
 	HRESULT hr = allocateOT(pHeader->nMaxTableSize, pHeader->nTableSize + (dwPageSize*otSlop / sizeof(OTE)));
 	if (FAILED(hr))
@@ -164,7 +164,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 	return S_OK;
 }
 
-template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
 {
 	HRESULT hr = LoadPointers<ImageNullTerms>(imageFile, pHeader, cbRead);
 	if (FAILED(hr))
@@ -172,7 +172,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointersAndObjects(ibi
 	return LoadObjects<ImageNullTerms>(imageFile, pHeader, cbRead);
 }
 
-template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
 {
 	ASSERT(pHeader->nGlobalPointers == NumPointers);
 
@@ -180,17 +180,17 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& i
 
 	size_t cbPerm = 0;
 	uint8_t* pNextConst = reinterpret_cast<uint8_t*>(m_pConstObjs);
-	int i;
+	size_t i;
 	for (i = 0; i < NumPermanent; i++)
 	{
 		VariantObject* pConstObj = reinterpret_cast<VariantObject*>(pNextConst);
 
 		OTE* ote = m_pOT + i;
-		MWORD bytesToRead;
-		MWORD allocSize;
+		size_t bytesToRead;
+		size_t allocSize;
 		if (ote->isNullTerminated())
 		{
-			MWORD byteSize = ote->getSize();
+			size_t byteSize = ote->getSize();
 			allocSize = byteSize + NULLTERMSIZE;
 			bytesToRead = byteSize + ImageNullTerms;
 		}
@@ -243,7 +243,7 @@ HRESULT ObjectMemory::LoadObjectTable(ibinstream& imageFile, const ImageHeader* 
 
 // Load objects and repair the free list
 
-template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & imageFile, const ImageHeader * pHeader, size_t & cbRead)
+template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & imageFile, const ImageHeader * pHeader, size_t & cbRead)
 {
 	// Other free OTEs will be threaded in front of the first OTE off the end
 	// of the currently committed table space. We set the free list pointer
@@ -254,7 +254,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 	m_pFreePointerList = reinterpret_cast<OTE*>(pEnd);
 
 #ifdef _DEBUG
-	unsigned numObjects = NumPermanent;	// Allow for VM registry, etc!
+	auto numObjects = NumPermanent;	// Allow for VM registry, etc!
 	m_nFreeOTEs = m_nOTSize - pHeader->nTableSize;
 #endif
 
@@ -263,21 +263,21 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 	{
 		if (!ote->isFree())
 		{
-			MWORD byteSize = ote->getSize();
+			size_t byteSize = ote->getSize();
 
-			MWORD* oldLocation = reinterpret_cast<MWORD*>(ote->m_location);
+			uintptr_t* oldLocation = reinterpret_cast<uintptr_t*>(ote->m_location);
 
 			Object* pBody;
 
 			// Allocate space for the object, and copy into that space
 			if (ote->heapSpace() == OTEFlags::VirtualSpace)
 			{
-				MWORD dwMaxAlloc;
-				if (!imageFile.read(&dwMaxAlloc, sizeof(MWORD)))
+				size_t maxAlloc;
+				if (!imageFile.read(&maxAlloc, sizeof(maxAlloc)))
 					return ImageReadError(imageFile);
-				cbRead += sizeof(MWORD);
+				cbRead += sizeof(maxAlloc);
 
-				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
+				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(maxAlloc, byteSize));
 				ote->m_location = pBody;
 			}
 			else
@@ -336,7 +336,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 	return S_OK;
 }
 
-ST::Object* ObjectMemory::AllocObj(OTE * ote, MWORD allocSize)
+ST::Object* ObjectMemory::AllocObj(OTE * ote, size_t allocSize)
 {
 	ST::Object* pObj;
 	if (allocSize <= MaxSmallObjectSize)
@@ -356,7 +356,7 @@ ST::Object* ObjectMemory::AllocObj(OTE * ote, MWORD allocSize)
 	return pObj;
 }
 
-void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* pHeader)
+void ObjectMemory::FixupObject(OTE* ote, uintptr_t* oldLocation, const ImageHeader* pHeader)
 {
 	// Convert the class now separately
 	BehaviorOTE* classPointer = reinterpret_cast<BehaviorOTE*>(FixupPointer(reinterpret_cast<OTE*>(ote->m_oteClass), static_cast<OTE*>(pHeader->BasePointer)));
@@ -450,7 +450,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 
 	// Wind down the stack adjusting references to self as we go
 	// Start with the suspended context
-	const int delta = m_callbackDepth - 1;
+	const SmallInteger delta = m_callbackDepth - 1;
 	while (isIntegerObject(framePointer) && framePointer != ZeroPointer)
 	{
 		framePointer += delta;
@@ -560,7 +560,7 @@ void ObjectMemory::PostLoadFix()
 	{
 		// Dump out the pointers
 		TRACESTREAM << NumPointers<< L" VM Pointers..." << std::endl;
-		for (int i = 0; i < NumPointers; i++)
+		for (auto i = 0; i < NumPointers; i++)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(m_pConstObjs);
 			POTE pote = POTE(obj->m_fields[i]);

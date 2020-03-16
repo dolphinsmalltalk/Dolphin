@@ -59,19 +59,19 @@ void ObjectMemory::FixedSizePool::Initialize()
 HRESULT ObjectMemory::Initialize()
 {
 	// Assembler will need to be modified if these are not the case
-	ASSERT(sizeof(MWORD) == sizeof(uint32_t));
-	ASSERT(sizeof(InstanceSpecification) == sizeof(MWORD));
+	ASSERT(sizeof(Oop) == sizeof(uint32_t));
+	ASSERT(sizeof(InstanceSpecification) == sizeof(Oop));
 	ASSERT(sizeof(OTE) == 16);
 	ASSERT(sizeof(OTEFlags) == 1);
 	ASSERT(sizeof(count_t) == 1);
 	ASSERT(sizeof(hash_t) == 2);
-	ASSERT(sizeof(STMethodHeader) == sizeof(MWORD));
+	ASSERT(sizeof(STMethodHeader) == sizeof(Oop));
 	ASSERT(OTEFlags::NumSpaces <= 8);
 	ASSERT(Context::FixedSize == 2);
 	ASSERT(BlockClosure::FixedSize == 5);
 	ASSERT(sizeof(BlockCopyExtension) == sizeof(uint32_t));
-	ASSERT(PoolGranularity >= sizeof(MWORD));
-	ASSERT(_ROUND2(PoolGranularity,sizeof(MWORD)) == PoolGranularity);
+	ASSERT(PoolGranularity >= sizeof(Oop));
+	ASSERT(_ROUND2(PoolGranularity,sizeof(Oop)) == PoolGranularity);
 	//ASSERT(sizeof(Object) == ObjectHeaderSize*sizeof(MWORD));
 	ASSERT(sizeof(VMPointers) == (150*sizeof(Oop)+ObjectByteSize));
 	// Check that the const objects segment is still exactly one page
@@ -116,7 +116,7 @@ HRESULT ObjectMemory::Initialize()
 	// N.B. By default the blank flags of NormalSpace is set up for pointer objects 
 	// as these are more frequently allocated
 
-	for (unsigned i=0;i<OTEFlags::NumSpaces;i++)
+	for (auto i=0;i<OTEFlags::NumSpaces;i++)
 	{
 		m_spaceOTEBits[i].m_free		= FALSE;
 		m_spaceOTEBits[i].m_pointer		= TRUE;
@@ -145,7 +145,7 @@ HRESULT ObjectMemory::Initialize()
 	//	ASSERT(NumPools >= 0 && NumPools <= MaxPools);
 	//}
 
- 	for (int j=0;j<NumPools;j++)
+ 	for (auto j=0;j<NumPools;j++)
 		m_pools[j].setSize(j*PoolGranularity+MinObjectSize);
 
 	// Ensure we can write to const space in order to initialie it

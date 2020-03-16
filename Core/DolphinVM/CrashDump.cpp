@@ -13,9 +13,9 @@
 #include "VMExcept.h"
 #include "RegKey.h"
 
-static const size_t DefaultStackDepth = 300;
-static const size_t DefaultWalkbackDepth = static_cast<size_t>(-1);
-static const int MAXDUMPPARMCHARS = 40;
+constexpr size_t DefaultStackDepth = 300;
+constexpr size_t DefaultWalkbackDepth = static_cast<size_t>(-1);
+constexpr int MAXDUMPPARMCHARS = 40;
 extern wchar_t achImagePath[];
 
 // Warning about SEH and destructable objects
@@ -58,17 +58,17 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		pStream = &TRACESTREAM;
 
 	*pStream << std::endl;
-	for (int i=0;i<80;i++)
+	for (auto i=0;i<80;i++)
 		*pStream << L'*';
 
 	EXCEPTION_RECORD* pExRec = pExceptionInfo->ExceptionRecord;
 	DWORD exceptionCode = pExRec->ExceptionCode;
 
 	*pStream << std::endl;
-	for (int i=0;i<26;i++)
+	for (auto i=0;i<26;i++)
 		*pStream << L'*';
 	*pStream<< L" Dolphin Crash Dump Report ";
-	for (int i=0;i<27;i++)
+	for (auto i=0;i<27;i++)
 		*pStream << L'*';
 
 	wchar_t szModule[_MAX_PATH+1];
@@ -101,7 +101,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		wostream::char_type cFill = pStream->fill(L'0');
 		pStream->setf(ios::uppercase);
 		*pStream << std::hex;
-		for (unsigned i=0;i<NumParms;i++)
+		for (auto i=0u;i<NumParms;i++)
 		{
 			uintptr_t parm = pExRec->ExceptionInformation[i];
 			*pStream << setw(sizeof(uintptr_t)<<1) << parm<< L"	";
@@ -228,7 +228,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath)
 	{
 		wchar_t achLogPath[_MAX_PATH+1];
 		achLogPath[0] = 0;
-		unsigned long size = _MAX_PATH;
+		ULONG size = _MAX_PATH;
 		rkDump.QueryStringValue(L"", achLogPath, &size);
 		pStream = OpenLogStream(achLogPath, achImagePath, fStream);
 
@@ -266,10 +266,10 @@ void __stdcall Dump2(const wchar_t* szMsg, wostream* pStream, int nStackDepth, i
 		pStream = &TRACESTREAM;
 
 	*pStream << std::endl;
-	for (int i=0;i<26;i++)
+	for (auto i=0;i<26;i++)
 		*pStream << L'*';
 	*pStream<< L" Dolphin Virtual Machine Dump Report ";
-	for (int i=0;i<27;i++)
+	for (auto i=0;i<27;i++)
 		*pStream << L'*';
 
 	// Dump the time and message

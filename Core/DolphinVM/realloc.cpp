@@ -26,7 +26,7 @@
 // These map directly onto C or Win32 heap
 
 
-inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
+inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 {
 	#if defined(_DEBUG)
 		if (__sbh_find_block(pChunk) != NULL)
@@ -34,8 +34,8 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 			ASSERT(FALSE);
 		else
 		{
-			for (int i=0;i<NumPools;i++)
-				ASSERT(!m_pools[i].isMyChunk(reinterpret_cast<MWORD*>(pChunk)));
+			for (auto i=0;i<NumPools;i++)
+				ASSERT(!m_pools[i].isMyChunk(reinterpret_cast<void*>(pChunk)));
 		}
 	#endif
 
@@ -103,7 +103,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 				pObject = allocSmallChunk(byteSize+Extra);
 	
 			POBJECT pOldObject = ote->m_location;
-			MWORD oldSize = ote->getSize();
+			auto oldSize = ote->getSize();
 			memcpy(pObject, pOldObject, min(oldSize, byteSize));
 			freeSmallChunk(pOldObject, ote->sizeOf());
 			ote->m_location = pObject;
@@ -130,17 +130,17 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 // Resize an object in VirtualSpace (commit/decommit some memory)
 // N.B. Assumes that there are no ref. counted object above shrinkTo (primarily intended for
 // Process stacks)
-POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
+POBJECT ObjectMemory::resizeVirtual(OTE* ote, size_t newByteSize)
 {
 	ASSERT(ote->heapSpace() == OTEFlags::VirtualSpace);
 
 	VariantObject* pObject = static_cast<VariantObject*>(ote->m_location);
 	VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pObject);
 	VirtualObjectHeader* pBase = pVObj->getHeader();
-	unsigned maxByteSize = pBase->getMaxAllocation(); maxByteSize;
-	unsigned currentTotalByteSize = pBase->getCurrentAllocation();
+	size_t maxByteSize = pBase->getMaxAllocation(); maxByteSize;
+	size_t currentTotalByteSize = pBase->getCurrentAllocation();
 	ASSERT(_ROUND2(currentTotalByteSize, dwPageSize) == currentTotalByteSize);
-	unsigned newTotalByteSize = _ROUND2(newByteSize + sizeof(VirtualObjectHeader), dwPageSize);
+	auto newTotalByteSize = _ROUND2(newByteSize + sizeof(VirtualObjectHeader), dwPageSize);
 	// Minimum virtual allocation is one page (4k normally)
 	ASSERT(newTotalByteSize >= dwPageSize);
 	
@@ -148,7 +148,7 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
 	{
 		// The object is increasing in size - commit some more memory
 		ASSERT(newByteSize <= maxByteSize);
-		unsigned allocSize = newTotalByteSize - currentTotalByteSize;
+		size_t allocSize = newTotalByteSize - currentTotalByteSize;
 		ASSERT(_ROUND2(allocSize, dwPageSize) == allocSize);
 		if (!::VirtualAlloc(reinterpret_cast<uint8_t*>(pBase) + currentTotalByteSize, allocSize, MEM_COMMIT, PAGE_READWRITE))
 			return 0;	// Request to resize failed
@@ -157,9 +157,9 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
 	{
 		const Behavior* behavior = ote->m_oteClass->m_location; behavior;
 		// The object is shrinking - decommit some memory
-		ASSERT(newByteSize > (ObjectHeaderSize+behavior->fixedFields())*sizeof(MWORD));
+		ASSERT(newByteSize > (ObjectHeaderSize+behavior->fixedFields())*sizeof(Oop));
 
-		MWORD* pCeiling = reinterpret_cast<MWORD*>(reinterpret_cast<uint8_t*>(pBase) + newTotalByteSize);
+		auto pCeiling = reinterpret_cast<Oop*>(reinterpret_cast<uint8_t*>(pBase) + newTotalByteSize);
 
 		// Determine the size of the committed region above shrinkTo
 		MEMORY_BASIC_INFORMATION mbi;
@@ -186,14 +186,14 @@ POBJECT ObjectMemory::resizeVirtual(OTE* ote, MWORD newByteSize)
 ///////////////////////////////////////////////////////////////////////////////
 // Safe public resizing functions.
 
-VariantByteObject* ObjectMemory::resize(BytesOTE* ote, MWORD newByteSize)
+VariantByteObject* ObjectMemory::resize(BytesOTE* ote, size_t newByteSize)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(ote) && ote->isBytes());
 
-	MWORD totalByteSize = newByteSize + SizeOfPointers(0);	// Add header size
+	auto totalByteSize = newByteSize + SizeOfPointers(0);	// Add header size
 
-	VariantByteObject* pByteObj = ote->m_location;
-	MWORD oldByteSize = ote->getSize();
+	auto pByteObj = ote->m_location;
+	auto oldByteSize = ote->getSize();
 
 	if (ote->isNullTerminated())
 	{
@@ -214,18 +214,18 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, MWORD newByteSize)
 	return pByteObj;
 }
 
-VariantObject* ObjectMemory::resize(PointersOTE* ote, MWORD newPointers, bool bRefCount)
+VariantObject* ObjectMemory::resize(PointersOTE* ote, size_t newPointers, bool bRefCount)
 {
 	ASSERT(!ObjectMemoryIsIntegerObject(ote) && ote->isPointers());
 
 	VariantObject* pObj = ote->m_location;
-	const MWORD oldPointers = ote->pointersSize();
+	const auto oldPointers = ote->pointersSize();
 
 	// If resizing the active process, then we don't do any ref. counting as refs from
 	// the current stack are not counted (we used deferred ref. counting)
 	if (bRefCount)
 	{
-		for (MWORD i=newPointers;i<oldPointers;i++)
+		for (auto i=newPointers;i<oldPointers;i++)
 			countDown(pObj->m_fields[i]);
 	}
 
@@ -239,7 +239,7 @@ VariantObject* ObjectMemory::resize(PointersOTE* ote, MWORD newPointers, bool bR
 
 		// Initialize any new pointers to Nil (indices must fit in a SmallInteger)
 		const Oop nil = Oop(Pointers.Nil);
-		for (MWORD i=oldPointers; i<newPointers; i++)
+		for (auto i=oldPointers; i<newPointers; i++)
 			pObj->m_fields[i] = nil;
 	}
 

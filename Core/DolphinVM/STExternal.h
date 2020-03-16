@@ -94,7 +94,7 @@ namespace ST
 		uint8_t	m_returnClass;
 		uint8_t	m_args[];
 
-		static unsigned argsLen(DescriptorOTE* ote) { return ote->getSize() - offsetof(DescriptorBytes, m_args); }
+		static size_t argsLen(DescriptorOTE* ote) { return ote->getSize() - offsetof(DescriptorBytes, m_args); }
 	};
 
 	class ExternalDescriptor : public Object

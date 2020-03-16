@@ -155,7 +155,7 @@ struct StoreUnsigned32
 
 #ifndef _M_IX86
 	// Intel version in assembler (see primitiv.cpp)
-	inline int __fastcall smalltalkMod(int numerator, int denominator)
+	inline SmallInteger __fastcall smalltalkMod(SmallInteger numerator, SmallInteger denominator)
 	{
 		SmallInteger quotient = numerator/denominator;
 		quotient = quotient - (quotient < 0 && quotient*denominator!=numerator);
@@ -163,7 +163,7 @@ struct StoreUnsigned32
 	}
 #else
 	// See primasm.asm
-	extern int __fastcall smalltalkMod(int numerator, int denominator);
+	extern SmallInteger __fastcall smalltalkMod(SmallInteger numerator, SmallInteger denominator);
 #endif
 
 inline bool Interpreter::IsShuttingDown()
@@ -200,13 +200,13 @@ inline BOOL Interpreter::isAFloat(Oop objectPointer)
 	#define STOPPROFILING()
 #endif
 
-inline void Interpreter::sendSelectorArgumentCount(SymbolOTE* selector, unsigned argCount)
+inline void Interpreter::sendSelectorArgumentCount(SymbolOTE* selector, argcount_t argCount)
 {
 	m_oopMessageSelector = selector;
 	sendSelectorToClass(ObjectMemory::fetchClassOf(*(m_registers.m_stackPointer - argCount)), argCount);
 }
 
-inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, unsigned argCount)
+inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, argcount_t argCount)
 {
 	MethodCacheEntry* pEntry = findNewMethodInClass(classPointer, argCount);
 	executeNewMethod(pEntry->method, argCount);
@@ -231,14 +231,14 @@ inline void Interpreter::basicQueueForFinalization(OTE* ote)
 	m_qForFinalize.Push(ote);
 }
 
-inline void Interpreter::queueForFinalization(OTE* ote, int highWater)
+inline void Interpreter::queueForFinalization(OTE* ote, SmallUinteger highWater)
 {
 	basicQueueForFinalization(ote);
 	asynchronousSignal(Pointers.FinalizeSemaphore);
 
-	unsigned count = m_qForFinalize.Count();
+	size_t count = m_qForFinalize.Count();
 	// Only raise interrupt when high water mark is hit!
-	if (count == static_cast<unsigned>(highWater))
+	if (count == highWater)
 		queueInterrupt(VMI_HOSPICECRISIS, ObjectMemoryIntegerObjectOf(count));
 }
 

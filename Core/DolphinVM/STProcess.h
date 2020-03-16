@@ -70,7 +70,7 @@ namespace ST
 
 		SmallUinteger stackSize(ProcessOTE* oteMe)
 		{
-			return (oteMe->getSize() - offsetof(Process, m_stack[0])) / sizeof(MWORD);
+			return (oteMe->getSize() - offsetof(Process, m_stack[0])) / sizeof(Oop);
 		}
 
 		SmallUinteger indexOfSP(Oop* sp)
@@ -212,7 +212,7 @@ namespace ST
 
 		DWORD Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int nTimeout);
 
-		static SemaphoreOTE* New(int sigs = 0);
+		static SemaphoreOTE* New(SmallInteger sigs = 0);
 	};
 
 #ifdef _DEBUG
@@ -246,8 +246,8 @@ namespace ST
 	// when accessing the active frame using the 'thisContext' pseudo variable.
 	inline void Process::sizeToSP(ProcessOTE* oteMe, Oop* sp) const
 	{
-		MWORD words = sp - reinterpret_cast<const Oop*>(this) + 1;
-		oteMe->setSize(words*sizeof(MWORD));
+		size_t words = sp - reinterpret_cast<const Oop*>(this) + 1;
+		oteMe->setSize(words*sizeof(Oop));
 	}
 
 #ifdef _DEBUG

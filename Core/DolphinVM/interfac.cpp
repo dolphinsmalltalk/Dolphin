@@ -37,8 +37,6 @@ static Oop currentCallbackContext = ZeroPointer;
 
 #define NUMVTBLENTRIES	1024
 
-typedef int (__stdcall *FP)();
-
 #pragma pack(push, 1)
 
 struct VTblThunk
@@ -71,7 +69,7 @@ inline void __fastcall Interpreter::returnValueTo(Oop resultPointer, Oop context
 }
 
 // Private - common part of perform callback routines
-Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
+Oop __stdcall Interpreter::callback(SymbolOTE* selector, argcount_t argCount TRACEPARM) /* throws SE_VMCALLBACKUNWIND */
 {
 	//CHECKREFERENCES
 
@@ -92,7 +90,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 		savedContext.m_stackPointer = m_registers.m_stackPointer-argCount;
 
 		int lastTrace=executionTrace;
-		if (traceFlag==TRACEFLAG::TraceOff && unsigned(executionTrace) < 2)
+		if (traceFlag==TRACEFLAG::TraceOff && static_cast<unsigned>(executionTrace) < 2)
 			executionTrace=0;
 	#endif
 
@@ -277,13 +275,13 @@ inline Semaphore* Interpreter::pendingCallbacks()
 	return pendingCallbacksPointer()->m_location;
 }
 
-unsigned Interpreter::countPendingCallbacks()
+size_t Interpreter::countPendingCallbacks()
 {
 	const Semaphore* pendingReturns = pendingCallbacks();
 
 	const ProcessOTE* nil = reinterpret_cast<ProcessOTE*>(Pointers.Nil);
 	const ProcessOTE* oteLink = pendingReturns->m_firstLink;
-	unsigned count = 0;
+	size_t count = 0;
 
 	while (oteLink != nil)
 	{
@@ -424,7 +422,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 
 void Interpreter::MarkRoots()
 {
-	unsigned i=0;
+	size_t i=0;
 	while (m_roots[i])
 	{
 		ObjectMemory::MarkObjectsAccessibleFromRoot(*m_roots[i]);
@@ -444,7 +442,7 @@ void Interpreter::OnCompact()
 	m_qAsyncSignals.onCompact();
 	m_qInterrupts.onCompact();
 
-	unsigned i=0;
+	size_t i=0;
 	while (m_roots[i])
 	{
 		ObjectMemory::compactOop(*m_roots[i]);
@@ -845,7 +843,7 @@ uintptr_t __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMTh
 
 #ifndef _M_X64
 
-__declspec(naked) int __stdcall _commonVfnEntryPoint()
+__declspec(naked) intptr_t __stdcall _commonVfnEntryPoint()
 {
 	_asm 
 	{
@@ -878,7 +876,7 @@ void InitializeVtbl()
 		return;
 	}
 
-	for (unsigned i=0;i<NUMVTBLENTRIES;i++)
+	for (auto i=0u;i<NUMVTBLENTRIES;i++)
 	{
 		VTable[i] = &aVtblThunks[i];
 		//aVtblThunks[i].int3 = 0xCC;
