@@ -106,7 +106,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 
 #elif defined(TO_GO)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const, unsigned)
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const, primargcount_t)
 {
 	return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 }

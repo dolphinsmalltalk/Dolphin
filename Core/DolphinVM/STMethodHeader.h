@@ -26,12 +26,16 @@ typedef enum {
 	PRIMITIVE_MAX = 255
 } STPrimitives;
 
+typedef uint8_t envtempcount_t;
+typedef uint8_t stacktempcount_t;
+typedef uint8_t methodargcount_t;
+
 typedef struct STMethodHeader
 {
-	uint8_t isInt 				: 1;	// MUST be 1 (to avoid treatment as object)
-	uint8_t isPrivate			: 1;
-	uint8_t envTempCount		: 6;	// Note that this is actually count+1
-	uint8_t stackTempCount;
-	uint8_t argumentCount;
+	uint8_t isInt 					: 1;	// MUST be 1 (to avoid treatment as object)
+	uint8_t isPrivate				: 1;
+	envtempcount_t envTempCount	: 6;	// Note that this is actually count+1
+	stacktempcount_t stackTempCount;
+	methodargcount_t argumentCount;
 	uint8_t primitiveIndex;
 } STMethodHeader;

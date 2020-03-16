@@ -36,7 +36,7 @@ using namespace DolphinX;
 #include "STBlockClosure.h"
 
 static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &AnsiString::New;
-static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, MWORD) = &AnsiString::New;
+static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, size_t) = &AnsiString::New;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* p
 		}
 		else
 		{
-			int nSize = behavior.extraSpec();
+			size_t nSize = behavior.extraSpec();
 			BytesOTE* oteBytes = ObjectMemory::newByteObject(classPointer, nSize, ptr);
 			resultPointer = reinterpret_cast<OTE*>(oteBytes);
 		}
@@ -95,7 +95,7 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 	OTE* resultPointer;
 	Behavior& behavior = *classPointer->m_location;
 	BytesOTE* bytesPointer;
-	unsigned size = behavior.extraSpec();
+	auto size = behavior.extraSpec();
 	if (behavior.isPointers())
 	{
 		StructureOTE* otePointers = reinterpret_cast<StructureOTE*>(ObjectMemory::newPointerObject(classPointer));
@@ -217,12 +217,12 @@ BytesOTE* __fastcall NewGUID(GUID* rguid)
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)
+argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms)
 {
 	DescriptorOTE* oteTypes = descriptor->m_descriptor;
 	const DescriptorBytes* types = oteTypes->m_location;
-	const unsigned argsLen = types->argsLen(oteTypes);
-	unsigned i=0;
+	const auto argsLen = types->argsLen(oteTypes);
+	auto i=0u;
 	while (i<argsLen)
 	{
 		uint8_t arg = types->m_args[i++];
@@ -232,7 +232,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* 
 			case ExtCallArgType::Void:					// Not a valid argument
 				HARDASSERT(FALSE);
 				pushNil();
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::LPVoid:
@@ -241,50 +241,50 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* 
 				break;
 
 			case ExtCallArgType::Char:
-				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<MWORD*>(lpParms)));
-				lpParms += sizeof(MWORD);
+				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<char32_t*>(lpParms)));
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::UInt8:
 				pushSmallInteger(*lpParms);
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Int8:
 				pushSmallInteger(*reinterpret_cast<char*>(lpParms));
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 			
 			case ExtCallArgType::UInt16:
 				pushSmallInteger(*reinterpret_cast<uint16_t*>(lpParms));
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Int16:
 				pushSmallInteger(*reinterpret_cast<int16_t*>(lpParms));
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::UInt32:
 				pushUint32(*reinterpret_cast<uint32_t*>(lpParms));
-				lpParms += sizeof(uint32_t);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Int32:
 			case ExtCallArgType::HResult:
 			case ExtCallArgType::NTStatus:
 				pushInt32(*reinterpret_cast<int32_t*>(lpParms));
-				lpParms += sizeof(int32_t);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Bool:
 				pushBool(*reinterpret_cast<BOOL*>(lpParms));
-				lpParms += sizeof(MWORD);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Handle:
 				pushHandle(*reinterpret_cast<HANDLE*>(lpParms));
-				lpParms += sizeof(HANDLE);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Double:
@@ -295,19 +295,19 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* 
 
 			case ExtCallArgType::LPStr:
 				push(*reinterpret_cast<LPCSTR*>(lpParms));
-				lpParms += sizeof(LPCSTR);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Oop:
 			case ExtCallArgType::Ote:
 				push(*reinterpret_cast<Oop*>(lpParms));
-				lpParms += sizeof(Oop);
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Float:
 				push(static_cast<double>(*reinterpret_cast<float*>(lpParms)));
-				// Yup, even doubles passed on main stack
-				lpParms += sizeof(FLOAT);
+				// Yup, even floats passed on main stack
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::LPPVoid:
@@ -348,7 +348,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* 
 
 			case ExtCallArgType::VarBool:
 				pushBool(*reinterpret_cast<VARIANT_BOOL*>(lpParms));
-				lpParms += sizeof(MWORD);				// Note passes as 32-bit
+				lpParms += sizeof(uintptr_t);
 				break;
 
 			case ExtCallArgType::Guid:
@@ -380,7 +380,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* 
 					arg = types->m_args[i++];
 					BehaviorOTE* behaviorPointer = reinterpret_cast<BehaviorOTE*>(descriptor->m_literals[arg]);
 					pushNewObject(ExternalStructure::New(behaviorPointer, lpParms));
-					lpParms += 4;
+					lpParms += sizeof(uintptr_t);
 				}
 				break;
 
@@ -468,7 +468,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargco
 	// Pop the descriptor and address and the selector
 	m_registers.m_stackPointer = sp - 3;
 
-	unsigned argCount;
+	argcount_t argCount;
 	// NEW FORMAT
 	ExternalDescriptor* descriptor = static_cast<ExternalDescriptor*>(descriptorPointer->m_location);
 	argCount = pushArgsAt(descriptor, lpParms);
@@ -506,11 +506,11 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(sp-2));
 	HARDASSERT(ObjectMemory::fetchClassOf(Oop(oteBlock)) == Pointers.ClassBlockClosure);
 	BlockClosure* block = oteBlock->m_location;
-	const MWORD blockArgumentCount = block->m_info.argumentCount;
+	const auto blockArgumentCount = block->m_info.argumentCount;
 
 	const ExternalDescriptor* descriptor = static_cast<ExternalDescriptor*>(descriptorPointer->m_location);
 	const DescriptorBytes* types = static_cast<DescriptorBytes*>(descriptor->m_descriptor->m_location);
-	const unsigned argCount = types->m_argumentCount;
+	const auto argCount = types->m_argumentCount;
 	
 	if (argCount != blockArgumentCount)
 		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
@@ -531,19 +531,19 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 
 	Oop* localSp = m_registers.m_stackPointer + 1;
 
-	const unsigned copiedValues = block->copiedValuesCount(oteBlock);
+	const auto copiedValues = block->copiedValuesCount(oteBlock);
 	{
-		for (unsigned i=0;i<copiedValues;i++)
+		for (auto i=0u;i<copiedValues;i++)
 		{
 			Oop oopCopied = block->m_copiedValues[i];
 			*localSp++ = oopCopied;
 		}
 	}
 
-	const unsigned extraTemps = block->stackTempsCount();
+	const auto extraTemps = block->stackTempsCount();
 	{
 		const Oop nilPointer = Oop(Pointers.Nil);
-		for (unsigned i=0;i<extraTemps;i++)
+		for (auto i=0u;i<extraTemps;i++)
 			*localSp++ = nilPointer;
 	}
 
@@ -562,7 +562,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcoun
 	pFrame->m_method = block->m_method;
 	
 	// Note that ref. count remains the same due to overwritten receiver slot
-	const unsigned envTemps = block->envTempsCount();
+	const auto envTemps = block->envTempsCount();
 	if (envTemps > 0)
 	{
 		ContextOTE* oteContext = Context::New(envTemps, reinterpret_cast<Oop>(block->m_outer));
@@ -664,7 +664,7 @@ void doBlah()
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef _M_IX86
-	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, uint8_t* argTypes, BOOL isVirtual);
+	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, argcount_t argCount, uint8_t* argTypes, BOOL isVirtual);
 
 	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, primargcount_t argCount)
 	{
@@ -752,10 +752,10 @@ void doBlah()
 		FARPROC pLibProc = *reinterpret_cast<FARPROC*>(argTypes.m_elements);
 		if (!pLibProc)
 		{
-			unsigned procNameOffset = argCount+ExtCallArgStart;
+			size_t procNameOffset = argCount+ExtCallArgStart;
 			#ifdef _DEBUG
 				// Compiler should have ensured number of arg types = argumentCount
-				unsigned argsLength = ObjectMemory::fetchByteLengthOf(arrayPointer);
+				size_t argsLength = ObjectMemory::fetchByteLengthOf(arrayPointer);
 				ASSERT(argsLength > procNameOffset);
 				// Compiler allocates space for a null terminator
 				ASSERT(argTypes.m_elements[argsLength-1] == 0);
@@ -787,7 +787,7 @@ void doBlah()
 	}
 
 	// Returns true/false for success/failure. Also sets the failure code.
-	BOOL __stdcall Interpreter::callExternalFunction(FARPROC pProc, unsigned argCount, uint8_t* argTypes, BOOL isVirtual)
+	BOOL __stdcall Interpreter::callExternalFunction(FARPROC pProc, argcount_t argCount, uint8_t* argTypes, BOOL isVirtual)
 	{
 		Oop arg;
 		uintptr_t retValue;
@@ -798,17 +798,17 @@ void doBlah()
 		// Compiler optimises out unless we pretend its volatile
 		StackFrame volatile* pCallingFrame = (StackFrame volatile*)m_pActiveFrame;
 		
-		unsigned savedSP;
+		uintptr_t savedSP;
 		_asm {
 			mov		eax, esp
 			mov		DWORD PTR[savedSP], eax
 		}
 
-		int pushCount = argCount + isVirtual - 1;
+		size_t pushCount = argCount + isVirtual - 1;
 		Oop* stackPointer = m_stackPointer - pushCount;
 
 		// Push args from Smalltalk stack onto machine stack
-		for (int i = pushCount;i >= 0;i--)
+		for (auto i = pushCount;i >= 0;i--)
 		{
 			arg = stackPointer[i];
 			switch (argTypes[ExtCallArgStart+i])
@@ -1147,10 +1147,10 @@ void doBlah()
 				if (stackPointer != m_stackPointer)
 				{
 					TRACE("primitiveDLL32Call WARNING: before call SP %p, after call SP %p\n\r", stackPointer, m_stackPointer);
-					const int extra = m_stackPointer - stackPointer;
+					const ptrdiff_t extra = m_stackPointer - stackPointer;
 					if (extra > 0)
 					{
-						for (int i=0;i<extra;i++)
+						for (auto i=0;i<extra;i++)
 						{
 							printStackTop(m_stackPointer, TRACESTREAM);
 							m_stackPointer--;

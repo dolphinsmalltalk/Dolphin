@@ -87,7 +87,7 @@ Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, primargcount_t)
 			{
 				if (r < 0)
 				{
-					for (MWORD i = oteArg->getWordSize()-1; i > 0; i--)
+					for (size_t i = oteArg->getWordSize()-1; i > 0; i--)
 					{
 						if (digits[i] != 0)
 						{

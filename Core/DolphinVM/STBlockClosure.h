@@ -40,34 +40,34 @@ namespace ST
 	public:
 		// The pool must contain fixed size objects, so choose a suitable maximum number of
 		// copied values permissible; very uncommonly exceed 2 (see Util class>>blockStats)
-		enum { MaxCopiedValues = 4 };
+		static constexpr size_t MaxCopiedValues = 4;
 
 		enum { OuterIndex = ObjectFixedSize, MethodIndex, InitialIPIndex, InfoIndex, ReceiverIndex, FixedSize };
-		enum { TempFrameStart = FixedSize };
+		static constexpr size_t TempFrameStart = FixedSize;
 
-		static BlockOTE* __fastcall New(unsigned copiedValuesCount);
+		static BlockOTE* __fastcall New(size_t copiedValuesCount);
 
-		unsigned initialIP() const
+		SmallUinteger initialIP() const
 		{
 			return integerValueOf(m_initialIP);
 		}
 
-		unsigned copiedValuesCount(BlockOTE* myOTE) const
+		size_t copiedValuesCount(BlockOTE* myOTE) const
 		{
 			return myOTE->pointersSize() - FixedSize;
 		}
 
-		unsigned stackTempsCount() const
+		stacktempcount_t stackTempsCount() const
 		{
 			return m_info.stackTempsCount;
 		}
 
-		unsigned envTempsCount() const
+		envtempcount_t envTempsCount() const
 		{
 			return m_info.envTempsCount;
 		}
 
-		unsigned argumentCount() const
+		methodargcount_t argumentCount() const
 		{
 			return m_info.argumentCount;
 		}

@@ -46,12 +46,12 @@ namespace ST
 		// The environment pool must contain fixed size objects, so choose a suitable maximum number of
 		// temps permissible; very uncommonly exceed even 1 environment (shared) temporaries
 		// In fact quite often there are none since the Context is required just to support a ^-return
-		enum { MaxEnvironmentTemps = 1 };
+		static constexpr size_t MaxEnvironmentTemps = 1;
 
 		enum { OuterIndex = ObjectFixedSize, BlockIndex, FixedSize };
-		enum { TempFrameStart = FixedSize };
+		static constexpr size_t TempFrameStart = FixedSize;
 
-		static ContextOTE* __fastcall New(unsigned tempCount, Oop oopOuter);
+		static ContextOTE* __fastcall New(size_t tempCount, Oop oopOuter);
 	};
 
 	///////////////////////////////////////////////////////////////////////////////

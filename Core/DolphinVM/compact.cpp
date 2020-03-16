@@ -23,12 +23,12 @@
 #pragma auto_inline(off)
 
 // Answer the index of the last occuppied OT entry
-unsigned __stdcall ObjectMemory::lastOTEntry()
+size_t __stdcall ObjectMemory::lastOTEntry()
 {
 	HARDASSERT(m_pOT);
 //	HARDASSERT(m_nInCritSection > 0);
 
-	unsigned i = m_nOTSize-1;
+	size_t i = m_nOTSize-1;
 	const OTE* pOT = m_pOT;
 	while (pOT[i].isFree())
 	{
@@ -54,8 +54,8 @@ void ObjectMemory::compactObject(OTE* ote)
 	if (ote->isPointers())
 	{
 		VariantObject* varObj = static_cast<VariantObject*>(ote->m_location);
-		const MWORD lastPointer = ote->pointersSize();
-		for (MWORD i = 0; i < lastPointer; i++)
+		const size_t lastPointer = ote->pointersSize();
+		for (size_t i = 0; i < lastPointer; i++)
 		{
 			// This will get nicely optimised by the Compiler
 			Oop fieldPointer = varObj->m_fields[i];

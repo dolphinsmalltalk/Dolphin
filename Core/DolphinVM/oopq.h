@@ -22,13 +22,13 @@ public:
 	OopQueue() : m_bufferArray(0), m_pBuffer(0), 
 		m_nHead(0), m_nTail(0), m_nGrowthGranularity(0), m_nSize(0) {}
 
-	OopQueue(OTE* bufferArray, MWORD nGrowthGranularity)
+	OopQueue(OTE* bufferArray, size_t nGrowthGranularity)
 	{
 		UseBuffer(bufferArray, nGrowthGranularity);
 	}
 
 	// initialization
-	void UseBuffer(ArrayOTE* bufferArray, MWORD nGrowthGranularity, bool bShrink)
+	void UseBuffer(ArrayOTE* bufferArray, size_t nGrowthGranularity, bool bShrink)
 	{
 		m_bufferArray = bufferArray;
 		m_nGrowthGranularity = nGrowthGranularity;
@@ -98,20 +98,20 @@ public:
 	}
 
 	// Return the number of elements in the queue
-	unsigned Count()
+	size_t Count()
 	{
 		// Remember the slot pointed at by m_hHead is empty
 		return m_nTail < m_nHead ? m_nSize - m_nHead + m_nTail : m_nTail - m_nHead;
 	}
 
 	// testing
-	BOOL isFull() const
+	bool isFull() const
 	{
 		ASSERT(m_pBuffer);
 		return m_nHead == (m_nTail+1) % m_nSize;
 	}
 
-	BOOL isEmpty() const
+	bool isEmpty() const
 	{
 		ASSERT(m_pBuffer);
 		return m_nHead == m_nTail;
@@ -126,7 +126,7 @@ private:
 	// The queue overflowed, grow it to accomodate more elements
 	void Overflow()
 	{
-		MWORD oldSize = m_nSize;
+		size_t oldSize = m_nSize;
 		m_nSize += m_nGrowthGranularity;
 		m_pBuffer = reinterpret_cast<T*>(ObjectMemory::resize(reinterpret_cast<PointersOTE*>(m_bufferArray), m_nSize, false)->m_fields);
 		if (m_nTail == 0)
@@ -137,9 +137,9 @@ private:
 			// The queue is split i.e. it has wrapped around, so we need to
 			// move those elements between the front and the old size so that they
 			// end at old size (this is quite likely to be an overlapping move).
-			const MWORD numToMove = oldSize - m_nHead;
+			const size_t numToMove = oldSize - m_nHead;
 			const T nil = reinterpret_cast<T>(Pointers.Nil);
-			for (unsigned i=1;i<=numToMove;i++)
+			for (size_t i=1;i<=numToMove;i++)
 			{
 				m_pBuffer[m_nSize-i] = m_pBuffer[oldSize-i];
 				m_pBuffer[oldSize-i] = nil;

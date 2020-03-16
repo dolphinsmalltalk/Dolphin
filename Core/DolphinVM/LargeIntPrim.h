@@ -105,12 +105,12 @@ template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const
 
 	// Same sign
 
-	const MWORD ai = oteA->getWordSize();
-	const MWORD bi = oteB->getWordSize();
+	const auto ai = oteA->getWordSize();
+	const auto bi = oteB->getWordSize();
 
 	if (ai == bi)
 	{
-		int i = ai - 1;
+		ptrdiff_t i = ai - 1;
 		// Same sign and size: Compare words (same sign, so comparison can be unsigned)
 		do
 		{
@@ -177,9 +177,9 @@ namespace Li
 		Oop operator()(const LargeIntegerOTE* oteOuter, const LargeIntegerOTE* oteInner) const
 		{
 			const LargeInteger* liOuter = oteOuter->m_location;
-			MWORD outerSize = oteOuter->getWordSize();
+			size_t outerSize = oteOuter->getWordSize();
 			const LargeInteger* liInner = oteInner->m_location;
-			MWORD innerSize = oteInner->getWordSize();
+			size_t innerSize = oteInner->getWordSize();
 
 			// The algorithm is substantially faster if the outer loop is shorter
 			return outerSize > innerSize ? LargeInteger::Mul(liInner, innerSize, liOuter, outerSize) :

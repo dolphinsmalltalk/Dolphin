@@ -23,19 +23,19 @@
 #include "STBlockClosure.h"
 
 // Value with args takes an array of arguments
-Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
+Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, primargcount_t)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(bp));
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(bp-1));
-	ASSERT(ObjectMemory::fetchClassOf(Oop(oteBlock)) == Pointers.ClassBlockClosure);
+	ASSERT(ObjectMemory::fetchClassOf(reinterpret_cast<Oop>(oteBlock)) == Pointers.ClassBlockClosure);
 	BlockClosure* block = oteBlock->m_location;
-	const MWORD blockArgumentCount = block->m_info.argumentCount;
+	const auto blockArgumentCount = block->m_info.argumentCount;
 
-	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
+	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(reinterpret_cast<Oop>(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 
-	const MWORD arrayArgumentCount = argumentArray->pointersSize();
+	const size_t arrayArgumentCount = argumentArray->pointersSize();
 	if (arrayArgumentCount != blockArgumentCount)
 		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);
 
@@ -55,7 +55,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 
 	// Push the args from the array
 	{
-		for (unsigned i=0;i<arrayArgumentCount;i++)
+		for (size_t i=0;i<arrayArgumentCount;i++)
 		{
 			Oop pushee = args->m_elements[i];
 			*sp++ = pushee;
@@ -63,9 +63,9 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 		}
 	}
 
-	const unsigned copiedValues = block->copiedValuesCount(oteBlock);
+	const auto copiedValues = block->copiedValuesCount(oteBlock);
 	{
-		for (unsigned i=0;i<copiedValues;i++)
+		for (auto i=0u;i<copiedValues;i++)
 		{
 			Oop oopCopied = block->m_copiedValues[i];
 			*sp++ = oopCopied;
@@ -74,10 +74,10 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 	}
 
 	// Nil out any extra stack temp slots we need
-	const unsigned extraTemps = block->stackTempsCount();
+	const auto extraTemps = block->stackTempsCount();
 	{
 		const Oop nilPointer = Oop(Pointers.Nil);
-		for (unsigned i=0;i<extraTemps;i++)
+		for (auto i=0;i<extraTemps;i++)
 			*sp++ = nilPointer;
 	}
 
@@ -94,7 +94,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 	m_registers.m_pActiveFrame = pFrame;
 
 	// Note that ref. count remains the same due dto overwritten receiver slot
-	const unsigned envTemps = block->envTempsCount();
+	const auto envTemps = block->envTempsCount();
 	if (envTemps > 0)
 	{
 		ContextOTE* oteContext = Context::New(envTemps, reinterpret_cast<Oop>(block->m_outer));
@@ -156,7 +156,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, primargcount_t argC
 	MethodCacheEntry* pEntry = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), (argCount - 1));
 	MethodOTE* methodPointer = pEntry->method;
 	CompiledMethod* method = methodPointer->m_location;
-	const unsigned methodArgCount = method->m_header.argumentCount;
+	const auto methodArgCount = method->m_header.argumentCount;
 	if (methodArgCount == (argCount-1) || m_oopMessageSelector == Pointers.DoesNotUnderstandSelector)
 	{
 		// Shuffle arguments down over the selector (use argumentCount of
@@ -168,7 +168,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, primargcount_t argC
 
 		// Not worth overhead of calling memmove here since argumentCount
 		// normally small
-		for (unsigned i=0;i<methodArgCount;i++)
+		for (auto i=0;i<methodArgCount;i++)
 			sp[i] = sp[i+1];
 		popStack();
 		executeNewMethod(methodPointer, methodArgCount);
@@ -195,7 +195,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcoun
 	//		(standard stack overflow mechanism should catch it)
 									   
 	// We must not get the length outside, in case small integer arg
-	const unsigned argCount = argumentArray->pointersSize();
+	const auto argCount = argumentArray->pointersSize();
 	
 	// Save old message selector in case of prim failure (need to reinstate)
 	SymbolOTE* performSelector = m_oopMessageSelector;
@@ -219,7 +219,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcoun
 	// the method then the lookup routines copy the arguments off the stack
 	// into a Message object
 	Array* args = argumentArray->m_location;
-	for (MWORD i=0; i<argCount; i++)
+	for (auto i=0u; i<argCount; i++)
 	{
 		Oop pushee = args->m_elements[i];
 		// Note no need to inc the ref. count when pushing on the stack
@@ -241,7 +241,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcoun
 	MethodCacheEntry* pEntry = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), argCount);
 	MethodOTE* methodPointer = pEntry->method;
 	CompiledMethod& method = *methodPointer->m_location;
-	const unsigned methodArgCount = method.m_header.argumentCount;
+	const auto methodArgCount = method.m_header.argumentCount;
 	if (methodArgCount == argCount ||
 			m_oopMessageSelector == Pointers.DoesNotUnderstandSelector)
 	{
@@ -277,22 +277,22 @@ Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, primargcount_
 	if (!ObjectMemory::isKindOf(receiverPointer, method->m_methodClass))
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);		// Wrong class of receiver
 
-	const unsigned argCount = oteArg->pointersSize();
-	const unsigned methodArgCount = method->m_header.argumentCount;
+	const size_t argCount = oteArg->pointersSize();
+	const auto methodArgCount = method->m_header.argumentCount;
 	if (methodArgCount != argCount)
 		return primitiveFailure(_PrimitiveFailureCode::WrongNumberOfArgs);		// Wrong number of arguments
 
 	// Push receiver and arguments on stack (over the top of array and receiver)
 	bp[0] = receiverPointer;					// Write receiver over the top of the method
-	for (MWORD i = 0; i < argCount; i++)
+	for (auto i = 0; i < methodArgCount; i++)
 	{
 		Oop pushee = arguments->m_elements[i];
 		// Don't count up because we are adding a stack ref.
 		bp[i+1] = pushee;
 	}
-	m_registers.m_stackPointer = bp+argCount;
+	m_registers.m_stackPointer = bp+ methodArgCount;
 
 	// Don't count down any args
-	executeNewMethod(oteMethod, argCount);
+	executeNewMethod(oteMethod, methodArgCount);
 	return primitiveSuccess(0);
 }

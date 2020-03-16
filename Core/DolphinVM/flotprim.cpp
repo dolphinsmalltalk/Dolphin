@@ -118,7 +118,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, primargcount_t
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Index not an integer
 	}
 
-	SmallUinteger offset = ObjectMemoryIntegerValueOf(integerPointer);
+	SmallInteger offset = ObjectMemoryIntegerValueOf(integerPointer);
 	OTE* receiver = reinterpret_cast<OTE*>(*(sp-1));
 
 	ASSERT(!ObjectMemoryIsIntegerObject(receiver));
@@ -138,7 +138,7 @@ Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, primargcount_t
 		BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(receiver);
 
 		// We can check that the offset is in bounds
-		if (static_cast<int>(offset) < 0 || offset+sizeof(double) > oteBytes->bytesSize())
+		if (offset < 0 || static_cast<size_t>(offset)+sizeof(double) > oteBytes->bytesSize())
 			return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 
 		VariantByteObject* bytes = oteBytes->m_location;

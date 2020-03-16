@@ -77,7 +77,7 @@ void Interpreter::asyncGC(uintptr_t gcFlags)
 #ifdef _DEBUG
 	if (Interpreter::executionTrace != 0)
 	{
-		for (unsigned i=0;i<NUMOTEPOOLS;i++)
+		for (auto i=0u;i<NUMOTEPOOLS;i++)
 			m_otePools[i].DumpStats();
 	}
 #endif
@@ -112,7 +112,7 @@ Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t ar
 #ifdef _DEBUG
 void Interpreter::DumpOTEPoolStats()
 {
-	for (unsigned i=0;i<NUMOTEPOOLS;i++)
+	for (auto i=0u;i<NUMOTEPOOLS;i++)
 		m_otePools[i].DumpStats();
 }
 #endif
@@ -130,7 +130,7 @@ void Interpreter::freePools()
 	// in case from a pool (avoids freeing mem back to smaller pool)
 	{
 		OTE* ote = m_otePools[CONTEXTPOOL].m_pFreeList;
-		const MWORD sizeOfPoolContext = SizeOfPointers(Context::FixedSize+Context::MaxEnvironmentTemps);
+		const size_t sizeOfPoolContext = SizeOfPointers(Context::FixedSize+Context::MaxEnvironmentTemps);
 		while (ote)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
@@ -141,7 +141,7 @@ void Interpreter::freePools()
 
 	{
 		OTE* ote = m_otePools[BLOCKPOOL].m_pFreeList;
-		const MWORD sizeOfPoolBlock = SizeOfPointers(BlockClosure::FixedSize+BlockClosure::MaxCopiedValues);
+		const size_t sizeOfPoolBlock = SizeOfPointers(BlockClosure::FixedSize+BlockClosure::MaxCopiedValues);
 		while (ote)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
@@ -154,7 +154,7 @@ void Interpreter::freePools()
 		//DumpOTEPoolStats();
 	#endif
 
-	for (unsigned i=0;i<NUMOTEPOOLS;i++)
+	for (auto i=0u;i<NUMOTEPOOLS;i++)
 		m_otePools[i].clear();
 
 	#if defined(_DEBUG) && defined(VMDLL)

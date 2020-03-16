@@ -24,7 +24,7 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncat
 	}
 	else
 	{
-		int intVal = static_cast<int>(fValue);
+		auto intVal = static_cast<SmallInteger>(fValue);
 		*sp = ObjectMemoryIntegerObjectOf(intVal);
 		return sp;
 	}

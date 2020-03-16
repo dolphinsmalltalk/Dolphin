@@ -223,7 +223,7 @@ private:
 
 	void TerminateThread();
 
-	bool Initiate(CompiledMethod* pMethod, unsigned nArgCount);
+	bool Initiate(CompiledMethod* pMethod, argcount_t nArgCount);
 	DWORD WaitForRequest();
 	int ProcessRequests();
 	bool PerformCall();
@@ -259,7 +259,7 @@ public:
 	static void Uninitialize();
 
 	static OverlappedCallPtr GetActiveProcessOverlappedCall();
-	static OverlappedCallPtr Do(CompiledMethod* pMethod, unsigned argCount);
+	static OverlappedCallPtr Do(CompiledMethod* pMethod, argcount_t argCount);
 
 	static Semaphore* pendingTerms();
 
@@ -319,7 +319,7 @@ public:
 
 	// Method causing this overlapped call to start executing
 	CompiledMethod*			m_pMethod;
-	unsigned				m_nArgCount;
+	argcount_t				m_nArgCount;
 	volatile States			m_state;
 private:
 	SHAREDLONG				m_nSuspendCount;

@@ -42,8 +42,8 @@ void Interpreter::initializeVMReferences()
 	ASSERT(m_nMaxVMRefs >= VMREFSINITIAL);
 
 	// Now set up the free list
-	const int loopEnd = m_nMaxVMRefs;
-	for (int i=0;i<loopEnd;i++)
+	const auto loopEnd = m_nMaxVMRefs;
+	for (auto i=0;i<loopEnd;i++)
 		m_pVMRefs[i] = ObjectMemoryIntegerObjectOf(i+1);
 	m_nFreeVMRef = 0;
 #else

@@ -237,8 +237,9 @@ Oop* __fastcall Interpreter::primitiveEnableInterrupts(Oop* const sp, primargcou
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Signal a Semaphore without regard to the execution state. The Semaphore will be properly
-SemaphoreOTE* Semaphore::New(int sigs)
+// Answer a new Semaphore, with the specified number of initial signals
+
+SemaphoreOTE* Semaphore::New(SmallInteger sigs)
 {
 	SemaphoreOTE* oteSem = reinterpret_cast<SemaphoreOTE*>(ObjectMemory::newPointerObject(Pointers.ClassSemaphore));
 	Semaphore* sem = oteSem->m_location;
@@ -433,7 +434,7 @@ void Interpreter::Yield()
 
 // Yield to the Processes of the same or higher priority than the current active process
 // Answers whether a process switch occurred
-Oop* __fastcall Interpreter::primitiveYield(Oop* const, unsigned)
+Oop* __fastcall Interpreter::primitiveYield(Oop* const, primargcount_t)
 {
 	Yield();
 	return m_registers.m_stackPointer;
@@ -447,9 +448,9 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 	ProcessorScheduler* scheduler = (ProcessorScheduler*)Pointers.Scheduler->m_location;
 	ArrayOTE* oteLists = scheduler->m_processLists;
 	HARDASSERT(oteLists->m_oteClass == Pointers.ClassArray);
-	unsigned highestPriority = oteLists->pointersSize();
+	size_t highestPriority = oteLists->pointersSize();
 	Array* processLists = oteLists->m_location;
-	unsigned index = highestPriority;
+	size_t index = highestPriority;
 	LinkedList* pProcessList;
 	do
 	{
@@ -892,8 +893,8 @@ int Interpreter::highestWaitingPriority()
 	ArrayOTE* oteLists = scheduler->m_processLists;
 	Array* processLists = oteLists->m_location;
 
-	unsigned highestPriority = oteLists->pointersSize();
-	unsigned index = highestPriority;
+	size_t highestPriority = oteLists->pointersSize();
+	size_t index = highestPriority;
 	LinkedList* pProcessList;
 	do
 	{
@@ -968,7 +969,7 @@ LinkedListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, LinkedLis
 		// to avoid incorrectly suspending the process
 		Semaphore* sem = static_cast<Semaphore*>(oteList->m_location);
 		HARDASSERT(ObjectMemoryIsIntegerObject(sem->m_excessSignals));
-		int excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals);
+		auto excessSignals = ObjectMemoryIntegerValueOf(sem->m_excessSignals);
 
 		if (excessSignals > 0)
 		{
@@ -999,7 +1000,7 @@ LinkedListOTE* Interpreter::ResuspendProcessOn(ProcessOTE* oteProcess, LinkedLis
 
 	CHECKREFERENCES
 
-		return oteList;
+	return oteList;
 }
 
 BOOL __stdcall Interpreter::Reschedule()
@@ -1350,19 +1351,6 @@ BOOL Interpreter::FastYield()
 	return FALSE;
 }
 
-/*
-///////////////////////////////////////////////////////////////////////////////
-// Answer a new Semaphore, with the specified number of initial signals
-
-OTE* Semaphore::New(int initSignals)
-{
-	SemaphoreOTE* pAnswer = ObjectMemory::instantiateClassWithPointers(Pointers.ClassSemaphore);
-	Semaphore* sem = pAnswer->m_location;
-	sem->m_excessSignals = ObjectMemoryIntegerObjectOf(initSignals);
-	return pAnswer;
-}
-*/
-
 DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout)
 {
 	if (!ObjectMemoryIsIntegerObject(m_excessSignals))
@@ -1631,7 +1619,7 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp, primargcou
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, unsigned)
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch

@@ -48,7 +48,7 @@ extern NewUnsigned64:near32
 REQUESTCOMPLETION EQU ?OnCallReturned@OverlappedCall@@AAEXXZ
 extern REQUESTCOMPLETION:near32
 
-CharacterGetCodePoint EQU ?getCodePoint@Character@ST@@QBEIXZ
+CharacterGetCodePoint EQU ?getCodePoint@Character@ST@@QBE_UXZ
 extern CharacterGetCodePoint:near32
 
 ; We need to test the structure type specially

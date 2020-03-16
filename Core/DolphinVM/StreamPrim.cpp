@@ -59,10 +59,10 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 				{
 				case StringEncoding::Ansi:
 				{
-					if (MWORD(index) < oteBuf->bytesSize())
+					if (static_cast<size_t>(index) < oteBuf->bytesSize())
 					{
 						auto ansiCodeUnit = static_cast<uint8_t>(reinterpret_cast<AnsiStringOTE*>(oteBuf)->m_location->m_characters[index]);
-						PushCharacter(sp, static_cast<MWORD>(m_ansiToUnicodeCharMap[ansiCodeUnit]));
+						PushCharacter(sp, static_cast<char32_t>(m_ansiToUnicodeCharMap[ansiCodeUnit]));
 						// When incrementing the index we must allow for it overflowing a SmallInteger, even though
 						// this is extremely unlikely in practice
 						readStream->m_index = Integer::NewSigned32WithRef(index + 1);
@@ -73,8 +73,8 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 
 				case StringEncoding::Utf8:
 				{
-					MWORD size = oteBuf->bytesSize();
-					if (MWORD(index) < size)
+					size_t size = oteBuf->bytesSize();
+					if (static_cast<size_t>(index) < size)
 					{
 						const Utf8String::CU* psz = reinterpret_cast<Utf8StringOTE*>(oteBuf)->m_location->m_characters;
 
@@ -101,8 +101,8 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 				{
 					Utf16StringOTE* oteString = reinterpret_cast<Utf16StringOTE*>(oteBuf);
 
-					MWORD size = oteString->bytesSize();
-					if (MWORD(index) < size / sizeof(Utf16String::CU))
+					size_t size = oteString->bytesSize();
+					if (static_cast<size_t>(index) < size / sizeof(Utf16String::CU))
 					{
 						const Utf16String::CU* pwsz = oteString->m_location->m_characters;
 						SmallInteger codePoint;
@@ -127,8 +127,8 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 				{
 					Utf32StringOTE* oteString = reinterpret_cast<Utf32StringOTE*>(oteBuf);
 
-					MWORD size = oteString->bytesSize();
-					if (MWORD(index) < size / sizeof(Utf32String::CU))
+					size_t size = oteString->bytesSize();
+					if (static_cast<size_t>(index) < size / sizeof(Utf32String::CU))
 					{
 						Utf32String::CU codePoint = oteString->m_location->m_characters[index];
 
@@ -156,7 +156,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 			else if (bufClass == Pointers.ClassByteArray)
 			{
 				ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(oteBuf);
-				if (MWORD(index) < oteBytes->bytesSize())
+				if (static_cast<size_t>(index) < oteBytes->bytesSize())
 				{
 					*sp = ObjectMemoryIntegerObjectOf(oteBytes->m_location->m_elements[index]);
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
@@ -168,7 +168,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 			else if (bufClass == Pointers.ClassArray)
 			{
 				ArrayOTE* oteArray = reinterpret_cast<ArrayOTE*>(oteBuf);
-				if (MWORD(index) < oteArray->pointersSize())
+				if (static_cast<size_t>(index) < oteArray->pointersSize())
 				{
 					*sp = oteArray->m_location->m_elements[index];
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
@@ -214,7 +214,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 					if (ObjectMemory::fetchClassOf(value) == Pointers.ClassCharacter)
 					{
 						Character* character = reinterpret_cast<CharOTE*>(value)->m_location;
-						MWORD codeUnit = character->CodeUnit;
+						auto codeUnit = character->CodeUnit;
 
 						switch (reinterpret_cast<StringClass*>(oteBuf->m_oteClass->m_location)->Encoding)
 						{
@@ -230,7 +230,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 								switch (character->Encoding)
 								{
 								case StringEncoding::Ansi:
-									oteStringBuf->m_location->m_characters[index] = codeUnit;
+									oteStringBuf->m_location->m_characters[index] = codeUnit & 0xff;
 									writeStream->m_index = Integer::NewSigned32WithRef(index + 1);		// Increment the stream index
 									*newSp = value;
 									return newSp;
@@ -276,7 +276,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 							// Write into a Utf8String - could possibly write more than one byte, so have to check bounds for each Character encoding
 
 							Utf8StringOTE* oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
-							MWORD codeUnit = character->CodeUnit;
+							auto codeUnit = character->CodeUnit;
 							char32_t codePoint = MAX_UCSCHAR+1;
 
 							switch (character->Encoding)
@@ -539,7 +539,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 				{
 					if (ObjectMemoryIsIntegerObject(value))
 					{
-						MWORD intValue = ObjectMemoryIntegerValueOf(value);
+						SmallUinteger intValue = ObjectMemoryIntegerValueOf(value);
 						if (intValue <= 255)
 						{
 							ByteArrayOTE* oteByteArray = reinterpret_cast<ByteArrayOTE*>(oteBuf);
@@ -621,7 +621,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 				switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteBuf)))
 				{
 				case 1:
-					if (MWORD(index) < oteBuf->bytesSize())
+					if (static_cast<size_t>(index) < oteBuf->bytesSize())
 					{
 						uint8_t value = reinterpret_cast<BytesOTE*>(oteBuf)->m_location->m_fields[index];
 						*sp = integerObjectOf(value);
@@ -633,7 +633,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				case 2:
-					if (MWORD(index) < (oteBuf->bytesSize() / 2))
+					if (static_cast<size_t>(index) < (oteBuf->bytesSize() / 2))
 					{
 						uint16_t value = reinterpret_cast<WordsOTE*>(oteBuf)->m_location->m_fields[index];
 						*sp = integerObjectOf(value);
@@ -645,7 +645,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 				case 4:
-					if (MWORD(index) < (oteBuf->bytesSize() / 4))
+					if (static_cast<size_t>(index) < (oteBuf->bytesSize() / 4))
 					{
 						uint32_t value = reinterpret_cast<QuadsOTE*>(oteBuf)->m_location->m_fields[index];
 						StoreUnsigned32()(sp, value);
@@ -665,7 +665,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 			else if (bufClass == Pointers.ClassArray)
 			{
 				ArrayOTE* oteArray = reinterpret_cast<ArrayOTE*>(oteBuf);
-				if (MWORD(index) < oteArray->pointersSize())
+				if (static_cast<size_t>(index) < oteArray->pointersSize())
 				{
 					*sp = oteArray->m_location->m_elements[index];
 					readStream->m_index = Integer::NewSigned32WithRef(index + 1);
@@ -686,7 +686,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 // Like primitiveNextPut, but always writes an integer element. For a ByteArray, this will be a byte. For a string, it will be a code unit.
 Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, primargcount_t)
 {
-	MWORD value = *sp;
+	uintptr_t value = *sp;
 	if (ObjectMemoryIsIntegerObject(value))
 	{
 		Oop* newSp = sp - 1;
@@ -803,7 +803,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 			auto oteBuf = writeStream->m_array;
 			auto bufClass = oteBuf->m_oteClass;
 
-			MWORD newIndex;
+			size_t newIndex;
 
 			if (oteBuf->isBytes())
 			{
@@ -821,13 +821,13 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteAnsiString = reinterpret_cast<AnsiStringOTE*>(value);
 						auto str = oteAnsiString->m_location;
 
-						MWORD valueSize = oteAnsiString->bytesSize();
-						newIndex = MWORD(index) + valueSize;
+						size_t valueSize = oteAnsiString->bytesSize();
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
@@ -840,13 +840,13 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteUtf8String = reinterpret_cast<Utf8StringOTE*>(oteStringArg);
 						auto str = oteUtf8String->m_location;
 
-						MWORD valueSize = oteUtf8String->bytesSize();
-						newIndex = MWORD(index) + valueSize;
+						size_t valueSize = oteUtf8String->bytesSize();
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						memcpy(oteStringBuf->m_location->m_characters + index, str->m_characters, valueSize);
@@ -869,14 +869,14 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						// TODO: Implement a direct ANSI to UTF-8 translation
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						Utf16StringBuf utf16(m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters, oteStringArg->getSize());
-						MWORD valueSize = utf16.ToUtf8();
+						size_t valueSize = utf16.ToUtf8();
 
-						newIndex = MWORD(index) + valueSize;
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer
 
 						utf16.ToUtf8(oteStringBuf->m_location->m_characters + index, valueSize);
@@ -889,17 +889,17 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						// UTF-8, Utf16 => UTF-8
 						auto oteStringBuf = reinterpret_cast<Utf8StringOTE*>(oteBuf);
 						const Utf16String::CU* pArgChars = reinterpret_cast<const Utf16StringOTE*>(oteStringArg)->m_location->m_characters;
-						MWORD cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
+						size_t cwchArg = oteStringArg->getSize() / sizeof(Utf16String::CU);
 						int cbArg = ::WideCharToMultiByte(CP_UTF8, 0, (LPCWCH)pArgChars, cwchArg, nullptr, 0, nullptr, nullptr);
 						ASSERT(cbArg >= 0);
-						MWORD valueSize = cbArg;
+						size_t valueSize = cbArg;
 
-						newIndex = MWORD(index) + valueSize;
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pchDest = oteStringBuf->m_location->m_characters;
@@ -911,16 +911,16 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					{
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
 						auto pszArg = reinterpret_cast<const AnsiStringOTE*>(oteStringArg)->m_location->m_characters;
-						MWORD cchArg = oteStringArg->getSize();
+						size_t cchArg = oteStringArg->getSize();
 						int cwchArg = ::MultiByteToWideChar(m_ansiCodePage, 0, pszArg, cchArg, nullptr, 0);
 						ASSERT(cwchArg >= 0);
-						MWORD valueSize = cwchArg;
-						newIndex = MWORD(index) + valueSize;
+						size_t valueSize = cwchArg;
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
@@ -932,16 +932,16 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					{
 						auto oteStringBuf = reinterpret_cast<Utf16StringOTE*>(oteBuf);
 						auto pszArg = reinterpret_cast<const Utf8StringOTE*>(oteStringArg)->m_location->m_characters;
-						MWORD cchArg = oteStringArg->getSize();
+						size_t cchArg = oteStringArg->getSize();
 						int cwchArg = ::MultiByteToWideChar(CP_UTF8, 0, (LPCCH)pszArg, cchArg, nullptr, 0);
 						ASSERT(cwchArg >= 0);
-						MWORD valueSize = cwchArg;
-						newIndex = MWORD(index) + valueSize;
+						size_t valueSize = cwchArg;
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
@@ -955,13 +955,13 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						auto oteUtf16String = reinterpret_cast<Utf16StringOTE*>(oteStringArg);
 						auto str = oteUtf16String->m_location;
 
-						MWORD valueSize = oteUtf16String->bytesSize()/sizeof(Utf16String::CU);
-						newIndex = MWORD(index) + valueSize;
+						size_t valueSize = oteUtf16String->bytesSize()/sizeof(Utf16String::CU);
+						newIndex = static_cast<size_t>(index) + valueSize;
 
-						if (newIndex > static_cast<MWORD>(limit))			// Beyond write limit
+						if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-						if (static_cast<int>(newIndex) > oteStringBuf->sizeForUpdate())
+						if (static_cast<ptrdiff_t>(newIndex) > oteStringBuf->sizeForUpdate())
 							return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 						auto pwsz = oteStringBuf->m_location->m_characters;
@@ -982,13 +982,13 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 
 					auto oteBytes = reinterpret_cast<ByteArrayOTE*>(value);
 					auto bytes = oteBytes->m_location;
-					MWORD valueSize = oteBytes->bytesSize();
-					newIndex = MWORD(index) + valueSize;
+					size_t valueSize = oteBytes->bytesSize();
+					newIndex = static_cast<size_t>(index) + valueSize;
 
-					if (newIndex > (MWORD)limit)			// Beyond write limit
+					if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-					if (static_cast<int>(newIndex) > oteBytesBuf->sizeForUpdate())
+					if (static_cast<ptrdiff_t>(newIndex) > oteBytesBuf->sizeForUpdate())
 						return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 					auto pb = oteBytesBuf->m_location->m_elements;
@@ -1004,18 +1004,18 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 
 				auto oteArray = reinterpret_cast<ArrayOTE*>(value);
 				auto array = oteArray->m_location;
-				MWORD valueSize = oteArray->pointersSize();
-				newIndex = MWORD(index) + valueSize;
+				size_t valueSize = oteArray->pointersSize();
+				newIndex = static_cast<size_t>(index) + valueSize;
 
-				if (newIndex > (MWORD)limit)			// Beyond write limit
+				if (newIndex > static_cast<size_t>(limit))			// Beyond write limit
 					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
-				if (static_cast<int>(newIndex) > oteArrayBuf->sizeForUpdate())
+				if (static_cast<ptrdiff_t>(newIndex) > oteArrayBuf->sizeForUpdate())
 					return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Attempt to write off end of buffer (or immutable)
 
 				auto pTarget = oteArrayBuf->m_location->m_elements;
 
-				for (MWORD i = 0; i < valueSize; i++)
+				for (auto i = 0u; i < valueSize; i++)
 				{
 					ObjectMemory::storePointerWithValue(pTarget[index + i], array->m_elements[i]);
 				}
@@ -1053,13 +1053,13 @@ Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp, primargcount_t)
 
 		if (oteBuf->isNullTerminated() || bufClass == Pointers.ClassByteArray)
 		{
-			*sp = reinterpret_cast<Oop>(index >= readLimit || (MWORD(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->bytesSize())
+			*sp = reinterpret_cast<Oop>(index >= readLimit || (static_cast<size_t>(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->bytesSize())
 				? Pointers.True : Pointers.False);
 			return sp;
 		}
 		else if (bufClass == Pointers.ClassArray)
 		{
-			*sp = reinterpret_cast<Oop>(index >= readLimit || (MWORD(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->pointersSize())
+			*sp = reinterpret_cast<Oop>(index >= readLimit || (static_cast<size_t>(ObjectMemoryIntegerValueOf(index)) >= readStream->m_array->pointersSize())
 				? Pointers.True : Pointers.False);
 			return sp;
 		}
@@ -1100,12 +1100,12 @@ Oop* __fastcall Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
 
 	ByteArrayOTE* oteBytes = reinterpret_cast<ByteArrayOTE*>(oteBuf);
 
-	const int newIndex = index + sizeof(int32_t);
-	if (MWORD(newIndex) > oteBytes->bytesSize())
+	const auto newIndex = index + sizeof(int32_t);
+	if (static_cast<size_t>(newIndex) > oteBytes->bytesSize())
 		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);
 
 	const Oop oopNewIndex = ObjectMemoryIntegerObjectOf(newIndex);
-	if (int(oopNewIndex) < 0)
+	if (static_cast<SmallInteger>(oopNewIndex) < 0)
 		return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// index overflowed SmallInteger range
 
 	// When incrementing the index we must allow for it overflowing a SmallInteger, even though

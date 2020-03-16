@@ -70,12 +70,15 @@ typedef volatile LONG SHAREDLONG;
 enum class TRACEFLAG { TraceInherit, TraceOff, TraceForce };
 #endif
 
+typedef uintptr_t argcount_t;
+
 class Interpreter
 {
 	friend class ObjectMemory; 
 	friend class BootLoader;
 
 public:
+
 	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, size_t imageSize, bool isDevSys);
 
 	// Fire off the startup message
@@ -111,8 +114,8 @@ public:
 		static BOOL isCallbackFrame(Oop framePointer);
 	#endif
 
-	static void StackTraceOn(std::wostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
-	static void DumpStack(std::wostream&, unsigned);
+	static void StackTraceOn(std::wostream& dc, StackFrame* pFrame=NULL, size_t depth=10);
+	static void DumpStack(std::wostream&, size_t);
 	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, std::wostream& logStream);
 	static void DumpContext(std::wostream& logStream);
 	static std::wstring PrintString(Oop);
@@ -137,7 +140,7 @@ public:
 	// for callback unwinds, and do the appropriate thing. If not caught at every callback
 	// point, then must be caught at some major entry point from Smalltalk to prevent it
 	// unwinding other callbacks (esp. window procedure entry points).
-	static Oop	__stdcall callback(SymbolOTE* selector, unsigned argCount TRACEPARM) 
+	static Oop	__stdcall callback(SymbolOTE* selector, argcount_t argCount TRACEPARM) 
 		/* throws  SE_VMCALLBACKUNWIND */;
 
 	static LRESULT lResultFromOop(Oop objectPointer, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -173,7 +176,7 @@ public:
 	#if defined(_DEBUG)
 		static const wchar_t* activeMethod();
 		static void decodeMethod(CompiledMethod*, std::wostream* pstream=NULL);
-		static void decodeMethodAt(CompiledMethod*, unsigned ip, std::wostream&);
+		static void decodeMethodAt(CompiledMethod*, size_t ip, std::wostream&);
 #endif
 
 	// Contexts
@@ -236,11 +239,11 @@ public:
 		intptr_t			primAddress;
 	};
 
-	static MethodCacheEntry* __fastcall findNewMethodInClass(BehaviorOTE* classPointer, const unsigned argCount);
-	static MethodCacheEntry* __stdcall findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount);
+	static MethodCacheEntry* __fastcall findNewMethodInClass(BehaviorOTE* classPointer, const argcount_t argCount);
+	static MethodCacheEntry* __stdcall findNewMethodInClassNoCache(BehaviorOTE* classPointer, const argcount_t argCount);
 	static MethodOTE* __fastcall lookupMethod(BehaviorOTE* aClass, SymbolOTE* selector);
-	static MethodCacheEntry* __fastcall messageNotUnderstood(BehaviorOTE* aClass, const unsigned argCount);
-	static void __fastcall createActualMessage(const unsigned argCount);
+	static MethodCacheEntry* __fastcall messageNotUnderstood(BehaviorOTE* aClass, const argcount_t argCount);
+	static void __fastcall createActualMessage(const argcount_t argCount);
 
 	//Misc
 
@@ -280,7 +283,7 @@ public:
 						};
 
 #ifdef _DEBUG
-	static const char* InterruptNames[static_cast<int>(VMI_CRTFAULT) + 1];
+	static const char* InterruptNames[static_cast<size_t>(VMI_CRTFAULT) + 1];
 #endif
 
 	static bool __fastcall disableInterrupts(bool bDisable);
@@ -339,10 +342,10 @@ private:
 	static bool saveContextAfterFault(LPEXCEPTION_POINTERS info);
 
 	static void wakePendingCallbacks();
-	static unsigned countPendingCallbacks();
+	static size_t countPendingCallbacks();
 
-	static void sendSelectorArgumentCount(SymbolOTE* selector, unsigned count);
-	static void sendSelectorToClass(BehaviorOTE* classPointer, unsigned argCount);
+	static void sendSelectorArgumentCount(SymbolOTE* selector, argcount_t count);
+	static void sendSelectorToClass(BehaviorOTE* classPointer, argcount_t argCount);
 	static void sendVMInterrupt(ProcessOTE* processPointer, Oop nInterrupt, Oop argPointer);
 	static void __fastcall sendVMInterrupt(Oop nInterrupt, Oop argPointer);
 
@@ -351,7 +354,7 @@ private:
 	static BOOL sampleInput();
 	static bool __stdcall IsUserBreakRequested();
 	
-	static void __fastcall executeNewMethod(MethodOTE* methodOTE, unsigned argCount);
+	static void __fastcall executeNewMethod(MethodOTE* methodOTE, argcount_t argCount);
 	static void __fastcall returnValueTo(Oop resultPointer, Oop contextPointer);
 	static void __fastcall returnValueToCaller(Oop resultPointer, Oop contextPointer);
 	static void __fastcall nonLocalReturnValueTo(Oop resultPointer, Oop contextPointer);
@@ -361,10 +364,10 @@ private:
 
 public:
 	static void basicQueueForFinalization(OTE* ote);
-	static void queueForFinalization(OTE* ote, int);
+	static void queueForFinalization(OTE* ote, SmallUinteger);
 	static void queueForBereavementOf(OTE* ote, Oop argPointer);
 	// Number of entries in the bereavement queue per object (one for the object, the other the loss count)
-	enum { OopsPerBereavementQEntry = 2 };
+	static constexpr size_t OopsPerBereavementQEntry = 2;
 
 	// Queue a process interrupt to be executed at the earliest opportunity
 	static void __stdcall queueInterrupt(ProcessOTE* processPointer, Oop nInterrupt, Oop argPointer);
@@ -485,7 +488,7 @@ private:
 	static bool isInPrimitive(LPEXCEPTION_POINTERS pExInfo);
 
 public:
-	typedef size_t primargcount_t;
+	typedef argcount_t primargcount_t;
 
 	typedef Oop* (__fastcall *PrimitiveFp)(Oop* const sp, primargcount_t argCount);
 
@@ -526,22 +529,22 @@ public:
 	static Oop* __fastcall primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger Arithmetic - mostly templated
-	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpZ(Oop * const sp, unsigned);
-	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpR(Oop * const sp, unsigned);
+	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpZ(Oop * const sp, primargcount_t);
+	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpR(Oop * const sp, primargcount_t);
 	static Oop* __fastcall primitiveLargeIntegerDivide(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveLargeIntegerQuo(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger relational ops - mostly templated
-	template<bool Lt, bool Eq> static Oop * __fastcall primitiveLargeIntegerCmp(Oop * const sp, unsigned);
+	template<bool Lt, bool Eq> static Oop * __fastcall primitiveLargeIntegerCmp(Oop * const sp, primargcount_t);
 	static Oop* __fastcall primitiveLargeIntegerEqual(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger bit manipulation
 	static Oop* __fastcall primitiveLargeIntegerBitInvert(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveLargeIntegerBitShift(Oop* const sp, primargcount_t argCount);
-	static Oop * __fastcall primitiveLargeIntegerHighBit(Oop * const sp, unsigned);
+	static Oop * __fastcall primitiveLargeIntegerHighBit(Oop * const sp, primargcount_t);
 
 	// LargeInteger miscellaneous
-	template<typename Op> static Oop * __fastcall primitiveLargeIntegerUnaryOp(Oop * const sp, unsigned);
+	template<typename Op> static Oop * __fastcall primitiveLargeIntegerUnaryOp(Oop * const sp, primargcount_t);
 	static Oop* __fastcall primitiveLargeIntegerAsFloat(Oop* const sp, primargcount_t argCount);
 
 	// Float primitives
@@ -571,10 +574,10 @@ public:
 	static Oop* __fastcall primitiveStructureIsNull(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBytesIsNull(Oop* const sp, primargcount_t argCount);
 
-	template<typename T, typename P> static Oop * __fastcall primitiveIndirectIntegerAtOffset(Oop * const sp, unsigned);
-	template<typename T, typename P> static Oop * __fastcall primitiveIntegerAtOffset(Oop * const sp, unsigned);
-	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, unsigned);
-	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, unsigned);
+	template<typename T, typename P> static Oop * __fastcall primitiveIndirectIntegerAtOffset(Oop * const sp, primargcount_t);
+	template<typename T, typename P> static Oop * __fastcall primitiveIntegerAtOffset(Oop * const sp, primargcount_t);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, primargcount_t);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, primargcount_t);
 
 	// These have specialised implementations as they accept other than just SmallInteger values to 'put'
 	static Oop* __fastcall primitiveUint32AtPut(Oop* const sp, primargcount_t argCount);
@@ -583,17 +586,17 @@ public:
 	static Oop* __fastcall primitiveIndirectInt32AtPut(Oop* const sp, primargcount_t argCount);
 
 	// Floating point number accessors
-	template<typename T> static Oop * __fastcall primitiveFloatAtOffset(Oop * const sp, unsigned);
-	template<typename T> static Oop * __fastcall primitiveFloatAtOffsetPut(Oop * const sp, unsigned);
+	template<typename T> static Oop * __fastcall primitiveFloatAtOffset(Oop * const sp, primargcount_t);
+	template<typename T> static Oop * __fastcall primitiveFloatAtOffsetPut(Oop * const sp, primargcount_t);
 
 	static Oop* __fastcall primitiveLongDoubleAt(Oop* const sp, primargcount_t argCount);
 
 	// Get address of contents of a byte object
 	static Oop* __fastcall primitiveAddressOf(Oop* const sp, primargcount_t argCount);
 
-	static void PushCharacter(Oop* const sp, MWORD codePoint);
+	static void PushCharacter(Oop* const sp, char32_t codePoint);
 
-	static Oop* primitiveNewCharacter(Oop * const sp, unsigned);
+	static Oop* primitiveNewCharacter(Oop * const sp, primargcount_t);
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
@@ -613,7 +616,7 @@ public:
 	static Oop* __fastcall primitiveStringNextIndexOfFromTo(Oop* const sp, primargcount_t argCount);
 
 	// String comparisons - mostly templated
-	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, unsigned);
+	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, primargcount_t);
 	static Oop* __fastcall primitiveStringEqual(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, primargcount_t argCount);
 
@@ -748,11 +751,11 @@ public:
 
 private:
 
-	static BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, DolphinX::CallDescriptor* argTypes, BOOL isVirtual);
+	static BOOL __stdcall callExternalFunction(FARPROC pProc, argcount_t argCount, DolphinX::CallDescriptor* argTypes, BOOL isVirtual);
 	
 	// Pushs object on stack instantiated from address, and returns size of object pushed
-	static void pushArgsAt(CallbackDescriptor* descriptor, unsigned argCount, uint8_t* lpParms);
-	static unsigned pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms);
+	static void pushArgsAt(CallbackDescriptor* descriptor, argcount_t argCount, uint8_t* lpParms);
+	static argcount_t pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms);
 	
 	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException);
 
@@ -777,7 +780,7 @@ public:
 private:
 	// Method cache is a hash table with overwrite on collision
 	// If changing method cache size, then must also modify METHODCACHEWORDS in ISTASM.INC!
-	constexpr static int MethodCacheSize = 1024;
+	constexpr static size_t MethodCacheSize = 1024;
 	static MethodCacheEntry methodCache[MethodCacheSize];
 
 	static void flushCaches();
@@ -842,8 +845,8 @@ private:
 	static bool		m_bAsyncGCDisabled;			
 	static bool		m_bShutDown;					// Is the interpreter shutting down?
 
-	static unsigned m_nCallbacksPending;			// Number of failed callback exits pending
-	static unsigned	m_nOTOverflows;
+	static size_t	m_nCallbacksPending;			// Number of failed callback exits pending
+	static size_t	m_nOTOverflows;
 
 	// Circular queues to hold the semaphores and interrupts, etc
 	static OopQueue<SemaphoreOTE*>	m_qAsyncSignals;
@@ -869,8 +872,8 @@ public:
 		// List of VM referenced objects (generic mechanism for avoiding GC problems with
 		// objects ref'd only from the VM)
 		static Oop*	m_pVMRefs;
-		static int	m_nFreeVMRef;
-		static int	m_nMaxVMRefs;				// Current size of VM References array
+		static SmallInteger	m_nFreeVMRef;
+		static SmallInteger	m_nMaxVMRefs;				// Current size of VM References array
 
 		enum { VMREFSINITIAL = 16 };
 		enum { VMREFSGROWTH = 64 };

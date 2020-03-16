@@ -22,7 +22,7 @@ namespace ST { class ByteArray; }
 class ByteArrayOTE : public TOTE<ST::ByteArray>
 {
 public:
-	__forceinline int sizeForUpdate() const { return static_cast<int>(m_size); }
+	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
 };
 
 namespace ST
@@ -32,22 +32,22 @@ namespace ST
 	public:
 		uint8_t m_elements[];
 
-		static ByteArrayOTE* New(MWORD size);
-		static ByteArrayOTE* New(MWORD size, const void* pBytes);
-		static ByteArrayOTE* NewWithRef(MWORD size, const void* pBytes);
+		static ByteArrayOTE* New(size_t size);
+		static ByteArrayOTE* New(size_t size, const void* pBytes);
+		static ByteArrayOTE* NewWithRef(size_t size, const void* pBytes);
 	};
 
-	inline ByteArrayOTE* ByteArray::New(MWORD size)
+	inline ByteArrayOTE* ByteArray::New(size_t size)
 	{
 		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject<false, true>(Pointers.ClassByteArray, size));
 	}
 
-	inline ByteArrayOTE* ByteArray::New(MWORD size, const void* pBytes)
+	inline ByteArrayOTE* ByteArray::New(size_t size, const void* pBytes)
 	{
 		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject(Pointers.ClassByteArray, size, pBytes));
 	}
 
-	inline ByteArrayOTE* ByteArray::NewWithRef(MWORD size, const void* pBytes)
+	inline ByteArrayOTE* ByteArray::NewWithRef(size_t size, const void* pBytes)
 	{
 		ByteArrayOTE* byteArray = New(size, pBytes);
 		byteArray->m_count = 1;

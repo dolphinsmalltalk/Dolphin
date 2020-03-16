@@ -50,7 +50,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 
 			if (ObjectMemoryIsIntegerObject(valuePointer))// Arg MUST be an Integer to be a member
 			{
-				const MWORD byteValue = ObjectMemoryIntegerValueOf(valuePointer);
+				const SmallUinteger byteValue = ObjectMemoryIntegerValueOf(valuePointer);
 				if (byteValue < 256)	// Only worth looking for 0..255
 				{
 					const SmallInteger length = oteBytes->bytesSize();
@@ -80,12 +80,12 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 			PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(receiverPointer);
 			VariantObject* receiver = oteReceiver->m_location;
 			Behavior* behavior = receiverPointer->m_oteClass->m_location;
-			const MWORD length = oteReceiver->pointersSize();
-			const MWORD fixedFields = behavior->fixedFields();
+			const auto length = oteReceiver->pointersSize();
+			const auto fixedFields = behavior->fixedFields();
 
 			// Similar reasoning with to/from as for byte objects, but here we need to
 			// take account of the fixed fields.
-			if (from < 1 || (to + fixedFields > length))
+			if (from < 1 || (static_cast<size_t>(to) + fixedFields > length))
 				return primitiveFailure(_PrimitiveFailureCode::OutOfBounds);	// Out of bounds
 
 			Oop* indexedFields = receiver->m_fields + fixedFields;
@@ -109,9 +109,9 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 // Initialize the Boyer-Moorer skip array
 inline void __stdcall bmInitSkip(const uint8_t* p, const int M, int* skip)
 {
-	for (int j=0;j<256;j++)
+	for (auto j=0;j<256;j++)
 		skip[j] = M;
-	for (int j=0;j < M;j++)
+	for (auto j=0;j < M;j++)
 		skip[p[j]] = M-j-1;
 }
 
@@ -192,7 +192,7 @@ Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t
 			// Check 'startingAt' is in range
 			if (startingAt > 0)
 			{
-				int nOffset = M == 0 || ((startingAt + M) - 1 > N)
+				SmallInteger nOffset = M == 0 || ((startingAt + M) - 1 > N)
 					? -1
 					: stringSearch(bytesReceiver->m_fields, N, bytesPattern->m_fields, M, startingAt - 1);
 
