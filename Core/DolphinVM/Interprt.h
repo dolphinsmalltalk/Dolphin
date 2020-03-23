@@ -391,7 +391,7 @@ private:
 	static OTE* dequeueBereaved(ST::VariantObject* out);
 	static void scheduleFinalization();
 
-	static void CALLBACK TimeProc(UINT uID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2);
+	static void CALLBACK TimeProc(UINT uID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
 
 	// Signal a semaphore; synchronously if no interrupts are pending, else asynchronously.
 	// May initiate a Process switch, but does not perform the actual context switch
