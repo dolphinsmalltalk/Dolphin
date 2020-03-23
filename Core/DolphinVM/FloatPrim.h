@@ -5,13 +5,14 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncat
 	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = Op()(oteFloat->m_location->m_fValue);
 
+#ifdef _M_IX86
 	if (fValue < MinSmallInteger || fValue > MaxSmallInteger)
 	{
 		// It may to have to be a LargeInteger...
-		if (fValue > double(_I64_MIN) && fValue < double(_I64_MAX))
+		if (fValue > double(INT64_MIN) && fValue < double(INT64_MAX))
 		{
 			// ... representable in 64-bits
-			LONGLONG liTrunc = static_cast<LONGLONG>(fValue);
+			int64_t liTrunc = static_cast<int64_t>(fValue);
 			Oop truncated = Integer::NewSigned64(liTrunc);
 			// The truncated value might actually be a SmallInteger, e.g. (SmallInteger maximum + 0.1) truncated
 			*sp = truncated;
@@ -23,11 +24,17 @@ template <typename Op> static Oop* __fastcall Interpreter::primitiveFloatTruncat
 			return primitiveFailure(_PrimitiveFailureCode::IntegerOverflow);
 	}
 	else
+#else
+	if (fValue > double(INT64_MIN) || fValue < double(INT64_MAX))
+#endif
 	{
 		auto intVal = static_cast<SmallInteger>(fValue);
 		*sp = ObjectMemoryIntegerObjectOf(intVal);
 		return sp;
 	}
+
+	// Non-finite receiver - can't be represented as an SmallInteger
+	return primitiveFailure(_PrimitiveFailureCode::IntegerOverflow);
 }
 
 struct Truncate { double operator() (const double& x) const { return x; } };

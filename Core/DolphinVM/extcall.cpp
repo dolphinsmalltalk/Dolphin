@@ -322,13 +322,13 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 				break;
 				
 			case ExtCallArgType::UInt64:
-				push(Integer::NewUnsigned64(*reinterpret_cast<ULONGLONG*>(lpParms)));
-				lpParms += sizeof(ULARGE_INTEGER);
+				push(Integer::NewUnsigned64(*reinterpret_cast<uint64_t*>(lpParms)));
+				lpParms += sizeof(uint64_t);
 				break;
 				
 			case ExtCallArgType::Int64:
-				push(Integer::NewSigned64(*reinterpret_cast<LONGLONG*>(lpParms)));
-				lpParms += sizeof(LONGLONG);
+				push(Integer::NewSigned64(*reinterpret_cast<int64_t*>(lpParms)));
+				lpParms += sizeof(int64_t);
 				break;
 			
 			case ExtCallArgType::Bstr:
