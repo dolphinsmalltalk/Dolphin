@@ -96,7 +96,7 @@ public:
 	// To allow the ObjectMemory to account for objects referenced from the VM we maintain an "Array"
 	// to keep the ref. count on our behalf
 	//
-	enum { INITIALVMREFERENCES = 16 };
+	static constexpr size_t INITIALVMREFERENCES = 16;
 
 public:
 	#if defined(_DEBUG)
@@ -150,16 +150,16 @@ public:
 	static LRESULT CALLBACK CbtFilterHook(int code, WPARAM wParam, LPARAM lParam);
 	static void subclassWindow(OTE* window, HWND hWnd);
 
-	static uintptr_t callbackResultFromOop(Oop objectPointer);
+	static LRESULT callbackResultFromOop(Oop objectPointer);
 
-	enum
+	enum class VmWndMsgs : UINT
 	{
-		SyncMsg = WM_USER,
-		SyncCallbackMsg,
-		SyncVirtualMsg
+		Sync = WM_USER,
+		SyncCallback,
+		SyncVirtual
 	};
-	static uintptr_t __stdcall GenericCallbackMain(SmallInteger id, uint8_t* lpArgs);
-	static uintptr_t __stdcall GenericCallback(SmallInteger id, uint8_t* lpArgs);
+	static LRESULT __stdcall GenericCallbackMain(SmallInteger id, uint8_t* lpArgs);
+	static LRESULT __stdcall GenericCallback(SmallInteger id, uint8_t* lpArgs);
 
 	struct COMThunk
 	{
@@ -169,8 +169,8 @@ public:
 		uint32_t	subId;
 	};
 
-	static uintptr_t __fastcall VirtualCallback(SmallInteger offset, COMThunk** thisPtr);
-	static uintptr_t __fastcall VirtualCallbackMain(SmallInteger offset, COMThunk** thisPtr);
+	static LRESULT __fastcall VirtualCallback(SmallInteger offset, COMThunk** thisPtr);
+	static LRESULT __fastcall VirtualCallbackMain(SmallInteger offset, COMThunk** thisPtr);
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)

@@ -610,9 +610,9 @@ int __stdcall Interpreter::callbackExceptionFilter(LPEXCEPTION_POINTERS info)
 }
 
 
-inline uintptr_t __stdcall Interpreter::GenericCallbackMain(SmallInteger id, uint8_t* lpArgs)
+inline LRESULT __stdcall Interpreter::GenericCallbackMain(SmallInteger id, uint8_t* lpArgs)
 {
-	uintptr_t result;
+	LRESULT result;
 	__try
 	{
 		// All accesses to stack/OT allocations must be inside the
@@ -642,15 +642,15 @@ inline uintptr_t __stdcall Interpreter::GenericCallbackMain(SmallInteger id, uin
 
 LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	switch(uMsg)
+	switch(static_cast<VmWndMsgs>(uMsg))
 	{
-	case SyncMsg:
+	case VmWndMsgs::Sync:
 		return DolphinWndProc(hWnd, uMsg, wParam, lParam);
 		break;
-	case SyncCallbackMsg:
+	case VmWndMsgs::SyncCallback:
 		return GenericCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<uint8_t*>(lParam));
 		break;
-	case SyncVirtualMsg:
+	case VmWndMsgs::SyncVirtual:
 		return VirtualCallbackMain(static_cast<SmallInteger>(wParam), reinterpret_cast<COMThunk**>(lParam));
 		break;
 	default:
@@ -661,14 +661,14 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 ///////////////////////////////////////////////////////////////////////////////
 // GenericCallback is the routine used for constructing function pointers for passing to external
 // libraries as callback functions.
-uintptr_t __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArgs)
+LRESULT __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArgs)
 {
-	uintptr_t result;
+	LRESULT result;
 	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
 	// As we have entered from an external function
 	if (GetCurrentThreadId() != MainThreadId())
 	{
-		result = SendMessage(m_hWndVM, SyncCallbackMsg, static_cast<WPARAM>(id), reinterpret_cast<LPARAM>(lpArgs));
+		result = SendMessage(m_hWndVM, static_cast<UINT>(VmWndMsgs::SyncCallback), static_cast<WPARAM>(id), reinterpret_cast<LPARAM>(lpArgs));
 	}
 	else
 		result = GenericCallbackMain(id, lpArgs);
@@ -677,7 +677,7 @@ uintptr_t __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArg
 }
 
 
-uintptr_t Interpreter::callbackResultFromOop(Oop objectPointer)
+LRESULT Interpreter::callbackResultFromOop(Oop objectPointer)
 {
 	if (ObjectMemoryIsIntegerObject(objectPointer))
 		// The result is a SmallInteger (the most common answer we hope)
@@ -800,26 +800,26 @@ Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, primargcount
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual function call-ins
 
-uintptr_t __fastcall Interpreter::VirtualCallback(SmallInteger offset, COMThunk** args)
+LRESULT __fastcall Interpreter::VirtualCallback(SmallInteger offset, COMThunk** args)
 {
-		uintptr_t result;
-		// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
-		// As we have entered from an external function
-		if (GetCurrentThreadId() != MainThreadId())
-		{
-			result = SendMessage(m_hWndVM, SyncVirtualMsg, static_cast<WPARAM>(offset), reinterpret_cast<LPARAM>(args));
-		}
-		else
-			result = VirtualCallbackMain(offset, args);
+	LRESULT result;
+	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
+	// As we have entered from an external function
+	if (GetCurrentThreadId() != MainThreadId())
+	{
+		result = SendMessage(m_hWndVM, static_cast<UINT>(VmWndMsgs::SyncVirtual), static_cast<WPARAM>(offset), reinterpret_cast<LPARAM>(args));
+	}
+	else
+		result = VirtualCallbackMain(offset, args);
 
-		return result;
+	return result;
 }
 
-uintptr_t __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMThunk** args)
+LRESULT __fastcall Interpreter::VirtualCallbackMain(SmallInteger offset, COMThunk** args)
 {
 	// We must perform this all inside our standard SEH catcher to handle the stack/OT overflows etc 
 	// and also to handle unwinds
-	uintptr_t result;
+	LRESULT result;
 	__try
 	{
 		pushObject((OTE*)Pointers.Scheduler);
