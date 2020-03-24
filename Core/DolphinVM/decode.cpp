@@ -569,7 +569,7 @@ void HexDump(tracestream out, LPCTSTR lpszLine, uint8_t* pby,
 	ASSERT(nBytes > 0);
 	ASSERT(nWidth > 0);
 
-	int nRow = 0;
+	size_t nRow = 0;
 
 	tracestream::char_type oldFill = out.fill('0');
 	out << std::hex;

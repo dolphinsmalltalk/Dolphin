@@ -211,7 +211,7 @@ inline BOOL Interpreter::sampleInput()
 				#ifdef _DEBUG
 					WarningWithStackTrace(L"User Interrupt:");
 				#endif
-				queueInterrupt(VMI_USERINTERRUPT, Oop(Pointers.Nil));
+				queueInterrupt(VMInterrupts::UserInterrupt, Oop(Pointers.Nil));
 			}
 			// By setting a Win32 event we guarantee that the image will continue
 			// even if about to make a call to MsgWaitForMultipleObjects(), if we
@@ -505,7 +505,7 @@ ContextOTE* __fastcall Context::New(size_t tempCount, Oop oopOuter)
 	{
 		// Can allocate from pool of contexts
 
-		newContext = reinterpret_cast<ContextOTE*>(Interpreter::m_otePools[Interpreter::CONTEXTPOOL].newPointerObject(Pointers.ClassContext, 
+		newContext = reinterpret_cast<ContextOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Contexts)].newPointerObject(Pointers.ClassContext,
 										FixedSize + MaxEnvironmentTemps, OTEFlags::ContextSpace));
 		pContext = newContext->m_location;
 
@@ -540,7 +540,7 @@ BlockOTE* __fastcall BlockClosure::New(size_t copiedValuesCount)
 	{
 		// Can allocate from pool of contexts
 
-		newBlock = reinterpret_cast<BlockOTE*>(Interpreter::m_otePools[Interpreter::BLOCKPOOL].newPointerObject(Pointers.ClassBlockClosure, 
+		newBlock = reinterpret_cast<BlockOTE*>(Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Blocks)].newPointerObject(Pointers.ClassBlockClosure,
 										FixedSize + MaxCopiedValues, OTEFlags::BlockSpace));
 		BlockClosure* pClosure = newBlock->m_location;
 

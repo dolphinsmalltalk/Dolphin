@@ -37,7 +37,7 @@ bool Interpreter::disableAsyncGC(bool bDisable)
 		{
 			m_nOTOverflows = 0;
 			CHECKREFERENCES
-			queueInterrupt(VMI_OTOVERFLOW, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
+			queueInterrupt(VMInterrupts::OtOverflow, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
 		}
 		return true;
 	}
@@ -54,7 +54,7 @@ void Interpreter::NotifyOTOverflow()
 	else
 	{
 		CHECKREFERENCES
-		queueInterrupt(VMI_OTOVERFLOW, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
+		queueInterrupt(VMInterrupts::OtOverflow, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
 	}
 }
 
@@ -77,7 +77,7 @@ void Interpreter::asyncGC(uintptr_t gcFlags)
 #ifdef _DEBUG
 	if (Interpreter::executionTrace != 0)
 	{
-		for (auto i=0u;i<NUMOTEPOOLS;i++)
+		for (auto i=0u;i<NumOtePools;i++)
 			m_otePools[i].DumpStats();
 	}
 #endif
@@ -112,7 +112,7 @@ Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t ar
 #ifdef _DEBUG
 void Interpreter::DumpOTEPoolStats()
 {
-	for (auto i=0u;i<NUMOTEPOOLS;i++)
+	for (auto i=0u;i<NumOtePools;i++)
 		m_otePools[i].DumpStats();
 }
 #endif
@@ -129,7 +129,7 @@ void Interpreter::freePools()
 	// Must first adjust context size back to normal for free
 	// in case from a pool (avoids freeing mem back to smaller pool)
 	{
-		OTE* ote = m_otePools[CONTEXTPOOL].m_pFreeList;
+		OTE* ote = m_otePools[static_cast<size_t>(Pools::Contexts)].m_pFreeList;
 		const size_t sizeOfPoolContext = SizeOfPointers(Context::FixedSize+Context::MaxEnvironmentTemps);
 		while (ote)
 		{
@@ -140,7 +140,7 @@ void Interpreter::freePools()
 	}
 
 	{
-		OTE* ote = m_otePools[BLOCKPOOL].m_pFreeList;
+		OTE* ote = m_otePools[static_cast<size_t>(Pools::Blocks)].m_pFreeList;
 		const size_t sizeOfPoolBlock = SizeOfPointers(BlockClosure::FixedSize+BlockClosure::MaxCopiedValues);
 		while (ote)
 		{
@@ -154,7 +154,7 @@ void Interpreter::freePools()
 		//DumpOTEPoolStats();
 	#endif
 
-	for (auto i=0u;i<NUMOTEPOOLS;i++)
+	for (auto i=0u;i<NumOtePools;i++)
 		m_otePools[i].clear();
 
 	#if defined(_DEBUG) && defined(VMDLL)

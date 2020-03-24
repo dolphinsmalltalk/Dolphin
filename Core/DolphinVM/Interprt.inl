@@ -239,7 +239,7 @@ inline void Interpreter::queueForFinalization(OTE* ote, SmallUinteger highWater)
 	size_t count = m_qForFinalize.Count();
 	// Only raise interrupt when high water mark is hit!
 	if (count == highWater)
-		queueInterrupt(VMI_HOSPICECRISIS, ObjectMemoryIntegerObjectOf(count));
+		queueInterrupt(VMInterrupts::HospiceCrisis, ObjectMemoryIntegerObjectOf(count));
 }
 
 inline void Interpreter::queueForBereavementOf(OTE* ote, Oop argPointer)

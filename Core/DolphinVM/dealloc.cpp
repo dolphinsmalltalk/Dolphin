@@ -93,16 +93,16 @@ void ObjectMemory::deallocate(OTE* ote)
 			break;
 
 		case OTEFlags::BlockSpace:
-			Interpreter::m_otePools[Interpreter::BLOCKPOOL].deallocate(ote);
+			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Blocks)].deallocate(ote);
 			break;
 
 		case OTEFlags::ContextSpace:
 			// Return it to the interpreter's free list of contexts
-			Interpreter::m_otePools[Interpreter::CONTEXTPOOL].deallocate(ote);
+			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Contexts)].deallocate(ote);
 			break;
 
 		case OTEFlags::DWORDSpace:
-			Interpreter::m_otePools[Interpreter::DWORDPOOL].deallocate(ote);
+			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Dwords)].deallocate(ote);
 			break;
 
 		case OTEFlags::HeapSpace:
@@ -111,7 +111,7 @@ void ObjectMemory::deallocate(OTE* ote)
 			break;
 		
 		case OTEFlags::FloatSpace:
-			Interpreter::m_otePools[Interpreter::FLOATPOOL].deallocate(ote);
+			Interpreter::m_otePools[static_cast<size_t>(Interpreter::Pools::Floats)].deallocate(ote);
 			break;
 
 		case OTEFlags::PoolSpace:

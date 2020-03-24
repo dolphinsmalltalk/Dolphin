@@ -736,7 +736,7 @@ size_t ObjectMemory::OopsUsed()
 		ote = reinterpret_cast<OTE*>(ote->m_location);
 	}
 
-	for (auto i=0u;i<Interpreter::NUMOTEPOOLS;i++)
+	for (auto i=0u;i<Interpreter::NumOtePools;i++)
 		nFreeOTEs += Interpreter::m_otePools[i].FreeCount();
 
 	return m_nOTSize - nFreeOTEs;

@@ -83,7 +83,7 @@ void Interpreter::scheduleFinalization()
 	size_t count = m_qForFinalize.Count();
 	// Raise interrupt when at or above high water mark
 	if (count >= (SmallUinteger)integerValueOf(memMan->m_hospiceHighWater))
-		queueInterrupt(VMI_HOSPICECRISIS, integerObjectOf(count));
+		queueInterrupt(VMInterrupts::HospiceCrisis, integerObjectOf(count));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

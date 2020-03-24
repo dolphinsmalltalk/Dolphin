@@ -335,8 +335,8 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 		for (auto i=resultSize-2;i>=0;i--)
 		{
 			carry = digit << carryShift;
-			const auto j = i+words;
-			ASSERT(j >= 0 && j < size);
+			const ptrdiff_t j = i+words;
+			ASSERT(j >= 0 && static_cast<size_t>(j) < size);
 			digit = li->m_digits[j];
 			liResult->m_digits[i] = (digit >> bits) | carry;
 		}

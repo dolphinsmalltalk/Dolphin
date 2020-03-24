@@ -67,22 +67,22 @@ void Interpreter::initializeVMReferences()
 
 	// Initialize the various VM circular queues
 	if (_Pointers.SignalQueue->isNil())
-		_Pointers.SignalQueue = Array::New(SIGNALQSIZE);
+		_Pointers.SignalQueue = Array::New(SignalQueueSize);
 	ASSERT(_Pointers.SignalQueue->m_oteClass == _Pointers.ClassArray);
-	m_qAsyncSignals.UseBuffer(_Pointers.SignalQueue, SIGNALQGROWTH, true);
+	m_qAsyncSignals.UseBuffer(_Pointers.SignalQueue, SignalQueueGrowth, true);
 
 	if (_Pointers.InterruptQueue->isNil())
-		_Pointers.InterruptQueue = Array::New(INTERRUPTQSIZE);
+		_Pointers.InterruptQueue = Array::New(InterruptQueueSize);
 	ASSERT(_Pointers.InterruptQueue->m_oteClass == _Pointers.ClassArray);
-	m_qInterrupts.UseBuffer(_Pointers.InterruptQueue, INTERRUPTQGROWTH, false);
+	m_qInterrupts.UseBuffer(_Pointers.InterruptQueue, InterruptQueueGrowth, false);
 
 	ArrayOTE* finalizeQueue = _Pointers.FinalizeQueue;
 	ASSERT(finalizeQueue->m_oteClass == Pointers.ClassArray);
-	m_qForFinalize.UseBuffer(finalizeQueue, FINALIZEQGROWTH, true);
+	m_qForFinalize.UseBuffer(finalizeQueue, FinalizeQueueGrowth, true);
 
 	ArrayOTE* bereavementQueue = _Pointers.BereavementQueue;
 	ASSERT(bereavementQueue->m_oteClass == Pointers.ClassArray);
-	m_qBereavements.UseBuffer(bereavementQueue, BEREAVEMENTQGROWTH, true);
+	m_qBereavements.UseBuffer(bereavementQueue, BereavementQueueGrowth, true);
 
 	ObjectMemory::InitializeMemoryManager();
 
@@ -116,5 +116,5 @@ void Interpreter::sendStartup(const wchar_t* szImagePath, uintptr_t arg)
 	// We no longer need to ref. count things we push on the stack, sendVMInterrupt will count
 	// down the argument after it has pushed it on the stack, possibly causing its addition to the Zct
 	oteArgs->m_count = 1;
-	sendVMInterrupt(VMI_STARTED, reinterpret_cast<Oop>(oteArgs));
+	sendVMInterrupt(VMInterrupts::Started, reinterpret_cast<Oop>(oteArgs));
 }

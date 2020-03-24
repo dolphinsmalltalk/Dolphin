@@ -67,7 +67,7 @@ size_t Interpreter::m_nOTOverflows;
 
 // Pools of reusable objects (just linked list of previously allocated and free'd objects of
 // correct size and class)
-ObjectMemory::OTEPool Interpreter::m_otePools[Interpreter::NUMOTEPOOLS];
+ObjectMemory::OTEPool Interpreter::m_otePools[NumOtePools];
 
 POTE* Interpreter::m_roots[] = {
 	reinterpret_cast<POTE*>(&m_oteNewProcess),
@@ -498,7 +498,7 @@ void Interpreter::recoverFromFault(LPEXCEPTION_POINTERS pExInfo)
 	}
 }
 
-void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::sendExceptionInterrupt(VMInterrupts oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
 {
 	recoverFromFault(pExInfo);
 #ifdef _DEBUG
@@ -557,12 +557,12 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 
 			if (bConstWrite)
 			{
-				sendExceptionInterrupt(VMI_CONSTWRITE, pExInfo);
+				sendExceptionInterrupt(VMInterrupts::ConstWrite, pExInfo);
 				action = EXCEPTION_EXECUTE_HANDLER;
 			}
 			else if (isInPrimitive(pExInfo) && PleaseTrapGPFs())
 			{
-				sendExceptionInterrupt(VMI_ACCESSVIOLATION, pExInfo);
+				sendExceptionInterrupt(VMInterrupts::AccessViolation, pExInfo);
 				action = EXCEPTION_EXECUTE_HANDLER;
 			}
 			// else
@@ -572,7 +572,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		break;
 
 	case STATUS_NO_MEMORY:
-		sendExceptionInterrupt(VMI_NOMEMORY, pExInfo);
+		sendExceptionInterrupt(VMInterrupts::NoMemory, pExInfo);
 		action = EXCEPTION_EXECUTE_HANDLER;
 		break;
 
@@ -589,7 +589,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			TRACESTREAM<< L"Divide by zero in " << *m_registers.m_pMethod << std::endl;
 		}
 #endif
-		sendVMInterrupt(VMI_ZERODIVIDE, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
+		sendVMInterrupt(VMInterrupts::ZeroDivide, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
 		action = EXCEPTION_EXECUTE_HANDLER;
 	}
 	break;
@@ -598,7 +598,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		if (PleaseTrapGPFs())
 		{
 			_asm fninit;
-			sendExceptionInterrupt(VMI_FPSTACK, pExInfo);
+			sendExceptionInterrupt(VMInterrupts::FpStack, pExInfo);
 			action = EXCEPTION_EXECUTE_HANDLER;
 		}
 		break;
@@ -608,7 +608,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	case EXCEPTION_ILLEGAL_INSTRUCTION:
 		if (isInPrimitive(pExInfo) && PleaseTrapGPFs())
 		{
-			sendExceptionInterrupt(VMI_EXCEPTION, pExInfo);
+			sendExceptionInterrupt(VMInterrupts::Exception, pExInfo);
 #ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
@@ -622,7 +622,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	case SE_VMCRTFAULT:
 		if (isInPrimitive(pExInfo))
 		{
-			sendExceptionInterrupt(VMI_CRTFAULT, pExInfo);
+			sendExceptionInterrupt(VMInterrupts::CrtFault, pExInfo);
 			action = EXCEPTION_EXECUTE_HANDLER;
 		}
 		break;
@@ -659,7 +659,7 @@ int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 		TRACESTREAM<< L"FP Fault in " << *m_registers.m_pMethod << std::endl;
 	}
 #endif
-	sendVMInterrupt(VMI_FPFAULT, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), pIEEEFPException)));
+	sendVMInterrupt(VMInterrupts::FpFault, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), pIEEEFPException)));
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
@@ -713,7 +713,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 				// We'll just add an interrupt to the queue, which'll be detected later.
 				// In order for this to continue to work, the stack must be shrunk at some
 				// point after the stack overflow is handled
-				queueInterrupt(VMI_STACKOVERFLOW, ObjectMemoryIntegerObjectOf(activeProcAlloc));
+				queueInterrupt(VMInterrupts::StackOverflow, ObjectMemoryIntegerObjectOf(activeProcAlloc));
 			}
 			else
 			{

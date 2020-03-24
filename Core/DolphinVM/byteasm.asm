@@ -92,7 +92,7 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; C++ method imports
-SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@CIXII@Z
+SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@CIXW4VMInterrupts@1@I@Z
 extern SENDVMINTERRUPT:near32
 
 FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@SGPAUMethodCacheEntry@1@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
