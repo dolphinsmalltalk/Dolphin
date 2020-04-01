@@ -94,8 +94,8 @@ template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const
 	const LargeInteger* liA = oteA->m_location;
 	const LargeInteger* liB = oteB->m_location;
 
-	const int aSign = liA->sign(oteA);
-	const int bSign = liB->sign(oteB);
+	const auto aSign = liA->sign(oteA);
+	const auto bSign = liB->sign(oteB);
 
 	// Compiler will optimize this to one comparison, and two conditional jumps
 	if (aSign < bSign)
@@ -114,8 +114,8 @@ template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const
 		// Same sign and size: Compare words (same sign, so comparison can be unsigned)
 		do
 		{
-			const uint32_t digitA = liA->m_digits[i];
-			const uint32_t digitB = liB->m_digits[i];
+			const auto digitA = liA->m_digits[i];
+			const auto digitB = liB->m_digits[i];
 			// Again single comparison, two conditional jumps
 			if (digitA < digitB)
 				return Lt;
@@ -129,7 +129,7 @@ template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const
 	else
 	{
 		// Same sign, different lengths, can compare based on number of limbs
-		return ((static_cast<int>(ai) - static_cast<int>(bi)) * aSign) < 0 ? Lt : !Lt;
+		return ((static_cast<ptrdiff_t>(ai) - static_cast<ptrdiff_t>(bi)) * aSign) < 0 ? Lt : !Lt;
 	}
 }
 
@@ -144,7 +144,7 @@ template <bool Lt, bool Eq> static Oop* __fastcall Interpreter::primitiveLargeIn
 		// since LargeIntegers are always normalized, any negative LargeInteger must be less
 		// than any SmallInteger, and any positive LargeInteger must be greater than any SmallInteger
 		// SmallIntegers can never be equal to normalized large integers
-		int sign = oteReceiver->m_location->signDigit(oteReceiver);
+		const auto sign = oteReceiver->m_location->signDigit(oteReceiver);
 		*(sp - 1) = reinterpret_cast<Oop>((sign < 0 ? Lt : !Lt) ? Pointers.True : Pointers.False);
 		return sp - 1;
 	}
