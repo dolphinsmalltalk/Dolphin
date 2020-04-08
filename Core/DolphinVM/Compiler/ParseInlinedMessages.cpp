@@ -53,13 +53,13 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 		return false;
 	}
 
-	ip_t condJumpMark = GenJumpInstruction(LongJumpIfFalse);
+	ip_t condJumpMark = GenJumpInstruction(OpCode::LongJumpIfFalse);
 	AddTextMap(condJumpMark, messageRange);
 
 	ParseZeroArgOptimizedBlock();
 
 	// Need to jump over the false block at end of true block
-	ip_t jumpOutMark = GenJumpInstruction(LongJump);
+	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 	ip_t elseMark = m_codePointer;
 
 	if (strcmp((LPCSTR)ThisTokenText, "ifFalse:") == 0)
@@ -77,7 +77,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 		
 		POTE oteSelector = AddSymbolToFrame("ifTrue:", messageRange);
 
-		GenInstruction(ShortPushNil);
+		GenInstruction(OpCode::ShortPushNil);
 	}
 
 	SetJumpTarget(jumpOutMark, GenNop());
@@ -96,13 +96,13 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 		return false;
 	}
 
-	ip_t condJumpMark = GenJumpInstruction(LongJumpIfTrue);
+	ip_t condJumpMark = GenJumpInstruction(OpCode::LongJumpIfTrue);
 	AddTextMap(condJumpMark, messageRange);
 
 	ParseZeroArgOptimizedBlock();
 
 	// Need to jump over the false block at end of true block
-	ip_t jumpOutMark = GenJumpInstruction(LongJump);
+	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 	ip_t elseMark = m_codePointer;
 
 	if (strcmp((LPCSTR)ThisTokenText, "ifTrue:") == 0)
@@ -135,7 +135,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 		// i.e. more methods are lengthened by the apparent optimization than without it (1), and
 		// the overall size of the methods is actually increased in most cases (2).
 
-		GenInstruction(ShortPushNil);
+		GenInstruction(OpCode::ShortPushNil);
 	}
 
 	SetJumpTarget(jumpOutMark, GenNop());
@@ -153,7 +153,6 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 	// Assume we can reorder blocks to allow us to use the smaller
 	// jump on false instruction.
 	//
-	int popAndJumpInstruction=LongJumpIfFalse;
 	
 	if (!ThisTokenIsBinary('['))
 	{
@@ -163,7 +162,7 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 
 	// If the receiver is false, then the whole expression is false, so 
 	// jump over (shortcut) the block argument
-	ip_t branchMark = GenJumpInstruction(LongJumpIfFalse);
+	ip_t branchMark = GenJumpInstruction(OpCode::LongJumpIfFalse);
 	AddTextMap(branchMark, messageRange);
 
 	textpos_t blockStart = ThisTokenRange.m_start;
@@ -173,9 +172,9 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 		return false;
 	}
 	
-	ip_t jumpOutMark = GenJumpInstruction(LongJump);
+	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 	
-	SetJumpTarget(branchMark, GenInstruction(ShortPushFalse));
+	SetJumpTarget(branchMark, GenInstruction(OpCode::ShortPushFalse));
 	SetJumpTarget(jumpOutMark, GenNop());
 
 	return true;
@@ -197,11 +196,11 @@ bool Compiler::ParseOrCondition(const TEXTRANGE& messageRange)
 	// result in a small overall size reduction. Which has a speed
 	// advantage is difficult to say.
 	//
-	ip_t branchMark = GenJumpInstruction(LongJumpIfFalse);
+	ip_t branchMark = GenJumpInstruction(OpCode::LongJumpIfFalse);
 	AddTextMap(branchMark, messageRange);
 
-	GenInstruction(ShortPushTrue);
-	ip_t jumpOutMark = GenJumpInstruction(LongJump);
+	GenInstruction(OpCode::ShortPushTrue);
+	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 
 	ip_t ifFalse = m_codePointer;
 	textpos_t blockStart = ThisTokenRange.m_start;
@@ -357,7 +356,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 
 	// We're going to add a pop and jump on condition instruction here
 	// Its a forward jump, so we need to patch up the target later
-	const ip_t popAndJumpMark = GenJumpInstruction(LongJumpIfNotNil);
+	const ip_t popAndJumpMark = GenJumpInstruction(OpCode::LongJumpIfNotNil);
 	const size_t mapEntry = AddTextMap(popAndJumpMark, exprStartPos, LastTokenRange.m_stop);
 
 	ParseIfNilBlock(false);
@@ -369,7 +368,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 		POTE oteSelector = AddSymbolToFrame("ifNil:ifNotNil:", messageRange);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
-		ip_t jumpOutMark = GenJumpInstruction(LongJump);
+		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 
 		// Mark first instruction of the "else" branch
 		ifNotNilMark = m_codePointer;
@@ -387,9 +386,9 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 			if (!hasArg)
 			{
 				UngenInstruction(dupMark);
-				_ASSERTE(m_bytecodes[popAndJumpMark + lengthOfByteCode(LongJumpIfFalse)].byte == PopStackTop);
-				UngenInstruction(popAndJumpMark + lengthOfByteCode(LongJumpIfFalse));
-				_ASSERTE(m_bytecodes[ifNotNilMark].byte == PopStackTop);
+				_ASSERTE(m_bytecodes[popAndJumpMark + lengthOfByteCode(OpCode::LongJumpIfFalse)].Opcode == OpCode::PopStackTop);
+				UngenInstruction(popAndJumpMark + lengthOfByteCode(OpCode::LongJumpIfFalse));
+				_ASSERTE(m_bytecodes[ifNotNilMark].Opcode == OpCode::PopStackTop);
 				UngenInstruction(ifNotNilMark);
 			}
 
@@ -430,7 +429,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 
 	// We're going to add a pop and jump on condition instruction here
 	// Its a forward jump, so we need to patch up the target later
-	const ip_t popAndJumpMark = GenJumpInstruction(LongJumpIfNil);
+	const ip_t popAndJumpMark = GenJumpInstruction(OpCode::LongJumpIfNil);
 	AddTextMap(popAndJumpMark, exprStartPos, LastTokenRange.m_stop);
 
 	bool hasArg = ParseIfNotNilBlock();
@@ -440,7 +439,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 	if (!hasArg)
 	{
 		UngenInstruction(dupMark);
-		UngenInstruction(popAndJumpMark + lengthOfByteCode(LongJumpIfTrue));
+		UngenInstruction(popAndJumpMark + lengthOfByteCode(OpCode::LongJumpIfTrue));
 	}
 
 	ip_t ifNilMark;
@@ -451,7 +450,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 		POTE oteSelector = AddSymbolToFrame("ifNotNil:ifNil:", messageRange);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
-		ip_t jumpOutMark = GenJumpInstruction(LongJump);
+		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 
 		// Mark first instruction of the "else" branch
 		ifNilMark = m_codePointer;
@@ -475,9 +474,9 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 			// This should normally get optimized away later if the expression value is not used.
 
 			// Generate the jump out instruction
-			ip_t jumpOutMark = GenJumpInstruction(LongJump);
+			ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 
-			ifNilMark = GenInstruction(ShortPushNil);
+			ifNilMark = GenInstruction(OpCode::ShortPushNil);
 
 			SetJumpTarget(jumpOutMark, GenNop());
 		}
@@ -501,21 +500,20 @@ void Compiler::InlineOptimizedBlock(ip_t nStart, ip_t nStop)
 	while (i < nStop)
 	{
 		BYTECODE& bytecode=m_bytecodes[i];
-		_ASSERTE(bytecode.IsOpCode);
 		size_t len = bytecode.InstructionLength;
 		
-		switch(bytecode.byte)
+		switch(bytecode.Opcode)
 		{
-		case BlockCopy:
+		case OpCode::BlockCopy:
 			// We must skip any nested blocks
 			_ASSERTE(bytecode.target > i+len);
 			i = bytecode.target;
 			_ASSERTE(m_bytecodes[i-1].IsReturn);
 			break;
 
-		case FarReturn:
+		case OpCode::FarReturn:
 			if (!IsInBlock)
-				bytecode.byte = ReturnMessageStackTop;
+				bytecode.Opcode = OpCode::ReturnMessageStackTop;
 			// Drop through
 
 		default:
@@ -529,7 +527,7 @@ Compiler::LoopReceiverType Compiler::InlineLoopBlock(const ip_t loopmark, const 
 {
 	const ip_t nPrior = m_codePointer-2;
 	const BYTECODE& prior=m_bytecodes[nPrior]; // Nop following this instruction
-	if (!prior.IsOpCode || prior.byte != ReturnBlockStackTop || m_bytecodes[loopmark+1].byte != BlockCopy)
+	if (!prior.IsOpCode || prior.Opcode != OpCode::ReturnBlockStackTop || m_bytecodes[loopmark+1].Opcode != OpCode::BlockCopy)
 	{
 		// Receiver is not a literal block so do not use optimized loop block form
 		return LoopReceiverType::Other;
@@ -549,23 +547,23 @@ Compiler::LoopReceiverType Compiler::InlineLoopBlock(const ip_t loopmark, const 
 		return LoopReceiverType::EmptyBlock;
 	}
 
-	_ASSERTE(loopHead.byte == Nop);
+	_ASSERTE(loopHead.Opcode == OpCode::Nop);
 	ip_t firstInBlock = loopmark + 1 + BlockCopyInstructionSize;
 	InlineOptimizedBlock(firstInBlock, nPrior);
 
 	// Mark the scope as being optimized
-	_ASSERTE(loopHead.byte == Nop);
+	_ASSERTE(loopHead.Opcode == OpCode::Nop);
 	loopHead.pScope->BeOptimizedBlock();
 
 	UngenInstruction(loopmark+1);		// BlockCopy (multi-byte instruction)
 	_ASSERTE(nPrior == m_codePointer-2);
-	_ASSERTE(prior.byte == ReturnBlockStackTop);
+	_ASSERTE(prior.Opcode == OpCode::ReturnBlockStackTop);
 	VERIFY(RemoveTextMapEntry(nPrior));
 	UngenInstruction(nPrior);	// Return block stack top
 	// If a debug method, also Nop out the breakpoint before the return instruction
 	if (WantDebugMethod)
 	{
-		_ASSERTE(m_bytecodes[nPrior-1].byte == Break);
+		_ASSERTE(m_bytecodes[nPrior-1].Opcode == OpCode::Break);
 		UngenInstruction(nPrior-1);
 	}
 
@@ -591,7 +589,7 @@ bool Compiler::ParseRepeatLoop(const ip_t loopmark, const TEXTRANGE& receiverRan
 	GenPopStack();
 	
 	// #repeat is very simple we just unconditionally jump back to the start again
-	GenJump(LongJump, loopmark);
+	GenJump(OpCode::LongJump, loopmark);
 
 	return true;
 }
@@ -636,7 +634,7 @@ template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const ip_t loopmark
 
 	// To have a breakpoint on the loop condition check uncomment the breakpoint and the text map lines marked with *1*
 	//BreakPoint(); // *1*
-	const uint8_t popAndJumpInstruction = WhileTrue ? LongJumpIfFalse : LongJumpIfTrue;
+	const OpCode popAndJumpInstruction = WhileTrue ? OpCode::LongJumpIfFalse : OpCode::LongJumpIfTrue;
 	ip_t condJumpMark = GenJumpInstruction(popAndJumpInstruction);
 	// We need a text map entry for the loop jump in case a mustBeBoolean error gets raised here
 	size_t nLoopTextMap = AddTextMap(condJumpMark, tokenRange);// *1* textStart, LastTokenRange.m_stop);
@@ -657,12 +655,12 @@ template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const ip_t loopmark
 	}	
 
 	// Unconditionally jump back to the loop condition
-	ip_t jumpPos = GenJump(LongJump, loopmark);
+	ip_t jumpPos = GenJump(OpCode::LongJump, loopmark);
 
 	//if (WantTextMap()) m_textMaps[nLoopTextMap].stop = LastTokenRange.m_stop;	// *1*
 
 	// Return Nil
-	ip_t exitMark = GenInstruction(ShortPushNil);
+	ip_t exitMark = GenInstruction(OpCode::ShortPushNil);
 
 	// We can now set the target of the forward conditional jump
 	SetJumpTarget(condJumpMark, exitMark);
@@ -690,11 +688,11 @@ template <bool WhileTrue> bool Compiler::ParseWhileLoop(const ip_t loopmark, con
 	// #whileTrue/#whileFalse is very simple to inline - we only need one conditional jump at the end
 	// after the condition block
 
-	ip_t jumpPos = GenJump(WhileTrue ? LongJumpIfTrue : LongJumpIfFalse, loopmark);
+	ip_t jumpPos = GenJump(WhileTrue ? OpCode::LongJumpIfTrue : OpCode::LongJumpIfFalse, loopmark);
 	AddTextMap(jumpPos, ThisTokenRange);
 
 	// Result of a #whileTrue/#whileFalse should be nil
-	GenInstruction(ShortPushNil);
+	GenInstruction(OpCode::ShortPushNil);
 
 	return true;
 }
@@ -731,7 +729,7 @@ void Compiler::ParseToByNumberDo(ip_t toPointer, Oop oopNumber, bool bNegativeSt
 	GenPushTemp(pEachTempRef);
 
 	// We must jump over the block to the test first time through
-	ip_t jumpOver = GenJumpInstruction(LongJump);
+	ip_t jumpOver = GenJumpInstruction(OpCode::LongJump);
 
 	ip_t loopHead = m_codePointer;
 
@@ -746,18 +744,18 @@ void Compiler::ParseToByNumberDo(ip_t toPointer, Oop oopNumber, bool bNegativeSt
 	GenPushTemp(pEachTempRef);
 	// If the step is 1/-1, this will be optimised down to Increment/Decrement
 	GenNumber(oopNumber, LastTokenRange);
-	ip_t add = GenInstruction(SendArithmeticAdd);
+	ip_t add = GenInstruction(OpCode::SendArithmeticAdd);
 	ip_t store = GenStoreTemp(pEachTempRef);
 
 	ip_t comparePointer = m_codePointer;
 	
 	if (bNegativeStep)
-		GenInstruction(SendArithmeticGT);
+		GenInstruction(OpCode::SendArithmeticGT);
 	else
 		// Note that < is the best message to send, since it is normally directly implemented
-		GenInstruction(SendArithmeticLT);
+		GenInstruction(OpCode::SendArithmeticLT);
 
-	GenJump(LongJumpIfFalse, loopHead);
+	GenJump(OpCode::LongJumpIfFalse, loopHead);
 
 	// Pop the to: value
 	GenPopStack();
@@ -849,7 +847,7 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const textpos
 
 	ip_t startMark = GenDup();
 
-	ip_t jumpOver = GenJumpInstruction(LongJump);
+	ip_t jumpOver = GenJumpInstruction(OpCode::LongJump);
 	ip_t loopHead = m_codePointer;
 	
 	PushOptimizedScope();
@@ -871,7 +869,7 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const textpos
 	}
 
 	// Decrement counter
-	GenInstruction(DecrementStackTop);
+	GenInstruction(OpCode::DecrementStackTop);
 
 	// Dup counter for compare
 	ip_t testMark = GenDup();
@@ -884,7 +882,7 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const textpos
 	{
 		// Using IsZero speeds up empty loop by about 5%.
 		_ASSERTE(loopTimes > 0);
-		GenInstruction(IsZero);
+		GenInstruction(OpCode::IsZero);
 	}
 	else
 	{
@@ -893,11 +891,11 @@ bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const textpos
 
 		// No breakpoint wanted here
 		//GenMessage("<", 1);
-		GenInstruction(SendArithmeticLT);
+		GenInstruction(OpCode::SendArithmeticLT);
 	}
 
 	// Conditional jump back to loop head
-	GenJump(LongJumpIfFalse, loopHead);
+	GenJump(OpCode::LongJumpIfFalse, loopHead);
 
 	// Pop off the loop counter, leaving the integer receiver on the stack
 	GenPopStack();

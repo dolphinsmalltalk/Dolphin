@@ -826,8 +826,8 @@ inline uint8_t* ObjectMemory::FixedSizePool::allocatePage()
 // Allocate another page for a fixed size pool
 void ObjectMemory::FixedSizePool::moreChunks()
 {
-	const size_t nOverhead = 0;//12;
-	const size_t nBlockSize = dwPageSize - nOverhead;
+	constexpr size_t nOverhead = 0;//12;
+	constexpr size_t nBlockSize = dwPageSize - nOverhead;
 	const size_t nChunks = nBlockSize / m_nChunkSize;
 
 	uint8_t* pStart = allocatePage();

@@ -6,30 +6,34 @@ Dolphin Instruction Set
 */
 #pragma once
 
+#include <cstdint>
+#include "EnumHelpers.h"
+
 ///////////////////////
 // Instruction Set
 
-enum { NumShortPushInstVars = 16 };
-enum { NumShortPushTemps = 8 };
-enum { NumPushContextTemps = 2 };
-enum { NumPushOuterTemps = 2 };
-enum { NumShortPushConsts = 16 };
-enum { NumShortPushStatics = 12 };
-enum { NumShortPushSelfAndTemps = 4 };
-enum { NumShortStoreTemps = 4 };
-enum { NumPopStoreContextTemps = 2};
-enum { NumPopStoreOuterTemps = 2};
-enum { NumShortPopStoreInstVars = 8 };
-enum { NumShortPopStoreTemps = 8 };
-enum { NumShortJumps = 8 };
-enum { NumShortJumpsIfFalse = 8 };
-enum { NumArithmeticSelectors = 16 };
-enum { NumCommonSelectors = 16 };
-enum { NumSpecialSelectors = NumArithmeticSelectors+NumCommonSelectors };
-enum { NumShortSendsWithNoArgs = 13 };
-enum { NumShortSendSelfWithNoArgs = 5 };
-enum { NumShortSendsWith1Arg = 14 };
-enum { NumShortSendsWith2Args = 8 };
+static constexpr unsigned NumShortPushInstVars = 16;
+static constexpr unsigned NumShortPushTemps = 8;
+static constexpr unsigned NumPushContextTemps = 2;
+static constexpr unsigned NumPushOuterTemps = 2;
+static constexpr unsigned NumShortPushConsts = 16;
+static constexpr unsigned NumShortPushStatics = 12;
+static constexpr unsigned NumShortPushSelfAndTemps = 4;
+static constexpr unsigned NumShortStoreTemps = 4;
+static constexpr unsigned NumPopStoreContextTemps = 2;
+static constexpr unsigned NumPopStoreOuterTemps = 2;
+static constexpr unsigned NumShortPopStoreInstVars = 8;
+static constexpr unsigned NumShortPopStoreTemps = 8;
+static constexpr unsigned NumShortJumps = 8;
+static constexpr unsigned NumShortJumpsIfFalse = 8;
+static constexpr unsigned NumArithmeticSelectors = 16;
+static constexpr unsigned NumCommonSelectors = 16;
+static constexpr unsigned NumSpecialSelectors = NumArithmeticSelectors+NumCommonSelectors;
+static constexpr unsigned NumShortSendsWithNoArgs = 13;
+static constexpr unsigned NumShortSendSelfWithNoArgs = 5;
+static constexpr unsigned NumShortSendsWith1Arg = 14;
+static constexpr unsigned NumShortSendsWith2Args = 8;
+static constexpr unsigned NumShortPopPushTemps = 2;
 
 // N.B. These sizes are offsets from the instruction FOLLOWING the jump (the IP is assumed to
 // have advanced to the next instruction by the time the offset is added to IP)
@@ -38,76 +42,61 @@ static constexpr int MaxForwardsLongJump = INT16_MAX;
 static constexpr int MaxBackwardsNearJump = INT8_MIN;
 static constexpr int MaxForwardsNearJump = INT8_MAX;
 
-enum { 
-	FirstSingleByteInstruction = 0, 
-	FirstDoubleByteInstruction = 204, 
-	FirstTripleByteInstruction = 234,
-	FirstMultiByteInstruction = 252 };
+static constexpr unsigned FirstSingleByteInstruction = 0;
+static constexpr unsigned FirstDoubleByteInstruction = 204;
+static constexpr unsigned FirstTripleByteInstruction = 234;
+static constexpr unsigned FirstMultiByteInstruction = 252;
 
-enum {	Break = FirstSingleByteInstruction,
-		FirstShortPush };
+enum class OpCode : uint8_t {
 
-enum {	ShortPushInstVar = FirstShortPush };
-enum {	ShortPushTemp = ShortPushInstVar + NumShortPushInstVars };
-enum {	ShortPushContextTemp = ShortPushTemp + NumShortPushTemps };
-enum {	ShortPushOuterTemp = ShortPushContextTemp + NumPushContextTemps };
-enum {	ShortPushConst = ShortPushOuterTemp + NumPushOuterTemps };
-enum {	ShortPushStatic = ShortPushConst + NumShortPushConsts };
-enum {
-	LastShortPush = ShortPushStatic + NumShortPushStatics - 1,
-	FirstPseudoPush
-	};
-
-enum { ShortPushSelf = FirstPseudoPush, ShortPushTrue, ShortPushFalse, ShortPushNil };		// Push pseudo variable
-
-enum { 
-	LastPseudoPush = ShortPushNil,
-	ShortPushMinusOne, ShortPushZero, ShortPushOne, ShortPushTwo,			// Short push immediates
-	ShortPushSelfAndTemp };
-
-enum {
-	LastPush =  ShortPushSelfAndTemp + NumShortPushSelfAndTemps - 1,
-	ShortStoreTemp };
-
-enum { ShortPopPushTemp = ShortStoreTemp + NumShortStoreTemps };
-enum { NumShortPopPushTemps = 2 };
-
-enum {PopPushSelf = ShortPopPushTemp + NumShortPopPushTemps,
+	Break = FirstSingleByteInstruction,
+	ShortPushInstVar,
+	ShortPushTemp = ShortPushInstVar + NumShortPushInstVars,
+	ShortPushContextTemp = ShortPushTemp + NumShortPushTemps,
+	ShortPushOuterTemp = ShortPushContextTemp + NumPushContextTemps,
+	ShortPushConst = ShortPushOuterTemp + NumPushOuterTemps,
+	ShortPushStatic = ShortPushConst + NumShortPushConsts,
+	// Push pseudo variable
+	ShortPushSelf = ShortPushStatic + NumShortPushStatics,
+	ShortPushTrue,
+	ShortPushFalse,
+	ShortPushNil,
+	// Short push immediates
+	ShortPushMinusOne,
+	ShortPushZero,
+	ShortPushOne,
+	ShortPushTwo,
+	ShortPushSelfAndTemp,
+	ShortStoreTemp = ShortPushSelfAndTemp + NumShortPushSelfAndTemps,
+	ShortPopPushTemp = ShortStoreTemp + NumShortStoreTemps,
+	PopPushSelf = ShortPopPushTemp + NumShortPopPushTemps,
 	PopDup,
-	PopStoreContextTemp 
-};
+	PopStoreContextTemp,
+	ShortPopStoreOuterTemp = PopStoreContextTemp + NumPopStoreContextTemps,
+	ShortPopStoreInstVar = ShortPopStoreOuterTemp + NumPopStoreOuterTemps,
+	ShortPopStoreTemp = ShortPopStoreInstVar + NumShortPopStoreInstVars,
 
-enum { ShortPopStoreOuterTemp = PopStoreContextTemp + NumPopStoreContextTemps };
-enum { ShortPopStoreInstVar = ShortPopStoreOuterTemp + NumPopStoreOuterTemps };
-enum { ShortPopStoreTemp = ShortPopStoreInstVar + NumShortPopStoreInstVars };
-
-enum { 
 	PopStackTop = ShortPopStoreTemp + NumShortPopStoreTemps,
-	IncrementStackTop,			// push 1; send #+
-	DecrementStackTop,			// push 1; send #-
+	IncrementStackTop,		// push 1; send #+
+	DecrementStackTop,		// push 1; send #-
 	DuplicateStackTop,
-	FirstReturn };
-	
-enum { FirstPseudoReturn = FirstReturn };
-enum {
-	ReturnSelf = FirstPseudoReturn, ReturnTrue, ReturnFalse, ReturnNil };
-enum {
-	LastPseudoReturn = ReturnNil,
-	ReturnMessageStackTop, 
+
+	ReturnSelf,
+	ReturnTrue,
+	ReturnFalse,
+	ReturnNil,
+
+	ReturnMessageStackTop,
 	ReturnBlockStackTop,
 	FarReturn,
 	PopReturnSelf,
-	};
-enum {
-	LastReturn = PopReturnSelf,
+
 	Nop,
-	ShortJump };
-enum { 
-	LastShortJump = ShortJump + NumShortJumps - 1, 
-	ShortJumpIfFalse };
-enum { FirstShortSend = ShortJumpIfFalse + NumShortJumpsIfFalse };
-enum { ShortSpecialSend = FirstShortSend };
-enum { 
+
+	ShortJump,
+	ShortJumpIfFalse = ShortJump + NumShortJumps,
+
+	ShortSpecialSend = ShortJumpIfFalse + NumShortJumpsIfFalse,
 	SendArithmeticAdd = ShortSpecialSend,
 	SendArithmeticSub,
 	SendArithmeticLT,
@@ -122,10 +111,9 @@ enum {
 	SendArithmeticBitShift,
 	SendArithmeticDiv,
 	SendArithmeticBitAnd,
-	SendArithmeticBitOr };
-enum { FirstSpecialSend = SendArithmeticBitOr + 1 };
-enum {
-	SpecialSendIdentical = FirstSpecialSend,
+	SendArithmeticBitOr,
+
+	SpecialSendIdentical,
 	SpecialSendValue0,
 	SpecialSendValue1,
 	SpecialSendClass,
@@ -141,55 +129,37 @@ enum {
 	SpecialSendBasicAt,
 	SpecialSendBasicAtPut,
 	SpecialSendIsNil,
-	SpecialSendNotNil
-	 };
-enum { ShortSendWithNoArgs = ShortSpecialSend + NumSpecialSelectors };
-enum { ShortSendSelfWithNoArgs = ShortSendWithNoArgs + NumShortSendsWithNoArgs };
-enum { ShortSendWith1Arg =  ShortSendSelfWithNoArgs + NumShortSendSelfWithNoArgs };
-enum { ShortSendWith2Args =  ShortSendWith1Arg + NumShortSendsWith1Arg };
+	SpecialSendNotNil,
+	
+	ShortSendWithNoArgs = ShortSpecialSend + NumSpecialSelectors,
+	ShortSendSelfWithNoArgs = ShortSendWithNoArgs + NumShortSendsWithNoArgs,
+	ShortSendWith1Arg =  ShortSendSelfWithNoArgs + NumShortSendSelfWithNoArgs,
+	ShortSendWith2Args =  ShortSendWith1Arg + NumShortSendsWith1Arg,
 
-enum { LastShortSend = ShortSendWith2Args + NumShortSendsWith2Args - 1};
-enum {
-	IsZero = LastShortSend+1,
+	IsZero = ShortSendWith2Args + NumShortSendsWith2Args,
 	PushActiveFrame,
-	SpecialSendNotIdentical,
+
+	ShortSpecialSendEx,
+	SpecialSendNotIdentical = ShortSpecialSendEx,
 	SpecialSendNot,
+
+	// Some unused space before double byte instructions...
 	UnusedShortSend202,
-	UnusedShortSend203
-};
-enum { FirstExSpecialSend = SpecialSendNotIdentical, LastExSpecialSend = UnusedShortSend203 };
-enum { NumExSpecialSends = LastExSpecialSend - FirstExSpecialSend + 1 };
-
-
-// Some unused space before double byte instructions...
-
-enum {
+	UnusedShortSend203,
+	
 	PushInstVar = FirstDoubleByteInstruction, 
 	PushTemp,
 	PushConst,
 	PushStatic,
-	FirstExtendedStore
-	};
-
-enum {
-	StoreInstVar = FirstExtendedStore,
+	
+	StoreInstVar,
 	StoreTemp,
 	StoreStatic,
-	};
-
-enum {
-	LastExtendedStore = StoreStatic,
-	FirstPopStore 
-	};
-
-enum {
-	PopStoreInstVar = FirstPopStore,
+	
+	PopStoreInstVar,
 	PopStoreTemp,
-	PopStoreStatic
-	};
+	PopStoreStatic,
 
-enum {
-	LastPopStore = PopStoreStatic,
 	PushImmediate,
 	PushChar,
 	Send,
@@ -209,9 +179,8 @@ enum {
 	PopStoreOuterTemp,
 	SendSelfWithNoArgs,
 	PopSendSelfNoArgs,
-	PushTempPair};
+	PushTempPair,
 
-enum {
 	LongPushConst = FirstTripleByteInstruction,
 	LongPushStatic,
 	LongStoreStatic,
@@ -230,16 +199,27 @@ enum {
 	IncrementPushTemp,
 	DecrementTemp,
 	DecrementPushTemp,
-	};
 
-
-enum { 
 	BlockCopy = FirstMultiByteInstruction,
 	ExLongSend,
 	ExLongSupersend,
 	ExLongPushImmediate
 };
 
+ENABLE_INT_OPERATORS(OpCode)
+
+static constexpr unsigned FirstShortPush = static_cast<unsigned>(OpCode::ShortPushInstVar);
+static constexpr unsigned LastShortPush = static_cast<unsigned>(OpCode::ShortPushStatic) + NumShortPushStatics - 1;
+static constexpr unsigned FirstPseudoPush = static_cast<unsigned>(OpCode::ShortPushSelf);
+static constexpr unsigned LastPseudoPush = static_cast<unsigned>(OpCode::ShortPushNil);
+static constexpr unsigned LastPush = static_cast<unsigned>(OpCode::ShortPushSelfAndTemp) + NumShortPushSelfAndTemps - 1;
+static constexpr unsigned LastShortJump = static_cast<unsigned>(OpCode::ShortJump) + NumShortJumps - 1;
+static constexpr unsigned LastShortSend = static_cast<unsigned>(OpCode::ShortSendWith2Args) + NumShortSendsWith2Args - 1;
+static constexpr unsigned NumExSpecialSends = 4;
+static constexpr unsigned FirstExtendedStore = static_cast<unsigned>(OpCode::StoreInstVar);
+static constexpr unsigned LastExtendedStore = static_cast<unsigned>(OpCode::StoreStatic);
+static constexpr unsigned FirstPopStore = static_cast<unsigned>(OpCode::PopStoreInstVar);
+static constexpr unsigned LastPopStore = static_cast<unsigned>(OpCode::PopStoreStatic);
 
 // Offsets for Push and ReturnFromMessage
 // These are deliberately reordered from Blue Book to provide most opportunity for packing
@@ -252,26 +232,26 @@ enum {
 #define MAXFORBITS(n) ((1 << (n)) - 1)
 
 // Consts for Single extended send instructions
-enum { SendXArgCountBits 	= 3 };
-enum { SendXMaxArgs	 		= MAXFORBITS(SendXArgCountBits) };
-enum { SendXLiteralBits 	= 8 - SendXArgCountBits };
-enum { SendXMaxLiteral 		= MAXFORBITS(SendXLiteralBits) };
+static constexpr unsigned SendXArgCountBits 	= 3;
+static constexpr unsigned SendXMaxArgs	 		= MAXFORBITS(SendXArgCountBits);
+static constexpr unsigned SendXLiteralBits 		= 8 - SendXArgCountBits;
+static constexpr unsigned SendXMaxLiteral 		= MAXFORBITS(SendXLiteralBits);
 
 // Consts for double extended send instructions
-enum { Send2XArgCountBits	= 8 };
-enum { Send2XMaxArgs		= MAXFORBITS(Send2XArgCountBits) };
-enum { Send2XLiteralBits 	= 8 };
-enum { Send2XMaxLiteral		= MAXFORBITS(Send2XLiteralBits) };
+static constexpr unsigned Send2XArgCountBits	= 8;
+static constexpr unsigned Send2XMaxArgs			= MAXFORBITS(Send2XArgCountBits);
+static constexpr unsigned Send2XLiteralBits 	= 8;
+static constexpr unsigned Send2XMaxLiteral		= MAXFORBITS(Send2XLiteralBits);
 
-enum { Send3XArgCountBits	= 8 };
-enum { Send3XMaxArgs		= MAXFORBITS(Send3XArgCountBits) };
-enum { Send3XLiteralBits 	= 16 };
-enum { Send3XMaxLiteral		= MAXFORBITS(Send3XLiteralBits) };
+static constexpr unsigned Send3XArgCountBits	= 8;
+static constexpr unsigned Send3XMaxArgs			= MAXFORBITS(Send3XArgCountBits);
+static constexpr unsigned Send3XLiteralBits 	= 16;
+static constexpr unsigned Send3XMaxLiteral		= MAXFORBITS(Send3XLiteralBits);
 
-enum { OuterTempIndexBits	= 5 };
-enum { OuterTempMaxIndex	= MAXFORBITS(OuterTempIndexBits) };
-enum { OuterTempDepthBits	= 3 };
-enum { OuterTempMaxDepth	= MAXFORBITS(OuterTempDepthBits) };
+static constexpr unsigned OuterTempIndexBits	= 5;
+static constexpr unsigned OuterTempMaxIndex		= MAXFORBITS(OuterTempIndexBits);
+static constexpr unsigned OuterTempDepthBits	= 3;
+static constexpr unsigned OuterTempMaxDepth		= MAXFORBITS(OuterTempDepthBits);
 
 #pragma warning(disable:4201)
 struct BlockCopyExtension
@@ -284,14 +264,136 @@ struct BlockCopyExtension
 	uint8_t	copiedValuesCount:7;
 };
 
-enum { ExLongPushImmediateInstructionSize = 5, BlockCopyInstructionSize = 7 };
+static constexpr unsigned ExLongPushImmediateInstructionSize = 5;
+static constexpr unsigned BlockCopyInstructionSize = 7;
 
-inline int lengthOfByteCode(uint8_t opCode)
+inline unsigned lengthOfByteCode(OpCode opCode)
 {
-	return opCode < FirstDoubleByteInstruction ? 1 : 
-				opCode < FirstTripleByteInstruction ? 2 : 
-					opCode <  FirstMultiByteInstruction ? 3 : 
-						opCode == BlockCopy ? BlockCopyInstructionSize : 
-							opCode == ExLongPushImmediate ? ExLongPushImmediateInstructionSize : 4;
+	return static_cast<unsigned>(opCode) < FirstDoubleByteInstruction ? 1 : 
+				static_cast<unsigned>(opCode) < FirstTripleByteInstruction ? 2 : 
+					static_cast<unsigned>(opCode) <  FirstMultiByteInstruction ? 3 : 
+						opCode == OpCode::BlockCopy ? BlockCopyInstructionSize : 
+							opCode == OpCode::ExLongPushImmediate ? ExLongPushImmediateInstructionSize : 4;
 
+}
+
+inline bool isShortPushInstVar(OpCode code)
+{
+	return code >= OpCode::ShortPushInstVar && code < OpCode::ShortPushInstVar + NumShortPushInstVars;
+}
+
+inline uint8_t indexOfShortPushInstVar(OpCode code)
+{
+	_ASSERTE(isShortPushInstVar(code));
+	return static_cast<uint8_t>(code - OpCode::ShortPushInstVar);
+}
+
+inline bool isShortPushTemp(OpCode code)
+{
+	return code >= OpCode::ShortPushTemp && code < OpCode::ShortPushTemp + NumShortPushTemps;
+}
+
+inline uint8_t indexOfShortPushTemp(OpCode code)
+{
+	_ASSERTE(isShortPushTemp(code));
+	return static_cast<uint8_t>(code - OpCode::ShortPushTemp);
+}
+
+inline bool isShortPushConst(OpCode code)
+{
+	return code >= OpCode::ShortPushConst && code < OpCode::ShortPushConst + NumShortPushConsts;
+}
+
+inline uint8_t indexOfShortPushConst(OpCode code)
+{
+	_ASSERTE(isShortPushConst(code));
+	return static_cast<uint8_t>(code - OpCode::ShortPushConst);
+}
+
+inline bool isShortPushStatic(OpCode code)
+{
+	return code >= OpCode::ShortPushStatic && code < OpCode::ShortPushStatic + NumShortPushStatics;
+}
+
+inline uint8_t indexOfShortPushStatic(OpCode code)
+{
+	_ASSERTE(isShortPushStatic(code));
+	return static_cast<uint8_t>(code - OpCode::ShortPushStatic);
+}
+
+inline bool isShortPopStoreTemp(OpCode code)
+{
+	return code >= OpCode::ShortPopStoreTemp && code < OpCode::ShortPopStoreTemp + NumShortPopStoreTemps;
+}
+
+inline uint8_t indexOfShortPopStoreTemp(OpCode code)
+{
+	_ASSERTE(isShortPopStoreTemp(code));
+	return static_cast<uint8_t>(code - OpCode::ShortPopStoreTemp);
+}
+
+inline bool isShortStoreTemp(OpCode code)
+{
+	return code >= OpCode::ShortStoreTemp && code < OpCode::ShortStoreTemp + NumShortStoreTemps;
+}
+
+inline uint8_t indexOfShortStoreTemp(OpCode code)
+{
+	_ASSERTE(isShortStoreTemp(code));
+	return static_cast<uint8_t>(code - OpCode::ShortStoreTemp);
+}
+
+inline bool isShortSendWithNoArgs(OpCode code)
+{
+	return code >= OpCode::ShortSendWithNoArgs && code < OpCode::ShortSendWithNoArgs + NumShortSendsWithNoArgs;
+}
+
+inline uint8_t indexOfShortSendNoArgs(OpCode code)
+{
+	_ASSERTE(isShortSendWithNoArgs(code));
+	return static_cast<uint8_t>(code - OpCode::ShortSendWithNoArgs);
+}
+
+inline bool isShortJump(OpCode code)
+{
+	return code >= OpCode::ShortJump && code < OpCode::ShortJump + NumShortJumps;
+}
+
+inline int8_t offsetOfShortJump(OpCode code)
+{
+	_ASSERTE(isShortJump(code));
+	return static_cast<uint8_t>(code - OpCode::ShortJump);
+}
+
+inline bool isShortJumpIfFalse(OpCode code)
+{
+	return code >= OpCode::ShortJumpIfFalse && code < OpCode::ShortJumpIfFalse + NumShortJumpsIfFalse;
+}
+
+inline int8_t offsetOfShortJumpIfFalse(OpCode code)
+{
+	_ASSERTE(isShortJumpIfFalse(code));
+	return static_cast<uint8_t>(code - OpCode::ShortJumpIfFalse);
+}
+
+inline bool isPseudoReturn(OpCode code)
+{
+	return code >= OpCode::ReturnSelf && code <= OpCode::ReturnNil;
+}
+
+inline uint8_t indexOfPseudoReturn(OpCode code)
+{
+	_ASSERTE(isPseudoReturn(code));
+	return static_cast<uint8_t>(code - OpCode::ReturnSelf);
+}
+
+inline bool isReturn(OpCode code)
+{
+	return code >= OpCode::ReturnSelf && code <= OpCode::PopReturnSelf;
+}
+
+inline bool isShortSend(OpCode code)
+{
+	return (code >= OpCode::ShortSpecialSend && static_cast<uint8_t>(code) <= LastShortSend) 
+		|| (code >= OpCode::ShortSpecialSendEx && code < OpCode::ShortSpecialSendEx + NumExSpecialSends);
 }

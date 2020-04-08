@@ -151,7 +151,7 @@ private:
 	POTE InternSymbol(const Str&) const;
 
 	// Lookup
-	uint8_t FindNameAsSpecialMessage(const Str&) const;
+	OpCode FindNameAsSpecialMessage(const Str&) const;
 	bool IsPseudoVariable(const Str&) const;
 	size_t FindNameAsInstanceVariable(const Str&) const;
 	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
@@ -173,9 +173,9 @@ private:
 	size_t RemoveInstruction(ip_t pos);
 	ip_t GenByte(uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	ip_t GenData(uint8_t value);
-	ip_t GenInstruction(uint8_t basic, uint8_t offset=0);
-	ip_t GenInstructionExtended(uint8_t basic, uint8_t extension);
-	ip_t GenLongInstruction(uint8_t basic, uint16_t extension);
+	ip_t GenInstruction(OpCode basic, uint8_t offset=0);
+	ip_t GenInstructionExtended(OpCode basic, uint8_t extension);
+	ip_t GenLongInstruction(OpCode basic, uint16_t extension);
 	void UngenInstruction(ip_t pos);
 	void UngenData(ip_t pos, LexicalScope* pScope);
 	
@@ -192,11 +192,11 @@ private:
 	
 	ip_t GenMessage(const Str& pattern, argcount_t argumentCount, textpos_t messageStart);
 
-	ip_t GenJumpInstruction(uint8_t basic);
-	ip_t GenJump(uint8_t basic, ip_t location);
+	ip_t GenJumpInstruction(OpCode basic);
+	ip_t GenJump(OpCode basic, ip_t location);
 	void SetJumpTarget(ip_t jump, ip_t target);
 
-	ip_t GenTempRefInstruction(uint8_t instruction, TempVarRef* pRef);
+	ip_t GenTempRefInstruction(OpCode instruction, TempVarRef* pRef);
 	size_t GenPushCopiedValue(TempVarDecl*);
 
 	void GenPushSelf();
@@ -215,7 +215,7 @@ private:
 	ip_t GenStoreInstVar(uint8_t index);
 	ip_t GenStaticStore(const Str&, const TEXTRANGE&, textpos_t assignedExpressionStop);
 
-	ip_t GenReturn(uint8_t retOp);
+	ip_t GenReturn(OpCode retOp);
 	ip_t GenFarReturn();
 
 
@@ -507,31 +507,31 @@ inline void Compiler::UngenData(ip_t pos, LexicalScope* pScope)
 
 // Insert an instruction at the code pointer, returning the position at which
 // the instruction was inserted.
-inline ip_t Compiler::GenInstruction(uint8_t basic, uint8_t offset)
+inline ip_t Compiler::GenInstruction(OpCode basic, uint8_t offset)
 {
-	_ASSERTE(offset == 0 || ((int)basic+offset) < FirstDoubleByteInstruction);
+	_ASSERTE(offset == 0 || static_cast<unsigned>(basic+offset) < FirstDoubleByteInstruction);
 	_ASSERTE(m_pCurrentScope != nullptr);
-	return GenByte(basic + offset, BYTECODE::Flags::IsOpCode, m_pCurrentScope);
+	return GenByte(static_cast<uint8_t>(basic + offset), BYTECODE::Flags::IsOpCode, m_pCurrentScope);
 }
 
 inline ip_t Compiler::GenNop()
 {
-	return GenInstruction(Nop);
+	return GenInstruction(OpCode::Nop);
 }
 
 inline ip_t Compiler::GenDup()
 {
-	return GenInstruction(DuplicateStackTop);
+	return GenInstruction(OpCode::DuplicateStackTop);
 }
 
 inline ip_t Compiler::GenPopStack()
 {
-	return GenInstruction(PopStackTop);
+	return GenInstruction(OpCode::PopStackTop);
 }
 
 inline ip_t Compiler::GenStoreTemp(TempVarRef* pTemp)
 {
-	return GenTempRefInstruction(LongStoreOuterTemp, pTemp);
+	return GenTempRefInstruction(OpCode::LongStoreOuterTemp, pTemp);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

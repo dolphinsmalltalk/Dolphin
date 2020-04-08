@@ -107,7 +107,6 @@ operator-=(T& x, const I offset)
 {
 	using underlying = typename std::underlying_type<T>::type;
 	underlying r = static_cast<underlying>(x) - offset;
-	_ASSERTE(r >= static_cast<underlying>(T::npos));
 	return x = static_cast<T>(r);
 }
 
@@ -125,7 +124,6 @@ operator-(const T x, const I y)
 {
 	using underlying = typename std::underlying_type<T>::type;
 	underlying r = static_cast<underlying>(x) - static_cast<underlying>(y);
-	_ASSERTE(r >= static_cast<underlying>(T::npos));
 	return static_cast<T>(r);
 }
 
