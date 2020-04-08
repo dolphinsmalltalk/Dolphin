@@ -96,10 +96,11 @@ name: aSymbol
 	!
 
 owningPackage
-	"Answers the package that owns the receiver or nil if it is not yet owned
-	by any package"
+	"Answers the package that owns the receiver or nil if it is not yet owned by any package"
 
-	^Package manager packageOfGlobalNamed: self name!
+	| n |
+	n := self name.
+	^n = 'Anon' ifFalse: [Package manager packageOfGlobalNamed: n]!
 
 owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."

@@ -48,7 +48,7 @@ addClassConstant: aString value: anObject
 									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
 	binding isImmutable: false.
 	[binding value: anObject] ensure: [binding isImmutable: true].
-	requiresRecompile ifTrue: [self recompileAllReferencesToLiteral: binding].
+	requiresRecompile ifTrue: [Object recompileAllReferencesToLiteral: binding].
 	^binding!
 
 addClassVariable: aString value: anObject
