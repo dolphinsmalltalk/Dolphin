@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Clipboard
-	instanceVariableNames: 'isOpen registeredFormats'
+	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -12,6 +12,7 @@ Clipboard comment: ''!
 
 addRegisteredFormat: formatName id: id converter: aTypeConverter
 	registeredFormats at: formatName put: {id. aTypeConverter}.
+	idToName at: id put: formatName.
 	^id!
 
 apply: operation
@@ -25,29 +26,30 @@ apply: operation
 !
 
 availableFormatIds
-	"Answer a <collection> containing each of the currently available  
-	clipboard format <integer> identifiers."
+	"Answer a <sequencedReadableCollection> containing each of the currently available clipboard format <integer> identifiers.
+	The actual formats on the clipboard appear first in the collection, with converted formats following."
 
 	| answer lib |
 	lib := UserLibrary default.
-	answer := OrderedCollection new: lib countClipboardFormats.
+	answer := Array writeStream: lib countClipboardFormats.
 	self apply: 
 			[| fmt |
 			fmt := 0.
-			[(fmt := lib enumClipboardFormats: fmt) == 0] whileFalse: [answer addLast: fmt]].
-	^answer!
+			[(fmt := lib enumClipboardFormats: fmt) == 0] whileFalse: [answer nextPut: fmt]].
+	^answer contents!
 
 availableFormats
-	"Answer a <collection> of the currently available clipboard format 
-	<readableString> names. This may not include all formats, as the built-in
-	formats are unnamed, and we don't keep an entry for them all in our map."
+	"Answer a <collection> of the currently available clipboard format <readableString> names. This may not include all formats, as the built-in formats are unnamed, and we don't keep an entry for them all in our map."
 
-	| answer |
-	answer := OrderedCollection new.
-	self availableFormatIds do: [:fmt | | name |
-		name := registeredFormats keyAtValue: fmt ifAbsent: [self getFormatName: fmt].
-		name isNil ifFalse: [answer addLast: name]].
-	^answer!
+	| availableIds names |
+	availableIds := self availableFormatIds.
+	names := Array writeStream: availableIds size.
+	availableIds do: 
+			[:fmt |
+			| name |
+			name := idToName at: fmt ifAbsent: [self getFormatName: fmt].
+			name isNil ifFalse: [names nextPut: name]].
+	^names contents!
 
 basicEmpty
 	"Private - Empty the clipboard (assumes it is open)."
@@ -170,9 +172,7 @@ getText
 	^self getTextIfNone: [self errorFormatNotAvailable: #String]!
 
 getTextIfNone: exceptionHandler
-	"Answer a <readableString> containing the the CF_TEXT contents 
-	of the clipboard. If no text is currently available, the answers the
-	result of evaluating the <niladicValuable> exceptionHandler."
+	"Answer a <readableString> containing the the CF_UNICODETEXT contents of the clipboard. If no text is currently available, the answers the result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #String ifNone: exceptionHandler!
 
@@ -185,40 +185,45 @@ initialize
 		Clipboard current initialize
 	"
 
-	| objectFormat objectClassFormat nullConversion objectConverter |
+	| nullConversion objectConverter |
 	isOpen := false.
 	registeredFormats := IdentityDictionary new.
-	objectFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Format'.
-	objectClassFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Class Format'.
+	idToName := IdentityDictionary new.
 	nullConversion := NullConverter new.
 	objectConverter := PluggableTypeConverter
 				leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj binaryStoreBytes]
 				rightToLeft: [:handle | Object fromBinaryStoreBytes: (ByteArray fromGlobalHandle: handle)].
-	registeredFormats
-		at: #String
-			put: {CF_UNICODETEXT.
-					PluggableTypeConverter
-						leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asUtf16String]
-						rightToLeft: [:handle | Utf16String fromGlobalHandle: handle]};
-		at: #AnsiString
-			put: {CF_TEXT.
-					PluggableTypeConverter
-						leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asAnsiString]
-						rightToLeft: [:handle | AnsiString fromGlobalHandle: handle]};
-		at: #Bitmap
-			put: {CF_BITMAP.
-					PluggableTypeConverter leftToRight: [:bmp | bmp copy detachHandle]
-						rightToLeft: 
-							[:hBitmap |
-							"Note that because the clipboard retains ownership of the bitmap, we must immediately copy it."
-							(Bitmap fromHandle: hBitmap) copy]};
-		at: #Palette put: {CF_PALETTE. nullConversion};
-		at: #Object put: {objectFormat. objectConverter};
-		at: #ObjectClass put: {objectClassFormat. objectConverter};
-		at: #DIBSection
-			put: {CF_DIB.
-					PluggableTypeConverter leftToRight: [:ds | ds copyToGlobalHeap]
-						rightToLeft: [:handle | DIBSection fromGlobalHandle: handle]}!
+	self
+		addRegisteredFormat: #String
+			id: CF_UNICODETEXT
+			converter: (PluggableTypeConverter
+					leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asUtf16String]
+					rightToLeft: [:handle | Utf16String fromGlobalHandle: handle]);
+		addRegisteredFormat: #AnsiString
+			id: CF_TEXT
+			converter: (PluggableTypeConverter
+					leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asAnsiString]
+					rightToLeft: [:handle | AnsiString fromGlobalHandle: handle]);
+		addRegisteredFormat: #Bitmap
+			id: CF_BITMAP
+			converter: (PluggableTypeConverter leftToRight: [:bmp | bmp copy detachHandle]
+					rightToLeft: 
+						[:hBitmap |
+						"Note that because the clipboard retains ownership of the bitmap, we must immediately copy it."
+						(Bitmap fromHandle: hBitmap) copy]);
+		addRegisteredFormat: #Palette
+			id: CF_PALETTE
+			converter: nullConversion;
+		addRegisteredFormat: #DIBSection
+			id: CF_DIB
+			converter: (PluggableTypeConverter leftToRight: [:ds | ds copyToGlobalHeap]
+					rightToLeft: [:handle | DIBSection fromGlobalHandle: handle]);
+		addRegisteredFormat: #Object
+			id: (UserLibrary default registerClipboardFormat: 'Smalltalk Object Format')
+			converter: objectConverter;
+		addRegisteredFormat: #ObjectClass
+			id: (UserLibrary default registerClipboardFormat: 'Smalltalk Object Class Format')
+			converter: objectConverter!
 
 isBitmapAvailable
 	"Answer whether the clipboard contains a bitmap."
@@ -252,11 +257,9 @@ isObjectAvailable
 	^self isFormatAvailable: #Object!
 
 isTextAvailable
-	"Answer whether the clipboard contains text data (i.e. CF_TEXT). Note that because of the
-	Clipboards auto-format conversion, this will always be true if CF_UNICODETEXT is available
-	too, and vice versa."
+	"Answer whether the clipboard contains text data (i.e. CF_UNICODETEXT). Note that because of the Clipboards auto-format conversion, this will always be true if CF_TEXT is available too, and vice versa."
 
-	^self isFormatIdAvailable: CF_TEXT!
+	^self isFormatIdAvailable: CF_UNICODETEXT!
 
 open
         "Open the clipboard."
@@ -272,9 +275,8 @@ registerFormat: formatName
 	^self registerFormat: formatName converter: NullConverter new!
 
 registerFormat: formatName converter: aTypeConverter
-	"Register the <readableString> formatName as a user-defined clipboard format. Answer the
-	format identifier. The type converter needs to convert objects to sutiable handles as its left-to-righ
-	conversion, and from global memory handles to objects for its right-to-left."
+	"Register the <readableString> formatName as a user-defined clipboard format. Answer the format identifier. 
+	The type converter needs to convert objects to suitable handles as its left-to-right conversion, and from global memory handles to objects for its right-to-left."
 
 	| id |
 	id := UserLibrary default registerClipboardFormat: formatName.

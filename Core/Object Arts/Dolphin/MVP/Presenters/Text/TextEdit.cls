@@ -149,7 +149,7 @@ canPaste
 	"Answer whether the window can paste from the current contents of
 	the clipboard."
 
-	^self isReadOnly not and: [UserLibrary default isClipboardFormatAvailable: CF_TEXT]!
+	^self isReadOnly not and: [UserLibrary default isClipboardFormatAvailable: CF_UNICODETEXT]!
 
 canRedo
 	"Answer whether the window can redo the last undone operation."

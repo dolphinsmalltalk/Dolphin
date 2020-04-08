@@ -416,7 +416,7 @@ Object subclass: #Canvas
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Clipboard
-	instanceVariableNames: 'isOpen registeredFormats'
+	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
