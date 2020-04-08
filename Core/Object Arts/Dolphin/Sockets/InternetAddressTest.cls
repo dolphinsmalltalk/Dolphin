@@ -49,6 +49,7 @@ testIsIPString
 
 testLocalHost
 	| local computerName |
+	self skipIfCiBuild.
 	computerName := SessionManager current computerName asLowercase.
 	local := InternetAddress localHost.
 	self assert: local host asLowercase equals: computerName.
