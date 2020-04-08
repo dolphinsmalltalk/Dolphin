@@ -228,7 +228,7 @@ queryCommand: aCommandQuery
 			^true].
 	aCommandQuery commandSymbol == #clipboardOpen
 		ifTrue: 
-			[aCommandQuery isEnabled: (Clipboard current isFormatIdAvailable: CF_TEXT).
+			[aCommandQuery isEnabled: Clipboard current isTextAvailable.
 			^true].
 	#idbHelp == aCommandQuery command
 		ifTrue: 
