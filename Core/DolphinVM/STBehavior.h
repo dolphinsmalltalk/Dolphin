@@ -78,10 +78,11 @@ namespace ST
 		uint16_t extraSpec() const { return m_instanceSpec.m_extraSpec; }
 		BOOL isIndirect() const { return m_instanceSpec.m_indirect; }
 
-		enum {
-			SuperclassIndex = ObjectFixedSize, MethodDictionaryIndex, InstanceSpecificationIndex,
-			SubClassesIndex, FixedSize
-		};
+		static constexpr size_t SuperclassIndex = Object::FixedSize;
+		static constexpr size_t MethodDictionaryIndex = SuperclassIndex + 1;
+		static constexpr size_t InstanceSpecificationIndex = MethodDictionaryIndex + 1;
+		static constexpr size_t SubClassesIndex = InstanceSpecificationIndex + 1;
+		static constexpr size_t FixedSize = SubClassesIndex + 1;
 	};
 }
 

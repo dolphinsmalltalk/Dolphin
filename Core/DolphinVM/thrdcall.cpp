@@ -56,10 +56,17 @@ inline void Process::SetThread(void* handle)
 // List management
 ///////////////////////////////////////////////////////////////////////////////
 
+OverlappedCall::States OverlappedCall::ExchangeState(States exchange, States comperand)
+{
+	return static_cast<States>(InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state),
+		static_cast<std::underlying_type<States>::type>(exchange),
+		static_cast<std::underlying_type<States>::type>(comperand)));
+}
+
 // The overlapped thread has completed a call, return to the idle state
 bool OverlappedCall::CallFinished()
 {
-	return InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Resting, Returned) == Returned;
+	return ExchangeState(States::Resting, States::Returned) == States::Returned;
 }
 
 OverlappedCallPtr OverlappedCall::GetActiveProcessOverlappedCall()
@@ -290,7 +297,7 @@ std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc)
 {
 	return stream<< L"OverlappedCall(" << &oc 
 		<< L", id:" << oc.m_dwThreadId 
-		<< L", state: " << oc.m_state
+		<< L", state: " << static_cast<std::underlying_type<OverlappedCall::States>::type>(oc.m_state)
 		<< L", suspend:" << oc.m_nSuspendCount 
 		<< L", process: " << oc.m_oteProcess
 #ifdef _DEBUG
@@ -310,7 +317,7 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 			m_hEvtGo(0), m_hEvtCompleted(0),
 			m_oteProcess(oteProcess),
 			m_nSuspendCount(0),
-			m_state(OverlappedCall::Starting),
+			m_state(States::Starting),
 			m_primitiveFailureCode(_PrimitiveFailureCode::NoError)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
@@ -407,7 +414,7 @@ void OverlappedCall::Free()
 OverlappedCall::States OverlappedCall::beTerminated()
 {
 	// Answer the previous state
-	return (States)InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Terminated);
+	return static_cast<States>(InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), static_cast<std::underlying_type<States>::type>(States::Terminated)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -447,7 +454,7 @@ int OverlappedCall::ProcessRequests()
 	// Wait until either there is work to do - a terminate exception could be delivered in an APC, 
 	// so the wait is interruptable.
 	while ((dwRet = WaitForRequest()) == WAIT_OBJECT_0
-		&& InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Calling, Resting) == Resting)
+		&& ExchangeState(States::Calling, States::Resting) == States::Resting)
 	{
 		#if TRACING == 1
 		{
@@ -517,7 +524,7 @@ bool OverlappedCall::PerformCall()
 		}
 		#endif
 
-		if (m_state == Calling)
+		if (m_state == States::Calling)
 		{
 			// Failed before the call was attempted, e.g. due to invalid arguments, so we must notify the Interpreter
 			// accordingly to wake the calling thread
@@ -607,7 +614,7 @@ bool OverlappedCall::CanComplete()
 	if (m_interpContext.m_pActiveFrame != activeContext.m_pActiveFrame)
 		return false;
 
-	if (m_nSuspendCount > 0 || m_state != Returned)
+	if (m_nSuspendCount > 0 || m_state != States::Returned)
 		return false;
 
 	HARDASSERT(m_interpContext.m_stackPointer == activeContext.m_stackPointer);
@@ -652,10 +659,10 @@ void OverlappedCall::OnActivateProcess()
 	else
 	{
 		#if TRACING == 1
-		if (m_state != Resting)
+		if (m_state != States::Resting)
 		{
 			TRACELOCK();
-			TRACESTREAM << std::hex << GetCurrentThreadId() << L": OnActivateProcess() state = " << this->m_state << std::endl;
+			TRACESTREAM << std::hex << GetCurrentThreadId() << L": OnActivateProcess() state = " << static_cast<std::underlying_type<States>::type>(this->m_state) << std::endl;
 		}
 		#endif
 	}
@@ -672,14 +679,14 @@ bool OverlappedCall::QueueTerminate()
 	// test, we don't care because the thread handle will be nulled, and the operations against
 	// a NULL thread handle are benign.
 	States previousState = beTerminated();
-	if (previousState == Terminated || m_hThread == NULL)
+	if (previousState == States::Terminated || m_hThread == NULL)
 		// Already terminated/terminating
 		return false;
 
 	// If the thread has entered its base try/catch block then we must use an exception
 	// to terminate it. If it hasn't then when it does it will not be able to transition to
 	// the running state, and will recognise that as a termination request and drop out.
-	if (previousState != Starting)
+	if (previousState != States::Starting)
 	{
 		#if TRACING == 1
 		{
@@ -871,7 +878,7 @@ int OverlappedCall::Main()
 {
 	int ret;
 
-	if (InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Resting, Starting) == Starting)
+	if (ExchangeState(States::Resting, States::Starting) == States::Starting)
 		ret = ProcessRequests();
 	else
 	{
@@ -962,7 +969,7 @@ void OverlappedCall::NotifyInterpreterOfCallReturn()
 	}
 	#endif
 
-	InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Returned, Calling);
+	ExchangeState(States::Returned, States::Calling);
 	Process* myProc = GetProcess();
 	Interpreter::asynchronousSignal(myProc->OverlapSemaphore());
 
@@ -1015,7 +1022,7 @@ void OverlappedCall::OnCallReturned()
 
 	WaitForInterpreter();
 
-	if (GetProcess()->Thread() != this || m_state != Returned)
+	if (GetProcess()->Thread() != this || m_state != States::Returned)
 	{
 		HARDASSERT(FALSE);
 		::DebugCrashDump(L"Terminated overlapped call got though to completion (%#x)\nPlease contact Object Arts.", GetProcess()->Thread());

@@ -29,11 +29,14 @@ namespace ST
 	class ClassDescription : public Behavior
 	{
 	public:
-		ArrayOTE*	m_instanceVariables;
+		ArrayOTE* m_instanceVariables;
 		POTE		m_methodsCatalogue;
 		POTE		m_protocols;
 
-		enum { InstanceVariablesIndex = Behavior::FixedSize, MethodsCatalogueIndex, ProtocolsIndex, FixedSize };
+		static constexpr size_t InstanceVariablesIndex = Behavior::FixedSize;
+		static constexpr size_t MethodsCatalogueIndex = InstanceVariablesIndex + 1;
+		static constexpr size_t ProtocolsIndex = MethodsCatalogueIndex + 1;
+		static constexpr size_t FixedSize = ProtocolsIndex + 1;
 	};
 
 	class Class : public ClassDescription
@@ -47,10 +50,13 @@ namespace ST
 		POTE		m_classCategories;
 		POTE		m_guid;
 
-		enum {
-			NameIndex = ClassDescription::FixedSize, ClassPoolIndex,
-			SharedPoolsIndex, CommentIndex, ClassCategoriesIndex, GUIDIndex, FixedSize
-		};
+		static constexpr size_t NameIndex = ClassDescription::FixedSize;
+		static constexpr size_t ClassPoolIndex = NameIndex + 1;
+		static constexpr size_t SharedPoolsIndex = ClassPoolIndex + 1;
+		static constexpr size_t CommentIndex = SharedPoolsIndex + 1;
+		static constexpr size_t ClassCategoriesIndex = CommentIndex + 1;
+		static constexpr size_t GUIDIndex = ClassCategoriesIndex + 1;
+		static constexpr size_t FixedSize = GUIDIndex + 1;
 
 #if defined(_DEBUG)
 		__declspec(property(get = getName)) LPCSTR Name;
@@ -64,9 +70,10 @@ namespace ST
 	class MetaClass : public ClassDescription
 	{
 	public:
-		ClassOTE*	m_instanceClass;
+		ClassOTE* m_instanceClass;
 
-		enum { InstanceClassIndex = ClassDescription::FixedSize, FixedSize };
+		static constexpr size_t InstanceClassIndex = ClassDescription::FixedSize;
+		static constexpr size_t FixedSize = InstanceClassIndex + 1;
 	};
 
 	class StringClass : Class

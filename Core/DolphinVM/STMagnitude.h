@@ -20,7 +20,7 @@ namespace ST
 	class Magnitude : public Object
 	{
 	public:
-		enum { FixedSize = 0 };
+		static constexpr size_t FixedSize = Object::FixedSize;
 	};
 
 	class ArithmeticValue : public Magnitude

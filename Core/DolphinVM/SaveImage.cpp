@@ -95,7 +95,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 
 #ifdef PROFILE_IMAGELOADSAVE
 	TRACESTREAM<< L"Saving image to '" << saveName<< L"' ..." << std::endl;
-	DWORD dwStartTicks = GetTickCount();
+	ULONGLONG dwStartTicks = GetTickCount64();
 #endif
 
 	::_write(fd, ISTHDRTYPE, sizeof(ISTHDRTYPE));
@@ -158,7 +158,7 @@ _PrimitiveFailureCode __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFil
 		}
 
 	#ifdef PROFILE_IMAGELOADSAVE
-		DWORD msToRun = GetTickCount() - dwStartTicks;
+		int64_t msToRun = GetTickCount64() - dwStartTicks;
 		TRACESTREAM << L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << std::endl;
 	#endif
 	}
@@ -229,7 +229,7 @@ template <size_t ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinst
 
 			POBJECT obj = ote->m_location;
 
-			if (ote->heapSpace() == OTEFlags::VirtualSpace)
+			if (ote->heapSpace() == Spaces::Virtual)
 			{
 				VirtualObject* vObj = static_cast<VirtualObject*>(obj);
 				VirtualObjectHeader* pObjHeader = vObj->getHeader();

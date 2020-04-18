@@ -26,7 +26,8 @@ namespace ST
 	public:
 		Oop m_tally;
 
-		enum { TallyIndex = Collection::FixedSize, FixedSize };
+		static constexpr size_t TallyIndex = Collection::FixedSize;
+		static constexpr size_t FixedSize = TallyIndex + 1;
 	};
 
 	class Set : public SetBase
@@ -38,10 +39,11 @@ namespace ST
 	class MethodDictionary : public SetBase
 	{
 	public:
-		ArrayOTE*	m_methods;			// Offset 1 (MethodArrayIndex) - External Array of values (see inherited m_elements)
-		SymbolOTE*	m_selectors[];		// Offset 2 (SelectorStart) - Internal array of keys
+		ArrayOTE* m_methods;			// Offset 1 (MethodArrayIndex) - External Array of values (see inherited m_elements)
+		SymbolOTE* m_selectors[];		// Offset 2 (SelectorStart) - Internal array of keys
 
-		enum { MethodArrayIndex = SetBase::FixedSize, FixedSize };
+		static constexpr size_t MethodArrayIndex = SetBase::FixedSize;
+		static constexpr size_t FixedSize = MethodArrayIndex + 1;
 	};
 }
 

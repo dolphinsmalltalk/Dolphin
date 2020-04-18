@@ -656,10 +656,10 @@ void ObjectMemory::Terminate()
 			{
 				bool bNeedsDealloc;
 				#ifdef PRIVATE_HEAP
-					OTEFlags::Spaces space = ote.heapSpace();
-					bNeedsDealloc = space != OTEFlags::PoolSpace || (ote.sizeOf() > MaxSizeOfPoolObject);
+					Spaces space = ote.heapSpace();
+					bNeedsDealloc = space != Spaces::Pools || (ote.sizeOf() > MaxSizeOfPoolObject);
 				#else
-					bNeedsDealloc = ote.getSpace != PoolSpace;
+					bNeedsDealloc = ote.getSpace != Spaces::Pools;
 				#endif
 
 				if (bNeedsDealloc)

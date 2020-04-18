@@ -204,7 +204,7 @@ public:
 	// Does an object have the current GC mark?
 	template <class T> static bool hasCurrentMark(TOTE<T>* const ote)
 	{
-			return ote->m_flags.m_mark == m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
+			return ote->m_flags.m_mark == m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)].m_mark;
 	}
 
 #ifdef MEMSTATS
@@ -225,21 +225,20 @@ public:
 	static constexpr size_t OTDefaultMax = 24 * 1024 * 1024;
 	static constexpr size_t OTMaxLimit = 64 * 1024 * 1024;
 
-	enum { registryIndex, FirstBuiltInIdx };
+	static constexpr size_t registryIndex = 0;
+	static constexpr size_t FirstBuiltInIdx = registryIndex + 1;
 
 	/***************************************************************************************
 	* N.B. If inserting new fixed Oops, must also update the FIRSTCHAROFFSET in ISTASM.INC
 	* or will get garbage DNU very early in boot
 	/***************************************************************************************/
-	enum {
-		nilOOPIndex = FirstBuiltInIdx,
-		trueOOPIndex,
-		falseOOPIndex,
-		emptyStringOOPIndex,
-		delimStringOOPIndex,
-		emptyArrayOOPIndex,
-		FirstCharacterIdx
-	};
+	static constexpr size_t nilOOPIndex = FirstBuiltInIdx;
+	static constexpr size_t trueOOPIndex = nilOOPIndex + 1;
+	static constexpr size_t falseOOPIndex = trueOOPIndex + 1;
+	static constexpr size_t emptyStringOOPIndex = falseOOPIndex + 1;
+	static constexpr size_t delimStringOOPIndex = emptyStringOOPIndex + 1;
+	static constexpr size_t emptyArrayOOPIndex = delimStringOOPIndex + 1;
+	static constexpr size_t FirstCharacterIdx = emptyArrayOOPIndex + 1;
 	static constexpr size_t NumCharacters = 256;
 	static constexpr size_t NumPermanent = FirstCharacterIdx + NumCharacters;
 	static constexpr size_t OTBase = NumPermanent;
@@ -272,8 +271,8 @@ public:
 		OTE* allocate();
 		void deallocate(OTE* ote);
 
-		BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t bytes, OTEFlags::Spaces space);
-		PointersOTE* newPointerObject(BehaviorOTE* classPointer, size_t pointers, OTEFlags::Spaces space);
+		BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t bytes, Spaces space);
+		PointersOTE* newPointerObject(BehaviorOTE* classPointer, size_t pointers, Spaces space);
 
 		void terminate()
 		{
@@ -457,7 +456,7 @@ private:
 
 public:			// Public Data
 
-	enum { dwOopsPerPage = dwPageSize/sizeof(Oop) };
+	static constexpr size_t dwOopsPerPage = dwPageSize/sizeof(Oop);
 
 	static uint32_t m_imageVersionMajor;	// MS part of image version number
 	static uint32_t m_imageVersionMinor;	// LS part of image version number
@@ -466,7 +465,7 @@ private:		// Private Data
 
 
 	static HANDLE m_hHeap;
-	enum { HEAPINITPAGES = 2 };
+	static constexpr size_t HEAPINITPAGES = 2;
 
 	static uint32_t m_nNextIdHash;					// Next identity hash value to use
 
@@ -822,7 +821,7 @@ inline bool ObjectMemory::isKindOf(Oop objectPointer, const BehaviorOTE* classPo
 
 inline void ObjectMemory::markObject(OTE* ote)
 {
-	ote->m_flags.m_mark = m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
+	ote->m_flags.m_mark = m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)].m_mark;
 }
 
 // lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
@@ -844,6 +843,7 @@ inline ObjectMemory::FixedSizePool& ObjectMemory::spacePoolForSize(size_t object
 {
 	auto nPool = (_ROUND2(objectSize, PoolGranularity) - MinObjectSize) / PoolGranularity;
 	ASSERT(nPool < MaxPools);
+	__assume(nPool < MaxPools);
 	ASSERT(nPool * PoolGranularity + (DWORD)MinObjectSize >= objectSize);
 	return m_pools[nPool];
 }
@@ -967,7 +967,7 @@ inline void ObjectMemory::OTEPool::deallocate(OTE* ote)
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer, size_t bytes, OTEFlags::Spaces space)
+inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer, size_t bytes, Spaces space)
 {
 	BytesOTE* ote = reinterpret_cast<BytesOTE*>(m_pFreeList);
 	if (ote)
@@ -992,10 +992,10 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 		#endif
 
 		// It MUST be the case that all pooled objects can reside in pool space
-		ASSERT(ote->heapSpace() == OTEFlags::PoolSpace);
+		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
-	ote->m_flags = m_spaceOTEBits[space];
+	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(space)];
 	ASSERT(!ote->isFree());
 	ASSERT(!ote->isPointers());
 	ASSERT(ote->heapSpace() == space);
@@ -1007,7 +1007,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 }
 
 // Although this looks like a long routine to inline, in fact it is very few machine instructions
-inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer, size_t pointers, OTEFlags::Spaces space)
+inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPointer, size_t pointers, Spaces space)
 {
 	PointersOTE* ote = reinterpret_cast<PointersOTE*>(m_pFreeList);
 	if (ote)
@@ -1033,10 +1033,10 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 		#endif
 
 		// It MUST be the case that all pooled objects can reside in pool space
-		ASSERT(ote->heapSpace() == OTEFlags::PoolSpace);
+		ASSERT(ote->heapSpace() == Spaces::Pools);
 	}
 
-	ote->m_flags = m_spaceOTEBits[space];
+	ote->m_flags = m_spaceOTEBits[static_cast<space_t>(space)];
 	ASSERT(!ote->isFree());
 	ASSERT(ote->isPointers());
 	ASSERT(ote->heapSpace() == space);

@@ -218,6 +218,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
     return _Module.DllMain(dwReason, lpReserved); 
 }
 
+__control_entrypoint(DllExport)
 STDAPI DllCanUnloadNow(void)
 {
 	HRESULT hr;
@@ -242,6 +243,7 @@ STDAPI DllCanUnloadNow(void)
 	return hr;
 }
 
+_Check_return_
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
 #ifdef _MERGE_PROXYSTUB

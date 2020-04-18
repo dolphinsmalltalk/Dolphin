@@ -11,7 +11,6 @@
 ******************************************************************************/
 #pragma once
 
-constexpr size_t ObjectFixedSize = 0u;
 constexpr size_t ObjectHeaderSize = 0u;
 constexpr size_t ObjectByteSize = ObjectHeaderSize*sizeof(Oop);
 
@@ -22,6 +21,8 @@ namespace ST
 {
 	class Object
 	{
+	public:
+		static constexpr size_t FixedSize = 0;
 	};
 
 	// Not real Smalltalk classes

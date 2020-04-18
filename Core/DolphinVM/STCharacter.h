@@ -25,7 +25,8 @@ namespace ST
 	{
 	public:
 		SmallInteger m_code;		// Small integer value.
-		enum { CharacterValueIndex = Magnitude::FixedSize, FixedSize };
+		static constexpr size_t CharacterValueIndex = Magnitude::FixedSize;
+		static constexpr size_t FixedSize = CharacterValueIndex + 1;
 
 		static CharOTE* NewAnsi(unsigned char value);
 		static CharOTE* NewUnicode(char32_t value);

@@ -34,9 +34,9 @@ namespace ST
 		union
 		{
 			Oop			m_frame;
-			OTE*		m_outer;
+			OTE* m_outer;
 		};
-		BlockOTE*		m_block;
+		BlockOTE* m_block;
 		Oop				m_tempFrame[];			// Environment temps only - args always in Process stack
 
 		BOOL isBlockContext() const;
@@ -48,7 +48,10 @@ namespace ST
 		// In fact quite often there are none since the Context is required just to support a ^-return
 		static constexpr size_t MaxEnvironmentTemps = 1;
 
-		enum { OuterIndex = ObjectFixedSize, BlockIndex, FixedSize };
+		static constexpr size_t OuterIndex = Object::FixedSize;
+		static constexpr size_t BlockIndex = OuterIndex + 1;
+		static constexpr size_t FixedSize = BlockIndex + 1;
+	
 		static constexpr size_t TempFrameStart = FixedSize;
 
 		static ContextOTE* __fastcall New(size_t tempCount, Oop oopOuter);

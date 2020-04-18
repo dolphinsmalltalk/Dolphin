@@ -75,7 +75,7 @@ void ObjectMemory::compactObject(OTE* ote)
 				}
 			}
 		}
-		if (ote->heapSpace() == OTEFlags::Spaces::VirtualSpace)
+		if (ote->heapSpace() == Spaces::Virtual)
 		{
 			Interpreter::CompactVirtualObject(ote);
 		}

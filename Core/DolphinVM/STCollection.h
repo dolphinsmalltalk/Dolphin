@@ -20,7 +20,7 @@ namespace ST
 	class Collection : public Object
 	{
 	public:
-		enum { FixedSize = 0 };		// FixedSize does not include Header
+		static constexpr size_t FixedSize = 0;		// FixedSize does not include Header
 	};
 
 	class SequenceableCollection : public Collection

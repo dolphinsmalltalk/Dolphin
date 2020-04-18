@@ -13,6 +13,9 @@
 ******************************************************************************/
 #pragma once
 
+#include <type_traits>
+#include <cstdint>
+
 #define COUNTBITS	(sizeof(uint8_t)*8)
 #define SPACEBITS	3
 #define NULLTERMTYPE WCHAR
@@ -31,10 +34,13 @@ typedef TOTE<ST::Behavior> BehaviorOTE;
 typedef	uint8_t count_t;
 typedef uint16_t hash_t;						// Identity hash value, assigned on object creation
 
+enum class Spaces { Normal, Virtual, Blocks, Contexts, Dwords, Heap, Floats, Pools };
+typedef typename std::underlying_type<Spaces>::type space_t;
+
 union OTEFlags
 {
 	// Object Creation
-	enum Spaces { NormalSpace, VirtualSpace, BlockSpace, ContextSpace, DWORDSpace, HeapSpace, FloatSpace, PoolSpace, NumSpaces };
+	static constexpr space_t NumSpaces = static_cast<space_t>(Spaces::Pools) + 1;
 
 	struct
 	{
@@ -48,16 +54,15 @@ union OTEFlags
 	uint8_t m_value;
 
 	// Often it is more efficient to use masking to avoid a 16-bit load operation
-	enum
-	{
-		FreeMask = 1,
-		PointerMask = 1 << 1,
-		MarkMask = 1 << 2,
-		FinalizeMask = 1 << 3,
-		WeakOrZMask = 1 << 4,
-		SpaceMask = 0x7 << 5,
-	};
-	enum { WeakMask = (PointerMask | WeakOrZMask) };
+	 
+	static constexpr uint8_t FreeMask = 1;
+	static constexpr uint8_t PointerMask = 1 << 1;
+	static constexpr uint8_t MarkMask = 1 << 2;
+	static constexpr uint8_t FinalizeMask = 1 << 3;
+	static constexpr uint8_t WeakOrZMask = 1 << 4;
+	static constexpr uint8_t SpaceMask = 0x7 << 5;
+
+	static constexpr uint8_t WeakMask = (PointerMask | WeakOrZMask);
 };
 
 
@@ -66,8 +71,9 @@ union OTEFlags
 template <class T> class TOTE
 {
 public:
-	enum { MAXCOUNT	= ((2<<(COUNTBITS-1))-1) };
-	enum { SizeMask = 0x7FFFFFFF, ImmutabilityBit = 0x80000000 };
+	static constexpr count_t MAXCOUNT = ((2 << (COUNTBITS - 1)) - 1);
+	static constexpr size_t SizeMask = 0x7FFFFFFF;
+	static constexpr size_t ImmutabilityBit = 0x80000000;
 
 	__forceinline size_t getSize() const					{ return m_size & SizeMask; }
 	__forceinline void setSize(size_t size)					{ m_size = size; }
@@ -148,7 +154,7 @@ public:
 	__forceinline bool isMetaclass() const					{ return m_oteClass == Pointers.ClassMetaclass; }
 
 	__forceinline bool isNil() const						{ return Oop(this) == Oop(Pointers.Nil); }
-	__forceinline OTEFlags::Spaces heapSpace() const		{ return static_cast<OTEFlags::Spaces>(m_flags.m_space); }
+	__forceinline Spaces heapSpace() const		{ return static_cast<Spaces>(m_flags.m_space); }
 	__forceinline bool flagsAllMask(uint8_t mask) const		{ return (m_ubFlags & mask) == mask; }
 
 	__forceinline hash_t identityHash()

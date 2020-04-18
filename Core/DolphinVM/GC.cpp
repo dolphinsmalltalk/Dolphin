@@ -45,7 +45,6 @@ extern VMPointers _Pointers;
 	typedef std::map<BehaviorOTE*, int> MAPCLASSOTE2INT;
 #endif
 
-enum { NoWeakMask = 0, GCNoWeakness = 1 };
 uint8_t ObjectMemory::WeaknessMask = static_cast<uint8_t>(OTEFlags::WeakMask);
 
 void ObjectMemory::ClearGCInfo()
@@ -61,7 +60,7 @@ inline Oop ObjectMemory::corpsePointer()
 
 void ObjectMemory::MarkObjectsAccessibleFromRoot(OTE* rootOTE)
 {
-	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)]);
 	if ((rootOTE->m_ubFlags ^ curMark) & OTEFlags::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(rootOTE);
 }
@@ -74,7 +73,7 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 	// First toggle the mark bit to the new mark
 	markObject(ote);
 
-	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)]);
 
 	// The class is always visited, but is now in the OTE which means we may not need
 	// to visit the object body at all
@@ -104,7 +103,7 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 
 OTEFlags ObjectMemory::nextMark()
 {
-	OTEFlags oldMark = m_spaceOTEBits[OTEFlags::NormalSpace];
+	OTEFlags oldMark = m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)];
 	// Toggle the "visited" mark - all objects will then have previous mark
 	BOOL newMark = oldMark.m_mark ? FALSE : TRUE;
 	for (auto i=0u;i<OTEFlags::NumSpaces;i++)
@@ -168,7 +167,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 	OTE**		pUnmarked = 0;
 
 	const OTE* pEnd = m_pOT+m_nOTSize;							// Loop invariant
-	const uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	const uint8_t curMark = 	*reinterpret_cast<uint8_t*>(&m_spaceOTEBits[static_cast<space_t>(Spaces::Normal)]);
 	for (OTE* ote=m_pOT+OTBase; ote < pEnd; ote++)
 	{
 		uint8_t oteFlags = ote->m_ubFlags;
@@ -441,8 +440,8 @@ void ObjectMemory::addVMRefs()
 			OTE& ote = m_pOT[i];
 			if (!ote.isFree())
 			{
-				OTEFlags::Spaces space = ote.heapSpace();
-				if (space == OTEFlags::PoolSpace)
+				Spaces space = ote.heapSpace();
+				if (space == Spaces::Pools)
 				{
 					size_t size = ote.sizeOf();
 					if (size > MaxSizeOfPoolObject)
@@ -555,7 +554,7 @@ void ObjectMemory::addVMRefs()
 					//errors++;
 				}*/
 				OTE* ote = &m_pOT[i];
-				if (!ote->isFree() && ote->heapSpace() == OTEFlags::PoolSpace)
+				if (!ote->isFree() && ote->heapSpace() == Spaces::Pools)
 					HARDASSERT(ote->sizeOf() <= MaxSmallObjectSize);
 				currentRefs[i] = ote->m_count;
 				ote->m_count = 0;

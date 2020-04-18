@@ -53,7 +53,7 @@ public:
 	}
 
 	// Move constructor
-	SmartPtr(SmartPtr&& other) : m_pObj(other.m_pObj)
+	SmartPtr(SmartPtr&& other) noexcept : m_pObj(other.m_pObj)
 	{
 		other.m_pObj = nullptr;
 	}
@@ -79,7 +79,7 @@ public:
 		return operator=(cp.m_pObj); 
 	}
 
-	SmartPtr& operator=(SmartPtr&& other) 
+	SmartPtr& operator=(SmartPtr&& other) noexcept
 	{
 		if (this != &other) 
 		{
@@ -197,7 +197,7 @@ public:
 	uint32_t AddRef();
 	uint32_t Release();
 
-	enum States { Starting, Resting, Terminated, Calling, Returned };
+	enum class States { Starting, Resting, Terminated, Calling, Returned };
 
 	States beTerminated();
 
@@ -227,6 +227,7 @@ private:
 	DWORD WaitForRequest();
 	int ProcessRequests();
 	bool PerformCall();
+	OverlappedCall::States ExchangeState(States exchange, States comperand);
 	bool CallFinished();
 
 	int Main();
@@ -345,5 +346,5 @@ inline uint32_t OverlappedCall::Release()
 inline bool OverlappedCall::IsInCall()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	return m_state >= Calling;
+	return m_state >= States::Calling;
 }

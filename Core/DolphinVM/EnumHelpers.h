@@ -1,4 +1,5 @@
 #pragma once
+#include <type_traits>
 
 template<typename T> struct EnableBitOperators : std::false_type { };
 

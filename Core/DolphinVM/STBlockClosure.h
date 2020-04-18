@@ -31,7 +31,7 @@ namespace ST
 	public:
 		// Outer environment, or SmallInteger frame pointer if a method env.
 		POTE		m_outer;
-		MethodOTE*	m_method;
+		MethodOTE* m_method;
 		Oop			m_initialIP;
 		BlockInfo	m_info;
 		Oop			m_receiver;
@@ -42,7 +42,12 @@ namespace ST
 		// copied values permissible; very uncommonly exceed 2 (see Util class>>blockStats)
 		static constexpr size_t MaxCopiedValues = 4;
 
-		enum { OuterIndex = ObjectFixedSize, MethodIndex, InitialIPIndex, InfoIndex, ReceiverIndex, FixedSize };
+		static constexpr size_t OuterIndex = Object::FixedSize;
+		static constexpr size_t MethodIndex = OuterIndex + 1;
+		static constexpr size_t InitialIPIndex = MethodIndex + 1;
+		static constexpr size_t InfoIndex = InitialIPIndex + 1;
+		static constexpr size_t ReceiverIndex = InfoIndex + 1;
+		static constexpr size_t FixedSize = ReceiverIndex + 1;
 		static constexpr size_t TempFrameStart = FixedSize;
 
 		static BlockOTE* __fastcall New(size_t copiedValuesCount);

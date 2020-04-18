@@ -127,9 +127,9 @@ HRESULT ObjectMemory::Initialize()
 	}
 
 	// Certain spaces contain byte objects
-	m_spaceOTEBits[OTEFlags::DWORDSpace].m_pointer	= FALSE;
-	m_spaceOTEBits[OTEFlags::HeapSpace].m_pointer	= FALSE;
-	m_spaceOTEBits[OTEFlags::FloatSpace].m_pointer	= FALSE;
+	m_spaceOTEBits[static_cast<space_t>(Spaces::Dwords)].m_pointer	= FALSE;
+	m_spaceOTEBits[static_cast<space_t>(Spaces::Heap)].m_pointer	= FALSE;
+	m_spaceOTEBits[static_cast<space_t>(Spaces::Floats)].m_pointer	= FALSE;
 
 	//MaxSizeOfPoolObject = PoolObjectSizeLimit;
 	//NumPools =  MaxPools;

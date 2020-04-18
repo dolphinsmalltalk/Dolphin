@@ -22,7 +22,7 @@ namespace ST
 	{
 	public:
 
-		enum { FixedSize = 0 };
+		static constexpr size_t FixedSize = Object::FixedSize;
 	};
 
 	class PositionableStream : public Stream
@@ -32,7 +32,10 @@ namespace ST
 		Oop m_index;
 		Oop m_readLimit;
 
-		enum { StreamArrayIndex = Stream::FixedSize, StreamIndexIndex, StreamReadLimitIndex, FixedSize };
+		static constexpr size_t StreamArrayIndex = Stream::FixedSize;
+		static constexpr size_t StreamIndexIndex = StreamArrayIndex + 1;
+		static constexpr size_t StreamReadLimitIndex = StreamIndexIndex + 1;
+		static constexpr size_t FixedSize = StreamReadLimitIndex + 1;
 	};
 
 	typedef TOTE<PositionableStream> PosStreamOTE;
@@ -42,7 +45,9 @@ namespace ST
 	public:
 		Oop m_writeLimit;
 
-		enum { StreamWriteLimitIndex = PositionableStream::FixedSize, FixedSize };
+		static constexpr size_t StreamWriteLimitIndex = PositionableStream::FixedSize;
+		static constexpr size_t FixedSize = StreamWriteLimitIndex + 1;
 	};
 }
+
 typedef TOTE<WriteStream> WriteStreamOTE;

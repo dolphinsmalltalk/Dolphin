@@ -76,7 +76,9 @@ public:
 	// accessing
 	void Push(T objectPointer)
 	{
-		ASSERT(m_pBuffer);
+		ASSERT(m_pBuffer != nullptr);
+		__assume(m_pBuffer != nullptr);
+
 		if (++m_nTail == m_nSize)		// Conditional check much quicker than division required for remainder
 			m_nTail = 0;	
 		if (m_nTail == m_nHead)

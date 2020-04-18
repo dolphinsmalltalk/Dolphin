@@ -29,12 +29,8 @@ CDolphinVMModule _Module;
 
 HRESULT CDolphinVMModule::RegisterAsEventSource() const
 {
-	static TCHAR* szKeyStem = _T("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\");
+	static constexpr TCHAR szKey[] = _T("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\Dolphin");
 	HRESULT hr;
-
-	TCHAR szKey[512];
-	_tcscpy(szKey, szKeyStem);
-	_tcscat(szKey, _T("Dolphin"));
 
 	CRegKey rkeyEvSrc;
 	// Register as an event source with message table in this DLL

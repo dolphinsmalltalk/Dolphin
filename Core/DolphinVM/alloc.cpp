@@ -54,7 +54,7 @@ POBJECT ObjectMemory::allocLargeObject(size_t objectSize, OTE*& ote)
 	// allocateOop expects crit section to be used
 	ote = allocateOop(pObj);
 	ote->setSize(objectSize);
-	ote->m_flags.m_space = OTEFlags::NormalSpace;
+	ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 	return pObj;
 }
 
@@ -74,7 +74,7 @@ inline POBJECT ObjectMemory::allocObject(size_t objectSize, OTE*& ote)
 	POBJECT pObj = static_cast<POBJECT>(allocSmallChunk(objectSize));
 	ote = allocateOop(pObj);
 	ote->setSize(objectSize);
-	ASSERT(ote->heapSpace() == OTEFlags::PoolSpace);
+	ASSERT(ote->heapSpace() == Spaces::Pools);
 	return pObj;
 }
 
@@ -94,7 +94,7 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 	PointersOTE* copyPointer;
 	size_t size;
 
-	if (ote->heapSpace() == OTEFlags::VirtualSpace)
+	if (ote->heapSpace() == Spaces::Virtual)
 	{
 		Interpreter::resizeActiveProcess();
 
@@ -330,8 +330,8 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 	size_t objectSize = SizeOfPointers(oops);
 	OTE* ote;
 	allocObject(objectSize, ote);
-	ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
-			|| ote->heapSpace() == OTEFlags::PoolSpace);
+	ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
+			|| ote->heapSpace() == Spaces::Pools);
 
 	// These are stored in the object itself
 	ASSERT(ote->getSize() == objectSize);
@@ -355,8 +355,8 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
 
 		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(elementCount + SizeOfPointers(0), ote));
-		ASSERT((elementCount > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
-			|| ote->heapSpace() == OTEFlags::PoolSpace);
+		ASSERT((elementCount > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
+			|| ote->heapSpace() == Spaces::Pools);
 
 		ASSERT(ote->getSize() == elementCount + SizeOfPointers(0));
 
@@ -398,8 +398,8 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 		objectSize += NULLTERMSIZE;
 
 		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + SizeOfPointers(0), ote));
-		ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
-			|| ote->heapSpace() == OTEFlags::PoolSpace);
+		ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == Spaces::Normal)
+			|| ote->heapSpace() == Spaces::Pools);
 
 		ASSERT(ote->getSize() == objectSize + SizeOfPointers(0));
 
@@ -579,8 +579,8 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 	OTE* copyPointer;
 	// Allocate an uninitialized object ...
 	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject(objectSize, copyPointer));
-	ASSERT((objectSize > MaxSizeOfPoolObject && copyPointer->heapSpace() == OTEFlags::NormalSpace)
-		|| copyPointer->heapSpace() == OTEFlags::PoolSpace);
+	ASSERT((objectSize > MaxSizeOfPoolObject && copyPointer->heapSpace() == Spaces::Normal)
+		|| copyPointer->heapSpace() == Spaces::Pools);
 
 	ASSERT(copyPointer->getSize() == objectSize);
 	// This set does not want to copy over the immutability bit - i.e. even if the original was immutable, the 
@@ -750,7 +750,7 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, size_t ini
 		ote->setSize(byteSize);
 		ote->m_oteClass = classPointer;
 		classPointer->countUp();
-		ote->m_flags = m_spaceOTEBits[OTEFlags::VirtualSpace];
+		ote->m_flags = m_spaceOTEBits[static_cast<space_t>(Spaces::Virtual)];
 		ASSERT(ote->isPointers());
 
 		return reinterpret_cast<VirtualOTE*>(ote);
@@ -965,7 +965,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 			if (!ote->isFree())
 			{
 				totalObjects++;
-				if (ote->heapSpace() == OTEFlags::PoolSpace)
+				if (ote->heapSpace() == Spaces::Pools)
 				{
 					size_t size = ote->sizeOf();
 					size_t chunkSize = _ROUND2(size, PoolGranularity);
