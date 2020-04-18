@@ -59,7 +59,7 @@ HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, si
 {
 #ifdef PROFILE_IMAGELOADSAVE
 	TRACESTREAM<< L"Loading image '" << szImageName << std::endl;
-	DWORD dwStartTicks = GetTickCount();
+	ULONGLONG dwStartTicks = GetTickCount64();
 #endif
 
 	HRESULT hr;
@@ -92,8 +92,8 @@ HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, si
 	}
 
 #ifdef PROFILE_IMAGELOADSAVE
-	DWORD msToRun = GetTickCount() - dwStartTicks;
-	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << long(msToRun)<< L"mS" << std::endl;
+	int64_t msToRun = GetTickCount64() - dwStartTicks;
+	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << msToRun << L"mS" << std::endl;
 #endif
 
 	return hr;
@@ -270,7 +270,7 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & 
 			Object* pBody;
 
 			// Allocate space for the object, and copy into that space
-			if (ote->heapSpace() == OTEFlags::VirtualSpace)
+			if (ote->heapSpace() == Spaces::Virtual)
 			{
 				size_t maxAlloc;
 				if (!imageFile.read(&maxAlloc, sizeof(maxAlloc)))
@@ -343,13 +343,13 @@ ST::Object* ObjectMemory::AllocObj(OTE * ote, size_t allocSize)
 	{
 		// Allocate from one of the memory pools
 		pObj = static_cast<POBJECT>(allocSmallChunk(allocSize));
-		ote->m_flags.m_space = OTEFlags::PoolSpace;
+		ote->m_flags.m_space = static_cast<space_t>(Spaces::Pools);
 	}
 	else
 	{
 		// Normal space and other spaces allocated from heap (may not be too many)
 		pObj = static_cast<POBJECT>(allocChunk(allocSize));
-		ote->m_flags.m_space = OTEFlags::NormalSpace;
+		ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 	}
 
 	ote->m_location = pObj;
@@ -418,7 +418,7 @@ void ObjectMemory::FixupObject(OTE* ote, uintptr_t* oldLocation, const ImageHead
 		// Look for the special image stamp object
 		else if (classPointer == _Pointers.ClassContext)
 		{
-			ASSERT(ote->heapSpace() == OTEFlags::PoolSpace || ote->heapSpace() == OTEFlags::NormalSpace);
+			ASSERT(ote->heapSpace() == Spaces::Pools || ote->heapSpace() == Spaces::Normal);
 
 			// Can't deallocate now - must leave for collection later - maybe could go in the Zct though.
 			VERIFY(ote->decRefs());
@@ -546,7 +546,7 @@ void ObjectMemory::PostLoadFix()
 			}
 			else if (ote->m_oteClass == _Pointers.ClassProcess)
 			{
-				ASSERT(ote->heapSpace() == OTEFlags::VirtualSpace);
+				ASSERT(ote->heapSpace() == Spaces::Virtual);
 				ProcessOTE* oteProcess = reinterpret_cast<ProcessOTE*>(ote);
 				Process* process = oteProcess->m_location;
 				process->PostLoadFix(oteProcess);

@@ -15,7 +15,7 @@ class CDolphinAxHost : public /*virtual*/ CAxHostWindow
 	, public IDolphinAxHost
 {
 protected:
-	enum NormalizedObjectType { otOther, otMSHTML, otWebBrowser };
+	enum class NormalizedObjectType { otOther, otMSHTML, otWebBrowser };
 
 	static HRESULT CreateHost(HWND hWnd, IUnknown** ppUnkContainer);
 	static HRESULT CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID riid, void** ppvObj, 
@@ -120,7 +120,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 	CLSID clsid;
 	HRESULT hr = E_FAIL;
 
-	otCreated = otOther;
+	otCreated = NormalizedObjectType::otOther;
 	lpszHTMLText = NULL;
 
 	if (lpszTricsData == NULL || lpszTricsData[0] == 0)
@@ -137,7 +137,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 	{
 		// It's HTML, so let's create mshtml
 		hr = CoCreateInstance(__uuidof(HTMLDocument), NULL, CLSCTX_INPROC_SERVER, riid, ppvObj);
-		otCreated = otMSHTML;
+		otCreated = NormalizedObjectType::otMSHTML;
 		lpszHTMLText = lpszTricsData + 7;
 		return hr;
 	}
@@ -150,7 +150,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 		if (FAILED(hr))
 			lpszHTMLText = MAKEINTRESOURCEW(IDS_CANTCREATEIE);
 		else
-			otCreated = otWebBrowser;
+			otCreated = NormalizedObjectType::otWebBrowser;
 
 		return hr;
 	}
@@ -625,7 +625,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 		{
 			// Failed for some reason, probably available in the HTML text
 			// Try and create an MSHTML instance to display the error.
-			otCreated = otMSHTML;
+			otCreated = NormalizedObjectType::otMSHTML;
 			hr = CoCreateInstance(__uuidof(HTMLDocument), NULL, CLSCTX_INPROC_SERVER, __uuidof(IUnknown), (void**)ppUnk);
 		}
 
@@ -641,7 +641,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 			AtlAdvise(*ppUnk, punkSink, m_iidSink, &m_dwAdviseSink);
 		}
 
-		if (SUCCEEDED(hr) && (otCreated != otOther) && *ppUnk != NULL)
+		if (SUCCEEDED(hr) && (otCreated != NormalizedObjectType::otOther) && *ppUnk != NULL)
 		{
 			if ((GetStyle() & (WS_VSCROLL | WS_HSCROLL)) == 0)
 			{
@@ -656,7 +656,7 @@ STDMETHODIMP CDolphinAxHost::CreateControlLicEx(LPCOLESTR lpszTricsData, HWND hW
 
 			CComPtr<IUnknown> spUnk(*ppUnk);
 			// Is it just plain HTML?
-			if (otCreated == otMSHTML)
+			if (otCreated == NormalizedObjectType::otMSHTML)
 			{
 				// Just HTML: load the HTML data into the document
 				LPWSTR buf = NULL;

@@ -23,7 +23,9 @@ namespace ST
 		StringOTE* m_key;
 		Oop m_value;
 
-		enum { KeyIndex = ObjectFixedSize, ValueIndex, FixedSize };
+		static constexpr size_t KeyIndex = Object::FixedSize;
+		static constexpr size_t ValueIndex = KeyIndex + 1;
+		static constexpr size_t FixedSize = ValueIndex + 1;
 	};
 }
 

@@ -24,10 +24,12 @@ namespace ST
 	class Message // : public Object
 	{
 	public:
-		SymbolOTE*	m_selector;
-		ArrayOTE*	m_args;
+		SymbolOTE* m_selector;
+		ArrayOTE* m_args;
 
-		enum { MessageSelectorIndex = ObjectFixedSize, MessageArgumentsIndex, FixedSize };
+		static constexpr size_t MessageSelectorIndex = Object::FixedSize;
+		static constexpr size_t MessageArgumentsIndex = MessageSelectorIndex + 1;
+		static constexpr size_t FixedSize = MessageArgumentsIndex + 1;
 
 		static MessageOTE* New()
 		{

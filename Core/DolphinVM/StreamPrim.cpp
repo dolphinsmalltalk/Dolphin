@@ -994,6 +994,8 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 					auto pb = oteBytesBuf->m_location->m_elements;
 					memcpy(pb + index, bytes->m_elements, valueSize);
 				}
+				else
+					return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 			}
 			else if (bufClass == Pointers.ClassArray)
 			{

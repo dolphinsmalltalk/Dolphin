@@ -24,7 +24,7 @@ static HRESULT LoadAndCreateVM(const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& 
 
 	// Try and register it
 	HINSTANCE hLib = ::LoadLibrary(pszVM);
-	HRESULT hr = HRESULT_FROM_WIN32(ERROR_NOT_FOUND);
+	constexpr HRESULT hr = HRESULT_FROM_WIN32(ERROR_NOT_FOUND);
 	if (hLib)
 	{
 		//::trace("Loaded Dolphin VM: %s\n", pszVM);

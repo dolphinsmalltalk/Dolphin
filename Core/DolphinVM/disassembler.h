@@ -2,7 +2,7 @@
 
 #include "bytecdes.h"
 
-enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
+enum class JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -311,7 +311,7 @@ public:
 		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 7):
 		{
 			int8_t offset = offsetOfShortJump(opcode);
-			PrintJumpInstruction(ip, stream, Jump, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
+			PrintJumpInstruction(ip, stream, JumpType::Jump, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
@@ -325,7 +325,7 @@ public:
 		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 7):
 		{
 			int8_t offset = offsetOfShortJumpIfFalse(opcode);
-			PrintJumpInstruction(ip, stream, JumpIfFalse, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
+			PrintJumpInstruction(ip, stream, JumpType::JumpIfFalse, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
@@ -671,7 +671,7 @@ public:
 	void BytecodeDisassembler::PrintJumpInstruction(I ip, std::wostream& stream, JumpType jumpType, int16_t offset, size_t target)
 	{
 		const char* JumpNames[] = { "Jump", "Jump If True", "Jump If False", "Jump If Nil", "Jump If Not Nil" };
-		stream << JumpNames[jumpType] << L' ';
+		stream << JumpNames[static_cast<std::underlying_type<JumpType>::type>(jumpType)] << L' ';
 		if (offset > 0)
 		{
 			stream << L'+';

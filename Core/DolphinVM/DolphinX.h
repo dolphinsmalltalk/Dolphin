@@ -6,7 +6,7 @@ namespace DolphinX {
 	// Enums used for external call primitives
 
 	// Location of data in the literal frame (first literal)
-	enum { LibCallArgArray };
+	static constexpr size_t LibCallArgArray = 0;
 
 	// External call primitives
 	enum class ExtCallPrimitive : uint8_t { Callback=0, VirtualCall=80, AsyncLibCall=48, LibCall=96 };

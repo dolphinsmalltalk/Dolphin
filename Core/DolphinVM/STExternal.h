@@ -14,6 +14,7 @@
 #pragma once
 
 #include "STObject.h"
+#include <cstdint>
 
 // Declare forward references
 namespace ST

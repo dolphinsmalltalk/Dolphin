@@ -23,7 +23,11 @@ namespace ST
 	public:
 		OTE* m_firstLink;
 		OTE* m_lastLink;
-		enum { FirstLinkIndex = SequenceableCollection::FixedSize, LastLinkIndex, FixedSize };
+
+		static constexpr size_t FirstLinkIndex = SequenceableCollection::FixedSize;
+		static constexpr size_t LastLinkIndex = FirstLinkIndex + 1;
+		static constexpr size_t FixedSize = LastLinkIndex + 1;
+	};
 
 		bool isEmpty();
 		void addLast(OTE* aLink);
@@ -31,10 +35,13 @@ namespace ST
 		OTE* remove(OTE* aLink);
 	};
 
-	class Link : public Object
-	{
-	public:
-		OTE* m_nextLink;
-		enum { NextLinkIndex = ObjectFixedSize, FixedSize };
+class Link : public Object
+{
+public:
+	OTE* m_nextLink;
+
+	static constexpr size_t NextLinkIndex = Object::FixedSize;
+	static constexpr size_t FixedSize = NextLinkIndex + 1;
+};
 	};
 }

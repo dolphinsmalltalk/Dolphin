@@ -59,7 +59,7 @@ private:
 	
 private:
 	// State
-	enum {bufSize = 255};
+	static constexpr size_t bufSize = 255;
 	// Allow an extra char for null terminator
 	char_type buffer[bufSize+1];
 };

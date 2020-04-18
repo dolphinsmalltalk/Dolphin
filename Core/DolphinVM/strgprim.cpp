@@ -635,7 +635,7 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 							{
 							case StringEncoding::Ansi:
 								// Non-ascii Ansi char into Utf16 string. Will always go.
-								psz[index] = m_ansiToUnicodeCharMap[codeUnit];
+								psz[index] = m_ansiToUnicodeCharMap[codeUnit & 0xff];
 								*newSp = oopValue;
 								return newSp;
 

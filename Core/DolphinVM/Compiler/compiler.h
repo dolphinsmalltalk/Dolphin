@@ -66,7 +66,7 @@ END_COM_MAP()
 
 public:
 	// Interpreting the primitiveCompile... type argument
-	enum {CompileToCode, CompileToRTF, CompileToTextMap, CompileToTempsMap };
+	enum class CompileTo { CompileToCode, CompileToRTF, CompileToTextMap, CompileToTempsMap };
 
 public:
 	Compiler();

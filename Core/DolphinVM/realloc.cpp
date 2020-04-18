@@ -67,7 +67,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 */
 	switch(ote->heapSpace())
 	{
-		case OTEFlags::NormalSpace:
+		case Spaces::Normal:
 		{
 //			TRACE("Resizing normal object...\n");
 			pObject = ote->m_location;
@@ -81,12 +81,12 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 			break;
 		}
 
-		case OTEFlags::VirtualSpace:
+		case Spaces::Virtual:
 //			TRACE("Resizing virtual object...\n");
 			pObject = resizeVirtual(ote, byteSize+Extra);
 			break;
 	
-		case OTEFlags::PoolSpace:
+		case Spaces::Pools:
 		{
 			#if defined(_DEBUG)
 				if (abs(Interpreter::executionTrace) > 0)
@@ -97,7 +97,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 			if ((byteSize+Extra) > MaxSmallObjectSize)
 			{
 				pObject = allocChunk(byteSize+Extra);
-				ote->m_flags.m_space = OTEFlags::NormalSpace;
+				ote->m_flags.m_space = static_cast<space_t>(Spaces::Normal);
 			}
 			else
 				pObject = allocSmallChunk(byteSize+Extra);
@@ -132,7 +132,7 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 // Process stacks)
 POBJECT ObjectMemory::resizeVirtual(OTE* ote, size_t newByteSize)
 {
-	ASSERT(ote->heapSpace() == OTEFlags::VirtualSpace);
+	ASSERT(ote->heapSpace() == Spaces::Virtual);
 
 	VariantObject* pObject = static_cast<VariantObject*>(ote->m_location);
 	VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(pObject);
@@ -198,7 +198,9 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, size_t newByteSize)
 	if (ote->isNullTerminated())
 	{
 		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<NULLTERMSIZE>(reinterpret_cast<POTE>(ote), totalByteSize));
-		ASSERT(pByteObj);	// Null-terminated objects should always be resizeable
+		ASSERT(pByteObj != nullptr);	// Null-terminated objects should always be resizeable
+		__assume(pByteObj != nullptr);
+
 		// Ensure we have a null-terminator
 		*reinterpret_cast<NULLTERMTYPE*>(&pByteObj->m_fields[totalByteSize]) = 0;
 	}
