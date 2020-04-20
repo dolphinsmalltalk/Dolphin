@@ -194,9 +194,9 @@ correspondingTestCase
 
 	| potentialTestCaseNames |
 	potentialTestCaseNames := #('Test' 'Tests' 'TestCase' 'TestCases')
-				collect: [:each | (self name , each) asSymbol].
+				collect: [:each | (self name , each) asQualifiedReference].
 	potentialTestCaseNames
-		do: [:each | (Smalltalk lookup: each) ifNotNil: [:class | (class inheritsFrom: TestCase) ifTrue: [^class]]].
+		do: [:each | each valueOrNil ifNotNil: [:class | (class inheritsFrom: TestCase) ifTrue: [^class]]].
 	^nil! !
 !ClassDescription categoriesFor: #correspondingTestCase!public! !
 

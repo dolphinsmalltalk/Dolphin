@@ -66,13 +66,17 @@ void Interpreter::initializeVMReferences()
 	block->m_initialIP = ZeroPointer;
 
 	// Initialize the various VM circular queues
-	if (_Pointers.SignalQueue->isNil())
+	if (isNil(_Pointers.SignalQueue))
+	{
 		_Pointers.SignalQueue = Array::New(SignalQueueSize);
+	}
 	ASSERT(_Pointers.SignalQueue->m_oteClass == _Pointers.ClassArray);
 	m_qAsyncSignals.UseBuffer(_Pointers.SignalQueue, SignalQueueGrowth, true);
 
-	if (_Pointers.InterruptQueue->isNil())
+	if (isNil(_Pointers.InterruptQueue))
+	{
 		_Pointers.InterruptQueue = Array::New(InterruptQueueSize);
+	}
 	ASSERT(_Pointers.InterruptQueue->m_oteClass == _Pointers.ClassArray);
 	m_qInterrupts.UseBuffer(_Pointers.InterruptQueue, InterruptQueueGrowth, false);
 
@@ -88,9 +92,9 @@ void Interpreter::initializeVMReferences()
 
 	m_pProcessor = _Pointers.Scheduler->m_location;
 
-	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassAnsiString)
+	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassUtf8String)
 	{
-		_Pointers.EmptyString = AnsiString::New("");
+		_Pointers.EmptyString = Utf8String::New("");
 		_Pointers.EmptyString->beImmutable();
 	}
 

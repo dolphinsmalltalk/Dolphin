@@ -10,6 +10,9 @@ StdioUtf8FileStream comment: ''!
 !StdioUtf8FileStream categoriesForClass!Collections-Streams! !
 !StdioUtf8FileStream methodsFor!
 
+basicNext: anInteger
+	^(super basicNext: anInteger) asUtf8String!
+
 contents
 	"Answer a <Utf8String> containing the complete contents of the file accessed by the
 	receiver."
@@ -58,6 +61,7 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
+!StdioUtf8FileStream categoriesFor: #basicNext:!accessing!private! !
 !StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
 !StdioUtf8FileStream categoriesFor: #position!accessing!public! !

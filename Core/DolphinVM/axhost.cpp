@@ -184,7 +184,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 	if (bstrLicKey != NULL)
 	{
 		// Licensed create request, so try using IClassFactory2
-		CComQIPtr<IClassFactory2> piFactory2 = piFactory;
+		CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
 		if (piFactory2)
 		{
 			// Supports IClassFactory2, so try licensed create...
@@ -207,7 +207,7 @@ HRESULT CDolphinAxHost::CreateNormalizedObject(LPCOLESTR lpszTricsData, REFIID r
 		if (hr == CLASS_E_NOTLICENSED)
 		{
 			// OK, so try using IClassFactory2
-			CComQIPtr<IClassFactory2> piFactory2 = piFactory;
+			CComQIPtr<IClassFactory2> piFactory2 = (IClassFactory*)piFactory;
 			if (piFactory2)
 			{
 				_ASSERTE(bstrLicKey == NULL);

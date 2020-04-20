@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base (Deprecated)'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
 Copyright (c) Object Arts Ltd 1997-2002. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -11,173 +11,180 @@ This package includes legacy classes and methods from Dolphin''s base package th
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ConformantArrayField;
-	add: #ConformantArrayPointerField;
-	add: #ConformantStructureArrayField;
-	add: #ConformantStructureArrayPointerField;
-	add: #MEMORY_BASIC_INFORMATION;
-	add: #OSVERSIONINFO;
-	add: #STBSymbolProxy;
-	yourself.
+package setClassNames: #(
+	#{ConformantArrayField}
+	#{ConformantArrayPointerField}
+	#{ConformantStructureArrayField}
+	#{ConformantStructureArrayPointerField}
+	#{MEMORY_BASIC_INFORMATION}
+	#{OSVERSIONINFO}
+	#{STBSymbolProxy}
+).
 
-package methodNames
-	add: #_FPIEEE_RECORD -> #causeCode;
-	add: #_FPIEEE_RECORD -> #causeName;
-	add: #_FPIEEE_VALUE -> #valueType;
-	add: #ArithmeticValue -> #quoAndRem:;
-	add: #Behavior -> #makeIndirect;
-	add: #Behavior -> #makeNullTerminated;
-	add: #ByteCodeDispatcher -> #byteCodeSegments;
-	add: #Class -> #addClassVarName:;
-	add: #Class -> #noClassCategoryName;
-	add: #ClassDescription -> #defaultIconFrom:;
-	add: #CompilerNotification -> #extra;
-	add: #CRTLibrary -> #_controlfp:mask:;
-	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
-	add: #CRTLibrary -> #_eof:;
-	add: #CRTLibrary -> #_filelength:;
-	add: #CRTLibrary -> #_finite:;
-	add: #CRTLibrary -> #_fpclass:;
-	add: #CRTLibrary -> #_gcvt:count:buffer:;
-	add: #CRTLibrary -> #_gcvt_s:bufferSize:value:digits:;
-	add: #CRTLibrary -> #_i64toa:string:radix:;
-	add: #CRTLibrary -> #_logb:;
-	add: #CRTLibrary -> #_ltoa:string:radix:;
-	add: #CRTLibrary -> #_makepath:drive:dir:fname:ext:;
-	add: #CRTLibrary -> #_putenv:;
-	add: #CRTLibrary -> #_rotl:shift:;
-	add: #CRTLibrary -> #_rotr:shift:;
-	add: #CRTLibrary -> #_splitpath:drive:dir:fname:ext:;
-	add: #CRTLibrary -> #_stricoll:string2:;
-	add: #CRTLibrary -> #acos:;
-	add: #CRTLibrary -> #asin:;
-	add: #CRTLibrary -> #atan:;
-	add: #CRTLibrary -> #atan:x:;
-	add: #CRTLibrary -> #ceil:;
-	add: #CRTLibrary -> #chmod:pmode:;
-	add: #CRTLibrary -> #cos:;
-	add: #CRTLibrary -> #exp:;
-	add: #CRTLibrary -> #fabs:;
-	add: #CRTLibrary -> #floor:;
-	add: #CRTLibrary -> #fopen:mode:;
-	add: #CRTLibrary -> #fopen_s:filename:mode:;
-	add: #CRTLibrary -> #fread:size:count:stream:;
-	add: #CRTLibrary -> #freopen:mode:stream:;
-	add: #CRTLibrary -> #frexp:expptr:;
-	add: #CRTLibrary -> #fseek:offset:origin:;
-	add: #CRTLibrary -> #ftell:;
-	add: #CRTLibrary -> #getenv:;
-	add: #CRTLibrary -> #iswspace:;
-	add: #CRTLibrary -> #ldexp:exp:;
-	add: #CRTLibrary -> #log:;
-	add: #CRTLibrary -> #log10:;
-	add: #CRTLibrary -> #log2:;
-	add: #CRTLibrary -> #memcpy:src:count:;
-	add: #CRTLibrary -> #memmove:src:count:;
-	add: #CRTLibrary -> #modf:intptr:;
-	add: #CRTLibrary -> #pow:y:;
-	add: #CRTLibrary -> #sin:;
-	add: #CRTLibrary -> #sqrt:;
-	add: #CRTLibrary -> #strcat:strSource:;
-	add: #CRTLibrary -> #strerror:;
-	add: #CRTLibrary -> #strncpy:strSource:count:;
-	add: #CRTLibrary -> #tan:;
-	add: #CRTLibrary -> #thread_chmod:pmode:;
-	add: #CRTLibrary -> #thread_errno;
-	add: #Date -> #evaluateYYMMDD:;
-	add: #Date -> #monthIndex;
-	add: #Date -> #weekday;
-	add: #Date -> #weekdayIndex;
-	add: #ExternalLibrary -> #invalidCall;
-	add: #ExternalStructure -> #do:;
-	add: #ExternalStructure -> #do:separatedBy:;
-	add: #File -> #readCharacter;
-	add: #Integer -> #digitSize;
-	add: #Integer -> #highSWord;
-	add: #Integer -> #lowSWord;
-	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
-	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
-	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
-	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
-	add: #KernelLibrary -> #getVersionEx:;
-	add: #KernelLibrary -> #lstrcmp:lpString2:;
-	add: #KernelLibrary -> #lstrcmpi:lpString2:;
-	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
-	add: #Locale -> #dateOrder;
-	add: #Locale -> #dateSeparator;
-	add: #Locale -> #isMonthBeforeDay;
-	add: #MessageBox -> #abortRetryIgnore;
-	add: #MessageBox -> #error;
-	add: #MessageBox -> #fatalError;
-	add: #MessageBox -> #ok;
-	add: #MessageBox -> #okCancel;
-	add: #MessageBox -> #prompt;
-	add: #MessageBox -> #retryCancel;
-	add: #MessageBox -> #systemModal;
-	add: #MessageBox -> #taskModal;
-	add: #MessageBox -> #yesNo;
-	add: #MessageBox -> #yesNoCancel;
-	add: #MessageBoxAbstract -> #notify;
-	add: #MessageBoxAbstract -> #warning;
-	add: #Process -> #fpeMask;
-	add: #Process -> #fpeMask:;
-	add: #STBPrefix -> #isLiteralPrefix;
-	add: #Stream -> #nextOrNil;
-	add: #String -> #asUnicodeString;
-	add: #String -> #equals:;
-	add: #Time -> #hours;
-	add: #Time -> #milliseconds;
-	add: #Time -> #minutes;
-	add: #TimeStamp -> #date:;
-	add: #TimeStamp -> #dateAndTime;
-	add: #TimeStamp -> #time:;
-	add: #WindowsLocale -> #timeSeparator;
-	add: #WinMMLibrary -> #timeGetTime;
-	add: 'Category class' -> #categoryIcon;
-	add: 'Character class' -> #safeCodePoint:;
-	add: 'Date class' -> #dateAndTimeNow;
-	add: 'Date class' -> #dayOfWeek:;
-	add: 'Date class' -> #nameOfDay:;
-	add: 'Date class' -> #nameOfMonth:;
-	add: 'Date class' -> #shortNameOfDay:;
-	add: 'Date class' -> #shortNameOfMonth:;
-	add: 'ExternalCallback class' -> #receiver:prototype:;
-	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
-	add: 'ExternalCallback class' -> #receiver:selector:;
-	add: 'ExternalCallback class' -> #receiver:selector:closure:;
-	add: 'ExternalDescriptor class' -> #oneStringArg;
-	add: 'File class' -> #change:extension:;
-	add: 'File class' -> #for:inAndBelow:do:;
-	add: 'KernelLibrary class' -> #clear;
-	add: 'SortAlgorithm class' -> #sortBlock:;
-	add: 'SortedCollection class' -> #value:value:;
-	add: 'STBClassProxy class' -> #for:;
-	add: 'STBCollectionProxy class' -> #for:;
-	add: 'STBSingletonProxy class' -> #for:;
-	add: 'STBSingletonProxy class' -> #for:using:;
-	add: 'String class' -> #fromUnicodeString:;
-	add: 'String class' -> #unicodeClass;
-	add: 'Time class' -> #dateAndTimeNow;
-	add: 'Time class' -> #microsecondsToRun:;
-	yourself.
+package setMethodNames: #(
+	#(#{_FPIEEE_RECORD} #causeCode)
+	#(#{_FPIEEE_RECORD} #causeName)
+	#(#{_FPIEEE_VALUE} #valueType)
+	#(#{ArithmeticValue} #quoAndRem:)
+	#(#{Behavior} #makeIndirect)
+	#(#{Behavior} #makeNullTerminated)
+	#(#{ByteCodeDispatcher} #byteCodeSegments)
+	#(#{Category class} #categoryIcon)
+	#(#{Character class} #safeCodePoint:)
+	#(#{ChunkSourceFiler} #fileOutBinaryGlobal:)
+	#(#{Class} #addClassVarName:)
+	#(#{Class} #noClassCategoryName)
+	#(#{ClassDescription} #defaultIconFrom:)
+	#(#{CompilerNotification} #extra)
+	#(#{CRTLibrary} #_controlfp:mask:)
+	#(#{CRTLibrary} #_ecvt:count:dec:sign:)
+	#(#{CRTLibrary} #_eof:)
+	#(#{CRTLibrary} #_filelength:)
+	#(#{CRTLibrary} #_finite:)
+	#(#{CRTLibrary} #_fpclass:)
+	#(#{CRTLibrary} #_gcvt:count:buffer:)
+	#(#{CRTLibrary} #_gcvt_s:bufferSize:value:digits:)
+	#(#{CRTLibrary} #_i64toa:string:radix:)
+	#(#{CRTLibrary} #_logb:)
+	#(#{CRTLibrary} #_ltoa:string:radix:)
+	#(#{CRTLibrary} #_makepath:drive:dir:fname:ext:)
+	#(#{CRTLibrary} #_putenv:)
+	#(#{CRTLibrary} #_rotl:shift:)
+	#(#{CRTLibrary} #_rotr:shift:)
+	#(#{CRTLibrary} #_splitpath:drive:dir:fname:ext:)
+	#(#{CRTLibrary} #_stricoll:string2:)
+	#(#{CRTLibrary} #acos:)
+	#(#{CRTLibrary} #asin:)
+	#(#{CRTLibrary} #atan:)
+	#(#{CRTLibrary} #atan:x:)
+	#(#{CRTLibrary} #ceil:)
+	#(#{CRTLibrary} #chmod:pmode:)
+	#(#{CRTLibrary} #cos:)
+	#(#{CRTLibrary} #exp:)
+	#(#{CRTLibrary} #fabs:)
+	#(#{CRTLibrary} #floor:)
+	#(#{CRTLibrary} #fopen:mode:)
+	#(#{CRTLibrary} #fopen_s:filename:mode:)
+	#(#{CRTLibrary} #fread:size:count:stream:)
+	#(#{CRTLibrary} #freopen:mode:stream:)
+	#(#{CRTLibrary} #frexp:expptr:)
+	#(#{CRTLibrary} #fseek:offset:origin:)
+	#(#{CRTLibrary} #ftell:)
+	#(#{CRTLibrary} #getenv:)
+	#(#{CRTLibrary} #iswspace:)
+	#(#{CRTLibrary} #ldexp:exp:)
+	#(#{CRTLibrary} #log:)
+	#(#{CRTLibrary} #log10:)
+	#(#{CRTLibrary} #log2:)
+	#(#{CRTLibrary} #memcpy:src:count:)
+	#(#{CRTLibrary} #memmove:src:count:)
+	#(#{CRTLibrary} #modf:intptr:)
+	#(#{CRTLibrary} #pow:y:)
+	#(#{CRTLibrary} #sin:)
+	#(#{CRTLibrary} #sqrt:)
+	#(#{CRTLibrary} #strcat:strSource:)
+	#(#{CRTLibrary} #strerror:)
+	#(#{CRTLibrary} #strncpy:strSource:count:)
+	#(#{CRTLibrary} #tan:)
+	#(#{CRTLibrary} #thread_chmod:pmode:)
+	#(#{CRTLibrary} #thread_errno)
+	#(#{Date} #evaluateYYMMDD:)
+	#(#{Date} #monthIndex)
+	#(#{Date} #weekday)
+	#(#{Date} #weekdayIndex)
+	#(#{Date class} #dateAndTimeNow)
+	#(#{Date class} #dayOfWeek:)
+	#(#{Date class} #nameOfDay:)
+	#(#{Date class} #nameOfMonth:)
+	#(#{Date class} #shortNameOfDay:)
+	#(#{Date class} #shortNameOfMonth:)
+	#(#{ExternalCallback class} #receiver:prototype:)
+	#(#{ExternalCallback class} #receiver:prototype:closure:)
+	#(#{ExternalCallback class} #receiver:selector:)
+	#(#{ExternalCallback class} #receiver:selector:closure:)
+	#(#{ExternalDescriptor class} #oneStringArg)
+	#(#{ExternalLibrary} #invalidCall)
+	#(#{ExternalStructure} #do:)
+	#(#{ExternalStructure} #do:separatedBy:)
+	#(#{File} #readCharacter)
+	#(#{File class} #change:extension:)
+	#(#{File class} #for:inAndBelow:do:)
+	#(#{Integer} #digitSize)
+	#(#{Integer} #highSWord)
+	#(#{Integer} #lowSWord)
+	#(#{KernelLibrary} #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:)
+	#(#{KernelLibrary} #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:)
+	#(#{KernelLibrary} #getFileSize:lpFileSizeHigh:)
+	#(#{KernelLibrary} #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:)
+	#(#{KernelLibrary} #getVersionEx:)
+	#(#{KernelLibrary} #lstrcmp:lpString2:)
+	#(#{KernelLibrary} #lstrcmpi:lpString2:)
+	#(#{KernelLibrary} #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:)
+	#(#{KernelLibrary class} #clear)
+	#(#{Locale} #dateOrder)
+	#(#{Locale} #dateSeparator)
+	#(#{Locale} #isMonthBeforeDay)
+	#(#{MessageBox} #abortRetryIgnore)
+	#(#{MessageBox} #error)
+	#(#{MessageBox} #fatalError)
+	#(#{MessageBox} #ok)
+	#(#{MessageBox} #okCancel)
+	#(#{MessageBox} #prompt)
+	#(#{MessageBox} #retryCancel)
+	#(#{MessageBox} #systemModal)
+	#(#{MessageBox} #taskModal)
+	#(#{MessageBox} #yesNo)
+	#(#{MessageBox} #yesNoCancel)
+	#(#{MessageBoxAbstract} #notify)
+	#(#{MessageBoxAbstract} #warning)
+	#(#{Package} #addGlobalNamed:)
+	#(#{Package} #includesGlobalNamed:)
+	#(#{Package} #isBaseImagePackage)
+	#(#{Package} #untracedGlobals)
+	#(#{PackageManager} #addGlobalNamed:to:)
+	#(#{PackageManager} #allGlobalAliases)
+	#(#{PackageManager} #packageOfGlobalNamed:)
+	#(#{Process} #fpeMask)
+	#(#{Process} #fpeMask:)
+	#(#{SortAlgorithm class} #sortBlock:)
+	#(#{SortedCollection class} #value:value:)
+	#(#{SourceFiler} #fileOutBinaryGlobal:)
+	#(#{STBClassProxy class} #for:)
+	#(#{STBCollectionProxy class} #for:)
+	#(#{STBPrefix} #isLiteralPrefix)
+	#(#{STBSingletonProxy class} #for:)
+	#(#{STBSingletonProxy class} #for:using:)
+	#(#{Stream} #nextOrNil)
+	#(#{String} #asUnicodeString)
+	#(#{String} #equals:)
+	#(#{String class} #fromUnicodeString:)
+	#(#{String class} #unicodeClass)
+	#(#{Time} #hours)
+	#(#{Time} #milliseconds)
+	#(#{Time} #minutes)
+	#(#{Time class} #dateAndTimeNow)
+	#(#{Time class} #microsecondsToRun:)
+	#(#{TimeStamp} #date:)
+	#(#{TimeStamp} #dateAndTime)
+	#(#{TimeStamp} #time:)
+	#(#{WindowsLocale} #timeSeparator)
+	#(#{WinMMLibrary} #timeGetTime)
+).
 
-package globalNames
-	add: #UnicodeString;
-	yourself.
+package setVariableNames: #(
+	#{UnicodeString}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #UnicodeString;
-	yourself).
+package setAliasVariableNames: #(
+	#{UnicodeString}
+).
 
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
 	'..\Dolphin Legacy Date & Time'
-	'..\Dolphin Message Box').
+	'..\Dolphin Message Box'
+).
 
 package!
 
@@ -219,7 +226,7 @@ STBProxy subclass: #STBSymbolProxy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 UnicodeString := Utf16String!
 
@@ -292,6 +299,40 @@ safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
 !Character class categoriesFor: #safeCodePoint:!instance creation!public! !
+
+!ChunkSourceFiler methodsFor!
+
+fileOutBinaryGlobal: anAssociation 
+	"File out the text representation of the non-<sourceObject> which is the value of the
+	<Association>, anAssociation, onto the receiver's source stream. The key of the association
+	is the global name. If the global is just an alias to a class, then we don't need to binary
+	file it at all."
+
+	| glob |
+	#deprecated.
+	glob := anAssociation value.
+	(glob class isMeta and: [anAssociation key ~= glob name]) 
+		ifTrue: 
+			[stream
+				nextPutAll: anAssociation key;
+				nextPutAll: ' := ';
+				print: anAssociation value;
+				nextPut: $!!;
+				cr.
+			^self].
+	stream
+		nextPutAll: anAssociation key;
+		nextPutAll: ' := ';
+		print: Object;
+		space;
+		display: #fromBinaryStoreBytes:;
+		space;
+		cr.
+	glob binaryStoreBytes base64StoreOn: stream.
+	stream
+		nextPut: $!!;
+		cr! !
+!ChunkSourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing-file out! !
 
 !Class methodsFor!
 
@@ -981,6 +1022,47 @@ warning
 !MessageBoxAbstract categoriesFor: #notify!modes!public! !
 !MessageBoxAbstract categoriesFor: #warning!modes!public! !
 
+!Package methodsFor!
+
+addGlobalNamed: globalName
+	#deprecated.
+	^self addVariableNamed: globalName!
+
+includesGlobalNamed: globalName
+	#deprecated.
+	^self includesVariableNamed: globalName asQualifiedReference!
+
+isBaseImagePackage
+	"Answer true if the receiver is a basic component of Dolphin "
+
+	#deprecated.
+	^self isBasePackage!
+
+untracedGlobals
+	#deprecated.
+	^self untracedVariables collect: [:each | each asSymbol]! !
+!Package categoriesFor: #addGlobalNamed:!adding!public! !
+!Package categoriesFor: #includesGlobalNamed:!public!testing! !
+!Package categoriesFor: #isBaseImagePackage!public!testing! !
+!Package categoriesFor: #untracedGlobals!accessing!public! !
+
+!PackageManager methodsFor!
+
+addGlobalNamed: globalName to: aPackageOrNil
+	#deprecated.
+	^self addVariableNamed: globalName asQualifiedReference to: aPackageOrNil!
+
+allGlobalAliases
+	#deprecated.
+	^self allVariableAliases collect: [:each | each asSymbol]!
+
+packageOfGlobalNamed: globalName 
+	#deprecated.
+	^self packageOfVariableNamed: globalName asQualifiedReference! !
+!PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
+!PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
+!PackageManager categoriesFor: #packageOfGlobalNamed:!public!searching! !
+
 !Process methodsFor!
 
 fpeMask
@@ -1010,6 +1092,17 @@ value: anObject1 value: anObject2
 	Notification deprecated.
 	^anObject1 <= anObject2! !
 !SortedCollection class categoriesFor: #value:value:!evaluating!private! !
+
+!SourceFiler methodsFor!
+
+fileOutBinaryGlobal: anAssociation 
+	"File out the text representation of the non-<sourceObject>
+	which is the value of the <Association>, anAssociation, to the
+	source stream. The key of the association is the global name."
+
+	#deprecated.
+	^self subclassResponsibility! !
+!SourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
 
 !STBClassProxy class methodsFor!
 

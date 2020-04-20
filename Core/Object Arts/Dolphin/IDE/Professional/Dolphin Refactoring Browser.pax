@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Refactoring Browser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Refactoring Browser Native UI Integration
 Copyright (c) Object Arts Ltd, 2001-2009.
@@ -24,199 +24,193 @@ In the browsers Refactoring commands can be found on the Refactoring sub-menus o
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #CodeMentorPlugin;
-	add: #CodeRefactoringTool;
-	add: #CodeRewriterPlugin;
-	add: #ConvertToSiblingDialog;
-	add: #CopyClassRefactoring;
-	add: #DolphinAddGlobalChange;
-	add: #DolphinGlobalChange;
-	add: #DolphinRemoveGlobalChange;
-	add: #LintRuleFailuresBrowserShell;
-	add: #MethodNameDialog;
-	add: #MethodRefactoringTool;
-	add: #RBScopedMethodName;
-	add: #RefactoringSmalltalkSystem;
-	add: #RefactoringTool;
-	add: #RenameAccessorsDialog;
-	add: #RenameMethodDialog;
-	add: #RenameMethodReferencesRefactoring;
-	add: #RewriteChangesBrowser;
-	add: #SmalllintCachingContext;
-	add: #SmalllintPlugin;
-	yourself.
+package setClassNames: #(
+	#{CodeMentorPlugin}
+	#{CodeRefactoringTool}
+	#{CodeRewriterPlugin}
+	#{ConvertToSiblingDialog}
+	#{CopyClassRefactoring}
+	#{DolphinAddGlobalChange}
+	#{DolphinGlobalChange}
+	#{DolphinRemoveGlobalChange}
+	#{LintRuleFailuresBrowserShell}
+	#{MethodNameDialog}
+	#{MethodRefactoringTool}
+	#{RBScopedMethodName}
+	#{RefactoringSmalltalkSystem}
+	#{RefactoringTool}
+	#{RenameAccessorsDialog}
+	#{RenameMethodDialog}
+	#{RenameMethodReferencesRefactoring}
+	#{RewriteChangesBrowser}
+	#{SmalllintCachingContext}
+	#{SmalllintPlugin}
+).
 
-package methodNames
-	add: #AbstractVariablesRefactoring -> #displayOn:;
-	add: #AddClassRefactoring -> #displayOn:;
-	add: #AddMethodRefactoring -> #displayOn:;
-	add: #AddParameterRefactoring -> #displayOn:;
-	add: #BasicLintRule -> #failedClasses;
-	add: #BasicLintRule -> #failedMethods;
-	add: #BasicLintRule -> #publishedAspects;
-	add: #BasicLintRule -> #searchStrings;
-	add: #ChildrenToSiblingsRefactoring -> #displayOn:;
-	add: #Class -> #directlyDefinesClassVariable:;
-	add: #ClassBrowserAbstract -> #abstractInstanceVariables;
-	add: #ClassBrowserAbstract -> #methodRefactoringTool;
-	add: #ClassBrowserAbstract -> #methodsToOverride;
-	add: #ClassBrowserAbstract -> #overrideMethods;
-	add: #ClassBrowserAbstract -> #protectInstanceVariables;
-	add: #ClassBrowserAbstract -> #pushDownInstanceVariables;
-	add: #ClassBrowserAbstract -> #pushDownMethods;
-	add: #ClassBrowserAbstract -> #pushMethods:;
-	add: #ClassBrowserAbstract -> #pushUpMethods;
-	add: #ClassBrowserAbstract -> #queryRefactoringCommand:;
-	add: #ClassBrowserAbstract -> #removeInstanceVariables;
-	add: #ClassBrowserAbstract -> #renameMethod;
-	add: #ClassBrowserAbstract -> #selectedOverridableMethods;
-	add: #ClassDescription -> #definesClassVariable:;
-	add: #ClassDescription -> #definesInstanceVariable:;
-	add: #ClassDescription -> #definesVariable:;
-	add: #ClassDescription -> #directlyDefinesClassVariable:;
-	add: #ClassDescription -> #directlyDefinesInstanceVariable:;
-	add: #ClassDescription -> #directlyDefinesVariable:;
-	add: #ClassDescription -> #hierarchyDefinesVariable:;
-	add: #ClassSelector -> #abstractClassVariables;
-	add: #ClassSelector -> #abstractInstanceVariables;
-	add: #ClassSelector -> #addClassVariable;
-	add: #ClassSelector -> #addInstanceVariable;
-	add: #ClassSelector -> #buildInstVarMenu:selectors:;
-	add: #ClassSelector -> #buildPullUpVariablesMenu:;
-	add: #ClassSelector -> #buildVariablesMenu:instVarSelectors:classVarSelectors:;
-	add: #ClassSelector -> #cloneClass:under:changes:;
-	add: #ClassSelector -> #convertToSibling;
-	add: #ClassSelector -> #createClassVariableAccessors;
-	add: #ClassSelector -> #populateClassVarMenu:selectors:;
-	add: #ClassSelector -> #populateInstVarMenu:selectors:;
-	add: #ClassSelector -> #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:;
-	add: #ClassSelector -> #populateRefactoringMenu:;
-	add: #ClassSelector -> #protectInstanceVariables;
-	add: #ClassSelector -> #pullUpClassVariables;
-	add: #ClassSelector -> #pullUpInstanceVariables;
-	add: #ClassSelector -> #pullUpVariableNamePairs:for:maximum:;
-	add: #ClassSelector -> #pushDownClassVariables;
-	add: #ClassSelector -> #pushDownInstanceVariables;
-	add: #ClassSelector -> #queryRefactoringCommand:;
-	add: #ClassSelector -> #removeClassVariables;
-	add: #ClassSelector -> #removeDuplicateMethods;
-	add: #ClassSelector -> #removeInstanceVariables;
-	add: #ClassSelector -> #safeRemoveClass;
-	add: #Debugger -> #canMoveMethods;
-	add: #Debugger -> #hasRefactorableMethodSelected;
-	add: #Debugger -> #performMethodRefactoring:;
-	add: #Debugger -> #performMethodRenameRefactoring:;
-	add: #ExpandReferencedPoolsRefactoring -> #displayOn:;
-	add: #ExtractMethodRefactoring -> #displayOn:;
-	add: #ExtractMethodToComponentRefactoring -> #displayOn:;
-	add: #ExtractMethodToComponentRefactoring -> #getOptionVariableToMoveToOf:in:;
-	add: #ExtractToTemporaryRefactoring -> #displayOn:;
-	add: #InlineAllSendersRefactoring -> #displayOn:;
-	add: #InlineMethodRefactoring -> #displayOn:;
-	add: #InlineParameterRefactoring -> #displayOn:;
-	add: #InlineTemporaryRefactoring -> #displayOn:;
-	add: #LintRule -> #failedClasses;
-	add: #LintRule -> #failedMethods;
-	add: #LintRule -> #searchStrings;
-	add: #Metaclass -> #directlyDefinesClassVariable:;
-	add: #MethodBrowser -> #canMoveMethods;
-	add: #MethodBrowser -> #hasRefactorableMethodSelected;
-	add: #MethodBrowser -> #performMethodRefactoring:;
-	add: #MethodBrowser -> #performMethodRenameRefactoring:;
-	add: #MethodBrowser -> #performMethodsRefactoring:name:;
-	add: #MethodRefactoring -> #getOptionMethodName:;
-	add: #MethodWorkspace -> #canRefactor;
-	add: #MethodWorkspace -> #executeRefactoring:;
-	add: #MethodWorkspace -> #executeRefactoring:with:;
-	add: #MethodWorkspace -> #fontOfStyle:;
-	add: #MethodWorkspace -> #performCodeRefactoring:;
-	add: #MethodWorkspace -> #performMethodRefactoring:;
-	add: #MethodWorkspace -> #performMethodRenameRefactoring:;
-	add: #MethodWorkspace -> #renameVariable:operation:validationBlock:;
-	add: #MoveMethodRefactoring -> #displayOn:;
-	add: #MoveMethodRefactoring -> #getOptionSelfArgumentName;
-	add: #MoveMethodRefactoring -> #getOptionVariableTypes:selected:;
-	add: #MoveVariableDefinitionRefactoring -> #displayOn:;
-	add: #PackageBrowserShell -> #addParameter;
-	add: #PackageBrowserShell -> #addParameterTo:;
-	add: #PackageBrowserShell -> #addParameterToMethod;
-	add: #PackageBrowserShell -> #chooseMethodsForRefactoring:;
-	add: #PackageBrowserShell -> #hasRefactorableMethodSelected;
-	add: #PackageBrowserShell -> #parseTree;
-	add: #PackageBrowserShell -> #performMethodRenameRefactoring:;
-	add: #PackageBrowserShell -> #performMethodsRefactoring:name:;
-	add: #PackageBrowserShell -> #promptForMethodName:caption:allowExisting:;
-	add: #PackageBrowserShell -> #queryRefactoringCommand:;
-	add: #PackageBrowserShell -> #removeParameter;
-	add: #PackageBrowserShell -> #renameLooseMethod;
-	add: #PackageBrowserShell -> #renameLooseMethodReferences;
-	add: #PackageBrowserShell -> #renameMethod;
-	add: #PackageBrowserShell -> #renameMethodReferences:;
-	add: #PackageBrowserShell -> #safeRemoveMethod;
-	add: #PackageBrowserShell -> #safeRemoveMethods;
-	add: #PackageSelector -> #moveAllTempsToInnerScope;
-	add: #PackageSelector -> #queryRefactoringCommand:;
-	add: #PackageSelector -> #removeDuplicateMethods;
-	add: #PullUpClassVariableRefactoring -> #displayOn:;
-	add: #PullUpInstanceVariableRefactoring -> #displayOn:;
-	add: #PushDownMethodRefactoring -> #displayOn:;
-	add: #PushUpMethodRefactoring -> #displayOn:;
-	add: #RBAbstractClass -> #instVarNames;
-	add: #RBAbstractClass -> #owningPackage;
-	add: #RBMethod -> #owningPackage;
-	add: #Refactoring -> #confirm:;
-	add: #RemoveClassRefactoring -> #displayOn:;
-	add: #RemoveMethodRefactoring -> #displayOn:;
-	add: #RemoveParameterRefactoring -> #displayOn:;
-	add: #RenameAccessorsForVariableRefactoring -> #displayOn:;
-	add: #RenameClassRefactoring -> #displayOn:;
-	add: #RenameClassVariableRefactoring -> #displayOn:;
-	add: #RenameInstanceVariableAndAccessorsRefactoring -> #displayOn:;
-	add: #RenameInstanceVariableRefactoring -> #displayOn:;
-	add: #RenameMethodRefactoring -> #displayOn:;
-	add: #RenameTemporaryRefactoring -> #displayOn:;
-	add: #SmalltalkToolShell -> #chooseMethodForRefactoring:;
-	add: #SmalltalkToolShell -> #queryRefactoringCommand:;
-	add: #TemporaryToInstanceVariableRefactoring -> #displayOn:;
-	add: #VariableRefactoring -> #displayOn:;
-	add: #VariableRefactoring -> #displayPrefix;
-	add: 'AbstractClassVariableRefactoring class' -> #displayPrefix;
-	add: 'AbstractInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'AddClassVariableRefactoring class' -> #displayPrefix;
-	add: 'AddInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'CreateAccessorsForVariableRefactoring class' -> #displayPrefix;
-	add: 'LintRule class' -> #icon;
-	add: 'ProtectInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'PullUpClassVariableRefactoring class' -> #displayPrefix;
-	add: 'PullUpInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'PushDownClassVariableRefactoring class' -> #displayPrefix;
-	add: 'PushDownInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'Refactoring class' -> #icon;
-	add: 'Refactoring class' -> #renameIcon;
-	add: 'RemoveClassVariableRefactoring class' -> #displayPrefix;
-	add: 'RemoveInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'RenameAccessorsForVariableRefactoring class' -> #displayPrefix;
-	add: 'RenameAccessorsForVariableRefactoring class' -> #icon;
-	add: 'RenameClassVariableRefactoring class' -> #displayPrefix;
-	add: 'RenameClassVariableRefactoring class' -> #icon;
-	add: 'RenameInstanceVariableRefactoring class' -> #displayPrefix;
-	add: 'RenameInstanceVariableRefactoring class' -> #icon;
-	add: 'RenameMethodRefactoring class' -> #icon;
-	add: 'RenameTemporaryRefactoring class' -> #icon;
-	add: 'SmalllintChecker class' -> #newWithCachingContext;
-	add: 'TransformationRule class' -> #bitLogicElimination;
-	add: 'TransformationRule class' -> #icon;
-	add: 'TransformationRule class' -> #ifElimination;
-	add: 'TransformationRule class' -> #renameArgument:to:;
-	add: 'VariableRefactoring class' -> #displayPrefix;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{AbstractClassVariableRefactoring class} #displayPrefix)
+	#(#{AbstractInstanceVariableRefactoring class} #displayPrefix)
+	#(#{AbstractVariablesRefactoring} #displayOn:)
+	#(#{AddClassRefactoring} #displayOn:)
+	#(#{AddClassVariableRefactoring class} #displayPrefix)
+	#(#{AddInstanceVariableRefactoring class} #displayPrefix)
+	#(#{AddMethodRefactoring} #displayOn:)
+	#(#{AddParameterRefactoring} #displayOn:)
+	#(#{BasicLintRule} #failedClasses)
+	#(#{BasicLintRule} #failedMethods)
+	#(#{BasicLintRule} #publishedAspects)
+	#(#{BasicLintRule} #searchStrings)
+	#(#{ChildrenToSiblingsRefactoring} #displayOn:)
+	#(#{Class} #directlyDefinesClassVariable:)
+	#(#{ClassBrowserAbstract} #abstractInstanceVariables)
+	#(#{ClassBrowserAbstract} #methodRefactoringTool)
+	#(#{ClassBrowserAbstract} #methodsToOverride)
+	#(#{ClassBrowserAbstract} #overrideMethods)
+	#(#{ClassBrowserAbstract} #protectInstanceVariables)
+	#(#{ClassBrowserAbstract} #pushDownInstanceVariables)
+	#(#{ClassBrowserAbstract} #pushDownMethods)
+	#(#{ClassBrowserAbstract} #pushMethods:)
+	#(#{ClassBrowserAbstract} #pushUpMethods)
+	#(#{ClassBrowserAbstract} #queryRefactoringCommand:)
+	#(#{ClassBrowserAbstract} #removeInstanceVariables)
+	#(#{ClassBrowserAbstract} #renameMethod)
+	#(#{ClassBrowserAbstract} #selectedOverridableMethods)
+	#(#{ClassDescription} #definesClassVariable:)
+	#(#{ClassDescription} #definesInstanceVariable:)
+	#(#{ClassDescription} #definesVariable:)
+	#(#{ClassDescription} #directlyDefinesClassVariable:)
+	#(#{ClassDescription} #directlyDefinesInstanceVariable:)
+	#(#{ClassDescription} #directlyDefinesVariable:)
+	#(#{ClassDescription} #hierarchyDefinesVariable:)
+	#(#{ClassSelector} #abstractClassVariables)
+	#(#{ClassSelector} #abstractInstanceVariables)
+	#(#{ClassSelector} #addClassVariable)
+	#(#{ClassSelector} #addInstanceVariable)
+	#(#{ClassSelector} #buildInstVarMenu:selectors:)
+	#(#{ClassSelector} #buildPullUpVariablesMenu:)
+	#(#{ClassSelector} #buildVariablesMenu:instVarSelectors:classVarSelectors:)
+	#(#{ClassSelector} #cloneClass:under:changes:)
+	#(#{ClassSelector} #convertToSibling)
+	#(#{ClassSelector} #createClassVariableAccessors)
+	#(#{ClassSelector} #populateClassVarMenu:selectors:)
+	#(#{ClassSelector} #populateInstVarMenu:selectors:)
+	#(#{ClassSelector} #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:)
+	#(#{ClassSelector} #populateRefactoringMenu:)
+	#(#{ClassSelector} #protectInstanceVariables)
+	#(#{ClassSelector} #pullUpClassVariables)
+	#(#{ClassSelector} #pullUpInstanceVariables)
+	#(#{ClassSelector} #pullUpVariableNamePairs:for:maximum:)
+	#(#{ClassSelector} #pushDownClassVariables)
+	#(#{ClassSelector} #pushDownInstanceVariables)
+	#(#{ClassSelector} #queryRefactoringCommand:)
+	#(#{ClassSelector} #removeClassVariables)
+	#(#{ClassSelector} #removeDuplicateMethods)
+	#(#{ClassSelector} #removeInstanceVariables)
+	#(#{ClassSelector} #safeRemoveClass)
+	#(#{CreateAccessorsForVariableRefactoring class} #displayPrefix)
+	#(#{Debugger} #canMoveMethods)
+	#(#{Debugger} #hasRefactorableMethodSelected)
+	#(#{Debugger} #performMethodRefactoring:)
+	#(#{Debugger} #performMethodRenameRefactoring:)
+	#(#{ExpandReferencedPoolsRefactoring} #displayOn:)
+	#(#{ExtractMethodRefactoring} #displayOn:)
+	#(#{ExtractMethodToComponentRefactoring} #displayOn:)
+	#(#{ExtractMethodToComponentRefactoring} #getOptionVariableToMoveToOf:in:)
+	#(#{ExtractToTemporaryRefactoring} #displayOn:)
+	#(#{InlineAllSendersRefactoring} #displayOn:)
+	#(#{InlineMethodRefactoring} #displayOn:)
+	#(#{InlineParameterRefactoring} #displayOn:)
+	#(#{InlineTemporaryRefactoring} #displayOn:)
+	#(#{LintRule} #failedClasses)
+	#(#{LintRule} #failedMethods)
+	#(#{LintRule class} #icon)
+	#(#{LintRule} #searchStrings)
+	#(#{Metaclass} #directlyDefinesClassVariable:)
+	#(#{MethodBrowser} #canMoveMethods)
+	#(#{MethodBrowser} #hasRefactorableMethodSelected)
+	#(#{MethodBrowser} #performMethodRefactoring:)
+	#(#{MethodBrowser} #performMethodRenameRefactoring:)
+	#(#{MethodBrowser} #performMethodsRefactoring:name:)
+	#(#{MethodRefactoring} #getOptionMethodName:)
+	#(#{MethodWorkspace} #canRefactor)
+	#(#{MethodWorkspace} #executeRefactoring:)
+	#(#{MethodWorkspace} #executeRefactoring:with:)
+	#(#{MethodWorkspace} #fontOfStyle:)
+	#(#{MethodWorkspace} #performCodeRefactoring:)
+	#(#{MethodWorkspace} #performMethodRefactoring:)
+	#(#{MethodWorkspace} #performMethodRenameRefactoring:)
+	#(#{MethodWorkspace} #renameVariable:operation:validationBlock:)
+	#(#{MoveMethodRefactoring} #displayOn:)
+	#(#{MoveMethodRefactoring} #getOptionSelfArgumentName)
+	#(#{MoveMethodRefactoring} #getOptionVariableTypes:selected:)
+	#(#{MoveVariableDefinitionRefactoring} #displayOn:)
+	#(#{PackageBrowserShell} #addParameter)
+	#(#{PackageBrowserShell} #addParameterTo:)
+	#(#{PackageBrowserShell} #addParameterToMethod)
+	#(#{PackageBrowserShell} #chooseMethodsForRefactoring:)
+	#(#{PackageBrowserShell} #hasRefactorableMethodSelected)
+	#(#{PackageBrowserShell} #parseTree)
+	#(#{PackageBrowserShell} #performMethodRenameRefactoring:)
+	#(#{PackageBrowserShell} #performMethodsRefactoring:name:)
+	#(#{PackageBrowserShell} #promptForMethodName:caption:allowExisting:)
+	#(#{PackageBrowserShell} #queryRefactoringCommand:)
+	#(#{PackageBrowserShell} #removeParameter)
+	#(#{PackageBrowserShell} #renameLooseMethod)
+	#(#{PackageBrowserShell} #renameLooseMethodReferences)
+	#(#{PackageBrowserShell} #renameMethod)
+	#(#{PackageBrowserShell} #renameMethodReferences:)
+	#(#{PackageBrowserShell} #safeRemoveMethod)
+	#(#{PackageBrowserShell} #safeRemoveMethods)
+	#(#{PackageSelector} #moveAllTempsToInnerScope)
+	#(#{PackageSelector} #queryRefactoringCommand:)
+	#(#{PackageSelector} #removeDuplicateMethods)
+	#(#{ProtectInstanceVariableRefactoring class} #displayPrefix)
+	#(#{PullUpClassVariableRefactoring} #displayOn:)
+	#(#{PullUpClassVariableRefactoring class} #displayPrefix)
+	#(#{PullUpInstanceVariableRefactoring} #displayOn:)
+	#(#{PullUpInstanceVariableRefactoring class} #displayPrefix)
+	#(#{PushDownClassVariableRefactoring class} #displayPrefix)
+	#(#{PushDownInstanceVariableRefactoring class} #displayPrefix)
+	#(#{PushDownMethodRefactoring} #displayOn:)
+	#(#{PushUpMethodRefactoring} #displayOn:)
+	#(#{RBAbstractClass} #instVarNames)
+	#(#{RBAbstractClass} #owningPackage)
+	#(#{RBMethod} #owningPackage)
+	#(#{Refactoring} #confirm:)
+	#(#{Refactoring class} #icon)
+	#(#{Refactoring class} #renameIcon)
+	#(#{RemoveClassRefactoring} #displayOn:)
+	#(#{RemoveClassVariableRefactoring class} #displayPrefix)
+	#(#{RemoveInstanceVariableRefactoring class} #displayPrefix)
+	#(#{RemoveMethodRefactoring} #displayOn:)
+	#(#{RemoveParameterRefactoring} #displayOn:)
+	#(#{RenameAccessorsForVariableRefactoring} #displayOn:)
+	#(#{RenameAccessorsForVariableRefactoring class} #displayPrefix)
+	#(#{RenameAccessorsForVariableRefactoring class} #icon)
+	#(#{RenameClassRefactoring} #displayOn:)
+	#(#{RenameClassVariableRefactoring} #displayOn:)
+	#(#{RenameClassVariableRefactoring class} #displayPrefix)
+	#(#{RenameClassVariableRefactoring class} #icon)
+	#(#{RenameInstanceVariableAndAccessorsRefactoring} #displayOn:)
+	#(#{RenameInstanceVariableRefactoring} #displayOn:)
+	#(#{RenameInstanceVariableRefactoring class} #displayPrefix)
+	#(#{RenameInstanceVariableRefactoring class} #icon)
+	#(#{RenameMethodRefactoring} #displayOn:)
+	#(#{RenameMethodRefactoring class} #icon)
+	#(#{RenameTemporaryRefactoring} #displayOn:)
+	#(#{RenameTemporaryRefactoring class} #icon)
+	#(#{SmalllintChecker class} #newWithCachingContext)
+	#(#{SmalltalkToolShell} #chooseMethodForRefactoring:)
+	#(#{SmalltalkToolShell} #queryRefactoringCommand:)
+	#(#{TemporaryToInstanceVariableRefactoring} #displayOn:)
+	#(#{TransformationRule class} #bitLogicElimination)
+	#(#{TransformationRule class} #icon)
+	#(#{TransformationRule class} #ifElimination)
+	#(#{TransformationRule class} #renameArgument:to:)
+	#(#{VariableRefactoring} #displayOn:)
+	#(#{VariableRefactoring class} #displayPrefix)
+	#(#{VariableRefactoring} #displayPrefix)
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Contributions\Camp Smalltalk\Refactoring Browser\Refactorings\CSRefactorings'
@@ -255,7 +249,8 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\ActiveX\Shell\Windows Shell'
-	'..\..\ActiveX\Components\XML DOM\XML DOM').
+	'..\..\ActiveX\Components\XML DOM\XML DOM'
+).
 
 package!
 
@@ -361,9 +356,6 @@ SmalllintContext subclass: #SmalllintCachingContext
 	classVariableNames: 'Literals Mtx Selectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -765,15 +757,15 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 	(aMenu notEmpty and: [self selection classPool notEmpty]) ifTrue: [aMenu addSeparator].
 	self populateClassVarMenu: aMenu selectors: classVarSelectors!
 
-cloneClass: aClass under: superClass changes: aCompositeRefactoryChange 
+cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
 	| namespace newName |
-	namespace := (RBNamespace new)
+	namespace := RBNamespace new
 				changes: aCompositeRefactoryChange;
 				yourself.
 	
 	[newName := ('CopyOf' , aClass name) asSymbol.
-	Smalltalk includesKey: newName] whileTrue.
-	(CopyClassRefactoring 
+	newName asQualifiedReference isDefined] whileTrue.
+	(CopyClassRefactoring
 		model: namespace
 		clone: aClass
 		as: newName
@@ -1492,9 +1484,8 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 				| global index |
 				index := aString identityIndexOf: $\x20.
 				global := index == 0
-							ifTrue: [Smalltalk lookup: aString]
-							ifFalse: 
-								[(Smalltalk lookup: (aString leftString: index - 1)) ifNil: [] ifNotNil: [:class | class class]].
+							ifTrue: [aString asQualifiedReference valueOrNil]
+							ifFalse: [(aString leftString: index - 1) asQualifiedReference ifDefined: [:c | c class]].
 				(global notNil
 					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]])
 						ifFalse: 

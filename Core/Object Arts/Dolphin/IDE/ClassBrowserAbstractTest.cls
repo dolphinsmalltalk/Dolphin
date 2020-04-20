@@ -282,7 +282,7 @@ testIsMethodVisibleClassSide
 	| subjectClass |
 	self deny: self browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods equals: browser class defaultFilterObjectMethods.
-	subjectClass := PackageBrowserTest class.
+	subjectClass := PackageBrowserShellTest class.
 	browser actualClass: subjectClass.
 	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
 	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).

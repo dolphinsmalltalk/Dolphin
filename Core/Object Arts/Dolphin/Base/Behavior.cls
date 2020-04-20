@@ -428,20 +428,12 @@ flushMethodCache
 	^self primitiveFailed: _failureCode!
 
 fullBindingFor: aString
-	"Answer a variable binding for the named variable in the scope of this class, and
-	failing that in the receiver's environment. If there is no such variable, then answer nil."
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	(aString identityIncludes: $.)
-		ifTrue: 
-			[| parts env count |
-			parts := $. split: aString.
-			"Fully qualified name always starts in Smalltalk"
-			env := Smalltalk.
-			count := parts size.
-			1 to: count - 1
-				do: [:i | (env bindingFor: (parts at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
-			^env bindingFor: (parts at: count)].
-	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
+	#todo.	"Temporary definition."
+	^(BindingReference isQualifiedName: aString)
+		ifTrue: [self environment resolveBindingPath: ($. split: aString)]
+		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
 
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
@@ -608,6 +600,12 @@ kindOfSubclass
 		ifTrue: [self isBytes ifTrue: ['variableByteSubclass:'] ifFalse: ['variableSubclass:']]
 		ifFalse: ['subclass:']!
 
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self environment
+!
+
 lookupMethod: aSymbol
 	"Answer the method of the receiver, or inherited by the receiver, corresponding
 	to the selector, aSymbol."
@@ -727,7 +725,7 @@ primAllSubinstances
 	<primitive: 58>
 	^self primitiveFailed: _failureCode!
 
-recompile: aSelector 
+recompile: aSelector
 	"Compile the method associated with the message selector, selector.
 	The method is not logged to the change log but the source is re-used
 	from the original"
@@ -736,29 +734,29 @@ recompile: aSelector
 	oldMethod := self compiledMethodAt: aSelector.
 	oldMethod isNil ifTrue: [^self].
 	
-	[result := self compilerClass 
+	[result := self compilerClass
 				compile: oldMethod getSource
 				in: self
-				flags: self defaultCompilationFlags] 
+				flags: self defaultCompilationFlags]
 			on: self compilerClass errorClass
 			do: 
-				[:ex | 
+				[:ex |
 				stubMethod := (MethodCompileFailed with: ex) signal: ex description.
 				ex pass].
 
 	"Was a stub method installed?"
 	stubMethod notNil ifTrue: [result := stubMethod].
-	^(result notNil and: [(method := result method) notNil]) 
+	^(result notNil and: [(method := result method) notNil])
 		ifTrue: 
 			["Add the selector and copy across the old source descriptor and privacy, as we haven't don't want to change either"
 			method selector: aSelector.
 			self addSelector: aSelector withMethod: method.
+			"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 			method
 				sourceDescriptor: oldMethod sourceDescriptor;
 				isPrivate: oldMethod isPrivate;
-				isImmutable: true.
-			"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
-			method]!
+				isImmutable: true;
+				yourself]!
 
 recompileAll
 	"Recompile this class and all its subclasses. The methods are not logged to the change log,
@@ -1125,7 +1123,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
-!Behavior categoriesFor: #environment!constants!public! !
+!Behavior categoriesFor: #environment!accessing!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
@@ -1159,6 +1157,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #isVariable!instance specification-testing!public! !
 !Behavior categoriesFor: #isWords!instance specification-testing!public! !
 !Behavior categoriesFor: #kindOfSubclass!class hierarchy-testing!private! !
+!Behavior categoriesFor: #localEnvironment!accessing!private! !
 !Behavior categoriesFor: #lookupMethod:!methods-accessing!public! !
 !Behavior categoriesFor: #makeMourner!instance specification-accessing!private! !
 !Behavior categoriesFor: #methodDictionary!methods-accessing!private! !

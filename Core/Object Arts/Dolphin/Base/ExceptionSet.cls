@@ -60,7 +60,10 @@ new
 selectors: anArray
 	"Private - Answer a new instance of the receiver containing representing a set of the <exceptionSelector>s in the <Array> argument."
 
-	^super new selectors: anArray! !
+	<primitive: 157>
+	^self basicNew
+		selectors: anArray;
+		yourself! !
 !ExceptionSet class categoriesFor: #new!instance creation!public! !
 !ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
 

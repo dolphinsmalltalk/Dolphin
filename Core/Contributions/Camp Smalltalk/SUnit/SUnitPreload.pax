@@ -1,33 +1,31 @@
 ﻿| package |
 package := Package name: 'SUnitPreload'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #ResumableTestFailure;
-	add: #SUnitNameResolver;
-	add: #TestFailure;
-	yourself.
+package setClassNames: #(
+	#{ResumableTestFailure}
+	#{SUnitNameResolver}
+	#{TestFailure}
+).
 
-package methodNames
-	add: #Exception -> #sunitExitWith:;
-	yourself.
+package setMethodNames: #(
+	#(#{Exception} #sunitExitWith:)
+).
 
-package globalNames
-	add: #SUnitDelay;
-	yourself.
+package setVariableNames: #(
+	#{SUnitDelay}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #SUnitDelay;
-	yourself).
+package setAliasVariableNames: #(
+	#{SUnitDelay}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -49,7 +47,7 @@ TestFailure subclass: #ResumableTestFailure
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 SUnitDelay := Delay!
 

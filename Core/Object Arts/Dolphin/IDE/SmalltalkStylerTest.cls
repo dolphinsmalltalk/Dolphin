@@ -318,6 +318,60 @@ testPseudoSignature
 	self assert: tokens
 		equals: #(#(##(1 to: 3) #unarySelector 'nil') #(##(4 to: 4) #whitespace ' ') #(##(5 to: 7) #literalPseudo 'nil'))!
 
+testQualifiedReferenceIncompleteIdentifier
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{_'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens equals: {{1 to: 3. #literalBindingReference. '#{_'}}!
+
+testQualifiedReferenceIncompleteQualifiedIdentifier
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{A.}'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	"Note that although the '.}' sequence will be scanned as separate special character tokens, they'll get merged into one styling token"
+	self assert: tokens
+		equals: {{1 to: 3. #literalBindingReference. '#{A'}. {4 to: 5. #specialCharacter. '.}'}}!
+
+testQualifiedReferenceInvalidIdentifier
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{1}'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 2. #literalBindingReference. '#{'}.
+				{3 to: 3. #literalNumber. '1'}.
+				{4 to: 4. #specialCharacter. '}'}}!
+
+testQualifiedReferenceUnterminated
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{Object+'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 8. #literalBindingReference. '#{Object'}. {9 to: 9. #binaryMessage. '+'}}!
+
 testScanningFloats
 	#('5.1234' '0.0' '0.5' '1.2e1' '1.2d2' '1.2e-1' '1.2e+1' '1.2d-2' '1.2d+2' '1.0e308' '1.0e+308' '2.2250738585072014e-308' '1.7976931348623158e308' '1.7976931348623158e+308' '0.5e0' '0.5d0' '0.5q0' '0.5e+0' '0.5d+0' '0.5q+0' '0.5e-0' '0.5d-0' '0.5q-0') 
 		do: [:each | self scanNumeric: each class: Float].
@@ -505,6 +559,25 @@ testUnaryMessageToBlock
 	self assert: tokens
 		equals: #(#(##(1 to: 2) #specialCharacter '[]') #(##(3 to: 3) #unaryMessage 'x'))!
 
+testUnaryMessageToBraceArray
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '{1. 2}reverse'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 1. #specialCharacter. '{'}.
+				{2 to: 2. #literalNumber. '1'}.
+				{3 to: 3. #specialCharacter. '.'}.
+				{4 to: 4. #whitespace. ' '}.
+				{5 to: 5. #literalNumber. '2'}.
+				{6 to: 6. #specialCharacter. '}'}.
+				{7 to: 13. #unaryMessage. 'reverse'}}!
+
 testUnaryMessageToByteArray
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
@@ -515,7 +588,33 @@ testUnaryMessageToByteArray
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens equals: #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))! !
+	self assert: tokens equals: #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))!
+
+testUnaryMessageToQualifiedReference
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{Smalltalk.Object}x'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens
+		equals: {{1 to: 19. #literalBindingReference. '#{Smalltalk.Object}'}.
+				{20 to: 20. #unaryMessage. 'x'}}!
+
+testUnaryMessageToString
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '''s''x'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens equals: {{1 to: 3. #literalString. '''s'''}. {4 to: 4. #unaryMessage. 'x'}}! !
 !SmalltalkStylerTest categoriesFor: #restyleFromEachPosition:resumeable:!private!unit tests! !
 !SmalltalkStylerTest categoriesFor: #scannerClass!private!unit tests! !
 !SmalltalkStylerTest categoriesFor: #scanNumeric:class:!private!unit tests! !
@@ -531,6 +630,10 @@ testUnaryMessageToByteArray
 !SmalltalkStylerTest categoriesFor: #testOptimizedExpressionInArray!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testPrimitiveTag!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testPseudoSignature!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testQualifiedReferenceIncompleteIdentifier!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testQualifiedReferenceIncompleteQualifiedIdentifier!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testQualifiedReferenceInvalidIdentifier!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testQualifiedReferenceUnterminated!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testScanningFloats!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testScanningIntegers!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testScanningRadixIntegers!public!unit tests! !
@@ -540,5 +643,8 @@ testUnaryMessageToByteArray
 !SmalltalkStylerTest categoriesFor: #testUnaryMessageSequence!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testUnaryMessageToArray!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testUnaryMessageToBlock!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testUnaryMessageToBraceArray!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testUnaryMessageToByteArray!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testUnaryMessageToQualifiedReference!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testUnaryMessageToString!public!unit tests! !
 

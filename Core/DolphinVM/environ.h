@@ -52,6 +52,7 @@
 	#include <windows.h>
 	#include <winver.h>
 	#include <mmsystem.h>
+	#include <ntstatus.h>
 
 	#undef LoadImage
 

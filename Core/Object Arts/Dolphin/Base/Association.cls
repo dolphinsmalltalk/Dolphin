@@ -62,7 +62,7 @@ key: aKey value: aValue
 !
 
 owningPackage: aPackage
-	aPackage addGlobalNamed: self key!
+	aPackage addVariableNamed: self key!
 
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."

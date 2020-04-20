@@ -58,7 +58,7 @@ inline ProcessorScheduler* Interpreter::scheduler()
 
 inline BOOL Interpreter::newProcessWaiting()
 {
-	return !m_oteNewProcess->isNil();
+	return !isNil(m_oteNewProcess);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

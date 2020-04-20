@@ -18,7 +18,7 @@ basePath
 package
 	"Answer the <Package> who's folder is used as the base path, or nil if the package is not loaded."
 
-	^Smalltalk at: #Package ifPresent: [:class | class manager packageNamed: packageName ifNone: []]!
+	^#{Package} ifDefined: [:class | class manager packageNamed: packageName ifNone: []]!
 
 packageName
 	"Answer the <readableString> name of the Package who's folder is used as the base path."

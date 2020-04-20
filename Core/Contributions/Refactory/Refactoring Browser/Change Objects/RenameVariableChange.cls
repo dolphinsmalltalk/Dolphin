@@ -19,9 +19,8 @@ RenameVariableChange comment: ''!
 						and: [newName = aRenameVariableChange newName]]]!
 
 changeClass
-	| class |
-	class := Smalltalk at: self changeClassName ifAbsent: [^nil].
-	^isMeta ifTrue: [class class] ifFalse: [class]!
+	^self changeClassName asQualifiedReference valueOrNil
+		ifNotNil: [:class | isMeta ifTrue: [class class] ifFalse: [class]]!
 
 changeClass: aBehavior 
 	isMeta := aBehavior isMeta.

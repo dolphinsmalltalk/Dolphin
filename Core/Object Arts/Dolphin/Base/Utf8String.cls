@@ -508,9 +508,7 @@ fromAddress: anAddress
 
 initialize
 	self extraInstanceSpec: EncodingUtf8.
-	empty := self new
-				isImmutable: true;
-				yourself.
+	empty := ''.
 	VMLibrary default registryAt: #Utf8String put: self.
 	self addClassConstant: 'LeadByteMask2' value: 16rC0.
 	self addClassConstant: 'LeadByteMask3' value: 16rE0.

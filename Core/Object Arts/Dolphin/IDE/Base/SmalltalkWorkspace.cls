@@ -185,7 +185,7 @@ classForToken: anAssociation
 	style == #literalPseudo
 		ifTrue: 
 			[| lookup |
-			lookup := ##((LookupTable new)
+			lookup := ##(LookupTable new
 						at: 'nil' put: nil class;
 						at: 'false' put: false class;
 						at: 'true' put: true class;
@@ -196,8 +196,13 @@ classForToken: anAssociation
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
 	style == #literalCharacter ifTrue: [^Character].
-	(style == #specialCharacter and: [(view characterAt: anAssociation key stop) == $]])
-		ifTrue: [^BlockClosure].
+	style == #literalBindingReference ifTrue: [^BindingReference].
+	style == #specialCharacter
+		ifTrue: 
+			[| ch |
+			ch := text last.
+			ch == $] ifTrue: [^BlockClosure].
+			ch == $} ifTrue: [^Array]].
 	style == #unaryMessage
 		ifTrue: 
 			[text = 'class'
@@ -304,7 +309,7 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 	pools := self allPools.
 	result := compiler
 				compileForEvaluation: source
-				in: context basicClass
+				in: (context ifNotNil: [context basicClass])
 				evaluationPools: pools
 				flags: f]
 			on: compiler warningClass
@@ -1959,6 +1964,10 @@ defaultTextStyles
 		add: ((ScintillaTextStyle name: #literalBytes)
 					description: 'Literal byte arrays, e.g. #[0 1 2]';
 					forecolor: Color olive;
+					yourself);
+		add: ((ScintillaTextStyle name: #literalBindingReference)
+					description: 'Literal binding references, e.g. #{Object}';
+					isItalic: true;
 					yourself);
 		add: ((ScintillaTextStyle name: #assignment)
 					description: 'Assignment operation, i.e. :=';

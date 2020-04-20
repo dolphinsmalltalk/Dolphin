@@ -1277,12 +1277,12 @@ mutate
 
 	| viewClasses excluded |
 	excluded := Set new.
-	#(#DesktopView #WinAsyncSocket #BrowserView) 
-		do: [:each | Smalltalk at: each ifPresent: [:viewClass | excluded add: viewClass]].
+	#(#{DesktopView} #{WinAsyncSocket} #{BrowserView})
+		do: [:each | each ifDefined: [:viewClass | excluded add: viewClass]].
 	"excluded 
 		addAll: (self class owningPackage classes select: [:each | each inheritsFrom: View])."
 	viewClasses := View allSubclasses reject: [:each | (excluded includes: each) or: [each isAbstract]].
-	(ChoicePrompter choices: viewClasses asSortedCollection caption: 'Mutate to') 
+	(ChoicePrompter choices: viewClasses asSortedCollection caption: 'Mutate to')
 		ifNotNil: [:viewClass | self mutateTo: viewClass]!
 
 mutate: selectedView to: aViewClass 

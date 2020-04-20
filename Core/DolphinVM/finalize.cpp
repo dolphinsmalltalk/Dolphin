@@ -75,7 +75,7 @@ void Interpreter::scheduleFinalization()
 	if (!m_qBereavements.isEmpty())
 	{
 		SemaphoreOTE* bereavementsSemaphore = Pointers.BereavementSemaphore; // memMan.m_bereavements;
-		if (!bereavementsSemaphore->isNil())
+		if (!isNil(bereavementsSemaphore))
 		{
 			#ifdef _DEBUG
 			{
@@ -89,7 +89,7 @@ void Interpreter::scheduleFinalization()
 	if (!m_qForFinalize.isEmpty())
 	{
 		SemaphoreOTE* finalizationSemaphore = Pointers.FinalizeSemaphore; //memMan.m_lastRequests;
-		if (!finalizationSemaphore->isNil())
+		if (!isNil(finalizationSemaphore))
 		{
 			#ifdef _DEBUG
 			{

@@ -90,6 +90,7 @@ Compiler::Compiler() :
 		m_flags(CompilerFlags::Default),
 		m_instVarsInitialized(false),
 		m_isMutable(false),
+		m_isCompilingExpression(false),
 		m_literalLimit(LITERALLIMIT),
 		m_notifier(0),
 		m_ok(true),
@@ -129,15 +130,16 @@ inline void Compiler::SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_
 	NextToken();
 }
 	
-void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos_t offset, POTE aClass, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context)
+void Compiler::PrepareToCompile(CompilerFlags flags, LPUTF8 compiletext, textpos_t offset, POTE aBehaviorOrNil, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context)
 {
 	// Prepare to compile methods for the given class.
 	// This gets the list of instance variable names for this class
 	// and all its super classes so we can find the indices later.
 	
-	m_compiledMethodClass = compiledMethodClass;
-	_ASSERTE(aClass);
-	m_class = aClass;
+	m_isCompilingExpression = isCompilingExpression;
+	m_compiledMethodClass = isCompilingExpression ? GetVMPointers().ClassCompiledExpression : GetVMPointers().ClassCompiledMethod;
+	_ASSERTE(aBehaviorOrNil);
+	m_class = aBehaviorOrNil;
 	_ASSERTE(notifier);
 	m_notifier=notifier;
 	_ASSERTE(compiler);
@@ -184,7 +186,7 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t exprStart)
 {
 	POTE classPointer = m_piVM->FetchClassOf(contextOop);
-	PrepareToCompile(flags, compiletext, exprStart, classPointer, compiler, notifier, Nil(), GetVMPointers().ClassCompiledExpression, contextOop);
+	PrepareToCompile(flags, compiletext, exprStart, classPointer, compiler, notifier, Nil(), true, contextOop);
 	POTE oteMethod;
 	if (m_ok)
 	{
@@ -206,7 +208,7 @@ POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notif
 	{
 		if (!(flags & CompilerFlags::ScanOnly))
 		{
-			PrepareToCompile(flags, compiletext, textpos_t::start, aClass, compiler, notifier, Nil(), GetVMPointers().ClassCompiledMethod);
+			PrepareToCompile(flags, compiletext, textpos_t::start, aClass, compiler, notifier, Nil(), false);
 			if (m_ok)
 				// Do the compile
 				method=ParseMethod();
@@ -224,13 +226,13 @@ POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notif
 	return method;
 }
 
-POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE aWorkspacePool, CompilerFlags flags)
+POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehaviorOrNil, POTE aWorkspacePool, CompilerFlags flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
 	__try
 	{
-		PrepareToCompile(flags, compiletext, textpos_t::start, aBehavior, compiler, notifier,  aWorkspacePool, GetVMPointers().ClassCompiledExpression);
+		PrepareToCompile(flags, compiletext, textpos_t::start, aBehaviorOrNil, compiler, notifier,  aWorkspacePool, true);
 		if (m_ok)
 		{
 			method = ParseEvalExpression(TokenType::Eof);
@@ -248,7 +250,7 @@ POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop 
 
 Str Compiler::GetClassName()
 {
-	return GetNameOfClass(Oop(m_class));
+	return m_class == Nil() ? (LPUTF8)u8"nil" : GetNameOfClass(reinterpret_cast<Oop>(m_class));
 }
 
 ///////////////////////////////////
@@ -336,7 +338,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 	POTE nil = Nil();
 	oteStatic = nil;
 
-	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().ClassUndefinedObject : m_class);
+	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().SmalltalkDictionary : m_class);
 	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol, 
 												reinterpret_cast<Oop>(NewUtf8String(name))));
 	STVarObject* pools = nullptr;
@@ -662,7 +664,7 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 		m_sendType = SendType::Self;
 	}
 	else if (strName == VarSuper &&	// Cannot supersend from class with no superclass
-		((STBehavior*)GetObj(m_class))->superclass != Nil())
+		((STBehavior*)GetObj(MethodClass))->superclass != Nil())
 	{
 		// If name is "super" then we must set a flag to tell our expressions
 		// that messages must be sent to superclass of self.
@@ -805,21 +807,21 @@ Oop Compiler::IsPushLiteral(ip_t pos) const
 		return m_literalFrame[m_bytecodes[pos+1].byte];
 
 	case OpCode::ShortPushConst:
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+1):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+2):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+3):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+4):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+5):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+6):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+7):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+8):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+9):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+10):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+11):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+12):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+13):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+14):
-	case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst)+15):
+	case OpCode::ShortPushConst+1:
+	case OpCode::ShortPushConst+2:
+	case OpCode::ShortPushConst+3:
+	case OpCode::ShortPushConst+4:
+	case OpCode::ShortPushConst+5:
+	case OpCode::ShortPushConst+6:
+	case OpCode::ShortPushConst+7:
+	case OpCode::ShortPushConst+8:
+	case OpCode::ShortPushConst+9:
+	case OpCode::ShortPushConst+10:
+	case OpCode::ShortPushConst+11:
+	case OpCode::ShortPushConst+12:
+	case OpCode::ShortPushConst+13:
+	case OpCode::ShortPushConst+14:
+	case OpCode::ShortPushConst+15:
 		return m_literalFrame[m_bytecodes[pos].indexOfShortPushConst()];
 
 	default:
@@ -1095,7 +1097,7 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	{
 		// Warn if supersends a message which is not implemented - be sure not to wrongly flag 
 		// recursive self send first time the method is compiled
-		POTE superclass = ((STBehavior*)GetObj(m_class))->superclass;
+		POTE superclass = ((STBehavior*)GetObj(MethodClass))->superclass;
 		if (IsInteractive && !CanUnderstand(superclass, oteSelector))
 			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("super"), superclass, 0);
 	}
@@ -1103,8 +1105,8 @@ ip_t Compiler::GenMessage(const Str& pattern, argcount_t argCount, textpos_t mes
 	{
 		// Warn if self-sends a message which is not implemented
 		if (m_sendType == SendType::Self && IsInteractive
-				&& pattern != m_selector && !CanUnderstand(m_class,  oteSelector))
-			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("self"), m_class, 0);
+				&& pattern != m_selector && !CanUnderstand(MethodClass,  oteSelector))
+			WarningV(errRange, CWarnMsgUnimplemented, reinterpret_cast<Oop>(oteSelector), m_piVM->NewString("self"), MethodClass, 0);
 
 		// A short send may be possible (sends to super are always long as there is no short
 		// version), but only if 0..2 args, and within literal index ranges
@@ -1726,6 +1728,50 @@ void Compiler::ParseBraceArray(textpos_t textPosition)
 	}
 }
 
+POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
+{
+	POTE bindingRef = nullptr;
+	NextToken();
+	TEXTRANGE identifierRange = ThisTokenRange;
+	if (ThisToken == TokenType::NameConst)
+	{
+		Str identifier = ThisTokenText;
+		NextToken();
+		bool isMeta = false;
+		if (ThisToken == TokenType::NameConst && !strcmp((LPCSTR)ThisTokenText, "class"))
+		{
+			isMeta = true;
+			NextToken();
+		}
+
+		if (ThisToken == TokenType::CloseBrace)
+		{
+			NextToken();
+			Str uniqueIdentifier = isMeta ? identifier + u8'*' : identifier;
+			auto iter = m_bindingRefs.find(uniqueIdentifier);
+			if (iter == m_bindingRefs.end())
+			{
+				// We want the context to be nil here if compiling an unbound expression, such as in a file-in or workspace
+				bindingRef = m_piVM->NewBindingRef((LPCSTR)identifier.c_str(), reinterpret_cast<Oop>(this->m_class), isMeta);
+				m_bindingRefs[uniqueIdentifier] = bindingRef;
+			}
+			else
+			{
+				bindingRef = (*iter).second;
+			}
+		}
+		else
+		{
+			CompileError(TEXTRANGE(textPosition, identifierRange.m_stop), CErrQualifiedRefNotClosed);
+		}
+	}
+	else
+	{
+		CompileError(identifierRange, CErrExpectVariable);
+	}
+	return bindingRef;
+}
+
 void Compiler::ParseTerm(textpos_t textPosition)
 {
 	TokenType tokenType = ThisToken;
@@ -1791,17 +1837,7 @@ void Compiler::ParseTerm(textpos_t textPosition)
 		NextToken();
 		break;
 
-	case TokenType::AnsiStringConst:
-		{
-			LPUTF8 szLiteral = ThisTokenText;
-			POTE oteString = *szLiteral
-				? NewAnsiString(szLiteral)
-				: GetVMPointers().EmptyString;
-            GenConstant(AddStringToFrame(oteString, ThisTokenRange));
-			NextToken();
-		}
-		break;
-
+	case TokenType::AsciiStringConst:	// We no longer create AnsiString literals, only Utf8Strings
 	case TokenType::Utf8StringConst:
 	{
 		LPUTF8 szLiteral = ThisTokenText;
@@ -1844,6 +1880,14 @@ void Compiler::ParseTerm(textpos_t textPosition)
 		}
 		break;
 
+	case TokenType::QualifiedRefBegin:
+		{
+			textpos_t start = ThisTokenRange.m_start;
+			POTE bindingRef = ParseQualifiedReference(start);
+			if (m_ok)
+				GenLiteralConstant(reinterpret_cast<Oop>(bindingRef), TEXTRANGE(start, LastTokenRange.m_stop));
+		}
+		break;
 	case TokenType::Binary:
 		ParseBinaryTerm(textPosition);
 		break;
@@ -2049,7 +2093,7 @@ ip_t Compiler::ParseBinaryContinuation(ip_t exprMark, textpos_t textPosition)
 	while (m_ok && (ThisToken== TokenType::Binary))
 	{
 		continuationPointer = m_codePointer;
-		uint8_t ch;
+		char8_t ch;
 		while (isAnsiBinaryChar((ch = PeekAtChar())))
 		{
 			if (ch == '-' && isdigit(PeekAtChar(1)))
@@ -2489,7 +2533,7 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPri
 	
 	TokenType tok = ThisToken;
 	// Function names must be ASCII, or an ordinal
-	if (tok != TokenType::AnsiStringConst && tok != TokenType::NameConst && tok != TokenType::SmallIntegerConst)
+	if (tok != TokenType::AsciiStringConst && tok != TokenType::NameConst && tok != TokenType::SmallIntegerConst)
 		CompileError(CErrExpectFnName);
 	else
 	{
@@ -2693,7 +2737,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 					if (ThisToken == TokenType::Binary && !ThisTokenIsBinary('>'))
 					{
 						// At least a single indirection to a standard type
-						uint8_t ch;
+						char8_t ch;
 						while ((ch = PeekAtChar()) != '>' && isAnsiBinaryChar(ch))
 							Step();
 
@@ -2951,7 +2995,7 @@ POTE Compiler::ParseArray()
 				if (ThisTokenIsBinary('-')) 
 				{
 					Oop oopElement;
-					uint8_t ch = PeekAtChar();
+					char8_t ch = PeekAtChar();
 					// Look for negation, but first see if in fact
 					// we have a binary selector
 					if (isAnsiBinaryChar(ch))
@@ -3018,20 +3062,7 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case TokenType::AnsiStringConst:
-			{
-				LPUTF8 szLiteral = ThisTokenText;
-				POTE oteString = *szLiteral
-					? NewAnsiString(szLiteral)
-					: GetVMPointers().EmptyString;
-				Oop oopString = reinterpret_cast<Oop>(oteString);
-				elems.push_back(oopString);
-				m_piVM->AddReference(oopString);
-				m_piVM->MakeImmutable(oopString, TRUE);
-				NextToken();
-			}
-			break;
-
+		case TokenType::AsciiStringConst:
 		case TokenType::Utf8StringConst:
 			{
 				LPUTF8 szLiteral = ThisTokenText;
@@ -3065,6 +3096,19 @@ POTE Compiler::ParseArray()
 					elems.push_back(oopBytes);
 					m_piVM->AddReference(oopBytes);
 					m_piVM->MakeImmutable(oopBytes, TRUE);
+				}
+			}
+			break;
+
+		case TokenType::QualifiedRefBegin:
+			{
+				textpos_t start = ThisTokenRange.m_start;
+				Oop oopBindingRef = reinterpret_cast<Oop>(ParseQualifiedReference(start));
+				if (m_ok)
+				{
+					elems.push_back(oopBindingRef);
+					m_piVM->AddReference(oopBindingRef);
+					m_piVM->MakeImmutable(oopBindingRef, TRUE);
 				}
 			}
 			break;
@@ -3214,7 +3258,8 @@ Oop Compiler::ParseConstExpression()
 		_ASSERTE(m_compilerObject && m_notifier);
 		CompilerFlags flags = m_flags & ~CompilerFlags::DebugMethod;
 
-		POTE oteSelf = m_piVM->IsAMetaclass(m_class) ? reinterpret_cast<STMetaclass*>(GetObj(m_class))->instanceClass: m_class;
+		POTE methodClass = MethodClass;
+		POTE oteSelf = m_piVM->IsAMetaclass(methodClass) ? reinterpret_cast<STMetaclass*>(GetObj(methodClass))->instanceClass: methodClass;
 		Oop contextOop = Oop(oteSelf);
 		TEXTRANGE tokRange = ThisTokenRange;
 		POTE oteMethod = pCompiler->CompileExpression(Text, m_compilerObject, m_notifier, contextOop, flags, len, tokRange.m_stop+1);
@@ -3275,7 +3320,7 @@ void Compiler::GetInstVars()
 {
 	_ASSERTE(!m_instVarsInitialized);
 
-	if (m_class != GetVMPointers().ClassUndefinedObject)
+	if (m_class != Nil())
 	{
 		POTE arrayPointer=InstVarNamesOf(m_class);	// May throw SE_VMCALLBACKUNWIND
 		if (m_piVM->FetchClassOf(Oop(arrayPointer)) != GetVMPointers().ClassArray) 
@@ -3640,15 +3685,16 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 }
 
 // Compile an expression (i.e. source outside a method)
-STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aClass, POTE aWorkspacePool, FLAGS flags, Oop notifier)
+STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, const char* szSource, POTE aBehaviorOrNil, POTE aWorkspacePool, FLAGS flags, Oop notifier)
 {
 	m_piVM = (IDolphin*)piVM; 
 
+	POTE nil = Nil();
 	// Check argument types are correct
-	if (!m_piVM->IsBehavior(Oop(aClass)) || szSource == nullptr)
-		return Nil();
+	if (!(aBehaviorOrNil == nil || m_piVM->IsBehavior(reinterpret_cast<Oop>(aBehaviorOrNil))) || szSource == nullptr)
+		return nil;
 	
-	POTE resultPointer = Nil();
+	POTE resultPointer = nil;
 
 #if 0
 	CHECKREFERENCES
@@ -3671,7 +3717,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		
 		__try
 		{
-			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aClass, aWorkspacePool, static_cast<CompilerFlags>(flags));
+			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aBehaviorOrNil, aWorkspacePool, static_cast<CompilerFlags>(flags));
 			
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
@@ -3690,7 +3736,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 			//
 #ifndef USE_VM_DLL
 			TRACESTREAM<< L"WARNING: Unwinding Compiler::CompileForEval("
-				<< compilerOop << L',' << szSource << L',' << aClass << L','
+				<< compilerOop << L',' << szSource << L',' << aClassOrNil << L','
 				<< aWorkspacePool << std::hex << flags << L',' << notifier << L')' << std::endl;
 #endif
 		}
@@ -3784,8 +3830,16 @@ void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 		else
 		{
 			Str erroneousText = GetTextRange(range);
-			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, (LPCSTR)GetClassName().c_str(), (LPCSTR)m_selector.c_str(), LineNo, range.m_start, range.m_stop,
-				(LPCSTR)erroneousText.c_str());
+			if (IsCompilingExpression)
+			{
+				fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, reinterpret_cast<const char*>(GetClassName().c_str()), reinterpret_cast<const char*>(m_selector.c_str()), LineNo, range.m_start, range.m_stop,
+					reinterpret_cast<const char*>(erroneousText.c_str()));
+			}
+			else
+			{
+				fprintf(stdout, "ERROR %d in %s>>%s line %d,(%Id..%Id): %s\n\r", code, reinterpret_cast<const char*>(GetClassName().c_str()), reinterpret_cast<const char*>(m_selector.c_str()), LineNo, range.m_start, range.m_stop,
+					reinterpret_cast<const char*>(erroneousText.c_str()));
+			}
 			fprintf(stdout, (LPCSTR)Text);
 		}
 	}

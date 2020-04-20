@@ -104,8 +104,8 @@ testAddParameterThatReferencesSelf
 	class := refactoring model classNamed: #RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (RBParser
-				parseMethod: 'testFoo: anObject bar: ' , (AnsiString new basicPrintString copyWithout: $\x20)
-						, '
+				parseMethod: 'testFoo: anObject bar: aString
+
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)
 		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').

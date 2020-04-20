@@ -1834,7 +1834,7 @@ testPrimitiveInstanceCounts2
 	counts
 		keysAndValuesDo: [:eachClass :eachCount | eachClass isNonInstantiable ifTrue: [self assert: eachCount equals: 0]].
 	self assert: (counts at: Symbol) equals: Symbol primAllInstances size.
-	self assert: (counts at: AnsiString) > 30000.
+	self assert: (counts at: Utf8String) > 30000.
 	self assert: (counts at: Object) < 100.
 	self assert: (counts at: VMLibrary) equals: 1.
 	self assert: (counts at: Processor class) equals: 1.

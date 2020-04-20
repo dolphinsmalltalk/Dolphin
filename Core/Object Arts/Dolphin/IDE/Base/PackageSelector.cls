@@ -49,15 +49,16 @@ addGlobal
 	globalNames := pack environment keys.
 	pacman := self packageManager.
 	globalNames
-		removeAll: (pack environment allClasses collect: [:aClass | aClass name]);
-		removeAll: pacman allPackagedGlobalNames.
-	globalNames isEmpty 
+		removeAll: (pack environment allClasses collect: [:aClass | aClass fullName]);
+		removeAll: (pacman allPackagedVariableNames collect: [:each | each asSymbol]).
+	globalNames isEmpty
 		ifTrue: [MessageBox notify: 'All Global objects are currently owned by packages']
 		ifFalse: 
 			[| globals |
 			globals := ChoicePrompter multipleChoices: globalNames asSortedCollection
-						caption: 'Add global objects to ' , pack name , ' package'.
-			globals notNil ifTrue: [globals do: [:each | pacman addGlobalNamed: each to: pack]]]!
+						caption: 'Add global variables to ' , pack name , ' package'.
+			globals notNil
+				ifTrue: [globals do: [:each | pacman addVariableNamed: each asQualifiedReference to: pack]]]!
 
 applicationEnvironment
 	| closure |
@@ -404,15 +405,15 @@ onDragOverFolder: aDragDropSession
 						and: [((each format: #Package) packageFolder sameAs: folder pathname) not]]]) 
 		ifTrue: [aDragDropSession operation: #move]!
 
-onDragOverPackage: aDragDropSession 
+onDragOverPackage: aDragDropSession
 	"Private - A drag session is passing over the receiver's package list pane.
 	Update the <DragDropSession>, session, with the drop operation supported
 	(if any)."
 
 	aDragDropSession operation: nil.
 	(aDragDropSession suggestedTarget notNil and: 
-			[#(#CompiledMethod #Class #ResourceIdentifier #GlobalSymbol) 
-				anySatisfy: [:each | aDragDropSession isFormatAvailable: each]]) 
+			[#(#CompiledMethod #Class #ResourceIdentifier #VariableName)
+				anySatisfy: [:each | aDragDropSession isFormatAvailable: each]])
 		ifTrue: [aDragDropSession operation: #move]!
 
 onDragPackages: aDragDropSession 
@@ -448,34 +449,39 @@ onDropOverPackage: session
 	Override this method to accept the dragObject(s)."
 
 	| targetPackage packageManager |
-
 	targetPackage := session suggestedTarget.
-	targetPackage isNil ifTrue: [ Sound errorBeep. ^false ].
-
+	targetPackage isNil
+		ifTrue: 
+			[Sound errorBeep.
+			^false].
 	packageManager := Package manager.
+	Cursor wait showWhile: 
+			[session dragObjects do: 
+					[:each |
+					"See if the drop is a CompiledMethod"
+					(each isFormatAvailable: #CompiledMethod)
+						ifTrue: 
+							[| method |
+							method := each format: #CompiledMethod.
+							packageManager addMethod: method to: targetPackage].
+					(each isFormatAvailable: #ResourceIdentifier)
+						ifTrue: 
+							[| resource |
+							resource := each format: #ResourceIdentifier.
+							packageManager addResourceIdentifier: resource to: targetPackage].
+					(each isFormatAvailable: #VariableName)
+						ifTrue: 
+							[| name |
+							name := each format: #VariableName.
+							packageManager addVariableNamed: name to: targetPackage].
+					(each isFormatAvailable: #Class)
+						ifTrue: 
+							[| class |
+							class := each format: #Class.
+							packageManager addClass: class to: targetPackage]]].
 
-	Cursor wait showWhile: [
-		session dragObjects do: [:each |
-			"See if the drop is a CompiledMethod"
-			(each isFormatAvailable: #CompiledMethod) ifTrue: [ | method |
-				method := each format: #CompiledMethod.
-				packageManager addMethod: method to: targetPackage ].
-	
-			(each isFormatAvailable: #ResourceIdentifier) ifTrue: [ | resource |
-				resource := each format: #ResourceIdentifier.
-				packageManager addResourceIdentifier: resource to: targetPackage ].
-
-			(each isFormatAvailable: #GlobalSymbol) ifTrue: [ | global |
-				global := each format: #GlobalSymbol.
-				packageManager addGlobalNamed: global to: targetPackage ].
-
-			(each isFormatAvailable: #Class) ifTrue: [ | class |
-				class := each format: #Class.
-				packageManager addClass: class to: targetPackage ]]].
-	
 	"Operation must never be #move to avoid methods being removed"
 	session operation: #copy.
-		
 	^true!
 
 onFilterSelected

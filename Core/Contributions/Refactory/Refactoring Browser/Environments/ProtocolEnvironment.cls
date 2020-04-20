@@ -31,13 +31,14 @@ defaultLabel
 	^stream contents!
 
 includesCategory: aCategory
-	^(super includesCategory: aCategory)
-		and: [(environment classNamesFor: aCategory)
-				inject: false into: [:bool :each | bool
-					or:
-						[| aClass |
-						aClass := Smalltalk at: each ifAbsent: [nil].
-						aClass == class or: [aClass class == class]]]]!
+	^(super includesCategory: aCategory) and: 
+			[(environment classNamesFor: aCategory) inject: false
+				into: 
+					[:bool :each |
+					bool or: 
+							[| aClass |
+							aClass := each asQualifiedReference valueOrNil.
+							aClass == class or: [aClass class == class]]]]!
 
 includesClass: aClass
 	^aClass == class and: [super includesClass: aClass]!

@@ -86,11 +86,11 @@ testMixedConcatenation
 					result := eachArray , eachEmpty.
 					self deny: eachArray identicalTo: result.
 					self assert: result equals: eachArray]].
-	{'a'.
+	{'a' asAnsiString.
 		#(255).
 		OrderedCollection with: 123.
 		100 to: 100.
-		'ab'.
+		'ab' asAnsiString.
 		#(1 255).
 		OrderedCollection with: 123 with: 255.
 		100 to: 101} do: 

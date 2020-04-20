@@ -267,14 +267,15 @@ initializeCopy: aClassDescriptionCopy fromClass: aClass superclass: aSuperclass
 	aClassDescriptionCopy compileAll.
 	^aClassDescriptionCopy!
 
-install: aClassDescription 
+install: aClassDescription
 	"Private - Install aClassDescription into its environment."
 
 	| binding env |
 	aClassDescription requiresInstallation ifFalse: [^self].
+	#todo.	"Requires updating for binding refs/namespaces"
 	env := self environment.
 	binding := env bindingFor: aClassDescription name.
-	binding 
+	binding
 		ifNil: 
 			[env at: aClassDescription name put: aClassDescription.
 			binding := env bindingFor: aClassDescription name]

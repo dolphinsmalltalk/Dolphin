@@ -232,9 +232,19 @@ library DolphinVM
 		uuid(FBBF2E4A-0452-4669-812B-1BE19860A567),
 		pointer_default(unique)
 	]
-	interface IDolphin : IDolphin7
+	interface IDolphin71 : IDolphin7
 	{
 		POTE NewUtf8String([in]LPCSTR szValue, [in, defaultvalue(-1)]int len);
+	};
+
+	[
+		object,
+		uuid(FB2A73A4-754E-4094-AE01-F8508D31ACC2),
+		pointer_default(unique)
+	]
+	interface IDolphin : IDolphin71
+	{
+		POTE NewBindingRef([in]LPCSTR szQualifiedName, [in]Oop context, [in]BOOL meta);
 	};
 
 	cpp_quote("#ifndef INTPTR_MAX")

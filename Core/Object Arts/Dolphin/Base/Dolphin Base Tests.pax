@@ -1,158 +1,155 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractDictionaryTest;
-	add: #AbstractFileStreamTest;
-	add: #AbstractKeyboardTest;
-	add: #AlwaysSearchPolicyTest;
-	add: #AnsiStringTest;
-	add: #ArrayedCollectionTest;
-	add: #ArrayFieldTest;
-	add: #ArrayPointerFieldTest;
-	add: #ArrayTest;
-	add: #BagTest;
-	add: #BehaviorTest;
-	add: #BehaviorTestClasses;
-	add: #BlockClosureTest;
-	add: #BooleanTest;
-	add: #ByteArrayTest;
-	add: #CaseInsensitiveSearchPolicyTest;
-	add: #CharacterTest;
-	add: #ClassBuilderTestClasses;
-	add: #ClassBuilderTests;
-	add: #ClassDescriptionTest;
-	add: #ClassTest;
-	add: #CollectionCombinator;
-	add: #CommandLineTest;
-	add: #CommandLineTestRunner;
-	add: #DateAndTimeTest;
-	add: #DateTest;
-	add: #DefaultSortAlgorithmTest;
-	add: #DelayTest;
-	add: #DictionaryTest;
-	add: #DiskVolumeInformationTest;
-	add: #DolphinCollectionTest;
-	add: #DolphinTest;
-	add: #DolphinTestClassResource;
-	add: #DolphinTestPackages;
-	add: #DolphinTestResource;
-	add: #DOUBLEArrayTest;
-	add: #DurationTest;
-	add: #DWORDArrayTest;
-	add: #EqualitySearchPolicyTest;
-	add: #EventMessageSendTest;
-	add: #ExceptionTesterClasses;
-	add: #ExternalAddressTest;
-	add: #ExternalArrayTest;
-	add: #ExternalDescriptorTest;
-	add: #ExternalFieldTest;
-	add: #ExternalIntegerTest;
-	add: #ExternalLibraryTest;
-	add: #ExternalResourceLibraryTest;
-	add: #ExternalStructureTest;
-	add: #FalseTest;
-	add: #FileLocatorTest;
-	add: #FileStreamTest;
-	add: #FileTest;
-	add: #FILETIMETest;
-	add: #FLOATArrayTest;
-	add: #FloatTest;
-	add: #GenericExternalArrayTest;
-	add: #GUIDTest;
-	add: #HeapsortAlgorithmTest;
-	add: #IdentityDictionaryTest;
-	add: #IdentitySearchPolicyTest;
-	add: #InsertionSortAlgorithmTest;
-	add: #IntegerTest;
-	add: #IntervalTest;
-	add: #IntrosortAlgorithmTest;
-	add: #KeyboardTest;
-	add: #LargeIntegerTest;
-	add: #LinkTest;
-	add: #LocaleTest;
-	add: #LookupTableTest;
-	add: #MemoryManagerTest;
-	add: #MenuPainterTest;
-	add: #MergesortAlgorithmTest;
-	add: #MessageTest;
-	add: #MetaclassTest;
-	add: #MethodCategoryTest;
-	add: #MethodDictionaryTest;
-	add: #MustBeBooleanTestClasses;
-	add: #NeverSearchPolicyTest;
-	add: #NumberTest;
-	add: #ObjectTest;
-	add: #OrderedCollectionTest;
-	add: #PackageTest;
-	add: #PoolConstantsDictionaryTest;
-	add: #PositionableStreamTest;
-	add: #ProcessTest;
-	add: #PropertyManagerTest;
-	add: #QuicksortAlgorithmTest;
-	add: #ReadStreamTest;
-	add: #ReadWriteStreamTest;
-	add: #RunArrayTest;
-	add: #ScaledDecimalTest;
-	add: #SDWORDArrayTest;
-	add: #SearchPolicyTest;
-	add: #SemaphoreTest;
-	add: #SequenceableCollectionTest;
-	add: #SequencedGrowableCollectionTest;
-	add: #SessionManagerTest;
-	add: #SetTest;
-	add: #ShellsortAlgorithmTest;
-	add: #ShlwapiLibraryTest;
-	add: #SignalTest;
-	add: #SmallIntegerTest;
-	add: #SmalltalkLocaleTest;
-	add: #SortAlgorithmTest;
-	add: #SortedCollectionTest;
-	add: #StableSortAlgorithmTest;
-	add: #StackFrameTest;
-	add: #STBTest;
-	add: #StdioFileStreamTest;
-	add: #StreamTest;
-	add: #StringTest;
-	add: #StructureArrayFieldTest;
-	add: #StructureArrayPointerFieldTest;
-	add: #StructureArrayTest;
-	add: #SWORDArrayTest;
-	add: #SymbolTest;
-	add: #TestRunConsoleLogger;
-	add: #TestRunLogger;
-	add: #TimeStampTest;
-	add: #TimeTest;
-	add: #TrueTest;
-	add: #UndefinedObjectTest;
-	add: #Utf16StringTest;
-	add: #Utf8StringTest;
-	add: #UtfEncodedStringTest;
-	add: #WCHARFieldTest;
-	add: #WindowsLocaleTest;
-	add: #WORDArrayTest;
-	add: #WriteStreamTest;
-	yourself.
+package setClassNames: #(
+	#{AbstractBindingReferenceTest}
+	#{AbstractDictionaryTest}
+	#{AbstractFileStreamTest}
+	#{AbstractKeyboardTest}
+	#{AlwaysSearchPolicyTest}
+	#{AnsiStringTest}
+	#{ArrayedCollectionTest}
+	#{ArrayFieldTest}
+	#{ArrayPointerFieldTest}
+	#{ArrayTest}
+	#{BagTest}
+	#{BehaviorTest}
+	#{BehaviorTestClasses}
+	#{BindingReferenceTest}
+	#{BlockClosureTest}
+	#{BooleanTest}
+	#{ByteArrayTest}
+	#{CaseInsensitiveSearchPolicyTest}
+	#{CharacterTest}
+	#{ClassBuilderTestClasses}
+	#{ClassBuilderTests}
+	#{ClassDescriptionTest}
+	#{ClassTest}
+	#{CollectionCombinator}
+	#{CommandLineTest}
+	#{CommandLineTestRunner}
+	#{DateAndTimeTest}
+	#{DateTest}
+	#{DefaultSortAlgorithmTest}
+	#{DelayTest}
+	#{DictionaryTest}
+	#{DiskVolumeInformationTest}
+	#{DolphinCollectionTest}
+	#{DolphinTest}
+	#{DolphinTestClassResource}
+	#{DolphinTestPackages}
+	#{DolphinTestResource}
+	#{DOUBLEArrayTest}
+	#{DurationTest}
+	#{DWORDArrayTest}
+	#{EqualitySearchPolicyTest}
+	#{EventMessageSendTest}
+	#{ExceptionTesterClasses}
+	#{ExternalAddressTest}
+	#{ExternalArrayTest}
+	#{ExternalDescriptorTest}
+	#{ExternalFieldTest}
+	#{ExternalIntegerTest}
+	#{ExternalLibraryTest}
+	#{ExternalResourceLibraryTest}
+	#{ExternalStructureTest}
+	#{FalseTest}
+	#{FileLocatorTest}
+	#{FileStreamTest}
+	#{FileTest}
+	#{FILETIMETest}
+	#{FLOATArrayTest}
+	#{FloatTest}
+	#{GenericExternalArrayTest}
+	#{GUIDTest}
+	#{HeapsortAlgorithmTest}
+	#{IdentityDictionaryTest}
+	#{IdentitySearchPolicyTest}
+	#{InsertionSortAlgorithmTest}
+	#{IntegerTest}
+	#{IntervalTest}
+	#{IntrosortAlgorithmTest}
+	#{KeyboardTest}
+	#{LargeIntegerTest}
+	#{LinkTest}
+	#{LocaleTest}
+	#{LookupTableTest}
+	#{MemoryManagerTest}
+	#{MenuPainterTest}
+	#{MergesortAlgorithmTest}
+	#{MessageTest}
+	#{MetaBindingReferenceTest}
+	#{MetaclassTest}
+	#{MethodCategoryTest}
+	#{MethodDictionaryTest}
+	#{MustBeBooleanTestClasses}
+	#{NeverSearchPolicyTest}
+	#{NumberTest}
+	#{ObjectTest}
+	#{OrderedCollectionTest}
+	#{PackageTest}
+	#{PoolConstantsDictionaryTest}
+	#{PositionableStreamTest}
+	#{ProcessTest}
+	#{PropertyManagerTest}
+	#{QuicksortAlgorithmTest}
+	#{ReadStreamTest}
+	#{ReadWriteStreamTest}
+	#{RunArrayTest}
+	#{ScaledDecimalTest}
+	#{SDWORDArrayTest}
+	#{SearchPolicyTest}
+	#{SemaphoreTest}
+	#{SequenceableCollectionTest}
+	#{SequencedGrowableCollectionTest}
+	#{SessionManagerTest}
+	#{SetTest}
+	#{ShellsortAlgorithmTest}
+	#{ShlwapiLibraryTest}
+	#{SignalTest}
+	#{SmallIntegerTest}
+	#{SmalltalkLocaleTest}
+	#{SortAlgorithmTest}
+	#{SortedCollectionTest}
+	#{StableSortAlgorithmTest}
+	#{StackFrameTest}
+	#{STBTest}
+	#{StdioFileStreamTest}
+	#{StreamTest}
+	#{StringTest}
+	#{StructureArrayFieldTest}
+	#{StructureArrayPointerFieldTest}
+	#{StructureArrayTest}
+	#{SWORDArrayTest}
+	#{SymbolTest}
+	#{TestRunConsoleLogger}
+	#{TestRunLogger}
+	#{TimeStampTest}
+	#{TimeTest}
+	#{TrueTest}
+	#{UndefinedObjectTest}
+	#{Utf16StringTest}
+	#{Utf8StringTest}
+	#{UtfEncodedStringTest}
+	#{WCHARFieldTest}
+	#{WindowsLocaleTest}
+	#{WORDArrayTest}
+	#{WriteStreamTest}
+).
 
-package methodNames
-	add: #SmalltalkSystem -> #baselinedSlowTests;
-	add: #SmalltalkSystem -> #regressionTestsLogFilename;
-	add: #SmalltalkSystem -> #regressionTestSuite;
-	add: #SmalltalkSystem -> #runRegressionTests;
-	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
-	add: #SmalltalkSystem -> #setTestAttributes:id:name:duration:tests:failures:errors:skipped:;
-	add: #SmalltalkSystem -> #writeJunitTestLog:result:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{SmalltalkSystem} #baselinedSlowTests)
+	#(#{SmalltalkSystem} #regressionTestsLogFilename)
+	#(#{SmalltalkSystem} #regressionTestSuite)
+	#(#{SmalltalkSystem} #runRegressionTests)
+	#(#{SmalltalkSystem} #runRegressionTests:logTo:verbose:)
+	#(#{SmalltalkSystem} #setTestAttributes:id:name:duration:tests:failures:errors:skipped:)
+	#(#{SmalltalkSystem} #writeJunitTestLog:result:)
+).
 
 package setPrerequisites: #(
 	'..\ActiveX\Components\Scripting\ActiveX Scripting'
@@ -171,10 +168,12 @@ package setPrerequisites: #(
 	'..\Registry\Dolphin Registry Access'
 	'..\System\Compiler\Smalltalk Parser'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\ActiveX\Components\XML DOM\XML DOM').
+	'..\ActiveX\Components\XML DOM\XML DOM'
+).
 
 package setManualPrerequisites: #(
-	'Dolphin Anonymous Classes').
+	'Dolphin Anonymous Classes'
+).
 
 package!
 
@@ -201,6 +200,11 @@ TestCase subclass: #CommandLineTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TestCase subclass: #DolphinTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractBindingReferenceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -476,6 +480,16 @@ DolphinTest subclass: #TrueTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #UndefinedObjectTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractBindingReferenceTest subclass: #BindingReferenceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractBindingReferenceTest subclass: #MetaBindingReferenceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -831,9 +845,6 @@ TestRunLogger subclass: #TestRunConsoleLogger
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !SmalltalkSystem methodsFor!
@@ -841,11 +852,11 @@ TestRunLogger subclass: #TestRunConsoleLogger
 baselinedSlowTests
 	| laggards |
 	laggards := Set new.
-	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#RenameClassTest #(#testModelRenameClass)))
+	#(#(#{ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{IdeaSpaceShellTest} #(#testSaveRestore)) #(#{RenameClassTest} #(#testModelRenameClass)))
 		do: 
 			[:each |
-			Smalltalk at: each first
-				ifPresent: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
+			each first
+				ifDefined: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
 	^laggards!
 
 regressionTestsLogFilename

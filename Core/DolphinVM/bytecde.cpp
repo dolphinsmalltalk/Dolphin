@@ -617,11 +617,11 @@ ContextOTE* __fastcall Context::New(size_t tempCount, Oop oopOuter)
 				}
 				else
 				{
-					HARDASSERT(context->m_block->isNil());
+					HARDASSERT(isNil(context->m_block));
 				}
 			}
 			else
-				HARDASSERT(oteOuter->isNil());
+				HARDASSERT(isNil(oteOuter));
 		}
 	}
 	#endif

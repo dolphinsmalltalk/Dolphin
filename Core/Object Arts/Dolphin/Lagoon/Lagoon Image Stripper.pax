@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Lagoon Image Stripper'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Lagoon Image Stripper.
 Copyright (c) Object Arts Ltd, 1998-2006.
@@ -12,29 +12,24 @@ See also the Application Deployment Kit package.'.
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #BasicImageStripper;
-	add: #ImageStripper;
-	add: #ImageStripperProgress;
-	add: #VersionResource;
-	add: #VS_VERSION_INFO_HEADER;
-	yourself.
+package setClassNames: #(
+	#{BasicImageStripper}
+	#{ImageStripper}
+	#{ImageStripperProgress}
+	#{VersionResource}
+	#{VS_VERSION_INFO_HEADER}
+).
 
-package methodNames
-	add: #UserLibrary -> #messageBox:lpText:lpCaption:uType:;
-	add: 'ExternalStructure class' -> #fullyCompileDefinition;
-	add: 'ExternalStructure class' -> #removeTemplate;
-	add: 'Object class' -> #onPreStripImage;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ExternalStructure class} #fullyCompileDefinition)
+	#(#{ExternalStructure class} #removeTemplate)
+	#(#{Object class} #onPreStripImage)
+	#(#{UserLibrary} #messageBox:lpText:lpCaption:uType:)
+).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+).
 
 package!
 
@@ -65,9 +60,6 @@ Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

@@ -382,7 +382,7 @@ findDetails: aFindDetails
 	^self presenter == self ifFalse: [self presenter findDetails: aFindDetails]!
 
 findDialogClass
-	^Smalltalk at: #AdvancedFindDialog ifAbsent: [FindDialog]!
+	^#{AdvancedFindDialog} valueOrNil ?? FindDialog!
 
 findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."

@@ -60,7 +60,7 @@ Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, primargco
 		else
 		{
 			// Could be nil
-			if (oteContents->isNil())
+			if (isNil(oteContents))
 			{
 				*sp = reinterpret_cast<Oop>(Pointers.True);
 				return sp;

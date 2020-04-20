@@ -43,7 +43,7 @@ testLintRuleTypes
 	typer := RefactoryTyper new.
 	types := typer guessTypesFor: 'name' in: LintRuleTest.
 	self assert: types size equals: 1.
-	self assert: (types includes: (typer model classFor: Utf8String))!
+	self assert: (types includes: (typer model classFor: String))!
 
 testParseTreeTypes
 	| types model |

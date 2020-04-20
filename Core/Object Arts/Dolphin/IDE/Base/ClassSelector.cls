@@ -732,43 +732,43 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-queryMoveClass: aClass toPackage: package 
+queryMoveClass: aClass toPackage: aPackage
 	"Private - Move aClass from its existing package to the receivers current package if
 	the user agrees."
 
 	| classPackage response packMan subclasses |
 	packMan := self systemModel packageManager.
 	classPackage := packMan packageOfClass: aClass.
-	subclasses := (aClass allSubclasses collect: [:s | s -> (packMan packageOfClass: s)]) 
-				select: [:a | a value isNil or: [a value == classPackage]].
-	classPackage isNil 
+	subclasses := (aClass allSubclasses collect: [:s | { s. packMan packageOfClass: s}])
+				select: [:a | a second isNil or: [a second == classPackage]].
+	classPackage isNil
 		ifTrue: [response := #yes	"Move all subclasses without package too"]
 		ifFalse: 
 			[| prompt |
 			prompt := 'The class <1d> is currently owned by the <2p> package' expandMacrosWith: aClass
 						with: classPackage name.
-			subclasses isEmpty 
+			subclasses isEmpty
 				ifTrue: 
 					[prompt := '<1s>.<n><n>Are you sure you would like to move it to <2p>?' expandMacrosWith: prompt
-								with: package name.
-					response := (MessageBox new)
+								with: aPackage name.
+					response := MessageBox new
 								caption: 'Moving class to new package...';
 								defaultButton: 2;
 								confirm: prompt.
 					response ifFalse: [^false]]
 				ifFalse: 
-					[prompt := prompt 
+					[prompt := prompt
 								, (', and will be moved to <2p>.
 
-Would you like to move its subclasses in <1p>, or without a package, too?' 
+Would you like to move its subclasses in <1p>, or without a package, too?'
 										expandMacrosWith: classPackage name
-										with: package name).
+										with: aPackage name).
 					(response := MessageBox new confirmOrCancel: prompt) == #cancel ifTrue: [^false]]].
-	packMan addClass: aClass to: package.
-	response == #yes 
+	packMan addClass: aClass to: aPackage.
+	response == #yes
 		ifTrue: 
 			["Move the subclasses too"
-			subclasses do: [:a | packMan addClass: a key to: package]].
+			subclasses do: [:a | packMan addClass: a first to: aPackage]].
 	^true!
 
 renameClass

@@ -199,7 +199,9 @@ fromAddress: anAddress
 	^VMLibrary default stringFromAddress: anAddress!
 
 initialize
-	empty := ''.
+	empty := self new
+				isImmutable: true;
+				yourself.
 	VMLibrary default registryAt: #AnsiString put: self.
 	self extraInstanceSpec: EncodingAnsi!
 

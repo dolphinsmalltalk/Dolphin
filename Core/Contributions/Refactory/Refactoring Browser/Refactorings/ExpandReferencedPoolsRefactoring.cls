@@ -61,8 +61,8 @@ movePoolVariables
 	pools 
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]!
 
-poolVariableNamesIn: poolName 
-	^(Smalltalk at: poolName ifAbsent: [Dictionary new]) keys 
+poolVariableNamesIn: poolName
+	^(poolName asQualifiedReference valueOrNil ifNil: [Dictionary new]) keys
 		collect: [:name | name asString]!
 
 preconditions

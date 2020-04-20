@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation Development'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Development Tools.
 Copyright (c) Object Arts Ltd, 2000-2006.
@@ -22,538 +22,532 @@ It is also possible to use late-binding to access COM objects through IDispatch.
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #AXAutomationAspect;
-	add: #AXComponentWizard;
-	add: #AXInspector;
-	add: #AXMethodName;
-	add: #AXRecordAspect;
-	add: #AXTypeLibraryPrompter;
-	add: #AXTypeLibRegistration;
-	add: #DispatchAspect;
-	yourself.
+package setClassNames: #(
+	#{AXAutomationAspect}
+	#{AXComponentWizard}
+	#{AXInspector}
+	#{AXMethodName}
+	#{AXRecordAspect}
+	#{AXTypeLibraryPrompter}
+	#{AXTypeLibRegistration}
+	#{DispatchAspect}
+).
 
-package methodNames
-	add: #AbstractELEMDESC -> #printFieldsOn:limit:;
-	add: #AXAPIInfoAnalyzer -> #areWrappersRequired;
-	add: #AXAPIInfoAnalyzer -> #compileMethodWrapper:;
-	add: #AXAPIInfoAnalyzer -> #functionHasReturnValue:;
-	add: #AXAPIInfoAnalyzer -> #generateGlobalDefinition:;
-	add: #AXAPIInfoAnalyzer -> #generateMethod:wrapping:;
-	add: #AXAPIInfoAnalyzer -> #generateMethodWrappers;
-	add: #AXAPIInfoAnalyzer -> #generateMethodWrappers:;
-	add: #AXAPIInfoAnalyzer -> #generateRawMethod:categories:;
-	add: #AXAPIInfoAnalyzer -> #idlAttributesOfFunc:;
-	add: #AXAPIInfoAnalyzer -> #instanceMethodCategories:;
-	add: #AXAPIInfoAnalyzer -> #isDefaultedWrapperRequiredFor:;
-	add: #AXAPIInfoAnalyzer -> #isMethodWrapperRequiredFor:;
-	add: #AXAPIInfoAnalyzer -> #methodCommentDescription;
-	add: #AXAPIInfoAnalyzer -> #mungeSelectorKeywords:forMember:;
-	add: #AXAPIInfoAnalyzer -> #printCommentPrefixOn:isPrivate:;
-	add: #AXAPIInfoAnalyzer -> #printFunctionPrototype:on:indent:;
-	add: #AXAPIInfoAnalyzer -> #printFunctionPrototypeComment:on:;
-	add: #AXAPIInfoAnalyzer -> #printIDLForFunction:on:indent:;
-	add: #AXAPIInfoAnalyzer -> #printMethod:wrapping:on:;
-	add: #AXAPIInfoAnalyzer -> #printMethodCommentPostamble:on:;
-	add: #AXAPIInfoAnalyzer -> #printMethodCommentPreamble:on:isPrivate:;
-	add: #AXAPIInfoAnalyzer -> #printRawMethodBody:name:on:;
-	add: #AXAPIInfoAnalyzer -> #printRawMethodComment:on:isPrivate:;
-	add: #AXAPIInfoAnalyzer -> #printRawMethodCommentHelp:on:;
-	add: #AXAPIInfoAnalyzer -> #printRawMethodCommentPreamble:on:isPrivate:;
-	add: #AXAPIInfoAnalyzer -> #proputrefWrapperPrefix;
-	add: #AXAPIInfoAnalyzer -> #rawMethodNameForFunction:;
-	add: #AXAPIInfoAnalyzer -> #reinventBadSelector:member:;
-	add: #AXAPIInfoAnalyzer -> #selectorForFunction:;
-	add: #AXAPIInfoAnalyzer -> #sharedPoolNames;
-	add: #AXInterfaceTypeAnalyzer -> #areWrappersRequired;
-	add: #AXInterfaceTypeAnalyzer -> #autoGenPropertiesCategories;
-	add: #AXInterfaceTypeAnalyzer -> #buildMethodName:defaultOptionals:;
-	add: #AXInterfaceTypeAnalyzer -> #buildPublishedAspects:forObject:;
-	add: #AXInterfaceTypeAnalyzer -> #classCategories;
-	add: #AXInterfaceTypeAnalyzer -> #compilePropertyAccessor:;
-	add: #AXInterfaceTypeAnalyzer -> #compileRawMethod:categories:;
-	add: #AXInterfaceTypeAnalyzer -> #determineNewBase:forExistingWrapper:;
-	add: #AXInterfaceTypeAnalyzer -> #generateClassCLSIDForCoclass:;
-	add: #AXInterfaceTypeAnalyzer -> #generateClassInitialize;
-	add: #AXInterfaceTypeAnalyzer -> #generateClassInstanceCreation;
-	add: #AXInterfaceTypeAnalyzer -> #generateClassSide:;
-	add: #AXInterfaceTypeAnalyzer -> #generateCollectionTest;
-	add: #AXInterfaceTypeAnalyzer -> #generateDefaultMethod:wrapping:;
-	add: #AXInterfaceTypeAnalyzer -> #generateGlobalDefinition:;
-	add: #AXInterfaceTypeAnalyzer -> #generateInitializeTypeLib;
-	add: #AXInterfaceTypeAnalyzer -> #generateInstanceSide:;
-	add: #AXInterfaceTypeAnalyzer -> #generateMethodWrappers;
-	add: #AXInterfaceTypeAnalyzer -> #generateMethodWrappers:;
-	add: #AXInterfaceTypeAnalyzer -> #generateNewForCoclass:;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropertyAccessors;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropGet:wrapping:defaultOptionals:;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropGetWrappers:;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropPut:wrapping:;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropPutRefWrappers:;
-	add: #AXInterfaceTypeAnalyzer -> #generatePropPutWrappers:;
-	add: #AXInterfaceTypeAnalyzer -> #generateRawPropGet:;
-	add: #AXInterfaceTypeAnalyzer -> #generateRawPropPut:;
-	add: #AXInterfaceTypeAnalyzer -> #generateRuntimeExtensibilityTest;
-	add: #AXInterfaceTypeAnalyzer -> #generateTests;
-	add: #AXInterfaceTypeAnalyzer -> #generateValueAccessor:wrapping:;
-	add: #AXInterfaceTypeAnalyzer -> #generateValueMutator:wrapping:;
-	add: #AXInterfaceTypeAnalyzer -> #generateValuePropertyWrappers;
-	add: #AXInterfaceTypeAnalyzer -> #idlAttributes;
-	add: #AXInterfaceTypeAnalyzer -> #inspectableProperties;
-	add: #AXInterfaceTypeAnalyzer -> #instanceMethodCategories:;
-	add: #AXInterfaceTypeAnalyzer -> #interfaceCategoryName;
-	add: #AXInterfaceTypeAnalyzer -> #isAutomationCompatible;
-	add: #AXInterfaceTypeAnalyzer -> #isInspectablePropGet:;
-	add: #AXInterfaceTypeAnalyzer -> #isProtocolRequired;
-	add: #AXInterfaceTypeAnalyzer -> #methodCommentDescription;
-	add: #AXInterfaceTypeAnalyzer -> #newAspectForMember:ppb:;
-	add: #AXInterfaceTypeAnalyzer -> #printArgument:named:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printDefaultMethod:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printDefaultMethodBody:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printMethod:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printMethodBody:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printMethodComment:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printMultiOutMethodBody:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropertyCommentDecl:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropertyCommentPostamble:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropGet:wrapping:on:defaultOptionals:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropGetComment:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropGetCommentPreamble:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropPut:wrapping:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printPropPutComment:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printRawPropGetBody:name:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printRawPropPutBody:name:on:;
-	add: #AXInterfaceTypeAnalyzer -> #printValuePropCommentPostambleOn:;
-	add: #AXInterfaceTypeAnalyzer -> #rawPropCategories;
-	add: #AXInterfaceTypeAnalyzer -> #reservedSelectors;
-	add: #AXInterfaceTypeAnalyzer -> #wrapMethodComment:;
-	add: #AXMemberDesc -> #idlAttributes;
-	add: #AXMemberDesc -> #idlAttributesAndId;
-	add: #AXMemberDesc -> #idlCustomAttributes;
-	add: #AXMemberDesc -> #isInspectable;
-	add: #AXMemberDesc -> #printIDL;
-	add: #AXMemberDesc -> #printIDLOn:;
-	add: #AXMemberDesc -> #printIDLOn:indent:;
-	add: #AXRecord -> #publishedAspects;
-	add: #AXStructureTypeAnalyzer -> #conformsToRequiredProtocols:;
-	add: #AXStructureTypeAnalyzer -> #determineNewBase:forExistingWrapper:;
-	add: #AXStructureTypeAnalyzer -> #generateClassSide:;
-	add: #AXStructureTypeAnalyzer -> #generateDefineFields;
-	add: #AXStructureTypeAnalyzer -> #generateGlobalDefinition:;
-	add: #AXStructureTypeAnalyzer -> #generateInstanceSide:;
-	add: #AXStructureTypeAnalyzer -> #generateTypeLibAccessor;
-	add: #AXStructureTypeAnalyzer -> #generateWrapper;
-	add: #AXStructureTypeAnalyzer -> #printAnonymousStruct:offset:prefix:hidden:on:;
-	add: #AXStructureTypeAnalyzer -> #printClassCommentPreambleOn:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinition:offset:prefix:hidden:on:;
-	add: #AXStructureTypeAnalyzer -> #printFieldDefinitionsOn:offset:prefix:hidden:;
-	add: #AXStructureTypeAnalyzer -> #printIDLBodyOn:indent:;
-	add: #AXStructureTypeAnalyzer -> #printIDLForVariablesOn:indent:;
-	add: #AXStructureTypeAnalyzer -> #printIDLOn:indent:;
-	add: #AXStructureTypeAnalyzer -> #printNamedFieldDefinition:offset:prefix:hidden:on:;
-	add: #AXTypeInfoAnalyzer -> #autoGenCategoryName;
-	add: #AXTypeInfoAnalyzer -> #autoGenClassCommentMarker;
-	add: #AXTypeInfoAnalyzer -> #autoGenMethodComment;
-	add: #AXTypeInfoAnalyzer -> #baseClassCheck:;
-	add: #AXTypeInfoAnalyzer -> #basicGenerate;
-	add: #AXTypeInfoAnalyzer -> #canGenerateClassMessage:;
-	add: #AXTypeInfoAnalyzer -> #canGenerateMessage:;
-	add: #AXTypeInfoAnalyzer -> #canGenerateMessage:into:;
-	add: #AXTypeInfoAnalyzer -> #canGenerateMethodNamed:;
-	add: #AXTypeInfoAnalyzer -> #checkConformanceOfExistingClass:;
-	add: #AXTypeInfoAnalyzer -> #classCategories;
-	add: #AXTypeInfoAnalyzer -> #classConstantsCategories;
-	add: #AXTypeInfoAnalyzer -> #classInitializerCategories;
-	add: #AXTypeInfoAnalyzer -> #compileClassMethod:categories:;
-	add: #AXTypeInfoAnalyzer -> #compileMethod:categories:;
-	add: #AXTypeInfoAnalyzer -> #compileRawMethod:categories:;
-	add: #AXTypeInfoAnalyzer -> #compileTestingMethod:;
-	add: #AXTypeInfoAnalyzer -> #conformsToRequiredProtocols:;
-	add: #AXTypeInfoAnalyzer -> #constantsPool;
-	add: #AXTypeInfoAnalyzer -> #determineNewBase:forExistingWrapper:;
-	add: #AXTypeInfoAnalyzer -> #emitComment:on:;
-	add: #AXTypeInfoAnalyzer -> #generate;
-	add: #AXTypeInfoAnalyzer -> #generateAs:flags:;
-	add: #AXTypeInfoAnalyzer -> #generateClassComment;
-	add: #AXTypeInfoAnalyzer -> #generateClassDefinition:;
-	add: #AXTypeInfoAnalyzer -> #generateClassSide:;
-	add: #AXTypeInfoAnalyzer -> #generateConstants;
-	add: #AXTypeInfoAnalyzer -> #generateConstantsIntoPool:;
-	add: #AXTypeInfoAnalyzer -> #generateGlobalDefinition;
-	add: #AXTypeInfoAnalyzer -> #generateGlobalDefinition:;
-	add: #AXTypeInfoAnalyzer -> #generateInstanceSide:;
-	add: #AXTypeInfoAnalyzer -> #generateWrapper;
-	add: #AXTypeInfoAnalyzer -> #generationFlags;
-	add: #AXTypeInfoAnalyzer -> #guidCheck:;
-	add: #AXTypeInfoAnalyzer -> #guidClashPrompt:;
-	add: #AXTypeInfoAnalyzer -> #handleClash:response:;
-	add: #AXTypeInfoAnalyzer -> #identifierFrom:;
-	add: #AXTypeInfoAnalyzer -> #idlTypeOfVT:;
-	add: #AXTypeInfoAnalyzer -> #isClassCheck:;
-	add: #AXTypeInfoAnalyzer -> #packageCheck:;
-	add: #AXTypeInfoAnalyzer -> #printAutoGenMethodPostambleOn:;
-	add: #AXTypeInfoAnalyzer -> #printClassCommentPreambleOn:;
-	add: #AXTypeInfoAnalyzer -> #printHelpstringComment:on:;
-	add: #AXTypeInfoAnalyzer -> #printIDLDecl:type:on:;
-	add: #AXTypeInfoAnalyzer -> #printIDLForVariable:on:indent:;
-	add: #AXTypeInfoAnalyzer -> #removeAutoGeneratedMethods:;
-	add: #AXTypeInfoAnalyzer -> #removeOldWrappers:;
-	add: #AXTypeInfoAnalyzer -> #reservedSelectors;
-	add: #AXTypeInfoAnalyzer -> #resolveExistingClass:;
-	add: #AXTypeInfoAnalyzer -> #shouldOverwriteClassComment;
-	add: #AXTypeInfoAnalyzer -> #superclassClashPrompt:;
-	add: #AXTypeInfoObject -> #abortGeneration;
-	add: #AXTypeInfoObject -> #basicIdlAttributes;
-	add: #AXTypeInfoObject -> #classComments;
-	add: #AXTypeInfoObject -> #classComments:;
-	add: #AXTypeInfoObject -> #customAttributes;
-	add: #AXTypeInfoObject -> #defineFunctionTables;
-	add: #AXTypeInfoObject -> #defineFunctionTables:;
-	add: #AXTypeInfoObject -> #defineMethodProtocols;
-	add: #AXTypeInfoObject -> #defineMethodProtocols:;
-	add: #AXTypeInfoObject -> #forceLowercaseIdentifiers;
-	add: #AXTypeInfoObject -> #forceLowercaseIdentifiers:;
-	add: #AXTypeInfoObject -> #generateSourceInterfaces;
-	add: #AXTypeInfoObject -> #generationFlags;
-	add: #AXTypeInfoObject -> #generationFlags:;
-	add: #AXTypeInfoObject -> #getCustData;
-	add: #AXTypeInfoObject -> #guidClashSignal;
-	add: #AXTypeInfoObject -> #highLevelWrappers;
-	add: #AXTypeInfoObject -> #highLevelWrappers:;
-	add: #AXTypeInfoObject -> #idlAttributes;
-	add: #AXTypeInfoObject -> #idlKeyword;
-	add: #AXTypeInfoObject -> #isTraceOnly;
-	add: #AXTypeInfoObject -> #isTracing;
-	add: #AXTypeInfoObject -> #isTracingVerbose;
-	add: #AXTypeInfoObject -> #isTracingVerbose:;
-	add: #AXTypeInfoObject -> #packageCheck:;
-	add: #AXTypeInfoObject -> #printAttributeList:on:;
-	add: #AXTypeInfoObject -> #printIDL;
-	add: #AXTypeInfoObject -> #printIDLAttributes:on:indent:;
-	add: #AXTypeInfoObject -> #printIDLAttributesOn:indent:;
-	add: #AXTypeInfoObject -> #printIDLBodyOn:indent:;
-	add: #AXTypeInfoObject -> #printIDLOn:;
-	add: #AXTypeInfoObject -> #printIDLOn:indent:;
-	add: #AXTypeInfoObject -> #printOn:;
-	add: #AXTypeInfoObject -> #sharedPoolNames;
-	add: #AXTypeInfoObject -> #tracing;
-	add: #AXTypeInfoObject -> #tracing:;
-	add: #AXTypeLibDocumentation -> #idlAttributes;
-	add: #AXTypeLibraryAnalyzer -> #addAlias:forType:;
-	add: #AXTypeLibraryAnalyzer -> #addClassToPackage:;
-	add: #AXTypeLibraryAnalyzer -> #addGlobalToPackage:;
-	add: #AXTypeLibraryAnalyzer -> #checkConformanceOfExistingPool:;
-	add: #AXTypeLibraryAnalyzer -> #constantsPool;
-	add: #AXTypeLibraryAnalyzer -> #constantsPoolBinding;
-	add: #AXTypeLibraryAnalyzer -> #constantsPoolName;
-	add: #AXTypeLibraryAnalyzer -> #constantsPoolName:;
-	add: #AXTypeLibraryAnalyzer -> #defaultPackageFolder;
-	add: #AXTypeLibraryAnalyzer -> #definesSymbolicConstants;
-	add: #AXTypeLibraryAnalyzer -> #generatableInterfaces;
-	add: #AXTypeLibraryAnalyzer -> #generatableModules;
-	add: #AXTypeLibraryAnalyzer -> #generateConstantsIntoPool:;
-	add: #AXTypeLibraryAnalyzer -> #generateConstantsPool;
-	add: #AXTypeLibraryAnalyzer -> #generateDispatchWrapper:;
-	add: #AXTypeLibraryAnalyzer -> #generateDispatchWrapper:name:flags:;
-	add: #AXTypeLibraryAnalyzer -> #generateInterfaceWrapper:;
-	add: #AXTypeLibraryAnalyzer -> #generateInterfaceWrapper:name:flags:;
-	add: #AXTypeLibraryAnalyzer -> #generateInterfaceWrappers;
-	add: #AXTypeLibraryAnalyzer -> #generateTypelibGlobal;
-	add: #AXTypeLibraryAnalyzer -> #generateTypelibGlobal:;
-	add: #AXTypeLibraryAnalyzer -> #generateWrapper:name:flags:;
-	add: #AXTypeLibraryAnalyzer -> #globalBinding;
-	add: #AXTypeLibraryAnalyzer -> #globalName;
-	add: #AXTypeLibraryAnalyzer -> #idlAttributes;
-	add: #AXTypeLibraryAnalyzer -> #idlHelpAttributes:;
-	add: #AXTypeLibraryAnalyzer -> #idlKeyword;
-	add: #AXTypeLibraryAnalyzer -> #isPoolCheck:;
-	add: #AXTypeLibraryAnalyzer -> #moveClassToPackage:;
-	add: #AXTypeLibraryAnalyzer -> #package;
-	add: #AXTypeLibraryAnalyzer -> #package:;
-	add: #AXTypeLibraryAnalyzer -> #packageCheck:;
-	add: #AXTypeLibraryAnalyzer -> #packageName;
-	add: #AXTypeLibraryAnalyzer -> #packageName:;
-	add: #AXTypeLibraryAnalyzer -> #prefix;
-	add: #AXTypeLibraryAnalyzer -> #prefix:;
-	add: #AXTypeLibraryAnalyzer -> #prefixGlobalNames;
-	add: #AXTypeLibraryAnalyzer -> #prefixGlobalNames:;
-	add: #AXTypeLibraryAnalyzer -> #printIDLForwardRefsOn:indent:;
-	add: #AXTypeLibraryAnalyzer -> #printIDLOn:indent:;
-	add: #AXTypeLibraryAnalyzer -> #printOn:;
-	add: #AXTypeLibraryAnalyzer -> #resolveExistingPool:;
-	add: #AXTypeLibraryAnalyzer -> #sharedPoolNames;
-	add: #AXTypeLibraryAnalyzer -> #superclassClashSignal;
-	add: #CURRENCY -> #printOn:;
-	add: #CUSTDATAITEM -> #printIDLOn:;
-	add: #DECIMAL -> #printOn:;
-	add: #ELEMDESC -> #idlAttributes;
-	add: #ExternalLibrary -> #DllRegisterServer;
-	add: #ExternalPoint -> #printOn:;
-	add: #FUNCDESC -> #buildMethodName;
-	add: #FUNCDESC -> #displayOn:;
-	add: #FUNCDESC -> #generate;
-	add: #FUNCDESC -> #hasAnswer;
-	add: #FUNCDESC -> #hasMultipleOutputs;
-	add: #FUNCDESC -> #hasOptionalInputs;
-	add: #FUNCDESC -> #hasReturnValue;
-	add: #FUNCDESC -> #isInspectable;
-	add: #FUNCDESC -> #isValueSetter;
-	add: #FUNCDESC -> #methodName;
-	add: #FUNCDESC -> #printIDLOn:indent:;
-	add: #FUNCDESC -> #printOn:;
-	add: #FUNCDESC -> #reinventBadVarNames:;
-	add: #IDispatch -> #alternateInspectorClass;
-	add: #IDispatch -> #aspectDisplayOn:;
-	add: #IDispatch -> #debugPrintString;
-	add: #IDispatch -> #printOn:;
-	add: #IDispatch -> #publishedAspects;
-	add: #ITypeInfo -> #printOn:;
-	add: #ITypeLib -> #printOn:;
-	add: #PARAMDESC -> #idlAttributes;
-	add: #SAFEARRAY -> #printOn:;
-	add: #TKindAliasAnalyzer -> #generateGlobalDefinition:;
-	add: #TKindAliasAnalyzer -> #generateWrapper;
-	add: #TKindAliasAnalyzer -> #idlAttributes;
-	add: #TKindAliasAnalyzer -> #idlKeyword;
-	add: #TKindAliasAnalyzer -> #printClassCommentPreambleOn:;
-	add: #TKindAliasAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindAliasAnalyzer -> #printIDLOn:indent:;
-	add: #TKindCoclassAnalyzer -> #generateWrapper;
-	add: #TKindCoclassAnalyzer -> #idlAttributes;
-	add: #TKindCoclassAnalyzer -> #idlKeyword;
-	add: #TKindCoclassAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindDispatchAnalyzer -> #buildPropertyAccessorName:;
-	add: #TKindDispatchAnalyzer -> #buildPropertyMutatorName:;
-	add: #TKindDispatchAnalyzer -> #generatePropertyAccessor:;
-	add: #TKindDispatchAnalyzer -> #generatePropertyAccessors;
-	add: #TKindDispatchAnalyzer -> #generatePropertyMutator:;
-	add: #TKindDispatchAnalyzer -> #generateRawMethod:categories:;
-	add: #TKindDispatchAnalyzer -> #generateValuePropertyWrappers;
-	add: #TKindDispatchAnalyzer -> #generateWrapper;
-	add: #TKindDispatchAnalyzer -> #idlKeyword;
-	add: #TKindDispatchAnalyzer -> #isInspectablePropGet:;
-	add: #TKindDispatchAnalyzer -> #isProtocolRequired;
-	add: #TKindDispatchAnalyzer -> #printClassCommentPreambleOn:;
-	add: #TKindDispatchAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindDispatchAnalyzer -> #printIDLOfPropertiesOn:indent:;
-	add: #TKindDispatchAnalyzer -> #printMethodBody:wrapping:on:;
-	add: #TKindDispatchAnalyzer -> #printMultiOutMethodBody:wrapping:on:;
-	add: #TKindDispatchAnalyzer -> #printPropertyCommentDecl:on:;
-	add: #TKindDispatchAnalyzer -> #printPropGet:wrapping:on:defaultOptionals:;
-	add: #TKindDispatchAnalyzer -> #printPropPut:wrapping:on:;
-	add: #TKindDispatchAnalyzer -> #printRawMethodBody:name:on:;
-	add: #TKindDispatchAnalyzer -> #printRawPropGetBody:name:on:;
-	add: #TKindDispatchAnalyzer -> #printRawPropPutBody:name:on:;
-	add: #TKindEnumAnalyzer -> #constantsPool;
-	add: #TKindEnumAnalyzer -> #generateGlobalDefinition:;
-	add: #TKindEnumAnalyzer -> #generateInstanceSide:;
-	add: #TKindEnumAnalyzer -> #idlAttributes;
-	add: #TKindEnumAnalyzer -> #idlKeyword;
-	add: #TKindEnumAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindEnumAnalyzer -> #printIDLOn:indent:;
-	add: #TKindEnumAnalyzer -> #removeOldWrappers:;
-	add: #TKindInterfaceAnalyzer -> #areWrappersRequired;
-	add: #TKindInterfaceAnalyzer -> #functionHasReturnValue:;
-	add: #TKindInterfaceAnalyzer -> #generateClassInitialize;
-	add: #TKindInterfaceAnalyzer -> #generateDefineFunctions;
-	add: #TKindInterfaceAnalyzer -> #generatePropertyAccessors;
-	add: #TKindInterfaceAnalyzer -> #generateRawPropGet:;
-	add: #TKindInterfaceAnalyzer -> #generateRawPropPut:;
-	add: #TKindInterfaceAnalyzer -> #idlAttributes;
-	add: #TKindInterfaceAnalyzer -> #idlKeyword;
-	add: #TKindInterfaceAnalyzer -> #isInspectablePropGet:;
-	add: #TKindInterfaceAnalyzer -> #isMethodWrapperRequiredFor:;
-	add: #TKindInterfaceAnalyzer -> #printClassCommentPreambleOn:;
-	add: #TKindInterfaceAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindInterfaceAnalyzer -> #printMethodBody:wrapping:on:;
-	add: #TKindInterfaceAnalyzer -> #printMultiOutMethodBody:wrapping:on:;
-	add: #TKindInterfaceAnalyzer -> #printPropertyCommentDecl:on:;
-	add: #TKindInterfaceAnalyzer -> #printPropGet:wrapping:on:defaultOptionals:;
-	add: #TKindInterfaceAnalyzer -> #printPropPut:wrapping:on:;
-	add: #TKindInterfaceAnalyzer -> #printRawMethodBody:name:on:;
-	add: #TKindInterfaceAnalyzer -> #printRawPropGetComment:on:isPrivate:;
-	add: #TKindInterfaceAnalyzer -> #printRawPropPutComment:name:on:isPrivate:;
-	add: #TKindInterfaceAnalyzer -> #rawMethodNameForFunction:;
-	add: #TKindModuleAnalyzer -> #areWrappersRequired;
-	add: #TKindModuleAnalyzer -> #generateClassFilename;
-	add: #TKindModuleAnalyzer -> #generateClassSide:;
-	add: #TKindModuleAnalyzer -> #generateInstanceSide:;
-	add: #TKindModuleAnalyzer -> #generateMethodWrappers;
-	add: #TKindModuleAnalyzer -> #generateWrapper;
-	add: #TKindModuleAnalyzer -> #idlAttributes;
-	add: #TKindModuleAnalyzer -> #idlAttributesOfFunc:;
-	add: #TKindModuleAnalyzer -> #idlKeyword;
-	add: #TKindModuleAnalyzer -> #instanceMethodCategories:;
-	add: #TKindModuleAnalyzer -> #methodCommentDescription;
-	add: #TKindModuleAnalyzer -> #mungeSelectorKeywords:forMember:;
-	add: #TKindModuleAnalyzer -> #printClassCommentPreambleOn:;
-	add: #TKindModuleAnalyzer -> #printIDLBodyOn:indent:;
-	add: #TKindModuleAnalyzer -> #printMethod:wrapping:on:;
-	add: #TKindModuleAnalyzer -> #printRawMethodBody:name:on:;
-	add: #TKindRecordAnalyzer -> #idlKeyword;
-	add: #TKindUnionAnalyzer -> #idlKeyword;
-	add: #TYPEDESC -> #printOn:;
-	add: #VARDESC -> #printIDLOn:indent:;
-	add: #VARDESC -> #printOn:;
-	add: #VARIANT -> #printIDLOn:;
-	add: #VARIANT -> #printOn:;
-	add: #VARIANT_BOOL -> #printOn:;
-	add: 'ArrayField class' -> #printVariable:type:indirections:on:;
-	add: 'ArrayPointerField class' -> #printVariable:type:indirections:on:;
-	add: 'AXDispatchImpAbstract class' -> #icon;
-	add: 'AXInterfaceTypeAnalyzer class' -> #icon;
-	add: 'AXInterfaceTypeAnalyzer class' -> #optimizedSelectors;
-	add: 'AXInterfaceTypeAnalyzer class' -> #overridableIDispatchSelectors;
-	add: 'AXInterfaceTypeAnalyzer class' -> #overridableIUnknownSelectors;
-	add: 'AXInterfaceTypeAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'AXInterfaceTypeAnalyzer class' -> #reservedDispSelectors;
-	add: 'AXInterfaceTypeAnalyzer class' -> #reservedUnkSelectors;
-	add: 'AXMemberDesc class' -> #publishedAspectsOfInstances;
-	add: 'AXStructureTypeAnalyzer class' -> #icon;
-	add: 'AXStructureTypeAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'AXTypeInfoAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'AXTypeInfoObject class' -> #classCommentStyleMap;
-	add: 'AXTypeInfoObject class' -> #classCommentStyles;
-	add: 'AXTypeInfoObject class' -> #guidClashSignal;
-	add: 'AXTypeInfoObject class' -> #highLevelWrapperStyleMap;
-	add: 'AXTypeInfoObject class' -> #highLevelWrapperStyles;
-	add: 'AXTypeInfoObject class' -> #icon;
-	add: 'AXTypeInfoObject class' -> #tracingStyleMap;
-	add: 'AXTypeInfoObject class' -> #tracingStyles;
-	add: 'AXTypeLibDocumentation class' -> #icon;
-	add: 'AXTypeLibraryAnalyzer class' -> #example1;
-	add: 'AXTypeLibraryAnalyzer class' -> #example2;
-	add: 'AXTypeLibraryAnalyzer class' -> #example3;
-	add: 'AXTypeLibraryAnalyzer class' -> #fileTypes;
-	add: 'AXTypeLibraryAnalyzer class' -> #icon;
-	add: 'AXTypeLibraryAnalyzer class' -> #open;
-	add: 'AXTypeLibraryAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'AXTypeLibraryAnalyzer class' -> #registerTypeLib;
-	add: 'AXTypeLibraryAnalyzer class' -> #superclassClashSignal;
-	add: 'AXTypeLibraryAnalyzer class' -> #typeLibRegistrations;
-	add: 'BOOL class' -> #fieldType;
-	add: 'BOOLEAN class' -> #fieldType;
-	add: 'BSTR class' -> #newInstanceAspect:class:;
-	add: 'BSTR class' -> #printDefaultValue:on:;
-	add: 'BSTR class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'BSTR class' -> #printOptionalParameter:on:;
-	add: 'BSTR class' -> #unspecifiedParameterValue;
-	add: 'BYTE class' -> #arrayType;
-	add: 'BYTE class' -> #fieldType;
-	add: 'ByteArray class' -> #fieldType;
-	add: 'ByteArray class' -> #fieldType:indirections:;
-	add: 'ByteArray class' -> #pointerFieldType;
-	add: 'ByteArray class' -> #printStructField:indirections:on:;
-	add: 'COMInterface class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'COMInterface class' -> #printOptionalParameter:on:;
-	add: 'CURRENCY class' -> #mustWrapOptionalArgument:;
-	add: 'CURRENCY class' -> #newInstanceAspect:class:;
-	add: 'DATE class' -> #newInstanceAspect:class:;
-	add: 'DATE class' -> #printDefaultValue:on:;
-	add: 'DOUBLE class' -> #arrayType;
-	add: 'DOUBLE class' -> #fieldType;
-	add: 'DWORD class' -> #arrayType;
-	add: 'DWORD class' -> #fieldType;
-	add: 'DWORDBytes class' -> #fieldType;
-	add: 'ExternalAddress class' -> #fieldType;
-	add: 'ExternalArray class' -> #arrayType;
-	add: 'ExternalArray class' -> #fieldType;
-	add: 'ExternalArray class' -> #fieldType:indirections:;
-	add: 'ExternalArray class' -> #pointerFieldType;
-	add: 'ExternalArray class' -> #printStructField:indirections:on:;
-	add: 'ExternalField class' -> #printArrayField:length:on:;
-	add: 'ExternalField class' -> #printArrayField:type:on:;
-	add: 'ExternalField class' -> #printConformantArrayLength:on:;
-	add: 'ExternalField class' -> #printFixedArrayLength:on:;
-	add: 'ExternalField class' -> #printTypedField:on:;
-	add: 'ExternalField class' -> #printVariable:type:indirections:on:;
-	add: 'ExternalField class' -> #warningMultiDimensionArray:;
-	add: 'ExternalHandle class' -> #arrayType:;
-	add: 'ExternalHandle class' -> #fieldType;
-	add: 'ExternalHandle class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'ExternalIntegerBytes class' -> #fieldType;
-	add: 'ExternalIntegerBytes class' -> #pointerFieldType;
-	add: 'ExternalIntegerBytes class' -> #printStructField:indirections:on:;
-	add: 'ExternalStructure class' -> #arrayType;
-	add: 'ExternalStructure class' -> #arrayType:;
-	add: 'ExternalStructure class' -> #elementType:;
-	add: 'ExternalStructure class' -> #fieldType;
-	add: 'ExternalStructure class' -> #fieldType:indirections:;
-	add: 'ExternalStructure class' -> #mustWrapOptionalArgument:;
-	add: 'ExternalStructure class' -> #printDefaultValue:on:;
-	add: 'ExternalStructure class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'ExternalStructure class' -> #printOptionalParameter:on:;
-	add: 'ExternalStructure class' -> #printStructField:indirections:on:;
-	add: 'ExternalStructure class' -> #printWrappedValue:on:;
-	add: 'ExternalStructure class' -> #unspecifiedParameterValue;
-	add: 'FLOAT class' -> #arrayType;
-	add: 'FLOAT class' -> #fieldType;
-	add: 'FLOAT class' -> #printDefaultValue:on:;
-	add: 'GUID class' -> #arrayType:;
-	add: 'GUID class' -> #elementType:;
-	add: 'GUID class' -> #newToClipboard;
-	add: 'GUID class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'GUID class' -> #printStructField:indirections:on:;
-	add: 'HRESULT class' -> #fieldType;
-	add: 'IDispatch class' -> #example1;
-	add: 'IDispatch class' -> #example2;
-	add: 'IDispatch class' -> #example3;
-	add: 'IDispatch class' -> #example4;
-	add: 'INT_PTR class' -> #arrayType;
-	add: 'INT_PTR class' -> #fieldType;
-	add: 'LARGE_INTEGER class' -> #fieldType;
-	add: 'OLECountedArray class' -> #fieldType;
-	add: 'OLECountedArray class' -> #pointerFieldType;
-	add: 'PointerArray class' -> #fieldType;
-	add: 'PointerArray class' -> #pointerFieldType;
-	add: 'PointerArrayField class' -> #printVariable:type:indirections:on:;
-	add: 'PointerField class' -> #printVariable:type:indirections:on:;
-	add: 'QWORD class' -> #fieldType;
-	add: 'SAFEARRAY class' -> #fieldType;
-	add: 'SAFEARRAY class' -> #pointerFieldType;
-	add: 'SAFEARRAY class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'SBYTE class' -> #arrayType;
-	add: 'SBYTE class' -> #fieldType;
-	add: 'SDWORD class' -> #arrayType;
-	add: 'SDWORD class' -> #fieldType;
-	add: 'String class' -> #arrayType;
-	add: 'String class' -> #arrayType:;
-	add: 'String class' -> #elementType:;
-	add: 'String class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'String class' -> #printStructField:indirections:on:;
-	add: 'StructureArray class' -> #fieldType;
-	add: 'StructureArray class' -> #pointerFieldType;
-	add: 'StructureArrayField class' -> #printVariable:type:indirections:on:;
-	add: 'StructureArrayPointerField class' -> #printVariable:type:indirections:on:;
-	add: 'StructureField class' -> #printVariable:type:indirections:on:;
-	add: 'SWORD class' -> #arrayType;
-	add: 'SWORD class' -> #fieldType;
-	add: 'TKindCoclassAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'TKindDispatchAnalyzer class' -> #icon;
-	add: 'TKindDispatchAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'TKindEnumAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'TKindModuleAnalyzer class' -> #icon;
-	add: 'TKindModuleAnalyzer class' -> #publishedAspectsOfInstances;
-	add: 'UINT_PTR class' -> #arrayType;
-	add: 'UINT_PTR class' -> #fieldType;
-	add: 'UIntPtrBytes class' -> #fieldType;
-	add: 'Utf16String class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'VARIANT class' -> #example1;
-	add: 'VARIANT class' -> #printMethodArgument:elemdesc:indirections:on:;
-	add: 'VARIANT class' -> #printOptionalParameter:on:;
-	add: 'VARIANT_BOOL class' -> #newInstanceAspect:class:;
-	add: 'VOID class' -> #arrayType;
-	add: 'VOID class' -> #fieldType;
-	add: 'VOID class' -> #pointerFieldType;
-	add: 'WORD class' -> #arrayType;
-	add: 'WORD class' -> #fieldType;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{AbstractELEMDESC} #printFieldsOn:limit:)
+	#(#{ArrayField class} #printVariable:type:indirections:on:)
+	#(#{ArrayPointerField class} #printVariable:type:indirections:on:)
+	#(#{AXAPIInfoAnalyzer} #areWrappersRequired)
+	#(#{AXAPIInfoAnalyzer} #compileMethodWrapper:)
+	#(#{AXAPIInfoAnalyzer} #functionHasReturnValue:)
+	#(#{AXAPIInfoAnalyzer} #generateGlobalDefinition:)
+	#(#{AXAPIInfoAnalyzer} #generateMethod:wrapping:)
+	#(#{AXAPIInfoAnalyzer} #generateMethodWrappers)
+	#(#{AXAPIInfoAnalyzer} #generateMethodWrappers:)
+	#(#{AXAPIInfoAnalyzer} #generateRawMethod:categories:)
+	#(#{AXAPIInfoAnalyzer} #idlAttributesOfFunc:)
+	#(#{AXAPIInfoAnalyzer} #instanceMethodCategories:)
+	#(#{AXAPIInfoAnalyzer} #isDefaultedWrapperRequiredFor:)
+	#(#{AXAPIInfoAnalyzer} #isMethodWrapperRequiredFor:)
+	#(#{AXAPIInfoAnalyzer} #methodCommentDescription)
+	#(#{AXAPIInfoAnalyzer} #mungeSelectorKeywords:forMember:)
+	#(#{AXAPIInfoAnalyzer} #printCommentPrefixOn:isPrivate:)
+	#(#{AXAPIInfoAnalyzer} #printFunctionPrototype:on:indent:)
+	#(#{AXAPIInfoAnalyzer} #printFunctionPrototypeComment:on:)
+	#(#{AXAPIInfoAnalyzer} #printIDLForFunction:on:indent:)
+	#(#{AXAPIInfoAnalyzer} #printMethod:wrapping:on:)
+	#(#{AXAPIInfoAnalyzer} #printMethodCommentPostamble:on:)
+	#(#{AXAPIInfoAnalyzer} #printMethodCommentPreamble:on:isPrivate:)
+	#(#{AXAPIInfoAnalyzer} #printRawMethodBody:name:on:)
+	#(#{AXAPIInfoAnalyzer} #printRawMethodComment:on:isPrivate:)
+	#(#{AXAPIInfoAnalyzer} #printRawMethodCommentHelp:on:)
+	#(#{AXAPIInfoAnalyzer} #printRawMethodCommentPreamble:on:isPrivate:)
+	#(#{AXAPIInfoAnalyzer} #proputrefWrapperPrefix)
+	#(#{AXAPIInfoAnalyzer} #rawMethodNameForFunction:)
+	#(#{AXAPIInfoAnalyzer} #reinventBadSelector:member:)
+	#(#{AXAPIInfoAnalyzer} #selectorForFunction:)
+	#(#{AXAPIInfoAnalyzer} #sharedPoolNames)
+	#(#{AXDispatchImpAbstract class} #icon)
+	#(#{AXInterfaceTypeAnalyzer} #areWrappersRequired)
+	#(#{AXInterfaceTypeAnalyzer} #autoGenPropertiesCategories)
+	#(#{AXInterfaceTypeAnalyzer} #buildMethodName:defaultOptionals:)
+	#(#{AXInterfaceTypeAnalyzer} #buildPublishedAspects:forObject:)
+	#(#{AXInterfaceTypeAnalyzer} #classCategories)
+	#(#{AXInterfaceTypeAnalyzer} #compilePropertyAccessor:)
+	#(#{AXInterfaceTypeAnalyzer} #compileRawMethod:categories:)
+	#(#{AXInterfaceTypeAnalyzer} #determineNewBase:forExistingWrapper:)
+	#(#{AXInterfaceTypeAnalyzer} #generateClassCLSIDForCoclass:)
+	#(#{AXInterfaceTypeAnalyzer} #generateClassInitialize)
+	#(#{AXInterfaceTypeAnalyzer} #generateClassInstanceCreation)
+	#(#{AXInterfaceTypeAnalyzer} #generateClassSide:)
+	#(#{AXInterfaceTypeAnalyzer} #generateCollectionTest)
+	#(#{AXInterfaceTypeAnalyzer} #generateDefaultMethod:wrapping:)
+	#(#{AXInterfaceTypeAnalyzer} #generateGlobalDefinition:)
+	#(#{AXInterfaceTypeAnalyzer} #generateInitializeTypeLib)
+	#(#{AXInterfaceTypeAnalyzer} #generateInstanceSide:)
+	#(#{AXInterfaceTypeAnalyzer} #generateMethodWrappers)
+	#(#{AXInterfaceTypeAnalyzer} #generateMethodWrappers:)
+	#(#{AXInterfaceTypeAnalyzer} #generateNewForCoclass:)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropertyAccessors)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropGet:wrapping:defaultOptionals:)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropGetWrappers:)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropPut:wrapping:)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropPutRefWrappers:)
+	#(#{AXInterfaceTypeAnalyzer} #generatePropPutWrappers:)
+	#(#{AXInterfaceTypeAnalyzer} #generateRawPropGet:)
+	#(#{AXInterfaceTypeAnalyzer} #generateRawPropPut:)
+	#(#{AXInterfaceTypeAnalyzer} #generateRuntimeExtensibilityTest)
+	#(#{AXInterfaceTypeAnalyzer} #generateTests)
+	#(#{AXInterfaceTypeAnalyzer} #generateValueAccessor:wrapping:)
+	#(#{AXInterfaceTypeAnalyzer} #generateValueMutator:wrapping:)
+	#(#{AXInterfaceTypeAnalyzer} #generateValuePropertyWrappers)
+	#(#{AXInterfaceTypeAnalyzer class} #icon)
+	#(#{AXInterfaceTypeAnalyzer} #idlAttributes)
+	#(#{AXInterfaceTypeAnalyzer} #inspectableProperties)
+	#(#{AXInterfaceTypeAnalyzer} #instanceMethodCategories:)
+	#(#{AXInterfaceTypeAnalyzer} #interfaceCategoryName)
+	#(#{AXInterfaceTypeAnalyzer} #isAutomationCompatible)
+	#(#{AXInterfaceTypeAnalyzer} #isInspectablePropGet:)
+	#(#{AXInterfaceTypeAnalyzer} #isProtocolRequired)
+	#(#{AXInterfaceTypeAnalyzer} #methodCommentDescription)
+	#(#{AXInterfaceTypeAnalyzer} #newAspectForMember:ppb:)
+	#(#{AXInterfaceTypeAnalyzer class} #optimizedSelectors)
+	#(#{AXInterfaceTypeAnalyzer class} #overridableIDispatchSelectors)
+	#(#{AXInterfaceTypeAnalyzer class} #overridableIUnknownSelectors)
+	#(#{AXInterfaceTypeAnalyzer} #printArgument:named:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printDefaultMethod:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printDefaultMethodBody:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printMethod:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printMethodBody:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printMethodComment:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printMultiOutMethodBody:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropertyCommentDecl:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropertyCommentPostamble:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropGet:wrapping:on:defaultOptionals:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropGetComment:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropGetCommentPreamble:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropPut:wrapping:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printPropPutComment:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printRawPropGetBody:name:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printRawPropPutBody:name:on:)
+	#(#{AXInterfaceTypeAnalyzer} #printValuePropCommentPostambleOn:)
+	#(#{AXInterfaceTypeAnalyzer class} #publishedAspectsOfInstances)
+	#(#{AXInterfaceTypeAnalyzer} #rawPropCategories)
+	#(#{AXInterfaceTypeAnalyzer class} #reservedDispSelectors)
+	#(#{AXInterfaceTypeAnalyzer} #reservedSelectors)
+	#(#{AXInterfaceTypeAnalyzer class} #reservedUnkSelectors)
+	#(#{AXInterfaceTypeAnalyzer} #wrapMethodComment:)
+	#(#{AXMemberDesc} #idlAttributes)
+	#(#{AXMemberDesc} #idlAttributesAndId)
+	#(#{AXMemberDesc} #idlCustomAttributes)
+	#(#{AXMemberDesc} #isInspectable)
+	#(#{AXMemberDesc} #printIDL)
+	#(#{AXMemberDesc} #printIDLOn:)
+	#(#{AXMemberDesc} #printIDLOn:indent:)
+	#(#{AXMemberDesc class} #publishedAspectsOfInstances)
+	#(#{AXRecord} #publishedAspects)
+	#(#{AXStructureTypeAnalyzer} #conformsToRequiredProtocols:)
+	#(#{AXStructureTypeAnalyzer} #determineNewBase:forExistingWrapper:)
+	#(#{AXStructureTypeAnalyzer} #generateClassSide:)
+	#(#{AXStructureTypeAnalyzer} #generateDefineFields)
+	#(#{AXStructureTypeAnalyzer} #generateGlobalDefinition:)
+	#(#{AXStructureTypeAnalyzer} #generateInstanceSide:)
+	#(#{AXStructureTypeAnalyzer} #generateTypeLibAccessor)
+	#(#{AXStructureTypeAnalyzer} #generateWrapper)
+	#(#{AXStructureTypeAnalyzer class} #icon)
+	#(#{AXStructureTypeAnalyzer} #printAnonymousStruct:offset:prefix:hidden:on:)
+	#(#{AXStructureTypeAnalyzer} #printClassCommentPreambleOn:)
+	#(#{AXStructureTypeAnalyzer} #printFieldDefinition:offset:prefix:hidden:on:)
+	#(#{AXStructureTypeAnalyzer} #printFieldDefinitionsOn:offset:prefix:hidden:)
+	#(#{AXStructureTypeAnalyzer} #printIDLBodyOn:indent:)
+	#(#{AXStructureTypeAnalyzer} #printIDLForVariablesOn:indent:)
+	#(#{AXStructureTypeAnalyzer} #printIDLOn:indent:)
+	#(#{AXStructureTypeAnalyzer} #printNamedFieldDefinition:offset:prefix:hidden:on:)
+	#(#{AXStructureTypeAnalyzer class} #publishedAspectsOfInstances)
+	#(#{AXTypeInfoAnalyzer} #autoGenCategoryName)
+	#(#{AXTypeInfoAnalyzer} #autoGenClassCommentMarker)
+	#(#{AXTypeInfoAnalyzer} #autoGenMethodComment)
+	#(#{AXTypeInfoAnalyzer} #baseClassCheck:)
+	#(#{AXTypeInfoAnalyzer} #basicGenerate)
+	#(#{AXTypeInfoAnalyzer} #canGenerateClassMessage:)
+	#(#{AXTypeInfoAnalyzer} #canGenerateMessage:)
+	#(#{AXTypeInfoAnalyzer} #canGenerateMessage:into:)
+	#(#{AXTypeInfoAnalyzer} #canGenerateMethodNamed:)
+	#(#{AXTypeInfoAnalyzer} #checkConformanceOfExistingClass:)
+	#(#{AXTypeInfoAnalyzer} #classCategories)
+	#(#{AXTypeInfoAnalyzer} #classConstantsCategories)
+	#(#{AXTypeInfoAnalyzer} #classInitializerCategories)
+	#(#{AXTypeInfoAnalyzer} #compileClassMethod:categories:)
+	#(#{AXTypeInfoAnalyzer} #compileMethod:categories:)
+	#(#{AXTypeInfoAnalyzer} #compileRawMethod:categories:)
+	#(#{AXTypeInfoAnalyzer} #compileTestingMethod:)
+	#(#{AXTypeInfoAnalyzer} #conformsToRequiredProtocols:)
+	#(#{AXTypeInfoAnalyzer} #constantsPool)
+	#(#{AXTypeInfoAnalyzer} #determineNewBase:forExistingWrapper:)
+	#(#{AXTypeInfoAnalyzer} #emitComment:on:)
+	#(#{AXTypeInfoAnalyzer} #generate)
+	#(#{AXTypeInfoAnalyzer} #generateAs:flags:)
+	#(#{AXTypeInfoAnalyzer} #generateClassComment)
+	#(#{AXTypeInfoAnalyzer} #generateClassDefinition:)
+	#(#{AXTypeInfoAnalyzer} #generateClassSide:)
+	#(#{AXTypeInfoAnalyzer} #generateConstants)
+	#(#{AXTypeInfoAnalyzer} #generateConstantsIntoPool:)
+	#(#{AXTypeInfoAnalyzer} #generateGlobalDefinition)
+	#(#{AXTypeInfoAnalyzer} #generateGlobalDefinition:)
+	#(#{AXTypeInfoAnalyzer} #generateInstanceSide:)
+	#(#{AXTypeInfoAnalyzer} #generateWrapper)
+	#(#{AXTypeInfoAnalyzer} #generationFlags)
+	#(#{AXTypeInfoAnalyzer} #guidCheck:)
+	#(#{AXTypeInfoAnalyzer} #guidClashPrompt:)
+	#(#{AXTypeInfoAnalyzer} #handleClash:response:)
+	#(#{AXTypeInfoAnalyzer} #identifierFrom:)
+	#(#{AXTypeInfoAnalyzer} #idlTypeOfVT:)
+	#(#{AXTypeInfoAnalyzer} #isClassCheck:)
+	#(#{AXTypeInfoAnalyzer} #packageCheck:)
+	#(#{AXTypeInfoAnalyzer} #printAutoGenMethodPostambleOn:)
+	#(#{AXTypeInfoAnalyzer} #printClassCommentPreambleOn:)
+	#(#{AXTypeInfoAnalyzer} #printHelpstringComment:on:)
+	#(#{AXTypeInfoAnalyzer} #printIDLDecl:type:on:)
+	#(#{AXTypeInfoAnalyzer} #printIDLForVariable:on:indent:)
+	#(#{AXTypeInfoAnalyzer class} #publishedAspectsOfInstances)
+	#(#{AXTypeInfoAnalyzer} #removeAutoGeneratedMethods:)
+	#(#{AXTypeInfoAnalyzer} #removeOldWrappers:)
+	#(#{AXTypeInfoAnalyzer} #reservedSelectors)
+	#(#{AXTypeInfoAnalyzer} #resolveExistingClass:)
+	#(#{AXTypeInfoAnalyzer} #shouldOverwriteClassComment)
+	#(#{AXTypeInfoAnalyzer} #superclassClashPrompt:)
+	#(#{AXTypeInfoObject} #abortGeneration)
+	#(#{AXTypeInfoObject} #basicIdlAttributes)
+	#(#{AXTypeInfoObject} #classComments)
+	#(#{AXTypeInfoObject} #classComments:)
+	#(#{AXTypeInfoObject class} #classCommentStyleMap)
+	#(#{AXTypeInfoObject class} #classCommentStyles)
+	#(#{AXTypeInfoObject} #customAttributes)
+	#(#{AXTypeInfoObject} #defineFunctionTables)
+	#(#{AXTypeInfoObject} #defineFunctionTables:)
+	#(#{AXTypeInfoObject} #defineMethodProtocols)
+	#(#{AXTypeInfoObject} #defineMethodProtocols:)
+	#(#{AXTypeInfoObject} #forceLowercaseIdentifiers)
+	#(#{AXTypeInfoObject} #forceLowercaseIdentifiers:)
+	#(#{AXTypeInfoObject} #generateSourceInterfaces)
+	#(#{AXTypeInfoObject} #generationFlags)
+	#(#{AXTypeInfoObject} #generationFlags:)
+	#(#{AXTypeInfoObject} #getCustData)
+	#(#{AXTypeInfoObject} #guidClashSignal)
+	#(#{AXTypeInfoObject class} #guidClashSignal)
+	#(#{AXTypeInfoObject} #highLevelWrappers)
+	#(#{AXTypeInfoObject} #highLevelWrappers:)
+	#(#{AXTypeInfoObject class} #highLevelWrapperStyleMap)
+	#(#{AXTypeInfoObject class} #highLevelWrapperStyles)
+	#(#{AXTypeInfoObject class} #icon)
+	#(#{AXTypeInfoObject} #idlAttributes)
+	#(#{AXTypeInfoObject} #idlKeyword)
+	#(#{AXTypeInfoObject} #isTraceOnly)
+	#(#{AXTypeInfoObject} #isTracing)
+	#(#{AXTypeInfoObject} #isTracingVerbose)
+	#(#{AXTypeInfoObject} #isTracingVerbose:)
+	#(#{AXTypeInfoObject} #packageCheck:)
+	#(#{AXTypeInfoObject} #printAttributeList:on:)
+	#(#{AXTypeInfoObject} #printIDL)
+	#(#{AXTypeInfoObject} #printIDLAttributes:on:indent:)
+	#(#{AXTypeInfoObject} #printIDLAttributesOn:indent:)
+	#(#{AXTypeInfoObject} #printIDLBodyOn:indent:)
+	#(#{AXTypeInfoObject} #printIDLOn:)
+	#(#{AXTypeInfoObject} #printIDLOn:indent:)
+	#(#{AXTypeInfoObject} #printOn:)
+	#(#{AXTypeInfoObject} #sharedPoolNames)
+	#(#{AXTypeInfoObject} #tracing)
+	#(#{AXTypeInfoObject} #tracing:)
+	#(#{AXTypeInfoObject class} #tracingStyleMap)
+	#(#{AXTypeInfoObject class} #tracingStyles)
+	#(#{AXTypeLibDocumentation class} #icon)
+	#(#{AXTypeLibDocumentation} #idlAttributes)
+	#(#{AXTypeLibraryAnalyzer} #addAlias:forType:)
+	#(#{AXTypeLibraryAnalyzer} #addClassToPackage:)
+	#(#{AXTypeLibraryAnalyzer} #addGlobalToPackage:)
+	#(#{AXTypeLibraryAnalyzer} #checkConformanceOfExistingPool:)
+	#(#{AXTypeLibraryAnalyzer} #constantsPool)
+	#(#{AXTypeLibraryAnalyzer} #constantsPoolBinding)
+	#(#{AXTypeLibraryAnalyzer} #constantsPoolName)
+	#(#{AXTypeLibraryAnalyzer} #constantsPoolName:)
+	#(#{AXTypeLibraryAnalyzer} #defaultPackageFolder)
+	#(#{AXTypeLibraryAnalyzer} #definesSymbolicConstants)
+	#(#{AXTypeLibraryAnalyzer class} #example1)
+	#(#{AXTypeLibraryAnalyzer class} #example2)
+	#(#{AXTypeLibraryAnalyzer class} #example3)
+	#(#{AXTypeLibraryAnalyzer class} #fileTypes)
+	#(#{AXTypeLibraryAnalyzer} #generatableInterfaces)
+	#(#{AXTypeLibraryAnalyzer} #generatableModules)
+	#(#{AXTypeLibraryAnalyzer} #generateConstantsIntoPool:)
+	#(#{AXTypeLibraryAnalyzer} #generateConstantsPool)
+	#(#{AXTypeLibraryAnalyzer} #generateDispatchWrapper:)
+	#(#{AXTypeLibraryAnalyzer} #generateDispatchWrapper:name:flags:)
+	#(#{AXTypeLibraryAnalyzer} #generateInterfaceWrapper:)
+	#(#{AXTypeLibraryAnalyzer} #generateInterfaceWrapper:name:flags:)
+	#(#{AXTypeLibraryAnalyzer} #generateInterfaceWrappers)
+	#(#{AXTypeLibraryAnalyzer} #generateTypelibGlobal)
+	#(#{AXTypeLibraryAnalyzer} #generateTypelibGlobal:)
+	#(#{AXTypeLibraryAnalyzer} #generateWrapper:name:flags:)
+	#(#{AXTypeLibraryAnalyzer} #globalBinding)
+	#(#{AXTypeLibraryAnalyzer} #globalName)
+	#(#{AXTypeLibraryAnalyzer class} #icon)
+	#(#{AXTypeLibraryAnalyzer} #idlAttributes)
+	#(#{AXTypeLibraryAnalyzer} #idlHelpAttributes:)
+	#(#{AXTypeLibraryAnalyzer} #idlKeyword)
+	#(#{AXTypeLibraryAnalyzer} #isPoolCheck:)
+	#(#{AXTypeLibraryAnalyzer} #moveClassToPackage:)
+	#(#{AXTypeLibraryAnalyzer class} #open)
+	#(#{AXTypeLibraryAnalyzer} #package)
+	#(#{AXTypeLibraryAnalyzer} #package:)
+	#(#{AXTypeLibraryAnalyzer} #packageCheck:)
+	#(#{AXTypeLibraryAnalyzer} #packageName)
+	#(#{AXTypeLibraryAnalyzer} #packageName:)
+	#(#{AXTypeLibraryAnalyzer} #prefix)
+	#(#{AXTypeLibraryAnalyzer} #prefix:)
+	#(#{AXTypeLibraryAnalyzer} #prefixGlobalNames)
+	#(#{AXTypeLibraryAnalyzer} #prefixGlobalNames:)
+	#(#{AXTypeLibraryAnalyzer} #printIDLForwardRefsOn:indent:)
+	#(#{AXTypeLibraryAnalyzer} #printIDLOn:indent:)
+	#(#{AXTypeLibraryAnalyzer} #printOn:)
+	#(#{AXTypeLibraryAnalyzer class} #publishedAspectsOfInstances)
+	#(#{AXTypeLibraryAnalyzer class} #registerTypeLib)
+	#(#{AXTypeLibraryAnalyzer} #resolveExistingPool:)
+	#(#{AXTypeLibraryAnalyzer} #sharedPoolNames)
+	#(#{AXTypeLibraryAnalyzer} #superclassClashSignal)
+	#(#{AXTypeLibraryAnalyzer class} #superclassClashSignal)
+	#(#{AXTypeLibraryAnalyzer class} #typeLibRegistrations)
+	#(#{BOOL class} #fieldType)
+	#(#{BOOLEAN class} #fieldType)
+	#(#{BSTR class} #newInstanceAspect:class:)
+	#(#{BSTR class} #printDefaultValue:on:)
+	#(#{BSTR class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{BSTR class} #printOptionalParameter:on:)
+	#(#{BSTR class} #unspecifiedParameterValue)
+	#(#{BYTE class} #arrayType)
+	#(#{BYTE class} #fieldType)
+	#(#{ByteArray class} #fieldType)
+	#(#{ByteArray class} #fieldType:indirections:)
+	#(#{ByteArray class} #pointerFieldType)
+	#(#{ByteArray class} #printStructField:indirections:on:)
+	#(#{COMInterface class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{COMInterface class} #printOptionalParameter:on:)
+	#(#{CURRENCY class} #mustWrapOptionalArgument:)
+	#(#{CURRENCY class} #newInstanceAspect:class:)
+	#(#{CURRENCY} #printOn:)
+	#(#{CUSTDATAITEM} #printIDLOn:)
+	#(#{DATE class} #newInstanceAspect:class:)
+	#(#{DATE class} #printDefaultValue:on:)
+	#(#{DECIMAL} #printOn:)
+	#(#{DOUBLE class} #arrayType)
+	#(#{DOUBLE class} #fieldType)
+	#(#{DWORD class} #arrayType)
+	#(#{DWORD class} #fieldType)
+	#(#{DWORDBytes class} #fieldType)
+	#(#{ELEMDESC} #idlAttributes)
+	#(#{ExternalAddress class} #fieldType)
+	#(#{ExternalArray class} #arrayType)
+	#(#{ExternalArray class} #fieldType)
+	#(#{ExternalArray class} #fieldType:indirections:)
+	#(#{ExternalArray class} #pointerFieldType)
+	#(#{ExternalArray class} #printStructField:indirections:on:)
+	#(#{ExternalField class} #printArrayField:length:on:)
+	#(#{ExternalField class} #printArrayField:type:on:)
+	#(#{ExternalField class} #printConformantArrayLength:on:)
+	#(#{ExternalField class} #printFixedArrayLength:on:)
+	#(#{ExternalField class} #printTypedField:on:)
+	#(#{ExternalField class} #printVariable:type:indirections:on:)
+	#(#{ExternalField class} #warningMultiDimensionArray:)
+	#(#{ExternalHandle class} #arrayType:)
+	#(#{ExternalHandle class} #fieldType)
+	#(#{ExternalHandle class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{ExternalIntegerBytes class} #fieldType)
+	#(#{ExternalIntegerBytes class} #pointerFieldType)
+	#(#{ExternalIntegerBytes class} #printStructField:indirections:on:)
+	#(#{ExternalLibrary} #DllRegisterServer)
+	#(#{ExternalPoint} #printOn:)
+	#(#{ExternalStructure class} #arrayType)
+	#(#{ExternalStructure class} #arrayType:)
+	#(#{ExternalStructure class} #elementType:)
+	#(#{ExternalStructure class} #fieldType)
+	#(#{ExternalStructure class} #fieldType:indirections:)
+	#(#{ExternalStructure class} #mustWrapOptionalArgument:)
+	#(#{ExternalStructure class} #printDefaultValue:on:)
+	#(#{ExternalStructure class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{ExternalStructure class} #printOptionalParameter:on:)
+	#(#{ExternalStructure class} #printStructField:indirections:on:)
+	#(#{ExternalStructure class} #printWrappedValue:on:)
+	#(#{ExternalStructure class} #unspecifiedParameterValue)
+	#(#{FLOAT class} #arrayType)
+	#(#{FLOAT class} #fieldType)
+	#(#{FLOAT class} #printDefaultValue:on:)
+	#(#{FUNCDESC} #buildMethodName)
+	#(#{FUNCDESC} #displayOn:)
+	#(#{FUNCDESC} #generate)
+	#(#{FUNCDESC} #hasAnswer)
+	#(#{FUNCDESC} #hasMultipleOutputs)
+	#(#{FUNCDESC} #hasOptionalInputs)
+	#(#{FUNCDESC} #hasReturnValue)
+	#(#{FUNCDESC} #isInspectable)
+	#(#{FUNCDESC} #isValueSetter)
+	#(#{FUNCDESC} #methodName)
+	#(#{FUNCDESC} #printIDLOn:indent:)
+	#(#{FUNCDESC} #printOn:)
+	#(#{FUNCDESC} #reinventBadVarNames:)
+	#(#{GUID class} #arrayType:)
+	#(#{GUID class} #elementType:)
+	#(#{GUID class} #newToClipboard)
+	#(#{GUID class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{GUID class} #printStructField:indirections:on:)
+	#(#{HRESULT class} #fieldType)
+	#(#{IDispatch} #alternateInspectorClass)
+	#(#{IDispatch} #aspectDisplayOn:)
+	#(#{IDispatch} #debugPrintString)
+	#(#{IDispatch class} #example1)
+	#(#{IDispatch class} #example2)
+	#(#{IDispatch class} #example3)
+	#(#{IDispatch class} #example4)
+	#(#{IDispatch} #printOn:)
+	#(#{IDispatch} #publishedAspects)
+	#(#{INT_PTR class} #arrayType)
+	#(#{INT_PTR class} #fieldType)
+	#(#{ITypeInfo} #printOn:)
+	#(#{ITypeLib} #printOn:)
+	#(#{LARGE_INTEGER class} #fieldType)
+	#(#{OLECountedArray class} #fieldType)
+	#(#{OLECountedArray class} #pointerFieldType)
+	#(#{PARAMDESC} #idlAttributes)
+	#(#{PointerArray class} #fieldType)
+	#(#{PointerArray class} #pointerFieldType)
+	#(#{PointerArrayField class} #printVariable:type:indirections:on:)
+	#(#{PointerField class} #printVariable:type:indirections:on:)
+	#(#{QWORD class} #fieldType)
+	#(#{SAFEARRAY class} #fieldType)
+	#(#{SAFEARRAY class} #pointerFieldType)
+	#(#{SAFEARRAY class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{SAFEARRAY} #printOn:)
+	#(#{SBYTE class} #arrayType)
+	#(#{SBYTE class} #fieldType)
+	#(#{SDWORD class} #arrayType)
+	#(#{SDWORD class} #fieldType)
+	#(#{String class} #arrayType)
+	#(#{String class} #arrayType:)
+	#(#{String class} #elementType:)
+	#(#{String class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{String class} #printStructField:indirections:on:)
+	#(#{StructureArray class} #fieldType)
+	#(#{StructureArray class} #pointerFieldType)
+	#(#{StructureArrayField class} #printVariable:type:indirections:on:)
+	#(#{StructureArrayPointerField class} #printVariable:type:indirections:on:)
+	#(#{StructureField class} #printVariable:type:indirections:on:)
+	#(#{SWORD class} #arrayType)
+	#(#{SWORD class} #fieldType)
+	#(#{TKindAliasAnalyzer} #generateGlobalDefinition:)
+	#(#{TKindAliasAnalyzer} #generateWrapper)
+	#(#{TKindAliasAnalyzer} #idlAttributes)
+	#(#{TKindAliasAnalyzer} #idlKeyword)
+	#(#{TKindAliasAnalyzer} #printClassCommentPreambleOn:)
+	#(#{TKindAliasAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindAliasAnalyzer} #printIDLOn:indent:)
+	#(#{TKindCoclassAnalyzer} #generateWrapper)
+	#(#{TKindCoclassAnalyzer} #idlAttributes)
+	#(#{TKindCoclassAnalyzer} #idlKeyword)
+	#(#{TKindCoclassAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindCoclassAnalyzer class} #publishedAspectsOfInstances)
+	#(#{TKindDispatchAnalyzer} #buildPropertyAccessorName:)
+	#(#{TKindDispatchAnalyzer} #buildPropertyMutatorName:)
+	#(#{TKindDispatchAnalyzer} #generatePropertyAccessor:)
+	#(#{TKindDispatchAnalyzer} #generatePropertyAccessors)
+	#(#{TKindDispatchAnalyzer} #generatePropertyMutator:)
+	#(#{TKindDispatchAnalyzer} #generateRawMethod:categories:)
+	#(#{TKindDispatchAnalyzer} #generateValuePropertyWrappers)
+	#(#{TKindDispatchAnalyzer} #generateWrapper)
+	#(#{TKindDispatchAnalyzer class} #icon)
+	#(#{TKindDispatchAnalyzer} #idlKeyword)
+	#(#{TKindDispatchAnalyzer} #isInspectablePropGet:)
+	#(#{TKindDispatchAnalyzer} #isProtocolRequired)
+	#(#{TKindDispatchAnalyzer} #printClassCommentPreambleOn:)
+	#(#{TKindDispatchAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindDispatchAnalyzer} #printIDLOfPropertiesOn:indent:)
+	#(#{TKindDispatchAnalyzer} #printMethodBody:wrapping:on:)
+	#(#{TKindDispatchAnalyzer} #printMultiOutMethodBody:wrapping:on:)
+	#(#{TKindDispatchAnalyzer} #printPropertyCommentDecl:on:)
+	#(#{TKindDispatchAnalyzer} #printPropGet:wrapping:on:defaultOptionals:)
+	#(#{TKindDispatchAnalyzer} #printPropPut:wrapping:on:)
+	#(#{TKindDispatchAnalyzer} #printRawMethodBody:name:on:)
+	#(#{TKindDispatchAnalyzer} #printRawPropGetBody:name:on:)
+	#(#{TKindDispatchAnalyzer} #printRawPropPutBody:name:on:)
+	#(#{TKindDispatchAnalyzer class} #publishedAspectsOfInstances)
+	#(#{TKindEnumAnalyzer} #constantsPool)
+	#(#{TKindEnumAnalyzer} #generateGlobalDefinition:)
+	#(#{TKindEnumAnalyzer} #generateInstanceSide:)
+	#(#{TKindEnumAnalyzer} #idlAttributes)
+	#(#{TKindEnumAnalyzer} #idlKeyword)
+	#(#{TKindEnumAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindEnumAnalyzer} #printIDLOn:indent:)
+	#(#{TKindEnumAnalyzer class} #publishedAspectsOfInstances)
+	#(#{TKindEnumAnalyzer} #removeOldWrappers:)
+	#(#{TKindInterfaceAnalyzer} #areWrappersRequired)
+	#(#{TKindInterfaceAnalyzer} #functionHasReturnValue:)
+	#(#{TKindInterfaceAnalyzer} #generateClassInitialize)
+	#(#{TKindInterfaceAnalyzer} #generateDefineFunctions)
+	#(#{TKindInterfaceAnalyzer} #generatePropertyAccessors)
+	#(#{TKindInterfaceAnalyzer} #generateRawPropGet:)
+	#(#{TKindInterfaceAnalyzer} #generateRawPropPut:)
+	#(#{TKindInterfaceAnalyzer} #idlAttributes)
+	#(#{TKindInterfaceAnalyzer} #idlKeyword)
+	#(#{TKindInterfaceAnalyzer} #isInspectablePropGet:)
+	#(#{TKindInterfaceAnalyzer} #isMethodWrapperRequiredFor:)
+	#(#{TKindInterfaceAnalyzer} #printClassCommentPreambleOn:)
+	#(#{TKindInterfaceAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindInterfaceAnalyzer} #printMethodBody:wrapping:on:)
+	#(#{TKindInterfaceAnalyzer} #printMultiOutMethodBody:wrapping:on:)
+	#(#{TKindInterfaceAnalyzer} #printPropertyCommentDecl:on:)
+	#(#{TKindInterfaceAnalyzer} #printPropGet:wrapping:on:defaultOptionals:)
+	#(#{TKindInterfaceAnalyzer} #printPropPut:wrapping:on:)
+	#(#{TKindInterfaceAnalyzer} #printRawMethodBody:name:on:)
+	#(#{TKindInterfaceAnalyzer} #printRawPropGetComment:on:isPrivate:)
+	#(#{TKindInterfaceAnalyzer} #printRawPropPutComment:name:on:isPrivate:)
+	#(#{TKindInterfaceAnalyzer} #rawMethodNameForFunction:)
+	#(#{TKindModuleAnalyzer} #areWrappersRequired)
+	#(#{TKindModuleAnalyzer} #generateClassFilename)
+	#(#{TKindModuleAnalyzer} #generateClassSide:)
+	#(#{TKindModuleAnalyzer} #generateInstanceSide:)
+	#(#{TKindModuleAnalyzer} #generateMethodWrappers)
+	#(#{TKindModuleAnalyzer} #generateWrapper)
+	#(#{TKindModuleAnalyzer class} #icon)
+	#(#{TKindModuleAnalyzer} #idlAttributes)
+	#(#{TKindModuleAnalyzer} #idlAttributesOfFunc:)
+	#(#{TKindModuleAnalyzer} #idlKeyword)
+	#(#{TKindModuleAnalyzer} #instanceMethodCategories:)
+	#(#{TKindModuleAnalyzer} #methodCommentDescription)
+	#(#{TKindModuleAnalyzer} #mungeSelectorKeywords:forMember:)
+	#(#{TKindModuleAnalyzer} #printClassCommentPreambleOn:)
+	#(#{TKindModuleAnalyzer} #printIDLBodyOn:indent:)
+	#(#{TKindModuleAnalyzer} #printMethod:wrapping:on:)
+	#(#{TKindModuleAnalyzer} #printRawMethodBody:name:on:)
+	#(#{TKindModuleAnalyzer class} #publishedAspectsOfInstances)
+	#(#{TKindRecordAnalyzer} #idlKeyword)
+	#(#{TKindUnionAnalyzer} #idlKeyword)
+	#(#{TYPEDESC} #printOn:)
+	#(#{UINT_PTR class} #arrayType)
+	#(#{UINT_PTR class} #fieldType)
+	#(#{UIntPtrBytes class} #fieldType)
+	#(#{Utf16String class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{VARDESC} #printIDLOn:indent:)
+	#(#{VARDESC} #printOn:)
+	#(#{VARIANT class} #example1)
+	#(#{VARIANT} #printIDLOn:)
+	#(#{VARIANT class} #printMethodArgument:elemdesc:indirections:on:)
+	#(#{VARIANT} #printOn:)
+	#(#{VARIANT class} #printOptionalParameter:on:)
+	#(#{VARIANT_BOOL class} #newInstanceAspect:class:)
+	#(#{VARIANT_BOOL} #printOn:)
+	#(#{VOID class} #arrayType)
+	#(#{VOID class} #fieldType)
+	#(#{VOID class} #pointerFieldType)
+	#(#{WORD class} #arrayType)
+	#(#{WORD class} #fieldType)
+).
 
 package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
@@ -579,7 +573,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\System\Compiler\Smalltalk Parser'
-	'..\..\ActiveX\Shell\Windows Shell').
+	'..\..\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -625,9 +620,6 @@ BasicInspector subclass: #AXInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -3654,7 +3646,7 @@ globalBinding
 	env := self environment.
 	assoc := env associationAt: name ifAbsent: [
 			env at: name put: self.
-			self package addGlobalNamed: name.
+			self package addVariableNamed: name.
 			env associationAt: globalName].
 	"Ensure the binding is actually referring to the receiver"
 	assoc value: self.
@@ -4033,15 +4025,14 @@ example2
 	"First lets get the FileSystem object, we might need to generate some wrappers to do so"
 
 	| fs cdrive croot windir systemdir |
-	fs := (Smalltalk at: #IFileSystem
-				ifAbsent: 
-					[| tlb |
+	fs := (#{IFileSystem} isDefined ifFalse: [
+					| tlb |
 					tlb := AXTypeLibraryAnalyzer open: 'scrrun.dll'.
 					"We'll forgo the prefix on all the generated names"
 					tlb prefix: ''.
 					"Generate the wrappers for the type library interfaces"
 					tlb generateInterfaceWrappers.
-					Smalltalk at: #IFileSystem]) 
+					#{IFileSystem} value]) 
 					createObject: 'Scripting.FileSystemObject'.
 
 	"Now we can test it out a bit by finding the root of C"
@@ -4053,7 +4044,7 @@ example2
 	systemdir := windir subFolders item: 'system32'.
 
 	"A better way to get the system folder is:"
-	systemdir := fs getSpecialFolder: ((Smalltalk at: #ScriptingConstants) at: 'SystemFolder').
+	systemdir := fs getSpecialFolder: #{ScriptingConstants.SystemFolder} value.
 
 	"Display the contents of the system folder (files only) in a list box (might take a while)"
 	ListPresenter show list: systemdir files contents!
@@ -4065,14 +4056,14 @@ example3
 	"
 
 	| excel books book range font arry caption |
-	Smalltalk at: #ExcelLib ifAbsent: [ | xl |
+	#{ExcelLib} isDefined ifFalse: [ | xl |
 			xl := AXTypeLibraryAnalyzer open: 'c:\Program Files\Microsoft Office\Office\excel9.olb'.
 			xl prefix: 'Xl'.
 			xl generateConstantsPool.
 			#(_Application Workbooks _Workbook Range Font) do: [:i | (xl at: i) generate].
 			xl reset].
 
-	excel :=  (Smalltalk at: #Xl_Application) new.
+	excel :=  #{Xl_Application} value new.
 	books := excel workbooks.
 	book := books add: VARIANT unspecified lcid: 0.
 
@@ -4118,7 +4109,7 @@ example3
 
       "Add fancy formatting to our report."
 	(excel range: 'A1:F14' cell2: VARIANT unspecified) 
-			autoFormat: ((Smalltalk at: #XlConstants) at: 'xlSimple' )
+			autoFormat: (#{XlConstants.xlSimple} value)
 			number: VARIANT unspecified font: VARIANT unspecified 
 			alignment: VARIANT unspecified border: VARIANT unspecified pattern: VARIANT unspecified 
 			width: VARIANT unspecified.

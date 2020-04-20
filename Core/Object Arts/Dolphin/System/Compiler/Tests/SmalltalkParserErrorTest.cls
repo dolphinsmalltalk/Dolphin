@@ -10,12 +10,6 @@ SmalltalkParserErrorTest comment: ''!
 !SmalltalkParserErrorTest categoriesForClass!Unclassified! !
 !SmalltalkParserErrorTest methodsFor!
 
-compilationErrorClass
-	^self parserClass errorClass!
-
-compilationWarningClass
-	^self parserClass warningClass!
-
 ifNil: aBlock
 	^nil!
 
@@ -35,33 +29,22 @@ lexicalErrorFrom: aBlockClosure range: anInterval line: lineInteger code: anInte
 		raise: SmalltalkParser errorClass
 		matching: [:ex | ex errorCode = anInteger and: [ex range = anInterval and: [ex line = lineInteger]]]!
 
-lexicalQualifiedRefError: aString code: anInteger range: anInterval
-	| mockEnv |
-	mockEnv := Dictionary new.
-	mockEnv at: #BindingReference put: Object new.
-	self
-		lexicalErrorFrom: 
-			[(SmalltalkScanner on: aString readStream)
-				environment: mockEnv;
-				yourself]
-		range: anInterval
-		line: 1
-		code: anInteger!
-
 parseExpression: aString in: aClass
-	| ast errors |
+	| ast errorBlock |
 	errors := OrderedCollection new.
+	errorBlock := [:err | errors addLast: err].
 	ast := SmalltalkParser
 				parseExpression: aString
 				in: aClass
-				onError: [:err | errors addLast: err].
+				onError: errorBlock.
 	^errors isEmpty
 		ifTrue: 
 			[BrowserSemanticAnalyser
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
-				pools: #()]
+				pools: #()
+				onError: errorBlock]
 		ifFalse: [ast]!
 
 parseMethod: aString in: aClass
@@ -78,7 +61,8 @@ parseMethod: aString in: aClass
 				analyzeParseTree: ast
 				for: aClass
 				context: nil
-				pools: #()]
+				pools: #()
+				onError: nil]
 		ifFalse: [ast]!
 
 parserClass
@@ -136,22 +120,6 @@ testErrorsLexicalBadNumber
 		line: 2
 		code: LErrBadNumber!
 
-testErrorsLexicalInvalidQualifier
-	| source |
-	source := ' #{nil} '.
-	self
-		lexicalQualifiedRefError: source
-		code: LErrInvalidQualifier
-		range: ((source indexOf: $#) to: (source indexOf: $}))!
-
-testErrorsLexicalUnterminatedQualifier
-	| source |
-	source := ' #{abc '.
-	self
-		lexicalQualifiedRefError: source
-		code: LErrQualifiedRefNotClosed
-		range: ((source indexOf: $#) to: source size)!
-
 testErrorsNonsenseAtEndOfExpression
 	| source mark |
 	source := ' 1+2]3 '.
@@ -193,6 +161,38 @@ testErrorsNonsenseAtEndOfMethod
 		range: (mark to: source size)
 		line: 1
 		code: CErrNonsenseAtExprEnd!
+
+testErrorsQualifiedReferenceInvalidName
+	| ast qr |
+	ast := super testErrorsQualifiedReferenceInvalidName.
+	"Looks like sending #nil to a malformed QR"
+	self assert: ast isMessage.
+	qr := ast receiver.
+	self assert: qr isQualifiedReference.
+	self assert: qr pathString isEmpty!
+
+testErrorsQualifiedReferenceMetaNotClosed
+	| ast qr |
+	ast := super testErrorsQualifiedReferenceMetaNotClosed.
+	self assert: ast isMessage.
+	self assert: ast selector equals: #name.
+	qr := ast receiver.
+	self assert: qr isQualifiedReference.
+	self assert: qr value isMeta.
+	self assert: qr value asString equals: 'A.B.C class'!
+
+testErrorsQualifiedReferenceNotClosed
+	| qr |
+	qr := super testErrorsQualifiedReferenceNotClosed.
+	self assert: qr isQualifiedReference.
+	self assert: qr pathString equals: 'A.B.C'!
+
+testErrorsQualifierReferenceEmpty
+	| ast |
+	ast := super testErrorsQualifierReferenceEmpty.
+	self assert: errors size equals: 1.
+	self assert: ast isQualifiedReference.
+	self assert: ast pathString isEmpty!
 
 testErrorsTempsNotClosedRecovery
 	| source ast |
@@ -414,13 +414,10 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
-!SmalltalkParserErrorTest categoriesFor: #compilationErrorClass!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #compilationWarningClass!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #ifNil:!control flow!public! !
 !SmalltalkParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
 !SmalltalkParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalQualifiedRefError:code:range:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
 !SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
@@ -428,10 +425,12 @@ writtenNotReadRange: aString
 !SmalltalkParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceInvalidName!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceMetaNotClosed!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifiedReferenceNotClosed!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsQualifierReferenceEmpty!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !

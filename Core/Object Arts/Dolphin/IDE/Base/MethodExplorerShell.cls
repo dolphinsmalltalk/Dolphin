@@ -286,6 +286,7 @@ recordMethodVisit
 	"Private - Add to the visit history - note that the current item is at the top of the history list"
 
 	| node method |
+	#todo "Rework to use MethodNames".
 	node := historyTree selectionOrNil.
 	node isNil ifTrue: [^self].
 	method := self selectedMethod.

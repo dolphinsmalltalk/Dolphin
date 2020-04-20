@@ -41,11 +41,6 @@ length
 realValue
 	^value!
 
-sourceInterval
-	"Answer an <Interval> that specifies the range of source positions occuppied by the receiver."
-
-	^self start to: stopPosition!
-
 stop
 	^stopPosition!
 
@@ -61,7 +56,6 @@ valueClass
 !StLiteralToken categoriesFor: #isMultiKeyword!public!testing! !
 !StLiteralToken categoriesFor: #length!accessing!private! !
 !StLiteralToken categoriesFor: #realValue!accessing!public! !
-!StLiteralToken categoriesFor: #sourceInterval!accessing!public! !
 !StLiteralToken categoriesFor: #stop!accessing!public! !
 !StLiteralToken categoriesFor: #stop:!initializing!private! !
 !StLiteralToken categoriesFor: #valueClass!accessing!public! !

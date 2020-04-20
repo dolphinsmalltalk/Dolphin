@@ -42,16 +42,14 @@ classes: classArray metaClasses: metaArray
 classesAndSelectorsDo: aBlock
 	classSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			(Smalltalk lookup: eachClassName)
-				ifNotNil: 
+			eachClassName asQualifiedReference valueOrNil ifNotNil:  
 					[:class |
 					(environment includesClass: class)
 						ifTrue: 
 							[eachSelectors do: [:each | (class includesSelector: each) ifTrue: [aBlock value: class value: each]]]]].
 	metaClassSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			(Smalltalk lookup: eachClassName)
-				ifNotNil: 
+			eachClassName asQualifiedReference valueOrNil ifNotNil:
 					[:class |
 					| meta |
 					meta := class class.
@@ -62,14 +60,12 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classSelectors keysDo: 
 			[:each |
-			| class |
-			class := Smalltalk lookup: each.
-			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
+			each asQualifiedReference
+				ifDefined: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
 	metaClassSelectors keysDo: 
 			[:each |
-			| class |
-			class := Smalltalk lookup: each.
-			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
+			each asQualifiedReference
+				ifDefined: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
 
 classNames
 	| names collectNames |

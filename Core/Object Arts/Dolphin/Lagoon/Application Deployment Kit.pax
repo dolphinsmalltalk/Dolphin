@@ -162,7 +162,7 @@ editCustomOptions
 	"Open a <PublishedAspectInspector> on the version resource."
 
 	| inspector |
-	inspector := (Smalltalk at: #PublishedAspectInspector) shellOn: self.
+	inspector := #{PublishedAspectInspector} value shellOn: self.
 	inspector topShell caption: self class name , ' Properties'!
 
 executableName: aString

@@ -99,7 +99,7 @@ defaultSystemFolderColor
 	"Private - Reference Color indirectly to eliminate hard dependency on Dolphin MVP Base.
 	This method will only be called if SmalltalkSystemShell is loaded, in which case Color will be as well."
 
-	^(Smalltalk at: #Color)
+	^#{Color} value
 		r: 41
 		g: 124
 		b: 182.!

@@ -2806,8 +2806,8 @@ defaultPluginsCollection
 
 	| answer |
 	answer := OrderedCollection new.
-	#(#ClassCommentPlugin #ClassDiagramPlugin #ResourceListPlugin #CodeMentorPlugin #CodeRewriterPlugin #UnitTestPlugin) 
-		do: [:each | Smalltalk at: each ifPresent: [:class | answer add: class]].
+	#(#{ClassCommentPlugin} #{ClassDiagramPlugin} #{ResourceListPlugin} #{CodeMentorPlugin} #{CodeRewriterPlugin} #{UnitTestPlugin})
+		do: [:each | each ifDefined: [:class | answer add: class]].
 	^answer!
 
 defaultShowInheritedMethods

@@ -28,6 +28,7 @@ template <class T> class TOTE;
 namespace ST
 {
 	class Behavior;
+	class Object;
 }
 typedef TOTE<ST::Behavior> BehaviorOTE;
 
@@ -119,7 +120,7 @@ public:
 		HARDASSERT(m_count > 0);
 		if (m_count != MAXCOUNT)
 	 		if (--m_count == 0)
-				ObjectMemory::AddToZct((OTE*)this);
+				ObjectMemory::AddToZct(reinterpret_cast<TOTE<ST::Object>*>(this));
 	}
 
 	void countDownStackRef()
@@ -127,7 +128,7 @@ public:
 		HARDASSERT(m_count > 0);
 		if (m_count != MAXCOUNT)
 			if (--m_count == 0)
-				ObjectMemory::AddStackRefToZct((OTE*)this);
+				ObjectMemory::AddStackRefToZct(reinterpret_cast<TOTE<ST::Object>*>(this));
 	}
 
 	__forceinline bool decRefs()							{ return (m_count != MAXCOUNT) && (--m_count == 0); }
@@ -149,12 +150,7 @@ public:
 	__forceinline bool isNullTerminated() const				{ return (m_flagsWord & OTEFlags::WeakMask) == OTEFlags::WeakOrZMask; }
 	__forceinline void beNullTerminated()					{ ASSERT(!isImmutable()); setNullTerminated(); m_size -= NULLTERMSIZE; }
 	__forceinline void setNullTerminated()					{ m_flagsWord = (m_flagsWord & ~OTEFlags::PointerMask) | OTEFlags::WeakOrZMask; }
-
-	__forceinline bool isBehavior() const					{ return isMetaclass() || m_oteClass->isMetaclass(); }
-	__forceinline bool isMetaclass() const					{ return m_oteClass == Pointers.ClassMetaclass; }
-
-	__forceinline bool isNil() const						{ return Oop(this) == Oop(Pointers.Nil); }
-	__forceinline Spaces heapSpace() const		{ return static_cast<Spaces>(m_flags.m_space); }
+	__forceinline Spaces heapSpace() const					{ return static_cast<Spaces>(m_flags.m_space); }
 	__forceinline bool flagsAllMask(uint8_t mask) const		{ return (m_ubFlags & mask) == mask; }
 
 	__forceinline hash_t identityHash()
@@ -213,8 +209,3 @@ typedef OTE* POTE;
 
 std::wostream& operator<<(std::wostream& stream, const OTE*);
 
-template <class T> inline void NilOutPointer(TOTE<T>*& ote)
-{
-	ote->countDown();
-	ote = reinterpret_cast<TOTE<T>*>(Pointers.Nil);
-}

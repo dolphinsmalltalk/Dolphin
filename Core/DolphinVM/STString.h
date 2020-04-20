@@ -158,7 +158,7 @@ namespace ST
 	const size_t ClassUtf8String = 104;
 	const size_t ClassUtf16String = 93;
 
-	class Utf8String : public ByteStringT<CP_UTF8, ClassUtf8String, Utf8StringOTE, uint8_t>
+	class Utf8String : public ByteStringT<CP_UTF8, ClassUtf8String, Utf8StringOTE, char8_t>
 	{
 	public:
 		static POTE __fastcall NewFromAnsi(const char* pChars, size_t len);
@@ -194,7 +194,7 @@ namespace ST
 		template <codepage_t CP, class T> static Utf16StringOTE* __fastcall New(const T* pChars, size_t len);
 		static Utf16StringOTE* __fastcall New(OTE* oteByteString);
 		static Utf16StringOTE* __fastcall New(size_t cwch);
-		static Utf16StringOTE * ST::Utf16String::NewFromBSTR(BSTR bs)
+		static Utf16StringOTE * NewFromBSTR(BSTR bs)
 		{
 			return New(bs, ::SysStringLen(bs));
 		}

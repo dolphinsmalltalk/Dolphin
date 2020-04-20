@@ -97,14 +97,14 @@ namespace ST
 		OverlappedCall* GetOverlappedCall();
 
 		Oop Name() const { return reinterpret_cast<Oop>(m_name); }
-		bool IsWaiting() const { return !m_myList->isNil(); }
+		bool IsWaiting() const { return !isNil(m_myList); }
 		bool IsWaitingOn(const LinkedListOTE* oteList) const { return m_myList == oteList; }
 		bool IsReady() const;
 		LinkedListOTE* SuspendingList() const { return m_myList; }
 		ProcessOTE* Next() const { return m_nextLink; }
 		void SetSuspendingList(LinkedListOTE* oteList)
 		{
-			HARDASSERT(m_myList->isNil());
+			HARDASSERT(isNil(m_myList));
 			oteList->countUp();
 			m_myList = oteList;
 		}

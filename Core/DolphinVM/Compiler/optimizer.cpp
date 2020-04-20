@@ -2080,7 +2080,7 @@ POTE Compiler::NewMethod()
 	// Allocate CompiledMethod and install the header
 	POTE method = NewCompiledMethod(m_compiledMethodClass, CodeSize, hdr);
 	STCompiledMethod& cmpldMethod = *(STCompiledMethod*)GetObj(method);
-	
+
 	// May have been changed above
 	byte0 = m_bytecodes[ip_t::zero].Opcode;
 
@@ -2154,8 +2154,8 @@ POTE Compiler::NewMethod()
 		}
 	}
 	
-	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(NewUtf8String(Selector)));
-	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.methodClass, Oop(m_class));
+	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, reinterpret_cast<Oop>(NewUtf8String(Selector)));
+	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.methodClass, reinterpret_cast<Oop>(MethodClass));
 
 #if defined(_DEBUG)
 	{

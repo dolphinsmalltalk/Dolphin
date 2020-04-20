@@ -225,13 +225,13 @@ resourceAt: aResourceIdentifier ifAbsent: aBlock
 
 !RuntimeSessionManager methodsFor!
 
-initializeFromSessionManager: oldSessionManager 
+initializeFromSessionManager: oldSessionManager
 	"Private - The receiver has taken take over as the current session
 	manager from oldSessionManager. This is an opportunity to transfer
 	state information from the replaced manager."
 
 	super initializeFromSessionManager: oldSessionManager.
-	Smalltalk at: #ResourceAccessor ifPresent: [:ra | ra ensureAccessorsAreInternal]! !
+	#{ResourceAccessor} ifDefined: [:ra | ra ensureAccessorsAreInternal]! !
 !RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
 
 "End of package definition"!

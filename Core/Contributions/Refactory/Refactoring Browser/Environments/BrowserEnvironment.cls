@@ -41,14 +41,13 @@ allClasses
 
 	^Smalltalk allClasses!
 
-associationAt: aKey 
-	| association class |
-	#rbFix.	"Missing ^-return in absent block"
-	association := Smalltalk associationAt: aKey ifAbsent: [^nil].
-	class := association value isBehavior ifTrue: [association value] ifFalse: [association value class].
-	^((self includesClass: class) or: [self includesClass: class class]) 
-		ifTrue: [association]
-		ifFalse: [nil]!
+associationAt: aKey
+	^aKey asQualifiedReference bindingOrNil
+		ifNotNil: 
+			[:association |
+			| class |
+			class := association value isBehavior ifTrue: [association value] ifFalse: [association value class].
+			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [association]]!
 
 at: aKey
 	#rbFix. "Replace #keyNotFoundError: with #errorNotFound"
@@ -105,17 +104,7 @@ classNamesFor: aCategoryName
 	#rbFix. "Dolphin class category system not compatible"
 	^((ClassCategory name: aCategoryName) classes select: [:class |
 			class notNil and: [(self includesClass: class)
-					or: [self includesClass: class class]]]) collect: [:e | e name]
-
-	"^(Smalltalk organization listAtCategoryNamed: aCategoryName)
-		select:
-			[:each |
-			| class |
-			class := Smalltalk at: each ifAbsent: [nil].
-			[:class |
-			class notNil and: [(self includesClass: class)
-					or: [self includesClass: class class]]]"
-!
+					or: [self includesClass: class class]]]) collect: [:e | e name]!
 
 classVariablesFor: aClass 
 	^aClass classVarNames!
@@ -366,7 +355,7 @@ storeOn: aStream
 
 whichCategoryIncludes: aClassName
 	#rbFix. "Dolphin's category system completely different"
-	^(Smalltalk at: aClassName) categories asSortedCollection first name
+	^aClassName asQualifiedReference value categories asSortedCollection first name
 "	^Smalltalk organization categoryOfElement: aClassName"!
 
 whichProtocolIncludes: aSelector in: aClass

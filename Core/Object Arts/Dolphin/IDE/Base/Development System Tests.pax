@@ -1,48 +1,42 @@
 ﻿| package |
 package := Package name: 'Development System Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractParserErrorTest;
-	add: #CompiledMethodTest;
-	add: #CompilerErrorTest;
-	add: #CompilerTest;
-	add: #CompilerTestClasses;
-	add: #DolphinCompilerTestMethods;
-	add: #DolphinCompilerTestMethodsSubclass;
-	add: #ImageListViewTest;
-	add: #KeyedAspectTest;
-	add: #MethodCategoryEnvironmentTest;
-	add: #PackageEnvironmentTest;
-	add: #PluggableEnvironmentTest;
-	add: #ProductReleaseTest;
-	add: #RegKeyTest;
-	add: #RewriteTestCase;
-	add: #SmalltalkParserTest;
-	add: #SmalltalkSystemTest;
-	add: #SmalltalkWorkspaceTest;
-	add: #StStyler;
-	add: #VersionResourceTest;
-	add: #VMTest;
-	add: #XMLDOMNodeTest;
-	yourself.
+package setClassNames: #(
+	#{AbstractParserErrorTest}
+	#{CompiledMethodTest}
+	#{CompilerErrorTest}
+	#{CompilerTest}
+	#{CompilerTestClasses}
+	#{DolphinCompilerTestMethods}
+	#{DolphinCompilerTestMethodsSubclass}
+	#{ImageListViewTest}
+	#{KeyedAspectTest}
+	#{MethodCategoryEnvironmentTest}
+	#{PackageEnvironmentTest}
+	#{PluggableEnvironmentTest}
+	#{ProductReleaseTest}
+	#{RegKeyTest}
+	#{RewriteTestCase}
+	#{SmalltalkParserTest}
+	#{SmalltalkSystemTest}
+	#{SmalltalkWorkspaceTest}
+	#{StStyler}
+	#{VersionResourceTest}
+	#{VMTest}
+	#{XMLDOMNodeTest}
+).
 
-package methodNames
-	add: #BorderLayoutTest -> #testResourceBrowserPreview;
-	add: #ExternalIntegerTest -> #testPrintOnNull;
-	add: #ExternalIntegerTest -> #testPrintOnSigned;
-	add: #ExternalIntegerTest -> #testPrintOnUnsigned;
-	add: #ScintillaViewTest -> #testTokensFromTo;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BorderLayoutTest} #testResourceBrowserPreview)
+	#(#{ExternalIntegerTest} #testPrintOnNull)
+	#(#{ExternalIntegerTest} #testPrintOnSigned)
+	#(#{ExternalIntegerTest} #testPrintOnUnsigned)
+	#(#{ScintillaViewTest} #testTokensFromTo)
+).
 
 package setPrerequisites: #(
 	'..\Community Edition\ActiveX Automation Development'
@@ -66,7 +60,8 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\ActiveX\Components\XML DOM\XML DOM').
+	'..\..\ActiveX\Components\XML DOM\XML DOM'
+).
 
 package!
 
@@ -93,7 +88,7 @@ TestCase subclass: #RewriteTestCase
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AbstractParserErrorTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -183,8 +178,7 @@ DolphinTestClassResource subclass: #CompilerTestClasses
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
+"Variable Aliases"!
 
 "Loose Methods"!
 

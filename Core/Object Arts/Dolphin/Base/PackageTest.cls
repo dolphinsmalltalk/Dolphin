@@ -11,10 +11,9 @@ PackageTest comment: ''!
 !PackageTest methodsFor!
 
 checkNoTestPackageContents
-	| scribbleTestClass scribbleClass |
-	scribbleTestClass := Smalltalk lookup: #ScribbleTest.
-	self assertIsNil: scribbleTestClass.
-	scribbleClass := Smalltalk at: #Scribble.
+	| scribbleClass |
+	self deny: #{ScribbleTest} isDefined.
+	scribbleClass := #{Scribble} value.
 	self assertIsNil: (scribbleClass compiledMethodAt: #looseA ifAbsent: []).
 	self assertIsNil: (scribbleClass compiledMethodAt: #looseC ifAbsent: []).
 	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: [])!
@@ -23,13 +22,13 @@ checkTestPackageContents
 	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass resourceIds |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
-	scribbleTestClass := Smalltalk at: #ScribbleTest.
-	self denyIsNil: scribbleTestClass.
+	self verifyPackageElementNamesAreAbsolute: scribbleTestPackage.
+	scribbleTestClass := #{ScribbleTest} value.
 	self assert: (scribbleTestPackage classes identityIncludes: scribbleTestClass).
 	scribbleTestResourceMethod := scribbleTestClass class
 				compiledMethodAt: #resource_Default_scribble_test_view.
 	self assert: scribbleTestResourceMethod owningPackage equals: scribbleTestPackage.
-	scribbleClass := Smalltalk at: #Scribble.
+	scribbleClass := #{Scribble} value.
 	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage equals: scribbleTestPackage.
 	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage equals: scribbleTestPackage.
 	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage
@@ -262,6 +261,41 @@ testLoad60Pac
 testLoad60Pax
 	self loadAndTestPackage: 'ScribbleTestPackages\6.0\ScribbleTest6.pax'!
 
+testLoad70Pax
+	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
+	self loadAndTestPackage: 'ScribbleTestPackages\7.0\ScribbleTest7.pax'.
+	scribbleTestPackage := loadedPackages first.
+	aliasName := 'AliasToScribbleTest' asQualifiedReference.
+	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
+	self assert: aliasName value identicalTo: #{ScribbleTest} value.
+	binaryVariableName := 'ScribbleTestBinaryGlobal' asQualifiedReference.
+	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
+	self assert: binaryVariableName value equals: #('Scribble').
+	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
+	self assert: scribbleTestPackage sourceVariableNames asArray equals: {sourceVariableName}.
+	testPool := sourceVariableName value.
+	self assert: testPool isKindOf: PoolConstantsDictionary!
+
+testLoad72Pax
+	| scribbleTestPackage aliasName binaryVariableName sourceVariableName testPool |
+	self loadAndTestPackage: 'ScribbleTestPackages\7.2\ScribbleTest72.pax'.
+	scribbleTestPackage := loadedPackages first.
+	aliasName := 'AliasToScribbleTest' asQualifiedReference.
+	self assert: scribbleTestPackage aliasVariableNames asArray equals: {aliasName}.
+	self assert: aliasName value identicalTo: #{ScribbleTest} value.
+	binaryVariableName := 'ScribbleTestBinaryGlobal' asQualifiedReference.
+	self assert: scribbleTestPackage binaryVariableNames asArray equals: {binaryVariableName}.
+	self assert: binaryVariableName value equals: #('Scribble').
+	sourceVariableName := 'ScribbleTestSourceGlobal' asQualifiedReference.
+	self assert: scribbleTestPackage sourceVariableNames asArray equals: {sourceVariableName}.
+	testPool := sourceVariableName value.
+	self assert: testPool isKindOf: PoolConstantsDictionary!
+
+testLoadedPackagesAreWellFormed
+	Package manager packages do: [:each |
+		self verifyPackageElementNamesAreAbsolute: each.
+		self verifyPackageElementsExist: each]!
+
 testLooseResourceIdentifiers
 	| all loose notLoose |
 	loose := Package manager looseResourceIdentifiers.
@@ -272,14 +306,36 @@ testLooseResourceIdentifiers
 	self assert: (notLoose allSatisfy: [:each | each owningClass owningPackage = each owningPackage])!
 
 testTimestampInitialized
-	self assert: Package new timestamp asInteger equals: 0! !
-!PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
-!PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
-!PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !
+	self assert: Package new timestamp asInteger equals: 0!
+
+verifyPackageElementNamesAreAbsolute: aPackage
+	aPackage classNames do: [:each | self assert: each context isNil].
+	aPackage methodNames do: [:each | self assert: each className context isNil].
+	aPackage variableNames do: [:each | self assert: each context isNil].
+	aPackage untracedVariables do: [:each | self assert: each context isNil]!
+
+verifyPackageElementsExist: aPackage
+	aPackage classNames do: [:each | | class |
+		class := each valueOrNil.
+		self assert: class notNil.
+		self assert: class owningPackage identicalTo: aPackage].
+	aPackage methodNames do: [:each | | method |
+		method := each valueOrNil.
+		self assert: method notNil.
+		self assert: method owningPackage identicalTo: aPackage].
+	aPackage variableNames do: [:each | self assert: each isDefined].
+	aPackage sourceVariableNames do: [:each |
+		| value |
+		value := each value.
+		self assert: value owningPackage identicalTo: aPackage].
+	aPackage untracedVariables do: [:each | self assert: each isDefined]! !
+!PackageTest categoriesFor: #checkNoTestPackageContents!helpers!private! !
+!PackageTest categoriesFor: #checkTestPackageContents!helpers!private! !
+!PackageTest categoriesFor: #d5ForwardRefTestPacContents!constants!private! !
 !PackageTest categoriesFor: #filenameFor:!helpers!private! !
 !PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
-!PackageTest categoriesFor: #setUp!initializing!private!unit tests! !
-!PackageTest categoriesFor: #tearDown!private!unit tests! !
+!PackageTest categoriesFor: #setUp!private!running! !
+!PackageTest categoriesFor: #tearDown!private!running! !
 !PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
 !PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
@@ -289,6 +345,11 @@ testTimestampInitialized
 !PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
 !PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
+!PackageTest categoriesFor: #testLoad70Pax!public!unit tests! !
+!PackageTest categoriesFor: #testLoad72Pax!public!unit tests! !
+!PackageTest categoriesFor: #testLoadedPackagesAreWellFormed!public!unit tests! !
 !PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
 !PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
+!PackageTest categoriesFor: #verifyPackageElementNamesAreAbsolute:!helpers!private! !
+!PackageTest categoriesFor: #verifyPackageElementsExist:!helpers!private! !
 

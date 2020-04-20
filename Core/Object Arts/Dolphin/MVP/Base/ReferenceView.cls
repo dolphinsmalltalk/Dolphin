@@ -188,7 +188,7 @@ stbConvertFromVersion9: anArray
 	| rid array |
 	array := super stbConvertFromVersion9: anArray.
 	rid := array at: 13.
-	rid owningClass == (Smalltalk lookup: #Toolbar) ifTrue: [array at: 6 put: Color face3d].
+	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color face3d].
 	^array! !
 !ReferenceView class categoriesFor: #icon!constants!public! !
 !ReferenceView class categoriesFor: #new!development!instance creation!public! !

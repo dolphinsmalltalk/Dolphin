@@ -460,9 +460,6 @@ testLargeAddress
 	self assert: proc yourAddress >= 16r7FFFFFFF.
 	self assert: proc basicSuspendedFrame class equals: SmallInteger.
 	copy1 := proc copy.
-	isTopDown
-		ifTrue: [self assert: copy1 yourAddress < proc yourAddress]
-		ifFalse: [self assert: copy1 yourAddress > proc yourAddress].
 	self assert: copy1 basicSuspendedFrame class equals: SmallInteger.
 	frame := copy1 topFrame.
 	self assert: frame basicSP class equals: SmallInteger.

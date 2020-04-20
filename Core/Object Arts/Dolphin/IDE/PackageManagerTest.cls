@@ -19,11 +19,17 @@ testAllClassesPackaged
 
 testLooseMethodCacheUpToDate
 	| allNames loose |
-	allNames := Set new.
-	Package manager packages
-		do: [:eachPackage | eachPackage methodNames do: [:each | allNames add: each key , each value]].
-	loose := Package manager looseMethods keys collect: [:each | each key , each value].
-	self assert: loose equals: allNames! !
+	allNames := LookupTable new.
+	Package manager packages do: 
+			[:eachPackage |
+			eachPackage methodNames do: 
+					[:each |
+					self deny: (allNames includesKey: each).
+					allNames at: each put: eachPackage]].
+	loose := Package manager looseMethods.
+	self assert: loose size equals: allNames size.
+	loose
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (allNames lookup: eachKey) identicalTo: eachValue]! !
 !PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
 !PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
 

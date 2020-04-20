@@ -45,7 +45,7 @@ testModelRenameClass
 
 testRenameClass
 	| refactoring class |
-	refactoring := RenameClassRefactoring rename: (Smalltalk at: ('Class' , 'ToRename') asSymbol)
+	refactoring := RenameClassRefactoring rename: ('Class' , 'ToRename') asQualifiedReference value
 				to: 'New' , 'ClassName' asSymbol.
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: ('New' , 'ClassName') asSymbol) parseTreeFor: #method1)

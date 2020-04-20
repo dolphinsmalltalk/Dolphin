@@ -205,9 +205,9 @@ editView
 	| hWnd editView |
 	hWnd := self editHwnd.
 	editView := View withHandle: hWnd.
-	editView isNil 
+	editView isNil
 		ifTrue: 
-			[editView := (Smalltalk at: #TextEdit ifAbsent: [ControlView]) new.
+			[editView := (#{TextEdit} valueOrNil ?? ControlView) new.
 			editView
 				parentView: self;
 				attachHandle: hWnd;

@@ -886,6 +886,9 @@ defineFields
 		defineField: #dblVal		type: DOUBLEField new
 		!
 
+externalTypeNames
+	^#(#{BYTE} #{SBYTE} #{WORD} #{SWORD} #{FLOAT} #{DOUBLE} #{DWORD} #{SDWORD} #{LARGE_INTEGER} #{ULARGE_INTEGER})!
+
 fromBoolean: bool
 	"Answer a new instance of the receiver of type VT_BOOL containing
 	the VARIANT_BOOL equivalent of the <Boolean> value, bool."
@@ -997,7 +1000,7 @@ initialize
 	"
 
 	| vm |
-	Unspecified := (self new)
+	Unspecified := self new
 				hresult: DISP_E_PARAMNOTFOUND;
 				beUnfinalizable;
 				yourself.
@@ -1005,8 +1008,7 @@ initialize
 		initializeVTNames;
 		initializeVTClasses.
 	vm := VMLibrary default.
-	#(#BYTE #SBYTE #WORD #SWORD #FLOAT #DOUBLE #DWORD #SDWORD #LARGE_INTEGER #ULARGE_INTEGER) 
-		do: [:each | vm registryAt: each put: (Smalltalk at: each)].
+	self externalTypeNames do: [:each | vm registryAt: each asSymbol put: each value].
 	vm registryAt: self name put: self!
 
 initializeVTClasses
@@ -1141,8 +1143,7 @@ uninitialize
 	"The VM only needs a ref to certain classes to implement the VARIANT>>value primitive, so these can be
 	 cleared out if this class is removed."
 	vm := VMLibrary default.
-	#(#BYTE #SBYTE #WORD #SWORD #FLOAT #DOUBLE #DWORD #SDWORD #LARGE_INTEGER #ULARGE_INTEGER) 
-		do: [:each | vm registryAt: each put: nil].
+	self externalTypeNames do: [:each | vm registryAt: each asSymbol put: nil].
 	vm registryAt: self name put: nil!
 
 unspecified
@@ -1158,6 +1159,7 @@ vt
 !VARIANT class categoriesFor: #classForVT:!enquiries!public! !
 !VARIANT class categoriesFor: #clear:!public!realizing/unrealizing! !
 !VARIANT class categoriesFor: #defineFields!public!template definition! !
+!VARIANT class categoriesFor: #externalTypeNames!constants!private! !
 !VARIANT class categoriesFor: #fromBoolean:!instance creation!public! !
 !VARIANT class categoriesFor: #fromCollection:!instance creation!public! !
 !VARIANT class categoriesFor: #fromDATE:!instance creation!public! !

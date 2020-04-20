@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Development System'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Development System.
     Copyright (c) Object Arts Ltd, 1997-2007. Portions Copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -11,663 +11,660 @@ This package contains the basic/essential Dolphin Smalltalk development system t
 package basicPackageVersion: '2016.7.0.4'.
 
 
-package classNames
-	add: #AbstractPublishedAspectInspector;
-	add: #AllMethodsCategory;
-	add: #AnonymousKeyedAspect;
-	add: #AnonymousKeyedAspectBatchAccessor;
-	add: #Aspect;
-	add: #AspectAccessor;
-	add: #AspectEditorDialog;
-	add: #AspectInspector;
-	add: #AstPlugin;
-	add: #BasicInspector;
-	add: #BasicKeyedAspect;
-	add: #BatchAspectAccessor;
-	add: #BrowserSemanticAnalyser;
-	add: #CategoryPrompter;
-	add: #CategoryTreeModel;
-	add: #ChangedMethodsCategory;
-	add: #ChooseClassDialog;
-	add: #ClassAspectPlugin;
-	add: #ClassBrowserAbstract;
-	add: #ClassBrowserPlugin;
-	add: #ClassBrowserShell;
-	add: #ClassCommentPlugin;
-	add: #ClassHierarchyModel;
-	add: #ClassHierarchySelector;
-	add: #ClassListSelector;
-	add: #ClassSelector;
-	add: #CommandMenuItemDialog;
-	add: #CompiledMethodInspector;
-	add: #CompiledMethodSearchPolicy;
-	add: #CreateSubclassDialog;
-	add: #Debugger;
-	add: #DebuggerMethodCategory;
-	add: #DebuggerShellView;
-	add: #DevelopmentSessionManager;
-	add: #DictionaryInspector;
-	add: #DolphinMoveClassChange;
-	add: #FlipperInspector;
-	add: #Grabber;
-	add: #ImageListView;
-	add: #IndexedInstVarBatchAccessor;
-	add: #InspectorAbstract;
-	add: #InspectorShell;
-	add: #InstVarAspect;
-	add: #InstVarInspector;
-	add: #IntermediateCategory;
-	add: #InvalidInstallationError;
-	add: #KeyedAspect;
-	add: #KeyedAspectBatch;
-	add: #KeyedAspectBatchAccessor;
-	add: #MenuBarComposer;
-	add: #MenuBarPainter;
-	add: #MenuComposer;
-	add: #MenuComposerArena;
-	add: #MenuComposerView;
-	add: #MenuDialog;
-	add: #MenuItemDialog;
-	add: #MenuPainter;
-	add: #MessageNodeCollector;
-	add: #MethodBrowser;
-	add: #MethodBrowserShell;
-	add: #MethodCategorizationPolicy;
-	add: #MethodCategoryEnvironment;
-	add: #MethodExplorerShell;
-	add: #MethodPrivacyCategory;
-	add: #MethodProtocolEnvironment;
-	add: #MethodSearch;
-	add: #MethodSourceSearch;
-	add: #MethodWorkspace;
-	add: #PackageBrowserShell;
-	add: #PackageDependencyPresenter;
-	add: #PackageDependents;
-	add: #PackageEnvironment;
-	add: #PackageFolder;
-	add: #PackageHierarchyModel;
-	add: #PackagePrerequisites;
-	add: #PackagePrompter;
-	add: #PackageRelativeFileLocator;
-	add: #PackageSelector;
-	add: #PackedReferencesCategory;
-	add: #PluggableEnvironment;
-	add: #PluggableVirtualMethodCategory;
-	add: #PopupMenuPainter;
-	add: #PropertyInspector;
-	add: #PublishedAspectInspector;
-	add: #ReferencesCategory;
-	add: #ResourceBrowser;
-	add: #ResourceIdentifierDialog;
-	add: #ResourceListPresenter;
-	add: #ResourceToolboxPresenter;
-	add: #SequenceableCollectionInspector;
-	add: #SetBatchAspectAccessor;
-	add: #SingleChunkReader;
-	add: #SingleUnarySendMethodCategory;
-	add: #SmalltalkExpressionStyler;
-	add: #SmalltalkMethodStyler;
-	add: #SmalltalkSearchPresenter;
-	add: #SmalltalkStyler;
-	add: #SmalltalkStylingScanner;
-	add: #SmalltalkSystem;
-	add: #SmalltalkSystemFolder;
-	add: #SmalltalkSystemIcon;
-	add: #SmalltalkSystemShell;
-	add: #SmalltalkToolShell;
-	add: #SmalltalkWorkspace;
-	add: #SmalltalkWorkspaceDocument;
-	add: #SpecialReferencesCategory;
-	add: #STBDebugger;
-	add: #StructureInspector;
-	add: #TwinLevelInspector;
-	add: #UnclassifiedMethodsCategory;
-	add: #ValueWorkspace;
-	add: #ViewComposer;
-	add: #ViewComposerArena;
-	add: #VirtualMethodCategory;
-	add: #VisualObjectFinder;
-	add: #VisualShellFinder;
-	add: #WalkbackDialog;
-	yourself.
+package setClassNames: #(
+	#{AbstractPublishedAspectInspector}
+	#{AllMethodsCategory}
+	#{AnonymousKeyedAspect}
+	#{AnonymousKeyedAspectBatchAccessor}
+	#{Aspect}
+	#{AspectAccessor}
+	#{AspectEditorDialog}
+	#{AspectInspector}
+	#{AstPlugin}
+	#{BasicInspector}
+	#{BasicKeyedAspect}
+	#{BatchAspectAccessor}
+	#{BrowserSemanticAnalyser}
+	#{CategoryPrompter}
+	#{CategoryTreeModel}
+	#{ChangedMethodsCategory}
+	#{ChooseClassDialog}
+	#{ClassAspectPlugin}
+	#{ClassBrowserAbstract}
+	#{ClassBrowserPlugin}
+	#{ClassBrowserShell}
+	#{ClassCommentPlugin}
+	#{ClassHierarchyModel}
+	#{ClassHierarchySelector}
+	#{ClassListSelector}
+	#{ClassSelector}
+	#{CommandMenuItemDialog}
+	#{CompiledMethodInspector}
+	#{CompiledMethodSearchPolicy}
+	#{CreateSubclassDialog}
+	#{Debugger}
+	#{DebuggerMethodCategory}
+	#{DebuggerShellView}
+	#{DevelopmentSessionManager}
+	#{DictionaryInspector}
+	#{DolphinMoveClassChange}
+	#{FlipperInspector}
+	#{Grabber}
+	#{ImageListView}
+	#{IndexedInstVarBatchAccessor}
+	#{InspectorAbstract}
+	#{InspectorShell}
+	#{InstVarAspect}
+	#{InstVarInspector}
+	#{IntermediateCategory}
+	#{InvalidInstallationError}
+	#{KeyedAspect}
+	#{KeyedAspectBatch}
+	#{KeyedAspectBatchAccessor}
+	#{MenuBarComposer}
+	#{MenuBarPainter}
+	#{MenuComposer}
+	#{MenuComposerArena}
+	#{MenuComposerView}
+	#{MenuDialog}
+	#{MenuItemDialog}
+	#{MenuPainter}
+	#{MessageNodeCollector}
+	#{MethodBrowser}
+	#{MethodBrowserShell}
+	#{MethodCategorizationPolicy}
+	#{MethodCategoryEnvironment}
+	#{MethodExplorerShell}
+	#{MethodPrivacyCategory}
+	#{MethodProtocolEnvironment}
+	#{MethodSearch}
+	#{MethodSourceSearch}
+	#{MethodWorkspace}
+	#{PackageBrowserShell}
+	#{PackageDependencyPresenter}
+	#{PackageDependents}
+	#{PackageEnvironment}
+	#{PackageFolder}
+	#{PackageHierarchyModel}
+	#{PackagePrerequisites}
+	#{PackagePrompter}
+	#{PackageRelativeFileLocator}
+	#{PackageSelector}
+	#{PackedReferencesCategory}
+	#{PluggableEnvironment}
+	#{PluggableVirtualMethodCategory}
+	#{PopupMenuPainter}
+	#{PropertyInspector}
+	#{PublishedAspectInspector}
+	#{ReferencesCategory}
+	#{ResourceBrowser}
+	#{ResourceIdentifierDialog}
+	#{ResourceListPresenter}
+	#{ResourceToolboxPresenter}
+	#{SequenceableCollectionInspector}
+	#{SetBatchAspectAccessor}
+	#{SingleChunkReader}
+	#{SingleUnarySendMethodCategory}
+	#{SmalltalkExpressionStyler}
+	#{SmalltalkMethodStyler}
+	#{SmalltalkSearchPresenter}
+	#{SmalltalkStyler}
+	#{SmalltalkStylingScanner}
+	#{SmalltalkSystem}
+	#{SmalltalkSystemFolder}
+	#{SmalltalkSystemIcon}
+	#{SmalltalkSystemShell}
+	#{SmalltalkToolShell}
+	#{SmalltalkWorkspace}
+	#{SmalltalkWorkspaceDocument}
+	#{SpecialReferencesCategory}
+	#{STBDebugger}
+	#{StructureInspector}
+	#{TwinLevelInspector}
+	#{UnclassifiedMethodsCategory}
+	#{ValueWorkspace}
+	#{ViewComposer}
+	#{ViewComposerArena}
+	#{VirtualMethodCategory}
+	#{VisualObjectFinder}
+	#{VisualShellFinder}
+	#{WalkbackDialog}
+).
 
-package methodNames
-	add: #_FPIEEE_RECORD -> #printFieldsOn:limit:;
-	add: #_FPIEEE_VALUE -> #printFieldsOn:limit:;
-	add: #AbstractCHARField -> #characterCreationMessage;
-	add: #AbstractCHARField -> #printAccessorExpression:on:;
-	add: #AbstractDocumentShell -> #saveStateOn:;
-	add: #AndEnvironment -> #includesResource:;
-	add: #Array -> #assignToResourceIdentifier:;
-	add: #ArrayedCollection -> #newBatchAccessor;
-	add: #ArrayField -> #printAccessorExpressionSuffixOn:;
-	add: #ArrayField -> #printMutatorBody:on:;
-	add: #ArrayPointerField -> #printAccessorExpressionSuffixOn:;
-	add: #ArrayPointerField -> #printMutatorBody:on:;
-	add: #Association -> #debugPrintString;
-	add: #Behavior -> #changedMethods;
-	add: #Behavior -> #hasAbstractMethods;
-	add: #Behavior -> #isAbstract;
-	add: #Behavior -> #methodFor:;
-	add: #Behavior -> #searchForInTool:;
-	add: #Behavior -> #whichClassDefinesInstVar:;
-	add: #Behavior -> #whichMethodsContainSource:;
-	add: #Behavior -> #whichMethodsOnlySelfSend:;
-	add: #Behavior -> #whichMethodsReferTo:;
-	add: #Behavior -> #whichSelectorsReferTo:;
-	add: #BlockClosure -> #cpuCyclesToRun;
-	add: #BlockFrame -> #debugIpFor:;
-	add: #BlockFrame -> #isRestartable;
-	add: #BlockFrame -> #makeDebug;
-	add: #BlockFrame -> #mapInitialIpFrom:to:;
-	add: #Boolean -> #literalTextStyle;
-	add: #BOOLField -> #newAspect:class:;
-	add: #BOOLField -> #printAccessorExpressionSuffixOn:;
-	add: #BorderLayout -> #arrangementAspect;
-	add: #BrowserEnvironment -> #allMethods;
-	add: #BrowserEnvironment -> #allResourcesDo:;
-	add: #BrowserEnvironment -> #browse;
-	add: #BrowserEnvironment -> #definitionsOf:;
-	add: #BrowserEnvironment -> #dynamicReferencesTo:;
-	add: #BrowserEnvironment -> #forClassHierarchyFrom:;
-	add: #BrowserEnvironment -> #forMethodCategories:;
-	add: #BrowserEnvironment -> #forPackages:;
-	add: #BrowserEnvironment -> #includesMethod:;
-	add: #BrowserEnvironment -> #includesMethodUncached:;
-	add: #BrowserEnvironment -> #openEditor;
-	add: #BrowserEnvironment -> #search;
-	add: #BrowserEnvironment -> #search:;
-	add: #BrowserEnvironmentWrapper -> #includesResource:;
-	add: #BrowserEnvironmentWrapper -> #openEditor;
-	add: #Character -> #literalTextStyle;
-	add: #CHARField -> #accessorMessage;
-	add: #CHARField -> #characterCreationMessage;
-	add: #Class -> #changeIndex;
-	add: #Class -> #changeIndexValue:;
-	add: #Class -> #isAbstract;
-	add: #Class -> #isChanged:;
-	add: #Class -> #isDeprecated;
-	add: #Class -> #methodChanged:;
-	add: #Class -> #notifyPackageOfChange;
-	add: #Class -> #renameClassVar:to:;
-	add: #ClassDescription -> #browse;
-	add: #ClassDescription -> #categoriesFor:are:;
-	add: #ClassDescription -> #commentStamp:prior:;
-	add: #ClassDescription -> #copy:from:;
-	add: #ClassDescription -> #copy:from:categories:;
-	add: #ClassDescription -> #copy:from:classified:;
-	add: #ClassDescription -> #copyAll:from:;
-	add: #ClassDescription -> #copyAll:from:classified:;
-	add: #ClassDescription -> #copyAllCategoriesFrom:;
-	add: #ClassDescription -> #copyCategory:from:;
-	add: #ClassDescription -> #copyCategory:from:classified:;
-	add: #ClassDescription -> #isDeprecated;
-	add: #ClassDescription -> #methodsFor:;
-	add: #ClassDescription -> #methodsFor:stamp:;
-	add: #ClassDescription -> #newInstanceAspect:class:;
-	add: #ClassDescription -> #privateMethods;
-	add: #ClassDescription -> #publicMethods;
-	add: #ClassDescription -> #renameInstVar:to:;
-	add: #ClassEnvironment -> #includesResource:;
-	add: #ClassEnvironment -> #openEditor;
-	add: #Collection -> #aspectDisplayOn:;
-	add: #Collection -> #debugPrintString;
-	add: #Collection -> #maxDebugPrint;
-	add: #Collection -> #newBatchAccessor;
-	add: #Collection -> #publishedAspects;
-	add: #Collection -> #publishedKeyedAspects;
-	add: #Collection -> #publishedKeyedAspectsBatchSize;
-	add: #ComboBox -> #visualObjectAtPoint:;
-	add: #CommandMenuItem -> #edit;
-	add: #CompiledCode -> #alternateInspectorClass;
-	add: #CompiledCode -> #asDebugMethod;
-	add: #CompiledCode -> #decodeHeaderOn:;
-	add: #CompiledCode -> #disassembly;
-	add: #CompiledCode -> #hasCompilationIssues;
-	add: #CompiledCode -> #indexOfIP:;
-	add: #CompiledCode -> #isAbstract;
-	add: #CompiledCode -> #isDeprecated;
-	add: #CompiledCode -> #isSimpleSelfSend:;
-	add: #CompiledCode -> #stylerClass;
-	add: #CompiledExpression -> #asDebugMethod;
-	add: #CompiledExpression -> #stylerClass;
-	add: #CompiledMethod -> #asDebugMethod;
-	add: #CompiledMethod -> #browse;
-	add: #CompiledMethod -> #icon;
-	add: #CompiledMethod -> #infoTip;
-	add: #CompiledMethod -> #searchForInTool:;
-	add: #CompiledMethod -> #stylerClass;
-	add: #CompileFailedMethod -> #asDebugMethod;
-	add: #CompilerNotification -> #okToContinue;
-	add: #DateTimeCommonControl -> #publishedAspects;
-	add: #Dictionary -> #alternateInspectorClass;
-	add: #Dictionary -> #debugPrintString;
-	add: #Dictionary -> #newBatchAccessor;
-	add: #Dictionary -> #publishedAspects;
-	add: #DOUBLEField -> #newAspect:class:;
-	add: #EmbeddedField -> #printAccessorExpression:on:;
-	add: #ExternalArray -> #printOn:;
-	add: #ExternalArray -> #publishedAspects;
-	add: #ExternalArray -> #publishedKeyedAspects;
-	add: #ExternalArray -> #publishedKeyedAspectsBatchSize;
-	add: #ExternalField -> #autoGenCategories;
-	add: #ExternalField -> #autoGenComment;
-	add: #ExternalField -> #makeInstanceName:;
-	add: #ExternalField -> #printAccessor:on:;
-	add: #ExternalField -> #printAccessorBody:on:;
-	add: #ExternalField -> #printAccessorExpression:on:;
-	add: #ExternalField -> #printAccessorExpressionSuffixOn:;
-	add: #ExternalField -> #printMutator:on:;
-	add: #ExternalField -> #printMutatorBody:on:;
-	add: #ExternalField -> #printOffsetExpression:on:;
-	add: #ExternalField -> #printOffsetExpression:on:extra:;
-	add: #ExternalField -> #valueParameterName;
-	add: #ExternalInteger -> #printOn:;
-	add: #ExternalIntegerBytes -> #debugPrintString;
-	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
-	add: #ExternalRectangle -> #printOn:;
-	add: #ExternalStructure -> #alternateInspectorClass;
-	add: #ExternalStructure -> #printableFields;
-	add: #ExternalStructure -> #printCyclicRefOn:;
-	add: #ExternalStructure -> #printFields:on:limit:;
-	add: #ExternalStructure -> #printFieldsOn:limit:;
-	add: #ExternalStructure -> #printOn:;
-	add: #ExternalStructure -> #publishedAspects;
-	add: #FILETIME -> #printOn:;
-	add: #FillerField -> #printAccessorExpression:on:;
-	add: #FillerField -> #printMutatorBody:on:;
-	add: #FLOATField -> #newAspect:class:;
-	add: #FramingLayout -> #arrangementAspect;
-	add: #HANDLEField -> #printAccessorExpressionSuffixOn:;
-	add: #Interval -> #debugPrintString;
-	add: #Interval -> #newBatchAccessor;
-	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
-	add: #LargeInteger -> #debugPrintString;
-	add: #LayoutManager -> #arrangementAspect;
-	add: #ListControlView -> #visualObjectAtPoint:;
-	add: #LOGBRUSH -> #printFieldsOn:limit:;
-	add: #LOGPEN -> #printFieldsOn:limit:;
-	add: #LPVOIDField -> #newAspect:class:;
-	add: #LPVOIDField -> #printAccessorExpressionSuffixOn:;
-	add: #LVITEMW -> #printableFields;
-	add: #Menu -> #edit;
-	add: #Menu -> #painterClass;
-	add: #MenuBar -> #painterClass;
-	add: #Metaclass -> #changeIndex;
-	add: #Metaclass -> #isChanged:;
-	add: #Metaclass -> #isDeprecated;
-	add: #Metaclass -> #methodChanged:;
-	add: #MethodProtocol -> #icon;
-	add: #MoenTreeView -> #visualObjectAtPoint:;
-	add: #MSG -> #printOn:;
-	add: #Number -> #literalTextStyle;
-	add: #Object -> #alternateInspectorClass;
-	add: #Object -> #aspectDisplayOn:;
-	add: #Object -> #basicInspect;
-	add: #Object -> #browse;
-	add: #Object -> #currentPublishedAspectsAsLiteralsMap;
-	add: #Object -> #debugPrintString;
-	add: #Object -> #halt;
-	add: #Object -> #inspect;
-	add: #Object -> #inspectorClass;
-	add: #Object -> #newAspect:class:;
-	add: #Object -> #publicAccessorAspects;
-	add: #Object -> #publishedAspects;
-	add: #Object -> #publishedEvents;
-	add: #Object -> #searchForInTool:;
-	add: #OrEnvironment -> #includesResource:;
-	add: #Package -> #browse;
-	add: #Package -> #defaultAbout;
-	add: #Package -> #defaultAboutBitmap;
-	add: #Package -> #fileLocator;
-	add: #Package -> #icon;
-	add: #Package -> #publishedAspects;
-	add: #Package -> #searchForInTool:;
-	add: #PackageManager -> #getVersionInfoFor:;
-	add: #PackageManager -> #isConnected;
-	add: #PackageManager -> #sourceControl;
-	add: #PointerField -> #printAccessorExpression:on:;
-	add: #PointerField -> #printMutatorBody:on:;
-	add: #PoolConstantsDictionary -> #browse;
-	add: #PoolConstantsDictionary -> #errorModify:value:;
-	add: #PoolConstantsDictionary -> #referencesTo:;
-	add: #PoolDictionary -> #aspectDisplayOn:;
-	add: #Process -> #attachDebugger:topFrame:resumable:;
-	add: #Process -> #debug;
-	add: #Process -> #debug:topFrame:resumable:;
-	add: #Process -> #debuggerClass;
-	add: #Process -> #halt:cause:;
-	add: #Process -> #primStep:;
-	add: #Process -> #showWalkback:callStack:debuggable:resumable:;
-	add: #Process -> #step;
-	add: #Process -> #step:;
-	add: #Process -> #walkback:topFrame:resumable:;
-	add: #ProcessorScheduler -> #singleStep:;
-	add: #ProtoObject -> #basicInspect;
-	add: #ProtoObject -> #debugPrintString;
-	add: #ProtoObject -> #halt;
-	add: #ProtoObject -> #inspect;
-	add: #QWORD -> #printOn:;
-	add: #RefactoryChange -> #displayOn:;
-	add: #ReferenceView -> #visualObjectAtPoint:;
-	add: #RegKeyAbstract -> #debugPrintString;
-	add: #ResourceIdentifier -> #assign:;
-	add: #ResourceIdentifier -> #assignLiteralResourceData:;
-	add: #ResourceIdentifier -> #browse;
-	add: #ResourceIdentifier -> #edit;
-	add: #ResourceIdentifier -> #editViewUsing:;
-	add: #ResourceIdentifier -> #emit:asStringOn:;
-	add: #ResourceIdentifier -> #prompt;
-	add: #ResourceIdentifier -> #publishedAspects;
-	add: #ResourceIdentifier -> #reassign;
-	add: #ScalarField -> #newAspect:class:;
-	add: #ScalarField -> #printAccessorExpression:on:;
-	add: #ScalarField -> #printMutatorBody:on:;
-	add: #ScintillaView -> #publishedAspects;
-	add: #SelectorEnvironment -> #addMethods:;
-	add: #Semaphore -> #debugPrintString;
-	add: #SequenceableCollection -> #alternateInspectorClass;
-	add: #SequenceableCollection -> #newBatchAccessor;
-	add: #Set -> #newBatchAccessor;
-	add: #Slider -> #publishedAspects;
-	add: #SpinButton -> #publishedAspects;
-	add: #StAbstractVariableNode -> #displayOn:;
-	add: #StackFrame -> #debugIpFor:;
-	add: #StackFrame -> #debugPrintOn:;
-	add: #StackFrame -> #makeDebug;
-	add: #StackFrame -> #stackWorkspace;
-	add: #StAssignmentNode -> #displayOn:;
-	add: #StBlockNode -> #displayOn:;
-	add: #StCascadeNode -> #displayOn:;
-	add: #StLiteralArrayNode -> #displayOn:;
-	add: #StLiteralToken -> #textStyle;
-	add: #StLiteralValueNode -> #displayOn:;
-	add: #StMessageNode -> #displayOn:;
-	add: #StNumberLiteralToken -> #textStyle;
-	add: #StOptimizedNode -> #displayOn:;
-	add: #StParameterNode -> #displayOn:;
-	add: #StPrimitiveNode -> #displayOn:;
-	add: #StProgramNode -> #debugPrintString;
-	add: #StProgramNode -> #postComments;
-	add: #StProgramNode -> #preComments;
-	add: #StProgramNode -> #publishedAspects;
-	add: #StReturnNode -> #displayOn:;
-	add: #String -> #aspectDisplayOn:;
-	add: #String -> #debugPrintString;
-	add: #String -> #literalTextStyle;
-	add: #String -> #newAspect:class:;
-	add: #String -> #publishedAspects;
-	add: #StringField -> #printAccessorExpressionSuffixOn:;
-	add: #StringField -> #printMutatorBody:on:;
-	add: #StructureArrayField -> #printAccessorExpressionSuffixOn:;
-	add: #StructureArrayPointerField -> #printAccessorExpressionSuffixOn:;
-	add: #StructureField -> #printMutatorBody:on:;
-	add: #StructurePointer -> #printOn:;
-	add: #StSelfVariable -> #valueClass;
-	add: #StSelfVariableNode -> #valueClassIn:;
-	add: #StSequenceNode -> #displayOn:;
-	add: #StSpecialVariableNode -> #displayOn:;
-	add: #StSpecialVariableNode -> #valueClassIn:;
-	add: #StStaticVariable -> #valueClass;
-	add: #StSuperVariable -> #valueClass;
-	add: #StSuperVariableNode -> #valueClassIn:;
-	add: #StTempDeclNode -> #displayOn:;
-	add: #StThisContextVariable -> #valueClass;
-	add: #StThisContextVariableNode -> #valueClassIn:;
-	add: #StToken -> #postComments;
-	add: #StToken -> #preComments;
-	add: #StVariable -> #valueClass;
-	add: #Symbol -> #aspectDisplayOn:;
-	add: #Symbol -> #literalTextStyle;
-	add: #Symbol -> #searchForInTool:;
-	add: #SYSTEMTIME -> #printOn:;
-	add: #ToolbarBitmapButton -> #publishedAspects;
-	add: #ToolbarSystemButton -> #publishedAspects;
-	add: #TranscriptShell -> #help;
-	add: #UndefinedObject -> #aspectDisplayOn:;
-	add: #UndefinedObject -> #literalTextStyle;
-	add: #ValueModel -> #debugPrintString;
-	add: #VariableEnvironment -> #includesMethodUncached:;
-	add: #VariableEnvironment -> #updateCachesForMethod:;
-	add: #View -> #aspectDisplayOn:;
-	add: #View -> #publishedAspects;
-	add: #View -> #visualObjectAtPoint:;
-	add: #WCHARField -> #accessorMessage;
-	add: #WCHARField -> #characterCreationMessage;
-	add: #WINDOWPOS -> #printOn:;
-	add: 'AbstractCardContainer class' -> #publishedAspectsOfInstances;
-	add: 'AbstractCardContainer class' -> #publishedEventsOfInstances;
-	add: 'AXControlSite class' -> #publishedAspectsOfInstances;
-	add: 'AXValueConvertingControlSite class' -> #publishedAspectsOfInstances;
-	add: 'Bag class' -> #publishedAspectsOfInstances;
-	add: 'BasicListAbstract class' -> #publishedAspectsOfInstances;
-	add: 'Bitmap class' -> #newInstanceAspect:class:;
-	add: 'BlockClosure class' -> #publishedAspectsOfInstances;
-	add: 'Boolean class' -> #newInstanceAspect:class:;
-	add: 'BooleanToText class' -> #publishedAspectsOfInstances;
-	add: 'BOOLField class' -> #icon;
-	add: 'BorderLayout class' -> #publishedAspectsOfInstances;
-	add: 'CardContainer class' -> #publishedAspectsOfInstances;
-	add: 'CardContainer class' -> #publishedEventsOfInstances;
-	add: 'CardLabel class' -> #publishedAspectsOfInstances;
-	add: 'CardLayout class' -> #publishedEventsOfInstances;
-	add: 'Category class' -> #icon;
-	add: 'CheckBox class' -> #publishedAspectsOfInstances;
-	add: 'CheckButton class' -> #publishedAspectsOfInstances;
-	add: 'ClassBuilder class' -> #publishedEventsOfInstances;
-	add: 'Collection class' -> #newInstanceAspect:class:;
-	add: 'Color class' -> #newInstanceAspect:class:;
-	add: 'ColorView class' -> #publishedAspectsOfInstances;
-	add: 'ComboBox class' -> #publishedAspectsOfInstances;
-	add: 'CommandDescription class' -> #publishedAspectsOfInstances;
-	add: 'CommandMenuItem class' -> #publishedAspectsOfInstances;
-	add: 'CompiledCode class' -> #publishedAspectsOfInstances;
-	add: 'CompiledMethod class' -> #overriddenIcon;
-	add: 'CompiledMethod class' -> #publishedAspectsOfInstances;
-	add: 'ContainerView class' -> #applicableLayoutManagerCategories;
-	add: 'ContainerView class' -> #publishedAspectsOfInstances;
-	add: 'ControlBarAbstract class' -> #applicableLayoutManagerCategories;
-	add: 'ControlBarAbstract class' -> #publishedAspectsOfInstances;
-	add: 'ControlView class' -> #publishedAspectsOfInstances;
-	add: 'Date class' -> #newInstanceAspect:class:;
-	add: 'DateTimePicker class' -> #publishedAspectsOfInstances;
-	add: 'DateToText class' -> #publishedAspectsOfInstances;
-	add: 'Dictionary class' -> #newInstanceAspect:class:;
-	add: 'DOUBLE class' -> #newInstanceAspect:class:;
-	add: 'ExternalArray class' -> #newInstanceAspect:class:;
-	add: 'ExternalArray class' -> #shouldOverrideGetFieldNames;
-	add: 'ExternalInteger class' -> #decompileDefinition;
-	add: 'ExternalInteger class' -> #newInstanceAspect:class:;
-	add: 'ExternalIntegerBytes class' -> #newInstanceAspect:class:;
-	add: 'ExternalMethod class' -> #publishedAspectsOfInstances;
-	add: 'ExternalScalar class' -> #shouldOverrideGetFieldNames;
-	add: 'ExternalStructure class' -> #autoGenCategory;
-	add: 'ExternalStructure class' -> #compileAllDefinitions;
-	add: 'ExternalStructure class' -> #compileDefinition;
-	add: 'ExternalStructure class' -> #compileGetFieldNames;
-	add: 'ExternalStructure class' -> #compileGetMethod:forField:;
-	add: 'ExternalStructure class' -> #compileNewFields;
-	add: 'ExternalStructure class' -> #compileSetMethod:forField:;
-	add: 'ExternalStructure class' -> #decompileDefinition;
-	add: 'ExternalStructure class' -> #formatAndCompile:categories:;
-	add: 'ExternalStructure class' -> #hasHandCodedMethodFor:;
-	add: 'ExternalStructure class' -> #inheritsFieldNamed:;
-	add: 'ExternalStructure class' -> #recompileDefinition;
-	add: 'ExternalStructure class' -> #shouldCompile:forField:;
-	add: 'ExternalStructure class' -> #shouldOverrideGetFieldNames;
-	add: 'Float class' -> #newInstanceAspect:class:;
-	add: 'FLOAT class' -> #newInstanceAspect:class:;
-	add: 'FlowLayout class' -> #publishedAspectsOfInstances;
-	add: 'Font class' -> #newInstanceAspect:class:;
-	add: 'FontView class' -> #publishedAspectsOfInstances;
-	add: 'FramingCalculation class' -> #allCalculations;
-	add: 'FramingConstraints class' -> #publishedAspectsOfInstances;
-	add: 'FramingLayout class' -> #example1;
-	add: 'GdiplusImage class' -> #newInstanceAspect:class:;
-	add: 'GridLayout class' -> #publishedAspectsOfInstances;
-	add: 'GroupBox class' -> #publishedAspectsOfInstances;
-	add: 'HotKey class' -> #publishedAspectsOfInstances;
-	add: 'Icon class' -> #choose;
-	add: 'Icon class' -> #newInstanceAspect:class:;
-	add: 'IconicListAbstract class' -> #publishedAspectsOfInstances;
-	add: 'IconicListAbstract class' -> #publishedEventsOfInstances;
-	add: 'ImagePresenter class' -> #resource_ImageList_view;
-	add: 'ImageViewAbstract class' -> #publishedAspectsOfInstances;
-	add: 'InputState class' -> #publishedEventsOfInstances;
-	add: 'InternalIcon class' -> #choose;
-	add: 'ListBox class' -> #publishedAspectsOfInstances;
-	add: 'ListControlView class' -> #publishedAspectsOfInstances;
-	add: 'ListControlView class' -> #publishedEventsOfInstances;
-	add: 'ListModel class' -> #publishedEventsOfInstances;
-	add: 'ListTreeView class' -> #publishedAspectsOfInstances;
-	add: 'ListTreeView class' -> #publishedEventsOfInstances;
-	add: 'ListView class' -> #publishedAspectsOfInstances;
-	add: 'ListView class' -> #publishedEventsOfInstances;
-	add: 'ListViewColumn class' -> #publishedAspectsOfInstances;
-	add: 'Menu class' -> #publishedAspectsOfInstances;
-	add: 'MenuBar class' -> #newInstanceAspect:class:;
-	add: 'MenuBar class' -> #publishedAspectsOfInstances;
-	add: 'MenuItem class' -> #icon;
-	add: 'MethodCategory class' -> #all;
-	add: 'MethodProtocol class' -> #ansiIcon;
-	add: 'MethodProtocol class' -> #publishedEventsOfInstances;
-	add: 'MethodProtocol class' -> #readOnlyIcon;
-	add: 'MoenTreeView class' -> #publishedAspectsOfInstances;
-	add: 'MoenTreeView class' -> #publishedEventsOfInstances;
-	add: 'MonthCalendarView class' -> #publishedAspectsOfInstances;
-	add: 'MultilineTextEdit class' -> #publishedAspectsOfInstances;
-	add: 'Object class' -> #publishedAspects;
-	add: 'Object class' -> #publishedAspectsOfInstances;
-	add: 'Object class' -> #publishedEvents;
-	add: 'Object class' -> #publishedEventsOfInstances;
-	add: 'Package class' -> #changedIcon;
-	add: 'Package class' -> #dolphinPackageIcon;
-	add: 'Package class' -> #publishedAspectsOfInstances;
-	add: 'Package class' -> #publishedEventsOfInstances;
-	add: 'PackageManager class' -> #publishedEventsOfInstances;
-	add: 'Pen class' -> #publishedAspectsOfInstances;
-	add: 'PluggableTypeConverter class' -> #publishedAspectsOfInstances;
-	add: 'Point class' -> #publishedAspectsOfInstances;
-	add: 'Point3D class' -> #publishedAspectsOfInstances;
-	add: 'Presenter class' -> #addView:asResource:;
-	add: 'Presenter class' -> #editNewDefaultView;
-	add: 'ProgressBar class' -> #publishedAspectsOfInstances;
-	add: 'ProportionalLayout class' -> #publishedAspectsOfInstances;
-	add: 'ProtoObject class' -> #icon;
-	add: 'ProtoObject class' -> #publishedAspects;
-	add: 'ProtoObject class' -> #publishedAspectsOfInstances;
-	add: 'PushButton class' -> #publishedAspectsOfInstances;
-	add: 'RBConfigurableFormatter class' -> #publishedAspects;
-	add: 'RBFormatter class' -> #publishedAspects;
-	add: 'RBSourceFormatter class' -> #publishedAspects;
-	add: 'Rectangle class' -> #publishedAspectsOfInstances;
-	add: 'ReferenceView class' -> #publishedAspectsOfInstances;
-	add: 'ResourceIdentifier class' -> #prompt;
-	add: 'ResourceIdentifier class' -> #publishedAspectsOfInstances;
-	add: 'RichTextEdit class' -> #publishedAspectsOfInstances;
-	add: 'RichTextPresenter class' -> #publishedEventsOfInstances;
-	add: 'ScalarField class' -> #icon;
-	add: 'ScintillaAttribute class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaIndicatorStyle class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaKeyBinding class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaMargin class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaMarkerDefinition class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaTextStyle class' -> #newInstanceAspect:class:;
-	add: 'ScintillaTextStyle class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaView class' -> #publishedAspectsOfInstances;
-	add: 'ScintillaView class' -> #publishedEventsOfInstances;
-	add: 'ScrollBar class' -> #publishedAspectsOfInstances;
-	add: 'ScrollingDecorator class' -> #publishedAspectsOfInstances;
-	add: 'ScrollingDecoratorLayout class' -> #publishedAspectsOfInstances;
-	add: 'SearchPolicy class' -> #method;
-	add: 'SequenceableCollection class' -> #newInstanceAspect:class:;
-	add: 'SessionManager class' -> #publishedEventsOfInstances;
-	add: 'Set class' -> #newInstanceAspect:class:;
-	add: 'Shell class' -> #registerAsToolWith:;
-	add: 'Shell class' -> #unregisterAsToolWith:;
-	add: 'ShellView class' -> #publishedAspectsOfInstances;
-	add: 'ShellView class' -> #publishedEventsOfInstances;
-	add: 'Slider class' -> #publishedAspectsOfInstances;
-	add: 'SpinButton class' -> #publishedAspectsOfInstances;
-	add: 'SpinButton class' -> #publishedEventsOfInstances;
-	add: 'Splitter class' -> #publishedAspectsOfInstances;
-	add: 'StackFrame class' -> #publishedAspectsOfInstances;
-	add: 'StaticBitmap class' -> #publishedAspectsOfInstances;
-	add: 'StaticIcon class' -> #publishedAspectsOfInstances;
-	add: 'StaticRectangle class' -> #publishedAspectsOfInstances;
-	add: 'StaticText class' -> #applicableTypeConverterCategories;
-	add: 'StaticText class' -> #publishedAspectsOfInstances;
-	add: 'StaticView class' -> #publishedAspectsOfInstances;
-	add: 'StatusBar class' -> #publishedAspectsOfInstances;
-	add: 'StatusBarItem class' -> #publishedAspectsOfInstances;
-	add: 'StatusBarItemAbstract class' -> #publishedAspectsOfInstances;
-	add: 'StringField class' -> #newInstanceAspect:class:;
-	add: 'StyledGradientBrush class' -> #publishedAspectsOfInstances;
-	add: 'StyledPen class' -> #publishedAspectsOfInstances;
-	add: 'Symbol class' -> #newInstanceAspect:class:;
-	add: 'SystemDictionary class' -> #publishedEventsOfInstances;
-	add: 'TabView class' -> #publishedAspectsOfInstances;
-	add: 'TextEdit class' -> #applicableTypeConverterCategories;
-	add: 'TextEdit class' -> #publishedAspectsOfInstances;
-	add: 'TextEdit class' -> #publishedEventsOfInstances;
-	add: 'TextTileIcon class' -> #newInstanceAspect:class:;
-	add: 'Time class' -> #newInstanceAspect:class:;
-	add: 'TimeToText class' -> #publishedAspectsOfInstances;
-	add: 'Toolbar class' -> #publishedAspectsOfInstances;
-	add: 'Toolbar class' -> #publishedEventsOfInstances;
-	add: 'Toolbar class' -> #resource_Class_browser_tools;
-	add: 'Toolbar class' -> #resource_Debugger_tools;
-	add: 'Toolbar class' -> #resource_Image_tools;
-	add: 'Toolbar class' -> #resource_Resource_tools;
-	add: 'Toolbar class' -> #resource_Search_tools;
-	add: 'Toolbar class' -> #resource_Smalltalk_tools;
-	add: 'Toolbar class' -> #resource_View_composer_alignment_tools;
-	add: 'Toolbar class' -> #resource_View_composer_match_size_tools;
-	add: 'Toolbar class' -> #resource_View_composer_nudge_tools;
-	add: 'Toolbar class' -> #resource_View_composer_spacing_tools;
-	add: 'Toolbar class' -> #resource_View_composer_tools;
-	add: 'Toolbar class' -> #resource_Workspace_tools;
-	add: 'ToolbarBitmapButton class' -> #publishedAspectsOfInstances;
-	add: 'ToolbarButton class' -> #publishedAspectsOfInstances;
-	add: 'ToolbarSeparator class' -> #icon;
-	add: 'ToolbarSeparator class' -> #publishedAspectsOfInstances;
-	add: 'ToolbarSystemButton class' -> #publishedAspectsOfInstances;
-	add: 'ToolButton class' -> #publishedAspectsOfInstances;
-	add: 'Tooltip class' -> #publishedAspectsOfInstances;
-	add: 'TranscriptShell class' -> #publishedAspects;
-	add: 'TreeModelAbstract class' -> #publishedEventsOfInstances;
-	add: 'TreeView class' -> #publishedAspectsOfInstances;
-	add: 'TypeConverter class' -> #publishedAspectsOfInstances;
-	add: 'ValueConverter class' -> #publishedEventsOfInstances;
-	add: 'ValueConvertingControlView class' -> #applicableTypeConverterCategories;
-	add: 'ValueConvertingControlView class' -> #publishedAspectsOfInstances;
-	add: 'ValueDialog class' -> #publishedEventsOfInstances;
-	add: 'ValueModel class' -> #publishedAspectsOfInstances;
-	add: 'ValueModel class' -> #publishedEventsOfInstances;
-	add: 'ValuePresenter class' -> #publishedEventsOfInstances;
-	add: 'VersionInfo class' -> #publishedAspectsOfInstances;
-	add: 'View class' -> #editNewDefaultView;
-	add: 'View class' -> #makeDefaultResource;
-	add: 'View class' -> #makeResource:inClass:;
-	add: 'View class' -> #publishedAspectsOfInstances;
-	add: 'View class' -> #publishedEventsOfInstances;
-	add: 'VS_FIXEDFILEINFO class' -> #publishedAspectsOfInstances;
-	add: 'WeakSet class' -> #publishedEventsOfInstances;
-	add: 'WinImageList class' -> #newInstanceAspect:class:;
-	yourself.
+package setMethodNames: #(
+	#(#{_FPIEEE_RECORD} #printFieldsOn:limit:)
+	#(#{_FPIEEE_VALUE} #printFieldsOn:limit:)
+	#(#{AbstractCardContainer class} #publishedAspectsOfInstances)
+	#(#{AbstractCardContainer class} #publishedEventsOfInstances)
+	#(#{AbstractCHARField} #characterCreationMessage)
+	#(#{AbstractCHARField} #printAccessorExpression:on:)
+	#(#{AbstractDocumentShell} #saveStateOn:)
+	#(#{AndEnvironment} #includesResource:)
+	#(#{Array} #assignToResourceIdentifier:)
+	#(#{ArrayedCollection} #newBatchAccessor)
+	#(#{ArrayField} #printAccessorExpressionSuffixOn:)
+	#(#{ArrayField} #printMutatorBody:on:)
+	#(#{ArrayPointerField} #printAccessorExpressionSuffixOn:)
+	#(#{ArrayPointerField} #printMutatorBody:on:)
+	#(#{Association} #debugPrintString)
+	#(#{AXControlSite class} #publishedAspectsOfInstances)
+	#(#{AXValueConvertingControlSite class} #publishedAspectsOfInstances)
+	#(#{Bag class} #publishedAspectsOfInstances)
+	#(#{BasicListAbstract class} #publishedAspectsOfInstances)
+	#(#{Behavior} #changedMethods)
+	#(#{Behavior} #hasAbstractMethods)
+	#(#{Behavior} #isAbstract)
+	#(#{Behavior} #methodFor:)
+	#(#{Behavior} #searchForInTool:)
+	#(#{Behavior} #whichClassDefinesInstVar:)
+	#(#{Behavior} #whichMethodsContainSource:)
+	#(#{Behavior} #whichMethodsOnlySelfSend:)
+	#(#{Behavior} #whichMethodsReferTo:)
+	#(#{Behavior} #whichSelectorsReferTo:)
+	#(#{Bitmap class} #newInstanceAspect:class:)
+	#(#{BlockClosure} #cpuCyclesToRun)
+	#(#{BlockClosure class} #publishedAspectsOfInstances)
+	#(#{BlockFrame} #debugIpFor:)
+	#(#{BlockFrame} #isRestartable)
+	#(#{BlockFrame} #makeDebug)
+	#(#{BlockFrame} #mapInitialIpFrom:to:)
+	#(#{Boolean} #literalTextStyle)
+	#(#{Boolean class} #newInstanceAspect:class:)
+	#(#{BooleanToText class} #publishedAspectsOfInstances)
+	#(#{BOOLField} #newAspect:class:)
+	#(#{BOOLField} #printAccessorExpressionSuffixOn:)
+	#(#{BOOLField class} #icon)
+	#(#{BorderLayout} #arrangementAspect)
+	#(#{BorderLayout class} #publishedAspectsOfInstances)
+	#(#{BrowserEnvironment} #allMethods)
+	#(#{BrowserEnvironment} #allResourcesDo:)
+	#(#{BrowserEnvironment} #browse)
+	#(#{BrowserEnvironment} #definitionsOf:)
+	#(#{BrowserEnvironment} #dynamicReferencesTo:)
+	#(#{BrowserEnvironment} #forClassHierarchyFrom:)
+	#(#{BrowserEnvironment} #forMethodCategories:)
+	#(#{BrowserEnvironment} #forPackages:)
+	#(#{BrowserEnvironment} #includesMethod:)
+	#(#{BrowserEnvironment} #includesMethodUncached:)
+	#(#{BrowserEnvironment} #openEditor)
+	#(#{BrowserEnvironment} #search)
+	#(#{BrowserEnvironment} #search:)
+	#(#{BrowserEnvironmentWrapper} #includesResource:)
+	#(#{BrowserEnvironmentWrapper} #openEditor)
+	#(#{CardContainer class} #publishedAspectsOfInstances)
+	#(#{CardContainer class} #publishedEventsOfInstances)
+	#(#{CardLabel class} #publishedAspectsOfInstances)
+	#(#{CardLayout class} #publishedEventsOfInstances)
+	#(#{Category class} #icon)
+	#(#{Character} #literalTextStyle)
+	#(#{CHARField} #accessorMessage)
+	#(#{CHARField} #characterCreationMessage)
+	#(#{CheckBox class} #publishedAspectsOfInstances)
+	#(#{CheckButton class} #publishedAspectsOfInstances)
+	#(#{Class} #changeIndex)
+	#(#{Class} #changeIndexValue:)
+	#(#{Class} #isAbstract)
+	#(#{Class} #isChanged:)
+	#(#{Class} #isDeprecated)
+	#(#{Class} #methodChanged:)
+	#(#{Class} #notifyPackageOfChange)
+	#(#{Class} #renameClassVar:to:)
+	#(#{ClassBuilder class} #publishedEventsOfInstances)
+	#(#{ClassDescription} #browse)
+	#(#{ClassDescription} #categoriesFor:are:)
+	#(#{ClassDescription} #commentStamp:prior:)
+	#(#{ClassDescription} #copy:from:)
+	#(#{ClassDescription} #copy:from:categories:)
+	#(#{ClassDescription} #copy:from:classified:)
+	#(#{ClassDescription} #copyAll:from:)
+	#(#{ClassDescription} #copyAll:from:classified:)
+	#(#{ClassDescription} #copyAllCategoriesFrom:)
+	#(#{ClassDescription} #copyCategory:from:)
+	#(#{ClassDescription} #copyCategory:from:classified:)
+	#(#{ClassDescription} #isDeprecated)
+	#(#{ClassDescription} #methodsFor:)
+	#(#{ClassDescription} #methodsFor:stamp:)
+	#(#{ClassDescription} #newInstanceAspect:class:)
+	#(#{ClassDescription} #privateMethods)
+	#(#{ClassDescription} #publicMethods)
+	#(#{ClassDescription} #renameInstVar:to:)
+	#(#{ClassEnvironment} #includesResource:)
+	#(#{ClassEnvironment} #openEditor)
+	#(#{Collection} #aspectDisplayOn:)
+	#(#{Collection} #debugPrintString)
+	#(#{Collection} #maxDebugPrint)
+	#(#{Collection} #newBatchAccessor)
+	#(#{Collection} #publishedAspects)
+	#(#{Collection} #publishedKeyedAspects)
+	#(#{Collection} #publishedKeyedAspectsBatchSize)
+	#(#{Collection class} #newInstanceAspect:class:)
+	#(#{Color class} #newInstanceAspect:class:)
+	#(#{ColorView class} #publishedAspectsOfInstances)
+	#(#{ComboBox} #visualObjectAtPoint:)
+	#(#{ComboBox class} #publishedAspectsOfInstances)
+	#(#{CommandDescription class} #publishedAspectsOfInstances)
+	#(#{CommandMenuItem} #edit)
+	#(#{CommandMenuItem class} #publishedAspectsOfInstances)
+	#(#{CompiledCode} #alternateInspectorClass)
+	#(#{CompiledCode} #asDebugMethod)
+	#(#{CompiledCode} #decodeHeaderOn:)
+	#(#{CompiledCode} #disassembly)
+	#(#{CompiledCode} #hasCompilationIssues)
+	#(#{CompiledCode} #indexOfIP:)
+	#(#{CompiledCode} #isAbstract)
+	#(#{CompiledCode} #isDeprecated)
+	#(#{CompiledCode} #isSimpleSelfSend:)
+	#(#{CompiledCode} #stylerClass)
+	#(#{CompiledCode class} #publishedAspectsOfInstances)
+	#(#{CompiledExpression} #asDebugMethod)
+	#(#{CompiledExpression} #stylerClass)
+	#(#{CompiledMethod} #asDebugMethod)
+	#(#{CompiledMethod} #browse)
+	#(#{CompiledMethod} #icon)
+	#(#{CompiledMethod} #infoTip)
+	#(#{CompiledMethod} #searchForInTool:)
+	#(#{CompiledMethod} #stylerClass)
+	#(#{CompiledMethod class} #overriddenIcon)
+	#(#{CompiledMethod class} #publishedAspectsOfInstances)
+	#(#{CompileFailedMethod} #asDebugMethod)
+	#(#{CompilerNotification} #okToContinue)
+	#(#{ContainerView class} #applicableLayoutManagerCategories)
+	#(#{ContainerView class} #publishedAspectsOfInstances)
+	#(#{ControlBarAbstract class} #applicableLayoutManagerCategories)
+	#(#{ControlBarAbstract class} #publishedAspectsOfInstances)
+	#(#{ControlView class} #publishedAspectsOfInstances)
+	#(#{Date class} #newInstanceAspect:class:)
+	#(#{DateTimeCommonControl} #publishedAspects)
+	#(#{DateTimePicker class} #publishedAspectsOfInstances)
+	#(#{DateToText class} #publishedAspectsOfInstances)
+	#(#{Dictionary} #alternateInspectorClass)
+	#(#{Dictionary} #debugPrintString)
+	#(#{Dictionary} #newBatchAccessor)
+	#(#{Dictionary} #publishedAspects)
+	#(#{Dictionary class} #newInstanceAspect:class:)
+	#(#{DOUBLE class} #newInstanceAspect:class:)
+	#(#{DOUBLEField} #newAspect:class:)
+	#(#{EmbeddedField} #printAccessorExpression:on:)
+	#(#{ExternalArray} #printOn:)
+	#(#{ExternalArray} #publishedAspects)
+	#(#{ExternalArray} #publishedKeyedAspects)
+	#(#{ExternalArray} #publishedKeyedAspectsBatchSize)
+	#(#{ExternalArray class} #newInstanceAspect:class:)
+	#(#{ExternalArray class} #shouldOverrideGetFieldNames)
+	#(#{ExternalField} #autoGenCategories)
+	#(#{ExternalField} #autoGenComment)
+	#(#{ExternalField} #makeInstanceName:)
+	#(#{ExternalField} #printAccessor:on:)
+	#(#{ExternalField} #printAccessorBody:on:)
+	#(#{ExternalField} #printAccessorExpression:on:)
+	#(#{ExternalField} #printAccessorExpressionSuffixOn:)
+	#(#{ExternalField} #printMutator:on:)
+	#(#{ExternalField} #printMutatorBody:on:)
+	#(#{ExternalField} #printOffsetExpression:on:)
+	#(#{ExternalField} #printOffsetExpression:on:extra:)
+	#(#{ExternalField} #valueParameterName)
+	#(#{ExternalInteger} #printOn:)
+	#(#{ExternalInteger class} #decompileDefinition)
+	#(#{ExternalInteger class} #newInstanceAspect:class:)
+	#(#{ExternalIntegerBytes} #debugPrintString)
+	#(#{ExternalIntegerBytes} #publishedKeyedAspects)
+	#(#{ExternalIntegerBytes class} #newInstanceAspect:class:)
+	#(#{ExternalMethod class} #publishedAspectsOfInstances)
+	#(#{ExternalRectangle} #printOn:)
+	#(#{ExternalScalar class} #shouldOverrideGetFieldNames)
+	#(#{ExternalStructure} #alternateInspectorClass)
+	#(#{ExternalStructure} #printableFields)
+	#(#{ExternalStructure} #printCyclicRefOn:)
+	#(#{ExternalStructure} #printFields:on:limit:)
+	#(#{ExternalStructure} #printFieldsOn:limit:)
+	#(#{ExternalStructure} #printOn:)
+	#(#{ExternalStructure} #publishedAspects)
+	#(#{ExternalStructure class} #autoGenCategory)
+	#(#{ExternalStructure class} #compileAllDefinitions)
+	#(#{ExternalStructure class} #compileDefinition)
+	#(#{ExternalStructure class} #compileGetFieldNames)
+	#(#{ExternalStructure class} #compileGetMethod:forField:)
+	#(#{ExternalStructure class} #compileNewFields)
+	#(#{ExternalStructure class} #compileSetMethod:forField:)
+	#(#{ExternalStructure class} #decompileDefinition)
+	#(#{ExternalStructure class} #formatAndCompile:categories:)
+	#(#{ExternalStructure class} #hasHandCodedMethodFor:)
+	#(#{ExternalStructure class} #inheritsFieldNamed:)
+	#(#{ExternalStructure class} #recompileDefinition)
+	#(#{ExternalStructure class} #shouldCompile:forField:)
+	#(#{ExternalStructure class} #shouldOverrideGetFieldNames)
+	#(#{FILETIME} #printOn:)
+	#(#{FillerField} #printAccessorExpression:on:)
+	#(#{FillerField} #printMutatorBody:on:)
+	#(#{Float class} #newInstanceAspect:class:)
+	#(#{FLOAT class} #newInstanceAspect:class:)
+	#(#{FLOATField} #newAspect:class:)
+	#(#{FlowLayout class} #publishedAspectsOfInstances)
+	#(#{Font class} #newInstanceAspect:class:)
+	#(#{FontView class} #publishedAspectsOfInstances)
+	#(#{FramingCalculation class} #allCalculations)
+	#(#{FramingConstraints class} #publishedAspectsOfInstances)
+	#(#{FramingLayout} #arrangementAspect)
+	#(#{FramingLayout class} #example1)
+	#(#{GdiplusImage class} #newInstanceAspect:class:)
+	#(#{GridLayout class} #publishedAspectsOfInstances)
+	#(#{GroupBox class} #publishedAspectsOfInstances)
+	#(#{HANDLEField} #printAccessorExpressionSuffixOn:)
+	#(#{HotKey class} #publishedAspectsOfInstances)
+	#(#{Icon class} #choose)
+	#(#{Icon class} #newInstanceAspect:class:)
+	#(#{IconicListAbstract class} #publishedAspectsOfInstances)
+	#(#{IconicListAbstract class} #publishedEventsOfInstances)
+	#(#{ImagePresenter class} #resource_ImageList_view)
+	#(#{ImageViewAbstract class} #publishedAspectsOfInstances)
+	#(#{InputState class} #publishedEventsOfInstances)
+	#(#{InternalIcon class} #choose)
+	#(#{Interval} #debugPrintString)
+	#(#{Interval} #newBatchAccessor)
+	#(#{KernelLibrary} #queryThreadCycleTime:cycleTime:)
+	#(#{LargeInteger} #debugPrintString)
+	#(#{LayoutManager} #arrangementAspect)
+	#(#{ListBox class} #publishedAspectsOfInstances)
+	#(#{ListControlView} #visualObjectAtPoint:)
+	#(#{ListControlView class} #publishedAspectsOfInstances)
+	#(#{ListControlView class} #publishedEventsOfInstances)
+	#(#{ListModel class} #publishedEventsOfInstances)
+	#(#{ListTreeView class} #publishedAspectsOfInstances)
+	#(#{ListTreeView class} #publishedEventsOfInstances)
+	#(#{ListView class} #publishedAspectsOfInstances)
+	#(#{ListView class} #publishedEventsOfInstances)
+	#(#{ListViewColumn class} #publishedAspectsOfInstances)
+	#(#{LOGBRUSH} #printFieldsOn:limit:)
+	#(#{LOGPEN} #printFieldsOn:limit:)
+	#(#{LPVOIDField} #newAspect:class:)
+	#(#{LPVOIDField} #printAccessorExpressionSuffixOn:)
+	#(#{LVITEMW} #printableFields)
+	#(#{Menu} #edit)
+	#(#{Menu} #painterClass)
+	#(#{Menu class} #publishedAspectsOfInstances)
+	#(#{MenuBar} #painterClass)
+	#(#{MenuBar class} #newInstanceAspect:class:)
+	#(#{MenuBar class} #publishedAspectsOfInstances)
+	#(#{MenuItem class} #icon)
+	#(#{Metaclass} #changeIndex)
+	#(#{Metaclass} #isChanged:)
+	#(#{Metaclass} #isDeprecated)
+	#(#{Metaclass} #methodChanged:)
+	#(#{MethodCategory class} #all)
+	#(#{MethodProtocol} #icon)
+	#(#{MethodProtocol class} #ansiIcon)
+	#(#{MethodProtocol class} #publishedEventsOfInstances)
+	#(#{MethodProtocol class} #readOnlyIcon)
+	#(#{MoenTreeView} #visualObjectAtPoint:)
+	#(#{MoenTreeView class} #publishedAspectsOfInstances)
+	#(#{MoenTreeView class} #publishedEventsOfInstances)
+	#(#{MonthCalendarView class} #publishedAspectsOfInstances)
+	#(#{MSG} #printOn:)
+	#(#{MultilineTextEdit class} #publishedAspectsOfInstances)
+	#(#{Number} #literalTextStyle)
+	#(#{Object} #alternateInspectorClass)
+	#(#{Object} #aspectDisplayOn:)
+	#(#{Object} #basicInspect)
+	#(#{Object} #browse)
+	#(#{Object} #currentPublishedAspectsAsLiteralsMap)
+	#(#{Object} #debugPrintString)
+	#(#{Object} #halt)
+	#(#{Object} #inspect)
+	#(#{Object} #inspectorClass)
+	#(#{Object} #newAspect:class:)
+	#(#{Object} #publicAccessorAspects)
+	#(#{Object} #publishedAspects)
+	#(#{Object} #publishedEvents)
+	#(#{Object} #searchForInTool:)
+	#(#{Object class} #publishedAspects)
+	#(#{Object class} #publishedAspectsOfInstances)
+	#(#{Object class} #publishedEvents)
+	#(#{Object class} #publishedEventsOfInstances)
+	#(#{OrEnvironment} #includesResource:)
+	#(#{Package} #browse)
+	#(#{Package} #defaultAbout)
+	#(#{Package} #defaultAboutBitmap)
+	#(#{Package} #fileLocator)
+	#(#{Package} #icon)
+	#(#{Package} #publishedAspects)
+	#(#{Package} #searchForInTool:)
+	#(#{Package class} #changedIcon)
+	#(#{Package class} #dolphinPackageIcon)
+	#(#{Package class} #publishedAspectsOfInstances)
+	#(#{Package class} #publishedEventsOfInstances)
+	#(#{PackageManager} #getVersionInfoFor:)
+	#(#{PackageManager} #isConnected)
+	#(#{PackageManager} #sourceControl)
+	#(#{PackageManager class} #publishedEventsOfInstances)
+	#(#{Pen class} #publishedAspectsOfInstances)
+	#(#{PluggableTypeConverter class} #publishedAspectsOfInstances)
+	#(#{Point class} #publishedAspectsOfInstances)
+	#(#{Point3D class} #publishedAspectsOfInstances)
+	#(#{PointerField} #printAccessorExpression:on:)
+	#(#{PointerField} #printMutatorBody:on:)
+	#(#{PoolConstantsDictionary} #browse)
+	#(#{PoolConstantsDictionary} #errorModify:value:)
+	#(#{PoolConstantsDictionary} #referencesTo:)
+	#(#{PoolDictionary} #aspectDisplayOn:)
+	#(#{Presenter class} #addView:asResource:)
+	#(#{Presenter class} #editNewDefaultView)
+	#(#{Process} #attachDebugger:topFrame:resumable:)
+	#(#{Process} #debug)
+	#(#{Process} #debug:topFrame:resumable:)
+	#(#{Process} #debuggerClass)
+	#(#{Process} #halt:cause:)
+	#(#{Process} #primStep:)
+	#(#{Process} #showWalkback:callStack:debuggable:resumable:)
+	#(#{Process} #step)
+	#(#{Process} #step:)
+	#(#{Process} #walkback:topFrame:resumable:)
+	#(#{ProcessorScheduler} #singleStep:)
+	#(#{ProgressBar class} #publishedAspectsOfInstances)
+	#(#{ProportionalLayout class} #publishedAspectsOfInstances)
+	#(#{ProtoObject} #basicInspect)
+	#(#{ProtoObject} #debugPrintString)
+	#(#{ProtoObject} #halt)
+	#(#{ProtoObject} #inspect)
+	#(#{ProtoObject class} #icon)
+	#(#{ProtoObject class} #publishedAspects)
+	#(#{ProtoObject class} #publishedAspectsOfInstances)
+	#(#{PushButton class} #publishedAspectsOfInstances)
+	#(#{QWORD} #printOn:)
+	#(#{RBConfigurableFormatter class} #publishedAspects)
+	#(#{RBFormatter class} #publishedAspects)
+	#(#{RBSourceFormatter class} #publishedAspects)
+	#(#{Rectangle class} #publishedAspectsOfInstances)
+	#(#{RefactoryChange} #displayOn:)
+	#(#{ReferenceView} #visualObjectAtPoint:)
+	#(#{ReferenceView class} #publishedAspectsOfInstances)
+	#(#{RegKeyAbstract} #debugPrintString)
+	#(#{ResourceIdentifier} #assign:)
+	#(#{ResourceIdentifier} #assignLiteralResourceData:)
+	#(#{ResourceIdentifier} #browse)
+	#(#{ResourceIdentifier} #edit)
+	#(#{ResourceIdentifier} #editViewUsing:)
+	#(#{ResourceIdentifier} #emit:asStringOn:)
+	#(#{ResourceIdentifier} #prompt)
+	#(#{ResourceIdentifier} #publishedAspects)
+	#(#{ResourceIdentifier} #reassign)
+	#(#{ResourceIdentifier class} #prompt)
+	#(#{ResourceIdentifier class} #publishedAspectsOfInstances)
+	#(#{RichTextEdit class} #publishedAspectsOfInstances)
+	#(#{RichTextPresenter class} #publishedEventsOfInstances)
+	#(#{ScalarField} #newAspect:class:)
+	#(#{ScalarField} #printAccessorExpression:on:)
+	#(#{ScalarField} #printMutatorBody:on:)
+	#(#{ScalarField class} #icon)
+	#(#{ScintillaAttribute class} #publishedAspectsOfInstances)
+	#(#{ScintillaIndicatorStyle class} #publishedAspectsOfInstances)
+	#(#{ScintillaKeyBinding class} #publishedAspectsOfInstances)
+	#(#{ScintillaMargin class} #publishedAspectsOfInstances)
+	#(#{ScintillaMarkerDefinition class} #publishedAspectsOfInstances)
+	#(#{ScintillaTextStyle class} #newInstanceAspect:class:)
+	#(#{ScintillaTextStyle class} #publishedAspectsOfInstances)
+	#(#{ScintillaView} #publishedAspects)
+	#(#{ScintillaView class} #publishedAspectsOfInstances)
+	#(#{ScintillaView class} #publishedEventsOfInstances)
+	#(#{ScrollBar class} #publishedAspectsOfInstances)
+	#(#{ScrollingDecorator class} #publishedAspectsOfInstances)
+	#(#{ScrollingDecoratorLayout class} #publishedAspectsOfInstances)
+	#(#{SearchPolicy class} #method)
+	#(#{SelectorEnvironment} #addMethods:)
+	#(#{Semaphore} #debugPrintString)
+	#(#{SequenceableCollection} #alternateInspectorClass)
+	#(#{SequenceableCollection} #newBatchAccessor)
+	#(#{SequenceableCollection class} #newInstanceAspect:class:)
+	#(#{SessionManager class} #publishedEventsOfInstances)
+	#(#{Set} #newBatchAccessor)
+	#(#{Set class} #newInstanceAspect:class:)
+	#(#{Shell class} #registerAsToolWith:)
+	#(#{Shell class} #unregisterAsToolWith:)
+	#(#{ShellView class} #publishedAspectsOfInstances)
+	#(#{ShellView class} #publishedEventsOfInstances)
+	#(#{Slider} #publishedAspects)
+	#(#{Slider class} #publishedAspectsOfInstances)
+	#(#{SpinButton} #publishedAspects)
+	#(#{SpinButton class} #publishedAspectsOfInstances)
+	#(#{SpinButton class} #publishedEventsOfInstances)
+	#(#{Splitter class} #publishedAspectsOfInstances)
+	#(#{StAbstractVariableNode} #displayOn:)
+	#(#{StackFrame} #debugIpFor:)
+	#(#{StackFrame} #debugPrintOn:)
+	#(#{StackFrame} #makeDebug)
+	#(#{StackFrame} #stackWorkspace)
+	#(#{StackFrame class} #publishedAspectsOfInstances)
+	#(#{StAssignmentNode} #displayOn:)
+	#(#{StaticBitmap class} #publishedAspectsOfInstances)
+	#(#{StaticIcon class} #publishedAspectsOfInstances)
+	#(#{StaticRectangle class} #publishedAspectsOfInstances)
+	#(#{StaticText class} #applicableTypeConverterCategories)
+	#(#{StaticText class} #publishedAspectsOfInstances)
+	#(#{StaticView class} #publishedAspectsOfInstances)
+	#(#{StatusBar class} #publishedAspectsOfInstances)
+	#(#{StatusBarItem class} #publishedAspectsOfInstances)
+	#(#{StatusBarItemAbstract class} #publishedAspectsOfInstances)
+	#(#{StBlockNode} #displayOn:)
+	#(#{StCascadeNode} #displayOn:)
+	#(#{StLiteralArrayNode} #displayOn:)
+	#(#{StLiteralToken} #textStyle)
+	#(#{StLiteralValueNode} #displayOn:)
+	#(#{StMessageNode} #displayOn:)
+	#(#{StNumberLiteralToken} #textStyle)
+	#(#{StOptimizedNode} #displayOn:)
+	#(#{StParameterNode} #displayOn:)
+	#(#{StPrimitiveNode} #displayOn:)
+	#(#{StProgramNode} #debugPrintString)
+	#(#{StProgramNode} #postComments)
+	#(#{StProgramNode} #preComments)
+	#(#{StProgramNode} #publishedAspects)
+	#(#{StReturnNode} #displayOn:)
+	#(#{String} #aspectDisplayOn:)
+	#(#{String} #debugPrintString)
+	#(#{String} #literalTextStyle)
+	#(#{String} #newAspect:class:)
+	#(#{String} #publishedAspects)
+	#(#{StringField} #printAccessorExpressionSuffixOn:)
+	#(#{StringField} #printMutatorBody:on:)
+	#(#{StringField class} #newInstanceAspect:class:)
+	#(#{StructureArrayField} #printAccessorExpressionSuffixOn:)
+	#(#{StructureArrayPointerField} #printAccessorExpressionSuffixOn:)
+	#(#{StructureField} #printMutatorBody:on:)
+	#(#{StructurePointer} #printOn:)
+	#(#{StSelfVariable} #valueClass)
+	#(#{StSelfVariableNode} #valueClassIn:)
+	#(#{StSequenceNode} #displayOn:)
+	#(#{StSpecialVariableNode} #displayOn:)
+	#(#{StSpecialVariableNode} #valueClassIn:)
+	#(#{StStaticVariable} #valueClass)
+	#(#{StSuperVariable} #valueClass)
+	#(#{StSuperVariableNode} #valueClassIn:)
+	#(#{StTempDeclNode} #displayOn:)
+	#(#{StThisContextVariable} #valueClass)
+	#(#{StThisContextVariableNode} #valueClassIn:)
+	#(#{StToken} #postComments)
+	#(#{StToken} #preComments)
+	#(#{StVariable} #valueClass)
+	#(#{StyledGradientBrush class} #publishedAspectsOfInstances)
+	#(#{StyledPen class} #publishedAspectsOfInstances)
+	#(#{Symbol} #aspectDisplayOn:)
+	#(#{Symbol} #literalTextStyle)
+	#(#{Symbol} #searchForInTool:)
+	#(#{Symbol class} #newInstanceAspect:class:)
+	#(#{SystemDictionary class} #publishedEventsOfInstances)
+	#(#{SYSTEMTIME} #printOn:)
+	#(#{TabView class} #publishedAspectsOfInstances)
+	#(#{TextEdit class} #applicableTypeConverterCategories)
+	#(#{TextEdit class} #publishedAspectsOfInstances)
+	#(#{TextEdit class} #publishedEventsOfInstances)
+	#(#{TextTileIcon class} #newInstanceAspect:class:)
+	#(#{Time class} #newInstanceAspect:class:)
+	#(#{TimeToText class} #publishedAspectsOfInstances)
+	#(#{Toolbar class} #publishedAspectsOfInstances)
+	#(#{Toolbar class} #publishedEventsOfInstances)
+	#(#{Toolbar class} #resource_Class_browser_tools)
+	#(#{Toolbar class} #resource_Debugger_tools)
+	#(#{Toolbar class} #resource_Image_tools)
+	#(#{Toolbar class} #resource_Resource_tools)
+	#(#{Toolbar class} #resource_Search_tools)
+	#(#{Toolbar class} #resource_Smalltalk_tools)
+	#(#{Toolbar class} #resource_View_composer_alignment_tools)
+	#(#{Toolbar class} #resource_View_composer_match_size_tools)
+	#(#{Toolbar class} #resource_View_composer_nudge_tools)
+	#(#{Toolbar class} #resource_View_composer_spacing_tools)
+	#(#{Toolbar class} #resource_View_composer_tools)
+	#(#{Toolbar class} #resource_Workspace_tools)
+	#(#{ToolbarBitmapButton} #publishedAspects)
+	#(#{ToolbarBitmapButton class} #publishedAspectsOfInstances)
+	#(#{ToolbarButton class} #publishedAspectsOfInstances)
+	#(#{ToolbarSeparator class} #icon)
+	#(#{ToolbarSeparator class} #publishedAspectsOfInstances)
+	#(#{ToolbarSystemButton} #publishedAspects)
+	#(#{ToolbarSystemButton class} #publishedAspectsOfInstances)
+	#(#{ToolButton class} #publishedAspectsOfInstances)
+	#(#{Tooltip class} #publishedAspectsOfInstances)
+	#(#{TranscriptShell} #help)
+	#(#{TranscriptShell class} #publishedAspects)
+	#(#{TreeModelAbstract class} #publishedEventsOfInstances)
+	#(#{TreeView class} #publishedAspectsOfInstances)
+	#(#{TypeConverter class} #publishedAspectsOfInstances)
+	#(#{UndefinedObject} #aspectDisplayOn:)
+	#(#{UndefinedObject} #literalTextStyle)
+	#(#{ValueConverter class} #publishedEventsOfInstances)
+	#(#{ValueConvertingControlView class} #applicableTypeConverterCategories)
+	#(#{ValueConvertingControlView class} #publishedAspectsOfInstances)
+	#(#{ValueDialog class} #publishedEventsOfInstances)
+	#(#{ValueModel} #debugPrintString)
+	#(#{ValueModel class} #publishedAspectsOfInstances)
+	#(#{ValueModel class} #publishedEventsOfInstances)
+	#(#{ValuePresenter class} #publishedEventsOfInstances)
+	#(#{VariableEnvironment} #includesMethodUncached:)
+	#(#{VariableEnvironment} #updateCachesForMethod:)
+	#(#{VersionInfo class} #publishedAspectsOfInstances)
+	#(#{View} #aspectDisplayOn:)
+	#(#{View} #publishedAspects)
+	#(#{View} #visualObjectAtPoint:)
+	#(#{View class} #editNewDefaultView)
+	#(#{View class} #makeDefaultResource)
+	#(#{View class} #makeResource:inClass:)
+	#(#{View class} #publishedAspectsOfInstances)
+	#(#{View class} #publishedEventsOfInstances)
+	#(#{VS_FIXEDFILEINFO class} #publishedAspectsOfInstances)
+	#(#{WCHARField} #accessorMessage)
+	#(#{WCHARField} #characterCreationMessage)
+	#(#{WeakSet class} #publishedEventsOfInstances)
+	#(#{WINDOWPOS} #printOn:)
+	#(#{WinImageList class} #newInstanceAspect:class:)
+).
 
-package globalNames
-	add: #ClassHierarchyPresenter;
-	add: #Inspector;
-	yourself.
+package setVariableNames: #(
+	#{ClassHierarchyPresenter}
+	#{Inspector}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #ClassHierarchyPresenter;
-	add: #Inspector;
-	yourself).
+package setAliasVariableNames: #(
+	#{ClassHierarchyPresenter}
+	#{Inspector}
+).
 
 package setPrerequisites: #(
 	'..\..\ActiveX\OCX\ActiveX Control Hosting'
@@ -730,10 +727,12 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Compiler'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
-	'..\..\ActiveX\Shell\Windows Shell').
+	'..\..\ActiveX\Shell\Windows Shell'
+).
 
 package setManualPrerequisites: #(
-	'Dolphin Source Fileout').
+	'Dolphin Source Fileout'
+).
 
 package!
 
@@ -1140,8 +1139,8 @@ SmalltalkToolShell subclass: #MethodBrowserShell
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #PackageBrowserShell
-	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool globalsPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel versionModel'
-	classVariableNames: 'UpdateMap WordWrapComment'
+	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel versionModel'
+	classVariableNames: 'WordWrapComment'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #ResourceBrowser
@@ -1325,7 +1324,7 @@ ImageView subclass: #ViewComposerArena
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 ClassHierarchyPresenter := ClassHierarchySelector!
 
@@ -4537,20 +4536,21 @@ defaultAboutBitmap
 	"Answer a default Bitmap to use for the receiver. We assume that a JPG of the same name as
 	the package is available in the Resources directory below the package's folder."
 
-	"We have to be a bit careful here. At boot time (or if the OLE COM package has been removed)
-	the OLEPicture class will not be available. In such cases we just display an empty bitmap"
+	"If the GdiplusImage class is not available, or the package does not provide an about bitmap
+	resource, we just display an empty bitmap"
 
-	| olePicture |
-	olePicture := Smalltalk lookup: #OLEPicture.
-	^olePicture notNil
-		ifTrue: 
-			[| bitmapFile |
-			bitmapFile := File
-						composePath: 'Resources\'
-						stem: self name
-						extension: 'jpg'.
-			olePicture fromFile: bitmapFile usingLocator: (FolderRelativeFileLocator basePath: self path)]
-		ifFalse: [DIBSection width: 480 height: 360]!
+	#{GdiplusImage} ifDefined: 
+			[:gdiplusImage |
+			| dir imageFile |
+			dir := File composePath: self path subPath: 'Resources'.
+			#('jpg' 'png') do: 
+					[:each |
+					imageFile := File
+								composePath: dir
+								stem: self name
+								extension: each.
+					(File exists: imageFile) ifTrue: [^gdiplusImage fromFile: imageFile]]].
+	^DIBSection width: 480 height: 360!
 
 fileLocator
 	^PackageRelativeFileLocator package: self!
@@ -4564,20 +4564,22 @@ publishedAspects
 
 	| aspects |
 	aspects := super publishedAspects.
-	aspects add: (Aspect 
-				collection: #untracedGlobals
+	aspects add: ((Aspect
+				collection: #untracedVariables
 				presenterClass: HashedCollectionPresenter
-				addFrom: self globalNames asSortedCollection).
+				addFrom: self variableNames asSortedCollection)
+				beImmutable;
+				yourself).
 	^aspects!
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForPackage: self! !
-!Package categoriesFor: #browse!enumerating!public! !
-!Package categoriesFor: #defaultAbout!public! !
-!Package categoriesFor: #defaultAboutBitmap!constants!public! !
+!Package categoriesFor: #browse!commands!public! !
+!Package categoriesFor: #defaultAbout!constants!public! !
+!Package categoriesFor: #defaultAboutBitmap!accessing!public! !
 !Package categoriesFor: #fileLocator!accessing!public! !
-!Package categoriesFor: #icon!public! !
-!Package categoriesFor: #publishedAspects!accessing!public! !
+!Package categoriesFor: #icon!accessing!public! !
+!Package categoriesFor: #publishedAspects!initializing!public! !
 !Package categoriesFor: #searchForInTool:!public! !
 
 !Package class methodsFor!
@@ -4649,7 +4651,7 @@ publishedEventsOfInstances
 	"Answer a <Set> of <Symbol>s being the names of the events published by
     	instances of the receiver."
 
-	^(super publishedEventsOfInstances)
+	^super publishedEventsOfInstances
 		add: #loadedChanged;
 		add: #prerequisitesReset;
 		add: #prerequisitesReset:;
@@ -4658,7 +4660,7 @@ publishedEventsOfInstances
 		add: #classRepackaged:from:to:;
 		add: #methodRepackaged:from:to:;
 		add: #resourceRepackaged:from:to:;
-		add: #globalRepackaged:from:to:;
+		add: #variableRepackaged:from:to:;
 		add: #aboutToSave:;
 		add: #packageInstalled:;
 		yourself! !
@@ -4887,11 +4889,10 @@ showWalkback: titleString callStack: stackTraceString debuggable: debuggableBool
 	the debug/resume buttons depending on the boolean arguments. If the Dolphin development 
 	system walkback dialog is not available, then use a MessageBox."
 
-	| dialogClass box response |
-	dialogClass := Smalltalk lookup: #WalkbackDialog.
-	dialogClass isNil
-		ifFalse: 
-			[response := (dialogClass new)
+	| box response |
+	#{WalkbackDialog} ifDefined: 
+			[:dialogClass |
+			response := dialogClass new
 						caption: titleString;
 						callStack: stackTraceString;
 						debuggable: debuggableBoolean;
@@ -6586,7 +6587,7 @@ publishedEventsOfInstances
 
 	"Note that there are currently no #globalAdded: and #protocolAdded: events"
 
-	^(super publishedEventsOfInstances)
+	^super publishedEventsOfInstances
 		add: #methodAdded:;
 		add: #methodUpdated:;
 		add: #methodRemoved:;
@@ -6596,8 +6597,8 @@ publishedEventsOfInstances
 		add: #classRemoved:;
 		add: #classCategorized:;
 		add: #classCommented:;
-		add: #globalRenamed:from:;
-		add: #globalRemoved:;
+		add: #variableRenamed:from:;
+		add: #variableRemoved:;
 		add: #protocolUpdated:;
 		add: #protocolRemoved:;
 		yourself! !

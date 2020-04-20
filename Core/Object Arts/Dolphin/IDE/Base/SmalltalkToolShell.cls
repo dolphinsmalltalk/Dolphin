@@ -59,7 +59,7 @@ configureFromSavedStateString: aSavedStateString
 	| result |
 	result := Compiler
 				compileForEvaluation: aSavedStateString
-				in: UndefinedObject
+				in: nil
 				evaluationPools: #()
 				flags: 0.
 	self view noRedrawDo: [(result method value: nil) value: self]!
@@ -392,9 +392,8 @@ workspaceClass
 !SmalltalkToolShell class methodsFor!
 
 activeIdeaSpace
-	| ideaSpaceShellClass |
-	ideaSpaceShellClass := Smalltalk at: #IdeaSpaceShell ifAbsent: [^nil].
-	^(View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]!
+	^#{IdeaSpaceShell}
+		ifDefined: [:ideaSpaceShellClass | (View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]]!
 
 buildIdeaSpacePopup
 	| popup |

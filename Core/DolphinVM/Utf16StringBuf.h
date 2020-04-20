@@ -32,7 +32,7 @@ public:
 		m_pBuf[m_cwch] = 0;
 	}
 
-	size_t ToUtf8(uint8_t* pDest = nullptr, size_t cchDest = 0) const
+	size_t ToUtf8(char8_t* pDest = nullptr, size_t cchDest = 0) const
 	{
 		int cch = ::WideCharToMultiByte(CP_UTF8, 0, m_pBuf, m_cwch, reinterpret_cast<LPSTR>(pDest), cchDest, nullptr, nullptr);
 		ASSERT(cch >= 0);

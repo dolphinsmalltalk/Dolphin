@@ -50,7 +50,7 @@ typedef TOTE<ST::MemoryManager> MemManOTE;
 typedef TOTE<ST::VariableBinding> VariableBindingOTE;
 #else
 typedef void OTE;
-typedef OTE AnsiStringOTE;
+typedef OTE Utf8StringOTE;
 typedef OTE SymbolOTE;
 typedef OTE SemaphoreOTE;
 typedef OTE SchedulerOTE;
@@ -74,8 +74,8 @@ struct VMPointers //: public Object
 			POTE Nil;											// 1
 			POTE True;											// 2
 			POTE False;											// 3
-			AnsiStringOTE* EmptyString;							// 4
-			AnsiStringOTE* LineDelimString;						// 5
+			Utf8StringOTE* EmptyString;							// 4
+			Utf8StringOTE* LineDelimString;						// 5
 			ArrayOTE* EmptyArray;								// 6
 			BlockOTE* EmptyBlock;								// 7
 			BlockOTE* EmptyDebugBlock;							// 8
@@ -110,14 +110,14 @@ struct VMPointers //: public Object
 			SymbolOTE* wndProcSelector;							// 57
 
 			/**/SymbolOTE* asNumberSymbol;							// 58
-				// TODO - Remove these when compiler no longer uses it.
+			// TODO - Remove these when compiler no longer uses them.
 			SymbolOTE* fullBindingForSymbol;					// 59
 			SymbolOTE* allInstVarNamesSymbol;					// 60
 			SymbolOTE* understandsArithmeticSymbol;				// 61
 			SymbolOTE* canUnderstandSymbol;						// 62
 			SymbolOTE* negativeSymbol;							// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
-			/**/POTE _unusedSelector65;								// 65
+			SymbolOTE* newBindingRefSelector;					// 65
 
 				// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
@@ -160,7 +160,7 @@ struct VMPointers //: public Object
 			POTE Dispatcher;									// 102 - Actually this doesn't need to be a class at all
 			BehaviorOTE* ClassLPVOID;							// 103
 			BehaviorOTE* ClassUtf8String;						// 104
-			BehaviorOTE* _unused105;							// 105
+			BehaviorOTE* ClassBindingReference;					// 105
 			BehaviorOTE* _unused106;							// 106
 			BehaviorOTE* ClassLargeInteger;						// 107 - 2's complement Large Integers (32 or more bits)
 			BehaviorOTE* ClassVARIANT;							// 107
@@ -224,3 +224,25 @@ struct VMPointers //: public Object
 // Globally accessible pointers, but please don't write to them!
 extern /*const*/ VMPointers Pointers;
 extern VMPointers _Pointers;
+
+#if defined (VM)
+template <class T> inline bool isNil(const TOTE<T>* ote)
+{
+	return ote == reinterpret_cast<const TOTE<T>*>(Pointers.Nil);
+}
+
+template <class T> inline bool isBehavior(const TOTE<T>* ote)
+{
+	return isMetaclass(ote) || isMetaclass(ote->m_oteClass);
+}
+template <class T> inline bool isMetaclass(const TOTE<T>* ote)
+{
+	return ote->m_oteClass == Pointers.ClassMetaclass;
+}
+
+template <class T> inline void NilOutPointer(TOTE<T>*& ote)
+{
+	ote->countDown();
+	ote = reinterpret_cast<TOTE<T>*>(Pointers.Nil);
+}
+#endif

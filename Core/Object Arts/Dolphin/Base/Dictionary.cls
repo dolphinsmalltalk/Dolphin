@@ -272,6 +272,11 @@ findKeyOrNil: anObject
 			whileFalse: [index := index \\ capacity + 1].
 	^index!
 
+fullBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	^self resolveBindingPath: ($. split: aString)!
+
 identityIncludes: anObject 
 	"Answer whether the argument, anObject, is one of the receiver's elements."
 
@@ -480,6 +485,14 @@ removeKey: key ifAbsent: operation
 			self removeIndex: index.
 			element value]!
 
+resolveBindingPath: anArrayOfString
+	| count env |
+	env := self.
+	count := anArrayOfString size.
+	1 to: count - 1
+		do: [:i | (env bindingFor: (anArrayOfString at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
+	^env bindingFor: (anArrayOfString at: count)!
+
 searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
@@ -564,6 +577,7 @@ values
 !Dictionary categoriesFor: #errorValueNotFound:!exceptions!private! !
 !Dictionary categoriesFor: #findElementOrNil:!private!searching! !
 !Dictionary categoriesFor: #findKeyOrNil:!private!searching! !
+!Dictionary categoriesFor: #fullBindingFor:!binding!public! !
 !Dictionary categoriesFor: #identityIncludes:!public!searching! !
 !Dictionary categoriesFor: #includes:!public!searching! !
 !Dictionary categoriesFor: #includesAssociation:!public!searching! !
@@ -587,6 +601,7 @@ values
 !Dictionary categoriesFor: #removeAssociation:ifAbsent:!public!removing! !
 !Dictionary categoriesFor: #removeKey:!public!removing! !
 !Dictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!Dictionary categoriesFor: #resolveBindingPath:!binding!public! !
 !Dictionary categoriesFor: #searchPolicy!constants!public! !
 !Dictionary categoriesFor: #select:!enumerating!public! !
 !Dictionary categoriesFor: #stbSaveOn:!binary filing!public! !

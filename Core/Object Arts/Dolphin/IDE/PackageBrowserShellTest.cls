@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #PackageBrowserTest
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
+DolphinTest subclass: #PackageBrowserShellTest
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PackageBrowserTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
-PackageBrowserTest comment: ''!
-!PackageBrowserTest categoriesForClass!Unclassified! !
-!PackageBrowserTest methodsFor!
+PackageBrowserShellTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
+PackageBrowserShellTest comment: ''!
+!PackageBrowserShellTest categoriesForClass!Unclassified! !
+!PackageBrowserShellTest methodsFor!
 
 addRemoveRenameClasses
 	"Remove classes"
@@ -36,7 +36,7 @@ assertCurrentCardInSync
 	self assert: (shell isCardUpToDate: card).
 	card == #classes ifTrue: [^self assertClassesInSync].
 	card == #methods ifTrue: [^self assertMethodsInSync].
-	card == #globals ifTrue: [^self assertGlobalsInSync].
+	card == #variables ifTrue: [^self assertVariablesInSync].
 	card == #dependents ifTrue: [^self assertDependencyCard: #dependents inSync: true].
 	card == #prerequisites ifTrue: [^self assertDependencyCard: #prerequisites inSync: true].
 	card == #resources ifTrue: [^self assertResourcesInSync].
@@ -56,12 +56,6 @@ assertDependencyCard: aSymbol inSync: aBoolean
 			self assert: (tree model rootNodes allSatisfy: [:each | each getChildren isNil])]
 		ifFalse: [self assert: tree model roots isEmpty]!
 
-assertGlobalsInSync
-	| globals |
-	globals := OrderedCollection new.
-	shell packages do: [:each | globals addAll: each globalNames].
-	self assert: (globalsPresenter model noDifference: globals)!
-
 assertMethodsInSync
 	(shell isCardUpToDate: #methods) 
 		ifTrue: 
@@ -80,6 +74,12 @@ assertResourcesInSync
 			self assert: (resourcesPresenter model noDifference: resources)]
 		ifFalse: [self assert: resourcesPresenter model isEmpty]!
 
+assertVariablesInSync
+	| globals |
+	globals := OrderedCollection new.
+	shell packages do: [:each | globals addAll: each variableNames].
+	self assert: (variablesPresenter model noDifference: globals)!
+
 create: aClassSymbol subclassOf: aClass
 	| newClass |
 	newClass := aClass subclass: aClassSymbol instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''.
@@ -89,7 +89,7 @@ create: aClassSymbol subclassOf: aClass
 create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	| newClass |
 	newClass := self create: aClassSymbol subclassOf: aClass.
-	(Smalltalk at: aClassSymbol) owningPackage: aPackage.
+	aClassSymbol asQualifiedReference value owningPackage: aPackage.
 	self assert: newClass owningPackage identicalTo: aPackage.
 	^newClass!
 
@@ -176,27 +176,27 @@ removeGlobals
 
 renameClass
 	| testA testA2 |
-	testA := 'DolphinTestA' asSymbol.
-	testA2 := 'DolphinTestA2' asSymbol.
+	testA := 'DolphinTestA' asQualifiedReference.
+	testA2 := 'DolphinTestA2' asQualifiedReference.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
-	ClassBuilder renameClass: (Smalltalk at: testA) to: testA2.
+	ClassBuilder renameClass: testA value to: testA2.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: testA2 value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: testA2 value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync.
-	ClassBuilder renameClass: (Smalltalk at: testA2) to: testA.
+	ClassBuilder renameClass: testA2 value to: testA.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync!
@@ -234,12 +234,12 @@ setUp
 	(Array
 		with: packageA
 		with: packageB
-		with: packageC) do: [:each | self assert: each globalNames isEmpty].
+		with: packageC) do: [:each | self assert: each variableNames isEmpty].
 	shell := PackageBrowserShell create showShell.
 	cardsPresenter := shell instVarAt: (shell class indexOfInstVar: 'cardsPresenter').
 	classesPresenter := shell instVarAt: (shell class indexOfInstVar: 'classesPresenter').
 	methodsPresenter := shell instVarAt: (shell class indexOfInstVar: 'methodsPresenter').
-	globalsPresenter := shell instVarAt: (shell class indexOfInstVar: 'globalsPresenter').
+	variablesPresenter := shell instVarAt: (shell class indexOfInstVar: 'variablesPresenter').
 	resourcesPresenter := shell instVarAt: (shell class indexOfInstVar: 'resourcesPresenter').
 	dependencyPresenters := IdentityDictionary new.
 	dependencyPresenters at: #prerequisites
@@ -255,7 +255,7 @@ showClassesPane
 tearDown
 	super tearDown.
 	shell destroy.
-	shell := cardsPresenter := classesPresenter := methodsPresenter := globalsPresenter := resourcesPresenter := dependencyPresenters := nil.
+	shell := cardsPresenter := classesPresenter := methodsPresenter := variablesPresenter := resourcesPresenter := dependencyPresenters := nil.
 	self removeClasses.
 	self removeGlobals.
 	packageA := packageB := packageC := nil!
@@ -270,8 +270,8 @@ testAddRemoveClasses
 	methodsPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #methods.
 	self addRemoveRenameClasses.
-	globalsPresenter ensureVisible.
-	self assert: self currentCard identicalTo: #globals.
+	variablesPresenter ensureVisible.
+	self assert: self currentCard identicalTo: #variables.
 	self addRemoveRenameClasses.
 	resourcesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #resources.
@@ -330,51 +330,51 @@ testGlobals
 	"Test adding, removing, renaming and repackaging globals"
 
 	shell packages: (Array with: packageA with: packageC).
-	globalsPresenter ensureVisible.
+	variablesPresenter ensureVisible.
 
 	"Add to displayed package"
-	packageA addGlobalNamed: #TestGlobalA.
-	self assert: globalsPresenter model asArray equals: #(#TestGlobalA).
+	packageA addVariableNamed: #TestGlobalA.
+	self assert: variablesPresenter model asArray equals: {#TestGlobalA asQualifiedReference}.
 
 	"Add to displayed package"
-	packageC addGlobalNamed: #TestGlobalC.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalA #TestGlobalC)).
+	packageC addVariableNamed: #TestGlobalC.
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Add to non-displayed package"
-	packageB addGlobalNamed: #TestGlobalB.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalA #TestGlobalC)).
+	packageB addVariableNamed: #TestGlobalB.
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalA asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Move to non-displayed package"
-	packageB addGlobalNamed: #TestGlobalA.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalC)).
+	packageB addVariableNamed: #TestGlobalA.
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalC asQualifiedReference}).
 
 	"Move from non-displayed package"
-	packageA addGlobalNamed: #TestGlobalB.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalB #TestGlobalC)).
+	packageA addVariableNamed: #TestGlobalB.
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference }).
 
 	"Move between displayed packages"
-	packageA addGlobalNamed: #TestGlobalC.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalB #TestGlobalC)).
+	packageA addVariableNamed: #TestGlobalC.
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalB asQualifiedReference. #TestGlobalC asQualifiedReference}).
 
 	"Remove from displayed package"
 	Smalltalk removeKey: #TestGlobalB.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalC)).
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalC asQualifiedReference}).
 
 	"Rename in displayed package"
 	Smalltalk renameGlobal: #TestGlobalC to: #TestGlobalD.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalD)).
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
 
 	"Rename in non-displayed package"
 	Smalltalk renameGlobal: #TestGlobalA to: #TestGlobalC.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalD)).
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
 
 	"Remove from non-displayed package"
 	Smalltalk removeKey: #TestGlobalC.
-	self assert: (globalsPresenter model asArray noDifference: #(#TestGlobalD)).
+	self assert: (variablesPresenter model asArray noDifference: {#TestGlobalD asQualifiedReference}).
 
 	"Move to unpackaged"
-	packageA removeGlobalNamed: #TestGlobalD.
-	self assert: globalsPresenter model isEmpty!
+	packageA removeVariableNamed: #TestGlobalD.
+	self assert: variablesPresenter model isEmpty!
 
 testRepackageClasses
 	shell packages: (Array with: packageA with: packageC).
@@ -384,8 +384,8 @@ testRepackageClasses
 	methodsPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #methods.
 	self repackageClasses.
-	globalsPresenter ensureVisible.
-	self assert: self currentCard identicalTo: #globals.
+	variablesPresenter ensureVisible.
+	self assert: self currentCard identicalTo: #variables.
 	self repackageClasses.
 	resourcesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #resources.
@@ -494,37 +494,37 @@ testRepackageMethods
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !
-!PackageBrowserTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertClassesInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertGlobalsInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertMethodsInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #assertResourcesInSync!private!unit tests! !
-!PackageBrowserTest categoriesFor: #create:subclassOf:!helpers!private! !
-!PackageBrowserTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
-!PackageBrowserTest categoriesFor: #createClassesABC!helpers!private! !
-!PackageBrowserTest categoriesFor: #createGlobals!helpers!private! !
-!PackageBrowserTest categoriesFor: #createMethods!helpers!private! !
-!PackageBrowserTest categoriesFor: #currentCard!public!unit tests! !
-!PackageBrowserTest categoriesFor: #removeClass:!private!unit tests! !
-!PackageBrowserTest categoriesFor: #removeClasses!public!Running! !
-!PackageBrowserTest categoriesFor: #removeGlobals!public!Running! !
-!PackageBrowserTest categoriesFor: #renameClass!private!unit tests! !
-!PackageBrowserTest categoriesFor: #repackageClasses!private!unit tests! !
-!PackageBrowserTest categoriesFor: #resourceManager!constants!public! !
-!PackageBrowserTest categoriesFor: #setUp!public!Running! !
-!PackageBrowserTest categoriesFor: #showClassesPane!public!unit tests! !
-!PackageBrowserTest categoriesFor: #tearDown!public!Running! !
-!PackageBrowserTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testGlobals!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testRepackageClasses!public!unit tests! !
-!PackageBrowserTest categoriesFor: #testRepackageMethods!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #addRemoveRenameClasses!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertClassesInSync!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertCurrentCardInSync!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertDependencyCard:inSync:!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertMethodsInSync!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertResourcesInSync!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #assertVariablesInSync!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #create:subclassOf:!helpers!private! !
+!PackageBrowserShellTest categoriesFor: #create:subclassOf:inPackage:!helpers!private! !
+!PackageBrowserShellTest categoriesFor: #createClassesABC!helpers!private! !
+!PackageBrowserShellTest categoriesFor: #createGlobals!helpers!private! !
+!PackageBrowserShellTest categoriesFor: #createMethods!helpers!private! !
+!PackageBrowserShellTest categoriesFor: #currentCard!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #removeClass:!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #removeClasses!public!Running! !
+!PackageBrowserShellTest categoriesFor: #removeGlobals!public!Running! !
+!PackageBrowserShellTest categoriesFor: #renameClass!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #repackageClasses!private!unit tests! !
+!PackageBrowserShellTest categoriesFor: #resourceManager!constants!public! !
+!PackageBrowserShellTest categoriesFor: #setUp!public!Running! !
+!PackageBrowserShellTest categoriesFor: #showClassesPane!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #tearDown!public!Running! !
+!PackageBrowserShellTest categoriesFor: #testAddRemoveClasses!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #testAddRemoveMethods!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #testGlobals!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #testRepackageClasses!public!unit tests! !
+!PackageBrowserShellTest categoriesFor: #testRepackageMethods!public!unit tests! !
 
-!PackageBrowserTest class methodsFor!
+!PackageBrowserShellTest class methodsFor!
 
 resources
-	^Array with: DolphinTestPackages! !
-!PackageBrowserTest class categoriesFor: #resources!public! !
+	^{DolphinTestPackages}! !
+!PackageBrowserShellTest class categoriesFor: #resources!public! !
 

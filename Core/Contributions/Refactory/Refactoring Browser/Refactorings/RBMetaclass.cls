@@ -34,7 +34,7 @@ printOn: aStream
 	aStream nextPutAll: ' class'!
 
 realName: aSymbol 
-	self realClass: (Smalltalk at: aSymbol) class!
+	self realClass: aSymbol asQualifiedReference value class!
 
 storeOn: aStream 
 	super storeOn: aStream.

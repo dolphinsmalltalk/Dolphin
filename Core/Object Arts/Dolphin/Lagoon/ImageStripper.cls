@@ -97,8 +97,8 @@ addReferencedViews: resid to: referenced
 	<Set> argument, referenced."
 
 	| proxies idIndex refView stbProxy |
-	refView := Smalltalk lookup: #ReferenceView.
-	stbProxy := Smalltalk lookup: #STBViewProxy.
+	refView := #{ReferenceView} valueOrNil.
+	stbProxy := #{STBViewProxy} valueOrNil.
 	(refView isNil or: [stbProxy isNil]) ifTrue: [^self].
 	idIndex := refView superclass instSize - 1.
 	proxies := resid hiddenObjects
@@ -445,8 +445,8 @@ developmentResources
 
 	| devres |
 	devres := OrderedCollection new.
-	#(#Dialog #Presenter #AXControlSite #AXValueConvertingControlSite) 
-		do: [:s | Smalltalk at: s ifPresent: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
+	#(#{Dialog} #{Presenter} #{AXControlSite} #{AXValueConvertingControlSite})
+		do: [:s | s ifDefined: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
 	^devres!
 
 disableClassChangeFlagging
@@ -807,17 +807,16 @@ logReference: anObject
 		value: ([anObject printString] on: Error , StackOverflow do: [:ex | anObject basicPrintString])!
 
 logReferencesToClass: anAssociation
-	| refs fugitive instances |
-	fugitive := (Smalltalk includesKey: anAssociation key name) not.
+	| refs fugitive instances binding |
+	binding := anAssociation key bindingOrNil.
+	fugitive := binding isNil.
 	refs := fugitive
 				ifTrue: 
 					[anAssociation key allReferences reject: 
 							[:r |
 							r == anAssociation key class
 								or: [r == anAssociation or: [(r isKindOf: CompiledMethod) and: [r methodClass == anAssociation key]]]]]
-				ifFalse: 
-					[(Smalltalk associationAt: anAssociation key name) allReferences
-						reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
+				ifFalse: [binding allReferences reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
 	refs isEmpty
 		ifFalse: 
 			[self startElement: 'References' attributes: #().
@@ -876,7 +875,7 @@ logRemainingClasses
 			attributes nextPut: 'count' -> count.
 			memory := classStats at: 2.
 			attributes nextPut: 'memoryUsage' -> memory.
-			(Smalltalk includesKey: name) ifFalse: [attributes nextPut: 'unbound' -> true].
+			name asQualifiedReference isDefined ifFalse: [attributes nextPut: 'unbound' -> true].
 			(devClasses includes: each key) ifTrue: [attributes nextPut: 'development' -> true].
 			self startElement: 'Class' attributes: attributes contents.
 			self startElement: 'Methods' attributes: {'count' -> each key methodDictionary size}.
@@ -975,7 +974,7 @@ logSentMessages: aWeakIdentityDictionary
 	self startElement: 'SentMessages' attributes: #().
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
-	(Smalltalk at: #BasicImageStripper ifAbsent: [])
+	#{BasicImageStripper} valueOrNil
 		ifNil: 
 			["This shouldn't be possible, but..."
 			remainingClasses := Class allClasses]
@@ -1287,7 +1286,7 @@ purgeIcons
 	"Private - If there are no open windows, then we can safely purge the icon image manager."
 
 	(SessionManager inputState topLevelWindows reject: [:each | each isKindOf: ImageStripperProgress])
-		isEmpty ifTrue: [Smalltalk at: #Icon ifPresent: [:iconClass | iconClass clear]]!
+		isEmpty ifTrue: [#{Icon} ifDefined: [:iconClass | iconClass clear]]!
 
 purgeStubbornClass: aClass
 	"Private - Remove what we can of a stubborn class that refuses to uninstall for some reason."
@@ -1496,8 +1495,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 removeRedundantPackages
 	| required |
 	required := super removeRedundantPackages.
-	(Smalltalk includesKey: #SmalltalkSystem) 
-		ifTrue: [flags := flags bitOr: RetainDevSysMask].
+	#{SmalltalkSystem} isDefined ifTrue: [flags := flags bitOr: RetainDevSysMask].
 	^required!
 
 removeRedundantResources: referencedClasses
@@ -1997,10 +1995,9 @@ viewsToClose
 	topViews := SessionManager inputState topLevelWindows.
 	self isConsoleApplication ifTrue: [^topViews].
 	shellClasses := Set new.
-	#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner) do: 
+	#(#{SmalltalkToolShell} #{SmalltalkWorkspaceDocument} #{TestRunner}) do: 
 			[:each |
-			Smalltalk at: each
-				ifPresent: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
+			each ifDefined: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
 	"We want to close all views/presenters that are not in the required packages"
 	packagedClasses := self packagedClasses.
 	^topViews select: 

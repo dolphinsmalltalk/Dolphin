@@ -18,9 +18,23 @@ displayOn: aStream
 displayString
 	^key!
 
+fullName
+	"Placeholder for answering fully qualified name (relative to Smalltalk)."
+	
+	^key!
+
+fullyQualifiedReference
+	^self fullName asQualifiedReference!
+
 refersToLiteral: anObject
-	^self == anObject! !
+	^self == anObject!
+
+targetVariable
+	^self! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
+!VariableBinding categoriesFor: #fullName!accessing!public! !
+!VariableBinding categoriesFor: #fullyQualifiedReference!accessing!public! !
 !VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
+!VariableBinding categoriesFor: #targetVariable!accessing!public! !
 

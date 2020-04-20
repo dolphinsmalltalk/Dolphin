@@ -20,8 +20,7 @@ resolveWithClassLocator: aClassLocator
 		ifNil: [self withClassLocator: aClassLocator]!
 
 withClassLocator: aClassLocator
-	^(Smalltalk lookup: #MetaclassStub)
-		ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
+	^#{MetaclassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
 !STBMetaclassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
 !STBMetaclassProxy categoriesFor: #withClassLocator:!converting!private! !
 

@@ -72,7 +72,7 @@ hiddenObjects
 	classes it needs into the image. View resources will not be realized as windows however."
 
 	| stlInFilerClass resource |
-	stlInFilerClass := Smalltalk at: #STLInFiler.
+	stlInFilerClass := #{STLInFiler} value.
 	resource := self resource.
 	resource ifNil: [^self error: ('Resource [', owningClass name, '>>', selector, '] does not exist')].
 	^(stlInFilerClass on: resource readStream)

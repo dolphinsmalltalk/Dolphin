@@ -43,6 +43,7 @@ SmalltalkParseErrorCodes at: 'CErrNonsenseAtExprEnd' put: 16r24!
 SmalltalkParseErrorCodes at: 'CErrNonsenseAtMethodEnd' put: 16r23!
 SmalltalkParseErrorCodes at: 'CErrNotIndirectable' put: 16r34!
 SmalltalkParseErrorCodes at: 'CErrParenNotClosed' put: 16r26!
+SmalltalkParseErrorCodes at: 'CErrQualifiedRefNotClosed' put: 16r59!
 SmalltalkParseErrorCodes at: 'CErrRedefiningArg' put: 16r57!
 SmalltalkParseErrorCodes at: 'CErrRedefiningPseudoVar' put: 16r46!
 SmalltalkParseErrorCodes at: 'CErrStaticExprNotClosed' put: 16r49!
@@ -92,8 +93,6 @@ SmalltalkParseErrorCodes at: 'LErrExpectConst' put: 16r4!
 SmalltalkParseErrorCodes at: 'LErrExpectExtendedLiteral' put: 16r5!
 SmalltalkParseErrorCodes at: 'LErrExpectMetaVariable' put: 16r6!
 SmalltalkParseErrorCodes at: 'LErrFirst' put: 16r1!
-SmalltalkParseErrorCodes at: 'LErrInvalidQualifier' put: 16r8!
 SmalltalkParseErrorCodes at: 'LErrLast' put: 16rA!
-SmalltalkParseErrorCodes at: 'LErrQualifiedRefNotClosed' put: 16r9!
 SmalltalkParseErrorCodes at: 'LErrStringNotClosed' put: 16r3!
 SmalltalkParseErrorCodes shrink!

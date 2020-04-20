@@ -42,7 +42,7 @@ stbFixup: inFiler at: anInteger
 	^behaviourOrStub.!
 
 withClassLocator: aClassLocator
-	^(Smalltalk lookup: #ClassStub) ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
+	^#{ClassStub} ifDefined: [:classStub | classStub withClassLocator: aClassLocator]! !
 !STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
 !STBClassProxy categoriesFor: #packageName:!accessing!private! !
 !STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !

@@ -231,6 +231,9 @@ isMethod
 isPatternNode
 	^false!
 
+isQualifiedReference
+	^false!
+
 isReturn
 	^false!
 
@@ -436,6 +439,7 @@ whoDefines: aName
 !StProgramNode categoriesFor: #isMessage!public!testing! !
 !StProgramNode categoriesFor: #isMethod!public!testing! !
 !StProgramNode categoriesFor: #isPatternNode!public!testing/matching! !
+!StProgramNode categoriesFor: #isQualifiedReference!public!testing! !
 !StProgramNode categoriesFor: #isReturn!public!testing! !
 !StProgramNode categoriesFor: #isSelfVariable!public!testing! !
 !StProgramNode categoriesFor: #isSequence!public!testing! !

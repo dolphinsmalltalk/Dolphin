@@ -62,7 +62,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcou
 	OTE* underConstruction = m_oteUnderConstruction;
 	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 1));
 
-	if (!underConstruction->isNil() && underConstruction != receiverPointer)
+	if (!isNil(underConstruction) && underConstruction != receiverPointer)
 	{
 		if (argPointer == reinterpret_cast<Oop>(Pointers.Nil))
 		{
@@ -84,7 +84,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcou
 
 			if (underConstruction != receiverPointer)
 			{
-				ASSERT(underConstruction->isNil());
+				ASSERT(isNil(underConstruction));
 				m_oteUnderConstruction = receiverPointer;
 				receiverPointer->countUp();
 			}
@@ -101,7 +101,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcou
 					ObjectMemory::nilOutPointer(m_oteUnderConstruction);
 				}
 				else
-					ASSERT(underConstruction->isNil());
+					ASSERT(isNil(underConstruction));
 			}
 			else
 				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);	// Invalid argument
@@ -141,7 +141,7 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 
 		OTE* underConstruction = m_oteUnderConstruction;
 
-		if (!underConstruction->isNil())
+		if (!isNil(underConstruction))
 		{
 			// Nil this out as soon as possible
 			m_oteUnderConstruction = Pointers.Nil;

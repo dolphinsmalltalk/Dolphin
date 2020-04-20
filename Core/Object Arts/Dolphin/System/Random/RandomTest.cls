@@ -30,7 +30,8 @@ setUp
 
 testCRT
 	| rnd |
-	rnd := Smalltalk at: #RandomCRT ifAbsent: [^self].
+	rnd := #{RandomCRT} valueOrNil.
+	rnd isNil ifTrue: [self skip: 'RandomCRT class not present to test'].
 	self 
 		assert: (rnd seed: 1)
 		generates: (#(41 18467 6334 26500 19169 15724 11478 29358 26962 24464) 
@@ -39,7 +40,8 @@ testCRT
 
 testLCG
 	| rng rnd |
-	rnd := Smalltalk at: #RandomLinearCongruential ifAbsent: [^self].
+	rnd := #{RandomLinearCongruential} valueOrNil.
+	rnd isNil ifTrue: [self skip: 'RandomLinearCongruential class not present to test'].
 	rng := (rnd 
 				newModulus: 31
 				multiplier: 13

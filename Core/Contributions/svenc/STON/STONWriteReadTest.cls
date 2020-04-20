@@ -191,8 +191,8 @@ testOrderedDictionary
 	It might also not exist in some dialects, where this test could be skipped."
 	
 	| dictionaries orderedDictionaryClass orderedIdentityDictionaryClass |
-	orderedDictionaryClass := Smalltalk at: #OrderedDictionary ifAbsent: [ Dictionary ].
-	orderedIdentityDictionaryClass := Smalltalk at: #OrderedIdentityDictionary ifAbsent: [ IdentityDictionary ].
+	orderedDictionaryClass := #{OrderedDictionary} valueOrNil ?? Dictionary.
+	orderedIdentityDictionaryClass := #{OrderedIdentityDictionary} valueOrNil ?? IdentityDictionary.
 	dictionaries := STON listClass withAll: {
 		orderedDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.
 		orderedDictionaryClass new at: #a put: 1; at: #b put: -2; at: #c put: 0; yourself.
@@ -212,7 +212,7 @@ testSmallDictionary
 	It might also not exist in some dialects, where this test could be skipped."
 	
 	| dictionaries smallDictionaryClass |
-	smallDictionaryClass := Smalltalk at: #SmallDictionary ifAbsent: [ Dictionary ].
+	smallDictionaryClass := #{SmallDictionary} valueOrNil ?? Dictionary.
 	dictionaries := STON listClass withAll: {
 		smallDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.
 		smallDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.

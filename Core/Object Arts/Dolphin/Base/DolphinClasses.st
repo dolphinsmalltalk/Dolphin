@@ -10,6 +10,11 @@ nil subclass: #ProtoObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #AbstractBindingReference
+	instanceVariableNames: ''
+	classVariableNames: 'Undeclared'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #ArrayFieldLength
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -205,6 +210,11 @@ Object subclass: #MessageSequenceAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #MethodName
+	instanceVariableNames: 'className selector'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #MethodProtocol
 	instanceVariableNames: 'name comment selectors flags'
 	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
@@ -231,12 +241,12 @@ Object subclass: #ObjectRegistry
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Package
-	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties preDeclareClassesOnLoad'
+	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
 	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #PackageManager
-	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage basePackages'
+	instanceVariableNames: 'packages processEvents packagedVariables looseMethods events defaultPackage basePackages'
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -330,6 +340,11 @@ Object subclass: #Stream
 	classVariableNames: 'EndOfStreamSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #UndeclaredVariable
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -337,6 +352,16 @@ Object subclass: #UndefinedObject
 	classInstanceVariableNames: ''!
 Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractBindingReference subclass: #BindingReference
+	instanceVariableNames: 'pathString path binding context'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractBindingReference subclass: #MetaBindingReference
+	instanceVariableNames: 'instance'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

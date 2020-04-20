@@ -140,7 +140,7 @@ loseSource
 	self sourceDescriptor: '"Source unavailable for this method"' !
 
 name
-	^Association key: self methodClass name value: self selector!
+	^MethodName method: self!
 
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned

@@ -89,6 +89,12 @@ public:
 	__declspec(property(get = get_Selector)) Str Selector;
 	Str get_Selector() const { return m_selector; }
 
+	__declspec(property(get = get_MethodClass)) POTE MethodClass;
+	POTE get_MethodClass() const
+	{
+		return m_class == Nil() ? GetVMPointers().ClassUndefinedObject : m_class;
+	}
+
 	POTE GetTextMapObject();
 	POTE GetTempsMapObject();
 
@@ -130,11 +136,17 @@ private:
 		return GetMethodScope()->ArgumentCount;
 	}
 
+	__declspec(property(get = get_IsCompilingExpression)) boolean IsCompilingExpression;
+	boolean get_IsCompilingExpression() const
+	{
+		return m_isCompilingExpression;
+	}
+
 	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, CompilerFlags flags= CompilerFlags::Default);
 	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
 
 	void SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset);
-	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
+	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
@@ -334,6 +346,7 @@ private:
 	POTE ParseArray();
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
+	POTE ParseQualifiedReference(textpos_t textPosition);
 
 	template <bool ignoreNops> ip_t PriorInstruction() const;
 	bool LastIsPushNil() const;
@@ -427,6 +440,7 @@ private:
 	bool m_ok;								// Parse still ok? 
 	bool m_instVarsInitialized;
 	bool m_isMutable;
+	bool m_isCompilingExpression;
 
 	enum class SendType { Other, Self, Super };
 	CompilerFlags m_flags;							// Compiler flags
@@ -458,7 +472,7 @@ private:
 	SCOPELIST m_allScopes;
 	LexicalScope* m_pCurrentScope;
 
-	POTE m_class;							// The current class to which the compilation applies
+	POTE m_class;							// The current class to which the compilation applies, i.e. the method class
 	POTE m_oopWorkspacePools;				// Shared pools for associated workspace
 	Oop	 m_context;							// Compilation context for expression
 
@@ -484,6 +498,9 @@ private:
 
 	POTE m_compiledMethodClass;				// Class of compiled method to generate
 	Oop m_notifier;							// Notifier object to send compilerError:... callbacks to
+
+	typedef std::map<Str, POTE> NAMEDOBJECTS;
+	NAMEDOBJECTS m_bindingRefs;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)

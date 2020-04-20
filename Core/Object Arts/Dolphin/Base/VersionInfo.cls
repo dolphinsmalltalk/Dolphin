@@ -169,7 +169,7 @@ forPath: path
 uninitialize
 	"Assist the version library in departing this world"
 
-	Smalltalk at: #VersionLibrary ifPresent: [:lib | lib closeDefault]! !
+	#{VersionLibrary} ifDefined: [:lib | lib closeDefault]! !
 !VersionInfo class categoriesFor: #forPath:!instance creation!public! !
 !VersionInfo class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

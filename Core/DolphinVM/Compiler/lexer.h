@@ -40,7 +40,7 @@ protected:
 		None, NameConst, NameColon, 
 			SmallIntegerConst, LargeIntegerConst, FloatingConst, ScaledDecimalConst, CharConst, 
 			SymbolConst, TrueConst, FalseConst, NilConst,
-			ArrayBegin, ByteArrayBegin, AnsiStringConst, Utf8StringConst, ExprConstBegin, Special,
+			ArrayBegin, ByteArrayBegin, QualifiedRefBegin, AsciiStringConst, Utf8StringConst, ExprConstBegin, Special,
 			Binary, Return, Assignment, CloseParen, CloseStatement, CloseSquare, CloseBrace, Cascade, Eof 
 	};
 	

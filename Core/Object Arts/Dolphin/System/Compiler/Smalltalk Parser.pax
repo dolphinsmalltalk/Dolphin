@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Smalltalk Parser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Parser
 Based on the Refactoring Browser parser (RBParser), copyright (c) John Brant & Don Roberts. 
@@ -20,72 +20,69 @@ The parser remains compatible with the RBParser, and so can be used in conjuncti
 package basicPackageVersion: '7.0'.
 
 
-package classNames
-	add: #PatternBlockToken;
-	add: #SmalltalkParser;
-	add: #SmalltalkScanner;
-	add: #StAbstractVariableNode;
-	add: #StAnnotationNode;
-	add: #StAssignmentNode;
-	add: #StAssignmentToken;
-	add: #StBinarySelectorToken;
-	add: #StBlockNode;
-	add: #StBraceArrayNode;
-	add: #StCascadeNode;
-	add: #StEofToken;
-	add: #StExternalArgTypeNode;
-	add: #StExternalCallNode;
-	add: #StIdentifierToken;
-	add: #StIllegalCharacterToken;
-	add: #StKeywordToken;
-	add: #StLiteralArrayNode;
-	add: #StLiteralArrayToken;
-	add: #StLiteralNode;
-	add: #StLiteralToken;
-	add: #StLiteralValueNode;
-	add: #StMessageNode;
-	add: #StMethodNode;
-	add: #StMultiKeywordLiteralToken;
-	add: #StNumberLiteralToken;
-	add: #StOptimizedNode;
-	add: #StOptimizedToken;
-	add: #StParameterNode;
-	add: #StParseNodeVisitor;
-	add: #StPrimitiveNode;
-	add: #StProgramNode;
-	add: #StReturnNode;
-	add: #StSelfVariableNode;
-	add: #StSequenceNode;
-	add: #StSpecialCharacterToken;
-	add: #StSpecialVariableNode;
-	add: #StSuperVariableNode;
-	add: #StTagNode;
-	add: #StTempDeclNode;
-	add: #StThisContextVariableNode;
-	add: #StToken;
-	add: #StValueNode;
-	add: #StValueToken;
-	add: #StVariableNode;
-	yourself.
+package setClassNames: #(
+	#{PatternBlockToken}
+	#{SmalltalkParser}
+	#{SmalltalkScanner}
+	#{StAbstractVariableNode}
+	#{StAnnotationNode}
+	#{StAssignmentNode}
+	#{StAssignmentToken}
+	#{StBinarySelectorToken}
+	#{StBlockNode}
+	#{StBraceArrayNode}
+	#{StCascadeNode}
+	#{StEofToken}
+	#{StExternalArgTypeNode}
+	#{StExternalCallNode}
+	#{StIdentifierToken}
+	#{StIllegalCharacterToken}
+	#{StKeywordToken}
+	#{StLiteralArrayNode}
+	#{StLiteralArrayToken}
+	#{StLiteralNode}
+	#{StLiteralToken}
+	#{StLiteralValueNode}
+	#{StMessageNode}
+	#{StMethodNode}
+	#{StMultiKeywordLiteralToken}
+	#{StNumberLiteralToken}
+	#{StOptimizedNode}
+	#{StOptimizedToken}
+	#{StParameterNode}
+	#{StParseNodeVisitor}
+	#{StPrimitiveNode}
+	#{StProgramNode}
+	#{StQualifiedReferenceNode}
+	#{StQualifiedReferenceToken}
+	#{StReturnNode}
+	#{StSelfVariableNode}
+	#{StSequenceNode}
+	#{StSpecialCharacterToken}
+	#{StSpecialVariableNode}
+	#{StSuperVariableNode}
+	#{StTagNode}
+	#{StTempDeclNode}
+	#{StThisContextVariableNode}
+	#{StToken}
+	#{StValueNode}
+	#{StValueToken}
+	#{StVariableNode}
+).
 
-package methodNames
-	add: #Behavior -> #parseTreeFor:;
-	add: #CompiledCode -> #parseTree;
-	add: #CompiledCode -> #parseTreeNoError;
-	add: #CompiledCode -> #parseTreeOnError:;
-	add: #CompiledExpression -> #parseTreeOnError:;
-	add: #CompiledMethod -> #parseTreeOnError:;
-	add: #CompileFailedMethod -> #accessesInstVar:at:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Behavior} #parseTreeFor:)
+	#(#{CompiledCode} #parseTree)
+	#(#{CompiledCode} #parseTreeNoError)
+	#(#{CompiledCode} #parseTreeOnError:)
+	#(#{CompiledExpression} #parseTreeOnError:)
+	#(#{CompiledMethod} #parseTreeOnError:)
+	#(#{CompileFailedMethod} #accessesInstVar:at:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -246,6 +243,11 @@ StLiteralNode subclass: #StLiteralValueNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+StLiteralNode subclass: #StQualifiedReferenceNode
+	instanceVariableNames: 'pathString meta start stop'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 StToken subclass: #StAssignmentToken
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -258,6 +260,11 @@ StToken subclass: #StEofToken
 	classInstanceVariableNames: ''!
 StToken subclass: #StOptimizedToken
 	instanceVariableNames: 'stopPosition'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StToken subclass: #StQualifiedReferenceToken
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -316,9 +323,6 @@ StLiteralToken subclass: #StNumberLiteralToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

@@ -53,7 +53,8 @@ autoParse
 		analyzeParseTree: self parseTree
 		for: self selfClass
 		context: self evaluationContext
-		pools: self allPools]
+		pools: self allPools
+		onError: nil]
 			on: SmalltalkParser notificationClass
 			do: 
 				[:err |
