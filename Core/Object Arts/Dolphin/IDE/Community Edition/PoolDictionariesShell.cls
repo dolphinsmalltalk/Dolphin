@@ -32,9 +32,8 @@ addPool
 	name := Prompter prompt: 'Enter Name of PoolConstantsDictionary to Create: ' caption: self caption.
 	name ifNil: [^self].
 	name := name trimBlanks capitalized asSymbol.
-	Smalltalk at: name
-		ifPresent: 
-			[:existingPool | 
+	name asQualifiedReference ifDefined: 
+			[:existingPool |
 			self selectionOrNil: existingPool.
 			^MessageBox warning: 'There is already a global called ' , name , '.' caption: self caption].
 	newPool := PoolConstantsDictionary named: name.

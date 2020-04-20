@@ -177,7 +177,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 		dwFlags: flags
 		pDataOut: unencrypted) ifFalse: [^Win32Error signal].
 	description := Utf16String fromAddress: description.
-	dataClass := Smalltalk at: description ifAbsent: [ByteArray].
+	dataClass := description asQualifiedReference valueOrNil ?? ByteArray.
 	size := unencrypted cbData.
 	answer := unencrypted data
 				copy: dataClass

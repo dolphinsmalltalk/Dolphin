@@ -196,15 +196,13 @@ performComponentRefactoring: aRefactoring
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute!
 
-poolVariableNamesFor: aClass 
+poolVariableNamesFor: aClass
 	| pools |
 	pools := Set new.
 	aClass withAllSuperclasses do: 
-			[:each | 
-			each allPoolDictionaryNames do: 
-					[:pool | 
-					pools addAll: ((Smalltalk at: pool asSymbol) keys 
-								collect: [:name | name asString])]].
+			[:each |
+			each allPoolDictionaryNames
+				do: [:pool | pools addAll: (pool asQualifiedReference value keys collect: [:name | name asString])]].
 	^pools!
 
 preconditions

@@ -132,9 +132,9 @@ loadLegacyResources
 	resNames do: 
 			[:each | 
 			| viewResClass resIdClass rid filename resource |
-			resIdClass := Smalltalk at: #ResourceIdentifier.
+			resIdClass := #{ResourceIdentifier} value.
 			rid := resIdClass class: (self environment at: each key) name: each value.
-			viewResClass := Smalltalk at: #ViewResource.
+			viewResClass := #{ViewResource} value.
 			filename := viewResClass generateFilenameFrom: rid inPackage: self.
 			resource := viewResClass inSTBFileWithName: filename.
 			rid assign: resource].

@@ -80,10 +80,10 @@ testCollectionConversions
 	self assert: var vt equals: VT_ARRAY | VT_UI1.
 	self assert: var value asArray asByteArray equals: bytes.
 	"External array types"
-	#(#DOUBLEArray #FLOATArray #DWORDArray #SDWORDArray #WORDArray #SWORDArray) do: 
+	#(#{DOUBLEArray} #{FLOATArray} #{DWORDArray} #{SDWORDArray} #{WORDArray} #{SWORDArray}) do: 
 			[:each |
 			| class |
-			class := Smalltalk at: each.
+			class := each value.
 			array := class withAll: #(1 2 3).
 			var := array asVariant.
 			self assert: var vt equals: VT_ARRAY | array elementClass vt.

@@ -80,12 +80,11 @@ allClassesDo: aBlock
 			progress value: i * 100 // numClasses]!
 
 classForName: aString
-	| name isMeta class |
+	| name isMeta |
 	isMeta := aString identityIncludes: $\x20.
-	name := (isMeta ifTrue: [aString copyFrom: 1 to: (aString size - 6 max: 1)] ifFalse: [aString])
-				asSymbol.
-	class := Smalltalk at: name ifAbsent: [].
-	^class notNil & isMeta ifTrue: [class class] ifFalse: [class]!
+	name := isMeta ifTrue: [aString copyFrom: 1 to: (aString size - 6 max: 1)] ifFalse: [aString].
+	^name asQualifiedReference valueOrNil
+		ifNotNil: [:class | class isMeta ifTrue: [class class] ifFalse: [class]]!
 
 classNamesWithVariables
 	| classNames |

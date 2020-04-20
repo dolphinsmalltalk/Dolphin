@@ -16,7 +16,7 @@ AddClassChange comment: ''!
 
 asUndoOperation
 	| class |
-	class := Smalltalk at: self changeClassName ifAbsent: [nil].
+	class := self changeClassName asQualifiedReference valueOrNil.
 	^class isBehavior 
 		ifTrue: [AddClassChange definition: class definition]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!

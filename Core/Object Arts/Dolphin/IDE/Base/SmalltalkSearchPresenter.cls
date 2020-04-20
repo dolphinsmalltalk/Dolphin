@@ -191,8 +191,9 @@ searchObject
 	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
 		ifTrue: [^Symbol findInterned: searchText].
 	(Package manager packageNamed: searchText ifNone: []) ifNotNil: [:a | ^a].
-	Smalltalk at: searchText ifPresent: [:a | ^a].
-	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | ].!
+	(BindingReference isValidQualifiedName: searchText)
+		ifTrue: [searchText asQualifiedReference ifDefined: [:a | ^a]].
+	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | nil]!
 
 searchText
 	^self view plainText!

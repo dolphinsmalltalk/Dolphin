@@ -272,7 +272,7 @@ logError: anException
 mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
-	^Smalltalk at: #SmalltalkSystemShell ifAbsent: [TranscriptShell]!
+	^#{SmalltalkSystemShell} valueOrNil ?? TranscriptShell!
 
 myDolphinUrl
 	^'http://www.object-arts.com/content/mydolphin/mydolphin?serialNumberOnly=<1d>' 

@@ -231,7 +231,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 				clone: aClass
 				as: newClassName
 				superclass: superclass) execute.
-			newClass := Smalltalk at: newClassName.
+			newClass := newClassName asQualifiedReference value.
 			newClass owningPackage: package.
 			newClass]!
 
@@ -244,23 +244,23 @@ convertTemporaryToInstanceVariable: aString in: aClass selector: aSelector
 				selector: aSelector
 				variable: aString) execute]!
 
-convertToSibling: aClass 
+convertToSibling: aClass
 	"Implement the 'Convert to Sibling' class refactoring: 'Converts a concrete superclass to be
 	a sibling of its subclasses. This is accomplished by adding a new class that is a superclass
 	of the superclass and its subclasses. This new class will contain all the common methods
 	between the superclass and its subclasses. Those methods that have been redefined in the
 	subclasses will be defined as #subclassResponsibility methods in the new class."
 
-	(ConvertToSiblingDialog showModalOn: (ChildrenToSiblingsRefactoring 
+	(ConvertToSiblingDialog showModalOn: (ChildrenToSiblingsRefactoring
 				name: 'Abstract' , aClass name
 				class: aClass
-				subclasses: aClass subclasses)) 
+				subclasses: aClass subclasses))
 		ifNotNil: 
-			[:refactoring | 
+			[:refactoring |
 			self handleRefactoringException: 
 					[refactoring execute.
-					Smalltalk at: refactoring className
-						ifPresent: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
+					refactoring className asQualifiedReference
+						ifDefined: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
 
 createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment 
 	"Invoke the 'Create Variable Accessors' refactoring on an instance variable."
@@ -1450,14 +1450,14 @@ initialize
 
 	self installCurrent.
 	RefactoringSignal := Refactoring preconditionSignal.
-	#(#SmalltalkToolShell #ClassSelector #PackageSelector) 
-		do: [:each | (Smalltalk at: each) addCommandQueryHandler: #queryRefactoringCommand:]!
+	#(#{SmalltalkToolShell} #{ClassSelector} #{PackageSelector})
+		do: [:each | each value addCommandQueryHandler: #queryRefactoringCommand:]!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	#(#SmalltalkToolShell #ClassSelector #PackageSelector) 
-		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryRefactoringCommand:].
+	#(#{SmalltalkToolShell} #{ClassSelector} #{PackageSelector}) 
+		do: [:each | each value removeCommandQueryHandler: #queryRefactoringCommand:].
 	MethodCategory removeCategory: '*-RB fixes'.
 	self uninstallCurrent! !
 !RefactoringSmalltalkSystem class categoriesFor: #initialize!class hierarchy-removing!private! !

@@ -224,7 +224,7 @@ comShutdown
 	reference to <COMInterface>"
 
 	self outer notNull ifTrue: [self outer free].
-	Smalltalk at: #COMInterface ifPresent: [:c | c onExit]!
+	#{COMInterface} ifDefined: [:c | c onExit]!
 
 consoleStreamClass
 	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.
@@ -1092,7 +1092,7 @@ traceLine: aString
 traceStream
 	"Answer a <puttableStream> onto the session's trace output device."
 
-	^Smalltalk at: #Trace ifAbsent: [DeafObject current]!
+	^#{Trace} valueOrNil ?? DeafObject current!
 
 triggerSettingsChanged
 	| pending |

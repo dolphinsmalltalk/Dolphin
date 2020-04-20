@@ -1574,7 +1574,7 @@ exampleGdipIPropertyItems
 	"
 
 	| directory filenames strm image |
-	(directory := ((Smalltalk at: #BrowseFolderDialog) new)
+	(directory := #{BrowseFolderDialog} value new
 				value: 'c:\my documents';
 				showModal) ifNil: [^nil].
 	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') 

@@ -8,6 +8,10 @@ package classNames
 	add: #TestRunner;
 	yourself.
 
+package methodNames
+	add: 'TestCase class' -> #icon;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -38,6 +42,14 @@ Shell subclass: #TestRunner
 
 
 "Loose Methods"!
+
+!TestCase class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^TestRunner icon! !
+!TestCase class categoriesFor: #icon!constants!public! !
 
 "End of package definition"!
 

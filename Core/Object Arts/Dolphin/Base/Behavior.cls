@@ -424,8 +424,8 @@ flushMethodCache
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	^(GeneralBindingReference isQualifiedName: aString)
-		ifTrue: [self environment resolveBindingPath: (GeneralBindingReference splitQualifiedName: aString)]
+	^(BindingReference isQualifiedName: aString)
+		ifTrue: [self environment resolveBindingPath: (BindingReference splitQualifiedName: aString)]
 		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
 
 hasCompilationFailures

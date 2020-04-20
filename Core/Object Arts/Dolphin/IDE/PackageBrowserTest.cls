@@ -89,7 +89,7 @@ create: aClassSymbol subclassOf: aClass
 create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	| newClass |
 	newClass := self create: aClassSymbol subclassOf: aClass.
-	(Smalltalk at: aClassSymbol) owningPackage: aPackage.
+	aClassSymbol asQualifiedReference value owningPackage: aPackage.
 	self assert: newClass owningPackage identicalTo: aPackage.
 	^newClass!
 
@@ -176,27 +176,27 @@ removeGlobals
 
 renameClass
 	| testA testA2 |
-	testA := 'DolphinTestA' asSymbol.
-	testA2 := 'DolphinTestA2' asSymbol.
+	testA := 'DolphinTestA' asQualifiedReference.
+	testA2 := 'DolphinTestA2' asQualifiedReference.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
-	ClassBuilder renameClass: (Smalltalk at: testA) to: testA2.
+	ClassBuilder renameClass: testA value to: testA2.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: testA2 value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: testA2 value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync.
-	ClassBuilder renameClass: (Smalltalk at: testA2) to: testA.
+	ClassBuilder renameClass: testA2 value to: testA.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: testA value.
 	self assert: methodCA isLoose.
 	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync!
