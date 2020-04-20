@@ -362,6 +362,9 @@ visitOptimizedToken: aStOptimizedToken
 	stack addLast: aStOptimizedToken.
 	^#specialCharacter!
 
+visitQualifiedReferenceToken: aStQualifiedReferenceToken 
+	^#specialCharacter!
+
 visitSpecialCharacterToken: aStSpecialCharacterToken
 	"Special case for Smalltalk-80 literal syntax, which allows nested arrays in literal arrays to be unquoted."
 
@@ -430,9 +433,10 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 !SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitQualifiedReferenceToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
 
-SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitSpecialCharacterToken:)!
+SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitQualifiedReferenceToken: #visitSpecialCharacterToken:)!
 
 !SmalltalkStyler class methodsFor!
 

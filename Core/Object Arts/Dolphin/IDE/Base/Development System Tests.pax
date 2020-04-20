@@ -75,7 +75,7 @@ TestCase subclass: #RewriteTestCase
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #AbstractParserErrorTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!

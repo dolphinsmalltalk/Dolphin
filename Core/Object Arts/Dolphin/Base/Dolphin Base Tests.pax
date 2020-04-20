@@ -15,6 +15,7 @@ package classNames
 	add: #BagTest;
 	add: #BehaviorTest;
 	add: #BehaviorTestClasses;
+	add: #BindingReferenceTest;
 	add: #BlockClosureTest;
 	add: #BooleanTest;
 	add: #ByteArrayTest;
@@ -56,6 +57,7 @@ package classNames
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
 	add: #FloatTest;
+	add: #GeneralBindingReferenceTest;
 	add: #GenericExternalArrayTest;
 	add: #GUIDTest;
 	add: #HeapsortAlgorithmTest;
@@ -66,6 +68,7 @@ package classNames
 	add: #IntervalTest;
 	add: #IntrosortAlgorithmTest;
 	add: #LargeIntegerTest;
+	add: #LiteralBindingReferenceTest;
 	add: #LocaleTest;
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
@@ -307,6 +310,11 @@ DolphinTest subclass: #FILETIMETest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: 'fpeMask'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #GeneralBindingReferenceTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -570,6 +578,16 @@ GenericExternalArrayTest subclass: #StructureArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+GeneralBindingReferenceTest subclass: #BindingReferenceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GeneralBindingReferenceTest subclass: #LiteralBindingReferenceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 IntegerTest subclass: #LargeIntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -741,11 +759,11 @@ TestRunLogger subclass: #TestRunConsoleLogger
 baselinedSlowTests
 	| laggards |
 	laggards := Set new.
-	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#RenameClassTest #(#testModelRenameClass)))
+	#(#(#{ReferenceFinderTest} #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#{BrowserEnvironmentTest} #(#testOrEnvironment)) #(#{IdeaSpaceShellTest} #(#testSaveRestore)) #(#{RenameClassTest} #(#testModelRenameClass)))
 		do: 
 			[:each |
-			Smalltalk at: each first
-				ifPresent: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
+			each first
+				ifDefined: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
 	^laggards!
 
 regressionTestsLogFilename

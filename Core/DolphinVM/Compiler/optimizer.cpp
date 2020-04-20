@@ -2074,7 +2074,15 @@ POTE Compiler::NewMethod()
 	// Allocate CompiledMethod and install the header
 	POTE method = NewCompiledMethod(m_compiledMethodClass, CodeSize, hdr);
 	STCompiledMethod& cmpldMethod = *(STCompiledMethod*)GetObj(method);
-	
+
+	// Ensure the LiteralBindingReferences are correctly initialised with their home method
+	for (auto it = m_bindingRefs.begin(); it != m_bindingRefs.end(); it++)
+	{
+		POTE oteBindingRef = (*it).second;
+		STLiteralBindingReference& bindingRef = *(STLiteralBindingReference*)GetObj(oteBindingRef);
+		m_piVM->StorePointerWithValue((Oop*)&bindingRef.m_method, (Oop)method);
+	}
+
 	// May have been changed above
 	byte0 = m_bytecodes[ip_t::zero].Opcode;
 

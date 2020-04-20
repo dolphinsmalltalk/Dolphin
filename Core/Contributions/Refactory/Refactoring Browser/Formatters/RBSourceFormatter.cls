@@ -123,6 +123,12 @@ visitPrimitiveNode: anStPrimitiveNode
 	codeStream nextPut: $>.
 	self newLine!
 
+visitQualifiedReferenceNode: aQualifiedReferenceNode
+	codeStream
+		nextPutAll: '#{';
+		display: aQualifiedReferenceNode pathString;
+		nextPut: $}!
+
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
 !RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
@@ -146,6 +152,7 @@ visitVariableNode: aVariableNode
 !RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
+!RBSourceFormatter categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
 !RBSourceFormatter categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
 
 !RBSourceFormatter class methodsFor!

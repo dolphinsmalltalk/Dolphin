@@ -526,6 +526,11 @@ void Lexer::ScanLiteral()
 		m_tokenType = TokenType::ByteArrayBegin;
 	}
 
+	else if (m_cc == '{')
+	{
+		m_tokenType = TokenType::QualifiedRefBegin;
+	}
+
 	else if (m_cc == LITERAL)
 	{
 		// Second hash, so should be a constant expression ##(xxx)

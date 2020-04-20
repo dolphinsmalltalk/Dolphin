@@ -700,6 +700,7 @@ initialize
 				at: #Dispatcher put: 102;
 				at: #LPVOID put: 103;
 				at: #Utf8String put: 104;
+				at: #LiteralBindingReference put: 105;
 				at: #LargeInteger put: 107;
 				at: #VARIANT put: 108;
 				at: #BSTR put: 109;

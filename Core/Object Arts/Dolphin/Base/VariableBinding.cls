@@ -19,8 +19,12 @@ displayString
 	^key!
 
 refersToLiteral: anObject
-	^self == anObject! !
+	^self == anObject!
+
+targetVariable
+	^self! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
 !VariableBinding categoriesFor: #refersToLiteral:!private!testing! !
+!VariableBinding categoriesFor: #targetVariable!accessing!public! !
 

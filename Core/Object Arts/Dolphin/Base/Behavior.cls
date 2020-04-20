@@ -422,20 +422,11 @@ flushMethodCache
 	^self primitiveFailed: _failureCode!
 
 fullBindingFor: aString
-	"Answer a variable binding for the named variable in the scope of this class, and
-	failing that in the receiver's environment. If there is no such variable, then answer nil."
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	(aString identityIncludes: $.)
-		ifTrue: 
-			[| parts env count |
-			parts := aString subStrings: $..
-			"Fully qualified name always starts in Smalltalk"
-			env := Smalltalk.
-			count := parts size.
-			1 to: count - 1
-				do: [:i | (env bindingFor: (parts at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
-			^env bindingFor: (parts at: count)].
-	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
+	^(GeneralBindingReference isQualifiedName: aString)
+		ifTrue: [self environment resolveBindingPath: (GeneralBindingReference splitQualifiedName: aString)]
+		ifFalse: [(self bindingFor: aString) ifNil: [self environment bindingFor: aString]]!
 
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
@@ -1119,7 +1110,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
-!Behavior categoriesFor: #environment!constants!public! !
+!Behavior categoriesFor: #environment!accessing!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !

@@ -176,6 +176,14 @@ renameGlobal: oldName to: newName
 	self noEventsDo: [binding := self changeKey: oldSymbol to: newName asSymbol].
 	self triggerGlobalRenamed: binding from: oldSymbol!
 
+resolveBindingPath: anArrayOfString
+	| count env |
+	env := self.
+	count := anArrayOfString size.
+	1 to: count - 1
+		do: [:i | (env bindingFor: (anArrayOfString at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
+	^env bindingFor: (anArrayOfString at: count)!
+
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
 	Answer the receiver."
@@ -208,6 +216,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
 !SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !
+!SystemDictionary categoriesFor: #resolveBindingPath:!binding!public! !
 !SystemDictionary categoriesFor: #setEvents:!events!private! !
 !SystemDictionary categoriesFor: #triggerGlobalRenamed:from:!events!private! !
 

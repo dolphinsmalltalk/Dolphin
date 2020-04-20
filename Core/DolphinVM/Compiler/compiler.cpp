@@ -1700,6 +1700,41 @@ void Compiler::ParseBraceArray(textpos_t textPosition)
 	}
 }
 
+POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
+{
+	POTE bindingRef = nullptr;
+	NextToken();
+	TEXTRANGE identifierRange = ThisTokenRange;
+	if (ThisToken == TokenType::NameConst)
+	{
+		Str identifier = ThisTokenText;
+		NextToken();
+		if (ThisToken == TokenType::CloseBrace)
+		{
+			NextToken();
+			auto iter = m_bindingRefs.find(identifier);
+			if (iter == m_bindingRefs.end())
+			{
+				bindingRef = m_piVM->NewBindingRef((LPCSTR)identifier.c_str());
+				m_bindingRefs[identifier] = bindingRef;
+			}
+			else
+			{
+				bindingRef = (*iter).second;
+			}
+		}
+		else
+		{
+			CompileError(TEXTRANGE(textPosition, identifierRange.m_stop), CErrQualifiedRefNotClosed);
+		}
+	}
+	else
+	{
+		CompileError(identifierRange, CErrExpectVariable);
+	}
+	return bindingRef;
+}
+
 void Compiler::ParseTerm(textpos_t textPosition)
 {
 	TokenType tokenType = ThisToken;
@@ -1818,6 +1853,14 @@ void Compiler::ParseTerm(textpos_t textPosition)
 		}
 		break;
 
+	case TokenType::QualifiedRefBegin:
+		{
+			textpos_t start = ThisTokenRange.m_start;
+			POTE bindingRef = ParseQualifiedReference(start);
+			if (m_ok)
+				GenLiteralConstant(reinterpret_cast<Oop>(bindingRef), TEXTRANGE(start, LastTokenRange.m_stop));
+		}
+		break;
 	case TokenType::Binary:
 		ParseBinaryTerm(textPosition);
 		break;
@@ -3029,6 +3072,19 @@ POTE Compiler::ParseArray()
 			}
 			break;
 
+		case TokenType::QualifiedRefBegin:
+			{
+				textpos_t start = ThisTokenRange.m_start;
+				Oop oopBindingRef = reinterpret_cast<Oop>(ParseQualifiedReference(start));
+				if (m_ok)
+				{
+					elems.push_back(oopBindingRef);
+					m_piVM->AddReference(oopBindingRef);
+					m_piVM->MakeImmutable(oopBindingRef, TRUE);
+				}
+			}
+			break;
+
 		default:
 			CompileError(CErrBadTokenInArray);
 			NextToken();
@@ -3337,8 +3393,8 @@ void Compiler::AssertValidIpForTextMapEntry(ip_t ip, bool bFinal)
 		_ASSERTE(ip > ip_t::zero);
 		const BYTECODE& prev = m_bytecodes[ip-1];
 		_ASSERTE(prev.IsOpCode);
-		_ASSERTE((bc.Opcode == OpCode::PopStoreTemp && (prev.Opcode == OpCode::IncrementTemp || prev.Opcode == OpCode::DecrementTemp))
-			|| (bc.Opcode == OpCode::StoreTemp && (prev.Opcode == OpCode::IncrementPushTemp || prev.Opcode == OpCode::DecrementPushTemp)));
+		_ASSERTE((bc.byte == static_cast<uint8_t>(OpCode::PopStoreTemp) && (prev.Opcode == OpCode::IncrementTemp || prev.Opcode == OpCode::DecrementTemp))
+			|| (bc.byte == static_cast<uint8_t>(OpCode::StoreTemp) && (prev.Opcode == OpCode::IncrementPushTemp || prev.Opcode == OpCode::DecrementPushTemp)));
 	}
 	else
 	{

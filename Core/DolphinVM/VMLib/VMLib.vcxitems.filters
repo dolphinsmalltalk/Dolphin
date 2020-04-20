@@ -152,6 +152,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ExternalBuf.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dnu.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />

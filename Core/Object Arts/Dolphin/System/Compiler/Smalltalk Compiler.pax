@@ -55,7 +55,7 @@ Object subclass: #StVariable
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope'
+	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope errorBlock'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -152,7 +152,8 @@ analyze
 		analyzeParseTree: self
 		for: self methodClass
 		context: nil
-		pools: #()! !
+		pools: #()
+		onError: nil! !
 !StMethodNode categoriesFor: #analyze!public! !
 
 "End of package definition"!
