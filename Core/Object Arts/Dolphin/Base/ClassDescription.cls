@@ -333,6 +333,17 @@ displayOn: aStream
 	aStream nextPutAll: self name
 !
 
+fullName
+	"Placeholder for answering fully qualified name (relative to Smalltalk)."
+
+	^self name
+
+	!
+
+fullyQualifiedReference
+	^self fullName asQualifiedReference
+	!
+
 includesCategory: category
 	"Answer whether the receiver includes the named category."
 
@@ -466,7 +477,7 @@ methodProtocol: protocolName attributes: attributes selectors: selectors
 methodProtocolClass
 	"Private - Answer the class of object used to represent method protocols for the receiver."
 
-	^Smalltalk at: #MethodProtocol!
+	^#{MethodProtocol} value!
 
 methods
 	"For compatibility with Visual Smalltalk/Smalltalk Express
@@ -834,6 +845,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
+!ClassDescription categoriesFor: #fullName!accessing!public! !
+!ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !

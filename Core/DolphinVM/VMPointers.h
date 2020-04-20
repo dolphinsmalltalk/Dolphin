@@ -110,14 +110,14 @@ struct VMPointers //: public Object
 			SymbolOTE* wndProcSelector;							// 57
 
 			/**/SymbolOTE* asNumberSymbol;							// 58
-				// TODO - Remove these when compiler no longer uses it.
+			// TODO - Remove these when compiler no longer uses them.
 			SymbolOTE* fullBindingForSymbol;					// 59
 			SymbolOTE* allInstVarNamesSymbol;					// 60
 			SymbolOTE* understandsArithmeticSymbol;				// 61
 			SymbolOTE* canUnderstandSymbol;						// 62
 			SymbolOTE* negativeSymbol;							// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
-			/**/POTE _unusedSelector65;								// 65
+			SymbolOTE* pathStringSelector;						// 65
 
 				// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
@@ -160,7 +160,7 @@ struct VMPointers //: public Object
 			POTE Dispatcher;									// 102 - Actually this doesn't need to be a class at all
 			BehaviorOTE* ClassLPVOID;							// 103
 			BehaviorOTE* ClassUtf8String;						// 104
-			BehaviorOTE* _unused105;							// 105
+			BehaviorOTE* ClassLiteralBindingReference;			// 105
 			BehaviorOTE* _unused106;							// 106
 			BehaviorOTE* ClassLargeInteger;						// 107 - 2's complement Large Integers (32 or more bits)
 			BehaviorOTE* ClassVARIANT;							// 107

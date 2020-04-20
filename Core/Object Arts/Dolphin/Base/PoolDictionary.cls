@@ -24,7 +24,7 @@ displayOn: aStream
 !
 
 environment
-	"Answer the receiver's controlling name space."
+	"Answer the receiver's <Namespace> scope."
 
 	^Smalltalk
 !
@@ -108,7 +108,7 @@ owningPackage: aPackage
 	aPackage addGlobalNamed: self name! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
 !PoolDictionary categoriesFor: #displayOn:!displaying!public! !
-!PoolDictionary categoriesFor: #environment!constants!public! !
+!PoolDictionary categoriesFor: #environment!accessing!public! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !

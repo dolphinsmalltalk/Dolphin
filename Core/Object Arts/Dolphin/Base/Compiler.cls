@@ -416,7 +416,7 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative)
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative #pathString:home:)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass

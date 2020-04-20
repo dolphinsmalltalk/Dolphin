@@ -206,6 +206,11 @@ debugInfo
 envInfo
 	^(header bitShift: -1) bitAnd: 63!
 
+environment
+	"Answer the <Namespace> in whose scope this method was compiled."
+
+	^methodClass environment!
+
 envTempCount
 	"Answer the number of environment temporaries used by the receiver."
 
@@ -621,6 +626,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #containsSource:!development!public!testing! !
 !CompiledCode categoriesFor: #debugInfo!development!private! !
 !CompiledCode categoriesFor: #envInfo!accessing!private! !
+!CompiledCode categoriesFor: #environment!accessing!public! !
 !CompiledCode categoriesFor: #envTempCount!accessing!development!public! !
 !CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
 !CompiledCode categoriesFor: #extraIndex!method header!private! !

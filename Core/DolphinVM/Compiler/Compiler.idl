@@ -43,9 +43,7 @@ library CompilerLib
 		LErrExpectExtendedLiteral,
 		LErrExpectMetaVariable,
 		LErrExpectChar,
-		LErrInvalidQualifier,
-		LErrQualifiedRefNotClosed,
-		LErrBadNumber,
+		LErrBadNumber=10,
 		LErrExpectCodePoint,
 		LErrBadCodePoint
 	} LexErrors;
@@ -104,6 +102,7 @@ library CompilerLib
 		CErrDuplicateArgName,
 		CErrRedefiningArg,
 		CErrEmptyConditionBlock,
+		CErrQualifiedRefNotClosed
 	} ParseErrors;
 
 	typedef enum ParseWarnings {

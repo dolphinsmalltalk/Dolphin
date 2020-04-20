@@ -216,6 +216,9 @@ asPhrase
 					last := each]].
 	^stream contents!
 
+asQualifiedReference
+	^BindingReference pathString: self!
+
 asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."
 
@@ -1185,6 +1188,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asMethodCategory!converting!public! !
 !String categoriesFor: #asNumber!converting!public! !
 !String categoriesFor: #asPhrase!converting!public! !
+!String categoriesFor: #asQualifiedReference!public! !
 !String categoriesFor: #asResourceId!converting!public! !
 !String categoriesFor: #asString!converting!public! !
 !String categoriesFor: #asSymbol!converting!public! !

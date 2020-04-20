@@ -63,8 +63,7 @@ do: aBlock
 !
 
 environment
-	"Answer the environment for which the receiver is scanning. By default this is the global
-	<SystemDictionary> instance, Smalltalk."
+	"Answer the <Namespace> in who's scope the receiver is scanning."
 
 	^environment!
 
@@ -111,10 +110,6 @@ illegalCharacter
 
 illegalNumber
 	self lexicalError: LErrBadNumber range: (tokenStart to: self previousStepPosition)!
-
-invalidQualifier
-	self lexicalError: LErrInvalidQualifier.
-	^self literalErrorToken: buffer contents stop: self previousStepPosition!
 
 lexicalError: anInteger
 	^self lexicalError: anInteger range: (tokenStart to: self errorPosition)!
@@ -234,6 +229,9 @@ previousStepPosition
 		ifTrue: [stream position]
 		ifFalse: [stream position - 1]!
 
+qualifiedReferenceTokenClass
+	^StQualifiedReferenceToken!
+
 readIntegerOfRadix: anInteger
 	| value |
 	value := nil.
@@ -330,6 +328,13 @@ scanIdentifierOrKeyword
 			token notNil ifTrue: [^token]].
 	(currentCharacter == $: and: [stream peek ~~ $=]) ifTrue: [^self scanKeyword].
 	name := buffer contents.
+	name = 'nil'
+		ifTrue: 
+			[^self literalTokenClass
+				start: tokenStart
+				comments: nil
+				value: nil
+				stop: self previousStepPosition].
 	name = 'true'
 		ifTrue: 
 			[^self literalTokenClass
@@ -344,13 +349,7 @@ scanIdentifierOrKeyword
 				comments: nil
 				value: false
 				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue: 
-			[^self literalTokenClass
-				start: tokenStart
-				comments: nil
-				value: nil
-				stop: self previousStepPosition].
+
 	^self identifierTokenClass
 		start: tokenStart
 		comments: nil
@@ -554,21 +553,15 @@ scanPatternVariable
 	^self scanIdentifierOrKeyword!
 
 scanQualifiedReference
-	| nameToken bindingClass |
-	bindingClass := self environment at: #BindingReference ifAbsent: [nil].
-	bindingClass isNil ifTrue: [^self illegalCharacter].
-	self step.	"{"
-	self stripSeparators.
-	nameToken := self scanIdentifierOrKeyword.
-	(nameToken isIdentifier and: [nameToken value notEmpty]) ifFalse: [^self invalidQualifier].
-	self stripSeparators.
-	currentCharacter == $} ifFalse: [^self unterminatedQualifiedRef].
-	self step.	"}"
-	^self literalTokenClass
-		start: tokenStart
-		comments: nil
-		value: (bindingClass pathString: nameToken value)
-		stop: self previousStepPosition!
+	"Scan the opening quote of literal qualified reference, i.e. the #{ of e.g. #{Root.Smalltalk}."
+	"In the original RBScanner, qualified references were scanned in their entirety as a literal token with no special token or node type to represent them. That design has a couple of issues:
+		i) Error reporting and recovery is better if the QR scanned as 3 components (open, identifier, close) and the composite is parsed
+		ii) QRs are 'homed' in the namespace of the method in which they are sited. This information is not available until semantic analysis, so it isn't possible to construct a valid literal value at scanning or parsing time, and the semantic analyser/code generator needs a specific node type to recognise when it is required to generate a BindingReference."
+
+	| token |
+	token := self qualifiedReferenceTokenClass start: tokenStart.
+	self step.
+	^token!
 
 scanSign
 	^currentCharacter == $-
@@ -747,10 +740,6 @@ unterminatedComment: anInteger
 	self lexicalError: LErrCommentNotClosed range: (anInteger to: self errorPosition).
 	^self recoverFromUnterminatedComment: anInteger!
 
-unterminatedQualifiedRef
-	self lexicalError: LErrQualifiedRefNotClosed.
-	^self literalErrorToken: buffer contents stop: self previousStepPosition!
-
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
@@ -769,7 +758,6 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #identifierTokenClass!constants!private! !
 !SmalltalkScanner categoriesFor: #illegalCharacter!error handling!private! !
 !SmalltalkScanner categoriesFor: #illegalNumber!error handling!private! !
-!SmalltalkScanner categoriesFor: #invalidQualifier!private!scanning! !
 !SmalltalkScanner categoriesFor: #lexicalError:!error handling!private! !
 !SmalltalkScanner categoriesFor: #lexicalError:range:!error handling!private! !
 !SmalltalkScanner categoriesFor: #line!accessing!public! !
@@ -785,6 +773,7 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #numberTokenClass!constants!private! !
 !SmalltalkScanner categoriesFor: #on:!initializing!private! !
 !SmalltalkScanner categoriesFor: #previousStepPosition!accessing!private! !
+!SmalltalkScanner categoriesFor: #qualifiedReferenceTokenClass!constants!private! !
 !SmalltalkScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
 !SmalltalkScanner categoriesFor: #recoverFromUnterminatedComment:!error handling!private! !
 !SmalltalkScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
@@ -814,7 +803,6 @@ unterminatedString
 !SmalltalkScanner categoriesFor: #stepBackTo:!helpers!private! !
 !SmalltalkScanner categoriesFor: #stripSeparators!private!scanning! !
 !SmalltalkScanner categoriesFor: #unterminatedComment:!error handling!private! !
-!SmalltalkScanner categoriesFor: #unterminatedQualifiedRef!error handling!private! !
 !SmalltalkScanner categoriesFor: #unterminatedString!error handling!private! !
 
 SmalltalkScanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!

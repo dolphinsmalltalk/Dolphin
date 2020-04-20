@@ -332,6 +332,7 @@ private:
 	POTE ParseArray();
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
+	POTE ParseQualifiedReference(textpos_t textPosition);
 
 	template <bool ignoreNops> ip_t PriorInstruction() const;
 	bool LastIsPushNil() const;
@@ -478,6 +479,9 @@ private:
 
 	POTE m_compiledMethodClass;				// Class of compiled method to generate
 	Oop m_notifier;							// Notifier object to send compilerError:... callbacks to
+
+	typedef std::map<Str, POTE> NAMEDOBJECTS;
+	NAMEDOBJECTS m_bindingRefs;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)

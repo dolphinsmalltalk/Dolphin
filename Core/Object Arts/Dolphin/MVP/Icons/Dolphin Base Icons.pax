@@ -55,6 +55,7 @@ package methodNames
 	add: 'FLOAT class' -> #icon;
 	add: 'Fraction class' -> #icon;
 	add: 'FramingLayout class' -> #icon;
+	add: 'GeneralBindingReference class' -> #icon;
 	add: 'InputState class' -> #icon;
 	add: 'Integer class' -> #icon;
 	add: 'Interval class' -> #icon;
@@ -539,6 +540,16 @@ icon
 
 	^(TextTileIcon text: $\x1F5BD)! !
 !FramingLayout class categoriesFor: #icon!constants!public! !
+
+!GeneralBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!GeneralBindingReference class categoriesFor: #icon!constants!public! !
 
 !InputState class methodsFor!
 

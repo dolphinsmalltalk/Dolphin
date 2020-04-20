@@ -555,6 +555,7 @@ parseLiteralArrayObject
 				ifTrue: [self parseLiteralByteArray]
 				ifFalse: [self parseLiteralArray]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
+	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
 	currentToken isLiteralToken ifFalse: [self patchLiteralArrayToken].
 	^self parsePrimitiveLiteral!
 
@@ -719,6 +720,7 @@ parsePrimitiveObject
 			char == $( ifTrue: [^self parseParenthesizedExpression].
 			char == ${ ifTrue: [^self parseBraceArray]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
+	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
 	self parserError: CErrInvalExprStart.
 	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
 	token := scanner literalTokenClass
@@ -736,6 +738,31 @@ parsePrimitiveValueLiteral
 	token := currentToken.
 	self step.
 	^self literalValueNodeClass literalToken: token!
+
+parseQualifiedReference
+	| start identifier stop |
+	start := currentToken start.
+	self step.
+	currentToken isIdentifier
+		ifTrue: 
+			[identifier := currentToken.
+			self step]
+		ifFalse: 
+			[identifier := scanner identifierTokenClass
+						start: start
+						comments: nil
+						value: ''.
+			self parserError: CErrExpectVariable.
+			"Attempt to recover - Skip over any invalid identifier if the next token is the closing brace"
+			((currentToken isSpecial: $}) not and: [self nextToken isSpecial: $}]) ifTrue: [self step]].
+	stop := currentToken stop.
+	(currentToken isSpecial: $})
+		ifTrue: [self step]
+		ifFalse: [self parserError: CErrQualifiedRefNotClosed range: (start to: identifier stop)].
+	^self qualifiedReferenceNodeClass
+		pathString: identifier value
+		start: start
+		stop: stop!
 
 parserError: anInteger
 	"Raise a <SmalltalkParseError> with the specified <integer> error code and associated arguments
@@ -1023,6 +1050,9 @@ patchNegativeLiteral
 				value: #-.
 	nextToken forgetNegative!
 
+qualifiedReferenceNodeClass
+	^StQualifiedReferenceNode!
+
 reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray
 	| err |
 	err := self class notificationClass
@@ -1166,6 +1196,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
 !SmalltalkParser categoriesFor: #parsePrimitiveObject!parsing!private! !
 !SmalltalkParser categoriesFor: #parsePrimitiveValueLiteral!parsing!private! !
+!SmalltalkParser categoriesFor: #parseQualifiedReference!parsing!private! !
 !SmalltalkParser categoriesFor: #parserError:!error handling!private! !
 !SmalltalkParser categoriesFor: #parserError:range:!error handling!private! !
 !SmalltalkParser categoriesFor: #parserError:range:extra:!error handling!private! !
@@ -1184,6 +1215,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #patchLiteralArrayToken!parsing!private! !
 !SmalltalkParser categoriesFor: #patchLiteralMessage!helpers!private! !
 !SmalltalkParser categoriesFor: #patchNegativeLiteral!helpers!private! !
+!SmalltalkParser categoriesFor: #qualifiedReferenceNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
 !SmalltalkParser categoriesFor: #returnNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #scanner:!accessing!public! !

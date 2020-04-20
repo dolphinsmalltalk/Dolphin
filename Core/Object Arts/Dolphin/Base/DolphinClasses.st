@@ -155,6 +155,11 @@ Object subclass: #FileLocator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #GeneralBindingReference
+	instanceVariableNames: 'path'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
 	classVariableNames: 'Null'
@@ -1368,6 +1373,16 @@ RelativeFileLocator subclass: #ImageRelativeFileLocator
 RelativeFileLocator subclass: #InstallRelativeFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GeneralBindingReference subclass: #BindingReference
+	instanceVariableNames: 'home'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GeneralBindingReference subclass: #LiteralBindingReference
+	instanceVariableNames: 'method'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 InstructionInterpreter subclass: #MessageSendCollector

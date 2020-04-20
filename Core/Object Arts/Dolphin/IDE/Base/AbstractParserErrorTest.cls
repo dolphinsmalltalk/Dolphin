@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AbstractParserErrorTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -64,10 +64,10 @@ checkCompileError: ex range: anInterval code: anInteger line: lineInteger source
 							ex errorMessage = msgString]]]!
 
 compilationErrorClass
-	^self subclassResponsibility!
+	^self parserClass errorClass!
 
 compilationWarningClass
-	^self subclassResponsibility!
+	^self parserClass warningClass!
 
 compileMethod: aString in: aClass 
 	^Compiler 
@@ -128,16 +128,11 @@ parseExprError: aString in: aClass range: anInterval line: lineInteger code: anI
                         false]]!
 
 parseExprError: aString range: anInterval line: lineInteger code: anInteger
-	| errors |
-	errors := OrderedCollection new.
-	[self parseExpression: aString in: self class]
-		on: self compilationWarningClass
-		do: [:ex | ex resume]
-		on: self compilationErrorClass
-		do: 
-			[:ex |
-			errors addLast: ex.
-			ex exit: nil].
+	| ast |
+	"The parser errors/warnings are caught and suppressed here to avoid dumping loads of stuff to the transcript while the test runs."
+	ast := [self parseExpression: aString in: self class]
+				on: self compilationWarningClass , self compilationErrorClass
+				do: [:ex | ex resume].
 	self
 		assert: (errors anySatisfy: 
 					[:each |
@@ -146,7 +141,8 @@ parseExprError: aString range: anInterval line: lineInteger code: anInteger
 						range: anInterval
 						code: anInteger
 						line: lineInteger
-						source: aString])!
+						source: aString]).
+	^ast!
 
 parseExpression: aString 
 	^self parseExpression: aString in: self class!
@@ -243,6 +239,9 @@ parseMethodWarning: aSymbol rangeBlock: aMonadicValuable code: anInteger
 		range: range
 		code: anInteger!
 
+parserClass
+	^self subclassResponsibility!
+
 restrictedSelectors
 	^##(#(#== #and: #or: #ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #timesRepeat: #to:do: #to:by:do: #yourself #basicAt: #basicAt:put: #basicNew: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
 		asIdentitySet)!
@@ -314,10 +313,10 @@ testErrorsAssignClass
 	[Smalltalk at: #CompilerTestGlobal put: Object.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := 1']
 		raise: Compiler notificationClass.
-	self assert: (Smalltalk at: #CompilerTestGlobal) equals: 1.
+	self assert: #{CompilerTestGlobal} value equals: 1.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := ''2''']
 		raise: Compiler notificationClass.
-	self assert: (Smalltalk at: #CompilerTestGlobal) equals: '2']
+	self assert: #{CompilerTestGlobal} value equals: '2']
 			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: []]!
 
 testErrorsAssignConstant
@@ -847,6 +846,31 @@ testErrorsInvalidExpressionStart
 		line: 1
 		code: CErrInvalExprStart!
 
+testErrorsInvalidQualifier
+	| source result |
+	source := ' #{ nil  '.
+	result := self
+				parseExprError: source
+				range: ((source indexOf: $n) to: (source indexOf: $l))
+				line: 1
+				code: CErrExpectVariable.
+	self
+		checkCompileError: errors last
+		range: (source size to: source size)
+		code: CErrQualifiedRefNotClosed
+		line: 1
+		source: source.
+	^result!
+
+testErrorsInvalidQualifierEmpty
+	| source |
+	source := ' #{} '.
+	^self
+		parseExprError: source
+		range: ((source indexOf: $}) to: (source indexOf: $}))
+		line: 1
+		code: CErrExpectVariable!
+
 testErrorsLexicalBadChar
 	"Non-ascii letters"
 
@@ -1352,6 +1376,15 @@ testErrorsUnspportedCallConv
 		parseMethodError: source
 		code: CErrUnsupportedCallConv
 		range: (mark to: mark + 8)!
+
+testErrorsUnterminatedQualifier
+	| source ast qr |
+	source := ' #{A.B.C. .'.
+	^self
+		parseExprError: source
+		range: ((source indexOf: $#) to: (source indexOf: $C))
+		line: 1
+		code: CErrQualifiedRefNotClosed!
 
 testErrorsUnterminatedStatement
 	"Unterminated statement"
@@ -1897,6 +1930,7 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #parseMethodWarning:in:range:code:extra:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodWarning:range:code:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #parseMethodWarning:rangeBlock:code:!helpers!private! !
+!AbstractParserErrorTest categoriesFor: #parserClass!constants!private! !
 !AbstractParserErrorTest categoriesFor: #restrictedSelectors!constants!private! !
 !AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
@@ -1927,6 +1961,8 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsInvalidQualifier!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsInvalidQualifierEmpty!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!public!unit tests! !
@@ -1952,6 +1988,7 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testErrorsTooManyTempsInOptimizedBlock!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsUnclosedParenthesis!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsUnspportedCallConv!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsUnterminatedQualifier!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsUnterminatedStatement!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsVirtualCalls!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsZeroArgOptimisedBlock!public!unit tests! !
