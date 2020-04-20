@@ -16,7 +16,7 @@ asUndoOperation
 changeObject
 	| dictionary |
 	dictionary := variable isString 
-				ifTrue: [Smalltalk at: variable asSymbol]
+				ifTrue: [variable asQualifiedReference value]
 				ifFalse: [variable].
 	^dictionary!
 

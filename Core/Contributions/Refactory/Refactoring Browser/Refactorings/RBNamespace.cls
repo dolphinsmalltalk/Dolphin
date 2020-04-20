@@ -91,21 +91,25 @@ classFor: aBehavior
 		ifFalse: [self classNamed: nonMetaclass name]!
 
 classNamed: aSymbol
-	| class index |
+	| index |
 	aSymbol isNil ifTrue: [^nil].
 	(self hasRemoved: aSymbol) ifTrue: [^nil].
 	(newClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
 	(changedClasses lookup: aSymbol) ifNotNil: [:behaviors | ^behaviors first].
-	(class := environment at: aSymbol ifAbsent: []) isBehavior
-		ifTrue: 
-			[| classes |
-			classes := self createNewClassFor: class.
-			^class isMeta ifTrue: [classes last] ifFalse: [classes first]].
-	index := aSymbol indexOfSubCollection: ' class' startingAt: 1.
+	index := aSymbol indexOf: $\x20.
 	^index ~~ 0
 		ifTrue: 
-			[class := self classNamed: (aSymbol copyFrom: 1 to: index - 1) asSymbol.
-			class isNil ifTrue: [nil] ifFalse: [class metaclass]]!
+			[(self classNamed: (aSymbol copyFrom: 1 to: index - 1) asSymbol)
+				ifNotNil: [:class | class metaclass]]
+		ifFalse: 
+			[(environment at: aSymbol ifAbsent: [])
+				ifNotNil: 
+					[:class |
+					class isBehavior
+						ifTrue: 
+							[| classes |
+							classes := self createNewClassFor: class.
+							class isMeta ifTrue: [classes last] ifFalse: [classes first]]]]!
 
 classNameFor: aBehavior 
 	^(aBehavior isMeta ifTrue: [aBehavior soleInstance] ifFalse: [aBehavior]) 

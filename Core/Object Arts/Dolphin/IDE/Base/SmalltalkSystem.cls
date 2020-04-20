@@ -962,9 +962,8 @@ browserEnvFromDom: anIXMLDOMDocument
 	classes do: 
 			[:each |
 			| methods className classMethods |
-			className := (each getAttribute: 'name') asSymbol.
-			Smalltalk at: className
-				ifPresent: 
+			className := each getAttribute: 'name'.
+			className asQualifiedReference ifDefined: 
 					[:class |
 					methods := each selectNodes: 'Methods/Method'.
 					env addClass: class selectors: (methods collect: [:eachMethod | eachMethod text asSymbol]).
@@ -1803,7 +1802,7 @@ dropTextFile: aString
 dropXmlFile: aString
 	"Private - Open an XML file. Use the XmlPad for this, if available."
 
-	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
 
 educationCenter
 	"Open the Education Centre contents page"
@@ -2670,7 +2669,7 @@ openWorkspace
 	^ws!
 
 openXmlFile: aString
-	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
 
 overlappingObjectsError: anError 
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
@@ -3231,16 +3230,18 @@ promptForInstVarName: nameString in: aClass prompt: promptString caption: captio
 				showModal.
 	^newName!
 
-promptForReferencesToGlobal: aString in: aBrowserEnvironment 
+promptForReferencesToGlobal: aString in: aBrowserEnvironment
 	| suggestion |
 	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
-	^((Prompter 
-				createOn: suggestion
-				prompt: 'Enter the name of a global:'
-				caption: 'Browse References to Global...')
-				validationBlock: [:value | Smalltalk includesKey: value];
-		showModal) 
-			ifNotNil: [:globalName | self referencesToVariable: (Smalltalk associationAt: globalName) in: aBrowserEnvironment]!
+	^((Prompter
+		createOn: suggestion
+		prompt: 'Enter the name of a global:'
+		caption: 'Browse References to Global...')
+		validationBlock: 
+				[:value |
+				(BindingReference isValidQualifiedName: value) and: [value asQualifiedReference isDefined]];
+		showModal)
+			ifNotNil: [:globalName | self referencesToVariable: globalName asQualifiedReference binding in: aBrowserEnvironment]!
 
 promptForSearchString: aFindDetails caption: aString 
 	^(AdvancedFindDialog create: 'Directionless view' on: aFindDetails)

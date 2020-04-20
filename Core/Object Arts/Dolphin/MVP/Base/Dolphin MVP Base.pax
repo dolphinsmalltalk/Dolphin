@@ -1396,7 +1396,7 @@ fixupIcon
 	resource. We perform a non-realizing load of the resource object."
 
 	| icon stlInFilerClass |
-	stlInFilerClass := Smalltalk at: #STLInFiler.
+	stlInFilerClass := #{STLInFiler} value.
 	icon := [(stlInFilerClass on: self resource readStream) basicNext icon] on: Error do: [:x | x icon].
 	self icon: icon.
 	^icon!

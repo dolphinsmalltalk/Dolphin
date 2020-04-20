@@ -541,9 +541,9 @@ loadCompatibilityCheck: aPackage
 	| overlappingObjects |
 	overlappingObjects := Set new.
 	aPackage classNames
-		do: [:each | Smalltalk at: each ifPresent: [:class | overlappingObjects add: class]].
+		do: [:each | each asQualifiedReference ifDefined: [:class | overlappingObjects add: class]].
 	(aPackage globalNames intersection: self packagedGlobals keys)
-		do: [:each | Smalltalk associationAt: each ifPresent: [:global | overlappingObjects add: global]].
+		do: [:each | each asQualifiedReference bindingOrNil ifNotNil: [:global | overlappingObjects add: global]].
 	"The methods accessor answers a collection of those methods named in the package that can
 	be found in the image, since the package is not yet loaded, this will only include the clashing methods"
 	overlappingObjects addAll: aPackage methods.

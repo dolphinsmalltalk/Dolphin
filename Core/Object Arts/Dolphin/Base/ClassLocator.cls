@@ -66,9 +66,7 @@ findResidentClass
 	"Private - Answer the class referred to by the receiver if it is
 	fully resident in the image."
 
-	| className |
-	className := key asSymbol.
-	^Smalltalk at: className ifAbsent: [Aliases lookup: className]!
+	^key asQualifiedReference valueOrNil ifNil: [Aliases lookup: key asSymbol]!
 
 fullClassKey
 	"Answer the full specification of the class identified by the receiver."

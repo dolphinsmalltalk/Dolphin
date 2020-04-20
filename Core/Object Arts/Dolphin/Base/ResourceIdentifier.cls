@@ -72,7 +72,7 @@ hiddenObjects
 	classes it needs into the image. View resources will not be realized as windows however."
 
 	| stlInFilerClass |
-	stlInFilerClass := Smalltalk at: #STLInFiler.
+	stlInFilerClass := #{STLInFiler} value.
 	^(stlInFilerClass on: self resource readStream)
 		basicNext;
 		readMap!

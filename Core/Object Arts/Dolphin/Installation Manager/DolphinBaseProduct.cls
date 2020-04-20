@@ -17,7 +17,8 @@ calcSystemFolderExtentFor: aPoint
 
 	| toolbarHeight metrics systemMetricsClass |
 
-	systemMetricsClass := Smalltalk at:  #SystemMetrics ifAbsent: [
+	systemMetricsClass := #{SystemMetrics} valueOrNil.
+	systemMetricsClass isNil ifTrue: [
 		^super calcSystemFolderExtentFor: aPoint].
 
 	metrics := systemMetricsClass current.

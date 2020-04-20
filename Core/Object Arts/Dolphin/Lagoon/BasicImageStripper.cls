@@ -83,7 +83,7 @@ compileExternalStructuresNow: aCollection
 	self assert: [self systemPackageManager isProcessingEvents].
 	self
 		startElement: 'StripClasses' attributes: {'reason' -> 'structure field descriptors'};
-		uncheckedRemoveClass: (Smalltalk at: #ExternalField);
+		uncheckedRemoveClass: #{ExternalField} value;
 		endElement: true.
 	self endElement: true!
 
@@ -113,7 +113,7 @@ destroyAndRemoveProgress
 	SessionManager current isConsoleApplication ifTrue: [self removeGuiForConsoleApplication].
 
 	"Ensure RichText converter is not hanging around unecessarily"
-	Smalltalk at: #RichText ifPresent: [:rt | rt uninitialize].
+	#{RichText} ifDefined: [:rt | rt uninitialize].
 	SessionManager inputState purgeDeadWindows]
 			on: Error
 			do: 
@@ -121,8 +121,7 @@ destroyAndRemoveProgress
 				self logStrippingError: e.
 				VMLibrary default crashDump: e description].
 	self collectGarbage: 3.
-	self
-		finishedWithAll: #(#destroyNotifier #progressDialogClass #removeGuiForConsoleApplication)!
+	self finishedWithAll: #(#destroyNotifier #progressDialogClass #removeGuiForConsoleApplication)!
 
 destroyNotifier!
 
@@ -352,8 +351,8 @@ removeCategoryManagement
 						sourceDescriptor: nil]].
 
 	"Uninitialize the category management system (don't remove it - it will be removed if unused, depending on stripping options)."
-	#(#Category #ClassCategory #MethodCategory)
-		do: [:each | Smalltalk at: each ifPresent: [:c | c uninitialize]]!
+	#(#{Category} #{ClassCategory} #{MethodCategory})
+		do: [:each | each ifDefined: [:c | c uninitialize]]!
 
 removeClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that
@@ -424,7 +423,7 @@ removeDevelopmentInfo
 	self startElement: 'StripDevelopmentInfo' attributes: #().
 	self removeCategoryManagement.
 	self removeProtocolManagement.
-	Smalltalk at: #SmalltalkSystem ifPresent: [:smsys | smsys reset].
+	#{SmalltalkSystem} ifDefined: [:smsys | smsys reset].
 	Class allSubinstances do: 
 			[:b |
 			b removePropertyAt: #changeIndex ifAbsent: [].
@@ -464,8 +463,8 @@ removeGuiForConsoleApplication
 	that will allow the entire View hierarchy, etc, to be removed."
 
 	self startElement: 'StripConsoleApplication' attributes: #().
-	#(#ImageRelativeFileLocator #InstallRelativeFileLocator)
-		do: [:each | Smalltalk at: each ifPresent: [:class | class uninitialize]].
+	#(#{ImageRelativeFileLocator} #{InstallRelativeFileLocator})
+		do: [:each | each ifDefined: [:class | class uninitialize]].
 	(Smalltalk includesKey: #View)
 		ifFalse: [VMLibrary default unregisterObject: #wndProc:message:wParam:lParam:cookie:].
 	self collectGarbage: 3.
@@ -552,10 +551,8 @@ removePackageManagement
 	self systemPackageManager class reset.
 	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
-	#(#PoolDictionary #PoolConstantsDictionary #ResourceIdentifier #CompiledMethod) do: 
-			[:each |
-			Smalltalk at: each
-				ifPresent: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: [])]].
+	#(#{PoolDictionary} #{PoolConstantsDictionary} #{ResourceIdentifier} #{CompiledMethod})
+		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: [])]].
 	self
 		removeMethods: methods
 		reason: 'package management'
@@ -572,7 +569,7 @@ removeProtocolManagement
 		logElement: 'RemoveMethodProtocols'
 		attributes: #()
 		value: nil.
-	Smalltalk at: #MethodProtocol ifPresent: [:p | p initializeProtocols]!
+	#{MethodProtocol} ifDefined: [:p | p initializeProtocols]!
 
 removeRedundantClassesAndResources: stripResources
 	"Private - Removes redundant classes from the current image. A redundant class is one
@@ -802,7 +799,7 @@ systemPackageManager
 	to prevent the PackageManager and Package classes remaining in the
 	deployed image."
 
-	^(Smalltalk at: #Package ifAbsent: [DeafObject current]) manager!
+	^(#{Package} valueOrNil ?? DeafObject current) manager!
 
 uncheckedRemoveClass: aClass
 	| removed |

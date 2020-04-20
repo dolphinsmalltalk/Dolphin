@@ -30,7 +30,7 @@ applyImageLists
 
 attachEditControl: hWnd 
 	| editView |
-	editView := (Smalltalk at: #TextEdit ifAbsent: [ControlView]) new.	"Attach a Smalltalk window so that keyboard accelerator keys will work in the in-place edit
+	editView := (#{TextEdit} valueOrNil ?? ControlView) new.	"Attach a Smalltalk window so that keyboard accelerator keys will work in the in-place edit
 	view (#1243). The caller can use this for whatever other purpose they wish."
 	editView
 		parentView: self;

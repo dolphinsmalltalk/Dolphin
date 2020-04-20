@@ -35,8 +35,10 @@ package classNames
 	add: #PushUpInstanceVariableTest;
 	add: #PushUpMethodTest;
 	add: #RBClassTest;
+	add: #RBConditionTest;
 	add: #RBNamespaceTest;
 	add: #RefactoringBrowserTest;
+	add: #RefactoringManagerTest;
 	add: #RefactoringTest;
 	add: #ReferenceFinderTest;
 	add: #RemoveClassTest;
@@ -122,6 +124,11 @@ RefactoringBrowserTest subclass: #RBClassTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringBrowserTest subclass: #RBNamespaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RefactoringBrowserTest subclass: #RefactoringManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -277,6 +284,11 @@ RefactoringTest subclass: #PushUpInstanceVariableTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringTest subclass: #PushUpMethodTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RefactoringTest subclass: #RBConditionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

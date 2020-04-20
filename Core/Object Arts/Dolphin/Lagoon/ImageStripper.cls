@@ -445,8 +445,8 @@ developmentResources
 
 	| devres |
 	devres := OrderedCollection new.
-	#(#Dialog #Presenter #AXControlSite #AXValueConvertingControlSite) 
-		do: [:s | Smalltalk at: s ifPresent: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
+	#(#{Dialog} #{Presenter} #{AXControlSite} #{AXValueConvertingControlSite})
+		do: [:s | s ifDefined: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
 	^devres!
 
 disableClassChangeFlagging
@@ -807,17 +807,16 @@ logReference: anObject
 		value: ([anObject printString] on: Error , StackOverflow do: [:ex | anObject basicPrintString])!
 
 logReferencesToClass: anAssociation
-	| refs fugitive instances |
-	fugitive := (Smalltalk includesKey: anAssociation key name) not.
+	| refs fugitive instances binding |
+	binding := anAssociation key fullyQualifiedReference bindingOrNil.
+	fugitive := binding isNil.
 	refs := fugitive
 				ifTrue: 
 					[anAssociation key allReferences reject: 
 							[:r |
 							r == anAssociation key class
 								or: [r == anAssociation or: [(r isKindOf: CompiledMethod) and: [r methodClass == anAssociation key]]]]]
-				ifFalse: 
-					[(Smalltalk associationAt: anAssociation key name) allReferences
-						reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
+				ifFalse: [binding allReferences reject: [:r | r == Smalltalk or: [r == Processor activeProcess]]].
 	refs isEmpty
 		ifFalse: 
 			[self startElement: 'References' attributes: #().
@@ -975,7 +974,7 @@ logSentMessages: aWeakIdentityDictionary
 	self startElement: 'SentMessages' attributes: #().
 	originallySent := Set new.
 	aWeakIdentityDictionary do: [:each | originallySent addAll: each].
-	(Smalltalk at: #BasicImageStripper ifAbsent: [])
+	#{BasicImageStripper} valueOrNil
 		ifNil: 
 			["This shouldn't be possible, but..."
 			remainingClasses := Class allClasses]
@@ -1287,7 +1286,7 @@ purgeIcons
 	"Private - If there are no open windows, then we can safely purge the icon image manager."
 
 	(SessionManager inputState topLevelWindows reject: [:each | each isKindOf: ImageStripperProgress])
-		isEmpty ifTrue: [Smalltalk at: #Icon ifPresent: [:iconClass | iconClass clear]]!
+		isEmpty ifTrue: [#{Icon} ifDefined: [:iconClass | iconClass clear]]!
 
 purgeStubbornClass: aClass
 	"Private - Remove what we can of a stubborn class that refuses to uninstall for some reason."
@@ -1997,10 +1996,9 @@ viewsToClose
 	topViews := SessionManager inputState topLevelWindows.
 	self isConsoleApplication ifTrue: [^topViews].
 	shellClasses := Set new.
-	#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner) do: 
+	#(#{SmalltalkToolShell} #{SmalltalkWorkspaceDocument} #{TestRunner}) do: 
 			[:each |
-			Smalltalk at: each
-				ifPresent: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
+			each ifDefined: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
 	"We want to close all views/presenters that are not in the required packages"
 	packagedClasses := self packagedClasses.
 	^topViews select: 

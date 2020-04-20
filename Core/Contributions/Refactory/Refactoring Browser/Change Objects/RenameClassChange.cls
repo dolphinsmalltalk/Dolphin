@@ -16,7 +16,7 @@ RenameClassChange comment: ''!
 		and: [newName = aRenameClassChange newName]!
 
 changeClass
-	^Smalltalk at: oldName asSymbol ifAbsent: [Smalltalk at: newName asSymbol]!
+	^(oldName asQualifiedReference bindingOrNil ifNil: [newName asQualifiedReference binding]) value!
 
 executeNotifying: aBlock 
 	| undos |

@@ -393,9 +393,8 @@ workspace
 !SmalltalkWorkspaceDocument class methodsFor!
 
 activeIdeaSpace
-	| ideaSpaceShellClass |
-	ideaSpaceShellClass := Smalltalk at: #IdeaSpaceShell ifAbsent: [^nil].
-	^(View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]!
+	^#{IdeaSpaceShell}
+		ifDefined: [:ideaSpaceShellClass | (View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]]!
 
 canUseIdeaSpace
 	"Answers true if an already open instance of the receiver should be reused instead of

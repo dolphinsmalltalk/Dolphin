@@ -20,7 +20,7 @@ create: aClassSymbol subclassOf: aClass
 create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	| newClass |
 	newClass := self create: aClassSymbol subclassOf: aClass.
-	(Smalltalk at: aClassSymbol) owningPackage: aPackage.
+	aClassSymbol asQualifiedReference value owningPackage: aPackage.
 	self assert: newClass owningPackage identicalTo: aPackage.
 	^newClass!
 
@@ -89,8 +89,8 @@ removeClassesGHI
 !
 
 removeClassesNamed: anArray
-	anArray 
-		do: [:eachName | Smalltalk at: eachName ifPresent: [:eachClass | eachClass removeFromSystem]]!
+	anArray
+		do: [:eachName | eachName asQualifiedReference ifDefined: [:eachClass | eachClass removeFromSystem]]!
 
 resetSelection
 	presenter resetSelection.

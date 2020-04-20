@@ -4022,15 +4022,14 @@ example2
 	"First lets get the FileSystem object, we might need to generate some wrappers to do so"
 
 	| fs cdrive croot windir systemdir |
-	fs := (Smalltalk at: #IFileSystem
-				ifAbsent: 
-					[| tlb |
+	fs := (#{IFileSystem} isDefined ifFalse: [
+					| tlb |
 					tlb := AXTypeLibraryAnalyzer open: 'scrrun.dll'.
 					"We'll forgo the prefix on all the generated names"
 					tlb prefix: ''.
 					"Generate the wrappers for the type library interfaces"
 					tlb generateInterfaceWrappers.
-					Smalltalk at: #IFileSystem]) 
+					#{IFileSystem} value]) 
 					createObject: 'Scripting.FileSystemObject'.
 
 	"Now we can test it out a bit by finding the root of C"
@@ -4042,7 +4041,7 @@ example2
 	systemdir := windir subFolders item: 'system32'.
 
 	"A better way to get the system folder is:"
-	systemdir := fs getSpecialFolder: ((Smalltalk at: #ScriptingConstants) at: 'SystemFolder').
+	systemdir := fs getSpecialFolder: #{ScriptingConstants.SystemFolder} value.
 
 	"Display the contents of the system folder (files only) in a list box (might take a while)"
 	ListPresenter show list: systemdir files contents!
@@ -4054,14 +4053,14 @@ example3
 	"
 
 	| excel books book range font arry caption |
-	Smalltalk at: #ExcelLib ifAbsent: [ | xl |
+	#{ExcelLib} isDefined ifFalse: [ | xl |
 			xl := AXTypeLibraryAnalyzer open: 'c:\Program Files\Microsoft Office\Office\excel9.olb'.
 			xl prefix: 'Xl'.
 			xl generateConstantsPool.
 			#(_Application Workbooks _Workbook Range Font) do: [:i | (xl at: i) generate].
 			xl reset].
 
-	excel :=  (Smalltalk at: #Xl_Application) new.
+	excel :=  #{Xl_Application} value new.
 	books := excel workbooks.
 	book := books add: VARIANT unspecified lcid: 0.
 
@@ -4107,7 +4106,7 @@ example3
 
       "Add fancy formatting to our report."
 	(excel range: 'A1:F14' cell2: VARIANT unspecified) 
-			autoFormat: ((Smalltalk at: #XlConstants) at: 'xlSimple' )
+			autoFormat: (#{XlConstants.xlSimple} value)
 			number: VARIANT unspecified font: VARIANT unspecified 
 			alignment: VARIANT unspecified border: VARIANT unspecified pattern: VARIANT unspecified 
 			width: VARIANT unspecified.

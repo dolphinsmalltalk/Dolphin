@@ -76,7 +76,7 @@ testNonExistentClass
 			["The class cannot be found so will be resolved to nil. Ought to be an error really, but this is the historic behavior."
 			self assert: rehydrated isNil]
 		ifNotNil: [:classStub | self assert: rehydrated classLocator key equals: 'STBTest_TestClass']]
-			ensure: [Smalltalk at: #STBTest_TestClass ifPresent: [:c | c removeFromSystem]]!
+			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]!
 
 testSortedCollection
 	| subject rehydrated dessicated sOriginal |

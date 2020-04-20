@@ -35,8 +35,8 @@ testREFGUIDfromAddress
 	self assert: g asString equals: ref asString!
 
 testStringsFromAddress
-	#(#BSTR #AnsiString #Utf8String #Utf16String)
-		do: [:each | self stringFromAddressTestClass: (Smalltalk at: each)]! !
+	#(#{BSTR} #{AnsiString} #{Utf8String} #{Utf16String})
+		do: [:each | self stringFromAddressTestClass: each value]! !
 !ExternalAddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
 !ExternalAddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
 !ExternalAddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !

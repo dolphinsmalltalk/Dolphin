@@ -683,14 +683,14 @@ refersToClass
 	detector := self new.
 	detector name: 'Refers to class name instead of "self class"'.
 	detector classBlock: 
-			[:context :result | 
+			[:context :result |
 			| sels className |
 			className := (context selectedClass isMetaclass
 						ifTrue: [context selectedClass primaryInstance]
 						ifFalse: [context selectedClass]) name.
-			sels := context selectedClass
-						whichSelectorsReferTo: (Smalltalk associationAt: className).
-			sels isEmpty ifFalse: 
+			sels := context selectedClass whichSelectorsReferTo: className asQualifiedReference binding.
+			sels isEmpty
+				ifFalse: 
 					[result addSearchString: className.
 					sels do: [:each | result addClass: context selectedClass selector: each]]].
 	^detector!
@@ -990,17 +990,17 @@ usesAdd
 usesTrue
 	| detector trueBinding falseBinding |
 	detector := self new.
-	trueBinding := Smalltalk associationAt: #True.
-	falseBinding := Smalltalk associationAt: #False.
+	trueBinding := #{True} binding.
+	falseBinding := #{False} binding.
 	detector name: 'Uses True/False instead of true/false'.
 	detector methodBlock: 
-			[:context :result | 
+			[:context :result |
 			| method |
 			method := context compiledMethod.
-			((method referencesLiteral: trueBinding)
-				or: [method referencesLiteral: falseBinding]) ifTrue: 
-						[result addClass: context selectedClass selector: context selector.
-						result searchStrings: #('True' 'False')]].
+			((method referencesLiteral: trueBinding) or: [method referencesLiteral: falseBinding])
+				ifTrue: 
+					[result addClass: context selectedClass selector: context selector.
+					result searchStrings: #('True' 'False')]].
 	^detector!
 
 utilityMethods
