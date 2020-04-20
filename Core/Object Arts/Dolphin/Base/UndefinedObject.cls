@@ -149,6 +149,9 @@ printString
 
 	^'nil'!
 
+refersToLiteral: anObject
+	^anObject isNil!
+
 shallowCopy
 	"Answer the receiver - there is only one instance, nil."
 
@@ -217,6 +220,7 @@ yourAddress
 !UndefinedObject categoriesFor: #notNull!private!testing! !
 !UndefinedObject categoriesFor: #printOn:!printing!public! !
 !UndefinedObject categoriesFor: #printString!printing!public! !
+!UndefinedObject categoriesFor: #refersToLiteral:!private!testing! !
 !UndefinedObject categoriesFor: #shallowCopy!copying!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !

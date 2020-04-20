@@ -1,49 +1,47 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Package Support'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Package Support.
-Copyright (c) Object Arts Ltd. 1997-2006. 
+Copyright © Object Arts Ltd. 1997-2020. 
 
-The loose methods here are only required when loading packages saved from these earlier versions prior to 5.0. '.
+The classes and loose methods here are only required when loading packages saved from earlier Dolphin versions.'.
 
 package basicPackageVersion: '6.1.1'.
 
 package basicScriptAt: #postinstall put: 'Package binaryPacLoader: [:package :stream | package loadLegacyPAC: stream]'.
 package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 
-package classNames
-	add: #MethodContext;
-	yourself.
+package setClassNames: #(
+	#{MethodContext}
+).
 
-package methodNames
-	add: #Package -> #basicLoadVersion4:filer:;
-	add: #Package -> #errorUnknownFileVersion:;
-	add: #Package -> #fileInClassDefinitions:;
-	add: #Package -> #loadGlobalsFromFiler:;
-	add: #Package -> #loadLegacyPAC:;
-	add: #Package -> #loadLegacyResources;
-	add: #Package -> #loadResourcesFromFiler:;
-	add: #Package -> #loadVersion1:filer:;
-	add: #Package -> #loadVersion2:filer:;
-	add: #Package -> #loadVersion3:filer:;
-	add: #Package -> #loadVersion4:filer:;
-	add: #Package -> #loadVersion5:filer:;
-	add: #Package -> #resourceNames;
-	add: #Package -> #script:;
-	add: #Package -> #script:put:;
-	add: #Package -> #versionLookup;
-	add: 'Package class' -> #name:comment:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Package} #allResourceNames)
+	#(#{Package} #allResourceNames:)
+	#(#{Package} #basicLoadVersion4:filer:)
+	#(#{Package} #errorUnknownFileVersion:)
+	#(#{Package} #fileInClassDefinitions:)
+	#(#{Package} #initializeLegacyResources)
+	#(#{Package} #loadGlobalsFromFiler:)
+	#(#{Package} #loadLegacyPAC:)
+	#(#{Package} #loadLegacyResources)
+	#(#{Package} #loadResourcesFromFiler:)
+	#(#{Package} #loadVersion1:filer:)
+	#(#{Package} #loadVersion2:filer:)
+	#(#{Package} #loadVersion3:filer:)
+	#(#{Package} #loadVersion4:filer:)
+	#(#{Package} #loadVersion5:filer:)
+	#(#{Package} #resourceNames)
+	#(#{Package} #script:)
+	#(#{Package} #script:put:)
+	#(#{Package} #versionLookup)
+	#(#{Package class} #name:comment:)
+).
 
 package setPrerequisites: #(
-	'..\Dolphin').
+	'..\Dolphin'
+).
 
 package!
 
@@ -55,18 +53,27 @@ Object variableSubclass: #MethodContext
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Package methodsFor!
+
+allResourceNames
+	"Private - Answer a <Collection> of all the resource names directly owned by the receiver or by its owned classes."
+
+	^self propertyAt: #allResourceNames ifAbsent: [^OrderedCollection new]!
+
+allResourceNames: resources
+	"Private - Record the <Collection> of <Associations>s, resources, as the names of all resources
+	in this package. This information is recorded only temporarily during package loading, and later
+	it is generated dynamically."
+
+	self propertyAt: #allResourceNames put: resources!
 
 basicLoadVersion4: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 4."
 
-	self declareGlobals.
+	self declareVariables.
 	self fileInClassDefinitions: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
 	self loadResourcesFromFiler: binaryFiler.
@@ -97,12 +104,23 @@ fileInClassDefinitions: aFileStream
 	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
 	aFileStream beBinary!
 
+initializeLegacyResources
+	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
+	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
+	we are only concerned with loose resources"
+
+	self allResourceNames do: 
+			[:each | 
+			| rid |
+			rid := ResourceIdentifier class: each key asQualifiedReference value name: each value.
+			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
+
 loadGlobalsFromFiler: binaryFiler
 	"Private - File in binary definitions of all the globals held by
 	the receiver are directly or indirectly through class ownership.
 	Note that this is only used for loading legacy (pre 4.0 packages."
 
-	globalNames size timesRepeat: [binaryFiler next]!
+	variableNames size timesRepeat: [binaryFiler next]!
 
 loadLegacyPAC: aReadStream 
 	"Private - Load the package the receiver represents from the Dolphin 3.x format 
@@ -126,16 +144,16 @@ loadLegacyPAC: aReadStream
 	self fileInScript: #postinstall!
 
 loadLegacyResources
-	"Private - Load all packaged resources for a source format (.PAX) package."
+	"Private - Load all packaged resources for a source format (.PAX) package. Required for older packages that stored resources in separate files, rather than as STL-format array literals in methods."
 
 	| resNames |
 	resNames := self allResourceNames asArray.
 	resNames do: 
-			[:each | 
+			[:each |
 			| viewResClass resIdClass rid filename resource |
-			resIdClass := Smalltalk at: #ResourceIdentifier.
-			rid := resIdClass class: (self environment at: each key) name: each value.
-			viewResClass := Smalltalk at: #ViewResource.
+			resIdClass := #{ResourceIdentifier} value.
+			rid := resIdClass class: each key asQualifiedReference value name: each value.
+			viewResClass := #{ViewResource} value.
 			filename := viewResClass generateFilenameFrom: rid inPackage: self.
 			resource := viewResClass inSTBFileWithName: filename.
 			rid assign: resource].
@@ -155,12 +173,12 @@ loadResourcesFromFiler: binaryFiler
 			resourceNames add: aResourceIdentifier owningClass name -> aResourceIdentifier name].
 	self allResourceNames: resourceNames!
 
-loadVersion1: aFileStream filer: binaryFiler 
+loadVersion1: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 1."
 
 	self vmVersionCheck: 0.
-	self declareGlobals.
+	self declareVariables.
 	self fileInClassDefinitions: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
 
@@ -173,7 +191,7 @@ loadVersion2: aFileStream filer: binaryFiler
 	a number of stored objects, organized into file version 2."
 
 	self vmVersionCheck: 0.
-	self declareGlobals.
+	self declareVariables.
 	self fileInClassDefinitions: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
 
@@ -181,12 +199,12 @@ loadVersion2: aFileStream filer: binaryFiler
 	self sourceManager fileInFrom: aFileStream beText.
 	self initializeGlobals!
 
-loadVersion3: aFileStream filer: binaryFiler 
+loadVersion3: aFileStream filer: binaryFiler
 	"Private - File in the objects owned by the receiver. The binaryFiler is positioned to
 	a number of stored objects, organized into file version 3."
 
 	self vmVersionCheck: 0.
-	self declareGlobals.
+	self declareVariables.
 	self fileInClassDefinitions: aFileStream.
 	self loadGlobalsFromFiler: binaryFiler.
 
@@ -195,7 +213,7 @@ loadVersion3: aFileStream filer: binaryFiler
 			[| className resourceClass |
 			className := binaryFiler next.
 			resourceClass := self classFromName: className.
-			binaryFiler next 
+			binaryFiler next
 				keysAndValuesDo: [:resourceName :resource | (ResourceIdentifier class: resourceClass name: resourceName) assign: resource]].
 
 	"File in any trailing source code of class/methods"
@@ -223,7 +241,6 @@ resourceNames
 	"Required for boot and loading of pre-D6 packages.
 	DO NOT USE"
 
-	#deprecated.
 	^Set new!
 
 script: scriptSymbol
@@ -245,22 +262,25 @@ versionLookup
 		at: 5 put: #loadVersion5:filer:;
 		shrink;
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
-!Package categoriesFor: #basicLoadVersion4:filer:!binary filing!private! !
-!Package categoriesFor: #errorUnknownFileVersion:!binary filing!exceptions!private! !
+!Package categoriesFor: #allResourceNames!accessing!private! !
+!Package categoriesFor: #allResourceNames:!private!source filing! !
+!Package categoriesFor: #basicLoadVersion4:filer:!legacy package loading!private! !
+!Package categoriesFor: #errorUnknownFileVersion:!exceptions!legacy package loading!private! !
 !Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
-!Package categoriesFor: #loadGlobalsFromFiler:!binary filing!private! !
-!Package categoriesFor: #loadLegacyPAC:!binary filing!private! !
-!Package categoriesFor: #loadLegacyResources!binary filing!private! !
-!Package categoriesFor: #loadResourcesFromFiler:!binary filing!private! !
-!Package categoriesFor: #loadVersion1:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion2:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion3:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion4:filer:!binary filing!private! !
-!Package categoriesFor: #loadVersion5:filer:!binary filing!private! !
-!Package categoriesFor: #resourceNames!accessing!public! !
-!Package categoriesFor: #script:!operations!public! !
-!Package categoriesFor: #script:put:!operations!public! !
-!Package categoriesFor: #versionLookup!binary filing!constants!private! !
+!Package categoriesFor: #initializeLegacyResources!initializing!private! !
+!Package categoriesFor: #loadGlobalsFromFiler:!legacy package loading!private! !
+!Package categoriesFor: #loadLegacyPAC:!legacy package loading!private! !
+!Package categoriesFor: #loadLegacyResources!legacy package loading!private! !
+!Package categoriesFor: #loadResourcesFromFiler:!legacy package loading!private! !
+!Package categoriesFor: #loadVersion1:filer:!legacy package loading!private! !
+!Package categoriesFor: #loadVersion2:filer:!legacy package loading!private! !
+!Package categoriesFor: #loadVersion3:filer:!legacy package loading!private! !
+!Package categoriesFor: #loadVersion4:filer:!legacy package loading!private! !
+!Package categoriesFor: #loadVersion5:filer:!legacy package loading!private! !
+!Package categoriesFor: #resourceNames!legacy package loading!public! !
+!Package categoriesFor: #script:!legacy package loading!public! !
+!Package categoriesFor: #script:put:!legacy package loading!public! !
+!Package categoriesFor: #versionLookup!constants!legacy package loading!private! !
 
 !Package class methodsFor!
 

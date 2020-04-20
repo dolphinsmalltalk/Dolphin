@@ -19,12 +19,16 @@ isOptimized
 length
 	^stopPosition - self start + 1!
 
-stop: anInteger 
+stop
+	^stopPosition!
+
+stop: anInteger
 	stopPosition := anInteger! !
 !StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
 !StOptimizedToken categoriesFor: #isOptimized!public!testing! !
 !StOptimizedToken categoriesFor: #length!accessing!private! !
-!StOptimizedToken categoriesFor: #stop:!accessing!public! !
+!StOptimizedToken categoriesFor: #stop!accessing!public! !
+!StOptimizedToken categoriesFor: #stop:!initializing!private! !
 
 !StOptimizedToken class methodsFor!
 

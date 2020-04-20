@@ -50,8 +50,8 @@ initializeBootPackages
 	STBPrefix initialize.
 	Delay initializeTimingSemaphore.
 	CompilerNotification initialize.
-	(Smalltalk at: #Utf8String) initialize.
-	(Smalltalk at: #SmalltalkLocale) initialize!
+	#{Utf8String} value initialize.
+	#{SmalltalkLocale} value initialize!
 
 keepAlive
 	"We stay alive until explicitly terminated."
@@ -167,7 +167,7 @@ reloadBootPackages
 	srcMgr := SourceManager default.
 	"First load the constants pools to ensure all constants ref'd in new code are defined"
 	Notification signal: 'Reloading BCL constants pools...'.
-	basePackage sourceGlobalVariables
+	basePackage sourceVariableNames
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
@@ -227,7 +227,7 @@ reloadBootPackages
 
 reloadPackage: aPackage
 	| newPackage missingClasses |
-	Notification signal: 'Reloading ' , aPackage name, ' ...'.
+	Notification signal: 'Reloading ' , aPackage name printString, ' ...'.
 	newPackage := Package fromFile: aPackage fileOutName.
 	Package manager
 		basicRemovePackage: aPackage;
@@ -241,14 +241,14 @@ reloadPackage: aPackage
 			[:each |
 			| class |
 			class := newPackage classFromName: each.
-			class name == each
+			class asQualifiedReference = each
 				ifFalse: 
-					[Notification signal: 'Boot class ' , each , ' renamed to ' , class name.
+					[Notification signal: 'Boot class ' , each asString , ' renamed to ' , class fullName.
 					aPackage removeClassName: each]].
 	missingClasses := aPackage classesInHierarchyOrder difference: newPackage classes.
 	missingClasses reverseDo: 
 			[:each |
-			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
+			Notification signal: 'Removing obsolete boot class ' , each fullName, '...'.
 			each removeFromSystem]!
 
 saveImageDefault

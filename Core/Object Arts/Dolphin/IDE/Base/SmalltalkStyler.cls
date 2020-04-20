@@ -300,7 +300,7 @@ visitIdentifierToken: aStIdentifierToken
 			[| char |
 			char := self lastCharacter.
 			char == $: ifTrue: [^#blockArgDecl].
-			(char == $) or: [char == $; or: [char = $]]]) ifTrue: [^#unaryMessage].
+			(');]}' includes: char) ifTrue: [^#unaryMessage].
 			^#identifier].
 	^##(IdentityDictionary new
 		at: #identifier put: #unaryMessage;
@@ -311,6 +311,7 @@ visitIdentifierToken: aStIdentifierToken
 		at: #literalCharacter put: #unaryMessage;
 		at: #literalSymbol put: #unaryMessage;
 		at: #literalBytes put: #unaryMessage;
+		at: #literalBindingReference put: #unaryMessage;
 		at: #tempOpenBar put: #tempDecl;
 		at: #tempDecl put: #tempDecl;
 		at: #keywordSelector put: #argDecl;
@@ -360,6 +361,10 @@ visitNumberLiteralToken: aStNumberLiteralToken
 
 visitOptimizedToken: aStOptimizedToken
 	stack addLast: aStOptimizedToken.
+	^#specialCharacter!
+
+visitQualifiedReferenceToken: aStQualifiedReferenceToken
+	"We should never actually get here because the SmalltalkStylingScanner scans literal binding refs as literal tokens."
 	^#specialCharacter!
 
 visitSpecialCharacterToken: aStSpecialCharacterToken
@@ -430,9 +435,10 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 !SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitQualifiedReferenceToken:!public!visiting! !
 !SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
 
-SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitSpecialCharacterToken:)!
+SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitQualifiedReferenceToken: #visitSpecialCharacterToken:)!
 
 !SmalltalkStyler class methodsFor!
 

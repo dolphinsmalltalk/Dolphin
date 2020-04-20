@@ -58,7 +58,7 @@ browseAllFailedMethods
 browseFailedClass: aString
 	"Private - Browser the class identified by aString"
 
-	(self class environment lookup: aString asSymbol)
+	aString asQualifiedReference valueOrNil
 		ifNotNil: [:failedClass | (Smalltalk developmentSystem browseClass: failedClass) caption: self failedRule name]!
 
 browseFailedMethodName: aString 
@@ -661,7 +661,8 @@ startCheckerProcess
 				refreshIcon;
 				runLintChecks.
 			checkerProcess := nil] 
-					forkAt: Processor userBackgroundPriority!
+					forkAt: Processor userBackgroundPriority
+					maxStack: 128*1024!
 
 stopCheckerProcess
 	self isBusy ifFalse: [^self].

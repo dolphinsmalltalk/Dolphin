@@ -77,6 +77,9 @@ visitParameterNode: anStParameterNode
 visitPrimitiveNode: anStPrimitiveNode
 	anStPrimitiveNode errorTemp ifNotNil: [:temp | self visitNode: temp]!
 
+visitQualifiedReferenceNode: aQualifiedReferenceNode
+	^aQualifiedReferenceNode!
+
 visitReturnNode: aReturnNode
 	self visitNode: aReturnNode value!
 
@@ -127,6 +130,7 @@ visitVariableNode: aVariableNode
 !StParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitQualifiedReferenceNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitSelfVariableNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !

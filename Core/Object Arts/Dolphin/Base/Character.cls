@@ -606,7 +606,10 @@ codePoint: anInteger ifInvalid: exceptionHandler
 			[(AnsiCharacters lookup: anInteger)
 				ifNil: 
 					[(self isValidCodePoint: anInteger)
-						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
+						ifTrue: 
+							[(self newCode: (Utf32Mask bitOr: anInteger))
+								isImmutable: true;
+								yourself]
 						ifFalse: [exceptionHandler value]]]!
 
 cr

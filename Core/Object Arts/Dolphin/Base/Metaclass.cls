@@ -69,6 +69,11 @@ comment: aString
 	self instanceClass comment: aString
 !
 
+fullyQualifiedReference
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+
+	^self instanceClass fullyQualifiedReference meta!
+
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
@@ -157,6 +162,7 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #classVarNames!class variables!public! !
 !Metaclass categoriesFor: #comment!accessing!public! !
 !Metaclass categoriesFor: #comment:!accessing!public! !
+!Metaclass categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Metaclass categoriesFor: #instanceClass!accessing!public! !
 !Metaclass categoriesFor: #instanceClass:!accessing!private! !
 !Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !

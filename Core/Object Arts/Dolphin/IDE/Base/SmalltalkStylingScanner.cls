@@ -52,9 +52,52 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 	creating an appropriate 'error' token which is of the correct type (if possible) so that the
 	styling/auto-completion remain as useful as possible."
 
-	! !
+	!
+
+scanQualifiedReference
+	"Private - For styling purposes it makes sense to scan binding references in their entirety, as opposed to parsing them, as this makes them easier to style and auto-complete. It doesn't make for an elegant code solution, however, especially in the handling of error cases. Fortunately we don't need sophisticated error reporting in the styling scanner - we just want to terminate parsing the QR as soon as we detect an error so that the colouring stops at the point the QR becomes invalid."
+
+	| bindingRef type |
+	self step.	"{"
+	self stripSeparators.
+	characterType == #alphabetic
+		ifFalse: [^self literalErrorToken: (BindingReference pathString: '') stop: self previousStepPosition].
+	self scanName.
+	[currentCharacter == $. and: [(self classify: stream peek) == #alphabetic]] whileTrue: 
+			[buffer nextPut: $..
+			self step.
+			self scanName].
+	bindingRef := BindingReference pathString: buffer contents.
+	self stripSeparators.
+	characterType == #alphabetic
+		ifFalse: 
+			["Avoid name validation done by BindingReference class>>path:, as we don't want this to error."
+			^currentCharacter == $}
+				ifTrue: 
+					[self step.
+					self literalTokenClass
+						start: tokenStart
+						comments: nil
+						value: bindingRef
+						stop: self previousStepPosition]
+				ifFalse: [self literalErrorToken: bindingRef stop: self previousStepPosition]].
+	buffer reset.
+	self scanName.
+	type := buffer contents.
+	type = 'class' ifFalse: [^self literalErrorToken: bindingRef stop: self previousStepPosition].
+	bindingRef := bindingRef meta.
+	self stripSeparators.
+	currentCharacter == $}
+		ifFalse: [^self literalErrorToken: bindingRef stop: self previousStepPosition].
+	self step.	"}"
+	^self literalTokenClass
+		start: tokenStart
+		comments: nil
+		value: bindingRef
+		stop: self previousStepPosition! !
 !SmalltalkStylingScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!SmalltalkStylingScanner categoriesFor: #scanQualifiedReference!private!scanning! !
 

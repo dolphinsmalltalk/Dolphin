@@ -167,6 +167,12 @@ public:
 	STDMETHOD_(POTE, NewUtf8String)(
 		/* [in] */ LPCSTR szValue,
 		/* [in] */ int len);
+
+    STDMETHOD_(POTE, NewBindingRef)(
+        /* [in] */ LPCSTR szQualifiedname,
+        /* [in] */ Oop context,
+        /* [in] */ BOOL meta
+        );
 };
 
 #ifdef VMDLL

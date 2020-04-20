@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" encryption and signature support.
 Copyright (c) Object Arts Ltd, 1999-2000.
@@ -15,47 +15,42 @@ For documentation evaluate:
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #BCryptLibrary;
-	add: #DigitalSignatureAlgorithm;
-	add: #DolphinSureCertificate;
-	add: #DolphinSureCertificateInfo;
-	add: #DolphinSureCertificateStore;
-	add: #DolphinSureCertificationAuthorityCertificate;
-	add: #DolphinSurePersonalCertificate;
-	add: #DolphinSureTrustedData;
-	add: #NotSignedCertificate;
-	add: #NotTrustedError;
-	add: #ObjectArtsCertificate;
-	add: #ObjectArtsRootCertificate;
-	add: #PC1Cipher;
-	add: #SecureHashAlgorithm;
-	add: #TrustedDataError;
-	yourself.
+package setClassNames: #(
+	#{BCryptLibrary}
+	#{DigitalSignatureAlgorithm}
+	#{DolphinSureCertificate}
+	#{DolphinSureCertificateInfo}
+	#{DolphinSureCertificateStore}
+	#{DolphinSureCertificationAuthorityCertificate}
+	#{DolphinSurePersonalCertificate}
+	#{DolphinSureTrustedData}
+	#{NotSignedCertificate}
+	#{NotTrustedError}
+	#{ObjectArtsCertificate}
+	#{ObjectArtsRootCertificate}
+	#{PC1Cipher}
+	#{SecureHashAlgorithm}
+	#{TrustedDataError}
+).
 
-package methodNames
-	add: #SourceManager -> #emitSecureChunk:description:publisherCertificate:privateKey:on:;
-	add: #SourceManager -> #secureChunkMarker;
-	add: #SourceManager -> #secureFileIn:;
-	add: #SourceManager -> #secureFileInFrom:;
-	add: #SourceManager -> #secureFileItIn:;
-	yourself.
+package setMethodNames: #(
+	#(#{SourceManager} #emitSecureChunk:description:publisherCertificate:privateKey:on:)
+	#(#{SourceManager} #secureChunkMarker)
+	#(#{SourceManager} #secureFileIn:)
+	#(#{SourceManager} #secureFileInFrom:)
+	#(#{SourceManager} #secureFileItIn:)
+).
 
-package globalNames
-	add: #BCryptConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{BCryptConstants}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Legacy Date & Time'
 	'..\System\Random\Dolphin Random Stream'
-	'..\Registry\Dolphin Registry Access').
+	'..\Registry\Dolphin Registry Access'
+).
 
 package!
 
@@ -136,9 +131,6 @@ ExternalLibrary subclass: #BCryptLibrary
 	classVariableNames: ''
 	poolDictionaries: 'BCryptConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

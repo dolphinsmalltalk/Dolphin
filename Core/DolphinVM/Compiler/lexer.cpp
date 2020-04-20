@@ -18,10 +18,10 @@ Smalltalk lexical analyser
 #include "..\compiler_i.h"
 #endif
 
-static const uint8_t COMMENTDELIM = '"';
-static const uint8_t STRINGDELIM = '\'';
-static const uint8_t CHARLITERAL = '$';
-static const uint8_t LITERAL = '#';
+static const char8_t COMMENTDELIM = '"';
+static const char8_t STRINGDELIM = '\'';
+static const char8_t CHARLITERAL = '$';
+static const char8_t LITERAL = '#';
 
 ///////////////////////
 
@@ -124,7 +124,7 @@ bool Lexer::IsASingleBinaryChar(char8_t ch) const
 inline void Lexer::SkipBlanks()
 {
 	// Skips blanks in the input stream but emits syntax colouring for newlines
-	uint8_t ch = m_cc;
+	char8_t ch = m_cc;
 	while (ch && isspace(ch))
 		ch = NextChar();
 }
@@ -134,7 +134,7 @@ void Lexer::SkipComments()
 	textpos_t commentStart = CharPosition;
 	while (m_cc == COMMENTDELIM)
 	{
-		uint8_t ch;
+		char8_t ch;
 		do
 		{
 			ch = NextChar();
@@ -172,7 +172,7 @@ double Lexer::get_ThisTokenFloat() const
 
 void Lexer::ScanFloat()
 {
-	uint8_t ch = NextChar();
+	char8_t ch = NextChar();
 	if (isdigit(PeekAtChar()))
 	{
 		m_tokenType = TokenType::FloatingConst;
@@ -186,7 +186,7 @@ void Lexer::ScanFloat()
 		// Read the exponent, if any
 		if (ch == 'e' || ch == 'd' || ch == 'q')
 		{
-			uint8_t peek = PeekAtChar();
+			char8_t peek = PeekAtChar();
 			if (isdigit(peek) || issign(peek))
 			{
 				if (issign(peek))
@@ -294,7 +294,7 @@ void Lexer::ScanNumber()
 
 	ScanInteger(radix_t::Decimal);
 
-	uint8_t ch = PeekAtChar();
+	char8_t ch = PeekAtChar();
 
 	// If they both read the same number of characters or the integer ended
 	// in a radix specifier then we got ourselves an integer but we'll need
@@ -368,7 +368,7 @@ void Lexer::ScanNumber()
 // Read string up to terminating quote, ignoring embedded double quotes
 Lexer::TokenType Lexer::ScanString(textpos_t stringStart)
 {
-	uint8_t ch;
+	char8_t ch;
 	bool isAscii = true;
 	do
 	{
@@ -394,7 +394,7 @@ Lexer::TokenType Lexer::ScanString(textpos_t stringStart)
 		}
 	} while (ch);
 
-	return isAscii ? TokenType::AnsiStringConst : TokenType::Utf8StringConst;
+	return isAscii ? TokenType::AsciiStringConst : TokenType::Utf8StringConst;
 }
 
 void Lexer::ScanName()
@@ -526,6 +526,11 @@ void Lexer::ScanLiteral()
 		m_tokenType = TokenType::ByteArrayBegin;
 	}
 
+	else if (m_cc == '{')
+	{
+		m_tokenType = TokenType::QualifiedRefBegin;
+	}
+
 	else if (m_cc == LITERAL)
 	{
 		// Second hash, so should be a constant expression ##(xxx)
@@ -556,7 +561,7 @@ Lexer::TokenType Lexer::NextToken()
 	m_thisTokenRange.m_start = start;
 
 	tp = m_token;
-	uint8_t ch = m_cc;
+	char8_t ch = m_cc;
 
 	*tp++ = ch;
 
@@ -672,7 +677,7 @@ Lexer::TokenType Lexer::NextToken()
 
 int32_t Lexer::ReadUtf8()
 {
-	uint8_t ch = Step();
+	char8_t ch = Step();
 	return ReadUtf8(ch);
 }
 
@@ -688,7 +693,7 @@ int32_t Lexer::ReadUtf8(char8_t ch)
 
 		if (ch >= 0xc0)
 		{
-			uint8_t ch2 = Step();
+			char8_t ch2 = Step();
 			if ((ch2 & 0xC0) != 0x80)
 			{
 				return -1;
@@ -697,7 +702,7 @@ int32_t Lexer::ReadUtf8(char8_t ch)
 
 			if (ch >= 0xE0)
 			{
-				uint8_t ch3 = Step();
+				char8_t ch3 = Step();
 				if ((ch3 & 0xC0) != 0x80)
 				{
 					return -1;
@@ -706,7 +711,7 @@ int32_t Lexer::ReadUtf8(char8_t ch)
 
 				if (ch >= 0xF0)
 				{
-					uint8_t ch4 = Step();
+					char8_t ch4 = Step();
 					if ((ch4 & 0xC0) != 0x80)
 					{
 						return -1;

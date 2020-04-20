@@ -550,7 +550,7 @@ parsePointerToStruct: anAssociation
 	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
-			[((self class environment lookup: #IUnknown)
+			[(#{IUnknown} valueOrNil
 				ifNil: [ExtCallArgLP]
 				ifNotNil: [:unkClass | (structClass includesBehavior: unkClass) ifTrue: [ExtCallArgCOMPTR] ifFalse: [ExtCallArgLP]])
 					-> structClass]!

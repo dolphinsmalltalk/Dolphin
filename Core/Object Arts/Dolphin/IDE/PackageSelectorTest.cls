@@ -13,8 +13,8 @@ PackageSelectorTest comment: ''!
 classToTest
 	^PackageSelector!
 
-createPackage: name 
-	^Package manager newPackage: name!
+createPackage: aString
+	^Package manager newPackage: aString!
 
 removePackage: aPackage 
 	Package manager removePackage: aPackage!

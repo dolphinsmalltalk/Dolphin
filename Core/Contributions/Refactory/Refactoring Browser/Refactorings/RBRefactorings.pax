@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBRefactorings'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Refactorings
 Copyright (c) John Brant & Don Roberts.
@@ -10,78 +10,72 @@ Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San D
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
 
-package classNames
-	add: #AbstractClassVariableRefactoring;
-	add: #AbstractInstanceVariableRefactoring;
-	add: #AbstractVariablesRefactoring;
-	add: #AddClassRefactoring;
-	add: #AddClassVariableRefactoring;
-	add: #AddInstanceVariableRefactoring;
-	add: #AddMethodRefactoring;
-	add: #AddParameterRefactoring;
-	add: #ChangeMethodNameRefactoring;
-	add: #ChildrenToSiblingsRefactoring;
-	add: #ClassRefactoring;
-	add: #CreateAccessorsForVariableRefactoring;
-	add: #ExpandReferencedPoolsRefactoring;
-	add: #ExtractMethodRefactoring;
-	add: #ExtractMethodToComponentRefactoring;
-	add: #ExtractToTemporaryRefactoring;
-	add: #InlineAllSendersRefactoring;
-	add: #InlineMethodFromComponentRefactoring;
-	add: #InlineMethodRefactoring;
-	add: #InlineParameterRefactoring;
-	add: #InlineTemporaryRefactoring;
-	add: #MethodRefactoring;
-	add: #MoveMethodRefactoring;
-	add: #MoveVariableDefinitionRefactoring;
-	add: #ProtectInstanceVariableRefactoring;
-	add: #PullUpClassVariableRefactoring;
-	add: #PullUpInstanceVariableRefactoring;
-	add: #PushDownClassVariableRefactoring;
-	add: #PushDownInstanceVariableRefactoring;
-	add: #PushDownMethodRefactoring;
-	add: #PushUpMethodRefactoring;
-	add: #RBAbstractClass;
-	add: #RBAbstractCondition;
-	add: #RBClass;
-	add: #RBCondition;
-	add: #RBConjunctiveCondition;
-	add: #RBMetaclass;
-	add: #RBMethod;
-	add: #RBMethodName;
-	add: #RBNamespace;
-	add: #RBNegationCondition;
-	add: #RBReadBeforeWrittenTester;
-	add: #Refactoring;
-	add: #RefactoringError;
-	add: #RefactoringManager;
-	add: #RefactoringWarning;
-	add: #RefactoryTyper;
-	add: #RemoveClassRefactoring;
-	add: #RemoveClassVariableRefactoring;
-	add: #RemoveInstanceVariableRefactoring;
-	add: #RemoveMethodRefactoring;
-	add: #RemoveParameterRefactoring;
-	add: #RenameClassRefactoring;
-	add: #RenameClassVariableRefactoring;
-	add: #RenameInstanceVariableRefactoring;
-	add: #RenameMethodRefactoring;
-	add: #RenameTemporaryRefactoring;
-	add: #SplitClassRefactoring;
-	add: #TemporaryToInstanceVariableRefactoring;
-	add: #VariableRefactoring;
-	yourself.
+package setClassNames: #(
+	#{AbstractClassVariableRefactoring}
+	#{AbstractInstanceVariableRefactoring}
+	#{AbstractVariablesRefactoring}
+	#{AddClassRefactoring}
+	#{AddClassVariableRefactoring}
+	#{AddInstanceVariableRefactoring}
+	#{AddMethodRefactoring}
+	#{AddParameterRefactoring}
+	#{ChangeMethodNameRefactoring}
+	#{ChildrenToSiblingsRefactoring}
+	#{ClassRefactoring}
+	#{CreateAccessorsForVariableRefactoring}
+	#{ExpandReferencedPoolsRefactoring}
+	#{ExtractMethodRefactoring}
+	#{ExtractMethodToComponentRefactoring}
+	#{ExtractToTemporaryRefactoring}
+	#{InlineAllSendersRefactoring}
+	#{InlineMethodFromComponentRefactoring}
+	#{InlineMethodRefactoring}
+	#{InlineParameterRefactoring}
+	#{InlineTemporaryRefactoring}
+	#{MethodRefactoring}
+	#{MoveMethodRefactoring}
+	#{MoveVariableDefinitionRefactoring}
+	#{ProtectInstanceVariableRefactoring}
+	#{PullUpClassVariableRefactoring}
+	#{PullUpInstanceVariableRefactoring}
+	#{PushDownClassVariableRefactoring}
+	#{PushDownInstanceVariableRefactoring}
+	#{PushDownMethodRefactoring}
+	#{PushUpMethodRefactoring}
+	#{RBAbstractClass}
+	#{RBAbstractCondition}
+	#{RBClass}
+	#{RBCondition}
+	#{RBConjunctiveCondition}
+	#{RBMetaclass}
+	#{RBMethod}
+	#{RBMethodName}
+	#{RBNamespace}
+	#{RBNegationCondition}
+	#{RBReadBeforeWrittenTester}
+	#{Refactoring}
+	#{RefactoringError}
+	#{RefactoringManager}
+	#{RefactoringWarning}
+	#{RefactoryTyper}
+	#{RemoveClassRefactoring}
+	#{RemoveClassVariableRefactoring}
+	#{RemoveInstanceVariableRefactoring}
+	#{RemoveMethodRefactoring}
+	#{RemoveParameterRefactoring}
+	#{RenameClassRefactoring}
+	#{RenameClassVariableRefactoring}
+	#{RenameInstanceVariableRefactoring}
+	#{RenameMethodRefactoring}
+	#{RenameTemporaryRefactoring}
+	#{SplitClassRefactoring}
+	#{TemporaryToInstanceVariableRefactoring}
+	#{VariableRefactoring}
+).
 
-package methodNames
-	add: 'Class class' -> #rootsOfTheWorld;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Class class} #rootsOfTheWorld)
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -90,7 +84,8 @@ package setPrerequisites: #(
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\Parser\RBParser'
-	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
+).
 
 package!
 
@@ -396,9 +391,6 @@ StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

@@ -1738,7 +1738,7 @@ toggleAnimation
 toggleDisassembly
 	"Private - Switch between source/disassembly modes."
 
-	(Smalltalk includesKey: #Disassembler) 
+	#{Disassembler} isDefined
 		ifFalse: 
 			[MessageBox warning: self selectedMethod disassembly.
 			^self].

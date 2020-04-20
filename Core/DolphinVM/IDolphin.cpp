@@ -289,3 +289,11 @@ STDMETHODIMP_(BSTR) CDolphinSmalltalk::DebugPrintString(
 	std::wstring str = Interpreter::PrintString(oop);
 	return SysAllocString(str.c_str());
 }
+
+STDMETHODIMP_(POTE) CDolphinSmalltalk::NewBindingRef(/* [in] */ LPCSTR  szQualifiedName, /* [in] */Oop context, /* [in] */ BOOL meta)
+{
+    return (POTE)PerformWithWithWith((Oop)Pointers.ClassBindingReference, 
+        Pointers.newBindingRefSelector, 
+        (Oop)Utf8String::New(szQualifiedName), context, reinterpret_cast<Oop>(meta ? Pointers.True : Pointers.False));
+}
+

@@ -65,6 +65,9 @@ isPatternBlock
 isPatternVariable
 	^false!
 
+isQualifiedReference
+	^false!
+
 isSpecial
 	^false!
 
@@ -113,6 +116,7 @@ stop
 !StToken categoriesFor: #isOptimized!public!testing! !
 !StToken categoriesFor: #isPatternBlock!public!testing! !
 !StToken categoriesFor: #isPatternVariable!public!testing! !
+!StToken categoriesFor: #isQualifiedReference!public!testing! !
 !StToken categoriesFor: #isSpecial!public!testing! !
 !StToken categoriesFor: #isSpecial:!public!testing! !
 !StToken categoriesFor: #length!accessing!public! !

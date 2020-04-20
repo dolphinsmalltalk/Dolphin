@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #StSemanticAnalyser
-	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations'
+	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -397,6 +397,13 @@ errorAssignConstant: anStVariableNode
 				extra: anStVariableNode name].
 	^nil!
 
+errorBlock: aMonadicValuable
+	"Set the <monadicValuable> that is evaluated for any semantic errors (not warnings) detected while analysing the AST.
+	The argument will be a CompilerErrorNotification. If the block returns, then the error will be signalled, but as these 
+	are resumable the analysis can recover and continue in order to detect any further errors."
+
+	errorBlock := aMonadicValuable!
+
 initialize
 	super initialize.
 	scopes := OrderedCollection new.
@@ -453,7 +460,7 @@ restrictedSelectors
 scopes
 	^scopes!
 
-setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArray
+setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArray errorBlock: aMonadicValuable
 	methodNode := aStMethodNode.
 	methodClass := aClass.
 	evaluationContext := anObject.
@@ -463,7 +470,8 @@ setMethodNode: aStMethodNode methodClass: aClass context: anObject pools: anArra
 			[evalScope := (StEvalScope pools: anArray)
 						outer: currentScope;
 						yourself.
-			currentScope := evalScope]!
+			currentScope := evalScope].
+	errorBlock := aMonadicValuable!
 
 signalError: anInteger forNode: aNode 
 	^self 
@@ -484,19 +492,23 @@ signalError: anInteger forNode: aNode extras: anArray
 		range: aNode sourceInterval
 		extras: anArray!
 
-signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anArray 
-	| source position |
+signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anArray
+	| source position err |
 	source := methodNode source.
 	position := anStProgramNode startWithoutParentheses.
-	^(self compilationErrorClass 
-		code: codeInteger
-		in: source
-		for: methodClass
-		selector: methodNode selector
-		position: position
-		line: (self lineOfSourcePosition: position)
-		range: anInterval
-		extras: anArray) signal!
+	err := self compilationErrorClass
+				code: codeInteger
+				in: source
+				for: methodClass
+				selector: methodNode selector
+				position: position
+				line: (self lineOfSourcePosition: position)
+				range: anInterval
+				extras: anArray.
+	"Warnings are not passed to the error block"
+	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
+	"If the error block returns, then the exception is signalled"
+	^err signal!
 
 tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
@@ -688,6 +700,7 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #countOuterTemps!helpers!private! !
 !StSemanticAnalyser categoriesFor: #currentScope!accessing!private! !
 !StSemanticAnalyser categoriesFor: #errorAssignConstant:!error handling!private! !
+!StSemanticAnalyser categoriesFor: #errorBlock:!accessing!private! !
 !StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
 !StSemanticAnalyser categoriesFor: #isReceiverOfNilTest:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #isTempVariable:!helpers!private! !
@@ -701,7 +714,7 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #removeScope!helpers!private! !
 !StSemanticAnalyser categoriesFor: #restrictedSelectors!constants!private! !
 !StSemanticAnalyser categoriesFor: #scopes!accessing!public! !
-!StSemanticAnalyser categoriesFor: #setMethodNode:methodClass:context:pools:!initializing!private! !
+!StSemanticAnalyser categoriesFor: #setMethodNode:methodClass:context:pools:errorBlock:!initializing!private! !
 !StSemanticAnalyser categoriesFor: #signalError:forNode:!error handling!private! !
 !StSemanticAnalyser categoriesFor: #signalError:forNode:extra:!error handling!private! !
 !StSemanticAnalyser categoriesFor: #signalError:forNode:extras:!error handling!private! !
@@ -729,14 +742,15 @@ visitVariableNode: aStVariableNode
 
 !StSemanticAnalyser class methodsFor!
 
-analyzeParseTree: aParseTree for: aClass context: anObject pools: anArray
+analyzeParseTree: aParseTree for: aClass context: anObject pools: anArray onError: aMonadicValuable
 	| methodNode |
 	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
-	^(self new)
+	^self new
 		setMethodNode: methodNode
 			methodClass: aClass
 			context: anObject
-			pools: anArray;
+			pools: anArray
+			errorBlock: aMonadicValuable;
 		visitNode: methodNode!
 
 initialize
@@ -765,6 +779,6 @@ initialize
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
 	RestrictedSelectors isImmutable: true.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
-!StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:context:pools:!accessing!public! !
+!StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:context:pools:onError:!accessing!public! !
 !StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !
 

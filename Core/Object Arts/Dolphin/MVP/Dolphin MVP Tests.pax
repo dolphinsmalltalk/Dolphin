@@ -1,104 +1,98 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractContainerViewTest;
-	add: #AbstractPointTest;
-	add: #AbstractRectangleTest;
-	add: #AbstractTextEditTest;
-	add: #AcceleratorTableTest;
-	add: #ARGBTest;
-	add: #BorderLayoutTest;
-	add: #BrushTest;
-	add: #CanvasTest;
-	add: #ChoicePresenterTest;
-	add: #ClipboardTest;
-	add: #ColorDialogTest;
-	add: #ColorTest;
-	add: #CommandDescriptionTest;
-	add: #ContainerViewTest;
-	add: #DifferencesPresenterTest;
-	add: #EvaluationConverterTest;
-	add: #ExternalPointTest;
-	add: #ExternalRectangleTest;
-	add: #FileDialogTest;
-	add: #FlowLayoutTest;
-	add: #FolderTest;
-	add: #FramingLayoutTest;
-	add: #GridLayoutTest;
-	add: #IconTest;
-	add: #ImageViewAbstractTest;
-	add: #ImageViewTest;
-	add: #LayoutManagerTest;
-	add: #LinkButtonTest;
-	add: #ListBoxTest;
-	add: #ListControlTest;
-	add: #ListPresenterTest;
-	add: #ListViewTest;
-	add: #MockScintillaView;
-	add: #MoenTreeViewTest;
-	add: #MoenTreeViewTest2;
-	add: #MultilineTextEditTest;
-	add: #MultipleSelectionListBoxTest;
-	add: #MultipleSelectionListViewTest;
-	add: #MultiSelectListBoxTest;
-	add: #MultiSelectListViewTest;
-	add: #PluggableColorTest;
-	add: #Point3DTest;
-	add: #POINTLTest;
-	add: #POINTSTest;
-	add: #PointTest;
-	add: #PresenterTest;
-	add: #ProportionalLayoutTest;
-	add: #PushButtonTest;
-	add: #RadioButtonSetPresenterTest;
-	add: #RectangleTest;
-	add: #RECTLTest;
-	add: #ReferenceViewTest;
-	add: #ResourceIdentifierTest;
-	add: #RichTextEditTest;
-	add: #ScintillaIndicatorTest;
-	add: #ScintillaLexerMetadataTest;
-	add: #ScintillaLexerPropertyTest;
-	add: #ScintillaViewTest;
-	add: #ScrollingDecoratorTest;
-	add: #SelectableItemsTest;
-	add: #SelectableListItemsTest;
-	add: #SelectableTreeItemsTest;
-	add: #SingleSelectListBoxTest;
-	add: #SingleSelectListViewTest;
-	add: #SliderTest;
-	add: #StaticPathTest;
-	add: #StaticTextTest;
-	add: #StyledContainerTest;
-	add: #TabViewTest;
-	add: #TabViewXPTest;
-	add: #TextEditTest;
-	add: #ThemeColorTest;
-	add: #TreePresenterTest;
-	add: #TreeViewTest;
-	add: #TypeConverterTest;
-	add: #ValueConverterTest;
-	add: #ViewTest;
-	add: #VirtualColorTest;
-	add: #WindowsEventTest;
-	yourself.
+package setClassNames: #(
+	#{AbstractContainerViewTest}
+	#{AbstractPointTest}
+	#{AbstractRectangleTest}
+	#{AbstractTextEditTest}
+	#{AcceleratorTableTest}
+	#{ARGBTest}
+	#{BorderLayoutTest}
+	#{BrushTest}
+	#{CanvasTest}
+	#{ChoicePresenterTest}
+	#{ClipboardTest}
+	#{ColorDialogTest}
+	#{ColorTest}
+	#{CommandDescriptionTest}
+	#{ContainerViewTest}
+	#{DifferencesPresenterTest}
+	#{EvaluationConverterTest}
+	#{ExternalPointTest}
+	#{ExternalRectangleTest}
+	#{FileDialogTest}
+	#{FlowLayoutTest}
+	#{FolderTest}
+	#{FramingLayoutTest}
+	#{GridLayoutTest}
+	#{IconTest}
+	#{ImageViewAbstractTest}
+	#{ImageViewTest}
+	#{LayoutManagerTest}
+	#{LinkButtonTest}
+	#{ListBoxTest}
+	#{ListControlTest}
+	#{ListPresenterTest}
+	#{ListViewTest}
+	#{MockScintillaView}
+	#{MoenTreeViewTest}
+	#{MoenTreeViewTest2}
+	#{MultilineTextEditTest}
+	#{MultipleSelectionListBoxTest}
+	#{MultipleSelectionListViewTest}
+	#{MultiSelectListBoxTest}
+	#{MultiSelectListViewTest}
+	#{PluggableColorTest}
+	#{Point3DTest}
+	#{POINTLTest}
+	#{POINTSTest}
+	#{PointTest}
+	#{PresenterTest}
+	#{ProportionalLayoutTest}
+	#{PushButtonTest}
+	#{RadioButtonSetPresenterTest}
+	#{RectangleTest}
+	#{RECTLTest}
+	#{ReferenceViewTest}
+	#{ResourceIdentifierTest}
+	#{RichTextEditTest}
+	#{ScintillaIndicatorTest}
+	#{ScintillaLexerMetadataTest}
+	#{ScintillaLexerPropertyTest}
+	#{ScintillaViewTest}
+	#{ScrollingDecoratorTest}
+	#{SelectableItemsTest}
+	#{SelectableListItemsTest}
+	#{SelectableTreeItemsTest}
+	#{SingleSelectListBoxTest}
+	#{SingleSelectListViewTest}
+	#{SliderTest}
+	#{StaticPathTest}
+	#{StaticTextTest}
+	#{StyledContainerTest}
+	#{TabViewTest}
+	#{TabViewXPTest}
+	#{TextEditTest}
+	#{ThemeColorTest}
+	#{TreePresenterTest}
+	#{TreeViewTest}
+	#{TypeConverterTest}
+	#{ValueConverterTest}
+	#{ViewTest}
+	#{VirtualColorTest}
+	#{WindowsEventTest}
+).
 
-package methodNames
-	add: #STLFilerTest -> #testRectangleReadWrite;
-	add: #STLFilerTest -> #testResourceReadWrite;
-	add: #STLFilerTest -> #testShellReadWrite;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{STLFilerTest} #testRectangleReadWrite)
+	#(#{STLFilerTest} #testResourceReadWrite)
+	#(#{STLFilerTest} #testShellReadWrite)
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
@@ -135,7 +129,8 @@ package setPrerequisites: #(
 	'Models\Tree\Dolphin Tree Models'
 	'Presenters\Tree\Dolphin Tree Presenter'
 	'Type Converters\Dolphin Type Converters'
-	'Models\Value\Dolphin Value Models').
+	'Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -541,9 +536,6 @@ VirtualColorTest subclass: #ThemeColorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

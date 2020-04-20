@@ -1,84 +1,83 @@
 ﻿| package |
 package := Package name: 'RBTests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractClassVariableTest;
-	add: #AbstractInstanceVariableTest;
-	add: #AddClassTest;
-	add: #AddClassVariableTest;
-	add: #AddInstanceVariableTest;
-	add: #AddMethodTest;
-	add: #AddParameterTest;
-	add: #BrowserEnvironmentTest;
-	add: #ChildrenToSiblingsTest;
-	add: #CreateAccessorsForVariableTest;
-	add: #ExtractMethodTest;
-	add: #ExtractMethodToComponentTest;
-	add: #ExtractToTemporaryTest;
-	add: #FormatterTest;
-	add: #InlineAllMethodTest;
-	add: #InlineMethodFromComponentTest;
-	add: #InlineMethodTest;
-	add: #InlineParameterTest;
-	add: #InlineTemporaryTest;
-	add: #MoveMethodTest;
-	add: #MoveVariableDefinitionTest;
-	add: #ParserTest;
-	add: #ProtectInstanceVariableTest;
-	add: #PullUpClassVariableTest;
-	add: #PushDownClassVariableTest;
-	add: #PushDownInstanceVariableTest;
-	add: #PushDownMethodTest;
-	add: #PushUpInstanceVariableTest;
-	add: #PushUpMethodTest;
-	add: #RBClassTest;
-	add: #RBMethodTest;
-	add: #RBNamespaceTest;
-	add: #RefactoringBrowserTest;
-	add: #RefactoringTest;
-	add: #ReferenceFinderTest;
-	add: #RemoveClassTest;
-	add: #RemoveClassVariableTest;
-	add: #RemoveInstanceVariableTest;
-	add: #RemoveMethodTest;
-	add: #RemoveParameterTest;
-	add: #RenameClassTest;
-	add: #RenameClassVariableTest;
-	add: #RenameInstanceVariableTest;
-	add: #RenameMethodTest;
-	add: #RenameTemporaryTest;
-	add: #SmalllintTest;
-	add: #TemporaryToInstanceVariableTest;
-	add: #VariableEnvironmentTest;
-	add: #VariableTypeTest;
-	yourself.
+package setClassNames: #(
+	#{AbstractClassVariableTest}
+	#{AbstractInstanceVariableTest}
+	#{AddClassTest}
+	#{AddClassVariableTest}
+	#{AddInstanceVariableTest}
+	#{AddMethodTest}
+	#{AddParameterTest}
+	#{BrowserEnvironmentTest}
+	#{ChildrenToSiblingsTest}
+	#{CreateAccessorsForVariableTest}
+	#{ExtractMethodTest}
+	#{ExtractMethodToComponentTest}
+	#{ExtractToTemporaryTest}
+	#{FormatterTest}
+	#{InlineAllMethodTest}
+	#{InlineMethodFromComponentTest}
+	#{InlineMethodTest}
+	#{InlineParameterTest}
+	#{InlineTemporaryTest}
+	#{MoveMethodTest}
+	#{MoveVariableDefinitionTest}
+	#{ParserTest}
+	#{ProtectInstanceVariableTest}
+	#{PullUpClassVariableTest}
+	#{PushDownClassVariableTest}
+	#{PushDownInstanceVariableTest}
+	#{PushDownMethodTest}
+	#{PushUpInstanceVariableTest}
+	#{PushUpMethodTest}
+	#{RBClassTest}
+	#{RBConditionTest}
+	#{RBMethodTest}
+	#{RBNamespaceTest}
+	#{RefactoringBrowserTest}
+	#{RefactoringManagerTest}
+	#{RefactoringTest}
+	#{ReferenceFinderTest}
+	#{RemoveClassTest}
+	#{RemoveClassVariableTest}
+	#{RemoveInstanceVariableTest}
+	#{RemoveMethodTest}
+	#{RemoveParameterTest}
+	#{RenameClassTest}
+	#{RenameClassVariableTest}
+	#{RenameInstanceVariableTest}
+	#{RenameMethodTest}
+	#{RenameTemporaryTest}
+	#{SmalllintTest}
+	#{TemporaryToInstanceVariableTest}
+	#{VariableEnvironmentTest}
+	#{VariableTypeTest}
+).
 
-package methodNames
-	add: #BlockClosure -> #isEqualTo:;
-	add: #ByteArray -> #isEqualTo:;
-	add: #Collection -> #isEqualTo:;
-	add: #CompiledCode -> #isEqualTo:;
-	add: #Interval -> #isEqualTo:;
-	add: #Object -> #isEqualTo:;
-	add: #String -> #isEqualTo:;
-	add: #String -> #withCRs;
-	add: #SystemDictionary -> #isEqualTo:;
-	yourself.
+package setMethodNames: #(
+	#(#{BlockClosure} #isEqualTo:)
+	#(#{ByteArray} #isEqualTo:)
+	#(#{Collection} #isEqualTo:)
+	#(#{CompiledCode} #isEqualTo:)
+	#(#{Interval} #isEqualTo:)
+	#(#{Object} #isEqualTo:)
+	#(#{String} #isEqualTo:)
+	#(#{String} #withCRs)
+	#(#{SystemDictionary} #isEqualTo:)
+).
 
-package globalNames
-	add: #RBFormatter1;
-	yourself.
+package setVariableNames: #(
+	#{RBFormatter1}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #RBFormatter1;
-	yourself).
+package setAliasVariableNames: #(
+	#{RBFormatter1}
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -92,7 +91,8 @@ package setPrerequisites: #(
 	'..\SmallLint\RBSmallLint'
 	'RBTestMethods'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
-	'..\..\..\Camp Smalltalk\SUnit\SUnit').
+	'..\..\..\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
@@ -129,6 +129,11 @@ RefactoringBrowserTest subclass: #RBMethodTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringBrowserTest subclass: #RBNamespaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RefactoringBrowserTest subclass: #RefactoringManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -288,6 +293,11 @@ RefactoringTest subclass: #PushUpMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RefactoringTest subclass: #RBConditionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 RefactoringTest subclass: #RemoveClassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -344,7 +354,7 @@ RefactoringTest subclass: #TemporaryToInstanceVariableTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 RBFormatter1 := RBConfigurableFormatter!
 

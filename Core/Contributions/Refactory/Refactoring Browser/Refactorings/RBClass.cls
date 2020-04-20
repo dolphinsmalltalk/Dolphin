@@ -147,7 +147,7 @@ privatePoolDictionaryNames
 	^poolDictionaryNames!
 
 realName: aSymbol 
-	self realClass: (Smalltalk at: aSymbol)!
+	self realClass: aSymbol asQualifiedReference value!
 
 removeClassVariable: aString 
 	self privateClassVariableNames remove: aString asSymbol.
@@ -167,8 +167,8 @@ renameClassVariable: oldName to: newName around: aBlock
 		around: aBlock!
 
 sharedPools
-	^self allPoolDictionaryNames 
-		collect: [:each | Smalltalk at: each asSymbol ifAbsent: [Dictionary new]]! !
+	^self allPoolDictionaryNames
+		collect: [:each | each asQualifiedReference valueOrNil ifNil: [Dictionary new]]! !
 !RBClass categoriesFor: #addClassVariable:!public!variable accessing! !
 !RBClass categoriesFor: #addPoolDictionary:!public!variable accessing! !
 !RBClass categoriesFor: #allClassVariableNames!accessing!public! !

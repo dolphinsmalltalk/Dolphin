@@ -1,41 +1,35 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AddMethodChangeTest;
-	add: #ClassBrowserAbstractTest;
-	add: #ClassBrowserTest;
-	add: #ClassHierarchySelectorTest;
-	add: #ClassListSelectorTest;
-	add: #ClassSelectorTest;
-	add: #ClosedCommandDescriptionIssueDialog;
-	add: #ClosedCommandDescriptionTest;
-	add: #CodeMentorTest;
-	add: #DebuggerTest;
-	add: #IdeaSpaceShellTest;
-	add: #MethodWorkspaceTest;
-	add: #PackageBrowserTest;
-	add: #PackagedClassSelectorTest;
-	add: #PackageFolderTest;
-	add: #PackageManagerTest;
-	add: #PackageSelectorTest;
-	add: #PublishedAspectInspectorTest;
-	add: #ResourceBrowserTest;
-	add: #SmalltalkStylerTest;
-	add: #SmalltalkSystemShellTest;
-	add: #SystemBrowserTest;
-	add: #ViewComposerTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AddMethodChangeTest}
+	#{ClassBrowserAbstractTest}
+	#{ClassBrowserTest}
+	#{ClassHierarchySelectorTest}
+	#{ClassListSelectorTest}
+	#{ClassSelectorTest}
+	#{ClosedCommandDescriptionIssueDialog}
+	#{ClosedCommandDescriptionTest}
+	#{CodeMentorTest}
+	#{DebuggerTest}
+	#{IdeaSpaceShellTest}
+	#{MethodWorkspaceTest}
+	#{PackageBrowserShellTest}
+	#{PackagedClassSelectorTest}
+	#{PackageFolderTest}
+	#{PackageManagerTest}
+	#{PackageSelectorTest}
+	#{PublishedAspectInspectorTest}
+	#{ResourceBrowserTest}
+	#{SmalltalkStylerTest}
+	#{SmalltalkSystemShellTest}
+	#{SystemBrowserTest}
+	#{ViewComposerTest}
+).
 
 package setPrerequisites: #(
 	'Base\Development System'
@@ -55,7 +49,8 @@ package setPrerequisites: #(
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\ActiveX\Components\XML DOM\XML DOM').
+	'..\ActiveX\Components\XML DOM\XML DOM'
+).
 
 package!
 
@@ -96,8 +91,8 @@ DolphinTest subclass: #IdeaSpaceShellTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #PackageBrowserTest
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
+DolphinTest subclass: #PackageBrowserShellTest
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -176,11 +171,6 @@ ClassSelectorTest subclass: #PackagedClassSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

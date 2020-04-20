@@ -825,10 +825,8 @@ isImmutable
 	^self primitiveFailed: _failureCode!
 
 isImmutable: aBoolean
-	"Set whether the receiver is a constant object. Any attempt to write to either named or
-	indexable instance variables of a constant object will result in an exception. The primitive
-	will fail if the receiver is a permanently immutable object such as a <SmallInteger> arnd
-	the argument is not 'true'."
+	"Set whether the receiver is a constant object, and answer whether it was a constant object before potentially changing that state.
+	Any attempt to write to either named or indexable instance variables of a constant object will result in an exception. The primitive will fail if the receiver is a permanently immutable object such as a <SmallInteger> arnd the argument is not 'true'."
 
 	<primitive: 178>
 	^self primitiveFailed: _failureCode!
@@ -1455,14 +1453,12 @@ when: anEventSymbol sendTo: anObject
 		send: anEventSymbol
 		to: anObject!
 
-whileMutableDo: aNiladicBlock 
+whileMutableDo: aNiladicBlock
 	"Evaluate and answer the result of the <niladicBlock> argument while the receiver is 
 	temporarily made mutable."
 
-	^self isImmutable 
-		ifTrue: 
-			[self isImmutable: false.
-			aNiladicBlock ensure: [self isImmutable: true]]
+	^(self isImmutable: false)
+		ifTrue: [aNiladicBlock ensure: [self isImmutable: true]]
 		ifFalse: [aNiladicBlock value]!
 
 yourAddress

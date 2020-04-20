@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Community Edition Tools'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Community Edition Additional Tools.
 Copyright (c) Object Arts Ltd, 1999-2005
@@ -21,28 +21,22 @@ Tip of the Day - Displays helpful tips at startup.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ClassHierarchyDiagram;
-	add: #CommunityEditionSmalltalkSystem;
-	add: #PoolDictionariesShell;
-	add: #ProtocolBrowserShell;
-	add: #SourceBrowser;
-	add: #UserPreferencesShell;
-	yourself.
+package setClassNames: #(
+	#{ClassHierarchyDiagram}
+	#{CommunityEditionSmalltalkSystem}
+	#{PoolDictionariesShell}
+	#{ProtocolBrowserShell}
+	#{SourceBrowser}
+	#{UserPreferencesShell}
+).
 
-package methodNames
-	add: #ClassBrowserAbstract -> #browseMethodProtocol;
-	add: #SmalltalkSystem -> #inspectPoolDictionaries;
-	add: #SmalltalkSystem -> #inspectSystemOptions;
-	add: 'ITEMIDLIST class' -> #publishedAspectsOfInstances;
-	add: 'Toolbar class' -> #resource_Protocol_tools;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassBrowserAbstract} #browseMethodProtocol)
+	#(#{ITEMIDLIST class} #publishedAspectsOfInstances)
+	#(#{SmalltalkSystem} #inspectPoolDictionaries)
+	#(#{SmalltalkSystem} #inspectSystemOptions)
+	#(#{Toolbar class} #resource_Protocol_tools)
+).
 
 package setPrerequisites: #(
 	'..\Base\Development System'
@@ -65,7 +59,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\ActiveX\Shell\Windows Shell Namespace').
+	'..\..\ActiveX\Shell\Windows Shell Namespace'
+).
 
 package!
 
@@ -101,9 +96,6 @@ SmalltalkToolShell subclass: #UserPreferencesShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

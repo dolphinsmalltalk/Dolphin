@@ -77,7 +77,7 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 {
 	//    stream.lock();
 
-	if (oteChars->isNil()) return stream << L"nil";
+	if (isNil(oteChars)) return stream << L"nil";
 	if (!oteChars->isNullTerminated())
 	{
 		stream << L"**Non-string object: " << (OTE*)oteChars << L"**";
@@ -119,7 +119,7 @@ wostream& operator<<(wostream& st, const CompiledMethod& method)
 
 wostream& operator<<(wostream& st, const MethodOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	BehaviorOTE* oteClass = ote->m_oteClass;
 	if (oteClass == Pointers.ClassCompiledExpression)
 	{
@@ -138,7 +138,7 @@ wostream& operator<<(wostream& st, const MethodOTE* ote)
 
 wostream& operator<<(wostream& st, const AnsiStringOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassAnsiString))
 	{
 		// Expected a String Oop, but got something else
@@ -157,7 +157,7 @@ wostream& operator<<(wostream& st, const AnsiStringOTE* ote)
 
 wostream& operator<<(wostream& st, const Utf8StringOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassUtf8String))
 	{
 		// Expected a String Oop, but got something else
@@ -176,7 +176,7 @@ wostream& operator<<(wostream& st, const Utf8StringOTE* ote)
 
 wostream& operator<<(wostream& st, const Utf16StringOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassUtf16String))
 	{
 		// Expected a String Oop, but got something else
@@ -200,9 +200,9 @@ inline wostream& operator<<(wostream& stream, const Class& cl)
 
 wostream& operator<<(wostream& stream, const ClassOTE* ote)
 {
-	if (ote->isNil()) return stream << L"nil";
+	if (isNil(ote)) return stream << L"nil";
 
-	if (!ote->m_oteClass->isMetaclass())
+	if (!isMetaclass(ote->m_oteClass))
 		// Expected a Class Oop, but got something else
 		return stream << L"**Non-class: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
@@ -216,7 +216,7 @@ wostream& operator<<(wostream& stream, const MetaClass& meta)
 
 wostream& operator<<(wostream& stream, const SymbolOTE* ote)
 {
-	if (ote->isNil()) return stream << L"nil";
+	if (isNil(ote)) return stream << L"nil";
 
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassSymbol))
 		// Expected a Symbol Oop, but got something else
@@ -228,20 +228,20 @@ wostream& operator<<(wostream& stream, const SymbolOTE* ote)
 
 wostream& operator<<(wostream& stream, const BehaviorOTE* ote)
 {
-	if (ote->isNil()) return stream << L"nil";
+	if (isNil(ote)) return stream << L"nil";
 
 	if (!ObjectMemory::isBehavior(Oop(ote)))
 		// Expected a class Oop, but got something else
 		return stream << L"**Non-behaviour: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
-		return ote->isMetaclass() ?
+		return isMetaclass(ote) ?
 		stream << *static_cast<MetaClass*>(ote->m_location) :
 		stream << *static_cast<Class*>(ote->m_location);
 }
 
 wostream& operator<<(wostream& st, const UnknownOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 
 	return st << L"a " << ote->m_oteClass;
 }
@@ -250,7 +250,7 @@ wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 {
 	static constexpr int MaxWords = 20;
 
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 
 	LargeInteger* li = ote->m_location;
 	st << L"a LargeInteger(" << std::hex << setfill(L'0');
@@ -275,7 +275,7 @@ wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 
 wostream& operator<<(wostream& st, const BlockOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	BlockClosure* block = ote->m_location;
 	return st << L"[] @ " << std::dec << block->initialIP() << L" in " << block->m_method;
 }
@@ -283,7 +283,7 @@ wostream& operator<<(wostream& st, const BlockOTE* ote)
 
 wostream& operator<<(wostream& st, const ContextOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	Context* ctx = ote->m_location;
 	return st << L"a Context for: " << ctx->m_block
 		<< L" frame: " << std::hex << ctx->m_frame;
@@ -291,14 +291,14 @@ wostream& operator<<(wostream& st, const ContextOTE* ote)
 
 wostream& operator<<(wostream& st, const VariableBindingOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	VariableBinding* var = ote->m_location;
 	return st << var->m_key << L" -> " << reinterpret_cast<const OTE*>(var->m_value);
 }
 
 wostream& operator<<(wostream& st, const ProcessOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	Process* proc = ote->m_location;
 	st << reinterpret_cast<const UnknownOTE*>(ote) << L"(" << reinterpret_cast<const OTE*>(proc->Name()) << L" base " << proc->getHeader();
 	StackFrame* topFrame;
@@ -328,7 +328,7 @@ wostream& operator<<(wostream& st, const ProcessOTE* ote)
 
 wostream& operator<<(wostream& st, const CharOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	Character* ch = ote->m_location;
 	if (IsBadReadPtr(&ch, sizeof(Character)))
 		return st << L"***Bad Character: " << ch;
@@ -349,17 +349,17 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		{
 		case StringEncoding::Ansi:
 		{
-			char16_t codePoint = Interpreter::m_ansiToUnicodeCharMap[codeUnit & 0xff];
+			wchar_t codePoint = Interpreter::m_ansiToUnicodeCharMap[codeUnit & 0xff];
 			if (iswgraph(codePoint))
 			{
-				return st << static_cast<char16_t>(codePoint);
+				return st << codePoint;
 			}
 			break;
 		}
 		case StringEncoding::Utf16:
-			if (iswgraph(static_cast<char16_t>(codeUnit)))
+			if (iswgraph(static_cast<wchar_t>(codeUnit)))
 			{
-				return st << static_cast<char16_t>(codeUnit);
+				return st << static_cast<wchar_t>(codeUnit);
 			}
 			break;
 
@@ -367,9 +367,9 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 			break;
 
 		case StringEncoding::Utf32:
-			if (U_IS_BMP(codeUnit) && iswgraph(static_cast<char16_t>(codeUnit)))
+			if (U_IS_BMP(codeUnit) && iswgraph(static_cast<wchar_t>(codeUnit)))
 			{
-				return st << static_cast<char16_t>(codeUnit);
+				return st << static_cast<wchar_t>(codeUnit);
 			}
 			break;
 
@@ -379,12 +379,12 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		}
 	}
 
-	return st << L"\\x" << std::hex << codeUnit;
+	return st << L"\\x" << std::hex << static_cast<uint32_t>(codeUnit);
 }
 
 wostream& operator<<(wostream& st, const FloatOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	Float* fp = ote->m_location;
 	if (IsBadReadPtr(fp, sizeof(Float)))
 		return st << L"***Bad Float: " << &fp;
@@ -394,7 +394,7 @@ wostream& operator<<(wostream& st, const FloatOTE* ote)
 
 wostream& operator<<(wostream& st, const MessageOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	Message* msg = ote->m_location;
 	if (IsBadReadPtr(msg, sizeof(Message)))
 		return st << L"***Bad Message: " << msg;
@@ -404,7 +404,7 @@ wostream& operator<<(wostream& st, const MessageOTE* ote)
 
 wostream& operator<<(wostream& st, const HandleOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	ExternalHandle* h = ote->m_location;
 	st << reinterpret_cast<const UnknownOTE*>(ote) << L'(';
 	if (IsBadReadPtr(h, sizeof(ExternalHandle)))
@@ -416,7 +416,7 @@ wostream& operator<<(wostream& st, const HandleOTE* ote)
 
 wostream& operator<<(wostream& st, const ArrayOTE* ote)
 {
-	if (ote->isNil()) return st << L"nil";
+	if (isNil(ote)) return st << L"nil";
 	size_t size = ote->pointersSize();
 	st << L"#(";
 	if (size > 0)
@@ -483,7 +483,7 @@ wostream& operator<<(wostream& stream, const OTE* ote)
 				return stream << L"***Object (Oop " << PVOID(ote) << L") with bad class Oop: " << PVOID(classPointer);
 			}
 
-			if (ote->isBehavior())
+			if (isBehavior(ote))
 				stream << reinterpret_cast<const BehaviorOTE*>(ote);
 			else
 			{
@@ -1213,7 +1213,7 @@ void __fastcall Interpreter::debugExecTrace(uint8_t* ip, Oop* sp)
 	}
 
 	HARDASSERT(!m_registers.m_pActiveProcess->IsWaiting());
-	HARDASSERT(m_registers.m_pActiveProcess->Next()->isNil());
+	HARDASSERT(isNil(m_registers.m_pActiveProcess->Next()));
 
 	m_registers.m_instructionPointer = oldIP;
 	m_registers.m_stackPointer = oldSP;

@@ -54,22 +54,22 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	changedOnly model 
+	changedOnly model
 		when: #valueChanged
 		send: #refresh
 		to: self.
-	listPresenter 
+	listPresenter
 		when: #actionPerformed
 		send: #browseIt
 		to: self.
-	(self class environment)
+	self class environment
 		when: #classRemoved:
 			send: #onClassRemoved:
 			to: self;
-		when: #globalRemoved:
-			send: #onGlobalRemoved:
+		when: #variableRemoved:
+			send: #onVariableRemoved:
 			to: self.
-	Package manager 
+	Package manager
 		when: #loadedChanged
 		send: #onLoadedPackagesChanged
 		to: self!
@@ -78,13 +78,18 @@ fileOut: sourceObjects
 	"Private - Save (file out) all the selected source objects which are saveable.
 	Answer a <collection> of all those which could not be saved."
 
-	| notSaved |
-	notSaved := OrderedCollection new.
-	sourceObjects do: [:each | 
-		each canFileOut 
-			ifTrue: [each fileOut]
-			ifFalse: [notSaved add: each]].
-	^notSaved!
+	| saved |
+	saved := Set new.
+	
+	[sourceObjects do: 
+			[:each |
+			each canFileOut
+				ifTrue: 
+					[each fileOut.
+					saved add: each]]]
+			on: OperationAborted
+			do: [:ex | ].
+	^sourceObjects difference: saved!
 
 fileSave
 	"Save (file out) all the selected source objects which are saveable
@@ -122,11 +127,6 @@ onClassRemoved: aClass
 
 	listPresenter model remove: aClass ifAbsent: []!
 
-onGlobalRemoved: anAssociation
-	"Private - React to globalName being removed from the Dolphin system."
-
-	listPresenter model remove: anAssociation ifAbsent: []!
-
 onLoadedPackagesChanged
 	"Private - React to the set of installed packages being changed."
 
@@ -135,6 +135,11 @@ onLoadedPackagesChanged
 				difference: Package manager packages.
 	listPresenter model removeAll: uninstalled.
 !
+
+onVariableRemoved: aVariableBinding
+	"Private - React to globalName being removed from the Dolphin system."
+
+	listPresenter model remove: aVariableBinding ifAbsent: []!
 
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "
@@ -325,8 +330,8 @@ viewRefresh
 !SourceBrowser categoriesFor: #fileSave!commands!public! !
 !SourceBrowser categoriesFor: #fileSaveAll!commands!public! !
 !SourceBrowser categoriesFor: #onClassRemoved:!event handling!private! !
-!SourceBrowser categoriesFor: #onGlobalRemoved:!event handling!private! !
 !SourceBrowser categoriesFor: #onLoadedPackagesChanged!event handling!private! !
+!SourceBrowser categoriesFor: #onVariableRemoved:!event handling!private! !
 !SourceBrowser categoriesFor: #onViewOpened!event handling!private! !
 !SourceBrowser categoriesFor: #queryCommand:!commands!private! !
 !SourceBrowser categoriesFor: #refresh!commands!operations!public! !

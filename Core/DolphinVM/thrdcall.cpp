@@ -1042,7 +1042,7 @@ void OverlappedCall::RemoveFromPendingTerminations()
 	}
 	else
 	{
-		HARDASSERT(oteProc->isNil());
+		HARDASSERT(isNil(oteProc));
 	}
 
 	NilOutPointer(m_oteProcess);

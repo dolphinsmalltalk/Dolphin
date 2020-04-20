@@ -508,11 +508,11 @@ browseClassReferences: aClass
 
 	self browseClassReferences: aClass in: self systemEnvironment!
 
-browseClassReferences: aClass in: aBrowserEnvironment 
+browseClassReferences: aClass in: aBrowserEnvironment
 	"Opens a new MethodBrowser on all the methods defined in the specified <BrowserEnvironment>
 	which refer to the <Class>, aClass."
 
-	self browseGlobalReferences: (self globalVariableNamed: aClass name) in: aBrowserEnvironment!
+	self browseGlobalReferences: aClass binding in: aBrowserEnvironment!
 
 browseClassVariables: aClass 
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
@@ -629,12 +629,12 @@ browseEnvironment: aBrowserEnvironment
 browseFolder: aString 
 	ShellLibrary default shellOpen: aString!
 
-browseGlobalReferences: anAssociation in: aBrowserEnvironment 
+browseGlobalReferences: aVariableBinding in: aBrowserEnvironment
 	"Opens a new Method Browser on all the methods which refer to the global binding represented
 	by the <Association> argument. Also includes methods that refer directly to the current
 	value of the global binding."
 
-	self browseMethodsIn: (self referencesToVariable: anAssociation in: aBrowserEnvironment)!
+	self browseMethodsIn: (self referencesToVariable: aVariableBinding in: aBrowserEnvironment)!
 
 browseHierarchy
 	"Open a new hierarchy browser at the root of the standard class hierarchy."
@@ -962,9 +962,8 @@ browserEnvFromDom: anIXMLDOMDocument
 	classes do: 
 			[:each |
 			| methods className classMethods |
-			className := (each getAttribute: 'name') asSymbol.
-			Smalltalk at: className
-				ifPresent: 
+			className := each getAttribute: 'name'.
+			className asQualifiedReference ifDefined: 
 					[:class |
 					methods := each selectNodes: 'Methods/Method'.
 					env addClass: class selectors: (methods collect: [:eachMethod | eachMethod text asSymbol]).
@@ -1010,6 +1009,16 @@ browseSelectors: aCollection caption: aString environment: aBrowserEnvironment
 	^browser
 		searchEnvironment: aBrowserEnvironment;
 		yourself!
+
+browseSharedVariableReferences: aBindingReference in: aBrowserEnvironment
+	"Opens a new Method Browser on all the methods in the specified <BrowserEnvironment> which refer to the shared variable identified by the specified <BindingReference>, 
+	either directly as a variable, or indirectly via another binding reference, or to the value."
+
+	"We resolve the variable, if it exists, and search for refs to that or its value, otherwise just look for references to the BindingReference."
+
+	^self browseMethodsIn: (aBindingReference bindingOrNil
+				ifNotNil: [:var | self referencesToVariable: var in: aBrowserEnvironment]
+				ifNil: [self referencesToBinding: aBindingReference in: aBrowserEnvironment])!
 
 browseSystem
 	"Open a new system browser at the root of the standard class hierarchy."
@@ -1347,8 +1356,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 		to: newClassName
 		changes: changes.
 	self changeManager performChange: changes.
-	^(Smalltalk lookup: newClassName)
-		ifNotNil: 
+	^newClassName asQualifiedReference ifDefined: 
 			[:newClass |
 			newClass owningPackage: aPackage.
 			newClass]!
@@ -1373,9 +1381,9 @@ compilationFailuresCategory
 compilationWarningClass
 	^CompilerWarningNotification!
 
-compile: aString in: class categories: anArray package: aPackageOrNil extraFlags: anInteger 
+compile: aString in: class categories: anArray package: aPackageOrNil extraFlags: anInteger
 	| change flags |
-	change := DolphinAddMethodChange 
+	change := DolphinAddMethodChange
 				compile: aString
 				in: class
 				categories: anArray
@@ -1383,7 +1391,7 @@ compile: aString in: class categories: anArray package: aPackageOrNil extraFlags
 	flags := class defaultCompilationFlags bitOr: anInteger.
 	change compilationFlags: flags.
 	self changeManager performChange: change.
-	(change method notNil and: [flags allMask: Interactive]) 
+	(change method notNil and: [flags allMask: Interactive])
 		ifTrue: [self warnOfUndefinedSelectorsSentBy: change method].
 	^change!
 
@@ -1441,11 +1449,12 @@ copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 			change changeClassName: newClass.
 			aCompositeRefactoryChange addChange: change]!
 
-copyClass: aClass 
+copyClass: aClass
 	| dialog newClassName superclass package |
 	
 	[newClassName := ('CopyOf' , aClass name) asSymbol.
-	Smalltalk includesKey: newClassName] whileTrue.
+	newClassName asQualifiedReference isDefined]
+			whileTrue.
 	dialog := CreateSubclassDialog on: aClass superclass asValue.
 	dialog
 		package: aClass owningPackage;
@@ -1456,7 +1465,7 @@ copyClass: aClass
 	newClassName := dialog subclassName asSymbol.
 	superclass := dialog superclass.
 	package := dialog package.
-	^self 
+	^self
 		cloneClass: aClass
 		as: newClassName
 		under: superclass
@@ -1804,7 +1813,7 @@ dropTextFile: aString
 dropXmlFile: aString
 	"Private - Open an XML file. Use the XmlPad for this, if available."
 
-	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
 
 educationCenter
 	"Open the Education Centre contents page"
@@ -2035,7 +2044,8 @@ initializeArgumentClasses
 	argumentClasses
 		add: Integer;
 		add: Boolean;
-		add: Class.
+		add: Class;
+		add: String.
 	argumentClasses shrink!
 
 initializeFrom: aSmalltalkSystem 
@@ -2528,19 +2538,6 @@ onFileDropped: aString over: aPresenter
 		routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
-onGlobalRemoved: anAssociation
-	self packageManager onGlobalRemoved: anAssociation.
-	self trigger: #globalRemoved: with: anAssociation!
-
-onGlobalRenamed: anAssocation from: aSymbol
-	"Inform the system that the global object has changed name."
-
-	self packageManager onGlobalRenamed: anAssocation from: aSymbol.
-	self 
-		trigger: #globalRenamed:from:
-		with: anAssocation
-		with: aSymbol!
-
 onMethodAdded: aCompilationResult 
 	allSelectors isNil ifFalse: [allSelectors add: aCompilationResult method selector].
 	self packageManager onMethodAdded: aCompilationResult.
@@ -2594,6 +2591,19 @@ onTipTextRequired: tool
 	cmd == #saveImage 
 		ifTrue: [^'Save image to <1p>' expandMacrosWith: self sessionManager imageFileName].
 	^tool toolTipText!
+
+onVariableRemoved: aVariableBinding
+	self packageManager onVariableRemoved: aVariableBinding.
+	self trigger: #variableRemoved: with: aVariableBinding!
+
+onVariableRenamed: aVariableBinding from: aBindingReference
+	"Inform the system that the global object has changed name."
+
+	self packageManager onVariableRenamed: aVariableBinding from: aBindingReference.
+	self
+		trigger: #variableRenamed:from:
+		with: aVariableBinding
+		with: aBindingReference!
 
 openHelpTopic: topic 
 	"Open the <readableString> Education Centre topic"
@@ -2671,7 +2681,7 @@ openWorkspace
 	^ws!
 
 openXmlFile: aString
-	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+	#{XmlPad} ifDefined: [:xmlpad | xmlpad filename: aString]!
 
 overlappingObjectsError: anError 
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
@@ -3232,16 +3242,18 @@ promptForInstVarName: nameString in: aClass prompt: promptString caption: captio
 				showModal.
 	^newName!
 
-promptForReferencesToGlobal: aString in: aBrowserEnvironment 
+promptForReferencesToGlobal: aString in: aBrowserEnvironment
 	| suggestion |
 	suggestion := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
-	^((Prompter 
-				createOn: suggestion
-				prompt: 'Enter the name of a global:'
-				caption: 'Browse References to Global...')
-				validationBlock: [:value | Smalltalk includesKey: value];
-		showModal) 
-			ifNotNil: [:globalName | self referencesToVariable: (Smalltalk associationAt: globalName) in: aBrowserEnvironment]!
+	^((Prompter
+		createOn: suggestion
+		prompt: 'Enter the name of a global:'
+		caption: 'Browse References to Global...')
+		validationBlock: 
+				[:value |
+				(BindingReference isValidQualifiedName: value) and: [value asQualifiedReference isDefined]];
+		showModal)
+			ifNotNil: [:globalName | self referencesToVariable: globalName asQualifiedReference binding in: aBrowserEnvironment]!
 
 promptForSearchString: aFindDetails caption: aString 
 	^(AdvancedFindDialog create: 'Directionless view' on: aFindDetails)
@@ -3415,6 +3427,12 @@ referencesTo: anObject in: aBrowserEnvironment
 		addSearchString: search pattern;
 		yourself!
 
+referencesToBinding: aBindingReference in: aBrowserEnvironment
+	^(self selectMethods: [:each | each refersToLiteral: aBindingReference] in: aBrowserEnvironment)
+		label: ('References to <1p> in <2d>' expandMacrosWith: aBindingReference with: aBrowserEnvironment);
+		addSearchString: aBindingReference printString;
+		yourself!
+
 referencesToClassVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment 
 	| references caption definingBehavior env |
 	definingBehavior := aBehavior whichClassDefinesClassVar: aString.
@@ -3442,19 +3460,16 @@ referencesToLiteral: anObject in: aBrowserEnvironment
 		search: search;
 		yourself!
 
-referencesToVariable: anAssociation in: aBrowserEnvironment 
-	| matched cookie |
-	cookie := Object new.
+referencesToVariable: aVariableBinding in: aBrowserEnvironment
+	| matched |
 	matched := self selectMethods: 
-					[:eachMethod | 
-					(eachMethod 
-						literalsDetect: [:eachLiteral | eachLiteral == anAssociation or: [eachLiteral = anAssociation value]]
-						ifNone: [cookie]) ~~ cookie]
+					[:each |
+					(each refersToLiteral: aVariableBinding value) or: [each refersToLiteral: aVariableBinding]]
 				in: aBrowserEnvironment.
 	matched
-		label: ('References to <1s> (or its value) in <2d>' expandMacrosWith: anAssociation key
+		label: ('Direct and indirect references to <1s> in <2d>' expandMacrosWith: aVariableBinding key
 					with: aBrowserEnvironment);
-		addSearchString: anAssociation key.
+		addSearchString: aVariableBinding key.
 	^matched!
 
 reformatAllMethodsIn: aBrowserEnvironment 
@@ -3476,7 +3491,7 @@ registerSystemEvents
 		SmalltalkSystem current registerSystemEvents
 	"
 
-	(self environment)
+	self environment
 		removeEventsTriggeredFor: self;
 		when: #methodAdded:
 			send: #onMethodAdded:
@@ -3511,11 +3526,11 @@ registerSystemEvents
 		when: #protocolRemoved:
 			send: #onProtocolRemoved:
 			to: self;
-		when: #globalRemoved:
-			send: #onGlobalRemoved:
+		when: #variableRemoved:
+			send: #onVariableRemoved:
 			to: self;
-		when: #globalRenamed:from:
-			send: #onGlobalRenamed:from:
+		when: #variableRenamed:from:
+			send: #onVariableRenamed:from:
 			to: self!
 
 registerTool: aToolClass
@@ -4084,7 +4099,7 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 	"Load and resave all view resources referencing the named class. This will apply any pending STB version upgrade."
 
 	| var refs |
-	var := self globalVariableNamed: aSymbol.
+	var := aSymbol asQualifiedReference binding.
 	refs := self referencesToVariable: var in: BrowserEnvironment new.
 	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
 
@@ -4336,6 +4351,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #browseResources!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browseResourcesReferencingView:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
+!SmalltalkSystem categoriesFor: #browseSharedVariableReferences:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseSystem!browsing!commands!public! !
 !SmalltalkSystem categoriesFor: #browseSystem:!browsing!public! !
 !SmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
@@ -4507,8 +4523,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #onDropFiles:over:!event handling!private! !
 !SmalltalkSystem categoriesFor: #onDropOverProtocol:!event handling!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #onFileDropped:over:!event handling!private! !
-!SmalltalkSystem categoriesFor: #onGlobalRemoved:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onGlobalRenamed:from:!events!public! !
 !SmalltalkSystem categoriesFor: #onMethodAdded:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onMethodCategorized:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onMethodRemoved:!event handling!public! !
@@ -4517,6 +4531,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #onProtocolUpdated:!event handling!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #onSessionStopped!event handling!public! !
 !SmalltalkSystem categoriesFor: #onTipTextRequired:!event handling!public! !
+!SmalltalkSystem categoriesFor: #onVariableRemoved:!event handling!private! !
+!SmalltalkSystem categoriesFor: #onVariableRenamed:from:!events!public! !
 !SmalltalkSystem categoriesFor: #openHelpTopic:!operations!public! !
 !SmalltalkSystem categoriesFor: #openHelpTopicForTool:!operations!public! !
 !SmalltalkSystem categoriesFor: #openHelpUrl:!operations!public! !
@@ -4571,9 +4587,10 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #publicMethodIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
 !SmalltalkSystem categoriesFor: #redoChange!commands!public! !
-!SmalltalkSystem categoriesFor: #referencesMatching:in:!browsing!private! !
+!SmalltalkSystem categoriesFor: #referencesMatching:in:!enquiries!private! !
 !SmalltalkSystem categoriesFor: #referencesTo:!enquiries!public! !
 !SmalltalkSystem categoriesFor: #referencesTo:in:!enquiries!public! !
+!SmalltalkSystem categoriesFor: #referencesToBinding:in:!enquiries!private! !
 !SmalltalkSystem categoriesFor: #referencesToClassVar:inHierarchyOf:within:!browsing!private! !
 !SmalltalkSystem categoriesFor: #referencesToLiteral:in:!browsing!public! !
 !SmalltalkSystem categoriesFor: #referencesToVariable:in:!enquiries!private! !
@@ -4731,7 +4748,7 @@ publishedEventsOfInstances
 	"Answer a <Set> of <Symbol>s, being the names of all events published 
 	by instances of the receiver."
 
-	^(super publishedEventsOfInstances)
+	^super publishedEventsOfInstances
 		add: #methodAdded:;
 		add: #methodUpdated:;
 		add: #methodRemoved:;
@@ -4741,8 +4758,8 @@ publishedEventsOfInstances
 		add: #classRemoved:;
 		add: #classCategorized:;
 		add: #classCommented:;
-		add: #globalRenamed:from:;
-		add: #globalRemoved:;
+		add: #variableRenamed:from:;
+		add: #variableRemoved:;
 		add: #protocolUpdated:;
 		add: #protocolRemoved:;
 		yourself!

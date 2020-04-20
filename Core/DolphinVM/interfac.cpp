@@ -450,7 +450,7 @@ void Interpreter::OnCompact()
 		i++;
 	}	
 
-	ASSERT(m_oteNewProcess->isNil() || m_oteNewProcess->m_oteClass == Pointers.ClassProcess);
+	ASSERT(isNil(m_oteNewProcess) || m_oteNewProcess->m_oteClass == Pointers.ClassProcess);
 	ObjectMemory::compactOop(m_oopMessageSelector);
 	ObjectMemory::compactOop(m_registers.m_oopNewMethod);
 	ASSERT(ObjectMemory::isKindOf(m_registers.m_oopNewMethod, Pointers.ClassCompiledMethod));
@@ -701,8 +701,12 @@ LRESULT Interpreter::callbackResultFromOop(Oop objectPointer)
 		return lResult;
 	}
 	else
-		if (ote->isNil())
+	{
+		if (isNil(ote))
+		{
 			return 0;
+		}
+	}
 
 #ifdef _DEBUG
 	TRACESTREAM<< L"WARNING: Returned non-Integer object from callback: " << ote << std::endl;

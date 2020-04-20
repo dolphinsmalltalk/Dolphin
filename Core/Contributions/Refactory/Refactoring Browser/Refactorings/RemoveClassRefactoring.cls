@@ -10,16 +10,16 @@ RemoveClassRefactoring comment: ''!
 !RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !RemoveClassRefactoring methodsFor!
 
-checkMethodReferencesTo: aSymbol 
-	(self hasReferencesTo: aSymbol) 
+checkMethodReferencesTo: aSymbol
+	(self hasReferencesTo: aSymbol)
 		ifTrue: 
-			[self 
-				refactoringError: ('<1s> is referenced and cannot be removed safely.<n><n>Would you like to browse references?' 
+			[self
+				refactoringError: ('<1s> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
 						expandMacrosWith: aSymbol)
 				with: 
 					[#rbFix.	"Should use refactoring environment to scope the search"
-					self openBrowserOn: (self model environment 
-								referencesTo: (Smalltalk associationAt: aSymbol ifAbsent: [aSymbol]))]]!
+					self openBrowserOn: (self model environment
+								referencesTo: aSymbol asQualifiedReference bindingOrNil ?? aSymbol)]]!
 
 checkReferencesTo: aString 
 	| className |
@@ -31,16 +31,14 @@ checkReferencesTo: aString
 classNames: aClassNameCollection 
 	classNames := aClassNameCollection!
 
-hasReferencesTo: aSymbol 
-	| literal env |
-	literal := Smalltalk associationAt: aSymbol.
-	env := BrowserEnvironment new.
-	env classesDo: 
-			[:each | 
-			(classNames includes: (each isMeta ifTrue: [each soleInstance] ifFalse: [each]) name) 
-				ifFalse: 
-					[(each whichSelectorsReferTo: literal) notEmpty ifTrue: [^true].
-					(each whichSelectorsReferTo: aSymbol) notEmpty ifTrue: [^true]]].
+hasReferencesTo: aSymbol
+	| binding bindingRef |
+	bindingRef := aSymbol asQualifiedReference.
+	BrowserEnvironment new methodsDo: 
+			[:each |
+			each literalsDo: 
+					[:literal |
+					((literal refersToLiteral: bindingRef) or: [literal refersToLiteral: aSymbol]) ifTrue: [^true]]].
 	^false!
 
 preconditions

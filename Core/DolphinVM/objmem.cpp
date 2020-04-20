@@ -238,14 +238,14 @@ Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp, primargcount_t
 
 bool __fastcall ObjectMemory::isBehavior(Oop objectPointer)
 {
-	return !isIntegerObject(objectPointer) && reinterpret_cast<OTE*>(objectPointer)->isBehavior();
+	return !isIntegerObject(objectPointer) && ::isBehavior(reinterpret_cast<OTE*>(objectPointer));
 }
 
 #pragma code_seg(MEM_SEG)
 
 bool __fastcall ObjectMemory::isAMetaclass(const OTE* ote)
 {
-	return ote->isMetaclass();
+	return ::isMetaclass(ote);
 }
 
 #pragma code_seg(MEM_SEG)
@@ -395,7 +395,7 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 
 	ArrayOTE* oteClassStats;
 
-	if (oteClasses->isNil())
+	if (isNil(oteClasses))
 	{
 		auto n = counts.size();
 		oteClassStats = Array::NewUninitialized(n * 3);

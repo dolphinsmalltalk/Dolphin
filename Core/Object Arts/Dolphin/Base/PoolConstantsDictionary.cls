@@ -63,7 +63,7 @@ keyString: anObject
 name
 	"Answer the receiver's name."
 
-	^name ifNil: [self environment keyAtValue: self ifAbsent: ['Anon']]!
+	^name ifNil: [super name]!
 
 name: aSymbol 
 	name := aSymbol asSymbol!

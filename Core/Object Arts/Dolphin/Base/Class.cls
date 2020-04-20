@@ -109,6 +109,11 @@ basicSharedPools: aCollection
 
 	sharedPools := aCollection!
 
+binding
+	"Answer the receiver's variable binding, raising an error if the receiver is unbound."
+
+	^self fullyQualifiedReference binding!
+
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil.
@@ -117,6 +122,11 @@ bindingFor: aString
 	classPool isNil ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
 	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
+
+bindingOrNil
+	"Answer the receiver's variable binding, or nil if unbound"
+
+	^self fullyQualifiedReference bindingOrNil!
 
 categories
 	"Answer a <Array> of <ClassCategory>s in which the receiver is included.
@@ -223,14 +233,20 @@ fileOutName
 
 	| path package |
 	path := File composeStem: self fileOutStem extension: 'cls'.
-	package := self owningPackage.
-	package notNil ifTrue: [path := File replacePath: path with: package path].
+	self owningPackage
+		ifNil: [Notification signal: 'Warning: ', self printString, ' is unpackaged']
+		ifNotNil: [:package | path := File replacePath: path with: package path].
 	^path!
 
 fileOutStem
 	"Private - Answer the default file name stem for the class to file out on."
 
 	^self name!
+
+fullyQualifiedReference
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+
+	^BindingReference pathString: self fullName!
 
 guid
 	"Answer the receiver's globally unique id (a 128-bit number allocated/set 
@@ -309,22 +325,18 @@ newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariable
 		yourself!
 
 owningPackage
-	"Answers the package that owns the receiver or nil if it is not yet owned
-	by any package."
+	"Answers the package that owns the receiver or nil if it is not yet owned by any package."
 
-	"We use an indirect reference to the Package to avoid referencing
-	this development class in a runtime image. The answer should always be nil
-	in a runtime application."
+	"We use an indirect reference to Package to avoid referencing this development class in a runtime image. The answer should always be nil in a runtime application."
 
-	^(self environment lookup: #PackageManager)
-		ifNotNil: [:pkgClass | pkgClass current packageOfClass: self]!
+	^#{Package} valueOrNil ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
 
 owningPackage: aPackageOrNil
 	"Set the receiver's <Package> to be the argument. Any current package association is lost.
 	Note that setting the owning package of a class to the distinguished '_Uncommitted' package
 	is exactly the same as setting it to nil."
 
-	(self environment lookup: #Package)
+	#{Package} valueOrNil
 		ifNotNil: [:pkgClass | pkgClass manager addClass: self to: aPackageOrNil]!
 
 printDefinitionOn: puttableStream 
@@ -406,9 +418,9 @@ rename: aString
 				print: aString;
 				contents)!
 
-rename: aString in: aSystemDictionary
+rename: aString in: aNamespace
 	"Private - Rename the receiver to aString.
-	This will change the receiver's key in aSystemDictionary whilst maintaining the association.
+	This will change the receiver's key in the specified Namespace whilst maintaining the binding.
 	This means that any existing references will be maintained but method source code will still
 	contain the old name and will subsequently fail to compile unless edited.
 
@@ -419,11 +431,11 @@ rename: aString in: aSystemDictionary
 	self removeFromSuper.
 	oldName := name.
 	newName := aString asSymbol.
-	binding := self environment changeKey: oldName to: newName.
+	binding := aNamespace changeKey: oldName to: newName.
 	name := newName.
 	self addToSuper.
 	"Note how the event is delayed until the class is correctly wired in"
-	self environment triggerGlobalRenamed: binding from: oldName!
+	aNamespace triggerVariableRenamed: binding from: oldName!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -677,7 +689,9 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
 !Class categoriesFor: #basicSharedPools:!accessing!private! !
+!Class categoriesFor: #binding!public! !
 !Class categoriesFor: #bindingFor:!binding!public! !
+!Class categoriesFor: #bindingOrNil!public! !
 !Class categoriesFor: #categories!categories-accessing!public! !
 !Class categoriesFor: #categories:!categories-accessing!public! !
 !Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
@@ -694,6 +708,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #fileIn!development!public!source filing! !
 !Class categoriesFor: #fileOutName!development!private!source filing! !
 !Class categoriesFor: #fileOutStem!development!private!source filing! !
+!Class categoriesFor: #fullyQualifiedReference!accessing!public! !
 !Class categoriesFor: #guid!constants!public! !
 !Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Class categoriesFor: #includeInCategory:!categories-adding!public! !

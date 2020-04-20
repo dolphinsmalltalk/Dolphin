@@ -34,14 +34,12 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classes do: 
 			[:each |
-			| class |
-			class := Smalltalk lookup: each.
-			(class notNil and: [environment includesClass: class]) ifTrue: [aBlock value: class]].
+			each asQualifiedReference
+				ifDefined: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]].
 	metaClasses do: 
 			[:each |
-			| class |
-			class := Smalltalk lookup: each.
-			(class notNil and: [environment includesClass: class class]) ifTrue: [aBlock value: class class]]!
+			each asQualifiedReference
+				ifDefined: [:class | (environment includesClass: class class) ifTrue: [aBlock value: class class]]]!
 
 classNames
 	^(IdentitySet withAll: classes)
@@ -59,14 +57,14 @@ definesClass: aClass
 	^self includesClass: aClass!
 
 includesCategory: aCategory
-	^(super includesCategory: aCategory)
-		and: [(environment classNamesFor: aCategory)
-				inject: false into: [:bool :each | bool
-					or:
-						[| class |
-						class := Smalltalk at: each ifAbsent: [nil].
-						class notNil and: [(self includesClass: class)
-								or: [self includesClass: class class]]]]]!
+	^(super includesCategory: aCategory) and: 
+			[(environment classNamesFor: aCategory) inject: false
+				into: 
+					[:bool :each |
+					bool or: 
+							[| class |
+							class := each asQualifiedReference valueOrNil.
+							class notNil and: [(self includesClass: class) or: [self includesClass: class class]]]]]!
 
 includesClass: aClass
 	^(aClass isMeta
@@ -111,13 +109,13 @@ storeOn: aStream
 	classes asArray storeOn: aStream.
 	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
 				| class |
-				class := Smalltalk at: each ifAbsent: [nil].
+				class := each asQualifiedReference valueOrNil.
 				class notNil ifTrue: [sum add: class].
 				sum]) , ('.
 	metaClasses asArray storeOn: aStream.
 	aStream nextPutAll: ' inject: OrderedCollection new into: [:sum :each | 
 				| class |
-				class := Smalltalk at: each ifAbsent: [nil].
+				class := each asQualifiedReference valueOrNil.
 				class notNil ifTrue: [sum add: class class].
 				sum])))'! !
 !ClassEnvironment categoriesFor: #addClass:!adding!public! !

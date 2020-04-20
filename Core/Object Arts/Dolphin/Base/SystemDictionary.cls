@@ -11,15 +11,17 @@ provides associative access to all global objects in the system.'!
 !SystemDictionary categoriesForClass!Collections-Unordered! !
 !SystemDictionary methodsFor!
 
-add: anAssociation
-	"Add anAssociation to the receiver. Answer anAssociation.
-	Although very similar to at:put:, we store the actual association passed
-	as an argument here in order to maintain its references.
-	The keys of associations stored in pool dictionaries must be strings."
+add: aVariableBinding
+	"Add the <VariableBinding> argument to the receiver. Answer aVariableBinding.
+	Although very similar to at:put:, we store the actual <VariableBinding> passed
+	as an argument here in order to maintain its references."
 
-	((anAssociation key isKindOf: Symbol) and: [anAssociation key notEmpty])
-		ifFalse: [self error: 'SystemDictionaries are keyed with non-empty Symbols'].
-	^super add: anAssociation!
+	(aVariableBinding class == self associationClass
+		and: [(aVariableBinding key isKindOf: Symbol) and: [aVariableBinding key notEmpty]])
+			ifFalse: [self error: 'Invalid global binding ' , aVariableBinding printString].
+	super add: aVariableBinding.
+	self bindingsChanged.
+	^aVariableBinding!
 
 allBehaviors
 	"Private - Answer a <sequencedReadableCollection> of all of the Behaviors 
@@ -67,8 +69,26 @@ at: key put: anObject
 	"Store the argument anObject with the external key, aKey,
 	in the receiver. Answer anObject. Ensure the key is a String."
 
+	| index keyObject |
 	key isEmpty ifTrue: [self error: 'Invalid global name'].
-	^super at: key asSymbol put: anObject!
+	keyObject := key asSymbol.
+	index := self findKeyOrNil: keyObject.
+	(self basicAt: index)
+		ifNil: 
+			[self privateAt: index put: (self newAssociation: keyObject value: anObject).
+			self bindingsChanged]
+		ifNotNil: [:assoc | assoc value: anObject].
+	^anObject!
+
+atAll: keys put: newElement
+	"Replace the elements of the receiver at each of the keys in the <collection> 
+	argument, keys, with the <Object> argument, newElement."
+
+	keys do: [:key | super at: key put: newElement].
+	self bindingsChanged!
+
+bindingsChanged
+	BindingReference clearCachedBindings!
 
 classAdded: class
 	"Private - The new <Class>, class, has been added to the receiver.
@@ -97,6 +117,11 @@ clearCachedClasses
 
 	allRoots := allClasses := nil!
 
+declareVariable: aSymbol
+	| index |
+	index := self findKeyOrNil: aSymbol.
+	^(self basicAt: index) ifNil: [self basicAt: index put: (self newAssociation: aSymbol value: nil)]!
+
 developmentSystem
 	"Answer the current instance of <SmalltalkSystem> if installed, otherwise 
 	a <DeafObject>."
@@ -104,6 +129,9 @@ developmentSystem
 	| devSys |
 	devSys := self at: #SmalltalkSystem ifPresent: [:c | c current].
 	^devSys ifNil: [DeafObject current]!
+
+environment
+	^self!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -118,6 +146,12 @@ isAtomic
 	"There can only be one ProcessorScheduler instance."
 
 	^true!
+
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self
+!
 
 postResize: oldMe
 	"Private - This message is sent by the receiver when resizing, after the
@@ -159,11 +193,12 @@ removeKey: key ifAbsent: exceptionHandler
 		ifFalse: 
 			[| global isClass |
 			self removeIndex: index.
+			self bindingsChanged.
 			global := element value.
 			isClass := global class isMeta.
 			(isClass not or: [global name ~= key])
 				ifTrue: 
-					[self trigger: #globalRemoved: with: element.
+					[self trigger: #variableRemoved: with: element.
 					"Uninitialize any global which is not a class name alias"
 					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global perform: #uninitialize]].
 			global]!
@@ -174,7 +209,7 @@ renameGlobal: oldName to: newName
 	| oldSymbol binding |
 	oldSymbol := oldName asSymbol.
 	self noEventsDo: [binding := self changeKey: oldSymbol to: newName asSymbol].
-	self triggerGlobalRenamed: binding from: oldSymbol!
+	self triggerVariableRenamed: binding from: oldSymbol!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -182,13 +217,13 @@ setEvents: anEventsCollectionOrNil
 
 	events := anEventsCollectionOrNil!
 
-triggerGlobalRenamed: anAssociation from: oldSymbol
+triggerVariableRenamed: aVariableBinding from: oldSymbol
 	"Private - Inform observers that a  system global object has been renamed."
 
-	self 
-		trigger: #globalRenamed:from:
-		with: anAssociation
-		with: oldSymbol! !
+	self
+		trigger: #variableRenamed:from:
+		with: aVariableBinding
+		with: oldSymbol asQualifiedReference! !
 !SystemDictionary categoriesFor: #add:!adding!public! !
 !SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
@@ -196,18 +231,23 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #allRoots!accessing!public! !
 !SystemDictionary categoriesFor: #associationClass!constants!private! !
 !SystemDictionary categoriesFor: #at:put:!accessing!public! !
+!SystemDictionary categoriesFor: #atAll:put:!accessing!public! !
+!SystemDictionary categoriesFor: #bindingsChanged!adding!private! !
 !SystemDictionary categoriesFor: #classAdded:!event handling!private! !
 !SystemDictionary categoriesFor: #classRemoved:!private!removing! !
 !SystemDictionary categoriesFor: #classUpdated:!event handling!private! !
 !SystemDictionary categoriesFor: #clearCachedClasses!accessing!private! !
+!SystemDictionary categoriesFor: #declareVariable:!adding!private! !
 !SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
+!SystemDictionary categoriesFor: #environment!public! !
 !SystemDictionary categoriesFor: #getEvents!events!private! !
 !SystemDictionary categoriesFor: #isAtomic!public!testing! !
+!SystemDictionary categoriesFor: #localEnvironment!accessing!private! !
 !SystemDictionary categoriesFor: #postResize:!adding!private! !
 !SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
 !SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
 !SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !
 !SystemDictionary categoriesFor: #setEvents:!events!private! !
-!SystemDictionary categoriesFor: #triggerGlobalRenamed:from:!events!private! !
+!SystemDictionary categoriesFor: #triggerVariableRenamed:from:!events!private! !
 

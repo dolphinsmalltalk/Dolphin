@@ -61,7 +61,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 				{
 					if (static_cast<size_t>(index) < oteBuf->bytesSize())
 					{
-						auto ansiCodeUnit = static_cast<uint8_t>(reinterpret_cast<AnsiStringOTE*>(oteBuf)->m_location->m_characters[index]);
+						auto ansiCodeUnit = static_cast<char8_t>(reinterpret_cast<AnsiStringOTE*>(oteBuf)->m_location->m_characters[index]);
 						PushCharacter(sp, static_cast<char32_t>(m_ansiToUnicodeCharMap[ansiCodeUnit]));
 						// When incrementing the index we must allow for it overflowing a SmallInteger, even though
 						// this is extremely unlikely in practice

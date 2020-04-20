@@ -104,13 +104,12 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-recompileDiffs: aCompiledMethod 
-	((Smalltalk at: #DiffBrowser) show: 'Vertical view')
+recompileDiffs: aCompiledMethod
+	(#{DiffBrowser} value show: 'Vertical view')
 		caption: aCompiledMethod printString;
 		compare: aCompiledMethod disassembly
 			id: 'Current'
-			and: (Compiler compile: aCompiledMethod getSource in: aCompiledMethod methodClass) 
-					disassembly
+			and: (Compiler compile: aCompiledMethod getSource in: aCompiledMethod methodClass) disassembly
 			id: 'Recompiled'!
 
 systemBrowserClass

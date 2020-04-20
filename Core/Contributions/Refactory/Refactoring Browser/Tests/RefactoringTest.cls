@@ -6,6 +6,7 @@ RefactoringBrowserTest subclass: #RefactoringTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringTest guid: (GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
+RefactoringTest isAbstract: true!
 RefactoringTest comment: ''!
 !RefactoringTest categoriesForClass!Refactory-Testing! !
 !RefactoringTest methodsFor!
@@ -92,37 +93,7 @@ tearDown
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance
 		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) 
-			value: manager!
-
-testConditions
-	| condition newCondition |
-	condition := RBCondition new
-				type: #false
-				block: [false]
-				errorString: 'false'.
-	condition errorMacro: '<1?true:false>'.
-	self deny: condition check.
-	self assert: condition errorString equals: 'false'.
-	self assert: condition not check.
-	self assert: condition printString equals: '#false'.
-	self assert: condition not printString equals: 'NOT #false'.
-	self deny: (condition not & condition) check.
-	self assert: (condition not & condition) printString equals: 'NOT #false & #false'.
-	self assert: (condition & condition) not check.
-	self assert: (condition | condition not) check.
-	self deny: (newCondition := condition | condition) check.
-	self assert: newCondition errorString equals: 'false AND false'.
-	self assert: (condition not | condition not) check.
-	self deny: (newCondition := condition & condition) check.
-	self assert: newCondition errorString equals: 'false'.
-	self assert: (condition not & condition not) check.
-	self assert: (condition & condition) errorString equals: 'false OR false'!
-
-testPrintRefactoringManager
-	Transcript
-		show: RefactoringManager instance printString;
-		cr;
-		flush! !
+			value: manager! !
 !RefactoringTest categoriesFor: #readFile:!public!set up! !
 !RefactoringTest categoriesFor: #setUp!public!set up! !
 !RefactoringTest categoriesFor: #setupImplementorToInlineFor:toReturn:!public!set up! !
@@ -135,6 +106,4 @@ testPrintRefactoringManager
 !RefactoringTest categoriesFor: #shouldFail:!private! !
 !RefactoringTest categoriesFor: #shouldWarn:!private! !
 !RefactoringTest categoriesFor: #tearDown!public!set up! !
-!RefactoringTest categoriesFor: #testConditions!public!tests! !
-!RefactoringTest categoriesFor: #testPrintRefactoringManager!public!tests! !
 

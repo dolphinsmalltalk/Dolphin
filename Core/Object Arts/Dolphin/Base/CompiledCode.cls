@@ -206,6 +206,11 @@ debugInfo
 envInfo
 	^(header bitShift: -1) bitAnd: 63!
 
+environment
+	"Answer the <Namespace> in whose scope this method was compiled."
+
+	^methodClass environment!
+
 envTempCount
 	"Answer the number of environment temporaries used by the receiver."
 
@@ -376,9 +381,20 @@ literalsDetect: discriminator ifNone: exceptionHandler
 	element is found, then the result of evaluating the <niladicValuable>, exceptionHandler,
 	is answered."
 
-	self literalsDo: [:literal | 
-		(discriminator value: literal) ifTrue: [^literal].
-		literal class == Array ifTrue: [literal do: [:e | (discriminator value: e) ifTrue: [^e]]]].
+	1 to: self literalCount
+		do: 
+			[:i |
+			| literal |
+			literal := self at: i.
+			(discriminator value: literal) ifTrue: [^literal].
+			literal class == Array
+				ifTrue: 
+					[1 to: literal size
+						do: 
+							[:j |
+							| elem |
+							elem := literal at: j.
+							(discriminator value: elem) ifTrue: [^elem]]]].
 	^exceptionHandler value!
 
 literalsDo: operation 
@@ -391,6 +407,12 @@ localCount
 	"Private - Answer the total number of stack temporaries (including arguments) used by the receiver."
 
 	^self argumentCount + self stackTempCount!
+
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self environment
+!
 
 messages
 	"Answer the set of messages sent by the receiver."
@@ -628,6 +650,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #containsSource:!development!public!testing! !
 !CompiledCode categoriesFor: #debugInfo!development!private! !
 !CompiledCode categoriesFor: #envInfo!accessing!private! !
+!CompiledCode categoriesFor: #environment!accessing!public! !
 !CompiledCode categoriesFor: #envTempCount!accessing!development!public! !
 !CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
 !CompiledCode categoriesFor: #extraIndex!method header!private! !
@@ -656,6 +679,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #literalsDetect:ifNone:!private!testing! !
 !CompiledCode categoriesFor: #literalsDo:!enumerating!private! !
 !CompiledCode categoriesFor: #localCount!accessing!method header!private! !
+!CompiledCode categoriesFor: #localEnvironment!accessing!private! !
 !CompiledCode categoriesFor: #messages!accessing!development!public! !
 !CompiledCode categoriesFor: #messagesDo:!development!enumerating!public! !
 !CompiledCode categoriesFor: #methodClass!accessing!public! !

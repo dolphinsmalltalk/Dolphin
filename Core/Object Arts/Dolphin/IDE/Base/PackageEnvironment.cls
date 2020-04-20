@@ -23,32 +23,35 @@ classesDo: aBlock
 	seen := Set new: 20.
 	packages do: 
 			[:eachPackage |
-			eachPackage behaviorsDo: 
+			eachPackage classNames do: 
 					[:each |
-					(environment includesClass: each)
+					| class |
+					class := each value.
+					(environment includesClass: class)
 						ifTrue: 
-							[seen add: each name.	"#1324"
-							aBlock value: each]].
+							[seen add: each.
+							aBlock value: class].
+					(environment includesClass: class class)
+						ifTrue: 
+							[seen add: each meta.
+							aBlock value: class class]].
 			eachPackage methodNames do: 
 					[:each |
 					| className |
-					className := each key.
+					className := each className.
 					(seen includes: className)
 						ifFalse: 
-							[(eachPackage behaviorFromName: className ifAbsent: [])
-								ifNotNil: 
-									[:behavior |
-									| class |
-									class := behavior instanceClass.
-									(environment includesClass: class)
-										ifTrue: 
-											["Both class and metaclass must be in the environment, regardless of the where loose methods reside."
-											aBlock
-												value: class;
-												value: class class].
-									seen
-										add: class name;
-										add: class class name]]]]!
+							[| class |
+							class := className valueOrNil ifNotNil: [:behavior | behavior instanceClass].
+							(class notNil and: [environment includesClass: class])
+								ifTrue: 
+									["Both class and metaclass must be in the environment, regardless of where the loose methods reside."
+									aBlock
+										value: class;
+										value: class class].
+							seen
+								add: className instance;
+								add: className meta]]]!
 
 defaultLabel
 	| stream |
@@ -58,17 +61,13 @@ defaultLabel
 	^stream contents!
 
 definesClass: aClass
-	^packages includes: (PackageManager current packageOfClass: aClass)!
+	^packages identityIncludes: aClass owningPackage!
 
-definesLooseMethodsInClass: aClass 
-	| class className metaclassName |
-	class := aClass instanceClass.
-	className := class name.
-	metaclassName := class class name.
-	^packages anySatisfy: 
-			[:eachPackage | 
-			eachPackage methodNames 
-				anySatisfy: [:each | each key == className or: [each key = metaclassName]]]!
+definesLooseMethodsInClass: aClass
+	| className |
+	className := aClass instanceClass fullyQualifiedReference.
+	^packages
+		anySatisfy: [:eachPackage | eachPackage methodNames anySatisfy: [:each | each className instance = className]]!
 
 includesClass: aClass 
 	^(super includesClass: aClass) 
@@ -103,19 +102,14 @@ packages
 packages: aCollection
 	packages := aCollection asArray!
 
-selectorsForClass: aClass do: aBlock
+selectorsForClass: aClass do: aBlock 
 	| name |
-	name := aClass name.
-	(self definesClass: aClass)
+	(self definesClass: aClass) 
 		ifTrue: 
-			[| methodName loose |
-			methodName := Association key: name value: nil.
-			loose := Package manager looseMethods.
-			aClass selectorsDo: 
-					[:each |
-					methodName value: each.
-					((loose includesKey: methodName) not and: [environment includesSelector: each in: aClass])
-						ifTrue: [aBlock value: each]].
+			[aClass selectorsAndMethodsDo: 
+					[:eachSelector :eachMethod | 
+					(eachMethod isLoose not and: [environment includesSelector: eachSelector in: aClass]) 
+						ifTrue: [aBlock value: eachSelector]].
 			"If only one package in the environment, can skip enumeration of loose
 			methods since there cannot be any (a package cannot both define a class and
 			own loose methods of that class)"
@@ -123,12 +117,13 @@ selectorsForClass: aClass do: aBlock
 
 	"#1325: Must enumerate any loose methods, regardless of whether one of the packages in this
 	environment defines the class."
+	name := aClass fullyQualifiedReference.
 	packages do: 
-			[:eachPackage |
+			[:eachPackage | 
 			eachPackage methodNames do: 
-					[:each |
-					each key = name
-						ifTrue: [(environment includesSelector: each value in: aClass) ifTrue: [aBlock value: each value]]]]!
+					[:each | 
+					each className = name 
+						ifTrue: [(environment includesSelector: each selector in: aClass) ifTrue: [aBlock value: each selector]]]]!
 
 storeOn: aStream
 	aStream nextPut: $(.

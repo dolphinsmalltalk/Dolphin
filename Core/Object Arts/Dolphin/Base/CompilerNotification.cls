@@ -208,8 +208,6 @@ initialize
 		at: LErrExpectExtendedLiteral put: 'extended literal expected';
 		at: LErrExpectMetaVariable put: 'meta variable expected';
 		at: LErrExpectChar put: 'character expected';
-		at: LErrInvalidQualifier put: 'invalid identifier in qualified reference';
-		at: LErrQualifiedRefNotClosed put: 'qualified reference not closed';
 		at: LErrBadNumber put: 'illegal number';
 		at: LErrExpectCodePoint put: 'hex code point expected';
 		at: LErrBadCodePoint put: 'invalid code point <1s>'.
@@ -269,6 +267,7 @@ initialize
 		at: CErrRedefiningArg put: 'redefining argument <1p>';
 		at: CErrStaticExprNotClosed put: 'static expression not closed';
 		at: CErrEmptyConditionBlock put: 'condition block of <2p> cannot be empty';
+		at: CErrQualifiedRefNotClosed put: 'qualified reference not closed';
 		yourself.
 
 	formats
@@ -298,7 +297,7 @@ initialize
 		at: CInfoSupersendsOther put: 'supersends other message <2p>';
 		at: CInfoHardBreakpoint put: 'contains hardcoded breakpoint';
 		yourself.
-	codes := Smalltalk at: #SmalltalkParseErrorCodes.
+	codes := #{SmalltalkParseErrorCodes} value.
 	codes keysAndValuesDo:  [:eachKey :each | self assert: [formats includesKey: each]].
 	formats keysDo:  [:each | self assert: [codes includes: each]].
 	self addClassConstant: 'ErrorFormats' value: formats!

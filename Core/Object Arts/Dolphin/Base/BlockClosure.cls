@@ -851,7 +851,7 @@ attemptToRecompile: aBlockClosure
 	receiver := aBlockClosure receiver.
 	result := Compiler
 				compileForEvaluation: oldMethod getSource
-				in: (receiver isNil ifTrue: [UndefinedObject] ifFalse: [oldMethod methodClass])
+				in: (receiver ifNotNil: [oldMethod methodClass])
 				evaluationPools: oldMethod evaluationPools
 				flags: 0.
 	newMethod := result method.

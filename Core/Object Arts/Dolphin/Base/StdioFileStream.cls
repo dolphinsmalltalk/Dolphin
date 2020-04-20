@@ -75,7 +75,7 @@ basicNext: anInteger
 
 	^self
 		basicNext: anInteger
-		into: (self contentsSpecies new: anInteger)
+		into: (self bufferClass new: anInteger)
 		startingAt: 1!
 
 basicNext: countInteger into: aSequenceableCollection startingAt: startInteger

@@ -54,7 +54,7 @@ mainShellClass
 	This should be overridden by subclasses, and would be a subclass responsibility
 	method if it were not for the need to support instance based deployment."
 
-	^Smalltalk lookup: #Shell!
+	^#{Shell} valueOrNil!
 
 new
 	"Private -  Use #createExecutable:"

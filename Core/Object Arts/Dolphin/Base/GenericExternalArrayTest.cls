@@ -30,7 +30,7 @@ testElementSize
 	self elementClassNames do: 
 			[:each |
 			| class array |
-			class := Smalltalk at: each.
+			class := each asQualifiedReference value.
 			array := self arrayClass length: 1 elementClass: class.
 			self assert: array elementSize equals: class elementSize]!
 

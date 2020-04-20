@@ -230,8 +230,7 @@ installSplash
 	"Use the default"!
 
 installSystemFolderOptions
-	Smalltalk at: #SmalltalkSystemShell
-		ifPresent: [:systemFolder | self installSystemFolderOptions: systemFolder]!
+	#{SmalltalkSystemShell} ifDefined: [:systemFolder | self installSystemFolderOptions: systemFolder]!
 
 installSystemFolderOptions: systemFolder
 	systemFolder

@@ -38,9 +38,9 @@ compare: x to: y epsilon: epsilon
 	| max |
 	^(max := x abs max: y abs) <= epsilon or: [(x - y) abs < (epsilon * max)]!
 
-createPackage: name
+createPackage: aString
 	| package |
-	package := Package name: name.
+	package := Package name: aString.
 	Package manager addPackage: package.
 	^package!
 

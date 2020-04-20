@@ -11,8 +11,6 @@ SUnitNameResolver comment: ''!
 !SUnitNameResolver class methodsFor!
 
 classNamed: aSymbol
-	^Smalltalk 
-		at: aSymbol 
-		ifAbsent: [nil].! !
+	^aSymbol asQualifiedReference valueOrNil! !
 !SUnitNameResolver class categoriesFor: #classNamed:!Camp Smalltalk!public! !
 

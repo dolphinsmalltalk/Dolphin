@@ -107,7 +107,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargco
 }
 
 // Initialize the Boyer-Moorer skip array
-inline void __stdcall bmInitSkip(const uint8_t* p, const int M, int* skip)
+template <typename T> void __stdcall bmInitSkip(const T* p, const int M, int* skip)
 {
 	for (auto j=0;j<256;j++)
 		skip[j] = M;
@@ -117,18 +117,18 @@ inline void __stdcall bmInitSkip(const uint8_t* p, const int M, int* skip)
 
 
 // Returns -1 for not found, or zero based index if found
-int __stdcall bmSearch(const uint8_t* string, const int N, const uint8_t* p, const int M, /*const int* skip, */const int startAt)
+template <typename T> int __stdcall bmSearch(const T* string, const int N, const T* p, const int M, /*const int* skip, */const int startAt)
 {
 	int skip[256];
 	bmInitSkip(p,M,skip);
 
 	const int n = N - startAt;
-	const uint8_t* a = string + startAt;
+	const T* a = string + startAt;
 
 	int i, j;
 	for (i=j=M-1; j >= 0; j--,i--)
 	{
-		uint8_t c;
+		T c;
 		while ((c = a[i]) != p[j])
 		{
 			const int t = skip[c];
@@ -143,7 +143,7 @@ int __stdcall bmSearch(const uint8_t* string, const int N, const uint8_t* p, con
 	return i+1+startAt;
 }
 
-int __stdcall bruteSearch(const uint8_t* a, const int N, const uint8_t* p, const int M, const int startAt)
+template <typename T> int __stdcall bruteSearch(const T* a, const int N, const T* p, const int M, const int startAt)
 {
 	int i, j;
 	for (i=startAt,j=0; j < M && i < N;i++,j++)
@@ -158,7 +158,7 @@ int __stdcall bruteSearch(const uint8_t* a, const int N, const uint8_t* p, const
 }
 
 // N.B. startAt is now zero based
-inline int __stdcall stringSearch(const uint8_t* a, const int N, const uint8_t* p, const int M, const int startAt)
+template<typename T> int __stdcall stringSearch(const T* a, const int N, const T* p, const int M, const int startAt)
 {
 	// In order for it to be worth initiating the skip array, we have to have enough characters to search
 	return N >= 512

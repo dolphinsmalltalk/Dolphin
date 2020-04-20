@@ -255,6 +255,9 @@ asPhrase
 					last := each]].
 	^stream contents!
 
+asQualifiedReference
+	^BindingReference pathString: self!
+
 asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."
 
@@ -714,7 +717,7 @@ lines
 	separated by line delimiters. Blank lines are included.
 	N.B. It is assumed that a line delimiter consists of two characters."
 
-	^String lineDelimiter split: self!
+	^self subStrings: String lineDelimiter!
 
 lookup: keyInteger
 	"Answer the <Character> value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
@@ -1114,7 +1117,7 @@ subStrings: separatorOrSeparators
 	Repeated separators produce empty strings in the array (cf. #subStrings). The separators are removed."
 
 	#todo. "N.B. This does not comply with the current ANSI definition, which expects that the argument is a <sequencedReadableCollection> of separators, any one of which may separate each token. In the next major release (7.2) this behaviour will be changed to be ANSI compliant. Also the historic asymmetric behaviour of ignoring a terminating separator will be corrected so that the operation behaves in the same was as Character>>split:"
-	^separatorOrSeparators _separateSubStringsIn: self!
+	^separatorOrSeparators split: self!
 
 subStringsAnsi: separators
 	"Answer an array containing the substrings of the receiver separated by occurrences
@@ -1249,6 +1252,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asMethodCategory!converting!public! !
 !String categoriesFor: #asNumber!converting!public! !
 !String categoriesFor: #asPhrase!converting!public! !
+!String categoriesFor: #asQualifiedReference!public! !
 !String categoriesFor: #asResourceId!converting!public! !
 !String categoriesFor: #associations!accessing!public! !
 !String categoriesFor: #asString!converting!public! !

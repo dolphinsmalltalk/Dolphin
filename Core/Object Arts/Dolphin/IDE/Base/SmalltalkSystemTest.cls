@@ -80,7 +80,7 @@ testNameForArgument
 	self assert: (devsys nameForArgument: [:a | ]) equals: 'aMonadicValuable'.
 	self assert: (devsys nameForArgument: [:a :b | ]) equals: 'aDyadicValuable'.
 	self assert: (devsys nameForArgument: [:a :b :c | ]) equals: 'aValuable'.
-	self assert: (devsys nameForArgument: 'abc') equals: 'anAnsiString'.
+	self assert: (devsys nameForArgument: 'abc') equals: 'aString'.
 	self assert: (devsys nameForArgument: #[1 2 3]) equals: 'aByteArray'.
 	self assert: (devsys nameForArgument: Object yourAddress asExternalAddress)
 		equals: 'anExternalAddress'!

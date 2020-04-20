@@ -109,6 +109,11 @@ allSharedPools
 			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
 	^pools contents!
 
+asQualifiedReference
+	"Answer a <BindingReference> to this class."
+
+	^self instanceClass fullyQualifiedReference!
+
 canUnderstandProtocol: protName
 	"Answer whether the receiver can understand the named <MethodProtocol>,
 	even if it does not necessarily claim to implement it. See also #conformsToProtocol:"
@@ -170,7 +175,7 @@ classCategoryClass
 	"Private - Answer the class of object used to categorize classes.
 	Answer nil if the category system is not present."
 
-	^Smalltalk lookup: #ClassCategory!
+	^#{ClassCategory} valueOrNil!
 
 classPool
 	"Answer the dictionary of class variables."
@@ -331,6 +336,18 @@ displayOn: aStream
 	aStream nextPutAll: self name
 !
 
+fullName
+	"Placeholder for answering fully qualified name (relative to Smalltalk)."
+
+	^self name
+
+	!
+
+fullyQualifiedReference
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+
+	^self subclassResponsibility!
+
 includesCategory: category
 	"Answer whether the receiver includes the named category."
 
@@ -464,7 +481,7 @@ methodProtocol: protocolName attributes: attributes selectors: selectors
 methodProtocolClass
 	"Private - Answer the class of object used to represent method protocols for the receiver."
 
-	^Smalltalk at: #MethodProtocol!
+	^#{MethodProtocol} value!
 
 methods
 	"For compatibility with Visual Smalltalk/Smalltalk Express
@@ -810,6 +827,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #allProtocols!protocols!public! !
 !ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
 !ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #asQualifiedReference!converting!public! !
 !ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
 !ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
 !ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
@@ -831,6 +849,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
+!ClassDescription categoriesFor: #fullName!accessing!public! !
+!ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !

@@ -77,12 +77,12 @@ testElementAt
 
 testElementClasses
 	| array random irand triplets |
-	triplets := #(#(#SWORD -32768 32767) #(#SDWORD -2147483648 2147483647) #(#FLOAT -1.25 1.25) #(#DOUBLE -1.23456789 1.23456789) #(#BSTR '' 'abc') #(#HRESULT ##(S_OK) ##(E_NOTIMPL)) #(#VARIANT_BOOL false true) #(#CURRENCY 99.99s2) #(#SBYTE -128 127) #(#BYTE 0 255) #(#WORD 0 65535) #(#DWORD 0 4294967295) #(#VARIANT 1 1.0 'abc' nil true 1.2s2 ##(DATE
-				now) 0.6) #(#DECIMAL 12345.12345s) #(#LARGE_INTEGER -9223372036854775808 9223372036854775807)).
+	triplets := #(#(#{SWORD} -32768 32767) #(#{SDWORD} -2147483648 2147483647) #(#{FLOAT} -1.25 1.25) #(#{DOUBLE} -1.23456789 1.23456789) #(#{BSTR} '' 'abc') #(#{HRESULT} ##(S_OK) ##(E_NOTIMPL)) #(#{VARIANT_BOOL} false true) #(#{CURRENCY} 99.99s2) #(#{SBYTE} -128 127) #(#{BYTE} 0 255) #(#{WORD} 0 65535) #(#{DWORD} 0 4294967295) #(#{VARIANT} 1 1.0 'abc' nil true 1.2s2 ##(DATE
+				now) 0.6) #(#{DECIMAL} 12345.12345s) #(#{LARGE_INTEGER} -9223372036854775808 9223372036854775807)).
 	triplets do: 
 			[:each |
 			| sa2 |
-			array := SAFEARRAY length: each size - 1 elementClass: (Smalltalk at: each first).
+			array := SAFEARRAY length: each size - 1 elementClass: each first value.
 			self should: [array at: 1 put: Object new] raise: Error.
 			"We also want to test an indirect reference"
 			sa2 := SAFEARRAY fromAddress: array yourAddress owner: array.
@@ -117,16 +117,16 @@ testElementClasses
 	self assert: array recordInfo getFieldNames equals: #('x' 'y').
 
 	"Some invalid safe array types in the VTClasses map"
-	#(#String #Utf16String #ExternalAddress) do: 
+	#(#{String} #{Utf16String} #{ExternalAddress}) do: 
 			[:each |
 			self
-				should: [SAFEARRAY length: 1 elementClass: (Smalltalk at: each)]
+				should: [SAFEARRAY length: 1 elementClass: each value]
 				raise: MessageNotUnderstood
 				matching: [:ex | ex selector == #newSAFEARRAY:]].
-	#(#VOID #FILETIME) do: 
+	#(#{VOID} #{FILETIME}) do: 
 			[:each |
 			self
-				should: [SAFEARRAY length: 1 elementClass: (Smalltalk at: each)]
+				should: [SAFEARRAY length: 1 elementClass: each value]
 				raise: Error
 				matching: [:ex | ex messageText = 'Failed to create vector']]
 

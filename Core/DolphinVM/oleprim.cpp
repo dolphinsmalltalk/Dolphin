@@ -20,8 +20,10 @@
 
 static Oop* AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
 {
-	if (oteClass->isNil())
+	if (isNil(oteClass))
+	{
 		return Interpreter::primitiveFailure(_PrimitiveFailureCode::ClassNotRegistered);
+	}
 
 	OTE* oteStruct = ExternalStructure::New(oteClass, ptr);
 	Oop* const sp = Interpreter::m_registers.m_stackPointer;
@@ -32,11 +34,15 @@ static Oop* AnswerNewStructure(BehaviorOTE* oteClass, void* ptr)
 
 static Oop* AnswerNewInterfacePointer(BehaviorOTE* oteClass, IUnknown* punk)
 {
-	if (oteClass->isNil())
+	if (isNil(oteClass))
+	{
 		return Interpreter::primitiveFailure(_PrimitiveFailureCode::ClassNotRegistered);
+	}
 
 	if (punk)
+	{
 		punk->AddRef();
+	}
 
 	OTE* poteUnk = ExternalStructure::NewPointer(oteClass, punk);
 	poteUnk->beFinalizable();

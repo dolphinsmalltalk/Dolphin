@@ -24,7 +24,7 @@ displayOn: aStream
 !
 
 environment
-	"Answer the receiver's controlling name space."
+	"Answer the receiver's <Namespace> scope."
 
 	^Smalltalk
 !
@@ -34,10 +34,19 @@ fileOutName
 
 	| path package |
 	path := File composeStem: self name extension: Package sourceGlobalExtension.
-	package := Package manager packageOfGlobalNamed: self name asSymbol.
+	package := Package manager packageOfVariableNamed: self fullyQualifiedReference.
 	package notNil ifTrue: [
 		path := File replacePath:  path with: package path ].
 	^path!
+
+fullName
+	"Placeholder for answering fully qualified name (relative to Smalltalk)."
+
+	^self name
+!
+
+fullyQualifiedReference
+	^self fullName asQualifiedReference!
 
 initializerFor: aString 
 	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
@@ -54,7 +63,7 @@ initializerFor: aString
 				ifNotNil: 
 					[:var | 
 					| value |
-					(Compiler compileExpression: chunkString in: UndefinedObject) 
+					(Compiler compileExpression: chunkString in: nil) 
 						ifNotNil: 
 							[:expr | 
 							value := [expr method value] on: Error
@@ -87,6 +96,12 @@ isChanged: aBoolean
 				package isChanged: true]]
 		ifFalse: [self removePropertyAt: #isChanged ifAbsent: []]!
 
+localEnvironment
+	"Private - Answer the nearest <Namespace> scope."
+
+	^self
+!
+
 name
 	"Answer the receiver's name."
 
@@ -98,21 +113,22 @@ name: aSymbol
 owningPackage
 	"Answers the package that owns the receiver or nil if it is not yet owned by any package"
 
-	| n |
-	n := self name.
-	^n = 'Anon' ifFalse: [Package manager packageOfGlobalNamed: n]!
+	^self name = 'Anon' ifFalse: [Package manager packageOfVariableNamed: self fullyQualifiedReference]!
 
 owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
-	aPackage addGlobalNamed: self name! !
+	aPackage addVariableNamed: self fullyQualifiedReference! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
 !PoolDictionary categoriesFor: #displayOn:!displaying!public! !
-!PoolDictionary categoriesFor: #environment!constants!public! !
+!PoolDictionary categoriesFor: #environment!accessing!public! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
+!PoolDictionary categoriesFor: #fullName!accessing!public! !
+!PoolDictionary categoriesFor: #fullyQualifiedReference!accessing!public! !
 !PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
+!PoolDictionary categoriesFor: #localEnvironment!accessing!private! !
 !PoolDictionary categoriesFor: #name!accessing!public! !
 !PoolDictionary categoriesFor: #name:!accessing!private! !
 !PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !

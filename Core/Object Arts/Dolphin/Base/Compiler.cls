@@ -86,20 +86,20 @@ compileDebugMethod: aString in: aClass
 		in: aClass
 		flags: aClass defaultCompilationFlags | DebugMethod) method!
 
-compileExpression: aString in: aClass 
-	^self 
+compileExpression: aString in: aBehaviorOrNil
+	^self
 		compileExpression: aString
-		in: aClass
-		flags: aClass defaultCompilationFlags!
+		in: aBehaviorOrNil
+		flags: aBehaviorOrNil defaultCompilationFlags!
 
-compileExpression: aString in: aClass flags: anInteger
+compileExpression: aString in: aBehaviorOrNil flags: anInteger
 	^self
 		compileForEvaluation: aString
-		in: aClass
+		in: aBehaviorOrNil
 		evaluationPools: nil
 		flags: anInteger!
 
-compileForEvaluation: aString in: aBehavior evaluationPools: anArray flags: anInteger
+compileForEvaluation: aString in: aBehaviorOrNil evaluationPools: anArray flags: anInteger
 	"Private - Compile the expression source, aString, in the context of the class, aBehavior,
 	parameterized by the flags, anInteger, notifying, notifier, of any errors or warnings 
 	which are detected. Additional shared variables are looked up in the <Array> of <PoolDictionary>,
@@ -139,7 +139,7 @@ compileForEvaluation: aString in: aBehavior evaluationPools: anArray flags: anIn
 	results := CompilerLibrary default
 				compileForEvaluation: self
 				source: source
-				in: aBehavior
+				in: aBehaviorOrNil
 				evaluationPools: anArray
 				flags: anInteger
 				notifying: self.
@@ -150,8 +150,8 @@ compileForEvaluation: aString in: aBehavior evaluationPools: anArray flags: anIn
 				rawTempsMap: results third.
 	expression notNil
 		ifTrue: 
-			[expression
-				methodClass: aBehavior;
+			[aBehaviorOrNil ifNotNil: [expression methodClass: aBehaviorOrNil].
+			expression
 				storeSourceString: source evaluationPools: anArray;
 				isImmutable: true].
 	^results!
@@ -174,13 +174,13 @@ debugInfoFor: aString in: aClass debug: aBoolean
 		in: aClass
 		flags: aClass defaultCompilationFlags | (self debugInfoFlags: aBoolean)!
 
-debugInfoForExpression: aString in: aClass evaluationPools: pools debug: aBoolean
+debugInfoForExpression: aString in: aBehaviorOrNil evaluationPools: pools debug: aBoolean
 	"Answers a CompilationResult with all the information necessary for debugging a method
 	in aClass whose sources is aString."
 
 	^self
 		compileForEvaluation: aString
-		in: aClass
+		in: aBehaviorOrNil
 		evaluationPools: pools
 		flags: (self debugInfoFlags: aBoolean)!
 
@@ -227,7 +227,7 @@ evaluate: aString for: anObject
 evaluate: aString for: anObject evaluationPools: anArray
 	^(self
 		compileForEvaluation: aString
-		in: anObject class
+		in: (anObject ifNotNil: [anObject class])
 		evaluationPools: anArray
 		flags: 0) method
 		ifNotNil: [:expr | expr value: anObject withArguments: #()]!
@@ -416,7 +416,7 @@ textMapOf: aString in: aClass
 uninitialize
 	"Clean up VM references that are only required if the compiler is present."
 
-	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative)
+	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor: #asNumber #understandsArithmetic #negative #pathString:)
 		do: [:each | VMLibrary default unregisterObject: each]!
 
 warningClass

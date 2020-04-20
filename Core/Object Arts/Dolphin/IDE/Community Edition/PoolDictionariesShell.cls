@@ -32,9 +32,8 @@ addPool
 	name := Prompter prompt: 'Enter Name of PoolConstantsDictionary to Create: ' caption: self caption.
 	name ifNil: [^self].
 	name := name trimBlanks capitalized asSymbol.
-	Smalltalk at: name
-		ifPresent: 
-			[:existingPool | 
+	name asQualifiedReference ifDefined: 
+			[:existingPool |
 			self selectionOrNil: existingPool.
 			^MessageBox warning: 'There is already a global called ' , name , '.' caption: self caption].
 	newPool := PoolConstantsDictionary named: name.
@@ -75,13 +74,13 @@ poolPackage
 	| pool newPkg oldPkg |
 	pool := self selectionOrNil.
 	oldPkg := pool owningPackage.
-	newPkg := PackagePrompter 
+	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
 				caption: ('Package of <1d>...' expandMacrosWith: pool)
 				default: nil
 				validationBlock: [:package | package notNil and: [pool environment includesKey: pool name]].
-	(newPkg isNil or: [newPkg = oldPkg]) ifTrue: [^self].	
-	Package manager addGlobalNamed: pool name to: newPkg!
+	(newPkg isNil or: [newPkg = oldPkg]) ifTrue: [^self].
+	Package manager addVariableNamed: pool fullyQualifiedReference to: newPkg!
 
 queryCommand: aCommandQuery 
 	"Private - Enters details about a potential command for the receiver into aCommandQuery"

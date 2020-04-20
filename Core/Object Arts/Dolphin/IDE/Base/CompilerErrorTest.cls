@@ -10,12 +10,6 @@ CompilerErrorTest comment: ''!
 !CompilerErrorTest categoriesForClass!Unclassified! !
 !CompilerErrorTest methodsFor!
 
-compilationErrorClass
-	^Compiler errorClass!
-
-compilationWarningClass
-	^Compiler warningClass!
-
 defaultCompileFlags
 	^Interactive "| SyntaxCheckOnly"
 
@@ -23,18 +17,28 @@ defaultCompileFlags
 
 !
 
-parseExpression: aString in: aClass 
-	^Compiler 
+parseExpression: aString in: aClass
+	errors := OrderedCollection new.
+	^
+	[Compiler
 		compileForEvaluation: aString
 		in: aClass
 		evaluationPools: #()
-		flags: self defaultCompileFlags!
+		flags: self defaultCompileFlags]
+			on: self compilationErrorClass
+			do: 
+				[:ex |
+				errors addLast: ex.
+				ex pass]!
 
 parseMethod: aString in: aClass 
 	^Compiler 
 		compile: aString
 		in: aClass
 		flags: self defaultCompileFlags!
+
+parserClass
+	^Compiler!
 
 printLiterals: anInteger on: aPuttableStream
 	| i |
@@ -169,11 +173,10 @@ writtenNotReadRange: aString
 	| start |
 	start := aString indexOf: $_.
 	^start to: start + 3! !
-!CompilerErrorTest categoriesFor: #compilationErrorClass!constants!private! !
-!CompilerErrorTest categoriesFor: #compilationWarningClass!constants!private! !
 !CompilerErrorTest categoriesFor: #defaultCompileFlags!constants!private! !
 !CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
 !CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
+!CompilerErrorTest categoriesFor: #parserClass!constants!private! !
 !CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
 !CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
 !CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !

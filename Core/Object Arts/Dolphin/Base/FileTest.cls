@@ -427,7 +427,7 @@ testSniffEncoding
 	{Utf16String.Bom.
 		Utf16String.Bom , 'even' asAnsiString asByteArray.
 		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
-		('a ' , Character dolphin asUtf16String) asByteArray.
+		('a ' asAnsiString, Character dolphin asUtf16String) asByteArray.
 		'a £' asUtf16String asByteArray} do: 
 				[:each |
 				tempFile

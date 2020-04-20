@@ -98,7 +98,7 @@ bindingFor: aString
 		ifAbsent: [self realClass classPool associationAt: aString asString ifAbsent: [nil]]!
 
 classBinding
-	^Smalltalk associationAt: self name!
+	^self name asQualifiedReference binding!
 
 classVarNames
 	^self nonMetaclass classVariableNames!

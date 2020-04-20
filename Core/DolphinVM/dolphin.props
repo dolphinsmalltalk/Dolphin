@@ -24,6 +24,7 @@
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
       <CallingConvention>FastCall</CallingConvention>
       <StringPooling>true</StringPooling>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>

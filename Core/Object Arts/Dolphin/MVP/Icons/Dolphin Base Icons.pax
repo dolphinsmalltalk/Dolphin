@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
@@ -9,110 +9,107 @@ This package extends base system classes to add icons.
 '.
 
 
-package methodNames
-	add: #Color -> #icon;
-	add: #ColorDefault -> #icon;
-	add: #CompileFailedMethod -> #icon;
-	add: #VariableBinding -> #icon;
-	add: 'AbstractCardContainer class' -> #icon;
-	add: 'Announcement class' -> #icon;
-	add: 'ArithmeticValue class' -> #icon;
-	add: 'Array class' -> #icon;
-	add: 'Association class' -> #icon;
-	add: 'Bag class' -> #icon;
-	add: 'Behavior class' -> #icon;
-	add: 'BlockClosure class' -> #icon;
-	add: 'BOOL class' -> #icon;
-	add: 'Boolean class' -> #icon;
-	add: 'BOOLEAN class' -> #icon;
-	add: 'BooleanPresenter class' -> #icon;
-	add: 'ByteArray class' -> #icon;
-	add: 'CardLabel class' -> #icon;
-	add: 'Character class' -> #icon;
-	add: 'CheckButton class' -> #icon;
-	add: 'Collection class' -> #icon;
-	add: 'CompiledCode class' -> #icon;
-	add: 'CompileFailedMethod class' -> #icon;
-	add: 'Compiler class' -> #icon;
-	add: 'CompilerNotification class' -> #icon;
-	add: 'Date class' -> #icon;
-	add: 'DateAndTime class' -> #icon;
-	add: 'DeadObject class' -> #icon;
-	add: 'DeafObject class' -> #icon;
-	add: 'Delay class' -> #icon;
-	add: 'Dictionary class' -> #icon;
-	add: 'DiskVolumeInformation class' -> #icon;
-	add: 'DOUBLE class' -> #icon;
-	add: 'Duration class' -> #icon;
-	add: 'Error class' -> #icon;
-	add: 'Exception class' -> #icon;
-	add: 'ExternalArray class' -> #icon;
-	add: 'ExternalCallback class' -> #icon;
-	add: 'ExternalInteger class' -> #icon;
-	add: 'ExternalLibrary class' -> #icon;
-	add: 'ExternalStructure class' -> #icon;
-	add: 'False class' -> #icon;
-	add: 'File class' -> #icon;
-	add: 'Float class' -> #icon;
-	add: 'FLOAT class' -> #icon;
-	add: 'Fraction class' -> #icon;
-	add: 'FramingLayout class' -> #icon;
-	add: 'GUID class' -> #icon;
-	add: 'InputState class' -> #icon;
-	add: 'Integer class' -> #icon;
-	add: 'Interval class' -> #icon;
-	add: 'Keyboard class' -> #icon;
-	add: 'LargeInteger class' -> #icon;
-	add: 'LayoutManager class' -> #icon;
-	add: 'Link class' -> #icon;
-	add: 'Locale class' -> #icon;
-	add: 'Magnitude class' -> #icon;
-	add: 'MemoryManager class' -> #icon;
-	add: 'Message class' -> #icon;
-	add: 'MessageSendAbstract class' -> #icon;
-	add: 'MessageSequenceAbstract class' -> #icon;
-	add: 'Metaclass class' -> #icon;
-	add: 'MethodProtocol class' -> #icon;
-	add: 'Model class' -> #icon;
-	add: 'Mutex class' -> #icon;
-	add: 'Notification class' -> #icon;
-	add: 'NotificationSignal class' -> #icon;
-	add: 'Number class' -> #icon;
-	add: 'Package class' -> #icon;
-	add: 'PackageManager class' -> #icon;
-	add: 'Point class' -> #icon;
-	add: 'Process class' -> #icon;
-	add: 'ProcessorScheduler class' -> #icon;
-	add: 'RadioButton class' -> #icon;
-	add: 'RadioButtonSetPresenter class' -> #icon;
-	add: 'Rectangle class' -> #icon;
-	add: 'ResourceIdentifier class' -> #icon;
-	add: 'ScaledDecimal class' -> #icon;
-	add: 'SearchPolicy class' -> #icon;
-	add: 'Semaphore class' -> #icon;
-	add: 'Set class' -> #icon;
-	add: 'Signal class' -> #icon;
-	add: 'SortAlgorithm class' -> #icon;
-	add: 'Sound class' -> #icon;
-	add: 'SourceManager class' -> #icon;
-	add: 'String class' -> #icon;
-	add: 'Symbol class' -> #icon;
-	add: 'SystemDictionary class' -> #icon;
-	add: 'Time class' -> #icon;
-	add: 'TIME_ZONE_INFORMATION class' -> #icon;
-	add: 'True class' -> #icon;
-	add: 'UndefinedObject class' -> #icon;
-	add: 'UtfEncodedString class' -> #icon;
-	add: 'Warning class' -> #icon;
-	add: 'WarningSignal class' -> #icon;
-	add: 'WeakArray class' -> #icon;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{AbstractBindingReference class} #icon)
+	#(#{AbstractCardContainer class} #icon)
+	#(#{Announcement class} #icon)
+	#(#{ArithmeticValue class} #icon)
+	#(#{Array class} #icon)
+	#(#{Association class} #icon)
+	#(#{Bag class} #icon)
+	#(#{Behavior class} #icon)
+	#(#{BindingReference class} #icon)
+	#(#{BlockClosure class} #icon)
+	#(#{BOOL class} #icon)
+	#(#{Boolean class} #icon)
+	#(#{BOOLEAN class} #icon)
+	#(#{BooleanPresenter class} #icon)
+	#(#{ByteArray class} #icon)
+	#(#{CardLabel class} #icon)
+	#(#{Character class} #icon)
+	#(#{CheckButton class} #icon)
+	#(#{Collection class} #icon)
+	#(#{Color} #icon)
+	#(#{ColorDefault} #icon)
+	#(#{CompiledCode class} #icon)
+	#(#{CompileFailedMethod} #icon)
+	#(#{CompileFailedMethod class} #icon)
+	#(#{Compiler class} #icon)
+	#(#{CompilerNotification class} #icon)
+	#(#{Date class} #icon)
+	#(#{DateAndTime class} #icon)
+	#(#{DeadObject class} #icon)
+	#(#{DeafObject class} #icon)
+	#(#{Delay class} #icon)
+	#(#{Dictionary class} #icon)
+	#(#{DiskVolumeInformation class} #icon)
+	#(#{DOUBLE class} #icon)
+	#(#{Duration class} #icon)
+	#(#{Error class} #icon)
+	#(#{Exception class} #icon)
+	#(#{ExternalArray class} #icon)
+	#(#{ExternalCallback class} #icon)
+	#(#{ExternalInteger class} #icon)
+	#(#{ExternalLibrary class} #icon)
+	#(#{ExternalStructure class} #icon)
+	#(#{False class} #icon)
+	#(#{File class} #icon)
+	#(#{Float class} #icon)
+	#(#{FLOAT class} #icon)
+	#(#{Fraction class} #icon)
+	#(#{FramingLayout class} #icon)
+	#(#{GUID class} #icon)
+	#(#{InputState class} #icon)
+	#(#{Integer class} #icon)
+	#(#{Interval class} #icon)
+	#(#{Keyboard class} #icon)
+	#(#{LargeInteger class} #icon)
+	#(#{LayoutManager class} #icon)
+	#(#{Link class} #icon)
+	#(#{Locale class} #icon)
+	#(#{Magnitude class} #icon)
+	#(#{MemoryManager class} #icon)
+	#(#{Message class} #icon)
+	#(#{MessageSendAbstract class} #icon)
+	#(#{MessageSequenceAbstract class} #icon)
+	#(#{MetaBindingReference class} #icon)
+	#(#{Metaclass class} #icon)
+	#(#{MethodProtocol class} #icon)
+	#(#{Model class} #icon)
+	#(#{Mutex class} #icon)
+	#(#{Notification class} #icon)
+	#(#{NotificationSignal class} #icon)
+	#(#{Number class} #icon)
+	#(#{Package class} #icon)
+	#(#{PackageManager class} #icon)
+	#(#{Point class} #icon)
+	#(#{Process class} #icon)
+	#(#{ProcessorScheduler class} #icon)
+	#(#{RadioButton class} #icon)
+	#(#{RadioButtonSetPresenter class} #icon)
+	#(#{Rectangle class} #icon)
+	#(#{ResourceIdentifier class} #icon)
+	#(#{ScaledDecimal class} #icon)
+	#(#{SearchPolicy class} #icon)
+	#(#{Semaphore class} #icon)
+	#(#{Set class} #icon)
+	#(#{Signal class} #icon)
+	#(#{SortAlgorithm class} #icon)
+	#(#{Sound class} #icon)
+	#(#{SourceManager class} #icon)
+	#(#{String class} #icon)
+	#(#{Symbol class} #icon)
+	#(#{SystemDictionary class} #icon)
+	#(#{Time class} #icon)
+	#(#{TIME_ZONE_INFORMATION class} #icon)
+	#(#{True class} #icon)
+	#(#{UndefinedObject class} #icon)
+	#(#{UtfEncodedString class} #icon)
+	#(#{VariableBinding} #icon)
+	#(#{Warning class} #icon)
+	#(#{WarningSignal class} #icon)
+	#(#{WeakArray class} #icon)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -123,17 +120,23 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
-	'Dolphin Text Tile Icons').
+	'Dolphin Text Tile Icons'
+).
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
+
+!AbstractBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		fontStyle: #italic;
+		yourself)! !
+!AbstractBindingReference class categoriesFor: #icon!constants!public! !
 
 !AbstractCardContainer class methodsFor!
 
@@ -205,6 +208,16 @@ icon
 
 	^##(self) defaultIcon! !
 !Behavior class categoriesFor: #icon!constants!public! !
+
+!BindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!BindingReference class categoriesFor: #icon!constants!public! !
 
 !BlockClosure class methodsFor!
 
@@ -673,6 +686,16 @@ icon
 
 	^##(self) defaultIcon! !
 !MessageSequenceAbstract class categoriesFor: #icon!constants!public! !
+
+!MetaBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!MetaBindingReference class categoriesFor: #icon!constants!public! !
 
 !Metaclass class methodsFor!
 

@@ -350,7 +350,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 							{
 								// Can perform a fast byte search
 
-								uint8_t codeUnit = charObj->CodeUnit & 0xFF;
+								char8_t codeUnit = charObj->CodeUnit & 0xFF;
 								auto s = oteUtf->m_location->m_characters;
 								auto i = from - 1;
 								while (i < to)
@@ -1022,9 +1022,9 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 	}
 }
 
-uint32_t __fastcall hashBytes(const uint8_t* bytes, size_t len)
+template <class T> uint32_t __fastcall hashBytes(const T* bytes, size_t len)
 {
-	const uint8_t* stop = bytes + len;
+	const T* stop = bytes + len;
 	uint32_t hash = 2166136261U;
 
 	while (bytes < stop) 
