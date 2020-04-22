@@ -99,6 +99,15 @@ createKey: subPath
 	subKey free.
 	^subKey!
 
+decodeMultiSz: aByteArray size: anInteger
+	"Private - Decode a REG_MULTISZ format registry value to an <Array> of <String> from a contiguous sequence of null-terminated UTF-16 strings that are terminated by two null characters."
+
+	| multisz strings |
+	multisz := (Utf16String fromByteArray: aByteArray length: (anInteger bitShift: -1) - 1) readStream.
+	strings := Array writeStream.
+	[multisz atEnd] whileFalse: [strings nextPut: (multisz upTo: $\0)].
+	^strings contents!
+
 displayOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
@@ -232,15 +241,12 @@ objectFromValue: bytes type: type size: size
 				ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
 	type == REG_DWORD ifTrue: [^bytes sdwordAtOffset: 0].
 	type == REG_BINARY ifTrue: [^bytes copyFrom: 1 to: size].
-	type == REG_MULTI_SZ
-		ifTrue: 
-			["Array of null-terminated strings that are terminated by two null characters."
-			^(Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1) subStrings: $\0].
+	type == REG_MULTI_SZ ifTrue: [^self decodeMultiSz: bytes size: size].
 	type == REG_NONE ifTrue: [^nil].
 	type == REG_EXPAND_SZ
 		ifTrue: 
 			[^KernelLibrary default
-				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: bytes size // 2 - 1)].
+				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
 	type == REG_QWORD ifTrue: [^bytes sqwordAtOffset: 0].
 	Notification signal: 'Unrecognised registry value type treated as binary: ' , type printString.
 	^bytes copyFrom: 1 to: size!
@@ -754,6 +760,7 @@ valueFromObject: value
 !RegKeyAbstract categoriesFor: #basicFree!private!realizing/unrealizing! !
 !RegKeyAbstract categoriesFor: #basicRealize!private!realizing/unrealizing! !
 !RegKeyAbstract categoriesFor: #createKey:!adding!public! !
+!RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
 !RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
 !RegKeyAbstract categoriesFor: #do:!enumerating!public! !
 !RegKeyAbstract categoriesFor: #fileOutOn:!public!source filing! !
