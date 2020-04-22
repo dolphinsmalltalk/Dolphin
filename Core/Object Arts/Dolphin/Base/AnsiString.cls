@@ -108,12 +108,12 @@ includes: aCharacter
 		from: 1
 		to: self size) ~~ 0!
 
-nextIndexOf: anElement from: start to: stop
-	"Answer the index of the next occurrence of anElement in the receiver between 
-	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
-
-	<primitive: 52>
-	^self nextIdentityIndexOf: anElement from: start to: stop!
+nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
+	aCharacter encoding ~~ #ansi ifTrue: [^0].
+	^self
+		basicIdentityIndexOf: aCharacter asInteger
+		from: startInteger
+		to: stopInteger!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order.
@@ -187,7 +187,7 @@ unescapePercents
 !AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
 !AnsiString categoriesFor: #first:!copying!public! !
 !AnsiString categoriesFor: #includes:!public!searching! !
-!AnsiString categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !AnsiString categoriesFor: #reverse!copying!public! !
 !AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #strlen!accessing!private! !

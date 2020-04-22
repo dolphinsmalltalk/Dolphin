@@ -33,24 +33,28 @@ class AnsiStringOTE : public TOTE<ST::AnsiString>
 {
 public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
+	__forceinline size_t sizeForRead() const { return m_size & SizeMask; }
 };
 
 class Utf8StringOTE : public TOTE<ST::Utf8String>
 {
 public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size); }
+	__forceinline size_t sizeForRead() const { return m_size & SizeMask; }
 };
 
 class Utf16StringOTE : public TOTE<ST::Utf16String>
 {
 public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size) / static_cast<ptrdiff_t>(sizeof(char16_t)); }
+	__forceinline size_t sizeForRead() const { return (m_size & SizeMask) / sizeof(char16_t); }
 };
 
 class Utf32StringOTE : public TOTE<ST::Utf32String>
 {
 public:
 	__forceinline ptrdiff_t sizeForUpdate() const { return static_cast<ptrdiff_t>(m_size) / static_cast<ptrdiff_t>(sizeof(char32_t)); }
+	__forceinline size_t sizeForRead() const { return (m_size & SizeMask) / sizeof(char32_t); }
 };
 
 typedef UINT codepage_t;

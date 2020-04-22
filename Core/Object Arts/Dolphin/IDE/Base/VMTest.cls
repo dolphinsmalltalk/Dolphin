@@ -2571,28 +2571,135 @@ testPrimitiveStringCollate
 	self assert: (method value: 'a' withArguments: {WeakArray new}) equals: 'InvalidParameter1'!
 
 testPrimitiveStringNextIndexOfFromTo
-	| method foundCases nonIntegerToFrom fromOutOfBounds toOutOfBounds emptyIntervalBounds notFoundCases |
-	method := self createPrimitiveMethodLike: AnsiString >> #nextIndexOf:from:to:.
+	| method subject foundCases nonIntegerToFrom fromOutOfBounds toOutOfBounds emptyIntervalBounds notFoundCases |
+	method := self createPrimitiveMethodLike: String >> #nextIdentityIndexOf:from:to:.
 	foundCases := #(#('aabc' $a 1 1 1) #('aabc' $a 1 2 1) #('a' $a 1 1 1) #('aabc' $a 2 3 2) #('abc' $c 1 3 3) #('abac' $a 2 4 3)).
-	nonIntegerToFrom := #(#('aabc' $a $b 4 'InvalidParameter1') #('aabc' $a nil 4 'InvalidParameter1') #('aabc' $a 1 nil 'InvalidParameter2')).
+	nonIntegerToFrom := #(#('aabc' $a $b 4 'InvalidParameter2') #('aabc' $a nil 4 'InvalidParameter2') #('aabc' $a 1 nil 'InvalidParameter3')).
 	fromOutOfBounds := #(#('aabc' $a 0 4 'OutOfBounds') #('aabc' $a -1 4 'OutOfBounds')).
 	emptyIntervalBounds := #(#('aabc' $a 1 -1 0) #('aabc' $a 1 0 0) #('aabc' $a 4 3 0) #('aabc' $a 5 4 0) #('' $a 1 0 0)).
 	toOutOfBounds := #(#('aabc' $a 1 5 'OutOfBounds') #('' $a 1 2 'OutOfBounds')).
-	notFoundCases := #(#('aabc' $d 1 1 0) #('aabc' $d 1 2 0) #('abc' $d 1 3 0) #('abac' nil 1 4 0))
-				asOrderedCollection.
+	notFoundCases := {#('aabc' $d 1 1 0).
+				#('aabc' $d 1 2 0).
+				#('abc' $d 1 3 0).
+				#('abac' nil 1 4 0).
+				{'abcd'. Character dolphin. 1. 4. 0}.
+				{Character dolphin asUtf8String asByteArray asAnsiString.
+					Character dolphin asUtf8String at: 2.
+					1.
+					4.
+					0}.
+				{Character dolphin asUtf16String asByteArray asAnsiString.
+					Character dolphin asUtf16String at: 2.
+					1.
+					4.
+					0}}
+					asOrderedCollection.
 	"Fails on earlier VM, as it truncates the codepoint to the first byte, which means $\x161 gets treated as $a"
 	notFoundCases add: {'abc'. Character value: 16r161. 1. 3. 0}.
 	foundCases , nonIntegerToFrom , fromOutOfBounds , emptyIntervalBounds , toOutOfBounds
 		, notFoundCases do: 
 				[:each |
-				| subject actual char start stop expected |
+				| actual char start stop expected |
 				subject := each first.
 				char := each second.
 				start := each third.
 				stop := each fourth.
 				expected := each last.
 				actual := method value: subject withArguments: {char. start. stop}.
-				self assert: actual equals: expected]!
+				self assert: actual equals: expected].
+	"UTF strings are now supported too"
+	{'aa£aa' asAnsiString. 'aa£aa' asUtf8String. 'aa£aa' asUtf16String} do: 
+			[:each |
+			1 to: each size do: [:i | self assert: (method value: each withArguments: {$a. 1. i}) equals: 1].
+			self assert: (method value: each withArguments: #($£ 1 3)) equals: 3.
+			{each size + 1. SmallInteger maximum} do: 
+					[:i |
+					self assert: (method value: each withArguments: {$a. 1. i}) equals: 'OutOfBounds'.
+					self assert: (method value: each withArguments: {$a. i. i}) equals: 'OutOfBounds'].
+			{-1. 0. SmallInteger minimum} do: 
+					[:i |
+					self assert: (method value: each withArguments: {$a. 1. i}) equals: 0.
+					self assert: (method value: each withArguments: {$a. i. each size}) equals: 'OutOfBounds']].
+	subject := '𝕬 🐬 string' asUtf16String.
+	1 to: 4
+		do: 
+			[:i |
+			"Search should work, even if we start in the middle of a 32-bit character"
+			self assert: (subject
+						nextIdentityIndexOf: Character dolphin
+						from: i
+						to: subject size)
+				equals: 4.
+			"Search for surrogates - this should work, again regardless of whether we start in the middle of a character"
+			self assert: (subject
+						nextIdentityIndexOf: Character dolphin asUtf16String first
+						from: i
+						to: subject size)
+				equals: 4].
+	1 to: 7
+		do: 
+			[:i |
+			self assert: (subject
+						nextIdentityIndexOf: $s
+						from: i
+						to: subject size)
+				equals: 7].
+	"Similarly, can search for UTF-16 trail surrogates"
+	1 to: 5
+		do: 
+			[:i |
+			self assert: (subject
+						nextIdentityIndexOf: Character dolphin asUtf16String last
+						from: i
+						to: subject size)
+				equals: 5].
+	"Utf16Strings can never contain UTF-8 surrogates"
+	subject := Utf16String
+				withAll: (Character dolphin asUtf8String asByteArray asArray collect: [:each | Character value: each]).
+	1 to: 4
+		do: 
+			[:i |
+			| ch |
+			ch := '🐬' at: i.
+			self assert: ch isUtf8Surrogate.
+			self assert: (subject
+						nextIdentityIndexOf: ch
+						from: 1
+						to: subject size)
+				equals: 0].
+	subject := '£ 🐬 string'.
+	self assert: subject encoding equals: #utf8.
+	1 to: 4
+		do: 
+			[:i |
+			"Search should work, even if we start in the middle of a 32-bit character"
+			self assert: (subject
+						nextIdentityIndexOf: $\x1F42C
+						from: i
+						to: subject size)
+				equals: 4].
+	1 to: 9
+		do: 
+			[:i |
+			self assert: (subject
+						nextIdentityIndexOf: $s
+						from: i
+						to: subject size)
+				equals: 9].
+	1 to: 4
+		do: 
+			[:i |
+			| ch |
+			ch := '🐬' at: i.
+			1 to: 3 + i
+				do: 
+					[:j |
+					"Search for UTF-8 surrogates - this should work, again regardless of whether we start in the middle of a character"
+					self assert: (subject
+								nextIdentityIndexOf: ch
+								from: j
+								to: subject size)
+						equals: 3 + i]]!
 
 testPrimitiveStructIsNull
 	| method subject |

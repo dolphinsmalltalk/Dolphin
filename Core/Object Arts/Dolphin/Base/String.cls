@@ -766,15 +766,52 @@ min: operand
 		ifTrue:  [self]
 		ifFalse: [operand]!
 
-nextIdentityIndexOf: anElement from: start to: stop
-	"Answer the index of the next occurrence of anElement in the receiver's indexable
-	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
-	Implementation Note: Override the inherited implementation to make use of the primitive."
+nextIdentityIndexOf: anObject from: startInteger to: stopInteger
+	"Answer the index of the next occurrence of anObject in the receiver's indexable variables between startInteger and stopInteger inclusive. If there are no such occurrences, or the search interval is empty, answer 0."
+
+	"The primitive will find Characters in any encoding of String. 
+
+	Primitive failure reasons:
+		InvalidParameter2	- startInteger is not a SmallInteger
+		InvalidParameter3	- stopInteger is not a SmallInteger
+		OutOfBounds		- one or other index if out of bounds (not in the range [1..receiver's size]
+		AssertionFailure		- malformed receiver (unrecognised encoding)"
 
 	<primitive: 52>
-	^anElement class == Character 
-		ifTrue: [self basicIdentityIndexOf: anElement asInteger from: start to: stop]
-		ifFalse: [0 "Can only contain characters"]!
+	^anObject class == Character
+		ifTrue: 
+			[self
+				nextIndexOfCharacter: anObject
+				from: startInteger
+				to: stopInteger]
+		ifFalse: 
+			["Strings can only contain Characters"
+			^0]!
+
+nextIndexOf: anObject from: startInteger to: stopInteger
+	"Answer the index of the next occurrence of anObject in the receiver's indexable variables between startInteger and stopInteger inclusive. If there are no such occurrences, or the search interval is empty, answer 0."
+
+	"The primitive will find Characters in any encoding of String. 
+
+	Primitive failure reasons:
+		InvalidParameter2	- startInteger is not a SmallInteger
+		InvalidParameter3	- stopInteger is not a SmallInteger
+		OutOfBounds		- one or other index if out of bounds (not in the range [1..receiver's size]
+		AssertionFailure		- malformed receiver (unrecognised encoding)"
+
+	<primitive: 52>
+	^anObject class == Character
+		ifTrue: 
+			[self
+				nextIndexOfCharacter: anObject
+				from: startInteger
+				to: stopInteger]
+		ifFalse: 
+			["Strings can only contain Characters"
+			^0]!
+
+nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
+	^self subclassResponsibility!
 
 occurrencesOf: anObject 
 	"Answer how many of the receiver's elements are equal to anObject.
@@ -1208,6 +1245,8 @@ withNormalizedLineDelimiters
 !String categoriesFor: #midString:from:!copying!public! !
 !String categoriesFor: #min:!comparing!public! !
 !String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!String categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !String categoriesFor: #occurrencesOf:!public!searching! !
 !String categoriesFor: #occurrencesOf:from:to:!public!searching! !
 !String categoriesFor: #printOn:!printing!public! !

@@ -27,6 +27,9 @@ namespace ST
 		SmallInteger m_code;		// Small integer value.
 		static constexpr size_t CharacterValueIndex = Magnitude::FixedSize;
 		static constexpr size_t FixedSize = CharacterValueIndex + 1;
+		static constexpr SmallInteger EncodingMask = 0x3F000000;
+		static constexpr SmallInteger Utf16Mask = 0x2000000;
+		static constexpr SmallInteger Utf8Mask = 0x1000000;
 
 		static CharOTE* NewAnsi(unsigned char value);
 		static CharOTE* NewUnicode(char32_t value);
@@ -39,6 +42,24 @@ namespace ST
 
 		__declspec(property(get = getCodePoint)) char32_t CodePoint;
 		char32_t getCodePoint() const;
+
+		__declspec(property(get = getIsUtf8Surrogate)) boolean IsUtf8Surrogate;
+		boolean getIsUtf8Surrogate() const
+		{
+			return (ObjectMemoryIntegerValueOf(m_code) & (EncodingMask | 0x80)) == (Utf8Mask | 0x80);
+		}
+
+		__declspec(property(get = getIsUtf16Surrogate)) boolean IsUtf16Surrogate;
+		boolean getIsUtf16Surrogate() const
+		{
+			return (ObjectMemoryIntegerValueOf(m_code) & (EncodingMask | 0xF800)) == (Utf16Mask | 0xD800);
+		}
+
+		__declspec(property(get = getIsUtfSurrogate)) boolean IsUtfSurrogate;
+		boolean getIsUtfSurrogate() const
+		{
+			return IsUtf8Surrogate | IsUtf16Surrogate;
+		}
 	};
 }
 
