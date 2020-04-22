@@ -375,6 +375,15 @@ testLength
 			subject := self assimilateString: each first.
 			self assert: subject length equals: each last]!
 
+testLines
+	| subject crlf actual empty |
+	crlf := String lineDelimiter.
+	subject := self newCollection: 'A' , crlf , crlf , 'bc' , crlf , ' ' , crlf.
+	actual := subject lines.
+	empty := self newCollection: ''.
+	self assert: actual
+		equals: {self newCollection: 'A'. empty. self newCollection: 'bc'. self newCollection: ' '. empty}!
+
 testMutableCopy
 	self caseConversionCases do: 
 			[:each |
@@ -421,29 +430,31 @@ testStreamUtfRoundTrip
 							contents.
 				self assert: (self assimilateString: actual) equals: expected]!
 
-testSubStrings
+testSubStringsByCharacter
 	"Test single character delimiter"
 
-	self assert: ((self newCollection: '') subStrings: $-)
-		equals: (#() collect: [:e | self newCollection: e]).
+	| empty sep |
+	empty := self newCollection: ''.
+	self assert: (empty subStrings: $-) equals: (#() collect: [:e | self newCollection: e]).
+	self assert: ('-' subStrings: $-) equals: {empty. empty}.
 	self assert: ((self newCollection: 'a') subStrings: $-)
 		equals: (#('a') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-a') subStrings: $-)
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-') subStrings: $-)
-		equals: (#('a') collect: [:e | self newCopy: e]).
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--a') subStrings: $-)
 		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a--') subStrings: $-)
-		equals: (#('a' '') collect: [:e | self newCopy: e]).
+		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab') subStrings: $-)
 		equals: (#('ab') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-ab') subStrings: $-)
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-') subStrings: $-)
-		equals: (#('ab') collect: [:e | self newCopy: e]).
+		equals: (#('ab' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab---') subStrings: $-)
-		equals: (#('ab' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--ab') subStrings: $-)
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b') subStrings: $-)
@@ -451,45 +462,97 @@ testSubStrings
 	self assert: ((self newCollection: 'a--b') subStrings: $-)
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-c-') subStrings: $-)
-		equals: (#('ab' 'c') collect: [:e | self newCopy: e]).
+		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b--c') subStrings: $-)
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 
 	"And again but using a string argument of only one character"
-	self assert: ((self newCollection: '') subStrings: (self newCollection: '-'))
-		equals: (#() collect: [:e | self newCollection: e]).
-	self assert: ((self newCollection: 'a') subStrings: (self newCollection: '-'))
+	sep := self newCollection: '-'.
+	self assert: (empty subStrings: sep) equals: (#() collect: [:e | self newCollection: e]).
+	self assert: (sep subStrings: sep) equals: {empty. empty}.
+	self assert: ((self newCollection: 'a') subStrings: sep)
 		equals: (#('a') collect: [:e | self newCollection: e]).
-	self assert: ((self newCollection: '-a') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: '-a') subStrings: sep)
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'a-') subStrings: (self newCollection: '-'))
-		equals: (#('a') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: '--a') subStrings: (self newCollection: '-'))
-		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'a--') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: 'a-') subStrings: sep)
 		equals: (#('a' '') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'ab') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: '--a') subStrings: sep)
+		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a--') subStrings: sep)
+		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab') subStrings: sep)
 		equals: (#('ab') collect: [:e | self newCollection: e]).
-	self assert: ((self newCollection: '-ab') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: '-ab') subStrings: sep)
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'ab-') subStrings: (self newCollection: '-'))
-		equals: (#('ab') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'ab---') subStrings: (self newCollection: '-'))
-		equals: (#('ab' '' '') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: '--ab') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: 'ab-') subStrings: sep)
+		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab---') subStrings: sep)
+		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: '--ab') subStrings: sep)
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'a-b') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: 'a-b') subStrings: sep)
 		equals: (#('a' 'b') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'a--b') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: 'a--b') subStrings: sep)
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'ab-c-') subStrings: (self newCollection: '-'))
-		equals: (#('ab' 'c') collect: [:e | self newCopy: e]).
-	self assert: ((self newCollection: 'a-b--c') subStrings: (self newCollection: '-'))
+	self assert: ((self newCollection: 'ab-c-') subStrings: sep)
+		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a-b--c') subStrings: sep)
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 
-	"The separator an also be a string, but must not be empty"
-	self should: [(self newCollection: 'abc') subStrings: (self newCollection: '')] raise: Error.
-	#todo	"Test multi-character separators"!
+	"Note that if the string consists only of separators, then we get N+1 empty strings if there are N chars"
+	1 to: 3
+		do: 
+			[:i |
+			| subject |
+			subject := self newCollection: (String new: i withAll: $a).
+			self assert: (subject subStrings: $a) equals: (Array new: i + 1 withAll: empty)]!
+
+testSubStringsByString
+	"Test string delimiter"
+
+	| sep empty |
+	empty := self newCollection: ''.
+	"The separator but must not be empty"
+	self should: [(self newCollection: 'abc') subStrings: empty] raise: Error.
+
+	"And again but using a string argument of more than one character"
+	sep := self newCollection: String lineDelimiter.
+	self assert: (empty subStrings: sep) equals: (#() collect: [:e | self newCollection: e]).
+	self assert: ((self newCollection: 'a') subStrings: sep)
+		equals: (#('a') collect: [:e | self newCollection: e]).
+	self assert: ((self newCollection: sep , 'a') subStrings: sep)
+		equals: (#('' 'a') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a' , sep) subStrings: sep)
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: sep , sep , 'a') subStrings: sep)
+		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a' , sep , sep) subStrings: sep)
+		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab') subStrings: sep)
+		equals: (#('ab') collect: [:e | self newCollection: e]).
+	self assert: ((self newCollection: sep , 'ab') subStrings: sep)
+		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab' , sep) subStrings: sep)
+		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab' , sep , sep , sep) subStrings: sep)
+		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: sep , sep , 'ab') subStrings: sep)
+		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a' , sep , 'b') subStrings: sep)
+		equals: (#('a' 'b') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a' , sep , sep , 'b') subStrings: sep)
+		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'ab' , sep , 'c' , sep) subStrings: sep)
+		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+	self assert: ((self newCollection: 'a' , sep , 'b' , sep , sep , 'c') subStrings: sep)
+		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
+	1 to: 3
+		do: 
+			[:i |
+			| subject |
+			subject := self
+						newCollection: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
+			self assert: (subject subStrings: 'ab') equals: (Array new: i + 1 withAll: empty)]!
 
 testTrimNulls
 	"#1187"
@@ -640,10 +703,12 @@ withAllTestCases
 !AbstractStringTest categoriesFor: #testHash!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
 !AbstractStringTest categoriesFor: #testLength!public!unit tests! !
+!AbstractStringTest categoriesFor: #testLines!public!unit tests! !
 !AbstractStringTest categoriesFor: #testMutableCopy!public!unit tests! !
 !AbstractStringTest categoriesFor: #testReverse!public!unit tests! !
 !AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
-!AbstractStringTest categoriesFor: #testSubStrings!public!unit tests! !
+!AbstractStringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
+!AbstractStringTest categoriesFor: #testSubStringsByString!public!unit tests! !
 !AbstractStringTest categoriesFor: #testTrimNulls!public!unit tests! !
 !AbstractStringTest categoriesFor: #testUnescapePercents!public!unit tests! !
 !AbstractStringTest categoriesFor: #testWithAll!public!unit tests! !

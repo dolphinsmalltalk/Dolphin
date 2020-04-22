@@ -18,27 +18,6 @@ _indexOfAnyInString: aString startingAt: anInteger
 	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
 	^0!
 
-_separateSubStringsIn: aReadableString
-	"Private - Answer an Array containing the substrings in aReadableString separated
-	by the elements of the receiver (which must be Characters)."
-
-	| start answer size end |
-	size := aReadableString size.
-	size == 0 ifTrue: [^{}].
-	end := aReadableString indexOfAnyOf: self startingAt: 1.
-	end == 0 ifTrue: [^{aReadableString}].
-	answer := Array writeStream: 5.
-	start := 1.
-	
-	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
-	start := end + 1.
-	end := aReadableString indexOfAnyOf: self startingAt: start.
-	end == 0]
-			whileFalse.
-	"Copy any remaining chars after the last separator"
-	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].
-	^answer contents!
-
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 
 	elements. Answer newElement."
@@ -560,6 +539,26 @@ size
 
 	^self countElements!
 
+split: aReadableString
+	"Answer an Array containing the substrings in aReadableString separated by any of the elements of the receiver (which must be Characters)."
+
+	| start answer size end |
+	size := aReadableString size.
+	size == 0 ifTrue: [^{}].
+	end := aReadableString indexOfAnyOf: self startingAt: 1.
+	end == 0 ifTrue: [^{aReadableString}].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
+	start := end + 1.
+	end := aReadableString indexOfAnyOf: self startingAt: start.
+	end == 0]
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].
+	^answer contents!
+
 storeOn: aStream 
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -597,7 +596,6 @@ union: comperand
 ! !
 !Collection categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Collection categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
-!Collection categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Collection categoriesFor: #add:!adding!public! !
 !Collection categoriesFor: #addAll:!adding!public! !
 !Collection categoriesFor: #allSatisfy:!enumerating!public! !
@@ -657,6 +655,7 @@ union: comperand
 !Collection categoriesFor: #select:!enumerating!public! !
 !Collection categoriesFor: #select:thenCollect:!enumerating!public! !
 !Collection categoriesFor: #size!accessing!public! !
+!Collection categoriesFor: #split:!public!tokenizing! !
 !Collection categoriesFor: #storeOn:!printing!public! !
 !Collection categoriesFor: #symmetricDifference:!public!set operations! !
 !Collection categoriesFor: #union:!public!set operations! !

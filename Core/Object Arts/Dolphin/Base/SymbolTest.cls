@@ -73,6 +73,18 @@ testInstVarAtPut
 	1 to: literal size + 1
 		do: [:each | self should: [literal instVarAt: each put: $x codePoint] raise: Processor constWriteSignal]!
 
+testKeywords
+	self assert: #a keywords equals: #(#a).
+	self assert: #a: keywords equals: #(#a:).
+	self assert: #ab: keywords equals: #(#ab:).
+	self assert: #a:b: keywords equals: #(#a: 'b:').
+	self assert: #ab:c:def: keywords equals: #('ab:' 'c:' 'def:').
+	self assert: #>= keywords equals: #(#>=).
+	"These aren't strictly valid selectors so the tests are more to document the behaviour"
+	self assert: #'a:b' keywords equals: #('a:b').	"Trailing : is expected"
+	self assert: #':a::b:' keywords equals: #(':' #a: ':' 'b:').
+	self assert: #':' keywords equals: #(':')!
+
 testPrintLiteral
 	self assert: #_ printString equals: '#_'.
 	self assert: #'1' printString equals: '#''1'''.
@@ -129,6 +141,7 @@ testSymbolTable
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testEquals!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
+!SymbolTest categoriesFor: #testKeywords!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintString!helpers!public! !
 !SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
