@@ -106,30 +106,6 @@ _sameAsString: aString
 
 	^self == aString or: [(aString _collate: self) == 0]!
 
-_separateSubStringsIn: aReadableString
-	"Private - Answer an Array containing the substrings in aReadableString separated
-	by the receiver."
-
-	| start size answer subSize |
-	(subSize := self size) == 0
-		ifTrue: [^self error: 'separator must consist of at least one character'].
-	subSize == 1 ifTrue: [^(self at: 1) _separateSubStringsIn: aReadableString].
-	start := 1.
-	size := aReadableString size.
-	answer := Array writeStream: 10.
-	
-	[| stop |
-	stop := aReadableString findString: self startingAt: start.
-	stop == 0
-		ifTrue: 
-			[^answer
-				nextPut: (aReadableString copyFrom: start to: size);
-				contents].
-	answer nextPut: (aReadableString copyFrom: start to: stop - 1).
-	(start := stop + subSize) > size]
-			whileFalse.
-	^answer contents!
-
 < comparand
 	"Answer whether the receiver is lexically less than the <readableString>, comparand,
 	ignoring case, according to the implementation defined collation sequence (see _collate:)."
@@ -947,6 +923,29 @@ skipOver: aStream ignoreCase: ignoreCase
 					^false]].
 	^true!
 
+split: aReadableString
+	"Answer an Array containing the substrings in aReadableString separated by the sequence of characters of the receiver."
+
+	| start end answer subSize size |
+	subSize := self size.
+	subSize == 0 ifTrue: [^self error: 'separator must consist of at least one character'].
+	size := aReadableString size.
+	size == 0 ifTrue: [^{}].
+	subSize == 1 ifTrue: [^(self at: 1) split: aReadableString].
+	end := aReadableString findString: self startingAt: 1.
+	end == 0 ifTrue: [^{aReadableString}].
+	start := 1.
+	answer := Array writeStream: 10.
+	
+	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
+	start := end + subSize.
+	end := aReadableString findString: self startingAt: start.
+	end == 0]
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	answer nextPut: (aReadableString copyFrom: start to: size).
+	^answer contents!
+
 sprintfWith: arg1
 	"Answer a String which is a message formatted from the receiver (assumed to be a C-printf
 	format String) with substituations from the remaining argument(s).
@@ -1032,11 +1031,9 @@ subStrings
 			word notEmpty ifTrue: [answer add: word]].
 	^answer asArray!
 
-subStrings: separatorOrSeparators 
-	"Answer an array containing the substrings of the receiver separated by occurrences
-	of the <Character> or <readableString> argument, separator.
-	Repeated separators produce empty strings in the array (cf. #subStrings).
-	The separators are removed."
+subStrings: separatorOrSeparators
+	"Answer an array containing the substrings of the receiver separated by occurrences of the <Character> or <readableString> argument, separator.
+	Repeated separators produce empty strings in the array (cf. #subStrings). The separators are removed."
 
 	#todo.	"This does not comply with the current ANSI definition, which expects that the
 		argument is a <sequencedReadableCollection> of separators, any one of which may
@@ -1044,7 +1041,7 @@ subStrings: separatorOrSeparators
 		accepts a single character as the separator, and furthermore when passed a <String>
 		it will use the entire string as a multi-character separator. A workaround is to
 		convert the separator string to an array of <Character>."
-	^separatorOrSeparators _separateSubStringsIn: self!
+	^separatorOrSeparators split: self!
 
 subStringsAnsi: separators
 	"Answer an array containing the substrings of the receiver separated by occurrences
@@ -1176,7 +1173,6 @@ withNormalizedLineDelimiters
 !String categoriesFor: #_collate:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
-!String categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !String categoriesFor: #<!comparing!public! !
 !String categoriesFor: #<=!comparing!public! !
 !String categoriesFor: #=!comparing!public! !
@@ -1257,6 +1253,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #rightString:!copying!public! !
 !String categoriesFor: #sameAs:!comparing!public! !
 !String categoriesFor: #skipOver:ignoreCase:!private!searching! !
+!String categoriesFor: #split:!public!tokenizing! !
 !String categoriesFor: #sprintfWith:!printing!public! !
 !String categoriesFor: #sprintfWith:with:!printing!public! !
 !String categoriesFor: #storeOn:!printing!public! !

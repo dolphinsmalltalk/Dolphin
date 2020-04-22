@@ -318,7 +318,7 @@ isRestartable
 			[| method |
 			method := self method.
 			method notNil
-				and: [method isExpression or: [method categories allSatisfy: [:c | c name ~= 'not restartable']]]]!
+				and: [method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
 
 localAt: anInteger
 	"Private - Answer the argument indexed, anInteger, from the receiver's stack frame."

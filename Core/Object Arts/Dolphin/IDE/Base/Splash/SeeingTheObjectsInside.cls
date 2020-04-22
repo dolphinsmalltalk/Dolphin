@@ -169,7 +169,7 @@ initialize
 	copyright := VMLibrary default versionInfo legalCopyright subStrings: $..
 	info := Utf16String writeStream.
 	info nextPutAll: copyright first.
-	copyright size > 1
+	(copyright size > 1 and: [copyright second notEmpty])
 		ifTrue: 
 			[info
 				nextPutAll: ', ';

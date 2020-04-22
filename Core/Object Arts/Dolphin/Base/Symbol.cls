@@ -114,10 +114,29 @@ isSymbol
 keywords
 	"Answer a <sequencedReadableCollection> of the receiver's keywords."
 
-	self isEmpty ifTrue: [^#()].
-	^self last == $:
-		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword copyWith: $:]]
-		ifFalse: [{self}]!
+	| size keywords start end |
+	size := self size.
+	size == 0 ifTrue: [^#()].
+	(self at: size) ~~ $:
+		ifTrue: 
+			["All well-formed multi-keyword selectors must end with a colon"
+			^{self}].
+	keywords := Array writeStream: 3.
+	end := self
+				nextIndexOf: $:
+				from: 1
+				to: size.
+	start := 1.
+	
+	[keywords nextPut: (self copyFrom: start to: end).
+	start := end + 1.
+	end := self
+				nextIndexOf: $:
+				from: start
+				to: size.
+	end == 0]
+			whileFalse.
+	^keywords contents!
 
 mutableCopy
 	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."

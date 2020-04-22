@@ -1475,11 +1475,10 @@ testRestrictedSelectors
 						ifFalse: 
 							[| i |
 							i := 1.
-							(each subStrings: $:) do: 
+							each keywords do: 
 									[:eachKeyword |
 									source
 										nextPutAll: eachKeyword;
-										nextPut: $:;
 										nextPutAll: ' operand';
 										display: i]
 								separatedBy: 
