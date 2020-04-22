@@ -222,14 +222,6 @@ length
 maxEncoding
 	^2!
 
-nextIdentityIndexOf: anElement from: start to: stop
-	"Answer the index of the next occurrence of anElement in the receiver's indexable
-	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
-
-	#todo.	"Remove when primitive is fixed"
-	start to: stop do: [:i | (self at: i) = anElement ifTrue: [^i]].
-	^0!
-
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
 	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
@@ -265,6 +257,36 @@ nextIndexOf: anElement from: start to: stop
 								nextIndexOf: lead
 								from: current + 1
 								to: stop - 1].
+			^current]!
+
+nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
+	| codePoint |
+	codePoint := aCharacter codePoint.
+	codePoint < 16r80
+		ifTrue: 
+			[^self
+				nextIdentityIndexOf: aCharacter
+				from: startInteger
+				to: stopInteger].
+	codePoint <= 16rFFFF
+		ifTrue: 
+			[aCharacter isUtf8Surrogate
+				ifFalse: [startInteger to: stopInteger do: [:i | (self at: i) = aCharacter ifTrue: [^i]]].
+			^0]
+		ifFalse: 
+			[| lead trail current |
+			codePoint := codePoint - 16r10000.
+			lead := Character utf16Value: (codePoint bitShift: -10) + 16rD800.
+			trail := Character utf16Value: (codePoint bitAnd: 16r3FF) + 16rDC00.
+			current := self
+						nextIndexOf: lead
+						from: startInteger
+						to: stopInteger - 1.
+			[current ~~ 0 and: [current < stopInteger and: [(self at: current + 1) ~= trail]]] whileTrue: 
+					[current := self
+								nextIndexOf: lead
+								from: current + 1
+								to: stopInteger - 1].
 			^current]!
 
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger
@@ -380,8 +402,8 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !Utf16String categoriesFor: #length!accessing!public! !
 !Utf16String categoriesFor: #maxEncoding!constants!private! !
-!Utf16String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !Utf16String categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Utf16String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !Utf16String categoriesFor: #resize:!mutating!public! !
 !Utf16String categoriesFor: #reverse!copying!public! !

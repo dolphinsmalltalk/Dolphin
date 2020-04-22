@@ -281,25 +281,24 @@ length
 maxEncoding
 	^4!
 
-nextIndexOf: anElement from: start to: stop
-	"Answer the index of the next occurrence of anElement in the receiver between 
-	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
-
-	^anElement class == Character
+nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
+	| codePoint stream i |
+	stopInteger > self size ifTrue: [self errorSubscriptBounds: stopInteger].
+	codePoint := aCharacter codePoint.
+	(codePoint < 16r80 or: [aCharacter isUtf8Surrogate])
 		ifTrue: 
-			[anElement isAscii
-				ifTrue: 
-					[self
-						nextIdentityIndexOf: anElement
-						from: start
-						to: stop]
-				ifFalse: 
-					[| found |
-					found := self indexOfSubCollection: (self class with: anElement) startingAt: start.
-					found <= stop ifTrue: [found] ifFalse: [0]]]
-		ifFalse: 
-			["Strings can only contain Characters"
-			0]!
+			[^self
+				basicIdentityIndexOf: codePoint
+				from: startInteger
+				to: stopInteger].
+	stream := self readStream.
+	i := startInteger - 1.
+	stream position: i.
+	
+	[stream next = aCharacter ifTrue: [^i + 1].
+	i := stream position.
+	i >= stopInteger] whileFalse.
+	^0!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order."
@@ -367,7 +366,7 @@ strlen
 !Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !Utf8String categoriesFor: #length!accessing!public! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
-!Utf8String categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !
 !Utf8String categoriesFor: #strlen!accessing!private! !
 
