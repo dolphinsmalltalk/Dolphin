@@ -111,7 +111,7 @@ primaryStartup
 	self openSources!
 
 productDetails
-	"Private - Answers a five element<Array> describing this version of the development environment
+	"Private - Answers an eight element<Array> describing this version of the development environment
 
 	1. <readableString> Product name 
 	2. <readableString> Short product name
@@ -126,7 +126,7 @@ productDetails
 	^productDetails!
 
 productDetails: anArray
-	"Private - Sets the receiver's product details to a five element<Array> 
+	"Private - Sets the receiver's product details to an eight element<Array> 
 	describing this version of the development environment"
 
 	productDetails := anArray!
