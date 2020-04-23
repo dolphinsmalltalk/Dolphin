@@ -77,67 +77,67 @@ public:
 			stream << L"*Break";
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 11):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 12):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 13):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 14):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushInstVar) + 15):
+		case OpCode::ShortPushInstVar + 0:
+		case OpCode::ShortPushInstVar + 1:
+		case OpCode::ShortPushInstVar + 2:
+		case OpCode::ShortPushInstVar + 3:
+		case OpCode::ShortPushInstVar + 4:
+		case OpCode::ShortPushInstVar + 5:
+		case OpCode::ShortPushInstVar + 6:
+		case OpCode::ShortPushInstVar + 7:
+		case OpCode::ShortPushInstVar + 8:
+		case OpCode::ShortPushInstVar + 9:
+		case OpCode::ShortPushInstVar + 10:
+		case OpCode::ShortPushInstVar + 11:
+		case OpCode::ShortPushInstVar + 12:
+		case OpCode::ShortPushInstVar + 13:
+		case OpCode::ShortPushInstVar + 14:
+		case OpCode::ShortPushInstVar + 15:
 			PrintInstVarInstruction(ip, stream, "Push", indexOfShortPushInstVar(opcode));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushTemp) + 7):
+		case OpCode::ShortPushTemp+0:
+		case OpCode::ShortPushTemp+1:
+		case OpCode::ShortPushTemp+2:
+		case OpCode::ShortPushTemp+3:
+		case OpCode::ShortPushTemp+4:
+		case OpCode::ShortPushTemp+5:
+		case OpCode::ShortPushTemp+6:
+		case OpCode::ShortPushTemp+7:
 			PrintTempInstruction(ip, stream, "Push", indexOfShortPushTemp(opcode));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 11):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 12):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 13):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 14):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushConst) + 15):
+		case OpCode::ShortPushConst+0:
+		case OpCode::ShortPushConst+1:
+		case OpCode::ShortPushConst+2:
+		case OpCode::ShortPushConst+3:
+		case OpCode::ShortPushConst+4:
+		case OpCode::ShortPushConst+5:
+		case OpCode::ShortPushConst+6:
+		case OpCode::ShortPushConst+7:
+		case OpCode::ShortPushConst+8:
+		case OpCode::ShortPushConst+9:
+		case OpCode::ShortPushConst+10:
+		case OpCode::ShortPushConst+11:
+		case OpCode::ShortPushConst+12:
+		case OpCode::ShortPushConst+13:
+		case OpCode::ShortPushConst+14:
+		case OpCode::ShortPushConst+15:
 			PrintStaticInstruction(ip, stream, "Push Const", indexOfShortPushConst(opcode));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushStatic) + 11):
+		case OpCode::ShortPushStatic+0:
+		case OpCode::ShortPushStatic+1:
+		case OpCode::ShortPushStatic+2:
+		case OpCode::ShortPushStatic+3:
+		case OpCode::ShortPushStatic+4:
+		case OpCode::ShortPushStatic+5:
+		case OpCode::ShortPushStatic+6:
+		case OpCode::ShortPushStatic+7:
+		case OpCode::ShortPushStatic+8:
+		case OpCode::ShortPushStatic+9:
+		case OpCode::ShortPushStatic+10:
+		case OpCode::ShortPushStatic+11:
 			PrintStaticInstruction(ip, stream, "Push Static", indexOfShortPushStatic(opcode));
 			break;
 
@@ -173,24 +173,24 @@ public:
 			PrintPushImmediate(ip, stream, 2, 0);
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushSelfAndTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushSelfAndTemp) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushSelfAndTemp) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushSelfAndTemp) + 3):
+		case OpCode::ShortPushSelfAndTemp+0:
+		case OpCode::ShortPushSelfAndTemp+1:
+		case OpCode::ShortPushSelfAndTemp+2:
+		case OpCode::ShortPushSelfAndTemp+3:
 			PrintTempInstruction(ip, stream, "Push self; Push", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPushSelfAndTemp));
 
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortStoreTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortStoreTemp) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortStoreTemp) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortStoreTemp) + 3):
+		case OpCode::ShortStoreTemp+0:
+		case OpCode::ShortStoreTemp+1:
+		case OpCode::ShortStoreTemp+2:
+		case OpCode::ShortStoreTemp+3:
 			PrintTempInstruction(ip, stream, "Store", indexOfShortStoreTemp(opcode));
 
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopPushTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopPushTemp) + 1):
+		case OpCode::ShortPopPushTemp+0:
+		case OpCode::ShortPopPushTemp+1:
 			PrintTempInstruction(ip, stream, "Pop; Push", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPopPushTemp));
 
 			break;
@@ -203,45 +203,45 @@ public:
 			stream << L"Pop; Dup";
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushContextTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushContextTemp) + 1):
+		case OpCode::ShortPushContextTemp+0:
+		case OpCode::ShortPushContextTemp+1:
 			PrintTempInstruction(ip, stream, "Push Outer[0]", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPushContextTemp));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushOuterTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPushOuterTemp) + 1):
+		case OpCode::ShortPushOuterTemp+0:
+		case OpCode::ShortPushOuterTemp+1:
 			PrintTempInstruction(ip, stream, "Push Outer[1]", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPushOuterTemp));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::PopStoreContextTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::PopStoreContextTemp) + 1):
+		case OpCode::PopStoreContextTemp+0:
+		case OpCode::PopStoreContextTemp+1:
 			PrintTempInstruction(ip, stream, "Pop Outer[0]", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::PopStoreContextTemp));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreOuterTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreOuterTemp) + 1):
+		case OpCode::ShortPopStoreOuterTemp+0:
+		case OpCode::ShortPopStoreOuterTemp+1:
 			PrintTempInstruction(ip, stream, "Pop Outer[1]", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPopStoreOuterTemp));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreInstVar) + 7):
+		case OpCode::ShortPopStoreInstVar+0:
+		case OpCode::ShortPopStoreInstVar+1:
+		case OpCode::ShortPopStoreInstVar+2:
+		case OpCode::ShortPopStoreInstVar+3:
+		case OpCode::ShortPopStoreInstVar+4:
+		case OpCode::ShortPopStoreInstVar+5:
+		case OpCode::ShortPopStoreInstVar+6:
+		case OpCode::ShortPopStoreInstVar+7:
 			PrintInstVarInstruction(ip, stream, "Pop", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPopStoreInstVar));
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortPopStoreTemp) + 7):
+		case OpCode::ShortPopStoreTemp+0:
+		case OpCode::ShortPopStoreTemp+1:
+		case OpCode::ShortPopStoreTemp+2:
+		case OpCode::ShortPopStoreTemp+3:
+		case OpCode::ShortPopStoreTemp+4:
+		case OpCode::ShortPopStoreTemp+5:
+		case OpCode::ShortPopStoreTemp+6:
+		case OpCode::ShortPopStoreTemp+7:
 			PrintTempInstruction(ip, stream, "Pop", static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortPopStoreTemp));
 			break;
 
@@ -301,121 +301,121 @@ public:
 			stream << L"Nop";
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJump) + 7):
+		case OpCode::ShortJump+0:
+		case OpCode::ShortJump+1:
+		case OpCode::ShortJump+2:
+		case OpCode::ShortJump+3:
+		case OpCode::ShortJump+4:
+		case OpCode::ShortJump+5:
+		case OpCode::ShortJump+6:
+		case OpCode::ShortJump+7:
 		{
 			int8_t offset = offsetOfShortJump(opcode);
 			PrintJumpInstruction(ip, stream, JumpType::Jump, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortJumpIfFalse) + 7):
+		case OpCode::ShortJumpIfFalse+0:
+		case OpCode::ShortJumpIfFalse+1:
+		case OpCode::ShortJumpIfFalse+2:
+		case OpCode::ShortJumpIfFalse+3:
+		case OpCode::ShortJumpIfFalse+4:
+		case OpCode::ShortJumpIfFalse+5:
+		case OpCode::ShortJumpIfFalse+6:
+		case OpCode::ShortJumpIfFalse+7:
 		{
 			int8_t offset = offsetOfShortJumpIfFalse(opcode);
 			PrintJumpInstruction(ip, stream, JumpType::JumpIfFalse, offset, offset + static_cast<intptr_t>(ip) + 1 + 1);
 		}
 		break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 0) :
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 1) :
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 11):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 12):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 13):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 14):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 15):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 16):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 17):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 18):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 19):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 20):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 21):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 22):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 23):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 24):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 25):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 26):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 27):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 28):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 30):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSpecialSend) + 31):
+		case OpCode::ShortSpecialSend+0 :
+		case OpCode::ShortSpecialSend+1 :
+		case OpCode::ShortSpecialSend+2:
+		case OpCode::ShortSpecialSend+3:
+		case OpCode::ShortSpecialSend+4:
+		case OpCode::ShortSpecialSend+5:
+		case OpCode::ShortSpecialSend+6:
+		case OpCode::ShortSpecialSend+7:
+		case OpCode::ShortSpecialSend+8:
+		case OpCode::ShortSpecialSend+9:
+		case OpCode::ShortSpecialSend+10:
+		case OpCode::ShortSpecialSend+11:
+		case OpCode::ShortSpecialSend+12:
+		case OpCode::ShortSpecialSend+13:
+		case OpCode::ShortSpecialSend+14:
+		case OpCode::ShortSpecialSend+15:
+		case OpCode::ShortSpecialSend+16:
+		case OpCode::ShortSpecialSend+17:
+		case OpCode::ShortSpecialSend+18:
+		case OpCode::ShortSpecialSend+19:
+		case OpCode::ShortSpecialSend+20:
+		case OpCode::ShortSpecialSend+21:
+		case OpCode::ShortSpecialSend+22:
+		case OpCode::ShortSpecialSend+23:
+		case OpCode::ShortSpecialSend+24:
+		case OpCode::ShortSpecialSend+25:
+		case OpCode::ShortSpecialSend+26:
+		case OpCode::ShortSpecialSend+27:
+		case OpCode::ShortSpecialSend+28:
+		case OpCode::ShortSpecialSend+30:
+		case OpCode::ShortSpecialSend+31:
 		{
 			stream << L"Special Send #" << context.GetSpecialSelector(static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSpecialSend));
 		}
 		break;
 
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 11):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWithNoArgs) + 12):
+		case OpCode::ShortSendWithNoArgs+0:
+		case OpCode::ShortSendWithNoArgs+1:
+		case OpCode::ShortSendWithNoArgs+2:
+		case OpCode::ShortSendWithNoArgs+3:
+		case OpCode::ShortSendWithNoArgs+4:
+		case OpCode::ShortSendWithNoArgs+5:
+		case OpCode::ShortSendWithNoArgs+6:
+		case OpCode::ShortSendWithNoArgs+7:
+		case OpCode::ShortSendWithNoArgs+8:
+		case OpCode::ShortSendWithNoArgs+9:
+		case OpCode::ShortSendWithNoArgs+10:
+		case OpCode::ShortSendWithNoArgs+11:
+		case OpCode::ShortSendWithNoArgs+12:
 			PrintSendInstruction(ip, stream, static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSendWithNoArgs), 0);
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs) + 4):
+		case OpCode::ShortSendSelfWithNoArgs+0:
+		case OpCode::ShortSendSelfWithNoArgs+1:
+		case OpCode::ShortSendSelfWithNoArgs+2:
+		case OpCode::ShortSendSelfWithNoArgs+3:
+		case OpCode::ShortSendSelfWithNoArgs+4:
 			stream << L"Push self; ";
 			PrintSendInstruction(ip, stream, static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSendSelfWithNoArgs), 0);
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 7):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 8):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 9):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 10):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 11):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 12):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith1Arg) + 13):
+		case OpCode::ShortSendWith1Arg+0:
+		case OpCode::ShortSendWith1Arg+1:
+		case OpCode::ShortSendWith1Arg+2:
+		case OpCode::ShortSendWith1Arg+3:
+		case OpCode::ShortSendWith1Arg+4:
+		case OpCode::ShortSendWith1Arg+5:
+		case OpCode::ShortSendWith1Arg+6:
+		case OpCode::ShortSendWith1Arg+7:
+		case OpCode::ShortSendWith1Arg+8:
+		case OpCode::ShortSendWith1Arg+9:
+		case OpCode::ShortSendWith1Arg+10:
+		case OpCode::ShortSendWith1Arg+11:
+		case OpCode::ShortSendWith1Arg+12:
+		case OpCode::ShortSendWith1Arg+13:
 			PrintSendInstruction(ip, stream, static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSendWith1Arg), 1);
 			break;
 
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 0):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 1):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 2):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 3):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 4):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 5):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 6):
-		case static_cast<OpCode>(static_cast<uint8_t>(OpCode::ShortSendWith2Args) + 7):
+		case OpCode::ShortSendWith2Args+0:
+		case OpCode::ShortSendWith2Args+1:
+		case OpCode::ShortSendWith2Args+2:
+		case OpCode::ShortSendWith2Args+3:
+		case OpCode::ShortSendWith2Args+4:
+		case OpCode::ShortSendWith2Args+5:
+		case OpCode::ShortSendWith2Args+6:
+		case OpCode::ShortSendWith2Args+7:
 			PrintSendInstruction(ip, stream, static_cast<uint8_t>(opcode) - static_cast<uint8_t>(OpCode::ShortSendWith2Args), 2);
 			break;
 
