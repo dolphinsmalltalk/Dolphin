@@ -410,17 +410,17 @@ StructureArrayPointerField subclass: #PointerArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ScalarField subclass: #AbstractCHARField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ScalarField subclass: #BOOLField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScalarField subclass: #BYTEField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ScalarField subclass: #CHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -480,12 +480,17 @@ ScalarField subclass: #WORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BOOLField subclass: #BOOLEANField
+AbstractCHARField subclass: #CHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CHARField subclass: #WCHARField
+AbstractCHARField subclass: #WCHARField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BOOLField subclass: #BOOLEANField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
