@@ -13,11 +13,27 @@ Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
 Character addClassConstant: 'Utf32Mask' value: 16r3000000!
 Character addClassConstant: 'Utf8Mask' value: 16r1000000!
 Character addClassConstant: 'Utf8SurrogateMask' value: 16rC0!
-Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk Strings. 
+Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk `Strings`.
 
 Each `Character` instance generally represents a specific Unicode [code point](https://en.wikipedia.org/wiki/Code_point). Note that this does not necessarily mean that each `Character` corresponds to a single user-perceived, visually distinct, character (aka grapheme cluster). Multiple `Character`s may compose into a single grapheme cluster when displayed, some examples of different types being `👨🏻‍🍳`, `ö`, and `กำ`. The 2nd example has more than one valid representation and can have either one or two code-points.
 
- `Character` instances may also represent partial or surrogate character code-units that are part of a multi-code-unit code-point. Such surrogate instances may result from indexed access into `UTFEncodedStrings` such as `Utf8String` or `Utf16String`, and can be distinguished through the use of the `isSurrogate`, `isUtf8Surrogate`, `isUtf16Surrogate` family of testing messages. In general it is recommended to stream over strings, rather than treating them as arrays of characters, in which case surrogates will not be encountered.
+ `Character` instances may also represent partial or surrogate character code-units that are part of a multi-code-unit code-point. Such surrogate instances may result from indexed access into `UTFEncodedStrings` such as `Utf8String` or `Utf16String`, and can be distinguished through the use of the `isSurrogate`, `isUtf8Surrogate`, `isUtf16Surrogate` family of testing messages. For example:
+
+```
+(Character dolphin asUtf8String at: 1) isUtf8Surrogate	"true"
+```
+
+A surrogate can be written into a `String` of the same encoding, e.g. a UTF-8 surrogate into a `Utf8String`, but not into a string with a different UTF encoding. Care is also needed to avoid constructing strings with partial characters by writing an incomplete, or misordered, set of surrogate code-unit characters into the string. It is also possible to work with surrogates and streams of the correct underlying encoding, for example:
+
+```
+i := 0. Character dolphin asUtf8String do: [:each | i := i + 1. Transcript nextPut: each]. Transcript nextPutAll: '' has ''; print: i; nextPutAll: '' UTF-8 code units''; cr; flush
+```
+
+However, in general it is recommended to stream over strings, rather than treating them as arrays of characters, in which case surrogates will not be encountered.
+
+```
+i := 0. Character dolphin asUtf8String readStream do: [:each | i := i + 1. Transcript nextPut: each]. Transcript nextPutAll: '' has ''; print: i; nextPutAll: '' codepoint(s)''; cr; flush
+```
 
 The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the ''$'' symbol followed by the normal printed representation of the character. 
 At present only byte characters (that are not control characters) have a printable literal representation. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
