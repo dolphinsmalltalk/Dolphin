@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EnumHelpers.h"
+#include "..\EnumHelpers.h"
 
 enum class textpos_t : intptr_t { npos = -1, start };
 ENABLE_INT_OPERATORS(textpos_t)

@@ -8,7 +8,7 @@ The Smalltalk lexical analyser
 
 ///////////////////////
 #include "Str.h"
-#include "..\textrange.h"
+#include "textrange.h"
 
 ///////////////////////
 
