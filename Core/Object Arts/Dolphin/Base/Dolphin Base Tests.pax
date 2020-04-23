@@ -47,6 +47,7 @@ package classNames
 	add: #ExternalAddressTest;
 	add: #ExternalArrayTest;
 	add: #ExternalDescriptorTest;
+	add: #ExternalFieldTest;
 	add: #ExternalLibraryTest;
 	add: #ExternalResourceLibraryTest;
 	add: #ExternalStructureTest;
@@ -118,6 +119,7 @@ package classNames
 	add: #UndefinedObjectTest;
 	add: #Utf16StringTest;
 	add: #Utf8StringTest;
+	add: #WCHARFieldTest;
 	add: #WindowsLocaleTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
@@ -276,6 +278,11 @@ DolphinTest subclass: #ExternalDescriptorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ExternalFieldTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ExternalLibraryTest
 	instanceVariableNames: ''
@@ -578,6 +585,11 @@ ExternalArrayTest subclass: #WORDArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GenericExternalArrayTest subclass: #StructureArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalFieldTest subclass: #WCHARFieldTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -133,6 +133,8 @@ package classNames
 package methodNames
 	add: #_FPIEEE_RECORD -> #printFieldsOn:limit:;
 	add: #_FPIEEE_VALUE -> #printFieldsOn:limit:;
+	add: #AbstractCHARField -> #characterCreationMessage;
+	add: #AbstractCHARField -> #printAccessorExpression:on:;
 	add: #AbstractDocumentShell -> #saveStateOn:;
 	add: #AndEnvironment -> #includesResource:;
 	add: #Array -> #assignToResourceIdentifier:;
@@ -177,7 +179,8 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
-	add: #CHARField -> #printAccessorExpressionSuffixOn:;
+	add: #CHARField -> #accessorMessage;
+	add: #CHARField -> #characterCreationMessage;
 	add: #Class -> #changeIndex;
 	add: #Class -> #changeIndexValue:;
 	add: #Class -> #isAbstract;
@@ -427,6 +430,8 @@ package methodNames
 	add: #View -> #aspectDisplayOn:;
 	add: #View -> #publishedAspects;
 	add: #View -> #visualObjectAtPoint:;
+	add: #WCHARField -> #accessorMessage;
+	add: #WCHARField -> #characterCreationMessage;
 	add: #WINDOWPOS -> #printOn:;
 	add: 'AbstractCardContainer class' -> #publishedAspectsOfInstances;
 	add: 'AbstractCardContainer class' -> #publishedEventsOfInstances;
@@ -1402,6 +1407,30 @@ publishedEventsOfInstances
 !AbstractCardContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 !AbstractCardContainer class categoriesFor: #publishedEventsOfInstances!events!public! !
 
+!AbstractCHARField methodsFor!
+
+characterCreationMessage
+	^self subclassResponsibility!
+
+printAccessorExpression: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	aWriteStream
+		nextPut: $(;
+		print: Character;
+		space;
+		display: self characterCreationMessage;
+		space;
+		nextPutAll: '(bytes ';
+		display: self accessorMessage keywords first;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream nextPutAll: '))'! !
+!AbstractCHARField categoriesFor: #characterCreationMessage!automatic generation!private! !
+!AbstractCHARField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+
 !AbstractDocumentShell methodsFor!
 
 saveStateOn: aWriteStream 
@@ -1989,14 +2018,15 @@ literalTextStyle
 
 !CHARField methodsFor!
 
-printAccessorExpressionSuffixOn: aWriteStream
-	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
-	configure the object being read from the structure instance."
+accessorMessage
+	"Private - Answer the receiver's 'accessorStem'."
 
-	aWriteStream
-		space;
-		display: #asCharacter! !
-!CHARField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+	^#byteAtOffset:put:!
+
+characterCreationMessage
+	^#ansiValue:! !
+!CHARField categoriesFor: #accessorMessage!public! !
+!CHARField categoriesFor: #characterCreationMessage!automatic generation!private! !
 
 !CheckBox class methodsFor!
 
@@ -7267,6 +7297,18 @@ publishedAspectsOfInstances
     		add: (Aspect string: #productVersionString) beReadOnly;
     		yourself! !
 !VS_FIXEDFILEINFO class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!WCHARField methodsFor!
+
+accessorMessage
+	"Private - Answer the receiver's 'accessorStem'."
+
+	^#wordAtOffset:put:!
+
+characterCreationMessage
+	^#utf16Value:! !
+!WCHARField categoriesFor: #accessorMessage!automatic generation!private! !
+!WCHARField categoriesFor: #characterCreationMessage!automatic generation!private! !
 
 !WeakSet class methodsFor!
 

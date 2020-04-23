@@ -74,7 +74,7 @@ tmAveCharWidth
 tmBreakChar
 	"Answer the <Character> value of the receiver's 'tmBreakChar' field."
 
-	^(bytes wordAtOffset: _OffsetOf_tmBreakChar) asCharacter!
+	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmBreakChar)!
 
 tmCharSet
 	"Answer the <Integer> value of the receiver's 'tmCharSet' field."
@@ -84,7 +84,7 @@ tmCharSet
 tmDefaultChar
 	"Answer the <Character> value of the receiver's 'tmDefaultChar' field."
 
-	^(bytes wordAtOffset: _OffsetOf_tmDefaultChar) asCharacter!
+	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmDefaultChar)!
 
 tmDescent
 	"Answer the <Integer> value of the receiver's 'tmDescent' field."
@@ -109,7 +109,7 @@ tmExternalLeading
 tmFirstChar
 	"Answer the <Character> value of the receiver's 'tmFirstChar' field."
 
-	^(bytes wordAtOffset: _OffsetOf_tmFirstChar) asCharacter!
+	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmFirstChar)!
 
 tmHeight
 	"Answer the <Integer> value of the receiver's 'tmHeight' field."
@@ -129,7 +129,7 @@ tmItalic
 tmLastChar
 	"Answer the <Character> value of the receiver's 'tmLastChar' field."
 
-	^(bytes wordAtOffset: _OffsetOf_tmLastChar) asCharacter!
+	^Character utf16Value: (bytes wordAtOffset: _OffsetOf_tmLastChar)!
 
 tmMaxCharWidth
 	"Answer the <Integer> value of the receiver's 'tmMaxCharWidth' field."

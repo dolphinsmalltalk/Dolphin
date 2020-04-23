@@ -10,6 +10,19 @@ CharacterTest comment: ''!
 !CharacterTest categoriesForClass!Tests-Magnitude-General! !
 !CharacterTest methodsFor!
 
+nonCharacters
+	"Private - Unicode non-characters - see https://www.unicode.org/faq/private_use.html"
+
+	| nonchars |
+	nonchars := 16rFDD0 to: 16rFDEF.
+	0 to: 16r10
+		do: 
+			[:each |
+			| start |
+			start := (each << 16) + 16rFFFE.
+			nonchars := nonchars , (start to: start + 1)].
+	^nonchars!
+
 testAnsiValue
 	1 to: 256
 		do: [:each | self assert: (Character byteCharacterSet at: each) ansiValue equals: each - 1].
@@ -271,9 +284,12 @@ testIsUtf16SurrogateTests
 	- `Character>>isUtf16Surrogate`
 	- `Character>>isUtf16Lead`
 	- `Character>>isUtf16Trail`
+	- `Character class>>utf16Value:`
+	- `Character class>>isValidUtf16CodeUnit:`
+	Also tests `Character class>>isValidCodePoint:`
 	"
 
-	| str |
+	| str nonchars |
 	str := Character dolphin asUtf16String.
 	self assert: str size equals: 2.
 	self assert: str first isUtf16Surrogate.
@@ -282,6 +298,8 @@ testIsUtf16SurrogateTests
 		do: 
 			[:each |
 			| ch |
+			self assert: (Character isValidUtf16CodeUnit: each).
+			self assert: (Character isValidCodePoint: each).
 			ch := Character utf16Value: each.
 			self assert: ch isUtf8.
 			self deny: ch isSurrogate.
@@ -292,6 +310,8 @@ testIsUtf16SurrogateTests
 		do: 
 			[:each |
 			| ch |
+			self assert: (Character isValidUtf16CodeUnit: each).
+			self assert: (Character isValidCodePoint: each).
 			ch := Character utf16Value: each.
 			self deny: ch isUtf8.
 			self deny: ch isSurrogate.
@@ -302,6 +322,7 @@ testIsUtf16SurrogateTests
 		do: 
 			[:each |
 			| ch |
+			self assert: (Character isValidUtf16CodeUnit: each).
 			ch := Character utf16Value: each.
 			self deny: ch isUtf8.
 			self assert: ch isSurrogate.
@@ -312,34 +333,31 @@ testIsUtf16SurrogateTests
 		do: 
 			[:each |
 			| ch |
+			self assert: (Character isValidUtf16CodeUnit: each).
+			self deny: (Character isValidCodePoint: each).
 			ch := Character utf16Value: each.
 			self deny: ch isUtf8.
 			self assert: ch isSurrogate.
 			self assert: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
 			self assert: ch isUtf16Trail].
-	16rE000 to: 16rFDCF
-		do: 
+	nonchars := self nonCharacters.
+	((16rE000 to: 16rFFFF) difference: nonchars) do: 
 			[:each |
 			| ch |
+			self assert: (Character isValidUtf16CodeUnit: each).
+			self assert: (Character isValidCodePoint: each).
 			ch := Character utf16Value: each.
 			self deny: ch isUtf8.
 			self deny: ch isSurrogate.
 			self deny: ch isUtf16Surrogate.
 			self deny: ch isUtf16Lead.
 			self deny: ch isUtf16Trail].
-	"16rFDD0 to 16rFDEF are not valid"
-	16rFDF0 to: 16rFFFD
-		do: 
+	nonchars , {-1. Win32Constants.MAX_UCSCHAR + 1} do: 
 			[:each |
-			| ch |
-			ch := Character utf16Value: each.
-			self deny: ch isUtf8.
-			self deny: ch isSurrogate.
-			self deny: ch isUtf16Surrogate.
-			self deny: ch isUtf16Lead.
-			self deny: ch isUtf16Trail]
-	"16rFFFE and 16rFFFF are not valid"!
+			self deny: (Character isValidUtf16CodeUnit: each).
+			self deny: (Character isValidCodePoint: each).
+			self assertIsNil: (Character utf16Value: each ifInvalid: [])]!
 
 testIsUtf8SurrogateTests
 	"Exhaustively test Charcter>>isUtf8Surrogate, Character>>isUtf8Lead, Character>>isUtf8Trail."
@@ -433,6 +451,7 @@ testStb
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated equals: Character dolphin! !
+!CharacterTest categoriesFor: #nonCharacters!constants!private! !
 !CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
 !CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
 !CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
