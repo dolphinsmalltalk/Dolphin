@@ -8,7 +8,7 @@ Smalltalk compiler
 #pragma once
 
 #include "..\bytecdes.h"
-#include "EnumHelpers.h"
+#include "..\EnumHelpers.h"
 
 class LexicalScope;
 class TempVarRef;

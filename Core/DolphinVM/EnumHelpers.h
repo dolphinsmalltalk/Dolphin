@@ -112,7 +112,7 @@ operator-=(T& x, const I offset)
 }
 
 template<typename T, typename I>
-const typename std::enable_if<EnableIntOperators<T>::value, T>::type
+constexpr const typename std::enable_if<EnableIntOperators<T>::value, T>::type
 operator+(const T x, const I y)
 {
 	using underlying = typename std::underlying_type<T>::type;
@@ -120,7 +120,7 @@ operator+(const T x, const I y)
 }
 
 template<typename T, typename I>
-const typename std::enable_if<EnableIntOperators<T>::value, T>::type
+constexpr const typename std::enable_if<EnableIntOperators<T>::value, T>::type
 operator-(const T x, const I y)
 {
 	using underlying = typename std::underlying_type<T>::type;
