@@ -304,7 +304,7 @@ testIsMethodVisibleClassSide
 	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
 	self assert: (browser isMethodVisible: (TestCase class compiledMethodAt: #testSelectors)).
 	"We now filter everything in Object class and above on the class side - see #923."
-	self assert: (browser isMethodVisible: (Object class compiledMethodAt: #icon))
+	self assert: (browser isMethodVisible: (Object class compiledMethodAt: #initializeEventsRegister))
 		equals: browser isFilterObjectMethods not.
 	self assert: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors))
 		equals: browser isFilterObjectMethods not.
