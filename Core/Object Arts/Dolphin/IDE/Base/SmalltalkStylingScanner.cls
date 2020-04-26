@@ -52,9 +52,31 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 	creating an appropriate 'error' token which is of the correct type (if possible) so that the
 	styling/auto-completion remain as useful as possible."
 
-	! !
+	!
+
+scanQualifiedReference
+	"Private - For styling purposes it makes sense to scan binding references in their entirety, as opposed to parsing them, as this makes them easier to style and auto-complete."
+
+	| nameToken bindingRef |
+	self step.	"{"
+	self stripSeparators.
+	(characterType == #alphabetic and: 
+			[nameToken := self scanIdentifierOrKeyword.
+			nameToken isIdentifier and: [nameToken value notEmpty]])
+		ifFalse: [^self literalErrorToken: (BindingReference path: #()) stop: self previousStepPosition].
+	self stripSeparators.
+	bindingRef := BindingReference pathString: nameToken value.
+	currentCharacter == $}
+		ifFalse: [^self literalErrorToken: bindingRef stop: self previousStepPosition].
+	self step.	"}"
+	^self literalTokenClass
+		start: tokenStart
+		comments: nil
+		value: bindingRef
+		stop: self previousStepPosition! !
 !SmalltalkStylingScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
 !SmalltalkStylingScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
+!SmalltalkStylingScanner categoriesFor: #scanQualifiedReference!private!scanning! !
 

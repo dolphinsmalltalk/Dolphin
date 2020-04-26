@@ -22,16 +22,3 @@ length
 !StQualifiedReferenceToken categoriesFor: #isQualifiedReference!helpers!public!testing! !
 !StQualifiedReferenceToken categoriesFor: #length!accessing!public! !
 
-!StQualifiedReferenceToken class methodsFor!
-
-start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger
-	<primitive: 157>
-	^self new
-		start: startInteger;
-		comments: aCollectionOrNil;
-		value: aString;
-		stop: stopInteger;
-		yourself
-! !
-!StQualifiedReferenceToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
-

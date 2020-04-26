@@ -273,6 +273,7 @@ package methodNames
 	add: #FillerField -> #printMutatorBody:on:;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
+	add: #GeneralBindingReference -> #literalTextStyle;
 	add: #HANDLEField -> #printAccessorExpressionSuffixOn:;
 	add: #Interval -> #debugPrintString;
 	add: #Interval -> #newBatchAccessor;
@@ -3625,6 +3626,12 @@ newInstanceAspect: aSymbol class: aspectClass
 		bePresenterBlockReadOnly;
 		yourself! !
 !GdiplusImage class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+
+!GeneralBindingReference methodsFor!
+
+literalTextStyle
+	^#literalBindingReference! !
+!GeneralBindingReference categoriesFor: #literalTextStyle!public! !
 
 !GridLayout class methodsFor!
 

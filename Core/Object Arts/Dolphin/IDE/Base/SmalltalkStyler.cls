@@ -300,7 +300,7 @@ visitIdentifierToken: aStIdentifierToken
 			[| char |
 			char := self lastCharacter.
 			char == $: ifTrue: [^#blockArgDecl].
-			(char == $) or: [char == $; or: [char = $]]]) ifTrue: [^#unaryMessage].
+			(');]}' includes: char) ifTrue: [^#unaryMessage].
 			^#identifier].
 	^##(IdentityDictionary new
 		at: #identifier put: #unaryMessage;
@@ -311,6 +311,7 @@ visitIdentifierToken: aStIdentifierToken
 		at: #literalCharacter put: #unaryMessage;
 		at: #literalSymbol put: #unaryMessage;
 		at: #literalBytes put: #unaryMessage;
+		at: #literalBindingReference put: #unaryMessage;
 		at: #tempOpenBar put: #tempDecl;
 		at: #tempDecl put: #tempDecl;
 		at: #keywordSelector put: #argDecl;
@@ -362,7 +363,8 @@ visitOptimizedToken: aStOptimizedToken
 	stack addLast: aStOptimizedToken.
 	^#specialCharacter!
 
-visitQualifiedReferenceToken: aStQualifiedReferenceToken 
+visitQualifiedReferenceToken: aStQualifiedReferenceToken
+	"We should never actually get here because the SmalltalkStylingScanner scans literal binding refs as literal tokens."
 	^#specialCharacter!
 
 visitSpecialCharacterToken: aStSpecialCharacterToken
