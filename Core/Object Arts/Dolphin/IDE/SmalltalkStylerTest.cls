@@ -119,6 +119,18 @@ testEmptyTemps
 		equals: #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4
 				to: 4) #identifier 'x') #(##(5 to: 6) #binaryMessage '||') #(##(7 to: 7) #identifier 'y'))!
 
+testIncompleteIdentifierInQualifiedReference
+	| styler text tokens |
+	styler := SmalltalkMethodStyler new.
+	text := '#{_'.
+	mock text: text.
+	styler
+		colorTextFrom: 1
+		to: text size
+		in: mock.
+	tokens := mock tokens asArray.
+	self assert: tokens equals: {{1 to: 3. #literalBindingReference. '#{_'}}!
+
 testInvalidIdentifierInQualifiedReference
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
@@ -597,6 +609,7 @@ testUnterminatedQualifiedReference
 !SmalltalkStylerTest categoriesFor: #testArrayNoSpace!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testBinaryMethodSignature!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testEmptyTemps!public!unit tests! !
+!SmalltalkStylerTest categoriesFor: #testIncompleteIdentifierInQualifiedReference!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testInvalidIdentifierInQualifiedReference!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testLegacyLiteralArray!public!unit tests! !
 !SmalltalkStylerTest categoriesFor: #testLiteralArray!public!unit tests! !
