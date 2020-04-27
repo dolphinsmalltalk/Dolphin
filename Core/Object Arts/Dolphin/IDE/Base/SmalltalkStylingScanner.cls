@@ -65,7 +65,8 @@ scanQualifiedReference
 			nameToken isIdentifier and: [nameToken value notEmpty]])
 		ifFalse: [^self literalErrorToken: (BindingReference path: #()) stop: self previousStepPosition].
 	self stripSeparators.
-	bindingRef := BindingReference pathString: nameToken value.
+	"Avoid name validation done by BindingReference class>>path:, as we don't want this to error."
+	bindingRef := BindingReference basicNew path: (nameToken value subStrings: $.).
 	currentCharacter == $}
 		ifFalse: [^self literalErrorToken: bindingRef stop: self previousStepPosition].
 	self step.	"}"
