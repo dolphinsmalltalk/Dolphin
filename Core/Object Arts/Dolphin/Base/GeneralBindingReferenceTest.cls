@@ -17,12 +17,12 @@ bindingTestCases
 	| missingNamespace |
 	missingNamespace := '_' , GUID newUnique idlString copyReplacing: $- withObject: $_.
 	^{#(#(#Object)).
-		{#(#Smalltalk #Object). #(#Object)}.
+		{#(#Smalltalk #Object). #(#Smalltalk #Object)}.
 		#(#(#OpcodePool #Nop)).
-		#(#(#Smalltalk #OpcodePool #Nop) #(#OpcodePool #Nop)).
+		#(#(#Smalltalk OpcodePool #Nop) #(#Smalltalk #OpcodePool #Nop)).
 		{{missingNamespace. '__MissingClass'}. nil}.
 		{{missingNamespace. 'Date'}. nil}.
-		{#(#Smalltalk #Object #_EventsRegister). #(#Object #_EventsRegister)}.
+		{#(#Object #_EventsRegister). #(#Object #_EventsRegister)}.
 }!
 
 newTestSubjectWithPath: anArrayOfStrings
@@ -82,15 +82,15 @@ testEquals
 	self assert: (self newTestSubjectWithPath: #('Smalltalk' 'Object'))
 		equals: (self newTestSubjectWithPathString: 'Smalltalk.Object').
 	self deny: (self newTestSubjectWithPath: #('Smalltalk')) equals: Object new.
-	"Different to VW behaviour."
-	self assert: (self newTestSubjectWithPath: #('Object'))
+	"BindingReference equality is a stable property based on the path and starting point. Different paths to the same target binding (of which there may be many) are not equal."
+	self deny: (self newTestSubjectWithPath: #('Object'))
 		equals: (self newTestSubjectWithPath: #('Smalltalk' 'Object'))!
 
 testHash
 	self assert: (self subjectClass path: #('Smalltalk' 'OpcodePool' 'Nop')) hash
 		equals: (self subjectClass pathString: 'Smalltalk.OpcodePool.Nop') hash.
-	"Different VW behaviour."
-	self assert: (self subjectClass path: #('Object')) hash
+	"Same target variable, but different paths, so different hashes."
+	self deny: (self subjectClass path: #('Object')) hash
 		equals: (self subjectClass path: #('Smalltalk' 'Object')) hash.
 	self deny: (self subjectClass path: #('Object')) hash
 		equals: (self subjectClass path: #('Smalltalk')) hash!
@@ -153,6 +153,29 @@ testPrintString
 			subject := self subjectClass path: each first.
 			self assert: subject printString equals: each last]!
 
+testRefersToLiteral
+	"A BindingReference matches literals for the same path..."
+
+	self assert: (Object fullyQualifiedReference refersToLiteral: #{Object}).
+	".. and the binding to which it would resolve ..."
+	self assert: (#{Object} refersToLiteral: Object binding).
+	"... but not the target value."
+	self deny: (#{Object} refersToLiteral: #{Object} value).
+	"BindingRef to a pool variable."
+	self assert: (#{_PrimitiveFailureCode.AccessViolation}
+				refersToLiteral: #{_PrimitiveFailureCode.AccessViolation}).
+	self assert: (#{_PrimitiveFailureCode.AccessViolation}
+				refersToLiteral: #{_PrimitiveFailureCode.AccessViolation} binding).
+	"Should a BindingRef implicitly refers to refs along its path? Not sure."
+	false
+		ifTrue: 
+			[self assert: (#{_PrimitiveFailureCode.AccessViolation} refersToLiteral: #{_PrimitiveFailureCode})].
+	#todo.	"This should be true, but at present is not because bindings do not know their scope."
+	false
+		ifTrue: 
+			[self
+				assert: (#{_PrimitiveFailureCode.AccessViolation} refersToLiteral: #{_PrimitiveFailureCode} binding)]!
+
 testSimpleName
 	self bindingTestCases do: 
 			[:each |
@@ -210,6 +233,7 @@ testValueOrNil
 !GeneralBindingReferenceTest categoriesFor: #testPath!public!unit tests! !
 !GeneralBindingReferenceTest categoriesFor: #testPathString!public!unit tests! !
 !GeneralBindingReferenceTest categoriesFor: #testPrintString!public!unit tests! !
+!GeneralBindingReferenceTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !GeneralBindingReferenceTest categoriesFor: #testSimpleName!public!unit tests! !
 !GeneralBindingReferenceTest categoriesFor: #testStoreString!public!unit tests! !
 !GeneralBindingReferenceTest categoriesFor: #testValue!public!unit tests! !

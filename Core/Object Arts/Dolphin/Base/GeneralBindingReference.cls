@@ -12,9 +12,13 @@ GeneralBindingReference comment: 'Abstract superclass of binding references.'!
 !GeneralBindingReference methodsFor!
 
 = anObject
-	"Answer whether the receiver and the <Object> argument should be considered equivalent (in this case that they are a reference to the same variable binding)."
+	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
+	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
+	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
+	to the same variable."
 
-	^self species == anObject species and: [self path = anObject path and: [self home = anObject home]]!
+	^self == anObject or: 
+			[self species == anObject species and: [self path = anObject path and: [self home == anObject home]]]!
 
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
@@ -25,7 +29,7 @@ asString
 	"Answer a <readableString> that expresses the receiver as a qualified name in the context of the home namespace."
 
 	| strm |
-	strm := String writeStream.
+	strm := String writeStream: 20.
 	self displayOn: strm.
 	^strm contents!
 
@@ -48,7 +52,6 @@ displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it (the qualified name)."
 
-	#todo.	"Forward to the home namespace to print complete qualified name"
 	path do: [:each | aStream nextPutAll: each] separatedBy: [aStream nextPut: $.]!
 
 hash
@@ -121,6 +124,12 @@ printOn: aStream
 		display: self;
 		nextPut: $}!
 
+refersToLiteral: anObject
+	"Private - Answer whether the receiver is a reference to the literal argument.
+	This assumes that the receiver is in the role of a literal. Normally this would only be true of LiteralBindingReferences, but other types of BindingReferences could find their way into literal frames if they result from the evaluation of a static expression."
+
+	^self = anObject or: [anObject notNil and: [self bindingOrNil refersToLiteral: anObject]]!
+
 simpleName
 	"Answer the unqualified name part of the receiver (the final component of the name)."
 
@@ -160,6 +169,7 @@ valueOrNil
 !GeneralBindingReference categoriesFor: #path!accessing!public! !
 !GeneralBindingReference categoriesFor: #path:!initializing!private! !
 !GeneralBindingReference categoriesFor: #printOn:!printing!public! !
+!GeneralBindingReference categoriesFor: #refersToLiteral:!public!testing! !
 !GeneralBindingReference categoriesFor: #simpleName!accessing!public! !
 !GeneralBindingReference categoriesFor: #storeOn:!public!storing! !
 !GeneralBindingReference categoriesFor: #value!accessing!public! !
@@ -226,9 +236,7 @@ path: aSequencedReadableCollection
 			(self isValidUnqualifiedName: last)
 				ifTrue: 
 					[self basicNew
-						path: ((depth > 1 and: [path first = 'Smalltalk'])
-									ifTrue: [path copyFrom: 2 to: depth]
-									ifFalse: [path]);
+						path: path;
 						yourself]
 				ifFalse: [self errorInvalidIdentifier: last]]!
 

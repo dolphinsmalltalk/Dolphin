@@ -109,6 +109,12 @@ basicSharedPools: aCollection
 
 	sharedPools := aCollection!
 
+binding
+	"Answer the receiver's variable binding, raising an error if the receiver is unbound."
+
+	#{Announcement}.
+	^self fullyQualifiedReference binding!
+
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil.
@@ -117,6 +123,11 @@ bindingFor: aString
 	classPool isNil ifFalse: [(classPool bindingFor: aString) ifNotNil: [:classVar | ^classVar]].
 	self sharedPoolsDo: [:each | (each bindingFor: aString) ifNotNil: [:sharedVar | ^sharedVar]].
 	^superclass bindingFor: aString!
+
+bindingOrNil
+	"Answer the receiver's variable binding, or nil if unbound"
+
+	^self fullyQualifiedReference bindingOrNil!
 
 categories
 	"Answer a <Array> of <ClassCategory>s in which the receiver is included.
@@ -231,6 +242,11 @@ fileOutStem
 	"Private - Answer the default file name stem for the class to file out on."
 
 	^self name!
+
+fullyQualifiedReference
+	"Answer a <BindingReference> that represents a fully qualified reference to the receiver."
+
+	^self fullName asQualifiedReference!
 
 guid
 	"Answer the receiver's globally unique id (a 128-bit number allocated/set 
@@ -677,7 +693,9 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #basicClassPool!class variables!private! !
 !Class categoriesFor: #basicClassPool:!class variables!private! !
 !Class categoriesFor: #basicSharedPools:!accessing!private! !
+!Class categoriesFor: #binding!public! !
 !Class categoriesFor: #bindingFor:!binding!public! !
+!Class categoriesFor: #bindingOrNil!public! !
 !Class categoriesFor: #categories!categories-accessing!public! !
 !Class categoriesFor: #categories:!categories-accessing!public! !
 !Class categoriesFor: #categoriesForClass!private!source filing-class definition! !
@@ -694,6 +712,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #fileIn!development!public!source filing! !
 !Class categoriesFor: #fileOutName!development!private!source filing! !
 !Class categoriesFor: #fileOutStem!development!private!source filing! !
+!Class categoriesFor: #fullyQualifiedReference!public! !
 !Class categoriesFor: #guid!constants!public! !
 !Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Class categoriesFor: #includeInCategory:!categories-adding!public! !

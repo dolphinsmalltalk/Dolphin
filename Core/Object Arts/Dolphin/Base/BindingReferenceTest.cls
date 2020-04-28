@@ -15,7 +15,8 @@ subjectClass
 
 testAsQualifiedReference
 	self assert: 'Object' asQualifiedReference equals: #{Object}.
-	self assert: 'Smalltalk.Object' asQualifiedReference equals: #{Object}.
+	"Although these two binding refs would resolve to the same binding, they are not equivalent as one has a more specific path."
+	self deny: 'Smalltalk.Object' asQualifiedReference equals: #{Object}.
 	self assert: #{Object} asQualifiedReference identicalTo: #{Object}.
 	self assert: 'Object._EventsRegister' asQualifiedReference equals: #{Object._EventsRegister}!
 

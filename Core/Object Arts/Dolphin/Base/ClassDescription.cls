@@ -172,7 +172,7 @@ classCategoryClass
 	"Private - Answer the class of object used to categorize classes.
 	Answer nil if the category system is not present."
 
-	^Smalltalk lookup: #ClassCategory!
+	^#{ClassCategory} valueOrNil!
 
 classPool
 	"Answer the dictionary of class variables."
@@ -338,10 +338,6 @@ fullName
 
 	^self name
 
-	!
-
-fullyQualifiedReference
-	^self fullName asQualifiedReference
 	!
 
 includesCategory: category
@@ -846,7 +842,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
 !ClassDescription categoriesFor: #fullName!accessing!public! !
-!ClassDescription categoriesFor: #fullyQualifiedReference!accessing!public! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
