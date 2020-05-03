@@ -7,6 +7,7 @@ package paxVersion: 1;
 package classNames
 	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
+	add: #AbstractKeyboardTest;
 	add: #AbstractStringTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #AnsiStringTest;
@@ -65,6 +66,7 @@ package classNames
 	add: #IntegerTest;
 	add: #IntervalTest;
 	add: #IntrosortAlgorithmTest;
+	add: #KeyboardTest;
 	add: #LargeIntegerTest;
 	add: #LocaleTest;
 	add: #LookupTableTest;
@@ -184,6 +186,11 @@ TestCase subclass: #DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #AbstractKeyboardTest
+	instanceVariableNames: 'savedLayout'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BagTest
 	instanceVariableNames: ''
@@ -416,6 +423,11 @@ DolphinTest subclass: #TrueTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #UndefinedObjectTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractKeyboardTest subclass: #KeyboardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

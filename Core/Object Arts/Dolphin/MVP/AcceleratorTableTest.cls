@@ -1,25 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DolphinTest subclass: #AcceleratorTableTest
-	instanceVariableNames: 'savedLayout'
+AbstractKeyboardTest subclass: #AcceleratorTableTest
+	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AcceleratorTableTest guid: (GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
 AcceleratorTableTest comment: ''!
 !AcceleratorTableTest categoriesForClass!Unclassified! !
 !AcceleratorTableTest methodsFor!
-
-setCurrentKeyboardLayout: aString
-	| current |
-	current := Keyboard layoutName.
-	^current = aString or: 
-			[(Keyboard layoutName: aString) and: 
-					[savedLayout ifNil: [savedLayout := current].
-					true]]!
-
-tearDown
-	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]!
 
 testKeycodeFromString
 	"for alphanumerics, the keycode corresponds with the ascii code point"
@@ -93,8 +82,6 @@ testRoundTrippingKeyNames
 	localised := AcceleratorTable keyStringFromCode: 8810.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: 8810! !
-!AcceleratorTableTest categoriesFor: #setCurrentKeyboardLayout:!helpers!private! !
-!AcceleratorTableTest categoriesFor: #tearDown!private!Running! !
 !AcceleratorTableTest categoriesFor: #testKeycodeFromString!public!unit tests! !
 !AcceleratorTableTest categoriesFor: #testRoundTrippingInvariantKeyNames!public! !
 !AcceleratorTableTest categoriesFor: #testRoundTrippingKeyNames!public!unit tests! !
