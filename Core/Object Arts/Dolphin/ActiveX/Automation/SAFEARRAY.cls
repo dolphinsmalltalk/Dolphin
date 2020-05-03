@@ -393,7 +393,20 @@ vt
 	"Answer the receiver's variant type. This will depend on the element type,
 	but always includes the array modifier."
 
-	^self class vt bitOr: self elementClass vt! !
+	^self class vt bitOr: self elementClass vt!
+
+with: otherCollection do: operation
+	"Evaluate the <dyadicValuable> argument, operation, with each of 
+	the receiver's elements along with the corresponding element from the 
+	<sequencedReadableCollection> argument, otherCollection. 
+	Raise an exception if otherCollection is not the same size as the receiver."
+
+	self size = otherCollection size
+		ifFalse: [^self error: 'collections are of different sizes'].
+	self keysAndValuesDo: [:i :elem |
+		operation
+			value: elem
+			value: (otherCollection at: i)]! !
 !SAFEARRAY categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
 !SAFEARRAY categoriesFor: #accessData!helpers!private! !
 !SAFEARRAY categoriesFor: #asObject!converting!public! !
@@ -437,6 +450,7 @@ vt
 !SAFEARRAY categoriesFor: #upperBound:!accessing!public! !
 !SAFEARRAY categoriesFor: #vartype!accessing!public! !
 !SAFEARRAY categoriesFor: #vt!constants!public! !
+!SAFEARRAY categoriesFor: #with:do:!enumerating!public! !
 
 SAFEARRAY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 

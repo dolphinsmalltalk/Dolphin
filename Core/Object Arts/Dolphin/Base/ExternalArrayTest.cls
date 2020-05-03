@@ -177,7 +177,32 @@ testFromToKeysAndValuesDo
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | ]]
-				raise: BoundsError]! !
+				raise: BoundsError]!
+
+testWithDo
+	| count validationBlock subject |
+	count := 1.
+	validationBlock := 
+			[:a :b |
+			self assert: b equals: count.
+			self assert: a value equals: b.
+			count := count + 1.
+			a value: count].
+	#(1 2 5) do: 
+			[:each |
+			subject := self newNumericArray: each.
+			subject with: (1 to: each) do: validationBlock.
+			self assert: subject asArray equals: (2 to: each + 1).
+			count := 1].
+	subject := self newNumericArray: 5.
+	{0. 1. subject size - 1. subject size + 1} do: 
+			[:each |
+			self
+				should: [subject with: (1 to: each) do: [:a :b | ]]
+				raise: Error
+				matching: [:ex | ex description = 'collections are of different sizes']].
+	subject := self newNumericArray: 0.
+	subject with: (1 to: 0) do: [:a :b | self assert: false]! !
 !ExternalArrayTest categoriesFor: #arrayClass!constants!private! !
 !ExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
 !ExternalArrayTest categoriesFor: #canonicalizeValue:!private!unit tests! !
@@ -187,4 +212,5 @@ testFromToKeysAndValuesDo
 !ExternalArrayTest categoriesFor: #newNumericArray:!helpers!private! !
 !ExternalArrayTest categoriesFor: #testAtAndAtPut!public!unit tests! !
 !ExternalArrayTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
+!ExternalArrayTest categoriesFor: #testWithDo!public!unit tests! !
 

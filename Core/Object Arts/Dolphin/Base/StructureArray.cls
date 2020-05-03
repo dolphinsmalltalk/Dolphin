@@ -78,21 +78,7 @@ uncheckedAt: anInteger put: anObject
 		from: 1 + offset
 		to: offset + self elementSize
 		startingAt: 1.
-	^anObject!
-
-with: aCollection do: aDyadicValuable
-	"Private - Evaluate the <dyadicValuable> argument with each of the receiver's elements along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order.
-	N.B. This is private because the element passed to the operation must not be captured since it is shared. StructureArrays are often initialized from Smalltalk arrays, and the elements passed are only transient references anyway."
-
-	| elem spacing |
-	spacing := self packing.
-	elem := elementClass newPointer.
-	aCollection inject: self yourAddress
-		into: 
-			[:addr :each |
-			elem initializeAtAddress: addr.
-			aDyadicValuable value: elem value: each.
-			addr + spacing]! !
+	^anObject! !
 !StructureArray categoriesFor: #alignment!constants!public! !
 !StructureArray categoriesFor: #basicFree!private!realizing/unrealizing! !
 !StructureArray categoriesFor: #elementClass:!accessing!private! !
@@ -100,7 +86,6 @@ with: aCollection do: aDyadicValuable
 !StructureArray categoriesFor: #initializePointer!initializing!private! !
 !StructureArray categoriesFor: #packing!constants!private! !
 !StructureArray categoriesFor: #uncheckedAt:put:!accessing!private! !
-!StructureArray categoriesFor: #with:do:!enumerating!private! !
 
 !StructureArray class methodsFor!
 
