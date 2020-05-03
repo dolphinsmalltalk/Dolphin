@@ -450,6 +450,7 @@ Win32Constants at: 'IS_TEXT_UNICODE_SIGNATURE' put: 16r8!
 Win32Constants at: 'IS_TEXT_UNICODE_STATISTICS' put: 16r2!
 Win32Constants at: 'IS_TEXT_UNICODE_UNICODE_MASK' put: 16rF!
 Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
+Win32Constants at: 'KF_EXTENDED' put: 16r100!
 Win32Constants at: 'KL_NAMELENGTH' put: 16r9!
 Win32Constants at: 'KLF_ACTIVATE' put: 16r1!
 Win32Constants at: 'KLF_NOTELLSHELL' put: 16r80!
@@ -1035,6 +1036,7 @@ Win32Constants at: 'VK_CANCEL' put: 16r3!
 Win32Constants at: 'VK_CAPITAL' put: 16r14!
 Win32Constants at: 'VK_CLEAR' put: 16rC!
 Win32Constants at: 'VK_CONTROL' put: 16r11!
+Win32Constants at: 'VK_DECIMAL' put: 16r6E!
 Win32Constants at: 'VK_DELETE' put: 16r2E!
 Win32Constants at: 'VK_DIVIDE' put: 16r6F!
 Win32Constants at: 'VK_DOWN' put: 16r28!
