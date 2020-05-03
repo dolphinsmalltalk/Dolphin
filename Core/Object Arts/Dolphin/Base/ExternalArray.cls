@@ -317,6 +317,12 @@ notEmpty
 
 	^self isEmpty not!
 
+packing
+	"Private - Answer the number of bytes between individual elements of the receiver.
+	This is the receiver's elementSize plus any padding necessary."
+
+	^self elementSize!
+
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
 	byte object to another, normally double dispatched from #replaceFrom:to:with:startingAt:"
@@ -388,7 +394,25 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	"Subclasses should override this method in order to replace all #do: family enumerators 
 	(#do:, #keysAndValuesDo:, #from:to:do:, and,	of course, #from:to:keysAndValuesDo:)."
 
-	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]! !
+	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]!
+
+with: aCollection do: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument with each of the receiver's elements along with the corresponding element from the <collection> argument, aCollection. The collection is enumerated in its #do: order."
+
+	"This should be used with care. In particular the element passed to the operation must not be captured since it is re-used for subsequent elements. In any case it will be a reference to the actual memory occupied by 
+	the array, which would be invalidated when the StructureArray is deallocated. If you do need to capture the elements, then you should make a copy of them."
+
+	| elem spacing |
+	self size = aCollection size
+		ifFalse: [^self error: 'collections are of different sizes'].
+	spacing := self packing.
+	elem := self elementClass newPointer.
+	aCollection inject: self yourAddress
+		into: 
+			[:addr :each |
+			elem initializeAtAddress: addr.
+			aDyadicValuable value: elem value: each.
+			addr + spacing]! !
 !ExternalArray categoriesFor: #=!public! !
 !ExternalArray categoriesFor: #anySatisfy:!enumerating!public! !
 !ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
@@ -425,6 +449,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #length:!accessing!public! !
 !ExternalArray categoriesFor: #lookup:!accessing!public! !
 !ExternalArray categoriesFor: #notEmpty!public!testing! !
+!ExternalArray categoriesFor: #packing!constants!private! !
 !ExternalArray categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 !ExternalArray categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
 !ExternalArray categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
@@ -434,6 +459,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
 !ExternalArray categoriesFor: #uncheckedAt:put:!accessing!private! !
 !ExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!ExternalArray categoriesFor: #with:do:!enumerating!public! !
 
 !ExternalArray class methodsFor!
 

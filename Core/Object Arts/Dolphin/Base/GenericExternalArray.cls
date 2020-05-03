@@ -58,12 +58,6 @@ owner: arrayOwner
 		ifTrue: [owner := nil. self beFinalizable]
 		ifFalse: [owner := arrayOwner. self beUnfinalizable]!
 
-packing
-	"Private - Answer the number of bytes between individual elements of the receiver.
-	This is the receiver's elementSize plus any padding necessary."
-
-	^self elementSize!
-
 uncheckedAt: anInteger 
 	"Private - Answer an instance of the receiver's elementClass which is a reference to the
 	element of the receiver at the specified <integer> index. No bounds checks are performed on
@@ -94,7 +88,6 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !GenericExternalArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
 !GenericExternalArray categoriesFor: #newElementAt:!helpers!private! !
 !GenericExternalArray categoriesFor: #owner:!accessing!private! !
-!GenericExternalArray categoriesFor: #packing!constants!private! !
 !GenericExternalArray categoriesFor: #uncheckedAt:!accessing!private! !
 !GenericExternalArray categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 
