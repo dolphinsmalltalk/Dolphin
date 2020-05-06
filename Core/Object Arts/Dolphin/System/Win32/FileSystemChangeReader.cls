@@ -86,8 +86,8 @@ filterString
 	self filters do: [:each | stream nextPutAll: each] separatedBy: [stream nextPut: $;].
 	^stream contents!
 
-filterString: aString 
-	self filters: (aString subStrings: $;)!
+filterString: aString
+	self filters: ($; split: aString)!
 
 free
 	"Free any external resources owned by the receiver."

@@ -358,6 +358,14 @@ isWhitespace
 
 	^self isSeparator!
 
+join: aCollection
+	"Answer a new <String> composed from the elements of the <collection> argument separated by the instances of the receiver."
+
+	| stream |
+	stream := String writeStream: aCollection size * 6.
+	aCollection do: [:each | each displayOn: stream] separatedBy: [stream nextPut: self].
+	^stream contents!
+
 printEscapedOn: aStream
 	"Append the escaped literal representation of the receiver to the <puttableStream> argument."
 
@@ -395,7 +403,7 @@ split: aReadableString
 
 	"Implementation Note: Although this routine is rather more complex than it need be, the performance of #subStrings(:) is important, so it pays to optimize this routine. In particular we try to avoid performing any work in the common cases where the string is either empty, or does not contain the separator at all. However, we must be careful not to over optimize and prevent correct operation for wide (Unicode) strings."
 
-	| start answer size end |
+	| start answer size end codeUnits |
 	size := aReadableString size.
 	size == 0 ifTrue: [^{}].
 	end := aReadableString
@@ -405,9 +413,10 @@ split: aReadableString
 	end == 0 ifTrue: [^{aReadableString}].
 	answer := Array writeStream: 5.
 	start := 1.
+	codeUnits := aReadableString encodedSizeOf: self.
 	
 	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
-	start := end + 1.
+	start := end + codeUnits.
 	end := aReadableString
 				nextIndexOf: self
 				from: start
@@ -417,6 +426,33 @@ split: aReadableString
 	"Copy any remaining chars after the last separator"
 	answer nextPut: (aReadableString copyFrom: start to: size).
 	^answer contents!
+
+split: aReadableString do: aMonadicValuable
+	"Evaluate the <monadicValuable> 2nd argument for each of the sub-strings of the <readableString> 1st argument that are separated by the receiver."
+
+	| start size end codeUnits |
+	size := aReadableString size.
+	end := aReadableString
+				nextIndexOf: self
+				from: 1
+				to: size.
+	end == 0
+		ifTrue: 
+			[aMonadicValuable value: aReadableString.
+			^self].
+	start := 1.
+	codeUnits := aReadableString encodedSizeOf: self.
+	
+	[aMonadicValuable value: (aReadableString copyFrom: start to: end - 1).
+	start := end + codeUnits.
+	end := aReadableString
+				nextIndexOf: self
+				from: start
+				to: size.
+	end == 0]
+			whileFalse.
+	"Evaluate for any remaining chars after the last separator"
+	aMonadicValuable value: (aReadableString copyFrom: start to: size)!
 
 to: aCharacter
 	"Answer a <sequencedReadableCollection> of <Character>s for each of the Unicode code points between the receiver's code point and that of the <Character> argument, aCharacter."
@@ -475,11 +511,13 @@ to: aCharacter
 !Character categoriesFor: #isUtf8Trail!public!testing! !
 !Character categoriesFor: #isVowel!public!testing! !
 !Character categoriesFor: #isWhitespace!public!testing! !
+!Character categoriesFor: #join:!public!tokenizing! !
 !Character categoriesFor: #printEscapedOn:!printing!public! !
 !Character categoriesFor: #printOn:!printing!public! !
 !Character categoriesFor: #setCode:!accessing!initializing!private! !
 !Character categoriesFor: #shallowCopy!copying!public! !
 !Character categoriesFor: #split:!public!tokenizing! !
+!Character categoriesFor: #split:do:!public!tokenizing! !
 !Character categoriesFor: #to:!converting!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!

@@ -323,21 +323,21 @@ checkSupersend: aMessageNode
 	methodClass superclass isNil
 		ifTrue: [^self signalError: CErrUndeclared forNode: aMessageNode receiver]!
 
-checkTryBlock: aMessageNode 
+checkTryBlock: aMessageNode
 	"Private - Warning if an exception guarded statement (i.e. a block sent #on:do:+) does not
 	appear to be correctly formed, or is using the deprecated VSE form with a niladic handler
 	block."
 
 	| args |
-	aMessageNode receiver isBlock 
+	aMessageNode receiver isBlock
 		ifFalse: 
 			["If the receiver is not a block, we can't make any assumptions about how it might implement on:do:+"
 			^self].
 	"Some quick checks to eliminate non-on:do: messages"
-	(aMessageNode isKeyword 
-		and: [aMessageNode selectorParts size even and: [aMessageNode selector beginsWith: #on:do:]]) 
+	(aMessageNode isKeyword
+		and: [aMessageNode selectorParts size even and: [aMessageNode selector beginsWith: #on:do:]])
 			ifFalse: [^self].
-	((aMessageNode selector subStrings: #on:do:) anySatisfy: [:each | each notEmpty]) ifTrue: [^self].
+	((#on:do: split: aMessageNode selector) anySatisfy: [:each | each notEmpty]) ifTrue: [^self].
 	"Message is of the form on:do:+, so check receiver and handler args"
 	self checkMessageHasNiladicBlockReceiver: aMessageNode.
 	args := aMessageNode arguments.

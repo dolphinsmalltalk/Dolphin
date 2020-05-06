@@ -43,7 +43,7 @@ isFullPathAlwaysRequired: aBoolean
 notEmpty
 	^self getRecentList notEmpty!
 
-onAboutToDisplayMenu: recentMenu 
+onAboutToDisplayMenu: recentMenu
 	"Private - The system is about to display the <Menu>, popup, this is our chance
 	to fiddle with it and display the recent files list if appropriate."
 
@@ -53,17 +53,18 @@ onAboutToDisplayMenu: recentMenu
 	recentList := self getRecentList.
 	basePath := File splitPathFrom: recentList first.
 	recentList do: 
-			[:each | 
+			[:each |
 			| nameToDisplay |
-			nameToDisplay := (each subStrings: ',') first.
-			nameToDisplay := self isFullPathAlwaysRequired 
+			nameToDisplay := ($, split: each) first.
+			nameToDisplay := self isFullPathAlwaysRequired
 						ifTrue: [nameToDisplay]
 						ifFalse: [(FolderRelativeFileLocator basePath: basePath) relativePathTo: nameToDisplay].
 			recentMenu addCommand: (Message selector: self openSelector argument: each)
 				description: nameToDisplay].
 	recentMenu
 		addSeparator;
-		addCommand: (MessageSend receiver: self selector: #clearRecentList) description: 'Clear Recent List'!
+		addCommand: (MessageSend receiver: self selector: #clearRecentList)
+			description: 'Clear Recent List'!
 
 openSelector
 	^openSelector!

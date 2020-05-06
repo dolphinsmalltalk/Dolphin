@@ -185,7 +185,7 @@ encryptedClasses
 			classes := classes asArray select: [:each | self isSafeToEncrypt: each].
 			self shouldEncryptMetaclasses 
 				ifTrue: [classes := classes , (classes collect: [:each | each class])].
-			encryptedClasses := classes asSortedCollection: [:a :b | (a name trueCompare: b name) <= 0]].
+			encryptedClasses := classes asSortedCollection: [:a :b | (a name <==> b name) <= 0]].
 	^encryptedClasses!
 
 encryptedClasses: aCollectionOfClasses

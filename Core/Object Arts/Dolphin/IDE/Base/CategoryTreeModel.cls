@@ -28,7 +28,7 @@ addCategory: aCategory
 	(name identityIncludes: sep)
 		ifTrue: 
 			[| names moniker |
-			names := name subStrings: sep.
+			names := sep split: name.
 			moniker := String writeStream.
 			names
 				from: 1

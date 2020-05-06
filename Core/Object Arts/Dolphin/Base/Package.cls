@@ -1692,7 +1692,7 @@ variableSortBlock
 	"Private - Answer a <dyadicValuable> sort block suitable for sorting global variable <Association>s
 	into alphabetic order."
 
-	^[:a :b | (a key trueCompare: b key) <= 0]!
+	^[:a :b | (a key <==> b key) <= 0]!
 
 versionIfRequired
 	Package manager versionPackageIfRequired: self!

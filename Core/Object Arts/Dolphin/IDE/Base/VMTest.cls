@@ -2535,7 +2535,7 @@ testPrimitiveStringCmp
 	"Test case sensitive string comparison primitive"
 
 	| method |
-	method := self createPrimitiveMethodLike: String >> #trueCompare:.
+	method := self createPrimitiveMethodLike: String >> #<==>.
 	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
 	#(#('a' 'b' -1) #('A' 'a' 1) #('abc' 'ABC' -1) #('abc' 'abc' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'InvalidParameter1'))
 		do: 
@@ -2554,7 +2554,7 @@ testPrimitiveStringCollate
 	"Test case insensitive string comparison primitive"
 
 	| method |
-	method := self createPrimitiveMethodLike: String >> #_collate:.
+	method := self createPrimitiveMethodLike: String >> #<=>.
 	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
 	#(#('a' 'b' -1) #('b' 'a' 1) #('abc' 'ABC' 0) #('A' 'a' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'InvalidParameter1'))
 		do: 

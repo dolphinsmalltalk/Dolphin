@@ -121,7 +121,7 @@ numberGrouping
 numberGrouping: aString
 	| groups |
 	numberGrouping := nil.
-	groups := aString subStrings: $;.
+	groups := $; split: aString.
 	groups last = '0' ifTrue: [groups := groups resize: groups size - 1].
 	self Grouping: (groups inject: 0
 				into: 

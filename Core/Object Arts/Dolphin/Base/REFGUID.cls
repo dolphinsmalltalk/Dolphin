@@ -17,13 +17,12 @@ REFGUID fromAddress: Object guid yourAddress'!
 !REFGUID categoriesForClass!External-Data-Unstructured! !
 !REFGUID methodsFor!
 
-_collate: comperand
-	"Private - Answer the ordering relationship between the receiver
-	and the argument, comperand."
+<=> aGUID
+	"Answer the ordering relationship between the receiver and the argument."
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := RPCLibrary default uuidCompare: self uuid2: comperand status: status.
+	answer := RPCLibrary default uuidCompare: self uuid2: aGUID status: status.
 	status := status dwordAtOffset: 0.
 	status == 0 ifFalse: [RPCError signalWith: status].
 	^answer!
@@ -31,7 +30,7 @@ _collate: comperand
 = comperand
 	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	^self species = comperand species and: [(self _collate: comperand) == 0]!
+	^self species = comperand species and: [(self <=> comperand) == 0]!
 
 asString
 	"Answer a string representation of the receiver."
@@ -73,7 +72,7 @@ value: guid
 	"Set the 16-byte GUID pointed at by the receiver to the <GUID>, guid."
 
 	self replaceFrom: 1 to: 16 with: guid startingAt: 1! !
-!REFGUID categoriesFor: #_collate:!comparing!private! !
+!REFGUID categoriesFor: #<=>!comparing!public! !
 !REFGUID categoriesFor: #=!comparing!public! !
 !REFGUID categoriesFor: #asString!converting!public! !
 !REFGUID categoriesFor: #displayOn:!printing!public! !

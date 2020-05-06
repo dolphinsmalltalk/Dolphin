@@ -402,7 +402,7 @@ instVarNames
 
 	instanceVariables isNil ifTrue: [^#()].
 	^instanceVariables isString
-		ifTrue: [(instanceVariables subStrings: $\x20) reject: [:each | each isEmpty]]
+		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
 		ifFalse: [instanceVariables]!
 
 isChanged

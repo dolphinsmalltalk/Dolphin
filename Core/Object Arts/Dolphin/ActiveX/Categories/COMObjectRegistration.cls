@@ -105,7 +105,7 @@ toolboxImage
 				ifFalse: 
 					[| id path pathAndId |
 					"Should be able to use PathParseIconLocation here, but it can't cope with spaces between the path and the icon id."
-					pathAndId := toolboxBitmap32 subStrings: $,.
+					pathAndId := $, split: toolboxBitmap32.
 					id := Integer readFrom: (pathAndId last readStream
 										skipSeparators;
 										yourself).

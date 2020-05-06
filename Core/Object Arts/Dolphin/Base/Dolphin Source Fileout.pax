@@ -387,7 +387,7 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 	associating them with the <ClassDescription>, aClassDescription."
 
 	aCollection isEmpty ifTrue: [^self].
-	(aCollection asSortedCollection: [:a :b | (a name trueCompare: b name) <= 0]) do: 
+	(aCollection asSortedCollection: [:a :b | (a name <==> b name) <= 0]) do: 
 			[:p | 
 			stream
 				nextPutAll: aClassDescription name;
@@ -1034,7 +1034,7 @@ savePAXPrerequisiteNamesOn: target
 		nextPutAll: ' #(';
 		cr.
 	basePath := self path.
-	(self prerequisites asSortedCollection: [:a :b | (a name trueCompare: b name) < 0]) do: 
+	(self prerequisites asSortedCollection: [:a :b | (a name <==> b name) < 0]) do: 
 			[:each |
 			target
 				tab;
@@ -1348,7 +1348,7 @@ fileOutMethods: aCollection
 			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
 			(methodsByClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
 	(methodsByClass associations 
-		asSortedCollection: [:a :b | (a key name trueCompare: b key name) <= 0]) 
+		asSortedCollection: [:a :b | (a key name <==> b key name) <= 0]) 
 			do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
 fileOutPoolDictionary: aPoolDictionary 

@@ -20,13 +20,16 @@ Class Variables:
 !GUID categoriesForClass!External-Data-Structured-COM! !
 !GUID methodsFor!
 
-_collate: comperand
-	"Private - Answer the ordering relationship between the receiver
-	and the argument, comperand."
+<=> aGUID
+	"Answer the ordering relationship between the receiver and the argument.
+	Colloquially known as the spaceship operator."
 
 	| status answer |
 	status := ByteArray newFixed: 4.
-	answer := RPCLibrary default uuidCompare: self uuid2: comperand status: status.
+	answer := RPCLibrary default
+				uuidCompare: self
+				uuid2: aGUID
+				status: status.
 	status := status dwordAtOffset: 0.
 	status == 0 ifFalse: [RPCError signalWith: status].
 	^answer!
@@ -34,7 +37,7 @@ _collate: comperand
 = comperand
 	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	^self species = comperand species and: [(self _collate: comperand) == 0]!
+	^self species = comperand species and: [self <=> comperand == 0]!
 
 asByteArray
 	"Answer the raw contents of the receiver as a byte array."
@@ -180,7 +183,7 @@ value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
 	guidBytes replaceBytesOf: self from: 1 to: self class byteSize startingAt: 1! !
-!GUID categoriesFor: #_collate:!comparing!private! !
+!GUID categoriesFor: #<=>!comparing!public! !
 !GUID categoriesFor: #=!comparing!public! !
 !GUID categoriesFor: #asByteArray!converting!public! !
 !GUID categoriesFor: #asInteger!converting!public! !

@@ -93,15 +93,46 @@ testEncodeOnPut
 						self assert: stream atEnd.
 						self assert: actual equals: each]]!
 
+testGothicSubStrings
+	"This is really a test of Character>>split: now with characters outside the basic plane that will require 4 or 2 code units for UTF-8 and UTF-16 respectively."
+
+	| subject actual |
+	subject := self
+				newCollection: '𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹̈𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸'.
+	"In UTF-8 the gothic characters are mostly 4 code units. In UTF-16 they will be mostly 2 code units."
+	actual := subject subStrings: $\x10330.
+	self assert: actual
+		equals: #('𐌼' '𐌲 𐌲𐌻𐌴𐍃 𐌹̈𐍄' '𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳' '𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸').
+	actual := subject subStrings: $\x20.
+	self assert: actual
+		equals: #('𐌼𐌰𐌲' '𐌲𐌻𐌴𐍃' '𐌹̈𐍄𐌰𐌽,' '𐌽𐌹' '𐌼𐌹𐍃' '𐍅𐌿' '𐌽𐌳𐌰𐌽' '𐌱𐍂𐌹𐌲𐌲𐌹𐌸').
+	"We can split on any codepoint, including one that is part of a composite glyph, in this case $̈, even though this isn't necessarily valid"
+	actual := subject subStrings: $\x308.
+	self assert: actual
+		equals: #('𐌼𐌰𐌲 𐌲𐌻𐌴𐍃 𐌹' '𐍄𐌰𐌽, 𐌽𐌹 𐌼𐌹𐍃 𐍅𐌿 𐌽𐌳𐌰𐌽 𐌱𐍂𐌹𐌲𐌲𐌹𐌸')!
+
+testIdentityIncludes
+	| subject pound dolphin foreign |
+	super testIdentityIncludes.
+	pound := Character value: 163.
+	dolphin := self collectionClass with: Character dolphin.
+	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
+	{$a. Character dolphin. $\x1F42C. $b. pound. $c}
+		do: [:each | self assert: (subject identityIncludes: each)].
+	"Should include all the surrogates too"
+	dolphin do: [:each | self assert: (subject identityIncludes: each)].
+	foreign := self collectionClass == Utf8String
+				ifTrue: [dolphin asUtf16String]
+				ifFalse: [dolphin asUtf8String].
+	foreign do: [:each | self deny: (subject identityIncludes: each)]!
+
 testIncludes
 	| subject pound dolphin foreign |
 	super testIncludes.
 	pound := Character value: 163.
 	dolphin := self collectionClass with: Character dolphin.
 	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
-	self assert: (subject includes: $b).
-	self assert: (subject includes: pound).
-	self assert: (subject includes: Character dolphin).
+	{$a. Character dolphin. $\x1F42C. $b. pound. $c} do: [:each | self assert: (subject includes: each)].
 	dolphin do: [:each | self assert: (subject includes: each)].
 	foreign := self collectionClass == Utf8String
 				ifTrue: [dolphin asUtf16String]
@@ -114,6 +145,21 @@ testReverseComposites
 	self assert: 'aeiöu' reverse equals: 'uöiea'.
 	self assert: ' กำ' reverse equals: 'กำ '!
 
+testRuneSubStrings
+	"This is really a test of Character>>split: with characters requiring 3 code units in UTF-8, although still only one in UTF-16"
+
+	| subject actual |
+	subject := self
+				newCollection: 'ᚠᛇᚻ᛫ᛒᛦᚦ᛫ᚠᚱᚩᚠᚢᚱ᛫ᚠᛁᚱᚪ᛫ᚷᛖᚻᚹᛦᛚᚳᚢᛗ
+ᛋᚳᛖᚪᛚ᛫ᚦᛖᚪᚻ᛫ᛗᚪᚾᚾᚪ᛫ᚷᛖᚻᚹᛦᛚᚳ᛫ᛗᛁᚳᛚᚢᚾ᛫ᚻᛦᛏ᛫ᛞᚫᛚᚪᚾ
+ᚷᛁᚠ᛫ᚻᛖ᛫ᚹᛁᛚᛖ᛫ᚠᚩᚱ᛫ᛞᚱᛁᚻᛏᚾᛖ᛫ᛞᚩᛗᛖᛋ᛫ᚻᛚᛇᛏᚪᚾ᛬'.
+	"In UTF-8 the runes are all 3 code units long, in UTF-16 they are in the basic plane, so 1 code unit"
+	actual := subject subStrings: $\x16EB.
+	self assert: actual
+		equals: #('ᚠᛇᚻ' 'ᛒᛦᚦ' 'ᚠᚱᚩᚠᚢᚱ' 'ᚠᛁᚱᚪ' 'ᚷᛖᚻᚹᛦᛚᚳᚢᛗ
+ᛋᚳᛖᚪᛚ' 'ᚦᛖᚪᚻ' 'ᛗᚪᚾᚾᚪ' 'ᚷᛖᚻᚹᛦᛚᚳ' 'ᛗᛁᚳᛚᚢᚾ' 'ᚻᛦᛏ' 'ᛞᚫᛚᚪᚾ
+ᚷᛁᚠ' 'ᚻᛖ' 'ᚹᛁᛚᛖ' 'ᚠᚩᚱ' 'ᛞᚱᛁᚻᛏᚾᛖ' 'ᛞᚩᛗᛖᛋ' 'ᚻᛚᛇᛏᚪᚾ᛬')!
+
 withAllTestCases
 	^super withAllTestCases , #('a 🐬 test' 'Приве́т नमस्ते שָׁלוֹם' 'áèȋöû')! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
@@ -123,7 +169,10 @@ withAllTestCases
 !MultiByteStringTest categoriesFor: #testBeginsWith!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testGothicSubStrings!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testIdentityIncludes!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testIncludes!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testReverseComposites!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testRuneSubStrings!public!unit tests! !
 !MultiByteStringTest categoriesFor: #withAllTestCases!constants!private! !
 

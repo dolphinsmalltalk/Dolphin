@@ -207,7 +207,7 @@ splitKeyCode: anInteger
 splitKeyString: aString
 	"Answer an <Array> of <String>s containing the names of the keys specified in the <readableString> accelerator key chord, aString. Note that this must not contain any spaces."
 
-	^aString subStrings: self keySeparator!
+	^self keySeparator split: aString!
 
 stbConvertFrom: anSTBClassFormat 
 	"Version 1 changes format of the 'commands' (formerly 'accelerators') instance variable."

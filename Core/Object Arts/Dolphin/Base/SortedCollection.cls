@@ -351,7 +351,7 @@ caseSensitiveSortBlock
 	case sensitive basis (String's implementation of the #<= message, used by the default sort
 	block, is case-insensitive).."
 
-	^[:a :b | (a trueCompare: b) <= 0]!
+	^[:a :b | (a <==> b) <= 0]!
 
 defaultSortBlock
 	"Answer a <dyadicValuable> that implements the default sort-order relationship."

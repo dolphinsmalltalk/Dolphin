@@ -215,7 +215,7 @@ fromString: menuString
 		ifTrue: [^DividerMenuItem perform: divider]
 		ifFalse: 
 			[| subStrings |
-			(subStrings := menuString subStrings: StringSeparator) size == 3
+			(subStrings := StringSeparator split: menuString) size == 3
 				ifTrue: 
 					[| commandDescription accel |
 					commandDescription := CommandDescription command: (subStrings at: 3) asSymbol.
