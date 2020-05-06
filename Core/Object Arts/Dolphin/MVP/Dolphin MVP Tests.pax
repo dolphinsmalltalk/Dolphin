@@ -7,6 +7,7 @@ package paxVersion: 1;
 package classNames
 	add: #AbstractContainerViewTest;
 	add: #AcceleratorTableTest;
+	add: #ARGBTest;
 	add: #BorderLayoutTest;
 	add: #BrushTest;
 	add: #CanvasTest;
@@ -127,6 +128,11 @@ DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ARGBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BrushTest
 	instanceVariableNames: ''

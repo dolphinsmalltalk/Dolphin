@@ -9,7 +9,6 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
-	add: #ARGBTest;
 	add: #GdiplusAdjustableArrowCapTest;
 	add: #GdiplusBaseTest;
 	add: #GdiplusBitmapFromBitmapInitializerTest;
@@ -80,11 +79,6 @@ TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
-GdiplusTests subclass: #ARGBTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''

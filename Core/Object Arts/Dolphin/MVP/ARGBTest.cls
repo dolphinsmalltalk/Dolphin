@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-GdiplusTests subclass: #ARGBTest
+DolphinTest subclass: #ARGBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -50,12 +50,14 @@ testConstructionValues
 			self assert: subject blue equals: values fourth]!
 
 testEquality
+	| model |
 	model := ARGB r: 255 g: 0 b: 0.
 	self assert: model equals: (ARGB r: 255 g: 0 b: 0).
 	self deny: model equals: (ARGB a: 1 r: 255 g: 0 b: 0).
 	model hash!
 
 testPrintString
+	| model |
 	model := ARGB
 				a: 1
 				r: 2
@@ -75,9 +77,18 @@ testPrintString
 				b: 32.
 	self assert: model printString equals: 'Color goldenrod'.
 	model := ARGB red.
-	self assert: model printString equals: 'Color red'! !
-!ARGBTest categoriesFor: #assertComponents:isCode:!asserting!public! !
+	self assert: model printString equals: 'Color red'!
+
+testStbRoundTrip
+	| subject bytes rehydrated |
+	subject := Color antiqueWhite alpha: 99.
+	bytes := subject binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated class identicalTo: ARGB.
+	self assert: rehydrated equals: subject! !
+!ARGBTest categoriesFor: #assertComponents:isCode:!asserting!private! !
 !ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !
 !ARGBTest categoriesFor: #testEquality!public!unit tests! !
 !ARGBTest categoriesFor: #testPrintString!public!unit tests! !
+!ARGBTest categoriesFor: #testStbRoundTrip!public!unit tests! !
 

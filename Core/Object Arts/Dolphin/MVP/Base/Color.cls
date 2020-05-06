@@ -682,7 +682,7 @@ fromHTMLSpec: aString
 		b: (rgb bitAnd: 16rFF)!
 
 fromInteger: anInteger
-	"Answer an appropriate <Color> to represent the color code value, anInteger."
+	"Private - Answer an appropriate <Color> to represent the color code value, anInteger. This should only be used for loading from STB."
 
 	^self fromCOLORREF: anInteger!
 
@@ -1446,7 +1446,7 @@ yellowGreen
 !Color class categoriesFor: #fromArray:!instance creation!public! !
 !Color class categoriesFor: #fromCOLORREF:!instance creation!public! !
 !Color class categoriesFor: #fromHTMLSpec:!instance creation!public! !
-!Color class categoriesFor: #fromInteger:!instance creation!public! !
+!Color class categoriesFor: #fromInteger:!instance creation!private! !
 !Color class categoriesFor: #fromNormalizedArray:!instance creation!public! !
 !Color class categoriesFor: #fromRgbCode:!instance creation!public! !
 !Color class categoriesFor: #fuchsia!**auto generated**!common colors!public! !
