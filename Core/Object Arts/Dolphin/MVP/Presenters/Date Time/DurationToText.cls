@@ -41,7 +41,7 @@ rightToLeft: aString
 	| values |
 	(aString allSatisfy: [:each | '0123456789+-:.' includes: each]) ifFalse: [^self leftNullValue].
 	values := OrderedCollection new.
-	(aString subStrings: $:) reverseDo: [:each | values add: (Number fromString: each)].
+	($: split: aString) reverseDo: [:each | values add: (Number fromString: each)].
 	(values isEmpty or: [values size > 4]) ifTrue: [^self leftNullValue].
 	[values size < 4] whileTrue: [values add: 0].
 	^Duration

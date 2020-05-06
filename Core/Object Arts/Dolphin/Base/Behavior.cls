@@ -428,7 +428,7 @@ fullBindingFor: aString
 	(aString identityIncludes: $.)
 		ifTrue: 
 			[| parts env count |
-			parts := aString subStrings: $..
+			parts := $. split: aString.
 			"Fully qualified name always starts in Smalltalk"
 			env := Smalltalk.
 			count := parts size.

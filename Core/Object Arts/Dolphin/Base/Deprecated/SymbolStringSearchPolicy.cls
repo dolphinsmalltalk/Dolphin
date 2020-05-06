@@ -16,7 +16,7 @@ compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
 	operand2, by this search policy."
 
-	^(operand1 trueCompare: operand2) == 0
+	^(operand1 <==> operand2) == 0
 !
 
 hash: operand

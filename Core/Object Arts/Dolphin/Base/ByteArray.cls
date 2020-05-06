@@ -17,14 +17,12 @@ ByteArray complies with the ANSI protocols:
 !ByteArray categoriesForClass!Collections-Arrayed! !
 !ByteArray methodsFor!
 
-_sameAsString: comparand
-	"Private - Answer whether the receiver collates the same as <readableString> 
-	argument, comparand.
-	This will only work if the receiver contains integers in the range of character
-	values, if not an exception will be raised.
+_sameAsString: aString
+	"Private - Answer whether the receiver collates the same as <readableString> argument.
+	This will only work if the receiver contains integers in the range of character values, if not an exception will be raised.
 	Implementation Note: Double dispatched from String>>sameAs:."
 
-	^(comparand _collate: self asString) == 0!
+	^(aString <=> self asString) == 0!
 
 = comperand
 	"Answer whether the receiver is equivalent to the <Object>, comperand.

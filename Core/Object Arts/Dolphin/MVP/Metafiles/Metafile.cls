@@ -44,16 +44,16 @@ description
 	"Return the description string associated with the receiver, if any."
 
 	| count strings |
-	count := GDILibrary default 
+	count := GDILibrary default
 				getEnhMetaFileDescription: self asParameter
 				cchBuffer: 0
 				lpszDescription: nil.
 	strings := Utf16String newFixed: count.
-	GDILibrary default 
+	GDILibrary default
 		getEnhMetaFileDescription: self asParameter
 		cchBuffer: count
 		lpszDescription: strings.
-	^strings subStrings: Character null!
+	^$\0 split: strings!
 
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint 
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."

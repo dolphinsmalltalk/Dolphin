@@ -51,7 +51,7 @@ _sameAsString: comparand
 	size := self size.
 	string2 := String new: size.
 	1 to: size do: [:i | string2 basicAt: i put: (self at: i)].
-	^(comparand _collate: string2) == 0!
+	^(comparand <=> string2) == 0!
 
 = comparand
 	"Answer whether the receiver and the <Object> argument, comparand,

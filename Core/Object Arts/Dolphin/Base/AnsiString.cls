@@ -98,16 +98,6 @@ first: anInteger
 		to: anInteger
 		startingAt: 1!
 
-includes: aCharacter
-	"Answer whether the <Character> argument is one of the elements of the receiver."
-
-	"Implementation Note: Ansi strings can only contain the base character set, all instances of which are unique."
-
-	^(self
-		nextIdentityIndexOf: aCharacter
-		from: 1
-		to: self size) ~~ 0!
-
 nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
 	aCharacter encoding ~~ #ansi ifTrue: [^0].
 	^self
@@ -186,7 +176,6 @@ unescapePercents
 !AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
 !AnsiString categoriesFor: #first:!copying!public! !
-!AnsiString categoriesFor: #includes:!public!searching! !
 !AnsiString categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !AnsiString categoriesFor: #reverse!copying!public! !
 !AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !

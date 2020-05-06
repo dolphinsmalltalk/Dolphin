@@ -20,7 +20,7 @@ Secondly, the encrypted form is rather long -- an order of magnitude longer than
 dataFromString: aString
 	"Private - Answer the raw encrypted data contained in the human-readable String."
 
-	^ (aString subStrings: '/') collect: [:each | self class integerFromReadableString: each].!
+	^($/ split: aString) collect: [:each | self class integerFromReadableString: each]!
 
 decrypt: anArrayOfLargeIntegers
 	"Answer anArrayOfLargeIntegers decrypted according to the encryption policy the receiver represents.

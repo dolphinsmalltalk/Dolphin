@@ -140,7 +140,7 @@ subNames
 	"Answer an OrderedCollection of the receivers name split
 	on category separator."
 
-	^self name subStrings: self class separator! !
+	^self class separator split: self name! !
 !Category categoriesFor: #<=!comparing!public! !
 !Category categoriesFor: #=!comparing!public! !
 !Category categoriesFor: #acceptsAdditions!public!testing! !

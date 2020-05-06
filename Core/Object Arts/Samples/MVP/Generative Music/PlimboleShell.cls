@@ -104,9 +104,9 @@ loadPalettes
 	| lines palettes |
 	lines := self palettesString lines.
 	palettes := lines collect: 
-					[:each | 
+					[:each |
 					| palette |
-					palette := (each subStrings: $#) allButFirst.
+					palette := ($# split: each) allButFirst.
 					palette := palette collect: [:c | Color fromHTMLSpec: '#' , c]].
 	^palettes!
 
