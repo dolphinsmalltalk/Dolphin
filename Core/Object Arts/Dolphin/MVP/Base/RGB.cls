@@ -50,9 +50,8 @@ setCode: anInteger
 !RGB class methodsFor!
 
 fromInteger: anInteger
-	"Answer an instance whose three component colour values are embedded in anInteger. The Integer is expected to be an integer encoding the red, green and blue components of the colour in BGR order, with each component represented by 8-bits."
+	"Private - Answer an instance whose three component colour values are embedded in anInteger. This should only be used for STB loading. Use fromRgbCode: instead."
 
-	Notification deprecated.
 	^self basicNew
 		setCode: anInteger;
 		yourself!
@@ -106,7 +105,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!RGB class categoriesFor: #fromInteger:!instance creation!public! !
+!RGB class categoriesFor: #fromInteger:!instance creation!private! !
 !RGB class categoriesFor: #fromRgbCode:!instance creation!public! !
 !RGB class categoriesFor: #r:g:b:!instance creation!public! !
 !RGB class categoriesFor: #red:green:blue:!instance creation!public! !

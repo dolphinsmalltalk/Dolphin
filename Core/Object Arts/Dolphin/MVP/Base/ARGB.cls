@@ -114,9 +114,8 @@ fromArgbCode: anInteger
 		yourself!
 
 fromInteger: anInteger
-	"Answer an instance with the specified code value, which is assumed to be in the receiver's native encoding."
+	"Private - Answer an instance with the specified code value, which is assumed to be in the receiver's native encoding. This should only be used for loading from STB."
 
-	Notification deprecated.
 	^self fromArgbCode: anInteger!
 
 none
@@ -146,7 +145,7 @@ transparent
 !ARGB class categoriesFor: #alpha:red:green:blue:!instance creation!public! !
 !ARGB class categoriesFor: #default!instance creation!public! !
 !ARGB class categoriesFor: #fromArgbCode:!instance creation!public! !
-!ARGB class categoriesFor: #fromInteger:!instance creation!public! !
+!ARGB class categoriesFor: #fromInteger:!instance creation!private! !
 !ARGB class categoriesFor: #none!instance creation!public! !
 !ARGB class categoriesFor: #r:g:b:!instance creation!public! !
 !ARGB class categoriesFor: #red:green:blue:!instance creation!public! !

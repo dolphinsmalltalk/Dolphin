@@ -110,7 +110,6 @@ package methodNames
 	add: 'Brush class' -> #ltGray;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
-	add: 'ColorRef class' -> #fromInteger:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
@@ -417,14 +416,6 @@ asIndexedColorUsingPalette: hPalette
 	^self asRGB asIndexedColorUsingPalette: hPalette! !
 !ColorRef categoriesFor: #asIndexedColor!converting!public! !
 !ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
-
-!ColorRef class methodsFor!
-
-fromInteger: anInteger
-
-	Notification deprecated.
-	^self fromCOLORREF: anInteger! !
-!ColorRef class categoriesFor: #fromInteger:!instance creation!private! !
 
 !GUISessionManager methodsFor!
 
