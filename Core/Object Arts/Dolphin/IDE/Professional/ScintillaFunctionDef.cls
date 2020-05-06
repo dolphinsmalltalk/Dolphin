@@ -480,6 +480,7 @@ renamedFunctions
 		at: 'SCI_CANCEL' put: #cancelModes;
 		at: 'SCI_CALLTIPSETPOSITION' put: #isCallTipAboveText:;
 		at: 'SCI_CALLTIPPOSSTART' put: #callTipPosition;
+		at: 'SCI_CALLTIPSETHLT' put: #highlightCallTipFrom:to:;
 		yourself.
 
 	"Macros"
@@ -720,6 +721,13 @@ renamedFunctions
 		at: 'SCI_SETLINESTATE' put: #setLine:state:;
 		at: 'SCI_GETSELECTIONSTART' put: #selectionStart;
 		yourself.
+	
+	"4.2.1"
+	renamedMessages
+		at: 'SCI_GETTABMINIMUMWIDTH' put: #tabMinimumWidth;
+		at: 'SCI_SETTABMINIMUMWIDTH' put: #tabMinimumWidth:;
+		yourself.
+		
 	renamedMessages
 		shrink;
 		yourself)!
