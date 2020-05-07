@@ -2,7 +2,7 @@
 
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles VariableTipsMask WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
 SmalltalkWorkspace guid: (GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -67,7 +67,8 @@ applyOptions
 	"#2137"
 	view annotationMode: self class annotationMode.
 	view wrapIndentMode: self class wrapIndentMode.
-	view setKeyBindings: self class editorKeyBindings!
+	view setKeyBindings: self class editorKeyBindings.
+	self class useDirectWrite ifTrue: [view drawingTechnology: #directWrite]!
 
 areVariableTipsEnabled
 	^flags allMask: VariableTipsMask!
@@ -2059,7 +2060,9 @@ initialize
 	MaxAutoCompletionListSize := 200.
 	AnnotationMode := #hidden.
 	"We set the wrap indent to same so that inline comments will wrap neatly."
-	WrapIndentMode := #same!
+	WrapIndentMode := #same.
+	"Whether to configure Scintilla to use DirectWrite for drawing text - this offers better quality, colour fonts, h/w acceleration, but may not work on all platforms."
+	UseDirectWrite := true!
 
 isAutoCompletionCaseInsensitive
 	"Answer whether auto-completion ignores case. This has pros and cons: It is not necessary to
@@ -2125,7 +2128,7 @@ publishedAspects
 
 	| answer |
 	answer := super publishedAspects.
-	#(#isAutoCompletionEnabled #isAutoCompletionCaseInsensitive #isAutoCompletionTruncating)
+	#(#isAutoCompletionEnabled #isAutoCompletionCaseInsensitive #isAutoCompletionTruncating #useDirectWrite)
 		do: [:each | answer add: (Aspect boolean: each)].
 	#(#defaultTabWidth #autoCompleteDwell #maxAutoCompletionListSize)
 		do: [:each | answer add: (Aspect integer: each)].
@@ -2192,6 +2195,15 @@ uninitialize
 
 	ThemeColor removeNamed: #smalltalkWorkspace!
 
+useDirectWrite
+	"Answer whether to use DirectWrite for drawing text in the workspace. This offers improved quality, coloured emoji's, and hardware acceleration, but may not 
+	work well in all circumstances, so it can be turned off."
+
+	^UseDirectWrite and: [VMLibrary default isWindowsVistaOrGreater]!
+
+useDirectWrite: aBoolean
+	UseDirectWrite := aBoolean!
+
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."
 
@@ -2257,6 +2269,8 @@ wrapIndentMode: aSymbol
 !SmalltalkWorkspace class categoriesFor: #textStyles:!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #textStylesAspect!private! !
 !SmalltalkWorkspace class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SmalltalkWorkspace class categoriesFor: #useDirectWrite!options!public! !
+!SmalltalkWorkspace class categoriesFor: #useDirectWrite:!options!public! !
 !SmalltalkWorkspace class categoriesFor: #wordWrap!accessing!options!public! !
 !SmalltalkWorkspace class categoriesFor: #wordWrap:!accessing!options!public! !
 !SmalltalkWorkspace class categoriesFor: #wrapIndentMode!accessing!options!public! !
