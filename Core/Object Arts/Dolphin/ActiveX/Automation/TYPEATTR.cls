@@ -54,7 +54,9 @@ Fields:
 basicFree
 	"Private - Free external resources owned by the receiver."
 
-	piTypeInfo asParameter ReleaseTypeAttr: self!
+	| interface |
+	interface := piTypeInfo asParameter.
+	interface isNull ifFalse: [interface ReleaseTypeAttr: self]!
 
 cbAlignment
 	"Answer the <Integer> value of the receiver's 'cbAlignment' field."
