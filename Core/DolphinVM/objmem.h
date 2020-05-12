@@ -81,9 +81,10 @@ public:
 	// Formerly Private reference count management
 	static void  __fastcall countUp(Oop objectPointer);
 	static void __fastcall countDown(Oop rootObjectPointer);
-	static ArrayOTE* __stdcall referencesTo(Oop referencedObjectPointer, bool includeWeakRefs);
-	static ArrayOTE* __fastcall instancesOf(BehaviorOTE* classPointer);
-	static ArrayOTE* __fastcall subinstancesOf(BehaviorOTE* classPointer);
+	template<typename Partitioner, typename Predicate> static ArrayOTE* selectObjects(const Partitioner&&, const Predicate& pred);
+	static ArrayOTE* __stdcall instancesOf(const BehaviorOTE* classPointer);
+	static ArrayOTE* __stdcall subinstancesOf(const BehaviorOTE* classPointer);
+	static ArrayOTE* __stdcall referencesTo(const Oop referencedObjectPointer, bool includeWeakRefs);
 	static ArrayOTE* __fastcall instanceCounts(ArrayOTE* oteClasses);
 	static void deallocateByteObject(OTE*);
 
@@ -158,7 +159,7 @@ public:
 	static bool isAContext(const OTE* ote);
 
 	// This is a very simple routine which can work entirely in registers (hence fastcall)
-	static bool __fastcall inheritsFrom(const BehaviorOTE* behaviorPointer, const BehaviorOTE* classPointer);
+	static bool __stdcall inheritsFrom(const BehaviorOTE* behaviorPointer, const BehaviorOTE* classPointer);
 	static bool isKindOf(Oop objectPointer, const BehaviorOTE* classPointer);
 
 	// Answer whether the object with Oop objectPointer is an instance or subinstance
@@ -413,7 +414,7 @@ private:
 
 	// Garbage collection/Ref count checking
 	static uint8_t WeaknessMask;
-	static size_t lastStrongPointerOf(OTE* ote);
+	static size_t lastStrongPointerOf(const OTE* ote);
 	static void reclaimInaccessibleObjects(uintptr_t flags);
 	static void markObjectsAccessibleFrom(OTE* ote);
 	static void ClearGCInfo();
@@ -825,7 +826,7 @@ inline void ObjectMemory::markObject(OTE* ote)
 }
 
 // lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
-inline size_t ObjectMemory::lastStrongPointerOf(OTE* ote)
+inline size_t ObjectMemory::lastStrongPointerOf(const OTE* ote)
 {
 	uint8_t flags = ote->m_ubFlags;
 	return (flags & OTEFlags::PointerMask)

@@ -92,6 +92,8 @@ HWND Interpreter::m_hWndVM;
 
 DWORD Interpreter::m_dwQueueStatusMask;
 
+unsigned Interpreter::m_numberOfProcessors;
+
 //==========
 //Initialise
 //==========
@@ -136,6 +138,9 @@ HRESULT Interpreter::initializeBeforeLoad()
 	m_dwThreadId = ::GetCurrentThreadId();
 	HANDLE hProc = GetCurrentProcess();
 	VERIFY(::DuplicateHandle(hProc, GetCurrentThread(), hProc, &m_hThread, 0, FALSE, DUPLICATE_SAME_ACCESS));
+
+	// We know that the static_partitioner returns the same number of chunks as there are logical cores
+	m_numberOfProcessors = concurrency::static_partitioner()._Get_num_chunks(0);
 
 	WNDCLASSW wndClass;
 	wndClass.style = 0;

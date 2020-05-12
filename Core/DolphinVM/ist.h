@@ -65,6 +65,7 @@
 #pragma warning(push,3)
 // Disable warning about exception handling (we compile with exception handling disabled)
 #pragma warning (disable:4530)
+#include <ppl.h>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
