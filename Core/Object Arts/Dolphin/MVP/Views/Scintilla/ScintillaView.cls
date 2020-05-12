@@ -2762,7 +2762,7 @@ getRawAnnotations
 			"Checking for presence of annotations on each line is not stricly necessary,
 			but makes this run up to 25% faster, which might be significant for very
 			large files."
-			(self sciAnnotationGetLines: i) > 0 ifTrue: [rawAnnotations add: (self getRawAnnotation: i)]].
+			(self sciAnnotationGetLines: i) > 0 ifTrue: [rawAnnotations nextPut: (self getRawAnnotation: i)]].
 	^rawAnnotations contents!
 
 getSelectionRange: anInteger
