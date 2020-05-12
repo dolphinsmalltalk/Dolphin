@@ -102,6 +102,13 @@ testNotepad
 	self verifyPackageClosure: (self environmentForAppDeployment: {Notepad owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
+testRegEdit
+	"Regedit uses List and Tree views"
+
+	| env |
+	env := self environmentForAppDeployment: {RegEdit owningPackage}.
+	self verifyPackageClosure: env missing: self simpleGuiAppUnimplementedMessages!
+
 testSystemPackage
 	| aPackage |
 	aPackage := Object owningPackage.
@@ -127,6 +134,7 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 !PackageClosureTests categoriesFor: #testEtchASketch!public!unit tests! !
 !PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
 !PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !
+!PackageClosureTests categoriesFor: #testRegEdit!public!unit tests! !
 !PackageClosureTests categoriesFor: #testSystemPackage!public!unit tests! !
 !PackageClosureTests categoriesFor: #verifyPackageClosure:missing:!helpers!private! !
 

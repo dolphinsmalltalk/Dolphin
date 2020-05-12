@@ -763,7 +763,7 @@ valueFromObject: value
 !RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
 !RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
 !RegKeyAbstract categoriesFor: #do:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #fileOutOn:!public!source filing! !
+!RegKeyAbstract categoriesFor: #fileOutOn:!public!storing! !
 !RegKeyAbstract categoriesFor: #free!public!realizing/unrealizing! !
 !RegKeyAbstract categoriesFor: #fullPath!accessing!public! !
 !RegKeyAbstract categoriesFor: #handle!accessing!public! !
