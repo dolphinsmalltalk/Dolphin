@@ -830,6 +830,7 @@ private:
 	static ProcessOTE* m_oteNewProcess;
 
 	static uint64_t m_clockFrequency;
+	static unsigned m_numberOfProcessors;			// Logical cores
 
 	static OTE* m_oteUnderConstruction;				// Window currently under construction
 

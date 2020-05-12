@@ -17,6 +17,10 @@
 #include "rc_vm.h"
 #include "VMExcept.h"
 #include "regkey.h"
+#include <unordered_set>
+
+using namespace concurrency;
+
 
 HANDLE ObjectMemory::m_hHeap;
 extern "C" { HANDLE _crtheap; }
@@ -144,49 +148,86 @@ Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, primargcount_t
 ///////////////////////////////////////////////////////////////////////////////
 // Instance Enumeration
 
-#pragma code_seg(GC_SEG)
+typedef std::vector<OTE*> OTEVector;
+typedef std::pair<OTEVector*, size_t> Batch;
 
-// Return an array containing all instances of the specified class
-ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
+// Parallel memory scan - This is mainly an experiment, but depending on the particular scan it can be between two and five times asfast as a single 
+// threaded scan on a machine with 12 logical cores.
+// A 2x speed up can be expected for the simplest scan (allInstances), because the amount of work being done is small and probably limited by memory bandwidth. 
+// A 2-5x speed up can be expected for a sub-instances scan, depending on the number of matches. Where there are few matches the isKindOf test takes most time 
+// and so there is most benefit from parallelization.
+// allReferences scans are around 4x as fast. 
+// All of these scans can now take less than 1mS, depending on the total number of Objects in the system, and the number of matches, and of course the speed 
+// of the host machine.
+// To measure the performance of scans, be sure to use primAllInstances and primAllSubinstances, as allInstances/allSubinstances trigger a GC first.
+template<typename Partitioner, typename Predicate> ArrayOTE* ObjectMemory::selectObjects(const Partitioner&& part, const Predicate& pred)
 {
-	ASSERT(isBehavior(Oop(classPointer)));
+	combinable<OTEVector> selected;
 
-	// Use the ref. count as an initial size
-	size_t size = classPointer->m_count;
+	// Parallel scan of the object table
+	parallel_for_each(m_pOT, m_pOT + m_nOTSize, [&](OTE& ote) {
+		if (!ote.isFree() && pred(&ote))
+			selected.local().emplace_back(&ote);
+	 }, part);
+
+	// Assemble batch results
+	size_t total = 0;
+	std::vector<Batch> batches;
+	batches.reserve(Interpreter::m_numberOfProcessors);
+	selected.combine_each([&](OTEVector& v) {
+		batches.emplace_back(Batch(&v, total));
+		total += v.size();
+		});
+
+	ArrayOTE* arrayPointer = Array::NewUninitialized(total);
+	Array* array = arrayPointer->m_location;
 	
-	ArrayOTE* arrayPointer = Array::New(size);
-	Array* pInstances = arrayPointer->m_location;
+	constexpr size_t minParallelBatch = 8192;
 
-	size_t cnt = 0;
-	const OTE* pEnd = m_pOT+m_nOTSize;
-	for (OTE* ote=m_pOT; ote < pEnd; ote++)
+	// If there are only a few results, it is not worth parallelizing the merge (although it is never of huge benefit anyway)
+	if (total < minParallelBatch * 2)
 	{
-		if (!ote->isFree())
-		{
-			if (ote->m_oteClass == classPointer)
+		auto pElem = array->m_elements;
+		selected.combine_each([&](OTEVector& v) {
+			for (auto it = v.cbegin(); it != v.cend(); ++it, ++pElem)
 			{
-				if (cnt == size)
-				{
-					// Resize the array to hold twice as many objects
-					size = size * 2;
-					pInstances = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
-				}
-				pInstances->m_elements[cnt++] = Oop(ote);
+				auto ote = *it;
+				*pElem = reinterpret_cast<Oop>(ote);
 				ote->countUp();
 			}
-		}
+			});
 	}
-	ASSERT(cnt <= size);
-	if (cnt < size)
-		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt));
+	else
+	{
+		size_t range = total / Interpreter::m_numberOfProcessors;
+		parallel_for_each(batches.cbegin(), batches.cend(), [&](const Batch& batch) {
+			auto results = batch.first;
+			auto pElem = &(array->m_elements[batch.second]);
+			for (auto it = batch.first->cbegin(); it != batch.first->cend(); ++it, ++pElem)
+			{
+				auto ote = *it;
+				*pElem = reinterpret_cast<Oop>(ote);
+				ote->countUp();
+			}
+			}, simple_partitioner(max(range, minParallelBatch)));
+	}
 
 	// WARNING: Ref. count of arrayPointer currently 0
 	return arrayPointer;
 }
 
+#pragma code_seg(GC_SEG)
+
+ArrayOTE* __stdcall ObjectMemory::instancesOf(const BehaviorOTE* classPointer)
+{
+	size_t range = m_nOTSize / Interpreter::m_numberOfProcessors;
+	return selectObjects(simple_partitioner(max(range, 16384)), [&](const OTE* ote) { return ote->m_oteClass == classPointer; });
+}
+
 Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
+
 	ArrayOTE* instances = ObjectMemory::instancesOf(receiver);
 	*sp = reinterpret_cast<Oop>(instances);
 	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(instances));
@@ -209,7 +250,7 @@ bool __fastcall ObjectMemory::isAMetaclass(const OTE* ote)
 
 #pragma code_seg(MEM_SEG)
 
-bool __fastcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, const BehaviorOTE* classPointer)
+bool __stdcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, const BehaviorOTE* classPointer)
 {
 	ASSERT(isBehavior(Oop(classPointer)));
 	ASSERT(isBehavior(Oop(behaviorPointer)));
@@ -219,10 +260,10 @@ bool __fastcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, c
 	const Oop nil = Oop(Pointers.Nil);
 	while (behaviorPointer != classPointer)
 	{
+		Behavior* behavior = behaviorPointer->m_location;
 		// Coded for speed rather than beauty !
 		if (Oop(behaviorPointer) == nil)
 			return false;
-		Behavior* behavior = behaviorPointer->m_location;
 		behaviorPointer = behavior->m_superclass;
 	}
 	return true;
@@ -230,47 +271,77 @@ bool __fastcall ObjectMemory::inheritsFrom(const BehaviorOTE* behaviorPointer, c
 
 #pragma code_seg(GC_SEG)
 
-// Return an array containing all subinstances of the specified class
-// Exactly the same as the above routine, but uses isKindOf() instead of 
-// class identity test, also allocates a minimum array size of 16 as obviously
-// the ref. count is not much use.
-ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
+template <class T> inline size_t hash_value(const TOTE<T>* ote)
 {
-	ASSERT(isBehavior(Oop(classPointer)));
+	return stdext::hash_value(ote->getIndex());
+}
 
-	// Use the ref. count as an initial size
-	size_t size = classPointer->m_count;
-	if (size < 32)
-		size = 32;
-	
-	ArrayOTE* arrayPointer = Array::New(size);
-	Array* pInstances = arrayPointer->m_location;
+template<class _Kty,
+	class _Pr = _STD less<_Kty> >
+	class hash_compare2
+{	// traits class for hash containers
+public:
+	enum
+	{	// parameters for hash table
+		bucket_size = 4,	// 0 < bucket_size
+		min_buckets = 2048
+	};	// min_buckets = 2 ^^ N, 0 < N
 
-	size_t cnt = 0;
-	const OTE* pEnd = m_pOT+m_nOTSize;
-	for (OTE* ote=m_pOT; ote < pEnd; ote++)
+	hash_compare2()
+		: comp()
+	{	// construct with default comparator
+	}
+
+	hash_compare2(_Pr _Pred)
+		: comp(_Pred)
+	{	// construct with _Pred comparator
+	}
+
+	size_t operator()(const _Kty& _Keyval) const
+	{	// hash _Keyval to size_t value
+		return ((size_t)hash_value(_Keyval));
+	}
+
+	bool operator()(const _Kty& _Keyval1, const _Kty& _Keyval2) const
+	{	// test if _Keyval1 ordered before _Keyval2
+		return (comp(_Keyval1, _Keyval2));
+	}
+
+protected:
+	_Pr comp;	// the comparator object
+};
+
+typedef std::unordered_set<const BehaviorOTE*, hash_compare2<const BehaviorOTE*>> BehaviorSet;
+
+void addAllInstantiableSubclasses(const BehaviorOTE* classPointer, BehaviorSet& allSubclasses)
+{
+	Behavior* behavior = classPointer->m_location;
+	if (!behavior->m_instanceSpec.m_nonInstantiable)
+		allSubclasses.insert(classPointer);
+	ArrayOTE* oteSubclasses = behavior->m_subclasses;
+	if (reinterpret_cast<OTE*>(oteSubclasses) != Pointers.Nil)
 	{
-		if (!ote->isFree())
+		Array* subclasses = oteSubclasses->m_location;
+		size_t count = oteSubclasses->pointersSize();
+		for (size_t i = 0; i < count; i++)
 		{
-			if (isKindOf(ote, classPointer))		// As above apart from this
-			{
-				if (cnt == size)
-				{
-					// Resize the array to hold twice as many objects
-					size = size * 2;
-					pInstances = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
-				}
-				pInstances->m_elements[cnt++] = Oop(ote);
-				ote->countUp();
-			}
+			BehaviorOTE* subclassPointer = reinterpret_cast<BehaviorOTE*>(subclasses->m_elements[i]);
+			addAllInstantiableSubclasses(subclassPointer, allSubclasses);
 		}
 	}
-	ASSERT(cnt <= size);
-	if (cnt < size)
-		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt));
+}
 
-	// WARNING: Ref. count of arrayPointer currently 0
-	return arrayPointer;
+ArrayOTE* __stdcall ObjectMemory::subinstancesOf(const BehaviorOTE* classPointer)
+{
+	BehaviorSet allInstantiableSubclasses;
+	//addAllInstantiableSubclasses(classPointer, allInstantiableSubclasses);
+	size_t range = m_nOTSize / Interpreter::m_numberOfProcessors;
+	return ObjectMemory::selectObjects(simple_partitioner(max(range, 16384)),
+		[&](const OTE* ote) { 
+			const BehaviorOTE* behaviorPointer = ote->m_oteClass;
+			return inheritsFrom(behaviorPointer, classPointer);
+			//return allInstantiableSubclasses.contains(behaviorPointer);
+		});
 }
 
 Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp, primargcount_t)
@@ -282,12 +353,6 @@ Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp, primargcoun
 	return sp;
 }
 
-
-template <class T> inline size_t hash_value(TOTE<T>* ote)
-{
-	return stdext::hash_value(ote->getIndex());
-}
-
 struct InstStats
 {
 	size_t count;
@@ -297,39 +362,6 @@ struct InstStats
 	InstStats(size_t count, size_t bytes) { this->count = count; this->bytes = bytes; }
 };
 
-template<class _Kty,
-	class _Pr = _STD less<_Kty> >
-	class hash_compare2
-	{	// traits class for hash containers
-public:
-	enum
-		{	// parameters for hash table
-		bucket_size = 4,	// 0 < bucket_size
-		min_buckets = 2048};	// min_buckets = 2 ^^ N, 0 < N
-
-	hash_compare2()
-		: comp()
-		{	// construct with default comparator
-		}
-
-	hash_compare2(_Pr _Pred)
-		: comp(_Pred)
-		{	// construct with _Pred comparator
-		}
-
-	size_t operator()(const _Kty& _Keyval) const
-		{	// hash _Keyval to size_t value
-		return ((size_t)hash_value(_Keyval));
-		}
-
-	bool operator()(const _Kty& _Keyval1, const _Kty& _Keyval2) const
-		{	// test if _Keyval1 ordered before _Keyval2
-		return (comp(_Keyval1, _Keyval2));
-		}
-
-protected:
-	_Pr comp;	// the comparator object
-	};
 typedef std::unordered_map<BehaviorOTE*,InstStats, hash_compare2<BehaviorOTE*> > ClassCountMap;
 
 static size_t storageSize(OTE* ote)
@@ -460,69 +492,26 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 {
 	WeaknessMask = includeWeakRefs ? 0 : OTEFlags::WeakMask;
 
-	size_t size = !isIntegerObject(referencedObjectPointer) ? max(reinterpret_cast<OTE*>(referencedObjectPointer)->m_count, 1) : 32;
-
-	ArrayOTE* arrayPointer = Array::New(size);
-	Array* pRefs = arrayPointer->m_location;
-	// Temporarily mark the ref array as being free to prevent it appearing as a ref. 
-	// to the object, which may happen if we are unfortunate enough to uncover a
-	// circular reference before the oop of the new array is considered
-	arrayPointer->beFree();
-
-	size_t refCnt = 0;
-	const OTE* pEnd = m_pOT + m_nOTSize;
-	for (OTE* ote = m_pOT; ote < pEnd; ote++)
-	{
-		if (!ote->isFree())
+	size_t range = m_nOTSize / Interpreter::m_numberOfProcessors;
+	return selectObjects(simple_partitioner(max(range, 16384)), [&](const OTE* ote) {
+		if (Oop(ote->m_oteClass) == referencedObjectPointer)
 		{
-			if (Oop(ote->m_oteClass) == referencedObjectPointer)
+			return true;
+		}
+		else
+		{
+			VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
+			const size_t lastPointer = lastStrongPointerOf(ote);
+			for (size_t i = 0; i < lastPointer; i++)
 			{
-				if (refCnt == size)
+				if (obj->m_fields[i] == referencedObjectPointer)
 				{
-					// Resize the array to hold twice as many objects
-					size = size * 2;
-					pRefs = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
-				}
-				pRefs->m_elements[refCnt++] = Oop(ote);
-				// Having created another ref. to the referencing
-				// object, we need to inc. its ref. count!
-				ote->countUp();
-			}
-			else
-			{
-				VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-				const size_t lastPointer = lastStrongPointerOf(ote);
-				for (size_t i = 0; i < lastPointer; i++)
-				{
-					if (obj->m_fields[i] == referencedObjectPointer)
-					{
-						if (refCnt == size)
-						{
-							// Resize the array to hold twice as many objects
-							size = size * 2;
-							pRefs = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
-						}
-						pRefs->m_elements[refCnt++] = Oop(ote);
-						ote->countUp();
-						// Don't want an objectPointer in the array 
-						// of references more than once
-						break;
-					}
+					return true;
 				}
 			}
 		}
-	}
-	// Undo the 'ignore' flag
-	arrayPointer->beAllocated();
-
-	ASSERT(refCnt <= size);
-	if (refCnt < size)
-	{
-		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(refCnt));
-	}
-
-	// Ref. count of arrayPointer currently 0
-	return arrayPointer;
+		return false;
+	});
 }
 
 /*****************************************************************************
