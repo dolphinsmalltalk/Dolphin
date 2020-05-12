@@ -792,11 +792,11 @@ allRoots
 	| roots i |
 	roots := self basicAllRoots select: [:each | (self environment lookup: each name) == each].
 	i := roots identityIndexOf: Object.
-	^i == 1
-		ifTrue: [roots]
+	i ~~ 1
 		ifFalse: 
 			[roots at: i put: (roots at: 1).
-			roots at: 1 put: Object]!
+			roots at: 1 put: Object].
+	^roots!
 
 basicAllRoots
 	"Private - Answer a Collection of all root classes - ie. those that are subclasses of nil."
