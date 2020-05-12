@@ -139,7 +139,7 @@ subValues
 !RegKeyValues categoriesFor: #at:ifAbsent:!accessing!public! !
 !RegKeyValues categoriesFor: #at:put:!accessing!public! !
 !RegKeyValues categoriesFor: #changeKey:to:!accessing!private! !
-!RegKeyValues categoriesFor: #fileOutOn:!public!source filing! !
+!RegKeyValues categoriesFor: #fileOutOn:!public!storing! !
 !RegKeyValues categoriesFor: #includesKey:!public!searching! !
 !RegKeyValues categoriesFor: #keysAndValuesDo:!enumerating!public! !
 !RegKeyValues categoriesFor: #keysDo:!enumerating!public! !

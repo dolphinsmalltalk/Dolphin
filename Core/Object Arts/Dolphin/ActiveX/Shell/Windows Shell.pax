@@ -92,7 +92,7 @@ unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
 !View class categoriesFor: #registerShellMessages!development!initializing!public! !
 !View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
-!View class categoriesFor: #unregisterShellMessages!public! !
+!View class categoriesFor: #unregisterShellMessages!class hierarchy-removing!public! !
 
 "End of package definition"!
 
