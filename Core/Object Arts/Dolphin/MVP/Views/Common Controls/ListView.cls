@@ -147,8 +147,9 @@ applyImageLists
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager ifNotNil: [:im | im imageListWithExtent: self largeIconExtent]].
-	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: self smallImageExtent].
-	stateImList := self stateImageManager ifNotNil: [:stateImages | stateImages imageListWithExtent: self smallImageExtent].
+	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: self smallIconExtent].
+	stateImList := self stateImageManager
+				ifNotNil: [:stateImages | stateImages imageListWithExtent: self smallIconExtent].
 	self lvmSetImageList: smallImList type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
 	self lvmSetImageList: stateImList type: LVSIL_STATE!

@@ -667,6 +667,11 @@ showDropHighlight: anItem
 
 !
 
+smallIconExtent
+	"Answer image extent for the small icons mode."
+
+	^Icon smallExtent!
+
 stateImageManager
 	"Answers the receiver's state image manager."
 
@@ -800,6 +805,7 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #setViewMode:!accessing!private! !
 !IconicListAbstract categoriesFor: #showDragDrop:highlight:!drag & drop!event handling!public! !
 !IconicListAbstract categoriesFor: #showDropHighlight:!drag & drop!private! !
+!IconicListAbstract categoriesFor: #smallIconExtent!constants!public! !
 !IconicListAbstract categoriesFor: #stateImageManager!image management!public! !
 !IconicListAbstract categoriesFor: #stateImageManager:!image management!public! !
 !IconicListAbstract categoriesFor: #stbSaveOn:!binary filing!public! !
