@@ -54,6 +54,26 @@ testLanguages
 	lingos := ScintillaView lexerLanguages.
 	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]!
 
+testSetGetAnnotations
+	| annotations |
+	presenter text: self text.
+	annotations := OrderedCollection new.
+	annotations
+		add: (ScintillaAnnotation
+					line: 1
+					text: 'Wobble'
+					style: #Error);
+		add: (ScintillaAnnotation
+					line: 2
+					text: 'Wibble'
+					style: #Warning);
+		add: (ScintillaAnnotation
+					line: 1
+					text: 'Blah'
+					style: #Notification).
+	presenter annotations: annotations.
+	self assert: (presenter annotations noDifference: annotations)!
+
 testTokensFromTo
 	| tokens expected styler |
 	presenter textStyles: SmalltalkWorkspace textStyles.
@@ -72,5 +92,6 @@ testTokensFromTo
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
 !ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
+!ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 
