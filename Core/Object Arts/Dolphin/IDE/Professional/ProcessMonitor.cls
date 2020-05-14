@@ -101,7 +101,6 @@ onTimerTick: timerId
 	refreshTime := [self refresh] timeToRun.
 	refreshTime > updateInterval ifTrue: [
 		self view killTimer: 1.
-		self halt.
 		self updateInterval: refreshTime]!
 
 onViewDestroyed
