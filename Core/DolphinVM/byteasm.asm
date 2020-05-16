@@ -4365,57 +4365,6 @@ ENDPRIMITIVE primitiveActivateMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-BEGINPRIMITIVE primitiveReturnInstVar
-	; Its a primitive return of an instance variable
-	; Compiler should not generate such a method for a SmallInteger
-	; Which inst var do we want? Well its that whose index is
-	; in the extra index field of the method (normally used
-	; for primitives)
-	;	1 Nop
-	;	2 PushInstVarN
-	;	3(inst var index)
-	;	4 ReturnStackTop
-
-	mov		ecx, [NEWMETHOD]
-
-	ASSUME	edx:NOTHING				; Don't need the argument count
-
-	; We need a mini interpreter now to extract the inst var index from the byte codes
-
-	mov		ecx, (OTE PTR[ecx]).m_location
-	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method
-
-	mov		edx, [STEPPING]
-	mov		eax, [ecx].m_byteCodes				; Get bytecodes into eax - note that it MUST be a SmallInteger
-	mov		ecx, [_SP]							; ecx = receiver Oop at stack top
-	ASSUME	ecx:PTR OTE
-
-	test	edx, edx
-	jnz		stepping
-	
-	shr		eax, 16
-	mov		edx, [ecx].m_location 				; edx points at receiver object
-	ASSUME	edx:PTR Object
-	and		eax, 0FFh
-	
-	; No arguments to pop as compiler only generates this quick method form if zero args
-
-	; Load inst var Oop from object into edx
-	mov		edx, [edx].fields[eax*OOPSIZE]
-	ASSUME	edx:Oop
-
-	mov		[_SP], edx							; Overwrite receiver with inst. var Oop
-
-	mov		eax, _SP							; primitiveSuccess(0)
-	ret
-
-stepping:
-	; Fail so can step into method
-	mov		eax, SMALLINTZERO
-	ret
-
-ENDPRIMITIVE primitiveReturnInstVar
-
 BEGINPRIMITIVE primitiveSetInstVar
 	; Its a primitive set of an instance variable
 	; Compiler should not generate such a method for a SmallInteger

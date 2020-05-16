@@ -176,7 +176,9 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #endif
 
 #ifdef _M_X64
+#define OOPSIZE 8
 #define PORT64(s) #error(s)
 #else
+#define OOPSIZE 4
 #define PORT64(s)
 #endif
