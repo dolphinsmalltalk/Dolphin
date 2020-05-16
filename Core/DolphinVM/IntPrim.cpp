@@ -9,8 +9,6 @@
 #include "Interprt.h"
 #include "InterprtPrim.inl"
 
-#define OOPSIZE 4
-
 Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;

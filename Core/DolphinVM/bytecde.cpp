@@ -93,6 +93,35 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* co
 		ret
 	}
 }
+
+__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
+{
+	_asm
+	{
+		// We need a to extract the inst var index from the byte codes, which should be in packed SmallInteger form
+		//	1 Nop
+		//	2 PushInstVarN
+		//	3(inst var index)
+		//	4 ReturnStackTop
+
+		mov		ecx, [m_registers.m_oopNewMethod]
+		cmp		[m_bStepping], 0
+		mov		ecx, [ecx]OTE.m_location
+		mov		edx, [esi]								// ecx = receiver Oop at stack top
+		movzx	ecx, [ecx]CompiledMethod.m_byteCodes+2	// Get bytecodes into eax - note that it MUST be a SmallInteger
+		mov		edx, [edx]OTE.m_location				// edx points at receiver object
+		jnz		debugStep
+		mov		eax, esi
+		mov		edx, [edx]VariantObject.m_fields[ecx*OOPSIZE]
+		mov		[esi], edx								// Overwrite receiver with inst.var Oop
+		ret
+
+	debugStep:
+		mov		eax, 90000009H
+		ret
+	}
+}
+
 #else
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
@@ -127,6 +156,23 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcou
 		*newSp = staticZero->m_location->m_value;
 		return newSp;
 	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
+{
+	SmallUinteger byteCodes = m_registers.m_oopNewMethod->m_location->m_byteCodes;
+	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*sp);
+	size_t index = (byteCodes >> 16) & 0xff;
+	if (!m_bStepping)
+	{
+		
+		*sp = oteReceiver->m_location->m_fields[index];
+		return sp;
+}
 	else
 	{
 		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
