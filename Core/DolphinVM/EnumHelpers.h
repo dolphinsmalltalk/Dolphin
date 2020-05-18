@@ -111,7 +111,7 @@ operator-=(T& x, const I offset)
 	return x = static_cast<T>(r);
 }
 
-template<typename T, typename I>
+template<typename T, typename I> constexpr
 const typename std::enable_if<EnableIntOperators<T>::value, T>::type
 operator+(const T x, const I y)
 {
@@ -119,7 +119,7 @@ operator+(const T x, const I y)
 	return static_cast<T>(static_cast<underlying>(x) + static_cast<underlying>(y));
 }
 
-template<typename T, typename I>
+template<typename T, typename I> constexpr
 const typename std::enable_if<EnableIntOperators<T>::value, T>::type
 operator-(const T x, const I y)
 {

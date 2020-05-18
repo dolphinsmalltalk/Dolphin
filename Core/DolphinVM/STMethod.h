@@ -28,6 +28,20 @@ typedef OTE SymbolOTE;
 
 namespace ST
 {
+	struct PackedBytecodes
+	{
+		union
+		{
+			struct {
+				uint8_t first;
+				uint8_t second;
+				uint8_t third;
+				uint8_t fourth;
+			};
+			uint32_t uintValue;
+		};
+	};
+
 	class CompiledMethod : public Object
 	{
 	public:
@@ -35,7 +49,11 @@ namespace ST
 		BehaviorOTE* m_methodClass;
 		SymbolOTE* m_selector;
 		Oop				m_source;
-		Oop				m_byteCodes;	// ByteArray of byte codes
+		union 
+		{
+			PackedBytecodes m_packedByteCodes;
+			Oop				m_byteCodes;	// ByteArray of byte codes
+		};
 		Oop				m_aLiterals[];
 
 		static constexpr size_t HeaderIndex	= Object::FixedSize;

@@ -35,7 +35,8 @@
 
 // The performance of the shortcut primitive implementations for methods that return self, literal zero, etc,
 // is important to overall system performance, so it is worth retaining assembler implementations, although 
-// the carefully ordered C++ versions are not too bad.
+// the carefully ordered C++ versions are not too bad. They sometimes push/pop some registers when
+// that is not strictly necessary, partly because the compiler doesn't realise that sp is also in ESI
 #ifdef _M_IX86
 __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
@@ -122,7 +123,49 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const
 	}
 }
 
+__declspec(naked) Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
+{
+	_asm
+	{
+		mov		ecx, [m_registers.m_oopNewMethod]
+		cmp		[m_bStepping], 0
+		mov		ecx, [ecx]OTE.m_location
+		jne		debugStep
+		movzx	eax, [ecx]CompiledMethod.m_byteCodes + 2
+		mov		edx, [esi - OOPSIZE]
+		cmp		[edx]OTE.m_size, 0
+		mov		ecx, [edx]OTE.m_location
+		jl		immutable
+		lea		eax, [ecx]VariantObject.m_fields[eax * OOPSIZE]
+
+		mov		edx, [esi]
+		mov		ecx, [eax]
+
+		test	dl, 1
+		jnz		store
+		inc		[edx]OTE.m_count
+		jnz		store
+		mov		[edx]OTE.m_count, 0xff // MAXCOUNT
+
+	store:
+		mov		[eax], edx
+		call	ObjectMemory::countDown
+
+		lea		eax, [esi - OOPSIZE]
+		ret
+
+	immutable:
+		mov		eax, 0x800E07FCD	// _PrimitiveFailureCode::AccessViolation
+		ret
+
+	debugStep :
+		mov		eax, 0x90000009		// _PrimitiveFailureCode::DebugStep
+		ret
+	}
+}
+
 #else
+
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
 	// This arrangement avoids any conditional jumps, although there is no guarantee a new version 
@@ -164,13 +207,13 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcou
 
 Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
 {
-	SmallUinteger byteCodes = m_registers.m_oopNewMethod->m_location->m_byteCodes;
+	auto byteCodes = m_registers.m_oopNewMethod->m_location->m_packedByteCodes;
 	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*sp);
-	size_t index = (byteCodes >> 16) & 0xff;
+	auto receiver = oteReceiver->m_location;
 	if (!m_bStepping)
 	{
 		
-		*sp = oteReceiver->m_location->m_fields[index];
+		*sp = receiver->m_fields[byteCodes.third];
 		return sp;
 }
 	else
@@ -178,6 +221,29 @@ Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_
 		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
 	}
 }
+
+// Around 8% slower than the assembler version, probably due to extra stack ops to save/restore registers
+Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
+{
+	MethodOTE* oteSetter = m_registers.m_oopNewMethod;
+	if (!m_bStepping)
+	{
+		auto pMethod = oteSetter->m_location;
+		PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
+		if (!oteReceiver->isImmutable())
+		{
+			ObjectMemory::storePointerOfObjectWithValue(pMethod->m_packedByteCodes.third, oteReceiver, *sp);
+			return sp - 1;
+		}
+		else
+			return primitiveFailure(_PrimitiveFailureCode::AccessViolation);
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+	}
+}
+
 #endif
 
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
