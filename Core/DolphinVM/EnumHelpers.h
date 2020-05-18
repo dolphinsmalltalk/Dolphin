@@ -4,7 +4,7 @@
 template<typename T> struct EnableBitOperators : std::false_type { };
 
 template<typename T>
-typename std::enable_if<EnableBitOperators<T>::value, T>::type
+typename std::enable_if<EnableBitOperators<T>::value, T>::type constexpr
 operator |(const T lhs, const T rhs)
 {
 	using underlying = typename std::underlying_type<T>::type;
@@ -15,7 +15,7 @@ operator |(const T lhs, const T rhs)
 }
 
 template<typename T>
-typename std::enable_if<EnableBitOperators<T>::value, T>::type
+typename std::enable_if<EnableBitOperators<T>::value, T>::type constexpr
 operator &(const T lhs, const T rhs)
 {
 	using underlying = typename std::underlying_type<T>::type;
@@ -26,7 +26,7 @@ operator &(const T lhs, const T rhs)
 }
 
 template<typename T>
-typename std::enable_if<EnableBitOperators<T>::value, T>::type
+typename std::enable_if<EnableBitOperators<T>::value, T>::type constexpr
 operator ~(const T rhs)
 {
 	using underlying = typename std::underlying_type<T>::type;
@@ -36,7 +36,7 @@ operator ~(const T rhs)
 }
 
 template<typename T>
-typename std::enable_if<EnableBitOperators<T>::value, bool>::type
+typename std::enable_if<EnableBitOperators<T>::value, bool>::type constexpr
 operator !(const T rhs)
 {
 	using underlying = typename std::underlying_type<T>::type;

@@ -24,6 +24,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CrashDump.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\dealloc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dnu.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\dolphin.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">

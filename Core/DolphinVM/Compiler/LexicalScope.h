@@ -9,7 +9,7 @@ LexicalScope.h
 #include <vector>
 #include <map>
 #include "bytecode.h"
-#include "textrange.h"
+#include "..\textrange.h"
 
 #define TEMPORARYLIMIT 		255		// maximum number of temporaries permitted (ditto)
 #define MAXBLOCKNESTING		255		// maximum depth to which blocks (actually contexts) can be nested
