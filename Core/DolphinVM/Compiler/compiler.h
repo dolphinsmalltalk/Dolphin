@@ -29,7 +29,7 @@ typedef std::valarray<POTE> POTEARRAY;
 	#include "..\disassembler.h"
 #endif
 
-#include "EnumHelpers.h"
+#include "..\EnumHelpers.h"
 ENABLE_BITMASK_OPERATORS(CompilerFlags)
 
 ///////////////////////
