@@ -63,8 +63,8 @@ public:
 
 	// Object Pointer access
 	static Oop fetchPointerOfObject(size_t fieldIndex, PointersOTE* ote);
-	static Oop storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer);
-	static Oop storePointerWithValue(Oop& oopSlot, Oop oopValue);
+	static void storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer);
+	static void storePointerWithValue(Oop& oopSlot, Oop oopValue);
 	static OTE* storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
 	static Oop storePointerWithValue(Oop& oopSlot, OTE* oteValue);
 	static void nilOutPointer(Oop& objectPointer);
@@ -584,7 +584,7 @@ inline void ObjectMemory::cantBeIntegerObject(Oop objectPointer)
 
 // MSVC seems to dislike expanding these as inlines, so add some useful macros
 
-inline void ObjectMemory::countUp(Oop objectPointer)
+__forceinline void ObjectMemory::countUp(Oop objectPointer)
 {
 	if (!isIntegerObject(objectPointer))
 	{
@@ -673,23 +673,23 @@ inline void __fastcall ObjectMemory::storePointerOfObjectWithUnrefCntdValue(size
 	obj->m_fields[fieldIndex] = nonRefCountedPointer;
 }
 
-inline Oop ObjectMemory::storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer)
+inline void ObjectMemory::storePointerOfObjectWithValue(size_t fieldIndex, PointersOTE* ote, Oop valuePointer)
 {
 	ASSERT(fieldIndex < ote->pointersSize());
 	countUp(valuePointer);
 	VariantObject* obj = ote->m_location;
-	countDown(obj->m_fields[fieldIndex]);
-	return obj->m_fields[fieldIndex] = valuePointer;
+	Oop oldValue = obj->m_fields[fieldIndex];
+	obj->m_fields[fieldIndex] = valuePointer;
+	countDown(oldValue);
 }
 
 // Useful for overwriting structure members
-inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
+inline void ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
 {
 	countUp(oopValue);	// Increase the reference count on stored object
 	Oop oldValue = oopSlot;
 	oopSlot = oopValue;
 	countDown(oldValue);
-	return oopValue;
 }
 
 // Useful for overwriting structure members

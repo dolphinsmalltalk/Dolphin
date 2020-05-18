@@ -2045,6 +2045,17 @@ POTE Compiler::NewMethod()
 		_ASSERTE(!bNeedsContext);
 		_ASSERTE((static_cast<uint8_t>(byte0) & 1) != 0);		// First must be odd, as VM assumes will be a packed method
 
+		// Convert back to the long form as the primitive method definition can be simpler/faster if it doesn't have to decode
+		if (static_cast<OpCode>(byte1) != OpCode::PopStoreInstVar)
+		{
+			byte2 = byte1 - static_cast<uint8_t>(OpCode::ShortPopStoreInstVar);
+			InsertByte(ip_t::two, byte2, BYTECODE::Flags::IsData, m_bytecodes[ip_t::one].pScope);
+			m_bytecodes[ip_t::one].Opcode = OpCode::PopStoreInstVar;
+			pMethodScope->FinalIP = ip_t::three;
+			m_codePointer++;
+			byte1 = static_cast<uint8_t>(OpCode::PopStoreInstVar);
+		}
+
 		MakeQuickMethod(hdr, PRIMITIVE_SET_INSTVAR);
 		
 		// We go ahead and generate the bytes anyway, as they're needed by the primitive

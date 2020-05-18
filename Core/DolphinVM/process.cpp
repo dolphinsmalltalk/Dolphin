@@ -1726,7 +1726,7 @@ Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp, primargcount
 
 	ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
 	Array* registry = reinterpret_cast<Array*>(&_Pointers);
-	registry->m_elements[which - 1] = ObjectMemory::storePointerWithValue(registry->m_elements[which - 1], oopValue);
+	ObjectMemory::storePointerWithValue(registry->m_elements[which - 1], oopValue);
 	ObjectMemory::ProtectConstSpace(PAGE_READONLY);
 
 	return sp-2;
