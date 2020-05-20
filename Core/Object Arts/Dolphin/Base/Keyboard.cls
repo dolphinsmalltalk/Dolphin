@@ -42,6 +42,15 @@ buildVKeyMaps
 	virtualKeys := nameToVk.
 	keyNames := vkToName!
 
+buttonKeys
+	"Private - Answer an <IdentityDictionary> mapping between the names of the mouse buttons and the corresponding virtual key codes."
+
+	^##(IdentityDictionary withAll: {#left -> VK_LBUTTON.
+				#right -> VK_RBUTTON.
+				#middle -> VK_MBUTTON.
+				#xButton1 -> VK_XBUTTON1.
+				#xButton2 -> VK_XBUTTON2})!
+
 getKeyNameFromVKey: anInteger ifNone: exceptionHandler
 	"Private - Answer the <readableString> name of the specified virtual key code in this Keyboard layout, or evaluate the exceptionHandler block if none."
 
@@ -64,17 +73,10 @@ isAltDown
 
 	^self isKeyDown: VK_MENU!
 
-isButtonDown: aSymbol 
+isButtonDown: aSymbol
 	"Answer whether the mouse button identified by the symbolic name (e.g. #left, #right, or #middle) is currently pressed down."
 
-	^self 
-		isKeyDown: (##((IdentityDictionary new)
-				at: #left put: VK_LBUTTON;
-				at: #right put: VK_RBUTTON;
-				at: #middle put: VK_MBUTTON;
-				at: #xButton1 put: VK_XBUTTON1;
-				at: #xButton2 put: VK_XBUTTON2;
-				yourself) at: aSymbol)!
+	^self isKeyDown: (self buttonKeys at: aSymbol)!
 
 isCancelDown
 	"Answer whether the Cancel (CTRL+BREAK) key is down."
@@ -209,6 +211,7 @@ vKeyToScanCode: anInteger
 	^UserLibrary default mapVirtualKey: (anInteger bitAnd: 16rFF) uMapType: MAPVK_VK_TO_VSC! !
 !Keyboard categoriesFor: #asyncKeyState:!helpers!private! !
 !Keyboard categoriesFor: #buildVKeyMaps!helpers!private! !
+!Keyboard categoriesFor: #buttonKeys!constants!private! !
 !Keyboard categoriesFor: #getKeyNameFromVKey:ifNone:!helpers!private! !
 !Keyboard categoriesFor: #getState!helpers!private! !
 !Keyboard categoriesFor: #isAltDown!public!testing! !

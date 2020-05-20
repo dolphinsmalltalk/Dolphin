@@ -18,7 +18,7 @@ isVertical
 wheelRotation
 	"Answer the <number> of notches that the mouse wheel was rotated to generate this event."
 
-	^self wParam highPartSigned / WHEEL_DELTA! !
+	^wParam highPartSigned / WHEEL_DELTA! !
 !MouseWheelEvent categoriesFor: #isVertical!public! !
 !MouseWheelEvent categoriesFor: #wheelRotation!public! !
 

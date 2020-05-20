@@ -246,10 +246,10 @@ backImageChanged
 	self lvmSetBkImage: bk!
 
 backImageIsTiled
-	^lvFlags allMask: BackImageIsTiledMask!
+	^self lvFlags allMask: BackImageIsTiledMask!
 
 backImageIsTiled: aBoolean
-	lvFlags := lvFlags mask: BackImageIsTiledMask set: aBoolean.
+	lvFlags := self lvFlags mask: BackImageIsTiledMask set: aBoolean.
 	backImage ifNotNil: [self backImageChanged]!
 
 backImageOffset
@@ -1055,6 +1055,9 @@ listViewStyleMask: mask set: aBoolean
 
 	^self lvmSetExtendedListViewStyle: mask dwExStyle: aBoolean asParameter negated!
 
+lvFlags
+	^lvFlags ?? 0!
+
 lvmApproximateViewRect: countInteger cx: cxInteger cy: cyInteger 
 	| dword |
 	dword := self 
@@ -1627,7 +1630,7 @@ onButtonPressed: aMouseEvent
 	The mouse event is only allowed to propagate to the control if we are happy that 
 	the selection should indeed be changed."
 
-| indices |
+	| indices |
 	indices := self newSelectionsFromEvent: aMouseEvent.
 	^indices = lastSelIndices
 		ifTrue: [aMouseEvent defaultWindowProcessing]
@@ -1641,7 +1644,7 @@ onButtonPressed: aMouseEvent
 					answer]
 				ifFalse: 
 					["Suppress the mouse down so not received by control"
-					0]].!
+					0]]!
 
 onDisplayDetailsRequired: anLVITEM
 	"Private - Get the display info for the receiver's row identified by the <LVITEM>, lvitem."
@@ -2382,6 +2385,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #listMode!commands!public! !
 !ListView categoriesFor: #listViewStyleAllMask:!accessing-styles!private! !
 !ListView categoriesFor: #listViewStyleMask:set:!accessing-styles!private! !
+!ListView categoriesFor: #lvFlags!accessing!private! !
 !ListView categoriesFor: #lvmApproximateViewRect:cx:cy:!geometry!private! !
 !ListView categoriesFor: #lvmArrange:!operations!private! !
 !ListView categoriesFor: #lvmCreateDragImage:position:!operations!private! !
