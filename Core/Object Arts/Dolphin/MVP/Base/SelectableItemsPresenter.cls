@@ -34,8 +34,7 @@ onSelectionChanged
 
 onSelectionChanging: aSelectionChangingEvent
 	"Handler to indicate that the receiver's selection is about to change.
-	To prevent the proposed change under certain circumstances a handler
-	can set the value of aValueHolder to false."
+	To prevent the proposed change under certain circumstances a handler can set the value of the <SelectionChangingEvent> to false."
 
 	self view onSelectionChanging: aSelectionChangingEvent!
 

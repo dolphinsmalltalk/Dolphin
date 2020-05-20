@@ -28,6 +28,9 @@ iSubItem
 
 	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
 
+position
+	^self ptAction asPoint!
+
 ptAction
 	"Answer the <POINTL> value of the receiver's 'ptAction' field."
 
@@ -54,6 +57,7 @@ uOldState
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
 !NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
 !NMITEMACTIVATE categoriesFor: #iSubItem!**compiled accessors**!public! !
+!NMITEMACTIVATE categoriesFor: #position!accessing!public! !
 !NMITEMACTIVATE categoriesFor: #ptAction!**compiled accessors**!public! !
 !NMITEMACTIVATE categoriesFor: #uChanged!**compiled accessors**!public! !
 !NMITEMACTIVATE categoriesFor: #uKeyFlags!**compiled accessors**!public! !

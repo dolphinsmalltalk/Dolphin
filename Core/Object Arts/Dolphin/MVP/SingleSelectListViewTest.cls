@@ -10,6 +10,9 @@ SingleSelectListViewTest comment: ''!
 !SingleSelectListViewTest categoriesForClass!Unclassified! !
 !SingleSelectListViewTest methodsFor!
 
+expectedSelectionsForSendShiftClickTests
+	^#(4)!
+
 sortSelections
 	^#(50)!
 
@@ -35,6 +38,7 @@ testSelectionModeChange
 	self assert: presenter selectionByIndex equals: caret.
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)! !
+!SingleSelectListViewTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
 !SingleSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
 !SingleSelectListViewTest categoriesFor: #testSelectionModeChange!public!unit tests! !
 

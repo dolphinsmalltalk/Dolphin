@@ -71,7 +71,13 @@ commonNotificationMap
 		at: NM_KEYDOWN put: #nmKeyDown:;
 		at: NM_RELEASEDCAPTURE put: #nmDummy:;
 		at: NM_SETCURSOR put: #nmDummy:;
-		at: NM_CHAR put: #nmDummy:.
+		at: NM_CHAR put: #nmDummy:;
+		at: NM_TOOLTIPSCREATED put: #nmDummy:;
+		at: NM_LDOWN put: #nmDummy:;
+		at: NM_RDOWN put: #nmDummy:;
+		at: NM_THEMECHANGED put: #nmDummy:;
+		at: NM_FONTCHANGED put: #nmDummy:;
+		at: NM_CUSTOMTEXT put: #nmDummy:.
 
 	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"
 	nmMap at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:.

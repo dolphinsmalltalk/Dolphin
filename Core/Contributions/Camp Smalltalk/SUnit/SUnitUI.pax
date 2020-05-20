@@ -8,6 +8,10 @@ package classNames
 	add: #TestRunner;
 	yourself.
 
+package methodNames
+	add: 'TestCase class' -> #icon;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -21,6 +25,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'SUnit').
 
@@ -38,6 +43,16 @@ Shell subclass: #TestRunner
 
 
 "Loose Methods"!
+
+!TestCase class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class, the emoji 🧪"
+
+	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
+		textcolor: Color lightSeaGreen;
+		yourself)! !
+!TestCase class categoriesFor: #icon!constants!public! !
 
 "End of package definition"!
 
