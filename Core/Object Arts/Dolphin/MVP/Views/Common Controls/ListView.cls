@@ -1,32 +1,41 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #ListView
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha _unused34 _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
+ListView addClassConstant: 'BackImageIsTiledMask' value: 16r1!
 ListView addClassConstant: 'NoImageIndex' value: 16r0!
-ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
+ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
 
-A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
+A `ListView` is capable of displaying it items in one of a number of modes, e.g. `#smallIcons`, `#largeIcons`, `#list`, and `#report` which can be set using the `#viewMode` aspect. In all but `#report` mode the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of `ListViewColumn`. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
 
 The underlying Windows common control is a sophisticated one with many options. We have not attempted to wrap all of the features of this control within the ListView class. However, you should find that much of the most useful functionality is present.
 
-Instance Variables:
-	primaryColumn	<ListViewColumn> which is the main column in the list.
-	columns			<OrderedCollection> of <ListViewColumn>s which are displayed in #report mode (excluding the primary column).
-	viewMode		<Symbol> describing the mode in which the list is displaying items.
-	lastSel			<integer> index of the last selection made.
-	iconSpacing		<Point> or nil, representing the explicit spacing between icons in #smallIcons and #largeIcons view modes.
-	lvStyle			<integer> representing the Windows extended list view style.
-	_lvReserved1	Reserved for future system use. Do not use.
-	_lvReserved2	Reserved for future system use. Do not use.
+## Instance Variables:
+  `lastClickedColIndex`	`<integer>` index of the last column clicked for sorting
+  `columns`			`OrderedCollection` of `ListViewColumn`s which are displayed in `#report` mode.
+  `viewMode`			`Symbol` describing the mode in which the list is displaying items.
+  `lastSelIndices`		`Array` of `<integer>`. The indices of the last selected rows.
+  `iconSpacing`		`Point`, optional. Represents the explicit spacing between icons in icon view modes. Default is to use the control''s preferred spacing.
+  `lvStyle`				`<integer>`. List view extended style flags
+  `thumbnailExtent`		`Point`, optional, representing the size of icons when in `#thumbnail` view mode. Default is 64@64.
+  `lvFlags`				`<integer>` flags specific to list views
+  `backImage`			`<Bitmap>`, optional. Background image. Default, nil.
+  `backImageOffset`		`Point`, optional. Origin of the background image. Default is 0@0.
+  `backImageAlpha`		`<integer>`, optional. Alpha percent for the background image. Default is 100.
+  
+## Class Variables:
+  `BackImageIsTiledMask`	`<integer>`. Flag mask for backImageIsTiled.
+  `LvModes`				`IdentityDictionary` mapping symbolic view mode names to the corresponding list view style constants. 
+  `NoImageIndex`			`<integer>`
+  `RevertSelMessage`		`<integer>` holding the private ''RevertSelection'' message.
+  `SelectionStateMask`		`<integer>`
+  `UnknownItem`			`<Object>`
 
-Class Variables:
-	LvnMap			<Array> which is a map between integer Windows notification messages and <selector>s.
-	RevertSelMessage	<integer> holding the private ''RevertSelection'' message.
-	ViewModes			<IdentityDictionary> mapping symbolic view mode names to the corresponding list view style constants.
+
 '!
 !ListView categoriesForClass!MVP-Views! !
 !ListView methodsFor!
@@ -205,30 +214,24 @@ backcolorChanged
 	self backImage notNil ifTrue: [self backImageChanged]!
 
 backImage
-	^self moreParamsAt: 1!
+	^backImage!
 
 backImage: aBitmapOrNil 
-	self moreParamsAt: 1 put: aBitmapOrNil.
+	backImage := aBitmapOrNil.
 	self backImageChanged!
 
 backImageAlphaPercent
-	| percent |
-	percent := self moreParamsAt: 4.
-	percent ifNil: [self backImageAlphaPercent: (percent := 100)].
-	^percent!
+	^backImageAlpha ?? 100!
 
-backImageAlphaPercent: anInteger 
-	self backImage 
-		ifNotNil: 
-			[self moreParamsAt: 4 put: anInteger.
-			self backImageChanged]!
+backImageAlphaPercent: anInteger
+	backImageAlpha := anInteger.
+	backImage ifNotNil: [self backImageChanged]!
 
 backImageChanged
 	"Private - The background image has been changed; apply it into the receiver. We take a copy here
 	since Windows takes ownership of the bitmap handle that we give it"
 
-	| backImage bk isTiled offset |
-	backImage := self backImage.
+	| bk isTiled offset |
 	bk := LVBKIMAGEW new.
 	bk bitmap: (backImage notNil
 				ifTrue: 
@@ -243,26 +246,18 @@ backImageChanged
 	self lvmSetBkImage: bk!
 
 backImageIsTiled
-	| isTiled |
-	isTiled := self moreParamsAt: 2.
-	isTiled ifNil: [self backImageIsTiled: (isTiled := false)].
-	^isTiled!
+	^lvFlags allMask: BackImageIsTiledMask!
 
-backImageIsTiled: aBoolean 
-	self backImage 
-		ifNotNil: 
-			[self moreParamsAt: 2 put: aBoolean.
-			self backImageChanged]!
+backImageIsTiled: aBoolean
+	lvFlags := lvFlags mask: BackImageIsTiledMask set: aBoolean.
+	backImage ifNotNil: [self backImageChanged]!
 
 backImageOffset
-	| offset |
-	offset := self moreParamsAt: 3.
-	offset ifNil: [self backImageOffset: (offset := Point zero)].
-	^offset!
+	^backImageOffset ?? Point zero!
 
 backImageOffset: aPoint 
-	self moreParamsAt: 3 put: aPoint.
-	self backImageChanged!
+	backImageOffset := aPoint = Point zero ifFalse: [aPoint].
+	backImage ifNotNil: [self backImageChanged]!
 
 basicAdd: anObject atIndex: anInteger
 	"Private - Adds an item to the list view at the index given by anInteger"
@@ -1520,28 +1515,6 @@ maybeSelChanging: aSymbol
 			^self].
 	self onSelChanged!
 
-moreParams
-	"Private - A cheating way of adding additional instance parameters to the receiver without
-	having to worry about STB upgrading"
-
-	moreParams ifNil: [moreParams := Array new: 1].
-	^moreParams!
-
-moreParamsAt: n 
-	"Private - A cheating way of adding additional instance parameters to the receiver without
-	having to worry about STB upgrading"
-
-	self moreParams at: n ifPresent: [:x | ^x].
-	moreParams resize: n.
-	^nil!
-
-moreParamsAt: n put: anObject 
-	"Private - A cheating way of adding additional instance parameters to the receiver without
-	having to worry about STB upgrading"
-
-	self moreParams at: n.
-	^self moreParams at: n put: anObject!
-
 newSelectionsFromEvent: event
 	"Private - Answer a collection of the <integer> selections that would occur if the <MouseEvent>,
 	event, was was passed to the control."
@@ -2471,9 +2444,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvnMarqueeBegin:!event handling-win32!private! !
 !ListView categoriesFor: #lvnODStateChanged:!event handling-win32!private! !
 !ListView categoriesFor: #maybeSelChanging:!event handling!private! !
-!ListView categoriesFor: #moreParams!accessing!private! !
-!ListView categoriesFor: #moreParamsAt:!accessing!private! !
-!ListView categoriesFor: #moreParamsAt:put:!accessing!private! !
 !ListView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
 !ListView categoriesFor: #nmClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmNotify:!event handling-win32!private! !
@@ -2589,6 +2559,38 @@ onStartup
 			SelectionStateMask := LVIS_SELECTED]
 		ifFalse: [SelectionStateMask := ##(LVIS_SELECTED | LVIS_FOCUSED)]!
 
+stbConvert: instVarArray fromVersion: verInteger
+	| instVars |
+	instVars := instVarArray.
+	verInteger <= 13 ifTrue: [instVars := super stbConvert: instVars fromVersion: verInteger].
+	verInteger < 17
+		ifTrue: 
+			[| size lvFlags |
+			size := instVars size + 15.
+			instVars := (Array new: size)
+						replaceFrom: 1
+							to: 30
+							with: instVars
+							startingAt: 1;
+						replaceFrom: 46
+							to: size
+							with: instVars
+							startingAt: 31;
+						yourself.
+			lvFlags := 0.
+			(instVars at: 30)
+				ifNotNil: 
+					[:moreParams |
+					| backImageOffset |
+					(moreParams lookup: 2)
+						ifNotNil: [:isTiled | lvFlags := lvFlags mask: BackImageIsTiledMask set: isTiled].
+					backImageOffset := moreParams lookup: 3.
+					instVars at: 31 put: (moreParams lookup: 1).
+					instVars at: 32 put: (backImageOffset = Point zero ifFalse: [backImageOffset]).
+					instVars at: 33 put: (moreParams lookup: 4)].
+			instVars at: 30 put: lvFlags].
+	^instVars!
+
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 10 <ListView> to version 11,
 	i.e. merge column and primaryColumns instance variables into one, and add a couple 
@@ -2630,6 +2632,14 @@ stbConvertFromVersion5: anArray
 
 	^(super stbConvertFromVersion5: anArray) copyWith: 0!
 
+stbVersion
+	"Versions:
+		1-13: See View
+		14-16: See EditableListView
+		17: Consolidates 4 vars using moreParams into inst vars and adds 12 spares"
+
+	^17!
+
 themePartName
 
 	^#ListView!
@@ -2645,10 +2655,12 @@ winClassName
 !ListView class categoriesFor: #icon!constants!public! !
 !ListView class categoriesFor: #initialize!development!initializing!private! !
 !ListView class categoriesFor: #onStartup!events-session!public! !
+!ListView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
 !ListView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
+!ListView class categoriesFor: #stbVersion!binary filing!public! !
 !ListView class categoriesFor: #themePartName!constants!public! !
 !ListView class categoriesFor: #viewModes!accessing!public! !
 !ListView class categoriesFor: #winClassName!constants!private! !

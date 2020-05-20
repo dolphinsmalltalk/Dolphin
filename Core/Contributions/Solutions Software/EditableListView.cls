@@ -1025,11 +1025,11 @@ columnClass
 
 stbConvert: instVarArray fromVersion: verInteger
 
-	| origInstVars instVars offset new |
-
+	| origInstVars instVars offset base new |
 	origInstVars := super stbConvert: instVarArray fromVersion: (verInteger <= 14 ifTrue: [11] ifFalse: [verInteger]).
 	instVars := origInstVars.
 	offset := 0.
+	base := ListView instSize.
 
 	verInteger < 12 ifTrue: 
 		["Added rowHeight"
@@ -1055,8 +1055,8 @@ stbConvert: instVarArray fromVersion: verInteger
 		new replaceFrom: 1 to: (##(self) instSize - 2) with: instVars startingAt: 1.
 		offset := offset + 2.
 
-		(new at: 36 "rowHeight") isNil ifTrue: [new at: 36 put: 1].
-		(new at: 33 "old isMultiSelect") == true
+		(new at: base + 6 "rowHeight") isNil ifTrue: [new at: base + 6 put: 1].
+		(new at: base + 3 "old isMultiSelect") == true
 			ifTrue: [(new instVarAt: 3) at: 1 put: ((new instVarAt: 3) first maskClear: LVS_SINGLESEL)]
 			ifFalse: [(new instVarAt: 3) at: 1 put: ((new instVarAt: 3) first maskSet: LVS_SINGLESEL)].
 
@@ -1073,8 +1073,8 @@ stbConvert: instVarArray fromVersion: verInteger
 	verInteger < 15 ifTrue:
 		["Renamed/reused inst vars. Clear out any old values no longer appropriate"
 		instVars 
-			at: 32 put: nil; "originalColumns - was multSelectStack"
-			at: 38 put: nil "headerControl - was hotItemAndColumn"].
+			at: base + 2 put: nil; "originalColumns - was multSelectStack"
+			at: base + 8 put: nil "headerControl - was hotItemAndColumn"].
 
 	^instVars!
 
