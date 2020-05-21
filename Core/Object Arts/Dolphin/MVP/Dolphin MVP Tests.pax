@@ -13,6 +13,7 @@ package classNames
 	add: #CanvasTest;
 	add: #ChoicePresenterTest;
 	add: #ClipboardTest;
+	add: #ColorDialogTest;
 	add: #ColorTest;
 	add: #ContainerViewTest;
 	add: #EvaluationConverterTest;
@@ -86,6 +87,7 @@ package setPrerequisites: #(
 	'Presenters\Choice\Dolphin Choice Presenter'
 	'Presenters\Color\Dolphin Color Presenter'
 	'Views\Common Controls\Dolphin Common Controls'
+	'Dialogs\Common\Dolphin Common Dialogs'
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
@@ -145,6 +147,11 @@ DolphinTest subclass: #CanvasTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ClipboardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ColorDialogTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -53,7 +53,8 @@ prepareStruct
 	| customColors color |
 	customColors := self class customColors.
 	customColors at: customColors size put: self defaultColor asCOLORREF.
-	color := self value isNil ifTrue: [self defaultColor] ifFalse: [self value].
+	color := self value.
+	(color isNil or: [color isDefault]) ifTrue: [color := self defaultColor].
 	(self winStruct)
 		hInstance: VMLibrary default applicationHandle;
 		rgbResult: color rgbCode;
