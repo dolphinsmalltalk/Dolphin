@@ -637,14 +637,6 @@ queryCommand: aCommandQuery
 renameIt
 	self canEditLabels ifTrue: [self editSelectionLabel]!
 
-selectIndices: aCollection set: aBoolean 
-	"Private - Set/clear (dependeing on the boolean argument) the selection status of the items
-	in the receiver with the <integer> in the <collection>, argument."
-
-	self isMultiSelect 
-		ifTrue: [aCollection do: [:each | self selectIndex: each set: aBoolean]]
-		ifFalse: [self setSingleSelection: aCollection first]!
-
 selectionState
 	^MessageSend 
 		receiver: self 
@@ -800,7 +792,6 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
 !IconicListAbstract categoriesFor: #queryCommand:!commands!public! !
 !IconicListAbstract categoriesFor: #renameIt!commands!public! !
-!IconicListAbstract categoriesFor: #selectIndices:set:!public!selection! !
 !IconicListAbstract categoriesFor: #selectionState!accessing!private! !
 !IconicListAbstract categoriesFor: #setViewMode:!accessing!private! !
 !IconicListAbstract categoriesFor: #showDragDrop:highlight:!drag & drop!event handling!public! !

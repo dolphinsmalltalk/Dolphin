@@ -352,7 +352,7 @@ SelectableListItemsTest subclass: #ListPresenterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableListItemsTest subclass: #ListViewTest
-	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks'
+	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!

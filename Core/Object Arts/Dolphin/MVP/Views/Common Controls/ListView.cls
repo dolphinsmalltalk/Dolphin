@@ -535,15 +535,17 @@ editLabelStyle
 
 	^LVS_EDITLABELS!
 
+ensureItemsVisible: indices
+	| caret |
+	caret := self caretIndex.
+	self ensureVisible: ((indices isEmpty or: [indices includes: caret])
+				ifTrue: [caret]
+				ifFalse: [indices first])!
+
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary."
 
-	| caret selected |
-	caret := self caretIndex.
-	selected := self selectionsByIndex.
-	self ensureVisible: ((selected isEmpty or: [selected includes: caret])
-				ifTrue: [caret]
-				ifFalse: [selected first])!
+	self ensureItemsVisible: self selectionsByIndex!
 
 ensureVisible: anInteger 
 	"Ensure the item with the specified index is visible, scrolling it into view if necessary."
@@ -634,12 +636,27 @@ getMultipleSelections
 
 	^self withOldWndProc: 
 			[| count index answer |
-			count := self selectedCount.
+			count := self getSelectedCount.
 			answer := Array new: count.
 			index := -1.
 			1 to: count
 				do: [:i | answer at: i put: (index := self lvmGetNextItem: index flags: LVNI_SELECTED) + 1].
 			answer]!
+
+getSelectedCount
+	"Private - Query the total number of items selected from the control."
+
+	^self sendMessage: LVM_GETSELECTEDCOUNT!
+
+getSelectionsByIndex
+	"Private - Query the actual current selections from the control."
+
+	^self isMultiSelect
+		ifTrue: [self getMultipleSelections]
+		ifFalse: 
+			[| index |
+			index := self getSingleSelection.
+			index == 0 ifTrue: [#()] ifFalse: [{index}]]!
 
 getSingleSelection
 	"Private - Answer the one-based <integer> index of the selected object in the receiver or
@@ -1034,9 +1051,6 @@ largeIconMode
 
 lastSelIndices
 	^lastSelIndices!
-
-lastSelIndices: anArray 
-	lastSelIndices := anArray!
 
 listMode
 	"Place the receiver in list mode"
@@ -1499,7 +1513,7 @@ lvnODStateChanged: pNMHDR
 
 	^nil!
 
-maybeSelChanging: aSymbol 
+maybeSelChanging: aSymbol
 	"Private - The selection may be changing as a result of a user action (e.g. due to a keypress). 
 	The argument is either #mouse, or #keyboard, indicating the source of the user input that
 	is initiating the selection change. Give the presenter/view a chance to change their mind."
@@ -1507,16 +1521,16 @@ maybeSelChanging: aSymbol
 	"See if the change is acceptable, and if not revert to original selection if there was one"
 
 	| curSel |
-	curSel := self selectionsByIndex.
+	curSel := self getSelectionsByIndex.
 	curSel = lastSelIndices ifTrue: [^self].
-	(self onSelChanging: curSel cause: aSymbol) 
+	(self onSelChanging: curSel cause: aSymbol)
 		ifFalse: 
-			[self 
+			[self
 				postMessage: RevertSelMessage
 				wParam: 0
 				lParam: 0.
 			^self].
-	self onSelChanged!
+	self onSelChanged: curSel!
 
 newSelectionsFromEvent: event
 	"Private - Answer a collection of the <integer> selections that would occur if the <MouseEvent>,
@@ -1526,7 +1540,7 @@ newSelectionsFromEvent: event
 	itemClicked := self itemFromPoint: event position.
 	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
 	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
-	newSelections := self selectionsByIndex.
+	newSelections := self getSelectionsByIndex.
 	anyKeysDown := event isShiftDown or: [event isCtrlDown].
 	"If the click is outside all items, and ctrl or shift is down, nothing changes."
 	(itemClicked isNil and: [anyKeysDown]) ifTrue: [^newSelections].
@@ -1619,16 +1633,20 @@ nmRClick: pNMHDR
 	self isMultiSelect ifTrue: [self maybeSelChanging: #mouse].
 	^super nmRClick: pNMHDR!
 
+nmSelChanged: anExternalAddress 
+	"Private - Default handler for the ??N_SELCHANGED notification message."
+
+	"We don't expect to receive this for ListViews."
+
+	self shouldNotImplement!
+
 notificationClass
 	"Private - Answer the class of NM_XXXXVIEW structure associated with the receiver."
 
 	^NMLISTVIEW!
 
 onButtonPressed: aMouseEvent
-	"Private - Common handler for a button down mouse event. Look for potential
-	selection change events, and fire a #selectionChanging: event if necessary.
-	The mouse event is only allowed to propagate to the control if we are happy that 
-	the selection should indeed be changed."
+	"Private - Common handler for a button down mouse event. Look for potential selection change events, and fire a #selectionChanging: event if necessary. The mouse event is only allowed to propagate to the control if we are happy that the selection should indeed be changed."
 
 	| indices |
 	indices := self newSelectionsFromEvent: aMouseEvent.
@@ -1638,7 +1656,7 @@ onButtonPressed: aMouseEvent
 			[(self onSelChanging: indices cause: #mouse)
 				ifTrue: 
 					[| answer |
-					"Selection change permitted?"
+					"Selection change permitted"
 					answer := aMouseEvent defaultWindowProcessing.
 					self onSelChanged.	"Selection may have changed"
 					answer]
@@ -1803,6 +1821,13 @@ onRightButtonPressed: aMouseEvent
 	self presenter trigger: #rightButtonPressed: with: aMouseEvent.
 	^self onButtonPressed: aMouseEvent!
 
+onSelChanged
+	"Private - Handle a selection change event by forwarding to the presenter."
+
+	| selections |
+	selections := self getSelectionsByIndex.
+	selections = lastSelIndices ifFalse: [self onSelChanged: selections]!
+
 onSelChanged: anArray 
 	lastSelIndices := anArray.
 	super onSelChanged: anArray!
@@ -1828,7 +1853,7 @@ onSelRemoved
 	"Private - A selected item has been removed. Update the receiver's selection state to
 	account."
 
-	self onSelChanged: self selectionsByIndex!
+	self onSelChanged: self getSelectionsByIndex!
 
 onViewCreated
 	"The receiver window has been created. Copy the info held
@@ -1961,7 +1986,7 @@ selectAll
 selectedCount
 	"Private - Answer the total number of items selected in the receiver."
 
-	^self sendMessage: LVM_GETSELECTEDCOUNT!
+	^lastSelIndices size!
 
 selectIndex: anInteger set: aBoolean
 	"Private - Set/reset the selection state of the object at the specified one-based <integer>
@@ -1986,8 +2011,13 @@ selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	self setSelectionsByIndex: indices.
 	^missing isEmpty ifTrue: [aCollection] ifFalse: [aNiladicOrMonadicValuable cull: missing]!
 
+selectionsByIndex
+	"Answer an <Array> of the <integer> the indices of the selected items 	in the receiver in ascending order. The array will be empty if there is no selection."
+
+	^lastSelIndices!
+
 selectionsByIndex: aCollection ifAbsent: exceptionHandler
-	"Select the objects identified by the <collection> of <integer> indices, indices, in the
+	"Select the objects identified by the <collection> of <integer> indices, aCollection, in the
 	receiver. If any of the indices are out of bounds, then evaluate the <monadicValuable>,
 	exceptionHandler, passing it a <collection> of the offending indices. For backwards
 	compatibility with the superclass implementation, exceptionHandler can also be a
@@ -2027,13 +2057,14 @@ setControlBackcolor: aColor
 setIconSpacing: aPointOrNil
 	self lvmSetIconSpacing: aPointOrNil ?? (-1 @ -1)!
 
-setSelectionsByIndex: indices 
+setSelectionsByIndex: indices
+	| selections |
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
-	self ensureSelectionVisible.
-	"Note: We have to check again whether the selection has changed because of the single-select
-	case - onSelChanged does this."
-	self onSelChanged!
+	"Use the actual selections that resulted"
+	selections := self getSelectionsByIndex.
+	self ensureItemsVisible: selections.
+	self onSelChanged: selections!
 
 setSingleSelection: anInteger 
 	self selectIndex: anInteger set: anInteger ~~ 0!
@@ -2223,7 +2254,10 @@ updateItem: anObject atIndex: anInteger
 				afterIndex: anInteger - 1]!
 
 updateSelectionCache
-	lastSelIndices notEmpty ifTrue: [lastSelIndices := self selectionsByIndex]!
+	"Private - The receiver's model is being modified, so we may need to account for selection changes caused by that.
+	Of course this can't add a selection if there is none."
+
+	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]!
 
 viewMode
 	"Answer the view mode of the receiver.
@@ -2318,6 +2352,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #defaultWindowStyle!constants!private! !
 !ListView categoriesFor: #dispatchRegistered:wParam:lParam:!operations!private! !
 !ListView categoriesFor: #editLabelStyle!constants!private! !
+!ListView categoriesFor: #ensureItemsVisible:!helpers!private! !
 !ListView categoriesFor: #ensureSelectionVisible!public!selection! !
 !ListView categoriesFor: #ensureVisible:!operations!public! !
 !ListView categoriesFor: #errorInCommonControlCall:!exceptions!private! !
@@ -2327,6 +2362,8 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #forgetLastClickedColumn!helpers!private! !
 !ListView categoriesFor: #getItemText:!accessing!private! !
 !ListView categoriesFor: #getMultipleSelections!private!selection! !
+!ListView categoriesFor: #getSelectedCount!private!selection! !
+!ListView categoriesFor: #getSelectionsByIndex!private!selection! !
 !ListView categoriesFor: #getSingleSelection!private!selection! !
 !ListView categoriesFor: #getThumbnailOf:!helpers!private! !
 !ListView categoriesFor: #hasBorderSelect!accessing-styles!public! !
@@ -2381,7 +2418,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #largeIconExtent:!constants!public! !
 !ListView categoriesFor: #largeIconMode!commands!public! !
 !ListView categoriesFor: #lastSelIndices!accessing!private! !
-!ListView categoriesFor: #lastSelIndices:!accessing!private! !
 !ListView categoriesFor: #listMode!commands!public! !
 !ListView categoriesFor: #listViewStyleAllMask:!accessing-styles!private! !
 !ListView categoriesFor: #listViewStyleMask:set:!accessing-styles!private! !
@@ -2408,7 +2444,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvmGetNextItem:flags:!accessing!private! !
 !ListView categoriesFor: #lvmGetOrigin!accessing!private! !
 !ListView categoriesFor: #lvmGetStringWidth:!accessing!private! !
-!ListView categoriesFor: #lvmGetSubItemRect:subitem:bounding:!private! !
+!ListView categoriesFor: #lvmGetSubItemRect:subitem:bounding:!geometry!private! !
 !ListView categoriesFor: #lvmGetView!accessing-styles!private! !
 !ListView categoriesFor: #lvmGetViewRect!geometry!private! !
 !ListView categoriesFor: #lvmInsertAt:column:!adding!private! !
@@ -2452,6 +2488,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #nmClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ListView categoriesFor: #nmRClick:!event handling-win32!private! !
+!ListView categoriesFor: #nmSelChanged:!event handling-win32!private! !
 !ListView categoriesFor: #notificationClass!constants!private! !
 !ListView categoriesFor: #onButtonPressed:!event handling!private! !
 !ListView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
@@ -2464,6 +2501,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !ListView categoriesFor: #onPositionChanged:!event handling!public! !
 !ListView categoriesFor: #onRightButtonPressed:!event handling!public! !
+!ListView categoriesFor: #onSelChanged!private!selection! !
 !ListView categoriesFor: #onSelChanged:!event handling!private! !
 !ListView categoriesFor: #onSelChanging:cause:!event handling!private! !
 !ListView categoriesFor: #onSelRemoved!public!selection! !
@@ -2483,6 +2521,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
+!ListView categoriesFor: #selectionsByIndex!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
 !ListView categoriesFor: #setControlBackcolor:!helpers!private! !
@@ -2497,7 +2536,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #smallIconMode!commands!public! !
 !ListView categoriesFor: #sortOnColumn:!columns!public!sorting! !
 !ListView categoriesFor: #state!accessing!private! !
-!ListView categoriesFor: #stateImageFromRow:!private! !
+!ListView categoriesFor: #stateImageFromRow:!helpers!private! !
 !ListView categoriesFor: #subItemRectRow:column:!geometry!public! !
 !ListView categoriesFor: #text:!accessing!public! !
 !ListView categoriesFor: #textFromRow:!adapters!private! !

@@ -135,7 +135,7 @@ testNewSelectionsShiftClickWithSelectionMark
 testSelectionEventsFromLeftClick
 	"Fails because of duplicated selectionChanging: event. To be deleted when that bug is fixed."
 
-	self skip.
+	self skipIfCiBuild.
 	super testSelectionEventsFromLeftClick!
 
 testSelectionsByIndex
