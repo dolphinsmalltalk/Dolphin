@@ -174,14 +174,6 @@ refreshContents
 	self basicRefreshContents.
 	self onSelChanged!
 
-selectIndices: aCollection set: aBoolean 
-	"Private - Set/clear (dependeing on the boolean argument) the selection status of the items
-	in the receiver with the <integer> in the <collection>, argument."
-
-	self isMultiSelect 
-		ifTrue: [aCollection do: [:each | self selectIndex: each set: aBoolean]]
-		ifFalse: [self setSingleSelection: aCollection first]!
-
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
@@ -262,7 +254,6 @@ updateSelectionCache
 !BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
 !BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
 !BasicListAbstract categoriesFor: #refreshContents!public!updating! !
-!BasicListAbstract categoriesFor: #selectIndices:set:!public!selection! !
 !BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
 !BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !BasicListAbstract categoriesFor: #selectionState!accessing!private! !

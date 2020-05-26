@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableListItemsTest subclass: #ListViewTest
-	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks'
+	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
@@ -76,18 +76,39 @@ onSelectionChanged
 onSelectionChanging: aSelectionChangingEvent 
 	selectionChanging value: aSelectionChangingEvent!
 
+onTimerTick: wParam
+	wParam = self timeoutId ifTrue: [
+		timedout := true.
+		presenter view killTimer: self timeoutId.
+		presenter view postMessage: WM_MOUSEMOVE wParam: 0 lParam: 0]!
+
 sendClickEvent: aMouseEvent
+	| pos |
 	self assert: (aMouseEvent isLButtonDown or: [aMouseEvent isRButtonDown]).
 	"Note that the ListView appears to take hold of the message loop in its handler for WM_?BUTTONDOWN, so we post the up before sending the down.
 	The reason this works is that the 'up' will wait in the queue, but the 'down' will be sent straight to the window proc of the list view. That window
 	proc is of course the Dolphin wndproc, which will forward the message into the image, where it will eventually arrive in ListView>>onButtonPressed:
 	When ListView>>onButtonPressed: calls for default window processing (i.e. calls the ListView's actual wnd proc), the LV handler will then consume
 	the mouse up from the queue."
+	pos := POINTL new.
+	UserLibrary default getCursorPos: pos;
+		setCursorPosX: 0 y: 0.
+	SessionManager inputState pumpMessages.
 	presenter view
+		postMessage: aMouseEvent message
+			wParam: aMouseEvent wParam
+			lParam: aMouseEvent lParam;
 		postMessage: aMouseEvent message + 1
-		wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
-		lParam: aMouseEvent lParam.
-	self sendEvent: aMouseEvent!
+			wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
+			lParam: aMouseEvent lParam.
+	timedout := false.
+	presenter view setTimer: self timeoutId interval: 500.
+	"Dispatch the posted messages to the control"
+	SessionManager inputState pumpMessages.
+	presenter view killTimer: self timeoutId.
+	UserLibrary default setCursorPosX: pos x y: pos y.
+	"If this fires, it means the control did not return from the call to its window proc to handle the button down event in ListView>>onButtonPressed:"
+	self deny: timedout description: 'Control blocked in mouse down handler'!
 
 sendEvent: aMouseEvent 
 	^presenter view sendMessage: aMouseEvent message wParam: aMouseEvent wParam lParam: aMouseEvent lParam!
@@ -128,7 +149,9 @@ setUpForSelectionEventTesting
 	selectionChanged := 
 			[events addLast: ((SelectionChangedEvent forSource: presenter)
 						newSelections: presenter view selectionsByIndex;
-						yourself)]!
+						yourself)].
+	presenter when: #timerTick: send: #onTimerTick: to: self.
+	timedout := false!
 
 setUpForSelectionTesting
 	presenter
@@ -290,72 +313,60 @@ testSelectionEventsFromLeftClick
 	"Test that the expected sequence of selectionChanging: and selectionChanged events are raised for left-click selection.
 	The test sends simulated mouse clicks to the control to try and test the actual control integration."
 
-	| event changing changed click |
 	self setUpForSelectionEventTesting.
-	event := self mouseDownEventOnItem: 2 buttons: #(#left).
-	self sendClickEvent: event.
-	self assert: events size equals: 2.
-	changing := events first.
-	self assert: changing isKindOf: SelectionChangingEvent.
-	self assert: changing oldSelections equals: #().
-	self assert: changing newSelections equals: #(2).
-	changed := events last.
-	self assert: changed isKindOf: SelectionChangedEvent.
-	self assert: changed newSelections equals: #(2).
-	self assert: clicks size equals: 1.
-	click := clicks first.
-	self assert: click iItem equals: 2 - 1.
-	self assert: click position equals: event lParamX @ event lParamY.
-	"Send a shift-left-click event over a subsequent item."
-	events := OrderedCollection new.
-	clicks := OrderedCollection new.
-	event := self mouseDownEventOnItem: 4 buttons: #(#left #shift).
-	self sendClickEvent: event.
-	self assert: events size equals: 2.
-	changing := events first.
-	self assert: changing isKindOf: SelectionChangingEvent.
-	self assert: changing oldSelections equals: #(2).
-	self assert: changing newSelections equals: self expectedSelectionsForSendShiftClickTests.
-	changed := events last.
-	self assert: changed isKindOf: SelectionChangedEvent.
-	self assert: changed newSelections equals: self expectedSelectionsForSendShiftClickTests.
-	self assert: clicks size equals: 1.
-	self assert: clicks size equals: 1.
-	click := clicks first.
-	self assert: click iItem equals: 4 - 1.
-	self assert: click position equals: event lParamX @ event lParamY!
+	self verifyEventsFromClickConfirmed: #left!
 
 testSelectionEventsFromLeftClickDenied
 	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is denied
 	but without a prompt so the control still receives the mouse up."
 
-	| event changing |
 	self setUpForSelectionEventTesting.
-	event := self mouseDownEventOnItem: 2 buttons: #(#left).
 	selectionChanging := 
 			[:selChanging |
 			events addLast: selChanging.
 			selChanging value: false].
-	self sendClickEvent: event.
-	self assert: events size equals: 1.
-	changing := events first.
-	self assert: changing isKindOf: SelectionChangingEvent.
-	self assert: changing oldSelections equals: #().
-	self assert: changing newSelections equals: #(2).
-	"Because we didn't forward the button down event to the control, there should be no click notification."
-	self assert: clicks size equals: 0.
-	"Ensure there is a selection and then send a shift-left-click event over a subsequent item."
-	presenter view selectionByIndex: 2.
-	events := OrderedCollection new.
-	clicks := OrderedCollection new.
-	event := self mouseDownEventOnItem: 4 buttons: #(#left #shift).
-	self sendClickEvent: event.
-	self assert: events size equals: 1.
-	changing := events first.
-	self assert: changing isKindOf: SelectionChangingEvent.
-	self assert: changing oldSelections equals: #(2).
-	self assert: changing newSelections equals: self expectedSelectionsForSendShiftClickTests.
-	self assert: clicks size equals: 0!
+	self verifyEventsFromClickDenied: #left!
+
+testSelectionEventsFromLeftClickPromptConfirmed
+	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is confirmed with a prompt so the control does not receive the mouse up associated with the actual click.
+	Regression test for #898."
+
+	"Test fails because the listview blocks in a modal message loop in its WM_LBUTTONDOWN handler"
+	self skipIfCiBuild.
+	self setUpForSelectionEventTesting.
+	selectionChanging := 
+			[:selChanging |
+			| msg |
+			events addLast: selChanging.
+			"Consume the mouse up so the control does not receive it."
+			msg := MSG new.
+			UserLibrary default
+				getMessage: msg
+				hWnd: presenter view handle
+				wMsgFilterMin: WM_LBUTTONUP
+				wMsgFilterMax: WM_LBUTTONUP.
+			"Allow the selection change to proceed"
+			selChanging value: true].
+	self verifyEventsFromClickConfirmed: #left!
+
+testSelectionEventsFromLeftClickPromptDenied
+	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is denied with a prompt so the control does not receive the mouse up associated with the actual click."
+
+	self setUpForSelectionEventTesting.
+	selectionChanging := 
+			[:selChanging |
+			| msg |
+			events addLast: selChanging.
+			"Snaffle the mouse up to try and simulate the appearance of a prompt"
+			msg := MSG new.
+			UserLibrary default
+				getMessage: msg
+				hWnd: presenter view handle
+				wMsgFilterMin: WM_LBUTTONUP
+				wMsgFilterMax: WM_LBUTTONUP.
+			"Prevent the selection change from proceeding"
+			selChanging value: false].
+	self verifyEventsFromClickDenied: #left!
 
 testSelectionRemainsVisibleOnSort
 	"#1381"
@@ -396,7 +407,69 @@ testSetTextImageDoesNotAffectSelection
 			self
 				shouldnt: [presenter selectionByIndex: 2]
 				trigger: #selectionChanging:
-				against: presenter]! !
+				against: presenter]!
+
+timeoutId
+	^171717!
+
+verifyEventsFromClickConfirmed: aSymbol
+	| changed changing click event |
+	event := self mouseDownEventOnItem: 2 buttons: {aSymbol}.
+	self sendClickEvent: event.
+	self assert: events size equals: 2.
+	changing := events first.
+	self assert: changing isKindOf: SelectionChangingEvent.
+	self assert: changing oldSelections equals: #().
+	self assert: changing newSelections equals: #(2).
+	changed := events last.
+	self assert: changed isKindOf: SelectionChangedEvent.
+	self assert: changed newSelections equals: #(2).
+	self assert: clicks size equals: 1.
+	click := clicks first.
+	self assert: click iItem equals: 2 - 1.
+	self assert: click position equals: event lParamX @ event lParamY.
+	"Send a shift-left-click event over a subsequent item."
+	events := OrderedCollection new.
+	clicks := OrderedCollection new.
+	event := self mouseDownEventOnItem: 4 buttons: {aSymbol. #shift}.
+	self sendClickEvent: event.
+	self assert: events size equals: 2.
+	changing := events first.
+	self assert: changing isKindOf: SelectionChangingEvent.
+	self assert: changing oldSelections equals: #(2).
+	self assert: changing newSelections equals: self expectedSelectionsForSendShiftClickTests.
+	changed := events last.
+	self assert: changed isKindOf: SelectionChangedEvent.
+	self assert: changed newSelections equals: self expectedSelectionsForSendShiftClickTests.
+	self assert: clicks size equals: 1.
+	self assert: clicks size equals: 1.
+	click := clicks first.
+	self assert: click iItem equals: 4 - 1.
+	self assert: click position equals: event lParamX @ event lParamY!
+
+verifyEventsFromClickDenied: aSymbol
+	| event changing |
+	event := self mouseDownEventOnItem: 2 buttons: {aSymbol}.
+	self sendClickEvent: event.
+	self assert: events size equals: 1.
+	changing := events first.
+	self assert: changing isKindOf: SelectionChangingEvent.
+	self assert: changing oldSelections equals: #().
+	self assert: changing newSelections equals: #(2).
+	"Because we didn't forward the button down event to the control, there should be no click notification."
+	self assert: clicks size equals: 0.
+	"Ensure there is a selection and then send a shift-left-click event over a subsequent item."
+	presenter view selectionByIndex: 2.
+	events := OrderedCollection new.
+	clicks := OrderedCollection new.
+	event := self mouseDownEventOnItem: 4 buttons: {aSymbol. #shift}.
+	self sendClickEvent: event.
+	self assert: events size equals: 1.
+	changing := events first.
+	self assert: changing isKindOf: SelectionChangingEvent.
+	self assert: changing oldSelections equals: #(2).
+	self assert: changing newSelections equals: self expectedSelectionsForSendShiftClickTests.
+	self assert: clicks size equals: 0! !
 !ListViewTest categoriesFor: #assertCaretVisible!helpers!private! !
 !ListViewTest categoriesFor: #classToTest!helpers!private! !
 !ListViewTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
@@ -405,6 +478,7 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #mouseDownEventOnItem:buttons:!helpers!private! !
 !ListViewTest categoriesFor: #onSelectionChanged!helpers!private! !
 !ListViewTest categoriesFor: #onSelectionChanging:!helpers!private! !
+!ListViewTest categoriesFor: #onTimerTick:!helpers!private! !
 !ListViewTest categoriesFor: #sendClickEvent:!helpers!private! !
 !ListViewTest categoriesFor: #sendEvent:!helpers!private! !
 !ListViewTest categoriesFor: #setColumns:!helpers!private! !
@@ -421,7 +495,12 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
 !ListViewTest categoriesFor: #testSelectionEventsFromLeftClick!public!unit tests! !
 !ListViewTest categoriesFor: #testSelectionEventsFromLeftClickDenied!public!unit tests! !
+!ListViewTest categoriesFor: #testSelectionEventsFromLeftClickPromptConfirmed!public!unit tests! !
+!ListViewTest categoriesFor: #testSelectionEventsFromLeftClickPromptDenied!public!unit tests! !
 !ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
+!ListViewTest categoriesFor: #timeoutId!constants!private! !
+!ListViewTest categoriesFor: #verifyEventsFromClickConfirmed:!helpers!private! !
+!ListViewTest categoriesFor: #verifyEventsFromClickDenied:!helpers!private! !
 

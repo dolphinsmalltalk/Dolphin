@@ -374,11 +374,13 @@ selectIndex: anInteger set: aBoolean
 
 	^self errorNotMultiSelect!
 
-selectIndices: indices set: aBoolean
-	"Private - Set/clear selection status of the items in the receiver with the <integer>
-	indices in the <collection>, indices."
-	
-	^self subclassResponsibility!
+selectIndices: aCollection set: aBoolean 
+	"Private - Set/clear (dependeing on the boolean argument) the selection status of the items
+	in the receiver with the <integer> in the <collection>, argument."
+
+	self isMultiSelect 
+		ifTrue: [aCollection do: [:each | self selectIndex: each set: aBoolean]]
+		ifFalse: [self setSingleSelection: aCollection first]!
 
 selection
 	"Answer the selected object, or signal an <Error> if there is no selection."
