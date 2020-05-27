@@ -11,6 +11,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Character -> #isOctetCharacter;
 	add: #ProcessorScheduler -> #stonOn:;
 	add: #STONCStyleCommentsSkipStream -> #skipSeparators;
 	add: #SystemDictionary -> #globals;
@@ -50,6 +51,12 @@ STONWriter subclass: #DolphinSTONWriter
 
 
 "Loose Methods"!
+
+!Character methodsFor!
+
+isOctetCharacter
+	^code <= 16rFF! !
+!Character categoriesFor: #isOctetCharacter!public! !
 
 !ProcessorScheduler methodsFor!
 
