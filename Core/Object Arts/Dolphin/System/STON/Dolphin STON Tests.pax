@@ -8,7 +8,6 @@ Tests of Dolphin specific aspects of the STON implementation.'.
 
 
 package methodNames
-	add: #Character -> #isOctetCharacter;
 	add: #Collection -> #atRandom;
 	add: #Integer -> #atRandom;
 	add: #SequenceableCollection -> #asFloatArray;
@@ -48,12 +47,6 @@ package!
 
 
 "Loose Methods"!
-
-!Character methodsFor!
-
-isOctetCharacter
-	^code <= 16rFF! !
-!Character categoriesFor: #isOctetCharacter!public! !
 
 !Collection methodsFor!
 
