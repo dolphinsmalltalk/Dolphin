@@ -23,9 +23,7 @@ BSTRs use finalization to safely manage the sys. alloc''d string, but they may b
 !BSTR methodsFor!
 
 asAnsiString
-	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the
-	receiver cannot be represented as ANSI code points, then these will be translated to the
-	default character ($?)."
+	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
 
 	^self asByteString: AnsiString!
 
@@ -54,16 +52,14 @@ asByteString: aClass
 	^buf!
 
 asString
-	"Answer an byte-encoded string representation of the receiver."
+	"Answer a <String> representation of the receiver."
 
-	^self asByteString: Utf8String!
+	^self asUtf16String!
 
 asUtf16String
-	"Answer a Utf16String composed of the characters of the receiver (assumed itself to be UTF-16
-	encoded), or the empty string if the receiver is a null pointer (by convention a null BSTR
-	is treated the same as an empty string)."
+	"Answer a `Utf16String` composed of the characters of the receiver (assumed itself to be UTF-16 encoded), or the empty string if the receiver is a null pointer (by convention a null BSTR is treated the same as an empty string)."
 
-	^Utf16String fromAddress: self length: self size!
+	^self isNull ifTrue: [Utf16String empty] ifFalse: [Utf16String fromAddress: self length: self size]!
 
 asUtf8String
 	"Answer a UTF-8 encoded <readableString> representation of the receiver."
