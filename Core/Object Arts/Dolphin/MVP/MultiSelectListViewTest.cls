@@ -20,12 +20,6 @@ initializePresenter
 sortSelections
 	^#(49 50)!
 
-testEventsFromClickSelectionChangePermitted
-	"Fails because of duplicated selectionChanging: event. To be deleted when that bug is fixed."
-
-	self skip898.
-	super testEventsFromClickSelectionChangePermitted!
-
 testNewSelectionsCtrlShiftClickAdditive
 	| event |
 	self setUpForSelectionTesting.
@@ -68,7 +62,6 @@ testNewSelectionsShiftClickWithSelectionMark
 !MultiSelectListViewTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
 !MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
 !MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testEventsFromClickSelectionChangePermitted!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !

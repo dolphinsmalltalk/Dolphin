@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #ListView
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha _unused34 _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
@@ -1523,12 +1523,12 @@ maybeSelChanging: aSymbol
 			^self].
 	self onSelChanged: curSel!
 
-nmClick: pNMHDR 
+nmClick: pNMHDR
 	"Private - Handler for a NM_CLICK notification message.
 	We intercept this to catch potential selection changes resulting from a drag-select
 	operation."
 
-	self isMultiSelect ifTrue: [self maybeSelChanging: #mouse].
+	self maybeSelChanging: #mouse.
 	^super nmClick: pNMHDR!
 
 nmNotify: pNMHDR
@@ -1566,12 +1566,12 @@ nmNotify: pNMHDR
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
-nmRClick: pNMHDR 
+nmRClick: pNMHDR
 	"Private - Handler for a NM_RCLICK notification message.
 	We intercept this to catch potential selection changes resulting from a drag-select
 	operation."
 
-	self isMultiSelect ifTrue: [self maybeSelChanging: #mouse].
+	self maybeSelChanging: #mouse.
 	^super nmRClick: pNMHDR!
 
 nmSelChanged: anExternalAddress 
@@ -1596,17 +1596,14 @@ onButtonPressed: aMouseEvent
 		ifFalse: 
 			[(self onSelChanging: indices cause: #mouse)
 				ifTrue: 
-					[| answer |
-					"Selection change permitted"
+					["Selection change permitted"
 					(Keyboard default isButtonDown: aMouseEvent button)
 						ifFalse: 
 							[self
-								postMessage: WM_MOUSEMOVE
+								postMessage: aMouseEvent message + 1
 								wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
 								lParam: aMouseEvent lParam].
-					answer := aMouseEvent defaultWindowProcessing.
-					self onSelChanged.	"Selection may have changed"
-					answer]
+					aMouseEvent defaultWindowProcessing]
 				ifFalse: 
 					["Suppress the mouse down so not received by control"
 					0]]!
@@ -1777,24 +1774,24 @@ onSelChanged
 
 onSelChanged: anArray 
 	lastSelIndices := anArray.
+	approvedSelIndices := nil.
 	super onSelChanged: anArray!
 
 onSelChanging: anArray cause: aSymbol
-	"Private - Selection is changing in the receiver to the item in the receiver's model 
-	identified by the specified <Collection> of <integer> indices. 
-	Note that #selectionChanging: events are only fired as a direct consequence of 
-	user initiated actions, not in response to selection changes that occur as direct 
-	or indirect results of programmatic actions."
+	"Private - Selection is changing in the receiver to the item in the receiver's model identified by the specified <Collection> of <integer> indices. Answer whether to allow the selection change to proceed.
+	Note that #selectionChanging: events are only fired as a direct consequence of  user initiated actions, not in response to selection changes that occur as direct  or indirect results of programmatic actions."
 
 	^self isStateRestoring or: 
-			[| event |
-			event := SelectionChangingEvent forSource: self.
-			event
-				newSelections: (anArray collect: [:each | self objectFromHandle: each]);
-				oldSelections: (lastSelIndices collect: [:each | self objectFromHandle: each]);
-				cause: aSymbol.
-			self presenter onSelectionChanging: event.
-			event value]!
+			[anArray = approvedSelIndices or: 
+					[| event |
+					event := SelectionChangingEvent forSource: self.
+					event
+						newSelections: (anArray collect: [:each | self objectFromHandle: each]);
+						oldSelections: (lastSelIndices collect: [:each | self objectFromHandle: each]);
+						cause: aSymbol.
+					self presenter onSelectionChanging: event.
+					event value ifTrue: [approvedSelIndices := anArray].
+					event value]]!
 
 onSelRemoved
 	"Private - A selected item has been removed. Update the receiver's selection state to
@@ -1810,6 +1807,7 @@ onViewCreated
 
 	super onViewCreated.
 	lastSelIndices := #().
+	approvedSelIndices := nil.
 	self setControlBackcolor.
 	self forecolor ifNotNil: [:fore | self forecolor: fore].
 	self allColumns
@@ -2200,7 +2198,8 @@ updateSelectionCache
 	"Private - The receiver's model is being modified, so we may need to account for selection changes caused by that.
 	Of course this can't add a selection if there is none."
 
-	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]!
+	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex].
+	approvedSelIndices := nil!
 
 viewMode
 	"Answer the view mode of the receiver.

@@ -269,7 +269,7 @@ newSelectionsFromEvent: aMouseEvent
 					["Other buttons have no effect on the selection"
 					self selectionsByIndex]].
 	newSelections := self getSelectionsByIndex.
-	anyKeysDown := aMouseEvent isShiftDown or: [aMouseEvent isCtrlDown].
+	anyKeysDown := aMouseEvent isModifierDown.
 	"If the click is outside all items, and ctrl or shift is down, nothing changes."
 	(itemClicked isNil and: [anyKeysDown]) ifTrue: [^newSelections].
 	"A right or middle click on an already-selected item also does not change the selection,
