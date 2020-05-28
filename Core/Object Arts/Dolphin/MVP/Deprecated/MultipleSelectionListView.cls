@@ -32,7 +32,7 @@ selection: newSelection ifAbsent: exceptionHandler
 selectionByIndex
 	"Legacy behaviour was to redefine the result to be a collection."
 
-	^self getMultipleSelections!
+	^self selectionsByIndex!
 
 selectionByIndex: anInteger ifAbsent: exceptionHandler 
 	"Legacy behaviour for backwards compatibility."

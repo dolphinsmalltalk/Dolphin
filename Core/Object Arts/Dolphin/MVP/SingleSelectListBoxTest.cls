@@ -12,7 +12,7 @@ SingleSelectListBoxTest comment: ''!
 
 testSelectionModeChange
 	| objects |
-	self deny: presenter view isMultiSelect.
+	self deny: self isMultiSelect.
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	self assert: presenter hasSelection not.

@@ -225,6 +225,13 @@ extent: aPoint
 	super 
 		extent: (self mode == #simple ifTrue: [aPoint] ifFalse: [aPoint x @ self actualHeight])!
 
+getSelectionsByIndex
+	"Private - Query the current selections from the control"
+
+	| index |
+	index := (self sendMessage: CB_GETCURSEL) + 1.
+	^index == 0 ifTrue: [#()] ifFalse: [{index}]!
+
 getSingleSelection
 	"Private - Answer the one-based <integer> 'index' of the selected object in the receiver or
 	zero if there is none."
@@ -307,6 +314,11 @@ placement: aWINDOWPLACEMENT
 			placement rcNormalPosition: rect].
 	super placement: placement!
 
+selectionByIndex
+	"Answer the one-based <integer> 'index' of the selected object in the receiver or zero if there is none."
+
+	^(self sendMessage: CB_GETCURSEL) + 1!
+
 setSingleSelection: anInteger 
 	"Private - Set the selection to the item with the specified index (1-based), scrolling it
 	into view if necessary."
@@ -359,6 +371,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !ComboBox categoriesFor: #editHwnd!accessing!private! !
 !ComboBox categoriesFor: #editView!accessing!public! !
 !ComboBox categoriesFor: #extent:!geometry!public! !
+!ComboBox categoriesFor: #getSelectionsByIndex!private!selection! !
 !ComboBox categoriesFor: #getSingleSelection!helpers!private!selection! !
 !ComboBox categoriesFor: #initialize!initializing!private! !
 !ComboBox categoriesFor: #itemCount!accessing!public! !
@@ -367,6 +380,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !ComboBox categoriesFor: #mode:!accessing-styles!public! !
 !ComboBox categoriesFor: #onPositionChanged:!event handling!public! !
 !ComboBox categoriesFor: #placement:!geometry!private! !
+!ComboBox categoriesFor: #selectionByIndex!helpers!private!selection! !
 !ComboBox categoriesFor: #setSingleSelection:!private!selection! !
 !ComboBox categoriesFor: #textLimit:!accessing!public! !
 !ComboBox categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !

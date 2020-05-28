@@ -201,20 +201,30 @@ getMultipleSelections
 	the receiver, in ascending order. This will fail if the ListBox is not in multi-select mode."
 
 	| count buffer |
-	count := self getSelCount.
+	count := self getSelectedCount.
 	count <= 0 ifTrue: [^#()].
 	buffer := DWORDArray new: count.
-	(self 
+	(self
 		sendMessage: LB_GETSELITEMS
 		wParam: count
-		lpParam: buffer asParameter) = LB_ERR 
+		lpParam: buffer asParameter) = LB_ERR
 		ifTrue: [self errorNotMultiSelect].
 	^buffer collect: [:each | each + 1]!
 
-getSelCount
+getSelectedCount
 	| count |
 	count := self sendMessage: LB_GETSELCOUNT.
 	^count == LB_ERR ifTrue: [self getSingleSelection == 0 ifTrue: [0] ifFalse: [1]] ifFalse: [count]!
+
+getSelectionsByIndex
+	"Private - Query the current selections from the control."
+
+	^self isMultiSelect
+		ifTrue: [self getMultipleSelections]
+		ifFalse: 
+			[| index |
+			index := self getSingleSelection.
+			index == 0 ifTrue: [#()] ifFalse: [{index}]]!
 
 getSingleSelection
 	"Private - Answer the one-based <integer> 'index' of the selected object in the receiver or
@@ -365,6 +375,17 @@ lbnSelChange
 	self onSelChanging.
 	^nil!
 
+onRightButtonPressed: aMouseEvent
+	| indices |
+	self presenter trigger: #rightButtonPressed: with: aMouseEvent.
+	indices := self newSelectionsFromEvent: aMouseEvent.
+	(indices ~= lastSelIndices and: [self onSelChanging: indices cause: #mouse])
+		ifTrue: 
+			["Selection change permitted"
+			self selectionsByIndex: indices.
+			self onSelChanged: indices].
+	^aMouseEvent defaultWindowProcessing!
+
 positionForKeyboardContextMenu
 	"Answer the desired position for a context menu requested from the keyboard.
 	This should be based on the 'current selection', whatever that means in the context of the
@@ -376,17 +397,6 @@ positionForKeyboardContextMenu
 		ifTrue: [super positionForKeyboardContextMenu]
 		ifFalse: [self mapPoint: (self itemRect: caret) bottomLeft to: self class desktop]
 !
-
-primarySelectionIndex
-	"Answer the index of the selected item with focus, or zero if there is no selection."
-
-	| caret selected |
-	selected := self selectionsByIndex.
-	^selected isEmpty
-		ifTrue: [0]
-		ifFalse: 
-			[caret := self caretIndex.
-			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
 
 selectAll
 	| size |
@@ -401,7 +411,7 @@ selectedCount
 	process. Thus we have to make this work for a list box which claims to be multiple
 	selection, but which is in fact single selection."
 
-	^self isMultiSelect ifTrue: [self getSelCount] ifFalse: [super selectedCount]!
+	^self isMultiSelect ifTrue: [self getSelectedCount] ifFalse: [super selectedCount]!
 
 selectIndex: anInteger set: aBoolean 
 	"Private - Set/reset the selection state of the object at the specified one-based <integer>
@@ -418,14 +428,6 @@ selectIndex: anInteger set: aBoolean
 					self errorSubscriptBounds: anInteger]
 				ifFalse: [self errorNotMultiSelect]]!
 
-selectionFromPoint: pos
-	"Private - Answer the selection that would occur if a mouse click at the
-	<Point>, pos, was passed to the control."
-
-	| item |
-	item := self itemFromPoint: pos.
-	^self isMultiSelect ifTrue: [item isNil ifTrue: [#()] ifFalse: [{item}]] ifFalse: [item]!
-
 selectionMode
 	^SelectionModes keyAtValue: (self baseStyle bitAnd: SelectionModeMask)!
 
@@ -440,7 +442,7 @@ selectionMode: aSymbol
 	mode := self selectionMode.
 	mode == aSymbol ifTrue: [^self].
 	self baseStyle: (SelectionModes at: aSymbol) maskedBy: SelectionModeMask.
-	(mode == #single eqv: aSymbol == #single) ifFalse: [self onSelChanged: self selectionsByIndex]!
+	(mode == #single eqv: aSymbol == #single) ifFalse: [self onSelChanged: self getSelectionsByIndex]!
 
 setSingleSelection: anInteger 
 	"Private - Set the selection to the item with the specified index (1-based), scrolling it
@@ -468,19 +470,7 @@ state
 	^super state
 		add: (MessageSend receiver: self selector: #horizontalExtent: argument: self horizontalExtent);
 		yourself
-!
-
-wmRButtonDown: message wParam: wParam lParam: lParam 
-	"Handle a WM_RBUTTONDOWN. We select the item under the mouse before
-	passing control on."
-
-	| sel |
-	sel := self selectionFromPoint: lParam lowPartSigned @ lParam highPartSigned.
-	sel notNil ifTrue: [self selectionByIndex: sel].
-	^super 
-		wmRButtonDown: message
-		wParam: wParam
-		lParam: lParam! !
+! !
 !ListBox categoriesFor: #anchorIndex!public!selection! !
 !ListBox categoriesFor: #anchorIndex:!public!selection! !
 !ListBox categoriesFor: #basicAdd:!adding!private! !
@@ -502,7 +492,8 @@ wmRButtonDown: message wParam: wParam lParam: lParam
 !ListBox categoriesFor: #dropHighlight!drag & drop!private! !
 !ListBox categoriesFor: #ensureSelectionVisible!public!selection! !
 !ListBox categoriesFor: #getMultipleSelections!private!selection! !
-!ListBox categoriesFor: #getSelCount!public!selection! !
+!ListBox categoriesFor: #getSelectedCount!private!selection! !
+!ListBox categoriesFor: #getSelectionsByIndex!private!selection! !
 !ListBox categoriesFor: #getSingleSelection!helpers!private!selection! !
 !ListBox categoriesFor: #hasPermanentScrollbars!public!testing! !
 !ListBox categoriesFor: #hasPermanentScrollbars:!accessing-styles!public! !
@@ -523,18 +514,16 @@ wmRButtonDown: message wParam: wParam lParam: lParam
 !ListBox categoriesFor: #lbnErrSpace!event handling-win32!private! !
 !ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
 !ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
+!ListBox categoriesFor: #onRightButtonPressed:!event handling!public! !
 !ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
-!ListBox categoriesFor: #primarySelectionIndex!public!selection! !
 !ListBox categoriesFor: #selectAll!public!selection! !
 !ListBox categoriesFor: #selectedCount!public!selection! !
 !ListBox categoriesFor: #selectIndex:set:!private!selection! !
-!ListBox categoriesFor: #selectionFromPoint:!event handling!private! !
 !ListBox categoriesFor: #selectionMode!accessing-styles!public! !
 !ListBox categoriesFor: #selectionMode:!accessing-styles!public! !
 !ListBox categoriesFor: #setSingleSelection:!private!selection! !
 !ListBox categoriesFor: #showDropHighlight:!drag & drop!private! !
 !ListBox categoriesFor: #state!accessing!private! !
-!ListBox categoriesFor: #wmRButtonDown:wParam:lParam:!event handling-win32!public! !
 
 ListBox methodProtocol: #multipleIndexSelectableItems attributes: #(#readOnly) selectors: #(#addSelectionsByIndex: #clearSelectionsByIndex: #selectionsByIndex #selectionsByIndex: #selectionsByIndex:ifAbsent:)!
 ListBox methodProtocol: #multipleSelectableItems attributes: #(#readOnly) selectors: #(#addSelections: #addSelections:ifAbsent: #hasSelection #selectAll #selections #selections: #selections:ifAbsent:)!

@@ -20,35 +20,11 @@ initializePresenter
 sortSelections
 	^#(49 50)!
 
-testNewSelectionsClickOutsideListWithModifiers
-	| event |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1).
-	OrderedCollection new
-		add: #(#control);
-		add: #(#shift);
-		add: #(#control #shift);
-		do: 
-				[:modifiers |
-				event := self mouseDownEventOnItem: 0 buttons: (modifiers copyWith: #left).
-				self assert: (presenter newSelectionsFromEvent: event) equals: #(1)]!
+testEventsFromClickSelectionChangePermitted
+	"Fails because of duplicated selectionChanging: event. To be deleted when that bug is fixed."
 
-testNewSelectionsCtrlClickOnSelectedItem
-	| event |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3).
-	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(3).
-	presenter selectionsByIndex: #(1).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #()!
-
-testNewSelectionsCtrlClickOnUnselectedItem
-	| event |
-	self setUpForSelectionTesting.
-	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1).
-	presenter selectionsByIndex: #(3).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3)!
+	self skip898.
+	super testEventsFromClickSelectionChangePermitted!
 
 testNewSelectionsCtrlShiftClickAdditive
 	| event |
@@ -57,11 +33,11 @@ testNewSelectionsCtrlShiftClickAdditive
 		selectionsByIndex: #(1 3);
 		anchorIndex: 3.
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 4 5 6 7).
+	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
 	"Programatically changing selection does not change the anchor."
 	self assert: presenter anchorIndex equals: 3.
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 4 5 6 7)!
+	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7)!
 
 testNewSelectionsCtrlShiftClickSubtractive
 	| event |
@@ -73,136 +49,27 @@ testNewSelectionsCtrlShiftClickSubtractive
 	"In Windows Explorer and other applications that use ListView or a similar control,
 	(2) would not be selected at this point. Why is it in Dolphin?
 	(See comment at the end of #newSelectionsFromEvent:.)"
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 2 7).
+	self verifyNewSelectionsFromEvent: event equals: #(1 2 7).
 	presenter selectionsByIndex: #(1 3 5 7).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 2 7)!
-
-testNewSelectionsInitialShiftClick
-	| event |
-	self setUpForSelectionTesting.
-	event := self mouseDownEventOnItem: 1 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1).
-	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(3)!
-
-testNewSelectionsNonLeftClicksWithModifiers
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3 5).
-	"Right or middle clicks with any modifiers will never modify the selection. Just cover a few example cases."
-	OrderedCollection new
-		add: 1 -> #(#right #control);
-		add: 2 -> #(#middle #shift);
-		add: 3 -> #(#right #control #shift);
-		add: 0 -> #(#middle #control);
-		do: 
-				[:assoc |
-				| event |
-				event := self mouseDownEventOnItem: assoc key buttons: assoc value.
-				self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 5)]!
-
-testNewSelectionsRightClickOutsideSelection
-	| event |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3 5).
-	event := self mouseDownEventOnItem: 2 buttons: #(#right).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(2)!
-
-testNewSelectionsRightClickWithinSelection
-	| event |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3 5).
-	event := self mouseDownEventOnItem: 3 buttons: #(#right).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 5)!
+	self verifyNewSelectionsFromEvent: event equals: #(1 2 7)!
 
 testNewSelectionsShiftClickWithSelectionMark
 	| event |
 	self setUpForSelectionTesting.
 	presenter anchorIndex: 3.
 	event := self mouseDownEventOnItem: 5 buttons: #(#left #shift).
-	"It does not really matter what is currently selected, only what is marked and what is clicked"
-	OrderedCollection new
-		add: #();
-		add: #(3);
-		add: #(1 2 3);
-		add: #(3 4 5 6);
-		do: 
-				[:oldSelections |
-				presenter selectionsByIndex: oldSelections.
-				self assert: (presenter newSelectionsFromEvent: event) equals: #(3 4 5)].
+	"In a ListView it does not really matter what is currently selected, only what is marked and what is clicked. The anchor is not expected to be part of the existing selection, and does not move on programmatic selection either."
+	#(#() #(3) #(1 2 3) #(3 4 5 6)) do: 
+			[:oldSelections |
+			presenter selectionsByIndex: oldSelections.
+			self verifyNewSelectionsFromEvent: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) equals: #(3)!
-
-testSelectionEventsFromLeftClick
-	"Fails because of duplicated selectionChanging: event. To be deleted when that bug is fixed."
-
-	self skipIfCiBuild.
-	super testSelectionEventsFromLeftClick!
-
-testSelectionsByIndex
-	| objects sel |
-	objects := self objectsToTest.
-	presenter view isMultiSelect: true.
-	presenter model addAll: objects.
-	"Select a single object"
-	sel := Array with: objects size.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting same element should be a no-op"
-	self
-		shouldnt: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting a pair including the existing selection"
-	sel := Array with: 1 with: objects size.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting same pair should be a no-op"
-	self
-		shouldnt: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting single item from existing selection should remove other selections"
-	sel := #(1).
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting a different pair not including the existing single selection"
-	sel := Array with: 2 with: objects size - 1.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"#selectionByIndex: should also clear other selections"
-	sel := sel copyFrom: 2.
-	self
-		should: [presenter selectionByIndex: sel first]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel! !
+	self verifyNewSelectionsFromEvent: event equals: #(3)! !
 !MultiSelectListViewTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
 !MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
 !MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlClickOnSelectedItem!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlClickOnUnselectedItem!public!unit tests! !
+!MultiSelectListViewTest categoriesFor: #testEventsFromClickSelectionChangePermitted!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsInitialShiftClick!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsNonLeftClicksWithModifiers!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsRightClickOutsideSelection!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testNewSelectionsRightClickWithinSelection!public!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testSelectionEventsFromLeftClick!public!unit tests! !
-!MultiSelectListViewTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
 

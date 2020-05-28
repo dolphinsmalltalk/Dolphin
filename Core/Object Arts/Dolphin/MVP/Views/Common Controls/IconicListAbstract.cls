@@ -244,11 +244,11 @@ ensureItemVisible: anObject
 
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary.
-	Raise an error if there is no selection."
+	Do nothing if there is no selection."
 
-	| selections |
-	selections := self selectionsByIndex.
-	selections notEmpty ifTrue: [self ensureVisible: selections first]!
+	| index |
+	index := self primarySelectionIndex.
+	index == 0 ifFalse: [self ensureVisible: index]!
 
 ensureVisible: anIntegerOrHandle 
 	"Ensure the item with the specified index is visible, scrolling it into view if necessary."
@@ -487,7 +487,7 @@ nmSelChanged: anExternalAddress
 	"Private - Default handler for the ??N_SELCHANGED notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	^self onSelChanged: self selectionsByIndex!
+	^self onSelChanged: self getSelectionsByIndex!
 
 nmSetDispInfoW: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.

@@ -124,14 +124,14 @@ onSelChanging
 	change be denied."
 
 	| curSel |
-	(curSel := self selectionsByIndex) = lastSelIndices 
+	(curSel := self getSelectionsByIndex) = lastSelIndices 
 		ifFalse: 
 			[(self onSelChanging: curSel cause: #unknown) 
 				ifFalse: 
 					["Attempt to revert to previous selection"
 
 					self basicSelectionsByIndex: lastSelIndices.
-					(curSel := self selectionsByIndex) = lastSelIndices 
+					(curSel := self getSelectionsByIndex) = lastSelIndices 
 						ifTrue: 
 							["Successfully prevented selection change"
 
@@ -174,6 +174,11 @@ refreshContents
 	self basicRefreshContents.
 	self onSelChanged!
 
+selectionByIndex
+	"Answer the 1-based <integer> index of the selected item in the view, or zero if there is not exactly one selection."
+
+	^lastSelIndices size == 1 ifTrue: [lastSelIndices at: 1] ifFalse: [0]!
+
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
@@ -186,6 +191,13 @@ selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	indices := self handlesFromObjects: aCollection whenAbsent: [:e | missing addLast: e].
 	self setSelectionsByIndex: indices.
 	^missing isEmpty ifTrue: [aCollection] ifFalse: [aNiladicOrMonadicValuable cull: missing]!
+
+selectionsByIndex
+	"Answer an <Array> of the <integer> the indices of the selected items 
+	in the receiver in ascending order. The array will be empty if there is
+	no selection."
+
+	^lastSelIndices!
 
 selectionsByIndex: aCollection ifAbsent: exceptionHandler
 	"Select the objects identified by the <collection> of <integer> indices, indices, in the
@@ -212,8 +224,7 @@ selectionState
 setSelectionsByIndex: indices 
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
-	"Note: We have to check again whether the selection has changed because of the single-select
-	case"
+	"Note: We have to check again whether the selection has changed because of the single-select case"
 	self onSelChanged!
 
 updateItem: anObject atIndex: anInteger 
@@ -233,7 +244,7 @@ updateItem: anObject atIndex: anInteger
 updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
-	lastSelIndices notEmpty ifTrue: [lastSelIndices := self selectionsByIndex]! !
+	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
 !BasicListAbstract categoriesFor: #basicAdd:!adding!private! !
 !BasicListAbstract categoriesFor: #basicRefreshContents!private!updating! !
 !BasicListAbstract categoriesFor: #basicResetSelection!private!selection! !
@@ -254,10 +265,12 @@ updateSelectionCache
 !BasicListAbstract categoriesFor: #onSelChanging:cause:!event handling!private! !
 !BasicListAbstract categoriesFor: #onViewCreated!event handling!public! !
 !BasicListAbstract categoriesFor: #refreshContents!public!updating! !
+!BasicListAbstract categoriesFor: #selectionByIndex!public!selection! !
 !BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
+!BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
 !BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
 !BasicListAbstract categoriesFor: #selectionState!accessing!private! !
-!BasicListAbstract categoriesFor: #setSelectionsByIndex:!public!selection! !
+!BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
 !BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
 !BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !
 
