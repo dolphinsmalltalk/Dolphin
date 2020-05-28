@@ -12,85 +12,55 @@ MultiSelectListBoxTest comment: 'Test a ListBox in multi-select mode. Inherited 
 
 initializePresenter
 	super initializePresenter.
-	presenter view selectionMode: #multi!
+	presenter view isMultiSelect: true!
 
-testLastSelectionCacheUpdatedOnRemove
-	super testLastSelectionCacheUpdatedOnRemove.
-	presenter selectionsByIndex: #(2 4).
-	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(2 4).
-	self
-		shouldnt: 
-			[presenter model removeAll: (Array with: presenter model first with: (presenter model at: 3))]
-		triggerAnyOf: #(#selectionChanging: #selectionChanged)
-		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 2).
-	self
-		should: [presenter model removeAll: presenter model copy]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #().
-	presenter model addAll: self objectsToTest.
-	presenter selectionsByIndex: #(1 3 5).
-	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 3 5).
-	self
-		should: [presenter model remove: presenter model last]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 3)!
+testNewSelectionsCtrlShiftClickAdditive
+	| event |
+	self setUpForSelectionTesting.
+	presenter
+		selectionsByIndex: #(1 3);
+		anchorIndex: 3.
+	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
+	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7).
+	presenter selectionsByIndex: #(1 3 5 7).
+	"Programatically changing selection in a ListBox does change the anchor (because it expects that the anchor is part of the selection, unsually the last selected item), unlike a ListView."
+	self assert: presenter anchorIndex equals: 7.
+	presenter anchorIndex: 3.
+	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7)!
 
-testSelectionsByIndex
-	| objects sel |
-	objects := self objectsToTest.
-	presenter view isMultiSelect: true.
-	presenter model addAll: objects.
-	"Select a single object"
-	sel := Array with: objects size.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting same element should be a no-op"
-	self
-		shouldnt: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting a pair including the existing selection"
-	sel := Array with: 1 with: objects size.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting same pair should be a no-op"
-	self
-		shouldnt: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting single item from existing selection should remove other selections"
-	sel := #(1).
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"Selecting a different pair not including the existing single selection"
-	sel := Array with: 2 with: objects size - 1.
-	self
-		should: [presenter selectionsByIndex: sel]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel.
-	"#selectionByIndex: should also clear other selections"
-	sel := sel copyFrom: 2.
-	self
-		should: [presenter selectionByIndex: sel first]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selectionsByIndex equals: sel! !
-!MultiSelectListBoxTest categoriesFor: #initializePresenter!public!Running! !
-!MultiSelectListBoxTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
+testNewSelectionsCtrlShiftClickSubtractive
+	| event |
+	self setUpForSelectionTesting.
+	presenter
+		selectionsByIndex: #(1 2 3 4 5 7);
+		anchorIndex: 6.
+	event := self mouseDownEventOnItem: 2 buttons: #(#left #control #shift).
+	"ListBox does not seem to have the issue that we have with ListView where the ctrl-shift-left-clicked item is retained in the selection when it should not be"
+	self verifyNewSelectionsFromEvent: event equals: #(1 7).
+	self assert: presenter caretIndex equals: 2.
+	presenter selectionsByIndex: #(1 3 5 7).
+	"Unlike ListView, programmatically changing the selection moves the anchor, so we must reset it."
+	presenter anchorIndex: 6.
+	self verifyNewSelectionsFromEvent: event equals: #(1 7)!
+
+testNewSelectionsShiftClickWithSelectionMark
+	| event |
+	self setUpForSelectionTesting.
+	event := self mouseDownEventOnItem: 5 buttons: #(#left #shift).
+	#(#() #(3) #(1 2 3) #(3 4 5 6)) do: 
+			[:oldSelections |
+			| expected |
+			presenter selectionsByIndex: oldSelections.
+			"Changing the selections in a ListBox moves the anchor (because it expects that the anchor is effectively the last selected item), so we must reset it each time."
+			presenter anchorIndex: 3.
+			self assert: presenter anchorIndex equals: 3.
+			"In a ListBox, unlike a ListView, the current selection does matter. If the anchor is set to an item in the selection, then that item will still be selected on a Shift-Click. If the anchor is not a selected item, then the selection will on Shift-Click will not include it."
+			expected := (oldSelections includes: 3) ifTrue: [#(3 4 5)] ifFalse: [#(4 5)].
+			self verifyNewSelectionsFromEvent: event equals: expected].
+	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
+	self verifyNewSelectionsFromEvent: event equals: #(3)! !
+!MultiSelectListBoxTest categoriesFor: #initializePresenter!private!Running! !
+!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
+!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
+!MultiSelectListBoxTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
 

@@ -630,19 +630,6 @@ getItemText: anInteger
 	self lvmGetItem: item.
 	^item pszText!
 
-getMultipleSelections
-	"Private - Answer an <Array> of the <integer> the indices of the selected items in the
-	receiver in ascending order. The array will be empty if there is no selection."
-
-	^self withOldWndProc: 
-			[| count index answer |
-			count := self getSelectedCount.
-			answer := Array new: count.
-			index := -1.
-			1 to: count
-				do: [:i | answer at: i put: (index := self lvmGetNextItem: index flags: LVNI_SELECTED) + 1].
-			answer]!
-
 getSelectedCount
 	"Private - Query the total number of items selected from the control."
 
@@ -651,12 +638,16 @@ getSelectedCount
 getSelectionsByIndex
 	"Private - Query the actual current selections from the control."
 
-	^self isMultiSelect
-		ifTrue: [self getMultipleSelections]
-		ifFalse: 
-			[| index |
-			index := self getSingleSelection.
-			index == 0 ifTrue: [#()] ifFalse: [{index}]]!
+	| selections index |
+	selections := Array writeStream.
+	index := -1.
+	
+	[(index := self
+				sendMessage: LVM_GETNEXTITEM
+				wParam: index
+				lParam: LVNI_SELECTED) == -1]
+			whileFalse: [selections nextPut: index + 1].
+	^selections contents!
 
 getSingleSelection
 	"Private - Answer the one-based <integer> index of the selected object in the receiver or
@@ -1532,56 +1523,6 @@ maybeSelChanging: aSymbol
 			^self].
 	self onSelChanged: curSel!
 
-newSelectionsFromEvent: event
-	"Private - Answer a collection of the <integer> selections that would occur if the <MouseEvent>,
-	event, was was passed to the control."
-
-	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
-	itemClicked := self itemFromPoint: event position.
-	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
-	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
-	newSelections := self getSelectionsByIndex.
-	anyKeysDown := event isShiftDown or: [event isCtrlDown].
-	"If the click is outside all items, and ctrl or shift is down, nothing changes."
-	(itemClicked isNil and: [anyKeysDown]) ifTrue: [^newSelections].
-	"A right or middle click on an already-selected item also does not change the selection,
-	otherwise it would be very frustrating to open the context menu with multiple items selected.
-	The control also chooses to leave the selection alone if modifiers are held during a right/middle click."
-	(event button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]])
-		ifTrue: [^newSelections].
-	"Having taken care of the above edge cases, if no keys are down, the behavior is equivalent to the single-select case."
-	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
-	"Only Ctrl is down, so we flip the selection state of the clicked item."
-	event isShiftDown
-		ifFalse: 
-			[newSelections := newSelections asSortedCollection.
-			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
-			^newSelections asArray].
-	"At least Shift is down, so we must start examining the 'anchor'. This is the last item
-	that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the
-	anchor). It acts as the 'start point' for operations where shift is held--they affect
-	the range of items from the anchor to the click point, inclusive. Initially it is zero,
-	i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on
-	the item actually clicked."
-	anchorIndex := self anchorIndex.
-	shiftRange := anchorIndex == 0
-				ifTrue: [itemClicked to: itemClicked]
-				ifFalse: [(anchorIndex min: itemClicked) to: (anchorIndex max: itemClicked)].
-	"Only shift is down, not ctrl, so the current selection will be entirely replaced by the marked range."
-	event isCtrlDown ifFalse: [^shiftRange asArray].
-	"Both ctrl and shift are down, so we set the selection state of the affected range to that of the
-	anchor itself. Note that this ignores the selection state of the item actually clicked
-	and everything in between it and the anchor."
-	newSelections := newSelections asSet.
-	anchorIsSelected := newSelections includes: anchorIndex.
-	shiftRange do: (anchorIsSelected
-				ifTrue: [[:i | newSelections add: i]]
-				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
-	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
-	of the marked range. This is not true in e.g. Windows Explorer--why is it in Dolphin?"
-	newSelections add: itemClicked.
-	^newSelections asSortedCollection asArray!
-
 nmClick: pNMHDR 
 	"Private - Handler for a NM_CLICK notification message.
 	We intercept this to catch potential selection changes resulting from a drag-select
@@ -1657,6 +1598,12 @@ onButtonPressed: aMouseEvent
 				ifTrue: 
 					[| answer |
 					"Selection change permitted"
+					(Keyboard default isButtonDown: aMouseEvent button)
+						ifFalse: 
+							[self
+								postMessage: WM_MOUSEMOVE
+								wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
+								lParam: aMouseEvent lParam].
 					answer := aMouseEvent defaultWindowProcessing.
 					self onSelChanged.	"Selection may have changed"
 					answer]
@@ -1878,17 +1825,6 @@ primaryColumn
 
 	^self allColumns first!
 
-primarySelectionIndex
-	"Answer the index of the selected item with focus, or zero if there is no selection."
-
-	| caret selected |
-	selected := self selectionsByIndex.
-	^selected isEmpty
-		ifTrue: [0]
-		ifFalse: 
-			[caret := self caretIndex.
-			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
-
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicates how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
@@ -1998,6 +1934,11 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: SelectionStateMask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
+selectionByIndex
+	"Answer the 1-based <integer> index of the selected item in the view, or zero if there is not exactly one selection."
+
+	^lastSelIndices size == 1 ifTrue: [lastSelIndices at: 1] ifFalse: [0]!
+
 selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
@@ -2061,10 +2002,12 @@ setSelectionsByIndex: indices
 	| selections |
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
-	"Use the actual selections that resulted"
+	"Use the actual selections that resulted - we need to check these again against the last selections, as in the single selection case the actual selection may not have changed if multiple selections were requested and the first is still the same as the previous single selection."
 	selections := self getSelectionsByIndex.
-	self ensureItemsVisible: selections.
-	self onSelChanged: selections!
+	selections = lastSelIndices
+		ifFalse: 
+			[self ensureItemsVisible: selections.
+			self onSelChanged: selections]!
 
 setSingleSelection: anInteger 
 	self selectIndex: anInteger set: anInteger ~~ 0!
@@ -2361,7 +2304,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #forecolor:!accessing!public! !
 !ListView categoriesFor: #forgetLastClickedColumn!helpers!private! !
 !ListView categoriesFor: #getItemText:!accessing!private! !
-!ListView categoriesFor: #getMultipleSelections!private!selection! !
 !ListView categoriesFor: #getSelectedCount!private!selection! !
 !ListView categoriesFor: #getSelectionsByIndex!private!selection! !
 !ListView categoriesFor: #getSingleSelection!private!selection! !
@@ -2484,7 +2426,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvnMarqueeBegin:!event handling-win32!private! !
 !ListView categoriesFor: #lvnODStateChanged:!event handling-win32!private! !
 !ListView categoriesFor: #maybeSelChanging:!event handling!private! !
-!ListView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
 !ListView categoriesFor: #nmClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ListView categoriesFor: #nmRClick:!event handling-win32!private! !
@@ -2507,7 +2448,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onSelRemoved!public!selection! !
 !ListView categoriesFor: #onViewCreated!event handling!public! !
 !ListView categoriesFor: #primaryColumn!columns!private! !
-!ListView categoriesFor: #primarySelectionIndex!public!selection! !
 !ListView categoriesFor: #queryCommand:!commands!public! !
 !ListView categoriesFor: #refreshContents!public!updating! !
 !ListView categoriesFor: #refreshNonVirtual!private!updating! !
@@ -2520,6 +2460,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
+!ListView categoriesFor: #selectionByIndex!public!selection! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex!public!selection! !
 !ListView categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !

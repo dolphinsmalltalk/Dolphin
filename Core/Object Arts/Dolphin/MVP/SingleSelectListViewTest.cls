@@ -18,7 +18,7 @@ sortSelections
 
 testSelectionModeChange
 	| objects caret |
-	self deny: presenter view isMultiSelect.
+	self deny: self isMultiSelect.
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	presenter selectionByIndex: 1.
@@ -26,7 +26,7 @@ testSelectionModeChange
 		shouldnt: [presenter view isMultiSelect: true]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter view isMultiSelect.
+	self assert: self isMultiSelect.
 	self assert: presenter selectionsByIndex equals: #(1).
 	presenter selectionsByIndex: #(2 3).
 	caret := presenter view caretIndex.

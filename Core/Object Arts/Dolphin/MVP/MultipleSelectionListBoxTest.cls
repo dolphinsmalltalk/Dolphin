@@ -105,13 +105,13 @@ testSelectionCacheUpdated
 	box model list: (1 to: 6) asOrderedCollection.
 	box selections: #(1 3 5).
 	box model remove: 2.
-	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
+	self assert: box lastSelIndices equals: box selectionsByIndex.
 	box model addFirst: 0.
-	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
+	self assert: box lastSelIndices equals: box selectionsByIndex.
 	box model add: 4.5 afterIndex: 4.
-	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
+	self assert: box lastSelIndices equals: box selectionsByIndex.
 	box model remove: 1.
-	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex!
+	self assert: box lastSelIndices equals: box selectionsByIndex!
 
 testSelectionIfAbsent
 	"Test legacy selection behaviour is maintained (even though it is incorrect)"

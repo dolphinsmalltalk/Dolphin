@@ -25,6 +25,9 @@ buttonFlag
 
 	^self button ifNil: [0] ifNotNil: [:button | self class wParamFlags at: button]!
 
+isButtonDown
+	^wParam anyMask: ##(MK_LBUTTON | MK_RBUTTON | MK_MBUTTON | MK_XBUTTON1 | MK_XBUTTON2)!
+
 isCtrlDown
 	"Answer whether the control key is down."
 
@@ -45,6 +48,9 @@ isRButtonDown
 
 	^wParam anyMask: MK_RBUTTON!
 
+isSelectionButtonDown
+	^wParam anyMask: ##(MK_LBUTTON | MK_RBUTTON)!
+
 isShiftDown
 	"Answer whether the shift key is down."
 
@@ -55,15 +61,28 @@ isXButtonDown: anInteger
 
 	(anInteger between: 1 and: 2)
 		ifFalse: [self error: 'Invalid X button number: ' , anInteger displayString].
-	^wParam anyMask: (MK_XBUTTON1 bitShift: anInteger - 1)! !
+	^wParam anyMask: (MK_XBUTTON1 bitShift: anInteger - 1)!
+
+printWParamOn: aStream
+	| first |
+	first := true.
+	#('MK_CONTROL' 'MK_SHIFT' 'MK_LBUTTON' 'MK_RBUTTON' 'MK_MBUTTON' 'MK_XBUTTON1' 'MK_XBUTTON2') do: 
+			[:each |
+			(wParam allMask: (Win32Constants at: each))
+				ifTrue: 
+					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+					aStream nextPutAll: each]]! !
 !MouseEvent categoriesFor: #button!accessing!public! !
 !MouseEvent categoriesFor: #buttonFlag!accessing!public! !
+!MouseEvent categoriesFor: #isButtonDown!helpers!private! !
 !MouseEvent categoriesFor: #isCtrlDown!public!testing! !
 !MouseEvent categoriesFor: #isLButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isMButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isRButtonDown!public!testing! !
+!MouseEvent categoriesFor: #isSelectionButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isShiftDown!public!testing! !
 !MouseEvent categoriesFor: #isXButtonDown:!public!testing! !
+!MouseEvent categoriesFor: #printWParamOn:!development!printing!private! !
 
 !MouseEvent class methodsFor!
 

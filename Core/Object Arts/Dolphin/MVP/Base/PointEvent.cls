@@ -15,6 +15,12 @@ position
 
 	^self x @ self y!
 
+printLParamOn: aStream 
+	"Private - Append a textual representation of the receiver's lParam to aStream, in a format
+	appropriate for the type of event."
+
+	aStream print: self position!
+
 screenPosition
 	"Answer the point stored in the receiver's lParam mapped to screen coordinates"
 
@@ -30,6 +36,7 @@ y
 
 	^self lParamY! !
 !PointEvent categoriesFor: #position!accessing!public! !
+!PointEvent categoriesFor: #printLParamOn:!printing!private! !
 !PointEvent categoriesFor: #screenPosition!accessing!public! !
 !PointEvent categoriesFor: #x!accessing!public! !
 !PointEvent categoriesFor: #y!accessing!public! !

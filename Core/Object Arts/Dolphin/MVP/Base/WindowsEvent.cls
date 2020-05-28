@@ -75,13 +75,21 @@ printOn: aStream
 	aStream
 		print: self window;
 		space.
-	msg isNil ifTrue: [self message printOn: aStream base: 16 showRadix: true] ifFalse: [aStream nextPutAll: msg].
-	aStream
-		space;
-		print: self wParam;
-		space.
+	msg isNil
+		ifTrue: 
+			[self message
+				printOn: aStream
+				base: 16
+				showRadix: true]
+		ifFalse: [aStream nextPutAll: msg].
+	aStream space.
+	self printWParamOn: aStream.
+	aStream space.
 	self printLParamOn: aStream.
 	aStream nextPut: $)!
+
+printWParamOn: aStream
+	aStream print: self wParam!
 
 window: aView message: msgInteger wParam: wInteger lParam: lInteger
 	"Private - Initialize the receiver's instance variables from the parameters."
@@ -101,8 +109,9 @@ wParam
 !WindowsEvent categoriesFor: #lResult!accessing!public! !
 !WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
 !WindowsEvent categoriesFor: #message!accessing!private! !
-!WindowsEvent categoriesFor: #printLParamOn:!printing!private! !
+!WindowsEvent categoriesFor: #printLParamOn:!development!printing!private! !
 !WindowsEvent categoriesFor: #printOn:!development!printing!public! !
+!WindowsEvent categoriesFor: #printWParamOn:!development!printing!private! !
 !WindowsEvent categoriesFor: #window:message:wParam:lParam:!initializing!private! !
 !WindowsEvent categoriesFor: #wParam!accessing!public! !
 

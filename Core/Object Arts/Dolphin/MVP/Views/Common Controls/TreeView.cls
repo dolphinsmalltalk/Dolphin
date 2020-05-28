@@ -357,6 +357,13 @@ getItemText: itemHandle
 	self tvmGetItem: tvItem.
 	^tvItem pszText!
 
+getSelectionsByIndex
+	"Private - Query the control for the current selection"
+
+	| selection |
+	selection := self tvmGetNextItem: nil code: TVGN_CARET.
+	^selection == 0 ifTrue: [#()] ifFalse: [{selection}]!
+
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
 	the receiver, or nil if there is no selection."
@@ -930,13 +937,18 @@ selection: anObject ifAbsent: exceptionHandler
 		ifNil: [exceptionHandler cull: anObject]
 		ifNotNil: [anObject]!
 
+selectionByIndex
+	"Answer the 'index' (or in the case of the receiver, the handle) of the selected object in the receiver, or 0 if there is no selection."
+
+	^self tvmGetNextItem: nil code: TVGN_CARET!
+
 selectionByIndex: itemHandle ifAbsent: exceptionHandler
 	"Select the object identified by the 'handle', itemHandle, in the receiver.
 	Answer the 'handle' of the resulting selection (the selection might not
 	change if the selection changing request is denied)."
 
 	| oldSel |
-	(oldSel := self getSingleSelection) = itemHandle
+	(oldSel := self selectionByIndex) = itemHandle
 		ifFalse: 
 			[(self setSingleSelection: itemHandle)
 				ifTrue: [(self objectFromHandle: itemHandle ifAbsent: []) ifNil: [^exceptionHandler value]]
@@ -1236,6 +1248,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #getIndent!accessing!private! !
 !TreeView categoriesFor: #getItemState:!helpers!private! !
 !TreeView categoriesFor: #getItemText:!accessing!private! !
+!TreeView categoriesFor: #getSelectionsByIndex!private!selection! !
 !TreeView categoriesFor: #getSingleSelection!private!selection! !
 !TreeView categoriesFor: #handleFromObject:ifAbsent:!accessing!private! !
 !TreeView categoriesFor: #hasButtons!accessing-styles!public! !
@@ -1296,6 +1309,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #resolutionScaledBy:!geometry!private! !
 !TreeView categoriesFor: #restoreSelection:!binary filing!private!selection! !
 !TreeView categoriesFor: #selection:ifAbsent:!public!selection! !
+!TreeView categoriesFor: #selectionByIndex!private!selection! !
 !TreeView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
 !TreeView categoriesFor: #selectionFromPoint:!event handling!private! !
 !TreeView categoriesFor: #selectionIfNone:!public!selection! !

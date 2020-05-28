@@ -166,7 +166,7 @@ paintTabLabelsOn: aCanvas
 	itemCount < 1 ifTrue: [^self].
 	nOldMode := aCanvas backgroundMode: TRANSPARENT.
 	oldFont := aCanvas font: self actualFont.
-	selectedIndex := self getSingleSelection.
+	selectedIndex := self selectionByIndex.
 	1 to: selectedIndex - 1
 		do: 
 			[:i |
@@ -215,7 +215,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 	numItems <= 0 ifTrue: [^self].
 	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
 	hot := self itemFromPoint: self cursorPosition.
-	selected := self getSingleSelection.
+	selected := self selectionByIndex.
 	themeLib := ThemeLibrary default.
 	dc := aCanvas asParameter.
 	hTheme := self theme.
@@ -325,7 +325,7 @@ paintVerticalTabLabelsOn: aCanvas
 	itemCount < 1 ifTrue: [^self].
 	oldFont := aCanvas font: self createVerticalFont.
 	nOldMode := aCanvas backgroundMode: TRANSPARENT.
-	selectedIndex := self getSingleSelection.
+	selectedIndex := self selectionByIndex .
 	1 to: selectedIndex - 1
 		do: 
 			[:i | 

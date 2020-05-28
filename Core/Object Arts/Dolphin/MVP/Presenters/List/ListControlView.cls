@@ -148,18 +148,8 @@ getInfoTipBlock: monad
 	over. At present basic lists do not support bubble help, so this message is a no-op."
 !
 
-getMultipleSelections
-	"Private - Answer an <Array> of the one based <integer> indices of the selected items in 
-	the receiver, in ascending order."
-
-	"Subclasses which support multiple selections must override this method"
-
-	^self errorNotMultiSelect!
-
-getSingleSelection
-	"Private - Answer the 'index' of the selected object in the receiver or zero/nil if there is
-	none. The 'index' could be an <integer> or some kind of handle, whatever representation is
-	used by the control to communicate selections."
+getSelectionsByIndex
+	"Private - Query the current selections from the control."
 
 	^self subclassResponsibility!
 
@@ -264,6 +254,62 @@ list: aSequenceableCollection
 
 	self model list: aSequenceableCollection!
 
+newSelectionsFromEvent: aMouseEvent
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the control.
+	This method encodes the selection behaviour of `ListView` in response to mouse clicks, and is used there to predict what it will do in order to generate `selectionChanging:` events that the control itself does not provide (or at least not in virtual mode). The method is also used to implement right-click selection for `ListBox`, but note that it does not precisely replicate the listbox control's native left-click selection behaviour."
+
+	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
+	itemClicked := self itemFromPoint: aMouseEvent position.
+	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
+	self isMultiSelect
+		ifFalse: 
+			[^aMouseEvent isSelectionButtonDown
+				ifTrue: [itemClicked ifNil: [#()] ifNotNil: [:item | {item}]]
+				ifFalse: 
+					["Other buttons have no effect on the selection"
+					self selectionsByIndex]].
+	newSelections := self getSelectionsByIndex.
+	anyKeysDown := aMouseEvent isShiftDown or: [aMouseEvent isCtrlDown].
+	"If the click is outside all items, and ctrl or shift is down, nothing changes."
+	(itemClicked isNil and: [anyKeysDown]) ifTrue: [^newSelections].
+	"A right or middle click on an already-selected item also does not change the selection,
+	otherwise it would be very frustrating to open the context menu with multiple items selected.
+	The control also chooses to leave the selection alone if modifiers are held during a right/middle click."
+	(aMouseEvent button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]])
+		ifTrue: [^newSelections].
+	"Having taken care of the above edge cases, if no keys are down, the behavior is equivalent to the single-select case."
+	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
+	"Only Ctrl is down, so we flip the selection state of the clicked item."
+	aMouseEvent isShiftDown
+		ifFalse: 
+			[newSelections := newSelections asSortedCollection.
+			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
+			^newSelections asArray].
+	"At least Shift is down, so we must start examining the 'anchor'. This is the last item
+	that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the
+	anchor). It acts as the 'start point' for operations where shift is held--they affect
+	the range of items from the anchor to the click point, inclusive. Initially it is zero,
+	i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on
+	the item actually clicked."
+	anchorIndex := self anchorIndex.
+	shiftRange := anchorIndex == 0
+				ifTrue: [itemClicked to: itemClicked]
+				ifFalse: [(anchorIndex min: itemClicked) to: (anchorIndex max: itemClicked)].
+	"Only shift is down, not ctrl, so the current selection will be entirely replaced by the marked range."
+	aMouseEvent isCtrlDown ifFalse: [^shiftRange asArray].
+	"Both ctrl and shift are down, so we set the selection state of the affected range to that of the
+	anchor itself. Note that this ignores the selection state of the item actually clicked
+	and everything in between it and the anchor."
+	newSelections := newSelections asSet.
+	anchorIsSelected := newSelections includes: anchorIndex.
+	shiftRange do: (anchorIsSelected
+				ifTrue: [[:i | newSelections add: i]]
+				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
+	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
+	of the marked range. This is not true in e.g. Windows Explorer--why is it in Dolphin?"
+	newSelections add: itemClicked.
+	^newSelections asSortedCollection asArray!
+
 noSelection
 	"Private - Answer the receiver's representation of no selection."
 
@@ -312,7 +358,7 @@ onSelChanged
 	"Private - Handle a selection change event by forwarding to the presenter."
 
 	| selections |
-	selections := self selectionsByIndex.
+	selections := self getSelectionsByIndex.
 	selections = self lastSelIndices ifFalse: [self onSelChanged: selections]!
 
 onSelChanged: anArray 
@@ -336,6 +382,17 @@ onSelectionChanging: aSelectionChangingEvent
 	false. The default is to trigger an #selectionChanging: event off the presenter"
 
 	self presenter trigger: #selectionChanging: with: aSelectionChangingEvent!
+
+primarySelectionIndex
+	"Answer the index of the selected item with focus, or zero if there is no selection."
+
+	| caret selected |
+	selected := self selectionsByIndex.
+	^selected isEmpty
+		ifTrue: [0]
+		ifFalse: 
+			[caret := self caretIndex.
+			(selected includes: caret) ifTrue: [caret] ifFalse: [selected first]]!
 
 refreshContents
 	"Refresh the receiver's contents to match the contents collection"
@@ -491,16 +548,9 @@ selections: newSelection ifAbsent: exceptionHandler
 		ifFalse: [self selection: newSelection first ifAbsent: exceptionHandler]!
 
 selectionsByIndex
-	"Answer an <Array> of the <integer> the indices of the selected items 
-	in the receiver in ascending order. The array will be empty if there is
-	no selection."
+	"Answer an <Array> of the <integer> the indices of the selected items in the receiver in ascending order. The array will be empty if there is no selection."
 
-	^self isMultiSelect
-		ifTrue: [self getMultipleSelections]
-		ifFalse: 
-			[| index |
-			index := self getSingleSelection.
-			index == 0 ifTrue: [#()] ifFalse: [{index}]]!
+	^self getSelectionsByIndex!
 
 selectionsByIndex: aCollectionOfIntegers
 	^self selectionsByIndex: aCollectionOfIntegers
@@ -604,8 +654,7 @@ updateSelectionCache
 !ListControlView categoriesFor: #errorNotMultiSelect!private!selection! !
 !ListControlView categoriesFor: #getInfoTipBlock!accessing!public! !
 !ListControlView categoriesFor: #getInfoTipBlock:!accessing!public! !
-!ListControlView categoriesFor: #getMultipleSelections!private!selection! !
-!ListControlView categoriesFor: #getSingleSelection!private!selection! !
+!ListControlView categoriesFor: #getSelectionsByIndex!private!selection! !
 !ListControlView categoriesFor: #getTextBlock!adapters!public! !
 !ListControlView categoriesFor: #getTextBlock:!adapters!public! !
 !ListControlView categoriesFor: #handleFromObject:!accessing!private! !
@@ -621,6 +670,7 @@ updateSelectionCache
 !ListControlView categoriesFor: #lastSelIndices!private! !
 !ListControlView categoriesFor: #list!accessing!public! !
 !ListControlView categoriesFor: #list:!accessing!public! !
+!ListControlView categoriesFor: #newSelectionsFromEvent:!event handling!private! !
 !ListControlView categoriesFor: #noSelection!constants!private! !
 !ListControlView categoriesFor: #objectFromHandle:!accessing!private! !
 !ListControlView categoriesFor: #objectFromHandle:ifAbsent:!accessing!private! !
@@ -633,6 +683,7 @@ updateSelectionCache
 !ListControlView categoriesFor: #onSelChanged:!event handling!private! !
 !ListControlView categoriesFor: #onSelectionChanged!event handling!public! !
 !ListControlView categoriesFor: #onSelectionChanging:!event handling!public! !
+!ListControlView categoriesFor: #primarySelectionIndex!public!selection! !
 !ListControlView categoriesFor: #refreshContents!public!updating! !
 !ListControlView categoriesFor: #requestDragObjects:!drag & drop!public! !
 !ListControlView categoriesFor: #resetSelection!public!selection! !

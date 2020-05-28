@@ -25,6 +25,7 @@ package classNames
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
+	add: #ListControlTest;
 	add: #ListPresenterTest;
 	add: #ListViewTest;
 	add: #MockScintillaView;
@@ -341,7 +342,7 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableListItemsTest subclass: #ListBoxTest
+SelectableListItemsTest subclass: #ListControlTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -351,14 +352,19 @@ SelectableListItemsTest subclass: #ListPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableListItemsTest subclass: #ListViewTest
-	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
-	classVariableNames: ''
-	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
 SelectableListItemsTest subclass: #TabViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListControlTest subclass: #ListBoxTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ListControlTest subclass: #ListViewTest
+	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
+	classVariableNames: 'Test898'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListBoxTest subclass: #MultiSelectListBoxTest
