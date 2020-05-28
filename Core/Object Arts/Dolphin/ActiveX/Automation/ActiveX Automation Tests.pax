@@ -5,6 +5,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #BSTRTest;
 	add: #IDispatchTest;
 	add: #SAFEARRAYTest;
 	add: #VARIANTTest;
@@ -32,6 +33,11 @@ package!
 
 "Class Definitions"!
 
+DolphinTest subclass: #BSTRTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
