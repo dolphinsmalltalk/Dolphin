@@ -364,7 +364,7 @@ ListControlTest subclass: #ListBoxTest
 	classInstanceVariableNames: ''!
 ListControlTest subclass: #ListViewTest
 	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
-	classVariableNames: 'Test898'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListBoxTest subclass: #MultiSelectListBoxTest

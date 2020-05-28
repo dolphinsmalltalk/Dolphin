@@ -26,6 +26,8 @@ buttonFlag
 	^self button ifNil: [0] ifNotNil: [:button | self class wParamFlags at: button]!
 
 isButtonDown
+	"Is the event associated with any mouse button being down?"
+
 	^wParam anyMask: ##(MK_LBUTTON | MK_RBUTTON | MK_MBUTTON | MK_XBUTTON1 | MK_XBUTTON2)!
 
 isCtrlDown
@@ -42,6 +44,11 @@ isMButtonDown
 	"Answer whether the middle mouse button is down."
 
 	^wParam anyMask: MK_MBUTTON!
+
+isModifierDown
+	"Answer whether the control or shift key is down."
+
+	^wParam anyMask: ##(MK_CONTROL | MK_SHIFT)!
 
 isRButtonDown
 	"Answer whether the right mouse button is down."
@@ -74,10 +81,11 @@ printWParamOn: aStream
 					aStream nextPutAll: each]]! !
 !MouseEvent categoriesFor: #button!accessing!public! !
 !MouseEvent categoriesFor: #buttonFlag!accessing!public! !
-!MouseEvent categoriesFor: #isButtonDown!helpers!private! !
+!MouseEvent categoriesFor: #isButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isCtrlDown!public!testing! !
 !MouseEvent categoriesFor: #isLButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isMButtonDown!public!testing! !
+!MouseEvent categoriesFor: #isModifierDown!public!testing! !
 !MouseEvent categoriesFor: #isRButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isSelectionButtonDown!public!testing! !
 !MouseEvent categoriesFor: #isShiftDown!public!testing! !

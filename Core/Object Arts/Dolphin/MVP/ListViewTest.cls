@@ -2,12 +2,11 @@
 
 ListControlTest subclass: #ListViewTest
 	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
-	classVariableNames: 'Test898'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListViewTest guid: (GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
 ListViewTest isAbstract: true!
-ListViewTest addClassConstant: 'Test898' value: false!
 ListViewTest comment: ''!
 !ListViewTest categoriesForClass!Unclassified! !
 !ListViewTest methodsFor!
@@ -127,9 +126,6 @@ setUpForSelectionTesting
 	super setUpForSelectionTesting.
 	presenter view viewMode: #list!
 
-skip898
-	self skipUnless: [Test898]!
-
 sortSelections
 	^self subclassResponsibility!
 
@@ -230,9 +226,6 @@ testEventsFromClickSelectChangeConfirmed
 	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is confirmed with a prompt so the control does not receive the mouse up associated with the actual click.
 	Regression test for #898."
 
-	"Test fails because the listview blocks in a modal message loop in its WM_LBUTTONDOWN handler"
-
-	self skip898.
 	self setUpForSelectionEventTesting.
 	selectionChanging := 
 			[:selChanging |
@@ -433,7 +426,6 @@ verifyNewSelectionsFromEvent: aMouseEvent equals: anArray
 !ListViewTest categoriesFor: #setColumns:!helpers!private! !
 !ListViewTest categoriesFor: #setUpForSelectionEventTesting!helpers!private! !
 !ListViewTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
-!ListViewTest categoriesFor: #skip898!private!unit tests! !
 !ListViewTest categoriesFor: #sortSelections!helpers!public! !
 !ListViewTest categoriesFor: #testBackImage!public!unit tests! !
 !ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
