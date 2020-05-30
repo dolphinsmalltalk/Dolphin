@@ -132,30 +132,26 @@ setUpForSelectionEventTesting
 setUpForSelectionTesting
 	presenter list: (1 to: 10) asOrderedCollection!
 
-testEventsFromClickSelectChangeConfirmed
-	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is confirmed with a prompt so the control does not receive the mouse up associated with the actual click.
-	Regression test for #898."
+testEventsFromClickSelectionChange
+	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is rejected but without a prompt so the control still receives the mouse up."
 
+	| decision |
 	self setUpForSelectionEventTesting.
+	decision := false.
 	selectionChanging := 
 			[:selChanging |
-			| msg |
 			events addLast: selChanging.
-			"Consume the mouse up so the control does not receive it."
-			msg := MSG new.
-			UserLibrary default
-				getMessage: msg
-				hWnd: presenter view handle
-				wMsgFilterMin: WM_LBUTTONUP
-				wMsgFilterMax: WM_LBUTTONUP.
-			"Allow the selection change to proceed"
-			selChanging value: true].
+			selChanging value: decision].
+	self verifyEventsFromClickSelectionChangeRejected: #left.
+	decision := true.
 	self verifyEventsFromClickSelectionChangeAccepted: #left!
 
-testEventsFromClickSelectChangeRefused
+testEventsFromClickSelectionChangePrompted
 	"Test that the expected sequence of selection events are raised for left-click selection, simulating the selectionChanging: event being refused by user in response to a prompt so the control does not receive the mouse up associated with the actual click."
 
+	| decision |
 	self setUpForSelectionEventTesting.
+	decision := false.
 	selectionChanging := 
 			[:selChanging |
 			| msg |
@@ -167,26 +163,11 @@ testEventsFromClickSelectChangeRefused
 				hWnd: presenter view handle
 				wMsgFilterMin: WM_LBUTTONUP
 				wMsgFilterMax: WM_LBUTTONUP.
-			"Prevent the selection change from proceeding"
-			selChanging value: false].
-	self verifyEventsFromClickSelectionChangeRejected: #left!
-
-testEventsFromClickSelectionChangePermitted
-	"Test that the expected sequence of selectionChanging: and selectionChanged events are raised for left-click selection with the selection change permitted without a prompt.
-	The test sends simulated mouse clicks to the control to try and test the actual control integration."
-
-	self setUpForSelectionEventTesting.
+			"Confirm or refuse the selection change"
+			selChanging value: decision].
+	self verifyEventsFromClickSelectionChangeRejected: #left.
+	decision := true.
 	self verifyEventsFromClickSelectionChangeAccepted: #left!
-
-testEventsFromClickSelectionChangeRejected
-	"Test that the expected sequence of selection events are raised for left-click selection when the selectionChanging: event is rejected but without a prompt so the control still receives the mouse up."
-
-	self setUpForSelectionEventTesting.
-	selectionChanging := 
-			[:selChanging |
-			events addLast: selChanging.
-			selChanging value: false].
-	self verifyEventsFromClickSelectionChangeRejected: #left!
 
 testLastSelectionCacheUpdatedOnRemove
 	"#717"
@@ -223,30 +204,62 @@ testLastSelectionCacheUpdatedOnRemove
 		against: presenter.
 	self assert: presenter lastSelIndices equals: #(1 3)!
 
+testNewSelectionNonLeftClicks
+	| event selections |
+	self setUpForSelectionTesting.
+	presenter selectionsByIndex: #(1 3 5).
+	event := self mouseDownEventOnItem: 2 buttons: #(#right).
+	self verifyNewSelectionsFromEvent: event equals: #(2).
+	presenter selectionsByIndex: #(3 5).
+	selections := presenter selectionsByIndex.
+	event := self mouseDownEventOnItem: 3 buttons: #(#right).
+	self verifyNewSelectionsFromEvent: event equals: selections.
+	presenter selectionsByIndex: #(1 3 5).
+	selections := presenter selectionsByIndex.
+	"Right or middle clicks with any modifiers will never modify the selection. Just cover a few example cases."
+	#(#(4 #(#right #control)) #(2 #(#middle #shift)) #(3 #(#right #control #shift)) #(0 #(#middle #control)))
+		do: 
+			[:pair |
+			| mouseDown expected |
+			mouseDown := self mouseDownEventOnItem: pair first buttons: pair second.
+			expected := (mouseDown isRButtonDown and: [self isMultiSelect not])
+						ifTrue: [{pair first}]
+						ifFalse: [selections].
+			self verifyNewSelectionsFromEvent: mouseDown equals: expected.
+			selections := expected]!
+
+testNewSelectionsBasicLeftClicks
+	"Tests left-click on an item changes selection, and left-click in no-mans land."
+
+	| event inNoMansLand |
+	self setUpForSelectionTesting.
+	inNoMansLand := self mouseDownEventOnItem: 0 buttons: #(#left).
+	self verifyNewSelectionsFromEvent: inNoMansLand equals: #().
+	event := self mouseDownEventOnItem: 1 buttons: #(#left).
+	self verifyNewSelectionsFromEvent: event equals: #(1).
+	presenter selectionsByIndex: #(3).
+	self verifyNewSelectionsFromEvent: event equals: #(1).
+	self verifyNewSelectionsFromEvent: inNoMansLand
+		equals: (self newSelectionAfterLeftClickOutsideList: #(1))!
+
 testNewSelectionsClickOutsideListWithModifiers
 	"ListView and ListBox behaviour differs"
 
 	self subclassResponsibility!
 
-testNewSelectionsCtrlClickOnSelectedItem
-	| event expected |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3).
-	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	"Ctrl-click over selected item makes no different in single-select mode"
-	expected := {self isMultiSelect ifTrue: [3] ifFalse: [1]}.
-	self verifyNewSelectionsFromEvent: event equals: expected.
-	presenter selectionsByIndex: #(1).
-	self isMultiSelect ifTrue: [expected := #()].
-	self verifyNewSelectionsFromEvent: event equals: expected!
-
-testNewSelectionsCtrlClickOnUnselectedItem
+testNewSelectionsCtrlLeftClick
 	| event expected |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
 	self verifyNewSelectionsFromEvent: event equals: #(1).
 	presenter selectionsByIndex: #(3).
 	expected := self isMultiSelect ifTrue: [#(1 3)] ifFalse: [#(1)].
+	self verifyNewSelectionsFromEvent: event equals: expected.
+	"Ctrl-click over selected item makes no different in single-select mode"
+	expected := {self isMultiSelect ifTrue: [3] ifFalse: [1]}.
+	self verifyNewSelectionsFromEvent: event equals: expected.
+	presenter selectionsByIndex: #(1).
+	self isMultiSelect ifTrue: [expected := #()].
 	self verifyNewSelectionsFromEvent: event equals: expected!
 
 testNewSelectionsInitialShiftClick
@@ -260,56 +273,6 @@ testNewSelectionsInitialShiftClick
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifyNewSelectionsFromEvent: event equals: #(3)!
 
-testNewSelectionsLeftClickOutsideList
-	| event |
-	self setUpForSelectionTesting.
-	event := self mouseDownEventOnItem: 0 buttons: #(#left).
-	self verifyNewSelectionsFromEvent: event equals: #().
-	presenter selectionsByIndex: #(3).
-	self verifyNewSelectionsFromEvent: event equals: (self newSelectionAfterLeftClickOutsideList: #(3))!
-
-testNewSelectionsNonLeftClicksWithModifiers
-	"Single selection ListView will always change the selection for right button clicks, regardless of modifiers"
-
-	| selections |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3 5).
-	selections := presenter selectionsByIndex.
-	"Right or middle clicks with any modifiers will never modify the selection. Just cover a few example cases."
-	#(#(4 #(#right #control)) #(2 #(#middle #shift)) #(3 #(#right #control #shift)) #(0 #(#middle #control)))
-		do: 
-			[:pair |
-			| event expected |
-			event := self mouseDownEventOnItem: pair first buttons: pair second.
-			expected := (event isRButtonDown and: [self isMultiSelect not])
-						ifTrue: [{pair first}]
-						ifFalse: [selections].
-			self verifyNewSelectionsFromEvent: event equals: expected.
-			selections := expected]!
-
-testNewSelectionsRightClickOutsideSelection
-	| event |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(1 3 5).
-	event := self mouseDownEventOnItem: 2 buttons: #(#right).
-	self verifyNewSelectionsFromEvent: event equals: #(2)!
-
-testNewSelectionsRightClickWithinSelection
-	| event selections |
-	self setUpForSelectionTesting.
-	presenter selectionsByIndex: #(3 5).
-	selections := presenter selectionsByIndex.
-	event := self mouseDownEventOnItem: 3 buttons: #(#right).
-	self verifyNewSelectionsFromEvent: event equals: selections!
-
-testNewSelectionsSimpleLeftClick
-	| event |
-	self setUpForSelectionTesting.
-	event := self mouseDownEventOnItem: 1 buttons: #(#left).
-	self verifyNewSelectionsFromEvent: event equals: #(1).
-	presenter selectionsByIndex: #(3).
-	self verifyNewSelectionsFromEvent: event equals: #(1)!
-
 testProgrammaticSelectionVisible
 	"#1381"
 
@@ -317,7 +280,7 @@ testProgrammaticSelectionVisible
 
 	| view |
 	view := presenter view.
-	view list: (0 to: 100) asOrderedCollection.
+	view list: (0 to: 100).
 	#(#(100) #(50 100) #(100 50) #(1)) do: 
 			[:each | 
 			view selections: each.
@@ -335,7 +298,10 @@ verifyClicks: anArray
 	self subclassResponsibility!
 
 verifyEventsFromClickSelectionChangeAccepted: aSymbol
-	| changed changing click event |
+	| changed changing event |
+	presenter view selectionsByIndex: #().
+	events := OrderedCollection new.
+	clicks := OrderedCollection new.
 	event := self mouseDownEventOnItem: 2 buttons: {aSymbol}.
 	self sendClickEvent: event.
 	self assert: events size equals: 2.
@@ -364,6 +330,8 @@ verifyEventsFromClickSelectionChangeAccepted: aSymbol
 
 verifyEventsFromClickSelectionChangeRejected: aSymbol
 	| event changing |
+	events := OrderedCollection new.
+	clicks := OrderedCollection new.
 	event := self mouseDownEventOnItem: 2 buttons: {aSymbol}.
 	self sendClickEvent: event.
 	self assert: events size equals: 1.
@@ -514,20 +482,14 @@ verifySingleSelectionsByIndex
 !ListControlTest categoriesFor: #setupClickIntercept!helpers!private! !
 !ListControlTest categoriesFor: #setUpForSelectionEventTesting!helpers!private! !
 !ListControlTest categoriesFor: #setUpForSelectionTesting!helpers!private! !
-!ListControlTest categoriesFor: #testEventsFromClickSelectChangeConfirmed!public!unit tests! !
-!ListControlTest categoriesFor: #testEventsFromClickSelectChangeRefused!public!unit tests! !
-!ListControlTest categoriesFor: #testEventsFromClickSelectionChangePermitted!public!unit tests! !
-!ListControlTest categoriesFor: #testEventsFromClickSelectionChangeRejected!public!unit tests! !
+!ListControlTest categoriesFor: #testEventsFromClickSelectionChange!public!unit tests! !
+!ListControlTest categoriesFor: #testEventsFromClickSelectionChangePrompted!public!unit tests! !
 !ListControlTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
+!ListControlTest categoriesFor: #testNewSelectionNonLeftClicks!public!unit tests! !
+!ListControlTest categoriesFor: #testNewSelectionsBasicLeftClicks!public!unit tests! !
 !ListControlTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsCtrlClickOnSelectedItem!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsCtrlClickOnUnselectedItem!public!unit tests! !
+!ListControlTest categoriesFor: #testNewSelectionsCtrlLeftClick!public!unit tests! !
 !ListControlTest categoriesFor: #testNewSelectionsInitialShiftClick!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsLeftClickOutsideList!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsNonLeftClicksWithModifiers!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsRightClickOutsideSelection!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsRightClickWithinSelection!public!unit tests! !
-!ListControlTest categoriesFor: #testNewSelectionsSimpleLeftClick!public!unit tests! !
 !ListControlTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
 !ListControlTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
 !ListControlTest categoriesFor: #timeoutId!constants!private! !
