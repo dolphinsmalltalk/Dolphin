@@ -10,9 +10,6 @@ MultiSelectListViewTest comment: ''!
 !MultiSelectListViewTest categoriesForClass!Unclassified! !
 !MultiSelectListViewTest methodsFor!
 
-expectedSelectionsForSendShiftClickTests
-	^#(2 3 4)!
-
 initializePresenter
 	super initializePresenter.
 	presenter view isMultiSelect: true!
@@ -59,7 +56,6 @@ testNewSelectionsShiftClickWithSelectionMark
 			self verifyNewSelectionsFromEvent: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifyNewSelectionsFromEvent: event equals: #(3)! !
-!MultiSelectListViewTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
 !MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
 !MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !

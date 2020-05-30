@@ -2,7 +2,7 @@
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
-	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex RevertSelMessage SelectionStateMask UnknownItem'
+	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -521,13 +521,6 @@ defaultWindowStyle
 		##(LVS_ICON | LVS_SHAREIMAGELISTS | LVS_SHOWSELALWAYS | LVS_SINGLESEL| 
 			LVS_OWNERDATA	"This style is necessary for virtual list behaviour"
 			)!
-
-dispatchRegistered: registeredId wParam: wParam lParam: lParam
-	"Private - Dispatch the registered message which was sent to the receiver."
-
-	^registeredId == RevertSelMessage
-		ifTrue: [self revertSelection. 0]
-		ifFalse: [super dispatchRegistered: registeredId wParam: wParam lParam: lParam]!
 
 editLabelStyle
 	"Private - Answer the <integer> style mask used to control whether label editing is enabled
@@ -1523,6 +1516,14 @@ maybeSelChanging: aSymbol
 			^self].
 	self onSelChanged: curSel!
 
+nmBeginDrag: pNMHDR
+	self maybeSelChanging: #mouse.
+	^super nmBeginDrag: pNMHDR!
+
+nmBeginRDrag: pNMHDR
+	self maybeSelChanging: #mouse.
+	^super nmBeginRDrag: pNMHDR!
+
 nmClick: pNMHDR
 	"Private - Handler for a NM_CLICK notification message.
 	We intercept this to catch potential selection changes resulting from a drag-select
@@ -1765,13 +1766,6 @@ onRightButtonPressed: aMouseEvent
 	self presenter trigger: #rightButtonPressed: with: aMouseEvent.
 	^self onButtonPressed: aMouseEvent!
 
-onSelChanged
-	"Private - Handle a selection change event by forwarding to the presenter."
-
-	| selections |
-	selections := self getSelectionsByIndex.
-	selections = lastSelIndices ifFalse: [self onSelChanged: selections]!
-
 onSelChanged: anArray 
 	lastSelIndices := anArray.
 	approvedSelIndices := nil.
@@ -1905,12 +1899,6 @@ resolutionScaledBy: scale
 
 	self allColumns do: [:each | each resolutionScaledBy: scale].
 	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * scale) truncated]!
-
-revertSelection
-	"Private - Revert to the last recorded selection (useful if the user indicated that he didn't want
-	to change selection after all when prompted)."
-
-	self basicSelectionsByIndex: lastSelIndices!
 
 selectAll
 	| size |
@@ -2292,7 +2280,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #defaultListViewExStyle!accessing-styles!constants!private! !
 !ListView categoriesFor: #defaultThumbnailExtent!constants!private! !
 !ListView categoriesFor: #defaultWindowStyle!constants!private! !
-!ListView categoriesFor: #dispatchRegistered:wParam:lParam:!operations!private! !
 !ListView categoriesFor: #editLabelStyle!constants!private! !
 !ListView categoriesFor: #ensureItemsVisible:!helpers!private! !
 !ListView categoriesFor: #ensureSelectionVisible!public!selection! !
@@ -2425,12 +2412,14 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvnMarqueeBegin:!event handling-win32!private! !
 !ListView categoriesFor: #lvnODStateChanged:!event handling-win32!private! !
 !ListView categoriesFor: #maybeSelChanging:!event handling!private! !
+!ListView categoriesFor: #nmBeginDrag:!event handling-win32!private! !
+!ListView categoriesFor: #nmBeginRDrag:!event handling-win32!private! !
 !ListView categoriesFor: #nmClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ListView categoriesFor: #nmRClick:!event handling-win32!private! !
 !ListView categoriesFor: #nmSelChanged:!event handling-win32!private! !
 !ListView categoriesFor: #notificationClass!constants!private! !
-!ListView categoriesFor: #onButtonPressed:!event handling!private! !
+!ListView categoriesFor: #onButtonPressed:!private! !
 !ListView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
 !ListView categoriesFor: #onDropDown:!event handling!private! !
 !ListView categoriesFor: #onEraseRequired:!event handling!public! !
@@ -2441,7 +2430,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !ListView categoriesFor: #onPositionChanged:!event handling!public! !
 !ListView categoriesFor: #onRightButtonPressed:!event handling!public! !
-!ListView categoriesFor: #onSelChanged!private!selection! !
 !ListView categoriesFor: #onSelChanged:!event handling!private! !
 !ListView categoriesFor: #onSelChanging:cause:!event handling!private! !
 !ListView categoriesFor: #onSelRemoved!public!selection! !
@@ -2455,7 +2443,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #reportMode!commands!public! !
 !ListView categoriesFor: #resetSelection!public!selection! !
 !ListView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!ListView categoriesFor: #revertSelection!helpers!private!selection! !
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
 !ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
@@ -2535,7 +2522,6 @@ onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after
 	the fact."
 
-	RevertSelMessage := self registerMessage: 'RevertSelection'.
 	NTLibrary isWine
 		ifTrue: 
 			["Having autoSelectPackages option turned on in System  Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."

@@ -343,7 +343,7 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableListItemsTest subclass: #ListControlTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -358,12 +358,12 @@ SelectableListItemsTest subclass: #TabViewTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListControlTest subclass: #ListBoxTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListControlTest subclass: #ListViewTest
-	instanceVariableNames: 'selectionChanging events selectionChanged nmClick clicks timedout'
+	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
