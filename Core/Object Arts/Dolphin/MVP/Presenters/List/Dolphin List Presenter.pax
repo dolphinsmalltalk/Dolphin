@@ -53,7 +53,7 @@ SelectableItemsPresenter subclass: #ListPresenter
 	classInstanceVariableNames: ''!
 ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
-	classVariableNames: ''
+	classVariableNames: 'RevertSelMessage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListControlView subclass: #BasicListAbstract
@@ -67,7 +67,7 @@ BasicListAbstract subclass: #ComboBox
 	poolDictionaries: 'ComboBoxConstants'
 	classInstanceVariableNames: ''!
 BasicListAbstract subclass: #ListBox
-	instanceVariableNames: '_reserved'
+	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!

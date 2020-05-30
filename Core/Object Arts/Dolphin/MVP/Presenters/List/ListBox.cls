@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicListAbstract subclass: #ListBox
-	instanceVariableNames: '_reserved'
+	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!
@@ -366,16 +366,142 @@ lbnErrSpace
 lbnSelCancel
 	"Private - A LBN_SELCANCEL has been received by our parent window."
 
-	self onSelChanging.
+	self maybeSelChanging: #mouse.
 	^nil!
 
 lbnSelChange
 	"Private - A LBN_SELCHANGE has been received by our parent window."
 
-	self onSelChanging.
+	self maybeSelChanging: #mouse.
 	^nil!
 
+maybeSelChanging: aSymbol
+	"Private - The selection may be changing as a result of a user action (e.g. due to a keypress). 
+	The argument is either #mouse, or #keyboard, indicating the source of the user input that
+	is initiating the selection change. Give the presenter/view a chance to change their mind."
+
+	"See if the change is acceptable, and if not revert to original selection if there was one"
+
+	| curSel |
+	curSel := self getSelectionsByIndex.
+	curSel = lastSelIndices ifTrue: [^self].
+	(self onSelChanging: curSel cause: aSymbol)
+		ifFalse: 
+			[self
+				postMessage: RevertSelMessage
+				wParam: 0
+				lParam: 0.
+			^self].
+	self onSelChanged: curSel!
+
+newMultiSelectionsFromEvent: aMouseEvent
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the list box control.
+	The behaviour is quite complicated, and different from the equally complicated behaviour of the later ListView control."
+
+	| itemClicked modified anchorIndex shiftRange button |
+	itemClicked := self itemFromPoint: aMouseEvent position.
+	modified := aMouseEvent isModifierDown.
+	button := aMouseEvent button.
+	"We follow the ListView behavior for right button clicks as the control itself does not actually change selection on right click natively:
+		- A right or middle click on an already-selected item should not change the selection
+		- If there are any modifiers then the click has no effect on selection"
+	(button ~~ #left and: [modified or: [lastSelIndices includes: itemClicked]])
+		ifTrue: [^lastSelIndices].
+	"Having taken care of the above edge cases, if no modifier keys are down, the behavior is equivalent to the single-select case."
+	modified ifFalse: [^itemClicked ifNil: [lastSelIndices] ifNotNil: [{itemClicked}]].
+	"The ListBox has a different with respect to the ListView in that clicking out of bounds is as if clicking on the last item"
+	itemClicked isNil ifTrue: [itemClicked := self itemCount].
+	aMouseEvent isShiftDown
+		ifFalse: 
+			[| newSelections |
+			"Only Ctrl is down, so we flip the selection state of the clicked item."
+			newSelections := lastSelIndices asSortedCollection.
+			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
+			^newSelections asArray].
+	"At least Shift is down, so we must start examining the 'anchor'. This is the last item that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the 	anchor). It acts as the 'start point' for operations where shift is held--they affect the range of items from the anchor to the click point, inclusive. Initially it is zero, i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on the item actually clicked."
+	anchorIndex := self anchorIndex.
+	shiftRange := anchorIndex == 0
+				ifTrue: [itemClicked to: itemClicked]
+				ifFalse: [(anchorIndex min: itemClicked) to: (anchorIndex max: itemClicked)].
+	"If only shift is down, not ctrl, the current selection will be replaced by the marked range between the anchor and the selection, although inclusive of the anchor only if currently selected."
+	^aMouseEvent isCtrlDown
+		ifTrue: 
+			["Both ctrl and shift are down, so we set the selection state of the affected range to that of the anchor itself. Note that this ignores the selection state of the item actually clicked and everything in between it and the anchor."
+			((lastSelIndices includes: anchorIndex)
+				ifTrue: [lastSelIndices union: shiftRange]
+				ifFalse: [lastSelIndices difference: shiftRange]) asSortedCollection
+				asArray]
+		ifFalse: 
+			[((lastSelIndices includes: anchorIndex) or: [anchorIndex == 0])
+				ifTrue: [shiftRange asArray]
+				ifFalse: [shiftRange copyWithout: anchorIndex]]!
+
+newSelectionsFromEvent: aMouseEvent
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the list box control.
+	The behaviour is quite complicated, and different from the similarly complicated behaviour of the later ListView control."
+
+	| mode |
+	mode := self selectionMode.
+	mode == #single ifTrue: [^self newSingleSelectionsFromEvent: aMouseEvent].
+	mode == #multi ifTrue: [^self newMultiSelectionsFromEvent: aMouseEvent].
+	^self newToggleSelectionsFromEvent: aMouseEvent!
+
+newSingleSelectionsFromEvent: aMouseEvent
+	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was was passed to a list box control in single-select mode.
+	Single select mode is very simple:
+		- clicking an item selects it
+		- clicking outside any item has no effect on selection (although the caret moves)
+		- modifier keys are irrelevant"
+
+	^(self itemFromPoint: aMouseEvent position)
+		ifNil: [lastSelIndices]
+		ifNotNil: [:itemClicked | {itemClicked}]!
+
+newToggleSelectionsFromEvent: aMouseEvent
+	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was was passed to a list box control in toggle-select mode.
+	Toggle select mode is relatively simple:
+		- clicking an item toggles its previous selection state
+		- clicking outside any item has no effect on selection (although the caret moves)
+		- modifier keys are ignored for left clicks, and cause right clicks to be ignored
+		- right clicks can only add to the selection (not toggle off items).
+	Note that the right click actions are not native behaviour of the control, but rather added here in Dolphin following the general principles of the way right clicks work in the ListView."
+
+	| itemClicked newSelections |
+	itemClicked := (self itemFromPoint: aMouseEvent position) ifNil: [self itemCount].
+	newSelections := lastSelIndices asSet.
+	aMouseEvent button == #left
+		ifTrue: [newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked]]
+		ifFalse: [aMouseEvent isModifierDown ifFalse: [newSelections add: itemClicked]].
+	^newSelections asArray
+		sort;
+		yourself!
+
+onLeftButtonPressed: aMouseEvent
+	"Handle a left button down mouse event. We intercede here in order to detect selection change events, and, if the view/presenter don't want the selection changed, then the message is absorbed without passing it to the control. Otherwise accept the default window processing."
+
+	| indices |
+	self presenter trigger: #leftButtonPressed: with: aMouseEvent.
+	indices := self newSelectionsFromEvent: aMouseEvent.
+	^indices = lastSelIndices
+		ifTrue: [aMouseEvent defaultWindowProcessing]
+		ifFalse: 
+			[(self onSelChanging: indices cause: #mouse)
+				ifTrue: 
+					["Selection change permitted"
+					(Keyboard default isButtonDown: aMouseEvent button)
+						ifFalse: 
+							[self
+								postMessage: aMouseEvent message + 1
+								wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
+								lParam: aMouseEvent lParam].
+					aMouseEvent defaultWindowProcessing]
+				ifFalse: 
+					["Suppress the mouse down so not received by control"
+					0]]!
+
 onRightButtonPressed: aMouseEvent
+	"Handle a left button down mouse event. We intercede here in order to implement selection changes on right clicks, which the control does not do natively."
+
 	| indices |
 	self presenter trigger: #rightButtonPressed: with: aMouseEvent.
 	indices := self newSelectionsFromEvent: aMouseEvent.
@@ -385,6 +511,26 @@ onRightButtonPressed: aMouseEvent
 			self selectionsByIndex: indices.
 			self onSelChanged: indices].
 	^aMouseEvent defaultWindowProcessing!
+
+onSelChanged: anArray
+	approvedSelIndices := nil.
+	super onSelChanged: anArray!
+
+onSelChanging: anArray cause: aSymbol
+	"Private - Selection is changing in the receiver to the item in the receiver's model identified by the specified <Collection> of <integer> indices. Answer whether to allow the selection change to proceed.
+	Note that #selectionChanging: events are only fired as a direct consequence of  user initiated actions, not in response to selection changes that occur as direct  or indirect results of programmatic actions."
+
+	^self isStateRestoring or: 
+			[anArray = approvedSelIndices or: 
+					[| event |
+					event := SelectionChangingEvent forSource: self.
+					event
+						newSelections: (anArray collect: [:each | self objectFromHandle: each]);
+						oldSelections: (lastSelIndices collect: [:each | self objectFromHandle: each]);
+						cause: aSymbol.
+					self presenter onSelectionChanging: event.
+					event value ifTrue: [approvedSelIndices := anArray].
+					event value]]!
 
 positionForKeyboardContextMenu
 	"Answer the desired position for a context menu requested from the keyboard.
@@ -399,9 +545,9 @@ positionForKeyboardContextMenu
 !
 
 selectAll
-	| size |
-	size := self size.
-	self selectedCount ~= size ifTrue: [self selectionsByIndex: (1 to: size)]!
+	| count |
+	count := self itemCount.
+	self selectedCount ~= count ifTrue: [self selectionsByIndex: (1 to: count)]!
 
 selectedCount
 	"Answer the total number of items selected in the receiver."
@@ -413,16 +559,15 @@ selectedCount
 
 	^self isMultiSelect ifTrue: [self getSelectedCount] ifFalse: [super selectedCount]!
 
-selectIndex: anInteger set: aBoolean 
-	"Private - Set/reset the selection state of the object at the specified one-based <integer>
-	index within the receiver according to the <boolean> argument."
+selectIndex: anInteger set: aBoolean
+	"Private - Set/reset the selection state of the object at the specified one-based <integer> index within the receiver according to the <boolean> argument."
 
-	(self 
+	(self
 		sendMessage: LB_SETSEL
 		wParam: aBoolean asParameter
-		lParam: anInteger - 1) == LB_ERR 
+		lParam: anInteger - 1) == LB_ERR
 		ifTrue: 
-			[self isMultiSelect 
+			[self isMultiSelect
 				ifTrue: 
 					["Assume its a bounds error"
 					self errorSubscriptBounds: anInteger]
@@ -514,7 +659,15 @@ state
 !ListBox categoriesFor: #lbnErrSpace!event handling-win32!private! !
 !ListBox categoriesFor: #lbnSelCancel!event handling-win32!private!selection! !
 !ListBox categoriesFor: #lbnSelChange!event handling-win32!private!selection! !
+!ListBox categoriesFor: #maybeSelChanging:!event handling!private! !
+!ListBox categoriesFor: #newMultiSelectionsFromEvent:!private!selection! !
+!ListBox categoriesFor: #newSelectionsFromEvent:!event handling!private! !
+!ListBox categoriesFor: #newSingleSelectionsFromEvent:!event handling!private! !
+!ListBox categoriesFor: #newToggleSelectionsFromEvent:!event handling!private! !
+!ListBox categoriesFor: #onLeftButtonPressed:!public! !
 !ListBox categoriesFor: #onRightButtonPressed:!event handling!public! !
+!ListBox categoriesFor: #onSelChanged:!event handling!private! !
+!ListBox categoriesFor: #onSelChanging:cause:!event handling!private! !
 !ListBox categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
 !ListBox categoriesFor: #selectAll!public!selection! !
 !ListBox categoriesFor: #selectedCount!public!selection! !

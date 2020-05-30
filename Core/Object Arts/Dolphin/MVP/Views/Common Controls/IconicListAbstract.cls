@@ -389,6 +389,62 @@ largeIconExtent: aPointOrNil
 	self applyImageLists
 !
 
+newSelectionsFromEvent: aMouseEvent
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the control.
+	This method encodes the selection behaviour of `ListView` in response to mouse clicks, and is used there to predict what it will do in order to generate `selectionChanging:` events that the control itself does not provide (or at least not in virtual mode). The method is also used to implement right-click selection for `ListBox`, but note that it does not precisely replicate the listbox control's native left-click selection behaviour."
+
+	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
+	itemClicked := self itemFromPoint: aMouseEvent position.
+	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
+	self isMultiSelect
+		ifFalse: 
+			[^aMouseEvent isSelectionButtonDown
+				ifTrue: [itemClicked ifNil: [#()] ifNotNil: [:item | {item}]]
+				ifFalse: 
+					["Other buttons have no effect on the selection"
+					self selectionsByIndex]].
+	newSelections := self getSelectionsByIndex.
+	anyKeysDown := aMouseEvent isModifierDown.
+	"If the click is outside all items, and ctrl or shift is down, nothing changes."
+	(itemClicked isNil and: [anyKeysDown]) ifTrue: [^newSelections].
+	"A right or middle click on an already-selected item also does not change the selection,
+	otherwise it would be very frustrating to open the context menu with multiple items selected.
+	The control also chooses to leave the selection alone if modifiers are held during a right/middle click."
+	(aMouseEvent button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]])
+		ifTrue: [^newSelections].
+	"Having taken care of the above edge cases, if no keys are down, the behavior is equivalent to the single-select case."
+	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
+	"Only Ctrl is down, so we flip the selection state of the clicked item."
+	aMouseEvent isShiftDown
+		ifFalse: 
+			[newSelections := newSelections asSortedCollection.
+			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
+			^newSelections asArray].
+	"At least Shift is down, so we must start examining the 'anchor'. This is the last item
+	that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the
+	anchor). It acts as the 'start point' for operations where shift is held--they affect
+	the range of items from the anchor to the click point, inclusive. Initially it is zero,
+	i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on
+	the item actually clicked."
+	anchorIndex := self anchorIndex.
+	shiftRange := anchorIndex == 0
+				ifTrue: [itemClicked to: itemClicked]
+				ifFalse: [(anchorIndex min: itemClicked) to: (anchorIndex max: itemClicked)].
+	"Only shift is down, not ctrl, so the current selection will be entirely replaced by the marked range."
+	aMouseEvent isCtrlDown ifFalse: [^shiftRange asArray].
+	"Both ctrl and shift are down, so we set the selection state of the affected range to that of the
+	anchor itself. Note that this ignores the selection state of the item actually clicked
+	and everything in between it and the anchor."
+	newSelections := newSelections asSet.
+	anchorIsSelected := newSelections includes: anchorIndex.
+	shiftRange do: (anchorIsSelected
+				ifTrue: [[:i | newSelections add: i]]
+				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
+	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
+	of the marked range. This is not true in e.g. Windows Explorer--why is it in Dolphin?"
+	newSelections add: itemClicked.
+	^newSelections asSortedCollection asArray!
+
 nmBeginDrag: pNMHDR
 	"Private - Default handler for the ?VN_BEGINDRAG notification message.
 	If the receiver is configured to be a drag source, then initiate a drag,
@@ -769,6 +825,7 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #itemRect:textOnly:!enquiries!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent!constants!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent:!constants!public! !
+!IconicListAbstract categoriesFor: #newSelectionsFromEvent:!event handling!private! !
 !IconicListAbstract categoriesFor: #nmBeginDrag:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmBeginLabelEdit:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmBeginRDrag:!event handling-win32!private! !

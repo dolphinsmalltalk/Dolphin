@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListControlTest subclass: #ListBoxTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'lbnSelChange'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -17,20 +17,19 @@ classToTest
 newSelectionAfterLeftClickOutsideList: anArrayOfInteger 
 	^anArrayOfInteger!
 
-sendClickEvent: aMouseEvent
-	| keyState newKeyState |
-	"The ListBox control ignores the button/key state flags the mouse messages and uses the keyboard state, so unfortunately we have to set that.
-	We use an ensure: block to prevent keys appearing stuck down if there is an error, but stopping in the debugger after the key state is set, but before the ensure block is run, will leave the shift and/or control keys stuck down. Hitting the actual keys will clear this though."
-	keyState := Keyboard default getState.
-	newKeyState := keyState copy.
-	aMouseEvent isCtrlDown ifTrue: [newKeyState at: VK_CONTROL + 1 put: 128].
-	aMouseEvent isShiftDown ifTrue: [newKeyState at: VK_SHIFT + 1 put: 128].
-	self postClickEvent: aMouseEvent.
-	
-	[newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: newKeyState].
-	"Dispatch the posted messages to the control"
-	SessionManager inputState pumpMessages]
-			ensure: [newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: keyState]]!
+setupClickIntercept
+	| anonClass method |
+	"Convert the ListBox to an instance of an anonymous subclass with an override of lbnSelChange handler that allows us to intercept the notifications."
+	anonClass := ListBox newAnonymousSubclass.
+	presenter view becomeA: anonClass.
+	method := anonClass
+				compile: 'lbnSelChange
+		#placeholder value.
+		^super lbnSelChange'.
+	self assert: (method literalAt: 1) equals: #placeholder.
+	lbnSelChange := [clicks addLast: #()].
+	method whileMutableDo: 
+			[method literalAt: 1 put: [lbnSelChange value]]!
 
 testNewSelectionsClickOutsideListWithModifiers
 	| event selection expected |
@@ -46,9 +45,13 @@ testNewSelectionsClickOutsideListWithModifiers
 				presenter selectionsByIndex: selection.
 				event := self mouseDownEventOnItem: 0 buttons: (pair first copyWith: #left).
 				expected := self isMultiSelect ifTrue: [pair second] ifFalse: [selection].
-				self verifyNewSelectionsFromEvent: event equals: expected]! !
+				self verifyNewSelectionsFromEvent: event equals: expected]!
+
+verifyClicks: anArray
+	self assert: clicks size equals: anArray size! !
 !ListBoxTest categoriesFor: #classToTest!helpers!private! !
 !ListBoxTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!helpers!private! !
-!ListBoxTest categoriesFor: #sendClickEvent:!helpers!private! !
+!ListBoxTest categoriesFor: #setupClickIntercept!private! !
 !ListBoxTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
+!ListBoxTest categoriesFor: #verifyClicks:!helpers!private! !
 
