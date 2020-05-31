@@ -183,7 +183,7 @@ testNewSelectionsClickOutsideListWithModifiers
 				[:modifiers |
 				presenter selectionsByIndex: selection.
 				event := self mouseDownEventOnItem: 0 buttons: (modifiers copyWith: #left).
-				self verifyNewSelectionsFromEvent: event equals: expected]!
+				self verifySelectionsFromMouseDown: event equals: expected]!
 
 testNilRow
 	"#2157"
@@ -245,11 +245,7 @@ verifyClicks: anArray
 		do: 
 			[:click :expected |
 			self assert: click iItem equals: expected first - 1.
-			self assert: click position equals: expected second]!
-
-verifyNewSelectionsFromEvent: aMouseEvent equals: anArray
-	self assert: (presenter view newSelectionsFromEvent: aMouseEvent) equals: anArray.
-	super verifyNewSelectionsFromEvent: aMouseEvent equals: anArray! !
+			self assert: click position equals: expected second]! !
 !ListViewTest categoriesFor: #classToTest!helpers!private! !
 !ListViewTest categoriesFor: #getColumns!helpers!private! !
 !ListViewTest categoriesFor: #getItem:!helpers!private! !
@@ -268,5 +264,4 @@ verifyNewSelectionsFromEvent: aMouseEvent equals: anArray
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #verifyClicks:!helpers!private! !
-!ListViewTest categoriesFor: #verifyNewSelectionsFromEvent:equals:!helpers!private! !
 

@@ -21,12 +21,12 @@ testNewSelectionsCtrlShiftClickAdditive
 		selectionsByIndex: #(1 3);
 		anchorIndex: 3.
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7).
+	self verifySelectionsFromMouseDown: event equals: #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
 	"Programatically changing selection in a ListBox does change the anchor (because it expects that the anchor is part of the selection, unsually the last selected item), unlike a ListView."
 	self assert: presenter anchorIndex equals: 7.
 	presenter anchorIndex: 3.
-	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7)!
+	self verifySelectionsFromMouseDown: event equals: #(1 3 4 5 6 7)!
 
 testNewSelectionsCtrlShiftClickSubtractive
 	| event |
@@ -36,12 +36,12 @@ testNewSelectionsCtrlShiftClickSubtractive
 		anchorIndex: 6.
 	event := self mouseDownEventOnItem: 2 buttons: #(#left #control #shift).
 	"ListBox does not seem to have the issue that we have with ListView where the ctrl-shift-left-clicked item is retained in the selection when it should not be"
-	self verifyNewSelectionsFromEvent: event equals: #(1 7).
+	self verifySelectionsFromMouseDown: event equals: #(1 7).
 	self assert: presenter caretIndex equals: 2.
 	presenter selectionsByIndex: #(1 3 5 7).
 	"Unlike ListView, programmatically changing the selection moves the anchor, so we must reset it."
 	presenter anchorIndex: 6.
-	self verifyNewSelectionsFromEvent: event equals: #(1 7)!
+	self verifySelectionsFromMouseDown: event equals: #(1 7)!
 
 testNewSelectionsShiftClickWithSelectionMark
 	| event |
@@ -56,11 +56,44 @@ testNewSelectionsShiftClickWithSelectionMark
 			self assert: presenter anchorIndex equals: 3.
 			"In a ListBox, unlike a ListView, the current selection does matter. If the anchor is set to an item in the selection, then that item will still be selected on a Shift-Click. If the anchor is not a selected item, then the selection will on Shift-Click will not include it."
 			expected := (oldSelections includes: 3) ifTrue: [#(3 4 5)] ifFalse: [#(4 5)].
-			self verifyNewSelectionsFromEvent: event equals: expected].
+			self verifySelectionsFromMouseDown: event equals: expected].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(3)! !
+	self verifySelectionsFromMouseDown: event equals: #(3)!
+
+testNewSelectionsToggleMode
+	| event i |
+	self setUpForSelectionTesting.
+	presenter selectionMode: #toggle.
+	event := self mouseDownEventOnItem: 5 buttons: #(#left).
+	"Toggle on, no selection"
+	self verifySelectionsFromMouseDown: event equals: #(5).
+	"Toggle on, existing selection"
+	self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 3 buttons: #(#left)) equals: #(3 5).
+	"Right click on existing selection, no change."
+	self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 3 buttons: #(#right)) equals: #(3 5).
+	"Right click on new selection, adds to selection..."
+	self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 1 buttons: #(#right))
+		equals: #(1 3 5).
+	"... but not with modifiers"
+	#(#(#control #right) #(#shift #right) #(#control #shift #right))
+		do: [:each | self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 2 buttons: each) equals: #(1 3 5)].
+	self assert: presenter caretIndex equals: 5.
+	"Click past end same as clicking on last selected"
+	self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 0 buttons: #(#left)) equals: #(1 3).
+	"The control has an odd behaviour that clicking past the end moves the caret that it reports to the last item, but internally it remembers a separate focused item and toggles that.
+	This seems like a bug, but means that we can't correctly determine the effect of clicks past the end in a toggle mode multi-select list box. It looks like this will require tracking the last selected item"
+	false
+		ifTrue: 
+			[self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 0 buttons: #(#left))
+				equals: #(1 3 5)].
+	"Toggle off with left click"
+	self verifySelectionsFromMouseDown: event equals: #(1 3 5).
+	"Modifiers disable right clicks"
+	#(#(#control #right) #(#shift #right) #(#control #shift #right))
+		do: [:each | self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 7 buttons: each) equals: #(1 3 5)]! !
 !MultiSelectListBoxTest categoriesFor: #initializePresenter!private!Running! !
 !MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
 !MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
 !MultiSelectListBoxTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+!MultiSelectListBoxTest categoriesFor: #testNewSelectionsToggleMode!public!unit tests! !
 

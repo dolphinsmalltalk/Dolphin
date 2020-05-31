@@ -24,11 +24,11 @@ testNewSelectionsCtrlShiftClickAdditive
 		selectionsByIndex: #(1 3);
 		anchorIndex: 3.
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7).
+	self verifySelectionsFromMouseDown: event equals: #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
 	"Programatically changing selection does not change the anchor."
 	self assert: presenter anchorIndex equals: 3.
-	self verifyNewSelectionsFromEvent: event equals: #(1 3 4 5 6 7)!
+	self verifySelectionsFromMouseDown: event equals: #(1 3 4 5 6 7)!
 
 testNewSelectionsCtrlShiftClickSubtractive
 	| event |
@@ -40,9 +40,9 @@ testNewSelectionsCtrlShiftClickSubtractive
 	"In Windows Explorer and other applications that use ListView or a similar control,
 	(2) would not be selected at this point. Why is it in Dolphin?
 	(See comment at the end of #newSelectionsFromEvent:.)"
-	self verifyNewSelectionsFromEvent: event equals: #(1 2 7).
+	self verifySelectionsFromMouseDown: event equals: #(1 2 7).
 	presenter selectionsByIndex: #(1 3 5 7).
-	self verifyNewSelectionsFromEvent: event equals: #(1 2 7)!
+	self verifySelectionsFromMouseDown: event equals: #(1 2 7)!
 
 testNewSelectionsShiftClickWithSelectionMark
 	| event |
@@ -53,9 +53,9 @@ testNewSelectionsShiftClickWithSelectionMark
 	#(#() #(3) #(1 2 3) #(3 4 5 6)) do: 
 			[:oldSelections |
 			presenter selectionsByIndex: oldSelections.
-			self verifyNewSelectionsFromEvent: event equals: #(3 4 5)].
+			self verifySelectionsFromMouseDown: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(3)! !
+	self verifySelectionsFromMouseDown: event equals: #(3)! !
 !MultiSelectListViewTest categoriesFor: #initializePresenter!public!Running! !
 !MultiSelectListViewTest categoriesFor: #sortSelections!private!unit tests! !
 !MultiSelectListViewTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
