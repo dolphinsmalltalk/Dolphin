@@ -45,7 +45,7 @@ testNewSelectionsClickOutsideListWithModifiers
 				presenter selectionsByIndex: selection.
 				event := self mouseDownEventOnItem: 0 buttons: (pair first copyWith: #left).
 				expected := self isMultiSelect ifTrue: [pair second] ifFalse: [selection].
-				self verifyNewSelectionsFromEvent: event equals: expected]!
+				self verifySelectionsFromMouseDown: event equals: expected]!
 
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size! !

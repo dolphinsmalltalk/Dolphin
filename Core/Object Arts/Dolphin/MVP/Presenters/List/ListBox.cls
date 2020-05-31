@@ -453,21 +453,23 @@ newSingleSelectionsFromEvent: aMouseEvent
 		- clicking outside any item has no effect on selection (although the caret moves)
 		- modifier keys are irrelevant"
 
-	^(self itemFromPoint: aMouseEvent position)
-		ifNil: [lastSelIndices]
-		ifNotNil: [:itemClicked | {itemClicked}]!
+	| itemClicked |
+	^(aMouseEvent isSelectionButtonDown
+		and: [(itemClicked := self itemFromPoint: aMouseEvent position) notNil])
+			ifTrue: [{itemClicked}]
+			ifFalse: [lastSelIndices]!
 
 newToggleSelectionsFromEvent: aMouseEvent
 	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was was passed to a list box control in toggle-select mode.
 	Toggle select mode is relatively simple:
 		- clicking an item toggles its previous selection state
-		- clicking outside any item has no effect on selection (although the caret moves)
+		- clicking outside any item toggles the last selected item
 		- modifier keys are ignored for left clicks, and cause right clicks to be ignored
 		- right clicks can only add to the selection (not toggle off items).
 	Note that the right click actions are not native behaviour of the control, but rather added here in Dolphin following the general principles of the way right clicks work in the ListView."
 
 	| itemClicked newSelections |
-	itemClicked := (self itemFromPoint: aMouseEvent position) ifNil: [self itemCount].
+	itemClicked := (self itemFromPoint: aMouseEvent position) ifNil: [self caretIndex].
 	newSelections := lastSelIndices asSet.
 	aMouseEvent button == #left
 		ifTrue: [newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked]]

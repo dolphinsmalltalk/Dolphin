@@ -36,11 +36,9 @@ mouseDownEventOnItem: itemIndex buttons: anArray
 				ifFalse: [(presenter itemRect: itemIndex) origin + (1 @ 1)].
 	^MouseEvent
 		window: presenter
-		message: (##(IdentityDictionary new
-				at: #left put: WM_LBUTTONDOWN;
-				at: #right put: WM_RBUTTONDOWN;
-				at: #middle put: WM_MBUTTONDOWN;
-				yourself) at: mouseButton)
+		message: (##(IdentityDictionary
+				withAll: {#left -> WM_LBUTTONDOWN. #right -> WM_RBUTTONDOWN. #middle -> WM_MBUTTONDOWN})
+					at: mouseButton)
 		wParam: keys
 		lParam: position asDword!
 
@@ -54,11 +52,12 @@ onSelectionChanging: aSelectionChangingEvent
 	selectionChanging value: aSelectionChangingEvent!
 
 onTimerTick: wParam
-	wParam = self timeoutId ifTrue: [
-		timedout := true.
-		presenter view killTimer: self timeoutId.
-		"Post a mouse move so that the ListView control returns from its WM_?BUTTONDOWN handler"
-		presenter view postMessage: WM_LBUTTONUP wParam: 0 lParam: 0]!
+	(wParam == WM_LBUTTONDOWN or: [wParam == WM_RBUTTONDOWN])
+		ifTrue: 
+			[timedout := true.
+			presenter killTimer: wParam.
+			"Post a mouse up so that the ListView control returns from its WM_?BUTTONDOWN handler"
+			presenter postMessage: wParam + 1]!
 
 postClickEvent: aMouseEvent
 	self assert: aMouseEvent isButtonDown.
@@ -90,14 +89,14 @@ sendClickEvent: aMouseEvent
 	self postClickEvent: aMouseEvent.
 	"Schedule a WM_TIMER so that we can detect the control's WM_?BUTTONDOWN handler not returning"
 	timedout := false.
-	presenter view setTimer: self timeoutId interval: 500.
+	presenter view setTimer: aMouseEvent message interval: 500.
 	"Dispatch the posted mouse down/up messages to the control"
 	
 	[newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: newKeyState].
 	"Dispatch the posted messages to the control"
 	SessionManager inputState pumpMessages]
 			ensure: [newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: keyState]].
-	presenter view killTimer: self timeoutId.
+	presenter view killTimer: aMouseEvent message.
 	UserLibrary default setCursorPosX: pos x y: pos y.
 	"If this fires, it means the control did not return from the call to its window proc to handle the button down event in ListView>>onButtonPressed:"
 	self deny: timedout description: 'Control blocked in mouse down handler'!
@@ -209,11 +208,11 @@ testNewSelectionNonLeftClicks
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1 3 5).
 	event := self mouseDownEventOnItem: 2 buttons: #(#right).
-	self verifyNewSelectionsFromEvent: event equals: #(2).
+	self verifySelectionsFromMouseDown: event equals: #(2).
 	presenter selectionsByIndex: #(3 5).
 	selections := presenter selectionsByIndex.
 	event := self mouseDownEventOnItem: 3 buttons: #(#right).
-	self verifyNewSelectionsFromEvent: event equals: selections.
+	self verifySelectionsFromMouseDown: event equals: selections.
 	presenter selectionsByIndex: #(1 3 5).
 	selections := presenter selectionsByIndex.
 	"Right or middle clicks with any modifiers will never modify the selection. Just cover a few example cases."
@@ -225,7 +224,7 @@ testNewSelectionNonLeftClicks
 			expected := (mouseDown isRButtonDown and: [self isMultiSelect not])
 						ifTrue: [{pair first}]
 						ifFalse: [selections].
-			self verifyNewSelectionsFromEvent: mouseDown equals: expected.
+			self verifySelectionsFromMouseDown: mouseDown equals: expected.
 			selections := expected]!
 
 testNewSelectionsBasicLeftClicks
@@ -234,12 +233,12 @@ testNewSelectionsBasicLeftClicks
 	| event inNoMansLand |
 	self setUpForSelectionTesting.
 	inNoMansLand := self mouseDownEventOnItem: 0 buttons: #(#left).
-	self verifyNewSelectionsFromEvent: inNoMansLand equals: #().
+	self verifySelectionsFromMouseDown: inNoMansLand equals: #().
 	event := self mouseDownEventOnItem: 1 buttons: #(#left).
-	self verifyNewSelectionsFromEvent: event equals: #(1).
+	self verifySelectionsFromMouseDown: event equals: #(1).
 	presenter selectionsByIndex: #(3).
-	self verifyNewSelectionsFromEvent: event equals: #(1).
-	self verifyNewSelectionsFromEvent: inNoMansLand
+	self verifySelectionsFromMouseDown: event equals: #(1).
+	self verifySelectionsFromMouseDown: inNoMansLand
 		equals: (self newSelectionAfterLeftClickOutsideList: #(1))!
 
 testNewSelectionsClickOutsideListWithModifiers
@@ -251,27 +250,27 @@ testNewSelectionsCtrlLeftClick
 	| event expected |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self verifyNewSelectionsFromEvent: event equals: #(1).
+	self verifySelectionsFromMouseDown: event equals: #(1).
 	presenter selectionsByIndex: #(3).
 	expected := self isMultiSelect ifTrue: [#(1 3)] ifFalse: [#(1)].
-	self verifyNewSelectionsFromEvent: event equals: expected.
+	self verifySelectionsFromMouseDown: event equals: expected.
 	"Ctrl-click over selected item makes no different in single-select mode"
 	expected := {self isMultiSelect ifTrue: [3] ifFalse: [1]}.
-	self verifyNewSelectionsFromEvent: event equals: expected.
+	self verifySelectionsFromMouseDown: event equals: expected.
 	presenter selectionsByIndex: #(1).
 	self isMultiSelect ifTrue: [expected := #()].
-	self verifyNewSelectionsFromEvent: event equals: expected!
+	self verifySelectionsFromMouseDown: event equals: expected!
 
 testNewSelectionsInitialShiftClick
 	| event |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(1).
+	self verifySelectionsFromMouseDown: event equals: #(1).
 	"Note that we have to clear the anchorIndex to reset to 'initial' state where a shift-click in a multi-select list will only select the clicked item and not a range. Unfortunately the only way to remove an existing anchor in a traditional ListBox is to delete the item. LB_SETANCHORINDEX returns LB_ERR when passed 0. The equivalent ListView operation to clear the anchor does work and is necessary because deleting the item does not remove the anchor. So we do both."
 	presenter model removeAtIndex: 1.
 	presenter view anchorIndex: 0.
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self verifyNewSelectionsFromEvent: event equals: #(3)!
+	self verifySelectionsFromMouseDown: event equals: #(3)!
 
 testProgrammaticSelectionVisible
 	"#1381"
@@ -290,9 +289,6 @@ testSelectionsByIndex
 	self isMultiSelect
 		ifTrue: [self verifyMultiSelectionsByIndex]
 		ifFalse: [self verifySingleSelectionsByIndex]!
-
-timeoutId
-	^171717!
 
 verifyClicks: anArray
 	self subclassResponsibility!
@@ -313,7 +309,7 @@ verifyEventsFromClickSelectionChangeAccepted: aSymbol
 	self assert: changed isKindOf: SelectionChangedEvent.
 	self assert: changed newSelections equals: #(2).
 	self verifyClicks: {{2. event position}}.
-	"Send a shift-left-click event over a subsequent item."
+	"Send a shift-<button>-click event over a subsequent item."
 	events := OrderedCollection new.
 	clicks := OrderedCollection new.
 	event := self mouseDownEventOnItem: 4 buttons: {aSymbol. #shift}.
@@ -341,7 +337,7 @@ verifyEventsFromClickSelectionChangeRejected: aSymbol
 	self assert: changing newSelections equals: #(2).
 	"Because we didn't forward the button down event to the control, there should be no click notification."
 	self assert: clicks size equals: 0.
-	"Ensure there is a selection and then send a shift-left-click event over a subsequent item."
+	"Ensure there is a selection and then send a shift-<button>-click event over a subsequent item."
 	presenter view selectionByIndex: 2.
 	events := OrderedCollection new.
 	clicks := OrderedCollection new.
@@ -406,9 +402,14 @@ verifyMultiSelectionsByIndex
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: sel!
 
-verifyNewSelectionsFromEvent: aMouseEvent equals: anArray
+verifySelectionsFromMouseDown: aMouseEvent equals: anArray
+	"Test the predicted selection..."
+	self assert: (presenter newSelectionsFromEvent: aMouseEvent) equals: anArray description: 'Predicted selections mismatch'.
 	self sendClickEvent: aMouseEvent.
-	self assert: presenter view selectionsByIndex equals: anArray!
+	"... and that the control did actually select the expected item(s)"
+	self assert: presenter getSelectionsByIndex equals: anArray description: 'Actual selections mismatch'.
+	"... and the selection cache was updated"
+	self assert: presenter selectionsByIndex equals: anArray description: 'Cached selections mismatch'!
 
 verifySingleSelectionsByIndex
 	| objects sel |
@@ -492,11 +493,10 @@ verifySingleSelectionsByIndex
 !ListControlTest categoriesFor: #testNewSelectionsInitialShiftClick!public!unit tests! !
 !ListControlTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
 !ListControlTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
-!ListControlTest categoriesFor: #timeoutId!constants!private! !
 !ListControlTest categoriesFor: #verifyClicks:!helpers!private! !
 !ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
 !ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeRejected:!private! !
 !ListControlTest categoriesFor: #verifyMultiSelectionsByIndex!helpers!private! !
-!ListControlTest categoriesFor: #verifyNewSelectionsFromEvent:equals:!helpers!private! !
+!ListControlTest categoriesFor: #verifySelectionsFromMouseDown:equals:!helpers!private! !
 !ListControlTest categoriesFor: #verifySingleSelectionsByIndex!helpers!private! !
 
