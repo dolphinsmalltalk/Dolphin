@@ -213,15 +213,13 @@ simulateMouseMouse: aKeyEvent
 	| pos event wParam |
 	pos := Cursor position.
 	wParam := 0.
-	##((OrderedCollection new)
-		add: VK_LBUTTON -> MK_LBUTTON;
-		add: VK_MBUTTON -> MK_MBUTTON;
-		add: VK_RBUTTON -> MK_RBUTTON;
-		add: VK_CONTROL -> MK_CONTROL;
-		add: VK_SHIFT -> MK_SHIFT;
-		add: VK_XBUTTON1 -> MK_XBUTTON1;
-		add: VK_XBUTTON2 -> MK_XBUTTON2;
-		asArray)
+	##({VK_LBUTTON -> MK_LBUTTON.
+		VK_MBUTTON -> MK_MBUTTON.
+		VK_RBUTTON -> MK_RBUTTON.
+		VK_CONTROL -> MK_CONTROL.
+		VK_SHIFT -> MK_SHIFT.
+		VK_XBUTTON1 -> MK_XBUTTON1.
+		VK_XBUTTON2 -> MK_XBUTTON2})
 			do: [:each | (Keyboard default isKeyDown: each key) ifTrue: [wParam := wParam bitOr: each value]].
 	event := MouseEvent
 				window: self view

@@ -32,8 +32,8 @@ mouseDownEventOnItem: itemIndex buttons: anArray
 	mouseButton := mouseButton anyOne.
 	keys := (anArray collect: [:each | MouseEvent wParamFlags at: each]) fold: [:a :b | a bitOr: b].
 	position := itemIndex == 0
-				ifTrue: [presenter clientExtent - (1 @ 1)]
-				ifFalse: [(presenter itemRect: itemIndex) origin + (1 @ 1)].
+				ifTrue: [presenter clientRectangle corner - 1]
+				ifFalse: [(presenter itemRect: itemIndex) origin + 1].
 	^MouseEvent
 		window: presenter
 		message: (##(IdentityDictionary
@@ -41,6 +41,15 @@ mouseDownEventOnItem: itemIndex buttons: anArray
 					at: mouseButton)
 		wParam: keys
 		lParam: position asDword!
+
+mouseUpForMouseDown: aMouseEvent
+	| upEvent |
+	upEvent := MouseEvent
+				window: presenter
+				message: aMouseEvent message + 1
+				wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
+				lParam: aMouseEvent lParam.
+	^upEvent!
 
 newSelectionAfterLeftClickOutsideList: anArrayOfInteger 
 	^self subclassResponsibility!
@@ -57,36 +66,41 @@ onTimerTick: wParam
 			[timedout := true.
 			presenter killTimer: wParam.
 			"Post a mouse up so that the ListView control returns from its WM_?BUTTONDOWN handler"
-			presenter postMessage: wParam + 1]!
+			presenter postMessage: wParam + 1 wParam: 0 lParam: 0]!
 
-postClickEvent: aMouseEvent
-	self assert: aMouseEvent isButtonDown.
+postMouseEvents: aSequencedReadableCollection
+	self assert: aSequencedReadableCollection first isButtonDown.
 	"Clear the message queue"
 	SessionManager inputState pumpMessages.
-	"Post a matched mouse down/up pair to the control"
-	presenter view
-		postMessage: aMouseEvent message
-			wParam: aMouseEvent wParam
-			lParam: aMouseEvent lParam;
-		postMessage: aMouseEvent message + 1
-			wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
-			lParam: aMouseEvent lParam!
+	aSequencedReadableCollection do: 
+			[:each |
+			presenter
+				postMessage: each message
+				wParam: each wParam
+				lParam: each lParam]!
 
 sendClickEvent: aMouseEvent
-	| keyState newKeyState pos |
-	"The ListBox control ignores the button/key state flags the mouse messages and uses the keyboard state, so unfortunately we have to set that.
-	We use an ensure: block to prevent keys appearing stuck down if there is an error, but stopping in the debugger after the key state is set, but before the ensure block is run, will leave the shift and/or control keys stuck down. Hitting the actual keys will clear this though."
-	keyState := Keyboard default getState.
-	newKeyState := keyState copy.
-	aMouseEvent isCtrlDown ifTrue: [newKeyState at: VK_CONTROL + 1 put: 128].
-	aMouseEvent isShiftDown ifTrue: [newKeyState at: VK_SHIFT + 1 put: 128].
-
+	| pos |
 	"The mouse needs to be outside any Dolphin window in order to cause the control's WM_?BUTTONDOWN handler to block in the way described in #898"
 	pos := POINTL new.
 	UserLibrary default
 		getCursorPos: pos;
 		setCursorPosX: 0 y: 0.
-	self postClickEvent: aMouseEvent.
+	self sendMouseEvents: {aMouseEvent. self mouseUpForMouseDown: aMouseEvent}.
+	UserLibrary default setCursorPosX: pos x y: pos y.
+!
+
+sendMouseEvents: aSequencedReadableCollection
+	| keyState newKeyState aMouseEvent |
+	"The ListBox control ignores the button/key state flags the mouse messages and uses the keyboard state, so unfortunately we have to set that.
+	We use an ensure: block to prevent keys appearing stuck down if there is an error, but stopping in the debugger after the key state is set, but before the ensure block is run, will leave the shift and/or control keys stuck down. Hitting the actual keys will clear this though."
+	keyState := Keyboard default getState.
+	newKeyState := keyState copy.
+	aMouseEvent := aSequencedReadableCollection first.
+	aMouseEvent isCtrlDown ifTrue: [newKeyState at: VK_CONTROL + 1 put: 128].
+	aMouseEvent isShiftDown ifTrue: [newKeyState at: VK_SHIFT + 1 put: 128].
+	self postMouseEvents: aSequencedReadableCollection.
+
 	"Schedule a WM_TIMER so that we can detect the control's WM_?BUTTONDOWN handler not returning"
 	timedout := false.
 	presenter view setTimer: aMouseEvent message interval: 500.
@@ -94,10 +108,16 @@ sendClickEvent: aMouseEvent
 	
 	[newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: newKeyState].
 	"Dispatch the posted messages to the control"
-	SessionManager inputState pumpMessages]
+	false
+		ifTrue: 
+			[| i |
+			i := aSequencedReadableCollection size.
+			SessionManager inputState loopWhile: 
+					[Sound bell.
+					(i := i - 1) > 0]]
+		ifFalse: [SessionManager inputState pumpMessages]]
 			ensure: [newKeyState = keyState ifFalse: [UserLibrary default setKeyboardState: keyState]].
 	presenter view killTimer: aMouseEvent message.
-	UserLibrary default setCursorPosX: pos x y: pos y.
 	"If this fires, it means the control did not return from the call to its window proc to handle the button down event in ListView>>onButtonPressed:"
 	self deny: timedout description: 'Control blocked in mouse down handler'!
 
@@ -474,12 +494,14 @@ verifySingleSelectionsByIndex
 !ListControlTest categoriesFor: #expectedSelectionsForSendShiftClickTests!constants!private! !
 !ListControlTest categoriesFor: #isMultiSelect!private!testing! !
 !ListControlTest categoriesFor: #mouseDownEventOnItem:buttons:!helpers!private! !
+!ListControlTest categoriesFor: #mouseUpForMouseDown:!helpers!private! !
 !ListControlTest categoriesFor: #newSelectionAfterLeftClickOutsideList:!constants!private! !
 !ListControlTest categoriesFor: #onSelectionChanged!helpers!private! !
 !ListControlTest categoriesFor: #onSelectionChanging:!public! !
 !ListControlTest categoriesFor: #onTimerTick:!event handling!private! !
-!ListControlTest categoriesFor: #postClickEvent:!helpers!private! !
+!ListControlTest categoriesFor: #postMouseEvents:!helpers!private! !
 !ListControlTest categoriesFor: #sendClickEvent:!helpers!private! !
+!ListControlTest categoriesFor: #sendMouseEvents:!helpers!private! !
 !ListControlTest categoriesFor: #setupClickIntercept!helpers!private! !
 !ListControlTest categoriesFor: #setUpForSelectionEventTesting!helpers!private! !
 !ListControlTest categoriesFor: #setUpForSelectionTesting!helpers!private! !

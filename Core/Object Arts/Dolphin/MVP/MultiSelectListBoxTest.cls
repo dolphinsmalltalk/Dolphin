@@ -61,7 +61,7 @@ testNewSelectionsShiftClickWithSelectionMark
 	self verifySelectionsFromMouseDown: event equals: #(3)!
 
 testNewSelectionsToggleMode
-	| event i |
+	| event |
 	self setUpForSelectionTesting.
 	presenter selectionMode: #toggle.
 	event := self mouseDownEventOnItem: 5 buttons: #(#left).

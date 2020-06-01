@@ -30,6 +30,9 @@ isHandled
 lParam
 	^lParam!
 
+lParam: anInteger 
+	lParam := anInteger!
+
 lParamX
 	"Answer the X-value signed integer packed into the low half of the receiver's lParam field.
 	Note that this could be a 16 or 32-bit value depending on whether the host OS is 32 or
@@ -104,6 +107,7 @@ wParam
 !WindowsEvent categoriesFor: #defaultWindowProcessing!event handling!public! !
 !WindowsEvent categoriesFor: #isHandled!public!testing! !
 !WindowsEvent categoriesFor: #lParam!accessing!public! !
+!WindowsEvent categoriesFor: #lParam:!accessing!public! !
 !WindowsEvent categoriesFor: #lParamX!accessing!public! !
 !WindowsEvent categoriesFor: #lParamY!accessing!public! !
 !WindowsEvent categoriesFor: #lResult!accessing!public! !
