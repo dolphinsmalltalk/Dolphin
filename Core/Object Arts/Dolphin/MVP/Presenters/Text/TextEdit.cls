@@ -833,8 +833,7 @@ positionForKeyboardContextMenu
 	This should be based on the 'current selection', whatever that means in the context of the
 	receiver. Should be overridden by subclasses as appropriate."
 
-	^(self mapPoint: (self positionOfChar: self caretPosition) to: self class desktop) + (0@20)
-!
+	^(self mapPointToScreen: (self positionOfChar: self caretPosition)) + (0 @ 20)!
 
 positionOfChar: anInteger 
 	"Map the one-based index of a character in the receiver to its client co-ordinates

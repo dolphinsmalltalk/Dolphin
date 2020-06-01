@@ -1151,7 +1151,7 @@ caretPosition: caretInteger
 				lParam: 0]!
 
 caretScreenCoordinates
-	^self mapPoint: (self positionOfChar: self caretPosition) to: View desktop!
+	^self mapPointToScreen: (self positionOfChar: self caretPosition)!
 
 caretStyle
 	"Answer the style of caret displayed in the receiver; one of #invisible (no caret), #line or

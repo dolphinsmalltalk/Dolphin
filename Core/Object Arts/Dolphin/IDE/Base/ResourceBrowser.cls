@@ -160,7 +160,7 @@ showAsToolboxFor: aView at: aPoint
 
 	| toolbox toolboxView position |
 	toolboxView := (self loadViewResource: 'Toolbox' inContext: View desktop) bePopupFor: aView.
-	position := aView mapPoint: aPoint to: View desktop.
+	position := aView mapPointToScreen: aPoint.
 	toolboxView position: position.
 
 	toolbox := self new.

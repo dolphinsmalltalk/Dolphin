@@ -24,7 +24,7 @@ printLParamOn: aStream
 screenPosition
 	"Answer the point stored in the receiver's lParam mapped to screen coordinates"
 
-	^self window mapPoint: self position to: View desktop!
+	^self window mapPointToScreen: self position!
 
 x
 	"Answer the x-position of the pointer."

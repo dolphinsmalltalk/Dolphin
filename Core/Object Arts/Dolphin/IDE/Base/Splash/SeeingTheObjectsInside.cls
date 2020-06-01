@@ -341,13 +341,13 @@ render
 
 showHintBubble
 	self hasHintBubble ifTrue: [^self].
-	hintBubble := (MessageBubble new)
+	hintBubble := MessageBubble new
 				caption: 'Hint';
 				maxWidth: 140;
 				willFade: true;
 				timeout: 5 seconds.
 	hintBubble
-		position: (self mapPoint: self sunPosition to: View desktop);
+		position: (self mapPointToScreen: self sunPosition);
 		notify: 'Find the dolphin inside and click to continue.'!
 
 startStepProcess
