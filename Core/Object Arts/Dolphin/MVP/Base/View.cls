@@ -2127,6 +2127,14 @@ mapPoint: aPoint to: anotherView
 		cPoints: 1.
 	^pt asPoint!
 
+mapPointToScreen: aPoint
+	"Maps the `Point` argument from the coordinate system of the receiver to screen coordindates."
+
+	| pt |
+	pt := POINTL fromPoint: aPoint.
+	UserLibrary default clientToScreen: handle lpPoint: pt.
+	^pt asPoint!
+
 mapRectangle: aRectangle to: anotherView
 	"Maps aRectangle from the coordinate system of the receiver into that of anotherView."
 
@@ -4739,6 +4747,7 @@ zOrderTop
 !View categoriesFor: #managedSubViews!hierarchy!public!sub views! !
 !View categoriesFor: #managedSubViewsDo:!hierarchy!public!sub views! !
 !View categoriesFor: #mapPoint:to:!geometry!public! !
+!View categoriesFor: #mapPointToScreen:!geometry!public! !
 !View categoriesFor: #mapRectangle:to:!geometry!public! !
 !View categoriesFor: #maxExtent!accessing!public! !
 !View categoriesFor: #minExtent!accessing!public! !

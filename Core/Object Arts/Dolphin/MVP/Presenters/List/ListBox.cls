@@ -543,8 +543,7 @@ positionForKeyboardContextMenu
 	caret := self caretIndex.
 	^caret == 0
 		ifTrue: [super positionForKeyboardContextMenu]
-		ifFalse: [self mapPoint: (self itemRect: caret) bottomLeft to: self class desktop]
-!
+		ifFalse: [self mapPointToScreen: (self itemRect: caret) bottomLeft]!
 
 selectAll
 	| count |

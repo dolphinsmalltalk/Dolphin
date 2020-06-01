@@ -669,11 +669,9 @@ positionForKeyboardContextMenu
 
 	| selections |
 	selections := self selectionsByIndex.
-	^selections isEmpty 
+	^selections isEmpty
 		ifTrue: [super positionForKeyboardContextMenu]
-		ifFalse: 
-			[self mapPoint: (self itemRect: selections first textOnly: true) bottomLeft
-				to: self class desktop]!
+		ifFalse: [self mapPointToScreen: (self itemRect: selections first textOnly: true) bottomLeft]!
 
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicates how a command would be processed.
