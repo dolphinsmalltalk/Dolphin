@@ -233,7 +233,7 @@ prepareStruct
 
 	| buf filename defext |
 	buf := File pathBuffer.
-	filename := self value.
+	filename := self value asUtf16String.
 	filename notNil
 		ifTrue: 
 			[buf
@@ -345,10 +345,9 @@ allFilesType
 	^#('All Files (*.*)' '*.*')!
 
 defaultModel
-	"Answer a default model to be assigned to the receiver when it
-	is initialized."
+	"Answer a default model to be assigned to the receiver when it is initialized."
 
-	^String new asValue
+	^Utf16String empty
 !
 
 icon

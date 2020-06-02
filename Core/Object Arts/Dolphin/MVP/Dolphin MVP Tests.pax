@@ -17,6 +17,7 @@ package classNames
 	add: #ColorTest;
 	add: #ContainerViewTest;
 	add: #EvaluationConverterTest;
+	add: #FileDialogTest;
 	add: #FlowLayoutTest;
 	add: #FolderTest;
 	add: #FramingLayoutTest;
@@ -163,6 +164,11 @@ DolphinTest subclass: #ColorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #EvaluationConverterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #FileDialogTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
