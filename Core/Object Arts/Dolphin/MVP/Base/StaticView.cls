@@ -34,6 +34,11 @@ defaultWindowStyle
 	^(super defaultWindowStyle maskClear: WS_TABSTOP) bitOr: SS_NOTIFY
 !
 
+invalidateOnResize
+	"Private - The Windows static controls do not normally expect to be resized so they do not redraw correctly. We therefore force them to redraw on resize."
+
+	^true!
+
 invalidateRect: rectangle erase: eraseBoolean 
 	"Invalidates the specified client rectangle (a RECT, Rectangle, or nil for the whole client window).
 	Set whether to erase the receivers background before repainting. Answer whether the function succeeds.
@@ -71,7 +76,7 @@ onPositionChanged: aPositionEvent
 	Implementation Note:  The Windows static controls do not normally expect to be resized
 	so they do not redraw correctly. We therefore force a redraw here."
 
-	aPositionEvent isResize ifTrue: [self invalidate].
+	(self invalidateOnResize and: [aPositionEvent isResize]) ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent!
 
 updateModel
@@ -80,6 +85,7 @@ updateModel
 !StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !StaticView categoriesFor: #defaultExtent!constants!private! !
 !StaticView categoriesFor: #defaultWindowStyle!constants!private! !
+!StaticView categoriesFor: #invalidateOnResize!private!testing! !
 !StaticView categoriesFor: #invalidateRect:erase:!drawing!public! !
 !StaticView categoriesFor: #isSunken!accessing-styles!public!testing! !
 !StaticView categoriesFor: #isSunken:!accessing-styles!public! !
