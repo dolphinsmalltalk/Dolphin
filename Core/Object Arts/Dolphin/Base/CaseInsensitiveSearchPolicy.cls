@@ -17,7 +17,7 @@ compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
 	operand2, by this search policy."
 
-	^operand1 asString sameAs: operand2 asString!
+	^operand1 asString <=> operand2 asString == 0!
 
 hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."

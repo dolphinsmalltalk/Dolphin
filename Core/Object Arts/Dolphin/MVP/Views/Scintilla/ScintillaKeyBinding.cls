@@ -264,15 +264,19 @@ initializeVirtualKeyMap
 new
 	^self newAcceleratorKey: 0 message: SCI_NULL!
 
-newAcceleratorKey: keyInteger message: sciInteger 
-	^(self basicNew)
+newAcceleratorKey: keyInteger message: sciInteger
+	^self basicNew
 		acceleratorKey: keyInteger;
 		message: sciInteger;
-		yourself! !
+		yourself!
+
+newChord: aString message: sciInteger
+	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
 !ScintillaKeyBinding class categoriesFor: #icon!constants!development!public! !
 !ScintillaKeyBinding class categoriesFor: #initialize!development!initializing!private! !
 !ScintillaKeyBinding class categoriesFor: #initializeCommands!**auto generated**!development!private!scintilla interface! !
 !ScintillaKeyBinding class categoriesFor: #initializeVirtualKeyMap!development!initializing!private! !
 !ScintillaKeyBinding class categoriesFor: #new!instance creation!public! !
 !ScintillaKeyBinding class categoriesFor: #newAcceleratorKey:message:!instance creation!public! !
+!ScintillaKeyBinding class categoriesFor: #newChord:message:!instance creation!public! !
 

@@ -64,6 +64,9 @@ addCommandHistory: aCommand
 allAdditionalAccelerators
 	^#()!
 
+allAdditionalKeyBindings
+	^#()!
+
 basicMenu: aMenuBarOrNil
 	"Private - Set the menu bar for this window to aMenuBarOrNil."
 
@@ -71,15 +74,12 @@ basicMenu: aMenuBarOrNil
 		setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
 
 buildCombinedAcceleratorTable
-	combinedAcceleratorTable := acceleratorTable  
+	combinedAcceleratorTable := acceleratorTable
 				ifNil: [AcceleratorTable new]
 				ifNotNil: [acceleratorTable copy].
 	menuBar ifNotNil: [menuBar registerAcceleratorKeyIn: combinedAcceleratorTable].
-	self presenter allAdditionalAccelerators do: 
-			[:each | 
-			(CommandDescription command: each first)
-				acceleratorKeyString: each last;
-				registerAcceleratorKeyIn: combinedAcceleratorTable]!
+	self presenter allAdditionalKeyBindings
+		do: [:each | each registerAcceleratorKeyIn: combinedAcceleratorTable]!
 
 buttonRemoved: aPushButton
 	"Private - Informs the receiver that aPushButton has been removed from the child hierachy.
@@ -1200,6 +1200,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #activateLastPopup!helpers!private! !
 !ShellView categoriesFor: #addCommandHistory:!accessing!private! !
 !ShellView categoriesFor: #allAdditionalAccelerators!accessing!public! !
+!ShellView categoriesFor: #allAdditionalKeyBindings!accessing!public! !
 !ShellView categoriesFor: #basicMenu:!menus!private! !
 !ShellView categoriesFor: #buildCombinedAcceleratorTable!private!realizing/unrealizing! !
 !ShellView categoriesFor: #buttonRemoved:!default button!private! !

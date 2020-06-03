@@ -4,7 +4,7 @@ Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalAccelerators commandQueryHandlers'!
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
 SmalltalkToolShell guid: (GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkToolShell isAbstract: true!
 SmalltalkToolShell addClassConstant: 'CanUseIdeaSpaceMask' value: 16r2!
@@ -495,8 +495,8 @@ defaultView: aString
 
 	defaultView := aString!
 
-getAdditionalAccelerators
-	^additionalAccelerators!
+getAdditionalKeyBindings
+	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self defaultAdditionalAccelerators]!
 
 getCommandQueryHandlers
 	^commandQueryHandlers!
@@ -591,8 +591,8 @@ searchFieldFlashes: anInteger
 
 	SearchFieldFlashes := anInteger!
 
-setAdditionalAccelerators: anArray 
-	additionalAccelerators := anArray isEmpty ifFalse: [anArray]!
+setAdditionalKeyBindings: anArray
+	additionalKeyBindings := anArray!
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray!
@@ -674,7 +674,7 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #defaultSlideyPinsMap:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultView!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #defaultView:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #getAdditionalAccelerators!accessing!private! !
+!SmalltalkToolShell class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
 !SmalltalkToolShell class categoriesFor: #getCommandQueryHandlers!accessing!private! !
 !SmalltalkToolShell class categoriesFor: #historyDwellTime!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #historyDwellTime:!accessing!public! !
@@ -689,7 +689,7 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #reuseIfOpen:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #searchFieldFlashes!public! !
 !SmalltalkToolShell class categoriesFor: #searchFieldFlashes:!public! !
-!SmalltalkToolShell class categoriesFor: #setAdditionalAccelerators:!accessing!private! !
+!SmalltalkToolShell class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
 !SmalltalkToolShell class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
 !SmalltalkToolShell class categoriesFor: #show!instance creation!public! !
 !SmalltalkToolShell class categoriesFor: #show:inIdeaSpace:!private! !

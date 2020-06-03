@@ -128,10 +128,16 @@ keyCodeFromString: aString
 keyCodeFromString: aString keyboard: aKeyboard
 	"Answer an accelerator key code (an integer packed with a virtual key code and accelerator modifiers) created from the key descriptions of the specified <Keyboard>."
 
-	| keys |
+	| keys count modifierKeys modifierFlags |
 	keys := self splitKeyString: aString.
-	keys isEmpty ifTrue: [^0].
-	^self keyCode: (aKeyboard virtualKeyFromString: keys last) modifiers: (self keyModifiers: keys keyboard: aKeyboard)!
+	count := keys size.
+	count == 0 ifTrue: [^0].
+	modifierKeys := aKeyboard modifierKeys.
+	"The FVIRTKEY modifier flag is always set."
+	modifierFlags := FVIRTKEY.
+	1 to: count - 1
+		do: [:i | modifierFlags := modifierFlags bitOr: (modifierKeys at: (keys at: i) ifAbsent: [0])].
+	^self keyCode: (aKeyboard virtualKeyFromString: (keys at: count)) modifiers: modifierFlags!
 
 keyModifierNames: anInteger keyboard: aKeyboard
 	"Private - Answer a <sequencedReadableCollection> of <String>s , being the names of the virtual key modifiers in the <integer> mask, anInteger, in the specified Keyboard layout."
@@ -149,12 +155,6 @@ keyModifierNames: anInteger keyboard: aKeyboard do: aMonadicValuable
 	modifierKeys := aKeyboard modifierKeys.
 	##({FCONTROL. FSHIFT. FALT})
 		do: [:each | (anInteger anyMask: each) ifTrue: [aMonadicValuable value: (modifierKeys keyAtValue: each)]]!
-
-keyModifiers: anArrayOfInvariantKeyStrings keyboard: aKeyboard
-	| modifiers |
-	modifiers := aKeyboard modifierKeys.
-	^anArrayOfInvariantKeyStrings inject: FVIRTKEY
-		into: [:sum :each | sum bitOr: (modifiers at: each ifAbsent: [0])]!
 
 keySeparator
 	"Private - Answer the <Character> used to separate the key names in a chord."
@@ -232,7 +232,6 @@ stbVersion
 !AcceleratorTable class categoriesFor: #keyCodeFromString:keyboard:!enquiries!public! !
 !AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:!enquiries!private! !
 !AcceleratorTable class categoriesFor: #keyModifierNames:keyboard:do:!enquiries!private! !
-!AcceleratorTable class categoriesFor: #keyModifiers:keyboard:!enquiries!private! !
 !AcceleratorTable class categoriesFor: #keySeparator!constants!private! !
 !AcceleratorTable class categoriesFor: #keyStringFromCode:!enquiries!public! !
 !AcceleratorTable class categoriesFor: #keyStringFromCode:keyboard:!enquiries!public! !

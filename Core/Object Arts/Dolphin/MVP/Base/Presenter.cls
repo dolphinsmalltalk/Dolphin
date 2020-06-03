@@ -76,7 +76,13 @@ additionalAccelerators
 	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
 	and the second the accelerator key string."
 
-	^self class additionalAccelerators!
+	^self class additionalKeyBindings collect: [:each | {each acceleratorKeyString. each command}]!
+
+additionalKeyBindings
+	"Private - Answer a collection of <CommandDescriptions> for commands not on the menu bar of the receiver's view(s) but which are to be bound to a key sequence.
+	Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string."
+
+	^self class additionalKeyBindings!
 
 addToCommandRoute: route
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
@@ -795,6 +801,7 @@ viewModel
 !Presenter categoriesFor: #add:name:!public!subpresenters! !
 !Presenter categoriesFor: #add:name:helpId:!public!subpresenters! !
 !Presenter categoriesFor: #additionalAccelerators!constants!public! !
+!Presenter categoriesFor: #additionalKeyBindings!constants!private! !
 !Presenter categoriesFor: #addToCommandRoute:!commands!public! !
 !Presenter categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !Presenter categoriesFor: #allSubPresentersDo:!enumerating!public! !
@@ -920,7 +927,7 @@ acceleratorKeyBindings
 
 	| answer |
 	answer := Dictionary new.
-	self additionalAccelerators do: [:each | answer at: each last put: each first].
+	self additionalKeyBindings do: [:each | answer at: each acceleratorKeyString put: each command].
 	^answer!
 
 acceleratorKeyBindings: aDictionary
@@ -940,8 +947,14 @@ addCommandQueryHandler: aSymbol
 
 	self setCommandQueryHandlers: (self commandQueryHandlers copyWith: aSymbol)!
 
-additionalAccelerators
-	^self getAdditionalAccelerators ifNil: [self defaultAdditionalAccelerators]!
+additionalKeyBindings
+	^self getAdditionalKeyBindings
+		ifNil: 
+			[self defaultAdditionalAccelerators collect: 
+					[:each |
+					(CommandDescription command: each first)
+						acceleratorKeyString: each second;
+						yourself]]!
 
 commandQueryHandlers
 	^self getCommandQueryHandlers ?? #()!
@@ -1033,7 +1046,7 @@ defaultView
 
 	^View defaultView!
 
-getAdditionalAccelerators
+getAdditionalKeyBindings
 	^nil!
 
 getCommandQueryHandlers
@@ -1100,8 +1113,22 @@ resource_OK_Cancel_button_block
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 656198 1 ##(Smalltalk.FlowLayout) 17 17 21 170 192 8 #() 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 11 17 578 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 3839 21 578 341 65 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 41 8 0 0 42 0 0 0] 34 2 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1141055488 1 832 nil nil nil 5 nil nil nil 832 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 'OK' 1 1 nil nil true nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 25 17 578 151 47 832 690 #text: 34 1 8 'OK' 832 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 8 0 0 0 87 0 0 0 31 0 0 0] 8 #() 578 193 193 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1184 nil nil nil 5 nil nil nil 1184 nil 8 1915188384 914 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 191 17 578 151 47 1184 690 #text: 34 1 8 'Cancel' 1184 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 8 0 0 0 170 0 0 0 31 0 0 0] 8 #() 1168 nil 29 1168 nil 27 )!
 
-setAdditionalAccelerators: anArray 
-	self error: 'configuring accelerator keys is not supported'!
+setAdditionalAccelerators: anArray
+	| bindings |
+	bindings := anArray
+				ifNotNil: 
+					[anArray collect: 
+							[:each |
+							(CommandDescription command: each first)
+								acceleratorKeyString: each last;
+								yourself]].
+	self setAdditionalKeyBindings: bindings.
+	^bindings!
+
+setAdditionalKeyBindings: anArray
+	"Private - Store key bindings, if supported."
+
+	!
 
 setCommandQueryHandlers: anArray 
 	self error: 'configuring command query handlers is not supported'!
@@ -1134,7 +1161,7 @@ showOn: aModel
 !Presenter class categoriesFor: #acceleratorKeyBindings!constants!public! !
 !Presenter class categoriesFor: #acceleratorKeyBindings:!constants!public! !
 !Presenter class categoriesFor: #addCommandQueryHandler:!accessing!public! !
-!Presenter class categoriesFor: #additionalAccelerators!accessing!private! !
+!Presenter class categoriesFor: #additionalKeyBindings!accessing!private! !
 !Presenter class categoriesFor: #commandQueryHandlers!accessing!private! !
 !Presenter class categoriesFor: #create!instance creation!public! !
 !Presenter class categoriesFor: #create:!instance creation!public! !
@@ -1148,7 +1175,7 @@ showOn: aModel
 !Presenter class categoriesFor: #defaultModel!models!public! !
 !Presenter class categoriesFor: #defaultResourceIdentifier!constants!public! !
 !Presenter class categoriesFor: #defaultView!constants!public! !
-!Presenter class categoriesFor: #getAdditionalAccelerators!accessing!private! !
+!Presenter class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
 !Presenter class categoriesFor: #getCommandQueryHandlers!accessing!private! !
 !Presenter class categoriesFor: #icon!constants!public! !
 !Presenter class categoriesFor: #loadViewResource:inContext:!operations!private! !
@@ -1159,6 +1186,7 @@ showOn: aModel
 !Presenter class categoriesFor: #resource_Default_view!public!resources-views! !
 !Presenter class categoriesFor: #resource_OK_Cancel_button_block!public!resources-views! !
 !Presenter class categoriesFor: #setAdditionalAccelerators:!accessing!private! !
+!Presenter class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
 !Presenter class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
 !Presenter class categoriesFor: #show!instance creation!public! !
 !Presenter class categoriesFor: #show:!instance creation!public! !

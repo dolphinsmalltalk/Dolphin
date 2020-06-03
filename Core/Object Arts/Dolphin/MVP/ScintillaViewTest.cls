@@ -54,6 +54,38 @@ testLanguages
 	lingos := ScintillaView lexerLanguages.
 	lingos do: [:each | each notNil ifTrue: [presenter view lexer: each]]!
 
+testOverrideDefaultKeyBindings
+	| bindings code expectedDiffs binding actualBindings |
+	bindings := ScintillaView.DefaultKeyBindings copy.
+	expectedDiffs := Set new.
+	"Remove a key binding"
+	code := AcceleratorTable keyCodeFromInvariantString: 'PGDOWN'.
+	self assert: (bindings includesKey: code).
+	bindings removeKey: code.
+	expectedDiffs
+		add: (ScintillaKeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_NULL).
+	"Add a binding"
+	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+J'.
+	self deny: (bindings includesKey: code).
+	binding := ScintillaKeyBinding newAcceleratorKey: code
+				message: ScintillaConstants.SCI_SELECTIONDUPLICATE.
+	bindings at: code put: binding.
+	expectedDiffs add: binding.
+	"Update a binding"
+	code := AcceleratorTable keyCodeFromInvariantString: 'CTRL+D'.
+	self assert: (bindings includesKey: code).
+	binding := ScintillaKeyBinding newAcceleratorKey: code message: ScintillaConstants.SCI_PAGEDOWN.
+	bindings at: code put: binding.
+	expectedDiffs add: binding.
+
+	"When the bindings are set, we should be able to get back matching bindings"
+	presenter keyBindings: bindings.
+	actualBindings := presenter keyBindings asSet.
+	bindings := bindings asSet.
+	self assert: (bindings symmetricDifference: actualBindings) asArray equals: #().
+	"But only the diffs should be stored"
+	self assert: presenter basicKeyBindings asSet equals: expectedDiffs!
+
 testSetGetAnnotations
 	| annotations |
 	presenter text: self text.
@@ -92,6 +124,7 @@ testTokensFromTo
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !
 !ScintillaViewTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testLanguages!public!unit tests! !
+!ScintillaViewTest categoriesFor: #testOverrideDefaultKeyBindings!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testSetGetAnnotations!public!unit tests! !
 !ScintillaViewTest categoriesFor: #testTokensFromTo!public!unit tests! !
 
