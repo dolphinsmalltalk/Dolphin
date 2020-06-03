@@ -1693,7 +1693,8 @@ openOn: aResourceIdentifier
 	resourceIdentifier := aResourceIdentifier.
 	self
 		updateCaption;
-		setInitialFocus!
+		setInitialFocus;
+		validateImage!
 
 openOnCopyOf: aResourceIdentifier 
 	"Private - Open the ViewResource identified by aResourceIdentifier for editing but don't save
