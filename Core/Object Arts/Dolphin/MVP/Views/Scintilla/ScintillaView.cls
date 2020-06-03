@@ -224,6 +224,12 @@ addSelectionRange: anInterval
 
 	self sciAddSelection: anInterval stop + 1 anchor: anInterval start!
 
+allKeyBindings
+	| bindings |
+	bindings := DefaultKeyBindings copy.
+	keyBindings ifNotNil: [keyBindings do: [:each | bindings at: each acceleratorKey put: each]].
+	^bindings!
+
 anchorPosition
 	"Returns the position of the opposite end of the selection to the caret."
 
@@ -658,7 +664,7 @@ basicClearSelection
 				lParam: 0]!
 
 basicKeyBindings
-	^keyBindings ifNil: [self defaultKeyBindings]!
+	^keyBindings!
 
 basicLineFromPosition: posInteger
 	"Private - Retrieve the line containing a position."
@@ -1595,9 +1601,6 @@ defaultFoldTextTag: textString
 				msg: SCI_SETDEFAULTFOLDDISPLAYTEXT
 				wParam: 0
 				lpParam: textString]!
-
-defaultKeyBindings
-	^DefaultKeyBindings collect: [:each | each copy]!
 
 defaultMarkerDefinitions
 	"Private - Answer an <IdentityDictionary> that associates marker names that are meaningful in the
@@ -3968,17 +3971,21 @@ joinTarget
 keyBindings
 	"Answer the collection of key bindings currently assigned in the receiver."
 
-	^self basicKeyBindings asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
+	^(self class mergeKeyBindings: keyBindings??#())
+		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
 
 keyBindings: aCollectionOfScintillaKeyBindings
+	"Set the full collection of key bindings in the receiver. Only the differences between the default bindings and the specified set will be remembered, including any deleted bindings.
+	Before removing bindings be aware that many of the bindings are required for correct operation of features such as auto-completion. For example you might reasonably decide to remove the PGDOWN binding when using the editor in single line mode as there will never be any pages to move down into, however this will also prevent the key being available for paging down in any auto-completion list shown by the editor."
+
 	aCollectionOfScintillaKeyBindings
 		ifNil: [keyBindings ifNotNil: [self resetKeyBindings]]
 		ifNotNil: 
-			[| set |
-			set := aCollectionOfScintillaKeyBindings asSet.
-			(set noDifference: DefaultKeyBindings values)
+			[| diff |
+			diff := self class unmergeKeyBindings: aCollectionOfScintillaKeyBindings.
+			diff isEmpty
 				ifTrue: [keyBindings ifNotNil: [self resetKeyBindings]]
-				ifFalse: [self setKeyBindings: set]]!
+				ifFalse: [self setKeyBindings: diff]]!
 
 keyboardCommands
 	^self keyBindings collect: 
@@ -10021,8 +10028,7 @@ setIndicatorStyles: aCollection
 	self updateIndicatorStyles!
 
 setKeyBindings: aCollectionOfScintillaKeyBindings
-	keyBindings := LookupTable new: aCollectionOfScintillaKeyBindings size.
-	aCollectionOfScintillaKeyBindings do: [:each | keyBindings at: each acceleratorKey put: each].
+	keyBindings := aCollectionOfScintillaKeyBindings.
 	^self updateKeyBindings!
 
 setLexerLanguage: aSymbol
@@ -10788,7 +10794,10 @@ updateKeyBindings
 	its default command key assignments."
 
 	self sciClearAllCmdKeys.
-	self basicKeyBindings do: [:each | self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]!
+	self allKeyBindings do: 
+			[:each |
+			each message == SCI_NULL
+				ifFalse: [self sciAssignCmdKey: each scintillaKeyCode sciCommand: each message]]!
 
 updateMarkers
 	self deleteMarkers: 0.
@@ -11158,6 +11167,7 @@ zoomOut
 !ScintillaView categoriesFor: #addMarker:!markers!public! !
 !ScintillaView categoriesFor: #addMarkerType:at:!markers!public! !
 !ScintillaView categoriesFor: #addSelectionRange:!public!selection! !
+!ScintillaView categoriesFor: #allKeyBindings!key bindings!private! !
 !ScintillaView categoriesFor: #anchorPosition!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #anchorPosition:!**auto generated**!public!scintilla interface!selection! !
 !ScintillaView categoriesFor: #annotateLine:withAll:!annotations!public! !
@@ -11201,7 +11211,7 @@ zoomOut
 !ScintillaView categoriesFor: #basicAnnotateLine:withText:inStyles:!annotations!helpers!private! !
 !ScintillaView categoriesFor: #basicClearContainerIndicators!indicators!private! !
 !ScintillaView categoriesFor: #basicClearSelection!**auto generated**!private!scintilla interface!selection! !
-!ScintillaView categoriesFor: #basicKeyBindings!key bindings!public! !
+!ScintillaView categoriesFor: #basicKeyBindings!key bindings!private! !
 !ScintillaView categoriesFor: #basicLineFromPosition:!accessing!private! !
 !ScintillaView categoriesFor: #basicPositionAtLine:!accessing!private! !
 !ScintillaView categoriesFor: #basicRemoveAllAnnotations!**auto generated**!annotations!private!removing!scintilla interface! !
@@ -11290,7 +11300,6 @@ zoomOut
 !ScintillaView categoriesFor: #defaultBraceChars!brace highlighting!constants!private! !
 !ScintillaView categoriesFor: #defaultFoldTextTag!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!public!scintilla interface! !
-!ScintillaView categoriesFor: #defaultKeyBindings!helpers!key bindings!private! !
 !ScintillaView categoriesFor: #defaultMarkerDefinitions!constants!markers!private! !
 !ScintillaView categoriesFor: #defaultModEventMask!constants!private! !
 !ScintillaView categoriesFor: #defaultTextStylesFor:!constants!public!style definition! !
@@ -12198,92 +12207,90 @@ defaultCallTipStyle
 		forecolor: Color gray;
 		yourself!
 
-defaultKeyBindings
-	^DefaultKeyBindings!
-
 defaultKeyMap
-	"Private - This key map is built (using editor macros) from the source code of the Scintilla control.
-	Unfortunately there is no way to query the command key assignments."
+	"Private - This key map is built (using editor macros. from the source code of the Scintilla control.
+	Unfortunately there is no way to query the command key assignments. Also the default map is only set when the Scintilla control is created. There is no way to reset to the default map, only to clear it entirely.
+	Scintilla defines its own set of key constants in its SCK_xxx enumeration. The mapping from these to Windows VK_xxx keys is performed by the ScintillaKeyBinding class."
 
-	^#(
-	    (##(VK_DOWN|KF_EXTENDED)		0	##(SCI_LINEDOWN))
-	    (##(VK_DOWN|KF_EXTENDED)		##(FSHIFT)	##(SCI_LINEDOWNEXTEND))
-	    (##(VK_DOWN|KF_EXTENDED)		##(FCONTROL)	##(SCI_LINESCROLLDOWN))
-	    (##(VK_DOWN|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_LINEDOWNRECTEXTEND))
-	    (##(VK_UP|KF_EXTENDED)		0	##(SCI_LINEUP))
-	    (##(VK_UP|KF_EXTENDED)			##(FSHIFT)	##(SCI_LINEUPEXTEND))
-	    (##(VK_UP|KF_EXTENDED)			##(FCONTROL)	##(SCI_LINESCROLLUP))
-	    (##(VK_UP|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_LINEUPRECTEXTEND))
-	    (##(VK_OEM_4)		##(FCONTROL)		##(SCI_PARAUP))
-	    (##(VK_OEM_4)		##(FCONTROL|FSHIFT)	##(SCI_PARAUPEXTEND))
-	    (##(VK_OEM_6)		##(FCONTROL)		##(SCI_PARADOWN))
-	    (##(VK_OEM_6)		##(FCONTROL|FSHIFT)	##(SCI_PARADOWNEXTEND))
-	    (##(VK_LEFT|KF_EXTENDED)		0	##(SCI_CHARLEFT))
-	    (##(VK_LEFT|KF_EXTENDED)		##(FSHIFT)	##(SCI_CHARLEFTEXTEND))
-	    (##(VK_LEFT|KF_EXTENDED)		##(FCONTROL)	##(SCI_WORDLEFT))
-	    (##(VK_LEFT|KF_EXTENDED)		##(FCONTROL|FSHIFT)	##(SCI_WORDLEFTEXTEND))
-	    (##(VK_LEFT|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_CHARLEFTRECTEXTEND))
-	    (##(VK_RIGHT|KF_EXTENDED)		0	##(SCI_CHARRIGHT))
-	    (##(VK_RIGHT|KF_EXTENDED)		##(FSHIFT)	##(SCI_CHARRIGHTEXTEND))
-	    (##(VK_RIGHT|KF_EXTENDED)		##(FCONTROL)	##(SCI_WORDRIGHT))
-	    (##(VK_RIGHT|KF_EXTENDED)		##(FCONTROL|FSHIFT)	##(SCI_WORDRIGHTEXTEND))
-	    (##(VK_RIGHT|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_CHARRIGHTRECTEXTEND))
-	    (##(VK_OEM_2)	##(FCONTROL)		##(SCI_WORDPARTLEFT))
-	    (##(VK_OEM_2)	##(FCONTROL|FSHIFT)	##(SCI_WORDPARTLEFTEXTEND))
-	    (##(VK_OEM_5)	##(FCONTROL)		##(SCI_WORDPARTRIGHT))
-	    (##(VK_OEM_5)	##(FCONTROL|FSHIFT)	##(SCI_WORDPARTRIGHTEXTEND))
-	    (##(VK_HOME|KF_EXTENDED)		0	##(SCI_VCHOME))
-	    (##(VK_HOME|KF_EXTENDED) 		##(FSHIFT) 	##(SCI_VCHOMEEXTEND))
-	    (##(VK_HOME|KF_EXTENDED) 		##(FCONTROL) 	##(SCI_DOCUMENTSTART))
-	    (##(VK_HOME|KF_EXTENDED) 		##(FCONTROL|FSHIFT) 	##(SCI_DOCUMENTSTARTEXTEND))
-	    (##(VK_HOME|KF_EXTENDED) 		##(FALT) 	##(SCI_HOMEDISPLAY))
-	    (##(VK_HOME|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_VCHOMERECTEXTEND))
-	    (##(VK_END|KF_EXTENDED)	 	0	##(SCI_LINEEND))
-	    (##(VK_END|KF_EXTENDED)	 	##(FSHIFT) 	##(SCI_LINEENDEXTEND))
-	    (##(VK_END|KF_EXTENDED) 		##(FCONTROL) 	##(SCI_DOCUMENTEND))
-	    (##(VK_END|KF_EXTENDED) 		##(FCONTROL|FSHIFT) 	##(SCI_DOCUMENTENDEXTEND))
-	    (##(VK_END|KF_EXTENDED) 		##(FALT) 	##(SCI_LINEENDDISPLAY))
-	    (##(VK_END|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_LINEENDRECTEXTEND))
-	    (##(VK_PRIOR|KF_EXTENDED)		0	##(SCI_PAGEUP))
-	    (##(VK_PRIOR|KF_EXTENDED)		##(FSHIFT) 	##(SCI_PAGEUPEXTEND))
-	    (##(VK_PRIOR|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_PAGEUPRECTEXTEND))
-	    (##(VK_NEXT|KF_EXTENDED) 		0 	##(SCI_PAGEDOWN))
-	    (##(VK_NEXT|KF_EXTENDED) 		##(FSHIFT) 	##(SCI_PAGEDOWNEXTEND))
-	    (##(VK_NEXT|KF_EXTENDED)		##(FALT|FSHIFT)	##(SCI_PAGEDOWNRECTEXTEND))
-	    (##(VK_DELETE|KF_EXTENDED) 	0	##(SCI_CLEAR))
-	    (##(VK_DELETE|KF_EXTENDED) 	##(FSHIFT)	##(SCI_CUT))
-	    (##(VK_DELETE|KF_EXTENDED) 	##(FCONTROL)	##(SCI_DELWORDRIGHT))
-	    (##(VK_DELETE|KF_EXTENDED)	##(FCONTROL|FSHIFT)	##(SCI_DELLINERIGHT))
-	    (##(VK_INSERT|KF_EXTENDED) 		0	##(SCI_EDITTOGGLEOVERTYPE))
-	    (##(VK_INSERT|KF_EXTENDED) 		##(FSHIFT)	##(SCI_PASTE))
-	    (##(VK_INSERT|KF_EXTENDED) 		##(FCONTROL)	##(SCI_COPY))
-	    (##(VK_ESCAPE)  	0	##(SCI_CANCEL))
-	    (##(VK_BACK)		0 	##(SCI_DELETEBACK))
-	    (##(VK_BACK)		##(FSHIFT) 	##(SCI_DELETEBACK))
-	    (##(VK_BACK)		##(FCONTROL) 	##(SCI_DELWORDLEFT))
-	    (##(VK_BACK) 		##(FALT)	##(SCI_UNDO))
-	    (##(VK_BACK)		##(FCONTROL|FSHIFT)	##(SCI_DELLINELEFT))
-	    ($Z 			##(FCONTROL)	##(SCI_UNDO))
-	    ($Y 			##(FCONTROL)	##(SCI_REDO))
-	    ($X 			##(FCONTROL)	##(SCI_CUT))
-	    ($C 			##(FCONTROL)	##(SCI_COPY))
-	    ($V 			##(FCONTROL)	##(SCI_PASTE))
-	    ($A 			##(FCONTROL)	##(SCI_SELECTALL))
-	    (##(VK_TAB)		0	##(SCI_TAB))
-	    (##(VK_TAB)		##(FSHIFT)	##(SCI_BACKTAB))
-	    (##(VK_RETURN) 	0	##(SCI_NEWLINE))
-	    (##(VK_RETURN) 	##(FSHIFT)	##(SCI_NEWLINE))
-	    (##(VK_ADD) 		##(FCONTROL)	##(SCI_ZOOMIN))
-	    (##(VK_SUBTRACT)	##(FCONTROL)	##(SCI_ZOOMOUT))
-	    (##(VK_DIVIDE|KF_EXTENDED)	##(FCONTROL)	##(SCI_SETZOOM)) "Reset zoom level to zero"
-	    ($L 			##(FCONTROL)	##(SCI_LINECUT))
-	    ($L 			##(FCONTROL|FSHIFT)	##(SCI_LINEDELETE))
-	    ($T 			##(FCONTROL|FSHIFT)	##(SCI_LINECOPY))
-	    ($T 			##(FCONTROL)	##(SCI_LINETRANSPOSE))
-	    ($D 			##(FCONTROL)	##(SCI_LINEDUPLICATE))
-	    ($U 			##(FCONTROL)	##(SCI_LOWERCASE))
-	    ($U 			##(FCONTROL|FSHIFT)	##(##(SCI_UPPERCASE)))
-	).!
+	^{
+	    {VK_DOWN|KF_EXTENDED.		0.				SCI_LINEDOWN}.
+	    {VK_DOWN|KF_EXTENDED.		FSHIFT.			SCI_LINEDOWNEXTEND}.
+	    {VK_DOWN|KF_EXTENDED.		FCONTROL.		SCI_LINESCROLLDOWN}.
+	    {VK_DOWN|KF_EXTENDED.		FALT|FSHIFT.		SCI_LINEDOWNRECTEXTEND}.
+	    {VK_UP|KF_EXTENDED.		0.				SCI_LINEUP}.
+	    {VK_UP|KF_EXTENDED.		FSHIFT.			SCI_LINEUPEXTEND}.
+	    {VK_UP|KF_EXTENDED.		FCONTROL.		SCI_LINESCROLLUP}.
+	    {VK_UP|KF_EXTENDED.		FALT|FSHIFT.		SCI_LINEUPRECTEXTEND}.
+	    {VK_OEM_4.					FCONTROL.		SCI_PARAUP}.
+	    {VK_OEM_4.					FCONTROL|FSHIFT.	SCI_PARAUPEXTEND}.
+	    {VK_OEM_6.					FCONTROL.		SCI_PARADOWN}.
+	    {VK_OEM_6.					FCONTROL|FSHIFT.	SCI_PARADOWNEXTEND}.
+	    {VK_LEFT|KF_EXTENDED.		0.				SCI_CHARLEFT}.
+	    {VK_LEFT|KF_EXTENDED.		FSHIFT.			SCI_CHARLEFTEXTEND}.
+	    {VK_LEFT|KF_EXTENDED.		FCONTROL.		SCI_WORDLEFT}.
+	    {VK_LEFT|KF_EXTENDED.		FCONTROL|FSHIFT.	SCI_WORDLEFTEXTEND}.
+	    {VK_LEFT|KF_EXTENDED.		FALT|FSHIFT.		SCI_CHARLEFTRECTEXTEND}.
+	    {VK_RIGHT|KF_EXTENDED.		0.				SCI_CHARRIGHT}.
+	    {VK_RIGHT|KF_EXTENDED.		FSHIFT.			SCI_CHARRIGHTEXTEND}.
+	    {VK_RIGHT|KF_EXTENDED.		FCONTROL.		SCI_WORDRIGHT}.
+	    {VK_RIGHT|KF_EXTENDED.		FCONTROL|FSHIFT.	SCI_WORDRIGHTEXTEND}.
+	    {VK_RIGHT|KF_EXTENDED.		FALT|FSHIFT.		SCI_CHARRIGHTRECTEXTEND}.
+	    {VK_OEM_2.					FCONTROL.		SCI_WORDPARTLEFT}.
+	    {VK_OEM_2.					FCONTROL|FSHIFT.	SCI_WORDPARTLEFTEXTEND}.
+	    {VK_OEM_5.					FCONTROL.		SCI_WORDPARTRIGHT}.
+	    {VK_OEM_5.					FCONTROL|FSHIFT.	SCI_WORDPARTRIGHTEXTEND}.
+	    {VK_HOME|KF_EXTENDED.		0.				SCI_VCHOME}.
+	    {VK_HOME|KF_EXTENDED. 		FSHIFT. 			SCI_VCHOMEEXTEND}.
+	    {VK_HOME|KF_EXTENDED. 		FCONTROL. 		SCI_DOCUMENTSTART}.
+	    {VK_HOME|KF_EXTENDED. 		FCONTROL|FSHIFT. SCI_DOCUMENTSTARTEXTEND}.
+	    {VK_HOME|KF_EXTENDED. 		FALT. 			SCI_HOMEDISPLAY}.
+	    {VK_HOME|KF_EXTENDED.		FALT|FSHIFT.		SCI_VCHOMERECTEXTEND}.
+	    {VK_END|KF_EXTENDED.	 	0.				SCI_LINEEND}.
+	    {VK_END|KF_EXTENDED.	 	FSHIFT. 			SCI_LINEENDEXTEND}.
+	    {VK_END|KF_EXTENDED. 		FCONTROL. 		SCI_DOCUMENTEND}.
+	    {VK_END|KF_EXTENDED. 		FCONTROL|FSHIFT. SCI_DOCUMENTENDEXTEND}.
+	    {VK_END|KF_EXTENDED. 		FALT. 			SCI_LINEENDDISPLAY}.
+	    {VK_END|KF_EXTENDED.		FALT|FSHIFT.		SCI_LINEENDRECTEXTEND}.
+	    {VK_PRIOR|KF_EXTENDED.		0.				SCI_PAGEUP}.
+	    {VK_PRIOR|KF_EXTENDED.		FSHIFT. 			SCI_PAGEUPEXTEND}.
+	    {VK_PRIOR|KF_EXTENDED.		FALT|FSHIFT.		SCI_PAGEUPRECTEXTEND}.
+	    {VK_NEXT|KF_EXTENDED. 		0. 				SCI_PAGEDOWN}.
+	    {VK_NEXT|KF_EXTENDED. 		FSHIFT. 			SCI_PAGEDOWNEXTEND}.
+	    {VK_NEXT|KF_EXTENDED.		FALT|FSHIFT.		SCI_PAGEDOWNRECTEXTEND}.
+	    {VK_DELETE|KF_EXTENDED. 	0.				SCI_CLEAR}.
+	    {VK_DELETE|KF_EXTENDED. 	FSHIFT.			SCI_CUT}.
+	    {VK_DELETE|KF_EXTENDED. 	FCONTROL.		SCI_DELWORDRIGHT}.
+	    {VK_DELETE|KF_EXTENDED.		FCONTROL|FSHIFT.	SCI_DELLINERIGHT}.
+	    {VK_INSERT|KF_EXTENDED. 	0.				SCI_EDITTOGGLEOVERTYPE}.
+	    {VK_INSERT|KF_EXTENDED. 	FSHIFT.			SCI_PASTE}.
+	    {VK_INSERT|KF_EXTENDED. 	FCONTROL.		SCI_COPY}.
+	    {VK_ESCAPE.  				0.				SCI_CANCEL}.
+	    {VK_BACK.					0. 				SCI_DELETEBACK}.
+	    {VK_BACK.					FSHIFT. 			SCI_DELETEBACK}.
+	    {VK_BACK.					FCONTROL. 		SCI_DELWORDLEFT}.
+	    {VK_BACK. 					FALT.			SCI_UNDO}.
+	    {VK_BACK.					FCONTROL|FSHIFT.	SCI_DELLINELEFT}.
+	    {$Z. 						FCONTROL.		SCI_UNDO}.
+	    {$Y. 						FCONTROL.		SCI_REDO}.
+	    {$X. 						FCONTROL.		SCI_CUT}.
+	    {$C. 						FCONTROL.		SCI_COPY}.
+	    {$V. 						FCONTROL.		SCI_PASTE}.
+	    {$A. 						FCONTROL.		SCI_SELECTALL}.
+	    {VK_TAB.					0.				SCI_TAB}.
+	    {VK_TAB.					FSHIFT.			SCI_BACKTAB}.
+	    {VK_RETURN. 				0.				SCI_NEWLINE}.
+	    {VK_RETURN. 				FSHIFT.			SCI_NEWLINE}.
+	    {VK_ADD. 					FCONTROL.		SCI_ZOOMIN}.
+	    {VK_SUBTRACT.				FCONTROL.		SCI_ZOOMOUT}.
+	    {VK_DIVIDE|KF_EXTENDED.		FCONTROL.		SCI_SETZOOM}. "Reset zoom level to zero"
+	    {$L. 						FCONTROL.		SCI_LINECUT}.
+	    {$L. 						FCONTROL|FSHIFT.	SCI_LINEDELETE}.
+	    {$T. 						FCONTROL|FSHIFT.	SCI_LINECOPY}.
+	    {$T. 						FCONTROL.		SCI_LINETRANSPOSE}.
+	    {$D. 						FCONTROL.		SCI_SELECTIONDUPLICATE}.	"Changed at some point from SCI_LINEDUPLICATE, but this is now the same as VS"
+	    {$U. 						FCONTROL.		SCI_LOWERCASE}.
+	    {$U. 						FCONTROL|FSHIFT.	SCI_UPPERCASE}
+	}!
 
 defaultTextStyles
 	"Answer the default text style settings to be used for new instances of the receiver. By
@@ -12383,7 +12390,7 @@ initialize
 	self defaultKeyMap do: 
 			[:each |
 			| keyCode |
-			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second.
+			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second | FVIRTKEY.
 			defaultKeyBindings at: keyCode
 				put: ((ScintillaKeyBinding newAcceleratorKey: keyCode message: each last)
 						isImmutable: true;
@@ -12528,6 +12535,20 @@ markdownTextStyles
 				backcolor: (Color fromHTMLSpec: '#EEEEEE');
 				yourself).
 	^styles!
+
+mergeKeyBindings: aCollectionOfScintillaKeyBindings
+	"Answer a mutable <collection> of `ScintillaKeyBindings` representing the result of merging the `ScintillaKeyBindings` in the argument with the default key bindings.
+	Key bindings in the argument take precedence. If any of those bindings are to null, then there will be no binding for the associated accelerator in the resulting table."
+
+	| bindings |
+	bindings := LookupTable new: DefaultKeyBindings size.
+	DefaultKeyBindings do: [:each | bindings at: each acceleratorKey put: each copy].
+	aCollectionOfScintillaKeyBindings do: 
+			[:each |
+			each message == SCI_NULL
+				ifTrue: [bindings removeKey: each acceleratorKey ifAbsent: []]
+				ifFalse: [bindings at: each acceleratorKey put: each copy]].
+	^bindings values!
 
 multiPasteModes
 	^#(#once #each)!
@@ -12695,6 +12716,18 @@ txtTextStyles
 				backcolor: Color window;
 				yourself).
 	^styles!
+
+unmergeKeyBindings: aCollectionOfScintillaKeyBindings
+	"Answer just those key bindings in aCollectionOfScintillaKeyBindings that are different from the defaults, including null bindings for any default accelerator keys that are not used in aCollectionOfScintillaKeyBindings"
+
+	| bindings diff |
+	bindings := aCollectionOfScintillaKeyBindings asSet.
+	diff := bindings difference: DefaultKeyBindings.
+	"We also add in SCI_NULLs for any bindings that were deleted, otherwise the fact that they were deleted will be lost"
+	((DefaultKeyBindings collect: [:each | each acceleratorKey])
+		difference: (bindings collect: [:each | each acceleratorKey]))
+			do: [:each | diff add: (ScintillaKeyBinding newAcceleratorKey: each message: SCI_NULL)].
+	^diff!
 
 whitespaceVisibilityLevels
 	"Answer the symbolic names of the whitespace visibility modes supported by Scintilla."
@@ -12880,8 +12913,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #caretStyles!constants!public! !
 !ScintillaView class categoriesFor: #defaultAnnotationStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #defaultCallTipStyle!constants!public!style definition! !
-!ScintillaView class categoriesFor: #defaultKeyBindings!constants!private! !
-!ScintillaView class categoriesFor: #defaultKeyMap!constants!private! !
+!ScintillaView class categoriesFor: #defaultKeyMap!constants!key bindings!private! !
 !ScintillaView class categoriesFor: #defaultTextStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #drawingPhases!constants!private! !
 !ScintillaView class categoriesFor: #drawingTechnologies!constants!public! !
@@ -12899,6 +12931,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !ScintillaView class categoriesFor: #lineEndings!constants!public! !
 !ScintillaView class categoriesFor: #markdownTextStyles!constants!public!style definition! !
+!ScintillaView class categoriesFor: #mergeKeyBindings:!key bindings!public! !
 !ScintillaView class categoriesFor: #multiPasteModes!constants!public! !
 !ScintillaView class categoriesFor: #selectionModes!constants!public! !
 !ScintillaView class categoriesFor: #smalltalkTextStyles!constants!public!style definition! !
@@ -12908,6 +12941,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #stbVersion!binary filing!public! !
 !ScintillaView class categoriesFor: #tabDrawModes!constants!public! !
 !ScintillaView class categoriesFor: #txtTextStyles!constants!public!style definition! !
+!ScintillaView class categoriesFor: #unmergeKeyBindings:!key bindings!public! !
 !ScintillaView class categoriesFor: #whitespaceVisibilityLevels!constants!public! !
 !ScintillaView class categoriesFor: #winClassName!constants!private! !
 !ScintillaView class categoriesFor: #wrapIndentModes!constants!public! !

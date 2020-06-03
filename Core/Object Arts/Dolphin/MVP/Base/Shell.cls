@@ -27,15 +27,15 @@ addCommandHistory: aCommand
 		ifTrue: [commandHistory addLast: aCommand]
 		ifFalse: [self clearCommandHistory]!
 
-allAdditionalAccelerators
+allAdditionalKeyBindings
 	"Private - Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s),
 	but which either the receiver of one of its sub-presenters wants to define.
 	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
 	and the second the accelerator key string."
 
 	| answer |
-	answer := OrderedCollection withAll: self additionalAccelerators.
-	self allSubPresentersDo: [:each | answer addAll: each additionalAccelerators].
+	answer := OrderedCollection withAll: self additionalKeyBindings.
+	self allSubPresentersDo: [:each | answer addAll: each additionalKeyBindings].
 	^answer!
 
 caption
@@ -304,7 +304,7 @@ view: aShellView
 	self onViewOpened; setInitialFocus
 ! !
 !Shell categoriesFor: #addCommandHistory:!accessing!private! !
-!Shell categoriesFor: #allAdditionalAccelerators!constants!private! !
+!Shell categoriesFor: #allAdditionalKeyBindings!constants!private! !
 !Shell categoriesFor: #caption!accessing!public! !
 !Shell categoriesFor: #caption:!accessing!public! !
 !Shell categoriesFor: #clearCommandHistory!accessing!public! !

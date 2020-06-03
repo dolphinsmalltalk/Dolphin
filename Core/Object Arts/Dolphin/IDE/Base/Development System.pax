@@ -980,7 +980,7 @@ Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
-	classInstanceVariableNames: 'additionalAccelerators commandQueryHandlers'!
+	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'!
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
@@ -1050,7 +1050,7 @@ Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalAccelerators commandQueryHandlers'!
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
 AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
 	instanceVariableNames: 'workspacePresenter searchPresenter'
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'

@@ -436,7 +436,7 @@ initialize
 	self viewMode: #thumbnails.
 	self playSystemSounds: true.
 	self resetWhenInvisible: false.
-	HotKey := 16r3244!
+	HotKey := AcceleratorTable keyCodeFromInvariantString: 'CTRL+ALT+D'!
 
 onNoVisibleWindows
 	"The system has detected that there are no visible windows. If so configured, open a new

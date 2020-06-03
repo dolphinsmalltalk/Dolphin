@@ -523,7 +523,7 @@ defaultAdditionalAccelerators
 	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
 	and the second the accelerator key string."
 
-	^super defaultAdditionalAccelerators , #(#(#widenSourceSelection 'Ctrl+U'))!
+	^super defaultAdditionalAccelerators copyWith: #(#widenSourceSelection 'Ctrl+U')!
 
 initialize
 	"Private - Initialize the receiver's class variables.

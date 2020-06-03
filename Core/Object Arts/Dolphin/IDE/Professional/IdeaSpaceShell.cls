@@ -47,16 +47,16 @@ addShellDecorations: aShell
 		set: true
 		recreateIfChanged: true) ifTrue: [shellView frameChanged]!
 
-allAdditionalAccelerators
+allAdditionalKeyBindings
 	| answer |
-	answer := OrderedCollection withAll: self additionalAccelerators.
+	answer := OrderedCollection withAll: self additionalKeyBindings.
 	self subPresenters do: 
 			[:each | 
 			each == cardsPresenter 
 				ifFalse: 
-					[answer addAll: each additionalAccelerators.
-					each allSubPresentersDo: [:eachSub | answer addAll: eachSub additionalAccelerators]]].
-	self currentCard ifNotNil: [:tool | answer addAll: tool allAdditionalAccelerators].
+					[answer addAll: each additionalKeyBindings.
+					each allSubPresentersDo: [:eachSub | answer addAll: eachSub additionalKeyBindings]]].
+	self currentCard ifNotNil: [:tool | answer addAll: tool allAdditionalKeyBindings].
 	^answer!
 
 basicCaption
@@ -519,7 +519,7 @@ watermarkBitmap
 !IdeaSpaceShell categoriesFor: #absorbCard:!private! !
 !IdeaSpaceShell categoriesFor: #addIdeaCardTools:!helpers!private! !
 !IdeaSpaceShell categoriesFor: #addShellDecorations:!helpers!private! !
-!IdeaSpaceShell categoriesFor: #allAdditionalAccelerators!constants!private! !
+!IdeaSpaceShell categoriesFor: #allAdditionalKeyBindings!constants!private! !
 !IdeaSpaceShell categoriesFor: #basicCaption!constants!public! !
 !IdeaSpaceShell categoriesFor: #breakoutCard:!private! !
 !IdeaSpaceShell categoriesFor: #breakoutCurrentCard!public! !
