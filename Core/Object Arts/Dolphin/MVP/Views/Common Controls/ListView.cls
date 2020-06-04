@@ -1793,6 +1793,9 @@ onSelRemoved
 
 	self onSelChanged: self getSelectionsByIndex!
 
+onStateRestored
+	self backImage ifNotNil: [self backImageChanged]!
+
 onViewCreated
 	"The receiver window has been created. Copy the info held
 	in instance variables across to it, and perform any other state
@@ -2050,20 +2053,18 @@ state
 
 	| sequence order |
 	sequence := super state.
-	self isReportMode 
+	self isReportMode
 		ifTrue: 
 			["Ensure the actual column widths are cached"
-			self allColumns 
+			self allColumns
 				keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]].
 	"Record the column order if anything other than ascending"
-	(order := self columnOrder) = (1 to: self columnCount) 
+	(order := self columnOrder) = (1 to: self columnCount)
 		ifFalse: 
-			[sequence add: (MessageSend 
+			[sequence add: (MessageSend
 						receiver: self
 						selector: #columnOrder:
 						argument: order)].
-	self backImage notNil 
-		ifTrue: [sequence add: (MessageSend receiver: self selector: #backImageChanged)].
 	^sequence!
 
 stateImageFromRow: anObject
@@ -2433,6 +2434,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onSelChanged:!event handling!private! !
 !ListView categoriesFor: #onSelChanging:cause:!event handling!private! !
 !ListView categoriesFor: #onSelRemoved!public!selection! !
+!ListView categoriesFor: #onStateRestored!binary filing!private! !
 !ListView categoriesFor: #onViewCreated!event handling!public! !
 !ListView categoriesFor: #primaryColumn!columns!private! !
 !ListView categoriesFor: #queryCommand:!commands!public! !

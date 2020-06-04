@@ -469,19 +469,6 @@ isPersistentView: aBoolean
 
 	svFlags := self svFlags mask: TransientMask set: aBoolean not!
 
-isStateRestoring: aBoolean 
-	"Private - Set a flag to indicate that state of the receiver is being restored according 
-	to aBoolean. Used to disable some notification during this period when sibling views 
-	may not yet be valid. 
-	Implementation Note: If leaving the restoration state then mark the UI for revalidation
-	at idle time, also sending DM_SETDEFID during state restoral causes a GPF in User.EXE 
-	on Win95/98, we must now act on any deferred attempt to set the default button"
-
-	super isStateRestoring: aBoolean.
-	aBoolean ifTrue: [^self].
-	self setDefId: defaultButton.
-	self invalidateUserInterface!
-
 isToolWindow
 	"Answers true if the receiver is a tool window. A tool window has a title bar that is shorter than 
 	a normal title bar, and the window title is drawn using a smaller font. 
@@ -679,6 +666,11 @@ onSettingChanged: aWindowsEvent
 	self presenter trigger: #settingChanged: with: aWindowsEvent.
 	(aWindowsEvent wParam = SPI_SETICONTITLELOGFONT and: [font isNil]) ifTrue: [self fontChanged].
 	^aWindowsEvent lResult!
+
+onStateRestored
+	self updateMenuBar.
+	self setDefId: defaultButton.
+	self invalidateUserInterface!
 
 onSubViewRemoved: aView 
 	(self lastFocus notNil and: [self lastFocus allParents includes: aView]) 
@@ -954,14 +946,6 @@ smallIcon: anIcon
 	self updateIcons
 !
 
-state
-	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
-	to its current state"
-
-	^super state
-		add: (MessageSend receiver: self selector: #updateMenuBar);
-		yourself!
-
 svFlags
 	^svFlags ?? 0!
 
@@ -1006,6 +990,7 @@ updateIcons
 				lParam: smallIcon asParameter]!
 
 updateMenuBar
+	self isStateRestoring ifTrue: [^self].
 	self releaseAccelerators.
 	self
 		basicMenu: menuBar;
@@ -1027,9 +1012,11 @@ winFinalize
 
 	| wasStateRestoring |
 	wasStateRestoring := self isStateRestoring.
-	[ 	"Prevent reaction to resize of frame that occurs when menu removed"
-		self isStateRestoring: true.
-		self releaseMenu] ensure: [self isStateRestoring: wasStateRestoring].
+	
+	["Prevent reaction to resize of frame that occurs when menu removed"
+	self setStateRestoring.
+	self releaseMenu]
+			ensure: [wasStateRestoring ifFalse: [self clearStateRestoring]].
 	self releaseAccelerators.
 	^super winFinalize!
 
@@ -1255,7 +1242,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #isPersistentlyDisabled!private!testing! !
 !ShellView categoriesFor: #isPersistentView!public!testing! !
 !ShellView categoriesFor: #isPersistentView:!public!testing! !
-!ShellView categoriesFor: #isStateRestoring:!accessing!private! !
 !ShellView categoriesFor: #isToolWindow!accessing!public! !
 !ShellView categoriesFor: #isToolWindow:!accessing!public! !
 !ShellView categoriesFor: #isUserInterfaceValid!public!testing! !
@@ -1280,6 +1266,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #onPostSaveImage!event handling!public! !
 !ShellView categoriesFor: #onPreSaveImage!event handling!public! !
 !ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
+!ShellView categoriesFor: #onStateRestored!event handling!private! !
 !ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
 !ShellView categoriesFor: #onTimeChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onViewActivated:!event handling!public! !
@@ -1309,7 +1296,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #showShell!operations!private! !
 !ShellView categoriesFor: #smallIcon!accessing!public! !
 !ShellView categoriesFor: #smallIcon:!accessing!public! !
-!ShellView categoriesFor: #state!accessing!private! !
 !ShellView categoriesFor: #svFlags!accessing!private! !
 !ShellView categoriesFor: #topShell!hierarchy!public! !
 !ShellView categoriesFor: #translateAccelerator:!accelerator!private! !

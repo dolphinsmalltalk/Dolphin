@@ -6,6 +6,10 @@ STBProxy subclass: #STBViewProxy
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+STBViewProxy addClassConstant: 'CreationParentIndex' value: 16r2!
+STBViewProxy addClassConstant: 'CreationStyleIndex' value: 16r3!
+STBViewProxy addClassConstant: 'EventsIndex' value: 16rB!
+STBViewProxy addClassConstant: 'HandleIndex' value: 16r1!
 STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
 !STBViewProxy categoriesForClass!System-Binary storage! !
 !STBViewProxy methodsFor!
@@ -65,6 +69,9 @@ parentView: aView
 
 	^self error: 'Not yet realized'!
 
+placement
+	^placement!
+
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
 
@@ -88,6 +95,11 @@ resolution: anInteger
 
 	resolution := anInteger!
 
+restoreFromProxy: aView
+	"This should never actually be sent to the receiver. The method is present because the semantic analyser thinks it is sent from #restoreView."
+
+	^self shouldNotImplement!
+
 restoreTopView
 	"Private - Mutate the hierarchy of proxies below the receiver into real Views.
 	Since this is the top of the hierarchy we must inform the context in which this
@@ -102,17 +114,7 @@ restoreView
 	Apply the receiver's state sequence, then recursively call this method for any
 	subViews and then apply the receiver's placement."
 
-	| newView stateTemp placementTemp resolutionTemp subViewsTemp |
-	stateTemp := self state.
-
-	"Get the window placement as saved. If the resolution of the saved view
-	is not equal to the current desktop resolution then we must scale the 
-	placement rectangle appropriately"
-	placementTemp := placement.
-	resolutionTemp := self resolution.
-	subViewsTemp := subViews.
-
-	"Create and populate the view object"
+	| newView |
 	newView := viewClass basicNew.
 	1 to: instVars size do: [:i | newView instVarAt: i put: (instVars at: i)].
 
@@ -122,27 +124,8 @@ restoreView
 	"Switch this proxy for the View"
 	self become: newView.
 
-	"After this point we cannot reference any instance variables, as 'self' is now the restored
-	View instance and the Compiler thought it was compiling  this method for STBViewProxy, 
-	not some View!!"
-
-	"The creationParent is already set, but we set it again here
-	to so that #parentView: can set the WS_CHILD style appropriately."
-	self parentView: self creationParentView.
-	self isStateRestoring: true.
-	self state: stateTemp.
-	subViewsTemp do: [:proxy | proxy restoreView].
-	placementTemp notNil 
-		ifTrue: [self restorePlacement: placementTemp resolution: resolutionTemp].
-	self isStateRestoring: false.
-
-	"The STB mechanism does not save and restore event triggers.
-	We must cause these to be rebuilt here"
-	self connectModel.
-
-	"In some situations (notably when restoring a ReferenceView for example) it may be that nothing has
-	yet caused the view to be realized. We do this here by forcing an access to its window handle. #57"
-	self handle!
+	"After this point self is actually the view."
+	self restoreFromProxy: newView!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -161,7 +144,7 @@ setView: aView
 	size := viewClass instSize.
 	instVars := Array new: size.
 	1 to: size do: [:i | instVars at: i put: (aView instVarAt: i)].
-	self state: aView state.
+	state := aView state.
 	aView isOpen
 		ifTrue: 
 			[placement := aView placement.
@@ -172,13 +155,10 @@ setView: aView
 	instVars at: EventsIndex put: nil.
 
 	"Set the resolution at which the view is being saved."
-	self resolution: aView resolution!
+	resolution := aView resolution!
 
 state
 	^state!
-
-state: aMessageSequence
-	state := aMessageSequence!
 
 stbFixup: inFiler at: anInteger
 	"We can't answer the real object at this stage as it is difficult to restore the
@@ -201,6 +181,9 @@ stbFixup: inFiler at: anInteger
 		inFiler deferAction: [self restoreTopView]].
 
 	^self!
+
+subViews
+	^subViews!
 
 version
 	"Answer an <integer> which is the STB version of the class of the view for which 
@@ -233,16 +216,18 @@ viewClass: aClass
 !STBViewProxy categoriesFor: #isTopView!accessing!private! !
 !STBViewProxy categoriesFor: #nameOf:!accessing!public! !
 !STBViewProxy categoriesFor: #parentView:!accessing!private! !
+!STBViewProxy categoriesFor: #placement!accessing!public! !
 !STBViewProxy categoriesFor: #printOn:!development!printing!public! !
 !STBViewProxy categoriesFor: #resolution!accessing!private! !
 !STBViewProxy categoriesFor: #resolution:!accessing!private! !
+!STBViewProxy categoriesFor: #restoreFromProxy:!binary filing!private! !
 !STBViewProxy categoriesFor: #restoreTopView!converting!private! !
 !STBViewProxy categoriesFor: #restoreView!converting!private! !
 !STBViewProxy categoriesFor: #setEvents:!events!private! !
 !STBViewProxy categoriesFor: #setView:!accessing!public! !
-!STBViewProxy categoriesFor: #state!accessing!private! !
-!STBViewProxy categoriesFor: #state:!accessing!development!private! !
+!STBViewProxy categoriesFor: #state!accessing!public! !
 !STBViewProxy categoriesFor: #stbFixup:at:!converting!public! !
+!STBViewProxy categoriesFor: #subViews!accessing!public! !
 !STBViewProxy categoriesFor: #version!accessing!public! !
 !STBViewProxy categoriesFor: #version:!accessing!public! !
 !STBViewProxy categoriesFor: #viewClass!accessing!public! !
@@ -267,11 +252,11 @@ initialize
 
 	| allInstVarNames |
 	allInstVarNames := View allInstVarNames.
-	HandleIndex := allInstVarNames indexOf: 'handle'.
-	CreationParentIndex := allInstVarNames indexOf: 'creationParent'.
-	CreationStyleIndex := allInstVarNames indexOf: 'creationStyle'.
-	EventsIndex := allInstVarNames indexOf: 'events'
-!
+	self
+		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
+		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');
+		addClassConstant: 'CreationStyleIndex' value: (allInstVarNames indexOf: 'creationStyle');
+		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events')!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version view proxies.
