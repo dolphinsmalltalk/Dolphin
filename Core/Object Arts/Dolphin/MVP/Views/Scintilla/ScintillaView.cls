@@ -2452,6 +2452,12 @@ extraDescent: extraDescentInteger
 				wParam: extraDescentInteger
 				lParam: 0]!
 
+filerProxy
+	| saved |
+	saved := styleIdMap.
+	styleIdMap := nil.
+	^[super filerProxy] ensure: [styleIdMap := saved]!
+
 find: aFindDetails range: anInterval 
 	"Private - Find the first occurrence of aString in the text of the receiver within the range rangeInterval."
 
@@ -4855,6 +4861,10 @@ onKillFocus
 
 	self isBackgroundDwellEnabled ifFalse: [self stopDwellTimer].
 	^super onKillFocus!
+
+onRestoredFromProxy
+	styleIdMap := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
+	currentTextStyles do: [:each | styleIdMap at: each basicId + 1 put: each]!
 
 onSetFocus
 	"Handler for set focus event"
@@ -11382,6 +11392,7 @@ zoomOut
 !ScintillaView categoriesFor: #extraAscent:!**auto generated**!public!scintilla interface!white space! !
 !ScintillaView categoriesFor: #extraDescent!**auto generated**!public!scintilla interface!white space! !
 !ScintillaView categoriesFor: #extraDescent:!**auto generated**!public!scintilla interface!white space! !
+!ScintillaView categoriesFor: #filerProxy!binary filing!private! !
 !ScintillaView categoriesFor: #find:range:!private!searching & replacing! !
 !ScintillaView categoriesFor: #find:range:flags:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla interface! !
@@ -11619,6 +11630,7 @@ zoomOut
 !ScintillaView categoriesFor: #nmNotify:!**auto generated**!event handling-win32!private!scintilla interface! !
 !ScintillaView categoriesFor: #onEraseRequired:!event handling!public! !
 !ScintillaView categoriesFor: #onKillFocus!event handling!public! !
+!ScintillaView categoriesFor: #onRestoredFromProxy!binary filing!private! !
 !ScintillaView categoriesFor: #onSetFocus!event handling!public! !
 !ScintillaView categoriesFor: #onViewCreated!event handling!public! !
 !ScintillaView categoriesFor: #parentOfFoldedLine:!**auto generated**!public!scintilla interface! !
