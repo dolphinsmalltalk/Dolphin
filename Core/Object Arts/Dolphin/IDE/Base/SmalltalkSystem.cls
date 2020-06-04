@@ -4701,7 +4701,7 @@ publishedAspectsOfInstances
 	^aspects
 		add: ((Aspect font: #defaultFont) category: #appearence);
 		add: (Aspect choice: #formatterClass
-					from: (ClassCategory name: 'System-Compiler-Formatters') contents);
+					from: (ClassCategory name: 'System-Compiler-Formatters') classes);
 		add: (Aspect integer: #changeHistorySize);
 		add: (Aspect color: #toolBackgroundColor);
 		add: (Aspect hotkey: #interruptHotKey);

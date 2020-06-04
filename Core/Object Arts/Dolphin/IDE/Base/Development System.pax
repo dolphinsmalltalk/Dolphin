@@ -1594,7 +1594,7 @@ publishedAspectsOfInstances
 
 	| applicableTypeConverters |
 	applicableTypeConverters := Set new.
-	self applicableTypeConverterCategories do: [:each | applicableTypeConverters addAll: each contents].
+	self applicableTypeConverterCategories do: [:each | applicableTypeConverters addAll: each classes].
 	^(super publishedAspectsOfInstances)
 		add: (Aspect choice: #typeconverter
 					evaluationFrom: (applicableTypeConverters asSortedCollection asArray 
@@ -2749,7 +2749,7 @@ publishedAspectsOfInstances
 	| applicableLayoutManagers categories choices |
 	applicableLayoutManagers := Set new.
 	categories := self applicableLayoutManagerCategories.
-	categories do: [:each | applicableLayoutManagers addAll: each contents].
+	categories do: [:each | applicableLayoutManagers addAll: each classes].
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection 
 		do: [:each | choices addLast: each name , ' new'].
