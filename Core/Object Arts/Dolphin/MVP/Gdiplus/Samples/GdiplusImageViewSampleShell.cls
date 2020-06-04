@@ -28,7 +28,7 @@ Instance Variables:
 attemptDisplayOABitmap
 	"Try opening an OA bitmap ... will show warning icon in deployed version"
 
-	filename := FileLocator installRelative localFileSpecFor: 'Resources/Dolphin1.jpg'.
+	filename := FileLocator installRelative localFileSpecFor: 'Resources/Splash.jpg'.
 	[self displayImage] on: Error do: [:e | ]!
 
 beachBallBytes
