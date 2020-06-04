@@ -435,6 +435,17 @@ testEqualsColon
 	self deny: (Float nan equals: Float nan) 
 !
 
+testEqualsZero
+	self assert: 0.0 equals: 0.
+	self assert: -0.0 equals: 0.
+	{Float pi. Float fminNormalized. Float fmax. Float infinity. Float nan} , (Float denormalized
+				ifTrue: [{self predecessor: Float fminNormalized. Float fminDenormalized}]
+				ifFalse: [#()])
+		do: 
+			[:each |
+			self deny: each equals: 0.
+			self deny: each negated equals: 0]!
+
 testExp
 	| e pi |
 	e := 2.718281828459045.
@@ -1464,6 +1475,7 @@ zeroes
 !FloatTest categoriesFor: #testDenormalsAsTrueFraction!public!unit tests! !
 !FloatTest categoriesFor: #testDivideByZero!public!Testing!unit tests! !
 !FloatTest categoriesFor: #testEqualsColon!public!unit tests! !
+!FloatTest categoriesFor: #testEqualsZero!public!unit tests! !
 !FloatTest categoriesFor: #testExp!public!unit tests! !
 !FloatTest categoriesFor: #testExponent!public!unit tests! !
 !FloatTest categoriesFor: #testFloatCharacterization!public!unit tests! !

@@ -55,7 +55,7 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 	If the operand is zero, and the receiver is finite (because if infinite, division-by-zero will not raise an exception); and the relevant exceptions are unmasked, then a ZeroDivide exception will be raised. If the exception is resumed then the primitive will fail and the method will return continuation value of either Float.Infinity or Float.NegativeInfinity, for division by 0.0 and -0.0 respectively, except where the receiver is NaN, in which case the result is also NaN. If ZeroDivide is masked, then division by zero will result in a continuation value direct from the primitive."
 
 	<primitive: 165>
-	^aNumber isZero
+	^aNumber = 0
 		ifTrue: 
 			["If we get here then ZeroDivide/Invalid must have been unmasked, but the ZeroDivide raised was resumed. Therefore we should return the appropriate continuation value."
 			self isNaN
