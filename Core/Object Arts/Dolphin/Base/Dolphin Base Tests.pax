@@ -8,7 +8,6 @@ package classNames
 	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
 	add: #AbstractKeyboardTest;
-	add: #AbstractStringTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #AnsiStringTest;
 	add: #ArrayedCollectionTest;
@@ -108,6 +107,7 @@ package classNames
 	add: #STBTest;
 	add: #StdioFileStreamTest;
 	add: #StreamTest;
+	add: #StringTest;
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
 	add: #SymbolTest;
@@ -494,11 +494,6 @@ SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayedCollectionTest subclass: #AbstractStringTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ArrayedCollectionTest subclass: #ArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -514,17 +509,22 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #AnsiStringTest
+ArrayedCollectionTest subclass: #StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #MultiByteStringTest
+StringTest subclass: #AnsiStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #SymbolTest
+StringTest subclass: #MultiByteStringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StringTest subclass: #SymbolTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

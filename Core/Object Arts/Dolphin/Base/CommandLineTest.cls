@@ -319,6 +319,18 @@ testLongOptionalArgumentPresent
 		assert: arguments equals: #('DPRO.img7');
 		yourself!
 
+testLongOptionEmptyArgument
+	| commandLine options |
+	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo='))
+				addOptionRequiringArgument: 'foo';
+				yourself.
+	options := commandLine options.
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assert: (options at: 'foo') equals: '';
+		yourself!
+
 testLongRequiredArgumentPresent
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
@@ -502,6 +514,7 @@ testUnrecognizedOption
 !CommandLineTest categoriesFor: #testLongNoArgument!long tests!public! !
 !CommandLineTest categoriesFor: #testLongOptionalArgumentAbsent!long tests!public! !
 !CommandLineTest categoriesFor: #testLongOptionalArgumentPresent!long tests!public! !
+!CommandLineTest categoriesFor: #testLongOptionEmptyArgument!errors!public! !
 !CommandLineTest categoriesFor: #testLongRequiredArgumentPresent!long tests!public! !
 !CommandLineTest categoriesFor: #testLongUnexpectedArgument!errors!public! !
 !CommandLineTest categoriesFor: #testLongUnexpectedOption!errors!public! !

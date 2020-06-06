@@ -81,6 +81,27 @@ _sameAsString: aString
 
 	^self == aString or: [aString <=> self == 0]!
 
+_separateSubStringsIn: aReadableString
+	| start size answer subSize |
+	(subSize := self size) == 0
+		ifTrue: [^self error: 'separator must consist of at least one character'].
+	subSize == 1 ifTrue: [^(self at: 1) _separateSubStringsIn: aReadableString].
+	start := 1.
+	size := aReadableString size.
+	answer := Array writeStream: 10.
+	
+	[| stop |
+	stop := aReadableString findString: self startingAt: start.
+	stop == 0
+		ifTrue: 
+			[^answer
+				nextPut: (aReadableString copyFrom: start to: size);
+				contents].
+	answer nextPut: (aReadableString copyFrom: start to: stop - 1).
+	(start := stop + subSize) > size]
+			whileFalse.
+	^answer contents!
+
 < aString
 	"Answer whether the receiver is lexically less than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
 
@@ -1061,13 +1082,8 @@ subStrings: separatorOrSeparators
 	"Answer an array containing the substrings of the receiver separated by occurrences of the <Character> or <readableString> argument, separator.
 	Repeated separators produce empty strings in the array (cf. #subStrings). The separators are removed."
 
-	#todo.	"This does not comply with the current ANSI definition, which expects that the
-		argument is a <sequencedReadableCollection> of separators, any one of which may
-		separate each token. For historical reasons the Dolphin implementation accepts also
-		accepts a single character as the separator, and furthermore when passed a <String>
-		it will use the entire string as a multi-character separator. A workaround is to
-		convert the separator string to an array of <Character>."
-	^separatorOrSeparators split: self!
+	#todo. "N.B. This does not comply with the current ANSI definition, which expects that the argument is a <sequencedReadableCollection> of separators, any one of which may separate each token. In the next major release (7.2) this behaviour will be changed to be ANSI compliant. Also the historic asymmetric behaviour of ignoring a terminating separator will be corrected so that the operation behaves in the same was as Character>>split:"
+	^separatorOrSeparators _separateSubStringsIn: self!
 
 subStringsAnsi: separators
 	"Answer an array containing the substrings of the receiver separated by occurrences
@@ -1076,6 +1092,7 @@ subStringsAnsi: separators
 	The separators are removed."
 
 	| start answer size end |
+	#deprecated. "Will be removed in 7.2"
 	size := self size.
 	size == 0 ifTrue: [^{}].
 	end := self indexOfAnyOf: separators startingAt: 1.
@@ -1175,6 +1192,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #_cmp:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
+!String categoriesFor: #_separateSubStringsIn:!private!tokenizing! !
 !String categoriesFor: #<!comparing!public! !
 !String categoriesFor: #<=!comparing!public! !
 !String categoriesFor: #<==>!comparing!public! !
@@ -1265,8 +1283,8 @@ withNormalizedLineDelimiters
 !String categoriesFor: #storeOn:!printing!public! !
 !String categoriesFor: #strcspn:start:!private!searching! !
 !String categoriesFor: #strlen!accessing!private! !
-!String categoriesFor: #subStrings!copying!public! !
-!String categoriesFor: #subStrings:!copying!public! !
+!String categoriesFor: #subStrings!public!tokenizing! !
+!String categoriesFor: #subStrings:!public!tokenizing! !
 !String categoriesFor: #subStringsAnsi:!copying!public! !
 !String categoriesFor: #titleCased!converting!public! !
 !String categoriesFor: #trimBlanks!copying!public! !
