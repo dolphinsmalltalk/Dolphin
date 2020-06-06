@@ -60,6 +60,11 @@ dwSize: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
+fileName
+	"Answer the file name buffer."
+
+	^fileName!
+
 fileName: aString
 	"Set the file name to be opened/saved.
 	We store down the String in an instance variable to prevent it being GC'd."
@@ -192,6 +197,7 @@ title: aString
 !OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
 !OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
 !OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!OPENFILENAMEW categoriesFor: #fileName!accessing!public! !
 !OPENFILENAMEW categoriesFor: #fileName:!accessing!public! !
 !OPENFILENAMEW categoriesFor: #fileTypes:!accessing!public! !
 !OPENFILENAMEW categoriesFor: #flags!**compiled accessors**!public! !

@@ -24,7 +24,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs').
 
 package!
@@ -32,7 +31,7 @@ package!
 "Class Definitions"!
 
 FileOpenDialog subclass: #MultipleFileOpenDialog
-	instanceVariableNames: 'buffer maxFileCount'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

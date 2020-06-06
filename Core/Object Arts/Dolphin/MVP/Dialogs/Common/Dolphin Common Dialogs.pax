@@ -119,7 +119,7 @@ CommonDialog subclass: #FontDialog
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileDialog subclass: #FileOpenDialog
-	instanceVariableNames: ''
+	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

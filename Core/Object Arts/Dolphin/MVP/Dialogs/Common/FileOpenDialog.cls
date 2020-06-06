@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 FileDialog subclass: #FileOpenDialog
-	instanceVariableNames: ''
+	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -28,12 +28,35 @@ basicShowModal
 
 	^ComDlgLibrary default getOpenFileName: winStruct!
 
-defaultStyle
-	"Answers the style for the receiver."
+defaultMaxFileCount
+	"Private - Answers the default number of selections that are expected to fit into the buffer. If the maxFileCount is not set, then the FileOpenDialog is operated in single file mode."
 
-	^super defaultStyle bitOr: OFN_FILEMUSTEXIST! !
+	^1!
+
+defaultStyle
+	"Private - Answers the style for the receiver."
+
+	^super defaultStyle bitOr: OFN_FILEMUSTEXIST!
+
+maxFileCount
+	^maxFileCount ifNil: [self defaultMaxFileCount] ifNotNil: [maxFileCount max: 10]!
+
+maxFileCount: anInteger
+	"Set the maximum number of files to be selected. Note that this is not a hard limit - it mainly affects the buffer size, so a larger or smaller number of files may fit depending on the length of the folder path and the file names.
+	However, a maximum count of 1 is special in that it means the dialog will operate in single selection mode."
+
+	maxFileCount := anInteger!
+
+style
+	"Answers the style flags to be used when the receiver is opened."
+
+	^self maxFileCount > 1 ifTrue: [style | ##(OFN_ALLOWMULTISELECT | OFN_EXPLORER)] ifFalse: [style]! !
 !FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileOpenDialog categoriesFor: #defaultStyle!constants!public! !
+!FileOpenDialog categoriesFor: #defaultMaxFileCount!constants!private! !
+!FileOpenDialog categoriesFor: #defaultStyle!constants!private! !
+!FileOpenDialog categoriesFor: #maxFileCount!accessing!public! !
+!FileOpenDialog categoriesFor: #maxFileCount:!accessing!public! !
+!FileOpenDialog categoriesFor: #style!accessing!public! !
 
 !FileOpenDialog class methodsFor!
 

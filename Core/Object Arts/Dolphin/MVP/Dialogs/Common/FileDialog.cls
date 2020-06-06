@@ -19,6 +19,9 @@ allFilesType
 
 	^self class allFilesType!
 
+averageFilenameLength
+	^30!
+
 basicShowModal
 	"Private - Show a Open File dialog for the receiver."
 
@@ -110,13 +113,36 @@ defaultStyle
 
 	^##(OFN_HIDEREADONLY | OFN_EXPLORER | OFN_ENABLESIZING)!
 
-extractResult: result 
-	"Private - Extract and apply the result from the parameter structure 
-	passed to the Win32 API associated with this common dialog, immediately 
+extractPathNames: aString
+	| multisz strings pathNames |
+	multisz := aString readStream.
+	strings := Array writeStream.
+	"The dialog populates the buffer with potentially multiple null-terminated strings, with an extra null terminator delimiting the list.
+	If there is only a single file selected, the full path of that file is the only entry. If more than one file is selected, then the first entry is the folder path, and subsequent entries the names of files in that folder."
+	[multisz atEnd or: [multisz peekFor: $\0]] whileFalse: [strings nextPut: (multisz upTo: $\0)].
+	strings := strings contents.
+	^strings size == 1
+		ifTrue: [strings]
+		ifFalse: 
+			[| folder count |
+			folder := strings first.
+			count := strings size.
+			pathNames := Array writeStream: count - 1.
+			strings
+				from: 2
+				to: count
+				do: [:each | pathNames nextPut: (File composePath: folder subPath: each)].
+			pathNames collection]!
+
+extractResult: result
+	"Private - Extract and apply the result from the parameter structure passed to the Win32 API associated with this common dialog, immediately 
 	after the call to that API."
 
+	| buffer |
 	result ifFalse: [^self].
-	self value: self winStruct lpstrFile.
+	buffer := self winStruct fileName.
+	self
+		value: (self maxFileCount > 1 ifTrue: [self extractPathNames: buffer] ifFalse: [buffer trimNulls]).
 	self apply!
 
 fileTypes
@@ -227,19 +253,25 @@ initialize
 	style := self defaultStyle.
 	validationBlock := [:path | true]!
 
-prepareStruct
-	"Private - Initialize the parameter structure to be passed to the Win32 API associated with
-	this common dialog, immediately prior to the call to that API."
+maxFileCount
+	"Answers the maximum number of selections that can be expected to fit into the buffer."
 
-	| buf filename defext |
-	buf := File pathBuffer.
-	filename := self value asUtf16String.
-	filename notNil
-		ifTrue: 
-			[buf
+	^1!
+
+prepareStruct
+	"Private - Initialize the parameter structure to be passed to the Win32 API associated with this common dialog, immediately prior to the call to that API."
+
+	| buf defext |
+	buf := Utf16String newFixed: self maxFileCount * self averageFilenameLength + File maxPath.
+	self value
+		ifNotNil: 
+			[:filename |
+			| utf16 |
+			utf16 := filename asUtf16String.
+			buf
 				replaceFrom: 1
-				to: filename size
-				with: filename].
+				to: utf16 size
+				with: utf16].
 	(self filterIndex = 0 and: [(defext := self defaultExtension) notNil])
 		ifTrue: [self filterIndex: (self fileTypes findFirst: [:pair | pair last contains: defext])].
 	self winStruct
@@ -303,6 +335,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
 !FileDialog categoriesFor: #allFilesType!constants!private! !
+!FileDialog categoriesFor: #averageFilenameLength!constants!private! !
 !FileDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !FileDialog categoriesFor: #caption:!accessing!public! !
 !FileDialog categoriesFor: #cdnFileOk:!event handling-win32!private! !
@@ -317,6 +350,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 !FileDialog categoriesFor: #defaultExtension!accessing!public! !
 !FileDialog categoriesFor: #defaultExtension:!accessing!public! !
 !FileDialog categoriesFor: #defaultStyle!constants!public! !
+!FileDialog categoriesFor: #extractPathNames:!helpers!private! !
 !FileDialog categoriesFor: #extractResult:!helpers!private! !
 !FileDialog categoriesFor: #fileTypes!accessing!public! !
 !FileDialog categoriesFor: #fileTypes:!accessing!public! !
@@ -327,6 +361,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 !FileDialog categoriesFor: #getFileSpec!operations!private! !
 !FileDialog categoriesFor: #initialDirectory:!accessing!public! !
 !FileDialog categoriesFor: #initialize!initializing!private! !
+!FileDialog categoriesFor: #maxFileCount!accessing!public! !
 !FileDialog categoriesFor: #prepareStruct!helpers!private! !
 !FileDialog categoriesFor: #style!accessing!public! !
 !FileDialog categoriesFor: #style:!accessing!public! !
