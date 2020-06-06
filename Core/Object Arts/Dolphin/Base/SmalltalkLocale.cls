@@ -111,9 +111,14 @@ durationFormat
 	^'-d:hh:mm:ssfff'!
 
 englishDisplayName
-	"The <String> name of the locale in English."
+	"The <String> full name of the locale in English."
 
-	^'Smalltalk'!
+	^'English (Smalltalk)'!
+
+englishLanguageName
+	"The <String> name of the language in English."
+
+	^'English'!
 
 firstDayOfWeek
 	"Answer an <Integer> in the range 1..7 identifying the first day of the week, where 1 is Monday and 7 is Sunday."
@@ -339,6 +344,7 @@ yearMonthFormat
 !SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
 !SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
 !SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
+!SmalltalkLocale categoriesFor: #englishLanguageName!constants!public! !
 !SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !
 !SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
 !SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
