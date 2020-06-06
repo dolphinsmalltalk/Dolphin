@@ -9,16 +9,34 @@ Tests of Dolphin specific aspects of the STON implementation.'.
 
 
 package methodNames
+	add: #Array -> #asDictionary;
+	add: #ByteArrayTest -> #testHex;
 	add: #Collection -> #atRandom;
 	add: #Integer -> #atRandom;
 	add: #SequenceableCollection -> #asFloatArray;
 	add: #SequenceableCollection -> #asIntegerArray;
 	add: #SequenceableCollection -> #atRandom;
 	add: #SequenceableCollection -> #doWithIndex:;
-	add: #STONReaderTests -> #testSymbolMultiByte;
-	add: #STONWriteReadTests -> #testProcessor;
-	add: #STONWriteReadTests -> #testSystemDictionary;
-	add: #STONWriterTests -> #testIsSimpleSymbol2;
+	add: #STONReaderTest -> #testColorInvalid;
+	add: #STONReaderTest -> #testReferenceCycle2;
+	add: #STONReaderTest -> #testSymbolMultiByte;
+	add: #STONWriteReadTest -> #testCompiledMethodsAndBlocks;
+	add: #STONWriteReadTest -> #testExtendedCharacters;
+	add: #STONWriteReadTest -> #testFramingCalculation;
+	add: #STONWriteReadTest -> #testNamedColors;
+	add: #STONWriteReadTest -> #testPluggableColors;
+	add: #STONWriteReadTest -> #testProcessor;
+	add: #STONWriteReadTest -> #testSearchPolicy;
+	add: #STONWriteReadTest -> #testSystemDictionary;
+	add: #STONWriterTest -> #testFramingCalculation;
+	add: #STONWriterTest -> #testIsSimpleSymbol2;
+	add: #STONWriterTest -> #testLegacyDate;
+	add: #STONWriterTest -> #testProcessor;
+	add: #STONWriterTest -> #testSearchPolicy;
+	add: #STONWriterTest -> #testSymbolMultiByte;
+	add: 'STONTestDomainObject class' -> #icon;
+	add: 'STONTestKnownObject class' -> #icon;
+	add: 'STONTestUser class' -> #icon;
 	add: 'String class' -> #crlf;
 	add: 'Symbol class' -> #hasInterned:ifTrue:;
 	add: 'Time class' -> #hour:minute:second:;
@@ -33,7 +51,9 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
 	'..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\Random\Dolphin Random Stream'
 	'..\..\..\..\Contributions\svenc\STON\STON-Core'
 	'..\..\..\..\Contributions\svenc\STON\STON-Tests').
@@ -47,6 +67,30 @@ package!
 
 
 "Loose Methods"!
+
+!Array methodsFor!
+
+asDictionary
+	"Private - Questionable conversion message from Pharo that works only it the target collection contains associations (or at least elements that understand #key and #value). 
+	It is here only for the STON tests."
+
+	^Dictionary withAll: self! !
+!Array categoriesFor: #asDictionary!private! !
+
+!ByteArrayTest methodsFor!
+
+testHex
+	self assert: #[122 43 213 7] hex equals: '7a2bd507'.
+	self
+		assert: #[151 193 242 221 249 32 153 72 179 41 49 154 48 193 99 134] hex
+		equals: '97c1f2ddf9209948b329319a30c16386'.
+	self
+		assert: (ByteArray readHexFrom: '7A2BD507')
+		equals: #[122 43 213 7].
+	self
+		assert: (ByteArray readHexFrom: '7a2bd507')
+		equals: #[122 43 213 7]! !
+!ByteArrayTest categoriesFor: #testHex!public! !
 
 !Collection methodsFor!
 
@@ -86,7 +130,20 @@ doWithIndex: aDyadicValuable
 !SequenceableCollection categoriesFor: #atRandom!public! !
 !SequenceableCollection categoriesFor: #doWithIndex:!public! !
 
-!STONReaderTests methodsFor!
+!STONReaderTest methodsFor!
+
+testColorInvalid
+	"This is a handy test of DolphinSTONReader>>parseListSingleton"
+	self should: [self materialize: 'Color[#red,#blue]'] raise: STONReaderError matching: [:ex | ex description = 'At character 11: ] expected'].
+	self should: [self materialize: 'Color[]'] raise: STONReaderError matching: [:ex | ex description = 'At character 7: invalid input']
+!
+
+testReferenceCycle2
+	| object |
+	object := self materialize: 'Link{#nextLink:@1}'.
+	self assert: object class equals: Link.
+	self assert: object nextLink identicalTo: object
+!
 
 testSymbolMultiByte
 	"https://github.com/svenvc/ston/issues/25"
@@ -95,26 +152,117 @@ testSymbolMultiByte
 	self assert: (self materialize: '#''€''') equals: Character euro asSymbol.
 	self assert: (self materialize: '#''你好''') equals: #'你好'.
 	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
-!STONReaderTests categoriesFor: #testSymbolMultiByte!public!tests! !
+!STONReaderTest categoriesFor: #testColorInvalid!public!tests! !
+!STONReaderTest categoriesFor: #testReferenceCycle2!public!tests! !
+!STONReaderTest categoriesFor: #testSymbolMultiByte!public!tests! !
 
-!STONWriteReadTests methodsFor!
+!STONTestDomainObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STONTest icon! !
+!STONTestDomainObject class categoriesFor: #icon!constants!public! !
+
+!STONTestKnownObject class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STONTest icon! !
+!STONTestKnownObject class categoriesFor: #icon!constants!public! !
+
+!STONTestUser class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STONTest icon! !
+!STONTestUser class categoriesFor: #icon!constants!public! !
+
+!STONWriteReadTest methodsFor!
+
+testCompiledMethodsAndBlocks
+	self serializeAndMaterialize: self class methodDictionary!
+
+testExtendedCharacters
+	| characters |
+	characters := {$£. $\x6587. $\x1F37A. $£. $\x394}.
+	self serializeAndMaterialize: characters!
+
+testFramingCalculation
+	| objects |
+	objects := {FramingCalculation fixedParentLeft. FramingCalculation relativeParentHeight}.
+	self serializeAndMaterialize: objects!
+
+testNamedColors
+	| objects |
+	"A mix of SystemColors, ThemeColors, RGBs, etc."
+	objects := {Color face3d.  Color named: #smalltalkSystem. Color named: #darkGreen. Color default. Color none}.
+	self serializeAndMaterialize: objects.
+	"IndexedColors will materialize as the equivalent RGB. As IndexedColors are effectively deprecated, this is OK"
+	self assert: (self materialize: (self serialize: (Color named: #maroon))) equals: Color maroon!
+
+testPluggableColors
+	| objects |
+	objects := {PluggableColor with: [Color window lighter]}.
+	self serializeAndMaterialize: objects!
 
 testProcessor
 	self serializeAndMaterialize: {'Foo'. Processor. 'Bar'}!
 
+testSearchPolicy
+	| objects |
+	objects := { SearchPolicy always. SearchPolicy association. SearchPolicy method}.
+	self serializeAndMaterialize: objects!
+
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
-!STONWriteReadTests categoriesFor: #testProcessor!public!tests! !
-!STONWriteReadTests categoriesFor: #testSystemDictionary!public!tests! !
+!STONWriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
+!STONWriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
+!STONWriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
+!STONWriteReadTest categoriesFor: #testNamedColors!public!tests! !
+!STONWriteReadTest categoriesFor: #testPluggableColors!public!tests! !
+!STONWriteReadTest categoriesFor: #testProcessor!public!tests! !
+!STONWriteReadTest categoriesFor: #testSearchPolicy!public!tests! !
+!STONWriteReadTest categoriesFor: #testSystemDictionary!public!tests! !
 
-!STONWriterTests methodsFor!
+!STONWriterTest methodsFor!
+
+testFramingCalculation
+	self assert: (self serialize: FramingCalculation fixedParentLeft) equals: 'FramingCalculation[#fixedParentLeft]'!
 
 testIsSimpleSymbol2
 	self deny: (STON writer isSimpleSymbol: #'£').
 	self deny: (STON writer isSimpleSymbol: Character euro asSymbol).
 	self deny: (STON writer isSimpleSymbol: Character dolphin asSymbol).
-! !
-!STONWriterTests categoriesFor: #testIsSimpleSymbol2!public!tests! !
+!
+
+testLegacyDate
+	| date tz |
+	tz := Locale timeZoneInformation offset printStringFormat: '+hh:mm'.
+	date := (Date year: 2012 month: 1 day: 1).
+	self assert: (self serialize: date) equals: ('Date[''2012-01-01<1s>'']' expandMacrosWith: tz) !
+
+testProcessor
+	self assert: (self serialize: Processor) equals: 'ProcessorScheduler'!
+
+testSearchPolicy
+	self assert: (self serialize: SearchPolicy caseInsensitive) equals: 'SearchPolicy[#caseInsensitive]'!
+
+testSymbolMultiByte
+	"https://github.com/svenvc/ston/issues/25"
+
+	self assert: (self serialize: #'£') equals: '#''£'''.
+	self assert: (self serialize: Character euro asSymbol) equals: '#''€'''.
+	self assert: (self serialize: #'你好') equals: '#''你好'''.
+	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
+!STONWriterTest categoriesFor: #testFramingCalculation!public!tests! !
+!STONWriterTest categoriesFor: #testIsSimpleSymbol2!public!tests! !
+!STONWriterTest categoriesFor: #testLegacyDate!public!tests! !
+!STONWriterTest categoriesFor: #testProcessor!public!tests! !
+!STONWriterTest categoriesFor: #testSearchPolicy!public!tests! !
+!STONWriterTest categoriesFor: #testSymbolMultiByte!public!tests! !
 
 !String class methodsFor!
 

@@ -291,6 +291,7 @@
     <Image Include="Res\HistoryList.ico" />
     <Image Include="Res\Information.ico" />
     <Image Include="Res\Interactor.ico" />
+    <Image Include="Res\JSON.ico" />
     <Image Include="Res\LinedNotes.ico" />
     <Image Include="Res\LintSleep.ico" />
     <Image Include="Res\LintWait.ico" />

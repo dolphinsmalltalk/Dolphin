@@ -49,7 +49,7 @@ consumeToEOL
 	| eol char |
 	eol := false.
 	[ eol ] whileFalse: [ 
-		char := stream nextAvailable.
+		char := stream next.
 		(char isNil or: [ char = Character lf ])
 			ifTrue: [ eol := true ]
 			ifFalse: [ 
@@ -110,6 +110,19 @@ next: requestedCount into: collection
 		into: collection
 		startingAt: 1!
 
+next: requestedCount into: collection startingAt: offset
+	"Read requestedCount elements into collection starting at offset,
+	returning a copy if less elements are available"
+	
+	| readCount |
+	readCount := self 
+		readInto: collection 
+		startingAt: offset 
+		count: requestedCount.
+	^ requestedCount = readCount
+		ifTrue: [ collection ]
+		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]!
+
 nextLine
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
 	
@@ -127,7 +140,7 @@ nextLine
 
 nextNonCommentChar
 	| char |
-	char := stream nextAvailable.
+	char := stream next.
 	(self insideString and: [ char = $\ ])
 		ifTrue: [ 
 			escape := true. 
@@ -136,10 +149,10 @@ nextNonCommentChar
 		ifTrue: [ 
 			^ self handleStringDelimiter: char ].
 	escape := false. 
-	^ (char = $/ and: [ self insideString not ])
+	^ (char = $/ and: [ self insideString not and: [ (stream peek = $/) | (stream peek = $*) ] ])
 		ifTrue: [ 
 			self consumeComment.
-			stream nextAvailable ]
+			stream next ]
 		ifFalse: [ char ]
 !
 
@@ -163,6 +176,24 @@ peekFor: object
 
 position
 	^ stream position!
+
+readInto: collection startingAt: offset count: requestedCount 
+	"Read count elements and place them in collection starting at offset.
+	Return the number of elements actually read."
+	
+	^ peekedCharacter 
+		ifNil: [
+			0 to: requestedCount - 1 do: [ :count | | object |
+				(object := self nextNonCommentChar) ifNil: [ ^ count ].  
+				collection at: offset + count put: object ].
+			^ requestedCount ]
+		ifNotNil: [ 
+			collection at: offset put: peekedCharacter.
+			peekedCharacter := nil.
+			(self 
+				readInto: collection 
+				startingAt: offset + 1
+				count: requestedCount - 1) + 1 ]!
 
 skip: count
 	count timesRepeat: [ self next ]!
@@ -193,12 +224,14 @@ wrappedStream
 !STONCStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
+!STONCStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
 !STONCStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #peek!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #peekFor:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
+!STONCStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
 !STONCStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !

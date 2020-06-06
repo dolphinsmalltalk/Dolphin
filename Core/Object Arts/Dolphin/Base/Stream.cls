@@ -124,6 +124,11 @@ errorNotReadable
 
 	^self error: 'The stream is not readable'!
 
+isPositionable
+	"Answer whether the receiver supports the #position[:] messages for querying and setting its position in the data stream."
+
+	^false!
+
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the gettableStream
 	protocol)."
@@ -255,6 +260,7 @@ upToEnd
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
 !Stream categoriesFor: #errorNotPositionable!exceptions!private! !
 !Stream categoriesFor: #errorNotReadable!exceptions!private! !
+!Stream categoriesFor: #isPositionable!public!testing! !
 !Stream categoriesFor: #isReadable!public!testing! !
 !Stream categoriesFor: #isWriteable!public!testing! !
 !Stream categoriesFor: #next!accessing!public! !

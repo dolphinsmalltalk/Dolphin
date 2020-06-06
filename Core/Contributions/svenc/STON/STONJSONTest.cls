@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #STONJSONTests
+TestCase subclass: #STONJSONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONJSONTests guid: (GUID fromString: '{437baf49-fca6-405c-9fb7-18b0c8f89f50}')!
-STONJSONTests comment: 'STONJSONTests contains unit tests for the JSON functionality available in STON.'!
-!STONJSONTests categoriesForClass!STON-Tests-Base! !
-!STONJSONTests methodsFor!
+STONJSONTest guid: (GUID fromString: '{437baf49-fca6-405c-9fb7-18b0c8f89f50}')!
+STONJSONTest comment: 'STONJSONTests contains unit tests for the JSON functionality available in STON.'!
+!STONJSONTest categoriesForClass!STON-Tests-Facade! !
+!STONJSONTest methodsFor!
 
 testBooleans
 	self assert: (STONJSON toString: true) equals: 'true'.
@@ -20,7 +20,7 @@ testCircular
 	"Circular datastructures cannot be encoded using JSON"
 	self
 		should: [ | foo |
-			foo :=Dictionary withAll: { 'foo'->'dummy' }.
+			foo := { 'foo'->'dummy' } asDictionary.
 			foo at: 'bar' put: foo.
 			STONJSON toString: foo ]
 		raise: STONWriterError!
@@ -56,20 +56,43 @@ testLists
 	self assert: (STONJSON fromString: '[1,[2],3]') equals: #(1 (2) 3).!
 
 testMaps
-	self assert: (STONJSON toString: (Dictionary withAll: { 'temperature'->37 })) equals: '{"temperature":37}'.
+	self assert: (STONJSON toString: { 'temperature'->37 } asDictionary) equals: '{"temperature":37}'.
 	self assert: (STONJSON toString: Dictionary new) equals: '{}'.
-	self assert: (STONJSON fromString: '{"temperature":37}') equals: (Dictionary withAll: { 'temperature'->37 }).
+	self assert: (STONJSON fromString: '{"temperature":37}') equals: { 'temperature'->37 } asDictionary.
 	self assert: (STONJSON fromString: '{}') equals: Dictionary new.!
 
 testNull
 	self assert: (STONJSON toString: nil) equals: 'null'.
 	self assert: (STONJSON fromString: 'null') equals: nil.!
 
+testOrderedDictionary
+	| odictClass odict json dict |
+	odictClass := Smalltalk at: #OrderedDictionary ifAbsent: [ ^ self skip ].
+
+	odict := odictClass newFrom: {('a' -> 42) . ('b' -> 1) . ('aa' -> 4) . ('c' -> 23)}.
+
+	"assert that the order is not equal in the dictionary hash table"
+	self
+		assertCollection: odict asArray hasSameElements: odict dictionary asArray;
+		deny: odict asArray equals: odict dictionary asArray.
+
+	"ordered presevered when encoding:"
+	json := STONJSON toString: odict.
+	self assert: json equals: '{"a":42,"b":1,"aa":4,"c":23}'.
+
+	"lost when decoding"
+	dict := STONJSON fromString: json.
+
+	self
+		assertCollection: dict asArray hasSameElements: odict asArray;
+		assert: dict equals: odict dictionary;
+		deny: dict asArray equals: odict asArray!
+
 testShared
 	"Structure sharing cannot be encoded using JSON"
 	self
 		should: [ | foo |
-			foo := (Dictionary withAll: { 'foo'->'dummy' }).
+			foo := { 'foo'->'dummy' } asDictionary.
 			STONJSON toString: { foo. foo } ]
 		raise: STONWriterError!
 
@@ -93,14 +116,15 @@ testUnknown
 	
 	self should: [ STONJSON toString: 1@2 ] raise: STONWriterError.
 	self should: [ STONJSON toString: #(1 2 3) asOrderedCollection ] raise: STONWriterError.! !
-!STONJSONTests categoriesFor: #testBooleans!public!tests! !
-!STONJSONTests categoriesFor: #testCircular!public!tests! !
-!STONJSONTests categoriesFor: #testFloats!public!tests! !
-!STONJSONTests categoriesFor: #testIntegers!public!tests! !
-!STONJSONTests categoriesFor: #testLists!public!tests! !
-!STONJSONTests categoriesFor: #testMaps!public!tests! !
-!STONJSONTests categoriesFor: #testNull!public!tests! !
-!STONJSONTests categoriesFor: #testShared!public!tests! !
-!STONJSONTests categoriesFor: #testStrings!public!tests! !
-!STONJSONTests categoriesFor: #testUnknown!public!tests! !
+!STONJSONTest categoriesFor: #testBooleans!public!tests! !
+!STONJSONTest categoriesFor: #testCircular!public!tests! !
+!STONJSONTest categoriesFor: #testFloats!public!tests! !
+!STONJSONTest categoriesFor: #testIntegers!public!tests! !
+!STONJSONTest categoriesFor: #testLists!public!tests! !
+!STONJSONTest categoriesFor: #testMaps!public!tests! !
+!STONJSONTest categoriesFor: #testNull!public!tests! !
+!STONJSONTest categoriesFor: #testOrderedDictionary!public!tests! !
+!STONJSONTest categoriesFor: #testShared!public!tests! !
+!STONJSONTest categoriesFor: #testStrings!public!tests! !
+!STONJSONTest categoriesFor: #testUnknown!public!tests! !
 

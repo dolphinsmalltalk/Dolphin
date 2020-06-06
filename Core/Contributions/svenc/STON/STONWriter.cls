@@ -62,6 +62,8 @@ encodeCharacter: char
 !
 
 encodeKey: key value: value
+	(jsonMode and: [ key isString not ])
+		ifTrue: [ self error: 'JSON key names in objects must be strings' ].
 	self nextPut: key.
 	self prettyPrintSpace.
 	writeStream nextPut: $:.
@@ -84,21 +86,19 @@ encodeList: elements
 !
 
 encodeMap: pairs
-	| first |
-	first := true.
 	writeStream nextPut: ${.
 	pairs isEmpty
-		ifTrue: [
-			self prettyPrintSpace ]
-		ifFalse: [
-			self indentedDo: [
-				self newlineIndent.
-				pairs keysAndValuesDo: [ :key :value |
-					first 
-						ifTrue: [ first := false ] 
-						ifFalse: [ self mapElementSeparator ].
-					self encodeKey: key value: value ] ].
-			self newlineIndent ].
+		ifTrue: [self prettyPrintSpace]
+		ifFalse: 
+			[self indentedDo: 
+					[| first |
+					first := true.
+					self newlineIndent.
+					pairs keysAndValuesDo: 
+							[:key :value |
+							first ifTrue: [first := false] ifFalse: [self mapElementSeparator].
+							self encodeKey: key value: value]].
+			self newlineIndent].
 	writeStream nextPut: $}!
 
 encodeString: string
@@ -172,12 +172,18 @@ initialize
 	objects := IdentityDictionary new!
 
 isSimpleSymbol: symbol
-	symbol isEmpty ifTrue: [ ^ false ].
+	(symbol isEmpty or: [ symbol isWideString ]) 
+		ifTrue: [ ^ false ].
 	^ (symbol class 
 		findFirstInString: symbol 
 		inSet: STONSimpleSymbolCharacters 
 		startingAt: 1) = 0
+
 !
+
+jsonMode
+
+	^ jsonMode !
 
 jsonMode: boolean
 	(jsonMode := boolean)
@@ -284,6 +290,14 @@ writeBoolean: boolean
 writeFloat: float
 	writeStream print: float!
 
+writeFraction: fraction
+	jsonMode
+		ifTrue: [ self writeFloat: fraction asFloat ]
+		ifFalse: [ writeStream
+				print: fraction numerator;
+				nextPut: $/;
+				print: fraction denominator ]!
+
 writeInteger: integer
 	writeStream print: integer!
 
@@ -332,6 +346,23 @@ writeObject: object listSingleton: element
 			prettyPrintSpace.
 		writeStream nextPut: $] ]!
 
+writeObject: anObject named: stonName do: block
+	(jsonMode and: [ anObject class ~= STON listClass and: [ anObject class ~= STON mapClass ] ])
+		ifTrue: [ self error: 'wrong object class for JSON mode' ].
+	self with: anObject do: [
+		writeStream nextPutAll: stonName.
+		self prettyPrintSpace.
+		block value ]!
+
+writeObject: object named: stonName listSingleton: element
+	self writeObject: object named: stonName do: [
+		writeStream nextPut: $[.
+		self 
+			prettyPrintSpace;
+			nextPut: element;
+			prettyPrintSpace.
+		writeStream nextPut: $] ]!
+
 writeObject: object streamList: block
 	self writeObject: object do: [ | listWriter |
 		listWriter := STONListWriter on: self.
@@ -367,6 +398,16 @@ writeReference: index
 		nextPut: $@;
 		print: index!
 
+writeScaledDecimal: scaledDecimal
+	jsonMode
+		ifTrue: [ self writeFloat: scaledDecimal asFloat ]
+		ifFalse: [ writeStream
+				print: scaledDecimal numerator;
+				nextPut: $/;
+				print: scaledDecimal denominator;
+				nextPut: $s;
+				print: scaledDecimal scale ]!
+
 writeString: string
 	self encodeString: string!
 
@@ -391,11 +432,12 @@ writeSymbol: symbol
 !STONWriter categoriesFor: #encodeStringKeepingNewLines:!private! !
 !STONWriter categoriesFor: #error:!error handling!public! !
 !STONWriter categoriesFor: #escape:with:!initialize/release!public! !
-!STONWriter categoriesFor: #escapeUnicode:!private! !
+!STONWriter categoriesFor: #escapeUnicode:!initialize/release!public! !
 !STONWriter categoriesFor: #escapeUnicode4:!private! !
 !STONWriter categoriesFor: #indentedDo:!private! !
 !STONWriter categoriesFor: #initialize!initialize/release!public! !
 !STONWriter categoriesFor: #isSimpleSymbol:!private! !
+!STONWriter categoriesFor: #jsonMode!initialize/release!public! !
 !STONWriter categoriesFor: #jsonMode:!initialize/release!public! !
 !STONWriter categoriesFor: #keepNewLines:!initialize/release!public! !
 !STONWriter categoriesFor: #listElementSeparator!private! !
@@ -412,10 +454,11 @@ writeSymbol: symbol
 !STONWriter categoriesFor: #shortListElementSeparator!private! !
 !STONWriter categoriesFor: #stonCharacters!private! !
 !STONWriter categoriesFor: #with:do:!private! !
-!STONWriter categoriesFor: #writeableStonCharacters!private! !
+!STONWriter categoriesFor: #writeableStonCharacters!public!writing! !
 !STONWriter categoriesFor: #writeAssociation:!public!writing! !
 !STONWriter categoriesFor: #writeBoolean:!public!writing! !
 !STONWriter categoriesFor: #writeFloat:!public!writing! !
+!STONWriter categoriesFor: #writeFraction:!public!writing! !
 !STONWriter categoriesFor: #writeInteger:!public!writing! !
 !STONWriter categoriesFor: #writeList:!public!writing! !
 !STONWriter categoriesFor: #writeMap:!public!writing! !
@@ -423,10 +466,13 @@ writeSymbol: symbol
 !STONWriter categoriesFor: #writeObject:!public!writing! !
 !STONWriter categoriesFor: #writeObject:do:!public!writing! !
 !STONWriter categoriesFor: #writeObject:listSingleton:!public!writing! !
+!STONWriter categoriesFor: #writeObject:named:do:!public!writing! !
+!STONWriter categoriesFor: #writeObject:named:listSingleton:!public!writing! !
 !STONWriter categoriesFor: #writeObject:streamList:!public!writing! !
 !STONWriter categoriesFor: #writeObject:streamMap:!public!writing! !
 !STONWriter categoriesFor: #writeObject:streamShortList:!public!writing! !
 !STONWriter categoriesFor: #writeReference:!public!writing! !
+!STONWriter categoriesFor: #writeScaledDecimal:!public!writing! !
 !STONWriter categoriesFor: #writeString:!public!writing! !
 !STONWriter categoriesFor: #writeSymbol:!public!writing! !
 

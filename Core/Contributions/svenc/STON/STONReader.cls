@@ -27,7 +27,7 @@ acceptUnknownClasses: boolean
 	acceptUnknownClasses := boolean!
 
 allowComplexMapKeys: boolean
-	"This is a no-op, this used to be an option, but it is now always enabled"!
+	"Private - This is a no-op, this used to be an option, but it is now always enabled"!
 
 atEnd
 	^ readStream atEnd!
@@ -44,7 +44,7 @@ consumeWhitespace
 		whileTrue: [ readStream next ]!
 
 convertNewLines: boolean
-	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
+	"Private - When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
 	will be converted to the newline convention chosen, see #newLine:
 	The default is false, not doing any convertions."
 	
@@ -113,7 +113,7 @@ matchChar: character
 		ifFalse: [ false ]!
 
 newLine: string
-	"Set the newline convention to be used when converting newlines, see #convertNewLines"
+	"Private - Set the newline convention to be used when converting newlines, see #convertNewLines"
 	
 	newLine := string !
 
@@ -294,6 +294,22 @@ parseMapDo: block
 		self expectChar: $, ].
 	self error: 'end of map expected'!
 
+parseMapOrListRepresentation
+	"Private - Parse either a map or list to be used as a representation, not considering it as a referenceable object"
+	readStream atEnd 
+		ifFalse: [ 
+			readStream peek = ${
+				ifTrue: [ | map |
+					map := STON mapClass new.
+					self parseMapDo: [ :key :value |
+						map at: key put: value ].
+					^ map ].
+			readStream peek = $[
+				ifTrue: [ 
+					^ STON listClass streamContents: [ :stream |
+						self parseListDo: [ :each | stream nextPut: each ] ] ] ].
+	self error: 'invalid input'!
+
 parseNamedInstVarsFor: anObject
 	self parseMapDo: [ :instVarName :value |
 		anObject instVarNamed: instVarName put: value ]!
@@ -302,10 +318,16 @@ parseNumber
 	| negated number |
 	negated := readStream peekFor: $-.
 	number := self parseNumberInteger.
-	(readStream peekFor: $.)
-		ifTrue: [ number := number + self parseNumberFraction ].
-	((readStream peekFor: $e) or: [ readStream peekFor: $E ])
-		ifTrue: [ number := number * self parseNumberExponent ].
+	(readStream peekFor: $/)
+		ifTrue: [ 
+			number := Fraction numerator: number denominator: self parseNumberInteger.
+			(readStream peekFor: $s)
+				ifTrue: [ number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger ] ]
+		ifFalse: [ 
+			(readStream peekFor: $.)
+				ifTrue: [ number := number + self parseNumberFraction ].
+			((readStream peekFor: $e) or: [ readStream peekFor: $E ])
+				ifTrue: [ number := number * self parseNumberExponent ] ].
 	negated
 		ifTrue: [ number := number negated ].
 	self consumeWhitespace.
@@ -340,22 +362,22 @@ parseNumberInteger
 
 parseObject
 	| targetClass reference object |
-	[
-		reference := self newReference.
-		targetClass := self parseClass.
-		object := targetClass fromSton: self .
-		self setReference: reference to: object ]
-		on: NotFound 
-		do: [ :notFound |
-			acceptUnknownClasses 
-				ifTrue: [ 
-					object := STON mapClass new.
-					self storeReference: object.
-					self parseMapDo: [ :key :value |
-						object at: key put: value ].
-					object at: STON classNameKey put: notFound object ]
-				ifFalse: [ self error: 'Cannot resolve class named ', notFound object printString ] ].
-	^ object!
+	
+	[reference := self newReference.
+	targetClass := self parseClass.
+	object := targetClass fromSton: self.
+	self setReference: reference to: object]
+			on: NotFound
+			do: 
+				[:notFound |
+				acceptUnknownClasses
+					ifTrue: 
+						[object := STON mapClass new.
+						self storeReference: object.
+						self parseMapDo: [:key :value | object at: key put: value].
+						object at: STON classNameKey put: notFound object]
+					ifFalse: [self error: 'Cannot resolve class named ' , notFound object printString]].
+	^object!
 
 parseReference
 	| index |
@@ -471,54 +493,55 @@ stringStreamContents: block
 	stringStream reset.
 	block value: stringStream.
 	^ stringStream contents! !
-!STONReader categoriesFor: #acceptUnknownClasses:!initialize/release!public! !
-!STONReader categoriesFor: #allowComplexMapKeys:!initialize/release!public! !
-!STONReader categoriesFor: #atEnd!public!testing! !
-!STONReader categoriesFor: #close!initialize/release!public! !
+!STONReader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
+!STONReader categoriesFor: #allowComplexMapKeys:!initialize/release!private! !
+!STONReader categoriesFor: #atEnd!private!testing! !
+!STONReader categoriesFor: #close!initialize/release!private! !
 !STONReader categoriesFor: #consumeWhitespace!helpers!private! !
-!STONReader categoriesFor: #convertNewLines:!initialize/release!public! !
-!STONReader categoriesFor: #error:!error handling!public! !
+!STONReader categoriesFor: #convertNewLines:!initialize/release!private! !
+!STONReader categoriesFor: #error:!error handling!private! !
 !STONReader categoriesFor: #expectChar:!helpers!private! !
-!STONReader categoriesFor: #initialize!initialize/release!public! !
+!STONReader categoriesFor: #initialize!initialize/release!private! !
 !STONReader categoriesFor: #isClassChar:!helpers!private! !
 !STONReader categoriesFor: #isClassStartChar:!helpers!private! !
 !STONReader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
 !STONReader categoriesFor: #lookupClass:!helpers!private! !
 !STONReader categoriesFor: #match:do:!helpers!private! !
 !STONReader categoriesFor: #matchChar:!helpers!private! !
-!STONReader categoriesFor: #newLine:!initialize/release!public! !
+!STONReader categoriesFor: #newLine:!initialize/release!private! !
 !STONReader categoriesFor: #newReference!helpers!private! !
 !STONReader categoriesFor: #next!helpers!public! !
-!STONReader categoriesFor: #on:!initialize/release!public! !
-!STONReader categoriesFor: #optimizeForLargeStructures!initialize/release!public! !
-!STONReader categoriesFor: #parseCharacter!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing/internal!parsing/internal-internal!parsing-internal!private! !
+!STONReader categoriesFor: #on:!initialize/release!private! !
+!STONReader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
+!STONReader categoriesFor: #parseCharacter!parsing-internal!private! !
+!STONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
 !STONReader categoriesFor: #parseCharacterHex!helpers!private! !
 !STONReader categoriesFor: #parseCharacterHex4Value!helpers!private! !
-!STONReader categoriesFor: #parseCharacterHexDigit!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseClass!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseConstantDo:!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseEscapedCharacter!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseList!parsing!public! !
-!STONReader categoriesFor: #parseListDo:!parsing!public! !
-!STONReader categoriesFor: #parseListSingleton!parsing!public! !
-!STONReader categoriesFor: #parseMap!parsing!public! !
-!STONReader categoriesFor: #parseMapDo:!parsing!public! !
-!STONReader categoriesFor: #parseNamedInstVarsFor:!parsing!public! !
-!STONReader categoriesFor: #parseNumber!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberExponent!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberFraction!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberInteger!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseObject!parsing!public! !
-!STONReader categoriesFor: #parseReference!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseSimpleValue!parsing!public! !
-!STONReader categoriesFor: #parseString!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseStringInternal!parsing/internal!parsing/internal-internal!parsing-internal!private! !
-!STONReader categoriesFor: #parseSymbol!parsing/internal!parsing/internal-internal!parsing-internal!private! !
+!STONReader categoriesFor: #parseCharacterHexDigit!parsing-internal!private! !
+!STONReader categoriesFor: #parseClass!parsing-internal!private! !
+!STONReader categoriesFor: #parseConstantDo:!parsing-internal!private! !
+!STONReader categoriesFor: #parseEscapedCharacter!parsing-internal!private! !
+!STONReader categoriesFor: #parseList!parsing!private! !
+!STONReader categoriesFor: #parseListDo:!parsing!private! !
+!STONReader categoriesFor: #parseListSingleton!parsing!private! !
+!STONReader categoriesFor: #parseMap!parsing!private! !
+!STONReader categoriesFor: #parseMapDo:!parsing!private! !
+!STONReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
+!STONReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
+!STONReader categoriesFor: #parseNumber!parsing-internal!private! !
+!STONReader categoriesFor: #parseNumberExponent!parsing-internal!private! !
+!STONReader categoriesFor: #parseNumberFraction!parsing-internal!private! !
+!STONReader categoriesFor: #parseNumberInteger!parsing-internal!private! !
+!STONReader categoriesFor: #parseObject!parsing!private! !
+!STONReader categoriesFor: #parseReference!parsing-internal!private! !
+!STONReader categoriesFor: #parseSimpleValue!parsing!private! !
+!STONReader categoriesFor: #parseString!parsing-internal!private! !
+!STONReader categoriesFor: #parseStringInternal!parsing-internal!private! !
+!STONReader categoriesFor: #parseSymbol!parsing-internal!private! !
 !STONReader categoriesFor: #parseTrailingSurrogateHexEscape!helpers!private! !
-!STONReader categoriesFor: #parseValue!parsing!public! !
+!STONReader categoriesFor: #parseValue!parsing!private! !
 !STONReader categoriesFor: #processSubObjectsOf:!helpers!private! !
-!STONReader categoriesFor: #reset!initialize/release!public! !
+!STONReader categoriesFor: #reset!initialize/release!private! !
 !STONReader categoriesFor: #resolveReference:!helpers!private! !
 !STONReader categoriesFor: #resolveReferenceIndex:!helpers!private! !
 !STONReader categoriesFor: #setReference:to:!helpers!private! !

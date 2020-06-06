@@ -29,6 +29,6 @@ value
 new
 	"Private - Use specialized instance creation methods"
 
-	^self subclassResponsibility! !
+	^self shouldNotImplement! !
 !STBProxy class categoriesFor: #new!instance creation!private! !
 

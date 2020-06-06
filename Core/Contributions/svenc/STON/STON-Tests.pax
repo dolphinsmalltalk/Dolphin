@@ -6,21 +6,30 @@ package paxVersion: 1;
 
 
 package classNames
-	add: #STONCStyleCommentsSkipStreamTests;
-	add: #STONJSONTests;
-	add: #STONLargeWriteReadTests;
-	add: #STONReaderTests;
+	add: #IdentityBag;
+	add: #STONCStyleCommentsSkipStreamTest;
+	add: #STONJSONTest;
+	add: #STONLargeWriteReadTest;
+	add: #STONReaderTest;
+	add: #STONTest;
 	add: #STONTestAssociation;
 	add: #STONTestDomainObject;
+	add: #STONTestKnownObject;
+	add: #STONTestMap;
 	add: #STONTestUser;
 	add: #STONTestUser2;
 	add: #STONTestUser3;
-	add: #STONWriteAsciiOnlyReadTests;
-	add: #STONWritePrettyPrinterReadTests;
-	add: #STONWriteReadCommentsTests;
-	add: #STONWriteReadTests;
-	add: #STONWriterTests;
+	add: #STONWriteAsciiOnlyReadTest;
+	add: #STONWritePrettyPrinterReadTest;
+	add: #STONWriteReadCommentsTest;
+	add: #STONWriteReadTest;
+	add: #STONWriterTest;
 	add: #UUID;
+	yourself.
+
+package methodNames
+	add: #Date -> #translateTo:;
+	add: #Date -> #translateToUTC;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -35,6 +44,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Collection Arithmetic'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'STON-Core'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
 
@@ -51,8 +61,23 @@ Object subclass: #STONTestDomainObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #STONTestKnownObject
+	instanceVariableNames: 'id description'
+	classVariableNames: 'KnownObjects'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #STONTestUser
 	instanceVariableNames: 'username password enabled'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Bag subclass: #IdentityBag
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dictionary variableSubclass: #STONTestMap
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -76,47 +101,52 @@ STONTestUser subclass: #STONTestUser3
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #STONCStyleCommentsSkipStreamTests
+TestCase subclass: #STONCStyleCommentsSkipStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #STONJSONTests
+TestCase subclass: #STONJSONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #STONReaderTests
+TestCase subclass: #STONReaderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #STONWriteReadTests
+TestCase subclass: #STONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TestCase subclass: #STONWriterTests
+TestCase subclass: #STONWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONWriteReadTests subclass: #STONLargeWriteReadTests
+TestCase subclass: #STONWriterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONWriteReadTests subclass: #STONWriteAsciiOnlyReadTests
+STONWriteReadTest subclass: #STONLargeWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONWriteReadTests subclass: #STONWritePrettyPrinterReadTests
+STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONWriteReadTests subclass: #STONWriteReadCommentsTests
+STONWriteReadTest subclass: #STONWritePrettyPrinterReadTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+STONWriteReadTest subclass: #STONWriteReadCommentsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -126,6 +156,23 @@ STONWriteReadTests subclass: #STONWriteReadCommentsTests
 
 
 "Loose Methods"!
+
+!Date methodsFor!
+
+translateTo: aDuration
+	"Private - This probably isn't correct, but then Dolphin's legacy Dates are not TZ aware. This is implemented purely to make the STON tests pass."
+
+	^(DateAndTime
+		year: self year
+		day: self dayOfYear
+		offset: aDuration) asLocal asDate!
+
+translateToUTC
+	"Private - This probably isn't correct, but then Dolphin's legacy Dates are not TZ aware. This is implemented purely to make the STON tests pass."
+
+	^self translateTo: 0 seconds! !
+!Date categoriesFor: #translateTo:!private! !
+!Date categoriesFor: #translateToUTC!private! !
 
 "End of package definition"!
 

@@ -47,6 +47,14 @@ name: aSymbol framingBlock: framingBlockClosure offsetBlock: offsetBlockClosure 
 	offsetBlock := offsetBlockClosure.
 	flags := anInteger!
 
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are the same as those which would result from sending a #printString message to the receiver."
+
+	aPuttableStream
+		print: self class;
+		space;
+		display: self name!
+
 stbSaveOn: anSTBOutFiler 
 	"Private - There should be only one instance of the receiver for each of the standard framing calculations
 	(though only to reduce memory usage), so arrange for the binary filer to recognise this."
@@ -61,6 +69,7 @@ stbSaveOn: anSTBOutFiler
 !FramingCalculation categoriesFor: #isVertical!public!testing! !
 !FramingCalculation categoriesFor: #name!accessing!public! !
 !FramingCalculation categoriesFor: #name:framingBlock:offsetBlock:flags:!initializing!private! !
+!FramingCalculation categoriesFor: #printOn:!public! !
 !FramingCalculation categoriesFor: #stbSaveOn:!binary filing!private! !
 
 !FramingCalculation class methodsFor!

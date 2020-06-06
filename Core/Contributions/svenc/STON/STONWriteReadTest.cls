@@ -1,14 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #STONWriteReadTests
+TestCase subclass: #STONWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STONWriteReadTests guid: (GUID fromString: '{8084b7c8-9c64-46ad-a994-4ca3445bcee8}')!
-STONWriteReadTests comment: 'STONWriteReadTests test serialization followed by materialization.'!
-!STONWriteReadTests categoriesForClass!STON-Tests-Writer! !
-!STONWriteReadTests methodsFor!
+STONWriteReadTest guid: (GUID fromString: '{8084b7c8-9c64-46ad-a994-4ca3445bcee8}')!
+STONWriteReadTest comment: 'STONWriteReadTests test serialization followed by materialization.'!
+!STONWriteReadTest categoriesForClass!STON-Tests-Writer! !
+!STONWriteReadTest methodsFor!
+
+environment
+	^ Smalltalk globals!
 
 materialize: string
 	^ STON reader 
@@ -19,7 +22,10 @@ serialize: anObject
 	^ String streamContents: [ :stream |
 		STON writer 
 			on: stream;
-			nextPut: anObject ]!
+			prettyPrint: Processor activeProcess debugger notNil;
+			nextPut: anObject ]
+
+!
 
 serializeAndMaterialize: object
 	| serialization materialization |
@@ -68,14 +74,32 @@ testCollections
 		#(1 2 3).
 		OrderedCollection withAll: #(1 2 3).
 		Set withAll: #(1 2 3).
-		IdentitySet withAll: #(1 2 3).
 		Bag withAll: #(1 2 2 3).
 		Dictionary new at: 1 put: 1; at: 2 put: 2; yourself.
-		IdentityDictionary new at: 1 put: 1; at: 2 put: 2; yourself.
 		#[1 2 3].
 		#(1 2 3) asIntegerArray.
 		#(1 2 3) asFloatArray }.
 	self serializeAndMaterialize: collections!
+
+testCollectionsStructured
+	| collections one two |
+	one := 1@2.
+	two := 2@3.
+	collections := STON listClass withAll: {
+	 	Bag withAll: { one. two. one. two. one }.
+	 	Set withAll: { one. two. one. two. one }.
+	 	OrderedCollection withAll: { one. two. one. two. one }.
+	}.
+	self serializeAndMaterialize: collections!
+
+testColors
+	| colors |
+	colors := STON listClass withAll: { 
+		Color red.
+		Color red copy setAlpha: 0.4.
+		Color red lighter lighter }.
+	self serializeAndMaterialize: colors
+!
 
 testCustomAssociations
 	| associations |
@@ -113,30 +137,30 @@ testEmpty
 	empty := STON mapClass new.
 	self serializeAndMaterialize: empty.!
 
-testFileSystemSupport
-	| fileReferences fileLocators |
-	self skip: 'Dolphin does not have a FileReference class.'.
-	fileReferences := STON listClass withAll: { 
-		FileLocator image asFileReference.
-		FileLocator workingDirectory asFileReference.
-		(FileLocator home / 'foo.txt') asFileReference }.
-	self serializeAndMaterialize: fileReferences.
-	fileLocators := STON listClass withAll: { 
-		FileLocator image.
-		FileLocator workingDirectory.
-		FileLocator home / 'foo.txt' }.
-	self serializeAndMaterialize: fileLocators.!
-
 testFloats
 	| floats serialization materialization |
 	floats := STON listClass withAll: ((-10 to: 10) collect: [ :each | each * Float pi ]).
 	serialization := self serialize: floats.
 	materialization := self materialize: serialization.
-	self assert: floats size = materialization size.
-	1 to: floats size do: [:index | | float |
+	self assert: floats size equals: materialization size.
+	1 to: floats size do: [ :index | 
+		| float |
 		float := floats at: index.
 		"Use #closeTo: instead of #= to increase portability"
 		self assert: (float closeTo: (materialization at: index)) ]!
+
+testFractions
+	| fractions |
+	fractions := STON listClass withAll: (-2/3 to: 2/3 by: 1/3).
+	self serializeAndMaterialize: fractions!
+
+testIdentityCollections
+	| collections |
+	collections := STON listClass withAll: {
+		IdentitySet withAll: #(1 2 3).
+		IdentityDictionary new at: 1 put: 1; at: 2 put: 2; yourself.
+		IdentityBag withAll: { #A. #B. #A. #B. #A } }.
+	self serializeAndMaterialize: collections!
 
 testIntervals
 	| intervals |
@@ -202,13 +226,13 @@ testSmallIntegers
 
 testSpecialCharacters
 	| primitives |
-	#dolphin. "Rewrite the #collect:as: expression in a portable way"
 	primitives := STON listClass withAll: { 
 		String withAll: { Character tab. Character lf. Character cr }.
 		String withAll: { $'. $". $\. $/ }.
 		'élèves français'.
 		'Düsseldorf Königsallee'.
-		String withAll: (#(1 10 20 30 127 140 150 160 200 255) collect: [:each | each asCharacter]) }.
+		#dolphin. "Modified non-standard collect and conversion."
+		#(1 10 20 30 127 140 150 160 200 255) asByteArray asString }.
 	self serializeAndMaterialize: primitives!
 
 testStrings
@@ -228,15 +252,6 @@ testSymbols
 	symbols := Collection allSubclasses collect: [ :each | each name ].
 	self serializeAndMaterialize: symbols
 !
-
-testTextAndRunArray
-	| texts |
-	self skip. "Dolphin has no Text or related classes"
-	"texts := { 
-		'Text!!' asText. 
-		(Text string: 'I am bold' attribute: TextEmphasis bold), ' and I am normal text'.
-		Text new }.
-	self serializeAndMaterialize: texts"!
 
 testUser
 	| user users |
@@ -271,32 +286,35 @@ testUUIDs
 		UUID new.
 		UUID nilUUID }.
 	self serializeAndMaterialize: uuids! !
-!STONWriteReadTests categoriesFor: #materialize:!private! !
-!STONWriteReadTests categoriesFor: #serialize:!private! !
-!STONWriteReadTests categoriesFor: #serializeAndMaterialize:!private! !
-!STONWriteReadTests categoriesFor: #serializeAndMaterializeJsonMode:!private! !
-!STONWriteReadTests categoriesFor: #serializeJson:!private! !
-!STONWriteReadTests categoriesFor: #testAssociations!public!tests! !
-!STONWriteReadTests categoriesFor: #testCharacters!public!tests! !
-!STONWriteReadTests categoriesFor: #testClasses!public!tests! !
-!STONWriteReadTests categoriesFor: #testCollections!public!tests! !
-!STONWriteReadTests categoriesFor: #testCustomAssociations!public!tests! !
-!STONWriteReadTests categoriesFor: #testDatesAndTimes!public!tests! !
-!STONWriteReadTests categoriesFor: #testDomainObject!public!tests! !
-!STONWriteReadTests categoriesFor: #testEmpty!public!tests! !
-!STONWriteReadTests categoriesFor: #testFileSystemSupport!public!tests! !
-!STONWriteReadTests categoriesFor: #testFloats!public!tests! !
-!STONWriteReadTests categoriesFor: #testIntervals!public!tests! !
-!STONWriteReadTests categoriesFor: #testJsonMode!public!tests! !
-!STONWriteReadTests categoriesFor: #testOrderedDictionary!public!tests! !
-!STONWriteReadTests categoriesFor: #testPrimitives!public!tests! !
-!STONWriteReadTests categoriesFor: #testSmallDictionary!public!tests! !
-!STONWriteReadTests categoriesFor: #testSmallIntegers!public!tests! !
-!STONWriteReadTests categoriesFor: #testSpecialCharacters!public!tests! !
-!STONWriteReadTests categoriesFor: #testStrings!public!tests! !
-!STONWriteReadTests categoriesFor: #testSymbols!public!tests! !
-!STONWriteReadTests categoriesFor: #testTextAndRunArray!public!tests! !
-!STONWriteReadTests categoriesFor: #testUser!public!tests! !
-!STONWriteReadTests categoriesFor: #testUser2!public!tests! !
-!STONWriteReadTests categoriesFor: #testUUIDs!public!tests! !
+!STONWriteReadTest categoriesFor: #environment!private! !
+!STONWriteReadTest categoriesFor: #materialize:!private! !
+!STONWriteReadTest categoriesFor: #serialize:!private! !
+!STONWriteReadTest categoriesFor: #serializeAndMaterialize:!private! !
+!STONWriteReadTest categoriesFor: #serializeAndMaterializeJsonMode:!private! !
+!STONWriteReadTest categoriesFor: #serializeJson:!private! !
+!STONWriteReadTest categoriesFor: #testAssociations!public!tests! !
+!STONWriteReadTest categoriesFor: #testCharacters!public!tests! !
+!STONWriteReadTest categoriesFor: #testClasses!public!tests! !
+!STONWriteReadTest categoriesFor: #testCollections!public!tests! !
+!STONWriteReadTest categoriesFor: #testCollectionsStructured!public!tests! !
+!STONWriteReadTest categoriesFor: #testColors!public!tests! !
+!STONWriteReadTest categoriesFor: #testCustomAssociations!public!tests! !
+!STONWriteReadTest categoriesFor: #testDatesAndTimes!public!tests! !
+!STONWriteReadTest categoriesFor: #testDomainObject!public!tests! !
+!STONWriteReadTest categoriesFor: #testEmpty!public!tests! !
+!STONWriteReadTest categoriesFor: #testFloats!public!tests! !
+!STONWriteReadTest categoriesFor: #testFractions!public!tests! !
+!STONWriteReadTest categoriesFor: #testIdentityCollections!public!tests! !
+!STONWriteReadTest categoriesFor: #testIntervals!public!tests! !
+!STONWriteReadTest categoriesFor: #testJsonMode!public!tests! !
+!STONWriteReadTest categoriesFor: #testOrderedDictionary!public!tests! !
+!STONWriteReadTest categoriesFor: #testPrimitives!public!tests! !
+!STONWriteReadTest categoriesFor: #testSmallDictionary!public!tests! !
+!STONWriteReadTest categoriesFor: #testSmallIntegers!public!tests! !
+!STONWriteReadTest categoriesFor: #testSpecialCharacters!public!tests! !
+!STONWriteReadTest categoriesFor: #testStrings!public!tests! !
+!STONWriteReadTest categoriesFor: #testSymbols!public!tests! !
+!STONWriteReadTest categoriesFor: #testUser!public!tests! !
+!STONWriteReadTest categoriesFor: #testUser2!public!tests! !
+!STONWriteReadTest categoriesFor: #testUUIDs!public!tests! !
 

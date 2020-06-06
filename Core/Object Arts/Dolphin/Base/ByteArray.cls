@@ -815,17 +815,18 @@ fromGlobalHandle: anExternalHandle
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
 
-	| answer size digits |
-	size := aString size / 2.
-	size isInteger ifFalse: [self error: 'Invalid hex string (odd length)'].
-	answer := self new: size.
+	| answer count digits |
+	count := aString size.
+	(count bitAnd: 1) == 0 ifFalse: [self error: 'Invalid hex string (odd length)'].
+	count := count bitShift: -1.
+	answer := self new: count.
 	digits := #(0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15).
-	1 to: size
+	1 to: count
 		do: 
 			[:i |
 			| j |
 			answer at: i
-				put: (digits at: (aString basicAt: (j := i * 2) - 1) - ##($0 codePoint - 1)) * 16
+				put: (digits at: (aString basicAt: (j := i + i) - 1) - ##($0 codePoint - 1)) * 16
 						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
 	^answer!
 
