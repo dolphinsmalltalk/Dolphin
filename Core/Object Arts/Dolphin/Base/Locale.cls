@@ -299,7 +299,12 @@ durationFormatters
 	formatters)!
 
 englishDisplayName
-	"The name of the locale in English."
+	"The <String> full name of the locale in English."
+
+	^self subclassResponsibility!
+
+englishLanguageName
+	"The <String> name of the language in English."
 
 	^self subclassResponsibility!
 
@@ -649,6 +654,7 @@ yearMonthFormat
 !Locale categoriesFor: #durationFormat!constants!public! !
 !Locale categoriesFor: #durationFormatters!printing!private! !
 !Locale categoriesFor: #englishDisplayName!constants!public! !
+!Locale categoriesFor: #englishLanguageName!constants!public! !
 !Locale categoriesFor: #firstDayOfWeek!constants!public! !
 !Locale categoriesFor: #getNumberFormat!helpers!private! !
 !Locale categoriesFor: #hasLeadingZero!constants!public! !

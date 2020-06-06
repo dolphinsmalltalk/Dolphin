@@ -48,8 +48,10 @@ testOutlineTextMetrics
 	"The tricky bit about getting the OTM is the way that the structure varies in size and 
 	the certain strings are then stored in the variable length portion at the end, the offset
 	of the strings being specified by other fields."
-	self assert: otm styleName equals: 'Regular'.
-	self assert: otm fullName equals: 'Microsoft Comic Sans'.
+	Locale systemDefault englishLanguageName = 'English'
+		ifTrue: 
+			[self assert: otm styleName equals: 'Regular'.
+			self assert: otm fullName equals: 'Microsoft Comic Sans'].
 	self assert: otm faceName equals: font name.
 	self assert: otm familyName equals: font name! !
 !CanvasTest categoriesFor: #testFont!public!unit tests! !

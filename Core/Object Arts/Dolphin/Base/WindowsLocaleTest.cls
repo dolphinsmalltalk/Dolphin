@@ -82,7 +82,7 @@ testDisplayFloatOn
 	self assert: (self displayFloat: Float negativeInfinity with: subject) equals: '-∞'.
 
 	"Fake up the other modes - zero is bracketed"
-	subject := Locale lcid: 1024.
+	subject := Locale lcid: 1033.
 	info := subject instVarNamed: 'info'.
 	info at: Win32Constants.LOCALE_INEGNUMBER put: 0.
 	self assert: (self displayFloat: -0.0 with: subject) equals: '0.00'.
@@ -91,14 +91,19 @@ testDisplayFloatOn
 	self assert: (self displayFloat: -123456789.123456789 with: subject) equals: '(123,456,789.12)'.
 
 	"Mode 4 is trailing minus after space"
-	subject := Locale lcid: 1024.
+	subject := Locale lcid: 1033.
 	(subject instVarNamed: 'info') at: Win32Constants.LOCALE_INEGNUMBER put: 4.
 	self assert: subject negativeNumberMode equals: 4.
 	self assert: (self displayFloat: -0.0 with: subject) equals: '0.00'.
 	self assert: (self displayFloat: -1.25 with: subject) equals: '1.25 -'.
 	self assert: (self displayFloat: -0.0001 with: subject) equals: '0.00'.
 	self assert: (self displayFloat: -123456789.123456789 with: subject) equals: '123,456,789.12 -'.
-! !
+!
+
+testEnglishName
+	#(1033 'English' 2057 'English' 1034 'Spanish' 1106 'Welsh' 11274 'Spanish') pairsDo: [:lcid :language |
+		self assert: (Locale lcid: lcid) englishLanguageName equals: language]! !
 !WindowsLocaleTest categoriesFor: #defaultSubject!helpers!private! !
 !WindowsLocaleTest categoriesFor: #testDisplayFloatOn!public!unit tests! !
+!WindowsLocaleTest categoriesFor: #testEnglishName!public!unit tests! !
 

@@ -111,9 +111,14 @@ durationFormat
 	^'-', (self getStringInfo: LOCALE_SDURATION)!
 
 englishDisplayName
-	"The <String> name of the locale in English."
+	"The <String> full name of the locale in English."
 
 	^self getStringInfo: LOCALE_SENGLISHDISPLAYNAME!
+
+englishLanguageName
+	"The <String> name of the language in English."
+
+	^self getStringInfo: LOCALE_SENGLISHLANGUAGENAME!
 
 firstDayOfWeek
 	"Answer an <Integer> in the range 1..7 identifying the first day of the week, where 1 is Monday and 7 is Sunday."
@@ -427,6 +432,7 @@ yearMonthFormat
 !WindowsLocale categoriesFor: #displayOn:!displaying!public! !
 !WindowsLocale categoriesFor: #durationFormat!constants!public! !
 !WindowsLocale categoriesFor: #englishDisplayName!displaying!public! !
+!WindowsLocale categoriesFor: #englishLanguageName!constants!public! !
 !WindowsLocale categoriesFor: #firstDayOfWeek!constants!public! !
 !WindowsLocale categoriesFor: #getCalendarInfoInteger:!helpers!private! !
 !WindowsLocale categoriesFor: #getCalendarInfoString:!helpers!private! !
