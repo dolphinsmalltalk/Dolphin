@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #LocaleTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -16,6 +16,15 @@ defaultSubject
 
 displayFloat: aFloat with: subject
 	^String streamContents: [:s | subject displayFloat: aFloat on: s]!
+
+setUp
+	super setUp.
+	savedLocale := Locale userDefault.
+	Locale userDefault: (Locale lcid: 1081)!
+
+tearDown
+	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	super tearDown!
 
 testPrintDateTimeOnFormat
 	| subject now expected |
@@ -71,6 +80,8 @@ testPrintDurationOnFormat
 	self assert: actual equals: '-12:06'! !
 !LocaleTest categoriesFor: #defaultSubject!helpers!private! !
 !LocaleTest categoriesFor: #displayFloat:with:!helpers!private! !
+!LocaleTest categoriesFor: #setUp!private!running! !
+!LocaleTest categoriesFor: #tearDown!private!running! !
 !LocaleTest categoriesFor: #testPrintDateTimeOnFormat!public! !
 !LocaleTest categoriesFor: #testPrintDurationOnFormat!public!unit tests! !
 

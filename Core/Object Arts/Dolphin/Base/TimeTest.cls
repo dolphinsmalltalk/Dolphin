@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #TimeTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -31,6 +31,15 @@ minutesShould: expectedMinutes for: seconds
 
 secondsShould: expectedSeconds for: seconds
 	self assert: (Time fromSeconds: seconds) second equals: expectedSeconds!
+
+setUp
+	super setUp.
+	savedLocale := Locale userDefault.
+	Locale userDefault: (Locale lcid: 1033)!
+
+tearDown
+	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	super tearDown!
 
 testAsSYSTEMTIME
 	| today now actual |
@@ -271,6 +280,8 @@ testStoreOn
 !TimeTest categoriesFor: #millisecondsShould:for:!comparing!private! !
 !TimeTest categoriesFor: #minutesShould:for:!comparing!private! !
 !TimeTest categoriesFor: #secondsShould:for:!comparing!private! !
+!TimeTest categoriesFor: #setUp!private!running! !
+!TimeTest categoriesFor: #tearDown!private!running! !
 !TimeTest categoriesFor: #testAsSYSTEMTIME!public!unit tests! !
 !TimeTest categoriesFor: #testClassReadFrom!public!unit tests! !
 !TimeTest categoriesFor: #testFromDuration!public!testing! !

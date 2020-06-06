@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 MainTestCase subclass: #DateAndTimeANSITest
-	instanceVariableNames: 'd19970426t8'
+	instanceVariableNames: 'd19970426t8 savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -18,9 +18,16 @@ protocol
 
 setUp
 	super setUp.
+	savedLocale := Locale userDefault.
+	"The tests of month and day names, etc, are expecting US English names and abbreviations"
+	Locale userDefault: (Locale lcid: 1033).
 	d19970426t8 := DateAndTime
 		year: 1997 month: 4 day: 26
 		hour: 8 minute: 0 second: 0.!
+
+tearDown
+	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	super tearDown!
 
 testXaddOp
 	" <DateAndTime>#+ "
@@ -370,7 +377,8 @@ testXyear
 		conformTo: #'DateAndTime' selector: #'year'.! !
 !DateAndTimeANSITest categoriesFor: #canonicalObject!public! !
 !DateAndTimeANSITest categoriesFor: #protocol!public! !
-!DateAndTimeANSITest categoriesFor: #setUp!public! !
+!DateAndTimeANSITest categoriesFor: #setUp!private!running! !
+!DateAndTimeANSITest categoriesFor: #tearDown!private!running! !
 !DateAndTimeANSITest categoriesFor: #testXaddOp!public! !
 !DateAndTimeANSITest categoriesFor: #testXasLocal!public! !
 !DateAndTimeANSITest categoriesFor: #testXasUTC!public! !

@@ -335,7 +335,7 @@ DolphinTest subclass: #IntegerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #LocaleTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -420,7 +420,7 @@ DolphinTest subclass: #TimeStampTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #TimeTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

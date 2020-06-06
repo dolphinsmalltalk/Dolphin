@@ -414,7 +414,7 @@ TextEditTest subclass: #MultilineTextEditTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEditTest subclass: #RichTextEditTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

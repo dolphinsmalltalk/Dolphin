@@ -208,7 +208,7 @@ MainTestCase subclass: #CollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MainTestCase subclass: #DateAndTimeANSITest
-	instanceVariableNames: 'd19970426t8'
+	instanceVariableNames: 'd19970426t8 savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
