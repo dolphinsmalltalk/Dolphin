@@ -141,6 +141,17 @@ atPriority: anInteger
 	activePriority := proc priority: anInteger.
 	^self ensure: [proc priority: activePriority]!
 
+copiedValues
+	"Private - Answer an array of the copiedValues in the receiver."
+
+	| count |
+	count := self size.
+	^self
+		replaceElementsOf: (Array new: count)
+		from: 1
+		to: count
+		startingAt: 1!
+
 critical
 	"Private - Evaluate the receiver as a Critical Section with asynchronous process switching disabled.
 	When asynchronous process switching is disabled, process pre-emption cannot occur because
@@ -538,6 +549,23 @@ repeat
 	[self value.
 	true] whileTrue!
 
+replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
+	"Private - Replace the indexable instance variables of the variable pointer object,
+	anIndexableObject, between startInteger and stopInteger inclusive with literals from the
+	receiver starting from startAtInteger. Answers anIndexableObject."
+
+	<primitive: 188>
+	| offset |
+	offset := startAtInteger - startInteger.
+	(anIndexableObject == self and: [startAtInteger < startInteger])
+		ifTrue: 
+			[stopInteger to: startInteger
+				by: -1
+				do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]]
+		ifFalse: 
+			[startInteger to: stopInteger do: [:i | anIndexableObject basicAt: i put: (self basicAt: offset + i)]].
+	^anIndexableObject!
+
 stackTempCount
 	"Private - Answer the <integer> number of extra stack temps (in addition to the arguments)
 	used by the receiver. This number of stack slots is reserved and nilled every time
@@ -737,6 +765,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
 !BlockClosure categoriesFor: #atPriority:!evaluating!public! !
+!BlockClosure categoriesFor: #copiedValues!private! !
 !BlockClosure categoriesFor: #critical!private!scheduling! !
 !BlockClosure categoriesFor: #cull:!evaluating!public! !
 !BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
@@ -781,6 +810,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #receiver!accessing!private! !
 !BlockClosure categoriesFor: #receiver:!accessing!private! !
 !BlockClosure categoriesFor: #repeat!evaluating!public! !
+!BlockClosure categoriesFor: #replaceElementsOf:from:to:startingAt:!public!replacing! !
 !BlockClosure categoriesFor: #stackTempCount!accessing!private! !
 !BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #tempCount!accessing!public! !

@@ -481,6 +481,8 @@ STEPOVER.ICO            ICON                    "Res\\StepOver.ico"
 
 STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
 
+STON.ICO                ICON                    "Res\\JSON.ico"
+
 SYSTEMBROWSERSHELL.ICO  ICON                    "Res\\SystemBrowserShell.ico"
 
 SYSTEMDICTIONARY.ICO    ICON                    "Res\\SystemDictionary.ico"

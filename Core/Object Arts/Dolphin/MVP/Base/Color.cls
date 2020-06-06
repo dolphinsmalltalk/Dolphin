@@ -49,10 +49,10 @@ alpha
 	^255!
 
 alpha: anAlphaInteger
-	"Answer an <ARGB> which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
+	"Answer a `Color` which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
 	The alpha component is expected to be in the range [0,255], but is clamped to that if not."
 
-	^self asRGB alpha: anAlphaInteger!
+	^anAlphaInteger >= 255 ifTrue: [self] ifFalse: [self asRGB alpha: anAlphaInteger]!
 
 alphaMask
 	"Private - Answer the receiver's alpha bits as they would compose into an ARGB."
@@ -216,6 +216,11 @@ isTransparent
 
 	^self alpha = 0!
 
+lighter
+	"Answer a lighter shade of this color."
+
+	^ self adjustSaturation: -0.03 brightness: 0.08!
+
 lightness
 	"Answer a <Number> in the range [0,1] representing the lightness of the receiver in the HSL colour system."
 
@@ -329,6 +334,9 @@ rgbCode
 
 	^self asRGB rgbCode!
 
+setAlpha: aFloat 
+	^self alpha: aFloat * 255!
+
 species
 	^##(self)!
 
@@ -378,6 +386,7 @@ stbSaveOn: anSTBOutFiler
 !Color categoriesFor: #isGrayscale!public!testing! !
 !Color categoriesFor: #isNone!public!testing! !
 !Color categoriesFor: #isTransparent!public!testing! !
+!Color categoriesFor: #lighter!public! !
 !Color categoriesFor: #lightness!public! !
 !Color categoriesFor: #luminance!accessing!public! !
 !Color categoriesFor: #name!accessing!public! !
@@ -393,6 +402,7 @@ stbSaveOn: anSTBOutFiler
 !Color categoriesFor: #registerName:!private! !
 !Color categoriesFor: #rgb!converting!public! !
 !Color categoriesFor: #rgbCode!accessing!public! !
+!Color categoriesFor: #setAlpha:!public! !
 !Color categoriesFor: #species!accessing!public! !
 !Color categoriesFor: #stbSaveOn:!binary filing!public! !
 

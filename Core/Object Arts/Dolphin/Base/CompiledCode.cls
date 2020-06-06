@@ -355,7 +355,7 @@ literals
 	"Private - Answer an array of the literals in the receiver."
 
 	| count |
-	count := self literalCount.
+	count := self size.
 	^self
 		replaceElementsOf: (Array new: count)
 		from: 1

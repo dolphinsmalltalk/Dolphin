@@ -146,6 +146,7 @@ contents
 	"STON"
 	contents
 		add: #('Core\Contributions\svenc\STON\STON-Core.pax' #plain #imageBased);
+		add: #('Core\Contributions\svenc\STON\STON-Text support.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON.pax' #plain #imageBased);
 		yourself.
 

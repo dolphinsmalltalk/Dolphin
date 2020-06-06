@@ -992,6 +992,7 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\AXControlSite.ico" />
+    <Image Include="Res\JSON.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

@@ -1,0 +1,55 @@
+﻿| package |
+package := Package name: 'STON-Text support'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package methodNames
+	add: #RunArray -> #fromSton:;
+	add: #RunArray -> #stonOn:;
+	add: 'RunArray class' -> #fromSton:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!RunArray methodsFor!
+
+fromSton: stonReader
+	"Overwritten to get back the standard object behavior"
+	
+	stonReader parseNamedInstVarsFor: self!
+
+stonOn: stonWriter
+	"Overwritten to get back the standard object behavior"
+	
+	stonWriter writeObject: self! !
+!RunArray categoriesFor: #fromSton:!public!ston! !
+!RunArray categoriesFor: #stonOn:!public!ston! !
+
+!RunArray class methodsFor!
+
+fromSton: stonReader
+	^ self new
+		fromSton: stonReader;
+		yourself! !
+!RunArray class categoriesFor: #fromSton:!public!ston! !
+
+"End of package definition"!
+

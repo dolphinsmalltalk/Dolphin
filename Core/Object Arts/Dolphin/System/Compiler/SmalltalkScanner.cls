@@ -821,6 +821,11 @@ SmalltalkScanner methodProtocol: #parseErrorHandler attributes: #(#readOnly) sel
 
 !SmalltalkScanner class methodsFor!
 
+classify: aCharacter
+	"May be asked to classify nil if peek at end of stream"
+
+	^aCharacter ifNil: [#eof] ifNotNil: [ClassificationTable lookup: aCharacter code + 1]!
+
 initialize
 	| escapeChars |
 	PatternVariableCharacter := $`.
@@ -889,6 +894,7 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
+!SmalltalkScanner class categoriesFor: #classify:!public!scanning! !
 !SmalltalkScanner class categoriesFor: #initialize!development!initializing!public! !
 !SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
 !SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
