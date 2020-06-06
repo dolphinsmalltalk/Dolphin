@@ -54,7 +54,7 @@ _beginsString: aString
 	^aString readStream peek = self!
 
 _separateSubStringsIn: tokens
-	| start answer size end |
+	| start answer size end codeUnits |
 	size := tokens size.
 	size == 0 ifTrue: [^{}].
 	end := tokens
@@ -64,9 +64,10 @@ _separateSubStringsIn: tokens
 	end == 0 ifTrue: [^{tokens}].
 	answer := Array writeStream: 5.
 	start := 1.
-	
+	codeUnits := tokens encodedSizeOf: self.
+
 	[answer nextPut: (tokens copyFrom: start to: end - 1).
-	start := end + 1.
+	start := end + codeUnits.
 	end := tokens
 				nextIndexOf: self
 				from: start
