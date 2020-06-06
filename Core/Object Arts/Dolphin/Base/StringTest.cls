@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ArrayedCollectionTest subclass: #AbstractStringTest
+ArrayedCollectionTest subclass: #StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest guid: (GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
-AbstractStringTest isAbstract: true!
-AbstractStringTest comment: ''!
-!AbstractStringTest categoriesForClass!Unclassified! !
-!AbstractStringTest methodsFor!
+StringTest guid: (GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
+StringTest isAbstract: true!
+StringTest comment: ''!
+!StringTest categoriesForClass!Unclassified! !
+!StringTest methodsFor!
 
 assimilate: each 
 	^Character codePoint: each asInteger!
@@ -408,6 +408,77 @@ testReverse
 			actual := actual reverse.
 			self assert: actual equals: subject mutableCopy]!
 
+testSplitByString
+	"Test String>>split:, which tokenizes the argument string into sequences that are separated by the receiver string."
+
+	| sep empty |
+	empty := self newCollection: ''.
+	"The separator but must not be empty"
+	self should: [empty split: (self newCollection: 'abc')] raise: Error.
+
+	"And again but using a string argument of more than one character"
+	sep := self newCollection: String lineDelimiter.
+	self assert: (sep split: empty) equals: (#() collect: [:e | self newCollection: e]).
+	self assert: (sep split: (self newCollection: 'a'))
+		equals: (#('a') collect: [:e | self newCollection: e]).
+	self assert: (sep split: (self newCollection: sep , 'a'))
+		equals: (#('' 'a') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'a' , sep))
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: sep , sep , 'a'))
+		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'a' , sep , sep))
+		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'ab'))
+		equals: (#('ab') collect: [:e | self newCollection: e]).
+	self assert: (sep split: (self newCollection: sep , 'ab'))
+		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'ab' , sep))
+		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'ab' , sep , sep , sep))
+		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: sep , sep , 'ab'))
+		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'a' , sep , 'b'))
+		equals: (#('a' 'b') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'a' , sep , sep , 'b'))
+		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'ab' , sep , 'c' , sep))
+		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+	self assert: (sep split: (self newCollection: 'a' , sep , 'b' , sep , sep , 'c'))
+		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
+	1 to: 3
+		do: 
+			[:i |
+			| subject |
+			subject := self
+						newCollection: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
+			self assert: ('ab' split: subject) equals: (Array new: i + 1 withAll: empty)]!
+
+testSplitSingle
+	"Test split by a single character string"
+
+	| empty sep |
+	empty := ''.
+	"And again but using a string argument of only one character"
+	sep := '-'.
+	self assert: (sep split: empty) equals: #().
+	self assert: (sep split: sep) equals: {empty. empty}.
+	self assert: (sep split: 'a') equals: #('a').
+	self assert: (sep split: '-a') equals: #('' 'a').
+	self assert: (sep split: 'a-') equals: #('a' '').
+	self assert: (sep split: '--a') equals: #('' '' 'a').
+	self assert: (sep split: 'a--') equals: #('a' '' '').
+	self assert: (sep split: 'ab') equals: #('ab').
+	self assert: (sep split: '-ab') equals: #('' 'ab').
+	self assert: (sep split: 'ab-') equals: #('ab' '').
+	self assert: (sep split: 'ab---') equals: #('ab' '' '' '').
+	self assert: (sep split: '--ab') equals: #('' '' 'ab').
+	self assert: (sep split: 'a-b') equals: #('a' 'b').
+	self assert: (sep split: 'a--b') equals: #('a' '' 'b').
+	self assert: (sep split: 'ab-c-') equals: #('ab' 'c' '').
+	self assert: (sep split: 'a-b--c') equals: #('a' 'b' '' 'c')!
+
 testStreamUtfRoundTrip
 	| expected actual |
 	self collectionClass == Symbol ifTrue: [^self].
@@ -431,30 +502,30 @@ testStreamUtfRoundTrip
 				self assert: (self assimilateString: actual) equals: expected]!
 
 testSubStringsByCharacter
-	"Test single character delimiter"
+	"Test legacy subStrings: behavior for single character delimiter. This will be changed in 7.2"
 
 	| empty sep |
 	empty := self newCollection: ''.
 	self assert: (empty subStrings: $-) equals: (#() collect: [:e | self newCollection: e]).
-	self assert: ('-' subStrings: $-) equals: {empty. empty}.
+	self assert: ('-' subStrings: $-) equals: {empty}.
 	self assert: ((self newCollection: 'a') subStrings: $-)
 		equals: (#('a') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-a') subStrings: $-)
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-') subStrings: $-)
-		equals: (#('a' '') collect: [:e | self newCopy: e]).
+		equals: (#('a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--a') subStrings: $-)
 		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a--') subStrings: $-)
-		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab') subStrings: $-)
 		equals: (#('ab') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-ab') subStrings: $-)
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-') subStrings: $-)
-		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab---') subStrings: $-)
-		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' '' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--ab') subStrings: $-)
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b') subStrings: $-)
@@ -462,32 +533,32 @@ testSubStringsByCharacter
 	self assert: ((self newCollection: 'a--b') subStrings: $-)
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-c-') subStrings: $-)
-		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' 'c') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b--c') subStrings: $-)
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 
 	"And again but using a string argument of only one character"
 	sep := self newCollection: '-'.
 	self assert: (empty subStrings: sep) equals: (#() collect: [:e | self newCollection: e]).
-	self assert: (sep subStrings: sep) equals: {empty. empty}.
+	self assert: (sep subStrings: sep) equals: {empty}.
 	self assert: ((self newCollection: 'a') subStrings: sep)
 		equals: (#('a') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-a') subStrings: sep)
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-') subStrings: sep)
-		equals: (#('a' '') collect: [:e | self newCopy: e]).
+		equals: (#('a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--a') subStrings: sep)
 		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a--') subStrings: sep)
-		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab') subStrings: sep)
 		equals: (#('ab') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: '-ab') subStrings: sep)
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-') subStrings: sep)
-		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab---') subStrings: sep)
-		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' '' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: '--ab') subStrings: sep)
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b') subStrings: sep)
@@ -495,20 +566,21 @@ testSubStringsByCharacter
 	self assert: ((self newCollection: 'a--b') subStrings: sep)
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab-c-') subStrings: sep)
-		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' 'c') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a-b--c') subStrings: sep)
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 
-	"Note that if the string consists only of separators, then we get N+1 empty strings if there are N chars"
+	"Note that if the string consists only of separators, then we get N empty strings if there are N chars"
 	1 to: 3
 		do: 
 			[:i |
 			| subject |
 			subject := self newCollection: (String new: i withAll: $a).
-			self assert: (subject subStrings: $a) equals: (Array new: i + 1 withAll: empty)]!
+			self assert: (subject subStrings: $a) equals: (Array new: i withAll: empty)]!
 
 testSubStringsByString
-	"Test string delimiter"
+	"Test subStrings: with a multi-character string argument. This is the historic behaviour, which ignored a trailing terminator. This will be corrected in 7.2 which will also adopt the ANSI specified behaviour of splitting by any of the 
+	characters in the argument string. The String>>split: allows for splitting by all of a sequence of characters."
 
 	| sep empty |
 	empty := self newCollection: ''.
@@ -517,25 +589,29 @@ testSubStringsByString
 
 	"And again but using a string argument of more than one character"
 	sep := self newCollection: String lineDelimiter.
-	self assert: (empty subStrings: sep) equals: (#() collect: [:e | self newCollection: e]).
+
+	"Note historic incorrect behaviour that splitting an empty string by anything yields a result with one empty element. Corrected in 7.2."
+	self assert: (empty subStrings: sep) equals: (#('') collect: [:e | self newCollection: e]).
+
 	self assert: ((self newCollection: 'a') subStrings: sep)
 		equals: (#('a') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: sep , 'a') subStrings: sep)
 		equals: (#('' 'a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a' , sep) subStrings: sep)
-		equals: (#('a' '') collect: [:e | self newCopy: e]).
+		equals: (#('a') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: sep , sep , 'a') subStrings: sep)
 		equals: (#('' '' 'a') collect: [:e | self newCopy: e]).
+	"Note asymmetry - two leading separators and we get a 3 element result, two trailing separator and we get a 2 element result."
 	self assert: ((self newCollection: 'a' , sep , sep) subStrings: sep)
-		equals: (#('a' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('a' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab') subStrings: sep)
 		equals: (#('ab') collect: [:e | self newCollection: e]).
 	self assert: ((self newCollection: sep , 'ab') subStrings: sep)
 		equals: (#('' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab' , sep) subStrings: sep)
-		equals: (#('ab' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab' , sep , sep , sep) subStrings: sep)
-		equals: (#('ab' '' '' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' '' '') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: sep , sep , 'ab') subStrings: sep)
 		equals: (#('' '' 'ab') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a' , sep , 'b') subStrings: sep)
@@ -543,7 +619,7 @@ testSubStringsByString
 	self assert: ((self newCollection: 'a' , sep , sep , 'b') subStrings: sep)
 		equals: (#('a' '' 'b') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'ab' , sep , 'c' , sep) subStrings: sep)
-		equals: (#('ab' 'c' '') collect: [:e | self newCopy: e]).
+		equals: (#('ab' 'c') collect: [:e | self newCopy: e]).
 	self assert: ((self newCollection: 'a' , sep , 'b' , sep , sep , 'c') subStrings: sep)
 		equals: (#('a' 'b' '' 'c') collect: [:e | self newCopy: e]).
 	1 to: 3
@@ -552,7 +628,7 @@ testSubStringsByString
 			| subject |
 			subject := self
 						newCollection: (String streamContents: [:strm | i timesRepeat: [strm nextPutAll: 'ab']]).
-			self assert: (subject subStrings: 'ab') equals: (Array new: i + 1 withAll: empty)]!
+			self assert: (subject subStrings: 'ab') equals: (Array new: i  withAll: empty)]!
 
 testTrimNulls
 	"#1187"
@@ -684,35 +760,37 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 
 withAllTestCases
 	^#('' 'a' 'abc' '£€')! !
-!AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
-!AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
-!AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !
-!AbstractStringTest categoriesFor: #equalityTestCases!constants!private! !
-!AbstractStringTest categoriesFor: #lengthTestCases!constants!private! !
-!AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
-!AbstractStringTest categoriesFor: #reverseTestCases!constants!private! !
-!AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
-!AbstractStringTest categoriesFor: #testAt!public!unit tests! !
-!AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
-!AbstractStringTest categoriesFor: #testCaseConversions!public!unit tests! !
-!AbstractStringTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!AbstractStringTest categoriesFor: #testEmpty!public!testing / accessing! !
-!AbstractStringTest categoriesFor: #testEquals!public!unit tests! !
-!AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
-!AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
-!AbstractStringTest categoriesFor: #testHash!public!unit tests! !
-!AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
-!AbstractStringTest categoriesFor: #testLength!public!unit tests! !
-!AbstractStringTest categoriesFor: #testLines!public!unit tests! !
-!AbstractStringTest categoriesFor: #testMutableCopy!public!unit tests! !
-!AbstractStringTest categoriesFor: #testReverse!public!unit tests! !
-!AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
-!AbstractStringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
-!AbstractStringTest categoriesFor: #testSubStringsByString!public!unit tests! !
-!AbstractStringTest categoriesFor: #testTrimNulls!public!unit tests! !
-!AbstractStringTest categoriesFor: #testUnescapePercents!public!unit tests! !
-!AbstractStringTest categoriesFor: #testWithAll!public!unit tests! !
-!AbstractStringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
-!AbstractStringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
-!AbstractStringTest categoriesFor: #withAllTestCases!constants!private! !
+!StringTest categoriesFor: #assimilate:!helpers!private! !
+!StringTest categoriesFor: #assimilateString:!helpers!private! !
+!StringTest categoriesFor: #caseConversionCases!constants!private! !
+!StringTest categoriesFor: #equalityTestCases!constants!private! !
+!StringTest categoriesFor: #lengthTestCases!constants!private! !
+!StringTest categoriesFor: #newNumericArray:!helpers!private! !
+!StringTest categoriesFor: #reverseTestCases!constants!private! !
+!StringTest categoriesFor: #testAsByteArray!public!unit tests! !
+!StringTest categoriesFor: #testAt!public!unit tests! !
+!StringTest categoriesFor: #testCapitalized!public!unit tests! !
+!StringTest categoriesFor: #testCaseConversions!public!unit tests! !
+!StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
+!StringTest categoriesFor: #testEmpty!public!testing / accessing! !
+!StringTest categoriesFor: #testEquals!public!unit tests! !
+!StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
+!StringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
+!StringTest categoriesFor: #testHash!public!unit tests! !
+!StringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!StringTest categoriesFor: #testLength!public!unit tests! !
+!StringTest categoriesFor: #testLines!public!unit tests! !
+!StringTest categoriesFor: #testMutableCopy!public!unit tests! !
+!StringTest categoriesFor: #testReverse!public!unit tests! !
+!StringTest categoriesFor: #testSplitByString!public!unit tests! !
+!StringTest categoriesFor: #testSplitSingle!public!unit tests! !
+!StringTest categoriesFor: #testStreamUtfRoundTrip!public!unit tests! !
+!StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
+!StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
+!StringTest categoriesFor: #testTrimNulls!public!unit tests! !
+!StringTest categoriesFor: #testUnescapePercents!public!unit tests! !
+!StringTest categoriesFor: #testWithAll!public!unit tests! !
+!StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
+!StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
+!StringTest categoriesFor: #withAllTestCases!constants!private! !
 

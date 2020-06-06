@@ -171,7 +171,7 @@ parseLongOption: aString
 		key := aString.
 	] ifTrue: [		"option=value format"
 		| pieces |
-		pieces := aString subStrings: $=.
+		pieces := $= split: aString.
 		key := pieces at: 1.
 		argument := pieces at: 2.
 	].

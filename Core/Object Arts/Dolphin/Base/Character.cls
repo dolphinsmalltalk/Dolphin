@@ -53,6 +53,30 @@ At present only byte characters (that are not control characters) have a printab
 _beginsString: aString
 	^aString readStream peek = self!
 
+_separateSubStringsIn: tokens
+	| start answer size end |
+	size := tokens size.
+	size == 0 ifTrue: [^{}].
+	end := tokens
+				nextIndexOf: self
+				from: 1
+				to: size.
+	end == 0 ifTrue: [^{tokens}].
+	answer := Array writeStream: 5.
+	start := 1.
+	
+	[answer nextPut: (tokens copyFrom: start to: end - 1).
+	start := end + 1.
+	end := tokens
+				nextIndexOf: self
+				from: start
+				to: size.
+	end == 0]
+			whileFalse.
+	"Copy any remaining chars after the last separator"
+	start <= size ifTrue: [answer nextPut: (tokens copyFrom: start to: size)].
+	^answer contents!
+
 < aCharacter
 	"Answer whether the receiver is less than the parameter aCharacter."
 
@@ -475,6 +499,7 @@ to: aCharacter
 
 	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
 !Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
+!Character categoriesFor: #_separateSubStringsIn:!private!tokenizing! !
 !Character categoriesFor: #<!comparing!public! !
 !Character categoriesFor: #=!comparing!public! !
 !Character categoriesFor: #>!comparing!public! !

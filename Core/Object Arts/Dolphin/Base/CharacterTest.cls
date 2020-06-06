@@ -446,6 +446,36 @@ testSize
 	self assert: $a size equals: 0.
 	self assert: Character dolphin size equals: 0!
 
+testSplit
+	"Test single character delimiter"
+
+	| empty |
+	empty := ''.
+	self assert: ($- split: empty) equals: #().
+	self assert: ($- split: '-') equals: {empty. empty}.
+	self assert: ($- split: 'a') equals: #('a').
+	self assert: ($- split: '-a') equals: #('' 'a').
+	self assert: ($- split: 'a-') equals: #('a' '').
+	self assert: ($- split: '--a') equals: #('' '' 'a').
+	self assert: ($- split: 'a--') equals: #('a' '' '').
+	self assert: ($- split: 'ab') equals: #('ab').
+	self assert: ($- split: '-ab') equals: #('' 'ab').
+	self assert: ($- split: 'ab-') equals: #('ab' '').
+	self assert: ($- split: 'ab---') equals: #('ab' '' '' '').
+	self assert: ($- split: '--ab') equals: #('' '' 'ab').
+	self assert: ($- split: 'a-b') equals: #('a' 'b').
+	self assert: ($- split: 'a--b') equals: #('a' '' 'b').
+	self assert: ($- split: 'ab-c-') equals: #('ab' 'c' '').
+	self assert: ($- split: 'a-b--c') equals: #('a' 'b' '' 'c').
+
+	"Note that if the string consists only of separators, then we get N+1 empty strings if there are N chars"
+	1 to: 3
+		do: 
+			[:i |
+			| subject |
+			subject := String new: i withAll: $a.
+			self assert: ($a split: subject) equals: (Array new: i + 1 withAll: empty)]!
+
 testStb
 	| bytes rehydrated |
 	bytes := Character dolphin binaryStoreBytes.
@@ -474,5 +504,6 @@ testStb
 !CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
 !CharacterTest categoriesFor: #testPrintString!public!unit tests! !
 !CharacterTest categoriesFor: #testSize!public!unit tests! !
+!CharacterTest categoriesFor: #testSplit!public!unit tests! !
 !CharacterTest categoriesFor: #testStb!public!unit tests! !
 
