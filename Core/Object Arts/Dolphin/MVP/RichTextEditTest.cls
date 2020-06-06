@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEditTest subclass: #RichTextEditTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -18,6 +18,15 @@ margins
 
 nonProportionalFont
 	^Font name: 'Consolas'!
+
+setUp
+	super setUp.
+	savedLocale := Locale userDefault.
+	Locale userDefault: (Locale lcid: 1033)!
+
+tearDown
+	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	super tearDown!
 
 testCharNearestPosition
 	| text point char |
@@ -64,7 +73,7 @@ testStreamInAnsiText
 \uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
 '
 				expandMacrosWith: Character.AnsiCodePage
-				with: Locale userDefault lcid.
+				with: Locale systemDefault lcid.
 	self assert: actual equals: rtf.
 
 	"Now stream in the ANSI RTF"
@@ -116,7 +125,7 @@ testStreamInUtfText
 \uc1\pard\lang<2d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
 '
 				expandMacrosWith: Character.AnsiCodePage
-				with: Locale userDefault lcid.
+				with: Locale systemDefault lcid.
 	self assert: actual equals: rtf.
 
 	"Check round-trip as ANSI RTF (which has an escape syntax to preserve international characters)"
@@ -137,6 +146,8 @@ text
 !RichTextEditTest categoriesFor: #classToTest!helpers!private! !
 !RichTextEditTest categoriesFor: #margins!private!unit tests! !
 !RichTextEditTest categoriesFor: #nonProportionalFont!constants!private! !
+!RichTextEditTest categoriesFor: #setUp!private!unit tests! !
+!RichTextEditTest categoriesFor: #tearDown!private!running! !
 !RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
 !RichTextEditTest categoriesFor: #testStreamInAnsiText!public!unit tests! !
 !RichTextEditTest categoriesFor: #testStreamInUtfText!public!unit tests! !

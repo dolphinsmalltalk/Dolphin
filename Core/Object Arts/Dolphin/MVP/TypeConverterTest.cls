@@ -12,6 +12,8 @@ TypeConverterTest comment: ''!
 
 setUp
 	savedLocale := Locale userDefault.
+	"Many formatting tests are Locale sensitive, so use a known Locale"
+	Locale userDefault: (Locale lcid: 1033).
 	edit := TextEdit show.
 !
 
