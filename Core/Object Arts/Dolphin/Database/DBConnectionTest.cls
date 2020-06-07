@@ -85,9 +85,11 @@ connectString
 
 	"'DSN=MS Access Database;DBQ=C:\OBJECT ARTS\DEV\DOLPHIN6\OBJECT ARTS\DOLPHIN\Tests\Northwind.mdb;DefaultDir=C:\OBJECT ARTS\DEV\DOLPHIN6\OBJECT ARTS\DOLPHIN\Tests;DriverId=25;FIL=MS Access;MaxBufferSize=2048;PageTimeout=5;'"
 
-	| locator filename |
+	| locator filename source |
 	locator := PackageRelativeFileLocator package: self class owningPackage.
-	filename := locator localFileSpecFor: 'Northwind.mdb'.
+	source := locator localFileSpecFor: 'Northwind.mdb'.
+	filename :=File composePath: File tempPath subPath: 'Northwind.mdb'.
+	File copy: source to: filename.
 	(File isWriteable: filename) ifFalse: [File isWriteable: filename set: true].
 	^'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=<1s>' expandMacrosWith: filename with: locator basePath!
 

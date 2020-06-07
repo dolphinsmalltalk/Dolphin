@@ -523,7 +523,7 @@ toTrace: anInteger
 	traceStream
 		nextPutAll: self description;
 		cr.
-	self raisingFrame printStackOn: traceStream depth: anInteger.
+	anInteger > 0 ifTrue: [self raisingFrame printStackOn: traceStream depth: anInteger].
 	traceStream flush! !
 !Exception categoriesFor: #_descriptionArguments!displaying!public! !
 !Exception categoriesFor: #_descriptionFormat!displaying!public! !

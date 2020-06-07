@@ -19,7 +19,7 @@ package setPrerequisites: #(
 	'Database Connection Base'
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
-	'..\..\..\..\..\Base Image\Core\Object Arts\Dolphin\Base\Dolphin Base Tests').
+	'..\Base\Dolphin Base Tests').
 
 package!
 
