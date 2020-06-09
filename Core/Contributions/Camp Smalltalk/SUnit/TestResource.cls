@@ -46,9 +46,6 @@ setUp
 	"Does nothing. Subclasses should override this
 	to initialize their resource"!
 
-signalInitializationError
-	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'!
-
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
@@ -62,7 +59,6 @@ tearDown
 !TestResource categoriesFor: #printOn:!Printing!public! !
 !TestResource categoriesFor: #resources!public! !
 !TestResource categoriesFor: #setUp!public!Running! !
-!TestResource categoriesFor: #signalInitializationError!public!Running! !
 !TestResource categoriesFor: #tearDown!public!Running! !
 
 !TestResource class methodsFor!
@@ -90,7 +86,10 @@ reset
 			current := nil]]!
 
 resources
-	^#()! !
+	^#()!
+
+signalInitializationError
+	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
 !TestResource class categoriesFor: #current!Accessing!public! !
 !TestResource class categoriesFor: #current:!Accessing!public! !
 !TestResource class categoriesFor: #isAvailable!public!Testing! !
@@ -98,4 +97,5 @@ resources
 !TestResource class categoriesFor: #new!Creation!public! !
 !TestResource class categoriesFor: #reset!Creation!public! !
 !TestResource class categoriesFor: #resources!public! !
+!TestResource class categoriesFor: #signalInitializationError!public!Running! !
 
