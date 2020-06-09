@@ -20,7 +20,6 @@ connectString
 
 createDatabase
 	| sql cmd process |
-	super createDatabase.
 	sql := (PackageRelativeFileLocator package: self class owningPackage)
 				localFileSpecFor: 'Northwind.sql'.
 	cmd := 'sqlcmd -S <1d> -U <2d> -P <3d> -i "<4d>"'
@@ -30,17 +29,26 @@ createDatabase
 				with: sql.
 	process := ExternalProcess new.
 	process commandLine: cmd.
-	process executeSync!
+	^
+	[process executeSync.
+	true] on: ExternalProcessExecuteError do: [:ex | false]!
 
 dropDatabase
-	self connection exec: 'USE [master]'.
-	self connection exec: 'DROP DATABASE [Northwind]'.
+	self connection
+		ifNotNil: 
+			[:cnxn |
+			cnxn
+				exec: 'USE [master]';
+				exec: 'DROP DATABASE [Northwind]'].
 	super dropDatabase!
 
 newConnection
 	^super newConnection
-		exec: 'USE [Northwind]';
-		yourself!
+		ifNotNil: 
+			[:cnxn |
+			cnxn
+				exec: 'USE [Northwind]';
+				yourself]!
 
 pwd
 	^'Password12!!'!

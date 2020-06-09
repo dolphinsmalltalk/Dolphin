@@ -17,11 +17,11 @@ connectString
 
 createDatabase
 	| source |
-	super createDatabase.
 	source := (PackageRelativeFileLocator package: self class owningPackage) localFileSpecFor: 'Northwind.mdb'.
 	filename := File composePath: File tempPath subPath: 'Northwind.mdb'.
 	File copy: source to: filename.
-	(File isWriteable: filename) ifFalse: [File isWriteable: filename set: true]!
+	(File isWriteable: filename) ifFalse: [File isWriteable: filename set: true].
+	^true!
 
 dropDatabase
 	super dropDatabase.

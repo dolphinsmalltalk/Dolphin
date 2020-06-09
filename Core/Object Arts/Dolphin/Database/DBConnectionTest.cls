@@ -6,6 +6,7 @@ DolphinTest subclass: #DBConnectionTest
 	poolDictionaries: 'ODBCConstants ODBCTypes'
 	classInstanceVariableNames: ''!
 DBConnectionTest guid: (GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
+DBConnectionTest isAbstract: true!
 DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.
 
 If these tests fail make sure that Tests\NWind.mdb is available and NOT write protected.'!
@@ -30,7 +31,8 @@ queryColumns
 	self subclassResponsibility!
 
 setUp
-	connection := self databaseResource newConnection!
+	connection := self databaseResource newConnection.
+	self skipUnless: [connection notNil]!
 
 shouldRaiseNotSupported: block 
 	self 
@@ -39,7 +41,7 @@ shouldRaiseNotSupported: block
 		matching: [:e | e tag errors anySatisfy: [:x | x sqlState = 'IM001']]!
 
 tearDown
-	connection close!
+	connection ifNotNil: [:cnxn | cnxn close]!
 
 testAsArray
 	| results array |
@@ -302,10 +304,4 @@ testTracing
 !DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
 !DBConnectionTest categoriesFor: #testStatisticsQuery!public!unit tests! !
 !DBConnectionTest categoriesFor: #testTracing!public!unit tests! !
-
-!DBConnectionTest class methodsFor!
-
-isAbstract
-	^self == ##(self)! !
-!DBConnectionTest class categoriesFor: #isAbstract!public! !
 
