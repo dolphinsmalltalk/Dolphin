@@ -62,9 +62,6 @@ run: aResult
 			each run: aResult]]
 		ensure: [aResult duration: (Delay microsecondClockValue - start) microseconds]!
 
-signalResourceErrorFor: res
-	^res signalInitializationError!
-
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
@@ -79,7 +76,6 @@ tests
 !TestSuite categoriesFor: #resources:!Accessing!public! !
 !TestSuite categoriesFor: #run!public!Running! !
 !TestSuite categoriesFor: #run:!public!Running! !
-!TestSuite categoriesFor: #signalResourceErrorFor:!public!Running! !
 !TestSuite categoriesFor: #tests!Accessing!public! !
 
 !TestSuite class methodsFor!
