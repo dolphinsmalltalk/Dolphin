@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #DBConnectionTestResource
-	instanceVariableNames: 'connection'
+	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -22,23 +22,23 @@ connectString
 createDatabase
 	"Private - Override in subclasses"
 
-	!
+	^self subclassResponsibility!
 
 dropDatabase
-	connection close.
-	connection := nil
-
-	!
+	connection
+		ifNotNil: 
+			[connection close.
+			connection := nil]!
 
 newConnection
-	^(DBConnection new connectString: self connectString)
-		open;
-		yourself!
+	^isAvailable
+		ifTrue: 
+			[(DBConnection new connectString: self connectString)
+				open;
+				yourself]!
 
 setUp
-	self
-		createDatabase;
-		connect!
+	(isAvailable := self createDatabase) ifTrue: [self connect]!
 
 tearDown
 	self dropDatabase! !

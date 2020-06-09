@@ -47,7 +47,7 @@ DBConnectionTest subclass: #SQLServerDBTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TestResource subclass: #DBConnectionTestResource
-	instanceVariableNames: 'connection'
+	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
