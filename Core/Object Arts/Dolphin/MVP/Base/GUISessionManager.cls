@@ -114,6 +114,7 @@ saveSessionState
 saveWindowState
 	"Private - Save the state of the top-level windows."
 
+	inputState purgeDeadWindows.
 	savedWindows := self topLevelWindowsInZOrder reverse collect: [ :w | ViewState recordStateOf: w forRecreate: false]
 
 !

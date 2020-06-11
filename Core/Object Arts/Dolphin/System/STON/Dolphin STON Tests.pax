@@ -14,7 +14,6 @@ package methodNames
 	add: #SequenceableCollection -> #asIntegerArray;
 	add: #SequenceableCollection -> #atRandom;
 	add: #SequenceableCollection -> #doWithIndex:;
-	add: #Set -> #isHealthy;
 	add: #STONReaderTests -> #testSymbolMultiByte;
 	add: #STONWriteReadTests -> #testProcessor;
 	add: #STONWriteReadTests -> #testSystemDictionary;
@@ -85,24 +84,6 @@ doWithIndex: aDyadicValuable
 !SequenceableCollection categoriesFor: #asIntegerArray!public! !
 !SequenceableCollection categoriesFor: #atRandom!public! !
 !SequenceableCollection categoriesFor: #doWithIndex:!public! !
-
-!Set methodsFor!
-
-isHealthy
-	"Test that object hashes match their positions stored in set's array,
-	answer true if everything ok, false otherwise
-	
-	Set allSubInstances select: [:badSet |
-		badSet isHealthy not ]
-	"
-	| capacity |
-	capacity := self basicSize.
-	1 to: capacity do: [:i | 
-		(self basicAt: i) ifNotNil: [:element |
-			(self findElementOrNil: element) == i
-				ifFalse: [ ^ false ]]].
-	^ true! !
-!Set categoriesFor: #isHealthy!public! !
 
 !STONReaderTests methodsFor!
 

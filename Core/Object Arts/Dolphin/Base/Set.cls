@@ -265,6 +265,18 @@ initialize
 	tally := 0
 !
 
+isHealthy
+	"Test that object hashes match their positions stored in set's array,
+	answer true if everything ok, false otherwise
+	
+	Set allSubInstances select: [:badSet |
+		badSet isHealthy not ]
+	"
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:element | (self findElementOrNil: element) == i ifFalse: [^false]]].
+	^true!
+
 moveFrom: fromIndex to: toIndex
 	"Private - Destructively move the element at index, fromIndex, over
 	the element (normally nil) at index, toIndex. Must be overridden by subclasses
@@ -415,6 +427,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #identityIncludes:!public!searching! !
 !Set categoriesFor: #includes:!public!searching! !
 !Set categoriesFor: #initialize!initializing!private! !
+!Set categoriesFor: #isHealthy!public! !
 !Set categoriesFor: #moveFrom:to:!private!removing! !
 !Set categoriesFor: #occurrencesOf:!public!searching! !
 !Set categoriesFor: #postResize:!adding!private! !
