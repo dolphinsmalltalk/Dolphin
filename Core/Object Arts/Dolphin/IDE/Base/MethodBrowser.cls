@@ -360,7 +360,7 @@ createComponents
 
 	super createComponents.
 	methodsPresenter := self 
-				add: (ListPresenter on: (ListModel newWithSearchPolicy: CompiledMethodSearchPolicy current))
+				add: (ListPresenter on: (ListModel newWithSearchPolicy: SearchPolicy method))
 				name: 'methods'
 				helpId: 10742.
 	sourcePresenter := self 
@@ -1210,7 +1210,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^ListModel newWithSearchPolicy: CompiledMethodSearchPolicy current!
+	^ListModel newWithSearchPolicy: SearchPolicy method!
 
 getAdditionalKeyBindings
 	^AdditionalAccelerators!

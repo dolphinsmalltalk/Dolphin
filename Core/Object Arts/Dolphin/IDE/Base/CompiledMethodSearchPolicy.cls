@@ -17,6 +17,12 @@ compare: operand1 with: operand2
 
 	^operand1 == operand2 or: [
 		operand1 methodClass == operand2 methodClass
-			and: [operand1 selector == operand2 selector]]! !
+			and: [operand1 selector == operand2 selector]]!
+
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#method! !
 !CompiledMethodSearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!CompiledMethodSearchPolicy categoriesFor: #name!accessing!public! !
 

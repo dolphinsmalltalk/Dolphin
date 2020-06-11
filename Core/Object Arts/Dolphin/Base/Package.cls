@@ -903,7 +903,7 @@ methodNames
 	receiver. Note that this only includes loose methods that extend classes in other 
 	packages, not the name of methods defined in classes owned by this package."
 
-	^methodNames ifNil: [methodNames := PluggableSet searchPolicy: AssociationSearchPolicy current]!
+	^methodNames ifNil: [methodNames := PluggableSet searchPolicy: SearchPolicy association]!
 
 methods
 	"Answer an <IdentitySet> of the <CompiledMethod>s owned by the receiver."

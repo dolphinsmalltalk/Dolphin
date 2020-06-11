@@ -21,7 +21,13 @@ hash: operand
 	Implementation Note: Since the objects compared are always considered equal, 
 	we must use the same hash value for all objects."
 
-	^1! !
+	^1!
+
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#always! !
 !AlwaysSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !AlwaysSearchPolicy categoriesFor: #hash:!comparing!public! !
+!AlwaysSearchPolicy categoriesFor: #name!accessing!public! !
 

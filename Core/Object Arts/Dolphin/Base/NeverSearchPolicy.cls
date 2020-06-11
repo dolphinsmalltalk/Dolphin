@@ -14,6 +14,12 @@ compare: operand1 with: operand2
 	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
 	operand2, by this search policy."
 
-	^false! !
+	^false!
+
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#never! !
 !NeverSearchPolicy categoriesFor: #compare:with:!comparing!public! !
+!NeverSearchPolicy categoriesFor: #name!accessing!public! !
 

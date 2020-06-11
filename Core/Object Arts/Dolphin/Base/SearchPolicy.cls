@@ -54,6 +54,11 @@ keyAtValue: value in: collection ifAbsent: operation
 	collection keysAndValuesDo: [:k :v | (self compare: v with: value) ifTrue: [^k]].
 	^operation value!
 
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^nil!
+
 newLookupTable
 	"Answer a new <LookupTable> with a search policy equivalent to the receiver."
 
@@ -70,14 +75,28 @@ nextIndexOf: anElement in: sequence from: start to: stop
 	answer 0."
 
 	sequence from: start to: stop keysAndValuesDo: [:i :elem | (self compare: elem with: anElement) ifTrue: [^i]].
-	^0! !
+	^0!
+
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are the same as those which would result from sending a #printString message to the receiver."
+
+	self name
+		ifNotNil: 
+			[:symbol |
+			aPuttableStream
+				print: SearchPolicy;
+				space;
+				display: symbol]
+		ifNil: [super printOn: aPuttableStream]! !
 !SearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !SearchPolicy categoriesFor: #hash:!comparing!public! !
 !SearchPolicy categoriesFor: #hash:max:!comparing!public! !
 !SearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!SearchPolicy categoriesFor: #name!accessing!public! !
 !SearchPolicy categoriesFor: #newLookupTable!operations!public! !
 !SearchPolicy categoriesFor: #newSet!operations!public! !
 !SearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !
+!SearchPolicy categoriesFor: #printOn:!public! !
 
 SearchPolicy methodProtocol: #comparisonPolicy attributes: #(#readOnly) selectors: #(#compare:with:)!
 SearchPolicy methodProtocol: #searchPolicy attributes: #(#readOnly) selectors: #(#compare:with: #hash: #hash:max: #keyAtValue:in:ifAbsent: #nextIndexOf:in:from:to:)!
@@ -90,6 +109,11 @@ always
 	are always considered equal)."
 
 	^AlwaysSearchPolicy current!
+
+association
+	"Answer the singleton sub-instance of the receiver which supports a search policy based appropriate for Associations."
+
+	^AssociationSearchPolicy current!
 
 caseInsensitive
 	"Answer the singleton sub-instance of the receiver which supports a search policy
@@ -117,6 +141,7 @@ never
 
 	^NeverSearchPolicy current! !
 !SearchPolicy class categoriesFor: #always!instance creation!public! !
+!SearchPolicy class categoriesFor: #association!instance creation!public! !
 !SearchPolicy class categoriesFor: #caseInsensitive!instance creation!public! !
 !SearchPolicy class categoriesFor: #equality!instance creation!public! !
 !SearchPolicy class categoriesFor: #identity!instance creation!public! !
