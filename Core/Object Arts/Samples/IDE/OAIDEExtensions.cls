@@ -189,7 +189,7 @@ printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 	| acceleratorKeys commands |
 	acceleratorKeys := Set new.
 	commands := aView keyboardCommands
-				asSortedCollection: [:a :b | a acceleratorKeyString < b acceleratorKeyString].
+				asSortedCollection: [:a :b | a acceleratorKeyDisplayString < b acceleratorKeyDisplayString].
 	commands notEmpty
 		ifTrue: 
 			[| stream path |
@@ -221,7 +221,7 @@ printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 								or: [acceleratorKeys includes: each acceleratorKey].
 					aPuttableStream nextPutAll: '<TR align=left><TD>'.
 					duplicate ifTrue: [aPuttableStream nextPutAll: '<b>'].
-					aPuttableStream nextPutAll: each acceleratorKeyString.
+					aPuttableStream nextPutAll: each acceleratorKeyDisplayString.
 					duplicate ifTrue: [aPuttableStream nextPutAll: '</b>'].
 					aPuttableStream
 						nextPutAll: '</TD><TD>';

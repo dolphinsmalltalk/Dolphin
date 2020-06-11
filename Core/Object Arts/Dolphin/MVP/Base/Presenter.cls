@@ -1120,7 +1120,7 @@ setAdditionalAccelerators: anArray
 					[anArray collect: 
 							[:each |
 							(CommandDescription command: each first)
-								acceleratorKeyString: each last;
+								acceleratorKeyString: each second;
 								yourself]].
 	self setAdditionalKeyBindings: bindings.
 	^bindings!

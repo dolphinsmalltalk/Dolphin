@@ -31,8 +31,13 @@ acceleratorKey: key
 
 	self commandDescription acceleratorKey: key!
 
+acceleratorKeyDisplayString
+	"Answer the accelerator key string for the receiver using the key names from the default Keyboard."
+
+	^self commandDescription acceleratorKeyDisplayString!
+
 acceleratorKeyString
-	"Answer the accelerator key string for the receiver."
+	"Answer the accelerator key string for the receiver using the key names from the invariant Keyboard."
 
 	^self commandDescription acceleratorKeyString!
 
@@ -176,6 +181,7 @@ text
 	^self commandDescription menuText! !
 !CommandMenuItem categoriesFor: #acceleratorKey!accessing!public! !
 !CommandMenuItem categoriesFor: #acceleratorKey:!accessing!public! !
+!CommandMenuItem categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
 !CommandMenuItem categoriesFor: #acceleratorKeyString!accessing!public! !
 !CommandMenuItem categoriesFor: #acceleratorKeyString:!accessing!public! !
 !CommandMenuItem categoriesFor: #command:!accessing!public! !
