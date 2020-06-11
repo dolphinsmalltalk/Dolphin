@@ -34,9 +34,13 @@ acceleratorKey: code
 
 	acceleratorKey := code!
 
+acceleratorKeyDisplayString
+	"Answers the <readableString> accelerator key string for the receiver as named on the default Keyboard, or an empty <String> if there is none."
+
+	^AcceleratorTable keyStringFromCode: self acceleratorKey!
+
 acceleratorKeyString
-	"Answers the <readableString> accelerator key string for the receiver, 
-	or an empty <String> if there is none."
+	"Answers the <readableString> accelerator key string for the receiver as named on the default Keyboard, or an empty <String> if there is none."
 
 	^AcceleratorTable keyStringFromCode: self acceleratorKey!
 
@@ -60,7 +64,7 @@ commandSymbol: aSymbol
 
 displayOn: target 
 	target
-		display: self acceleratorKeyString;
+		display: self acceleratorKeyDisplayString;
 		nextPutAll: ' -> ';
 		print: self commandSymbol!
 
@@ -91,6 +95,7 @@ translateVirtualKey: vkInteger
 !ScintillaKeyBinding categoriesFor: #=!comparing!public! !
 !ScintillaKeyBinding categoriesFor: #acceleratorKey!accessing!public! !
 !ScintillaKeyBinding categoriesFor: #acceleratorKey:!accessing!public! !
+!ScintillaKeyBinding categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
 !ScintillaKeyBinding categoriesFor: #acceleratorKeyString!accessing!public! !
 !ScintillaKeyBinding categoriesFor: #acceleratorKeyString:!accessing!public! !
 !ScintillaKeyBinding categoriesFor: #commandSymbol!accessing!public! !

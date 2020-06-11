@@ -15,6 +15,7 @@ package classNames
 	add: #ClipboardTest;
 	add: #ColorDialogTest;
 	add: #ColorTest;
+	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
 	add: #EvaluationConverterTest;
 	add: #FileDialogTest;
@@ -160,6 +161,11 @@ DolphinTest subclass: #ColorDialogTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ColorTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CommandDescriptionTest
+	instanceVariableNames: 'savedKeyboardLayout'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

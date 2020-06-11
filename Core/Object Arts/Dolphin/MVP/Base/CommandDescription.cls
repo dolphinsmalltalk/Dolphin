@@ -42,15 +42,18 @@ acceleratorKey: code
 
 	acceleratorKey := code!
 
-acceleratorKeyString
-	"Answers the <readableString> accelerator key string for the receiver, 
-	or an empty <String> if there is none."
+acceleratorKeyDisplayString
+	"Answers the <readableString> accelerator key string for the receiver in the language of the default Keyboard, or an empty <String> if there is none."
 
 	^AcceleratorTable keyStringFromCode: self acceleratorKey!
 
+acceleratorKeyString
+	"Answers the <readableString> accelerator key string for the receiver in the language of the invariant Keyboard, or an empty <String> if there is none."
+
+	^AcceleratorTable keyStringFromCode: self acceleratorKey keyboard: Keyboard invariant!
+
 acceleratorKeyString: keys
-	"Sets the accelerator key to the key code generated from parsing the <readableString> 
-	accelerator key description, keys. The string is assumed to be in English."
+	"Sets the accelerator key to the key code generated from parsing the <readableString> accelerator key description, keys. The string is assumed to be in English (actually the UK English form used for Dolphin's invariant keyboard)."
 
 	self acceleratorKey: (AcceleratorTable keyCodeFromInvariantString: keys)!
 
@@ -156,8 +159,8 @@ menuText
 
 	| menuText |
 	menuText := self description.
-	self hasAcceleratorKey ifTrue: [
-		menuText := menuText, String tab, self acceleratorKeyString].
+	self hasAcceleratorKey
+		ifTrue: [menuText := menuText , String tab , self acceleratorKeyDisplayString].
 	^menuText!
 
 messages
@@ -204,6 +207,7 @@ toolTipText
 	^self description! !
 !CommandDescription categoriesFor: #acceleratorKey!accessing!public! !
 !CommandDescription categoriesFor: #acceleratorKey:!accessing!public! !
+!CommandDescription categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
 !CommandDescription categoriesFor: #acceleratorKeyString!accessing!public! !
 !CommandDescription categoriesFor: #acceleratorKeyString:!accessing!public! !
 !CommandDescription categoriesFor: #canPerformAgainst:!commands!public!testing! !

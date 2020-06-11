@@ -24,7 +24,6 @@ package classNames
 	add: #ClassBuilderTests;
 	add: #ClassTest;
 	add: #CollectionCombinator;
-	add: #CommandDescriptionTest;
 	add: #CommandLineTest;
 	add: #CommandLineTestRunner;
 	add: #DateAndTimeTest;
@@ -225,11 +224,6 @@ DolphinTest subclass: #ClassBuilderTests
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ClassTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #CommandDescriptionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
