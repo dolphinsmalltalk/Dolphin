@@ -80,21 +80,18 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 	ASSERT(!ObjectMemoryIsIntegerObject(oop1));
 	ASSERT(!ObjectMemoryIsIntegerObject(oop2));
 
-
-	const OTE* pEnd = m_pOT+m_nOTSize;
-	for (OTE* ote=m_pOT; ote < pEnd; ote++)
-	{
-		if (!ote->isFree())
+	size_t range = m_nOTSize / Interpreter::m_numberOfProcessors;
+	parallel_for_each(m_pOT, m_pOT + m_nOTSize, [&](OTE& ote) {
+		if (!ote.isFree())
 		{
 			// Must do class separately as in the OT
-			if (ote->m_oteClass == reinterpret_cast<const BehaviorOTE*>(ote1))
-				ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(ote2);
+			if (ote.m_oteClass == reinterpret_cast<const BehaviorOTE*>(ote1))
+				ote.m_oteClass = reinterpret_cast<BehaviorOTE*>(ote2);
 
-			if (ote->isPointers())
+			if (ote.isPointers())
 			{
-				
-				VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-				const size_t lastPointer = ote->pointersSize();
+				VariantObject* obj = static_cast<VariantObject*>(ote.m_location);
+				const size_t lastPointer = ote.pointersSize();
 				for (size_t j = 0; j < lastPointer; j++)
 				{
 					Oop fieldPointer = obj->m_fields[j];
@@ -103,7 +100,7 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 				}
 			}
 		}
-	}
+	}, simple_partitioner(max(range, 16384)));
 
 	unsigned newCount = ote1->m_count + ote2->m_count;
 	if (newCount > OTE::MAXCOUNT)
