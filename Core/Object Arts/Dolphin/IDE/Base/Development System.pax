@@ -6271,7 +6271,7 @@ newAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
-	^(self identityIncludes: Character cr) 
+	^(self size > 80 or: [self identityIncludes: Character cr]) 
 		ifTrue: [aspectClass multilineString: aSymbol]
 		ifFalse: [aspectClass string: aSymbol]!
 
