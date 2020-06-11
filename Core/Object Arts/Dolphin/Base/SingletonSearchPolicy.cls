@@ -11,10 +11,16 @@ SingletonSearchPolicy comment: ''!
 !SingletonSearchPolicy categoriesForClass!Collections-Support! !
 !SingletonSearchPolicy methodsFor!
 
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^self subclassResponsibility!
+
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+!SingletonSearchPolicy categoriesFor: #name!accessing!public! !
 !SingletonSearchPolicy categoriesFor: #stbSaveOn:!binary filing!public! !
 
 !SingletonSearchPolicy class methodsFor!

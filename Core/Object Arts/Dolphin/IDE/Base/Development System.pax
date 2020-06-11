@@ -579,6 +579,7 @@ package methodNames
 	add: 'ScrollBar class' -> #publishedAspectsOfInstances;
 	add: 'ScrollingDecorator class' -> #publishedAspectsOfInstances;
 	add: 'ScrollingDecoratorLayout class' -> #publishedAspectsOfInstances;
+	add: 'SearchPolicy class' -> #method;
 	add: 'SequenceableCollection class' -> #newInstanceAspect:class:;
 	add: 'SessionManager class' -> #publishedEventsOfInstances;
 	add: 'Set class' -> #newInstanceAspect:class:;
@@ -5658,6 +5659,14 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #shouldStretchToFit);
 		yourself! !
 !ScrollingDecoratorLayout class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!SearchPolicy class methodsFor!
+
+method
+	"Answer the singleton sub-instance of the receiver which supports a search policy based appropriate for CompiledMethods."
+
+	^CompiledMethodSearchPolicy current! !
+!SearchPolicy class categoriesFor: #method!instance creation!public! !
 
 !SelectorEnvironment methodsFor!
 

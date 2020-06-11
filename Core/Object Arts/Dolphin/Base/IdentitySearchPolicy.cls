@@ -37,6 +37,11 @@ keyAtValue: value in: collection ifAbsent: operation
 
 	^collection keyAtValue: value ifAbsent: operation!
 
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#identity!
+
 newLookupTable
 	"Answer a new <LookupTable> with the receiver as its search policy."
 
@@ -57,6 +62,7 @@ nextIndexOf: anElement in: collection from: start to: stop
 !IdentitySearchPolicy categoriesFor: #hash:!comparing!public! !
 !IdentitySearchPolicy categoriesFor: #hash:max:!comparing!public! !
 !IdentitySearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!IdentitySearchPolicy categoriesFor: #name!accessing!public! !
 !IdentitySearchPolicy categoriesFor: #newLookupTable!operations!public! !
 !IdentitySearchPolicy categoriesFor: #newSet!operations!public! !
 !IdentitySearchPolicy categoriesFor: #nextIndexOf:in:from:to:!public!searching! !

@@ -417,7 +417,7 @@ getLooseMethods
 	by name to their owning package."
 
 	| loose |
-	loose := PluggableLookupTable new: 4096 searchPolicy: AssociationSearchPolicy current.
+	loose := PluggableLookupTable new: 4096 searchPolicy: SearchPolicy association.
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
 

@@ -9,7 +9,7 @@ AssociationSearchPolicy guid: (GUID fromString: '{f7fa3e66-a3ec-48a8-a083-defdf8
 AssociationSearchPolicy comment: 'AssocationSearchPolicy is a specialized <EqualitySearchPolicy> for searching homogeneous collections of Associations by equality.
 
 Association has traditionally implemented #hash as the has of its key only, and this leads to poor lookup performance in a standard <Set> where there are a lot of Associations with equal keys. This search policy can be used with <PluggableSet> and <PluggableLookupTable> to ameliorate this problem.'!
-!AssociationSearchPolicy categoriesForClass!Unclassified! !
+!AssociationSearchPolicy categoriesForClass!Collections-Support! !
 !AssociationSearchPolicy methodsFor!
 
 hash: operand
@@ -27,7 +27,13 @@ hash: operand max: maximum
 	evenly between 1 and maximum in order to avoid generating excessive collisions at
 	the low end of the range."
 
-	^(operand key hash bitXor: operand value hash) \\ maximum + 1! !
+	^(operand key hash bitXor: operand value hash) \\ maximum + 1!
+
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#association! !
 !AssociationSearchPolicy categoriesFor: #hash:!comparing!public! !
 !AssociationSearchPolicy categoriesFor: #hash:max:!comparing!public! !
+!AssociationSearchPolicy categoriesFor: #name!accessing!public! !
 

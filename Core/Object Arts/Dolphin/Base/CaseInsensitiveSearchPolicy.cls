@@ -36,8 +36,14 @@ keyAtValue: value in: collection ifAbsent: operation
 	comperand := value asString.
 	collection keysAndValuesDo: [:k :v | (self compare: v asString with: comperand) ifTrue: [^k]].
 	^operation value
-! !
+!
+
+name
+	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
+
+	^#caseInsensitive! !
 !CaseInsensitiveSearchPolicy categoriesFor: #compare:with:!comparing!public! !
 !CaseInsensitiveSearchPolicy categoriesFor: #hash:!comparing!public! !
 !CaseInsensitiveSearchPolicy categoriesFor: #keyAtValue:in:ifAbsent:!public!searching! !
+!CaseInsensitiveSearchPolicy categoriesFor: #name!accessing!public! !
 

@@ -19,7 +19,6 @@ package classNames
 	add: #MEMORY_BASIC_INFORMATION;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
-	add: #SymbolStringSearchPolicy;
 	add: #TimeStamp;
 	yourself.
 
@@ -218,11 +217,6 @@ OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	classInstanceVariableNames: ''!
 Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
