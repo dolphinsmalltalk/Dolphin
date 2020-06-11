@@ -64,6 +64,13 @@ setSizes
 	^((Set preferredSizesFrom: (Integer primesUpTo: lastSmall + 256))
 		select: [:each | each <= lastSmall]) , (Set.PrimeSizes select: [:each | each > lastSmall])!
 
+testAllHealthy
+	"Test whether all subinstances are correctly hashed."
+
+	| unhealthy |
+	unhealthy := Set allSubinstances reject: [:each | each isHealthy].
+	self assert: unhealthy asArray equals: #()!
+
 testAllInstancesValid
 	| invalid |
 	invalid := self collectionClass allSubinstances
@@ -209,6 +216,7 @@ testShallowCopy
 !SetTest categoriesFor: #newSet!private!unit tests! !
 !SetTest categoriesFor: #newSet:!private!unit tests! !
 !SetTest categoriesFor: #setSizes!public!unit tests! !
+!SetTest categoriesFor: #testAllHealthy!public! !
 !SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
 !SetTest categoriesFor: #testCopy!public!unit tests! !
