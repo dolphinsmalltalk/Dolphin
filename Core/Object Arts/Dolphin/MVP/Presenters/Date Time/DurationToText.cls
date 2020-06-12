@@ -28,7 +28,7 @@ leftToRight: aDuration
 		printDuration: aDuration
 		on: stream
 		format: fmt.
-	^stream contents!
+	^stream grabContents!
 
 rightToLeft: aString
 	"Convert aString into a Duration.  

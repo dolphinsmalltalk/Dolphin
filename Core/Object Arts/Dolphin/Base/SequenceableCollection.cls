@@ -1429,7 +1429,7 @@ new: anInteger streamContents: aMonadicValuable
 	| stream |
 	stream := self writeStream: anInteger.
 	aMonadicValuable value: stream.
-	^stream contents!
+	^stream grabContents!
 
 ofSize: anInteger
 	"Private - Answer a new instance of the receiver with anInteger nil elements.
@@ -1444,7 +1444,7 @@ ofSize: anInteger
 	^self new: anInteger!
 
 streamContents: aMonadicValuable
-	^self new: 100 streamContents: aMonadicValuable!
+	^self new: 64 streamContents: aMonadicValuable!
 
 writeStream
 	"Answer a WriteStream on the a new empty instance of the receiver."

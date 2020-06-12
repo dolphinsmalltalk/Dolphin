@@ -37,7 +37,7 @@ forCollection: anIdentityDictionary
 			nextPut: value].	
 	^self
 		class: anIdentityDictionary class
-		array: tempStream contents
+		array: tempStream grabContents
 ! !
 !STBIdentityDictionaryProxy class categoriesFor: #forCollection:!instance creation!public! !
 

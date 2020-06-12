@@ -115,7 +115,7 @@ printStringFormat: aString
 	| stream |
 	stream := String writeStream: aString size.
 	self printOn: stream format: aString.
-	^stream contents!
+	^stream grabContents!
 
 second
 	"Answer a <rational> in the range [0, 60), representing the second of the minute of the local time of the receiver, including any fractional part."

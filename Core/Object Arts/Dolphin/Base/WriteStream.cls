@@ -105,6 +105,17 @@ crtab: tabCount
 
 	self cr; tab: tabCount!
 
+grabContents
+	"Destructively answer the contents of the streamed over collection up to the current position. This may be the actual collection, or a copy of it up to the current position.
+	The stream is no longer usable after this, so the message should only be sent to owned streams that are going out of scope."
+
+	| answer |
+	answer := position == collection size 
+		ifTrue: [collection]
+		ifFalse: [collection copyFrom: 1 to: position].
+	collection := nil.
+	^answer!
+
 growCollection
 	"Private - Increase the size of the streamed over collection
 	to accomodate more elements."
@@ -261,6 +272,7 @@ tab: tabCount
 !WriteStream categoriesFor: #cr!accessing!public! !
 !WriteStream categoriesFor: #crtab!accessing!public! !
 !WriteStream categoriesFor: #crtab:!accessing!public! !
+!WriteStream categoriesFor: #grabContents!accessing!public! !
 !WriteStream categoriesFor: #growCollection!operations!private! !
 !WriteStream categoriesFor: #initialize!initializing!private! !
 !WriteStream categoriesFor: #isWriteable!public!testing! !

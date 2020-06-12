@@ -55,19 +55,19 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 		do: [:i | aSequenceableCollection basicAt: i put: self basicNext].
 	^aSequenceableCollection!
 
-basicNextAvailable: anInteger 
+basicNextAvailable: anInteger
 	"Private - Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
 	answer will be a collection of the same class as the one accessed by the receiver (though
 	this is determined by the receiver), and will contain anInteger undecoded elements, or as
 	many as are left in the receiver's collection."
 
-	| newStream count |
+	| writeStream count |
 	count := 0.
-	newStream := self basicContentsSpecies writeStream: anInteger.
+	writeStream := self basicContentsSpecies writeStream: anInteger.
 	[count == anInteger or: [self atEnd]] whileFalse: 
-			[newStream basicNextPut: self basicNext.
+			[writeStream basicNextPut: self basicNext.
 			count := count + 1].
-	^newStream contents!
+	^writeStream grabContents!
 
 close
 	"Relinquish any external resources associated with the receiver, and put the
@@ -148,10 +148,10 @@ next: anInteger
 	"Answer a <sequencedReadableCollection> containing the next anInteger number of objects
 	accessible by the receiver."
 
-	| newStream |
-	newStream := self contentsSpecies writeStream: anInteger.
-	anInteger timesRepeat: [newStream nextPut: self next].
-	^newStream contents!
+	| writeStream |
+	writeStream := self contentsSpecies writeStream: anInteger.
+	anInteger timesRepeat: [writeStream nextPut: self next].
+	^writeStream grabContents!
 
 next: countInteger into: aSequenceableCollection startingAt: startInteger
 	"Destructively replace the elements of the <sequenceableCollection> argument in the

@@ -256,7 +256,7 @@ printStringFormat: aString
 	| stream |
 	stream := String writeStream: aString size.
 	self printOn: stream format: aString.
-	^stream contents!
+	^stream grabContents!
 
 seconds
 	"Answer the <number> of seconds past midnight in the local time of the receiver.
@@ -327,7 +327,7 @@ yyyymmdd
 		printDate: self
 		on: stream
 		format: 'yyyy-MM-dd'.
-	^stream contents! !
+	^stream grabContents! !
 !Date categoriesFor: #<!comparing!public! !
 !Date categoriesFor: #=!comparing!public! !
 !Date categoriesFor: #addDays:!arithmetic!public! !
