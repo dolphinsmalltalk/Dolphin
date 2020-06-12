@@ -40,10 +40,11 @@ format: aStringOrNil
 leftToRight: aTime
 	"Private - Answers the result of converting aTime to a String"
 
-	| stream |
-	stream := String writeStream: 32.
-	aTime printOn: stream format: self actualFormat.
-	^stream contents!
+	| stream fmt |
+	fmt := self actualFormat.
+	stream := String writeStream: fmt size.
+	aTime printOn: stream format: fmt.
+	^stream grabContents!
 
 locale
 	"Private - Answer the locale to use for the receiver's conversions"

@@ -632,7 +632,7 @@ getSelectionsByIndex
 	"Private - Query the actual current selections from the control."
 
 	| selections index |
-	selections := Array writeStream.
+	selections := Array writeStream: 1.
 	index := -1.
 	
 	[(index := self
@@ -640,7 +640,7 @@ getSelectionsByIndex
 				wParam: index
 				lParam: LVNI_SELECTED) == -1]
 			whileFalse: [selections nextPut: index + 1].
-	^selections contents!
+	^selections grabContents!
 
 getSingleSelection
 	"Private - Answer the one-based <integer> index of the selected object in the receiver or

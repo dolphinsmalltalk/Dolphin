@@ -4105,7 +4105,7 @@ lexerNamedStyles
 			| style |
 			style := ScintillaLexerNamedStyle view: self id: i - 1.
 			style name isEmpty ifFalse: [styles nextPut: style]].
-	^styles contents!
+	^styles grabContents!
 
 lexerProperties
 	"Answer a <collection> of the <ScintillaLexerProperty> objects representing the current lexers' properties."

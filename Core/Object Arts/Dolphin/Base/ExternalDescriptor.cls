@@ -160,7 +160,7 @@ argumentTypes
 	| types |
 	types := Array writeStream: self argumentCount.
 	self argumentsDo: [:n :type | types nextPut: (self class nameOf: n type: type)].
-	^types contents!
+	^types grabContents!
 
 calleeCleans
 	"Answer whether the receiver describes a function which pops its own arguments

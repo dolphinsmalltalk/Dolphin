@@ -72,7 +72,7 @@ fromBase64String: aString
 	| stream |
 	stream := self writeStream: (aString size * 3 bitShift: -2).
 	Base64Codec decodeFrom: aString readStream onto: stream.
-	^stream contents! !
+	^stream grabContents! !
 !ByteArray class categoriesFor: #fromBase64String:!instance creation!public! !
 
 "End of package definition"!

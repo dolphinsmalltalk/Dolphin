@@ -222,9 +222,9 @@ getFrames: anInteger
 	if anInteger < 0)."
 
 	| answer |
-	answer := Array writeStream: 40.
+	answer := Array writeStream: (anInteger < 0 ifTrue: [40] ifFalse: [anInteger]).
 	self callstackDo: [:frame | answer nextPut: frame] depth: anInteger.
-	^answer contents!
+	^answer grabContents!
 
 getOuter: anInteger 
 	| answer |

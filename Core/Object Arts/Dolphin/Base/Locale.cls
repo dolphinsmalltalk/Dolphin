@@ -518,11 +518,14 @@ printFloat: aFloat on: aStream format: aNUMBERFMT
 						ifFalse: [self infinity]).
 			^self].
 	"The Windows API takes a string as input in a canonical form"
-	invariant := ((classification anyMask: Float.FpClassZero)
-				ifTrue: [(classification anyMask: Float.FpClassNegative) ifTrue: ['-0.0'] ifFalse: ['0.0']]
+	invariant := (classification anyMask: Float.FpClassZero)
+				ifTrue: 
+					[(classification anyMask: Float.FpClassNegative)
+						ifTrue: [##('-0.0' asUtf16String)]
+						ifFalse: [##('0.0' asUtf16String)]]
 				ifFalse: 
 					[| stream |
-					stream := String writeStream: 30.
+					stream := Utf16String writeStream: 30.
 					((classification anyMask: Float.FpClassNegative)
 						ifTrue: 
 							[stream nextPut: $-.
@@ -532,8 +535,7 @@ printFloat: aFloat on: aStream format: aNUMBERFMT
 							base: 10
 							digitCount: 16
 							decimalExponents: ##(SmallInteger minimum to: SmallInteger maximum).
-					stream contents])
-					asUtf16String.
+					stream contents].
 	lib := KernelLibrary default.
 	size := lib
 				getNumberFormat: self lcid

@@ -3286,7 +3286,7 @@ rgb0000FF_100x100bmpBytes
 	byteStream nextPutAll: ##(ByteArray
 				fromHexString: '424D667500000000000036000000280000006400000064000000010018000000000030750000130B0000130B00000000000000000000').
 	10000 timesRepeat: [byteStream nextPutAll: ##(ByteArray fromHexString: 'FF0000')].
-	^byteStream contents!
+	^byteStream grabContents!
 
 seattleNightJpgBytes
 	^ByteArray 

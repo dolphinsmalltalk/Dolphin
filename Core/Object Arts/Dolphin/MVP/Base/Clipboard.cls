@@ -36,7 +36,7 @@ availableFormatIds
 			[| fmt |
 			fmt := 0.
 			[(fmt := lib enumClipboardFormats: fmt) == 0] whileFalse: [answer nextPut: fmt]].
-	^answer contents!
+	^answer grabContents!
 
 availableFormats
 	"Answer a <collection> of the currently available clipboard format <readableString> names. This may not include all formats, as the built-in formats are unnamed, and we don't keep an entry for them all in our map."
@@ -49,7 +49,7 @@ availableFormats
 			| name |
 			name := idToName at: fmt ifAbsent: [self getFormatName: fmt].
 			name isNil ifFalse: [names nextPut: name]].
-	^names contents!
+	^names grabContents!
 
 basicEmpty
 	"Private - Empty the clipboard (assumes it is open)."

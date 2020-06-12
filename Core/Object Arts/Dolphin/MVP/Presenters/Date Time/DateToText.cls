@@ -51,13 +51,14 @@ format: aStringOrNil
 leftToRight: aDate
 	"Answers the result of converting aDate to a String"
 
-	| stream |
-	stream := String writeStream: 32.
+	| stream fmt |
+	fmt := self actualFormat.
+	stream := String writeStream: fmt size.
 	self actualLocale
 		printDate: aDate
 		on: stream
-		format: self actualFormat.
-	^stream contents!
+		format: fmt.
+	^stream grabContents!
 
 locale
 	"Answer the locale to use for the receiver's conversions"

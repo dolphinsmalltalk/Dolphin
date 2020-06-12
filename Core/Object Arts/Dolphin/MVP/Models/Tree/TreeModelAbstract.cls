@@ -64,7 +64,7 @@ asArray
 	| stream |
 	stream := Array writeStream: self approxSize.
 	self do: [:e | stream nextPut: e].
-	^stream contents!
+	^stream grabContents!
 
 asBag
 	"Answer a Bag whose elements are those stored in the receiver"
