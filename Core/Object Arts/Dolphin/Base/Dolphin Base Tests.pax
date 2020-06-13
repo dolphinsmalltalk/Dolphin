@@ -22,6 +22,7 @@ package classNames
 	add: #CharacterTest;
 	add: #ClassBuilderTestClasses;
 	add: #ClassBuilderTests;
+	add: #ClassDescriptionTest;
 	add: #ClassTest;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
@@ -71,6 +72,7 @@ package classNames
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MergesortAlgorithmTest;
+	add: #MetaclassTest;
 	add: #MethodDictionaryTest;
 	add: #MultiByteStringTest;
 	add: #MustBeBooleanTestClasses;
@@ -223,7 +225,7 @@ DolphinTest subclass: #ClassBuilderTests
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #ClassTest
+DolphinTest subclass: #ClassDescriptionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -429,6 +431,16 @@ DolphinTest subclass: #UndefinedObjectTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractKeyboardTest subclass: #KeyboardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassDescriptionTest subclass: #ClassTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ClassDescriptionTest subclass: #MetaclassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

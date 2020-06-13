@@ -9,7 +9,9 @@ allRoots
 			[roots at: i put: (roots at: 1).
 			roots at: 1 put: Object].
 	^roots! !
-	
+
+Smalltalk clearCachedClasses!
+
 !Class class categoriesFor: #allRoots!class hierarchy-accessing!private! !
 ResourceIdentifier addClassVariable: 'SelectorPrefix' value: ('resource_' asUtf8String
 				isImmutable: true;
@@ -44,3 +46,5 @@ split: aReadableString
 	"Copy any remaining chars after the last separator"
 	answer nextPut: (aReadableString copyFrom: start to: size).
 	^answer contents! !
+
+Metaclass allInstances do: [:each | each  subclasses sort]!
