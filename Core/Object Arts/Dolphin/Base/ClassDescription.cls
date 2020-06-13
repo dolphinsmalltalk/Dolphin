@@ -17,9 +17,7 @@ Instance Variables:
 !ClassDescription methodsFor!
 
 <= aClassDescription
-	"Answer whether the receiver is 'less than' aClassDescription.
-	By implementing this method, we enable Class objects to be stored
-	in a SortedCollection with the default sort block."
+	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block."
 
 	^self name <= aClassDescription name!
 
