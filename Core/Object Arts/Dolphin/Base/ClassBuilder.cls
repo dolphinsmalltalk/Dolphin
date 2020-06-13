@@ -423,22 +423,6 @@ modifyProper
 	self superclassIsBeingChanged ifTrue: [self removeUnimplementedProtocols]
 !
 
-mutateAllInstancesOf: oldClass toBeInstancesOf: newClass 
-	"Private - Mutate all instances of oldClass to instances of newClass."
-
-	| mappingArray |
-	mappingArray := self generateMapFrom: oldClass to: newClass.
-	oldClass primAllInstances do: 
-			[:oldInst | 
-			| newInst |
-			newInst := self 
-						translateInstance: oldInst
-						intoANewInstanceOf: newClass
-						via: mappingArray.
-			"We need to manually move the special behavior as #become: does not"
-			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 16rFF00).
-			oldInst become: newInst]!
-
 mutateClass: oldClass toBeASubclassOf: newSuperclass
 	"Private - Create a new class with the appropriate features and mutate
 	all instances of oldClass to new instances of the new class and then 
@@ -452,7 +436,10 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 		ifTrue: 
 			[| newClass |
 			newClass := self newMetaclassLike: oldClass superclass: newSuperclass.
-			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.	"Mutate the instance class."
+			self
+				mutateInstances: {oldClass instanceClass}
+				of: oldClass
+				toBeInstancesOf: newClass.	"Mutate the instance class."
 			self updateVMRegistryWith: newClass instanceClass.
 			oldClass subclasses do: [:cls | self mutateClass: cls toBeASubclassOf: newClass].
 			oldClass removeFromSuper.
@@ -463,7 +450,10 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			mutatingClassItself := oldClass == Class.
 			newClass := self newClassLike: oldClass superclass: newSuperclass.
 			self install: newClass.
-			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.
+			self
+				mutateInstances: oldClass primAllInstances
+				of: oldClass
+				toBeInstancesOf: newClass.
 			mutatingClassItself
 				ifTrue: 
 					["In Dolphin Object class et al are not in the subclasses
@@ -486,6 +476,26 @@ mutateInSitu
 			currentClass setSuperclass: superclass.
 			self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
 			self recompilationRequired: true].!
+
+mutateInstances: anArray of: oldClass toBeInstancesOf: newClass
+	"Private - Mutate the instances of oldClass in anArray to be instances of newClass."
+
+	| mappingArray count |
+	count := anArray size.
+	count == 0 ifTrue: [^self].
+	mappingArray := self generateMapFrom: oldClass to: newClass.
+	1 to: count
+		do: 
+			[:i |
+			| oldInst newInst |
+			oldInst := anArray at: i.
+			newInst := self
+						translateInstance: oldInst
+						intoANewInstanceOf: newClass
+						via: mappingArray.
+			"We need to manually move the special behavior as #become: does not"
+			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 16rFF00).
+			oldInst become: newInst]!
 
 mutateToNewClass
 	"Private - Set currentClass to a mutation of itself based on the information
@@ -962,10 +972,10 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
 !ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
 !ClassBuilder categoriesFor: #modifyPrivate!operations!private! !
-!ClassBuilder categoriesFor: #modifyProper!helpers!private! !
-!ClassBuilder categoriesFor: #mutateAllInstancesOf:toBeInstancesOf:!mutating!private! !
+!ClassBuilder categoriesFor: #modifyProper!private! !
 !ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:!mutating!private! !
 !ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !
+!ClassBuilder categoriesFor: #mutateInstances:of:toBeInstancesOf:!mutating!private! !
 !ClassBuilder categoriesFor: #mutateToNewClass!mutating!private! !
 !ClassBuilder categoriesFor: #newClassLike:superclass:!mutating!private! !
 !ClassBuilder categoriesFor: #newMetaclassLike:superclass:!mutating!private! !
