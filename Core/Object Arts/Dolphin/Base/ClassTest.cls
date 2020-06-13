@@ -13,6 +13,12 @@ ClassTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	Smalltalk allClasses do: aMonadicValuable!
 
+testAllRoots
+	| roots |
+	roots := Class allRoots.
+	self assert: roots first identicalTo: Object.
+	roots do: [:each | self assertIsNil: each superclass]!
+
 testClassPoolsWellFormed
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/562"
 
@@ -31,6 +37,7 @@ testLessOrEqual
 	self deny: ArithmeticValue <= ArithmeticError.
 	self deny: ArithmeticValue <= ArithmeticError class.! !
 !ClassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
+!ClassTest categoriesFor: #testAllRoots!public!unit tests! !
 !ClassTest categoriesFor: #testClassPoolsWellFormed!public!unit tests! !
 !ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
 
