@@ -10,7 +10,10 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Class -> #isAnonymous;
 	add: #Class -> #newAnonymousSubclass;
+	add: #ClassDescription -> #isAnonymous;
+	add: #Metaclass -> #isAnonymous;
 	add: 'ClassBuilder class' -> #forAnonymousSubclassOf:;
 	yourself.
 
@@ -40,9 +43,15 @@ ClassBuilder subclass: #AnonymousClassBuilder
 
 !Class methodsFor!
 
+isAnonymous
+	"Answer whether this is an anonymous (unbound) class."
+
+	^name isNil!
+
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self)
 		createNewClass! !
+!Class categoriesFor: #isAnonymous!public!testing! !
 !Class categoriesFor: #newAnonymousSubclass!public! !
 
 !ClassBuilder class methodsFor!
@@ -52,6 +61,22 @@ forAnonymousSubclassOf: aClass
 		superclass: aClass;
 		yourself! !
 !ClassBuilder class categoriesFor: #forAnonymousSubclassOf:!instance creation!public! !
+
+!ClassDescription methodsFor!
+
+isAnonymous
+	"Answer whether this is an anonymous (unbound) class."
+
+	^self subclassResponsibility! !
+!ClassDescription categoriesFor: #isAnonymous!public!testing! !
+
+!Metaclass methodsFor!
+
+isAnonymous
+	"Answer whether this is an anonymous (unbound) class."
+
+	^self instanceClass isAnonymous! !
+!Metaclass categoriesFor: #isAnonymous!public!testing! !
 
 "End of package definition"!
 

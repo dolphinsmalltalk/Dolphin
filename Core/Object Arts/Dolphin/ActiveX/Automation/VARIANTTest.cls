@@ -151,7 +151,8 @@ testDISPATCHREF
 	self assert: obj referenceCount identicalTo: 1.
 	val free.
 	self assert: obj referenceCount identicalTo: 1.
-	self assert: var value value asExternalAddress equals: obj bytes!
+	self assert: var value value asExternalAddress equals: obj bytes.
+	obj free!
 
 testEMPTY
 	| var |
