@@ -14,6 +14,9 @@ ClassDescriptionTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	self subclassResponsibility!
 
+testLessOrEqual
+	self subclassResponsibility!
+
 testSubclasses
 	self allClassHierarchyInstancesDo: 
 			[:each |
@@ -23,5 +26,6 @@ testSubclasses
 			self assert: each subclasses
 				equals: (each subclasses asSortedCollection: [:a :b | a name <= b name]) asArray]! !
 !ClassDescriptionTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!ClassDescriptionTest categoriesFor: #testSubclasses!public! !
+!ClassDescriptionTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!ClassDescriptionTest categoriesFor: #testSubclasses!public!unit tests! !
 

@@ -59,6 +59,14 @@ testInstances
 					each isAnonymous not and: [each instanceClass environment includesKey: each instanceClass name]].
 	self assert: shadows asArray equals: #()!
 
+testLessOrEqual
+	self assert: ArithmeticError class <= ArithmeticError class description: 'Metaclasses must be <= to themselves'.
+	self deny: ArithmeticError class <= ArithmeticError description: 'Metaclasses should sort after their instance classes'.
+	self assert: ArithmeticError class <= ArithmeticValue class .
+	self assert: ArithmeticError class <= ArithmeticValue.
+	self deny: ArithmeticValue class <= ArithmeticError.
+	self deny: ArithmeticValue class <= ArithmeticError class.!
+
 testName
 	Smalltalk allRoots do: 
 			[:root |
@@ -66,5 +74,6 @@ testName
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
 !MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
 !MetaclassTest categoriesFor: #testInstances!public!unit tests! !
+!MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
 !MetaclassTest categoriesFor: #testName!public!unit tests! !
 

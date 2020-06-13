@@ -21,7 +21,16 @@ testClassPoolsWellFormed
 					[:each |
 					each classPool class == PoolDictionary
 						and: [each classPool associations allSatisfy: [:v | v class == VariableBinding]]].
-	self assert: badPools asArray equals: #()! !
+	self assert: badPools asArray equals: #()!
+
+testLessOrEqual
+	self assert: ArithmeticError <= ArithmeticError description: 'Classes must be <= to themselves'.
+	self assert: ArithmeticError <= ArithmeticError class description: 'Classes must be <= their Metaclass'.
+	self assert: ArithmeticError <= ArithmeticValue.
+	self assert: ArithmeticError <= ArithmeticValue class.
+	self deny: ArithmeticValue <= ArithmeticError.
+	self deny: ArithmeticValue <= ArithmeticError class.! !
 !ClassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!ClassTest categoriesFor: #testClassPoolsWellFormed!public! !
+!ClassTest categoriesFor: #testClassPoolsWellFormed!public!unit tests! !
+!ClassTest categoriesFor: #testLessOrEqual!public!unit tests! !
 
