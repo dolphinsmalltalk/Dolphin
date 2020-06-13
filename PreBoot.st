@@ -47,4 +47,4 @@ split: aReadableString
 	answer nextPut: (aReadableString copyFrom: start to: size).
 	^answer contents! !
 
-Metaclass allInstances do: [:each | each  subclasses sort]!
+Metaclass allInstances do: [:each | each subclasses sort. each instanceClass subclasses sort]!

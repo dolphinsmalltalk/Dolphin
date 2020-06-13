@@ -15,7 +15,7 @@ testAllClassesPackaged
 	or patched correctly. This is to avoid embarassments like Base64Codec being unpackaged in
 	5.1 PL4."
 
-	self assert: Package manager unpackagedClasses isEmpty!
+	self assert: Package manager unpackagedClasses asArray equals: #()!
 
 testLooseMethodCacheUpToDate
 	| allNames loose |
