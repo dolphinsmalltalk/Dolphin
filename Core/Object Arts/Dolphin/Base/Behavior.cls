@@ -82,14 +82,30 @@ addSelector: aSymbol withMethod: aCompiledMethod
 addSubclass: aClass
 	"Private - Include the argument, aClass, as a subclass of the receiver."
 
-	| subs |
+	| subs count index |
 	aClass superclass == self
 		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
 	subs := self subclasses.
-	(subs identityIndexOf: aClass) == 0
+	"Maintain the array in sorted order as saves sorting on access - speed is important to minimize class creation time"
+	count := subs size.
+	count == 0
 		ifTrue: 
-			["Maintain the array in sorted order as saves sorting on access"
-			subclasses := (subs copyWith: aClass) sort]!
+			[subclasses := {aClass}.
+			^self].
+	index := subs binarySearchFor: aClass using: [:a :b | a name <=> b name <= 0].
+	(index > 1 and: [(subs at: index - 1) == aClass]) ifTrue: [^self].
+	self assert: [(subs identityIndexOf: aClass) == 0].
+	subclasses := Array new: count + 1.
+	subclasses at: index put: aClass.
+	subs
+		replaceElementsOf: subclasses
+			from: 1
+			to: index - 1
+			startingAt: 1;
+		replaceElementsOf: subclasses
+			from: index + 1
+			to: count + 1
+			startingAt: index!
 
 addToSuper
 	"Private - Add the receiver to its superclasses' subclass collection."

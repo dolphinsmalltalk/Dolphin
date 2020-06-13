@@ -19,7 +19,7 @@ Instance Variables:
 <= aClassDescription
 	"Answer whether the receiver should sort before the argument, e.g. in a SortedCollection using the default sort block."
 
-	^self name <= aClassDescription name!
+	^self name <=> aClassDescription name <= 0!
 
 >> aSymbol
 	^self compiledMethodAt: aSymbol!
