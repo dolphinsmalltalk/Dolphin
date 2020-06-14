@@ -122,7 +122,7 @@ testRecordInfo
 	self assert: recinfo byteSize equals: sa elementClass byteSize.
 	fieldNames := sa elementClass template keys asArray select: [:each | each argumentCount = 0]
 				thenCollect: [:each | each asString].
-	self assert: (recinfo getFieldNames noDifference: fieldNames).
+	self assert: recinfo getFieldNames equals: fieldNames.
 	self assert: recinfo guid equals: sa elementClass guid.
 	"Make sure enumeration of records is working"
 	ordered := OrderedCollection new.
