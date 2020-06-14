@@ -3337,8 +3337,8 @@ void Compiler::AssertValidIpForTextMapEntry(ip_t ip, bool bFinal)
 		_ASSERTE(ip > ip_t::zero);
 		const BYTECODE& prev = m_bytecodes[ip-1];
 		_ASSERTE(prev.IsOpCode);
-		_ASSERTE((bc.Opcode == OpCode::PopStoreTemp && (prev.Opcode == OpCode::IncrementTemp || prev.Opcode == OpCode::DecrementTemp))
-			|| (bc.Opcode == OpCode::StoreTemp && (prev.Opcode == OpCode::IncrementPushTemp || prev.Opcode == OpCode::DecrementPushTemp)));
+		_ASSERTE((static_cast<OpCode>(bc.byte) == OpCode::PopStoreTemp && (prev.Opcode == OpCode::IncrementTemp || prev.Opcode == OpCode::DecrementTemp))
+			|| (static_cast<OpCode>(bc.byte) == OpCode::StoreTemp && (prev.Opcode == OpCode::IncrementPushTemp || prev.Opcode == OpCode::DecrementPushTemp)));
 	}
 	else
 	{
