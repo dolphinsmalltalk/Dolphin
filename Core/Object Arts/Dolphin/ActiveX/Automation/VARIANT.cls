@@ -119,7 +119,11 @@ bstr
 			LPBSTR fromAddress: addr]
 		ifFalse: 
 			["Get down to bare metal for speed"
-			(Utf16String fromAddress: addr length: (OLEAutLibrary default sysStringLen: addr)) asString]!
+			addr == 0
+				ifTrue: [
+					"By convention a null BSTR represents the empty string"
+					'']
+				ifFalse: [Utf16String fromAddress: addr length: (OLEAutLibrary default sysStringLen: addr)]]!
 
 bstr: aString
 	"Set the BSTR value of the receiver to the <String> argument, newValue.
@@ -468,10 +472,9 @@ recordInfo
 	^IRecordInfo fromAddress: (bytes intPtrAtOffset: 12)!
 
 refAddress
-	"Private - Answer the reference address from the receiver (assumes
-	receiver is a VT_BYREF)."
+	"Private - Answer the reference address from the receiver (assumes receiver is a VT_BYREF)."
 
-	^(bytes dwordAtOffset: 8) becomeAn: ExternalAddress!
+	^ExternalAddress fromInteger: self ulVal!
 
 reference: anObject
 	"Private - Set the receiver up to be a reference to the specified object (assumes

@@ -7353,25 +7353,22 @@ printIDLOn: aPuttableStream
 						ifTrue: [FLOAT printDefaultValue: self on: aPuttableStream]
 						ifFalse: [self value displayOn: aPuttableStream]]]!
 
-printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
-	the same as those which would result from sending a #printString
-	message to the receiver.
-	N.B. This is really intended for development use. #displayOn: and #displayString
-	are complementary methods for generating strings for presentation to an
-	end-user."
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver.
+	N.B. This is really intended for development use. #displayOn: and #displayString are complementary methods for generating strings for presentation to an end-user."
 
-	target
+	aPuttableStream
 		basicPrint: self;
 		nextPut: $(.
-	self isNull 
-		ifTrue: [target nextPutAll: 'NULL']
-		ifFalse: [
-			target 
-				nextPutAll: self typeName;
+	self isNull
+		ifTrue: [aPuttableStream nextPutAll: 'NULL']
+		ifFalse: 
+			[aPuttableStream nextPutAll: self typeName.
+			self isByRef ifTrue: [aPuttableStream nextPut: $*].
+			aPuttableStream
 				nextPutAll: ': ';
 				print: self value].
-	target nextPut: $)! !
+	aPuttableStream nextPut: $)! !
 !VARIANT categoriesFor: #printIDLOn:!printing-IDL!public! !
 !VARIANT categoriesFor: #printOn:!development!printing!public! !
 

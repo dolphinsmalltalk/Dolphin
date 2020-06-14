@@ -488,6 +488,35 @@ testExtCallArgBstr
 	self assert: (OLEAutLibrary default sysStringLen: beers) equals: 2.
 	self assert: (OLEAutLibrary default sysStringLen: beers asUtf16String) equals: 2!
 
+testExtCallArgLppvoid
+	"Regression test for https://github.com/dolphinsmalltalk/Dolphin/issues/940
+	The issue was intermittent failure of some Active-X related tests that were passing out (and in some cases handling incoming) pointers to buffers that were arrays of pointers and doing so by taking the address of the buffer (yielding an integer) before calling the function with an lppvoid argument type.
+	It turns out that there is a very longstanding bug in the VM FFI that it doesn't correctly handle LargeInteger address values as lppvoid args. Originally when Dolphin was written it expected to run in a 2Gb address space, so addresses were very unlikely to fall outside the SmallInteger range. However at some point in the recent past the application was marked as LARGEADDRESSAWARE, meaning that it is given the full 4GB address space when running on a 64-bit host OS, and a 3Gb address space on a 32-bit host OS. Even so the OS allocates dynamic memory bottom up by default, so it is unusual to encounter an address value that doesn't fit in a SmallInteger. This test forcibly creates LargeInteger address values to check that they pass through such FFI calls correctly."
+
+	| method string result large address |
+	method := Compiler
+				compile: 'x: aString
+	<stdcall: uintptr AnswerDWORD lppvoid>
+	| proc |
+	proc := Processor activeProcess.
+	^proc primitiveFailureCode -> proc primitiveFailureData'
+				in: VMLibrary.
+	string := 'Hello World' asAnsiString.
+	"Sanity check"
+	address := string yourAddress asExternalAddress.
+	result := method value: VMLibrary default withArguments: {address}.
+	self assert: result equals: address basicYourAddress.
+
+	"Integers are a special case - they should pass through directly as the pointer value"
+	address := string yourAddress.
+	result := method value: VMLibrary default withArguments: {address}.
+	self assert: result equals: address.
+
+	"Now check LI"
+	address := string yourAddress becomeA: LargeInteger.
+	result := method value: VMLibrary default withArguments: {address}.
+	self assert: result equals: string yourAddress.!
+
 testExtCallArgLpwstr
 	| expected actual method |
 	method := Compiler
@@ -3299,6 +3328,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
 !VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
+!VMTest categoriesFor: #testExtCallArgLppvoid!public!unit tests! !
 !VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
