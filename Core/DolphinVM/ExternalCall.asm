@@ -1223,8 +1223,7 @@ ExtCallArgLPPVOID:
 	PushLoopNext <ARG>									; else push pointer out of object
 
 @@:
-	jnz		preCallFail									; Yes, not valid
-	ASSUME	ARG:PTR OTE									; No, its an object
+	ASSUME	ARG:PTR OTE
 
 	test	[ARG].m_flags, MASK m_pointer				; It it a pointer object
 	jz		@F											; No, skip handling for external structures
@@ -1259,18 +1258,13 @@ ExtCallArgLPPVOID:
 	ASSUME	TEMP:PTR OTE
 
 	mov		ARG, [ARG].m_location
-	ASSUME	ARG:PTR ByteArray							; It's bytes
-	
-;	add		ARG, HEADERSIZE
-	ASSUME	ARG:PTR BYTE								; ARG now points at the bytes themselves
 
-	mov		TEMP, [TEMP].m_location
-	ASSUME	TEMP:PTR Behavior							; TEMP is OTE of inst var class
-
-	; Relaxed for 2.2. Always passes the address of the object regardless
-	;test	[TEMP].m_instanceSpec, MASK m_indirect		; Is inst var instance of indirection class?
-	;jz		preCallFail									; No, fail it
-	
+	cmp		TEMP, [Pointers.ClassLargeInteger]	
+	je		@F
+	PushLoopNext <ARG>									; Yes, push pointer to the ExternalAddress obj, so can be written back into
+@@:
+	ASSUME	ARG:PTR LargeInteger
+	mov		ARG, DWORD PTR[ARG].m_digits
 	PushLoopNext <ARG>									; Yes, push pointer to the ExternalAddress obj, so can be written back into
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
