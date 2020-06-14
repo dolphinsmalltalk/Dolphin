@@ -311,7 +311,7 @@ forSeconds: anInteger
 getTicksToNanos
 	| freq |
 	freq := LargeInteger new64.
-	(KernelLibrary default queryPerformanceFrequency: freq yourAddress)
+	(KernelLibrary default queryPerformanceFrequency: freq basicYourAddress)
 		ifFalse: [self error: 'performance counter not available'].
 	^1e9 / freq normalize!
 

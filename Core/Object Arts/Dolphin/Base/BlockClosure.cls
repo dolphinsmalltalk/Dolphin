@@ -559,13 +559,14 @@ tempCount
 ticksToRun
 	"Private - Answer the number of performance counter ticks consumed by the evaluation of the receiver (including the overhead). The length of a counter tick is system dependent, but usually it is 100nS."
 
-	| startTime endTime lib |
+	| startTime endTime lib endTimeAddress |
 	startTime := LargeInteger new64.
 	endTime := LargeInteger new64.
+	endTimeAddress := endTime basicYourAddress.
 	lib := KernelLibrary default.
-	lib queryPerformanceCounter: startTime yourAddress.
+	lib queryPerformanceCounter: startTime basicYourAddress.
 	self value.
-	lib queryPerformanceCounter: endTime yourAddress.
+	lib queryPerformanceCounter: endTimeAddress.
 	^endTime normalize - startTime normalize!
 
 timeToRepeat: anInteger
