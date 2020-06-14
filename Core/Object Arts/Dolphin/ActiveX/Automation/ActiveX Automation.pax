@@ -1055,6 +1055,7 @@ GetFieldNames: pcNames rgBstrNames: rgBstrNames
 		ifFalse: 
 			[| namesArray maxNames end |
 			maxNames := pcNames value.
+			"rgBstrNames will be an LPVOID holding the address of the buffer, which is a sufficiently sized array of BSTR pointers"
 			namesArray := DWORDArray fromAddress: rgBstrNames yourAddress length: maxNames.
 			end := names size min: maxNames.
 			1 to: end do: [:i | namesArray at: i put: (names at: i) asBSTR detach].

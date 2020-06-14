@@ -62,7 +62,7 @@ getFieldNames
 	self GetFieldNames: cNames rgBstrNames: nil.
 	size := cNames asInteger.
 	pNames := DWORDArray new: size.
-	self GetFieldNames: cNames rgBstrNames: pNames yourAddress.
+	self GetFieldNames: cNames rgBstrNames: pNames.
 	bstr := BSTR new.
 	^pNames collect: 
 			[:e |
