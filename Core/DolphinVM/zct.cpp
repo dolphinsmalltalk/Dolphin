@@ -114,7 +114,7 @@ Oop* ObjectMemory::ReconcileZct()
 		//Interpreter::DumpOTEPoolStats();
 		TRACESTREAM << L"..." << std::endl;
 	}
-	dwLastReconcileTicks = dwTicksNow;
+	dwLastReconcileTicks = timeGetTime();
 	const auto nOldZctEntries = m_nZctEntries;
 #endif
 

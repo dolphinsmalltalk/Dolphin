@@ -71,6 +71,7 @@ constexpr int OTPagesAllocatedPerOverflow = 16;	// i.e. 64Kb per overflow, 4096 
 void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 {
 	Interpreter::resizeActiveProcess();
+	ReconcileZct();
 
 	CHECKREFERENCES
 
@@ -159,6 +160,8 @@ typedef std::pair<OTEVector*, size_t> Batch;
 // To measure the performance of scans, be sure to use primAllInstances and primAllSubinstances, as allInstances/allSubinstances trigger a GC first.
 template<typename Partitioner, typename Predicate> ArrayOTE* ObjectMemory::selectObjects(const Partitioner&& part, const Predicate& pred)
 {
+	ReconcileZct();
+
 	combinable<OTEVector> selected;
 
 	// Parallel scan of the object table
