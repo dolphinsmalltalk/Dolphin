@@ -776,7 +776,12 @@ truncated
 	"Answer the integer nearest the receiver toward zero."
 
 	^self
-! !
+!
+
+yourAddress
+	"Assume that the integer is being used as an address, so answer self."
+
+	^self! !
 !Integer categoriesFor: #-!arithmetic!public! !
 !Integer categoriesFor: #&!bit manipulation!public! !
 !Integer categoriesFor: #*!arithmetic!public! !
@@ -882,6 +887,7 @@ truncated
 !Integer categoriesFor: #subtractFromFraction:!double dispatch!private! !
 !Integer categoriesFor: #timesRepeat:!evaluating!public! !
 !Integer categoriesFor: #truncated!public!truncation and round off! !
+!Integer categoriesFor: #yourAddress!accessing!public! !
 
 Integer methodProtocol: #integer attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #+ #< #allMask: #anyMask: #asFraction #asInteger #asScaledDecimal: #bitAnd: #bitAt: #bitAt:put: #bitOr: #bitShift: #bitXor: #ceiling #even #factorial #floor #fractionPart #gcd: #highBit #integerPart #lcm: #negated #negative #noMask: #odd #printOn:base:showRadix: #printStringRadix: #quo: #rounded #truncated)!
 

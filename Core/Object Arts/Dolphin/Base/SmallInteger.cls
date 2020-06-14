@@ -522,13 +522,7 @@ species
 	Implementation Note: The primitive superclass implementation
 	will fail for immediate classes, so we must override here."
 
-	^SmallInteger!
-
-yourAddress
-	"Answer the address of the bytes of the receiver. 
-	Assume that the integer is being used as an address, so answer self."
-
-	^self! !
+	^SmallInteger! !
 !SmallInteger categoriesFor: #-!arithmetic!public! !
 !SmallInteger categoriesFor: #&!bit manipulation!public! !
 !SmallInteger categoriesFor: #*!arithmetic!public! !
@@ -584,7 +578,6 @@ yourAddress
 !SmallInteger categoriesFor: #refersToLiteral:!private!testing! !
 !SmallInteger categoriesFor: #shallowCopy!copying!public! !
 !SmallInteger categoriesFor: #species!accessing!public! !
-!SmallInteger categoriesFor: #yourAddress!accessing!public! !
 
 !SmallInteger class methodsFor!
 

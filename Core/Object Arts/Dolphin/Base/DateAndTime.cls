@@ -572,24 +572,14 @@ now
 		self now
 	"
 
-	| filetime |
-	filetime := LargeInteger new64.
-	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
-	KernelLibrary default getSystemTimePreciseAsFileTime: filetime yourAddress.
-	^self utcSeconds: FiletimeEpochSeconds + (filetime / ##(1e9 / 100))
-		offset: Locale timeZoneInformation offsetSeconds!
+	^self utcSeconds: self utcSecondsNow offset: Locale timeZoneInformation offsetSeconds!
 
 nowUTC
 	"Answer the current <DateAndTime> in UTC.
 		self nowUTC
 	"
 
-	| filetime |
-	"Strictly speaking a FILETIME is unsigned, and so could require up to a 12-byte LargeInteger, but we'll be Ok with 8-bytes until about 4pm on 15th May 30600."
-	filetime := LargeInteger new64.
-	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
-	KernelLibrary default getSystemTimePreciseAsFileTime: filetime yourAddress.
-	^self utcSeconds: FiletimeEpochSeconds + (filetime / ##(1e9 / 100)) offset: 0!
+	^self utcSeconds: self utcSecondsNow offset: 0!
 
 readFrom: aStream
 	"Answers a new instance of the receiver read from aStream <gettableStream> in the Reg. Ex. format:
@@ -698,6 +688,15 @@ utcSeconds: aNumber offset: anInteger
 		setRataDie: daysSinceEpoch + SmalltalkEpochRD
 		seconds: localSeconds - (daysSinceEpoch * Duration.SecondsPerDay)
 		offset: anInteger!
+
+utcSecondsNow
+	| filetime |
+	"Strictly speaking a FILETIME is unsigned, and so could require up to a 12-byte LargeInteger, but we'll be Ok with 8-bytes until about 4pm on 15th May 30600."
+	filetime := LargeInteger new64.
+	"Get the UTC FILETIME - this expresses the number of 100 nanosecond intervals since 00:00h on 1st Jan 1601 UTC"
+	KernelLibrary default getSystemTimePreciseAsFileTime: filetime basicYourAddress.
+	"Convert to seconds (and fractional seconds) past epoch"
+	^FiletimeEpochSeconds + (filetime / ##(1e9 / 100))!
 
 validateHour: hour minute: minute second: second
 	(hour >= 0 and: [hour < 24])
@@ -895,6 +894,7 @@ yesterday
 !DateAndTime class categoriesFor: #today!instance creation!public! !
 !DateAndTime class categoriesFor: #tomorrow!instance creation!public! !
 !DateAndTime class categoriesFor: #utcSeconds:offset:!instance creation!private! !
+!DateAndTime class categoriesFor: #utcSecondsNow!helpers!private! !
 !DateAndTime class categoriesFor: #validateHour:minute:second:!instance creation!private! !
 !DateAndTime class categoriesFor: #validateOffset:!helpers!private! !
 !DateAndTime class categoriesFor: #year:day:!instance creation!public! !
