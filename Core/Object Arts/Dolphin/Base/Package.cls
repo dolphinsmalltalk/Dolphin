@@ -796,37 +796,38 @@ loadPAX
 
 	| filename filer stream |
 	filename := self packageFileName.
-	Notification 
+	Notification
 		signal: ('Loading source package <1p> from: <2s>' expandMacrosWith: self name with: filename).
 	stream := FileStream read: filename.
 	timestamp := stream file lastWriteTime asInteger.
 	filer := ChunkSourceFiler on: stream.
 	
-	[filer nextChunk.	"Skip the first chunk since it represents the receiver."
+	[| sourceGlobals |
+	filer nextChunk.	"Skip the first chunk since it represents the receiver."
 	self fileInScript: #preinstall.
 
 	"Define any globals that might be referenced from source code, but don't load them as yet as they
 		 may be instances of one of the classes in the package."
 	self declareGlobals.
-
-	"Forward reference any classes just in case they are required by the globals that are just about to be loaded"
-	self declareClasses.
-
-	"Load source globals"
-	self globalNames - (self propertyAt: #binaryGlobalNames ifAbsent: [#()]) 
-		- (self propertyAt: #globalAliases ifAbsent: [#()]) 
-			do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)].
+	sourceGlobals := self globalNames - (self propertyAt: #binaryGlobalNames ifAbsent: [#()])
+				- (self propertyAt: #globalAliases ifAbsent: [#()]).
+	sourceGlobals isEmpty
+		ifFalse: 
+			["Forward reference any classes just in case they are required by the source globals that are just about to be loaded"
+			self declareClasses.
+			"Load source globals"
+			sourceGlobals do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)]].
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
 	filer fileIn.
 	self fileInClasses.
 	self loadBinaryGlobals.
 	self initializeGlobals.
-	self paxVersion < 1 
+	self paxVersion < 1
 		ifTrue: 
 			["Initialize old style (pre D6) binary resources"
 			self initializeOldSourcePackage].
-	self fileInScript: #postinstall] 
+	self fileInScript: #postinstall]
 			ensure: [filer close]!
 
 looseResourceIdentifiers
