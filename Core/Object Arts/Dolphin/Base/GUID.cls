@@ -40,22 +40,21 @@ Class Variables:
 	^self species = comperand species and: [self <=> comperand == 0]!
 
 asByteArray
-	"Answer the raw contents of the receiver as a byte array."
-
-	^self yourAddress asExternalAddress copyFrom: 1 to: self size!
-
-asInteger
-	"Answer the 128-bit integer value of the receiver."
+	"Answer the raw contents of the receiver as a ByteArray."
 
 	| answer |
 	answer := ByteArray new: 16.
-	self 
+	self
 		replaceBytesOf: answer
 		from: 1
 		to: 16
 		startingAt: 1.
-	answer isImmutable: true.
-	^answer becomeA: LargeInteger!
+	^answer!
+
+asInteger
+	"Answer the 128-bit integer value of the receiver."
+
+	^LargeInteger fromBytes: self asByteArray!
 
 asObject
 	"Answer the <Object> value represented by the receiver."

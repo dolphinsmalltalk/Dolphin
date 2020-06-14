@@ -17,6 +17,37 @@ assertNull: guid
 	self assert: guid asString size equals: 38.
 	self assert: (guid asByteArray allSatisfy: [:each | each = 0])!
 
+testAsByteArray
+	| subject bytes parts |
+	subject := GUID newUnique.
+	bytes := subject asByteArray.
+	parts := $- split: subject idlString.
+	"See https://docs.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid"
+	self assert: ((bytes dwordAtOffset: 0) printStringBase: 16 nDigits: 8) asLowercase equals: parts first.
+	self assert: ((bytes wordAtOffset: 4) printStringBase: 16 nDigits: 4) asLowercase equals: parts second.
+	self assert: ((bytes wordAtOffset: 6) printStringBase: 16 nDigits: 4) asLowercase equals: parts third.
+	self assert: (bytes copyFrom: 9 to: 10) hex equals: parts fourth.
+	self assert: (bytes copyFrom: 11 to: 16) hex equals: parts fifth.
+	self assert: (GUID fromBytes: bytes) equals: subject.
+	self assert: GUID null asByteArray equals: #[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]!
+
+testAsInteger
+	| guids status |
+	self assert: GUID null asInteger equals: 0.
+	guids := (1 to: 3) collect: [:i | GUID newUnique].
+	status := DWORDBytes new.
+	guids do: 
+			[:subject |
+			| int cmp |
+			int := subject asInteger.
+			self assert: int positive.
+			cmp := RPCLibrary default
+						uuidCompare: int basicYourAddress
+						uuid2: subject
+						status: status.
+			self assert: status value equals: 0.
+			self assert: cmp equals: 0]!
+
 testComparison
 	| guid1 guid2 |
 	guid1 := GUID newUnique.
@@ -69,14 +100,13 @@ testStoreOn
 
 testUniqueness
 	| generated size |
-	size := 5000.
+	size := 1000.
 	generated := Set new: size.
-	size timesRepeat: 
-			[| guid |
-			guid := GUID newUnique.
-			self deny: (generated includes: guid).
-			generated add: guid]! !
+	size timesRepeat: [generated add: GUID newUnique].
+	self assert: generated size equals: size! !
 !GUIDTest categoriesFor: #assertNull:!private!testing! !
+!GUIDTest categoriesFor: #testAsByteArray!public!testing! !
+!GUIDTest categoriesFor: #testAsInteger!public!testing! !
 !GUIDTest categoriesFor: #testComparison!public!testing! !
 !GUIDTest categoriesFor: #testFromString!public!testing! !
 !GUIDTest categoriesFor: #testFromStringNull!public!testing! !
