@@ -36,6 +36,32 @@ tearDown
 	SmalltalkSystem current isOAD: wasOAD.
 	^super tearDown!
 
+testAddClassInstVars
+	| testClass testMeta offset |
+	testClass := self classBuilderTestClass.
+	testMeta := testClass class.
+	testMeta instanceVariableNames: ''.
+	self assert: testMeta instanceVariableString equals: ''.
+	"Due to a known bug, we have to regrab the Metaclass instance each time"
+	testMeta :=testClass class.
+	offset := Class instSize.
+	self assert: testMeta instSize equals: offset.
+	testMeta instanceVariableNames: 'a b'.
+	testMeta := testClass class.
+	self assert: testMeta instanceVariableString equals: 'a b'.
+	self assert: testMeta instSize equals: offset + 2.
+	testMeta withAllSubclasses
+		do: [:each | offset + 1 to: each instSize do: [:i | each instanceClass instVarAt: i put: i]].
+	testMeta instanceVariableNames: 'b c a'.
+	testMeta := testClass class.
+	self assert: testMeta instanceVariableString equals: 'b c a'.
+	self assert: testMeta instSize equals: offset + 3.
+	testMeta withAllSubclasses do: 
+			[:each |
+			self assert: (each instanceClass instVarAt: offset + 1) equals: offset + 2.
+			self assert: (each instanceClass instVarAt: offset + 2) equals: nil.
+			self assert: (each instanceClass instVarAt: offset + 3) equals: offset + 1]!
+
 testAddRemovePools
 	self assert: self classBuilderTestSubclass1 allSharedPoolNames
 		equals: #(#ClassBuilderTestPool2 #ClassBuilderTestPool1) , Object sharedPoolNames.
@@ -354,6 +380,7 @@ testReshapeSubClass
 !ClassBuilderTests categoriesFor: #makeCleanClasses!private!Running! !
 !ClassBuilderTests categoriesFor: #setUp!public!Running! !
 !ClassBuilderTests categoriesFor: #tearDown!public!Running! !
+!ClassBuilderTests categoriesFor: #testAddClassInstVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testAddRemovePools!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testBuildAnonymous!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testBuildAnonymousRoot!public!unit tests! !
