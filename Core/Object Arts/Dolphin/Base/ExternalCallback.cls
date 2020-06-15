@@ -269,10 +269,9 @@ uninitializeBeforeRemove
 	remaining := ##(self) allSubclasses reject: [:each | each isNonInstantiable].
 	(remaining size = 1 and: [remaining first == self])
 		ifTrue: 
-			[
-			Notification signal: 'Uninstalling VM callback entry point'.
+			[Notification signal: 'Uninstalling VM callback entry point'.
 			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie:.
-			VMLibrary default primRegistryAt: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
+			VMLibrary default registryAtIndex: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
 				put: nil]!
 
 unitializeSubclass: anExternalCallbackClass
