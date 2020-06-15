@@ -57,6 +57,11 @@ testNext
 	"It is an error to attempt to read from a WriteStream"
 	self readOperationNotImplemented: [stream next]!
 
+testNextAvailable
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream nextAvailable]!
+
 testNextAvailableColon
 	| stream |
 	stream := self streamOn: 'abc'.
@@ -131,6 +136,7 @@ testUpToUtf
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNext!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
