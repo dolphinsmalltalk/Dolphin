@@ -179,7 +179,7 @@ classCategories: categoryCollection
 	"Private - Set the class categories of the receiver to categoryCollection."
 
 	classCategories := categoryCollection notEmpty 
-				ifTrue: [categoryCollection asSortedCollection asArray]!
+				ifTrue: [categoryCollection asArray sort]!
 
 classPool
 	"Answer the Dictionary of class variables belonging to the receiver.
