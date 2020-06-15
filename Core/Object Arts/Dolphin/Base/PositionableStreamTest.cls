@@ -152,6 +152,24 @@ testNext
 			self should: [subject next] raise: subject class endOfStreamSignal.
 			self closeTempStream: subject]!
 
+testNextAvailable
+	self collections do: 
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
+			subject := self streamOn: each.
+			elems := each asArray.
+			0 to: elems size
+				do: 
+					[:i |
+					subject reset.
+					actual := subject nextAvailable: i.
+					expected := elems copyFrom: 1 to: i.
+					self assert: actual asArray equals: expected].
+			self assert: subject atEnd.
+			self assert: (subject nextAvailable) isNil.
+			self closeTempStream: subject]!
+
 testNextAvailableColon
 	self collections do: 
 			[:pair |
@@ -855,6 +873,7 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
