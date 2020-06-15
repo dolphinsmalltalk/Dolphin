@@ -5366,7 +5366,7 @@ initialize
 			[MessageMap := self buildMessageMap
 						isImmutable: true;
 						yourself].
-	VMLibrary default primRegistryAt: 54 put: #subclassWindow:!
+	VMLibrary default registryAtIndex: 54 put: #subclassWindow:!
 
 mapRectangle: aRectangle from: aSourceView to: aDestinationView
 	"Answers a RECT like aRectangle mapped from the coordinate system of aSourceView 

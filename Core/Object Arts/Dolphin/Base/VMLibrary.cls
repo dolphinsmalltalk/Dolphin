@@ -451,21 +451,6 @@ onStartup
 	wndProc := dlgProc := vtable := genericCallback := nil.
 	WinVerOrGreaterMask := nil!
 
-primRegistryAt: anInteger put: anObject
-	"Private - Generic VM object registering primitive. Used to register cookies, Semaphores,
-	the Corpse object, etc.
-
-	Equivalent to 'Registry at: anInteger put: anObject', but allows the VM to reload any
-	information it caches.
-
-	Primitive failure reasons:
-		InvalidParameter1	- anInteger is not a SmallInteger
-		OutOfBounds		- anInteger is out of the bounds of the registry
-		InvalidParameter2	- anObject is not of the appropriate class for the object being registered."
-
-	<primitive: 93>
-	^self primitiveFailed: _failureCode!
-
 productName
 	"Answer the localised name for Dolphin."
 
@@ -486,12 +471,27 @@ registryAt: aSymbol
 
 	^Registry at: (RegistryKeys at: aSymbol)!
 
-registryAt: aSymbol put: anObject 
+registryAt: aSymbol put: anObject
 	"Private - Register the argument, anObject, as the VM registered object with the name,
 	aSymbol."
 
-	self primRegistryAt: (RegistryKeys at: aSymbol) put: anObject.
+	self registryAtIndex: (RegistryKeys at: aSymbol) put: anObject.
 	^anObject!
+
+registryAtIndex: anInteger put: anObject
+	"Private - Generic VM object registering primitive. Used to register cookies, Semaphores,
+	the Corpse object, etc.
+
+	Equivalent to 'Registry at: anInteger put: anObject', but allows the VM to reload any
+	information it caches.
+
+	Primitive failure reasons:
+		InvalidParameter1	- anInteger is not a SmallInteger
+		OutOfBounds		- anInteger is out of the bounds of the registry
+		InvalidParameter2	- anObject is not of the appropriate class for the object being registered."
+
+	<primitive: 93>
+	^self primitiveFailed: _failureCode!
 
 selectorOfSpecialSend: anInteger
 	^Registry at: specialSelectorStart + anInteger!
@@ -556,12 +556,12 @@ stringFromAddress: pointer
 	len := addr indexOf: 0.
 	^addr copyStringFrom: 1 to: len - 1!
 
-unregisterObject: anObject 
+unregisterObject: anObject
 	| i |
 	i := self registry identityIndexOf: anObject.
 	i > 0 ifFalse: [^self].
 	Notification signal: 'Unregistering VM ref ' , anObject printString.
-	self primRegistryAt: i put: nil!
+	self registryAtIndex: i put: nil!
 
 unsignedFromSigned: anInteger
 	"Private - Answer a 32-bit unsigned integer value instantiated from the signed 32-bit integer
@@ -627,12 +627,12 @@ versionFormatString
 !VMLibrary categoriesFor: #makeLargeUnsigned:!helpers!private! !
 !VMLibrary categoriesFor: #makeLargeUnsigned:highPart:!helpers!private! !
 !VMLibrary categoriesFor: #onStartup!event handling!public! !
-!VMLibrary categoriesFor: #primRegistryAt:put:!accessing-registry!private! !
 !VMLibrary categoriesFor: #productName!accessing!public! !
 !VMLibrary categoriesFor: #registerEventSource:!arithmetic!public! !
 !VMLibrary categoriesFor: #registry!accessing!private! !
 !VMLibrary categoriesFor: #registryAt:!accessing-registry!private! !
 !VMLibrary categoriesFor: #registryAt:put:!accessing-registry!private! !
+!VMLibrary categoriesFor: #registryAtIndex:put:!accessing-registry!private! !
 !VMLibrary categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
 !VMLibrary categoriesFor: #selectorOfSpecialSendEx:!enquiries!private! !
 !VMLibrary categoriesFor: #shortName!accessing!public! !

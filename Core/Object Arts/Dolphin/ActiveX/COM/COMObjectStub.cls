@@ -335,7 +335,7 @@ initialize
 	"
 
 	self initializeRegistries.
-	VMLibrary default primRegistryAt: 70 put: #comCallback:id:subId:withArgumentsAt:cookie:.
+	VMLibrary default registryAtIndex: 70 put: #comCallback:id:subId:withArgumentsAt:cookie:
 
 	"See also OLE COM package post install script which sets up various method skips with the debugger"!
 
@@ -373,7 +373,7 @@ uninitialize
 	"Private - Uninitialize the receiver immediately prior to its removal from the system."
 
 	self initializeRegistries.
-	VMLibrary default primRegistryAt: 70 put: nil! !
+	VMLibrary default registryAtIndex: 70 put: nil! !
 !COMObjectStub class categoriesFor: #disconnectAll!accessing!public! !
 !COMObjectStub class categoriesFor: #initialize!development!initializing!private! !
 !COMObjectStub class categoriesFor: #initializeRegistries!initializing!private! !
