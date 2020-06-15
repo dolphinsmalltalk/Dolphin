@@ -492,7 +492,7 @@ mutateMetaclass: oldMetaclass toBeASubclassOf: newSuperclass
 		of: oldMetaclass
 		toBeInstancesOf: newMetaclass.	"Mutate the instance class."
 	self updateVMRegistryWith: newMetaclass instanceClass.
-	oldMetaclass subclasses do: [:metaclass | self mutateClass: metaclass toBeASubclassOf: newMetaclass].
+	oldMetaclass subclasses do: [:metaclass | self mutateMetaclass: metaclass toBeASubclassOf: newMetaclass].
 	oldMetaclass removeFromSuper.
 	oldMetaclass become: newMetaclass.
 	newMetaclass oneWayBecome: oldMetaclass!
