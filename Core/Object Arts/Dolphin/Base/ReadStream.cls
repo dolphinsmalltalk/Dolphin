@@ -91,7 +91,7 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^collection decodeNextFrom: self! !
+	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
 !ReadStream categoriesFor: #basicNext!accessing!public! !
 !ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
