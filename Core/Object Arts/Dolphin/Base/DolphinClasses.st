@@ -1536,7 +1536,7 @@ EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SessionManager subclass: #BootSessionManager
-	instanceVariableNames: 'productDetails'
+	instanceVariableNames: 'productDetails startTime'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

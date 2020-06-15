@@ -1,4 +1,4 @@
-"Check for update to DBOOT itself"
+﻿"Check for update to DBOOT itself"
 (SessionManager current argv at: 3 ifAbsent: [nil]) = 'UpdateBoot' ifTrue: [
 	SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\Boot\Boot.st'.
 ]!
@@ -45,6 +45,8 @@ Notification signal: 'Booting ', product name.
 product boot] on: Error do: [:ex | 
 	"isPrompted==true ifFalse: [SessionManager current quit: -2]."
 	ex pass ] !
+
+SessionManager current bootFinished!
 
 DevelopmentSessionManager installNew!
 

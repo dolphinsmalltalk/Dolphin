@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #BootSessionManager
-	instanceVariableNames: 'productDetails'
+	instanceVariableNames: 'productDetails startTime'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -22,6 +22,21 @@ basicTertiaryStartup
 	"Perform tertiary system startup operations."
 
 	"Nothing to do - this SessionManager should never be installed on startup anyway?"!
+
+bootFinished
+	| endTime duration |
+	endTime := DateAndTime now.
+	duration := endTime - startTime.
+	self stdout nextPutAll: 'Boot completed at '; print: endTime; nextPutAll: ', duration '.
+	duration printHumanReadableOn: self stdout.
+	self stdout cr; flush
+	
+!
+
+bootStarted
+	startTime := DateAndTime now.
+	self stdout nextPutAll: 'Boot started at '; print: startTime; cr
+!
 
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
@@ -72,6 +87,8 @@ logError: anException
 			do: [:e | ]!
 
 main
+	self bootStarted.
+
 	self stdout nextPutAll: 'Loading boot script...'; cr; flush.
 
 	self class sourceManager fileIn: 'Boot.st'.
@@ -299,6 +316,8 @@ updateBootImage
 	self reloadBootPackages! !
 !BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!BootSessionManager categoriesFor: #bootFinished!event handling!public! !
+!BootSessionManager categoriesFor: #bootStarted!event handling!public! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
 !BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
