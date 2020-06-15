@@ -233,6 +233,7 @@ package methodNames
 	add: #CompiledMethod -> #asDebugMethod;
 	add: #CompiledMethod -> #browse;
 	add: #CompiledMethod -> #icon;
+	add: #CompiledMethod -> #infoTip;
 	add: #CompiledMethod -> #searchForInTool:;
 	add: #CompiledMethod -> #stylerClass;
 	add: #CompileFailedMethod -> #asDebugMethod;
@@ -2094,7 +2095,7 @@ methodChanged: aCompiledMethod
 	self notifyPackageOfChange!
 
 notifyPackageOfChange
-	self owningPackage ifNotNil: [:package | package isChanged: true]!
+	PackageManager current onClassDirtied: self!
 
 renameClassVar: oldString to: newString
 	"Private - Rename the class variable of the receiver named by the <readableString>, oldString, to be
@@ -2647,6 +2648,21 @@ icon
 
 	^Smalltalk developmentSystem iconForMethod: self!
 
+infoTip
+	"Private - Answer a suitable 'info tip' for the receiver."
+
+	| stream |
+	stream := String writeStream: 32.
+	stream
+		display: self;
+		nextPutAll: ' ('.
+	self realCategories asSortedCollection asArray 
+		, (self protocols asSortedCollection: [:a :b | a asSymbol < b asSymbol]) 
+			do: [:each | stream display: each]
+			separatedBy: [stream nextPutAll: ', '].
+	stream nextPut: $).
+	^stream contents!
+
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
 
@@ -2655,6 +2671,7 @@ stylerClass
 !CompiledMethod categoriesFor: #asDebugMethod!private! !
 !CompiledMethod categoriesFor: #browse!public! !
 !CompiledMethod categoriesFor: #icon!constants!public! !
+!CompiledMethod categoriesFor: #infoTip!accessing!development!private! !
 !CompiledMethod categoriesFor: #searchForInTool:!public! !
 !CompiledMethod categoriesFor: #stylerClass!constants!public! !
 

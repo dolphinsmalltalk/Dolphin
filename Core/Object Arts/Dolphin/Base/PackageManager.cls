@@ -763,6 +763,12 @@ onClassAdded: aClass
 	#todo.	"This event needs an additional parameter which should be the desired package, or nil for default"
 	self isProcessingEvents ifTrue: [self addClass: aClass to: self defaultPackage]!
 
+onClassDirtied: aClass
+	"Sent by a class when it detects that it has been made dirty."
+
+	self isProcessingEvents ifFalse: [^self].
+	aClass owningPackage ifNotNil: [:package | package isChanged: true]!
+
 onClassRemoved: aClass 
 	"Private - React to aClass being removed from the Smalltalk system. Ensure that none of the
 	packages held by the receiver refer to aClass or its methods now it has departed."
@@ -1243,6 +1249,7 @@ youShouldBeProcessingEvents
 !PackageManager categoriesFor: #noEventsDo:!helpers!private! !
 !PackageManager categoriesFor: #observePackage:!private!updating! !
 !PackageManager categoriesFor: #onClassAdded:!event handling!private! !
+!PackageManager categoriesFor: #onClassDirtied:!helpers!private! !
 !PackageManager categoriesFor: #onClassRemoved:!event handling!private! !
 !PackageManager categoriesFor: #onClassRenamed:from:to:!event handling!private! !
 !PackageManager categoriesFor: #onClassUpdated:!event handling!private! !
@@ -1290,16 +1297,16 @@ buildSingletonInstance
 	Notification signal: 'Creating new PackageManager'.
 	Current := self basicNew initialize.
 	dolphin := self systemPackage.
-	Current
+	^Current
 		basicAddPackage: dolphin;
 		observePackage: dolphin;
-		buildGlobalsMap!
+		buildGlobalsMap;
+		yourself!
 
 current
 	"Answer the singleton instance of the receiver."
 
-	Current isNil ifTrue: [self buildSingletonInstance].
-	^Current!
+	^Current ifNil: [self buildSingletonInstance]!
 
 initialize
 	"Private - Initialize the receiver's class variables.

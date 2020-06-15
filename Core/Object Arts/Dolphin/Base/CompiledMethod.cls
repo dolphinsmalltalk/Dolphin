@@ -78,21 +78,6 @@ hasChanged
 
 	^self changeManager hasMethodChanged: self!
 
-infoTip
-	"Private - Answer a suitable 'info tip' for the receiver."
-
-	| stream |
-	stream := String writeStream: 32.
-	stream
-		display: self;
-		nextPutAll: ' ('.
-	self realCategories asSortedCollection asArray 
-		, (self protocols asSortedCollection: [:a :b | a asSymbol < b asSymbol]) 
-			do: [:each | stream display: each]
-			separatedBy: [stream nextPutAll: ', '].
-	stream nextPut: $).
-	^stream contents!
-
 isChanged
 	"Private - Answer whether the receiver is 'changed' (i.e. its class has unsaved changes)."
 
@@ -212,7 +197,6 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #getDebugInfo!development!private! !
 !CompiledMethod categoriesFor: #getSource!accessing!development!public! !
 !CompiledMethod categoriesFor: #hasChanged!development!private!testing! !
-!CompiledMethod categoriesFor: #infoTip!accessing!development!private! !
 !CompiledMethod categoriesFor: #isChanged!development!private!testing! !
 !CompiledMethod categoriesFor: #isClassMethod!public!testing! !
 !CompiledMethod categoriesFor: #isExpression!private!testing! !
