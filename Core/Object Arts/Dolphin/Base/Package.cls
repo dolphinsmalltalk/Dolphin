@@ -1998,9 +1998,7 @@ initialize
 	BinaryPacLoader := nil!
 
 manager
-	"Answer the object responsible for managing the collection of installed packages.
-	N.B. This should be the only reference to PackageManager in the entire system,
-	as the class may be removed from a future release."
+	"Answer the object responsible for managing the collection of installed packages."
 
 	^PackageManager current!
 
