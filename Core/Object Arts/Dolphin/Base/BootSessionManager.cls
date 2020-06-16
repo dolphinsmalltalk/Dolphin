@@ -27,7 +27,7 @@ bootFinished
 	| endTime duration |
 	endTime := DateAndTime now.
 	duration := endTime - startTime.
-	self stdout nextPutAll: 'Boot completed at '; print: endTime; nextPutAll: ', duration '.
+	self stdout nextPutAll: 'Boot completed at'; print: endTime; nextPutAll: ', duration '.
 	duration printHumanReadableOn: self stdout.
 	self stdout cr; flush
 	
@@ -35,7 +35,7 @@ bootFinished
 
 bootStarted
 	startTime := DateAndTime now.
-	self stdout nextPutAll: 'Boot started at '; print: startTime; cr
+	self stdout nextPutAll: 'Boot started at'; print: startTime; cr
 !
 
 fileInClass: aClass 
