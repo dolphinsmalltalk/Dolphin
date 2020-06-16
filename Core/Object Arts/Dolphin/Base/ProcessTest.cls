@@ -286,6 +286,17 @@ forkWaiterOn: s sharing: anIdentityDictionary
 	anIdentityDictionary at: #state put: (anIdentityDictionary at: #state) + 1] 
 			forkAt: Processor userInterruptPriority!
 
+isMemTopDown
+	"It is possible to configure Windows so that memory for 32-bit processes is allocated top-down. This is really a debugging mode to help detect issues in 32-bit apps when run large address aware.
+	If this mode is enabled, then we don't need to try and push process allocations over the 2Gb boundary, as actually we may end up doing the reverse."
+
+	| allocationPreference |
+	allocationPreference := (RegKey localMachineRoot
+				at: 'System\CurrentControlSet\Control\Session Manager\Memory Management')
+				mode: #read;
+				valueAt: 'AllocationPreference' ifAbsent: [0].
+	^allocationPreference allMask: Win32Constants.MEM_TOP_DOWN!
+
 testAsStackPointer
 	{0 -> 0.
 		-1 -> -1.
@@ -414,23 +425,27 @@ testForkedBlockHomeFrame
 	Processor sleep: 10 milliseconds!
 
 testLargeAddress
-	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
+	| blocks sem1 sem2 result proc value copy1 copy2 frame expected isTopDown |
 	self skipIfWin32.
-	blocks := OrderedCollection new: 3000.
-	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
-	
-	[
-	[blocks addLast: (Array new: 1 max: 1024 * 1024 * 128).
-	true] on: OutOfMemoryError
-			do: [:ex | false]]
-			whileTrue.
-	"Reserve enough Process sized blocks of virtual memory to start pushing allocations beyond the 2Gb boundary"
-	
-	[| block |
-	block := Process new: 1 max: Process.DefaultMaxStack.
-	blocks addLast: block.
-	block yourAddress <= 16r7FFFFFFF]
-			whileTrue.
+	isTopDown := self isMemTopDown.
+	isTopDown
+		ifTrue: [self assert: Processor activeProcess yourAddress > SmallInteger maximum]
+		ifFalse: 
+			[blocks := OrderedCollection new: 3000.
+			"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
+			
+			[
+			[blocks addLast: (Array new: 1 max: 1024 * 1024 * 128).
+			true] on: OutOfMemoryError
+					do: [:ex | false]]
+					whileTrue.
+			"Reserve enough Process sized blocks of virtual memory to start pushing allocations beyond the 2Gb boundary"
+			
+			[| block |
+			block := Process new: 1 max: Process.DefaultMaxStack.
+			blocks addLast: block.
+			block yourAddress <= 16r7FFFFFFF]
+					whileTrue].
 	"Now fork a process in large address space"
 	sem1 := Semaphore new.
 	sem2 := Semaphore new.
@@ -445,7 +460,9 @@ testLargeAddress
 	self assert: proc yourAddress >= 16r7FFFFFFF.
 	self assert: proc basicSuspendedFrame class equals: SmallInteger.
 	copy1 := proc copy.
-	self assert: copy1 yourAddress > proc yourAddress.
+	isTopDown
+		ifTrue: [self assert: copy1 yourAddress < proc yourAddress]
+		ifFalse: [self assert: copy1 yourAddress > proc yourAddress].
 	self assert: copy1 basicSuspendedFrame class equals: SmallInteger.
 	frame := copy1 topFrame.
 	self assert: frame basicSP class equals: SmallInteger.
@@ -573,6 +590,7 @@ testUnwindFromForeignProcess
 !ProcessTest categoriesFor: #assertStackFrame:isCopyOf:visited:!helpers!private! !
 !ProcessTest categoriesFor: #forkNested:!helpers!private! !
 !ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
+!ProcessTest categoriesFor: #isMemTopDown!helpers!private! !
 !ProcessTest categoriesFor: #testAsStackPointer!public!unit tests! !
 !ProcessTest categoriesFor: #testCopy!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
