@@ -94,7 +94,6 @@ addSubclass: aClass
 			^self].
 	index := subs binarySearchFor: aClass using: [:a :b | a name <=> b name <= 0].
 	(index > 1 and: [(subs at: index - 1) == aClass]) ifTrue: [^self].
-	self assert: [(subs identityIndexOf: aClass) == 0].
 	subclasses := Array new: count + 1.
 	subclasses at: index put: aClass.
 	subs
