@@ -483,10 +483,6 @@ mutateMetaclass: oldMetaclass toBeASubclassOf: newSuperclass
 
 	| newMetaclass |
 	newMetaclass := self newMetaclassLike: oldMetaclass superclass: newSuperclass.
-	self assert: 
-			[| instances |
-			instances := oldMetaclass primAllInstances.
-			instances size = 1 and: [instances first == oldMetaclass instanceClass]].
 	self
 		mutateInstances: {oldMetaclass instanceClass}
 		of: oldMetaclass
