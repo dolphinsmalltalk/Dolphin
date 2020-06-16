@@ -38,6 +38,9 @@ testBinaryIncludes
 testCopyReplaceAllWith
 	self shouldnt: [super testCopyReplaceAllWith] implement: #replaceFrom:to:with:startingAt:!
 
+testCopyWithAtIndex
+	self shouldnt: [super testCopyWithAtIndex] implement: #replaceFrom:to:with:startingAt:!
+
 testReplaceFromToWithStartingAt
 	self shouldnt: [super testReplaceFromToWithStartingAt] implement: #replaceFrom:to:with:startingAt:!
 
@@ -73,6 +76,7 @@ verifyConcatenation: b with: a
 !SortedCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testBinaryIncludes!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
+!SortedCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testResize!public!unit tests! !
 !SortedCollectionTest categoriesFor: #testStrongTalkTests!public!unit tests! !

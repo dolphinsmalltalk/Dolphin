@@ -169,6 +169,25 @@ copyWithout: oldElement
 	self do: [:element | element = oldElement ifFalse: [answer add: element]].
 	^answer!
 
+copyWithoutIndex: anInteger
+	"Answer a <SequenceableCollection> which is a copy of the receiver but without the element with the specified index.
+	Implementation Note: This implementation is more efficient for OrderedCollection, and necessary for SortedCollection."
+
+	| size copy |
+	size := self size - 1.
+	copy := self copyLikeOfSize: size.
+	self
+		basicReplaceElementsOf: copy
+		from: 1
+		to: anInteger - 1
+		startingAt: firstIndex.
+	self
+		basicReplaceElementsOf: copy
+		from: anInteger
+		to: size
+		startingAt: firstIndex + anInteger.
+	^copy!
+
 detect: discriminator ifNone: exceptionHandler
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
 	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
@@ -500,6 +519,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
+!OrderedCollection categoriesFor: #copyWithoutIndex:!copying!public! !
 !OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
 !OrderedCollection categoriesFor: #findFirst:!public!searching! !

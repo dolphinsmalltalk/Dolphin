@@ -114,16 +114,22 @@ testBeginsWith
 	self assert: (sequence beginsWith: (self newUnsortedCollection: #($1 $2 $3 $4 $5 $6))) not!
 
 testBinarySearch
-	| searchee lessThan |
+	| searchee lessThan lessOrEqual |
 	lessThan := [:x :y | x < y].
-	searchee := self newCollection: 'abcdefghijklmnopqrstuvwxyz'.
-	(searchee respondsTo: #binarySearchFor:using:)
-		ifFalse: 
-			["Binary search method introduced in D6"
-			^self].
-	self assert: (searchee binarySearchFor: (searchee at: 1) using: lessThan) equals: 1.
-	self assert: (searchee binarySearchFor: (searchee at: 8) using: lessThan) equals: 8.
-	self assert: (searchee binarySearchFor: (searchee at: 26) using: lessThan) equals: 26!
+	searchee := self newCollection: 'bcdefghijklmnopqrstuvwxy'.
+	self assert: (searchee binarySearchFor: (self assimilate: $a) using: lessThan) equals: 1.
+	self assert: (searchee binarySearchFor: (self assimilate: $b) using: lessThan) equals: 1.
+	self assert: (searchee binarySearchFor: (self assimilate: $e) using: lessThan) equals: 4.
+	self assert: (searchee binarySearchFor: (self assimilate: $y) using: lessThan) equals: 24.
+	self assert: (searchee binarySearchFor: (self assimilate: $z) using: lessThan) equals: 25.
+	lessOrEqual := [:x :y | x <= y].
+	self assert: (searchee binarySearchFor: (self assimilate: $a) using: lessOrEqual) equals: 1.
+	self assert: (searchee binarySearchFor: (self assimilate: $b) using: lessOrEqual) equals: 2.
+	self assert: (searchee binarySearchFor: (self assimilate: $e) using: lessOrEqual) equals: 5.
+	self assert: (searchee binarySearchFor: (self assimilate: $y) using: lessOrEqual) equals: 25.
+	self assert: (searchee binarySearchFor: (self assimilate: $z) using: lessOrEqual) equals: 25.
+	self assert: ((self newCollection: #()) binarySearchFor: (self assimilate: $a) using: lessOrEqual) equals: 1.
+!
 
 testConcatenation
 	| a b |
@@ -272,6 +278,26 @@ testCopyReplaceAllWith
 			actual := subject copyReplaceAll: (self newCollection: eachCase second)
 						with: (self newCollection: eachCase third).
 			self assert: actual equals: expected]!
+
+testCopyWithAtIndex
+	#(#(#() 1 #($1)) #(#($2) 1 #($1 $2)) #(#($2) 2 #($2 $1)) #(#($2 $3) 1 #($1 $2 $3)) #(#($2 $3) 2 #($2 $1 $3)) #(#($2 $3) 3 #($2 $3 $1)))
+		do: 
+			[:each |
+			self assert: ((self newCollection: each first) copyWith: (self assimilate: $1) atIndex: each second)
+				equals: (self newCollection: each third)].
+	#(#() 2 #() 0 #($1) 3 #($1 $2) 4) pairsDo: 
+			[:each :index |
+			self should: [(self newCollection: each) copyWith: (self assimilate: $1) atIndex: index]
+				raise: BoundsError]!
+
+testCopyWithoutIndex
+	#(#(#($1) 1 #()) #(#($1 $2) 1 #($2)) #(#($1 $2) 2 #($1)) #(#($1 $2 $3) 1 #($2 $3)) #(#($1 $2 $3) 2 #($1 $3)) #(#($1 $2 $3) 3 #($1 $2)))
+		do: 
+			[:each |
+			self assert: ((self newCollection: each first) copyWithoutIndex: each second)
+				equals: (self newCollection: each third)].
+	#(#() 1 #() 0 #($1) 2 #($1 $2) 3)
+		pairsDo: [:each :index | self should: [(self newCollection: each) copyWithoutIndex: index] raise: Error]!
 
 testEndsWith
 	"Test SequenceableCollection>>endsWith:"
@@ -785,6 +811,8 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testCopyFromTo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testCopyReplaceAllWith!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testEndsWith!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFindFirst!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFirst!public!unit tests! !

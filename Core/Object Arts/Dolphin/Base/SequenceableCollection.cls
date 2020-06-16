@@ -256,7 +256,7 @@ beginsWith: aCollection
 	^self basicBeginsWith: aCollection!
 
 binarySearchFor: anObject using: searchBlock 
-	"Answer the index at which anObject is located using a binary chop search based on searchBlock"
+	"Answer the index at which anObject would have to be inserted into this collection in order to maintain its sort order. The <dyadicValuble> search block must express the same ordering."
 
 	^self class 
 		binarySearch: self
@@ -465,6 +465,23 @@ copyWith: newElement
 			with: self
 			startingAt: 1!
 
+copyWith: anObject atIndex: anInteger
+	"Answer a <SequenceableCollection> which is a copy of the receiver that has anObject inserted at the index, anInteger."
+
+	| size |
+	size := self size + 1.
+	^(self copyLikeOfSize: size)
+		replaceFrom: 1
+			to: anInteger - 1
+			with: self
+			startingAt: 1;
+		at: anInteger put: anObject;
+		replaceFrom: anInteger + 1
+			to: size
+			with: self
+			startingAt: anInteger;
+		yourself!
+
 copyWithout: oldElement
 	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
 	which all occurrences of the <Object> oldElement have been removed."
@@ -484,6 +501,22 @@ copyWithoutAll: oldElements
 	self 
 		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
 	^aStream contents!
+
+copyWithoutIndex: anInteger
+	"Answer a <SequenceableCollection> which is a copy of the receiver but without the element with the specified index."
+
+	| size |
+	size := self size - 1.
+	^(self copyLikeOfSize: size)
+		replaceFrom: 1
+			to: anInteger - 1
+			with: self
+			startingAt: 1;
+		replaceFrom: anInteger
+			to: size
+			with: self
+			startingAt: anInteger + 1;
+		yourself!
 
 decodeFrom: aReadStream upTo: anObject
 	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
@@ -1274,8 +1307,10 @@ writeStream
 !SequenceableCollection categoriesFor: #copyReplaceFrom:to:withObject:!copying!public! !
 !SequenceableCollection categoriesFor: #copyReplacing:withObject:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWith:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWith:atIndex:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
+!SequenceableCollection categoriesFor: #copyWithoutIndex:!copying!public! !
 !SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
@@ -1365,8 +1400,7 @@ SequenceableCollection methodProtocol: #sequencedReadableCollection attributes: 
 !SequenceableCollection class methodsFor!
 
 binarySearch: aSequenceableCollection for: anObject using: searchBlock 
-	"Private - Answer the index at which anObject is located within aSequenceableCollection using a binary chop
-	search based on searchBlock"
+	"Search aSequenceableCollection, which must be sorted, for anObject using a binary chop search based on the <dyadicValuable>, searchBlock. The search block needs to express the same sort order as that used to sort the collection or the result will be incorrect. If the collection is ordered in ascending order, then use #<= comparison, or #>= for descending order. If anObject is in the collection, then the answer will be the index of the last occurrence of anObject + 1. If anObject is not in the collection, then the answer will be 1. This is most useful to find an insertion point."
 
 	| index low high |
 	low := 1.
