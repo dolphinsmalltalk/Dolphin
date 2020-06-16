@@ -86,25 +86,15 @@ addSubclass: aClass
 	aClass superclass == self
 		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
 	subs := self subclasses.
-	"Maintain the array in sorted order as saves sorting on access - speed is important to minimize class creation time"
 	count := subs size.
 	count == 0
 		ifTrue: 
 			[subclasses := {aClass}.
 			^self].
+	"Maintain the array in sorted order as saves sorting on access - speed is important to minimize class creation time"
 	index := subs binarySearchFor: aClass using: [:a :b | a name <=> b name <= 0].
 	(index > 1 and: [(subs at: index - 1) == aClass]) ifTrue: [^self].
-	subclasses := Array new: count + 1.
-	subclasses at: index put: aClass.
-	subs
-		replaceElementsOf: subclasses
-			from: 1
-			to: index - 1
-			startingAt: 1;
-		replaceElementsOf: subclasses
-			from: index + 1
-			to: count + 1
-			startingAt: index!
+	subclasses := subs copyWith: aClass atIndex: index!
 
 addToSuper
 	"Private - Add the receiver to its superclasses' subclass collection."

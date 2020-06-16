@@ -149,9 +149,21 @@ testAddFirst
 	interval := 1 to: 30.
 	"Collection may have to grow a few times"
 	interval do: [:each | subject addFirst: each].
-	self assert: subject asArray equals: interval reverse! !
+	self assert: subject asArray equals: interval reverse!
+
+testCopyWithoutIndex
+	super testCopyWithoutIndex.
+	"Also test that the copying works if there is some space up front."
+	#(#(#($a $b) 1 #()) #(#($a $b $c) 1 #($c)) #(#($a $b $c) 2 #($b))) do: 
+			[:each |
+			| subject |
+			subject := (self newCollection: each first)
+						removeFirst;
+						yourself.
+			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
+!SequencedGrowableCollectionTest categoriesFor: #testCopyWithoutIndex!public!unit tests! !
 
