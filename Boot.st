@@ -46,15 +46,15 @@ product boot] on: Error do: [:ex |
 	"isPrompted==true ifFalse: [SessionManager current quit: -2]."
 	ex pass ] !
 
+"Ensure all structures have calculated size to avoid recompilation messages later"
+ExternalStructure allSubclasses do: [:e | e ensureDefined]!
+
 SessionManager current bootFinished!
 
 DevelopmentSessionManager installNew!
 
 SessionManager current defaultResourceLibrary loadFlags: 0.
 SessionManager current stashBootInfo!
-
-"Ensure all structures have calculated size to avoid recompilation messages later"
-ExternalStructure allSubclasses do: [:e | e ensureDefined]!
 
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!
