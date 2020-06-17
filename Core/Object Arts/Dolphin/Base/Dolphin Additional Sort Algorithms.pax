@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Additional Sort Algorithms'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Additional Sort Algorithms.
 Copyright (c) Object Arts Ltd. 2005.
 

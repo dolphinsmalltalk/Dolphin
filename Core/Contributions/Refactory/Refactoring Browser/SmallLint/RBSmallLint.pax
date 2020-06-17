@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBSmallLint'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser SmallLint
 Copyright (c) John Brant & Don Roberts.'.
 

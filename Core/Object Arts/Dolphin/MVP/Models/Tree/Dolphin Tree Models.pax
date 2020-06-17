@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree Models'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree Models.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1996.
 

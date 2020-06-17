@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Key-Value Prompter'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Key-Value Pair Prompter.
 Copyright (c) Object Arts Ltd. 2005.'.
 

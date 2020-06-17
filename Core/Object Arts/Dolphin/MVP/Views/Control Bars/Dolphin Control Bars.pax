@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Control Bars'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Control Bars.
 Copyright (c) Object Arts Ltd, 1997-2002. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
 

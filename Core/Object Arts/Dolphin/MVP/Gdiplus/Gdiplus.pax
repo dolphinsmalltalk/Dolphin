@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Gdiplus'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GDI+ Binding
 Copyright (c) Dan Antion, Object Arts Ltd, Louis Sumberg, Chris Uppal, and Steve Waring, 2003-2004.
 

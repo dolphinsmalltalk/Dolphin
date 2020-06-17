@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Products'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Product Descriptions'.
 
 package basicPackageVersion: '6.1.27'.

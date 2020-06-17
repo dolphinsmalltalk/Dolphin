@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'OLE Structured Storage'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
 Copyright (c) Object Arts Ltd 1997-2003. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
 

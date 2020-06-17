@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Internal Bitmaps and Icons'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'One of the most common reasons why Dolphin applications need to use external files is to make use of icon and bitmap resources. These may be required solely to present your Dolphin classes with an icon inside the browsers or for more functional reasons such as toolbar buttons etc. 
 
 This package makes use of GDI+ to load in external image files and hold them as GdiplusBitmap byte array initializers within the image. Hence the appropriate bitmap can be created at anytime without reference to the external file. Typically, the external file will be a PNG file, which can contain transparency information and is therefore capable of replacing most functionality of standard Windows ICO files. Other files, such as BMP and JPG, may also be used if alpha transparency is not required. Note, however, that currently ICO files are not allowed due to an inability to easily load the correct (large) resource from the icon file (anyone care to fix this?)

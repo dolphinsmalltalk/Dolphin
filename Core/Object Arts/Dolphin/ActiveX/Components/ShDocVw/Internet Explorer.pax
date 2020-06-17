@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Internet Explorer'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Internet Explorer* Package.
 Copyright (c) Object Arts Ltd, 2000.
 

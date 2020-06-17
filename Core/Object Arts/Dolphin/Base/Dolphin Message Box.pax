@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Message Box'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin MessageBox
 Copyright (c) Object Arts Ltd. 1997-2016'.
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBEnvironments'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Environments
 Copyright (c) John Brant & Don Roberts.
 

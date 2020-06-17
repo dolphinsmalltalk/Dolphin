@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Calculator (Console)'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Console Calculator Sample. 
 Copyright (c) Object Arts Ltd, 2000-2002.
 

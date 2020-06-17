@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBFormatters'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Smalltalk Code Reformatters
 Based on the Refactoring Browser formatter (RBFormatter) and configurable formatter (RBConfigurableFormatter), copyright (c) John Brant & Don Roberts.
 

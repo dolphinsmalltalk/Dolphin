@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Announcements Tests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 

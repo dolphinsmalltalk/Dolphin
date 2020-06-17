@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Transcript'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.2'.

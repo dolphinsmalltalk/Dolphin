@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Video Library'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Video Library Sample. 
 Copyright (c) Object Arts Ltd, 2001.
 

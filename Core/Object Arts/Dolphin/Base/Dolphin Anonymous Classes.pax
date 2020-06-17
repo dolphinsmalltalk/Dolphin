@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Anonymous Classes'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Anonymous Classes
 Copyright (c) Object Arts Ltd. 2019.'.
 

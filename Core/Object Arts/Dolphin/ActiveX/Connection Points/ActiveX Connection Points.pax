@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX Connection Points'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Connection Points Package. 
 Copyright (c) Object Arts Ltd, 2000.
 

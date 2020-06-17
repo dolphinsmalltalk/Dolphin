@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'EnumRECT'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk EnumRect COM Sample.
 Copyright (c) Object Arts Ltd, 1997-2000.
 

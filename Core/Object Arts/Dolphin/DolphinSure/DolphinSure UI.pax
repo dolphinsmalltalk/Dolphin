@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'DolphinSure UI'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" user interface.
 Copyright (c) Object Arts Ltd, 1999-2001.
 

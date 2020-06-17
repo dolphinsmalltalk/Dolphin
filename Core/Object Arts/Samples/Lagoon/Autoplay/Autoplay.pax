@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Autoplay'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Autoplay Sample. 
 Copyright (c) Object Arts Ltd, 2001-2002.
 

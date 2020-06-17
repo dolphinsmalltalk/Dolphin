@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBChangeObjects'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Change Objects
 Copyright (c) John Brant & Don Roberts.
 

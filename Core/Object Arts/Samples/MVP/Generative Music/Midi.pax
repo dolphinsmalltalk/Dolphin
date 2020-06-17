@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Midi'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 

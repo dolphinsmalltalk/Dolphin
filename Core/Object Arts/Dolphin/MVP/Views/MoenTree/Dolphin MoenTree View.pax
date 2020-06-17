@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin MoenTree View'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Moen Tree View.
 Copyright (c) Object Arts Ltd, 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
 

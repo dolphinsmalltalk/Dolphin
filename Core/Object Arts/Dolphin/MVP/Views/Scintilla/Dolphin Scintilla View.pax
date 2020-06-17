@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Scintilla View'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Scintilla Control Wrapper
 Copyright (c) Object Arts Ltd, 2002-2020.
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin SysLink Control'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SysLink Common Control.
 Copyright (c) Object Arts Ltd, 2005.
 

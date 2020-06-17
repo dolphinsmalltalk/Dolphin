@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Etch-a-Sketch'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Etch-A-Sketch(tm) Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
 

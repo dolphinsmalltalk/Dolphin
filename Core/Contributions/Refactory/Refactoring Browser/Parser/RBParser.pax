@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBParser'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin RBParser Package
 Copyright John Brant and Don Roberts.
 

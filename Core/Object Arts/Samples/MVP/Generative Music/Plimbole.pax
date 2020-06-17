@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Plimbole'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Plimbole is a Generative Music Sequencer based on Otomata (http://www.earslap.com/page/otomata.html). It uses the same cellular automata logic as Otomata but adds a few features that, hopefully, make the results more compelling. Things like different grid sizes and the ability to play through MIDI with separate voices for the tenor (low) and alto (high) parts.
 
 In order to get started, just click in the central grid area and place cells. Each cell has a direction that it is travelling in and, as it collides with the boundary walls, it will create a note. The pitch of the note will be dependent on which part of the boundary is hit; pitches increase from left to right and from top to bottom. Clicking again on a cell will alter the starting direction by 90 degrees. Start the "music" with the Play button and the cells are stepped in their current directions. Cells that hit each other are rotated a quarter turn and those that hit the boundaries bounce back after having generated their notes. You can stop the player at any time and add more cells, or you can just add them while it is running. 

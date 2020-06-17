@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
 

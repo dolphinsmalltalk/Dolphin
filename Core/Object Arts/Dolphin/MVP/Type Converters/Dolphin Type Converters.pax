@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Type Converters'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework Type Converters.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
 

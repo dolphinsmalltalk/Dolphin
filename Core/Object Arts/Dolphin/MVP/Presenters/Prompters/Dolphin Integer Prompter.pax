@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Integer Prompter'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Integer Prompter.
 Copyright (c) Object Arts Ltd. 2003.'.
 

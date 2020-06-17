@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'IP Help API'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IP Helper Library Package
 Copyright (c) Object Arts Ltd, 2004
 

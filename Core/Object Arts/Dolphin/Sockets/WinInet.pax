@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'WinInet'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk WinInet Library Wrapper
 Copyright (c) Object Arts Ltd, 1997-2006.'.
 

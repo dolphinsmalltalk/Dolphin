@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Text Tile Icons'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Text Tile Icons
 Copyright (c) Object Arts Ltd. 2018.
 '.

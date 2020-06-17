@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'DolphinSure'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" encryption and signature support.
 Copyright (c) Object Arts Ltd, 1999-2000.
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Refactoring Browser'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Refactoring Browser Native UI Integration
 Copyright (c) Object Arts Ltd, 2001-2009.
 

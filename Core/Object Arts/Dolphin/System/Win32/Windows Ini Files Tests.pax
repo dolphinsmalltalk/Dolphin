@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Windows Ini Files Tests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Tests for Dolphin Smalltalk Windows Ini Files
 Copyright (c) Object Arts Ltd, 2017-18'.
 

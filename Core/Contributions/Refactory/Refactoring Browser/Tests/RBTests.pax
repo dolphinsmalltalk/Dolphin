@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBTests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 

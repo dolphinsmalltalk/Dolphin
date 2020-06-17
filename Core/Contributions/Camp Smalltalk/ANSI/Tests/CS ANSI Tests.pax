@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'CS ANSI Tests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicScriptAt: #postinstall put: '| locator |

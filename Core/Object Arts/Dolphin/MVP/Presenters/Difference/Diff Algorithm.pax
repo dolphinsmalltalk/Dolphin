@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Diff Algorithm'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Diff Algorithm Package
 Copyright (c) Mario Wolczko, 1993, portions copyright (c) Ian Bartholomew 2002.
 

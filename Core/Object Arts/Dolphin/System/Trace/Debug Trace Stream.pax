@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Debug Trace Stream'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Debug Trace Stream.
 Copyright (c) Object Arts Ltd, 2002.
 

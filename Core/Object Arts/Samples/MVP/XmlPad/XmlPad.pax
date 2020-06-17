@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'XmlPad'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk XmlPad Sample. 
 Copyright (c) Object Arts Ltd, 2005
 

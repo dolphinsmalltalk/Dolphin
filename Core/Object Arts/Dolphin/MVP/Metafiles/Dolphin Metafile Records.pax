@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Metafile Records'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk metafile extensions for handling individual metafile records. Allows diagnostic tracing, and also manipulation of the individual records.
 Copyright (c) Object Arts Ltd. 2010.'.
 

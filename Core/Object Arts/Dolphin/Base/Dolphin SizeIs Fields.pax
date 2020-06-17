@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin SizeIs Fields'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin SizeIs Fields Package.
 
 Contains support for sophisticated conformant field types that can interpret a MIDL size_is expression involving simple arithmetic.'.

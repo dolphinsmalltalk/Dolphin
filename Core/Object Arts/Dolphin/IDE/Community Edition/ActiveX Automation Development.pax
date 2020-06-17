@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation Development'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Development Tools.
 Copyright (c) Object Arts Ltd, 2000-2006.
 
