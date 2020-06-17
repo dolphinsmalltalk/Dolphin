@@ -1346,6 +1346,7 @@ newSystemPackage
 	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
 				ifNil: [0]
 				ifNotNil: [:filetime | filetime asInteger]).
+	dolphin preDeclareClassesOnLoad: false.
 	dolphin isChanged: false.
 	^dolphin!
 

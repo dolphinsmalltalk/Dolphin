@@ -4599,6 +4599,7 @@ publishedAspectsOfInstances
 				add: (Aspect fileSave: #packageFileName);
 				add: (Aspect sequenceableCollection: #manualPrerequisites
 							addFrom: self manager packageNames asSortedCollection);
+				add: (Aspect boolean: #preDeclareClassesOnLoad);
 				yourself.
 	"If the image has the ADK loaded, then include the image stripper"
 	self environment at: #ImageStripper
