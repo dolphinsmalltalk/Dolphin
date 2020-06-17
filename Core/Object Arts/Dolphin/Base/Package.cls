@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Package
-	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
-	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
+	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties preDeclareClassesOnLoad'
+	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -802,21 +802,17 @@ loadPAX
 	timestamp := stream file lastWriteTime asInteger.
 	filer := ChunkSourceFiler on: stream.
 	
-	[| sourceGlobals |
-	filer nextChunk.	"Skip the first chunk since it represents the receiver."
+	[filer nextChunk.	"Skip the first chunk since it represents the receiver."
 	self fileInScript: #preinstall.
 
-	"Define any globals that might be referenced from source code, but don't load them as yet as they
-		 may be instances of one of the classes in the package."
+	"Define any globals that might be referenced from source code, but don't load them as yet as they may be instances of one of the classes in the package."
 	self declareGlobals.
-	sourceGlobals := self globalNames - (self propertyAt: #binaryGlobalNames ifAbsent: [#()])
-				- (self propertyAt: #globalAliases ifAbsent: [#()]).
-	sourceGlobals isEmpty
-		ifFalse: 
-			["Forward reference any classes just in case they are required by the source globals that are just about to be loaded"
-			self declareClasses.
-			"Load source globals"
-			sourceGlobals do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)]].
+	"Optionally declare all classes in the package for the case where classes are referenced by source globals or other class definitions (other than the class hierarchy relationship)"
+	self preDeclareClassesOnLoad ifTrue: [self declareClasses].
+	"Load source globals"
+	self globalNames - (self propertyAt: #binaryGlobalNames ifAbsent: [#()])
+		- (self propertyAt: #globalAliases ifAbsent: [#()])
+			do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)].
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
 	filer fileIn.
@@ -1133,6 +1129,17 @@ paxVersion: anInteger
 	was saved. This may be used for loading old format source packages in future."
 
 	self propertyAt: #paxVersion put: anInteger!
+
+preDeclareClassesOnLoad
+	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. See the class side implementation of this message for further details."
+
+	^preDeclareClassesOnLoad ifNil: [self class preDeclareClassesOnLoad]!
+
+preDeclareClassesOnLoad: aBoolean
+	preDeclareClassesOnLoad == aBoolean
+		ifFalse: 
+			[preDeclareClassesOnLoad := aBoolean.
+			self isChanged: true]!
 
 prerequisiteNames
 	"Private - Answer the <readableString> names of the receiver's prerequisite packages, i.e.
@@ -1849,6 +1856,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #path!accessing!public! !
 !Package categoriesFor: #paxVersion!accessing!private! !
 !Package categoriesFor: #paxVersion:!accessing!private! !
+!Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
+!Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
 !Package categoriesFor: #prerequisiteNames!accessing!private! !
 !Package categoriesFor: #prerequisites!enumerating!public! !
 !Package categoriesFor: #printOn:!printing!public! !
@@ -2038,6 +2047,14 @@ paxVersion
 	1 - D6.0 format with implicit literal (i.e. not embedded binary) resources"
 
 	^1!
+
+preDeclareClassesOnLoad
+	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. This is generally not necessary except in circumstances where one or more of the source globals in the package as dependencies on classes in the package, or where classes in the package are being used in the role of pool dictionaries by other classes in the package. However, the historic behaviour was to declare classes, so for the time being this is still on by default. The setting can either be changed globally (i.e. `Package declareClassesOnLoad: false`) or for individual packages using the `preDeclareClassesOnLoad` property on the instance side. If the property is set, then it will be persisted to the package file and respected by future loads. In the next major release of Dolphin, this property will default to 'false'. The reason for this is that pre-declaration is relatively expensive (causing a class mutation when the actual class declaration is subsequently loaded), and so worth avoiding when not required."
+
+	^PreDeclareClassesOnLoad ?? true!
+
+preDeclareClassesOnLoad: aBoolean
+	PreDeclareClassesOnLoad := aBoolean!
 
 readFrom: pacStream
 	"Private - Answer a new instance of the receiver created from the .PAX (source 
@@ -2268,6 +2285,8 @@ unsaveableSignal
 !Package class categoriesFor: #packageExtension!constants!private! !
 !Package class categoriesFor: #packageFileVersion!constants!public! !
 !Package class categoriesFor: #paxVersion!constants!private! !
+!Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
+!Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
 !Package class categoriesFor: #readFrom:!instance creation!private! !
 !Package class categoriesFor: #sourceGlobalExtension!constants!private! !
 !Package class categoriesFor: #sourcePackageExtension!constants!private! !

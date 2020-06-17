@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Source Fileout'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicScriptAt: #postinstall put: '(MethodProtocol name: #sourceObject)
@@ -979,13 +980,12 @@ savePAXNamesOn: target
 						cr;
 						cr]]!
 
-savePAXPackageOn: stream
-	"Private - Save the basic details of the receiver in the PAX source file 
-	representation onto the <puttableStream>, target."
+savePAXPackageOn: aPuttableStream
+	"Private - Save the basic details of the receiver in the PAX source file representation onto the <puttableStream> argument."
 
 	"Create package and set some basic attributes"
 
-	stream
+	aPuttableStream
 		nextPutAll: '| package |';
 		cr;
 		nextPutAll: 'package := ';
@@ -1001,14 +1001,22 @@ savePAXPackageOn: stream
 		space;
 		print: self paxVersion;
 		nextPut: $;;
-		crtab;
+		crtab.
+	preDeclareClassesOnLoad
+		ifNotNil: 
+			[aPuttableStream
+				nextPutAll: #preDeclareClassesOnLoad:;
+				space;
+				print: preDeclareClassesOnLoad;
+				nextPut: $;;
+				crtab].
+	aPuttableStream
 		nextPutAll: #basicComment:;
 		space;
 		print: self comment;
 		nextPut: $.;
 		cr;
-		cr.
-!
+		cr!
 
 savePAXPackageVersionOn: aStream 
 	"Private - Save Package Version - this is the version of the package, not the file out format"
