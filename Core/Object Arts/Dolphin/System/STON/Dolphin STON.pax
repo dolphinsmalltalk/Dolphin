@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin STON'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin STON support
 Copyright (c) Object Arts Ltd, 2019'.
 

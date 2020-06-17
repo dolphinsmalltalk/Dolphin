@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX DLL Server Kit'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X In-Process Server Deployment Kit 
 Copyright (c) Object Arts Ltd, 2001-2002.
 

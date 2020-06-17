@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Memory-Mapped Files'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Memory-Mapped Files
 Copyright (c) Object Arts Ltd, 2004.
 

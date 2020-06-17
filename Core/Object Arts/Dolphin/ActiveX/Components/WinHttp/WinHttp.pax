@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'WinHttp'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk WinHttp Package. 
 
 This package implements a Smalltalk mapping for the Microsoft WinHttp component, which provides a simple and high performance HTTP client.'.

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin In-place Text Editor'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic In-place Text Editor.
 Copyright (c) Object Arts Ltd. 2009
 '.

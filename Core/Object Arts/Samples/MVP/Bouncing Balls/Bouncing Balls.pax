@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Bouncing Balls'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Bouncing Balls Animation Sample. 
 Copyright (c) Object Arts Ltd, 2001.
 

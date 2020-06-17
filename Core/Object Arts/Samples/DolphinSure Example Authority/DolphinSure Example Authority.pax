@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'DolphinSure Example Authority'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Example Authority for DolphinSure Sample
 Copyright (c) Object Arts Ltd, 2006.
 

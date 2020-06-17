@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Accelerator Presenter'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Accelerator Presenter.
 Copyright (c) Object Arts Ltd, 1997-2002, and CGI Group (Europe) Ltd, 1997.
 

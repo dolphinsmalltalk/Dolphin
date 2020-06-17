@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'XML DOM Visitor'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk XML DOM Visitor Package. 
 Copyright (c) Object Arts Ltd, 2000-2006
 

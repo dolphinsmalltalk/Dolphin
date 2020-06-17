@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Professional Tools'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Professional Additional Tools.
 Copyright (c) Object Arts Ltd, 2001-2006.
 

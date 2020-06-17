@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX Property Bags'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Property Bags package.
 Copyright (c) Object Arts Ltd, 2000-2001.
 '.

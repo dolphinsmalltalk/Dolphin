@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'CSRefactorings'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Additional Refactorings developed by the Camp Smalltalk "Custom Refactorings and Rewrite Editor Usability" project: 
 
 http://wiki.cs.uiuc.edu/CampSmalltalk/Custom+Refactorings+and+Rewrite+Editor+Usability

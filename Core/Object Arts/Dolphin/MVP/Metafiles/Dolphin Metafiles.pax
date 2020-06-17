@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Metafiles'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.
 Copyright (c) Object Arts Ltd. 2010.'.
 

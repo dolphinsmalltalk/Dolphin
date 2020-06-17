@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Notepad'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Notepad Sample. 
 Copyright (c) Object Arts Ltd, 2000-2001.
 

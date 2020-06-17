@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'File System Monitor'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk File System Monitor Sample
 Copyright (c) Object Arts Ltd, 2005.
 

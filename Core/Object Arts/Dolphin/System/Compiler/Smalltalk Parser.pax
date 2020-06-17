@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Smalltalk Parser'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Parser
 Based on the Refactoring Browser parser (RBParser), copyright (c) John Brant & Don Roberts. 
 

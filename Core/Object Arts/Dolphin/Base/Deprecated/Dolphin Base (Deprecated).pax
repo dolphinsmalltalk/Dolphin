@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Base (Deprecated)'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
 Copyright (c) Object Arts Ltd 1997-2002. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
 

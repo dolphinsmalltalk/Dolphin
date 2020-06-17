@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Extension Example'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IDE Extension Sample. 
 Copyright (c) Object Arts Ltd, 2002.
 

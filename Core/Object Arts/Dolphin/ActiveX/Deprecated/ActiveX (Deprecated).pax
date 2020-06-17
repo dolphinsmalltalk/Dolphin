@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX (Deprecated)'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Support (Deprecated Classes and Methods)
 
 This package includes legacy classes and methods from Dolphin''s Active-X framework that have been deprecated. If you have no requirement to use code imported from pre-5.0 versions of Dolphin, then this package can be safely uninstalled.'.

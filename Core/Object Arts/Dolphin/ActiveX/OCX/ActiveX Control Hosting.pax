@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX Control Hosting'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Visual Control (OCX) Hosting. 
 Copyright (c) Object Arts Ltd, 2000-2006.
 

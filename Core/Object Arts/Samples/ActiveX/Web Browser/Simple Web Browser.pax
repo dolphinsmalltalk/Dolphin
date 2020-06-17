@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Simple Web Browser'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Simple Web Browser Sample.
 Copyright (c) Object Arts Ltd, 2000.
 

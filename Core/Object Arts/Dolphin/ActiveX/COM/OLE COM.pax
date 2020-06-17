@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'OLE COM'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE COM Support. 
 Copyright (c) Object Arts Ltd 1997-2006. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
 

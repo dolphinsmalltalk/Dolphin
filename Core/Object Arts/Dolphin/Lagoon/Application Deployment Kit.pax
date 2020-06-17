@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Application Deployment Kit'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Application Deployment Kit. 
 Copyright (c) Object Arts Ltd, 1998-2006.
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'COM Random Stream'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
 Copyright (c) Object Arts Ltd, 1997-2000. Portions copyright CGI Group (Europe) Ltd, 1997.
 

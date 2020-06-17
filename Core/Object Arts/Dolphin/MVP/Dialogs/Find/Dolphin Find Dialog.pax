@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Find Dialog'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Find Dialog
 Copyright (c) Object Arts Ltd. 2004.
 

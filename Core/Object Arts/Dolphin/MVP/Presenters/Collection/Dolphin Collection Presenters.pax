@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Collection Presenters'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Collection Presenters.
 Copyright (c) Object Arts Ltd. 2002.
 '.

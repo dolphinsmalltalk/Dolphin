@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Random Stream Tests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 

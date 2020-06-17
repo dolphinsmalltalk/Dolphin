@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Overlapped IO'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 Overlapped I/O
 Copyright (c) Object Arts Ltd, 2004
 

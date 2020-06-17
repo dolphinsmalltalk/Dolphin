@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Windows Shell'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Shell Basics
 Copyright (c) Object Arts Ltd, 1998-2000. 
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Database Connection'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ODBC Database Connection Development Extensions
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
 

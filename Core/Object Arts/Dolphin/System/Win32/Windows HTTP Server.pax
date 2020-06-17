@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Windows HTTP Server'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 HTTP Server
 Copyright (c) Object Arts Ltd, 2017
 

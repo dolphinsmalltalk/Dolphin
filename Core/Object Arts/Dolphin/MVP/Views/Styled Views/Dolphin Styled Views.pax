@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Styled Views'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '0.003'.

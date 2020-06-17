@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'PersonalMoney'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Personal Accounts Sample.
 Copyright (c) Object Arts Ltd, 1998-2005
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Database Connection (Deprecated)'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.0'.

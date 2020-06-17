@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBReferenceFinder'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Reference Finder
 Copyright (c) John Brant & Don Roberts.
 

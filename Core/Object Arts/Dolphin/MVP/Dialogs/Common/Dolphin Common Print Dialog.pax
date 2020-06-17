@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Common Print Dialog'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 

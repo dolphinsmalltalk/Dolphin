@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Resource Framework'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.
 Copyright (c) Object Arts Ltd. 1997-2006. 
 

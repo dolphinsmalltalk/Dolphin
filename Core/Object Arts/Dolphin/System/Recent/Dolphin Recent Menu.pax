@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Recent Menu'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.2.2'.

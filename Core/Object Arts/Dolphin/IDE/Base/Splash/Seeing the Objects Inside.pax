@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Seeing the Objects Inside'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem aboutBoxClass: DolphinSplash'.

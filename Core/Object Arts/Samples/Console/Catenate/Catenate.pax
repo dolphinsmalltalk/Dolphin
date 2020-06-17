@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Catenate'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Catenate Sample. 
 Copyright (c) Object Arts Ltd, 2000-2004.
 

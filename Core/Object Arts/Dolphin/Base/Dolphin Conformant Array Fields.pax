@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Conformant Array Fields'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Conformant Array Fields Package.
 
 Contains support for conformant array fields in structures. Conformant array fields are those where the size of the array is variable and defined by another field in the structure.'.

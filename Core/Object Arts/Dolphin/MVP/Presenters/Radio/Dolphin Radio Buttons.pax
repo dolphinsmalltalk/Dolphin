@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Radio Buttons'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Radio Buttons.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) Ian Bartholomew.
 

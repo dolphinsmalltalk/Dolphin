@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'STON-Core'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: '# STON - Smalltalk Object Notation
 
 [!![Build Status](https://travis-ci.org/svenvc/ston.svg?branch=master)](https://travis-ci.org/svenvc/ston)

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Chat'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Chat Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
 

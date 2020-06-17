@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Windows Data Protection API'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 Data Protection API
 
 This package contains classes and methods for using the Windows Data Protection API (aka DP API).

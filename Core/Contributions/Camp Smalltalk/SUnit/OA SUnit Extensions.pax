@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'OA SUnit Extensions'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Object Arts SUnit Extensions.
 Copyright (c) Object Arts Ltd, 2002.
 

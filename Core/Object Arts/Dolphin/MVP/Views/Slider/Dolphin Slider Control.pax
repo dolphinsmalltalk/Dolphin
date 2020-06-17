@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Slider Control'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
 Copyright (c) Ian Bartholomew, 2002, and Object Arts Ltd, 2002-2005.
 

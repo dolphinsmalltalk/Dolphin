@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Date Time Controls'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Date & Time Common Controls.
 Copyright (c) Object Arts Ltd, 1997-2003.
 

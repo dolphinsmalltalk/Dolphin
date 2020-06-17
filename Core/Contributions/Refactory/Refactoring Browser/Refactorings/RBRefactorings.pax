@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'RBRefactorings'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Refactorings
 Copyright (c) John Brant & Don Roberts.
 

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Gdiplus ImageView Sample'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Evaluate
 	GdiplusImageViewSampleShell show'.
 

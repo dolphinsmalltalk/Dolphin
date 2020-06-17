@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Differences Presenter'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Differences Presenter.
 Copyright (c) Ian Bartholomew and Object Arts Ltd. 2002.
 '.

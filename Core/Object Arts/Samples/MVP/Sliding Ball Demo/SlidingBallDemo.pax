@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'SlidingBallDemo'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
 circle travel along the line from one rectangle to the other. Upon

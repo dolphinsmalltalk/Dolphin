@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin MMF Tests'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Tests for the Dolphin Memory-Mapped Files Package
 Copyright (c) Object Arts Ltd, 2004.
 '.

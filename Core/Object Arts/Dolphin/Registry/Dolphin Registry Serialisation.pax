@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Registry Serialisation'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Registry Serialisation.
 Copyright (c) Object Arts Ltd, 2004.
 

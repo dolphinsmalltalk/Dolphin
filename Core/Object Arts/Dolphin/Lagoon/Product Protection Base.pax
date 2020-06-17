@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Product Protection Base'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: 'OA 6 CU 1'.

@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ActiveX Categories'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Active-X Categories Package. 
 Copyright (c) Object Arts Ltd, 2000-2001.
 

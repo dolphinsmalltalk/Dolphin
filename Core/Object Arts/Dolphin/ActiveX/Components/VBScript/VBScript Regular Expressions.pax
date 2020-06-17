@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'VBScript Regular Expressions'.
 package paxVersion: 1;
+	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk VBScript Regular Expressions Package
 Copyright (c) Object Arts Ltd, 2004.
 
