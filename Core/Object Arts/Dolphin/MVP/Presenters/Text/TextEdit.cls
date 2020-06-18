@@ -251,6 +251,9 @@ cutSelection
 defaultSelectionRange
 	^1 to: 0!
 
+defaultTextLimit
+	^30000!
+
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style.
 	Use the client edge style for the standard Win95 look."
@@ -1102,7 +1105,7 @@ state
 								selector: #cueBanner:
 								argument: cue)]].
 	limit := self textLimit.
-	limit = 30000
+	limit = self defaultTextLimit
 		ifFalse: 
 			[state add: (MessageSend
 						receiver: self
@@ -1301,6 +1304,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #cueBanner:!accessing!public! !
 !TextEdit categoriesFor: #cutSelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #defaultSelectionRange!constants!private! !
+!TextEdit categoriesFor: #defaultTextLimit!constants!private! !
 !TextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
 !TextEdit categoriesFor: #dispatchRegistered:wParam:lParam:!dispatching!private! !
 !TextEdit categoriesFor: #displayValue!private!updating! !

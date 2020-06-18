@@ -1620,6 +1620,9 @@ defaultModEventMask
 	"Enable only the set that we actually respond to"
 	^##(SC_MOD_INSERTTEXT|SC_MOD_DELETETEXT|SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN)!
 
+defaultTextLimit
+	^SmallInteger maximum!
+
 defaultTextStylesFor: aSymbol 
 	"Answer the default text style settings to be used for newly configured lexers."
 
@@ -10286,7 +10289,7 @@ state
 
 	| answer |
 	answer := super state.
-	#(#(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime 10000000) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color
+	#(#(#isDrawingBuffered: #isDrawingBuffered true) #(#hoverTime: #hoverTime ##(SC_TIME_FOREVER)) #(#setIndicators: #indicators #()) #(#sciSetCaretStyle: #sciGetCaretStyle ##(CARETSTYLE_LINE)) #(#caretForecolor: #caretForecolor ##(Color
 		black)) #(#secondaryCaretForecolor: #secondaryCaretForecolor ##(Color fromRgbCode: 16r7F7F7F)) #(#currentLineAlpha: #currentLineAlpha ##(SC_ALPHA_NOALPHA)) #(#caretPeriod: #caretPeriod 500) #(#caretWidth: #caretWidth 1) #(#sciSetCaretSticky: #sciGetCaretSticky ##(SC_CARETSTICKY_OFF)) #(#isCurrentLineHighlighted: #isCurrentLineHighlighted false) #(#isCurrentLineHighlightedAlways: #isCurrentLineHighlightedAlways false) #(#currentLineBackcolor: #currentLineBackcolor ##(Color
 		yellow)) #(#sciSetEOLMode: #sciGetEOLMode ##(SC_EOL_CRLF)) #(#hasVisibleLineEndings: #hasVisibleLineEndings false) #(#wordWrap: #wordWrap false) #(#sciSetLayoutCache: #sciGetLayoutCache ##(SC_CACHE_CARET)) #(#margins: #margins #()) #(#markers: #markers ##(IdentitySet
 		new)) #(#isOvertypeEnabled: #isOvertypeEnabled false) #(#printMagnification: #printMagnification 0) #(#printColourMode: #printColourMode ##(SC_PRINT_NORMAL)) #(#canHScroll: #canHScroll true) #(#canScrollPastEnd: #canScrollPastEnd true) #(#scrollWidth: #scrollWidth 2000) #(#xOffset: #xOffset 0) #(#sciSetSelectionMode: #sciGetSelectionMode ##(SC_SEL_STREAM)) #(#backspaceUnindents: #backspaceUnindents false) #(#sciSetIndentationGuides: #sciGetIndentationGuides ##(SC_IV_NONE)) #(#indentation: #indentation 0) #(#tabIndents: #tabIndents true) #(#tabWidth: #tabWidth 8) #(#isUsingTabs: #isUsingTabs true) #(#tabMinimumWidth: #tabMinimumWidth 2) #(#targetRange: #targetRange ##(1
@@ -11312,6 +11315,7 @@ zoomOut
 !ScintillaView categoriesFor: #defaultFoldTextTag:!**auto generated**!public!scintilla interface! !
 !ScintillaView categoriesFor: #defaultMarkerDefinitions!constants!markers!private! !
 !ScintillaView categoriesFor: #defaultModEventMask!constants!private! !
+!ScintillaView categoriesFor: #defaultTextLimit!constants!private! !
 !ScintillaView categoriesFor: #defaultTextStylesFor:!constants!public!style definition! !
 !ScintillaView categoriesFor: #defaultWhitespaceChars!constants!public! !
 !ScintillaView categoriesFor: #defaultWindowStyle!constants!private! !
