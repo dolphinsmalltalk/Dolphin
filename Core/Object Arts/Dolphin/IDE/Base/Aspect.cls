@@ -349,7 +349,7 @@ block: anAspectSymbol
 	for some kind of <valuable> (not necessarily a block).
 	The aspect is editable using a <ValueWorkspace> presenter."
 
-	^(self name: anAspectSymbol presenterBlock: nil)
+	^(self name: anAspectSymbol presenterBlock: self defaultPresenterBlock)
 		beMultilineValue;
 		yourself!
 
