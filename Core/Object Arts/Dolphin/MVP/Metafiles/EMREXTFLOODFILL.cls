@@ -97,7 +97,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_EXTFLOODFILL! !
+	^{EMR_EXTFLOODFILL}! !
 !EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !

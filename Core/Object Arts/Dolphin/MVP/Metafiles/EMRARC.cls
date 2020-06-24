@@ -105,11 +105,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array 
-		with: EMR_ARC
-		with: EMR_ARCTO
-		with: EMR_CHORD
-		with: EMR_PIE! !
+	^{EMR_ARC. EMR_ARCTO. EMR_CHORD. EMR_PIE}! !
 !EMRARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRARC class categoriesFor: #iTypes!constants!public! !

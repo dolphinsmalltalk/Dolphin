@@ -1,45 +1,40 @@
 ﻿| package |
 package := Package name: 'Smalltalk Compiler'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #StArgumentVariable;
-	add: #StBlockScope;
-	add: #StClassScope;
-	add: #StEvalScope;
-	add: #StGeneratedTempVariable;
-	add: #StInstanceVariable;
-	add: #StLexicalScope;
-	add: #StLocalVariable;
-	add: #StMethodScope;
-	add: #StOptimizedBlockScope;
-	add: #StSelfVariable;
-	add: #StSemanticAnalyser;
-	add: #StSemanticScope;
-	add: #StSpecialVariable;
-	add: #StStaticVariable;
-	add: #StSuperVariable;
-	add: #StTempVariable;
-	add: #StThisContextVariable;
-	add: #StVariable;
-	yourself.
+package setClassNames: #(
+	#{StArgumentVariable}
+	#{StBlockScope}
+	#{StClassScope}
+	#{StEvalScope}
+	#{StGeneratedTempVariable}
+	#{StInstanceVariable}
+	#{StLexicalScope}
+	#{StLocalVariable}
+	#{StMethodScope}
+	#{StOptimizedBlockScope}
+	#{StSelfVariable}
+	#{StSemanticAnalyser}
+	#{StSemanticScope}
+	#{StSpecialVariable}
+	#{StStaticVariable}
+	#{StSuperVariable}
+	#{StTempVariable}
+	#{StThisContextVariable}
+	#{StVariable}
+).
 
-package methodNames
-	add: #StMethodNode -> #analyze;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{StMethodNode} #analyze)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'Smalltalk Parser').
+	'Smalltalk Parser'
+).
 
 package!
 
@@ -140,9 +135,6 @@ StSpecialVariable subclass: #StThisContextVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

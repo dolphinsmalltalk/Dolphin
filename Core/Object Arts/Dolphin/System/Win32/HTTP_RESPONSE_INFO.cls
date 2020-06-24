@@ -34,11 +34,7 @@ info
 
 	| type |
 	type := self Type.
-	^(##(Array
-		with: HTTP_MULTIPLE_KNOWN_HEADERS
-		with: nil
-		with: HTTP_QOS_SETTING_INFO
-		with: HTTP_CHANNEL_BIND_INFO) at: type + 1)
+	^(##({HTTP_MULTIPLE_KNOWN_HEADERS. nil. HTTP_QOS_SETTING_INFO. HTTP_CHANNEL_BIND_INFO}) at: type + 1)
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo)	""!
 
 Length

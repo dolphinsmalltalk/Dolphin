@@ -191,10 +191,7 @@ exampleGdipGPCreatingFigures
 	path addLineFrom: 100 @ 0 to: 250 @ 20.
 	path startFigure.
 	path addLineFrom: 50 @ 20 to: 5 @ 90.
-	path addCurve: (Array 
-				with: 40 @ 60
-				with: 50 @ 70
-				with: 30 @ 90).
+	path addCurve: {40 @ 60. 50 @ 70. 30 @ 90}.
 	path addLineFrom: 50 @ 150 to: 150 @ 180.
 	path closeFigure.
 	graphics drawPath: path pen: pen.

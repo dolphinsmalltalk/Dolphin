@@ -704,20 +704,20 @@ nilVariable
 
 	self setSelectedVariableTo: nil!
 
-onAboutToDisplayMenu: aMenu 
+onAboutToDisplayMenu: aMenu
 	"The system is about to display the <Menu>, popup, this is our chance
 	to fiddle with it."
 
 	super onAboutToDisplayMenu: aMenu.
 	self class enableDynamicMenus ifFalse: [^self].
-	aMenu name == #implementDNUMenu 
+	aMenu name == #implementDNUMenu
 		ifTrue: 
 			[self populateImplementMenu: aMenu.
 			^self].
 	"Otherwise pass on to the dev. system model to populate message menus"
-	self model 
+	self model
 		populateMessagesMenus: aMenu
-		fromMethods: (Array with: self selectedMethod)
+		fromMethods: {self selectedMethod}
 		environment: self searchEnvironment!
 
 onBreak: pFrame
@@ -942,7 +942,7 @@ performMethodsRefactoring: aMonadicValuable name: aString
 	self promptToSaveChanges ifFalse: [^self].
 	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods!
 
-populateImplementMenu: aMenu 
+populateImplementMenu: aMenu
 	"Private - Build the menu which lists the classes into which a stub can be generated for
 	messages which were either not understood, or not implemented directly by the receiver's
 	class. The receiver's class is the first, default, item on the menu, and is separated from
@@ -952,7 +952,7 @@ populateImplementMenu: aMenu
 	frame := self frame homeFrame.
 	method := frame method.
 	selector := method selector.
-	msg := selector == #doesNotUnderstand: 
+	msg := selector == #doesNotUnderstand:
 				ifTrue: [frame arguments first]
 				ifFalse: 
 					[self assert: [method methodClass ~= frame receiver class].
@@ -960,28 +960,27 @@ populateImplementMenu: aMenu
 	receiver := frame receiver.
 	class := receiver class.
 	aMenu clear.
-	aMenu addCommand: (MessageSend 
+	aMenu addCommand: (MessageSend
 				receiver: self
 				selector: #restartWithStubFor:inClass:
-				arguments: (Array with: msg with: receiver class))
+				arguments: {msg. receiver class})
 		description: class name.
 	superclasses := OrderedCollection new.
 	
 	[current := class superclass.
 	class := current.
-	current notNil 
-		and: [selector == #doesNotUnderstand: or: [(current includesSelector: selector) not]]] 
+	current notNil and: [selector == #doesNotUnderstand: or: [(current includesSelector: selector) not]]]
 			whileTrue: [superclasses addLast: current].
-	superclasses notEmpty 
+	superclasses notEmpty
 		ifTrue: 
 			[aMenu addSeparator.
 			superclasses do: 
-					[:each | 
+					[:each |
 					| cmd |
-					cmd := MessageSend 
+					cmd := MessageSend
 								receiver: self
 								selector: #restartWithStubFor:inClass:
-								arguments: (Array with: msg with: each).
+								arguments: {msg. each}.
 					aMenu addCommand: cmd description: each name]].
 	aMenu setDefault: 1!
 
@@ -1485,7 +1484,7 @@ selectedMethod
 	^_method!
 
 selectedMethods
-	^self selectedMethod ifNil: [#()] ifNotNil: [:method | Array with: method]!
+	^self selectedMethod ifNil: [#()] ifNotNil: [:method | {method}]!
 
 selectedNode
 	"Private - Answer an <StProgramNode> to represent the syntactic element which is currently
@@ -1783,9 +1782,9 @@ updateTemporaries
 	extra := frame stackWorkspace.
 	class := receiver basicClass.
 	varList := OrderedCollection new: 1 + tempCount + class instSize + extra.
-	varList addLast: (Array with: 'self' with: receiver).
-	class allInstVarNames 
-		keysAndValuesDo: [:i :each | varList addLast: (Array with: '   ' , each with: (receiver instVarAt: i))].
+	varList addLast: {'self'. receiver}.
+	class allInstVarNames
+		keysAndValuesDo: [:i :each | varList addLast: {'   ' , each. receiver instVarAt: i}].
 
 	"The evaluation context of the inspector becomes the frames receiver."
 	inspectorPresenter evaluationContext: receiver.
@@ -1796,29 +1795,28 @@ updateTemporaries
 	can be used in expressions in the source and inspector panes, and add them
 	into the variables list."
 	temps do: 
-			[:each | 
-			"The compiler temp map may contain entries for unused temps that are not allocated a slot in the frame - these have an index of 0"
+			[:each |
 			| i |
+			"The compiler temp map may contain entries for unused temps that are not allocated a slot in the frame - these have an index of 0"
 			i := each third.
-			i > 0 
+			i > 0
 				ifTrue: 
 					[| tempValue tempName |
 					tempName := each first.
 					tempValue := (frame getOuter: each second) at: i.
 					pool at: tempName put: tempValue.
-					varList addLast: (Array with: tempName with: tempValue)]].
+					varList addLast: {tempName. tempValue}]].
 
 	"Add any extra used stack slots onto the variables list"
 	base := frame index + frame frameSize.
-	0 to: extra - 1
-		do: [:i | varList addLast: (Array with: '_stack' , i displayString with: (process at: base + i))].
-	frame method evaluationPools 
+	0 to: extra - 1 do: [:i | varList addLast: {'_stack' , i displayString. process at: base + i}].
+	frame method evaluationPools
 		ifNotNil: 
-			[:evalPools | 
-			evalPools notEmpty 
+			[:evalPools |
+			evalPools notEmpty
 				ifTrue: 
 					[evalPools first isNil ifFalse: [pool addAll: evalPools first associations].
-					inspectorPresenter 
+					inspectorPresenter
 						evaluationPools: (evalPools copyFrom: 2 to: evalPools size) , inspectorPresenter evaluationPools]].
 
 	"Source presenter should share the same pools"

@@ -96,7 +96,7 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-resetForFoundClass: aClass 
+resetForFoundClass: aClass
 	"Private - Reset the receiver to place it into a state required to display aClass
 	that has just been searched for. This should first navigate the receiver 
 	to the class's owning package."
@@ -104,7 +104,7 @@ resetForFoundClass: aClass
 	| package |
 	package := aClass owningPackage.
 	package isNil ifTrue: [^self].
-	(self packages includes: package) ifFalse: [self packages: (Array with: package)].
+	(self packages includes: package) ifFalse: [self packages: {package}].
 	super resetForFoundClass: aClass!
 
 saveStateOn: aWriteStream 
@@ -124,8 +124,8 @@ saveStateOn: aWriteStream
 	aWriteStream nextPutAll: ' value: aSystemBrowser.'.
 	aWriteStream nextPut: $]!
 
-searchForPackage: aPackage 
-	self packages: (Array with: aPackage)!
+searchForPackage: aPackage
+	self packages: {aPackage}!
 
 selectionEnvironment
 	| classEnvironment |

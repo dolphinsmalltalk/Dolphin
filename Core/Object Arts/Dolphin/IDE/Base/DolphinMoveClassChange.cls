@@ -25,9 +25,9 @@ expression
 	stream
 		print: ClassBuilder;
 		space.
-	#moveClass:toSuperclass: keywords with: (Array with: self changeClassName with: superclassName)
+	#moveClass:toSuperclass: keywords with: {self changeClassName. superclassName}
 		do: 
-			[:eachKeyword :eachArg | 
+			[:eachKeyword :eachArg |
 			stream
 				space;
 				display: eachKeyword;

@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SELECTPALETTE! !
+	^{EMR_SELECTPALETTE}! !
 !EMRSELECTPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSELECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTPALETTE class categoriesFor: #iTypes!constants!public! !

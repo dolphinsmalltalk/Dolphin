@@ -127,7 +127,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETICMPROFILEA with: EMR_SETICMPROFILEW! !
+	^{EMR_SETICMPROFILEA. EMR_SETICMPROFILEW}! !
 !EMRSETICMPROFILE class categoriesFor: #defineFields!public!template definition! !
 !EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !

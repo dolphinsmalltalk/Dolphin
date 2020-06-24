@@ -20,15 +20,15 @@ checkerForRule: aLintRule environment: env
 		environment: env;
 		yourself!
 
-methodFilterForRule: aLintRule inEnvironment: aBrowserEnvironment 
+methodFilterForRule: aLintRule inEnvironment: aBrowserEnvironment
 	^
-	[:method | 
+	[:method |
 	(aBrowserEnvironment includesMethod: method) and: 
 			[(self checkerForRule: aLintRule
-				environment: (SelectorEnvironment 
-						onMethods: (Array with: method selector)
+				environment: (SelectorEnvironment
+						onMethods: {method selector}
 						forClass: method methodClass
-						in: aBrowserEnvironment)) 
+						in: aBrowserEnvironment))
 					run.
 			aLintRule failedMethods notEmpty]]!
 

@@ -10,17 +10,17 @@ AXDispatchImpAbstract comment: ''!
 !AXDispatchImpAbstract categoriesForClass!Unclassified! !
 !AXDispatchImpAbstract methodsFor!
 
-decodeArgs: aDISPPARAMS 
+decodeArgs: aDISPPARAMS
 	| args argc rgvarg i |
 	argc := aDISPPARAMS cArgs.
 	argc == 0 ifTrue: [^#()].
 	"Optimize single argument"
-	argc == 1 ifTrue: [^Array with: aDISPPARAMS singleArg value].
+	argc == 1 ifTrue: [^{aDISPPARAMS singleArg value}].
 	rgvarg := aDISPPARAMS rgvarg.
 	args := Array new: argc.
 	i := argc.
 	rgvarg do: 
-			[:varg | 
+			[:varg |
 			args at: i put: varg value.
 			i := i - 1].
 	^args!
@@ -137,7 +137,7 @@ notifyDispatchError: anError invoking: dispidInteger
 supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
-	^Array with: IDispatch!
+	^{IDispatch}!
 
 typeInfo: lcid ifNone: exceptionHandler
 	"Private - Answer an <ITypeInfo> on the type information for this dispinterface,

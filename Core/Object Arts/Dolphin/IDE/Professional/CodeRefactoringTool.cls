@@ -75,7 +75,7 @@ changeSignature: aSymbol in: methodClass operation: aMonadicValuable title: titl
 								with: titleString).
 					nil]]!
 
-changeSignatureCommandFor: aStMessageNode in: aClass operation: aMonadicValuable title: aString 
+changeSignatureCommandFor: aStMessageNode in: aClass operation: aMonadicValuable title: aString
 	"Private - Determines the receiver of a message under the caret, and if possible works out
 	its class. Answers an appropriate <Message> which when sent to the receiver will initiate a
 	method signature changing refactoring (e.g. a selector rename) of the appropriate method, by
@@ -85,11 +85,7 @@ changeSignatureCommandFor: aStMessageNode in: aClass operation: aMonadicValuable
 	complete job because all initialised variables have a type we can use to lookup the method."
 
 	^Message selector: #changeSignature:in:operation:title:
-		arguments: (Array 
-				with: aStMessageNode selector
-				with: aClass
-				with: aMonadicValuable
-				with: aString)!
+		arguments: {aStMessageNode selector. aClass. aMonadicValuable. aString}!
 
 contextBindingFor: aString 
 	^presenter contextBindingFor: aString!
@@ -247,13 +243,13 @@ findAssignmentsToTemp: aStVariableNode
 hasUndeclaredVariables
 	^presenter compilationErrors anySatisfy: [:each | each errorCode = CErrUndeclared]!
 
-implementMessage: aStMessageNode 
+implementMessage: aStMessageNode
 	| dialog |
 	dialog := self systemModel classChooserClass create.
 	dialog
 		caption: 'Choose Target Class...';
 		allowNil: false.
-	presenter parseContext owningPackage ifNotNil: [:package | dialog packages: (Array with: package)].
+	presenter parseContext owningPackage ifNotNil: [:package | dialog packages: {package}].
 	dialog showModal ifNotNil: [:class | self implementMessage: aStMessageNode inClass: class]!
 
 implementMessage: aStMessageNode inClass: aClass 
@@ -394,65 +390,65 @@ populateAutoCorrectMenu: aMenu forMessage: aStMessageNode
 	implementMenu := aMenu addSubmenu: ('&Implement <1p> In' expandMacrosWith: aStMessageNode selector).
 	self populateImplementMenu: implementMenu forMessage: aStMessageNode!
 
-populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode 
+populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
 	| methodClass |
 	methodClass := presenter parseContext.
-	^aStVariableNode name first isUppercase 
+	^aStVariableNode name first isUppercase
 		ifTrue: 
 			[| subMenu |
 			subMenu := aMenu addSubmenu: ('Add C&lass Variable <1p> to' expandMacrosWith: aStVariableNode name).
 			methodClass instanceClass withAllSuperclassesDo: 
-					[:eachClass | 
-					subMenu addCommand: (MessageSend 
+					[:eachClass |
+					subMenu addCommand: (MessageSend
 								receiver: self
 								selector: #addClassVariable:to:
-								arguments: (Array with: aStVariableNode with: eachClass))
+								arguments: {aStVariableNode. eachClass})
 						description: eachClass name].
-			aMenu addCommand: (MessageSend 
+			aMenu addCommand: (MessageSend
 						receiver: self
 						selector: #createClassForVariable:
-						arguments: (Array with: aStVariableNode))
+						arguments: {aStVariableNode})
 				description: ('Create &Class <1p>' expandMacrosWith: aStVariableNode name).
-			aMenu addCommand: (MessageSend 
+			aMenu addCommand: (MessageSend
 						receiver: self
 						selector: #addGlobalVariable:
-						arguments: (Array with: aStVariableNode))
+						arguments: {aStVariableNode})
 				description: ('Declare &Global <1p>' expandMacrosWith: aStVariableNode name)]
 		ifFalse: 
 			[| subMenu |
-			aMenu addCommand: (MessageSend 
+			aMenu addCommand: (MessageSend
 						receiver: self
 						selector: #declareTemporary:
-						arguments: (Array with: aStVariableNode))
+						arguments: {aStVariableNode})
 				description: ('Declare &Temp <1p>' expandMacrosWith: aStVariableNode name).
-			subMenu := Menu 
+			subMenu := Menu
 						description: ('Add &Instance Variable <1p> to' expandMacrosWith: aStVariableNode name).
 			methodClass withAllSuperclassesDo: 
-					[:eachClass | 
-					(ClassBuilder isFixedLayout: eachClass) 
+					[:eachClass |
+					(ClassBuilder isFixedLayout: eachClass)
 						ifFalse: 
-							[subMenu addCommand: (MessageSend 
+							[subMenu addCommand: (MessageSend
 										receiver: self
 										selector: #addInstanceVariable:to:
-										arguments: (Array with: aStVariableNode with: eachClass))
+										arguments: {aStVariableNode. eachClass})
 								description: eachClass name]].
 			subMenu isEmpty ifFalse: [aMenu addItem: subMenu]]!
 
-populateAutoCorrectMenu: aMenu forVariable: aStVariableNode 
+populateAutoCorrectMenu: aMenu forVariable: aStVariableNode
 	| range |
 	range := aStVariableNode sourceInterval.
 	(presenter compilationErrors select: [:each | each range = range]) do: 
-			[:each | 
+			[:each |
 			| code |
 			code := each errorCode.
-			code = CErrUndeclared 
+			code = CErrUndeclared
 				ifTrue: [self populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode].
-			code = CWarnUnreferencedTemp 
+			code = CWarnUnreferencedTemp
 				ifTrue: 
-					[aMenu addCommand: (MessageSend 
+					[aMenu addCommand: (MessageSend
 								receiver: self
 								selector: #removeTempDecl:
-								arguments: (Array with: aStVariableNode))
+								arguments: {aStVariableNode})
 						description: 'Remove Declaration ']]!
 
 populateImplementMenu: aMenu 
@@ -461,22 +457,22 @@ populateImplementMenu: aMenu
 
 	self populateImplementMenu: aMenu forMessage: presenter selectedMessageNode!
 
-populateImplementMenu: aMenu forMessage: aStMessageNode 
+populateImplementMenu: aMenu forMessage: aStMessageNode
 	aMenu clear.
-	(presenter targetOfMessage: aStMessageNode) 
+	(presenter targetOfMessage: aStMessageNode)
 		ifNotNil: 
-			[:target | 
+			[:target |
 			| class |
 			class := target.
 			[class notNil and: [(class includesSelector: aStMessageNode selector) not]] whileTrue: 
-					[aMenu addCommand: (MessageSend 
+					[aMenu addCommand: (MessageSend
 								receiver: self
 								selector: #implementMessage:inClass:
-								arguments: (Array with: aStMessageNode with: class))
+								arguments: {aStMessageNode. class})
 						description: class name.
 					class := class superclass]].
 	aMenu notEmpty ifTrue: [aMenu addSeparator].
-	aMenu addCommand: (MessageSend 
+	aMenu addCommand: (MessageSend
 				receiver: self
 				selector: #implementMessage:
 				argument: aStMessageNode)

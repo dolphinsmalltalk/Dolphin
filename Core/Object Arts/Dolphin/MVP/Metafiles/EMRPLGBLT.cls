@@ -422,7 +422,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_PLGBLT! !
+	^{EMR_PLGBLT}! !
 !EMRPLGBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRPLGBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPLGBLT class categoriesFor: #iTypes!constants!public! !

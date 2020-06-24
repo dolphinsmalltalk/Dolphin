@@ -86,9 +86,8 @@ packagedResourceIdentifierDialogClass: anObject
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^(super publishedAspects)
-		add: (Aspect choice: #defaultBrowserClass
-					from: (Array with: self hierarchyBrowserClass with: self systemBrowserClass));
+	^super publishedAspects
+		add: (Aspect choice: #defaultBrowserClass from: {self hierarchyBrowserClass. self systemBrowserClass});
 		yourself!
 
 queryCommand: aCommandQuery 

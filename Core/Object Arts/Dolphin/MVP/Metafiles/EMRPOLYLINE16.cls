@@ -113,12 +113,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array 
-		with: EMR_POLYLINE16
-		with: EMR_POLYBEZIER16
-		with: EMR_POLYGON16
-		with: EMR_POLYBEZIERTO16
-		with: EMR_POLYLINETO16! !
+	^{EMR_POLYLINE16. EMR_POLYBEZIER16. EMR_POLYGON16. EMR_POLYBEZIERTO16. EMR_POLYLINETO16}! !
 !EMRPOLYLINE16 class categoriesFor: #defineFields!public!template definition! !
 !EMRPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYLINE16 class categoriesFor: #iTypes!constants!public! !

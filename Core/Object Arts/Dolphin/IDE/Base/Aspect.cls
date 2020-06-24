@@ -338,7 +338,7 @@ bitmap: aBitmapAspectSymbol
 			[:p |
 			| filename |
 			filename := FileOpenDialog new
-						fileTypes: (Array with: DIBSection filesType with: FileDialog allFilesType);
+						fileTypes: {DIBSection filesType. FileDialog allFilesType};
 						showModal.
 			filename notNil ifTrue: [p value: (DIBSection fromFile: filename)]])
 		bePresenterBlockReadOnly;

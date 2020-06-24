@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GDI+ Binding
 Copyright (c) Dan Antion, Object Arts Ltd, Louis Sumberg, Chris Uppal, and Steve Waring, 2003-2004.
@@ -125,119 +125,113 @@ GdiplusGUIDs
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #ENHMETAHEADER3;
-	add: #GdiplusAdjustableArrowCap;
-	add: #GdiplusAdjustableArrowCapInitializer;
-	add: #GdiplusBase;
-	add: #GdiplusBitmap;
-	add: #GdiplusBitmapFromBitmapInitializer;
-	add: #GdiplusBitmapFromBlankInitializer;
-	add: #GdiplusBitmapFromBytesInitializer;
-	add: #GdiplusBitmapFromFileInitializer;
-	add: #GdiplusBitmapFromIconInitializer;
-	add: #GdiplusBitmapFromIStreamInitializer;
-	add: #GdiplusBrush;
-	add: #GdiplusCachedBitmap;
-	add: #GdiplusCachedBitmapInitializer;
-	add: #GdiplusCustomLineCap;
-	add: #GdiplusCustomLineCapInitializer;
-	add: #GdiplusDoubleBufferedView;
-	add: #GdiplusError;
-	add: #GdiplusFont;
-	add: #GdiplusFontCollection;
-	add: #GdiplusFontFamily;
-	add: #GdiplusFontFamilyFromNameInitializer;
-	add: #GdiplusFontFamilyGenericSansSerifInitializer;
-	add: #GdiplusFontFamilyGenericSerifInitializer;
-	add: #GdiplusFontFamilyInitializer;
-	add: #GdiplusFontFromFontFamilyInitializer;
-	add: #GdiplusFromBytesInitializer;
-	add: #GdiplusFromFileInitializer;
-	add: #GdiplusGraphics;
-	add: #GdiplusGraphicsFromHDCInitializer;
-	add: #GdiplusGraphicsFromImageInitializer;
-	add: #GdiplusGraphicsPath;
-	add: #GdiplusGraphicsPathFromPointsInitializer;
-	add: #GdiplusGraphicsPathInitializer;
-	add: #GdiplusHatchBrush;
-	add: #GdiplusHatchBrushInitializer;
-	add: #GdiplusImage;
-	add: #GdiplusImageAttributes;
-	add: #GdiplusImageAttributesInitializer;
-	add: #GdiplusImageFromBytesInitializer;
-	add: #GdiplusImageFromFileInitializer;
-	add: #GdiplusImageFromIStreamInitializer;
-	add: #GdiplusInitializer;
-	add: #GdiplusInstalledFontCollection;
-	add: #GdiplusInstalledFontCollectionInitializer;
-	add: #GdiplusLibrary;
-	add: #GdiplusLinearGradientBrush;
-	add: #GdiplusLinearGradientBrushFromPointsInitializer;
-	add: #GdiplusLinearGradientBrushFromRectInitializer;
-	add: #GdiplusLinearGradientBrushInitializer;
-	add: #GdiplusMatrix;
-	add: #GdiplusMatrixInitializer;
-	add: #GdiplusPathGradientBrush;
-	add: #GdiplusPathGradientFromPathInitializer;
-	add: #GdiplusPathGradientFromPointsInitializer;
-	add: #GdiplusPen;
-	add: #GdiplusPenFromBrushInitializer;
-	add: #GdiplusPenFromColorInitializer;
-	add: #GdiplusPenInitializer;
-	add: #GdiplusPrivateFontCollection;
-	add: #GdiplusPrivateFontCollectionInitializer;
-	add: #GdiplusRegion;
-	add: #GdiplusRegionFromPathInitializer;
-	add: #GdiplusRegionFromRectangleInitializer;
-	add: #GdiplusRegionInitializer;
-	add: #GdiplusSolidBrush;
-	add: #GdiplusSolidBrushFromColorInitializer;
-	add: #GdiplusStartupInput;
-	add: #GdiplusStartupOutput;
-	add: #GdiplusStringFormat;
-	add: #GdiplusStringFormatFromFlagsInitializer;
-	add: #GdiplusStringFormatGenericDefaultInitializer;
-	add: #GdiplusStringFormatGenericTypographicInitializer;
-	add: #GdiplusStringFormatInitializer;
-	add: #GdiplusTextureBrush;
-	add: #GdiplusTextureBrushInitializer;
-	add: #GpBitmapData;
-	add: #GpCharacterRange;
-	add: #GpColorMap;
-	add: #GpColorMatrix;
-	add: #GpColorPalette;
-	add: #GpEncoderParameter;
-	add: #GpEncoderParameters;
-	add: #GpImageCodecInfo;
-	add: #GpMetafileHeader;
-	add: #GpPathData;
-	add: #GpPropertyItem;
-	add: #GpWmfPlaceableFileHeader;
-	add: #GpWMFRect16;
-	add: #METAHEADER;
-	add: #RECTF;
-	yourself.
+package setClassNames: #(
+	#{ENHMETAHEADER3}
+	#{GdiplusAdjustableArrowCap}
+	#{GdiplusAdjustableArrowCapInitializer}
+	#{GdiplusBase}
+	#{GdiplusBitmap}
+	#{GdiplusBitmapFromBitmapInitializer}
+	#{GdiplusBitmapFromBlankInitializer}
+	#{GdiplusBitmapFromBytesInitializer}
+	#{GdiplusBitmapFromFileInitializer}
+	#{GdiplusBitmapFromIconInitializer}
+	#{GdiplusBitmapFromIStreamInitializer}
+	#{GdiplusBrush}
+	#{GdiplusCachedBitmap}
+	#{GdiplusCachedBitmapInitializer}
+	#{GdiplusCustomLineCap}
+	#{GdiplusCustomLineCapInitializer}
+	#{GdiplusDoubleBufferedView}
+	#{GdiplusError}
+	#{GdiplusFont}
+	#{GdiplusFontCollection}
+	#{GdiplusFontFamily}
+	#{GdiplusFontFamilyFromNameInitializer}
+	#{GdiplusFontFamilyGenericSansSerifInitializer}
+	#{GdiplusFontFamilyGenericSerifInitializer}
+	#{GdiplusFontFamilyInitializer}
+	#{GdiplusFontFromFontFamilyInitializer}
+	#{GdiplusFromBytesInitializer}
+	#{GdiplusFromFileInitializer}
+	#{GdiplusGraphics}
+	#{GdiplusGraphicsFromHDCInitializer}
+	#{GdiplusGraphicsFromImageInitializer}
+	#{GdiplusGraphicsPath}
+	#{GdiplusGraphicsPathFromPointsInitializer}
+	#{GdiplusGraphicsPathInitializer}
+	#{GdiplusHatchBrush}
+	#{GdiplusHatchBrushInitializer}
+	#{GdiplusImage}
+	#{GdiplusImageAttributes}
+	#{GdiplusImageAttributesInitializer}
+	#{GdiplusImageFromBytesInitializer}
+	#{GdiplusImageFromFileInitializer}
+	#{GdiplusImageFromIStreamInitializer}
+	#{GdiplusInitializer}
+	#{GdiplusInstalledFontCollection}
+	#{GdiplusInstalledFontCollectionInitializer}
+	#{GdiplusLibrary}
+	#{GdiplusLinearGradientBrush}
+	#{GdiplusLinearGradientBrushFromPointsInitializer}
+	#{GdiplusLinearGradientBrushFromRectInitializer}
+	#{GdiplusLinearGradientBrushInitializer}
+	#{GdiplusMatrix}
+	#{GdiplusMatrixInitializer}
+	#{GdiplusPathGradientBrush}
+	#{GdiplusPathGradientFromPathInitializer}
+	#{GdiplusPathGradientFromPointsInitializer}
+	#{GdiplusPen}
+	#{GdiplusPenFromBrushInitializer}
+	#{GdiplusPenFromColorInitializer}
+	#{GdiplusPenInitializer}
+	#{GdiplusPrivateFontCollection}
+	#{GdiplusPrivateFontCollectionInitializer}
+	#{GdiplusRegion}
+	#{GdiplusRegionFromPathInitializer}
+	#{GdiplusRegionFromRectangleInitializer}
+	#{GdiplusRegionInitializer}
+	#{GdiplusSolidBrush}
+	#{GdiplusSolidBrushFromColorInitializer}
+	#{GdiplusStartupInput}
+	#{GdiplusStartupOutput}
+	#{GdiplusStringFormat}
+	#{GdiplusStringFormatFromFlagsInitializer}
+	#{GdiplusStringFormatGenericDefaultInitializer}
+	#{GdiplusStringFormatGenericTypographicInitializer}
+	#{GdiplusStringFormatInitializer}
+	#{GdiplusTextureBrush}
+	#{GdiplusTextureBrushInitializer}
+	#{GpBitmapData}
+	#{GpCharacterRange}
+	#{GpColorMap}
+	#{GpColorMatrix}
+	#{GpColorPalette}
+	#{GpEncoderParameter}
+	#{GpEncoderParameters}
+	#{GpImageCodecInfo}
+	#{GpMetafileHeader}
+	#{GpPathData}
+	#{GpPropertyItem}
+	#{GpWmfPlaceableFileHeader}
+	#{GpWMFRect16}
+	#{METAHEADER}
+	#{RECTF}
+).
 
-package methodNames
-	add: #Bitmap -> #asColorKeyedBitmap;
-	add: #Bitmap -> #asColorKeyedBitmap:;
-	add: #Point -> #scaledOver:;
-	add: #Point -> #scaledTo:;
-	add: #Rectangle -> #asGdiplusRectangle;
-	add: #View -> #createThumbnailExtent:mask:;
-	yourself.
+package setMethodNames: #(
+	#(#{Bitmap} #asColorKeyedBitmap)
+	#(#{Bitmap} #asColorKeyedBitmap:)
+	#(#{Point} #scaledOver:)
+	#(#{Point} #scaledTo:)
+	#(#{Rectangle} #asGdiplusRectangle)
+	#(#{View} #createThumbnailExtent:mask:)
+).
 
-package globalNames
-	add: #GdiplusConstants;
-	add: #GdiplusGUIDs;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{GdiplusConstants}
+	#{GdiplusGUIDs}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -248,7 +242,8 @@ package setPrerequisites: #(
 	'..\Models\List\Dolphin List Models'
 	'..\..\Base\Dolphin Message Box'
 	'..\Base\Dolphin MVP Base'
-	'..\..\ActiveX\Structured Storage\OLE Structured Storage').
+	'..\..\ActiveX\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
@@ -709,9 +704,6 @@ View subclass: #GdiplusDoubleBufferedView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

@@ -301,7 +301,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETDIBITSTODEVICE! !
+	^{EMR_SETDIBITSTODEVICE}! !
 !EMRSETDIBITSTODEVICE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETDIBITSTODEVICE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETDIBITSTODEVICE class categoriesFor: #iTypes!constants!public! !

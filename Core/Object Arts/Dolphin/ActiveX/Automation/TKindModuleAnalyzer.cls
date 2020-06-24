@@ -24,23 +24,20 @@ dllNameIfNone: exceptionHandler
 
 	^(self getDllEntry: (self functions at: 1 ifAbsent: [^exceptionHandler value])) first!
 
-getDllEntry: funcDesc 
+getDllEntry: funcDesc
 	"Private - Answer an array of info. about a member of the receiver."
 
 	| pBstrDllName pBstrName pwOrdinal answer |
 	pBstrDllName := BSTR new.
 	pBstrName := BSTR new.
 	pwOrdinal := DWORDBytes new.
-	self tlbInterface 
+	self tlbInterface
 		GetDllEntry: funcDesc memid
 		invkind: funcDesc invkind
 		pBstrDllName: pBstrDllName
 		pBstrName: pBstrName
 		pwOrdinal: pwOrdinal.
-	answer := Array 
-				with: pBstrDllName asString
-				with: pBstrName asString
-				with: pwOrdinal value.
+	answer := {pBstrDllName asString. pBstrName asString. pwOrdinal value}.
 	pBstrDllName free.
 	pBstrName free.
 	^answer!

@@ -85,13 +85,13 @@ getTabOffsets
 	count := self tabStopCount.
 	first := SDWORD new.
 	array := FLOATArray new: count.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetStringFormatTabStops: self asParameter
 				count: count
 				firstTabOffset: first
-				tabStops: array) == Ok 
+				tabStops: array) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
-	^Array with: first value with: array asArray!
+	^{first value. array asArray}!
 
 lineAlignment
 	| buf status |

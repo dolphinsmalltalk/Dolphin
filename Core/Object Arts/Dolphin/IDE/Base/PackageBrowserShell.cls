@@ -1109,7 +1109,7 @@ singlePackage
 singlePackage: aPackage
 	"Set the receiver to be displaying a single package, aPackage"
 
-	self packages: (Array with: aPackage)!
+	self packages: {aPackage}!
 
 source
 	"Private - Answer the source for the currently selected method as a String"

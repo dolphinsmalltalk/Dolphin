@@ -11,11 +11,11 @@ RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends Smalltal
 !RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
 !RefactoringSmalltalkSystem methodsFor!
 
-abstractClassVariable: aString in: aClass within: aBrowserEnvironment 
+abstractClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Class Variable' class refactoring: 'Performs the create accessors refactoring 
 	and then converts all direct variable to use the accessor methods.'"
 
-	self abstractClassVariables: (Array with: aClass -> aString) within: aBrowserEnvironment!
+	self abstractClassVariables: {aClass -> aString} within: aBrowserEnvironment!
 
 abstractClassVariables: aCollectionOfAssociations within: aBrowserEnvironment 
 	"Invoke the 'Abstract Class Variable' refactoring for each of the {class, class. var. name}
@@ -28,11 +28,11 @@ abstractClassVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
-abstractInstanceVariable: aString in: aClass within: aBrowserEnvironment 
+abstractInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Instance Variable' class refactoring: 'Performs the create
 	accessors refactoring and then converts all direct variable to use the accessor methods.'"
 
-	self abstractInstanceVariables: (Array with: aClass -> aString) within: aBrowserEnvironment!
+	self abstractInstanceVariables: {aClass -> aString} within: aBrowserEnvironment!
 
 abstractInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment 
 	"Invoke the 'Abstract Instance Variable' refactoring for each of the {class, inst. var.
@@ -45,10 +45,10 @@ abstractInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
-addClassVariable: aString to: aClass 
-	self 
+addClassVariable: aString to: aClass
+	self
 		executeVariableRefactoring: AddClassVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: self systemEnvironment!
 
 addClassVariableTo: aClass 
@@ -71,10 +71,10 @@ addFilteredMethod: aCompiledMethod forLintRule: aLintRule
 addGlobalVariable: aString 
 	self changeManager performChange: (DolphinAddGlobalChange addGlobal: aString)!
 
-addInstanceVariable: aString to: aClass 
-	self 
+addInstanceVariable: aString to: aClass
+	self
 		executeVariableRefactoring: AddInstanceVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: self systemEnvironment!
 
 addInstanceVariableTo: aClass 
@@ -172,9 +172,7 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 	and all of its subclasses by using the refactoring (although I wouldn't recommend it).'"
 
 	| categories |
-	categories := aClass isNil
-				ifTrue: [Array with: ClassCategory unclassified]
-				ifFalse: [aClass categories].
+	categories := aClass isNil ifTrue: [{ClassCategory unclassified}] ifFalse: [aClass categories].
 	self handleRefactoringException: 
 			[(AddClassRefactoring
 				addClass: aSymbol
@@ -262,11 +260,11 @@ convertToSibling: aClass
 					refactoring className asQualifiedReference
 						ifDefined: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
 
-createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment 
+createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment
 	"Invoke the 'Create Variable Accessors' refactoring on an instance variable."
 
-	self 
-		createVariableAccessors: (Array with: aClass -> aString)
+	self
+		createVariableAccessors: {aClass -> aString}
 		classVariables: false
 		within: aBrowserEnvironment!
 
@@ -727,13 +725,13 @@ pullUpClassVariable: aString into: aClass
 		into: aClass
 		within: self systemEnvironment!
 
-pullUpClassVariable: aString into: aClass within: aBrowserEnvironment 
+pullUpClassVariable: aString into: aClass within: aBrowserEnvironment
 	"Implement the 'Pull Up Class Variable' class refactoring: 'Move a variable definition
 	 up from a subclass.'"
 
-	^self 
+	^self
 		executeVariableRefactoring: PullUpClassVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
 
 pullUpInstanceVariable: aString into: aClass 
@@ -744,13 +742,13 @@ pullUpInstanceVariable: aString into: aClass
 		into: aClass
 		within: self systemEnvironment!
 
-pullUpInstanceVariable: aString into: aClass within: aBrowserEnvironment 
+pullUpInstanceVariable: aString into: aClass within: aBrowserEnvironment
 	"Implement the 'Pull Up Instance Variable' class refactoring: 'Move a variable definition
 	 from a subclass of the currently selected class into the currently selected class.'"
 
-	^self 
+	^self
 		executeVariableRefactoring: PullUpInstanceVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
 
 pushDownClassVariable: aString in: aClass 
@@ -762,7 +760,7 @@ pushDownClassVariable: aString in: aClass
 		in: aClass
 		within: self systemEnvironment!
 
-pushDownClassVariable: aString in: aClass within: aBrowserEnvironment 
+pushDownClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Push Down Class Variable' class refactoring within the scope of the
 	specified <BrowserEnvironment>: 'Moves a variable definition from the currently selected
 	class to only those subclasses that use the variable (removing the variable if no subclass
@@ -771,9 +769,9 @@ pushDownClassVariable: aString in: aClass within: aBrowserEnvironment
 	possibly break the code as a result. The refactoring is only allowed, if the specified
 	environment contains no references to the variable."
 
-	^self 
+	^self
 		executeVariableRefactoring: PushDownClassVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
 
 pushDownInstanceVariable: aString in: aClass 
@@ -785,16 +783,16 @@ pushDownInstanceVariable: aString in: aClass
 		in: aClass
 		within: self systemEnvironment!
 
-pushDownInstanceVariable: aString in: aClass within: aBrowserEnvironment 
+pushDownInstanceVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Push Down Instance Variable' class refactoring: 'Moves a variable definition
 	from the currently selected class to only those subclasses that use the variable (removing
 	the variable if no subclass has a reference to the variable). This will only be allowed, if
 	the selected class contains no references to the variable. As will the other variable
 	refactorings, this refactoring will not work with instVarAt:'s."
 
-	^self 
+	^self
 		executeVariableRefactoring: PushDownInstanceVariableRefactoring
-		variables: (Array with: aClass -> aString)
+		variables: {aClass -> aString}
 		within: aBrowserEnvironment!
 
 pushDownInstanceVariables: aCollectionOfAssociations 
@@ -882,8 +880,8 @@ refactoringError
 
 	^RefactoringSignal!
 
-removeClassVariable: aString from: aClass within: aBrowserEnvironment 
-	self removeClassVariables: (Array with: aClass -> aString) within: aBrowserEnvironment!
+removeClassVariable: aString from: aClass within: aBrowserEnvironment
+	self removeClassVariables: {aClass -> aString} within: aBrowserEnvironment!
 
 removeClassVariables: aCollectionOfAssociations within: aBrowserEnvironment 
 	"Invoke the 'Remove Class Variable' refactoring for each of the {class, var. name} pairs in
@@ -901,8 +899,8 @@ removeFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	filter removeClass: aCompiledMethod methodClass selector: aCompiledMethod selector.
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
 
-removeInstanceVariable: aString from: aClass within: aBrowserEnvironment 
-	^self removeInstanceVariables: (Array with: aClass -> aString) within: aBrowserEnvironment!
+removeInstanceVariable: aString from: aClass within: aBrowserEnvironment
+	^self removeInstanceVariables: {aClass -> aString} within: aBrowserEnvironment!
 
 removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment 
 	"Invoke the 'Remove Instance Variable' refactoring for each of the {class, inst. var. name}
@@ -1116,26 +1114,25 @@ renameVariable: aString to: newName in: aClass classVariable: aBoolean within: a
 			refactoring execute.
 			newName]!
 
-safeRemoveClass: aClass 
+safeRemoveClass: aClass
 	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
 	the class if referenced, and which promotes all subclasses."
 
 	| oldClassName |
 	oldClassName := aClass name asString.
-	((MessageBox new)
+	(MessageBox new
 		uniqueId: [self] method displayString;
 		isSuppressible: true;
 		caption: 'Safe Remove Class...';
 		confirm: ('Remove class <1p>?' expandMacrosWith: oldClassName)) ifFalse: [^false].
-	self 
-		handleRefactoringException: [(RemoveClassRefactoring classNames: (Array with: aClass name)) execute].
+	self handleRefactoringException: [(RemoveClassRefactoring classNames: {aClass name}) execute].
 	^true!
 
-safeRemoveMethod: aCompiledMethod 
+safeRemoveMethod: aCompiledMethod
 	"Implement the 'Remove Method' method refactoring."
 
-	self 
-		safeRemoveSelectors: (Array with: aCompiledMethod selector)
+	self
+		safeRemoveSelectors: {aCompiledMethod selector}
 		from: aCompiledMethod methodClass
 		inEnvironment: self systemEnvironment!
 
@@ -1155,24 +1152,24 @@ safeRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
 			[self safeRemoveMethodsIn: (aBrowserEnvironment forMethods: aCollectionOfCompiledMethods)
 				within: aBrowserEnvironment]!
 
-safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment 
+safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 	| model errors |
 	model := RBNamespace onEnvironment: searchEnvironment.
 	model name: 'Safe Remove ' , methodsEnvironment label.
 	errors := OrderedCollection new.
 	methodsEnvironment classesAndSelectorsDo: 
-			[:eachClass :eachSelector | 
+			[:eachClass :eachSelector |
 			
-			[(RemoveMethodRefactoring 
+			[(RemoveMethodRefactoring
 				model: model
-				removeMethods: (Array with: eachSelector)
-				from: eachClass) primitiveExecute] 
+				removeMethods: {eachSelector}
+				from: eachClass) primitiveExecute]
 					on: self refactoringError
 					do: 
-						[:ex | 
+						[:ex |
 						errors addLast: ex.
 						ex return]].
-	errors notEmpty 
+	errors notEmpty
 		ifTrue: 
 			[| prompt mb |
 			prompt := String writeStream.
@@ -1181,7 +1178,7 @@ safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 				nextPutAll: ' non-fatal error(s) occured while constructing the refactoring:';
 				cr.
 			errors do: 
-					[:each | 
+					[:each |
 					prompt
 						crtab;
 						nextPutAll: each description readStream nextLine].
@@ -1240,9 +1237,9 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 				execute;
 				yourself]!
 
-scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aBrowserEnvironment 
+scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aBrowserEnvironment
 	| finder dialog selectors scope |
-	finder := CreateAccessorsForVariableRefactoring 
+	finder := CreateAccessorsForVariableRefactoring
 				variable: aString
 				class: aClass
 				classVariable: aBoolean.
@@ -1251,21 +1248,19 @@ scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aB
 	finder findSetterMethod ifNotNil: [:setter | selectors addLast: setter].
 	selectors isEmpty ifTrue: [^nil].
 	dialog := RenameAccessorsDialog create.
-	dialog caption: ('Rename <3s> variable <1p>.<2s> ...' 
+	dialog caption: ('Rename <3s> variable <1p>.<2s> ...'
 				expandMacrosWith: aClass
 				with: aString
 				with: (aBoolean ifTrue: ['class'] ifFalse: ['instance'])).
 	dialog selectors: selectors.
 	scope := dialog showModal.
 	scope isNil ifTrue: [self refactoringAborted signal].
-	scope == #Class 
-		ifTrue: 
-			[^aBrowserEnvironment 
-				forClasses: (Array with: aClass instanceClass with: aClass instanceClass class)].
+	scope == #Class
+		ifTrue: [^aBrowserEnvironment forClasses: {aClass instanceClass. aClass instanceClass class}].
 	scope == #Hierarchy ifTrue: [^aBrowserEnvironment forClassHierarchyFrom: aClass].
-	scope == #'Package(s)' 
+	scope == #'Package(s)'
 		ifTrue: 
-			[^aBrowserEnvironment 
+			[^aBrowserEnvironment
 				forPackages: (selectors collect: [:each | (aClass compiledMethodAt: each) owningPackage])].
 	scope == #'Method(s)' ifTrue: [^aBrowserEnvironment forClass: aClass selectors: selectors].
 	scope == #Global ifTrue: [^aBrowserEnvironment].

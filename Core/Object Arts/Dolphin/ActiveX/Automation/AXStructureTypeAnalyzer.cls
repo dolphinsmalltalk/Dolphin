@@ -93,6 +93,6 @@ suggestedBinding
 
 initialize
 	BuiltIns := LookupTable new.
-	(Array with: ExternalHandle) do: [:each | BuiltIns at: each guid put: each]! !
+	{ExternalHandle} do: [:each | BuiltIns at: each guid put: each]! !
 !AXStructureTypeAnalyzer class categoriesFor: #initialize!initializing!private! !
 

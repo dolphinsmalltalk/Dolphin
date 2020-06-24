@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETMAPPERFLAGS! !
+	^{EMR_SETMAPPERFLAGS}! !
 !EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Categories'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Active-X Categories Package. 
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -18,28 +18,23 @@ This package is a pre-requisite for hosting Active-X visual controls (OCXs).'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #CATEGORYINFO;
-	add: #COMObjectRegistration;
-	add: #ICatInformation;
-	add: #ICatRegister;
-	yourself.
+package setClassNames: #(
+	#{CATEGORYINFO}
+	#{COMObjectRegistration}
+	#{ICatInformation}
+	#{ICatRegister}
+).
 
-package methodNames
-	add: #OLELibrary -> #oleRegGetUserType:dwFormOfType:pszUserType:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{OLELibrary} #oleRegGetUserType:dwFormOfType:pszUserType:)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\Registry\Dolphin Registry Access'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
 
@@ -65,9 +60,6 @@ OLEStructure subclass: #CATEGORYINFO
 	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

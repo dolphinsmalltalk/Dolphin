@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Metafiles'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.
 Copyright (c) Object Arts Ltd. 2010.'.
@@ -8,44 +8,39 @@ Copyright (c) Object Arts Ltd. 2010.'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ENHMETAHEADER;
-	add: #ENHMETARECORD;
-	add: #Metafile;
-	yourself.
+package setClassNames: #(
+	#{ENHMETAHEADER}
+	#{ENHMETARECORD}
+	#{Metafile}
+).
 
-package methodNames
-	add: #Clipboard -> #getMetafile;
-	add: #Clipboard -> #getMetafileIfNone:;
-	add: #GDILibrary -> #closeEnhMetaFile:;
-	add: #GDILibrary -> #copyEnhMetaFile:lpszFile:;
-	add: #GDILibrary -> #createEnhMetaFile:lpFileName:lpRect:lpDescription:;
-	add: #GDILibrary -> #deleteEnhMetaFile:;
-	add: #GDILibrary -> #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:;
-	add: #GDILibrary -> #getEnhMetaFile:;
-	add: #GDILibrary -> #getEnhMetaFileBits:cbBuffer:lpbBuffer:;
-	add: #GDILibrary -> #getEnhMetaFileDescription:cchBuffer:lpszDescription:;
-	add: #GDILibrary -> #getEnhMetaFileHeader:cbBuffer:lpemnh:;
-	add: #GDILibrary -> #getEnhMetaFilePaletteEntries:cbEntries:lppe:;
-	add: #GDILibrary -> #playEnhMetaFile:hemf:lpRect:;
-	add: #GDILibrary -> #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:;
-	add: #GDILibrary -> #setEnhMetaFileBits:lpData:;
-	yourself.
+package setMethodNames: #(
+	#(#{Clipboard} #getMetafile)
+	#(#{Clipboard} #getMetafileIfNone:)
+	#(#{GDILibrary} #closeEnhMetaFile:)
+	#(#{GDILibrary} #copyEnhMetaFile:lpszFile:)
+	#(#{GDILibrary} #createEnhMetaFile:lpFileName:lpRect:lpDescription:)
+	#(#{GDILibrary} #deleteEnhMetaFile:)
+	#(#{GDILibrary} #enumEnhMetaFile:hemf:lpEnhMetaFunc:lpData:lpRect:)
+	#(#{GDILibrary} #getEnhMetaFile:)
+	#(#{GDILibrary} #getEnhMetaFileBits:cbBuffer:lpbBuffer:)
+	#(#{GDILibrary} #getEnhMetaFileDescription:cchBuffer:lpszDescription:)
+	#(#{GDILibrary} #getEnhMetaFileHeader:cbBuffer:lpemnh:)
+	#(#{GDILibrary} #getEnhMetaFilePaletteEntries:cbEntries:lppe:)
+	#(#{GDILibrary} #playEnhMetaFile:hemf:lpRect:)
+	#(#{GDILibrary} #playEnhMetaFileRecord:lpHandletable:lpEnhMetaRecord:nHandles:)
+	#(#{GDILibrary} #setEnhMetaFileBits:lpData:)
+).
 
-package globalNames
-	add: #EnhancedMetafileRecordTypes;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{EnhancedMetafileRecordTypes}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
-	'..\Base\Dolphin MVP Base').
+	'..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -66,9 +61,6 @@ Image subclass: #Metafile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

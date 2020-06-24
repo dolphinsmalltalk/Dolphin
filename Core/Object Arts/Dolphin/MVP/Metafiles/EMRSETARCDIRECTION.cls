@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETARCDIRECTION! !
+	^{EMR_SETARCDIRECTION}! !
 !EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !

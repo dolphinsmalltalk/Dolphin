@@ -141,7 +141,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_CREATEDIBPATTERNBRUSHPT! !
+	^{EMR_CREATEDIBPATTERNBRUSHPT}! !
 !EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #iTypes!constants!public! !

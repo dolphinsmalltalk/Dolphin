@@ -112,7 +112,7 @@ refresh
 	| instVarTreeModel inspectee accessor |
 	inspectee := self object.
 	accessor := (inspectee newAspect: 0 class: InstVarAspect) accessorFor: inspectee.
-	instVarTreeModel := (ExpandingTreeModel withRoots: (Array with: accessor)) 
+	instVarTreeModel := (ExpandingTreeModel withRoots: {accessor})
 				getChildrenBlock: [:x | self getInstVarAccessorsOf: x].
 	aspectTreePresenter
 		model: instVarTreeModel;

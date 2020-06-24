@@ -57,10 +57,7 @@ fromAddress: anAddress
 	| ptr |
 	anAddress isNull ifTrue: [^nil].
 	ptr := anAddress asExternalAddress.
-	(##(Array
-		with: self
-		with: HTTP_SERVICE_BINDING_W
-		with: HTTP_SERVICE_BINDING_A) at: (ptr sdwordAtOffset: 0) + 1)
+	(##({self. HTTP_SERVICE_BINDING_W. HTTP_SERVICE_BINDING_A}) at: (ptr sdwordAtOffset: 0) + 1)
 		basicNew initializeAtAddress: ptr!
 
 getFieldNames

@@ -386,7 +386,7 @@ registration
 	"Answers an Association for the receiver as it would appear in
 	AXTypeLibraryAnalyzer class>>typeLibRegistrations."
 
-	^self helpstring -> (Array with: self guid asString with: self versionString)!
+	^self helpstring -> {self guid asString. self versionString}!
 
 reset
 	"Clear any cached information such as the list of analyzers. This may be necessary if
@@ -728,10 +728,10 @@ stbConvertFrom: anSTBClassFormat
 		do: [:i | newInstance instVarAt: i put: (converted at: i)].
 	newInstance]!
 
-stbConvertToVersion1: anArray 
+stbConvertToVersion1: anArray
 	"Convert from version 0 instance. - aliasMap and typeAnalyzers instance variables added."
 
-	^anArray , (Array with: self new aliasMap with: nil)!
+	^anArray , {self new aliasMap. nil}!
 
 stbConvertToVersion2: anArray 
 	"Convert from version 1 instance.

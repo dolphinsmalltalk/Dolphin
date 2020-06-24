@@ -114,7 +114,7 @@ propertyPut: item value: argument
 	There is some slight trickiness here as for some reason the property put argument must 
 	always be 'named'. As the argument count includes the named arguments it is set to two."
 
-	self args: (Array with: item with: argument).
+	self args: {item. argument}.
 	dispids := SDWORD fromInteger: DISPID_PROPERTYPUT.
 	self rgdispidNamedArgs: dispids.
 	self cNamedArgs: 1!

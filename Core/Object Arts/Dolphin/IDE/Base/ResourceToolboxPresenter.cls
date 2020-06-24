@@ -239,8 +239,8 @@ selectableItems
 	
 	^resourcesPresenter!
 
-selectCategory: aStringOrNil 
-	^categoriesPresenter selections: (Array with: aStringOrNil)!
+selectCategory: aStringOrNil
+	^categoriesPresenter selections: {aStringOrNil}!
 
 systemModel
 	"Private - Answer the development system model."

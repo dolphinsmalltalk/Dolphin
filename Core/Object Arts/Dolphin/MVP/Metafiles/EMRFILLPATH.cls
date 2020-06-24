@@ -67,10 +67,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array 
-		with: EMR_FILLPATH
-		with: EMR_STROKEANDFILLPATH
-		with: EMR_STROKEPATH! !
+	^{EMR_FILLPATH. EMR_STROKEANDFILLPATH. EMR_STROKEPATH}! !
 !EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRFILLPATH class categoriesFor: #iTypes!constants!public! !

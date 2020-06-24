@@ -67,7 +67,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETVIEWPORTEXTEX with: EMR_SETWINDOWEXTEX! !
+	^{EMR_SETVIEWPORTEXTEX. EMR_SETWINDOWEXTEX}! !
 !EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !

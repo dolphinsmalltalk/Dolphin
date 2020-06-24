@@ -67,7 +67,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_OFFSETCLIPRGN! !
+	^{EMR_OFFSETCLIPRGN}! !
 !EMROFFSETCLIPRGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMROFFSETCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMROFFSETCLIPRGN class categoriesFor: #iTypes!constants!public! !

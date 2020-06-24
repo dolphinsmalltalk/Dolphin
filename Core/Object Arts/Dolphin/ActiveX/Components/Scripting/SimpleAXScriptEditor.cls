@@ -166,10 +166,7 @@ scriptFileTypes
 	"Answer an Array of file types that can be associated with
 	instances of the receiver"
 
-	^Array
-		with: #('VB Script (*.vbs)' '*.vbs')
-		with: #('JScript (*.js)' '*.js')
-		with: FileDialog allFilesType!
+	^{#('VB Script (*.vbs)' '*.vbs'). #('JScript (*.js)' '*.js'). FileDialog allFilesType}!
 
 scriptParse
 	"Parse the script text, reporting any errors.

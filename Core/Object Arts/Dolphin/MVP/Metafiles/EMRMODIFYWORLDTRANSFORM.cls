@@ -85,7 +85,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_MODIFYWORLDTRANSFORM! !
+	^{EMR_MODIFYWORLDTRANSFORM}! !
 !EMRMODIFYWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRMODIFYWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRMODIFYWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !

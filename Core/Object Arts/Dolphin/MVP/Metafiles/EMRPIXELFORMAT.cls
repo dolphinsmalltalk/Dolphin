@@ -67,7 +67,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_PIXELFORMAT! !
+	^{EMR_PIXELFORMAT}! !
 !EMRPIXELFORMAT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRPIXELFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPIXELFORMAT class categoriesFor: #iTypes!constants!public! !

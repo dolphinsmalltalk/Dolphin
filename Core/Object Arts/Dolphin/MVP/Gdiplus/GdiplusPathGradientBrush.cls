@@ -29,7 +29,7 @@ blendColors
 				positions: positions
 				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientPresetBlend failed' with: status].
-	^Array with: (blend asArray collect: [:e | Color fromArgbCode: e]) with: positions asArray!
+	^{blend asArray collect: [:e | Color fromArgbCode: e]. positions asArray}!
 
 blendColors: colorsArray positions: positionsArray
 	"Set the preset colors and the blend positions of this path gradient brush.  colorsArray
@@ -71,7 +71,7 @@ blendFactors
 				positions: positions
 				count: count) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPathGradientBlend failed' with: status].
-	^Array with: factors asArray with: positions asArray!
+	^{factors asArray. positions asArray}!
 
 blendFactors: factorsArray positions: positionsArray 
 	| status |
@@ -389,11 +389,7 @@ exampleGdipPGBlendColors
 	| bitmap graphics brush colors |
 	bitmap := GdiplusBitmap extent: 400 @ 400.
 	graphics := bitmap graphics.
-	brush := GdiplusPathGradientBrush points: (Array 
-						with: 100 @ 0
-						with: 200 @ 200
-						with: 0 @ 200)
-				wrapMode: WrapModeTile.
+	brush := GdiplusPathGradientBrush points: {100 @ 0. 200 @ 200. 0 @ 200} wrapMode: WrapModeTile.
 	colors := self rgb.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -438,7 +434,7 @@ exampleGdipPGBlendFactors
 	(brush := GdiplusPathGradientBrush path: path)
 		wrapMode: WrapModeTile;
 		centerColor: Color blue;
-		surroundColors: (Array with: Color green with: Color red).
+		surroundColors: {Color green. Color red}.
 	graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
 	graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
@@ -457,17 +453,13 @@ exampleGdipPGBounds
 
 	| bitmap points brush bounds |
 	bitmap := GdiplusBitmap extent: 250 @ 300.
-	points := Array 
-				with: 0 @ 0
-				with: 120 @ 20
-				with: 70 @ 80
-				with: 30 @ 180.
+	points := {0 @ 0. 120 @ 20. 70 @ 80. 30 @ 180}.
 	"Uncomment the next line and see how this doesn't seem to work right."
 	"points := points collect: [:e | e + (20 @ 30)]."
 	brush := GdiplusPathGradientBrush points: points.
 	bitmap graphics translateTransform: 20 @ 30.
 	bounds := brush bounds.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: bounds brush: brush;
 		drawRectangle: bounds pen: GdiplusPen new;
 		drawPolygon: points pen: GdiplusPen red.
@@ -521,9 +513,9 @@ exampleGdipPGFocusScales
 	| bitmap brush focusBrush |
 	bitmap := GdiplusBitmap extent: 500 @ 250.
 	brush := GdiplusPathGradientBrush points: self triangle.
-	brush blendColors: (Array with: Color red with: Color blue) positions: #(0 1).
+	brush blendColors: {Color red. Color blue} positions: #(0 1).
 	focusBrush := brush clone focusScales: 0.2 @ 0.6.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 0;
 		translateTransform: 250 @ 0;
@@ -587,10 +579,7 @@ exampleGdipPGMultiply
 	| bitmap graphics points matrix brush |
 	bitmap := GdiplusBitmap extent: 650 @ 350.
 	graphics := bitmap graphics.
-	points := Array 
-				with: 0 @ 0
-				with: 150 @ 0
-				with: 150 @ 150.
+	points := {0 @ 0. 150 @ 0. 150 @ 150}.
 	brush := GdiplusPathGradientBrush points: points.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -638,7 +627,7 @@ exampleGdipPGSurroundColors
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
 	brush surroundColor: Color red.
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 200) brush: brush.
-	brush surroundColors: (Array with: Color red with: Color green).
+	brush surroundColors: {Color red. Color green}.
 	bitmap graphics fillRectangle: (0 @ 200 extent: 200 @ 200) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (200 @ 200 extent: 200 @ 200) brush: brush.
@@ -657,25 +646,21 @@ exampleGdipPGSurroundColors2
 		wrapMode: WrapModeTile;
 		centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: Color red).
+	brush surroundColors: {Color red}.
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: Color red with: Color green).
+	brush surroundColors: {Color red. Color green}.
 	bitmap graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: Color cyan).
+	brush surroundColors: self rgb , {Color cyan}.
 	bitmap graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: Color cyan with: Color magenta).
+	brush surroundColors: self rgb , {Color cyan. Color magenta}.
 	bitmap graphics fillRectangle: (400 @ 150 extent: 200 @ 150) brush: brush.
-	brush 
-		surroundColors: self rgb , (Array 
-						with: Color cyan
-						with: Color magenta
-						with: Color black).
+	brush surroundColors: self rgb , {Color cyan. Color magenta. Color black}.
 	bitmap graphics fillRectangle: (0 @ 300 extent: 200 @ 150) brush: brush.
-	brush 
-		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta) 
-				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red) 
+	brush
+		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta)
+				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red)
 				, (Array new: 13 withAll: Color blue).
 	bitmap graphics fillRectangle: (200 @ 300 extent: 200 @ 150) brush: brush.
 	brush surroundColor: Color red.
@@ -732,26 +717,17 @@ exampleGdipPGWrapMode
 
 	| bitmap pathPoints brush points modes |
 	bitmap := GdiplusBitmap extent: 600 @ 400.
-	pathPoints := Array 
-				with: 5 @ 5
-				with: 25 @ 30
-				with: 35 @ 60
-				with: 10 @ 50.
-	points := Array 
-				with: 0 @ 0
-				with: 200 @ 0
-				with: 400 @ 0
-				with: 0 @ 200
-				with: 200 @ 200.
+	pathPoints := {5 @ 5. 25 @ 30. 35 @ 60. 10 @ 50}.
+	points := {0 @ 0. 200 @ 0. 400 @ 0. 0 @ 200. 200 @ 200}.
 	"Take out 'reverse' in next line and see the effect on WrapModeClamp."
 	modes := self enumsWrapMode reverse.
 	self assert: [points size = modes size].
 	modes with: points
 		do: 
-			[:assoc :point | 
+			[:assoc :point |
 			brush := GdiplusPathGradientBrush points: pathPoints wrapMode: assoc value.
 			brush centerColor: Color red.
-			(bitmap graphics)
+			bitmap graphics
 				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
 				drawString: assoc key at: point].
 	^bitmap!
@@ -780,7 +756,7 @@ examplesWorkspace
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
 	brush centerColor: Color red.
-	colors := Array with: Color blue.
+	colors := {Color blue}.
 	brush surroundColors: colors.
 	brush blendTriangularShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -791,7 +767,7 @@ examplesWorkspace
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
 	brush centerColor: Color red.
-	colors := Array with: Color blue.
+	colors := {Color blue}.
 	brush surroundColors: colors.
 	brush blendBellShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -799,11 +775,7 @@ examplesWorkspace
 
 	"#bounds"
 	graphics := (bitmap := GdiplusBitmap new) graphics.
-	points := Array 
-				with: 30 @ 20
-				with: 150 @ 40
-				with: 100 @ 100
-				with: 60 @ 200.
+	points := {30 @ 20. 150 @ 40. 100 @ 100. 60 @ 200}.
 	"	points := points collect: [:e | e - (30@20)].		"
 	"	points := points collect: [:e | e + (100@100)].	"
 	brush := GdiplusPathGradientBrush points: points.
@@ -834,16 +806,10 @@ points: points wrapMode: aWrapModeConstant
 rgb
 	"Private - Answer a 3-element Array containing red, green, and blue Colors."
 
-	^Array 
-		with: Color red
-		with: Color green
-		with: Color blue!
+	^{Color red. Color green. Color blue}!
 
 triangle
-	^Array 
-		with: 100 @ 0
-		with: 200 @ 200
-		with: 0 @ 200! !
+	^{100 @ 0. 200 @ 200. 0 @ 200}! !
 !GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBlendColors!examples!public!sunit! !
 !GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBlendFactors!examples!public!sunit! !
 !GdiplusPathGradientBrush class categoriesFor: #exampleGdipPGBounds!examples!public!sunit! !

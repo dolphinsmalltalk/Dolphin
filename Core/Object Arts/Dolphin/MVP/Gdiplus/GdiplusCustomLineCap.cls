@@ -92,7 +92,7 @@ strokeCaps
 				startCap: startCap
 				endCap: endCap) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapStrokeCaps failed' with: status].
-	^Array with: startCap value with: endCap value!
+	^{startCap value. endCap value}!
 
 strokeJoin
 	"Answer the style of line join (how intersecting lines are joined) for the stroke."
@@ -158,10 +158,7 @@ exampleGdipCLCStrokeCaps
 	| bitmap graphics path customCap pen rect |
 	bitmap := GdiplusBitmap extent: 450 @ 300.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new addLines: (Array 
-						with: -15 @ -15
-						with: 0 @ 0
-						with: 15 @ -15).
+	path := GdiplusGraphicsPath new addLines: {-15 @ -15. 0 @ 0. 15 @ -15}.
 	customCap := GdiplusCustomLineCap strokePath: path.
 	customCap startCap: LineCapTriangle endCap: LineCapRound.
 	pen := GdiplusPen red width: 5.5.

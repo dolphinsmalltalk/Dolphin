@@ -156,9 +156,8 @@ FromMemory_pBuffer: anExternalAddress
 	bytes uintPtrAtOffset: _OffsetOf_FromMemory_pBuffer put: anExternalAddress!
 
 printableFields
-	^Array
-		with: (#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
-				at: self DataChunkType + 1)! !
+	^{#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
+			at: self DataChunkType + 1}! !
 !HTTP_DATA_CHUNK categoriesFor: #data:!accessing!public! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType!**compiled accessors**!public! !
 !HTTP_DATA_CHUNK categoriesFor: #DataChunkType:!**compiled accessors**!public! !

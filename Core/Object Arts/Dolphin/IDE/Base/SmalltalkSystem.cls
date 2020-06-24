@@ -177,7 +177,7 @@ additionalToolsFolder
 addMethod: method toProtocol: target
 	"Add the <CompiledMethod>, method, to the <MethodProtocol> target"
 
-	(self add: (Array with: method selector) toProtocolWarning: target) 
+	(self add: {method selector} toProtocolWarning: target)
 		ifTrue: [target addSelector: method selector]!
 
 addProtocolSelectors: source toProtocol: target
@@ -467,11 +467,11 @@ browseAllUnimplementedSelectors
 		caption: 'Unimplemented Selectors'
 		environment: env!
 
-browseChangedMethodsOf: aClass 
+browseChangedMethodsOf: aClass
 	"Open a method browser on methods in aClass which have been changed (i.e. which
 	have source in the change log and are in classes marked as changed)."
 
-	self browseChangedMethodsOfClasses: (Array with: aClass)!
+	self browseChangedMethodsOfClasses: {aClass}!
 
 browseChangedMethodsOfClasses: aCollection 
 	"Open a method browser on methods that belong to the <collection> of <Class>, classes,
@@ -876,13 +876,13 @@ browseReferencesTo: anObject
 
 	^self browseReferencesToLiteral: anObject in: self systemEnvironment!
 
-browseReferencesToClassVar: aString inHierarchyOf: browseClass within: aBrowserEnvironment 
+browseReferencesToClassVar: aString inHierarchyOf: browseClass within: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods that reference the class variable named,
 	aString, in the hierarchy of the <Behavior>, browseClass."
 
 	| var refs writers readers |
 	var := (browseClass whichClassDefinesClassVar: aString) classPool associationAt: aString.
-	refs := self 
+	refs := self
 				referencesToClassVar: aString
 				inHierarchyOf: browseClass
 				within: aBrowserEnvironment.
@@ -890,10 +890,7 @@ browseReferencesToClassVar: aString inHierarchyOf: browseClass within: aBrowserE
 	writers label: (refs label copyReplaceAll: 'reference' with: 'assign to').
 	readers := self selectMethods: [:each | each byteCodeDispatcher readsStatic: var] in: refs.
 	readers label: (refs label copyReplaceAll: 'reference' with: 'read').
-	self browseMethodsInEnvironments: (Array 
-				with: refs
-				with: readers
-				with: writers)!
+	self browseMethodsInEnvironments: {refs. readers. writers}!
 
 browseReferencesToGlobal: aString 
 	self browseReferencesToGlobal: aString in: self systemEnvironment!
@@ -902,23 +899,23 @@ browseReferencesToGlobal: aString in: aBrowserEnvironment
 	(self promptForReferencesToGlobal: aString in: aBrowserEnvironment) 
 		ifNotNil: [:env | self browseMethodsIn: env]!
 
-browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment 
+browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
 	"Private - Open a method browser on all the methods that refer to the instance variable
 	named by the <readableString> argument, in the hierarchy of the <Behavior> argument."
 
 	| definingBehavior label env writers readers references |
 	definingBehavior := aBehavior whichClassDefinesInstVar: aString.
-	env := definingBehavior == aBehavior 
+	env := definingBehavior == aBehavior
 				ifTrue: 
 					[label := 'All methods that %<1s> <1p>.<2s> in <4d>'.
 					aBrowserEnvironment]
 				ifFalse: 
 					[label := 'Methods that %<1s> <1p>.<2s> in the hierarchy of <3d> within <4d>'.
 					aBrowserEnvironment forClassHierarchyOf: aBehavior instanceClass].
-	label := label 
-					expandMacrosWith: definingBehavior
-					with: aString
-					with: aBehavior
+	label := label
+				expandMacrosWith: definingBehavior
+				with: aString
+				with: aBehavior
 				with: aBrowserEnvironment.
 	references := env instVarRefsTo: aString in: definingBehavior.
 	references
@@ -933,10 +930,7 @@ browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvi
 		label: (label expandMacrosWith: 'read');
 		addSearchString: aString.
 	#todo.	"VariableEnvironment caches list of methods that access an inst. var. It needs to flush this cache when a new method is defined (or drop it altogether)."
-	self browseMethodsInEnvironments: (Array 
-				with: references
-				with: readers
-				with: writers)!
+	self browseMethodsInEnvironments: {references. readers. writers}!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment 
 	"Opens a MethodBrowser on all the methods that refer to aString from their literal frames
@@ -1054,18 +1048,18 @@ browseTests
 
 	^self testBrowserClass show!
 
-browseViewHierarchy: aView 
+browseViewHierarchy: aView
 	"Useful utility for browsing a view hierarchy."
 
 	| model tree |
-	model := VirtualTreeModel withRoots: (Array with: aView).
+	model := VirtualTreeModel withRoots: {aView}.
 	model getChildrenBlock: [:each | each subViews].
 	model getParentBlock: [:each | each parentView].
 	tree := TreePresenter showOn: model.
 	tree view getTextBlock: [:each | each printString].
 	tree view getImageBlock: [:each | each iconImageIndex].
 	tree view viewMode: #smallIcons.
-	tree topShell 
+	tree topShell
 		caption: ('View hierarchy of a <1p> (<2d>)' expandMacrosWith: aView class with: aView handle)!
 
 buildAllSelectors
@@ -1094,8 +1088,7 @@ buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector e
 	aMenu clear.
 	aCollection do: 
 			[:method |
-			aMenu
-				addCommand: (Message selector: browseSelector arguments: (Array with: method selector) , extraArgs)
+			aMenu addCommand: (Message selector: browseSelector arguments: {method selector} , extraArgs)
 				description: (method selector copyReplaceAll: '&' with: '&&').
 			"Rather than include only sent messages, we include all referenced symbols as useful for tracking down events, etc"
 			messages := method allSymbolLiterals.
@@ -1105,7 +1098,7 @@ buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector e
 				ifTrue: 
 					[messages asSortedCollection do: 
 							[:selector |
-							aMenu addCommand: (Message selector: browseSelector arguments: (Array with: selector) , extraArgs)
+							aMenu addCommand: (Message selector: browseSelector arguments: {selector} , extraArgs)
 								description: (selector copyReplaceAll: '&' with: '&&')].
 					aMenu addSeparator]].
 	aMenu addCommand: (Message selector: browseOtherSelector arguments: extraArgs)
@@ -1266,25 +1259,23 @@ classFileIn: aClass
 	"The user has chosen to file in aClass. Prompt for a file and file it in"
 
 	| filename |
-	filename := (FileOpenDialog new)
+	filename := FileOpenDialog new
 				caption: 'File In ' , aClass name , ' Class';
-				fileTypes: (Array with: self classFilesType with: FileDialog allFilesType);
+				fileTypes: {self classFilesType. FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
-	filename notNil 
-		ifTrue: [self sourceManager fileInPackagedClass: aClass from: filename]!
+	filename notNil ifTrue: [self sourceManager fileInPackagedClass: aClass from: filename]!
 
 classFileOut: aClass
 	"The user has chosen to file out aClass. Prompt for a file and file it out"
 
 	| filename |
-	filename := (FileSaveDialog new)
+	filename := FileSaveDialog new
 				caption: 'File Out ' , aClass name , ' Class';
-				fileTypes: (Array with: self classFilesType with: FileDialog allFilesType);
+				fileTypes: {self classFilesType. FileDialog allFilesType};
 				value: aClass fileOutName;
 				showModal.
-	filename notNil 
-		ifTrue: [self sourceManager fileOutPackagedClass: aClass to: filename]!
+	filename notNil ifTrue: [self sourceManager fileOutPackagedClass: aClass to: filename]!
 
 classFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -1471,11 +1462,11 @@ copyClass: aClass
 		under: superclass
 		in: package!
 
-createClassVariableAccessors: aString in: aClass within: aBrowserEnvironment 
+createClassVariableAccessors: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Create Variable Accessors' class refactoring on a class variable."
 
-	self 
-		createVariableAccessors: (Array with: aClass -> aString)
+	self
+		createVariableAccessors: {aClass -> aString}
 		classVariables: true
 		within: aBrowserEnvironment!
 
@@ -1833,12 +1824,9 @@ fileFileIn
 	(containing chunks) and file it in"
 
 	| filename |
-	filename := (FileOpenDialog new)
+	filename := FileOpenDialog new
 				caption: 'File in...';
-				fileTypes: (Array
-							with: self smalltalkFilesType
-							with: self classFilesType
-							with: FileDialog allFilesType);
+				fileTypes: {self smalltalkFilesType. self classFilesType. FileDialog allFilesType};
 				defaultExtension: '';
 				showModal.
 	filename notNil
@@ -2004,10 +1992,10 @@ ideaSpaceFilesType
 imageFilesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
 	with the fileTypes: message."
-	
+
 	| ext |
 	ext := SessionManager current imageExtension.
-	^Array with: 'Smalltalk Images (*.', ext, ')' with: '*.', ext!
+	^{'Smalltalk Images (*.' , ext , ')'. '*.' , ext}!
 
 initialize
 	"Private - Initialize the receiver.
@@ -2203,9 +2191,9 @@ loadViewResource: aResourceArray inContext: contextView
 				defaultExtentBlock: nil;
 				createHookBlock: nil]!
 
-messagesMatching: aMethodSearch in: aBrowserEnvironment 
-	^Array with: (self definitionsMatching: aMethodSearch in: aBrowserEnvironment)
-		with: (self referencesMatching: aMethodSearch in: aBrowserEnvironment)!
+messagesMatching: aMethodSearch in: aBrowserEnvironment
+	^{self definitionsMatching: aMethodSearch in: aBrowserEnvironment.
+		self referencesMatching: aMethodSearch in: aBrowserEnvironment}!
 
 methodCategorizationPolicy
 	"Private - Answer the <MethodCategorizationPolicy> used by the receiver."
@@ -2717,7 +2705,7 @@ pacFileDialogType
 
 	| pac |
 	pac := '*.' , Package packageExtension.
-	^Array with: ('Package (<1s>)' expandMacrosWith: pac) with: pac!
+	^{'Package (<1s>)' expandMacrosWith: pac. pac}!
 
 packageBrowserClass
 	"Answer the class of browser to be used for browsing packages in the development system."
@@ -2764,11 +2752,10 @@ packageOpenFileDialogTypes
 	| filter |
 	filter := '*.<1s>;*.<2s>' expandMacrosWith: Package packageExtension
 				with: Package sourcePackageExtension.
-	^Array 
-		with: (Array with: ('Packages (<1s>)' expandMacrosWith: filter) with: filter)
-		with: self pacFileDialogType
-		with: self paxFileDialogType
-		with: FileDialog allFilesType!
+	^{{'Packages (<1s>)' expandMacrosWith: filter. filter}.
+		self pacFileDialogType.
+		self paxFileDialogType.
+		FileDialog allFilesType}!
 
 panic
 	"Forcibly close all views to clean up if necessary"
@@ -2799,7 +2786,7 @@ paxFileDialogType
 
 	| pax |
 	pax := '*.' , Package sourcePackageExtension.
-	^Array with: ('Multi-file Package (<1s>)' expandMacrosWith: pax) with: pax!
+	^{'Multi-file Package (<1s>)' expandMacrosWith: pax. pax}!
 
 playSaveImageSound
 	"Private - Plays the registered save image sound, if any."
@@ -2851,29 +2838,29 @@ populateMenu: popup tree: folderModel items: folderItems
 						description: text
 						image: each icon]]!
 
-populateMessagesMenus: aMenu fromMethods: aCollection environment: aBrowserEnvironment 
+populateMessagesMenus: aMenu fromMethods: aCollection environment: aBrowserEnvironment
 	"Private - The pop-up <Menu>, popup, is about to be displayed. If it is one of the standard
 	message menus, then populate it with messages from the <Collection> of <CompiledMethod>s,
 	aCollection."
 
 	| menuName |
 	menuName := aMenu name.
-	menuName == #definitionsMenu 
+	menuName == #definitionsMenu
 		ifTrue: 
-			[self 
+			[self
 				buildMessageMenu: aMenu
 				forMethods: aCollection
 				browseSelector: #browseDefinitionsOfSelector:in:
-				extraArgs: (Array with: aBrowserEnvironment)
+				extraArgs: {aBrowserEnvironment}
 				browseOtherSelector: #browseMessageDefinitionsIn:.
 			^true].
-	menuName == #referencesMenu 
+	menuName == #referencesMenu
 		ifTrue: 
-			[self 
+			[self
 				buildMessageMenu: aMenu
 				forMethods: aCollection
 				browseSelector: #browseReferencesToLiteral:in:
-				extraArgs: (Array with: aBrowserEnvironment)
+				extraArgs: {aBrowserEnvironment}
 				browseOtherSelector: #browseMessageReferencesIn:.
 			^true].
 	"Not a message menu"
@@ -3553,12 +3540,12 @@ removeGlobalNamed: aSymbol
 	self environment removeGlobalNamed: aSymbol.
 !
 
-removeMethod: aCompiledMethod 
+removeMethod: aCompiledMethod
 	"Removes the <CompiledMethod>, method, from its class after first verifying with the user.
 	If the method is implementing any protocols on behalf of its owner class or subclasses then 
 	we must either remove the method from the protocol, or remove the protocol(s) from the class(es)."
 
-	self removeMethods: (Array with: aCompiledMethod)!
+	self removeMethods: {aCompiledMethod}!
 
 removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 	"Private - Removes the <CompiledMethod>, method, from its class. If the method is implementing any
@@ -3650,8 +3637,7 @@ removeMethodsIn: methodsEnvironment within: searchEnvironment
 removeSelector: sel fromProtocol: target
 	"Remove the <Symbol> selectors, sels from the <MethodProtocol>,	target."
 
-	self removeSelectors: (Array with: sel)  fromProtocol: target.
-!
+	self removeSelectors: {sel} fromProtocol: target!
 
 removeSelectors: sels fromProtocol: target 
 	"Remove the <collection> of selectors, sels, from the <MethodProtocol>,
@@ -3911,22 +3897,22 @@ saveImageAs
 	"Save the Smalltalk image and sources to a user chosen filename."
 
 	| fileName |
-	fileName := (FileSaveDialog new)
-				fileTypes: (Array with: self imageFilesType with: FileDialog allFilesType);
+	fileName := FileSaveDialog new
+				fileTypes: {self imageFilesType. FileDialog allFilesType};
 				defaultExtension: '';
 				value: self sessionManager imagePath;
 				caption: 'Save Image As';
 				showModal.
 	fileName isNil ifTrue: [^self].
-	fileName = self sessionManager imageFileName 
+	fileName = self sessionManager imageFileName
 		ifTrue: [self saveImage]
 		ifFalse: 
 			[((File exists: fileName) not or: 
-					[(MessageBox new)
+					[MessageBox new
 						beTaskModal;
 						caption: self sessionManager applicationName;
-						confirm: ('The image <1p> already exists.<n><n>Are you sure you would like to overwrite it?' 
-									expandMacrosWith: fileName)]) 
+						confirm: ('The image <1p> already exists.<n><n>Are you sure you would like to overwrite it?'
+									expandMacrosWith: fileName)])
 				ifTrue: 
 					[Cursor wait showWhile: 
 							[self playSaveImageSound.
@@ -3962,7 +3948,7 @@ sessionManager
 	^SessionManager current!
 
 showPrerequisitesForPackage: aPackage
-	(self browsePackages: (Array with: aPackage)) showPrerequisitesFor: aPackage!
+	(self browsePackages: {aPackage}) showPrerequisitesFor: aPackage!
 
 showShellWithHandle: aShellHandle
 	"Private - Displays the open window identified by aShellHandle"
@@ -4044,7 +4030,7 @@ systemFolderNamed: name
 	^self systemFolder asOrderedCollection detect: [:each | each description = name]!
 
 systemOptions
-	^(Array with: self) 
+	^{self}
 		, (self class registeredTools asSortedCollection: [:t1 :t2 | t1 displayString < t2 displayString])!
 
 testBrowserClass
@@ -4139,12 +4125,12 @@ viewResourcesMatching: matchBlock do: doBlock
 
 warnOfUndefinedSelectorsSentBy: aCompiledMethod 
 	(aCompiledMethod messages difference: self allSelectors) do: 
-			[:each | 
+			[:each |
 			| source |
 			source := aCompiledMethod getSource.
-			aCompiledMethod parseTreeNoError 
+			aCompiledMethod parseTreeNoError
 				ifNil: 
-					[(self compilationWarningClass 
+					[(self compilationWarningClass
 						code: CWarnUndefinedSelector
 						in: source
 						for: aCompiledMethod methodClass
@@ -4152,14 +4138,14 @@ warnOfUndefinedSelectorsSentBy: aCompiledMethod
 						position: 1
 						line: 1
 						range: (1 to: source size)
-						extras: (Array with: each)) signal]
+						extras: {each}) signal]
 				ifNotNil: 
-					[:ast | 
+					[:ast |
 					| range |
-					((MessageNodeCollector messagesSentBy: ast) detect: [:eachMsg | eachMsg selector == each] ifNone: []) 
+					((MessageNodeCollector messagesSentBy: ast) detect: [:eachMsg | eachMsg selector == each] ifNone: [])
 						ifNil: [range := 1 to: 1]
 						ifNotNil: [:value | range := value sourceInterval].
-					(self compilationWarningClass 
+					(self compilationWarningClass
 						code: CWarnUndefinedSelector
 						in: source
 						for: aCompiledMethod methodClass
@@ -4167,7 +4153,7 @@ warnOfUndefinedSelectorsSentBy: aCompiledMethod
 						position: 1
 						line: 1
 						range: range
-						extras: (Array with: each)) signal]]!
+						extras: {each}) signal]]!
 
 workspaceClass
 	"Answer the class of presenter to be used for non-method source workspaces in the various

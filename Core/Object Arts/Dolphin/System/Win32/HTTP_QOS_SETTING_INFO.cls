@@ -55,11 +55,8 @@ QosType: anInteger
 value
 	^setting
 		ifNil: 
-			[setting := (##(Array
-						with: HTTP_BANDWIDTH_LIMIT_INFO
-						with: HTTP_CONNECTION_LIMIT_INFO
-						with: HTTP_FLOWRATE_INFO) at: self QosType + 1)
-						fromAddress: self QosSetting]!
+			[setting := (##({HTTP_BANDWIDTH_LIMIT_INFO. HTTP_CONNECTION_LIMIT_INFO. HTTP_FLOWRATE_INFO})
+						at: self QosType + 1) fromAddress: self QosSetting]!
 
 value: aHttpQosPropertyInfo
 	setting := aHttpQosPropertyInfo.

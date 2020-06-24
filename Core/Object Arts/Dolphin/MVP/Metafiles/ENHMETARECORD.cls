@@ -84,16 +84,8 @@ initializeAfterLoad
 iTypes
 	"Answer an collection of the integer enhanced metafile record type ids that this class can represent."
 
-	^(Array 
-		with: EMR_ABORTPATH
-		with: EMR_BEGINPATH
-		with: EMR_ENDPATH
-		with: EMR_CLOSEFIGURE
-		with: EMR_FLATTENPATH) , (Array 
-					with: EMR_WIDENPATH
-					with: EMR_SETMETARGN
-					with: EMR_SAVEDC
-					with: EMR_REALIZEPALETTE)!
+	^{EMR_ABORTPATH. EMR_BEGINPATH. EMR_ENDPATH. EMR_CLOSEFIGURE. EMR_FLATTENPATH}
+		, {EMR_WIDENPATH. EMR_SETMETARGN. EMR_SAVEDC. EMR_REALIZEPALETTE}!
 
 registerRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: self]!

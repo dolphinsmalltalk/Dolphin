@@ -63,16 +63,8 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^(Array 
-		with: EMR_SELECTCLIPPATH
-		with: EMR_SETBKMODE
-		with: EMR_SETMAPMODE
-		with: EMR_SETLAYOUT
-		with: EMR_SETPOLYFILLMODE) , (Array 
-					with: EMR_SETROP2
-					with: EMR_SETSTRETCHBLTMODE
-					with: EMR_SETICMMODE
-					with: EMR_SETTEXTALIGN)! !
+	^{EMR_SELECTCLIPPATH. EMR_SETBKMODE. EMR_SETMAPMODE. EMR_SETLAYOUT. EMR_SETPOLYFILLMODE}
+		, {EMR_SETROP2. EMR_SETSTRETCHBLTMODE. EMR_SETICMMODE. EMR_SETTEXTALIGN}! !
 !EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !

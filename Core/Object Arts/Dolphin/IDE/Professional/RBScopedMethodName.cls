@@ -26,19 +26,19 @@ addScope: aBrowserEnvironment name: aString
 	aBrowserEnvironment label: aString.
 	^self addScope: aBrowserEnvironment!
 
-addScopesForMethod: aCompiledMethod 
+addScopesForMethod: aCompiledMethod
 	| package env |
-	self addScope: (BrowserEnvironment new 
-				forClasses: (Array with: aCompiledMethod methodClass with: aCompiledMethod methodClass class))
+	self addScope: (BrowserEnvironment new
+				forClasses: {aCompiledMethod methodClass. aCompiledMethod methodClass class})
 		name: 'Class'.
-	self addScope: (BrowserEnvironment new forClass: self methodClass
-				selectors: (Array with: aCompiledMethod selector))
+	self
+		addScope: (BrowserEnvironment new forClass: self methodClass selectors: {aCompiledMethod selector})
 		name: 'Method'.
 	self addScope: (BrowserEnvironment new forClassHierarchyFrom: aCompiledMethod methodClass)
 		name: 'Hierarchy'.
 	package := aCompiledMethod owningPackage.
 	package isNil ifTrue: [^self].
-	env := (BrowserEnvironment new forPackages: (Array with: package))
+	env := (BrowserEnvironment new forPackages: {package})
 				label: 'Package';
 				yourself.
 	self addScope: env!

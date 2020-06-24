@@ -64,7 +64,7 @@ classesInCategory: implementedCategory
 	"Answer a <collection> of the <CLSID>s of all components registered on the system
 	that support the category identified by CATID <GUID>, implementedCategory."
 
-	^self classesInCategories: (Array with: implementedCategory) requiring: #()!
+	^self classesInCategories: {implementedCategory} requiring: #()!
 
 descriptionOfCategory: catid
 	"Answer a <readableString> description of the category with <GUID> id, catid,

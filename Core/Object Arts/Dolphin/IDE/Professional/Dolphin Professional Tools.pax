@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Professional Tools'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Professional Additional Tools.
 Copyright (c) Object Arts Ltd, 2001-2006.
@@ -21,57 +21,51 @@ package basicPackageVersion: '6.2'.
 
 package basicScriptAt: #postinstall put: 'EnvironmentBrowserShell initializeTool'.
 
-package classNames
-	add: #AXControlBrowser;
-	add: #ChoosePackagedClassDialog;
-	add: #ClassDiagramPlugin;
-	add: #DebugInfoPlugin;
-	add: #Disassembler;
-	add: #EnvironmentBrowserShell;
-	add: #IdeaSpaceShell;
-	add: #PackagedClassSelector;
-	add: #PackagedResourceIdentifierDialog;
-	add: #ProcessMonitor;
-	add: #ProfessionalSmalltalkSystem;
-	add: #ResourceListPlugin;
-	add: #SystemBrowserShell;
-	add: #UnitTestPlugin;
-	yourself.
+package setClassNames: #(
+	#{AXControlBrowser}
+	#{ChoosePackagedClassDialog}
+	#{ClassDiagramPlugin}
+	#{DebugInfoPlugin}
+	#{Disassembler}
+	#{EnvironmentBrowserShell}
+	#{IdeaSpaceShell}
+	#{PackagedClassSelector}
+	#{PackagedResourceIdentifierDialog}
+	#{ProcessMonitor}
+	#{ProfessionalSmalltalkSystem}
+	#{ResourceListPlugin}
+	#{SystemBrowserShell}
+	#{UnitTestPlugin}
+).
 
-package methodNames
-	add: #ClassDescription -> #correspondingTestCase;
-	add: #PackageSelector -> #browseDeployed;
-	add: #PackageSelector -> #browsePackageSources;
-	add: #PackageSelector -> #browseSources;
-	add: #Process -> #priorityName;
-	add: #ProcessorScheduler -> #nameOfPriority:;
-	add: #SmalltalkSystem -> #openIdeaSpace;
-	add: #SmalltalkSystem -> #updateHelpMenus;
-	add: #SmalltalkToolShell -> #addToNewIdeaSpace;
-	add: #SmalltalkToolShell -> #browseSystem;
-	add: #SmalltalkToolShell -> #destroy;
-	add: #SmalltalkToolShell -> #dragToolToIdeaSpace;
-	add: #SmalltalkToolShell -> #exit;
-	add: #SmalltalkWorkspaceDocument -> #addToNewIdeaSpace;
-	add: #SmalltalkWorkspaceDocument -> #browseSources;
-	add: #SmalltalkWorkspaceDocument -> #dragToolToIdeaSpace;
-	add: 'LinkButton class' -> #publishedAspectsOfInstances;
-	add: 'SlideyInneyOuteyThing class' -> #example1;
-	add: 'SlideyInneyOuteyThing class' -> #publishedAspectsOfInstances;
-	add: 'SmalltalkToolShell class' -> #addToNewIdeaSpace:;
-	add: 'SmalltalkToolShell class' -> #dragToolToIdeaSpace:;
-	add: 'StyledContainer class' -> #publishedAspectsOfInstances;
-	add: 'SysLinkView class' -> #publishedAspectsOfInstances;
-	add: 'SysLinkView class' -> #publishedEventsOfInstances;
-	add: 'TestCase class' -> #correspondingTestCase;
-	add: 'Toolbar class' -> #resource_Idea_space_card_tools;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassDescription} #correspondingTestCase)
+	#(#{LinkButton class} #publishedAspectsOfInstances)
+	#(#{PackageSelector} #browseDeployed)
+	#(#{PackageSelector} #browsePackageSources)
+	#(#{PackageSelector} #browseSources)
+	#(#{Process} #priorityName)
+	#(#{ProcessorScheduler} #nameOfPriority:)
+	#(#{SlideyInneyOuteyThing class} #example1)
+	#(#{SlideyInneyOuteyThing class} #publishedAspectsOfInstances)
+	#(#{SmalltalkSystem} #openIdeaSpace)
+	#(#{SmalltalkSystem} #updateHelpMenus)
+	#(#{SmalltalkToolShell} #addToNewIdeaSpace)
+	#(#{SmalltalkToolShell} #browseSystem)
+	#(#{SmalltalkToolShell} #destroy)
+	#(#{SmalltalkToolShell} #dragToolToIdeaSpace)
+	#(#{SmalltalkToolShell} #exit)
+	#(#{SmalltalkToolShell class} #addToNewIdeaSpace:)
+	#(#{SmalltalkToolShell class} #dragToolToIdeaSpace:)
+	#(#{SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
+	#(#{SmalltalkWorkspaceDocument} #browseSources)
+	#(#{SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
+	#(#{StyledContainer class} #publishedAspectsOfInstances)
+	#(#{SysLinkView class} #publishedAspectsOfInstances)
+	#(#{SysLinkView class} #publishedEventsOfInstances)
+	#(#{TestCase class} #correspondingTestCase)
+	#(#{Toolbar class} #resource_Idea_space_card_tools)
+).
 
 package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
@@ -104,7 +98,8 @@ package setPrerequisites: #(
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\ActiveX\Shell\Windows Shell'
-	'..\..\ActiveX\Components\XML DOM\XML DOM').
+	'..\..\ActiveX\Components\XML DOM\XML DOM'
+).
 
 package!
 
@@ -180,9 +175,6 @@ ClassBrowserAbstract subclass: #SystemBrowserShell
 	classVariableNames: 'AutoSelectPackages'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

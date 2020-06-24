@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETMITERLIMIT! !
+	^{EMR_SETMITERLIMIT}! !
 !EMRSETMITERLIMIT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETMITERLIMIT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETMITERLIMIT class categoriesFor: #iTypes!constants!public! !

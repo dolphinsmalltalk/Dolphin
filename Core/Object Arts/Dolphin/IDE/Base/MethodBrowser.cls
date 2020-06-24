@@ -263,7 +263,7 @@ browseSystem
 
 	self systemModel browseSystemOnMethod: self selection!
 
-buildAddCategoryMenu: aMenu 
+buildAddCategoryMenu: aMenu
 	"Private - Build a dynamic pull-out menu to hold suggested categories and an 'Other...' 
 	command to bring up the traditional prompter."
 
@@ -274,22 +274,22 @@ buildAddCategoryMenu: aMenu
 	methods := self selections.
 	methods isEmpty ifTrue: [^self].
 	suggestions := #().
-	methods 
+	methods
 		do: [:each | suggestions := suggestions union: (self methodCategorizationPolicy suggestionsFor: each)].
-	suggestions notEmpty 
+	suggestions notEmpty
 		ifTrue: 
 			[| suggested |
 			suggested := IdentitySet new.
 			suggestions do: 
-					[:cat | 
-					(suggested includes: cat) 
+					[:cat |
+					(suggested includes: cat)
 						ifFalse: 
 							[| msg desc |
 							suggested add: cat.
-							msg := MessageSend 
+							msg := MessageSend
 										receiver: self
 										selector: #addMethods:toCategory:
-										arguments: (Array with: methods with: cat).
+										arguments: {methods. cat}.
 							desc := cat name.
 							(desc identityIncludes: $&) ifTrue: [desc := desc copyReplaceAll: '&' with: '&&'].
 							aMenu addCommand: msg description: desc]]].

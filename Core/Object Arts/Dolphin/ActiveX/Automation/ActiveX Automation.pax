@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Support.
 Copyright (c) Object Arts Ltd, 2000-2003.
@@ -20,260 +20,255 @@ package basicScriptAt: #postinstall put: 'VMLibrary default
 ExternalStructure registerSubclasses.'.
 package basicScriptAt: #postuninstall put: 'ExternalStructure classPool at: ''RecordClasses'' put: nil.'.
 
-package classNames
-	add: #AbstractELEMDESC;
-	add: #ARRAYDESC;
-	add: #AXAPIInfoAnalyzer;
-	add: #AXDispatchImpAbstract;
-	add: #AXDualImp;
-	add: #AXForwardingDualImp;
-	add: #AXInterfaceTypeAnalyzer;
-	add: #AXMemberDesc;
-	add: #AXRecord;
-	add: #AXStructureTypeAnalyzer;
-	add: #AXTypeInfoAnalyzer;
-	add: #AXTypeInfoObject;
-	add: #AXTypeInfoStructure;
-	add: #AXTypeLibDocumentation;
-	add: #AXTypeLibraryAnalyzer;
-	add: #COMVariantEnumerator;
-	add: #CURRENCY;
-	add: #CUSTDATA;
-	add: #CUSTDATAITEM;
-	add: #DATE;
-	add: #DECIMAL;
-	add: #DispFunction;
-	add: #DISPPARAMS;
-	add: #ELEMDESC;
-	add: #FONTDESC;
-	add: #FUNCDESC;
-	add: #ICreateErrorInfo;
-	add: #IDispatch;
-	add: #IDLDESC;
-	add: #IEnumVARIANT;
-	add: #IPerPropertyBrowsing;
-	add: #IProvideClassInfo;
-	add: #IProvideClassInfo2;
-	add: #IRecordInfo;
-	add: #ITypeComp;
-	add: #ITypeInfo;
-	add: #ITypeInfo2;
-	add: #ITypeLib;
-	add: #ITypeLib2;
-	add: #LPBSTR;
-	add: #PARAMDESC;
-	add: #PARAMDESCEX;
-	add: #SAFEARRAY;
-	add: #SAFEARRAYBOUND;
-	add: #TKindAliasAnalyzer;
-	add: #TKindCoclassAnalyzer;
-	add: #TKindDispatchAnalyzer;
-	add: #TKindEnumAnalyzer;
-	add: #TKindInterfaceAnalyzer;
-	add: #TKindModuleAnalyzer;
-	add: #TKindRecordAnalyzer;
-	add: #TKindUnionAnalyzer;
-	add: #TLIBATTR;
-	add: #TYPEATTR;
-	add: #TYPEDESC;
-	add: #VARDESC;
-	add: #VARIANT;
-	add: #VARIANT_BOOL;
-	yourself.
+package setClassNames: #(
+	#{AbstractELEMDESC}
+	#{ARRAYDESC}
+	#{AXAPIInfoAnalyzer}
+	#{AXDispatchImpAbstract}
+	#{AXDualImp}
+	#{AXForwardingDualImp}
+	#{AXInterfaceTypeAnalyzer}
+	#{AXMemberDesc}
+	#{AXRecord}
+	#{AXStructureTypeAnalyzer}
+	#{AXTypeInfoAnalyzer}
+	#{AXTypeInfoObject}
+	#{AXTypeInfoStructure}
+	#{AXTypeLibDocumentation}
+	#{AXTypeLibraryAnalyzer}
+	#{COMVariantEnumerator}
+	#{CURRENCY}
+	#{CUSTDATA}
+	#{CUSTDATAITEM}
+	#{DATE}
+	#{DECIMAL}
+	#{DispFunction}
+	#{DISPPARAMS}
+	#{ELEMDESC}
+	#{FONTDESC}
+	#{FUNCDESC}
+	#{ICreateErrorInfo}
+	#{IDispatch}
+	#{IDLDESC}
+	#{IEnumVARIANT}
+	#{IPerPropertyBrowsing}
+	#{IProvideClassInfo}
+	#{IProvideClassInfo2}
+	#{IRecordInfo}
+	#{ITypeComp}
+	#{ITypeInfo}
+	#{ITypeInfo2}
+	#{ITypeLib}
+	#{ITypeLib2}
+	#{LPBSTR}
+	#{PARAMDESC}
+	#{PARAMDESCEX}
+	#{SAFEARRAY}
+	#{SAFEARRAYBOUND}
+	#{TKindAliasAnalyzer}
+	#{TKindCoclassAnalyzer}
+	#{TKindDispatchAnalyzer}
+	#{TKindEnumAnalyzer}
+	#{TKindInterfaceAnalyzer}
+	#{TKindModuleAnalyzer}
+	#{TKindRecordAnalyzer}
+	#{TKindUnionAnalyzer}
+	#{TLIBATTR}
+	#{TYPEATTR}
+	#{TYPEDESC}
+	#{VARDESC}
+	#{VARIANT}
+	#{VARIANT_BOOL}
+).
 
-package methodNames
-	add: #Boolean -> #asVariant;
-	add: #BSTR -> #asSAFEARRAY;
-	add: #BSTR -> #asVariant;
-	add: #ByteArray -> #asSAFEARRAY;
-	add: #Character -> #asVariant;
-	add: #Collection -> #asSAFEARRAY;
-	add: #Collection -> #asVariant;
-	add: #COMInterface -> #coclassTypeInfo;
-	add: #COMInterface -> #coclassTypeInfoIfNone:;
-	add: #COMInterface -> #typeInfo;
-	add: #COMInterface -> #typeInfoIfNone:;
-	add: #Date -> #asFloat;
-	add: #Date -> #asVariant;
-	add: #DateAndTime -> #asFloat;
-	add: #DateAndTime -> #asVariant;
-	add: #ExternalArray -> #asSAFEARRAY;
-	add: #ExternalArray -> #asVariant;
-	add: #ExternalScalar -> #asVariant;
-	add: #ExternalStructure -> #asVariant;
-	add: #ExternalStructure -> #recordInfo;
-	add: #ExternalStructure -> #vt;
-	add: #Float -> #asVariant;
-	add: #Fraction -> #asVariant;
-	add: #Integer -> #asVariant;
-	add: #IUnknown -> #asVariant;
-	add: #LargeInteger -> #asVariant;
-	add: #OLEAutLibrary -> #clearCustData:;
-	add: #OLEAutLibrary -> #createErrorInfo:;
-	add: #OLEAutLibrary -> #getRecordInfoFromTypeInfo:ppRecInfo:;
-	add: #OLEAutLibrary -> #lHashValOfNameSys:lcid:szName:;
-	add: #OLEAutLibrary -> #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:;
-	add: #OLEAutLibrary -> #loadTypeLib:pptlib:;
-	add: #OLEAutLibrary -> #loadTypeLibEx:regkind:pptlib:;
-	add: #OLEAutLibrary -> #oleCreateFontIndirect:riid:ppvObj:;
-	add: #OLEAutLibrary -> #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:;
-	add: #OLEAutLibrary -> #registerTypeLib:wszFullPath:wszHelpDir:;
-	add: #OLEAutLibrary -> #registerTypeLibForUser:szFullPath:szHelpDir:;
-	add: #OLEAutLibrary -> #safeArrayAccessData:ppvData:;
-	add: #OLEAutLibrary -> #safeArrayCopy:ppsaout:;
-	add: #OLEAutLibrary -> #safeArrayCreateEx:cDims:rgsabound:pvExtra:;
-	add: #OLEAutLibrary -> #safeArrayCreateVectorEx:lLbound:cElements:pvExtra:;
-	add: #OLEAutLibrary -> #safeArrayDestroy:;
-	add: #OLEAutLibrary -> #safeArrayGetDim:;
-	add: #OLEAutLibrary -> #safeArrayGetElement:rgIndices:pv:;
-	add: #OLEAutLibrary -> #safeArrayGetIID:pguid:;
-	add: #OLEAutLibrary -> #safeArrayGetLBound:nDim:plLbound:;
-	add: #OLEAutLibrary -> #safeArrayGetRecordInfo:prinfo:;
-	add: #OLEAutLibrary -> #safeArrayGetUBound:nDim:plUbound:;
-	add: #OLEAutLibrary -> #safeArrayGetVartype:pvt:;
-	add: #OLEAutLibrary -> #safeArrayPtrOfIndex:rgIndices:ppvData:;
-	add: #OLEAutLibrary -> #safeArrayPutElement:rgIndices:pv:;
-	add: #OLEAutLibrary -> #safeArrayRedim:psaboundNew:;
-	add: #OLEAutLibrary -> #safeArraySetIID:pguid:;
-	add: #OLEAutLibrary -> #safeArrayUnaccessData:;
-	add: #OLEAutLibrary -> #safeArrayUnlock:;
-	add: #OLEAutLibrary -> #setErrorInfo:perrinfo:;
-	add: #OLEAutLibrary -> #systemTimeToVariantTime:pvtime:;
-	add: #OLEAutLibrary -> #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:;
-	add: #OLEAutLibrary -> #varCmp:pvarRight:lcid:dwFlags:;
-	add: #OLEAutLibrary -> #varDateFromStr:lcid:dwFlags:pdateOut:;
-	add: #OLEAutLibrary -> #variantChangeType:pvarSrc:wFlags:vt:;
-	add: #OLEAutLibrary -> #variantClear:;
-	add: #OLEAutLibrary -> #variantCopy:pvargSrc:;
-	add: #OLEAutLibrary -> #variantCopyInd:pvargSrc:;
-	add: #OLEAutLibrary -> #variantInit:;
-	add: #OLEAutLibrary -> #variantTimeToSystemTime:lpSystemTime:;
-	add: #ScaledDecimal -> #asVariant;
-	add: #SmallInteger -> #asVariant;
-	add: #String -> #asVariant;
-	add: #SYSTEMTIME -> #asFloat;
-	add: #SYSTEMTIME -> #asVariant;
-	add: #UndefinedObject -> #asVariant;
-	add: 'BOOL class' -> #typeName;
-	add: 'BOOLEAN class' -> #typeName;
-	add: 'BSTR class' -> #fromObject:;
-	add: 'BSTR class' -> #newSAFEARRAY:;
-	add: 'BSTR class' -> #typeName;
-	add: 'BSTR class' -> #vt;
-	add: 'BYTE class' -> #typeName;
-	add: 'BYTE class' -> #vt;
-	add: 'ByteArray class' -> #typeName;
-	add: 'CLSID class' -> #newSAFEARRAY:;
-	add: 'CLSID class' -> #vt;
-	add: 'COMInterface class' -> #coclassTypeInfo;
-	add: 'COMInterface class' -> #coclassTypeInfoIfNone:;
-	add: 'COMInterface class' -> #errorNoTypeInfo;
-	add: 'COMInterface class' -> #fromObject:;
-	add: 'COMInterface class' -> #newSAFEARRAY:;
-	add: 'COMInterface class' -> #registerDispinterface:;
-	add: 'COMInterface class' -> #typeInfoIfNone:;
-	add: 'COMInterface class' -> #typeLib;
-	add: 'DOUBLE class' -> #typeName;
-	add: 'DOUBLE class' -> #vt;
-	add: 'DWORD class' -> #typeName;
-	add: 'DWORD class' -> #vt;
-	add: 'ExternalAddress class' -> #typeName;
-	add: 'ExternalAddress class' -> #vt;
-	add: 'ExternalArray class' -> #vt;
-	add: 'ExternalHandle class' -> #typeName;
-	add: 'ExternalInteger class' -> #typeName;
-	add: 'ExternalInteger class' -> #vt;
-	add: 'ExternalStructure class' -> #classForGUID:ifNone:;
-	add: 'ExternalStructure class' -> #clearGuid;
-	add: 'ExternalStructure class' -> #finalRelease;
-	add: 'ExternalStructure class' -> #fromAddress:recordInfo:owner:;
-	add: 'ExternalStructure class' -> #fromObject:;
-	add: 'ExternalStructure class' -> #GetField:szFieldName:pvarField:;
-	add: 'ExternalStructure class' -> #GetFieldNames:rgBstrNames:;
-	add: 'ExternalStructure class' -> #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:;
-	add: 'ExternalStructure class' -> #GetGuid:;
-	add: 'ExternalStructure class' -> #GetName:;
-	add: 'ExternalStructure class' -> #GetSize:;
-	add: 'ExternalStructure class' -> #GetTypeInfo:;
-	add: 'ExternalStructure class' -> #initializeRegister;
-	add: 'ExternalStructure class' -> #IsMatchingType:;
-	add: 'ExternalStructure class' -> #newSAFEARRAY:;
-	add: 'ExternalStructure class' -> #pointerFieldType;
-	add: 'ExternalStructure class' -> #PutField:pvData:szFieldName:pvarField:;
-	add: 'ExternalStructure class' -> #PutFieldNoCopy:pvData:szFieldName:pvarField:;
-	add: 'ExternalStructure class' -> #queryInterface:;
-	add: 'ExternalStructure class' -> #queryInterface:ifNone:;
-	add: 'ExternalStructure class' -> #RecordClear:;
-	add: 'ExternalStructure class' -> #RecordCopy:pvNew:;
-	add: 'ExternalStructure class' -> #RecordCreate;
-	add: 'ExternalStructure class' -> #RecordCreateCopy:ppvDest:;
-	add: 'ExternalStructure class' -> #RecordDestroy:;
-	add: 'ExternalStructure class' -> #recordInfo;
-	add: 'ExternalStructure class' -> #RecordInit:;
-	add: 'ExternalStructure class' -> #registerSubclasses;
-	add: 'ExternalStructure class' -> #supportedInterfaces;
-	add: 'ExternalStructure class' -> #typeInfo;
-	add: 'ExternalStructure class' -> #typeInfoIfNone:;
-	add: 'ExternalStructure class' -> #typeLib;
-	add: 'ExternalStructure class' -> #typeName;
-	add: 'ExternalStructure class' -> #vt;
-	add: 'FILETIME class' -> #vt;
-	add: 'FLOAT class' -> #typeName;
-	add: 'FLOAT class' -> #vt;
-	add: 'GUID class' -> #typeName;
-	add: 'HRESULT class' -> #typeName;
-	add: 'HRESULT class' -> #vt;
-	add: 'IErrorInfo class' -> #fromEXCEPINFO:guid:;
-	add: 'IErrorInfo class' -> #source:description:helpContext:helpFile:guid:;
-	add: 'INT_PTR class' -> #typeName;
-	add: 'INT_PTR class' -> #vt;
-	add: 'IUnknown class' -> #vt;
-	add: 'LARGE_INTEGER class' -> #typeName;
-	add: 'LARGE_INTEGER class' -> #vt;
-	add: 'LPVOID class' -> #typeName;
-	add: 'LPVOID class' -> #vt;
-	add: 'QWORD class' -> #vt;
-	add: 'SBYTE class' -> #typeName;
-	add: 'SBYTE class' -> #vt;
-	add: 'SDWORD class' -> #typeName;
-	add: 'SDWORD class' -> #vt;
-	add: 'String class' -> #pointerType;
-	add: 'String class' -> #typeName;
-	add: 'String class' -> #vt;
-	add: 'SWORD class' -> #typeName;
-	add: 'SWORD class' -> #vt;
-	add: 'SYSTEMTIME class' -> #fromDATE:;
-	add: 'UINT_PTR class' -> #typeName;
-	add: 'UINT_PTR class' -> #vt;
-	add: 'ULARGE_INTEGER class' -> #typeName;
-	add: 'UndefinedObject class' -> #typeName;
-	add: 'UndefinedObject class' -> #vt;
-	add: 'Utf16String class' -> #pointerType;
-	add: 'Utf16String class' -> #typeName;
-	add: 'Utf16String class' -> #vt;
-	add: 'VOID class' -> #typeName;
-	add: 'VOID class' -> #vt;
-	add: 'WORD class' -> #typeName;
-	add: 'WORD class' -> #vt;
-	yourself.
+package setMethodNames: #(
+	#(#{BOOL class} #typeName)
+	#(#{Boolean} #asVariant)
+	#(#{BOOLEAN class} #typeName)
+	#(#{BSTR} #asSAFEARRAY)
+	#(#{BSTR} #asVariant)
+	#(#{BSTR class} #fromObject:)
+	#(#{BSTR class} #newSAFEARRAY:)
+	#(#{BSTR class} #typeName)
+	#(#{BSTR class} #vt)
+	#(#{BYTE class} #typeName)
+	#(#{BYTE class} #vt)
+	#(#{ByteArray} #asSAFEARRAY)
+	#(#{ByteArray class} #typeName)
+	#(#{Character} #asVariant)
+	#(#{CLSID class} #newSAFEARRAY:)
+	#(#{CLSID class} #vt)
+	#(#{Collection} #asSAFEARRAY)
+	#(#{Collection} #asVariant)
+	#(#{COMInterface} #coclassTypeInfo)
+	#(#{COMInterface} #coclassTypeInfoIfNone:)
+	#(#{COMInterface} #typeInfo)
+	#(#{COMInterface} #typeInfoIfNone:)
+	#(#{COMInterface class} #coclassTypeInfo)
+	#(#{COMInterface class} #coclassTypeInfoIfNone:)
+	#(#{COMInterface class} #errorNoTypeInfo)
+	#(#{COMInterface class} #fromObject:)
+	#(#{COMInterface class} #newSAFEARRAY:)
+	#(#{COMInterface class} #registerDispinterface:)
+	#(#{COMInterface class} #typeInfoIfNone:)
+	#(#{COMInterface class} #typeLib)
+	#(#{Date} #asFloat)
+	#(#{Date} #asVariant)
+	#(#{DateAndTime} #asFloat)
+	#(#{DateAndTime} #asVariant)
+	#(#{DOUBLE class} #typeName)
+	#(#{DOUBLE class} #vt)
+	#(#{DWORD class} #typeName)
+	#(#{DWORD class} #vt)
+	#(#{ExternalAddress class} #typeName)
+	#(#{ExternalAddress class} #vt)
+	#(#{ExternalArray} #asSAFEARRAY)
+	#(#{ExternalArray} #asVariant)
+	#(#{ExternalArray class} #vt)
+	#(#{ExternalHandle class} #typeName)
+	#(#{ExternalInteger class} #typeName)
+	#(#{ExternalInteger class} #vt)
+	#(#{ExternalScalar} #asVariant)
+	#(#{ExternalStructure} #asVariant)
+	#(#{ExternalStructure} #recordInfo)
+	#(#{ExternalStructure} #vt)
+	#(#{ExternalStructure class} #classForGUID:ifNone:)
+	#(#{ExternalStructure class} #clearGuid)
+	#(#{ExternalStructure class} #finalRelease)
+	#(#{ExternalStructure class} #fromAddress:recordInfo:owner:)
+	#(#{ExternalStructure class} #fromObject:)
+	#(#{ExternalStructure class} #GetField:szFieldName:pvarField:)
+	#(#{ExternalStructure class} #GetFieldNames:rgBstrNames:)
+	#(#{ExternalStructure class} #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:)
+	#(#{ExternalStructure class} #GetGuid:)
+	#(#{ExternalStructure class} #GetName:)
+	#(#{ExternalStructure class} #GetSize:)
+	#(#{ExternalStructure class} #GetTypeInfo:)
+	#(#{ExternalStructure class} #initializeRegister)
+	#(#{ExternalStructure class} #IsMatchingType:)
+	#(#{ExternalStructure class} #newSAFEARRAY:)
+	#(#{ExternalStructure class} #pointerFieldType)
+	#(#{ExternalStructure class} #PutField:pvData:szFieldName:pvarField:)
+	#(#{ExternalStructure class} #PutFieldNoCopy:pvData:szFieldName:pvarField:)
+	#(#{ExternalStructure class} #queryInterface:)
+	#(#{ExternalStructure class} #queryInterface:ifNone:)
+	#(#{ExternalStructure class} #RecordClear:)
+	#(#{ExternalStructure class} #RecordCopy:pvNew:)
+	#(#{ExternalStructure class} #RecordCreate)
+	#(#{ExternalStructure class} #RecordCreateCopy:ppvDest:)
+	#(#{ExternalStructure class} #RecordDestroy:)
+	#(#{ExternalStructure class} #recordInfo)
+	#(#{ExternalStructure class} #RecordInit:)
+	#(#{ExternalStructure class} #registerSubclasses)
+	#(#{ExternalStructure class} #supportedInterfaces)
+	#(#{ExternalStructure class} #typeInfo)
+	#(#{ExternalStructure class} #typeInfoIfNone:)
+	#(#{ExternalStructure class} #typeLib)
+	#(#{ExternalStructure class} #typeName)
+	#(#{ExternalStructure class} #vt)
+	#(#{FILETIME class} #vt)
+	#(#{Float} #asVariant)
+	#(#{FLOAT class} #typeName)
+	#(#{FLOAT class} #vt)
+	#(#{Fraction} #asVariant)
+	#(#{GUID class} #typeName)
+	#(#{HRESULT class} #typeName)
+	#(#{HRESULT class} #vt)
+	#(#{IErrorInfo class} #fromEXCEPINFO:guid:)
+	#(#{IErrorInfo class} #source:description:helpContext:helpFile:guid:)
+	#(#{INT_PTR class} #typeName)
+	#(#{INT_PTR class} #vt)
+	#(#{Integer} #asVariant)
+	#(#{IUnknown} #asVariant)
+	#(#{IUnknown class} #vt)
+	#(#{LARGE_INTEGER class} #typeName)
+	#(#{LARGE_INTEGER class} #vt)
+	#(#{LargeInteger} #asVariant)
+	#(#{LPVOID class} #typeName)
+	#(#{LPVOID class} #vt)
+	#(#{OLEAutLibrary} #clearCustData:)
+	#(#{OLEAutLibrary} #createErrorInfo:)
+	#(#{OLEAutLibrary} #getRecordInfoFromTypeInfo:ppRecInfo:)
+	#(#{OLEAutLibrary} #lHashValOfNameSys:lcid:szName:)
+	#(#{OLEAutLibrary} #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:)
+	#(#{OLEAutLibrary} #loadTypeLib:pptlib:)
+	#(#{OLEAutLibrary} #loadTypeLibEx:regkind:pptlib:)
+	#(#{OLEAutLibrary} #oleCreateFontIndirect:riid:ppvObj:)
+	#(#{OLEAutLibrary} #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:)
+	#(#{OLEAutLibrary} #registerTypeLib:wszFullPath:wszHelpDir:)
+	#(#{OLEAutLibrary} #registerTypeLibForUser:szFullPath:szHelpDir:)
+	#(#{OLEAutLibrary} #safeArrayAccessData:ppvData:)
+	#(#{OLEAutLibrary} #safeArrayCopy:ppsaout:)
+	#(#{OLEAutLibrary} #safeArrayCreateEx:cDims:rgsabound:pvExtra:)
+	#(#{OLEAutLibrary} #safeArrayCreateVectorEx:lLbound:cElements:pvExtra:)
+	#(#{OLEAutLibrary} #safeArrayDestroy:)
+	#(#{OLEAutLibrary} #safeArrayGetDim:)
+	#(#{OLEAutLibrary} #safeArrayGetElement:rgIndices:pv:)
+	#(#{OLEAutLibrary} #safeArrayGetIID:pguid:)
+	#(#{OLEAutLibrary} #safeArrayGetLBound:nDim:plLbound:)
+	#(#{OLEAutLibrary} #safeArrayGetRecordInfo:prinfo:)
+	#(#{OLEAutLibrary} #safeArrayGetUBound:nDim:plUbound:)
+	#(#{OLEAutLibrary} #safeArrayGetVartype:pvt:)
+	#(#{OLEAutLibrary} #safeArrayPtrOfIndex:rgIndices:ppvData:)
+	#(#{OLEAutLibrary} #safeArrayPutElement:rgIndices:pv:)
+	#(#{OLEAutLibrary} #safeArrayRedim:psaboundNew:)
+	#(#{OLEAutLibrary} #safeArraySetIID:pguid:)
+	#(#{OLEAutLibrary} #safeArrayUnaccessData:)
+	#(#{OLEAutLibrary} #safeArrayUnlock:)
+	#(#{OLEAutLibrary} #setErrorInfo:perrinfo:)
+	#(#{OLEAutLibrary} #systemTimeToVariantTime:pvtime:)
+	#(#{OLEAutLibrary} #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:)
+	#(#{OLEAutLibrary} #varCmp:pvarRight:lcid:dwFlags:)
+	#(#{OLEAutLibrary} #varDateFromStr:lcid:dwFlags:pdateOut:)
+	#(#{OLEAutLibrary} #variantChangeType:pvarSrc:wFlags:vt:)
+	#(#{OLEAutLibrary} #variantClear:)
+	#(#{OLEAutLibrary} #variantCopy:pvargSrc:)
+	#(#{OLEAutLibrary} #variantCopyInd:pvargSrc:)
+	#(#{OLEAutLibrary} #variantInit:)
+	#(#{OLEAutLibrary} #variantTimeToSystemTime:lpSystemTime:)
+	#(#{QWORD class} #vt)
+	#(#{SBYTE class} #typeName)
+	#(#{SBYTE class} #vt)
+	#(#{ScaledDecimal} #asVariant)
+	#(#{SDWORD class} #typeName)
+	#(#{SDWORD class} #vt)
+	#(#{SmallInteger} #asVariant)
+	#(#{String} #asVariant)
+	#(#{String class} #pointerType)
+	#(#{String class} #typeName)
+	#(#{String class} #vt)
+	#(#{SWORD class} #typeName)
+	#(#{SWORD class} #vt)
+	#(#{SYSTEMTIME} #asFloat)
+	#(#{SYSTEMTIME} #asVariant)
+	#(#{SYSTEMTIME class} #fromDATE:)
+	#(#{UINT_PTR class} #typeName)
+	#(#{UINT_PTR class} #vt)
+	#(#{ULARGE_INTEGER class} #typeName)
+	#(#{UndefinedObject} #asVariant)
+	#(#{UndefinedObject class} #typeName)
+	#(#{UndefinedObject class} #vt)
+	#(#{Utf16String class} #pointerType)
+	#(#{Utf16String class} #typeName)
+	#(#{Utf16String class} #vt)
+	#(#{VOID class} #typeName)
+	#(#{VOID class} #vt)
+	#(#{WORD class} #typeName)
+	#(#{WORD class} #vt)
+).
 
-package globalNames
-	add: #AXAutomationConstants;
-	add: #AXAutomationErrors;
-	add: #AXTypeGenerationFlags;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{AXAutomationConstants}
+	#{AXAutomationErrors}
+	#{AXTypeGenerationFlags}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\..\Base\Dolphin Legacy Date & Time'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
 
@@ -569,9 +564,6 @@ AXMemberDesc subclass: #VARDESC
 	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

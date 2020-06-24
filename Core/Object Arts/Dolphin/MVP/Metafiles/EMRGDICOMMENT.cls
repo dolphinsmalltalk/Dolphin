@@ -88,7 +88,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_GDICOMMENT! !
+	^{EMR_GDICOMMENT}! !
 !EMRGDICOMMENT class categoriesFor: #defineFields!public!template definition! !
 !EMRGDICOMMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGDICOMMENT class categoriesFor: #iTypes!constants!public! !

@@ -27,13 +27,13 @@ blendFactors
 	count := self blendCount.
 	factorsArray := FLOATArray new length: count.
 	positionsArray := FLOATArray new length: count.
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipGetLineBlend: self asParameter
 				blend: factorsArray
 				positions: positionsArray
 				count: count.
 	status = Ok ifFalse: [GdiplusError signal: 'GdipGetBlend failed' with: status].
-	^Array with: factorsArray asArray with: positionsArray asArray!
+	^{factorsArray asArray. positionsArray asArray}!
 
 blendFactors: factorsArray positions: positionsArray 
 	"Set the receiver's blend factors and blend positions to create a custom blend."
@@ -95,11 +95,7 @@ exampleGdipLGChangingColors
 	| bitmap graphics points colors brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	colors := #(#red #green #blue #magenta #cyan).
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
@@ -108,8 +104,7 @@ exampleGdipLGChangingColors
 				color2: Color blue.
 	points keysAndValuesDo: 
 			[:i :point |
-			brush startingColor: (Color named: (colors at: i))
-				endingColor: (Color named: (colors at: i + 1)).
+			brush startingColor: (Color named: (colors at: i)) endingColor: (Color named: (colors at: i + 1)).
 			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
 	^bitmap!
 
@@ -183,11 +178,7 @@ exampleGdipLGModeConstants
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	points keysAndValuesDo: 
 			[:i :point |
 			enum := self enumsLinearGradientMode at: i.
@@ -210,11 +201,7 @@ exampleGdipLGTiling
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	points keysAndValuesDo: 
 			[:i :point |
 			enum := self enumsLinearGradientMode at: i.

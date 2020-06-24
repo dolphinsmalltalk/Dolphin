@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Property Bags'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Property Bags package.
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -9,30 +9,25 @@ Copyright (c) Object Arts Ltd, 2000-2001.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #AXPropertyBag;
-	add: #AXPropertyBagErrorLog;
-	add: #AXPropertyReadError;
-	add: #IEnumErrorInfo;
-	add: #IErrorLog;
-	add: #IPersistPropertyBag;
-	add: #IPersistPropertyBag2;
-	add: #IPropertyBag;
-	add: #IPropertyBag2;
-	add: #PROPBAG2;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AXPropertyBag}
+	#{AXPropertyBagErrorLog}
+	#{AXPropertyReadError}
+	#{IEnumErrorInfo}
+	#{IErrorLog}
+	#{IPersistPropertyBag}
+	#{IPersistPropertyBag2}
+	#{IPropertyBag}
+	#{IPropertyBag2}
+	#{PROPBAG2}
+).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
-	'..\Persist\OLE Persistence Base').
+	'..\Persist\OLE Persistence Base'
+).
 
 package!
 
@@ -88,11 +83,6 @@ OLEStructure subclass: #PROPBAG2
 	classVariableNames: '_OffsetOf_cfType _OffsetOf_clsid _OffsetOf_dwHint _OffsetOf_dwType _OffsetOf_pstrName _OffsetOf_vt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

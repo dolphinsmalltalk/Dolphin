@@ -287,7 +287,7 @@ getBounds
 				srcRect: rect
 				srcUnit: unit) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetImageBounds failed' with: status].
-	^Array with: rect asRectangle with: unit value!
+	^{rect asRectangle. unit value}!
 
 graphics
 	"Answer a GdiplusGraphics instance based on the receiver."
@@ -405,12 +405,12 @@ propertiesSizeAndCount
 	| size count status |
 	size := SDWORD new.
 	count := SDWORD new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetPropertySize: self asParameter
 				totalBufferSize: size
-				numProperties: count) = Ok 
+				numProperties: count) = Ok
 		ifFalse: [^GdiplusError signal: 'GdipGetPropertySize failed' with: status].
-	^Array with: size asInteger with: count asInteger!
+	^{size asInteger. count asInteger}!
 
 property: aGpPropertyItem 
 	"Set aGpPropertyItem to be one of the receiver's property items."
@@ -1149,25 +1149,20 @@ exampleGdipIJPEGCompression
 	encoderParameter Value: quality yourAddress.
 	images := OrderedCollection new.
 	#(0 30 70 100) do: 
-			[:num | 
+			[:num |
 			quality value: num.
-			toFile := self fileResource fileLocator 
-						localFileSpecFor: 'test' , num displayString , '.jpg'.
+			toFile := self fileResource fileLocator localFileSpecFor: 'test' , num displayString , '.jpg'.
 			image saveToFile: toFile encoderParams: encoderParameters.
 			images add: (GdiplusImage fromFile: toFile)].
 	bitmap := GdiplusBitmap extent: 810 @ 610.
-	points := Array 
-				with: 0 @ 0
-				with: 410 @ 0
-				with: 0 @ 310
-				with: 410 @ 310.
+	points := {0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310}.
 	images keysAndValuesDo: 
-			[:i :e | 
+			[:i :e |
 			| point fileSize text |
 			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
 			point := points at: i.
 			text := (File splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
-			(bitmap graphics)
+			bitmap graphics
 				drawImage: e
 					at: point
 					extent: 400 @ 300;
@@ -1647,11 +1642,7 @@ exampleGdipISkewing
 				usingLocator: FileLocator installRelative) thumbnailWithHeight: 75.
 	graphics
 		drawImage: image at: 10 @ 10;
-		drawImage: image
-			points: (Array 
-					with: 200 @ 20
-					with: 110 @ 200
-					with: 250 @ 50).
+		drawImage: image points: {200 @ 20. 110 @ 200. 250 @ 50}.
 	^bitmap!
 
 exampleGdipIThumbnails
@@ -1677,17 +1668,16 @@ fileTypes
 	all := String writeStream.
 	types := OrderedCollection new.
 	self decoders do: 
-			[:each | 
+			[:each |
 			| extensions |
 			extensions := each FilenameExtension asString asLowercase.
 			all
 				nextPut: $;;
 				nextPutAll: extensions.
-			types addLast: (Array 
-						with: ('<1s> (<2s>)' expandMacrosWith: each FormatDescription asString with: extensions)
-						with: extensions)].
+			types addLast: {'<1s> (<2s>)' expandMacrosWith: each FormatDescription asString with: extensions.
+						extensions}].
 	types
-		addLast: (Array with: 'All Images' with: all contents);
+		addLast: {'All Images'. all contents};
 		addLast: FileDialog allFilesType.
 	^types asArray!
 

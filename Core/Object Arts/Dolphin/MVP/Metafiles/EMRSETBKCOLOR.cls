@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SETBKCOLOR with: EMR_SETTEXTCOLOR! !
+	^{EMR_SETBKCOLOR. EMR_SETTEXTCOLOR}! !
 !EMRSETBKCOLOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSETBKCOLOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETBKCOLOR class categoriesFor: #iTypes!constants!public! !

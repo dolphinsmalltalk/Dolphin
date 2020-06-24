@@ -174,29 +174,25 @@ exampleGdipRClipWithRegion
 	bitmap := GdiplusBitmap extent: 200 @ 200.
 	graphics := bitmap graphics.
 	path := GdiplusGraphicsPath new.
-	path addPolygon: (Array 
-				with: 10 @ 10
-				with: 150 @ 10
-				with: 100 @ 75
-				with: 100 @ 150).
+	path addPolygon: {10 @ 10. 150 @ 10. 100 @ 75. 100 @ 150}.
 	region := GdiplusRegion fromPath: path.
 	pen := GdiplusPen black.
 	graphics drawPath: path pen: pen.
 	graphics clipRegion: region combineMode: nil.
 	fontFamily := GdiplusFontFamily fromName: 'Arial'.
-	font := GdiplusFont 
+	font := GdiplusFont
 				fontFamily: fontFamily
 				emSize: 36
 				style: FontStyleBold
 				unit: UnitPixel.
 	brush := GdiplusSolidBrush red.
-	graphics 
+	graphics
 		drawString: 'A Clipping Region'
 		font: font
 		at: 15 @ 15
 		format: nil
 		brush: brush.
-	graphics 
+	graphics
 		drawString: 'A Clipping Region'
 		font: font
 		at: 15 @ 68

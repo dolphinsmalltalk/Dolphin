@@ -623,23 +623,20 @@ permitSelectionChange
 	self onSelectionChanging: proceed.
 	^proceed value!
 
-populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection format: aString 
+populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection format: aString
 	"Private - Populate a dynamic menu with commands which send
 	the selector, cmdSelector, to the development system model with
 	each of the items and the <ClassDescription>, class, as its 
 	arguments. The items are used as the descriptions too."
 
 	aCollection do: 
-			[:each | 
+			[:each |
 			| msg |
-			msg := MessageSend 
+			msg := MessageSend
 						receiver: self systemModel
 						selector: cmdSelector
-						arguments: (Array 
-								with: each value
-								with: class
-								with: self searchEnvironment).
-			(aMenu addCommand: msg description: (aString expandMacrosWith: each key name with: each value)) 
+						arguments: {each value. class. self searchEnvironment}.
+			(aMenu addCommand: msg description: (aString expandMacrosWith: each key name with: each value))
 				isModalCommand: true]!
 
 queryCommand: aCommandQuery 
@@ -814,7 +811,7 @@ selectableItems
 selectionEnvironment
 	| class |
 	class := self selectionOrNil.
-	^self browserEnvironment forClasses: (Array with: class with: class class)!
+	^self browserEnvironment forClasses: {class. class class}!
 
 setInitialFocus
 	self selectableItems setFocus!

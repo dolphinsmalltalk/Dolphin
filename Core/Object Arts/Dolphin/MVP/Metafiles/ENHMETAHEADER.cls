@@ -327,7 +327,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_HEADER! !
+	^{EMR_HEADER}! !
 !ENHMETAHEADER class categoriesFor: #defineFields!public!template definition! !
 !ENHMETAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ENHMETAHEADER class categoriesFor: #iTypes!constants!public! !

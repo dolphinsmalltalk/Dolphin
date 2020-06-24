@@ -65,7 +65,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_EXCLUDECLIPRECT with: EMR_INTERSECTCLIPRECT! !
+	^{EMR_EXCLUDECLIPRECT. EMR_INTERSECTCLIPRECT}! !
 !EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !

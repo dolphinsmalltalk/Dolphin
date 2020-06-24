@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Scripting'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Script Control Support. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -15,28 +15,25 @@ The editor shows how to instruct the component to compile and evaluate script. F
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #ActiveXScriptlet;
-	add: #IScriptControl;
-	add: #IScriptError;
-	add: #IScriptModule;
-	add: #IScriptModuleCollection;
-	add: #IScriptProcedure;
-	add: #IScriptProcedureCollection;
-	add: #SimpleAXScriptEditor;
-	yourself.
+package setClassNames: #(
+	#{ActiveXScriptlet}
+	#{IScriptControl}
+	#{IScriptError}
+	#{IScriptModule}
+	#{IScriptModuleCollection}
+	#{IScriptProcedure}
+	#{IScriptProcedureCollection}
+	#{SimpleAXScriptEditor}
+).
 
-package globalNames
-	add: #MSScriptControlConstants;
-	add: #MSScriptControlLib;
-	yourself.
+package setVariableNames: #(
+	#{MSScriptControlConstants}
+	#{MSScriptControlLib}
+).
 
-package binaryGlobalNames: (Set new
-	add: #MSScriptControlLib;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{MSScriptControlLib}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
@@ -53,7 +50,8 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
-	'..\..\Shell\Windows Shell').
+	'..\..\Shell\Windows Shell'
+).
 
 package!
 
@@ -99,11 +97,6 @@ Dialog subclass: #SimpleAXScriptEditor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

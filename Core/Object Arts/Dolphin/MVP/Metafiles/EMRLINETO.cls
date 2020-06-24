@@ -67,7 +67,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_LINETO with: EMR_MOVETOEX! !
+	^{EMR_LINETO. EMR_MOVETOEX}! !
 !EMRLINETO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRLINETO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRLINETO class categoriesFor: #iTypes!constants!public! !

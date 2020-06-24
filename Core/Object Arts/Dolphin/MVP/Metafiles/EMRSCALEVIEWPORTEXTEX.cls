@@ -117,7 +117,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SCALEVIEWPORTEXTEX with: EMR_SCALEWINDOWEXTEX! !
+	^{EMR_SCALEVIEWPORTEXTEX. EMR_SCALEWINDOWEXTEX}! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !

@@ -75,17 +75,17 @@ actualClassChain
 
 	| actualClass |
 	(actualClass := self actualClass) isNil ifTrue: [^#()].
-	^self isShowInheritedMethods 
+	^self isShowInheritedMethods
 		ifTrue: 
 			[| chain |
 			chain := actualClass withAllSuperclasses.
-			self isFilterObjectMethods 
+			self isFilterObjectMethods
 				ifTrue: 
 					[| objectClass |
 					objectClass := self isInstanceMode ifTrue: [Object] ifFalse: [Object class].
 					actualClass ~= objectClass ifTrue: [chain := chain upTo: objectClass]].
 			chain]
-		ifFalse: [Array with: actualClass]!
+		ifFalse: [{actualClass}]!
 
 actualClassChainCategories
 	"Private - Answer an <OrderedCollection> of all the method categories in the search chain for the actual class selected in the receiver.
@@ -119,11 +119,11 @@ addCategoriesOfMethod: aCompiledMethod
 	(aCompiledMethod realCategories difference: categoriesPresenter model asSet) 
 		do: [:each | categoriesPresenter model addCategory: each]!
 
-addMethod: method toCategory: target 
+addMethod: method toCategory: target
 	"Private - Add the <CompiledMethod>, method, to the <methodCategory>,
 	target, e.g. following a drag-copy operation in the category pane."
 
-	methodBrowserPresenter addMethods: (Array with: method) toCategory: target!
+	methodBrowserPresenter addMethods: {method} toCategory: target!
 
 addMethodCategory
 	"Private - Add a new method category to the receiver's category pane."
@@ -238,13 +238,13 @@ browseContainingText
 
 	self model browseContainingTextIn: self searchEnvironment!
 
-browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment 
+browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| devsys |
 	devsys := self systemModel.
-	devsys browseMethodsInEnvironments: (Array 
-				with: (devsys definitionsMatching: aMethodSearch in: aBrowserEnvironment)
-				with: (devsys definitionsMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)))!
+	devsys
+		browseMethodsInEnvironments: {devsys definitionsMatching: aMethodSearch in: aBrowserEnvironment.
+				devsys definitionsMatching: aMethodSearch
+					in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)}!
 
 browseHierarchy
 	self systemModel browseHierarchy: self actualClass!
@@ -315,13 +315,13 @@ browseReferences
 	self browseInstVarReferences
 !
 
-browseReferencesMatching: aMethodSearch in: aBrowserEnvironment 
+browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| devsys |
 	devsys := self systemModel.
-	devsys browseMethodsInEnvironments: (Array 
-				with: (devsys referencesMatching: aMethodSearch in: aBrowserEnvironment)
-				with: (devsys referencesMatching: aMethodSearch
-						in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)))!
+	devsys
+		browseMethodsInEnvironments: {devsys referencesMatching: aMethodSearch in: aBrowserEnvironment.
+				devsys referencesMatching: aMethodSearch
+					in: (aBrowserEnvironment forClassHierarchyOf: self actualClass)}!
 
 browserEnvironment
 	^classesPresenter browserEnvironment!
@@ -413,7 +413,7 @@ categories
 
 	| cat |
 	cat := self category ifNil: [self allCategory].
-	^cat == self allCategory ifTrue: [Array with: cat] ifFalse: [self hierarchyOfCategory: cat]!
+	^cat == self allCategory ifTrue: [{cat}] ifFalse: [self hierarchyOfCategory: cat]!
 
 categoriesEnvironment
 	^self searchEnvironment forMethodCategories: self categories!
@@ -1215,41 +1215,41 @@ onDragVariableRefs: aDragDropSession
 
 	self systemModel beginDrag: aDragDropSession methods: (self methodsMatching: self variablesFilter)!
 
-onDropOverCategory: aDragDropSession 
+onDropOverCategory: aDragDropSession
 	"Private - The drag operation described by <DragDropSession>, session, would like to do a drop.
 	Override this method to accept the dragObject(s)."
 
 	| targetCategory |
 	targetCategory := aDragDropSession suggestedTarget.
-	targetCategory isNil 
+	targetCategory isNil
 		ifTrue: 
 			[Sound errorBeep.
 			^false].
 	aDragDropSession dragObjects do: 
-			[:each | 
+			[:each |
 			"See if the drop is a CompiledMethod"
-			(each isFormatAvailable: #CompiledMethod) 
+			(each isFormatAvailable: #CompiledMethod)
 				ifTrue: 
 					[| method |
 					method := each format: #CompiledMethod.
 
 					"Check for a move to single category"
-					aDragDropSession isMove 
+					aDragDropSession isMove
 						ifTrue: 
 							["Don't change the privacy unless the target is public/private"
 							method
-								categories: (targetCategory isPrivacy 
-											ifTrue: [Array with: targetCategory]
-											ifFalse: [Array with: targetCategory with: method privacyCategory]);
+								categories: (targetCategory isPrivacy
+											ifTrue: [{targetCategory}]
+											ifFalse: [{targetCategory. method privacyCategory}]);
 								storeCategories].
 
 					"Check for a copy to additional category"
 					aDragDropSession isCopy ifTrue: [self addMethod: method toCategory: targetCategory].
 
 					"Check for a removal from target category"
-					(aDragDropSession isLink and: [targetCategory includesMethod: method]) 
+					(aDragDropSession isLink and: [targetCategory includesMethod: method])
 						ifTrue: [self removeMethod: method fromCategory: targetCategory]]].
-	aDragDropSession isMove 
+	aDragDropSession isMove
 		ifTrue: 
 			["Operation must never be #move to avoid methods being removed"
 			aDragDropSession operation: #copy].
@@ -2166,28 +2166,28 @@ saveDefinition
 				definitionPresenter isModified: wasModified.
 				e okCancel]!
 
-saveNewMethod: aString 
+saveNewMethod: aString
 	"Private - Save the specified text as the method source of a new method in the current
 	category or leave unclassified if no suitable category is selected."
 
 	| method newMethod status |
 	method := self method.
-	newMethod := method isNil 
+	newMethod := method isNil
 				ifTrue: 
 					[| cat class categories |
 					cat := self category.
-					categories := (cat notNil and: [cat acceptsAdditions]) 
-								ifTrue: [Array with: cat]
+					categories := (cat notNil and: [cat acceptsAdditions])
+								ifTrue: [{cat}]
 								ifFalse: [self model defaultMethodCategories].
 					class := self classForNewMethod.
 					class isNil ifTrue: [^self].
-					methodBrowserPresenter 
+					methodBrowserPresenter
 						saveMethod: aString
 						in: class
 						categories: categories
 						package: self packageForNewMethod]
 				ifFalse: 
-					[newMethod := methodBrowserPresenter 
+					[newMethod := methodBrowserPresenter
 								saveMethod: aString
 								in: method methodClass
 								categories: method realCategories

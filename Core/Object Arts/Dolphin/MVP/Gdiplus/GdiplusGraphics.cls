@@ -1222,8 +1222,8 @@ exampleGdipGTransformPoints
 	| bitmap pen points |
 	bitmap := GdiplusBitmap extent: 300 @ 200.
 	pen := GdiplusPen blue width: 5.
-	points := Array with: 10 @ 10 with: 150 @ 50.
-	(bitmap graphics)
+	points := {10 @ 10. 150 @ 50}.
+	bitmap graphics
 		drawLineFrom: points first
 			to: points second
 			pen: pen;

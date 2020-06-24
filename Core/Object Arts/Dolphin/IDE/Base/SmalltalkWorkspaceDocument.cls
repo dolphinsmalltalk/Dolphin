@@ -60,11 +60,11 @@ createComponents
 
 createSchematicWiring
 	super createSchematicWiring.
-	self 
+	self
 		when: #dropFiles:
 		send: #onDropFiles:over:
 		to: self systemModel
-		withArguments: (Array with: nil with: self)!
+		withArguments: {nil. self}!
 
 defaultHelpId
 	^10729!

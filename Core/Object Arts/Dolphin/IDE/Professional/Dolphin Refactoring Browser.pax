@@ -123,8 +123,8 @@ package setMethodNames: #(
 	#(#{InlineTemporaryRefactoring} #displayOn:)
 	#(#{LintRule} #failedClasses)
 	#(#{LintRule} #failedMethods)
-	#(#{LintRule class} #icon)
 	#(#{LintRule} #searchStrings)
+	#(#{LintRule class} #icon)
 	#(#{Metaclass} #directlyDefinesClassVariable:)
 	#(#{MethodBrowser} #canMoveMethods)
 	#(#{MethodBrowser} #hasRefactorableMethodSelected)
@@ -208,8 +208,8 @@ package setMethodNames: #(
 	#(#{TransformationRule class} #ifElimination)
 	#(#{TransformationRule class} #renameArgument:to:)
 	#(#{VariableRefactoring} #displayOn:)
-	#(#{VariableRefactoring class} #displayPrefix)
 	#(#{VariableRefactoring} #displayPrefix)
+	#(#{VariableRefactoring class} #displayPrefix)
 ).
 
 package setPrerequisites: #(
@@ -815,30 +815,26 @@ populateInstVarMenu: aMenu selectors: selectors
 
 populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classVariables: aBoolean ifTooMany: tooManyCommand
 	| pairs |
-	pairs := self 
+	pairs := self
 				pullUpVariableNamePairs: aBoolean
 				for: aClass
 				maximum: self maximumVariableMenuEntries.
-	pairs isNil 
+	pairs isNil
 		ifTrue: 
 			[aMenu addCommand: tooManyCommand
-				description: (aBoolean 
-						ifTrue: ['&Class Variable...']
-						ifFalse: ['&Instance Variable...'])]
+				description: (aBoolean ifTrue: ['&Class Variable...'] ifFalse: ['&Instance Variable...'])]
 		ifFalse: 
 			[(pairs asSortedCollection: 
-					[:p1 :p2 | 
-					p1 key == p2 key 
-						ifTrue: [p1 value < p2 value]
-						ifFalse: [p1 key name < p2 key name]]) 
+					[:p1 :p2 |
+					p1 key == p2 key ifTrue: [p1 value < p2 value] ifFalse: [p1 key name < p2 key name]])
 				do: 
-					[:each | 
+					[:each |
 					| msg varName |
 					varName := each value.
-					msg := MessageSend 
+					msg := MessageSend
 								receiver: self systemModel
 								selector: commandSymbol
-								arguments: (Array with: varName with: aClass).
+								arguments: {varName. aClass}.
 					aMenu addCommand: msg description: each key name , '.' , varName]]!
 
 populateRefactoringMenu: aMenu 

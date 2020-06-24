@@ -125,15 +125,15 @@ queryCommand: query
 			^true].
 	^super queryCommand: query!
 
-resetForItem: aClass 
+resetForItem: aClass
 	"Private - Try to ensure that the receiver is set to display aClass if possible"
 
 	| owningPackage |
-	(owningPackage := aClass owningPackage) notNil 
+	(owningPackage := aClass owningPackage) notNil
 		ifTrue: 
-			[(self packagesPresenter)
+			[self packagesPresenter
 				resetForItem: owningPackage;
-				selections: (Array with: owningPackage);
+				selections: {owningPackage};
 				ensureSelectionVisible]!
 
 selectPackageRoot

@@ -3725,8 +3725,8 @@ publishedAspectsOfInstances
 
 choose
 	| filename |
-	filename := (FileOpenDialog new)
-				fileTypes: (Array with: self filesType with: FileDialog allFilesType);
+	filename := FileOpenDialog new
+				fileTypes: {self filesType. FileDialog allFilesType};
 				showModal.
 	^filename notNil ifTrue: [self fromFile: filename]!
 
@@ -3808,15 +3808,12 @@ publishedEventsOfInstances
 
 choose
 	| filename |
-	filename := (FileOpenDialog new)
-				fileTypes: (Array 
-							with: self filesType
-							with: Icon filesType
-							with: FileDialog allFilesType);
+	filename := FileOpenDialog new
+				fileTypes: {self filesType. Icon filesType. FileDialog allFilesType};
 				showModal.
-	^filename notNil 
+	^filename notNil
 		ifTrue: 
-			[(File splitExtensionFrom: filename) asLowercase = 'png' 
+			[(File splitExtensionFrom: filename) asLowercase = 'png'
 				ifTrue: [self fromFile: filename]
 				ifFalse: [Icon fromFile: filename]]! !
 !InternalIcon class categoriesFor: #choose!public! !
@@ -3979,7 +3976,7 @@ publishedAspectsOfInstances
 
 	| answer |
 	answer := super publishedAspectsOfInstances.
-	#(#isVirtual #hasColumnHeaders #hasFullRowSelect #hasGridLines #hasHeaderDragDrop #hasColumnImages #hasSortHeaders #hasFlatScrollbars #hasInfoTips #canEditLabels #showsSelAlways #hasCheckBoxes #isMultiSelect #isAutoArranged #isDoubleBuffered) 
+	#(#isVirtual #hasColumnHeaders #hasFullRowSelect #hasGridLines #hasHeaderDragDrop #hasColumnImages #hasSortHeaders #hasFlatScrollbars #hasInfoTips #canEditLabels #showsSelAlways #hasCheckBoxes #isMultiSelect #isAutoArranged #isDoubleBuffered)
 		do: [:each | answer add: (Aspect boolean: each)].
 	answer
 		add: (Aspect autostring: #text);
@@ -3990,8 +3987,8 @@ publishedAspectsOfInstances
 		add: (Aspect name: #iconSpacing chooseFrom: #('32@32'));
 		add: (Aspect name: #thumbnailExtent chooseFrom: #('64@64' '96@96' '128@128'));
 		add: (Aspect sequenceableCollection: #columnOrder) beImmutable;
-		add: (Aspect sequenceableCollection: #columnsList
-					addEvaluationFrom: (Array with: self columnClass name , ' new')) beImmutable;
+		add: (Aspect sequenceableCollection: #columnsList addEvaluationFrom: {self columnClass name , ' new'})
+					beImmutable;
 		removeKey: #text.
 	^answer!
 
@@ -4518,9 +4515,9 @@ includesResource: aResourceIdentifier
 !Package methodsFor!
 
 browse
-    	"Open a suitable browser onto the receiver."
-    
-    	Smalltalk developmentSystem browsePackages: (Array with: self)!
+	"Open a suitable browser onto the receiver."
+
+	Smalltalk developmentSystem browsePackages: {self}!
 
 defaultAbout
 	"Shows a default About splash screen for the receiver. This looks for a bitmap of the same
@@ -5566,20 +5563,18 @@ publishedAspectsOfInstances
 		removeKey: #format;
 		removeKey: #alignment;
 		add: (Aspect sequenceableCollection: #keyBindings
-					addEvaluationFrom: (Array with: ScintillaKeyBinding name , ' new')) beImmutable;
+					addEvaluationFrom: {ScintillaKeyBinding name , ' new'}) beImmutable;
 		add: (Aspect sequenceableCollection: #margins);
 		add: (Aspect sequenceableCollection: #indicatorStyles
-					addEvaluationFrom: (Array with: ScintillaIndicatorStyle name , ' new')) beImmutable;
+					addEvaluationFrom: {ScintillaIndicatorStyle name , ' new'}) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
-					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
+					addEvaluationFrom: {ScintillaMarkerDefinition name , ' new'}) beImmutable;
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
 		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
-		add: (Aspect choice: #foldMarkerStyle
-					from: (Array with: nil) , self foldMarkerStyles asSortedCollection);
+		add: (Aspect choice: #foldMarkerStyle from: {nil} , self foldMarkerStyles asSortedCollection);
 		add: (Aspect choice: #caretStyle from: self caretStyles asSortedCollection);
-		add: (Aspect choice: #indentationGuides
-					from: (Array with: nil) , self indentationGuideStyles asSortedCollection);
+		add: (Aspect choice: #indentationGuides from: {nil} , self indentationGuideStyles asSortedCollection);
 		add: (Aspect choice: #annotationMode from: self annotationModes);
 		add: (Aspect choice: #wrapIndentMode from: self wrapIndentModes);
 		add: (Aspect choice: #fontQuality from: self fontQualities);
@@ -6064,12 +6059,11 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect boolean: #hasSizeGrip);
 		add: (Aspect boolean: #hasToolTips);
 		add: (Aspect sequenceableCollection: #items
-					addEvaluationFrom: (Array with: ('<1p> <2d>' expandMacrosWith: StatusBarItem with: #new))) 
-						beImmutable;
+					addEvaluationFrom: {'<1p> <2d>' expandMacrosWith: StatusBarItem with: #new}) beImmutable;
 		yourself! !
 !StatusBar class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 

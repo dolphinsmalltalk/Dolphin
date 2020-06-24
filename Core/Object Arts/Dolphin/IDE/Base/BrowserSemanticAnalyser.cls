@@ -46,10 +46,7 @@ checkUnimplemented: aStMessageNode
 							[self
 								signalError: CWarnMsgUnimplemented
 								forNode: aStMessageNode
-								extras: (Array
-										with: selector
-										with: (receiver isVariable ifTrue: [receiver name] ifFalse: ['literal'])
-										with: receiverClass)]].
+								extras: {selector. receiver isVariable ifTrue: [receiver name] ifFalse: ['literal']. receiverClass}]].
 			^self].
 	(Smalltalk developmentSystem allSelectors includes: selector)
 		ifFalse: 
@@ -58,23 +55,20 @@ checkUnimplemented: aStMessageNode
 				forNode: aStMessageNode
 				extra: selector]!
 
-checkUnimplementedSubclassResponsibility: aStMessageNode 
+checkUnimplementedSubclassResponsibility: aStMessageNode
 	"Private - Warn for any leaf classes that don't implement the subclass responsibility?"
 
 	| selector |
 	aStMessageNode selector == #subclassResponsibility ifFalse: [^self].
 	selector := methodNode selector.
 	methodClass allSubclassesDo: 
-			[:class | 
-			(class subclasses isEmpty and: [(class whichClassIncludesSelector: selector) == methodClass]) 
+			[:class |
+			(class subclasses isEmpty and: [(class whichClassIncludesSelector: selector) == methodClass])
 				ifTrue: 
-					[self 
+					[self
 						signalError: CWarnUnimplementedAbstractMethod
 						forNode: aStMessageNode
-						extras: (Array 
-								with: methodClass
-								with: selector
-								with: class)]]!
+						extras: {methodClass. selector. class}]]!
 
 contextBindingFor: anStVariableNode
 	^evalScope ifNotNil: [(evalScope lookupVariable: anStVariableNode) ifNotNil: [:var | var binding]]!

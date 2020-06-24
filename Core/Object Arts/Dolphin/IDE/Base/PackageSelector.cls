@@ -352,27 +352,27 @@ newPackage
 	directory := File fullPathOf: self filter relativeTo: SessionManager current imageBase.
 	[File createDirectoryPath: directory] on: Win32Error
 		do: 
-			[:ex | 
+			[:ex |
 			"User probably doesn't have access rights"
 			].
-	dialog := (FileSaveDialog new)
+	dialog := FileSaveDialog new
 				initialDirectory: directory;
-				fileTypes: (Array with: self systemModel pacFileDialogType);
+				fileTypes: {self systemModel pacFileDialogType};
 				defaultExtension: Package packageExtension;
 				caption: 'New Package'.
 	pathname := dialog showModal.
-	pathname notNil 
+	pathname notNil
 		ifTrue: 
 			[| packageName |
 			packageName := File splitStemFrom: pathname.
-			packageName notEmpty 
+			packageName notEmpty
 				ifTrue: 
 					[| packMan |
 					packMan := self packageManager.
 					
 					[| package |
 					package := packMan newPackage: pathname.
-					self packages: (Array with: package)] 
+					self packages: {package}]
 							on: packMan duplicatePackageSignal
 							do: [:e | e okCancel]]]!
 
@@ -584,7 +584,7 @@ packagesPresenter
 	
 	^packagesPresenter!
 
-promptToSavePackageChanges: package 
+promptToSavePackageChanges: package
 	"Private - Uninstallation of the <Package>, package, has been initiated. Prompt the user to save
 	any changes."
 
@@ -592,13 +592,13 @@ promptToSavePackageChanges: package
 	package isChanged ifFalse: [^self].
 	mb := MessageBox new.
 	mb beTaskModal.
-	resp := mb 
-				confirmOrCancel: ('The <1p> package has unsaved changes.<n>Would you like to save it before uninstalling it?' 
+	resp := mb
+				confirmOrCancel: ('The <1p> package has unsaved changes.<n>Would you like to save it before uninstalling it?'
 						expandMacrosWith: package name).
-	resp == #no 
+	resp == #no
 		ifFalse: 
-			[resp == #yes 
-				ifTrue: [(Cursor wait showWhile: [self savePackageChanges: (Array with: package)]) ifTrue: [^self]].
+			[resp == #yes
+				ifTrue: [(Cursor wait showWhile: [self savePackageChanges: {package}]) ifTrue: [^self]].
 			self operationAbortedSignal signalWith: package]!
 
 queryCommand: aCommandQuery 
@@ -769,7 +769,7 @@ rootFolder
 saveFileDialogTypes
 	"Private - Answer a file types array for use with a FileDialog to save packages."
 
-	^Array with: self systemModel pacFileDialogType with: self systemModel paxFileDialogType!
+	^{self systemModel pacFileDialogType. self systemModel paxFileDialogType}!
 
 savePackageAs
 	"Save the selected package to a user set pathname."
@@ -777,16 +777,16 @@ savePackageAs
 	| pathname package |
 	package := self singlePackage.
 	(self okToSavePackage: package) ifFalse: [^self].
-	pathname := (FileSaveDialog new)
+	pathname := FileSaveDialog new
 				fileTypes: self saveFileDialogTypes;
 				defaultExtension: Package packageExtension;
 				value: (File removeExtension: package packageFileName);
 				caption: ('Save Package <1p> As...' expandMacrosWith: package name);
 				showModal.
-	pathname notNil 
+	pathname notNil
 		ifTrue: 
 			[package saveAs: pathname.
-			self packages: (Array with: package)]!
+			self packages: {package}]!
 
 savePackageChanges
 	"Save out the selected package (if changed) and its changed owned objects."

@@ -128,7 +128,7 @@ browseDefinitions
 
 browseDefinitionsCommand
 	^Message selector: #browseMessageDefinitions:in:
-		arguments: (Array with: self selectedWord with: self searchEnvironment)!
+		arguments: {self selectedWord. self searchEnvironment}!
 
 browseIt
 	"Evaluate currently selected text (or the current line if there is no selection) in the
@@ -145,7 +145,7 @@ browseReferences
 
 browseReferencesCommand
 	^Message selector: #browseMessageReferences:in:
-		arguments: (Array with: self selectedWord with: self searchEnvironment)!
+		arguments: {self selectedWord. self searchEnvironment}!
 
 cancelAutoCompletion
 	self view cancelAutoCompletion!
@@ -2067,7 +2067,7 @@ indicatorStyles: aCollectionOfScintillaIndicatorStyles
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
-		addEvaluationFrom: (Array with: ScintillaIndicatorStyle name , ' new'))
+		addEvaluationFrom: {ScintillaIndicatorStyle name , ' new'})
 		beImmutable;
 		yourself!
 
@@ -2170,7 +2170,7 @@ publishedAspects
 		add: (Aspect choice: #annotationMode from: ScintillaView annotationModes);
 		add: (Aspect choice: #wrapIndentMode from: ScintillaView wrapIndentModes);
 		add: (Aspect sequenceableCollection: #editorKeyBindings
-					addEvaluationFrom: (Array with: ScintillaKeyBinding name , ' new')) beImmutable;
+					addEvaluationFrom: {ScintillaKeyBinding name , ' new'}) beImmutable;
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;

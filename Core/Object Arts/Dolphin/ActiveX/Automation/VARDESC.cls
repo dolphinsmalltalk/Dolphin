@@ -38,7 +38,7 @@ arguments
 	have any arguments, but its property set function does so it can be convenient to
 	consider it as having one argument of the properties type."
 
-	^Array with: self elemDesc!
+	^{self elemDesc}!
 
 basicFree
 	"Private - Free external resources owned by the receiver."

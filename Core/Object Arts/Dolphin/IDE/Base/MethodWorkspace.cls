@@ -70,21 +70,20 @@ browseDefinitionsCommand
 	failing that prompt for a selector and open a method browser displaying the implementors of
 	that selector."
 
-	self selectedNode 
+	self selectedNode
 		ifNotNil: 
-			[:node | 
-			(self selectorFromNode: node) 
+			[:node |
+			(self selectorFromNode: node)
 				ifNil: 
-					[node isVariable 
+					[node isVariable
 						ifTrue: 
-							[(self variableClassification: node) == #classGlobal 
+							[(self variableClassification: node) == #classGlobal
 								ifTrue: 
 									[^Message selector: #browseClass:
 										argument: (self parseContext environment bindingFor: node name) value]]]
 				ifNotNil: 
-					[:selector | 
-					^Message selector: #browseDefinitionsOfSelector:in:
-						arguments: (Array with: selector with: self searchEnvironment)]].
+					[:selector |
+					^Message selector: #browseDefinitionsOfSelector:in: arguments: {selector. self searchEnvironment}]].
 	^super browseDefinitionsCommand!
 
 browseMessage
@@ -96,24 +95,22 @@ browseReferencesCommand
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector."
 
-	self selectedNode 
+	self selectedNode
 		ifNotNil: 
-			[:node | 
-			(self selectorFromNode: node) 
+			[:node |
+			(self selectorFromNode: node)
 				ifNil: 
-					[node isVariable 
+					[node isVariable
 						ifTrue: 
 							[| varClass |
 							varClass := self variableClassification: node.
-							(varClass == #classGlobal or: [varClass == #global]) 
+							(varClass == #classGlobal or: [varClass == #global])
 								ifTrue: 
 									[^Message selector: #browseGlobalReferences:in:
-										arguments: (Array with: (self parseContext environment bindingFor: node name)
-												with: self searchEnvironment)]]]
+										arguments: {self parseContext environment bindingFor: node name. self searchEnvironment}]]]
 				ifNotNil: 
-					[:literal | 
-					^Message selector: #browseReferencesToLiteral:in:
-						arguments: (Array with: literal with: self searchEnvironment)]].
+					[:literal |
+					^Message selector: #browseReferencesToLiteral:in: arguments: {literal. self searchEnvironment}]].
 	^super browseReferencesCommand!
 
 buildParseTree

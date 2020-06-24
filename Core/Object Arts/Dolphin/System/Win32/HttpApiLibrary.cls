@@ -1291,8 +1291,8 @@ example6
 						maxBandwidth: 10000
 						maxPeakBandwidth: 30000
 						burstSize: 20000))."
-	Array with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeConnectionLimit)
-		with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeBandwidth)
+	{lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeConnectionLimit.
+		lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeBandwidth}
 	"with: (lib queryUrlGroup: groupId qosSetting: HttpQosSettingTypeFlowRate)"]
 			ensure: 
 				[queue ifNotNil: [lib httpCloseRequestQueue: queue].

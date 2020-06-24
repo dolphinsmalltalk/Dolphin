@@ -462,28 +462,28 @@ invoke: methodName with: arg1 with: arg2
 	"Invoke the method with <Integer> DISPID, id, and the pair of <variantCompatible>
 	arguments, arg1 and arg2. This is much like #perform:with:with: for a dispatch interface."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
-		flags: DISPATCH_METHOD 
-		parms: (DISPPARAMS withArguments: (Array with: arg1 with: arg2))!
+		flags: DISPATCH_METHOD
+		parms: (DISPPARAMS withArguments: {arg1. arg2})!
 
 invoke: methodName with: arg1 with: arg2 with: arg3
 	"Invoke the method with <Integer> DISPID, id, and the pair of <variantCompatible>
 	arguments, arg1 and arg2. This is much like #perform:with:with: for a dispatch interface."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
-		flags: DISPATCH_METHOD 
-		parms: (DISPPARAMS withArguments: (Array with: arg1 with: arg2 with: arg3))!
+		flags: DISPATCH_METHOD
+		parms: (DISPPARAMS withArguments: {arg1. arg2. arg3})!
 
 invoke: methodName with: arg1 with: arg2 with: arg3 with: arg4
 	"Invoke the method with <Integer> DISPID, id, and the pair of <variantCompatible>
 	arguments, arg1 and arg2. This is much like #perform:with:with: for a dispatch interface."
 
-	^self 
+	^self
 		invokeId: (self idOfName: methodName)
-		flags: DISPATCH_METHOD 
-		parms: (DISPPARAMS withArguments: (Array with: arg1 with: arg2 with: arg3 with: arg4))!
+		flags: DISPATCH_METHOD
+		parms: (DISPPARAMS withArguments: {arg1. arg2. arg3. arg4})!
 
 invoke: methodName withArguments: args
 	"Invoke the method with the <readableString> name, methodName, and the <Array> of 
@@ -546,20 +546,20 @@ invokeId: id with: arg1 with: arg2
 	"Invoke the method with <Integer> DISPID, id, and the pair of <variantCompatible>
 	arguments, arg1 and arg2. This is much like #perform:with:with: for a dispatch interface."
 
-	^self 
-		invokeId: id 
-		flags: DISPATCH_METHOD 
-		parms: (DISPPARAMS withArguments: (Array with: arg1 with: arg2))!
+	^self
+		invokeId: id
+		flags: DISPATCH_METHOD
+		parms: (DISPPARAMS withArguments: {arg1. arg2})!
 
 invokeId: id with: arg1 with: arg2 with: arg3
 	"Invoke the method with <Integer> DISPID, id, and the triplet of <variantCompatible>
 	arguments, arg1, arg2, and arg3. This is much like #perform:with:with:with: for a 
 	dispatch interface."
 
-	^self 
-		invokeId: id 
-		flags: DISPATCH_METHOD 
-		parms: (DISPPARAMS withArguments: (Array with: arg1 with: arg2 with: arg3))!
+	^self
+		invokeId: id
+		flags: DISPATCH_METHOD
+		parms: (DISPPARAMS withArguments: {arg1. arg2. arg3})!
 
 invokeId: id withArguments: args
 	"Invoke the method with <Integer> DISPID, id, and the <Array> of <variantCompatible>
@@ -659,12 +659,13 @@ setPropertyId: dispid withArguments: items value: value
 	| parms var |
 	var := value asVariant.
 	parms := DISPPARAMS new.
-	parms names: (Array with: DISPID_PROPERTYPUT) named: (Array with: var) args: items.
-	self 
-		invokeId: dispid 
-		flags: (var vt == VT_DISPATCH
-				ifTrue: [DISPATCH_PROPERTYPUTREF]
-				ifFalse: [DISPATCH_PROPERTYPUT])
+	parms
+		names: {DISPID_PROPERTYPUT}
+		named: {var}
+		args: items.
+	self
+		invokeId: dispid
+		flags: (var vt == VT_DISPATCH ifTrue: [DISPATCH_PROPERTYPUTREF] ifFalse: [DISPATCH_PROPERTYPUT])
 		parms: parms
 		retVal: nil!
 

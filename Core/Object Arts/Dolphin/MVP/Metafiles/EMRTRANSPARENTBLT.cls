@@ -359,7 +359,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_TRANSPARENTBLT! !
+	^{EMR_TRANSPARENTBLT}! !
 !EMRTRANSPARENTBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRTRANSPARENTBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRTRANSPARENTBLT class categoriesFor: #iTypes!constants!public! !

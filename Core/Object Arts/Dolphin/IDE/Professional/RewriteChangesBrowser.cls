@@ -169,7 +169,7 @@ removePackageChanges
 selectCaret
 	| caret |
 	caret := changesPresenter view caretIndex.
-	^caret isZero ifFalse: [changesPresenter view selectionsByIndex: (Array with: caret)]!
+	^caret isZero ifFalse: [changesPresenter view selectionsByIndex: {caret}]!
 
 setInitialFocus
 	changesPresenter view tabFirst!

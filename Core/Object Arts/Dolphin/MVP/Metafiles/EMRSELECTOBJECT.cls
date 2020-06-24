@@ -63,7 +63,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_SELECTOBJECT with: EMR_DELETEOBJECT! !
+	^{EMR_SELECTOBJECT. EMR_DELETEOBJECT}! !
 !EMRSELECTOBJECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
 !EMRSELECTOBJECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTOBJECT class categoriesFor: #iTypes!constants!public! !

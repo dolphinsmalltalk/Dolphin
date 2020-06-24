@@ -32,11 +32,10 @@ info
 
 	| type |
 	type := self InfoType.
-	^(##(Array
-		with: HTTP_REQUEST_AUTH_INFO
-		with: HTTP_REQUEST_CHANNEL_BIND_STATUS
-		with: HTTP_SSL_PROTOCOL_INFO
-		with: HTTP_REQUEST_TOKEN_BINDING_INFO) at: type + 1)
+	^(##({HTTP_REQUEST_AUTH_INFO.
+		HTTP_REQUEST_CHANNEL_BIND_STATUS.
+		HTTP_SSL_PROTOCOL_INFO.
+		HTTP_REQUEST_TOKEN_BINDING_INFO}) at: type + 1)
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pInfo)!
 
 InfoLength

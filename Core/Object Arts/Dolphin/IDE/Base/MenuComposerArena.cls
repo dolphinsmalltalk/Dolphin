@@ -71,29 +71,28 @@ createDragImageList
 		hotSpotX: hotspot x
 		hotSpotY: hotspot y!
 
-endTrackingAt: aPoint 
+endTrackingAt: aPoint
 	"Private - End position tracking for the new position of the receiver.
 	Part of the <MouseTracker> target protocol."
 
 	self cancelTrackingAt: nil.
 	
 	[self managedSubViewsDo: 
-			[:view | 
+			[:view |
 			| index localPoint |
 			localPoint := aPoint - view position.
 			index := view itemAt: localPoint.
-			index isZero 
+			index isZero
 				ifFalse: 
 					[self trigger: #itemFrom:at:droppedBefore:copy:
-						withArguments: (Array 
-								with: dragSource
-								with: dragMenuIndex
-								with: (view 
-										insertBefore: index
-										position: localPoint
-										canvas: self canvas)
-								with: Keyboard default isCtrlDown).
-					^self]]] 
+						withArguments: {dragSource.
+								dragMenuIndex.
+								view
+									insertBefore: index
+									position: localPoint
+									canvas: self canvas.
+								Keyboard default isCtrlDown}.
+					^self]]]
 			ensure: [dragMenuIndex := nil]!
 
 hideDragCursor

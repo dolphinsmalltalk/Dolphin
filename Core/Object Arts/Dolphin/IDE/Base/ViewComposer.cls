@@ -2201,11 +2201,7 @@ trackGrabber: aGrabber from: aScreenPoint
 
 undoState
 	| stateBlock |
-	stateBlock := 
-			[(Array 
-				with: self composingView
-				with: selections
-				with: self aspectAccessor) literalStoreArray].
+	stateBlock := [{self composingView. selections. self aspectAccessor} literalStoreArray].
 	^self composingView ifNil: [stateBlock value] ifNotNil: [:v | v whileInvisibleDo: stateBlock]!
 
 updateAdornment

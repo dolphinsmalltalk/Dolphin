@@ -76,7 +76,7 @@ propertyTable: anObject
 
 	propertyTable := anObject!
 
-Read: pszPropName pVar: pVar pErrorLog: pErrorLog 
+Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	"Implement the IPropertyBag::Read() method.
 	Note that the pVar argument is really an in-out parameter, since the 'vt' member is expected to
 	be set to the type of variant desired, or VT_EMPTY for don't care. This means it should not
@@ -96,27 +96,27 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	(vt := pVar vt) == VT_EMPTY ifFalse: [val := val changeType: vt].
 	"VARIANT>>value: method frees existing content, which we don't want as may not be valid"
 	pVar copyBytes: val detach.
-	S_OK] 
+	S_OK]
 			on: AXPropertyReadError
 			do: 
-				[:e | 
-				pErrorLog notNull 
+				[:e |
+				pErrorLog notNull
 					ifTrue: 
 						[| errs |
 						errs := e errorLog queryInterface: IEnumErrorInfo
 									ifNone: 
-										[Array with: (IErrorInfo 
-													source: pszPropName
-													description: 'Error loading embedded object property'
-													helpContext: 0
-													helpFile: ''
-													guid: e guid)].
+										[{IErrorInfo
+												source: pszPropName
+												description: 'Error loading embedded object property'
+												helpContext: 0
+												helpFile: ''
+												guid: e guid}].
 						errs do: [:errInfo | pErrorLog addError: pszPropName pExcepInfo: errInfo excepInfo]].
 				e hresult asInteger]
 			on: Error
 			do: 
-				[:e | 
-				pErrorLog notNull 
+				[:e |
+				pErrorLog notNull
 					ifTrue: 
 						[| ex |
 						ex := EXCEPINFO new.

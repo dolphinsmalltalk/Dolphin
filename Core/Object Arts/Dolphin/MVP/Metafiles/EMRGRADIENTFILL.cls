@@ -148,7 +148,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_GRADIENTFILL! !
+	^{EMR_GRADIENTFILL}! !
 !EMRGRADIENTFILL class categoriesFor: #defineFields!public!template definition! !
 !EMRGRADIENTFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRGRADIENTFILL class categoriesFor: #iTypes!constants!public! !

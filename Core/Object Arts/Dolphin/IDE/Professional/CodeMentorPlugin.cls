@@ -61,14 +61,14 @@ browseFailedClass: aString
 	aString asQualifiedReference valueOrNil
 		ifNotNil: [:failedClass | (Smalltalk developmentSystem browseClass: failedClass) caption: self failedRule name]!
 
-browseFailedMethodName: aString 
+browseFailedMethodName: aString
 	"Private - Browser the method identified by aString"
 
-	(CompiledMethod fromString: aString) 
+	(CompiledMethod fromString: aString)
 		ifNotNil: 
-			[:failedMethod | 
+			[:failedMethod |
 			| env |
-			env := BrowserEnvironment new forMethods: (Array with: failedMethod).
+			env := BrowserEnvironment new forMethods: {failedMethod}.
 			env
 				label: aString;
 				filter: (self methodFilterForRule: self failedRule inEnvironment: self browserEnvironment).
@@ -570,16 +570,14 @@ resetProgressBar
 rulesTreeModel
 	"Private - Answer a TreeModel that provides a <treeModel> interface on LintRules"
 
-	rulesTreeModel isNil 
+	rulesTreeModel isNil
 		ifTrue: 
-			[rulesTreeModel := VirtualTreeModel withRoots: (Array with: self lintRules).
+			[rulesTreeModel := VirtualTreeModel withRoots: {self lintRules}.
 			rulesTreeModel
 				hasChildrenBlock: [:each | each isComposite];
 				getChildrenBlock: 
-						[:each | 
-						each isComposite 
-							ifTrue: [each rules reject: [:r | r hasConflicts]]
-							ifFalse: [OrderedCollection new]];
+						[:each |
+						each isComposite ifTrue: [each rules reject: [:r | r hasConflicts]] ifFalse: [OrderedCollection new]];
 				getParentBlock: [:each | self parentRuleOf: each]].
 	^rulesTreeModel!
 

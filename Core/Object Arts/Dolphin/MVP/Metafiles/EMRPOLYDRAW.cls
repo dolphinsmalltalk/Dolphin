@@ -139,7 +139,7 @@ getFieldNames
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
-	^Array with: EMR_POLYDRAW! !
+	^{EMR_POLYDRAW}! !
 !EMRPOLYDRAW class categoriesFor: #defineFields!public!template definition! !
 !EMRPOLYDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYDRAW class categoriesFor: #iTypes!constants!public! !

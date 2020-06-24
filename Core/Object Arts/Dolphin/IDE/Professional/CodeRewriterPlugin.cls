@@ -22,15 +22,15 @@ buildReplaceRule
 	searchText := self searchText.
 	replaceText := self replaceText.
 	^
-	[TransformationRule 
-		rewrite: (Array with: (Array with: searchText with: replaceText))
+	[TransformationRule
+		rewrite: {{searchText. replaceText}}
 		methods: isMethodPresenter value
 		name: ('Replace: <1s> with: <2s>' expandMacrosWith: (self captionText: searchText)
-				with: (self captionText: replaceText))] 
+				with: (self captionText: replaceText))]
 			on: SmalltalkParser errorClass
 			do: 
-				[:ex | 
-				(ex source = searchText ifTrue: [searchTextPresenter] ifFalse: [replaceTextPresenter]) 
+				[:ex |
+				(ex source = searchText ifTrue: [searchTextPresenter] ifFalse: [replaceTextPresenter])
 					selectionRange: ex range.
 				self browser statusModel value: ex.
 				nil]!
@@ -41,13 +41,13 @@ buildSearchRule
 	caption nextPutAll: 'Methods matching: '.
 	self searchText aspectDisplayOn: caption.
 	^
-	[ParseTreeLintRule 
-		createParseTreeRule: (Array with: self searchText)
+	[ParseTreeLintRule
+		createParseTreeRule: {self searchText}
 		method: isMethodPresenter value
-		name: caption contents] 
+		name: caption contents]
 			on: SmalltalkParser errorClass
 			do: 
-				[:ex | 
+				[:ex |
 				searchTextPresenter selectionRange: ex range.
 				self browser statusModel value: ex.
 				ex return]!

@@ -24,9 +24,7 @@ cancelTrackingAt: arg1
 continueTrackingAt: aPoint from: aPreviousPoint
 	| foundObject |
 	foundObject := self visualObjectAt: aPoint.
-	foundObject notNil 
-		ifTrue: [heading list: (Array with: foundObject)]
-		ifFalse: [heading clear]!
+	foundObject notNil ifTrue: [heading list: {foundObject}] ifFalse: [heading clear]!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"
@@ -112,7 +110,7 @@ onDropOver: anInternalDragDropSession
 onValueChanged
 	"Private - The receiver's value has changed; refresh our heading"
 
-	heading list: (Array with: self value)!
+	heading list: {self value}!
 
 onViewOpened
 	super onViewOpened.

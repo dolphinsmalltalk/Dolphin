@@ -15,10 +15,9 @@ _descriptionArguments
 	into the receiver's Win32 description format string when constructing the receivers 
 	#description."
 
-	^Array 
-		with: self messageText displayString
-		with: (ErrorDescriptions at: self tag + 1 ifAbsent: ['Unknown error'])
-		with: self win32ErrorDescription!
+	^{self messageText displayString.
+		ErrorDescriptions at: self tag + 1 ifAbsent: ['Unknown error'].
+		self win32ErrorDescription}!
 
 _descriptionFormat
 	"Answer a <readableString> whose contents are a Win32 format string to be used 
