@@ -1102,7 +1102,7 @@ unicodeClass
 
 asTimeStamp
 	Notification deprecated.
-	^self asDateAndTime asTime! !
+	^self asDateAndTime asTimeStamp.! !
 !SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
 
 !Time methodsFor!
