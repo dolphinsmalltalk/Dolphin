@@ -35,7 +35,7 @@ critical: aNiladicBlock
 		ifTrue: [^aNiladicBlock value].
 
 	"We need to acquire the mutex before we can proceed"
-	stateHolder := Array new: 1.
+	stateHolder := { nil }.
 	^[	"The semaphore primitive will atomically wait AND set the wait result if it completes"
 		semaphore wait: INFINITE ret: stateHolder.
 		owner := active.
