@@ -52,8 +52,8 @@ defaultExtension: aString
 	"Set the default extension for the file open/save.
 	We store down the String in an instance variable to prevent it being GC'd."
 
-	defExt := aString asUtf16String.
-	self lpstrDefExt: defExt!
+	defExt := aString ifNotNil: [:a | a asUtf16String].
+	self lpstrDefExt: defExt.!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -69,15 +69,15 @@ fileName: aString
 	"Set the file name to be opened/saved.
 	We store down the String in an instance variable to prevent it being GC'd."
 
-	fileName := aString asUtf16String.
-	self lpstrFile: fileName!
+	fileName := aString ifNotNil: [:a | a asUtf16String].
+	self lpstrFile: fileName.!
 
 fileTypes: aString
 	"Set the file type filter to be used for the the common file dialog.
 	We store down the String in an instance variable to prevent it being GC'd."
 
-	filter := aString asUtf16String.
-	self lpstrFilter: filter!
+	filter := aString ifNotNil: [:a | a asUtf16String].
+	self lpstrFilter: filter.!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -111,8 +111,8 @@ initialDirectory: aString
 	"Set the initial directory path name to be opened/saved.
 	We store down the String in an instance variable to prevent it being GC'd."
 
-	initialDir := aString asUtf16String.
-	self lpstrInitialDir: initialDir!
+	initialDir := aString ifNotNil: [:a | a asUtf16String].
+	self lpstrInitialDir: initialDir.!
 
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
@@ -192,8 +192,8 @@ title: aString
 	"Set the title to be used for the the common file dialog caption.
 	We store down the String in an instance variable to prevent it being GC'd."
 
-	title := aString asUtf16String.
-	self lpstrTitle: title! !
+	title := aString ifNotNil: [:a | a asUtf16String].
+	self lpstrTitle: title.! !
 !OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
 !OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
 !OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
