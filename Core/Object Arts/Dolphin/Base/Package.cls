@@ -371,6 +371,21 @@ comment: aString
 	self storeComment.
 	self isChanged: true!
 
+convertOldMethodNames
+	| names classes |
+	(methodNames notNil and: [methodNames notEmpty and: [methodNames anyOne isKindOf: Association]])
+		ifFalse: [^self].
+	classes := Set new.
+	names := Set new: methodNames size.
+	methodNames do: 
+			[:each |
+			| parts className |
+			parts := each key subStrings.
+			className := classes addIfAbsent: (BindingReference pathString: parts first).
+			parts size > 1 ifTrue: [className := classes addIfAbsent: className meta].
+			names add: (MethodName className: className selector: each value)].
+	methodNames := names!
+
 convertOldNames: aCollectionOfSymbols
 	^aCollectionOfSymbols
 		ifNotNil: 
@@ -1621,18 +1636,7 @@ upgradeToVersion2
 	prerequisiteNames := prerequisiteNames asArray.
 	self convertOldNamesProperty: #binaryVariables.
 	self convertOldNamesProperty: #aliasVariables.
-	(methodNames notNil and: [methodNames notEmpty and: [methodNames anyOne isKindOf: Association]])
-		ifTrue: 
-			[| names |
-			names := Set new.
-			methodNames do: 
-					[:each |
-					| parts className |
-					parts := each key subStrings.
-					className := BindingReference pathString: parts first.
-					parts size > 1 ifTrue: [className := className meta].
-					names add: (MethodName className: className selector: each value)].
-			methodNames := names]!
+	self convertOldMethodNames!
 
 validate
 	"Private - Validate the internal structure repairing any errors"
@@ -1718,6 +1722,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #classNames!accessing!public! !
 !Package categoriesFor: #comment!accessing!public! !
 !Package categoriesFor: #comment:!accessing!public! !
+!Package categoriesFor: #convertOldMethodNames!helpers!private! !
 !Package categoriesFor: #convertOldNames:!helpers!private! !
 !Package categoriesFor: #convertOldNamesProperty:!helpers!private! !
 !Package categoriesFor: #declareClasses!helpers!private! !

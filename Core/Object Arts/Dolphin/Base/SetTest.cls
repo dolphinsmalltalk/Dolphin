@@ -64,6 +64,18 @@ setSizes
 	^((Set preferredSizesFrom: (Integer primesUpTo: lastSmall + 256))
 		select: [:each | each <= lastSmall]) , (Set.PrimeSizes select: [:each | each > lastSmall])!
 
+testAddIfAbsent
+	| subject element1 element2 |
+	subject := Set new.
+	element1 := 'a'.
+	self assert: (subject addIfAbsent: element1) identicalTo: 'a'.
+	self assert: subject asArray equals: {element1}.
+	self assert: (subject addIfAbsent: element1) identicalTo: 'a'.
+	element2 := String with: $a.
+	self assert: (subject addIfAbsent: element2) identicalTo: element1.
+	self assert: (subject includes: element2).
+	self assert: subject asArray equals: {element1}!
+
 testAllHealthy
 	"Test whether all subinstances are correctly hashed."
 
@@ -216,6 +228,7 @@ testShallowCopy
 !SetTest categoriesFor: #newSet!private!unit tests! !
 !SetTest categoriesFor: #newSet:!private!unit tests! !
 !SetTest categoriesFor: #setSizes!public!unit tests! !
+!SetTest categoriesFor: #testAddIfAbsent!public! !
 !SetTest categoriesFor: #testAllHealthy!public! !
 !SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !SetTest categoriesFor: #testClassSizeFor!public!unit tests! !

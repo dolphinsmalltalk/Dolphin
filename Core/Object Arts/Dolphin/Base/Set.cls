@@ -57,6 +57,16 @@ add: anObject
 		ifTrue: [self privateAt: index put: anObject].
 	^anObject!
 
+addIfAbsent: anObject
+	"Include the <Object> argument as one of the elements of the receiver, unless an equivalent object is already present.
+	Answer either the existing member, or anObject if it becomes a member."
+
+	| index |
+	^(self basicAt: (index := self findElementOrNil: anObject))
+		ifNil: 
+			[self privateAt: index put: anObject.
+			anObject]!
+
 addNewElement: anObject
 	"Include the <Object> newElement as one of the elements of the receiver. 
 	If newElement is nil, then it is not added. Answer true if the object was
@@ -393,6 +403,7 @@ uncheckedAdd: newObject
 !Set categoriesFor: #_deepCopyElementsInto:trail:!copying!private! !
 !Set categoriesFor: #=!comparing!public! !
 !Set categoriesFor: #add:!adding!public! !
+!Set categoriesFor: #addIfAbsent:!adding!public! !
 !Set categoriesFor: #addNewElement:!adding!public! !
 !Set categoriesFor: #approxSize!accessing!private! !
 !Set categoriesFor: #asSet!converting!public! !
