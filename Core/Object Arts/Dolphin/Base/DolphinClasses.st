@@ -356,8 +356,8 @@ Object subclass: #VersionInfo
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractBindingReference subclass: #BindingReference
-	instanceVariableNames: 'pathString path binding context'
-	classVariableNames: ''
+	instanceVariableNames: 'pathString path context binding generation'
+	classVariableNames: 'Generation'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractBindingReference subclass: #MetaBindingReference

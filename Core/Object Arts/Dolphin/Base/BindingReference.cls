@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractBindingReference subclass: #BindingReference
-	instanceVariableNames: 'pathString path binding context'
-	classVariableNames: ''
+	instanceVariableNames: 'pathString path context binding generation'
+	classVariableNames: 'Generation'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BindingReference guid: (GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
@@ -15,14 +15,17 @@ asString
 
 	^self pathString!
 
+bind
+	self
+		setGeneration: Generation;
+		setBinding: ((self home resolveBindingPath: self path) ifNil: [Undeclared])!
+
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
-	^(binding
-		ifNil: 
-			[self setBinding: ((self home resolveBindingPath: self path) ifNil: [Undeclared]).
-			binding])
-			targetVariable!
+	(binding isNil or: [generation ~~ Generation])
+		ifTrue: [self bind].
+	^binding targetVariable!
 
 context
 	"Answer the naming context in which this reference should be resolved."
@@ -74,6 +77,10 @@ setBinding: aVariableBindingOrNil
 	<mutable>
 	binding := aVariableBindingOrNil!
 
+setGeneration: anInteger
+	<mutable>
+	generation := anInteger!
+
 setPath: anArray
 	<mutable>
 	path := anArray!
@@ -82,6 +89,7 @@ setPathString: aString
 	<mutable>
 	pathString := aString! !
 !BindingReference categoriesFor: #asString!converting!public! !
+!BindingReference categoriesFor: #bind!operations!private! !
 !BindingReference categoriesFor: #bindingOrNil!accessing!public! !
 !BindingReference categoriesFor: #context!accessing!public! !
 !BindingReference categoriesFor: #context:!initializing!private! !
@@ -92,17 +100,25 @@ setPathString: aString
 !BindingReference categoriesFor: #path!accessing!public! !
 !BindingReference categoriesFor: #pathString!accessing!public! !
 !BindingReference categoriesFor: #setBinding:!initializing!private! !
+!BindingReference categoriesFor: #setGeneration:!initializing!private! !
 !BindingReference categoriesFor: #setPath:!initializing!private! !
 !BindingReference categoriesFor: #setPathString:!initializing!private! !
 
 !BindingReference class methodsFor!
 
 clearCachedBindings
+	Generation := Generation + 1.
+	"Avoid the generation number becoming a large integer - unlikely, but possible"
+	Generation >= VMConstants.SmallIntegerMax ifTrue: [self flushBindings]!
+
+flushBindings
 	| instances |
 	instances := self primAllInstances.
-	1 to: instances size do: [:i | (instances at: i) setBinding: nil]!
+	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
+	Generation := 0!
 
 initialize
+	self flushBindings.
 	VMLibrary default
 		registryAt: self name put: self;
 		registryAtIndex: 65 put: #pathString:context:meta:!
@@ -144,7 +160,8 @@ uninitialize
 	VMLibrary default
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil! !
-!BindingReference class categoriesFor: #clearCachedBindings!private! !
+!BindingReference class categoriesFor: #clearCachedBindings!operations!private! !
+!BindingReference class categoriesFor: #flushBindings!operations!private! !
 !BindingReference class categoriesFor: #initialize!class initialization!public! !
 !BindingReference class categoriesFor: #newPath:context:!instance creation!private! !
 !BindingReference class categoriesFor: #pathString:!instance creation!public! !
