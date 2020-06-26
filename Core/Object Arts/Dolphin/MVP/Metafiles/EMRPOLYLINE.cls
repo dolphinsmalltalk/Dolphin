@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMRPOLYLINE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_aptl' -> 16r1C.
+		'_OffsetOf_cptl' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMRPOLYLINE guid: (GUID fromString: '{d4e9a638-aade-4ece-a3f4-9e54a0929730}')!
-EMRPOLYLINE addClassConstant: '_OffsetOf_aptl' value: 16r1C!
-EMRPOLYLINE addClassConstant: '_OffsetOf_cptl' value: 16r18!
-EMRPOLYLINE addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYLINE comment: '<EMRPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

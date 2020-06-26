@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRELLIPSE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_rclBox'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rclBox' -> 16r8
+	}!
 EMRELLIPSE guid: (GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
-EMRELLIPSE addClassConstant: '_OffsetOf_rclBox' value: 16r8!
 EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

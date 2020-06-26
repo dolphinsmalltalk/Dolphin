@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_xDenom _OffsetOf_xNum _OffsetOf_yDenom _OffsetOf_yNum'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_xDenom' -> 16rC.
+		'_OffsetOf_xNum' -> 16r8.
+		'_OffsetOf_yDenom' -> 16r14.
+		'_OffsetOf_yNum' -> 16r10
+	}!
 EMRSCALEVIEWPORTEXTEX guid: (GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
-EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xDenom' value: 16rC!
-EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xNum' value: 16r8!
-EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yDenom' value: 16r14!
-EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yNum' value: 16r10!
 EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

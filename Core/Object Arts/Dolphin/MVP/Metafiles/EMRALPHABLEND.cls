@@ -2,27 +2,29 @@
 
 ENHMETARECORD subclass: #EMRALPHABLEND
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBitsSrc' -> 16r60.
+		'_OffsetOf_cbBmiSrc' -> 16r58.
+		'_OffsetOf_crBkColorSrc' -> 16r4C.
+		'_OffsetOf_cxDest' -> 16r20.
+		'_OffsetOf_cxSrc' -> 16r64.
+		'_OffsetOf_cyDest' -> 16r24.
+		'_OffsetOf_cySrc' -> 16r68.
+		'_OffsetOf_dwRop' -> 16r28.
+		'_OffsetOf_iUsageSrc' -> 16r50.
+		'_OffsetOf_offBitsSrc' -> 16r5C.
+		'_OffsetOf_offBmiSrc' -> 16r54.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xDest' -> 16r18.
+		'_OffsetOf_xformSrc' -> 16r34.
+		'_OffsetOf_xSrc' -> 16r2C.
+		'_OffsetOf_yDest' -> 16r1C.
+		'_OffsetOf_ySrc' -> 16r30
+	}!
 EMRALPHABLEND guid: (GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
-EMRALPHABLEND addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cxDest' value: 16r20!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cxSrc' value: 16r64!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cyDest' value: 16r24!
-EMRALPHABLEND addClassConstant: '_OffsetOf_cySrc' value: 16r68!
-EMRALPHABLEND addClassConstant: '_OffsetOf_dwRop' value: 16r28!
-EMRALPHABLEND addClassConstant: '_OffsetOf_iUsageSrc' value: 16r50!
-EMRALPHABLEND addClassConstant: '_OffsetOf_offBitsSrc' value: 16r5C!
-EMRALPHABLEND addClassConstant: '_OffsetOf_offBmiSrc' value: 16r54!
-EMRALPHABLEND addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRALPHABLEND addClassConstant: '_OffsetOf_xDest' value: 16r18!
-EMRALPHABLEND addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
-EMRALPHABLEND addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
-EMRALPHABLEND addClassConstant: '_OffsetOf_yDest' value: 16r1C!
-EMRALPHABLEND addClassConstant: '_OffsetOf_ySrc' value: 16r30!
 EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

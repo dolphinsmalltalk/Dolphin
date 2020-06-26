@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRFILLPATH
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMRFILLPATH guid: (GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
-EMRFILLPATH addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

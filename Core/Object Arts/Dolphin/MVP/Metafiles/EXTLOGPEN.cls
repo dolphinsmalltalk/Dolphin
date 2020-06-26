@@ -2,17 +2,19 @@
 
 ExternalStructure subclass: #EXTLOGPEN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_elpBrushStyle _OffsetOf_elpColor _OffsetOf_elpHatch _OffsetOf_elpNumEntries _OffsetOf_elpPenStyle _OffsetOf_elpStyleEntry _OffsetOf_elpWidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elpBrushStyle' -> 16r8.
+		'_OffsetOf_elpColor' -> 16rC.
+		'_OffsetOf_elpHatch' -> 16r10.
+		'_OffsetOf_elpNumEntries' -> 16r14.
+		'_OffsetOf_elpPenStyle' -> 16r0.
+		'_OffsetOf_elpStyleEntry' -> 16r18.
+		'_OffsetOf_elpWidth' -> 16r4
+	}!
 EXTLOGPEN guid: (GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpBrushStyle' value: 16r8!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpColor' value: 16rC!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpHatch' value: 16r10!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpNumEntries' value: 16r14!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpPenStyle' value: 16r0!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpStyleEntry' value: 16r18!
-EXTLOGPEN addClassConstant: '_OffsetOf_elpWidth' value: 16r4!
 EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihCS _OffsetOf_lcs'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihCS' -> 16r8.
+		'_OffsetOf_lcs' -> 16rC
+	}!
 EMRCREATECOLORSPACE guid: (GUID fromString: '{20d38d2a-27f0-4a74-ad30-adb4de0f37c1}')!
-EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
-EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_lcs' value: 16rC!
 EMRCREATECOLORSPACE comment: '<EMRCREATECOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

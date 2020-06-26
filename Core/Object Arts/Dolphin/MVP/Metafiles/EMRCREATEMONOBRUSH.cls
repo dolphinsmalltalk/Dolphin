@@ -2,16 +2,18 @@
 
 ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBits' -> 16r1C.
+		'_OffsetOf_cbBmi' -> 16r14.
+		'_OffsetOf_ihBrush' -> 16r8.
+		'_OffsetOf_iUsage' -> 16rC.
+		'_OffsetOf_offBits' -> 16r18.
+		'_OffsetOf_offBmi' -> 16r10
+	}!
 EMRCREATEMONOBRUSH guid: (GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBits' value: 16r1C!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBmi' value: 16r14!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_iUsage' value: 16rC!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBits' value: 16r18!
-EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBmi' value: 16r10!
 EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSELECTOBJECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihObject'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihObject' -> 16r8
+	}!
 EMRSELECTOBJECT guid: (GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
-EMRSELECTOBJECT addClassConstant: '_OffsetOf_ihObject' value: 16r8!
 EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

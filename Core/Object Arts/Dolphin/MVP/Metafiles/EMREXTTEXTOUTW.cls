@@ -2,11 +2,13 @@
 
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_text'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_text' -> 16r4C
+	}!
 EMREXTTEXTOUTW guid: (GUID fromString: '{984a2e2c-3699-4a16-9ed7-8f174e2ca081}')!
-EMREXTTEXTOUTW addClassConstant: '_OffsetOf_text' value: 16r4C!
 EMREXTTEXTOUTW comment: ''!
 !EMREXTTEXTOUTW categoriesForClass!Win32-Structs! !
 !EMREXTTEXTOUTW methodsFor!

@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRSETICMPROFILE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r10.
+		'_OffsetOf_cbName' -> 16rC.
+		'_OffsetOf_Data' -> 16r14.
+		'_OffsetOf_dwFlags' -> 16r8
+	}!
 EMRSETICMPROFILE guid: (GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
-EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbData' value: 16r10!
-EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbName' value: 16rC!
-EMRSETICMPROFILE addClassConstant: '_OffsetOf_Data' value: 16r14!
-EMRSETICMPROFILE addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
 EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

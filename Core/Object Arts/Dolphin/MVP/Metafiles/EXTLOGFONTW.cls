@@ -2,20 +2,22 @@
 
 ExternalStructure subclass: #EXTLOGFONTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_elfCulture _OffsetOf_elfFullName _OffsetOf_elfLogFont _OffsetOf_elfMatch _OffsetOf_elfPanose _OffsetOf_elfReserved _OffsetOf_elfStyle _OffsetOf_elfStyleSize _OffsetOf_elfVendorId _OffsetOf_elfVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elfCulture' -> 16r130.
+		'_OffsetOf_elfFullName' -> 16r5C.
+		'_OffsetOf_elfLogFont' -> 16r0.
+		'_OffsetOf_elfMatch' -> 16r124.
+		'_OffsetOf_elfPanose' -> 16r134.
+		'_OffsetOf_elfReserved' -> 16r128.
+		'_OffsetOf_elfStyle' -> 16rDC.
+		'_OffsetOf_elfStyleSize' -> 16r120.
+		'_OffsetOf_elfVendorId' -> 16r12C.
+		'_OffsetOf_elfVersion' -> 16r11C
+	}!
 EXTLOGFONTW guid: (GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfCulture' value: 16r130!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfFullName' value: 16r5C!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfLogFont' value: 16r0!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfMatch' value: 16r124!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfPanose' value: 16r134!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfReserved' value: 16r128!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfStyle' value: 16rDC!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfStyleSize' value: 16r120!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfVendorId' value: 16r12C!
-EXTLOGFONTW addClassConstant: '_OffsetOf_elfVersion' value: 16r11C!
 EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

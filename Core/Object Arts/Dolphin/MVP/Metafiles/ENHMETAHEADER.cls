@@ -2,27 +2,29 @@
 
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bOpenGL' -> 16r60.
+		'_OffsetOf_cbPixelFormat' -> 16r58.
+		'_OffsetOf_dSignature' -> 16r28.
+		'_OffsetOf_nBytes' -> 16r30.
+		'_OffsetOf_nDescription' -> 16r3C.
+		'_OffsetOf_nHandles' -> 16r38.
+		'_OffsetOf_nPalEntries' -> 16r44.
+		'_OffsetOf_nRecords' -> 16r34.
+		'_OffsetOf_nVersion' -> 16r2C.
+		'_OffsetOf_offDescription' -> 16r40.
+		'_OffsetOf_offPixelFormat' -> 16r5C.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_rclFrame' -> 16r18.
+		'_OffsetOf_sReserved' -> 16r3A.
+		'_OffsetOf_szlDevice' -> 16r48.
+		'_OffsetOf_szlMicrometers' -> 16r64.
+		'_OffsetOf_szlMillimeters' -> 16r50
+	}!
 ENHMETAHEADER guid: (GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
-ENHMETAHEADER addClassConstant: '_OffsetOf_bOpenGL' value: 16r60!
-ENHMETAHEADER addClassConstant: '_OffsetOf_cbPixelFormat' value: 16r58!
-ENHMETAHEADER addClassConstant: '_OffsetOf_dSignature' value: 16r28!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nBytes' value: 16r30!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nDescription' value: 16r3C!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nHandles' value: 16r38!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nPalEntries' value: 16r44!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nRecords' value: 16r34!
-ENHMETAHEADER addClassConstant: '_OffsetOf_nVersion' value: 16r2C!
-ENHMETAHEADER addClassConstant: '_OffsetOf_offDescription' value: 16r40!
-ENHMETAHEADER addClassConstant: '_OffsetOf_offPixelFormat' value: 16r5C!
-ENHMETAHEADER addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-ENHMETAHEADER addClassConstant: '_OffsetOf_rclFrame' value: 16r18!
-ENHMETAHEADER addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
-ENHMETAHEADER addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
-ENHMETAHEADER addClassConstant: '_OffsetOf_szlMicrometers' value: 16r64!
-ENHMETAHEADER addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
 ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 
 The type library contains no documentation for this struct

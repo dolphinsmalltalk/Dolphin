@@ -2,25 +2,27 @@
 
 ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBitsSrc' -> 16r3C.
+		'_OffsetOf_cbBmiSrc' -> 16r34.
+		'_OffsetOf_cxDest' -> 16r48.
+		'_OffsetOf_cxSrc' -> 16r28.
+		'_OffsetOf_cyDest' -> 16r4C.
+		'_OffsetOf_cySrc' -> 16r2C.
+		'_OffsetOf_dwRop' -> 16r44.
+		'_OffsetOf_iUsageSrc' -> 16r40.
+		'_OffsetOf_offBitsSrc' -> 16r38.
+		'_OffsetOf_offBmiSrc' -> 16r30.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xDest' -> 16r18.
+		'_OffsetOf_xSrc' -> 16r20.
+		'_OffsetOf_yDest' -> 16r1C.
+		'_OffsetOf_ySrc' -> 16r24
+	}!
 EMRSTRETCHDIBITS guid: (GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r3C!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r34!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cxDest' value: 16r48!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cxSrc' value: 16r28!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cyDest' value: 16r4C!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cySrc' value: 16r2C!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_dwRop' value: 16r44!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_iUsageSrc' value: 16r40!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_offBitsSrc' value: 16r38!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_offBmiSrc' value: 16r30!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_xDest' value: 16r18!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_xSrc' value: 16r20!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_yDest' value: 16r1C!
-EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_ySrc' value: 16r24!
 EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

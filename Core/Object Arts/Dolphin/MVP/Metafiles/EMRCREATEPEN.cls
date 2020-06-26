@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCREATEPEN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihPen _OffsetOf_lopn'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihPen' -> 16r8.
+		'_OffsetOf_lopn' -> 16rC
+	}!
 EMRCREATEPEN guid: (GUID fromString: '{f7e241d3-4c87-4409-a235-94cd95523c94}')!
-EMRCREATEPEN addClassConstant: '_OffsetOf_ihPen' value: 16r8!
-EMRCREATEPEN addClassConstant: '_OffsetOf_lopn' value: 16rC!
 EMRCREATEPEN comment: '<EMRCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,11 +2,13 @@
 
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_text'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_text' -> 16r4C
+	}!
 EMREXTTEXTOUTA guid: (GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
-EMREXTTEXTOUTA addClassConstant: '_OffsetOf_text' value: 16r4C!
 EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

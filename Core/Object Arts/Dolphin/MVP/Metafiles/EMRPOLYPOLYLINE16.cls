@@ -2,15 +2,17 @@
 
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE16
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_aPolyCounts _OffsetOf_apts _OffsetOf_cpts _OffsetOf_nPolys _OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_aPolyCounts' -> 16r20.
+		'_OffsetOf_apts' -> 16r24.
+		'_OffsetOf_cpts' -> 16r1C.
+		'_OffsetOf_nPolys' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMRPOLYPOLYLINE16 guid: (GUID fromString: '{2a9bb18a-1223-4e8d-a462-82c531b52df3}')!
-EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_aPolyCounts' value: 16r20!
-EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_apts' value: 16r24!
-EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_cpts' value: 16r1C!
-EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_nPolys' value: 16r18!
-EMRPOLYPOLYLINE16 addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYPOLYLINE16 comment: '<EMRPOLYPOLYLINE16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYPOLYLINE16''.
 
 The type library contains no documentation for this struct

@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_rclClip'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rclClip' -> 16r8
+	}!
 EMREXCLUDECLIPRECT guid: (GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
-EMREXCLUDECLIPRECT addClassConstant: '_OffsetOf_rclClip' value: 16r8!
 EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

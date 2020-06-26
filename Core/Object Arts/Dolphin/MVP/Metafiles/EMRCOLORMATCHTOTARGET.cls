@@ -2,15 +2,17 @@
 
 ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwAction _OffsetOf_dwFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r14.
+		'_OffsetOf_cbName' -> 16r10.
+		'_OffsetOf_Data' -> 16r18.
+		'_OffsetOf_dwAction' -> 16r8.
+		'_OffsetOf_dwFlags' -> 16rC
+	}!
 EMRCOLORMATCHTOTARGET guid: (GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
-EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbData' value: 16r14!
-EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbName' value: 16r10!
-EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_Data' value: 16r18!
-EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwAction' value: 16r8!
-EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwFlags' value: 16rC!
 EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

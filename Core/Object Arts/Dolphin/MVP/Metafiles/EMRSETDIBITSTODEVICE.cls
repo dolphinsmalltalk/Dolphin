@@ -2,24 +2,26 @@
 
 ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cScans _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iStartScan _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBitsSrc' -> 16r3C.
+		'_OffsetOf_cbBmiSrc' -> 16r34.
+		'_OffsetOf_cScans' -> 16r48.
+		'_OffsetOf_cxSrc' -> 16r28.
+		'_OffsetOf_cySrc' -> 16r2C.
+		'_OffsetOf_iStartScan' -> 16r44.
+		'_OffsetOf_iUsageSrc' -> 16r40.
+		'_OffsetOf_offBitsSrc' -> 16r38.
+		'_OffsetOf_offBmiSrc' -> 16r30.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xDest' -> 16r18.
+		'_OffsetOf_xSrc' -> 16r20.
+		'_OffsetOf_yDest' -> 16r1C.
+		'_OffsetOf_ySrc' -> 16r24
+	}!
 EMRSETDIBITSTODEVICE guid: (GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r3C!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r34!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cScans' value: 16r48!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cxSrc' value: 16r28!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cySrc' value: 16r2C!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_iStartScan' value: 16r44!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_iUsageSrc' value: 16r40!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_offBitsSrc' value: 16r38!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_offBmiSrc' value: 16r30!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_xDest' value: 16r18!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_xSrc' value: 16r20!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_yDest' value: 16r1C!
-EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_ySrc' value: 16r24!
 EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

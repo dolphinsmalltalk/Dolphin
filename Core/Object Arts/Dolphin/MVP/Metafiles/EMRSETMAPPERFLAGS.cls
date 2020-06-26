@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETMAPPERFLAGS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFlags' -> 16r8
+	}!
 EMRSETMAPPERFLAGS guid: (GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
-EMRSETMAPPERFLAGS addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
 EMRSETMAPPERFLAGS comment: '<EMRSETMAPPERFLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMAPPERFLAGS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

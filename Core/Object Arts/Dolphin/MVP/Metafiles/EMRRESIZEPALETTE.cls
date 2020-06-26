@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRRESIZEPALETTE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cEntries _OffsetOf_ihPal'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cEntries' -> 16rC.
+		'_OffsetOf_ihPal' -> 16r8
+	}!
 EMRRESIZEPALETTE guid: (GUID fromString: '{7a0359ce-039f-4128-a1ed-09dc1fb5e2e5}')!
-EMRRESIZEPALETTE addClassConstant: '_OffsetOf_cEntries' value: 16rC!
-EMRRESIZEPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
 EMRRESIZEPALETTE comment: '<EMRRESIZEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESIZEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

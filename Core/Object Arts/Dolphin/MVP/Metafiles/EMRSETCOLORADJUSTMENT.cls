@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_COLORADJUSTMENT'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_COLORADJUSTMENT' -> 16r8
+	}!
 EMRSETCOLORADJUSTMENT guid: (GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
-EMRSETCOLORADJUSTMENT addClassConstant: '_OffsetOf_COLORADJUSTMENT' value: 16r8!
 EMRSETCOLORADJUSTMENT comment: '<EMRSETCOLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

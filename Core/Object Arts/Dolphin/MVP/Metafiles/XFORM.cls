@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_eDx _OffsetOf_eDy _OffsetOf_eM11 _OffsetOf_eM12 _OffsetOf_eM21 _OffsetOf_eM22'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_eDx' -> 16r10.
+		'_OffsetOf_eDy' -> 16r14.
+		'_OffsetOf_eM11' -> 16r0.
+		'_OffsetOf_eM12' -> 16r4.
+		'_OffsetOf_eM21' -> 16r8.
+		'_OffsetOf_eM22' -> 16rC
+	}!
 XFORM guid: (GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
-XFORM addClassConstant: '_OffsetOf_eDx' value: 16r10!
-XFORM addClassConstant: '_OffsetOf_eDy' value: 16r14!
-XFORM addClassConstant: '_OffsetOf_eM11' value: 16r0!
-XFORM addClassConstant: '_OffsetOf_eM12' value: 16r4!
-XFORM addClassConstant: '_OffsetOf_eM21' value: 16r8!
-XFORM addClassConstant: '_OffsetOf_eM22' value: 16rC!
 XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

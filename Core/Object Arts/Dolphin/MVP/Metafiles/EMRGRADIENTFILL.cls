@@ -2,15 +2,17 @@
 
 ENHMETARECORD subclass: #EMRGRADIENTFILL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_nTri _OffsetOf_nVer _OffsetOf_rclBounds _OffsetOf_ulMode _OffsetOf_Ver'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_nTri' -> 16r1C.
+		'_OffsetOf_nVer' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_ulMode' -> 16r20.
+		'_OffsetOf_Ver' -> 16r24
+	}!
 EMRGRADIENTFILL guid: (GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
-EMRGRADIENTFILL addClassConstant: '_OffsetOf_nTri' value: 16r1C!
-EMRGRADIENTFILL addClassConstant: '_OffsetOf_nVer' value: 16r18!
-EMRGRADIENTFILL addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRGRADIENTFILL addClassConstant: '_OffsetOf_ulMode' value: 16r20!
-EMRGRADIENTFILL addClassConstant: '_OffsetOf_Ver' value: 16r24!
 EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

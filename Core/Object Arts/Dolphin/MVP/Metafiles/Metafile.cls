@@ -4,7 +4,8 @@ Image subclass: #Metafile
 	instanceVariableNames: 'header'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Metafile guid: (GUID fromString: '{9afeffe3-f782-4d07-ad88-4aab4659091e}')!
 Metafile comment: 'Metafile is the class of <Image>s that represent Windows'' Enhanced Metafiles.
 

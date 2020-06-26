@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #CIEXYZTRIPLE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ciexyzBlue _OffsetOf_ciexyzGreen _OffsetOf_ciexyzRed'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ciexyzBlue' -> 16r18.
+		'_OffsetOf_ciexyzGreen' -> 16rC.
+		'_OffsetOf_ciexyzRed' -> 16r0
+	}!
 CIEXYZTRIPLE guid: (GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
-CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzBlue' value: 16r18!
-CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzGreen' value: 16rC!
-CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzRed' value: 16r0!
 CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

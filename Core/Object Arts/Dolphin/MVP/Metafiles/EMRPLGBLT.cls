@@ -2,30 +2,32 @@
 
 ENHMETARECORD subclass: #EMRPLGBLT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_aptlDest _OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yMask _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_aptlDest' -> 16r18.
+		'_OffsetOf_cbBitsMask' -> 16r88.
+		'_OffsetOf_cbBitsSrc' -> 16r6C.
+		'_OffsetOf_cbBmiMask' -> 16r80.
+		'_OffsetOf_cbBmiSrc' -> 16r64.
+		'_OffsetOf_crBkColorSrc' -> 16r58.
+		'_OffsetOf_cxSrc' -> 16r38.
+		'_OffsetOf_cySrc' -> 16r3C.
+		'_OffsetOf_iUsageMask' -> 16r78.
+		'_OffsetOf_iUsageSrc' -> 16r5C.
+		'_OffsetOf_offBitsMask' -> 16r84.
+		'_OffsetOf_offBitsSrc' -> 16r68.
+		'_OffsetOf_offBmiMask' -> 16r7C.
+		'_OffsetOf_offBmiSrc' -> 16r60.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xformSrc' -> 16r40.
+		'_OffsetOf_xMask' -> 16r70.
+		'_OffsetOf_xSrc' -> 16r30.
+		'_OffsetOf_yMask' -> 16r74.
+		'_OffsetOf_ySrc' -> 16r34
+	}!
 EMRPLGBLT guid: (GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
-EMRPLGBLT addClassConstant: '_OffsetOf_aptlDest' value: 16r18!
-EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsMask' value: 16r88!
-EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r6C!
-EMRPLGBLT addClassConstant: '_OffsetOf_cbBmiMask' value: 16r80!
-EMRPLGBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r64!
-EMRPLGBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r58!
-EMRPLGBLT addClassConstant: '_OffsetOf_cxSrc' value: 16r38!
-EMRPLGBLT addClassConstant: '_OffsetOf_cySrc' value: 16r3C!
-EMRPLGBLT addClassConstant: '_OffsetOf_iUsageMask' value: 16r78!
-EMRPLGBLT addClassConstant: '_OffsetOf_iUsageSrc' value: 16r5C!
-EMRPLGBLT addClassConstant: '_OffsetOf_offBitsMask' value: 16r84!
-EMRPLGBLT addClassConstant: '_OffsetOf_offBitsSrc' value: 16r68!
-EMRPLGBLT addClassConstant: '_OffsetOf_offBmiMask' value: 16r7C!
-EMRPLGBLT addClassConstant: '_OffsetOf_offBmiSrc' value: 16r60!
-EMRPLGBLT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRPLGBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r40!
-EMRPLGBLT addClassConstant: '_OffsetOf_xMask' value: 16r70!
-EMRPLGBLT addClassConstant: '_OffsetOf_xSrc' value: 16r30!
-EMRPLGBLT addClassConstant: '_OffsetOf_yMask' value: 16r74!
-EMRPLGBLT addClassConstant: '_OffsetOf_ySrc' value: 16r34!
 EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

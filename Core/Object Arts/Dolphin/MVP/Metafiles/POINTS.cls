@@ -2,12 +2,14 @@
 
 ExternalPoint subclass: #POINTS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r2
+	}!
 POINTS guid: (GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
-POINTS addClassConstant: '_OffsetOf_x' value: 16r0!
-POINTS addClassConstant: '_OffsetOf_y' value: 16r2!
 POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

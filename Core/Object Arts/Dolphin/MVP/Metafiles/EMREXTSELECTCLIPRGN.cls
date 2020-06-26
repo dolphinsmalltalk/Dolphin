@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMREXTSELECTCLIPRGN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_iMode _OffsetOf_RGNDATA'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbRgnData' -> 16r8.
+		'_OffsetOf_iMode' -> 16rC.
+		'_OffsetOf_RGNDATA' -> 16r10
+	}!
 EMREXTSELECTCLIPRGN guid: (GUID fromString: '{c49e357c-2207-4eea-b22f-1b9d456c35f8}')!
-EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r8!
-EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_iMode' value: 16rC!
-EMREXTSELECTCLIPRGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r10!
 EMREXTSELECTCLIPRGN comment: '<EMREXTSELECTCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTSELECTCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

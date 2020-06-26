@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMRINVERTRGN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_rclBounds _OffsetOf_RGNDATA'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbRgnData' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_RGNDATA' -> 16r1C
+	}!
 EMRINVERTRGN guid: (GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
-EMRINVERTRGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r18!
-EMRINVERTRGN addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRINVERTRGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r1C!
 EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

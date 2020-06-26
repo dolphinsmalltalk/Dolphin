@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_aPalEntries _OffsetOf_cEntries _OffsetOf_ihPal _OffsetOf_iStart'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_aPalEntries' -> 16r14.
+		'_OffsetOf_cEntries' -> 16r10.
+		'_OffsetOf_ihPal' -> 16r8.
+		'_OffsetOf_iStart' -> 16rC
+	}!
 EMRSETPALETTEENTRIES guid: (GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
-EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_aPalEntries' value: 16r14!
-EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_cEntries' value: 16r10!
-EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_ihPal' value: 16r8!
-EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_iStart' value: 16rC!
 EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

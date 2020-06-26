@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMREOF
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_nPalEntries _OffsetOf_nSizeLast _OffsetOf_offPalEntries'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_nPalEntries' -> 16r8.
+		'_OffsetOf_nSizeLast' -> 16r10.
+		'_OffsetOf_offPalEntries' -> 16rC
+	}!
 EMREOF guid: (GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
-EMREOF addClassConstant: '_OffsetOf_nPalEntries' value: 16r8!
-EMREOF addClassConstant: '_OffsetOf_nSizeLast' value: 16r10!
-EMREOF addClassConstant: '_OffsetOf_offPalEntries' value: 16rC!
 EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

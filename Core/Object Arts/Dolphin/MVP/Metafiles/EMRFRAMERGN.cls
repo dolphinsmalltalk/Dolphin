@@ -2,15 +2,17 @@
 
 ENHMETARECORD subclass: #EMRFRAMERGN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_ihBrush _OffsetOf_rclBounds _OffsetOf_RGNDATA _OffsetOf_szlStroke'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbRgnData' -> 16r18.
+		'_OffsetOf_ihBrush' -> 16r1C.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_RGNDATA' -> 16r28.
+		'_OffsetOf_szlStroke' -> 16r20
+	}!
 EMRFRAMERGN guid: (GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
-EMRFRAMERGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r18!
-EMRFRAMERGN addClassConstant: '_OffsetOf_ihBrush' value: 16r1C!
-EMRFRAMERGN addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRFRAMERGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r28!
-EMRFRAMERGN addClassConstant: '_OffsetOf_szlStroke' value: 16r20!
 EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

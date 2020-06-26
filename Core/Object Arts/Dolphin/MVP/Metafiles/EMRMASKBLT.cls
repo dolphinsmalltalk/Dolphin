@@ -2,32 +2,34 @@
 
 ENHMETARECORD subclass: #EMRMASKBLT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cyDest _OffsetOf_dwRop _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_yMask _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBitsMask' -> 16r7C.
+		'_OffsetOf_cbBitsSrc' -> 16r60.
+		'_OffsetOf_cbBmiMask' -> 16r74.
+		'_OffsetOf_cbBmiSrc' -> 16r58.
+		'_OffsetOf_crBkColorSrc' -> 16r4C.
+		'_OffsetOf_cxDest' -> 16r20.
+		'_OffsetOf_cyDest' -> 16r24.
+		'_OffsetOf_dwRop' -> 16r28.
+		'_OffsetOf_iUsageMask' -> 16r6C.
+		'_OffsetOf_iUsageSrc' -> 16r50.
+		'_OffsetOf_offBitsMask' -> 16r78.
+		'_OffsetOf_offBitsSrc' -> 16r5C.
+		'_OffsetOf_offBmiMask' -> 16r70.
+		'_OffsetOf_offBmiSrc' -> 16r54.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xDest' -> 16r18.
+		'_OffsetOf_xformSrc' -> 16r34.
+		'_OffsetOf_xMask' -> 16r64.
+		'_OffsetOf_xSrc' -> 16r2C.
+		'_OffsetOf_yDest' -> 16r1C.
+		'_OffsetOf_yMask' -> 16r68.
+		'_OffsetOf_ySrc' -> 16r30
+	}!
 EMRMASKBLT guid: (GUID fromString: '{99001d44-ed7a-4cee-84b9-dbcf1f67898b}')!
-EMRMASKBLT addClassConstant: '_OffsetOf_cbBitsMask' value: 16r7C!
-EMRMASKBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
-EMRMASKBLT addClassConstant: '_OffsetOf_cbBmiMask' value: 16r74!
-EMRMASKBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
-EMRMASKBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
-EMRMASKBLT addClassConstant: '_OffsetOf_cxDest' value: 16r20!
-EMRMASKBLT addClassConstant: '_OffsetOf_cyDest' value: 16r24!
-EMRMASKBLT addClassConstant: '_OffsetOf_dwRop' value: 16r28!
-EMRMASKBLT addClassConstant: '_OffsetOf_iUsageMask' value: 16r6C!
-EMRMASKBLT addClassConstant: '_OffsetOf_iUsageSrc' value: 16r50!
-EMRMASKBLT addClassConstant: '_OffsetOf_offBitsMask' value: 16r78!
-EMRMASKBLT addClassConstant: '_OffsetOf_offBitsSrc' value: 16r5C!
-EMRMASKBLT addClassConstant: '_OffsetOf_offBmiMask' value: 16r70!
-EMRMASKBLT addClassConstant: '_OffsetOf_offBmiSrc' value: 16r54!
-EMRMASKBLT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRMASKBLT addClassConstant: '_OffsetOf_xDest' value: 16r18!
-EMRMASKBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
-EMRMASKBLT addClassConstant: '_OffsetOf_xMask' value: 16r64!
-EMRMASKBLT addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
-EMRMASKBLT addClassConstant: '_OffsetOf_yDest' value: 16r1C!
-EMRMASKBLT addClassConstant: '_OffsetOf_yMask' value: 16r68!
-EMRMASKBLT addClassConstant: '_OffsetOf_ySrc' value: 16r30!
 EMRMASKBLT comment: '<EMRMASKBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMASKBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

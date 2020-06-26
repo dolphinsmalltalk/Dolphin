@@ -2,16 +2,18 @@
 
 ENHMETARECORD subclass: #EMREXTCREATEPEN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_elp _OffsetOf_ihPen _OffsetOf_offBits _OffsetOf_offBmi'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBits' -> 16r18.
+		'_OffsetOf_cbBmi' -> 16r10.
+		'_OffsetOf_elp' -> 16r1C.
+		'_OffsetOf_ihPen' -> 16r8.
+		'_OffsetOf_offBits' -> 16r14.
+		'_OffsetOf_offBmi' -> 16rC
+	}!
 EMREXTCREATEPEN guid: (GUID fromString: '{797b4380-74af-4163-8248-87bca7b9a3f4}')!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_cbBits' value: 16r18!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_cbBmi' value: 16r10!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_elp' value: 16r1C!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_ihPen' value: 16r8!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_offBits' value: 16r14!
-EMREXTCREATEPEN addClassConstant: '_OffsetOf_offBmi' value: 16rC!
 EMREXTCREATEPEN comment: '<EMREXTCREATEPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

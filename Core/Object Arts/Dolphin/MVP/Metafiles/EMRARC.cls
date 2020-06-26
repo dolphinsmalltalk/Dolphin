@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMRARC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ptlEnd _OffsetOf_ptlStart _OffsetOf_rclBox'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ptlEnd' -> 16r20.
+		'_OffsetOf_ptlStart' -> 16r18.
+		'_OffsetOf_rclBox' -> 16r8
+	}!
 EMRARC guid: (GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
-EMRARC addClassConstant: '_OffsetOf_ptlEnd' value: 16r20!
-EMRARC addClassConstant: '_OffsetOf_ptlStart' value: 16r18!
-EMRARC addClassConstant: '_OffsetOf_rclBox' value: 16r8!
 EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

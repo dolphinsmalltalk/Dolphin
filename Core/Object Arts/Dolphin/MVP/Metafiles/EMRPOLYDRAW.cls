@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRPOLYDRAW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_abTypes _OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_abTypes' -> 16r24.
+		'_OffsetOf_aptl' -> 16r1C.
+		'_OffsetOf_cptl' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMRPOLYDRAW guid: (GUID fromString: '{5be172c2-6045-4143-8550-377acd60fd3f}')!
-EMRPOLYDRAW addClassConstant: '_OffsetOf_abTypes' value: 16r24!
-EMRPOLYDRAW addClassConstant: '_OffsetOf_aptl' value: 16r1C!
-EMRPOLYDRAW addClassConstant: '_OffsetOf_cptl' value: 16r18!
-EMRPOLYDRAW addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYDRAW comment: '<EMRPOLYDRAW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

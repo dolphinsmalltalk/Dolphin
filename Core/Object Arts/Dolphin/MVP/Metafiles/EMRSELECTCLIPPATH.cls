@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSELECTCLIPPATH
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iMode'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iMode' -> 16r8
+	}!
 EMRSELECTCLIPPATH guid: (GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
-EMRSELECTCLIPPATH addClassConstant: '_OffsetOf_iMode' value: 16r8!
 EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

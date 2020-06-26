@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRGLSRECORD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r8.
+		'_OffsetOf_Data' -> 16rC
+	}!
 EMRGLSRECORD guid: (GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
-EMRGLSRECORD addClassConstant: '_OffsetOf_cbData' value: 16r8!
-EMRGLSRECORD addClassConstant: '_OffsetOf_Data' value: 16rC!
 EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

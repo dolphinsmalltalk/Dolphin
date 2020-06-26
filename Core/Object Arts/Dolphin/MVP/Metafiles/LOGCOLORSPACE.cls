@@ -2,20 +2,22 @@
 
 ExternalStructure subclass: #LOGCOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lcsCSType' -> 16rC.
+		'_OffsetOf_lcsEndpoints' -> 16r14.
+		'_OffsetOf_lcsFilename' -> 16r44.
+		'_OffsetOf_lcsGammaBlue' -> 16r40.
+		'_OffsetOf_lcsGammaGreen' -> 16r3C.
+		'_OffsetOf_lcsGammaRed' -> 16r38.
+		'_OffsetOf_lcsIntent' -> 16r10.
+		'_OffsetOf_lcsSignature' -> 16r0.
+		'_OffsetOf_lcsSize' -> 16r8.
+		'_OffsetOf_lcsVersion' -> 16r4
+	}!
 LOGCOLORSPACE guid: (GUID fromString: '{2b6b91b8-caef-4fdf-ac3d-f032417ca840}')!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsCSType' value: 16rC!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsEndpoints' value: 16r14!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsFilename' value: 16r44!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsGammaBlue' value: 16r40!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsGammaGreen' value: 16r3C!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsGammaRed' value: 16r38!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsIntent' value: 16r10!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsSignature' value: 16r0!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsSize' value: 16r8!
-LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsVersion' value: 16r4!
 LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

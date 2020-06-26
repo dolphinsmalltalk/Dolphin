@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
+	classVariableNames: 'RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iType' -> 16r0.
+		'_OffsetOf_nSize' -> 16r4
+	}!
 ENHMETARECORD guid: (GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
-ENHMETARECORD addClassConstant: '_OffsetOf_iType' value: 16r0!
-ENHMETARECORD addClassConstant: '_OffsetOf_nSize' value: 16r4!
 ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
 !ENHMETARECORD categoriesForClass!Win32-Structs! !
 !ENHMETARECORD methodsFor!

@@ -2,16 +2,18 @@
 
 ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_aemrtext _OffsetOf_cStrings _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_aemrtext' -> 16r28.
+		'_OffsetOf_cStrings' -> 16r24.
+		'_OffsetOf_exScale' -> 16r1C.
+		'_OffsetOf_eyScale' -> 16r20.
+		'_OffsetOf_iGraphicsMode' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMRPOLYTEXTOUTA guid: (GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_aemrtext' value: 16r28!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_cStrings' value: 16r24!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_exScale' value: 16r1C!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_eyScale' value: 16r20!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_iGraphicsMode' value: 16r18!
-EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

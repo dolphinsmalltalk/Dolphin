@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRFILLRGN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_ihBrush _OffsetOf_rclBounds _OffsetOf_RGNDATA'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbRgnData' -> 16r18.
+		'_OffsetOf_ihBrush' -> 16r1C.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_RGNDATA' -> 16r20
+	}!
 EMRFILLRGN guid: (GUID fromString: '{5840d53d-c10c-442c-be9f-cfada623813e}')!
-EMRFILLRGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r18!
-EMRFILLRGN addClassConstant: '_OffsetOf_ihBrush' value: 16r1C!
-EMRFILLRGN addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRFILLRGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r20!
 EMRFILLRGN comment: '<EMRFILLRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

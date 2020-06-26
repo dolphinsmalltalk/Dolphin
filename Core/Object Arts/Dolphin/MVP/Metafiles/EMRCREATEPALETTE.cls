@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCREATEPALETTE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihPal _OffsetOf_lgpl'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihPal' -> 16r8.
+		'_OffsetOf_lgpl' -> 16rC
+	}!
 EMRCREATEPALETTE guid: (GUID fromString: '{b8739ed2-de47-467f-aa8d-3a62f4c00509}')!
-EMRCREATEPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
-EMRCREATEPALETTE addClassConstant: '_OffsetOf_lgpl' value: 16rC!
 EMRCREATEPALETTE comment: '<EMRCREATEPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -48,19 +48,43 @@ package!
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
+	classVariableNames: 'RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iType' -> 16r0.
+		'_OffsetOf_nSize' -> 16r4
+	}!
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bOpenGL' -> 16r60.
+		'_OffsetOf_cbPixelFormat' -> 16r58.
+		'_OffsetOf_dSignature' -> 16r28.
+		'_OffsetOf_nBytes' -> 16r30.
+		'_OffsetOf_nDescription' -> 16r3C.
+		'_OffsetOf_nHandles' -> 16r38.
+		'_OffsetOf_nPalEntries' -> 16r44.
+		'_OffsetOf_nRecords' -> 16r34.
+		'_OffsetOf_nVersion' -> 16r2C.
+		'_OffsetOf_offDescription' -> 16r40.
+		'_OffsetOf_offPixelFormat' -> 16r5C.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_rclFrame' -> 16r18.
+		'_OffsetOf_sReserved' -> 16r3A.
+		'_OffsetOf_szlDevice' -> 16r48.
+		'_OffsetOf_szlMicrometers' -> 16r64.
+		'_OffsetOf_szlMillimeters' -> 16r50
+	}!
 Image subclass: #Metafile
 	instanceVariableNames: 'header'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -2,13 +2,15 @@
 
 ENHMETARECORD subclass: #EMREXTFLOODFILL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_crColor _OffsetOf_iMode _OffsetOf_ptlStart'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_crColor' -> 16r10.
+		'_OffsetOf_iMode' -> 16r14.
+		'_OffsetOf_ptlStart' -> 16r8
+	}!
 EMREXTFLOODFILL guid: (GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
-EMREXTFLOODFILL addClassConstant: '_OffsetOf_crColor' value: 16r10!
-EMREXTFLOODFILL addClassConstant: '_OffsetOf_iMode' value: 16r14!
-EMREXTFLOODFILL addClassConstant: '_OffsetOf_ptlStart' value: 16r8!
 EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

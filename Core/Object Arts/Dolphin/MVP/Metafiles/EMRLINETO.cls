@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRLINETO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ptl'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ptl' -> 16r8
+	}!
 EMRLINETO guid: (GUID fromString: '{fff03eec-0fdc-4448-ac60-d19e59624d01}')!
-EMRLINETO addClassConstant: '_OffsetOf_ptl' value: 16r8!
 EMRLINETO comment: '<EMRLINETO> is an <ExternalStructure> class to wrap the struct ''Win32.EMRLINETO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

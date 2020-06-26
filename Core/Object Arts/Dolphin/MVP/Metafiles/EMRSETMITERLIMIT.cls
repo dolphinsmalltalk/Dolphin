@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETMITERLIMIT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_eMiterLimit'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_eMiterLimit' -> 16r8
+	}!
 EMRSETMITERLIMIT guid: (GUID fromString: '{bc8dabd4-f8b4-4f42-895c-1b712c75fc43}')!
-EMRSETMITERLIMIT addClassConstant: '_OffsetOf_eMiterLimit' value: 16r8!
 EMRSETMITERLIMIT comment: '<EMRSETMITERLIMIT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMITERLIMIT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

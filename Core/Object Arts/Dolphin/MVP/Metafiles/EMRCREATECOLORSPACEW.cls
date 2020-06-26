@@ -2,15 +2,17 @@
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_dwFlags _OffsetOf_ihCS _OffsetOf_lcs'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r158.
+		'_OffsetOf_Data' -> 16r15C.
+		'_OffsetOf_dwFlags' -> 16r154.
+		'_OffsetOf_ihCS' -> 16r8.
+		'_OffsetOf_lcs' -> 16rC
+	}!
 EMRCREATECOLORSPACEW guid: (GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
-EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_cbData' value: 16r158!
-EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_Data' value: 16r15C!
-EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_dwFlags' value: 16r154!
-EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_ihCS' value: 16r8!
-EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_lcs' value: 16rC!
 EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

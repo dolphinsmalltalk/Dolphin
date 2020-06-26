@@ -2,27 +2,29 @@
 
 ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBitsSrc' -> 16r60.
+		'_OffsetOf_cbBmiSrc' -> 16r58.
+		'_OffsetOf_crBkColorSrc' -> 16r4C.
+		'_OffsetOf_cxDest' -> 16r20.
+		'_OffsetOf_cxSrc' -> 16r64.
+		'_OffsetOf_cyDest' -> 16r24.
+		'_OffsetOf_cySrc' -> 16r68.
+		'_OffsetOf_dwRop' -> 16r28.
+		'_OffsetOf_iUsageSrc' -> 16r50.
+		'_OffsetOf_offBitsSrc' -> 16r5C.
+		'_OffsetOf_offBmiSrc' -> 16r54.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_xDest' -> 16r18.
+		'_OffsetOf_xformSrc' -> 16r34.
+		'_OffsetOf_xSrc' -> 16r2C.
+		'_OffsetOf_yDest' -> 16r1C.
+		'_OffsetOf_ySrc' -> 16r30
+	}!
 EMRTRANSPARENTBLT guid: (GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cxDest' value: 16r20!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cxSrc' value: 16r64!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cyDest' value: 16r24!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_cySrc' value: 16r68!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_dwRop' value: 16r28!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_iUsageSrc' value: 16r50!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_offBitsSrc' value: 16r5C!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_offBmiSrc' value: 16r54!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_xDest' value: 16r18!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_yDest' value: 16r1C!
-EMRTRANSPARENTBLT addClassConstant: '_OffsetOf_ySrc' value: 16r30!
 EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

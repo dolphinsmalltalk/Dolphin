@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #CIEXYZ
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ciexyzX _OffsetOf_ciexyzY _OffsetOf_ciexyzZ'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ciexyzX' -> 16r0.
+		'_OffsetOf_ciexyzY' -> 16r4.
+		'_OffsetOf_ciexyzZ' -> 16r8
+	}!
 CIEXYZ guid: (GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
-CIEXYZ addClassConstant: '_OffsetOf_ciexyzX' value: 16r0!
-CIEXYZ addClassConstant: '_OffsetOf_ciexyzY' value: 16r4!
-CIEXYZ addClassConstant: '_OffsetOf_ciexyzZ' value: 16r8!
 CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

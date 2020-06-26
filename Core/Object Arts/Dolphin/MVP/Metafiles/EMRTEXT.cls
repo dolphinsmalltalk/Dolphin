@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #EMRTEXT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_fOptions _OffsetOf_nChars _OffsetOf_offDx _OffsetOf_offString _OffsetOf_ptlReference _OffsetOf_rcl'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_fOptions' -> 16r10.
+		'_OffsetOf_nChars' -> 16r8.
+		'_OffsetOf_offDx' -> 16r24.
+		'_OffsetOf_offString' -> 16rC.
+		'_OffsetOf_ptlReference' -> 16r0.
+		'_OffsetOf_rcl' -> 16r14
+	}!
 EMRTEXT guid: (GUID fromString: '{b8857668-f891-426b-8df0-ccc12b909e4d}')!
-EMRTEXT addClassConstant: '_OffsetOf_fOptions' value: 16r10!
-EMRTEXT addClassConstant: '_OffsetOf_nChars' value: 16r8!
-EMRTEXT addClassConstant: '_OffsetOf_offDx' value: 16r24!
-EMRTEXT addClassConstant: '_OffsetOf_offString' value: 16rC!
-EMRTEXT addClassConstant: '_OffsetOf_ptlReference' value: 16r0!
-EMRTEXT addClassConstant: '_OffsetOf_rcl' value: 16r14!
 EMRTEXT comment: '<EMRTEXT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTEXT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

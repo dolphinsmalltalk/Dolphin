@@ -2,22 +2,24 @@
 
 ExternalStructure subclass: #COLORADJUSTMENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_caBlueGamma _OffsetOf_caBrightness _OffsetOf_caColorfulness _OffsetOf_caContrast _OffsetOf_caFlags _OffsetOf_caGreenGamma _OffsetOf_caIlluminantIndex _OffsetOf_caRedGamma _OffsetOf_caRedGreenTint _OffsetOf_caReferenceBlack _OffsetOf_caReferenceWhite _OffsetOf_caSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_caBlueGamma' -> 16rA.
+		'_OffsetOf_caBrightness' -> 16r12.
+		'_OffsetOf_caColorfulness' -> 16r14.
+		'_OffsetOf_caContrast' -> 16r10.
+		'_OffsetOf_caFlags' -> 16r2.
+		'_OffsetOf_caGreenGamma' -> 16r8.
+		'_OffsetOf_caIlluminantIndex' -> 16r4.
+		'_OffsetOf_caRedGamma' -> 16r6.
+		'_OffsetOf_caRedGreenTint' -> 16r16.
+		'_OffsetOf_caReferenceBlack' -> 16rC.
+		'_OffsetOf_caReferenceWhite' -> 16rE.
+		'_OffsetOf_caSize' -> 16r0
+	}!
 COLORADJUSTMENT guid: (GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caBlueGamma' value: 16rA!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caBrightness' value: 16r12!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caColorfulness' value: 16r14!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caContrast' value: 16r10!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caFlags' value: 16r2!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caGreenGamma' value: 16r8!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caIlluminantIndex' value: 16r4!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caRedGamma' value: 16r6!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caRedGreenTint' value: 16r16!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caReferenceBlack' value: 16rC!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caReferenceWhite' value: 16rE!
-COLORADJUSTMENT addClassConstant: '_OffsetOf_caSize' value: 16r0!
 COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

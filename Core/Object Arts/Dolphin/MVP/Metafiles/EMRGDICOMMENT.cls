@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRGDICOMMENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r8.
+		'_OffsetOf_Data' -> 16rC
+	}!
 EMRGDICOMMENT guid: (GUID fromString: '{5b2c2616-4205-49f8-86dc-fa73c7092f5b}')!
-EMRGDICOMMENT addClassConstant: '_OffsetOf_cbData' value: 16r8!
-EMRGDICOMMENT addClassConstant: '_OffsetOf_Data' value: 16rC!
 EMRGDICOMMENT comment: '<EMRGDICOMMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGDICOMMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

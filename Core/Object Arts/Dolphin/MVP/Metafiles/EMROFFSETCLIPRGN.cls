@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ptlOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ptlOffset' -> 16r8
+	}!
 EMROFFSETCLIPRGN guid: (GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
-EMROFFSETCLIPRGN addClassConstant: '_OffsetOf_ptlOffset' value: 16r8!
 EMROFFSETCLIPRGN comment: '<EMROFFSETCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMROFFSETCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

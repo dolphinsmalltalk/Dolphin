@@ -2,14 +2,16 @@
 
 ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihPalette _OffsetOf_nFirstEntry _OffsetOf_nPalEntries _OffsetOf_nReserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihPalette' -> 16r8.
+		'_OffsetOf_nFirstEntry' -> 16rC.
+		'_OffsetOf_nPalEntries' -> 16r10.
+		'_OffsetOf_nReserved' -> 16r14
+	}!
 EMRCOLORCORRECTPALETTE guid: (GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
-EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_ihPalette' value: 16r8!
-EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nFirstEntry' value: 16rC!
-EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nPalEntries' value: 16r10!
-EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nReserved' value: 16r14!
 EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihCS'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihCS' -> 16r8
+	}!
 EMRSETCOLORSPACE guid: (GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
-EMRSETCOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
 EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

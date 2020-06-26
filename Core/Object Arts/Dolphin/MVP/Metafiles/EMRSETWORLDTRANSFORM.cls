@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_XFORM'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_XFORM' -> 16r8
+	}!
 EMRSETWORLDTRANSFORM guid: (GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
-EMRSETWORLDTRANSFORM addClassConstant: '_OffsetOf_XFORM' value: 16r8!
 EMRSETWORLDTRANSFORM comment: '<EMRSETWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

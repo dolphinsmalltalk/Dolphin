@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSELECTPALETTE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihPal'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihPal' -> 16r8
+	}!
 EMRSELECTPALETTE guid: (GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
-EMRSELECTPALETTE addClassConstant: '_OffsetOf_ihPal' value: 16r8!
 EMRSELECTPALETTE comment: '<EMRSELECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

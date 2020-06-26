@@ -2,11 +2,13 @@
 
 ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ptlOrigin'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ptlOrigin' -> 16r8
+	}!
 EMRSETVIEWPORTORGEX guid: (GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
-EMRSETVIEWPORTORGEX addClassConstant: '_OffsetOf_ptlOrigin' value: 16r8!
 EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

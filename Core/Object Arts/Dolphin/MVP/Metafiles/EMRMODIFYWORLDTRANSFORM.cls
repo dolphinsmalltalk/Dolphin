@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iMode _OffsetOf_XFORM'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iMode' -> 16r20.
+		'_OffsetOf_XFORM' -> 16r8
+	}!
 EMRMODIFYWORLDTRANSFORM guid: (GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
-EMRMODIFYWORLDTRANSFORM addClassConstant: '_OffsetOf_iMode' value: 16r20!
-EMRMODIFYWORLDTRANSFORM addClassConstant: '_OffsetOf_XFORM' value: 16r8!
 EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,16 +2,18 @@
 
 ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbBits' -> 16r1C.
+		'_OffsetOf_cbBmi' -> 16r14.
+		'_OffsetOf_ihBrush' -> 16r8.
+		'_OffsetOf_iUsage' -> 16rC.
+		'_OffsetOf_offBits' -> 16r18.
+		'_OffsetOf_offBmi' -> 16r10
+	}!
 EMRCREATEDIBPATTERNBRUSHPT guid: (GUID fromString: '{ae1203b9-a6b7-4cca-8fc6-408d43a80c8c}')!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_cbBits' value: 16r1C!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_cbBmi' value: 16r14!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_iUsage' value: 16rC!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_offBits' value: 16r18!
-EMRCREATEDIBPATTERNBRUSHPT addClassConstant: '_OffsetOf_offBmi' value: 16r10!
 EMRCREATEDIBPATTERNBRUSHPT comment: '<EMRCREATEDIBPATTERNBRUSHPT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEDIBPATTERNBRUSHPT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

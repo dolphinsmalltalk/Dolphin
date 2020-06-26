@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCREATEBRUSHINDIRECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ihBrush _OffsetOf_lb'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ihBrush' -> 16r8.
+		'_OffsetOf_lb' -> 16rC
+	}!
 EMRCREATEBRUSHINDIRECT guid: (GUID fromString: '{491c3d56-fbf6-4cd9-8ea2-30cdf342f656}')!
-EMRCREATEBRUSHINDIRECT addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
-EMRCREATEBRUSHINDIRECT addClassConstant: '_OffsetOf_lb' value: 16rC!
 EMRCREATEBRUSHINDIRECT comment: '<EMRCREATEBRUSHINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEBRUSHINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

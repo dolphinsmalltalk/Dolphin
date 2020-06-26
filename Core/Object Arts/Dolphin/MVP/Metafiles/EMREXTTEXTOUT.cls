@@ -2,16 +2,18 @@
 
 ENHMETARECORD subclass: #EMREXTTEXTOUT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_EMRTEXT _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_EMRTEXT' -> 16r24.
+		'_OffsetOf_exScale' -> 16r1C.
+		'_OffsetOf_eyScale' -> 16r20.
+		'_OffsetOf_iGraphicsMode' -> 16r18.
+		'_OffsetOf_rclBounds' -> 16r8
+	}!
 EMREXTTEXTOUT guid: (GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
 EMREXTTEXTOUT isAbstract: true!
-EMREXTTEXTOUT addClassConstant: '_OffsetOf_EMRTEXT' value: 16r24!
-EMREXTTEXTOUT addClassConstant: '_OffsetOf_exScale' value: 16r1C!
-EMREXTTEXTOUT addClassConstant: '_OffsetOf_eyScale' value: 16r20!
-EMREXTTEXTOUT addClassConstant: '_OffsetOf_iGraphicsMode' value: 16r18!
-EMREXTTEXTOUT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMREXTTEXTOUT comment: ''!
 !EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
 !EMREXTTEXTOUT methodsFor!

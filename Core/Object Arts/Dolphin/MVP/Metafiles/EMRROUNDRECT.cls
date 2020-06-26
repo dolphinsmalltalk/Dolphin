@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMRROUNDRECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_rclBox _OffsetOf_szlCorner'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rclBox' -> 16r8.
+		'_OffsetOf_szlCorner' -> 16r18
+	}!
 EMRROUNDRECT guid: (GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
-EMRROUNDRECT addClassConstant: '_OffsetOf_rclBox' value: 16r8!
-EMRROUNDRECT addClassConstant: '_OffsetOf_szlCorner' value: 16r18!
 EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

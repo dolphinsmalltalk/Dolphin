@@ -2,36 +2,38 @@
 
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bReserved _OffsetOf_cAccumAlphaBits _OffsetOf_cAccumBits _OffsetOf_cAccumBlueBits _OffsetOf_cAccumGreenBits _OffsetOf_cAccumRedBits _OffsetOf_cAlphaBits _OffsetOf_cAlphaShift _OffsetOf_cAuxBuffers _OffsetOf_cBlueBits _OffsetOf_cBlueShift _OffsetOf_cColorBits _OffsetOf_cDepthBits _OffsetOf_cGreenBits _OffsetOf_cGreenShift _OffsetOf_cRedBits _OffsetOf_cRedShift _OffsetOf_cStencilBits _OffsetOf_dwDamageMask _OffsetOf_dwFlags _OffsetOf_dwLayerMask _OffsetOf_dwVisibleMask _OffsetOf_iLayerType _OffsetOf_iPixelType _OffsetOf_nSize _OffsetOf_nVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bReserved' -> 16r1B.
+		'_OffsetOf_cAccumAlphaBits' -> 16r16.
+		'_OffsetOf_cAccumBits' -> 16r12.
+		'_OffsetOf_cAccumBlueBits' -> 16r15.
+		'_OffsetOf_cAccumGreenBits' -> 16r14.
+		'_OffsetOf_cAccumRedBits' -> 16r13.
+		'_OffsetOf_cAlphaBits' -> 16r10.
+		'_OffsetOf_cAlphaShift' -> 16r11.
+		'_OffsetOf_cAuxBuffers' -> 16r19.
+		'_OffsetOf_cBlueBits' -> 16rE.
+		'_OffsetOf_cBlueShift' -> 16rF.
+		'_OffsetOf_cColorBits' -> 16r9.
+		'_OffsetOf_cDepthBits' -> 16r17.
+		'_OffsetOf_cGreenBits' -> 16rC.
+		'_OffsetOf_cGreenShift' -> 16rD.
+		'_OffsetOf_cRedBits' -> 16rA.
+		'_OffsetOf_cRedShift' -> 16rB.
+		'_OffsetOf_cStencilBits' -> 16r18.
+		'_OffsetOf_dwDamageMask' -> 16r24.
+		'_OffsetOf_dwFlags' -> 16r4.
+		'_OffsetOf_dwLayerMask' -> 16r1C.
+		'_OffsetOf_dwVisibleMask' -> 16r20.
+		'_OffsetOf_iLayerType' -> 16r1A.
+		'_OffsetOf_iPixelType' -> 16r8.
+		'_OffsetOf_nSize' -> 16r0.
+		'_OffsetOf_nVersion' -> 16r2
+	}!
 PIXELFORMATDESCRIPTOR guid: (GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_bReserved' value: 16r1B!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumAlphaBits' value: 16r16!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumBits' value: 16r12!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumBlueBits' value: 16r15!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumGreenBits' value: 16r14!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumRedBits' value: 16r13!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAlphaBits' value: 16r10!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAlphaShift' value: 16r11!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAuxBuffers' value: 16r19!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cBlueBits' value: 16rE!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cBlueShift' value: 16rF!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cColorBits' value: 16r9!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cDepthBits' value: 16r17!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cGreenBits' value: 16rC!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cGreenShift' value: 16rD!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cRedBits' value: 16rA!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cRedShift' value: 16rB!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cStencilBits' value: 16r18!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_dwDamageMask' value: 16r24!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_dwLayerMask' value: 16r1C!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_dwVisibleMask' value: 16r20!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_iLayerType' value: 16r1A!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_iPixelType' value: 16r8!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_nSize' value: 16r0!
-PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_nVersion' value: 16r2!
 PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

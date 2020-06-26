@@ -2,12 +2,14 @@
 
 ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_elfw _OffsetOf_ihFont'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elfw' -> 16rC.
+		'_OffsetOf_ihFont' -> 16r8
+	}!
 EMREXTCREATEFONTINDIRECTW guid: (GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
-EMREXTCREATEFONTINDIRECTW addClassConstant: '_OffsetOf_elfw' value: 16rC!
-EMREXTCREATEFONTINDIRECTW addClassConstant: '_OffsetOf_ihFont' value: 16r8!
 EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
