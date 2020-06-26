@@ -2,11 +2,13 @@
 
 HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_QueryDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_QueryDesc' -> 16r0
+	}!
 HttpServiceConfigQuery guid: (GUID fromString: '{38f6548e-ee39-4262-9f31-96ce0e8c6cb7}')!
-HttpServiceConfigQuery addClassConstant: '_OffsetOf_QueryDesc' value: 16r0!
 HttpServiceConfigQuery comment: '<HttpServiceConfigQuery> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HttpServiceConfigQuery'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

@@ -2,20 +2,22 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AppId _OffsetOf_DefaultCertCheckMode _OffsetOf_DefaultFlags _OffsetOf_DefaultRevocationFreshnessTime _OffsetOf_DefaultRevocationUrlRetrievalTimeout _OffsetOf_pDefaultSslCtlIdentifier _OffsetOf_pDefaultSslCtlStoreName _OffsetOf_pSslCertStoreName _OffsetOf_pSslHash _OffsetOf_SslHashLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AppId' -> 16r8.
+		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
+		'_OffsetOf_DefaultFlags' -> 16r30.
+		'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
+		'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
+		'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
+		'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
+		'_OffsetOf_pSslCertStoreName' -> 16r18.
+		'_OffsetOf_pSslHash' -> 16r4.
+		'_OffsetOf_SslHashLength' -> 16r0
+	}!
 HTTP_SERVICE_CONFIG_SSL_PARAM guid: (GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_AppId' value: 16r8!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultCertCheckMode' value: 16r1C!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultFlags' value: 16r30!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultRevocationFreshnessTime' value: 16r20!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultRevocationUrlRetrievalTimeout' value: 16r24!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pDefaultSslCtlIdentifier' value: 16r28!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pDefaultSslCtlStoreName' value: 16r2C!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslCertStoreName' value: 16r18!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslHash' value: 16r4!
-HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_SslHashLength' value: 16r0!
 HTTP_SERVICE_CONFIG_SSL_PARAM comment: '<HTTP_SERVICE_CONFIG_SSL_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

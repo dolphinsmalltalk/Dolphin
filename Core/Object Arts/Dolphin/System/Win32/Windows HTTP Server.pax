@@ -107,302 +107,656 @@ ExternalLibrary subclass: #HttpApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #HttpServerStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Length _OffsetOf_StartingOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Length' -> 16r8.
+		'_OffsetOf_StartingOffset' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Policy _OffsetOf_SecondsToLive NoCache UserInvalidates'
+	classVariableNames: 'NoCache UserInvalidates'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Policy' -> 16r0.
+		'_OffsetOf_SecondsToLive' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Flags _OffsetOf_Hardening _OffsetOf_NumberOfServiceNames _OffsetOf_ServiceNames'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Flags' -> 16r4.
+		'_OffsetOf_Hardening' -> 16r0.
+		'_OffsetOf_NumberOfServiceNames' -> 16rC.
+		'_OffsetOf_ServiceNames' -> 16r8
+	}!
 HttpServerStructure subclass: #HTTP_COOKED_URL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AbsPathLength _OffsetOf_FullUrlLength _OffsetOf_HostLength _OffsetOf_pAbsPath _OffsetOf_pFullUrl _OffsetOf_pHost _OffsetOf_pQueryString _OffsetOf_QueryStringLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AbsPathLength' -> 16r4.
+		'_OffsetOf_FullUrlLength' -> 16r0.
+		'_OffsetOf_HostLength' -> 16r2.
+		'_OffsetOf_pAbsPath' -> 16r10.
+		'_OffsetOf_pFullUrl' -> 16r8.
+		'_OffsetOf_pHost' -> 16rC.
+		'_OffsetOf_pQueryString' -> 16r14.
+		'_OffsetOf_QueryStringLength' -> 16r6
+	}!
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: 'data'
-	classVariableNames: '_OffsetOf_DataChunkType _OffsetOf_FromFileHandle_ByteRange _OffsetOf_FromFileHandle_FileHandle _OffsetOf_FromFragmentCache_FragmentNameLength _OffsetOf_FromFragmentCache_pFragmentName _OffsetOf_FromFragmentCacheEx_ByteRange _OffsetOf_FromFragmentCacheEx_pFragmentName _OffsetOf_FromMemory_BufferLength _OffsetOf_FromMemory_pBuffer'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DataChunkType' -> 16r0.
+		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
+		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
+		'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
+		'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
+		'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
+		'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
+		'_OffsetOf_FromMemory_BufferLength' -> 16rC.
+		'_OffsetOf_FromMemory_pBuffer' -> 16r8
+	}!
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pTrailers _OffsetOf_pUnknownHeaders _OffsetOf_TrailerCount _OffsetOf_UnknownHeaderCount HeaderToIndexMap'
+	classVariableNames: 'HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pTrailers' -> 16rC.
+		'_OffsetOf_pUnknownHeaders' -> 16r4.
+		'_OffsetOf_TrailerCount' -> 16r8.
+		'_OffsetOf_UnknownHeaderCount' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pRawValue _OffsetOf_RawValueLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pRawValue' -> 16r4.
+		'_OffsetOf_RawValueLength' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ClientIp _OffsetOf_ClientIpLength _OffsetOf_Cookie _OffsetOf_CookieLength _OffsetOf_Host _OffsetOf_HostLength _OffsetOf_Method _OffsetOf_MethodLength _OffsetOf_MethodNum _OffsetOf_ProtocolStatus _OffsetOf_Referrer _OffsetOf_ReferrerLength _OffsetOf_ServerIp _OffsetOf_ServerIpLength _OffsetOf_ServerName _OffsetOf_ServerNameLength _OffsetOf_ServerPort _OffsetOf_ServiceName _OffsetOf_ServiceNameLength _OffsetOf_SubStatus _OffsetOf_Type _OffsetOf_UriQuery _OffsetOf_UriQueryLength _OffsetOf_UriStem _OffsetOf_UriStemLength _OffsetOf_UserAgent _OffsetOf_UserAgentLength _OffsetOf_UserName _OffsetOf_UserNameLength _OffsetOf_Win32Status'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ClientIp' -> 16r24.
+		'_OffsetOf_ClientIpLength' -> 16r8.
+		'_OffsetOf_Cookie' -> 16r44.
+		'_OffsetOf_CookieLength' -> 16r18.
+		'_OffsetOf_Host' -> 16r3C.
+		'_OffsetOf_HostLength' -> 16r14.
+		'_OffsetOf_Method' -> 16r34.
+		'_OffsetOf_MethodLength' -> 16r10.
+		'_OffsetOf_MethodNum' -> 16r54.
+		'_OffsetOf_ProtocolStatus' -> 16r4E.
+		'_OffsetOf_Referrer' -> 16r48.
+		'_OffsetOf_ReferrerLength' -> 16r1A.
+		'_OffsetOf_ServerIp' -> 16r30.
+		'_OffsetOf_ServerIpLength' -> 16rE.
+		'_OffsetOf_ServerName' -> 16r28.
+		'_OffsetOf_ServerNameLength' -> 16rA.
+		'_OffsetOf_ServerPort' -> 16r4C.
+		'_OffsetOf_ServiceName' -> 16r2C.
+		'_OffsetOf_ServiceNameLength' -> 16rC.
+		'_OffsetOf_SubStatus' -> 16r58.
+		'_OffsetOf_Type' -> 16r0.
+		'_OffsetOf_UriQuery' -> 16r38.
+		'_OffsetOf_UriQueryLength' -> 16r12.
+		'_OffsetOf_UriStem' -> 16r20.
+		'_OffsetOf_UriStemLength' -> 16r6.
+		'_OffsetOf_UserAgent' -> 16r40.
+		'_OffsetOf_UserAgentLength' -> 16r16.
+		'_OffsetOf_UserName' -> 16r1C.
+		'_OffsetOf_UserNameLength' -> 16r4.
+		'_OffsetOf_Win32Status' -> 16r50
+	}!
 HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Flags _OffsetOf_HeaderId _OffsetOf_KnownHeaderCount _OffsetOf_KnownHeaders'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Flags' -> 16r4.
+		'_OffsetOf_HeaderId' -> 16r0.
+		'_OffsetOf_KnownHeaderCount' -> 16r8.
+		'_OffsetOf_KnownHeaders' -> 16rC
+	}!
 HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Present'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Present' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	instanceVariableNames: 'setting'
-	classVariableNames: '_OffsetOf_QosSetting _OffsetOf_QosType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_QosSetting' -> 16r4.
+		'_OffsetOf_QosType' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AccessToken _OffsetOf_AuthStatus _OffsetOf_AuthType _OffsetOf_ContextAttributes _OffsetOf_Flags _OffsetOf_MutualAuthDataLength _OffsetOf_PackageNameLength _OffsetOf_PackedContext _OffsetOf_PackedContextLength _OffsetOf_PackedContextType _OffsetOf_pMutualAuthData _OffsetOf_pPackageName _OffsetOf_SecStatus'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AccessToken' -> 16r10.
+		'_OffsetOf_AuthStatus' -> 16r0.
+		'_OffsetOf_AuthType' -> 16rC.
+		'_OffsetOf_ContextAttributes' -> 16r14.
+		'_OffsetOf_Flags' -> 16r8.
+		'_OffsetOf_MutualAuthDataLength' -> 16r24.
+		'_OffsetOf_PackageNameLength' -> 16r2C.
+		'_OffsetOf_PackedContext' -> 16r20.
+		'_OffsetOf_PackedContextLength' -> 16r18.
+		'_OffsetOf_PackedContextType' -> 16r1C.
+		'_OffsetOf_pMutualAuthData' -> 16r28.
+		'_OffsetOf_pPackageName' -> 16r30.
+		'_OffsetOf_SecStatus' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ChannelToken _OffsetOf_ChannelTokenSize _OffsetOf_Flags _OffsetOf_ServiceName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ChannelToken' -> 16r4.
+		'_OffsetOf_ChannelTokenSize' -> 16r8.
+		'_OffsetOf_Flags' -> 16rC.
+		'_OffsetOf_ServiceName' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_InfoLength _OffsetOf_InfoType _OffsetOf_pInfo'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_InfoLength' -> 16r4.
+		'_OffsetOf_InfoType' -> 16r0.
+		'_OffsetOf_pInfo' -> 16r8
+	}!
 HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyType _OffsetOf_TlsUnique _OffsetOf_TlsUniqueSize _OffsetOf_TokenBinding _OffsetOf_TokenBindingSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyType' -> 16r10.
+		'_OffsetOf_TlsUnique' -> 16r8.
+		'_OffsetOf_TlsUniqueSize' -> 16rC.
+		'_OffsetOf_TokenBinding' -> 16r0.
+		'_OffsetOf_TokenBindingSize' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_REQUEST_V1
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Address _OffsetOf_BytesReceived _OffsetOf_ConnectionId _OffsetOf_CookedUrl _OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pRawUrl _OffsetOf_pSslInfo _OffsetOf_pUnknownVerb _OffsetOf_RawConnectionId _OffsetOf_RawUrlLength _OffsetOf_RequestId _OffsetOf_UnknownVerbLength _OffsetOf_UrlContext _OffsetOf_Verb _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Address' -> 16r4C.
+		'_OffsetOf_BytesReceived' -> 16r1B0.
+		'_OffsetOf_ConnectionId' -> 16r8.
+		'_OffsetOf_CookedUrl' -> 16r34.
+		'_OffsetOf_EntityChunkCount' -> 16r1B8.
+		'_OffsetOf_Flags' -> 16r0.
+		'_OffsetOf_Headers' -> 16r54.
+		'_OffsetOf_pEntityChunks' -> 16r1BC.
+		'_OffsetOf_pRawUrl' -> 16r30.
+		'_OffsetOf_pSslInfo' -> 16r1C8.
+		'_OffsetOf_pUnknownVerb' -> 16r2C.
+		'_OffsetOf_RawConnectionId' -> 16r1C0.
+		'_OffsetOf_RawUrlLength' -> 16r2A.
+		'_OffsetOf_RequestId' -> 16r10.
+		'_OffsetOf_UnknownVerbLength' -> 16r28.
+		'_OffsetOf_UrlContext' -> 16r18.
+		'_OffsetOf_Verb' -> 16r24.
+		'_OffsetOf_Version' -> 16r20
+	}!
 HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Length _OffsetOf_pInfo _OffsetOf_Type'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Length' -> 16r4.
+		'_OffsetOf_pInfo' -> 16r8.
+		'_OffsetOf_Type' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: 'contentType content'
-	classVariableNames: '_OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pReason _OffsetOf_ReasonLength _OffsetOf_StatusCode _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_EntityChunkCount' -> 16r110.
+		'_OffsetOf_Flags' -> 16r0.
+		'_OffsetOf_Headers' -> 16r10.
+		'_OffsetOf_pEntityChunks' -> 16r114.
+		'_OffsetOf_pReason' -> 16rC.
+		'_OffsetOf_ReasonLength' -> 16rA.
+		'_OffsetOf_StatusCode' -> 16r8.
+		'_OffsetOf_Version' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Realm _OffsetOf_RealmLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Realm' -> 16r4.
+		'_OffsetOf_RealmLength' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DomainName _OffsetOf_DomainNameLength _OffsetOf_Realm _OffsetOf_RealmLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DomainName' -> 16r4.
+		'_OffsetOf_DomainNameLength' -> 16r0.
+		'_OffsetOf_Realm' -> 16rC.
+		'_OffsetOf_RealmLength' -> 16r8
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Type'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Type' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	instanceVariableNames: 'address'
-	classVariableNames: '_OffsetOf_AddrLength _OffsetOf_pAddress'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AddrLength' -> 16r0.
+		'_OffsetOf_pAddress' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AddrCount _OffsetOf_AddrList'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AddrCount' -> 16r0.
+		'_OffsetOf_AddrList' -> 16r8
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r80
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AppId _OffsetOf_DefaultCertCheckMode _OffsetOf_DefaultFlags _OffsetOf_DefaultRevocationFreshnessTime _OffsetOf_DefaultRevocationUrlRetrievalTimeout _OffsetOf_pDefaultSslCtlIdentifier _OffsetOf_pDefaultSslCtlStoreName _OffsetOf_pSslCertStoreName _OffsetOf_pSslHash _OffsetOf_SslHashLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AppId' -> 16r8.
+		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
+		'_OffsetOf_DefaultFlags' -> 16r30.
+		'_OffsetOf_DefaultRevocationFreshnessTime' -> 16r20.
+		'_OffsetOf_DefaultRevocationUrlRetrievalTimeout' -> 16r24.
+		'_OffsetOf_pDefaultSslCtlIdentifier' -> 16r28.
+		'_OffsetOf_pDefaultSslCtlStoreName' -> 16r2C.
+		'_OffsetOf_pSslCertStoreName' -> 16r18.
+		'_OffsetOf_pSslHash' -> 16r4.
+		'_OffsetOf_SslHashLength' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Host _OffsetOf_IpPort'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Host' -> 16r80.
+		'_OffsetOf_IpPort' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r88
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_CertDeniedByMapper _OffsetOf_CertEncodedSize _OffsetOf_CertFlags _OffsetOf_pCertEncoded _OffsetOf_Token'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_CertDeniedByMapper' -> 16r10.
+		'_OffsetOf_CertEncodedSize' -> 16r4.
+		'_OffsetOf_CertFlags' -> 16r0.
+		'_OffsetOf_pCertEncoded' -> 16r8.
+		'_OffsetOf_Token' -> 16rC
+	}!
 HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ConnectionKeySize _OffsetOf_pClientCertInfo _OffsetOf_pServerCertIssuer _OffsetOf_pServerCertSubject _OffsetOf_ServerCertIssuerSize _OffsetOf_ServerCertKeySize _OffsetOf_ServerCertSubjectSize _OffsetOf_SslClientCertNegotiated'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ConnectionKeySize' -> 16r2.
+		'_OffsetOf_pClientCertInfo' -> 16r14.
+		'_OffsetOf_pServerCertIssuer' -> 16rC.
+		'_OffsetOf_pServerCertSubject' -> 16r10.
+		'_OffsetOf_ServerCertIssuerSize' -> 16r4.
+		'_OffsetOf_ServerCertKeySize' -> 16r0.
+		'_OffsetOf_ServerCertSubjectSize' -> 16r8.
+		'_OffsetOf_SslClientCertNegotiated' -> 16r18
+	}!
 HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_CipherStrength _OffsetOf_CipherType _OffsetOf_HashStrength _OffsetOf_HashType _OffsetOf_KeyExchangeStrength _OffsetOf_KeyExchangeType _OffsetOf_Protocol'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_CipherStrength' -> 16r8.
+		'_OffsetOf_CipherType' -> 16r4.
+		'_OffsetOf_HashStrength' -> 16r10.
+		'_OffsetOf_HashType' -> 16rC.
+		'_OffsetOf_KeyExchangeStrength' -> 16r18.
+		'_OffsetOf_KeyExchangeType' -> 16r14.
+		'_OffsetOf_Protocol' -> 16r0
+	}!
 HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_NameLength _OffsetOf_pName _OffsetOf_pRawValue _OffsetOf_RawValueLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_NameLength' -> 16r0.
+		'_OffsetOf_pName' -> 16r4.
+		'_OffsetOf_pRawValue' -> 16r8.
+		'_OffsetOf_RawValueLength' -> 16r2
+	}!
 HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MajorVersion _OffsetOf_MinorVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MajorVersion' -> 16r0.
+		'_OffsetOf_MinorVersion' -> 16r2
+	}!
 HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_QueryDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_QueryDesc' -> 16r0
+	}!
 HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KnownHeaders'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KnownHeaders' -> 16r10
+	}!
 HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KnownHeaders'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KnownHeaders' -> 16r10
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_RequestQueueHandle'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_RequestQueueHandle' -> 16r4
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_EnableSharing'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_EnableSharing' -> 16r4
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: 'directoryName softwareName'
-	classVariableNames: '_OffsetOf_DirectoryName _OffsetOf_DirectoryNameLength _OffsetOf_Fields _OffsetOf_Format _OffsetOf_LoggingFlags _OffsetOf_MaxRecordSize _OffsetOf_NumOfExtFields _OffsetOf_pExtFields _OffsetOf_pSecurityDescriptor _OffsetOf_RolloverSize _OffsetOf_RolloverType _OffsetOf_SoftwareName _OffsetOf_SoftwareNameLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DirectoryName' -> 16r10.
+		'_OffsetOf_DirectoryNameLength' -> 16rE.
+		'_OffsetOf_Fields' -> 16r18.
+		'_OffsetOf_Format' -> 16r14.
+		'_OffsetOf_LoggingFlags' -> 16r4.
+		'_OffsetOf_MaxRecordSize' -> 16r22.
+		'_OffsetOf_NumOfExtFields' -> 16r20.
+		'_OffsetOf_pExtFields' -> 16r1C.
+		'_OffsetOf_pSecurityDescriptor' -> 16r2C.
+		'_OffsetOf_RolloverSize' -> 16r28.
+		'_OffsetOf_RolloverType' -> 16r24.
+		'_OffsetOf_SoftwareName' -> 16r8.
+		'_OffsetOf_SoftwareNameLength' -> 16rC
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Level'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Level' -> 16r4
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AuthSchemes _OffsetOf_BasicParams _OffsetOf_DigestParams _OffsetOf_DisableNTLMCredentialCaching _OffsetOf_ExFlags _OffsetOf_ReceiveContextHandle _OffsetOf_ReceiveMutualAuth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AuthSchemes' -> 16r4.
+		'_OffsetOf_BasicParams' -> 16r1C.
+		'_OffsetOf_DigestParams' -> 16rC.
+		'_OffsetOf_DisableNTLMCredentialCaching' -> 16rA.
+		'_OffsetOf_ExFlags' -> 16rB.
+		'_OffsetOf_ReceiveContextHandle' -> 16r9.
+		'_OffsetOf_ReceiveMutualAuth' -> 16r8
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_State'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_State' -> 16r4
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DrainEntityBody _OffsetOf_EntityBody _OffsetOf_HeaderWait _OffsetOf_IdleConnection _OffsetOf_MinSendRate _OffsetOf_RequestQueue'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DrainEntityBody' -> 16r6.
+		'_OffsetOf_EntityBody' -> 16r4.
+		'_OffsetOf_HeaderWait' -> 16rC.
+		'_OffsetOf_IdleConnection' -> 16rA.
+		'_OffsetOf_MinSendRate' -> 16r10.
+		'_OffsetOf_RequestQueue' -> 16r8
+	}!
 HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MaxBandwidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MaxBandwidth' -> 16r4
+	}!
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MaxConnections'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MaxConnections' -> 16r4
+	}!
 HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_BurstSize _OffsetOf_MaxBandwidth _OffsetOf_MaxPeakBandwidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_BurstSize' -> 16rC.
+		'_OffsetOf_MaxBandwidth' -> 16r4.
+		'_OffsetOf_MaxPeakBandwidth' -> 16r8
+	}!
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pRequestInfo _OffsetOf_RequestInfoCount'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pRequestInfo' -> 16r1D4.
+		'_OffsetOf_RequestInfoCount' -> 16r1D0
+	}!
 HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pResponseInfo _OffsetOf_ResponseInfoCount'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pResponseInfo' -> 16r11C.
+		'_OffsetOf_ResponseInfoCount' -> 16r118
+	}!
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Buffer _OffsetOf_BufferSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Buffer' -> 16r4.
+		'_OffsetOf_BufferSize' -> 16r8
+	}!
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Buffer _OffsetOf_BufferSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Buffer' -> 16r4.
+		'_OffsetOf_BufferSize' -> 16r8
+	}!
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r88.
+		'_OffsetOf_KeyDesc' -> 16r8
+	}!
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r8.
+		'_OffsetOf_KeyDesc' -> 16r4
+	}!
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r90.
+		'_OffsetOf_KeyDesc' -> 16r8
+	}!
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r8.
+		'_OffsetOf_KeyDesc' -> 16r4
+	}!
 
 "Variable Aliases"!
 

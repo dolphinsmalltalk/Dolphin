@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r88
+	}!
 HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
-HTTP_SERVICE_CONFIG_SSL_SNI_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
-HTTP_SERVICE_CONFIG_SSL_SNI_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r88!
 HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

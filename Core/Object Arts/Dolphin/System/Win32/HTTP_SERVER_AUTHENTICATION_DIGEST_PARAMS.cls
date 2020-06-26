@@ -2,14 +2,16 @@
 
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DomainName _OffsetOf_DomainNameLength _OffsetOf_Realm _OffsetOf_RealmLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DomainName' -> 16r4.
+		'_OffsetOf_DomainNameLength' -> 16r0.
+		'_OffsetOf_Realm' -> 16rC.
+		'_OffsetOf_RealmLength' -> 16r8
+	}!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_DomainName' value: 16r4!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_DomainNameLength' value: 16r0!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_Realm' value: 16rC!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_RealmLength' value: 16r8!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

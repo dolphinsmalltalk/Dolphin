@@ -2,15 +2,17 @@
 
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pTrailers _OffsetOf_pUnknownHeaders _OffsetOf_TrailerCount _OffsetOf_UnknownHeaderCount HeaderToIndexMap'
+	classVariableNames: 'HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pTrailers' -> 16rC.
+		'_OffsetOf_pUnknownHeaders' -> 16r4.
+		'_OffsetOf_TrailerCount' -> 16r8.
+		'_OffsetOf_UnknownHeaderCount' -> 16r0
+	}!
 HTTP_HEADERS guid: (GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
 HTTP_HEADERS isAbstract: true!
-HTTP_HEADERS addClassConstant: '_OffsetOf_pTrailers' value: 16rC!
-HTTP_HEADERS addClassConstant: '_OffsetOf_pUnknownHeaders' value: 16r4!
-HTTP_HEADERS addClassConstant: '_OffsetOf_TrailerCount' value: 16r8!
-HTTP_HEADERS addClassConstant: '_OffsetOf_UnknownHeaderCount' value: 16r0!
 HTTP_HEADERS comment: '<HTTP_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,12 +2,14 @@
 
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Buffer _OffsetOf_BufferSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Buffer' -> 16r4.
+		'_OffsetOf_BufferSize' -> 16r8
+	}!
 HTTP_SERVICE_BINDING_A guid: (GUID fromString: '{88ca7833-a66a-4e2f-98bc-cd2313254b15}')!
-HTTP_SERVICE_BINDING_A addClassConstant: '_OffsetOf_Buffer' value: 16r4!
-HTTP_SERVICE_BINDING_A addClassConstant: '_OffsetOf_BufferSize' value: 16r8!
 HTTP_SERVICE_BINDING_A comment: '<HTTP_SERVICE_BINDING_A> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_A'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

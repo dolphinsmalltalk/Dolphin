@@ -2,11 +2,13 @@
 
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MaxConnections'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MaxConnections' -> 16r4
+	}!
 HTTP_CONNECTION_LIMIT_INFO guid: (GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
-HTTP_CONNECTION_LIMIT_INFO addClassConstant: '_OffsetOf_MaxConnections' value: 16r4!
 HTTP_CONNECTION_LIMIT_INFO comment: '<HTTP_CONNECTION_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

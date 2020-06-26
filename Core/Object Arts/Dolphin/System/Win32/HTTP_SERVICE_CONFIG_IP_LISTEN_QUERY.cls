@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AddrCount _OffsetOf_AddrList'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AddrCount' -> 16r0.
+		'_OffsetOf_AddrList' -> 16r8
+	}!
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY guid: (GUID fromString: '{3eebcb9d-9dc3-4701-a044-c16df022085b}')!
-HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrCount' value: 16r0!
-HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrList' value: 16r8!
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

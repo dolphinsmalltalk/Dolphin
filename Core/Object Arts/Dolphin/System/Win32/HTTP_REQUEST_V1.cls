@@ -2,28 +2,30 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_V1
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Address _OffsetOf_BytesReceived _OffsetOf_ConnectionId _OffsetOf_CookedUrl _OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pRawUrl _OffsetOf_pSslInfo _OffsetOf_pUnknownVerb _OffsetOf_RawConnectionId _OffsetOf_RawUrlLength _OffsetOf_RequestId _OffsetOf_UnknownVerbLength _OffsetOf_UrlContext _OffsetOf_Verb _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Address' -> 16r4C.
+		'_OffsetOf_BytesReceived' -> 16r1B0.
+		'_OffsetOf_ConnectionId' -> 16r8.
+		'_OffsetOf_CookedUrl' -> 16r34.
+		'_OffsetOf_EntityChunkCount' -> 16r1B8.
+		'_OffsetOf_Flags' -> 16r0.
+		'_OffsetOf_Headers' -> 16r54.
+		'_OffsetOf_pEntityChunks' -> 16r1BC.
+		'_OffsetOf_pRawUrl' -> 16r30.
+		'_OffsetOf_pSslInfo' -> 16r1C8.
+		'_OffsetOf_pUnknownVerb' -> 16r2C.
+		'_OffsetOf_RawConnectionId' -> 16r1C0.
+		'_OffsetOf_RawUrlLength' -> 16r2A.
+		'_OffsetOf_RequestId' -> 16r10.
+		'_OffsetOf_UnknownVerbLength' -> 16r28.
+		'_OffsetOf_UrlContext' -> 16r18.
+		'_OffsetOf_Verb' -> 16r24.
+		'_OffsetOf_Version' -> 16r20
+	}!
 HTTP_REQUEST_V1 guid: (GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Address' value: 16r4C!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_BytesReceived' value: 16r1B0!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_ConnectionId' value: 16r8!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_CookedUrl' value: 16r34!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_EntityChunkCount' value: 16r1B8!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Flags' value: 16r0!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Headers' value: 16r54!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pEntityChunks' value: 16r1BC!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pRawUrl' value: 16r30!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pSslInfo' value: 16r1C8!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pUnknownVerb' value: 16r2C!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RawConnectionId' value: 16r1C0!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RawUrlLength' value: 16r2A!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RequestId' value: 16r10!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UnknownVerbLength' value: 16r28!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UrlContext' value: 16r18!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Verb' value: 16r24!
-HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Version' value: 16r20!
 HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

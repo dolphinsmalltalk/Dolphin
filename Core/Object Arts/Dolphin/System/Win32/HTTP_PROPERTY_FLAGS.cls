@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Present'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Present' -> 16r0
+	}!
 HTTP_PROPERTY_FLAGS guid: (GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
 HTTP_PROPERTY_FLAGS isAbstract: true!
-HTTP_PROPERTY_FLAGS addClassConstant: '_OffsetOf_Present' value: 16r0!
 HTTP_PROPERTY_FLAGS comment: '<HTTP_PROPERTY_FLAGS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,11 +2,13 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_RequestQueueHandle'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_RequestQueueHandle' -> 16r4
+	}!
 HTTP_BINDING_INFO guid: (GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
-HTTP_BINDING_INFO addClassConstant: '_OffsetOf_RequestQueueHandle' value: 16r4!
 HTTP_BINDING_INFO comment: '<HTTP_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,11 +2,13 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_EnableSharing'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_EnableSharing' -> 16r4
+	}!
 HTTP_LISTEN_ENDPOINT_INFO guid: (GUID fromString: '{c96f66fd-b678-4046-9100-ed4b4bc7c9fe}')!
-HTTP_LISTEN_ENDPOINT_INFO addClassConstant: '_OffsetOf_EnableSharing' value: 16r4!
 HTTP_LISTEN_ENDPOINT_INFO comment: '<HTTP_LISTEN_ENDPOINT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

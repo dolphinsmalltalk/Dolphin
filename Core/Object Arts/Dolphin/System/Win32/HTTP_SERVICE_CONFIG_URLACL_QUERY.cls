@@ -2,12 +2,14 @@
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r8.
+		'_OffsetOf_KeyDesc' -> 16r4
+	}!
 HTTP_SERVICE_CONFIG_URLACL_QUERY guid: (GUID fromString: '{fbe6f060-f472-445e-b48c-9caa8faedc7e}')!
-HTTP_SERVICE_CONFIG_URLACL_QUERY addClassConstant: '_OffsetOf_dwToken' value: 16r8!
-HTTP_SERVICE_CONFIG_URLACL_QUERY addClassConstant: '_OffsetOf_KeyDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_URLACL_QUERY comment: '<HTTP_SERVICE_CONFIG_URLACL_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

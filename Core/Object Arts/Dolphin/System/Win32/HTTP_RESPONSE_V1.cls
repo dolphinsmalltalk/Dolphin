@@ -2,18 +2,20 @@
 
 HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	instanceVariableNames: 'contentType content'
-	classVariableNames: '_OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pReason _OffsetOf_ReasonLength _OffsetOf_StatusCode _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_EntityChunkCount' -> 16r110.
+		'_OffsetOf_Flags' -> 16r0.
+		'_OffsetOf_Headers' -> 16r10.
+		'_OffsetOf_pEntityChunks' -> 16r114.
+		'_OffsetOf_pReason' -> 16rC.
+		'_OffsetOf_ReasonLength' -> 16rA.
+		'_OffsetOf_StatusCode' -> 16r8.
+		'_OffsetOf_Version' -> 16r4
+	}!
 HTTP_RESPONSE_V1 guid: (GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_EntityChunkCount' value: 16r110!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Flags' value: 16r0!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Headers' value: 16r10!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_pEntityChunks' value: 16r114!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_pReason' value: 16rC!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_ReasonLength' value: 16rA!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_StatusCode' value: 16r8!
-HTTP_RESPONSE_V1 addClassConstant: '_OffsetOf_Version' value: 16r4!
 HTTP_RESPONSE_V1 comment: '<HTTP_RESPONSE_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

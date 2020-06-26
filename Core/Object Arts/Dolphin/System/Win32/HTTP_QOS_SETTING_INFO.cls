@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	instanceVariableNames: 'setting'
-	classVariableNames: '_OffsetOf_QosSetting _OffsetOf_QosType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_QosSetting' -> 16r4.
+		'_OffsetOf_QosType' -> 16r0
+	}!
 HTTP_QOS_SETTING_INFO guid: (GUID fromString: '{a0bcefe3-d299-4e8a-9c7a-6e753a441ad6}')!
-HTTP_QOS_SETTING_INFO addClassConstant: '_OffsetOf_QosSetting' value: 16r4!
-HTTP_QOS_SETTING_INFO addClassConstant: '_OffsetOf_QosType' value: 16r0!
 HTTP_QOS_SETTING_INFO comment: '<HTTP_QOS_SETTING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_QOS_SETTING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,18 +2,20 @@
 
 HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ConnectionKeySize _OffsetOf_pClientCertInfo _OffsetOf_pServerCertIssuer _OffsetOf_pServerCertSubject _OffsetOf_ServerCertIssuerSize _OffsetOf_ServerCertKeySize _OffsetOf_ServerCertSubjectSize _OffsetOf_SslClientCertNegotiated'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ConnectionKeySize' -> 16r2.
+		'_OffsetOf_pClientCertInfo' -> 16r14.
+		'_OffsetOf_pServerCertIssuer' -> 16rC.
+		'_OffsetOf_pServerCertSubject' -> 16r10.
+		'_OffsetOf_ServerCertIssuerSize' -> 16r4.
+		'_OffsetOf_ServerCertKeySize' -> 16r0.
+		'_OffsetOf_ServerCertSubjectSize' -> 16r8.
+		'_OffsetOf_SslClientCertNegotiated' -> 16r18
+	}!
 HTTP_SSL_INFO guid: (GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_ConnectionKeySize' value: 16r2!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_pClientCertInfo' value: 16r14!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_pServerCertIssuer' value: 16rC!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_pServerCertSubject' value: 16r10!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_ServerCertIssuerSize' value: 16r4!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_ServerCertKeySize' value: 16r0!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_ServerCertSubjectSize' value: 16r8!
-HTTP_SSL_INFO addClassConstant: '_OffsetOf_SslClientCertNegotiated' value: 16r18!
 HTTP_SSL_INFO comment: '<HTTP_SSL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

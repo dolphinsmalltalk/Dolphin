@@ -2,13 +2,15 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_InfoLength _OffsetOf_InfoType _OffsetOf_pInfo'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_InfoLength' -> 16r4.
+		'_OffsetOf_InfoType' -> 16r0.
+		'_OffsetOf_pInfo' -> 16r8
+	}!
 HTTP_REQUEST_INFO guid: (GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
-HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoLength' value: 16r4!
-HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoType' value: 16r0!
-HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
 HTTP_REQUEST_INFO comment: '<HTTP_REQUEST_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

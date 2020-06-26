@@ -2,12 +2,14 @@
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwToken' -> 16r88.
+		'_OffsetOf_KeyDesc' -> 16r8
+	}!
 HTTP_SERVICE_CONFIG_SSL_CCS_QUERY guid: (GUID fromString: '{d6a678d5-678e-4bf6-ab65-77c8e6a641a9}')!
-HTTP_SERVICE_CONFIG_SSL_CCS_QUERY addClassConstant: '_OffsetOf_dwToken' value: 16r88!
-HTTP_SERVICE_CONFIG_SSL_CCS_QUERY addClassConstant: '_OffsetOf_KeyDesc' value: 16r8!
 HTTP_SERVICE_CONFIG_SSL_CCS_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_CCS_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_CCS_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

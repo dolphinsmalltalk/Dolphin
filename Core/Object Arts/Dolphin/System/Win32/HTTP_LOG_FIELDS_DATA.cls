@@ -2,40 +2,42 @@
 
 HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ClientIp _OffsetOf_ClientIpLength _OffsetOf_Cookie _OffsetOf_CookieLength _OffsetOf_Host _OffsetOf_HostLength _OffsetOf_Method _OffsetOf_MethodLength _OffsetOf_MethodNum _OffsetOf_ProtocolStatus _OffsetOf_Referrer _OffsetOf_ReferrerLength _OffsetOf_ServerIp _OffsetOf_ServerIpLength _OffsetOf_ServerName _OffsetOf_ServerNameLength _OffsetOf_ServerPort _OffsetOf_ServiceName _OffsetOf_ServiceNameLength _OffsetOf_SubStatus _OffsetOf_Type _OffsetOf_UriQuery _OffsetOf_UriQueryLength _OffsetOf_UriStem _OffsetOf_UriStemLength _OffsetOf_UserAgent _OffsetOf_UserAgentLength _OffsetOf_UserName _OffsetOf_UserNameLength _OffsetOf_Win32Status'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ClientIp' -> 16r24.
+		'_OffsetOf_ClientIpLength' -> 16r8.
+		'_OffsetOf_Cookie' -> 16r44.
+		'_OffsetOf_CookieLength' -> 16r18.
+		'_OffsetOf_Host' -> 16r3C.
+		'_OffsetOf_HostLength' -> 16r14.
+		'_OffsetOf_Method' -> 16r34.
+		'_OffsetOf_MethodLength' -> 16r10.
+		'_OffsetOf_MethodNum' -> 16r54.
+		'_OffsetOf_ProtocolStatus' -> 16r4E.
+		'_OffsetOf_Referrer' -> 16r48.
+		'_OffsetOf_ReferrerLength' -> 16r1A.
+		'_OffsetOf_ServerIp' -> 16r30.
+		'_OffsetOf_ServerIpLength' -> 16rE.
+		'_OffsetOf_ServerName' -> 16r28.
+		'_OffsetOf_ServerNameLength' -> 16rA.
+		'_OffsetOf_ServerPort' -> 16r4C.
+		'_OffsetOf_ServiceName' -> 16r2C.
+		'_OffsetOf_ServiceNameLength' -> 16rC.
+		'_OffsetOf_SubStatus' -> 16r58.
+		'_OffsetOf_Type' -> 16r0.
+		'_OffsetOf_UriQuery' -> 16r38.
+		'_OffsetOf_UriQueryLength' -> 16r12.
+		'_OffsetOf_UriStem' -> 16r20.
+		'_OffsetOf_UriStemLength' -> 16r6.
+		'_OffsetOf_UserAgent' -> 16r40.
+		'_OffsetOf_UserAgentLength' -> 16r16.
+		'_OffsetOf_UserName' -> 16r1C.
+		'_OffsetOf_UserNameLength' -> 16r4.
+		'_OffsetOf_Win32Status' -> 16r50
+	}!
 HTTP_LOG_FIELDS_DATA guid: (GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ClientIp' value: 16r24!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ClientIpLength' value: 16r8!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Cookie' value: 16r44!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_CookieLength' value: 16r18!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Host' value: 16r3C!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_HostLength' value: 16r14!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Method' value: 16r34!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_MethodLength' value: 16r10!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_MethodNum' value: 16r54!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ProtocolStatus' value: 16r4E!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Referrer' value: 16r48!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ReferrerLength' value: 16r1A!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServerIp' value: 16r30!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServerIpLength' value: 16rE!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServerName' value: 16r28!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServerNameLength' value: 16rA!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServerPort' value: 16r4C!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServiceName' value: 16r2C!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ServiceNameLength' value: 16rC!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_SubStatus' value: 16r58!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Type' value: 16r0!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UriQuery' value: 16r38!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UriQueryLength' value: 16r12!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UriStem' value: 16r20!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UriStemLength' value: 16r6!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserAgent' value: 16r40!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserAgentLength' value: 16r16!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserName' value: 16r1C!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserNameLength' value: 16r4!
-HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Win32Status' value: 16r50!
 HTTP_LOG_FIELDS_DATA comment: '<HTTP_LOG_FIELDS_DATA> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOG_FIELDS_DATA'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

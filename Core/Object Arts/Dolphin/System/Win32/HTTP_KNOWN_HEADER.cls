@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pRawValue _OffsetOf_RawValueLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pRawValue' -> 16r4.
+		'_OffsetOf_RawValueLength' -> 16r0
+	}!
 HTTP_KNOWN_HEADER guid: (GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
-HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r4!
-HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r0!
 HTTP_KNOWN_HEADER comment: '`HTTP_KNOWN_HEADER` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

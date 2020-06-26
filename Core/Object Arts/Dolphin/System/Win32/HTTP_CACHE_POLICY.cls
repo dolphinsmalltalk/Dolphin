@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Policy _OffsetOf_SecondsToLive NoCache UserInvalidates'
+	classVariableNames: 'NoCache UserInvalidates'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Policy' -> 16r0.
+		'_OffsetOf_SecondsToLive' -> 16r4
+	}!
 HTTP_CACHE_POLICY guid: (GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
-HTTP_CACHE_POLICY addClassConstant: '_OffsetOf_Policy' value: 16r0!
-HTTP_CACHE_POLICY addClassConstant: '_OffsetOf_SecondsToLive' value: 16r4!
 HTTP_CACHE_POLICY comment: '<HTTP_CACHE_POLICY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CACHE_POLICY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

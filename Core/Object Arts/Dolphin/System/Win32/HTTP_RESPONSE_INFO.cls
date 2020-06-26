@@ -2,13 +2,15 @@
 
 HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Length _OffsetOf_pInfo _OffsetOf_Type'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Length' -> 16r4.
+		'_OffsetOf_pInfo' -> 16r8.
+		'_OffsetOf_Type' -> 16r0
+	}!
 HTTP_RESPONSE_INFO guid: (GUID fromString: '{cdf58c2c-140f-4611-b847-12837ce3155f}')!
-HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Length' value: 16r4!
-HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
-HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Type' value: 16r0!
 HTTP_RESPONSE_INFO comment: '<HTTP_RESPONSE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

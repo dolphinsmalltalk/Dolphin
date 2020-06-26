@@ -2,13 +2,15 @@
 
 HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_BurstSize _OffsetOf_MaxBandwidth _OffsetOf_MaxPeakBandwidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_BurstSize' -> 16rC.
+		'_OffsetOf_MaxBandwidth' -> 16r4.
+		'_OffsetOf_MaxPeakBandwidth' -> 16r8
+	}!
 HTTP_FLOWRATE_INFO guid: (GUID fromString: '{c2fad8f6-f179-4bbb-a5f2-073c416f6704}')!
-HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_BurstSize' value: 16rC!
-HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_MaxBandwidth' value: 16r4!
-HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_MaxPeakBandwidth' value: 16r8!
 HTTP_FLOWRATE_INFO comment: '<HTTP_FLOWRATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_FLOWRATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

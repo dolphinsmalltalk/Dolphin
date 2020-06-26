@@ -2,11 +2,13 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Type'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Type' -> 16r0
+	}!
 HTTP_SERVICE_BINDING_BASE guid: (GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
-HTTP_SERVICE_BINDING_BASE addClassConstant: '_OffsetOf_Type' value: 16r0!
 HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

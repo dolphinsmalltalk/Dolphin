@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Length _OffsetOf_StartingOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Length' -> 16r8.
+		'_OffsetOf_StartingOffset' -> 16r0
+	}!
 HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
-HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_Length' value: 16r8!
-HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_StartingOffset' value: 16r0!
 HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BYTE_RANGE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

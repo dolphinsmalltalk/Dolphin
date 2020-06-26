@@ -2,16 +2,18 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DrainEntityBody _OffsetOf_EntityBody _OffsetOf_HeaderWait _OffsetOf_IdleConnection _OffsetOf_MinSendRate _OffsetOf_RequestQueue'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DrainEntityBody' -> 16r6.
+		'_OffsetOf_EntityBody' -> 16r4.
+		'_OffsetOf_HeaderWait' -> 16rC.
+		'_OffsetOf_IdleConnection' -> 16rA.
+		'_OffsetOf_MinSendRate' -> 16r10.
+		'_OffsetOf_RequestQueue' -> 16r8
+	}!
 HTTP_TIMEOUT_LIMIT_INFO guid: (GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_DrainEntityBody' value: 16r6!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_EntityBody' value: 16r4!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_HeaderWait' value: 16rC!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_IdleConnection' value: 16rA!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_MinSendRate' value: 16r10!
-HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_RequestQueue' value: 16r8!
 HTTP_TIMEOUT_LIMIT_INFO comment: '<HTTP_TIMEOUT_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

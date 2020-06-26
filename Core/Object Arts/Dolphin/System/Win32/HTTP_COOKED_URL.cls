@@ -2,18 +2,20 @@
 
 HttpServerStructure subclass: #HTTP_COOKED_URL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AbsPathLength _OffsetOf_FullUrlLength _OffsetOf_HostLength _OffsetOf_pAbsPath _OffsetOf_pFullUrl _OffsetOf_pHost _OffsetOf_pQueryString _OffsetOf_QueryStringLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AbsPathLength' -> 16r4.
+		'_OffsetOf_FullUrlLength' -> 16r0.
+		'_OffsetOf_HostLength' -> 16r2.
+		'_OffsetOf_pAbsPath' -> 16r10.
+		'_OffsetOf_pFullUrl' -> 16r8.
+		'_OffsetOf_pHost' -> 16rC.
+		'_OffsetOf_pQueryString' -> 16r14.
+		'_OffsetOf_QueryStringLength' -> 16r6
+	}!
 HTTP_COOKED_URL guid: (GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_AbsPathLength' value: 16r4!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_FullUrlLength' value: 16r0!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_HostLength' value: 16r2!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_pAbsPath' value: 16r10!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_pFullUrl' value: 16r8!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_pHost' value: 16rC!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_pQueryString' value: 16r14!
-HTTP_COOKED_URL addClassConstant: '_OffsetOf_QueryStringLength' value: 16r6!
 HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

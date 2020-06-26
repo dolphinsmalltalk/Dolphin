@@ -2,17 +2,19 @@
 
 HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_CipherStrength _OffsetOf_CipherType _OffsetOf_HashStrength _OffsetOf_HashType _OffsetOf_KeyExchangeStrength _OffsetOf_KeyExchangeType _OffsetOf_Protocol'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_CipherStrength' -> 16r8.
+		'_OffsetOf_CipherType' -> 16r4.
+		'_OffsetOf_HashStrength' -> 16r10.
+		'_OffsetOf_HashType' -> 16rC.
+		'_OffsetOf_KeyExchangeStrength' -> 16r18.
+		'_OffsetOf_KeyExchangeType' -> 16r14.
+		'_OffsetOf_Protocol' -> 16r0
+	}!
 HTTP_SSL_PROTOCOL_INFO guid: (GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherStrength' value: 16r8!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherType' value: 16r4!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashStrength' value: 16r10!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashType' value: 16rC!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeStrength' value: 16r18!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeType' value: 16r14!
-HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_Protocol' value: 16r0!
 HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

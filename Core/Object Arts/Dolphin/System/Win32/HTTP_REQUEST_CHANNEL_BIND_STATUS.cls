@@ -2,14 +2,16 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ChannelToken _OffsetOf_ChannelTokenSize _OffsetOf_Flags _OffsetOf_ServiceName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ChannelToken' -> 16r4.
+		'_OffsetOf_ChannelTokenSize' -> 16r8.
+		'_OffsetOf_Flags' -> 16rC.
+		'_OffsetOf_ServiceName' -> 16r0
+	}!
 HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
-HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ChannelToken' value: 16r4!
-HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ChannelTokenSize' value: 16r8!
-HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_Flags' value: 16rC!
-HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ServiceName' value: 16r0!
 HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '<HTTP_REQUEST_CHANNEL_BIND_STATUS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

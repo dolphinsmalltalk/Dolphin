@@ -2,11 +2,13 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Level'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Level' -> 16r4
+	}!
 HTTP_PROTECTION_LEVEL_INFO guid: (GUID fromString: '{e1881388-d03e-4ea0-8e39-8f1439753299}')!
-HTTP_PROTECTION_LEVEL_INFO addClassConstant: '_OffsetOf_Level' value: 16r4!
 HTTP_PROTECTION_LEVEL_INFO comment: '<HTTP_PROTECTION_LEVEL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HTTP_SERVICE_CONFIG_URLACL_SET guid: (GUID fromString: '{8144c4ca-dfd3-4ed0-a83b-ad096bd611a4}')!
-HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
-HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_URLACL_SET comment: '<HTTP_SERVICE_CONFIG_URLACL_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HTTP_SERVICE_CONFIG_CACHE_SET guid: (GUID fromString: '{7d7f269d-ce99-4ee1-979d-387f6f2147be}')!
-HTTP_SERVICE_CONFIG_CACHE_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
-HTTP_SERVICE_CONFIG_CACHE_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_CACHE_SET comment: '<HTTP_SERVICE_CONFIG_CACHE_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

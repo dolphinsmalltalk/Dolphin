@@ -2,14 +2,16 @@
 
 HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_NameLength _OffsetOf_pName _OffsetOf_pRawValue _OffsetOf_RawValueLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_NameLength' -> 16r0.
+		'_OffsetOf_pName' -> 16r4.
+		'_OffsetOf_pRawValue' -> 16r8.
+		'_OffsetOf_RawValueLength' -> 16r2
+	}!
 HTTP_UNKNOWN_HEADER guid: (GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
-HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_NameLength' value: 16r0!
-HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pName' value: 16r4!
-HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r8!
-HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r2!
 HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

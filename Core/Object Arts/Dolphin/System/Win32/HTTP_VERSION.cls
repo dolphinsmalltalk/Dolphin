@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MajorVersion _OffsetOf_MinorVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MajorVersion' -> 16r0.
+		'_OffsetOf_MinorVersion' -> 16r2
+	}!
 HTTP_VERSION guid: (GUID fromString: '{f6a0c406-b01a-4701-aa8c-d4c1a0d2b1a5}')!
-HTTP_VERSION addClassConstant: '_OffsetOf_MajorVersion' value: 16r0!
-HTTP_VERSION addClassConstant: '_OffsetOf_MinorVersion' value: 16r2!
 HTTP_VERSION comment: '<HTTP_VERSION> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_VERSION'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

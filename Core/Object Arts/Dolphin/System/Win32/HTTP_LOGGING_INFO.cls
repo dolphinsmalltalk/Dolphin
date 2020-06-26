@@ -2,23 +2,25 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: 'directoryName softwareName'
-	classVariableNames: '_OffsetOf_DirectoryName _OffsetOf_DirectoryNameLength _OffsetOf_Fields _OffsetOf_Format _OffsetOf_LoggingFlags _OffsetOf_MaxRecordSize _OffsetOf_NumOfExtFields _OffsetOf_pExtFields _OffsetOf_pSecurityDescriptor _OffsetOf_RolloverSize _OffsetOf_RolloverType _OffsetOf_SoftwareName _OffsetOf_SoftwareNameLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DirectoryName' -> 16r10.
+		'_OffsetOf_DirectoryNameLength' -> 16rE.
+		'_OffsetOf_Fields' -> 16r18.
+		'_OffsetOf_Format' -> 16r14.
+		'_OffsetOf_LoggingFlags' -> 16r4.
+		'_OffsetOf_MaxRecordSize' -> 16r22.
+		'_OffsetOf_NumOfExtFields' -> 16r20.
+		'_OffsetOf_pExtFields' -> 16r1C.
+		'_OffsetOf_pSecurityDescriptor' -> 16r2C.
+		'_OffsetOf_RolloverSize' -> 16r28.
+		'_OffsetOf_RolloverType' -> 16r24.
+		'_OffsetOf_SoftwareName' -> 16r8.
+		'_OffsetOf_SoftwareNameLength' -> 16rC
+	}!
 HTTP_LOGGING_INFO guid: (GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryName' value: 16r10!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryNameLength' value: 16rE!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_Fields' value: 16r18!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_Format' value: 16r14!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_LoggingFlags' value: 16r4!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_MaxRecordSize' value: 16r22!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_NumOfExtFields' value: 16r20!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_pExtFields' value: 16r1C!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_pSecurityDescriptor' value: 16r2C!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverSize' value: 16r28!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverType' value: 16r24!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareName' value: 16r8!
-HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareNameLength' value: 16rC!
 HTTP_LOGGING_INFO comment: '<HTTP_LOGGING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOGGING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

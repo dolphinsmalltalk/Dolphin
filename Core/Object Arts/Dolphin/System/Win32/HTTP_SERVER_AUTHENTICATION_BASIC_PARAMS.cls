@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Realm _OffsetOf_RealmLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Realm' -> 16r4.
+		'_OffsetOf_RealmLength' -> 16r0
+	}!
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS guid: (GUID fromString: '{813ff062-e4ed-4b4c-8eef-9d94a1fb65c4}')!
-HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS addClassConstant: '_OffsetOf_Realm' value: 16r4!
-HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS addClassConstant: '_OffsetOf_RealmLength' value: 16r0!
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct

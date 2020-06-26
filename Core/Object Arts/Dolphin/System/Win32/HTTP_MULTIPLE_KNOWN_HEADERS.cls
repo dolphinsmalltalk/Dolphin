@@ -2,14 +2,16 @@
 
 HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Flags _OffsetOf_HeaderId _OffsetOf_KnownHeaderCount _OffsetOf_KnownHeaders'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Flags' -> 16r4.
+		'_OffsetOf_HeaderId' -> 16r0.
+		'_OffsetOf_KnownHeaderCount' -> 16r8.
+		'_OffsetOf_KnownHeaders' -> 16rC
+	}!
 HTTP_MULTIPLE_KNOWN_HEADERS guid: (GUID fromString: '{a12486b1-fdf5-4d31-a4b7-af9848ffe5c6}')!
-HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_Flags' value: 16r4!
-HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_HeaderId' value: 16r0!
-HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_KnownHeaderCount' value: 16r8!
-HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16rC!
 HTTP_MULTIPLE_KNOWN_HEADERS comment: '<HTTP_MULTIPLE_KNOWN_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

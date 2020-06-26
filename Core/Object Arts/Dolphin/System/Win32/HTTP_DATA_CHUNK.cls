@@ -2,19 +2,21 @@
 
 HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	instanceVariableNames: 'data'
-	classVariableNames: '_OffsetOf_DataChunkType _OffsetOf_FromFileHandle_ByteRange _OffsetOf_FromFileHandle_FileHandle _OffsetOf_FromFragmentCache_FragmentNameLength _OffsetOf_FromFragmentCache_pFragmentName _OffsetOf_FromFragmentCacheEx_ByteRange _OffsetOf_FromFragmentCacheEx_pFragmentName _OffsetOf_FromMemory_BufferLength _OffsetOf_FromMemory_pBuffer'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DataChunkType' -> 16r0.
+		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
+		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
+		'_OffsetOf_FromFragmentCache_FragmentNameLength' -> 16r8.
+		'_OffsetOf_FromFragmentCache_pFragmentName' -> 16rC.
+		'_OffsetOf_FromFragmentCacheEx_ByteRange' -> 16r8.
+		'_OffsetOf_FromFragmentCacheEx_pFragmentName' -> 16r18.
+		'_OffsetOf_FromMemory_BufferLength' -> 16rC.
+		'_OffsetOf_FromMemory_pBuffer' -> 16r8
+	}!
 HTTP_DATA_CHUNK guid: (GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_DataChunkType' value: 16r0!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFileHandle_ByteRange' value: 16r8!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFileHandle_FileHandle' value: 16r18!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCache_FragmentNameLength' value: 16r8!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCache_pFragmentName' value: 16rC!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCacheEx_ByteRange' value: 16r8!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCacheEx_pFragmentName' value: 16r18!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromMemory_BufferLength' value: 16rC!
-HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromMemory_pBuffer' value: 16r8!
 HTTP_DATA_CHUNK comment: '<HTTP_DATA_CHUNK> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_DATA_CHUNK'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

@@ -2,15 +2,17 @@
 
 HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_CertDeniedByMapper _OffsetOf_CertEncodedSize _OffsetOf_CertFlags _OffsetOf_pCertEncoded _OffsetOf_Token'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_CertDeniedByMapper' -> 16r10.
+		'_OffsetOf_CertEncodedSize' -> 16r4.
+		'_OffsetOf_CertFlags' -> 16r0.
+		'_OffsetOf_pCertEncoded' -> 16r8.
+		'_OffsetOf_Token' -> 16rC
+	}!
 HTTP_SSL_CLIENT_CERT_INFO guid: (GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
-HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertDeniedByMapper' value: 16r10!
-HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertEncodedSize' value: 16r4!
-HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertFlags' value: 16r0!
-HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_pCertEncoded' value: 16r8!
-HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_Token' value: 16rC!
 HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

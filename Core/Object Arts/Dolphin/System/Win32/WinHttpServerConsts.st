@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinHttpServerConsts put: (PoolConstantsDictionary named: #WinHttpServerConsts)!
+#{WinHttpServerConsts} declare: (PoolConstantsDictionary named: #WinHttpServerConsts)!
 WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_ALL' put: 16r1F!
 WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_BASIC' put: 16r1!
 WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_DIGEST' put: 16r2!

@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KeyDesc' -> 16r0.
+		'_OffsetOf_ParamDesc' -> 16r4
+	}!
 HTTP_SERVICE_CONFIG_TIMEOUT_SET guid: (GUID fromString: '{6f4abcfc-2a59-4996-a958-5de93dc64213}')!
-HTTP_SERVICE_CONFIG_TIMEOUT_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
-HTTP_SERVICE_CONFIG_TIMEOUT_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_TIMEOUT_SET comment: '<HTTP_SERVICE_CONFIG_TIMEOUT_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

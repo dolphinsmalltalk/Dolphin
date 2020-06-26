@@ -2,14 +2,16 @@
 
 HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Flags _OffsetOf_Hardening _OffsetOf_NumberOfServiceNames _OffsetOf_ServiceNames'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Flags' -> 16r4.
+		'_OffsetOf_Hardening' -> 16r0.
+		'_OffsetOf_NumberOfServiceNames' -> 16rC.
+		'_OffsetOf_ServiceNames' -> 16r8
+	}!
 HTTP_CHANNEL_BIND_INFO guid: (GUID fromString: '{84ea1900-0bc6-4ac8-9025-7f74436d5dc9}')!
-HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Flags' value: 16r4!
-HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Hardening' value: 16r0!
-HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_NumberOfServiceNames' value: 16rC!
-HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_ServiceNames' value: 16r8!
 HTTP_CHANNEL_BIND_INFO comment: '<HTTP_CHANNEL_BIND_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CHANNEL_BIND_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

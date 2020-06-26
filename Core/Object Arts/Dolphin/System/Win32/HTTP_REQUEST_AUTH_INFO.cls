@@ -2,23 +2,25 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AccessToken _OffsetOf_AuthStatus _OffsetOf_AuthType _OffsetOf_ContextAttributes _OffsetOf_Flags _OffsetOf_MutualAuthDataLength _OffsetOf_PackageNameLength _OffsetOf_PackedContext _OffsetOf_PackedContextLength _OffsetOf_PackedContextType _OffsetOf_pMutualAuthData _OffsetOf_pPackageName _OffsetOf_SecStatus'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AccessToken' -> 16r10.
+		'_OffsetOf_AuthStatus' -> 16r0.
+		'_OffsetOf_AuthType' -> 16rC.
+		'_OffsetOf_ContextAttributes' -> 16r14.
+		'_OffsetOf_Flags' -> 16r8.
+		'_OffsetOf_MutualAuthDataLength' -> 16r24.
+		'_OffsetOf_PackageNameLength' -> 16r2C.
+		'_OffsetOf_PackedContext' -> 16r20.
+		'_OffsetOf_PackedContextLength' -> 16r18.
+		'_OffsetOf_PackedContextType' -> 16r1C.
+		'_OffsetOf_pMutualAuthData' -> 16r28.
+		'_OffsetOf_pPackageName' -> 16r30.
+		'_OffsetOf_SecStatus' -> 16r4
+	}!
 HTTP_REQUEST_AUTH_INFO guid: (GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AccessToken' value: 16r10!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthStatus' value: 16r0!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthType' value: 16rC!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_ContextAttributes' value: 16r14!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_Flags' value: 16r8!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_MutualAuthDataLength' value: 16r24!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackageNameLength' value: 16r2C!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContext' value: 16r20!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextLength' value: 16r18!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextType' value: 16r1C!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pMutualAuthData' value: 16r28!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pPackageName' value: 16r30!
-HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_SecStatus' value: 16r4!
 HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

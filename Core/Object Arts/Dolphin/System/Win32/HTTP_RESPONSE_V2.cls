@@ -2,12 +2,14 @@
 
 HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pResponseInfo _OffsetOf_ResponseInfoCount'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pResponseInfo' -> 16r11C.
+		'_OffsetOf_ResponseInfoCount' -> 16r118
+	}!
 HTTP_RESPONSE_V2 guid: (GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
-HTTP_RESPONSE_V2 addClassConstant: '_OffsetOf_pResponseInfo' value: 16r11C!
-HTTP_RESPONSE_V2 addClassConstant: '_OffsetOf_ResponseInfoCount' value: 16r118!
 HTTP_RESPONSE_V2 comment: '<HTTP_RESPONSE_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

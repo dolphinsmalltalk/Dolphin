@@ -2,11 +2,13 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_State'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_State' -> 16r4
+	}!
 HTTP_STATE_INFO guid: (GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
-HTTP_STATE_INFO addClassConstant: '_OffsetOf_State' value: 16r4!
 HTTP_STATE_INFO comment: '<HTTP_STATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_STATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

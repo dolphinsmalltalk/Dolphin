@@ -2,12 +2,14 @@
 
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pRequestInfo _OffsetOf_RequestInfoCount'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pRequestInfo' -> 16r1D4.
+		'_OffsetOf_RequestInfoCount' -> 16r1D0
+	}!
 HTTP_REQUEST_V2 guid: (GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
-HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_pRequestInfo' value: 16r1D4!
-HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_RequestInfoCount' value: 16r1D0!
 HTTP_REQUEST_V2 comment: '<HTTP_REQUEST_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

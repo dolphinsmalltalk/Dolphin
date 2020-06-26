@@ -2,11 +2,13 @@
 
 HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_KnownHeaders'
+	classVariableNames: ''
 	poolDictionaries: 'WinHttpServerConsts'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_KnownHeaders' -> 16r10
+	}!
 HTTP_REQUEST_HEADERS guid: (GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
-HTTP_REQUEST_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16r10!
 HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

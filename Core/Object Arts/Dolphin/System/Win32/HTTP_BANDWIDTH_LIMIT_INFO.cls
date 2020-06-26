@@ -2,11 +2,13 @@
 
 HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_MaxBandwidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_MaxBandwidth' -> 16r4
+	}!
 HTTP_BANDWIDTH_LIMIT_INFO guid: (GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
-HTTP_BANDWIDTH_LIMIT_INFO addClassConstant: '_OffsetOf_MaxBandwidth' value: 16r4!
 HTTP_BANDWIDTH_LIMIT_INFO comment: '<HTTP_BANDWIDTH_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct

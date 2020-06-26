@@ -2,12 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	instanceVariableNames: 'address'
-	classVariableNames: '_OffsetOf_AddrLength _OffsetOf_pAddress'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AddrLength' -> 16r0.
+		'_OffsetOf_pAddress' -> 16r4
+	}!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
-HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_AddrLength' value: 16r0!
-HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_pAddress' value: 16r4!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
