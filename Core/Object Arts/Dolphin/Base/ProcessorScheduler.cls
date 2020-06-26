@@ -3,8 +3,9 @@
 Object subclass: #ProcessorScheduler
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
-	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProcessorScheduler guid: (GUID fromString: '{87b4c4aa-026e-11d3-9fd7-00a0cc3e4a32}')!
 ProcessorScheduler comment: 'The singleton instance of ProcessorScheduler (the global, Processor) manages the set of live, ready to run, processes, scheduling the interpreter in a round-robin fashion but in strict priority order.
 

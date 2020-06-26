@@ -3,8 +3,9 @@
 LinkedList subclass: #Semaphore
 	instanceVariableNames: 'signals'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Semaphore guid: (GUID fromString: '{87b4c524-026e-11d3-9fd7-00a0cc3e4a32}')!
 Semaphore comment: ''!
 !Semaphore categoriesForClass!Kernel-Processes! !
@@ -46,10 +47,10 @@ critical: aBlock
 	| retHolder |
 	retHolder := Array new: 1.
 	^[
-		self wait: INFINITE ret: retHolder.
+		self wait: Win32Constants.INFINITE ret: retHolder.
 		aBlock value
 	] ensure: [
-		(retHolder basicAt: 1) == WAIT_OBJECT_0 
+		(retHolder basicAt: 1) == Win32Constants.WAIT_OBJECT_0 
 			ifTrue: [self signal]]!
 
 critical: aBlock atPriority: anInteger
@@ -66,10 +67,10 @@ critical: aBlock atPriority: anInteger
 	activePriority := Processor activeProcess priority: anInteger.
 	waitResult := Array new: 1.
 	^[
-		self wait: INFINITE ret: waitResult.
+		self wait: Win32Constants.INFINITE ret: waitResult.
 		aBlock value
 	] ensure: [
-		(waitResult basicAt: 1) == WAIT_OBJECT_0 
+		(waitResult basicAt: 1) == Win32Constants.WAIT_OBJECT_0 
 			ifTrue: [self signal].
 		Processor activeProcess priority: activePriority]!
 
@@ -162,7 +163,7 @@ wait
 
 	| ret |
 	ret := Array new: 1.
-	self wait: INFINITE ret: ret.
+	self wait: Win32Constants.INFINITE ret: ret.
 	^ret basicAt: 1!
 
 wait: timeout

@@ -20,12 +20,12 @@ compileAccessorsFor: aClass
 compileMethods
 	"To be implemented by subclasses as required"!
 
-createClass: className superclass: superClass instVars: instanceVariables pools: aString
+createClass: className superclass: superClass instVars: instanceVariables pools: aString classVars: classVariablesString
 	| class |
 	class := superClass
 				subclass: className
 				instanceVariableNames: instanceVariables
-				classVariableNames: ''
+				classVariableNames: classVariablesString
 				poolDictionaries: aString
 				classInstanceVariableNames: ''.
 	package addClass: class.
@@ -72,7 +72,7 @@ tearDown
 	self destroyPackage! !
 !DolphinTestClassResource categoriesFor: #compileAccessorsFor:!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #compileMethods!accessing!public! !
-!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:!Init / Release!private! !
+!DolphinTestClassResource categoriesFor: #createClass:superclass:instVars:pools:classVars:!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createClasses!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPackage!Init / Release!private! !
 !DolphinTestClassResource categoriesFor: #createPool:!Init / Release!private! !

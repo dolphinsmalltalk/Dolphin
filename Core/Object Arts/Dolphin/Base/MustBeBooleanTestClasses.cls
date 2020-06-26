@@ -15,13 +15,15 @@ createClasses
 				createClass: #MustBeBooleanTestTrueClass
 				superclass: Object
 				instVars: ''
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	trueClass compile: 'mustBeBoolean ^true'.
 	falseClass := self
 				createClass: #MustBeBooleanTestFalseClass
 				superclass: Object
 				instVars: ''
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	falseClass compile: 'mustBeBoolean ^false'!
 
 falseClass

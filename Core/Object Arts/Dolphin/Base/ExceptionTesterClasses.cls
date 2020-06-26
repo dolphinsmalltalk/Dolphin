@@ -15,18 +15,21 @@ createClasses
 				createClass: #MyTestNotification
 				superclass: Notification
 				instVars: ''
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	resumableErrorClass := self
 				createClass: #MyResumableTestError
 				superclass: Error
 				instVars: ''
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	resumableErrorClass compile: 'isResumable ^true'.
 	testErrorClass := self
 				createClass: #MyTestError
 				superclass: Error
 				instVars: ''
-				pools: ''!
+				pools: ''
+				classVars: ''!
 
 isAvailable
 	^testNotificationClass notNil!

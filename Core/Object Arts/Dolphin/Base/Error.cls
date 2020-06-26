@@ -3,8 +3,9 @@
 Exception subclass: #Error
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'MessageBoxConstants'
-	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error guid: (GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
 Error comment: ''!
 !Error categoriesForClass!Kernel-Exception Handling! !

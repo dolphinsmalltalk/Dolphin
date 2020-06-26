@@ -4,7 +4,8 @@ Object subclass: #DiskVolumeInformation
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DiskVolumeInformation guid: (GUID fromString: '{3de35cee-9281-49c6-9bd5-7141432d16e4}')!
 DiskVolumeInformation comment: 'DiskVolumeInformation can be used to access various statistics and various other items of information available through the Win32 API about disk volumes, for example the disk volumne label and serial number of the disk in a particular drive.
 
@@ -159,7 +160,7 @@ getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
-	volumeNameBuffer := Utf16String newFixed: File._MAX_PATH.
+	volumeNameBuffer := Utf16String newFixed: CRTConstants._MAX_PATH.
 	volumeSerialNumber := DWORDBytes new.
 	maximumComponentLengthBuffer := DWORDBytes new.
 	fileSystemFlagsBuffer := DWORDBytes new.

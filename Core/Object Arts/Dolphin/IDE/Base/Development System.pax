@@ -742,587 +742,733 @@ Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MenuPainter
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MethodCategorizationPolicy
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: 'IgnoreCaseMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SmalltalkSystemIcon
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #VisualShellFinder
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
-	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EditInPlaceMask' -> 16r80000.
+		'MultilineValueMask' -> 16r40000.
+		'ReadOnlyPresenterBlockMask' -> 16r10000.
+		'ValueWorkspaceEditorMask' -> 16r20000
+	}!
 Aspect subclass: #KeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyedAspect subclass: #AnonymousKeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyedAspect subclass: #KeyedAspectBatch
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnonymousKeyedAspect subclass: #BasicKeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #MethodCategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #PackageEnvironment
 	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #PluggableEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Category subclass: #IntermediateCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodCategory subclass: #DebuggerMethodCategory
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodCategory subclass: #VirtualMethodCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #AllMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #ChangedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #MethodPrivacyCategory
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #ReferencesCategory
 	instanceVariableNames: 'literal'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferencesCategory subclass: #PackedReferencesCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferencesCategory subclass: #SingleUnarySendMethodCategory
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferencesCategory subclass: #SpecialReferencesCategory
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkReader subclass: #SingleChunkReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RelativeFileLocator subclass: #PackageRelativeFileLocator
 	instanceVariableNames: 'packageName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuPainter subclass: #MenuBarPainter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuPainter subclass: #PopupMenuPainter
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModel subclass: #CategoryTreeModel
 	instanceVariableNames: 'title'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FolderHierarchyModel subclass: #PackageHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualTreeModel subclass: #ClassHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAdaptor subclass: #AspectAccessor
 	instanceVariableNames: 'aspectDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AspectAccessor subclass: #BatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BatchAspectAccessor subclass: #KeyedAspectBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyedAspectBatchAccessor subclass: #AnonymousKeyedAspectBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #PackageDependencyPresenter
 	instanceVariableNames: 'treePresenter tracesPresenter traces packages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
-	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'!
+	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
+	classConstants: {}!
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #AstPlugin
 	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #ClassAspectPlugin
 	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassAspectPlugin subclass: #ClassCommentPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageDependencyPresenter subclass: #PackageDependents
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageDependencyPresenter subclass: #PackagePrerequisites
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
 	classVariableNames: 'ClassModeMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'commandQueryHandlers'!
+	classInstanceVariableNames: 'commandQueryHandlers'
+	classConstants: {}!
 SelectableItemsPresenter subclass: #PackageSelector
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'commandQueryHandlers'!
+	classInstanceVariableNames: 'commandQueryHandlers'
+	classConstants: {}!
 ClassSelector subclass: #ClassHierarchySelector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassSelector subclass: #ClassListSelector
 	instanceVariableNames: 'classesListPresenter environment'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListPresenter subclass: #MethodBrowser
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	poolDictionaries: 'CompilerFlags'
-	classInstanceVariableNames: 'commandQueryHandlers'!
+	classInstanceVariableNames: 'commandQueryHandlers'
+	classConstants: {}!
 ListPresenter subclass: #ResourceListPresenter
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListPresenter subclass: #ResourceToolboxPresenter
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
-	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
+	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classConstants: {
+		'CanUseIdeaSpaceMask' -> 16r2.
+		'ReuseIfOpenMask' -> 16r1
+	}!
 AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
 	instanceVariableNames: 'workspacePresenter searchPresenter'
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #AspectEditorDialog
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #CreateSubclassDialog
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter usePackagePresenter package superclassPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #MenuItemDialog
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #ResourceIdentifierDialog
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuItemDialog subclass: #CommandMenuItemDialog
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuItemDialog subclass: #MenuDialog
 	instanceVariableNames: 'autoDismissPresenter checkColumnModePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: 'AllowIntermediatesMask AllowReadOnlyMask'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #ChooseClassDialog
 	instanceVariableNames: 'classesPresenter allowNil'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #MenuComposer
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #PackagePrompter
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuComposer subclass: #MenuBarComposer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #ClassBrowserAbstract
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
-	classVariableNames: 'FilterObjectMethodsMask GrayedMethodFadeFactor HistoryListSize LooseMethodColor ShowInheritedMethodsMask WordWrapDefinition'
+	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
+	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
+	classConstants: {
+		'FilterObjectMethodsMask' -> 16r2.
+		'ShowInheritedMethodsMask' -> 16r1
+	}!
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
-	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
+	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	poolDictionaries: 'CompilerFlags OpcodePool'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnimateMask' -> 16r10.
+		'DisassemblyMask' -> 16r4.
+		'MainMask' -> 16r1.
+		'ResumableMask' -> 16r8.
+		'RunMask' -> 16r2.
+		'StackDepthIncrement' -> 16r64
+	}!
 SmalltalkToolShell subclass: #FlipperInspector
 	instanceVariableNames: 'cards'
 	classVariableNames: 'Renderers'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #InspectorShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #MethodBrowserShell
 	instanceVariableNames: 'browserPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #PackageBrowserShell
 	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool variablesPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel versionModel'
 	classVariableNames: 'WordWrapComment'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #ResourceBrowser
 	instanceVariableNames: 'resourceToolboxPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #SmalltalkSystemShell
 	instanceVariableNames: 'systemFolderPresenter'
 	classVariableNames: 'Backcolor BackImage BackImageAlphaPercent BackImageIsTiled Default HotKey PlaySystemSounds ResetWhenInvisible Textcolor ViewMode'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #ViewComposer
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
+	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AdornmentModifiedFlag' -> 16r4.
+		'ModifiedFlag' -> 16r1.
+		'MouseClickFlag' -> 16r2.
+		'RefreshFlag' -> 16r8.
+		'UndoRedoFlag' -> 16r10
+	}!
 ClassBrowserAbstract subclass: #ClassBrowserShell
 	instanceVariableNames: ''
-	classVariableNames: 'LocalHierarchyMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LocalHierarchyMask' -> 16r10
+	}!
 MethodBrowserShell subclass: #MethodExplorerShell
 	instanceVariableNames: 'historyTree historyList'
 	classVariableNames: 'HistoryListSize'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkWorkspace subclass: #MethodWorkspace
 	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkWorkspace subclass: #ValueWorkspace
 	instanceVariableNames: 'textModel'
 	classVariableNames: 'ValueIsSelfCookie'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #BasicInspector
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #InspectorAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
 	classVariableNames: 'MethodTypes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicInspector subclass: #DictionaryInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicInspector subclass: #SequenceableCollectionInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicInspector subclass: #StructureInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InspectorAbstract subclass: #AspectInspector
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'!
+	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'
+	classConstants: {}!
 InspectorAbstract subclass: #VisualObjectFinder
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AspectInspector subclass: #AbstractPublishedAspectInspector
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AspectInspector subclass: #InstVarInspector
 	instanceVariableNames: 'sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractPublishedAspectInspector subclass: #PropertyInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractPublishedAspectInspector subclass: #PublishedAspectInspector
 	instanceVariableNames: 'displayPresenter workspacePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #DolphinMoveClassChange
 	instanceVariableNames: 'superclassName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaStyler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkStyler subclass: #SmalltalkExpressionStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkStyler subclass: #SmalltalkMethodStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GUISessionManager subclass: #DevelopmentSessionManager
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkScanner subclass: #SmalltalkStylingScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StParseNodeVisitor subclass: #MessageNodeCollector
 	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StSemanticAnalyser subclass: #BrowserSemanticAnalyser
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #MenuComposerView
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'
-	classVariableNames: 'CallStackId Commands IconId'
+	classVariableNames: 'Commands'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CallStackId' -> 16r3E9.
+		'IconId' -> 16r3F1
+	}!
 ImageViewAbstract subclass: #ImageListView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Variable Aliases"!
 

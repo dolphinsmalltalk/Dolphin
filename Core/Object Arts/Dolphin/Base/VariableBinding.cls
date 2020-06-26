@@ -4,7 +4,8 @@ Association subclass: #VariableBinding
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VariableBinding guid: (GUID fromString: '{1e72742f-5466-4331-bb39-2ff12ac9743f}')!
 VariableBinding comment: ''!
 !VariableBinding categoriesForClass!Collections-Support! !

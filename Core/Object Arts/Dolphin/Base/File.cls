@@ -2,12 +2,14 @@
 
 Object subclass: #File
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
-	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
-	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classVariableNames: 'CheckModes NoCheckModes ShareModes'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AccessFlagsMask' -> -16r8.
+		'OpenFlagsMask' -> 16r7
+	}!
 File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
-File addClassConstant: 'AccessFlagsMask' value: -16r8!
-File addClassConstant: 'OpenFlagsMask' value: 16r7!
 File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 
 Instance Variables:
@@ -63,7 +65,7 @@ beSparse
 	bytesReturnedBuf := DWORDBytes new.
 	(KernelLibrary default
 		deviceIoControl: self asParameter
-		dwIoControlCode: FSCTL_SET_SPARSE
+		dwIoControlCode: Win32Constants.FSCTL_SET_SPARSE
 		lpInBuffer: nil
 		nInBufferSize: 0
 		lpOutBuffer: nil
@@ -145,12 +147,12 @@ handle
 isReadable
 	"Answer true if the file is readable."
 
-	^flags anyMask: GENERIC_READ!
+	^flags anyMask: Win32Constants.GENERIC_READ!
 
 isWriteable
 	"Answer whether the receiver can be written to."
 
-	^flags anyMask: GENERIC_WRITE!
+	^flags anyMask: Win32Constants.GENERIC_WRITE!
 
 lastAccessTime
 	"Answer a <FILETIME> identifying the point in time at which some data was
@@ -197,7 +199,7 @@ open
 				dwSharedMode: shareFlags
 				lpSecurityAttributes: self securityAttributes
 				dwCreationDistribution: self openFlags
-				dwFlagsAndAttributes: FILE_ATTRIBUTE_NORMAL
+				dwFlagsAndAttributes: Win32Constants.FILE_ATTRIBUTE_NORMAL
 				hTemplateFile: nil.
 	fh asSignedInteger == -1] 
 			whileTrue: [self signalOsError: true].
@@ -278,7 +280,7 @@ position
 	"Answer the absolute Integer position of the reciver's file pointer
 	or signal a FileException if the operation fails."
 
-	^self seek: 0 sense: FILE_CURRENT
+	^self seek: 0 sense: Win32Constants.FILE_CURRENT
 !
 
 position: anInteger 
@@ -287,7 +289,7 @@ position: anInteger
 	Answer the <integer> offset achieved or signal a <FileException> 
 	if the operation fails."
 
-	^self seek: anInteger sense: FILE_BEGIN!
+	^self seek: anInteger sense: Win32Constants.FILE_BEGIN!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
@@ -405,7 +407,7 @@ setToEnd
 	Answer the absolute integer position achieved or
 	signal a FileException if the operation fails."
 
-	^self seek: 0 sense: FILE_END
+	^self seek: 0 sense: Win32Constants.FILE_END
 !
 
 shareFlags: anInteger
@@ -448,12 +450,12 @@ sniffEncoding
 		iSize: count
 		lpiResult: ituResult) and: 
 				[ituResult := ituResult dwordAtOffset: 0.
-				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
+				(ituResult anyMask: Win32Constants.IS_TEXT_UNICODE_REVERSE_MASK)
 					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
-				count > 128 or: [(ituResult bitAnd: IS_TEXT_UNICODE_UNICODE_MASK) ~= IS_TEXT_UNICODE_STATISTICS]])
+				count > 128 or: [(ituResult bitAnd: Win32Constants.IS_TEXT_UNICODE_UNICODE_MASK) ~= Win32Constants.IS_TEXT_UNICODE_STATISTICS]])
 		ifTrue: 
-			[self position: ((ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
+			[self position: ((ituResult allMask: Win32Constants.IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
 			String.EncodingUtf16]
 		ifFalse: 
 			["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
@@ -661,7 +663,7 @@ createDirectory: path
 	^(kernel createDirectory: path lpSecurityAttributes: nil)
 		or: [ | err |
 			err := kernel getLastError.
-			err = ERROR_ALREADY_EXISTS
+			err = Win32Errors.ERROR_ALREADY_EXISTS
 				ifFalse: [^kernel systemError: err].
 			false "already existed"]!
 
@@ -683,7 +685,7 @@ createDirectoryPath: path
 					["Skip UNC machine name and share"
 
 					pos := path indexOfAnyOf: delims startingAt: pos.
-					pos == 0 ifTrue: [^Win32Error signalWith: ERROR_INVALID_NAME].
+					pos == 0 ifTrue: [^Win32Error signalWith: Win32Errors.ERROR_INVALID_NAME].
 					pos := pos + 1]]
 		ifFalse: [pos := 1].
 	[pos <= len] whileTrue: 
@@ -804,11 +806,11 @@ for: matchString in: dirString do: operation
 	findStruct directory: dirString.
 	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
 				lpFindFileData: findStruct.
-	handle = INVALID_HANDLE_VALUE
+	handle = Win32Constants.INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
 			err := lib getLastError.
-			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED])
+			^(err == Win32Errors.ERROR_FILE_NOT_FOUND or: [err == Win32Errors.ERROR_ACCESS_DENIED])
 				ifTrue: [self]
 				ifFalse: [lib systemError: err]].
 	
@@ -817,7 +819,7 @@ for: matchString in: dirString do: operation
 	[operation value: findStruct.
 	lib findNextFile: handle lpFindFileData: findStruct] whileTrue.
 	error := lib getLastError.
-	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]]
+	error == Win32Errors.ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]]
 			ensure: [lib findClose: handle]!
 
 forAll: matchString in: dirString do: operation
@@ -900,7 +902,7 @@ fromHandle: aHandle
 	it does not own it)."
 
 	^(super new)
-		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ | GENERIC_WRITE);
+		setHandle: aHandle asExternalHandle flags: ##(Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE);
 		yourself!
 
 fullPathOf: aPathnameString
@@ -952,32 +954,32 @@ initialize
 
 	self addClassConstant: 'ShareModes' value: ##(
 		IdentityDictionary new
-			at: #read			put: FILE_SHARE_READ;
-			at: #write			put: FILE_SHARE_WRITE;
-			at: #readWrite		put: FILE_SHARE_READ | FILE_SHARE_WRITE;
+			at: #read			put: Win32Constants.FILE_SHARE_READ;
+			at: #write			put: Win32Constants.FILE_SHARE_WRITE;
+			at: #readWrite		put: Win32Constants.FILE_SHARE_READ | Win32Constants.FILE_SHARE_WRITE;
 			at: #exclusive		put: 0;
 			shrink;
 			yourself).
 	
 	self addClassConstant: 'CheckModes' value: ##(
 		IdentityDictionary new
-			at: #read			put: OPEN_EXISTING | GENERIC_READ;
-			at: #create		put: CREATE_NEW | GENERIC_READ | GENERIC_WRITE;
+			at: #read			put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ;
+			at: #create		put: Win32Constants.CREATE_NEW | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
 			"open will only ever open an existing file"
-			at: #open			put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
-			at: #append		put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
-			at: #truncate		put: TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE;
+			at: #open			put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
+			at: #append		put: Win32Constants.OPEN_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
+			at: #truncate		put: Win32Constants.TRUNCATE_EXISTING | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
 			shrink;
 			yourself).
 
 	self addClassConstant: 'NoCheckModes' value: ##(
 		IdentityDictionary new
 			"No check read is a bit of a nonsense, but ..."
-			at: #read			put: OPEN_ALWAYS | GENERIC_READ;
-			at: #create		put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-			at: #open			put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-			at: #append		put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-			at: #truncate		put: CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE;
+			at: #read			put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ;
+			at: #create		put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
+			at: #open			put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
+			at: #append		put: Win32Constants.OPEN_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
+			at: #truncate		put: Win32Constants.CREATE_ALWAYS | Win32Constants.GENERIC_READ | Win32Constants.GENERIC_WRITE;
 			shrink;
 			yourself)!
 
@@ -986,7 +988,7 @@ isDirectory: aString
 
 	| attribs |
 	attribs := self attributes: aString.
-	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
+	^attribs ~= -1 and: [attribs allMask: Win32Constants.FILE_ATTRIBUTE_DIRECTORY]!
 
 isRelativePath: aFileNameString
 	"Answers true if aFileNameString is a relative path with no absolute components"
@@ -1008,14 +1010,14 @@ isWriteable: aString
 
 	| attributes |
 	attributes := KernelLibrary default getFileAttributes: aString.
-	^(attributes ~= -1 and: [attributes allMask: FILE_ATTRIBUTE_READONLY]) not!
+	^(attributes ~= -1 and: [attributes allMask: Win32Constants.FILE_ATTRIBUTE_READONLY]) not!
 
 isWriteable: aFileNameString set: aBoolean
 	"Set the writeable state of aFileNameString to aBoolean. Answers true if the
 	operation succeeds"
 
 	| mode |
-	mode := aBoolean ifTrue: [ _S_IWRITE ] ifFalse: [ _S_IREAD ].
+	mode := aBoolean ifTrue: [CRTConstants._S_IWRITE ] ifFalse: [CRTConstants._S_IREAD ].
 	^(CRTLibrary default _chmod: aFileNameString pmode: mode)=0!
 
 lastWriteTime: aString 
@@ -1090,7 +1092,7 @@ makePath: anArray
 maxPath
 	"Answers the maximum number of characters in a file pathname"
 
-	^_MAX_PATH!
+	^CRTConstants._MAX_PATH!
 
 new
 	"Answer a new initialized instance of the receiver."
@@ -1245,8 +1247,8 @@ removeExtension: aString
 	crt := CRTLibrary default.
 	(errno := crt
 				_splitpath_s: path
-				drive: (drive := Utf8String new: _MAX_DRIVE)
-				driveLen: ##(_MAX_DRIVE + 1)
+				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
+				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
 				dir: (dir := Utf8String new: max)
 				dirLen: max + 1
 				fname: (fname := Utf8String new: max)
@@ -1363,8 +1365,8 @@ splitDriveFrom: aString
 	| drive errno |
 	^(errno := CRTLibrary default
 				_splitpath_s: aString asUtf8String
-				drive: (drive := Utf8String new: _MAX_DRIVE)
-				driveLen: ##(_MAX_DRIVE + 1)
+				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
+				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
 				dir: nil
 				dirLen: 0
 				fname: nil
@@ -1437,8 +1439,8 @@ splitPath: aString
 	crt := CRTLibrary default.
 	^(errno := crt
 				_splitpath_s: path
-				drive: (drive := Utf8String new: _MAX_DRIVE)
-				driveLen: ##(_MAX_DRIVE + 1)
+				drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
+				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
 				dir: (dir := Utf8String new: max)
 				dirLen: max + 1
 				fname: (fname := Utf8String new: max)
@@ -1467,7 +1469,7 @@ splitPathFrom: aPathnameString
 	(errno := CRTLibrary default
 				_splitpath_s: path
 				drive: (drive := Utf8String new: len)
-				driveLen: ##(_MAX_DRIVE + 1)
+				driveLen: ##(CRTConstants._MAX_DRIVE + 1)
 				dir: (dir := Utf8String new: len)
 				dirLen: len + 1
 				fname: nil

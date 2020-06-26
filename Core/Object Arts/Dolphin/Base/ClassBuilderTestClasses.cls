@@ -20,17 +20,20 @@ createClasses
 				createClass: #ClassBuilderTestClass
 				superclass: Object
 				instVars: 'var1 var2'
-				pools: 'ClassBuilderTestPool1'.
+				pools: 'ClassBuilderTestPool1'
+				classVars: 'Var1 Var2'.
 	testSubclass1 := self
 				createClass: #ClassBuilderTestSubClass
 				superclass: testClass
 				instVars: 'var3 var4'
-				pools: 'ClassBuilderTestPool2'.
+				pools: 'ClassBuilderTestPool2'
+				classVars: ''.
 	testSubclass2 := self
 				createClass: #ClassBuilderTestSubClass2
 				superclass: testClass
 				instVars: 'var3 var4'
-				pools: 'ClassBuilderTestPool3 ClassBuilderTestPool2'!
+				pools: 'ClassBuilderTestPool3 ClassBuilderTestPool2'
+				classVars: ''!
 
 createPools
 	testPool1 := self createPool: #ClassBuilderTestPool1.

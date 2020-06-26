@@ -4,7 +4,8 @@ ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Class guid: (GUID fromString: '{87b4c4fb-026e-11d3-9fd7-00a0cc3e4a32}')!
 Class comment: '"Instances" of Class describe the representation and behavior of objects. Class adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass Behavior and more descriptive facilities to the ones provided in the abstract superclass ClassDescription. In particular Class adds the representation for class variable names and shared (pool) variables.
 
@@ -36,7 +37,8 @@ addClassConstant: aString value: anObject
 		- the binding was not constant, and the new constant value is inlineable
 		- the binding was constant, but the value has changed, and either the previous or new value are inlineable"
 	requiresRecompile := classPool size = count and: 
-					[binding isImmutable
+					[self isChanged: true.
+					binding isImmutable
 						ifFalse: 
 							["Wasn't constant, recompile if it can be inlined"
 							VMLibrary hasBytecodeRepresentation: anObject]
@@ -46,8 +48,9 @@ addClassConstant: aString value: anObject
 							oldValue := binding value.
 							oldValue ~~ anObject and: 
 									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
-	binding isImmutable: false.
-	[binding value: anObject] ensure: [binding isImmutable: true].
+	binding
+		setValue: anObject;
+		isImmutable: true.
 	requiresRecompile ifTrue: [Object recompileAllReferencesToLiteral: binding].
 	^binding!
 
@@ -191,12 +194,22 @@ classCategories: categoryCollection
 	classCategories := categoryCollection notEmpty 
 				ifTrue: [categoryCollection asArray sort]!
 
+classConstants
+	"Answer a <Set> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
+
+	^self classPool associations select: [:each | each isImmutable and: [each value isLiteral]]!
+
 classPool
 	"Answer the Dictionary of class variables belonging to the receiver.
 	N.B. This should not be modified as it may not be the actual class pool
 	(though it is guaranteed to have identical contents)."
 
 	^classPool ifNil: [PoolDictionary new]!
+
+classVariables
+	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
+
+	^self classPool associations reject: [:each | each isImmutable and: [each value isLiteral]]!
 
 classVarNames
 	"Answer a Set of the class variable names of the receiver."
@@ -339,11 +352,12 @@ owningPackage: aPackageOrNil
 	#{Package} valueOrNil
 		ifNotNil: [:pkgClass | pkgClass manager addClass: self to: aPackageOrNil]!
 
-printDefinitionOn: puttableStream 
+printDefinitionOn: puttableStream
 	"Private - Append the textual definition of the receiver to the <puttableStream>,
 	target. Note that this includes the definition of the receiver's metaclass since
 	we now define the whole caboodle using a single message."
 
+	| classConstants classVariables |
 	puttableStream
 		nextPutAll: self superclass name;
 		space;
@@ -354,14 +368,44 @@ printDefinitionOn: puttableStream
 		nextPutAll: 'instanceVariableNames: ';
 		print: self instanceVariableString;
 		crtab;
-		nextPutAll: 'classVariableNames: ';
-		print: self classVariableString;
+		nextPutAll: 'classVariableNames: '''.
+	classConstants := OrderedCollection new.
+	classVariables := OrderedCollection new.
+	self classPool associations asSortedCollection do: 
+			[:each |
+			((each isImmutable and: [each value isLiteral]) ifTrue: [classConstants] ifFalse: [classVariables])
+				addLast: each].
+	classVariables do: [:var | puttableStream nextPutAll: var key] separatedBy: [puttableStream space].
+	puttableStream
+		nextPut: $';
 		crtab;
 		nextPutAll: 'poolDictionaries: ';
 		print: self sharedVariableString;
 		crtab;
 		nextPutAll: 'classInstanceVariableNames: ';
-		print: self class instanceVariableString!
+		print: self class instanceVariableString;
+		crtab;
+		nextPutAll: 'classConstants: {'.
+	classConstants isEmpty
+		ifFalse: 
+			[classConstants do: 
+					[:each |
+					| value |
+					puttableStream
+						crtab: 2;
+						print: each key;
+						nextPutAll: ' -> '.
+					value := each value.
+					value isInteger
+						ifTrue: 
+							[value
+								printOn: puttableStream
+								base: 16
+								showRadix: true]
+						ifFalse: [value storeOn: puttableStream]]
+				separatedBy: [puttableStream nextPut: $.].
+			puttableStream crtab].
+	puttableStream nextPut: $}!
 
 removeClassVarName: aString
 	"Remove the class variable from the receiver with the specified <readableString> name.
@@ -575,6 +619,20 @@ subclass: aClassSymbol
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"Create or modify the class, classSymbol, to be a subclass of the receiver with the specified instance variables, class pool, pool dictionaries, class instance variables, and class constants."
+
+	| subclass |
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString) 
+				classConstants: anArrayOfAssociations;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
 uninitialize
 	"Private - Perform any uninitialisation for the class - typically clearing down class variables - in
 	preparation for removal from the system. You should override this method if, for example,
@@ -639,6 +697,20 @@ variableByteSubclass: aClassSymbol
 	^subclass
 !
 
+variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"Create or modify the class named, classSymbol, to be a variable-byte subclass (has indexable byte-size nonpointer variables) of the receiver with the specified class pool, and pool dictionaries, and class instance variables. Note that variable byte classes cannot have any named instance variables, and therefore the instVarString must be empty."
+	| subclass |
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString)
+				classConstants: anArrayOfAssociations;
+				beBytes;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
 variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString
 	^(self 
 		newClassBuilder: aClassSymbol
@@ -681,7 +753,22 @@ variableSubclass: aClassSymbol
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass
 
-! !
+!
+
+variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"Create or modify the class named classSymbol to be a variable subclass (has indexable pointer variables) of the receiver with the specified instance variables, class variables, class constants, pool dictionaries, and class instance variables."
+
+	| subclass |
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString)
+				classConstants: anArrayOfAssociations;
+				beVariable;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass! !
 !Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
 !Class categoriesFor: #addClassVariable:value:!class hierarchy-mutating!class variables!public! !
 !Class categoriesFor: #addClassVarNamed:!class hierarchy-mutating!class variables!public! !
@@ -700,7 +787,9 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #classBinding!binding!public! !
 !Class categoriesFor: #classCategories!categories-accessing!private!source filing! !
 !Class categoriesFor: #classCategories:!categories-accessing!private! !
+!Class categoriesFor: #classConstants!class variables!public! !
 !Class categoriesFor: #classPool!accessing!class variables!public! !
+!Class categoriesFor: #classVariables!class variables!public! !
 !Class categoriesFor: #classVarNames!accessing!class variables!public! !
 !Class categoriesFor: #clearGuid!accessing!private! !
 !Class categoriesFor: #comment!accessing!development!public! !
@@ -744,14 +833,17 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
 !Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!Class categoriesFor: #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 
 !Class class methodsFor!
 

@@ -69,9 +69,12 @@ package!
 
 Object subclass: #DolphinCompilerTestMethods
 	instanceVariableNames: 'iv1 iv2'
-	classVariableNames: 'Const'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Const' -> 16r1
+	}!
 DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
 	instanceVariableNames: ''
 	classVariableNames: ''

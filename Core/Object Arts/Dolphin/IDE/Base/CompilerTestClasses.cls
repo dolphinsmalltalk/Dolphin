@@ -27,7 +27,8 @@ createClasses
 				createClass: #CompilerTestClass
 				superclass: Object
 				instVars: ivs contents
-				pools: ''!
+				pools: ''
+				classVars: ''!
 
 tearDown
 	super tearDown.

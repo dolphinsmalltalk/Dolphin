@@ -1,4 +1,6 @@
-﻿!Utf8String methodsFor!
+﻿"N.B. Class constants can be added in this file to reduce recompilations, but they must also be present in DolphinClasses.st and the class' own cls file"!
+
+!Utf8String methodsFor!
 
 decodeAt: anInteger
 	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. Raise an error if the indexed code unit is not the first in a character. If the character encoding is invalid or incomplete, return the replacement character. Intolerance of indexing errors is intended to help detect logic errors in algorithms working with multi-byte strings, although this may also occur in incorrectly encoded data which is otherwise tolerated by returning the replacement character."
@@ -62,5 +64,4 @@ decodeAt: anInteger
 	^Character codePoint: codePoint ifInvalid: [Character.Utf8Default]! !
 
 Float addClassVariable: 'DefaultDecimalExponents' value: (-3 to: 6)!
-
 #(#thousandSeparator #thousandSeparator:) do: [:each | NUMBERFMTW removeSelector: each]!

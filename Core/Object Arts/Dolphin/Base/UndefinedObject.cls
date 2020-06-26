@@ -4,7 +4,8 @@ Object subclass: #UndefinedObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UndefinedObject guid: (GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UndefinedObject comment: 'UndefinedObject is the singleton class of the distinguished object, <nil>.
 
@@ -195,6 +196,20 @@ subclass: aClassSymbol
 	^subclass
 !
 
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString classInstanceVariableNames: classInstVarString classConstants: anArrayOfAssociations
+	"If aClassSymbol is not an existing class then create and answer a new fixed-pointer subclass,  otherwise modify the class with name aClassSymbol to have the indicated features and answer it. Subclasses of nil are root classes, like Object, and special care is needed in their definition.  It is also the case that many modifications of Object are illegal (it cannot have named instance variables for example)."
+
+	| subclass |
+	subclass := (self
+				newClassBuilder: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				poolDictionaries: poolDictString)
+				classConstants: anArrayOfAssociations;
+				modifyOrCreate.
+	subclass class instanceVariableNames: classInstVarString.
+	^subclass!
+
 yourAddress
 	"Private - Answer the address of the receiver.
 	Nil is treated like a NULL pointer."
@@ -225,6 +240,7 @@ yourAddress
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !UndefinedObject categoriesFor: #yourAddress!accessing!private! !
 
 !UndefinedObject class methodsFor!

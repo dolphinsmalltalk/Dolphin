@@ -4,7 +4,8 @@ Behavior subclass: #ClassDescription
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassDescription guid: (GUID fromString: '{87b4c4fa-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassDescription isAbstract: true!
 ClassDescription comment: 'ClassDescription is an abstract class which adds descriptive information such as instance variable names and method categories to Behavior. This additional state and behaviour is generally not required or used by the VM, but is important for the development environment, the compiler in particular.
@@ -182,13 +183,17 @@ classPool
 
 	^self subclassResponsibility!
 
+classVariables
+	"Answer a <collection> of <VariableBindings>s, being the class variables of the receiver, but not including class constants."
+
+	^self subclassResponsibility!
+
 classVariableString
-	"Answer a space separated string of the names of the receiver's class variables"
+	"Answer a space separated string of the names of the receiver's class variables. Note for legacy reasons this will include class constant names too."
 
 	| aStream |
 	aStream := String writeStream: 40.
-	self classPool keys asSortedCollection 
-		do: [ :key | aStream nextPutAll: key]
+	self classPool keys asSortedCollection do: [:key | aStream nextPutAll: key]
 		separatedBy: [aStream space].
 	^aStream contents!
 
@@ -835,6 +840,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #changeIndexValue:!accessing!private! !
 !ClassDescription categoriesFor: #classCategoryClass!constants!private! !
 !ClassDescription categoriesFor: #classPool!class variables!public! !
+!ClassDescription categoriesFor: #classVariables!class variables!public! !
 !ClassDescription categoriesFor: #classVariableString!accessing!public! !
 !ClassDescription categoriesFor: #classVarNames!class variables!public! !
 !ClassDescription categoriesFor: #comment!accessing!public! !

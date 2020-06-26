@@ -4,7 +4,8 @@ Dictionary variableSubclass: #PoolDictionary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PoolDictionary guid: (GUID fromString: '{87b4c52a-026e-11d3-9fd7-00a0cc3e4a32}')!
 PoolDictionary comment: ''!
 !PoolDictionary categoriesForClass!Collections-Unordered!System-Support! !
@@ -48,30 +49,30 @@ fullName
 fullyQualifiedReference
 	^self fullName asQualifiedReference!
 
-initializerFor: aString 
+initializerFor: aString
 	"Answer a chunk reader to read and evaluate an initializer for the receiver's named variable"
 
-	^ChunkReader 
+	^ChunkReader
 		do: 
-			[:chunkString | 
-			(self bindingFor: aString) 
+			[:chunkString |
+			(self bindingFor: aString)
 				ifNil: 
-					[Warning signal: ('Ignoring initializer for undefined variable <1S>.<2S>: <3S>' 
+					[Warning signal: ('Ignoring initializer for undefined variable <1S>.<2S>: <3S>'
 								expandMacrosWith: self
 								with: aString
 								with: chunkString)]
 				ifNotNil: 
-					[:var | 
+					[:var |
 					| value |
-					(Compiler compileExpression: chunkString in: nil) 
+					(Compiler compileExpression: chunkString in: nil)
 						ifNotNil: 
-							[:expr | 
+							[:expr |
 							value := [expr method value] on: Error
 										do: 
-											[:ex | 
+											[:ex |
 											ex resignalAsWarning.
 											nil].
-							var whileMutableDo: [var value: value]]]]
+							var setValue: value]]]
 		inContext: self
 		atEnd: []!
 

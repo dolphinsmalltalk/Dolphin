@@ -2004,9 +2004,9 @@ paxVersion
 	^2!
 
 preDeclareClassesOnLoad
-	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. This is generally not necessary except in circumstances where one or more of the source globals in the package as dependencies on classes in the package, or where classes in the package are being used in the role of pool dictionaries by other classes in the package. However, the historic behaviour was to declare classes, so for the time being this is still on by default. The setting can either be changed globally (i.e. `Package declareClassesOnLoad: false`) or for individual packages using the `preDeclareClassesOnLoad` property on the instance side. If the property is set, then it will be persisted to the package file and respected by future loads. In the next major release of Dolphin, this property will default to 'false'. The reason for this is that pre-declaration is relatively expensive (causing a class mutation when the actual class declaration is subsequently loaded), and so worth avoiding when not required."
+	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. This is generally not necessary except in circumstances where one or more of the source globals in the package as dependencies on classes in the package, or where classes in the package are being used in the role of pool dictionaries by other classes in the package. The historic behaviour was to declare classes, but as of 7.2 this is now off by default. The reason for this is that pre-declaration is relatively expensive (causing a class mutation when the actual class declaration is subsequently loaded), and so worth avoiding when not required. The setting can either be changed globally (i.e. `Package declareClassesOnLoad: true`) or for individual packages using the `preDeclareClassesOnLoad` property on the instance side. If the property is set, then it will be persisted to the package file and respected by future loads. "
 
-	^PreDeclareClassesOnLoad ?? true!
+	^PreDeclareClassesOnLoad ?? false!
 
 preDeclareClassesOnLoad: aBoolean
 	PreDeclareClassesOnLoad := aBoolean!

@@ -2,9 +2,12 @@
 
 Object subclass: #ExternalStructure
 	instanceVariableNames: 'bytes'
-	classVariableNames: 'CompiledMask RecordClasses'
+	classVariableNames: 'RecordClasses'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'template flags alignment'!
+	classInstanceVariableNames: 'template flags alignment'
+	classConstants: {
+		'CompiledMask' -> 16r1
+	}!
 ExternalStructure guid: (GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalStructure isAbstract: true!
 ExternalStructure comment: ''!
@@ -661,13 +664,6 @@ init: buffer
 
 	KernelLibrary default zeroMemory: buffer length: self byteSize!
 
-initialize
-	"Private - Initialize the receiver class.
-		ExternalStructure initialize
-	"
-
-	CompiledMask := 16r1.!
-
 initializeAfterLoad
 	"Private - Ensure the template is removed. This could have been incorrectly initialised
 	during compilation of methods on load that caused the template to be lazily initialised
@@ -966,7 +962,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #getFieldNames!accessing!private! !
 !ExternalStructure class categoriesFor: #inheritTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #init:!initializing!public! !
-!ExternalStructure class categoriesFor: #initialize!development!initializing!private! !
 !ExternalStructure class categoriesFor: #initializeAfterLoad!development!initializing!private! !
 !ExternalStructure class categoriesFor: #initializeTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #isCompiled!private!testing! !

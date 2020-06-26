@@ -267,7 +267,7 @@ setRefOffset: anInteger
 !STBInFiler class methodsFor!
 
 initialize
-	UpgradingMask := 1!
+	self addClassConstant: 'UpgradingMask' value: 1!
 
 peekForSignatureIn: aReadStream
 	"Answer whether the <readableStream> argument, aReadStream, appears to

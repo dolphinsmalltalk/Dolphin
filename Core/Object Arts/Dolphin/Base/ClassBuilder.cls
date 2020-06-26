@@ -1,13 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ClassBuilder
-	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
-	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
+	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories classConstants'
+	classVariableNames: 'FixedInitialLayout FixedLayout Unsubclassable'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IgnoreInstsMask' -> 16r2.
+		'RecompileMask' -> 16r1
+	}!
 ClassBuilder guid: (GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 16r2!
-ClassBuilder addClassConstant: 'RecompileMask' value: 16r1!
 ClassBuilder comment: ''!
 !ClassBuilder categoriesForClass!System-Support! !
 !ClassBuilder methodsFor!
@@ -108,6 +110,12 @@ class: aClass
 classCategoryClass
 	^(superclass ifNil: [superclass class]) classCategoryClass!
 
+classConstants
+^classConstants ?? #()!
+
+classConstants: anArrayOfAssociations
+	classConstants := anArrayOfAssociations!
+
 className: aString
 	"Private - Set the className inst var to aString."
 
@@ -134,8 +142,7 @@ comment: aString
 	comment := aString!
 
 createNewClass
-	"Private - Create, install and answer a new class from the
-	details contained in the receiver."
+	"Private - Create, install and answer a new class from the details contained in the receiver."
 
 	self
 		validateForCreate;
@@ -166,7 +173,7 @@ createProper
 	self installInSuperclass: currentClass.
 	self
 		setInstanceVariablesOf: currentClass;
-		setClassVariablesOf: currentClass;
+		declareClassVariablesOf: currentClass;
 		setSharedPoolsOf: currentClass;
 		setCommentOf: currentClass!
 
@@ -174,6 +181,17 @@ currentClass
 	"Answer the currentClass inst var."
 
 	^currentClass!
+
+declareClassVariablesOf: aClass
+	| pool |
+	pool := aClass classPool.
+	classVariables do: [:each | pool at: each put: nil].
+	self classConstants do: 
+			[:each |
+			pool add: ((pool newAssociation: each key value: each value)
+						isImmutable: true;
+						yourself)].
+	pool isEmpty ifFalse: [aClass basicClassPool: pool]!
 
 environment
 	"Private - Answer the namespace environment for the class being modified."
@@ -242,7 +260,9 @@ initialize
 
 	instanceSpec := 0.
 	self beFixed.
-	flags := 0!
+	flags := 0.
+	classVariables := #()
+	!
 
 initializeCopy: aClassDescriptionCopy fromClass: aClass superclass: aSuperclass
 	"Private - Adjust the invalid inst vars of aClassDescription. Its method
@@ -356,6 +376,41 @@ isModifyAction
 					^false]].
 	^true!
 
+modifyClassVariablesOf: aClass
+	| removed classVars addedVariables originalNames newNames |
+	"If classConstants are not specified, then one of the legacy class creation messages has been used, in which case we can't distinguish between constants and variables."
+	classConstants
+		ifNil: 
+			[self recompilationRequired: (aClass setClassVarNames: self classVariables).
+			^self].
+	"We now segregate the class variables into those that are literal constants, and those that are not.
+	First we want to determine if any of these bindings are being added or removed to give us a broad idea of whether there are changes
+	that may require recompilation. We don't consider changes from constant to non-constant or vice versa at this point."
+	classVars := aClass classPool.
+	newNames := classVariables union: (classConstants collect: [:each | each key]).
+	originalNames := classVars keys.
+	"If there are any additions or removals, then assume we need to recompile"
+	removed := originalNames difference: newNames.
+	removed notEmpty
+		ifTrue: 
+			[self recompilationRequired: true.
+			removed do: [:each | classVars removeKey: each].
+			aClass basicClassPool: (classVars notEmpty ifTrue: [classVars])].
+
+	"Any completely new variables, we'll recompile the class"
+	(newNames difference: originalNames) notEmpty ifTrue: [self recompilationRequired: true].
+
+	"Now add any new class variables, or those changing from constants to vars"
+	addedVariables := classVariables difference: (aClass classVariables collect: [:each | each key]).
+	addedVariables do: [:each | aClass addClassVarNamed: each].
+
+	"Add all the constants:
+		- existing constants with unchanged value will have no effect
+		- existing constants with changed value may cause a recompile, but only if the new or old value had an immediate representation.
+		- new constants will require a recompile.
+	For constants with immediate (i.e. bytecode) representations the recompilation is across the entire image."
+	classConstants do: [:each | aClass addClassConstant: each key value: each value]!
+
 modifyExistingClass
 	"Private - Modify and answer an existing class using the details
 	contained in the receiver.
@@ -406,23 +461,31 @@ modifyProper
 	inst. var accessors."
 
 	| current |
-	self requiresMutation ifTrue: [
-		self canMutateInSitu
-			ifTrue: [self mutateInSitu]
-			ifFalse: [self mutateToNewClass]].
+	self requiresMutation
+		ifTrue: [self canMutateInSitu ifTrue: [self mutateInSitu] ifFalse: [self mutateToNewClass]].
 
 	"After this point, must not access inst vars directly in case mutated the receiver."
 	current := self currentClass.
-	current isMeta ifFalse: [
-		self
-			setClassVariablesOf: current;
-			setSharedPoolsOf: current;
-			setCommentOf: current].
-
+	current isMeta
+		ifFalse: 
+			[self
+				modifyClassVariablesOf: current;
+				modifySharedPoolsOf: current;
+				setCommentOf: current].
 	self recompilationRequired ifTrue: [current recompileAll].
+	self superclassIsBeingChanged ifTrue: [self removeUnimplementedProtocols]!
 
-	self superclassIsBeingChanged ifTrue: [self removeUnimplementedProtocols]
-!
+modifySharedPoolsOf: aClass
+	"Private - Set the shared pools of aClass to those described by
+	the receiver's sharedPools inst var."
+
+	| oldPoolNames newPoolNames |
+	oldPoolNames := aClass sharedPoolNames.
+	newPoolNames := self sharedPools.
+	(newPoolNames noDifference: oldPoolNames)
+		ifFalse: 
+			[aClass setSharedPoolNames: newPoolNames.
+			self recompilationRequired: true]!
 
 mutateClass: oldClass toBeASubclassOf: newSuperclass
 	"Private - Create a new class with the appropriate features and mutate	all instances of oldClass to new instances of the new class and then recursively make the same change to the subclasses of aClass. Finally, remove the oldClass and if appropriate its metaclass from their respective superclasses and do a #oneWayBeome: on oldClass to newClass.
@@ -452,11 +515,12 @@ mutateInSitu
 	We may need to change the superclass or instance variables.
 	N.B. We cannot change instance variables without changing superclass, as this always requires a full mutation."
 
-	self superclassIsBeingChanged ifTrue: 
+	self superclassIsBeingChanged
+		ifTrue: 
 			[currentClass class setSuperclass: (self class classOf: superclass).
 			currentClass setSuperclass: superclass.
 			self instanceVariablesAreBeingChanged ifTrue: [self setInstanceVariablesOf: currentClass].
-			self recompilationRequired: true].!
+			self recompilationRequired: true]!
 
 mutateInstances: anArray of: oldClass toBeInstancesOf: newClass
 	"Private - Mutate the instances of oldClass in anArray to be instances of newClass."
@@ -554,8 +618,11 @@ recompilationRequired
 
 	^flags allMask: RecompileMask!
 
-recompilationRequired: aBoolean 
-	flags := flags mask: RecompileMask set: aBoolean!
+recompilationRequired: aBoolean
+	"Private - Record that recompilation is required if the argument is true. 
+	Note this is not an accessor - if the argument is false, then leave the current setting unchanged."
+
+	aBoolean ifTrue: [flags := flags bitOr: RecompileMask]!
 
 remove
 	"Private - Remove currentClass completely from the system."
@@ -603,15 +670,7 @@ requiresMutation
 		its instance variables."
 
 	^self superclassIsBeingChanged
-		or: [self instanceShapeIsBeingChanged
-		or: [self instanceVariablesAreBeingChanged]]!
-
-setClassVariablesOf: aClass
-	"Private - Set class variables of aClass to those described by
-	the receiver's classVariables inst var."
-
-	(classVariables notNil and: [aClass setClassVarNames: self classVariables])
-		ifTrue: [self recompilationRequired: true]!
+		or: [self instanceShapeIsBeingChanged or: [self instanceVariablesAreBeingChanged]]!
 
 setCommentOf: aClass
 	"Private - Set the comment of aClass to the receiver's comment inst var unless it
@@ -630,16 +689,10 @@ setNewClassCategories
 	currentClass classCategories: self categories!
 
 setSharedPoolsOf: aClass
-	"Private - Set the shared pools of aClass to those described by
-	the receiver's sharedPools inst var."
+	"Private - Set the shared pools of the newly created class, aClass, to those described by the receiver's sharedPools inst var."
 
-	| oldPoolNames newPoolNames |
-	oldPoolNames := aClass sharedPoolNames.
-	newPoolNames := self sharedPools.
-	(newPoolNames noDifference: oldPoolNames)
-		ifFalse: 
-			[aClass setSharedPoolNames: newPoolNames.
-			self recompilationRequired: true]!
+	aClass setSharedPoolNames: self sharedPools.
+!
 
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
@@ -742,11 +795,8 @@ validateClassVarsForCreate
 	contain a reserved word or a duplicate name defined either in the list
 	itself or anywhere in the proposed superclass chain."
 
-	classVariables notNil
-		ifTrue: [
-			self class
-				validateClassVars: self classVariables
-				againstSuperclass: superclass]!
+	classVariables isEmpty
+		ifFalse: [self class validateClassVars: self classVariables againstSuperclass: superclass]!
 
 validateClassVarsForModify
 	"Private - Ensure that the proposed class variable name list does not
@@ -938,6 +988,8 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #checkNoSubclasses!private!validation! !
 !ClassBuilder categoriesFor: #class:!accessing!private! !
 !ClassBuilder categoriesFor: #classCategoryClass!accessing!private! !
+!ClassBuilder categoriesFor: #classConstants!accessing!public! !
+!ClassBuilder categoriesFor: #classConstants:!accessing!public! !
 !ClassBuilder categoriesFor: #className:!accessing!private! !
 !ClassBuilder categoriesFor: #classVariables!class variables!private! !
 !ClassBuilder categoriesFor: #classVariables:!class variables!public! !
@@ -946,6 +998,7 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #createNewClass!operations!private! !
 !ClassBuilder categoriesFor: #createProper!helpers!private! !
 !ClassBuilder categoriesFor: #currentClass!accessing!public! !
+!ClassBuilder categoriesFor: #declareClassVariablesOf:!private! !
 !ClassBuilder categoriesFor: #environment!environment!private! !
 !ClassBuilder categoriesFor: #errorInvalidRemove:!exceptions!private! !
 !ClassBuilder categoriesFor: #fundamentalTypeIsBeingChanged!private!testing! !
@@ -969,10 +1022,12 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #isFixedLayout!public!testing! !
 !ClassBuilder categoriesFor: #isFixedType!public!testing! !
 !ClassBuilder categoriesFor: #isModifyAction!private!testing! !
+!ClassBuilder categoriesFor: #modifyClassVariablesOf:!private! !
 !ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
 !ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
 !ClassBuilder categoriesFor: #modifyPrivate!operations!private! !
 !ClassBuilder categoriesFor: #modifyProper!private! !
+!ClassBuilder categoriesFor: #modifySharedPoolsOf:!pool dictionaries!private! !
 !ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:!mutating!private! !
 !ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !
 !ClassBuilder categoriesFor: #mutateInstances:of:toBeInstancesOf:!mutating!private! !
@@ -989,7 +1044,6 @@ validateSuperclassIsSubclassable
 !ClassBuilder categoriesFor: #removeUnimplementedProtocols!helpers!private! !
 !ClassBuilder categoriesFor: #rename!operations!private! !
 !ClassBuilder categoriesFor: #requiresMutation!mutating!private! !
-!ClassBuilder categoriesFor: #setClassVariablesOf:!class variables!private! !
 !ClassBuilder categoriesFor: #setCommentOf:!comments!private! !
 !ClassBuilder categoriesFor: #setInstanceVariablesOf:!instance variables!private! !
 !ClassBuilder categoriesFor: #setNewClassCategories!helpers!public! !
@@ -1102,9 +1156,7 @@ initialize
 				add: ProcessorScheduler;
 				shrink;
 				isImmutable: true;
-				yourself).
-	self addClassConstant: 'RecompileMask' value: 1.
-	self addClassConstant: 'IgnoreInstsMask' value: 2!
+				yourself)!
 
 instanceSpecIsBytes: anInstanceSpec
 	"Private - Answer whether anInstanceSpec represents a byte subclass."

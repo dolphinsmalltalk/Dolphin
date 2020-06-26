@@ -92,7 +92,6 @@ package setMethodNames: #(
 	#(#{SourceFiler} #emitCategoriesOfClass:)
 	#(#{SourceFiler} #emitCategoriesOfMethod:)
 	#(#{SourceFiler} #emitCategoriesOfMethods:)
-	#(#{SourceFiler} #emitClassPoolOfClass:)
 	#(#{SourceFiler} #emitComment:)
 	#(#{SourceFiler} #emitCommentOfClass:)
 	#(#{SourceFiler} #emitDeclarationForClass:variable:)
@@ -351,7 +350,7 @@ fileOutPoolDictionary: aPoolDictionary
 			[:a |
 			| value |
 			stream
-				print: poolName;
+				display: poolName;
 				nextPutAll: ' at: ';
 				print: a key;
 				nextPutAll: ' put: '.
@@ -1199,15 +1198,6 @@ emitCategoriesOfMethods: methods
 
 	methods do: [:m | self emitCategoriesOfMethod: m]!
 
-emitClassPoolOfClass: aClass
-	"Private - Emit initialization expressions for each of the literal constants in the class pool of aClass."
-
-	| literalConstants |
-	literalConstants := aClass classPool associations
-				select: [:each | each isImmutable and: [each value isLiteral]].
-	literalConstants asSortedCollection
-		do: [:each | self emitDeclarationForClass: aClass variable: each]!
-
 emitComment: aString 
 	"Private - Record aString to the source stream.
 	N.B. Logging requests should be directed through the SessionManager."
@@ -1270,7 +1260,6 @@ fileOutAttributesOfClass: aClass
 
 	self emitGUIDOfClass: aClass.
 	self emitSpecialBehaviourAttributesOfClass: aClass.
-	self emitClassPoolOfClass: aClass.
 	self emitCommentOfClass: aClass.
 	self emitCategoriesOfClass: aClass.
 !
@@ -1369,7 +1358,6 @@ storeCommentString: aString forPackage: aPackage
 !SourceFiler categoriesFor: #emitCategoriesOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing! !
 !SourceFiler categoriesFor: #emitCategoriesOfMethods:!private!source filing! !
-!SourceFiler categoriesFor: #emitClassPoolOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitComment:!operations-logging!private! !
 !SourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !

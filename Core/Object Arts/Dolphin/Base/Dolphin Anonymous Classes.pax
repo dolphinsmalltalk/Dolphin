@@ -1,31 +1,26 @@
 ﻿| package |
 package := Package name: 'Dolphin Anonymous Classes'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Anonymous Classes
 Copyright (c) Object Arts Ltd. 2019.'.
 
 
-package classNames
-	add: #AnonymousClassBuilder;
-	yourself.
+package setClassNames: #(
+	#{AnonymousClassBuilder}
+).
 
-package methodNames
-	add: #Class -> #isAnonymous;
-	add: #Class -> #newAnonymousSubclass;
-	add: #ClassDescription -> #isAnonymous;
-	add: #Metaclass -> #isAnonymous;
-	add: 'ClassBuilder class' -> #forAnonymousSubclassOf:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Class} #isAnonymous)
+	#(#{Class} #newAnonymousSubclass)
+	#(#{ClassBuilder class} #forAnonymousSubclassOf:)
+	#(#{ClassDescription} #isAnonymous)
+	#(#{Metaclass} #isAnonymous)
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -36,9 +31,6 @@ ClassBuilder subclass: #AnonymousClassBuilder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

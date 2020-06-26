@@ -4,7 +4,8 @@ DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: 'wasOAD'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBuilderTests guid: (GUID fromString: '{889ced5d-011b-4995-82ec-dcc53ee38da2}')!
 ClassBuilderTests comment: ''!
 !ClassBuilderTests categoriesForClass!Tests-Kernel-Classes! !
@@ -159,6 +160,12 @@ testBuildAnonymousRoot
 	self assert: instance printString equals: 'anon'
 
 !
+
+testClassVars
+	| testClass |
+	testClass := self classBuilderTestClass.
+	self assert: ((testClass classVariables collect: [:each | each key]) noDifference: #('Var1' 'Var2')).
+	#todo	"Test add/remove class variable, add/remove class constant, change immediate constant to variable, change constant to variable, change variable to immediate constant, change variable to constant."!
 
 testMoveClassToSuperclassWithInstVars
 	| newClass |
@@ -384,6 +391,7 @@ testReshapeSubClass
 !ClassBuilderTests categoriesFor: #testAddRemovePools!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testBuildAnonymous!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testBuildAnonymousRoot!public!unit tests! !
+!ClassBuilderTests categoriesFor: #testClassVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
 !ClassBuilderTests categoriesFor: #testMoveVariable!public!unit tests! !

@@ -21,21 +21,21 @@ createClasses
 				createClass: #ClassWithAbstractMethod1
 				superclass: Object
 				instVars: ''
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	classWithAbstractMethod1 compile: 'abstractMethod ^self subclassResponsibility'.
 	classWithAbstractMethod1 class compile: 'nonAbstractMethod  ^#(subclassResponsibility)'.
 	classWithAbstractMethod2 := self
 				createClass: #ClassWithAbstractMethod2
 				superclass: Object
 				instVars: 'iv1'
-				pools: ''.
+				pools: ''
+				classVars: ''.
 	classWithAbstractMethod2 class compile: 'abstractMethod self subclassResponsibility'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod1 #(subclassResponsibility)'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod2  ^iv1 subclassResponsibility'.
-
 	classWithAbstractMethod1 compile: 'returnSendSelfSpecial ^self class'.
-	classWithAbstractMethod1 compile: 'sendSelfSpecial ^self value'.
-!
+	classWithAbstractMethod1 compile: 'sendSelfSpecial ^self value'!
 
 isAvailable
 	^classWithAbstractMethod1 notNil!

@@ -2,12 +2,14 @@
 
 Object variableSubclass: #CompiledCode
 	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
-	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
+	classVariableNames: 'InfoCacheKeys InfoCacheValues'
 	poolDictionaries: 'OpcodePool'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'PrivateMask' -> 16r1
+	}!
 CompiledCode guid: (GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledCode isAbstract: true!
-CompiledCode addClassConstant: 'PrivateMask' value: 16r1!
 CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):
@@ -537,9 +539,9 @@ sendsSpecialSelector: anInteger
 
 	^self byteCodeDispatcher sendsSpecialSelector: anInteger!
 
-setByteCodes: anObject 
+setByteCodes: anIntegerOrByteArray
 	<mutable>
-	byteCodes := anObject!
+	byteCodes := anIntegerOrByteArray!
 
 sourceDescriptor
 	"Private - Answer the receiver's sourceDescriptor (an object, usually an Integer which
@@ -695,7 +697,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #selector:!accessing!private! !
 !CompiledCode categoriesFor: #sendsSelector:!development!public!testing! !
 !CompiledCode categoriesFor: #sendsSpecialSelector:!development!public!testing! !
-!CompiledCode categoriesFor: #setByteCodes:!accessing!private! !
+!CompiledCode categoriesFor: #setByteCodes:!initializing!private! !
 !CompiledCode categoriesFor: #sourceDescriptor!accessing!private! !
 !CompiledCode categoriesFor: #sourceDescriptor:!accessing!private! !
 !CompiledCode categoriesFor: #specialMessages!development!enumerating!private! !
