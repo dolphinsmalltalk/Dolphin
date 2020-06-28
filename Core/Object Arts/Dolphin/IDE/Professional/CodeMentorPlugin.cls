@@ -355,14 +355,14 @@ lintRules
 
 	^CompositeLintRule lintChecks!
 
-onBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameName: targetVARIANT PostData: postDataVARIANT Headers: headersVARIANT Cancel: aBooleanValue 
+onBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameName: targetVARIANT PostData: postDataVARIANT Headers: headersVARIANT Cancel: aBooleanValue
 	| url |
 	url := urlVARIANT value.
-	(url beginsWith: self smalltalkUrlTag) 
+	(url beginsWith: self smalltalkUrlTag)
 		ifTrue: 
 			[| expression |
-			expression := (url allButFirst: self smalltalkUrlTag size) unescapePercents.
-			Compiler 
+			expression := (url allButFirst: self smalltalkUrlTag size) urlDecoded.
+			Compiler
 				evaluate: expression
 				for: self
 				evaluationPools: nil

@@ -639,7 +639,7 @@ testTrimNulls
 	self assert: trimmed size equals: 1.
 	self assert: (self newCollection: trimmed) equals: (self newCollection: 'a')!
 
-testUnescapePercents
+testUrlDecoded
 	"Test URI decoding per RFC3986"
 
 	| unreserved misencoded |
@@ -648,24 +648,23 @@ testUnescapePercents
 			[:each |
 			| subject actual |
 			subject := self collectionClass fromString: each first.
-			actual := subject unescapePercents.
+			actual := subject urlDecoded.
 			self assert: actual equals: each last].
 	"Test case from @fxgallego"
-	self assert: (self collectionClass fromString: 'Ca%C3%B1%C3%B3n') unescapePercents equals: 'Cañón'.
+	self assert: (self collectionClass fromString: 'Ca%C3%B1%C3%B3n') urlDecoded equals: 'Cañón'.
 	"Non-latin 3-byte encoding test case from RFC3986"
-	self assert: (self collectionClass fromString: '%E3%82%A2') unescapePercents
-		equals: $\x30A2 asUtf8String.
+	self assert: (self collectionClass fromString: '%E3%82%A2') urlDecoded equals: $\x30A2 asUtf8String.
 	"And a 4-byte encoding for fun"
-	self assert: (self collectionClass fromString: '%F0%9F%90%AC') unescapePercents equals: '🐬'.
+	self assert: (self collectionClass fromString: '%F0%9F%90%AC') urlDecoded equals: '🐬'.
 
 	"All reserved characters in RFC3986, exception '+', should be unaffected by decoding"
-	self assert: (self collectionClass fromString: ':/?#[]@!!$&''()*+,;=') unescapePercents
+	self assert: (self collectionClass fromString: ':/?#[]@!!$&''()*+,;=') urlDecoded
 		equals: ':/?#[]@!!$&''()* ,;='.
 
 	"Unreserved characters, also untouched"
 	unreserved := (Character byteCharacterSet select: [:each | each isEnglishLetter or: [each isDigit]])
 				, '-._~'.
-	self assert: (self collectionClass fromString: unreserved) unescapePercents equals: unreserved.
+	self assert: (self collectionClass fromString: unreserved) urlDecoded equals: unreserved.
 	"But should be coded if found encoded"
 	misencoded := String writeStream.
 	unreserved do: 
@@ -676,14 +675,14 @@ testUnescapePercents
 				base: 16
 				showRadix: false].
 	misencoded := misencoded contents.
-	self assert: (self collectionClass fromString: misencoded) unescapePercents equals: unreserved.
+	self assert: (self collectionClass fromString: misencoded) urlDecoded equals: unreserved.
 
 	"Invalid cases, therefore assume not an escaped string"
 	#('%GA' '%AG' '%[1' '%1[' '+%A' '%1' '100%' '%+') do: 
 			[:each |
 			| subject actual |
 			subject := self collectionClass fromString: each.
-			actual := subject unescapePercents.
+			actual := subject urlDecoded.
 			self assert: actual equals: (self newCopy: subject)].
 
 	"Special cases of non-ASCII input - these should be detected and not decoded"
@@ -691,13 +690,41 @@ testUnescapePercents
 			[:each |
 			| subject actual |
 			subject := self collectionClass fromString: each.
-			actual := subject unescapePercents.
+			actual := subject urlDecoded.
 			self assert: actual equals: each].
 	self collectionClass == AnsiString
 		ifFalse: 
 			[| subject |
 			subject := self collectionClass fromString: '%97+🐬'.
-			self assert: subject unescapePercents equals: subject]!
+			self assert: subject urlDecoded equals: subject]!
+
+testUrlEncoded
+	"Test URI encoding per RFC3986"
+
+	| unreserved reserved |
+	unreserved := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~'.
+	reserved := ':/?#[]@!!$&''()*+,;='.
+	
+	"Unreserved shouldn't be encoded"
+	self assert: (self collectionClass withAll: unreserved) urlEncoded equals: unreserved.
+	"Reserved should allways be encoded when used for some other purpose."
+	self assert: (self collectionClass withAll: reserved) urlEncoded equals: '%3A%2F%3F%23%5B%5D%40%21%24%26%27%28%29%2A%2B%2C%3B%3D'.
+	self assert: (self collectionClass with: Character space) urlEncoded equals: '%20'.
+	self assert: (self collectionClass with: $%) urlEncoded equals: '%25'.
+	self assert: (self collectionClass withAll: String lineDelimiter) urlEncoded equals: '%0D%0A'.
+	"Other common characters found in urls."
+	self assert: (self collectionClass withAll: '"<>\^`{|}') urlEncoded equals: '%22%3C%3E%5C%5E%60%7B%7C%7D'.
+	"Some unicode"
+	self assert: '🐬 cañón CAÑÓN' urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '🐬 cañón CAÑÓN' asUtf16String urlEncoded equals: '%F0%9F%90%AC%20ca%C3%B1%C3%B3n%20CA%C3%91%C3%93N'.
+	self assert: '日本語' urlEncoded equals: '%E6%97%A5%E6%9C%AC%E8%AA%9E'.
+	"Test reversions"
+	self assert: '🐬 cañón CAÑÓN' urlEncoded urlDecoded equals: '🐬 cañón CAÑÓN'.
+	self assert: String lineDelimiter urlEncoded urlDecoded equals: String lineDelimiter.
+	self assert: ' ' urlEncoded urlDecoded equals: ' '.
+	self assert: (self collectionClass withAll: unreserved) urlEncoded urlDecoded equals: unreserved.
+	self assert: (self collectionClass withAll: reserved) urlEncoded urlDecoded equals: reserved.
+!
 
 testWithAll
 	self withAllTestCases do: 
@@ -788,7 +815,8 @@ withAllTestCases
 !StringTest categoriesFor: #testSubStringsByCharacter!public!unit tests! !
 !StringTest categoriesFor: #testSubStringsByString!public!unit tests! !
 !StringTest categoriesFor: #testTrimNulls!public!unit tests! !
-!StringTest categoriesFor: #testUnescapePercents!public!unit tests! !
+!StringTest categoriesFor: #testUrlDecoded!public!unit tests! !
+!StringTest categoriesFor: #testUrlEncoded!public!unit tests! !
 !StringTest categoriesFor: #testWithAll!public!unit tests! !
 !StringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
 !StringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
