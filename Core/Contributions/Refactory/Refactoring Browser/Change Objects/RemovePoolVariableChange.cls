@@ -4,7 +4,8 @@ RefactoryVariableChange subclass: #RemovePoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RemovePoolVariableChange guid: (GUID fromString: '{dc8b3bc9-6d9d-4e17-aa32-596044261886}')!
 RemovePoolVariableChange comment: ''!
 !RemovePoolVariableChange categoriesForClass!Refactory-Change Objects! !

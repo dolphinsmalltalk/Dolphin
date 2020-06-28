@@ -4,7 +4,8 @@ AddMethodChange subclass: #DolphinAddMethodChange
 	instanceVariableNames: 'packageName compilationFlags method'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinAddMethodChange guid: (GUID fromString: '{13f8e696-5138-421f-be85-426d5a1a603d}')!
 DolphinAddMethodChange comment: 'DolphinAddMethodChange is a specialised AddMethodChange object that overrides the latters behaviour to support Dolphin''s different compiler interface, to maintain Dolphin''s multiple categories, and to maintain the package of loose methods.'!
 !DolphinAddMethodChange categoriesForClass!Unclassified! !

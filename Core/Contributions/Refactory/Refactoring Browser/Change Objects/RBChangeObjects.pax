@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBChangeObjects'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Change Objects
 Copyright (c) John Brant & Don Roberts.
@@ -10,40 +10,36 @@ Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San D
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
 
-package classNames
-	add: #AddClassChange;
-	add: #AddClassVariableChange;
-	add: #AddInstanceVariableChange;
-	add: #AddMethodChange;
-	add: #AddPoolVariableChange;
-	add: #ChangeSet;
-	add: #CompositeRefactoryChange;
-	add: #DolphinAddMethodChange;
-	add: #RefactoryChange;
-	add: #RefactoryChangeManager;
-	add: #RefactoryClassChange;
-	add: #RefactoryVariableChange;
-	add: #RemoveClassChange;
-	add: #RemoveClassVariableChange;
-	add: #RemoveInstanceVariableChange;
-	add: #RemoveMethodChange;
-	add: #RemovePoolVariableChange;
-	add: #RenameClassChange;
-	add: #RenameClassVariableChange;
-	add: #RenameInstanceVariableChange;
-	add: #RenameVariableChange;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AddClassChange}
+	#{AddClassVariableChange}
+	#{AddInstanceVariableChange}
+	#{AddMethodChange}
+	#{AddPoolVariableChange}
+	#{ChangeSet}
+	#{CompositeRefactoryChange}
+	#{DolphinAddClassChange}
+	#{DolphinAddMethodChange}
+	#{RefactoryChange}
+	#{RefactoryChangeManager}
+	#{RefactoryClassChange}
+	#{RefactoryVariableChange}
+	#{RemoveClassChange}
+	#{RemoveClassVariableChange}
+	#{RemoveInstanceVariableChange}
+	#{RemoveMethodChange}
+	#{RemovePoolVariableChange}
+	#{RenameClassChange}
+	#{RenameClassVariableChange}
+	#{RenameInstanceVariableChange}
+	#{RenameVariableChange}
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Environments\RBEnvironments'
-	'..\Parser\RBParser').
+	'..\Parser\RBParser'
+).
 
 package!
 
@@ -53,112 +49,134 @@ Object subclass: #ChangeSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #RefactoryChange
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #RefactoryChangeManager
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
 	classVariableNames: 'Instance UndoSize'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryChange subclass: #CompositeRefactoryChange
 	instanceVariableNames: 'changes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryChange subclass: #RefactoryClassChange
 	instanceVariableNames: 'className isMeta'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompositeRefactoryChange subclass: #RenameClassChange
 	instanceVariableNames: 'oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameVariableChange subclass: #RenameClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameVariableChange subclass: #RenameInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #AddMethodChange
 	instanceVariableNames: 'source selector protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #RefactoryVariableChange
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #RemoveClassChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange subclass: #RemoveMethodChange
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
+AddClassChange subclass: #DolphinAddClassChange
+	instanceVariableNames: 'classConstants'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddMethodChange subclass: #DolphinAddMethodChange
 	instanceVariableNames: 'packageName compilationFlags method'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #AddClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #AddInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #AddPoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #RemoveClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #RemoveInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryVariableChange subclass: #RemovePoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

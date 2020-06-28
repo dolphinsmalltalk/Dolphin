@@ -4,7 +4,8 @@ RefactoryVariableChange subclass: #AddPoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddPoolVariableChange guid: (GUID fromString: '{48291ca4-180f-4a5e-b79e-409203e18930}')!
 AddPoolVariableChange comment: ''!
 !AddPoolVariableChange categoriesForClass!Refactory-Change Objects! !

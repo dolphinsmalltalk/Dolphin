@@ -4,7 +4,8 @@ RefactoryChange subclass: #CompositeRefactoryChange
 	instanceVariableNames: 'changes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompositeRefactoryChange guid: (GUID fromString: '{74a295ee-f099-43f1-bd6e-d82d0b07d9d9}')!
 CompositeRefactoryChange comment: 'RefactoryBuilder represents a series of changes (RefactoryChange) that need to be performed. It provides transaction-like behavior by defering all changes until it is told to commit them (#doIt).
 
@@ -85,7 +86,7 @@ compile: source in: class classified: aProtocol
 				classified: aProtocol)!
 
 defineClass: aString 
-	^self addChange: (AddClassChange definition: aString)!
+	^self addChange: (self addClassChangeClass definition: aString)!
 
 executeNotifying: aBlock
 	#rbFix.	"Extract to method so can invoke from subclass of subclass where both override"

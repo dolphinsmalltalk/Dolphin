@@ -163,6 +163,9 @@ addClass: class toProtocol: newProtocol
 	self classChanged: class.
 	^true!
 
+addClassChangeClass
+	^DolphinAddClassChange!
+
 addGlobalName: aSymbol
 	"Adds a global called aSymbol to the system dictionary"
 
@@ -399,7 +402,7 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 		ifTrue: 
 			[^self 
 				error: 'Unable to reparent subclasses in this version of the system (requires Dolphin Professional)'].
-	addClass := AddClassChange 
+	addClass := self addClassChangeClass 
 				definition: ('<1p> <2s> <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: ''''' 
 						expandMacrosWith: aClass
 						with: aClass kindOfSubclass
@@ -1337,7 +1340,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 		display: 'classInstanceVariableNames: '.
 	buildVarString value: (aClass class allInstVarNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstVarNames])).
-	changes addChange: (AddClassChange definition: definition contents).
+	changes addChange: (self addClassChangeClass definition: definition contents).
 	self
 		copyAllMethodsOf: aClass
 		to: newClassName
@@ -4238,6 +4241,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #addAdditionalToolsFolderIcon:!operations!public! !
 !SmalltalkSystem categoriesFor: #addAdditionalToolsFolderIconFor:description:!operations!public! !
 !SmalltalkSystem categoriesFor: #addClass:toProtocol:!private!protocols! !
+!SmalltalkSystem categoriesFor: #addClassChangeClass!constants!private! !
 !SmalltalkSystem categoriesFor: #addGlobalName:!operations!public! !
 !SmalltalkSystem categoriesFor: #additionalToolsFolder!accessing!private! !
 !SmalltalkSystem categoriesFor: #addMethod:toProtocol:!operations!protocols!public! !

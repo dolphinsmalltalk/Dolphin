@@ -4,7 +4,8 @@ CompositeRefactoryChange subclass: #RenameClassChange
 	instanceVariableNames: 'oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameClassChange guid: (GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
 RenameClassChange comment: ''!
 !RenameClassChange categoriesForClass!Refactory-Change Objects! !

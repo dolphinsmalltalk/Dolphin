@@ -4,7 +4,8 @@ Object subclass: #RefactoryChange
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryChange guid: (GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
 RefactoryChange isAbstract: true!
 RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
@@ -17,6 +18,10 @@ Instance Variables:
 	class	<Behavior>	the class that is to be changed'!
 !RefactoryChange categoriesForClass!Refactory-Change Objects! !
 !RefactoryChange methodsFor!
+
+addClassChangeClass
+	#rbFix. "Replace hard refs to AddClassChange with sends of this message, and use Dolphin specific subclass"
+	^DolphinAddClassChange!
 
 addMethodChangeClass
 	#rbFix. "Replace hard refs to AddMethodChange with sends of this message, and use Dolphin specific subclass"
@@ -69,6 +74,7 @@ renameChangesForClass: aClassName to: newClassName
 	name to perform the compiles."
 
 	self subclassResponsibility! !
+!RefactoryChange categoriesFor: #addClassChangeClass!constants!public! !
 !RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
 !RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
 !RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !

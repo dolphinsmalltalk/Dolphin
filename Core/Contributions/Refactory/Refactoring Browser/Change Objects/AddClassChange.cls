@@ -4,7 +4,8 @@ RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddClassChange guid: (GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
 AddClassChange comment: ''!
 !AddClassChange categoriesForClass!Refactory-Change Objects! !
@@ -14,11 +15,14 @@ AddClassChange comment: ''!
 	self class = anAddClassChange class ifFalse: [^false].
 	^definition = anAddClassChange definition!
 
+areSubclassCreationMessageArgumentsValid: aMessageNode
+	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode]!
+
 asUndoOperation
 	| class |
 	class := self changeClassName asQualifiedReference valueOrNil.
 	^class isBehavior 
-		ifTrue: [AddClassChange definition: class definition]
+		ifTrue: [self class definition: class definition]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
 
 category
@@ -50,19 +54,20 @@ definition: aString
 
 fillOutDefinition
 	| parseTree |
-	parseTree := RBParser parseExpression: definition
-				onError: [:str :pos | ^self parseDefinitionError].
+	parseTree := RBParser parseExpression: definition onError: [:str :pos | ^self parseDefinitionError].
 	parseTree isMessage ifFalse: [^self parseDefinitionError].
-	(self isValidSubclassCreationMessage: parseTree) 
-		ifFalse: [^self parseDefinitionError].
-	superclassName := parseTree receiver isVariable 
+	(self isValidSubclassCreationMessage: parseTree) ifFalse: [^self parseDefinitionError].
+	superclassName := parseTree receiver isVariable
 				ifTrue: [parseTree receiver name asSymbol]
 				ifFalse: [parseTree receiver value].
+	self fillOutDefinitionArguments: parseTree!
+
+fillOutDefinitionArguments: parseTree
 	className := parseTree arguments first value.
 	instanceVariableNames := self namesIn: (parseTree arguments at: 2) value.
 	classVariableNames := self namesIn: (parseTree arguments at: 3) value.
 	poolDictionaryNames := self namesIn: (parseTree arguments at: 4) value.
-	category := parseTree arguments size < 5 
+	category := parseTree arguments size < 5
 				ifTrue: [#Unknown]
 				ifFalse: [(parseTree arguments at: 5) value asSymbol]!
 
@@ -89,11 +94,10 @@ isValidMessageName: aMessageNode
 	#variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:) 
 		includes: aMessageNode selector!
 
-isValidSubclassCreationMessage: aMessageNode 
-	(aMessageNode receiver isVariable or: [aMessageNode receiver isLiteralNode]) 
-		ifFalse: [^false].
+isValidSubclassCreationMessage: aMessageNode
+	(aMessageNode receiver isVariable or: [aMessageNode receiver isLiteralNode]) ifFalse: [^false].
 	(self isValidMessageName: aMessageNode) ifFalse: [^false].
-	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode]!
+	^self areSubclassCreationMessageArgumentsValid: aMessageNode!
 
 namesIn: aString 
 	| names stream |
@@ -138,6 +142,7 @@ superclassName
 	className isNil ifTrue: [self fillOutDefinition].
 	^superclassName! !
 !AddClassChange categoriesFor: #=!comparing!public! !
+!AddClassChange categoriesFor: #areSubclassCreationMessageArgumentsValid:!private!testing! !
 !AddClassChange categoriesFor: #asUndoOperation!converting!public! !
 !AddClassChange categoriesFor: #category!accessing!public! !
 !AddClassChange categoriesFor: #changeClassName!accessing!public! !
@@ -148,6 +153,7 @@ superclassName
 !AddClassChange categoriesFor: #definition!accessing!private! !
 !AddClassChange categoriesFor: #definition:!initialize/release!public! !
 !AddClassChange categoriesFor: #fillOutDefinition!helpers!private! !
+!AddClassChange categoriesFor: #fillOutDefinitionArguments:!helpers!private! !
 !AddClassChange categoriesFor: #hash!comparing!public! !
 !AddClassChange categoriesFor: #initialize!initialize/release!public! !
 !AddClassChange categoriesFor: #instanceVariableNames!accessing!public! !

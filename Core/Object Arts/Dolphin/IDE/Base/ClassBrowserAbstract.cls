@@ -2155,7 +2155,7 @@ saveDefinition
 	| wasModified |
 	wasModified := definitionPresenter isModified.
 	definitionPresenter isModified: false.
-	
+	#todo. "Use change objects so this is undoable/redoable."
 	[definitionPresenter evaluateRange: (1 to: definitionPresenter textLength)
 		ifFail: 
 			[definitionPresenter isModified: wasModified.

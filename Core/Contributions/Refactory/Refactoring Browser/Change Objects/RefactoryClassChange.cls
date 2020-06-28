@@ -4,7 +4,8 @@ RefactoryChange subclass: #RefactoryClassChange
 	instanceVariableNames: 'className isMeta'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryClassChange guid: (GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
 RefactoryClassChange isAbstract: true!
 RefactoryClassChange comment: ''!

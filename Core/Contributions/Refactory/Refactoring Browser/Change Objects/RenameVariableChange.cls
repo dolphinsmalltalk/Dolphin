@@ -4,7 +4,8 @@ CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameVariableChange guid: (GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
 RenameVariableChange isAbstract: true!
 RenameVariableChange comment: ''!

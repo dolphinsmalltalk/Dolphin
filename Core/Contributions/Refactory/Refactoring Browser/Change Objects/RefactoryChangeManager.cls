@@ -4,7 +4,8 @@ Object subclass: #RefactoryChangeManager
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
 	classVariableNames: 'Instance UndoSize'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryChangeManager guid: (GUID fromString: '{5bc74f5c-1bcd-4890-ad8b-bf8a58b6df7f}')!
 RefactoryChangeManager comment: ''!
 !RefactoryChangeManager categoriesForClass!Refactory-Change Objects! !
