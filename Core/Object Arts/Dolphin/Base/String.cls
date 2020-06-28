@@ -1158,6 +1158,10 @@ truncateTo: anInteger
 	^self size <= anInteger ifTrue: [self] ifFalse: [self copyFrom: 1 to: anInteger]!
 
 unescapePercents
+	Notification deprecated.
+	^self urlDecoded!
+
+urlDecoded
 	"Asuming that receiver is a URI encoded representation from UTF-8 as specified in RFC3986,
 	answer a <Utf8String> representing the unescaped (original) UTF-8 encoded text. If it is
 	detected that the content is not URI-encoded (e.g. it contains %-prefixed character
@@ -1168,7 +1172,13 @@ unescapePercents
 
 	| ansi |
 	ansi := self asAnsiString.
-	^(ansi = self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
+	^ansi = self ifTrue: [ansi urlDecoded] ifFalse: [self]!
+
+urlEncoded
+	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
+	Not every part in a URI should be encoded as it is explained in section 2.4 so you should be cautious."
+
+	^self asUtf8String urlEncoded!
 
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."
@@ -1291,6 +1301,8 @@ withNormalizedLineDelimiters
 !String categoriesFor: #trimNulls!copying!public! !
 !String categoriesFor: #truncateTo:!converting!public! !
 !String categoriesFor: #unescapePercents!operations!public! !
+!String categoriesFor: #urlDecoded!operations!public! !
+!String categoriesFor: #urlEncoded!operations!public! !
 !String categoriesFor: #withNormalizedLineDelimiters!converting!public! !
 
 String methodProtocol: #readableString attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!

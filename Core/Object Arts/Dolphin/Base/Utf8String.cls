@@ -353,7 +353,26 @@ reverse
 strlen
 	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^CRTLibrary default strlen: self! !
+	^CRTLibrary default strlen: self!
+
+urlEncoded
+	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
+	Not every part in a URI should be encoded as it is explained in section 2.4 so you should be cautious."
+
+	| encodedStream |
+	encodedStream := AnsiString writeStream: self size.
+	self do: 
+			[:each |
+			"Unreserved characters from RFC3986, section 2.3: Ascii letters and digits, hyphen, underscore, period and tilde"
+			('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~' includes: each)
+				ifTrue: [encodedStream nextPut: each]
+				ifFalse: 
+					[encodedStream nextPut: $%.
+					each codeUnit
+						printOn: encodedStream
+						base: 16
+						nDigits: 2]].
+	^encodedStream grabContents! !
 !Utf8String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Utf8String categoriesFor: #asLowercase!converting!public! !
 !Utf8String categoriesFor: #asUppercase!converting!public! !
@@ -369,6 +388,7 @@ strlen
 !Utf8String categoriesFor: #nextIndexOfCharacter:from:to:!private!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !
 !Utf8String categoriesFor: #strlen!accessing!private! !
+!Utf8String categoriesFor: #urlEncoded!public! !
 
 !Utf8String class methodsFor!
 

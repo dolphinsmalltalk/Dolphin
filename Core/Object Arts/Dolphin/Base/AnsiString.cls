@@ -137,7 +137,7 @@ trimNulls
 
 	^self species fromAddress: self yourAddress!
 
-unescapePercents
+urlDecoded
 	"Asuming that receiver is a URI-encoded representation of a UTF-8 encoded original as
 	specified in RFC3986, answer a <Utf8String> which has been unescaped to reveal the original
 	text. If it is detected that the content is not URI-encoded (e.g. it contains %-prefixed
@@ -181,7 +181,7 @@ unescapePercents
 !AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #strlen!accessing!private! !
 !AnsiString categoriesFor: #trimNulls!copying!public! !
-!AnsiString categoriesFor: #unescapePercents!operations!public! !
+!AnsiString categoriesFor: #urlDecoded!operations!public! !
 
 !AnsiString class methodsFor!
 
