@@ -4,7 +4,8 @@ GdiplusBase subclass: #GdiplusFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontCollection guid: (GUID fromString: '{c09d8c02-5f28-11d7-b609-00e0987e8081}')!
 GdiplusFontCollection isAbstract: true!
 GdiplusFontCollection comment: 'GdiplusFontCollection is an abstract class that contains methods for enumerating the font families in a collection of fonts.

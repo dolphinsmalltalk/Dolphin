@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #GpPathData
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Count _OffsetOf_Points _OffsetOf_Types'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Count' -> 16r0.
+		'_OffsetOf_Points' -> 16r4.
+		'_OffsetOf_Types' -> 16r8
+	}!
 GpPathData guid: (GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
-GpPathData addClassConstant: '_OffsetOf_Count' value: 16r0!
-GpPathData addClassConstant: '_OffsetOf_Points' value: 16r4!
-GpPathData addClassConstant: '_OffsetOf_Types' value: 16r8!
 GpPathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

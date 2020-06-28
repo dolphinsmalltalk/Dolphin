@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	instanceVariableNames: 'fontFamily emSize style unit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFromFontFamilyInitializer guid: (GUID fromString: '{f4b7aa80-5fd1-11d7-b609-00e0987e8081}')!
 GdiplusFontFromFontFamilyInitializer comment: ''!
 !GdiplusFontFromFontFamilyInitializer categoriesForClass!Unclassified! !

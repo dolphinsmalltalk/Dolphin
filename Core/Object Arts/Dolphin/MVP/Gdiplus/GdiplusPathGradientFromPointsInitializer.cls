@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
 	instanceVariableNames: 'pathPoints wrapMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
 GdiplusPathGradientFromPointsInitializer comment: ''!
 !GdiplusPathGradientFromPointsInitializer categoriesForClass!Unclassified! !

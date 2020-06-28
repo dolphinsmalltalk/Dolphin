@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
 	instanceVariableNames: 'height width isFilled'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusAdjustableArrowCapInitializer guid: (GUID fromString: '{c1fcc801-8763-11d7-b609-00e0987e8081}')!
 GdiplusAdjustableArrowCapInitializer comment: ''!
 !GdiplusAdjustableArrowCapInitializer categoriesForClass!Unclassified! !

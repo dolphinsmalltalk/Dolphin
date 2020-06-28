@@ -253,457 +253,665 @@ Object subclass: #GdiplusInitializer
 	instanceVariableNames: 'library'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #GdiplusError
 	instanceVariableNames: 'win32Error'
-	classVariableNames: 'ErrorDescriptions'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ErrorDescriptions' -> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
+	}!
 ExternalLibrary subclass: #GdiplusLibrary
 	instanceVariableNames: 'token'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #ENHMETAHEADER3
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dSignature _OffsetOf_iType _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nSize _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMillimeters'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dSignature' -> 16r28.
+		'_OffsetOf_iType' -> 16r0.
+		'_OffsetOf_nBytes' -> 16r30.
+		'_OffsetOf_nDescription' -> 16r3C.
+		'_OffsetOf_nHandles' -> 16r38.
+		'_OffsetOf_nPalEntries' -> 16r44.
+		'_OffsetOf_nRecords' -> 16r34.
+		'_OffsetOf_nSize' -> 16r4.
+		'_OffsetOf_nVersion' -> 16r2C.
+		'_OffsetOf_offDescription' -> 16r40.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_rclFrame' -> 16r18.
+		'_OffsetOf_sReserved' -> 16r3A.
+		'_OffsetOf_szlDevice' -> 16r48.
+		'_OffsetOf_szlMillimeters' -> 16r50
+	}!
 ExternalStructure subclass: #GdiplusStartupInput
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DebugEventCallback _OffsetOf_GdiplusVersion _OffsetOf_SuppressBackgroundThread _OffsetOf_SuppressExternalCodecs'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DebugEventCallback' -> 16r4.
+		'_OffsetOf_GdiplusVersion' -> 16r0.
+		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
+		'_OffsetOf_SuppressExternalCodecs' -> 16rC
+	}!
 ExternalStructure subclass: #GdiplusStartupOutput
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_NotificationHook _OffsetOf_NotificationUnhook'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_NotificationHook' -> 16r0.
+		'_OffsetOf_NotificationUnhook' -> 16r4
+	}!
 ExternalStructure subclass: #GpBitmapData
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Height _OffsetOf_PixelFormat _OffsetOf_Reserved _OffsetOf_Scan0 _OffsetOf_Stride _OffsetOf_Width'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Height' -> 16r4.
+		'_OffsetOf_PixelFormat' -> 16rC.
+		'_OffsetOf_Reserved' -> 16r14.
+		'_OffsetOf_Scan0' -> 16r10.
+		'_OffsetOf_Stride' -> 16r8.
+		'_OffsetOf_Width' -> 16r0
+	}!
 ExternalStructure subclass: #GpCharacterRange
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_First _OffsetOf_length'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_First' -> 16r0.
+		'_OffsetOf_length' -> 16r4
+	}!
 ExternalStructure subclass: #GpColorMap
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_newColor _OffsetOf_oldColor'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_newColor' -> 16r4.
+		'_OffsetOf_oldColor' -> 16r0
+	}!
 ExternalStructure subclass: #GpColorMatrix
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_m'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_m' -> 16r0
+	}!
 ExternalStructure subclass: #GpColorPalette
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Count _OffsetOf_Entries _OffsetOf_Flags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Count' -> 16r4.
+		'_OffsetOf_Entries' -> 16r8.
+		'_OffsetOf_Flags' -> 16r0
+	}!
 ExternalStructure subclass: #GpEncoderParameter
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Guid _OffsetOf_NumberOfValues _OffsetOf_Type _OffsetOf_Value'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Guid' -> 16r0.
+		'_OffsetOf_NumberOfValues' -> 16r10.
+		'_OffsetOf_Type' -> 16r14.
+		'_OffsetOf_Value' -> 16r18
+	}!
 ExternalStructure subclass: #GpEncoderParameters
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Count _OffsetOf_Parameter'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Count' -> 16r0.
+		'_OffsetOf_Parameter' -> 16r4
+	}!
 ExternalStructure subclass: #GpImageCodecInfo
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Clsid _OffsetOf_CodecName _OffsetOf_DllName _OffsetOf_FilenameExtension _OffsetOf_Flags _OffsetOf_FormatDescription _OffsetOf_FormatID _OffsetOf_MimeType _OffsetOf_SigCount _OffsetOf_SigMask _OffsetOf_SigPattern _OffsetOf_SigSize _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Clsid' -> 16r0.
+		'_OffsetOf_CodecName' -> 16r20.
+		'_OffsetOf_DllName' -> 16r24.
+		'_OffsetOf_FilenameExtension' -> 16r2C.
+		'_OffsetOf_Flags' -> 16r34.
+		'_OffsetOf_FormatDescription' -> 16r28.
+		'_OffsetOf_FormatID' -> 16r10.
+		'_OffsetOf_MimeType' -> 16r30.
+		'_OffsetOf_SigCount' -> 16r3C.
+		'_OffsetOf_SigMask' -> 16r48.
+		'_OffsetOf_SigPattern' -> 16r44.
+		'_OffsetOf_SigSize' -> 16r40.
+		'_OffsetOf_Version' -> 16r38
+	}!
 ExternalStructure subclass: #GpMetafileHeader
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DpiX _OffsetOf_DpiY _OffsetOf_EmfHeader _OffsetOf_EmfPlusFlags _OffsetOf_EmfPlusHeaderSize _OffsetOf_height _OffsetOf_LogicalDpiX _OffsetOf_LogicalDpiY _OffsetOf_size _OffsetOf_type _OffsetOf_Version _OffsetOf_width _OffsetOf_WmfHeader _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DpiX' -> 16r10.
+		'_OffsetOf_DpiY' -> 16r14.
+		'_OffsetOf_EmfHeader' -> 16r28.
+		'_OffsetOf_EmfPlusFlags' -> 16rC.
+		'_OffsetOf_EmfPlusHeaderSize' -> 16r80.
+		'_OffsetOf_height' -> 16r24.
+		'_OffsetOf_LogicalDpiX' -> 16r84.
+		'_OffsetOf_LogicalDpiY' -> 16r88.
+		'_OffsetOf_size' -> 16r4.
+		'_OffsetOf_type' -> 16r0.
+		'_OffsetOf_Version' -> 16r8.
+		'_OffsetOf_width' -> 16r20.
+		'_OffsetOf_WmfHeader' -> 16r28.
+		'_OffsetOf_x' -> 16r18.
+		'_OffsetOf_y' -> 16r1C
+	}!
 ExternalStructure subclass: #GpPathData
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Count _OffsetOf_Points _OffsetOf_Types'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Count' -> 16r0.
+		'_OffsetOf_Points' -> 16r4.
+		'_OffsetOf_Types' -> 16r8
+	}!
 ExternalStructure subclass: #GpPropertyItem
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_id _OffsetOf_length _OffsetOf_Type _OffsetOf_Value'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_id' -> 16r0.
+		'_OffsetOf_length' -> 16r4.
+		'_OffsetOf_Type' -> 16r8.
+		'_OffsetOf_Value' -> 16rC
+	}!
 ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_BoundingBox _OffsetOf_Checksum _OffsetOf_Hmf _OffsetOf_Inch _OffsetOf_Key _OffsetOf_Reserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_BoundingBox' -> 16r6.
+		'_OffsetOf_Checksum' -> 16r14.
+		'_OffsetOf_Hmf' -> 16r4.
+		'_OffsetOf_Inch' -> 16rE.
+		'_OffsetOf_Key' -> 16r0.
+		'_OffsetOf_Reserved' -> 16r10
+	}!
 ExternalStructure subclass: #GpWMFRect16
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bottom' -> 16r6.
+		'_OffsetOf_left' -> 16r0.
+		'_OffsetOf_right' -> 16r4.
+		'_OffsetOf_top' -> 16r2
+	}!
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_mtHeaderSize' -> 16r2.
+		'_OffsetOf_mtMaxRecord' -> 16r10.
+		'_OffsetOf_mtNoObjects' -> 16rC.
+		'_OffsetOf_mtNoParameters' -> 16r14.
+		'_OffsetOf_mtSize' -> 16r8.
+		'_OffsetOf_mtType' -> 16r0.
+		'_OffsetOf_mtVersion' -> 16r4
+	}!
 ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_height' -> 16rC.
+		'_OffsetOf_width' -> 16r8.
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
 	instanceVariableNames: 'height width isFilled'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
 	instanceVariableNames: 'bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
 	instanceVariableNames: 'icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
 	instanceVariableNames: 'bitmap graphics'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'GenericSansSerif GenericSerif'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	instanceVariableNames: 'fontFamily emSize style unit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	instanceVariableNames: 'filename fileLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
 	instanceVariableNames: 'style forecolor backcolor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusMatrixInitializer
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
 	instanceVariableNames: 'pathPoints wrapMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusPenInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusPrivateFontCollectionInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	instanceVariableNames: 'rectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusRegionInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
 	instanceVariableNames: 'color'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
 	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
 	instanceVariableNames: 'image wrapMode rectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
 	instanceVariableNames: 'name fontCollection'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSansSerifInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromPointsInitializer
 	instanceVariableNames: 'point1 point2 color1 color2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromRectInitializer
 	instanceVariableNames: 'rect color1 color2 mode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	instanceVariableNames: 'brush width'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
 	instanceVariableNames: 'color width'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GraphicsTool subclass: #GdiplusBase
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants GdiplusGUIDs'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusCachedBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusCustomLineCap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusFont
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusFontFamily
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusGraphics
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusGraphicsPath
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusImage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusImageAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusMatrix
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusPen
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusRegion
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBase subclass: #GdiplusStringFormat
 	instanceVariableNames: ''
 	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBrush subclass: #GdiplusHatchBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBrush subclass: #GdiplusLinearGradientBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBrush subclass: #GdiplusPathGradientBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBrush subclass: #GdiplusSolidBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBrush subclass: #GdiplusTextureBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontCollection subclass: #GdiplusInstalledFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontCollection subclass: #GdiplusPrivateFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImage subclass: #GdiplusBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #GdiplusDoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

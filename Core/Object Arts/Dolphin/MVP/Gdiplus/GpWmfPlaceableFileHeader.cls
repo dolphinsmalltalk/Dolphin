@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_BoundingBox _OffsetOf_Checksum _OffsetOf_Hmf _OffsetOf_Inch _OffsetOf_Key _OffsetOf_Reserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_BoundingBox' -> 16r6.
+		'_OffsetOf_Checksum' -> 16r14.
+		'_OffsetOf_Hmf' -> 16r4.
+		'_OffsetOf_Inch' -> 16rE.
+		'_OffsetOf_Key' -> 16r0.
+		'_OffsetOf_Reserved' -> 16r10
+	}!
 GpWmfPlaceableFileHeader guid: (GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_BoundingBox' value: 16r6!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Checksum' value: 16r14!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Hmf' value: 16r4!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Inch' value: 16rE!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Key' value: 16r0!
-GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Reserved' value: 16r10!
 GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

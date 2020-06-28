@@ -2,9 +2,12 @@
 
 Error subclass: #GdiplusError
 	instanceVariableNames: 'win32Error'
-	classVariableNames: 'ErrorDescriptions'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ErrorDescriptions' -> #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')
+	}!
 GdiplusError guid: (GUID fromString: '{2fdb3661-122f-4b12-b60d-ce33dbab46f6}')!
 GdiplusError comment: ''!
 !GdiplusError categoriesForClass!Unclassified! !
@@ -60,6 +63,6 @@ initialize
 		the status to OutOfMemory when they fail regardless of the reason for 
 		failure."
 
-	ErrorDescriptions := #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
+	self addClassConstant: 'ErrorDescriptions' value: #('Ok' 'Generic Error' 'Invalid parameter' 'Gdiplus error' 'Object busy' 'Insufficient buffer' 'Not implemented' 'Win32 error' 'Wrong state' 'Aborted' 'File not found' 'Value overflow' 'Access denied' 'Unknown image format' 'Font family not found' 'Font style not found' 'Not a TrueType font' 'Unsupported GDI+ Version' 'GDI+ not initialized' 'Property not found' 'Property not supported')! !
 !GdiplusError class categoriesFor: #initialize!development!initializing!public! !
 

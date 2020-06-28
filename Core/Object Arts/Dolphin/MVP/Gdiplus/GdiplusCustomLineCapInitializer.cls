@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
 	instanceVariableNames: 'fillPath strokePath baseCap baseInset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusCustomLineCapInitializer guid: (GUID fromString: '{ea986b36-8426-11d7-b609-00e0987e8081}')!
 GdiplusCustomLineCapInitializer comment: ''!
 !GdiplusCustomLineCapInitializer categoriesForClass!Unclassified! !

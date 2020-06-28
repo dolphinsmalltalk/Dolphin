@@ -1,29 +1,23 @@
 ﻿| package |
 package := Package name: 'Gdiplus ImageView'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'See the "Gdiplus ImageView Sample" package'.
 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #GdiplusImageView;
-	yourself.
+package setClassNames: #(
+	#{GdiplusImageView}
+).
 
-package methodNames
-	add: #Bitmap -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
-	add: #Icon -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
-	add: #Image -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
-	add: #OLEPicture -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
-	add: 'ImagePresenter class' -> #resource_Gdiplus_view;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Bitmap} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Icon} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{Image} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+	#(#{ImagePresenter class} #resource_Gdiplus_view)
+	#(#{OLEPicture} #drawOnGraphics:at:extent:from:extent:unit:attributes:)
+).
 
 package setPrerequisites: #(
 	'..\..\IDE\Base\Development System'
@@ -34,7 +28,8 @@ package setPrerequisites: #(
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
 	'Gdiplus'
-	'..\..\ActiveX\Components\Picture\OLE Picture').
+	'..\..\ActiveX\Components\Picture\OLE Picture'
+).
 
 package!
 
@@ -44,10 +39,8 @@ ImageViewAbstract subclass: #GdiplusImageView
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

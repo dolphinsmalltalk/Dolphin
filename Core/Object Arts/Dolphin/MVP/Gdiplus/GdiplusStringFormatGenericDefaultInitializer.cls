@@ -4,7 +4,8 @@ GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultIniti
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatGenericDefaultInitializer guid: (GUID fromString: '{c8f38621-766b-11d7-b609-00e0987e8081}')!
 GdiplusStringFormatGenericDefaultInitializer comment: ''!
 !GdiplusStringFormatGenericDefaultInitializer categoriesForClass!Unclassified! !

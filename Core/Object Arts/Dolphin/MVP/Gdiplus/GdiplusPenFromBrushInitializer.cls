@@ -4,7 +4,8 @@ GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	instanceVariableNames: 'brush width'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenFromBrushInitializer guid: (GUID fromString: '{3cebfbe5-f58d-442f-bf48-8d88151842cf}')!
 GdiplusPenFromBrushInitializer comment: ''!
 !GdiplusPenFromBrushInitializer categoriesForClass!Unclassified! !

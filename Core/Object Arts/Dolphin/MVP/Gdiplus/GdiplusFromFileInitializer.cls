@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	instanceVariableNames: 'filename fileLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFromFileInitializer guid: (GUID fromString: '{9bcb004e-83e4-4d47-9adf-ec7927a69088}')!
 GdiplusFromFileInitializer isAbstract: true!
 GdiplusFromFileInitializer comment: ''!

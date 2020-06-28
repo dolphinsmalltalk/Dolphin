@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsPathFromPointsInitializer guid: (GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathFromPointsInitializer comment: ''!
 !GdiplusGraphicsPathFromPointsInitializer categoriesForClass!Unclassified! !

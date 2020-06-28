@@ -2,14 +2,16 @@
 
 ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_height' -> 16rC.
+		'_OffsetOf_width' -> 16r8.
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 RECTF guid: (GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
-RECTF addClassConstant: '_OffsetOf_height' value: 16rC!
-RECTF addClassConstant: '_OffsetOf_width' value: 16r8!
-RECTF addClassConstant: '_OffsetOf_x' value: 16r0!
-RECTF addClassConstant: '_OffsetOf_y' value: 16r4!
 RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

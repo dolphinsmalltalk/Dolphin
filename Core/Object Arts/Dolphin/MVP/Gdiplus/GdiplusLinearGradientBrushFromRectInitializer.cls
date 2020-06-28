@@ -4,7 +4,8 @@ GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromR
 	instanceVariableNames: 'rect color1 color2 mode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushFromRectInitializer guid: (GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
 GdiplusLinearGradientBrushFromRectInitializer comment: ''!
 !GdiplusLinearGradientBrushFromRectInitializer categoriesForClass!Unclassified! !

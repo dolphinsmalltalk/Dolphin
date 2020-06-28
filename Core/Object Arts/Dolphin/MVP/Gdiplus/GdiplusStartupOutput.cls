@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #GdiplusStartupOutput
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_NotificationHook _OffsetOf_NotificationUnhook'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_NotificationHook' -> 16r0.
+		'_OffsetOf_NotificationUnhook' -> 16r4
+	}!
 GdiplusStartupOutput guid: (GUID fromString: '{40bb7e65-cd3b-49aa-b850-f404c6d944fc}')!
-GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationHook' value: 16r0!
-GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationUnhook' value: 16r4!
 GdiplusStartupOutput comment: '<GdiplusStartupOutput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupOutput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains the following helpstring for this struct

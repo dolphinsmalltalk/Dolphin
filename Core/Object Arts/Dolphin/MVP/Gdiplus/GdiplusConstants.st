@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #GdiplusConstants put: (PoolConstantsDictionary named: #GdiplusConstants)!
+#{GdiplusConstants} declare: (PoolConstantsDictionary named: #GdiplusConstants)!
 GdiplusConstants at: 'Aborted' put: 16r9!
 GdiplusConstants at: 'AccessDenied' put: 16rC!
 GdiplusConstants at: 'BrushTypeHatchFill' put: 16r1!

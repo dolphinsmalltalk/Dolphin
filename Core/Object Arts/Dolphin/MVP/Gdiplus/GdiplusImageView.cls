@@ -4,7 +4,8 @@ ImageViewAbstract subclass: #GdiplusImageView
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageView guid: (GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
 GdiplusImageView comment: 'GdiplusImageView is a <valueView> for displaying static <image>s based on Object-Art''''s ImageView
 

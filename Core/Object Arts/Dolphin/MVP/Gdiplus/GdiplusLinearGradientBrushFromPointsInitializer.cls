@@ -4,7 +4,8 @@ GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromP
 	instanceVariableNames: 'point1 point2 color1 color2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushFromPointsInitializer guid: (GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
 GdiplusLinearGradientBrushFromPointsInitializer comment: ''!
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesForClass!Unclassified! !

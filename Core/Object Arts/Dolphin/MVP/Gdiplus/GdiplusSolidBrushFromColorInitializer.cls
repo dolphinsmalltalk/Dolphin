@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
 	instanceVariableNames: 'color'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusSolidBrushFromColorInitializer guid: (GUID fromString: '{02b80350-515e-40c3-8ec4-b328a7a4bcbb}')!
 GdiplusSolidBrushFromColorInitializer comment: ''!
 !GdiplusSolidBrushFromColorInitializer categoriesForClass!Unclassified! !

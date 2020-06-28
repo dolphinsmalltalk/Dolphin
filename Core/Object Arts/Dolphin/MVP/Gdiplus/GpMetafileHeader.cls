@@ -2,25 +2,27 @@
 
 ExternalStructure subclass: #GpMetafileHeader
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DpiX _OffsetOf_DpiY _OffsetOf_EmfHeader _OffsetOf_EmfPlusFlags _OffsetOf_EmfPlusHeaderSize _OffsetOf_height _OffsetOf_LogicalDpiX _OffsetOf_LogicalDpiY _OffsetOf_size _OffsetOf_type _OffsetOf_Version _OffsetOf_width _OffsetOf_WmfHeader _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DpiX' -> 16r10.
+		'_OffsetOf_DpiY' -> 16r14.
+		'_OffsetOf_EmfHeader' -> 16r28.
+		'_OffsetOf_EmfPlusFlags' -> 16rC.
+		'_OffsetOf_EmfPlusHeaderSize' -> 16r80.
+		'_OffsetOf_height' -> 16r24.
+		'_OffsetOf_LogicalDpiX' -> 16r84.
+		'_OffsetOf_LogicalDpiY' -> 16r88.
+		'_OffsetOf_size' -> 16r4.
+		'_OffsetOf_type' -> 16r0.
+		'_OffsetOf_Version' -> 16r8.
+		'_OffsetOf_width' -> 16r20.
+		'_OffsetOf_WmfHeader' -> 16r28.
+		'_OffsetOf_x' -> 16r18.
+		'_OffsetOf_y' -> 16r1C
+	}!
 GpMetafileHeader guid: (GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
-GpMetafileHeader addClassConstant: '_OffsetOf_DpiX' value: 16r10!
-GpMetafileHeader addClassConstant: '_OffsetOf_DpiY' value: 16r14!
-GpMetafileHeader addClassConstant: '_OffsetOf_EmfHeader' value: 16r28!
-GpMetafileHeader addClassConstant: '_OffsetOf_EmfPlusFlags' value: 16rC!
-GpMetafileHeader addClassConstant: '_OffsetOf_EmfPlusHeaderSize' value: 16r80!
-GpMetafileHeader addClassConstant: '_OffsetOf_height' value: 16r24!
-GpMetafileHeader addClassConstant: '_OffsetOf_LogicalDpiX' value: 16r84!
-GpMetafileHeader addClassConstant: '_OffsetOf_LogicalDpiY' value: 16r88!
-GpMetafileHeader addClassConstant: '_OffsetOf_size' value: 16r4!
-GpMetafileHeader addClassConstant: '_OffsetOf_type' value: 16r0!
-GpMetafileHeader addClassConstant: '_OffsetOf_Version' value: 16r8!
-GpMetafileHeader addClassConstant: '_OffsetOf_width' value: 16r20!
-GpMetafileHeader addClassConstant: '_OffsetOf_WmfHeader' value: 16r28!
-GpMetafileHeader addClassConstant: '_OffsetOf_x' value: 16r18!
-GpMetafileHeader addClassConstant: '_OffsetOf_y' value: 16r1C!
 GpMetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

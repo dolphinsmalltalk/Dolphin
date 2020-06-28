@@ -2,23 +2,25 @@
 
 ExternalStructure subclass: #GpImageCodecInfo
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Clsid _OffsetOf_CodecName _OffsetOf_DllName _OffsetOf_FilenameExtension _OffsetOf_Flags _OffsetOf_FormatDescription _OffsetOf_FormatID _OffsetOf_MimeType _OffsetOf_SigCount _OffsetOf_SigMask _OffsetOf_SigPattern _OffsetOf_SigSize _OffsetOf_Version'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Clsid' -> 16r0.
+		'_OffsetOf_CodecName' -> 16r20.
+		'_OffsetOf_DllName' -> 16r24.
+		'_OffsetOf_FilenameExtension' -> 16r2C.
+		'_OffsetOf_Flags' -> 16r34.
+		'_OffsetOf_FormatDescription' -> 16r28.
+		'_OffsetOf_FormatID' -> 16r10.
+		'_OffsetOf_MimeType' -> 16r30.
+		'_OffsetOf_SigCount' -> 16r3C.
+		'_OffsetOf_SigMask' -> 16r48.
+		'_OffsetOf_SigPattern' -> 16r44.
+		'_OffsetOf_SigSize' -> 16r40.
+		'_OffsetOf_Version' -> 16r38
+	}!
 GpImageCodecInfo guid: (GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
-GpImageCodecInfo addClassConstant: '_OffsetOf_Clsid' value: 16r0!
-GpImageCodecInfo addClassConstant: '_OffsetOf_CodecName' value: 16r20!
-GpImageCodecInfo addClassConstant: '_OffsetOf_DllName' value: 16r24!
-GpImageCodecInfo addClassConstant: '_OffsetOf_FilenameExtension' value: 16r2C!
-GpImageCodecInfo addClassConstant: '_OffsetOf_Flags' value: 16r34!
-GpImageCodecInfo addClassConstant: '_OffsetOf_FormatDescription' value: 16r28!
-GpImageCodecInfo addClassConstant: '_OffsetOf_FormatID' value: 16r10!
-GpImageCodecInfo addClassConstant: '_OffsetOf_MimeType' value: 16r30!
-GpImageCodecInfo addClassConstant: '_OffsetOf_SigCount' value: 16r3C!
-GpImageCodecInfo addClassConstant: '_OffsetOf_SigMask' value: 16r48!
-GpImageCodecInfo addClassConstant: '_OffsetOf_SigPattern' value: 16r44!
-GpImageCodecInfo addClassConstant: '_OffsetOf_SigSize' value: 16r40!
-GpImageCodecInfo addClassConstant: '_OffsetOf_Version' value: 16r38!
 GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusRegionFromPathInitializer guid: (GUID fromString: '{2e7c1bb2-37d2-4d8b-9135-3eb9ab2ed1bb}')!
 GdiplusRegionFromPathInitializer comment: ''!
 !GdiplusRegionFromPathInitializer categoriesForClass!Unclassified! !

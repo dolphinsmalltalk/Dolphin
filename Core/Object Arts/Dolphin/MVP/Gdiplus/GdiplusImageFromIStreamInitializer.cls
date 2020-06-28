@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageFromIStreamInitializer guid: (GUID fromString: '{0a3984b0-2193-4a59-abd8-6f6d3f8ed0f7}')!
 GdiplusImageFromIStreamInitializer comment: ''!
 !GdiplusImageFromIStreamInitializer categoriesForClass!Unclassified! !

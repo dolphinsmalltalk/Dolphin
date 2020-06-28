@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusRegionInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusRegionInitializer guid: (GUID fromString: '{c8f38620-766b-11d7-b609-00e0987e8081}')!
 GdiplusRegionInitializer comment: ''!
 !GdiplusRegionInitializer categoriesForClass!Unclassified! !

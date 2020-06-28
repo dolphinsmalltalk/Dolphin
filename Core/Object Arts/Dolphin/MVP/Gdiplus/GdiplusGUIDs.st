@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #GdiplusGUIDs put: (PoolConstantsDictionary named: #GdiplusGUIDs)!
+#{GdiplusGUIDs} declare: (PoolConstantsDictionary named: #GdiplusGUIDs)!
 GdiplusGUIDs at: 'EncoderChrominanceTable' put: (Object fromBinaryStoreBytes: 
 (ByteArray fromBase64String: 'IVNUQiA0IDYABABHVUlEEAAAANxV5PKzCRZDgmBnatoySBw='))!
 GdiplusGUIDs at: 'EncoderColorDepth' put: (Object fromBinaryStoreBytes: 

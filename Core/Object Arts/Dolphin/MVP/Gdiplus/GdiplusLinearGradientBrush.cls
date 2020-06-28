@@ -4,7 +4,8 @@ GdiplusBrush subclass: #GdiplusLinearGradientBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrush guid: (GUID fromString: '{0ea671c7-823f-4367-89b3-c28e45a365ea}')!
 GdiplusLinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color gradient in which the color changes evenly from the starting boundary line of an instance to its ending boundary line. Boundary lines are two parallel straight lines. The color gradient is perpendicular to the boundary lines, changing gradually across the stroke from starting to ending boundary lines. The color gradient has one color at the starting boundary line and another color at the ending boundary line.'!
 !GdiplusLinearGradientBrush categoriesForClass!Unclassified! !

@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #GpColorPalette
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Count _OffsetOf_Entries _OffsetOf_Flags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Count' -> 16r4.
+		'_OffsetOf_Entries' -> 16r8.
+		'_OffsetOf_Flags' -> 16r0
+	}!
 GpColorPalette guid: (GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
-GpColorPalette addClassConstant: '_OffsetOf_Count' value: 16r4!
-GpColorPalette addClassConstant: '_OffsetOf_Entries' value: 16r8!
-GpColorPalette addClassConstant: '_OffsetOf_Flags' value: 16r0!
 GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

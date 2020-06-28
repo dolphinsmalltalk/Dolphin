@@ -4,7 +4,8 @@ GdiplusBase subclass: #GdiplusRegion
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusRegion guid: (GUID fromString: '{148916f7-d5f7-4aea-a739-3e4ba82692ac}')!
 GdiplusRegion comment: 'An instance of GdiplusRegion describes an area of the display surface. The area can be any shape, i.e., the boundary of the area can be a combination of curved and straight lines. Regions can also be created from the interiors of rectangles, paths, or a combination of these. Regions are used in clipping and hit-testing operations.'!
 !GdiplusRegion categoriesForClass!Unclassified! !

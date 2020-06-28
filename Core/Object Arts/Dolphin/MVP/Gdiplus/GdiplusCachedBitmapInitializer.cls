@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
 	instanceVariableNames: 'bitmap graphics'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusCachedBitmapInitializer guid: (GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
 GdiplusCachedBitmapInitializer comment: ''!
 !GdiplusCachedBitmapInitializer categoriesForClass!Unclassified! !

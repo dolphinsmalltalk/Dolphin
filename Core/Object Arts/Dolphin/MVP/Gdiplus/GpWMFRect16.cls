@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #GpWMFRect16
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bottom' -> 16r6.
+		'_OffsetOf_left' -> 16r0.
+		'_OffsetOf_right' -> 16r4.
+		'_OffsetOf_top' -> 16r2
+	}!
 GpWMFRect16 guid: (GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
-GpWMFRect16 addClassConstant: '_OffsetOf_bottom' value: 16r6!
-GpWMFRect16 addClassConstant: '_OffsetOf_left' value: 16r0!
-GpWMFRect16 addClassConstant: '_OffsetOf_right' value: 16r4!
-GpWMFRect16 addClassConstant: '_OffsetOf_top' value: 16r2!
 GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

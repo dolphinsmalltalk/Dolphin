@@ -4,7 +4,8 @@ View subclass: #GdiplusDoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusDoubleBufferedView guid: (GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
 GdiplusDoubleBufferedView comment: ''!
 !GdiplusDoubleBufferedView categoriesForClass!Unclassified! !

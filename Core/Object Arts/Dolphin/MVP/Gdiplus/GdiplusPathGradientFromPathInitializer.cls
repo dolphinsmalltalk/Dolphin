@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
 	instanceVariableNames: 'path'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPathGradientFromPathInitializer guid: (GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
 GdiplusPathGradientFromPathInitializer comment: ''!
 !GdiplusPathGradientFromPathInitializer categoriesForClass!Unclassified! !

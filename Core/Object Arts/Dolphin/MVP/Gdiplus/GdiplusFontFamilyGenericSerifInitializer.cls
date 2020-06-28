@@ -4,7 +4,8 @@ GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFamilyGenericSerifInitializer guid: (GUID fromString: '{57c9fb99-3104-48e2-b5e7-d4f2041b5a3e}')!
 GdiplusFontFamilyGenericSerifInitializer comment: ''!
 !GdiplusFontFamilyGenericSerifInitializer categoriesForClass!Unclassified! !

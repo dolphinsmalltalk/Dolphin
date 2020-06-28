@@ -4,7 +4,8 @@ ExternalLibrary subclass: #GdiplusLibrary
 	instanceVariableNames: 'token'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLibrary guid: (GUID fromString: '{de97dca0-ad17-4002-a790-a4b99480a5b8}')!
 GdiplusLibrary comment: 'Gdiplus is the <ExternalLibrary> class to represent the dynamic link library, ''GDIPLUS.DLL''. It was generated from IDL built from the GDI+ header files. It contains wrapper methods for each of the methods in the GDI+ Flat API. The GDI+ class library (a set of C++ classes) sits on top of the flat API. There is very little documentation for the flat API, but the class library is, for the most part, a thin layer on top so it is easy to map between the C++ class library documentation and the corresponding flat API calls.
 '!

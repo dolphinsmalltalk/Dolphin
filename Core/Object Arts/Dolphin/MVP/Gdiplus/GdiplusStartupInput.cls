@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #GdiplusStartupInput
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_DebugEventCallback _OffsetOf_GdiplusVersion _OffsetOf_SuppressBackgroundThread _OffsetOf_SuppressExternalCodecs'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_DebugEventCallback' -> 16r4.
+		'_OffsetOf_GdiplusVersion' -> 16r0.
+		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
+		'_OffsetOf_SuppressExternalCodecs' -> 16rC
+	}!
 GdiplusStartupInput guid: (GUID fromString: '{0cb202b5-b002-428d-8a31-f44d2919cb02}')!
-GdiplusStartupInput addClassConstant: '_OffsetOf_DebugEventCallback' value: 16r4!
-GdiplusStartupInput addClassConstant: '_OffsetOf_GdiplusVersion' value: 16r0!
-GdiplusStartupInput addClassConstant: '_OffsetOf_SuppressBackgroundThread' value: 16r8!
-GdiplusStartupInput addClassConstant: '_OffsetOf_SuppressExternalCodecs' value: 16rC!
 GdiplusStartupInput comment: '<GdiplusStartupInput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupInput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

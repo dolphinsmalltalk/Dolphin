@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #GpColorMap
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_newColor _OffsetOf_oldColor'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_newColor' -> 16r4.
+		'_OffsetOf_oldColor' -> 16r0
+	}!
 GpColorMap guid: (GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
-GpColorMap addClassConstant: '_OffsetOf_newColor' value: 16r4!
-GpColorMap addClassConstant: '_OffsetOf_oldColor' value: 16r0!
 GpColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

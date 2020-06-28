@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #GpEncoderParameter
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Guid _OffsetOf_NumberOfValues _OffsetOf_Type _OffsetOf_Value'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Guid' -> 16r0.
+		'_OffsetOf_NumberOfValues' -> 16r10.
+		'_OffsetOf_Type' -> 16r14.
+		'_OffsetOf_Value' -> 16r18
+	}!
 GpEncoderParameter guid: (GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
-GpEncoderParameter addClassConstant: '_OffsetOf_Guid' value: 16r0!
-GpEncoderParameter addClassConstant: '_OffsetOf_NumberOfValues' value: 16r10!
-GpEncoderParameter addClassConstant: '_OffsetOf_Type' value: 16r14!
-GpEncoderParameter addClassConstant: '_OffsetOf_Value' value: 16r18!
 GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

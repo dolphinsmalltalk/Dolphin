@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusPenInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenInitializer guid: (GUID fromString: '{b5a5d186-b0ef-421c-befb-c5628a17fee9}')!
 GdiplusPenInitializer isAbstract: true!
 GdiplusPenInitializer comment: ''!

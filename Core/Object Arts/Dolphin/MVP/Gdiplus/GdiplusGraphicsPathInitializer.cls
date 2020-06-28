@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsPathInitializer guid: (GUID fromString: '{1a1a5ea1-6151-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathInitializer comment: ''!
 !GdiplusGraphicsPathInitializer categoriesForClass!Unclassified! !

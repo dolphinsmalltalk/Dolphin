@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInstalledFontCollectionInitializer guid: (GUID fromString: '{c09d8c04-5f28-11d7-b609-00e0987e8081}')!
 GdiplusInstalledFontCollectionInitializer comment: ''!
 !GdiplusInstalledFontCollectionInitializer categoriesForClass!Unclassified! !

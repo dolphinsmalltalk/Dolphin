@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsFromHDCInitializer guid: (GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
 GdiplusGraphicsFromHDCInitializer comment: ''!
 !GdiplusGraphicsFromHDCInitializer categoriesForClass!Unclassified! !

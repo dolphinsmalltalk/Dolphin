@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	instanceVariableNames: 'width height format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBitmapFromBlankInitializer guid: (GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
 GdiplusBitmapFromBlankInitializer comment: ''!
 !GdiplusBitmapFromBlankInitializer categoriesForClass!Unclassified! !

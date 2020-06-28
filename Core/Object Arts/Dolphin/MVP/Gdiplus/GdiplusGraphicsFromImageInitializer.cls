@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsFromImageInitializer guid: (GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
 GdiplusGraphicsFromImageInitializer comment: ''!
 !GdiplusGraphicsFromImageInitializer categoriesForClass!Unclassified! !

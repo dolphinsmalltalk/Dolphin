@@ -2,17 +2,19 @@
 
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_mtHeaderSize' -> 16r2.
+		'_OffsetOf_mtMaxRecord' -> 16r10.
+		'_OffsetOf_mtNoObjects' -> 16rC.
+		'_OffsetOf_mtNoParameters' -> 16r14.
+		'_OffsetOf_mtSize' -> 16r8.
+		'_OffsetOf_mtType' -> 16r0.
+		'_OffsetOf_mtVersion' -> 16r4
+	}!
 METAHEADER guid: (GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
-METAHEADER addClassConstant: '_OffsetOf_mtHeaderSize' value: 16r2!
-METAHEADER addClassConstant: '_OffsetOf_mtMaxRecord' value: 16r10!
-METAHEADER addClassConstant: '_OffsetOf_mtNoObjects' value: 16rC!
-METAHEADER addClassConstant: '_OffsetOf_mtNoParameters' value: 16r14!
-METAHEADER addClassConstant: '_OffsetOf_mtSize' value: 16r8!
-METAHEADER addClassConstant: '_OffsetOf_mtType' value: 16r0!
-METAHEADER addClassConstant: '_OffsetOf_mtVersion' value: 16r4!
 METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

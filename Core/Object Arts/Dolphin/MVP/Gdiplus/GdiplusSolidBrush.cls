@@ -4,7 +4,8 @@ GdiplusBrush subclass: #GdiplusSolidBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusSolidBrush guid: (GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
 GdiplusSolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
 !GdiplusSolidBrush categoriesForClass!Unclassified! !

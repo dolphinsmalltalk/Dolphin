@@ -4,7 +4,8 @@ GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
 	instanceVariableNames: 'name fontCollection'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusFontFamilyFromNameInitializer guid: (GUID fromString: '{2688e140-b9b7-4e51-9b2d-f8bba5c90e2b}')!
 GdiplusFontFamilyFromNameInitializer comment: ''!
 !GdiplusFontFamilyFromNameInitializer categoriesForClass!Unclassified! !

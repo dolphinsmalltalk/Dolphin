@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
 	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatInitializer guid: (GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
 GdiplusStringFormatInitializer isAbstract: true!
 GdiplusStringFormatInitializer comment: ''!

@@ -4,7 +4,8 @@ GdiplusFontCollection subclass: #GdiplusPrivateFontCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPrivateFontCollection guid: (GUID fromString: '{c09d8c05-5f28-11d7-b609-00e0987e8081}')!
 GdiplusPrivateFontCollection comment: 'GdiplusPrivateFontCollection is a collection class for fonts. This class keeps a collection of fonts specifically for an application. The fonts in the collection can include installed fonts as well as fonts that have not been installed on the system.
 

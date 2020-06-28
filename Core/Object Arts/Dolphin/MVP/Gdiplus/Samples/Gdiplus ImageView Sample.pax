@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus ImageView Sample'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Evaluate
 	GdiplusImageViewSampleShell show'.
@@ -8,15 +8,9 @@ package paxVersion: 1;
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #GdiplusImageViewSampleShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{GdiplusImageViewSampleShell}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -34,7 +28,8 @@ package setPrerequisites: #(
 	'..\..\Models\Value\Dolphin Value Models'
 	'..\Gdiplus'
 	'..\Gdiplus ImageView'
-	'..\..\..\ActiveX\Components\Picture\OLE Picture').
+	'..\..\..\ActiveX\Components\Picture\OLE Picture'
+).
 
 package!
 
@@ -44,12 +39,8 @@ Shell subclass: #GdiplusImageViewSampleShell
 	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

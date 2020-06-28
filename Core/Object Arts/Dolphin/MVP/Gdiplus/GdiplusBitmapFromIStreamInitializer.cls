@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
 	instanceVariableNames: 'iStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBitmapFromIStreamInitializer guid: (GUID fromString: '{f3cd9058-7788-4cff-95d9-04dda741ef4e}')!
 GdiplusBitmapFromIStreamInitializer comment: ''!
 !GdiplusBitmapFromIStreamInitializer categoriesForClass!Unclassified! !

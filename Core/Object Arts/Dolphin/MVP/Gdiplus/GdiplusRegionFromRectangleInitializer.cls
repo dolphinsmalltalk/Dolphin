@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	instanceVariableNames: 'rectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusRegionFromRectangleInitializer guid: (GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
 GdiplusRegionFromRectangleInitializer comment: ''!
 !GdiplusRegionFromRectangleInitializer categoriesForClass!Unclassified! !

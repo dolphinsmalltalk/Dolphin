@@ -4,7 +4,8 @@ GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicI
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusStringFormatGenericTypographicInitializer guid: (GUID fromString: '{cbe1bbee-b46a-4c95-90e4-d4bec63775e9}')!
 GdiplusStringFormatGenericTypographicInitializer comment: ''!
 !GdiplusStringFormatGenericTypographicInitializer categoriesForClass!Unclassified! !

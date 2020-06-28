@@ -4,7 +4,8 @@ GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
 	instanceVariableNames: 'icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBitmapFromIconInitializer guid: (GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
 GdiplusBitmapFromIconInitializer comment: ''!
 !GdiplusBitmapFromIconInitializer categoriesForClass!Unclassified! !

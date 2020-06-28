@@ -2,25 +2,27 @@
 
 ExternalStructure subclass: #ENHMETAHEADER3
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dSignature _OffsetOf_iType _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nSize _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMillimeters'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dSignature' -> 16r28.
+		'_OffsetOf_iType' -> 16r0.
+		'_OffsetOf_nBytes' -> 16r30.
+		'_OffsetOf_nDescription' -> 16r3C.
+		'_OffsetOf_nHandles' -> 16r38.
+		'_OffsetOf_nPalEntries' -> 16r44.
+		'_OffsetOf_nRecords' -> 16r34.
+		'_OffsetOf_nSize' -> 16r4.
+		'_OffsetOf_nVersion' -> 16r2C.
+		'_OffsetOf_offDescription' -> 16r40.
+		'_OffsetOf_rclBounds' -> 16r8.
+		'_OffsetOf_rclFrame' -> 16r18.
+		'_OffsetOf_sReserved' -> 16r3A.
+		'_OffsetOf_szlDevice' -> 16r48.
+		'_OffsetOf_szlMillimeters' -> 16r50
+	}!
 ENHMETAHEADER3 guid: (GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_dSignature' value: 16r28!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_iType' value: 16r0!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nBytes' value: 16r30!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nDescription' value: 16r3C!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nHandles' value: 16r38!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nPalEntries' value: 16r44!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nRecords' value: 16r34!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nSize' value: 16r4!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_nVersion' value: 16r2C!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_offDescription' value: 16r40!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_rclFrame' value: 16r18!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
-ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
 ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct

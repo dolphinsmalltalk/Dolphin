@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #GpCharacterRange
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_First _OffsetOf_length'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_First' -> 16r0.
+		'_OffsetOf_length' -> 16r4
+	}!
 GpCharacterRange guid: (GUID fromString: '{01079d38-5861-45b6-8de5-d2165b5de26b}')!
-GpCharacterRange addClassConstant: '_OffsetOf_First' value: 16r0!
-GpCharacterRange addClassConstant: '_OffsetOf_length' value: 16r4!
 GpCharacterRange comment: '<GpCharacterRange> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpCharacterRange'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
