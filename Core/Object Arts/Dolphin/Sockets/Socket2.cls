@@ -4,7 +4,8 @@ SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Socket2 guid: (GUID fromString: '{dfa0db01-8f76-4b2a-a19c-002ecf488fdc}')!
 Socket2 comment: 'This class represents a socket for one end of a TCP/IP network communication link. Sockets can be instantiated to be associated with a specified port on a host computer at a given internet address. Once a connection is made using #connect the underlying communication mechanism uses a stream-based protocol rather than the alternative unreliable datagram-based protocol.
 

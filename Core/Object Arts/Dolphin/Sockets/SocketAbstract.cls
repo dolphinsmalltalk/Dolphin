@@ -4,7 +4,8 @@ Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
 	classVariableNames: 'AllSockets WaitingSemaphores'
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketAbstract guid: (GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketAbstract isAbstract: true!
 SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Sockets Connection'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk TCP/IP Sockets Connection Support
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -15,26 +15,21 @@ For documentation evaluate:
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #BlockingCallMonitor;
-	add: #ServerSocket;
-	add: #Socket;
-	add: #SocketAbstract;
-	add: #SocketWouldBlock;
-	add: #WinAsyncSocket;
-	add: #WSockLibrary;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{BlockingCallMonitor}
+	#{ServerSocket}
+	#{Socket}
+	#{SocketAbstract}
+	#{SocketWouldBlock}
+	#{WinAsyncSocket}
+	#{WSockLibrary}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\MVP\Base\Dolphin MVP Base'
-	'Dolphin Sockets').
+	'Dolphin Sockets'
+).
 
 package!
 
@@ -44,42 +39,44 @@ Object subclass: #BlockingCallMonitor
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
 	classVariableNames: 'AllSockets WaitingSemaphores'
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketError subclass: #SocketWouldBlock
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #WSockLibrary
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

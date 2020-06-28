@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #IP_ADDR_STRING
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Context _OffsetOf_IpAddress _OffsetOf_IpMask _OffsetOf_Next'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Context' -> 16r24.
+		'_OffsetOf_IpAddress' -> 16r4.
+		'_OffsetOf_IpMask' -> 16r14.
+		'_OffsetOf_Next' -> 16r0
+	}!
 IP_ADDR_STRING guid: (GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
-IP_ADDR_STRING addClassConstant: '_OffsetOf_Context' value: 16r24!
-IP_ADDR_STRING addClassConstant: '_OffsetOf_IpAddress' value: 16r4!
-IP_ADDR_STRING addClassConstant: '_OffsetOf_IpMask' value: 16r14!
-IP_ADDR_STRING addClassConstant: '_OffsetOf_Next' value: 16r0!
 IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

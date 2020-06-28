@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_h_addr_list _OffsetOf_h_addrtype _OffsetOf_h_aliases _OffsetOf_h_length _OffsetOf_h_name'
+	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_h_addr_list' -> 16rC.
+		'_OffsetOf_h_addrtype' -> 16r8.
+		'_OffsetOf_h_aliases' -> 16r4.
+		'_OffsetOf_h_length' -> 16rA.
+		'_OffsetOf_h_name' -> 16r0
+	}!
 HOSTENT guid: (GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
-HOSTENT addClassConstant: '_OffsetOf_h_addr_list' value: 16rC!
-HOSTENT addClassConstant: '_OffsetOf_h_addrtype' value: 16r8!
-HOSTENT addClassConstant: '_OffsetOf_h_aliases' value: 16r4!
-HOSTENT addClassConstant: '_OffsetOf_h_length' value: 16rA!
-HOSTENT addClassConstant: '_OffsetOf_h_name' value: 16r0!
 HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

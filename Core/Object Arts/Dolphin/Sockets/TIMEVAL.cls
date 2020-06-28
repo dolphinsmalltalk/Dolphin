@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_tv_sec _OffsetOf_tv_usec'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_tv_sec' -> 16r0.
+		'_OffsetOf_tv_usec' -> 16r4
+	}!
 TIMEVAL guid: (GUID fromString: '{c4066d09-c93b-488e-b9b9-585ddddb41ea}')!
-TIMEVAL addClassConstant: '_OffsetOf_tv_sec' value: 16r0!
-TIMEVAL addClassConstant: '_OffsetOf_tv_usec' value: 16r4!
 TIMEVAL comment: '<Timeval> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.timeval'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 The type library contains no documentation for this struct

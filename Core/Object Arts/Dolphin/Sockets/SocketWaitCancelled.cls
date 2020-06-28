@@ -4,7 +4,8 @@ SocketError subclass: #SocketWaitCancelled
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketWaitCancelled guid: (GUID fromString: '{87b4c56b-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketWaitCancelled comment: 'This exception signals that a wait on a blocking Socket operation has been explicitly cancelled.'!
 !SocketWaitCancelled categoriesForClass!Windows Sockets! !

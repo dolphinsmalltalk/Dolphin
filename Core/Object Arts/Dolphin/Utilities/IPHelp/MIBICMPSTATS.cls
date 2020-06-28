@@ -2,23 +2,25 @@
 
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwAddrMaskReps _OffsetOf_dwAddrMasks _OffsetOf_dwDestUnreachs _OffsetOf_dwEchoReps _OffsetOf_dwEchos _OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_dwParmProbs _OffsetOf_dwRedirects _OffsetOf_dwSrcQuenchs _OffsetOf_dwTimeExcds _OffsetOf_dwTimestampReps _OffsetOf_dwTimestamps'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwAddrMaskReps' -> 16r30.
+		'_OffsetOf_dwAddrMasks' -> 16r2C.
+		'_OffsetOf_dwDestUnreachs' -> 16r8.
+		'_OffsetOf_dwEchoReps' -> 16r20.
+		'_OffsetOf_dwEchos' -> 16r1C.
+		'_OffsetOf_dwErrors' -> 16r4.
+		'_OffsetOf_dwMsgs' -> 16r0.
+		'_OffsetOf_dwParmProbs' -> 16r10.
+		'_OffsetOf_dwRedirects' -> 16r18.
+		'_OffsetOf_dwSrcQuenchs' -> 16r14.
+		'_OffsetOf_dwTimeExcds' -> 16rC.
+		'_OffsetOf_dwTimestampReps' -> 16r28.
+		'_OffsetOf_dwTimestamps' -> 16r24
+	}!
 MIBICMPSTATS guid: (GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMaskReps' value: 16r30!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMasks' value: 16r2C!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwDestUnreachs' value: 16r8!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwEchoReps' value: 16r20!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwEchos' value: 16r1C!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwErrors' value: 16r4!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwMsgs' value: 16r0!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwParmProbs' value: 16r10!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwRedirects' value: 16r18!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwSrcQuenchs' value: 16r14!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimeExcds' value: 16rC!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestampReps' value: 16r28!
-MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestamps' value: 16r24!
 MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

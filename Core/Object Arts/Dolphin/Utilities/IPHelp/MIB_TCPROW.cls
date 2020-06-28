@@ -2,15 +2,17 @@
 
 ExternalStructure subclass: #MIB_TCPROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort _OffsetOf_dwRemoteAddr _OffsetOf_dwRemotePort _OffsetOf_dwState'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwLocalAddr' -> 16r4.
+		'_OffsetOf_dwLocalPort' -> 16r8.
+		'_OffsetOf_dwRemoteAddr' -> 16rC.
+		'_OffsetOf_dwRemotePort' -> 16r10.
+		'_OffsetOf_dwState' -> 16r0
+	}!
 MIB_TCPROW guid: (GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
-MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalAddr' value: 16r4!
-MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalPort' value: 16r8!
-MIB_TCPROW addClassConstant: '_OffsetOf_dwRemoteAddr' value: 16rC!
-MIB_TCPROW addClassConstant: '_OffsetOf_dwRemotePort' value: 16r10!
-MIB_TCPROW addClassConstant: '_OffsetOf_dwState' value: 16r0!
 MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

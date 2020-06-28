@@ -2,24 +2,26 @@
 
 ExternalStructure subclass: #MIB_IPFORWARDROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwForwardAge _OffsetOf_dwForwardDest _OffsetOf_dwForwardIfIndex _OffsetOf_dwForwardMask _OffsetOf_dwForwardMetric1 _OffsetOf_dwForwardMetric2 _OffsetOf_dwForwardMetric3 _OffsetOf_dwForwardMetric4 _OffsetOf_dwForwardMetric5 _OffsetOf_dwForwardNextHop _OffsetOf_dwForwardNextHopAS _OffsetOf_dwForwardPolicy _OffsetOf_dwForwardProto _OffsetOf_dwForwardType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwForwardAge' -> 16r1C.
+		'_OffsetOf_dwForwardDest' -> 16r0.
+		'_OffsetOf_dwForwardIfIndex' -> 16r10.
+		'_OffsetOf_dwForwardMask' -> 16r4.
+		'_OffsetOf_dwForwardMetric1' -> 16r24.
+		'_OffsetOf_dwForwardMetric2' -> 16r28.
+		'_OffsetOf_dwForwardMetric3' -> 16r2C.
+		'_OffsetOf_dwForwardMetric4' -> 16r30.
+		'_OffsetOf_dwForwardMetric5' -> 16r34.
+		'_OffsetOf_dwForwardNextHop' -> 16rC.
+		'_OffsetOf_dwForwardNextHopAS' -> 16r20.
+		'_OffsetOf_dwForwardPolicy' -> 16r8.
+		'_OffsetOf_dwForwardProto' -> 16r18.
+		'_OffsetOf_dwForwardType' -> 16r14
+	}!
 MIB_IPFORWARDROW guid: (GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardAge' value: 16r1C!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardDest' value: 16r0!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardIfIndex' value: 16r10!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMask' value: 16r4!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric1' value: 16r24!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric2' value: 16r28!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric3' value: 16r2C!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric4' value: 16r30!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardMetric5' value: 16r34!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardNextHop' value: 16rC!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardNextHopAS' value: 16r20!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardPolicy' value: 16r8!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardProto' value: 16r18!
-MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardType' value: 16r14!
 MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

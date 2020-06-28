@@ -2,17 +2,19 @@
 
 ExternalStructure subclass: #MIB_IPADDRROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwAddr _OffsetOf_dwBCastAddr _OffsetOf_dwIndex _OffsetOf_dwMask _OffsetOf_dwReasmSize _OffsetOf_Unused1 _OffsetOf_wType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwAddr' -> 16r0.
+		'_OffsetOf_dwBCastAddr' -> 16rC.
+		'_OffsetOf_dwIndex' -> 16r4.
+		'_OffsetOf_dwMask' -> 16r8.
+		'_OffsetOf_dwReasmSize' -> 16r10.
+		'_OffsetOf_Unused1' -> 16r14.
+		'_OffsetOf_wType' -> 16r16
+	}!
 MIB_IPADDRROW guid: (GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_dwAddr' value: 16r0!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_dwBCastAddr' value: 16rC!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_dwIndex' value: 16r4!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_dwMask' value: 16r8!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_dwReasmSize' value: 16r10!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_Unused1' value: 16r14!
-MIB_IPADDRROW addClassConstant: '_OffsetOf_wType' value: 16r16!
 MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

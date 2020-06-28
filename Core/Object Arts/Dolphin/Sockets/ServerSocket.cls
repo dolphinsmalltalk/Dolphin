@@ -4,7 +4,8 @@ SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ServerSocket guid: (GUID fromString: '{87b4c6e0-026e-11d3-9fd7-00a0cc3e4a32}')!
 ServerSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 

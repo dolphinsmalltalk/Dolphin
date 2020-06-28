@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #IPHlpApiConstants put: (PoolConstantsDictionary named: #IPHlpApiConstants)!
+#{IPHlpApiConstants} declare: (PoolConstantsDictionary named: #IPHlpApiConstants)!
 IPHlpApiConstants at: 'AD_APPLY_ALL' put: 16r7!
 IPHlpApiConstants at: 'AD_APPLY_BUFFERED_REFRESH' put: 16r10!
 IPHlpApiConstants at: 'AD_APPLY_FORCE' put: 16r8!

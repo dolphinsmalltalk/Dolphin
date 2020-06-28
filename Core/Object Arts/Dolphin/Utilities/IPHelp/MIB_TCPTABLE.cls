@@ -2,11 +2,13 @@
 
 IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_table'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_table' -> 16r4
+	}!
 MIB_TCPTABLE guid: (GUID fromString: '{1308bd96-edb7-4030-85b1-a6651a737122}')!
-MIB_TCPTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
 MIB_TCPTABLE comment: '<MIB_TCPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

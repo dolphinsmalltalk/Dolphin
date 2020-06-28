@@ -4,7 +4,8 @@ ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketReadStream guid: (GUID fromString: '{87b4c6fc-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketReadStream comment: 'This class represents a buffered read stream for receiving data across a Socket connection. The #next call will receive the next element from the stream and will block until there is data available. In order to avoid blocking (when executing on the user interface thread, for example) the #hasInput method may be used to check for the presence of available input before calling #next.'!
 !SocketReadStream categoriesForClass!Collections-Streams!Windows Sockets! !

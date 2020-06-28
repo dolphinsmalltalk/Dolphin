@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AutoconfigActive _OffsetOf_AutoconfigEnabled _OffsetOf_CurrentDnsServer _OffsetOf_DnsServerList'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AutoconfigActive' -> 16r4.
+		'_OffsetOf_AutoconfigEnabled' -> 16r0.
+		'_OffsetOf_CurrentDnsServer' -> 16r8.
+		'_OffsetOf_DnsServerList' -> 16rC
+	}!
 IP_PER_ADAPTER_INFO guid: (GUID fromString: '{e2022105-d714-4780-a2dc-5db76307f035}')!
-IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_AutoconfigActive' value: 16r4!
-IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_AutoconfigEnabled' value: 16r0!
-IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_CurrentDnsServer' value: 16r8!
-IP_PER_ADAPTER_INFO addClassConstant: '_OffsetOf_DnsServerList' value: 16rC!
 IP_PER_ADAPTER_INFO comment: '<IP_PER_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_PER_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

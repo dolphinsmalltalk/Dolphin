@@ -2,15 +2,17 @@
 
 ExternalStructure subclass: #MIB_UDPSTATS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwInDatagrams _OffsetOf_dwInErrors _OffsetOf_dwNoPorts _OffsetOf_dwNumAddrs _OffsetOf_dwOutDatagrams'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwInDatagrams' -> 16r0.
+		'_OffsetOf_dwInErrors' -> 16r8.
+		'_OffsetOf_dwNoPorts' -> 16r4.
+		'_OffsetOf_dwNumAddrs' -> 16r10.
+		'_OffsetOf_dwOutDatagrams' -> 16rC
+	}!
 MIB_UDPSTATS guid: (GUID fromString: '{c9d1622e-d10d-4ba8-a634-acebf006ae2e}')!
-MIB_UDPSTATS addClassConstant: '_OffsetOf_dwInDatagrams' value: 16r0!
-MIB_UDPSTATS addClassConstant: '_OffsetOf_dwInErrors' value: 16r8!
-MIB_UDPSTATS addClassConstant: '_OffsetOf_dwNoPorts' value: 16r4!
-MIB_UDPSTATS addClassConstant: '_OffsetOf_dwNumAddrs' value: 16r10!
-MIB_UDPSTATS addClassConstant: '_OffsetOf_dwOutDatagrams' value: 16rC!
 MIB_UDPSTATS comment: '<MIB_UDPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

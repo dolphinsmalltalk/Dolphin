@@ -2,34 +2,36 @@
 
 ExternalStructure subclass: #MIB_IFROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bDescr _OffsetOf_bPhysAddr _OffsetOf_dwAdminStatus _OffsetOf_dwDescrLen _OffsetOf_dwIndex _OffsetOf_dwInDiscards _OffsetOf_dwInErrors _OffsetOf_dwInNUcastPkts _OffsetOf_dwInOctets _OffsetOf_dwInUcastPkts _OffsetOf_dwInUnknownProtos _OffsetOf_dwLastChange _OffsetOf_dwMtu _OffsetOf_dwOperStatus _OffsetOf_dwOutDiscards _OffsetOf_dwOutErrors _OffsetOf_dwOutNUcastPkts _OffsetOf_dwOutOctets _OffsetOf_dwOutQLen _OffsetOf_dwOutUcastPkts _OffsetOf_dwPhysAddrLen _OffsetOf_dwSpeed _OffsetOf_dwType _OffsetOf_wszName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bDescr' -> 16r25C.
+		'_OffsetOf_bPhysAddr' -> 16r214.
+		'_OffsetOf_dwAdminStatus' -> 16r21C.
+		'_OffsetOf_dwDescrLen' -> 16r258.
+		'_OffsetOf_dwIndex' -> 16r200.
+		'_OffsetOf_dwInDiscards' -> 16r234.
+		'_OffsetOf_dwInErrors' -> 16r238.
+		'_OffsetOf_dwInNUcastPkts' -> 16r230.
+		'_OffsetOf_dwInOctets' -> 16r228.
+		'_OffsetOf_dwInUcastPkts' -> 16r22C.
+		'_OffsetOf_dwInUnknownProtos' -> 16r23C.
+		'_OffsetOf_dwLastChange' -> 16r224.
+		'_OffsetOf_dwMtu' -> 16r208.
+		'_OffsetOf_dwOperStatus' -> 16r220.
+		'_OffsetOf_dwOutDiscards' -> 16r24C.
+		'_OffsetOf_dwOutErrors' -> 16r250.
+		'_OffsetOf_dwOutNUcastPkts' -> 16r248.
+		'_OffsetOf_dwOutOctets' -> 16r240.
+		'_OffsetOf_dwOutQLen' -> 16r254.
+		'_OffsetOf_dwOutUcastPkts' -> 16r244.
+		'_OffsetOf_dwPhysAddrLen' -> 16r210.
+		'_OffsetOf_dwSpeed' -> 16r20C.
+		'_OffsetOf_dwType' -> 16r204.
+		'_OffsetOf_wszName' -> 16r0
+	}!
 MIB_IFROW guid: (GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
-MIB_IFROW addClassConstant: '_OffsetOf_bDescr' value: 16r25C!
-MIB_IFROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r214!
-MIB_IFROW addClassConstant: '_OffsetOf_dwAdminStatus' value: 16r21C!
-MIB_IFROW addClassConstant: '_OffsetOf_dwDescrLen' value: 16r258!
-MIB_IFROW addClassConstant: '_OffsetOf_dwIndex' value: 16r200!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInDiscards' value: 16r234!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInErrors' value: 16r238!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInNUcastPkts' value: 16r230!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInOctets' value: 16r228!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInUcastPkts' value: 16r22C!
-MIB_IFROW addClassConstant: '_OffsetOf_dwInUnknownProtos' value: 16r23C!
-MIB_IFROW addClassConstant: '_OffsetOf_dwLastChange' value: 16r224!
-MIB_IFROW addClassConstant: '_OffsetOf_dwMtu' value: 16r208!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOperStatus' value: 16r220!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutDiscards' value: 16r24C!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutErrors' value: 16r250!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutNUcastPkts' value: 16r248!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutOctets' value: 16r240!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutQLen' value: 16r254!
-MIB_IFROW addClassConstant: '_OffsetOf_dwOutUcastPkts' value: 16r244!
-MIB_IFROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r210!
-MIB_IFROW addClassConstant: '_OffsetOf_dwSpeed' value: 16r20C!
-MIB_IFROW addClassConstant: '_OffsetOf_dwType' value: 16r204!
-MIB_IFROW addClassConstant: '_OffsetOf_wszName' value: 16r0!
 MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

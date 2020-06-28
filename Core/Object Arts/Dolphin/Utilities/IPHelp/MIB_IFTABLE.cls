@@ -2,11 +2,13 @@
 
 IpHlpApiTableStruct subclass: #MIB_IFTABLE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_table'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_table' -> 16r4
+	}!
 MIB_IFTABLE guid: (GUID fromString: '{2ba815fb-13d2-4ab7-a138-15332adeb3bf}')!
-MIB_IFTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
 MIB_IFTABLE comment: '<MIB_IFTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

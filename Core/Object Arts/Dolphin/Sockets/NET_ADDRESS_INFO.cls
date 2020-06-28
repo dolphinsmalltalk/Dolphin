@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Format _OffsetOf_IpAddress _OffsetOf_Ipv4Address _OffsetOf_Ipv6Address _OffsetOf_NamedAddress_Address _OffsetOf_NamedAddress_Port'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Format' -> 16r0.
+		'_OffsetOf_IpAddress' -> 16r4.
+		'_OffsetOf_Ipv4Address' -> 16r4.
+		'_OffsetOf_Ipv6Address' -> 16r4.
+		'_OffsetOf_NamedAddress_Address' -> 16r4.
+		'_OffsetOf_NamedAddress_Port' -> 16r204
+	}!
 NET_ADDRESS_INFO guid: (GUID fromString: '{0451c625-7a0f-4b75-ad7c-ea167ec0f47c}')!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_Format' value: 16r0!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_IpAddress' value: 16r4!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_Ipv4Address' value: 16r4!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_Ipv6Address' value: 16r4!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_NamedAddress_Address' value: 16r4!
-NET_ADDRESS_INFO addClassConstant: '_OffsetOf_NamedAddress_Port' value: 16r204!
 NET_ADDRESS_INFO comment: '<NET_ADDRESS_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.NET_ADDRESS_INFO'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

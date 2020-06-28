@@ -2,11 +2,13 @@
 
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwProcessId'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwProcessId' -> 16r8
+	}!
 MIB_UDPEXROW guid: (GUID fromString: '{fda0765b-395f-447b-881b-26155c88393a}')!
-MIB_UDPEXROW addClassConstant: '_OffsetOf_dwProcessId' value: 16r8!
 MIB_UDPEXROW comment: '<MIB_UDPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

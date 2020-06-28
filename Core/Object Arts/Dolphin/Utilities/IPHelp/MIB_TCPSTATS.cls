@@ -2,25 +2,27 @@
 
 ExternalStructure subclass: #MIB_TCPSTATS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwActiveOpens _OffsetOf_dwAttemptFails _OffsetOf_dwCurrEstab _OffsetOf_dwEstabResets _OffsetOf_dwInErrs _OffsetOf_dwInSegs _OffsetOf_dwMaxConn _OffsetOf_dwNumConns _OffsetOf_dwOutRsts _OffsetOf_dwOutSegs _OffsetOf_dwPassiveOpens _OffsetOf_dwRetransSegs _OffsetOf_dwRtoAlgorithm _OffsetOf_dwRtoMax _OffsetOf_dwRtoMin'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwActiveOpens' -> 16r10.
+		'_OffsetOf_dwAttemptFails' -> 16r18.
+		'_OffsetOf_dwCurrEstab' -> 16r20.
+		'_OffsetOf_dwEstabResets' -> 16r1C.
+		'_OffsetOf_dwInErrs' -> 16r30.
+		'_OffsetOf_dwInSegs' -> 16r24.
+		'_OffsetOf_dwMaxConn' -> 16rC.
+		'_OffsetOf_dwNumConns' -> 16r38.
+		'_OffsetOf_dwOutRsts' -> 16r34.
+		'_OffsetOf_dwOutSegs' -> 16r28.
+		'_OffsetOf_dwPassiveOpens' -> 16r14.
+		'_OffsetOf_dwRetransSegs' -> 16r2C.
+		'_OffsetOf_dwRtoAlgorithm' -> 16r0.
+		'_OffsetOf_dwRtoMax' -> 16r8.
+		'_OffsetOf_dwRtoMin' -> 16r4
+	}!
 MIB_TCPSTATS guid: (GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwActiveOpens' value: 16r10!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwAttemptFails' value: 16r18!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwCurrEstab' value: 16r20!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwEstabResets' value: 16r1C!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwInErrs' value: 16r30!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwInSegs' value: 16r24!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwMaxConn' value: 16rC!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwNumConns' value: 16r38!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwOutRsts' value: 16r34!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwOutSegs' value: 16r28!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwPassiveOpens' value: 16r14!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRetransSegs' value: 16r2C!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoAlgorithm' value: 16r0!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMax' value: 16r8!
-MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMin' value: 16r4!
 MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

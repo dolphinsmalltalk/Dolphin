@@ -4,7 +4,8 @@ ExternalLibrary subclass: #WinInetLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WinInetLibrary guid: (GUID fromString: '{96152a1d-1214-4ed9-82f2-10021d755f70}')!
 WinInetLibrary comment: ''!
 !WinInetLibrary categoriesForClass!External-Libraries-Win32! !

@@ -2,15 +2,17 @@
 
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bPhysAddr _OffsetOf_dwAddr _OffsetOf_dwIndex _OffsetOf_dwPhysAddrLen _OffsetOf_dwType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bPhysAddr' -> 16r8.
+		'_OffsetOf_dwAddr' -> 16r10.
+		'_OffsetOf_dwIndex' -> 16r0.
+		'_OffsetOf_dwPhysAddrLen' -> 16r4.
+		'_OffsetOf_dwType' -> 16r14
+	}!
 MIB_IPNETROW guid: (GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
-MIB_IPNETROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r8!
-MIB_IPNETROW addClassConstant: '_OffsetOf_dwAddr' value: 16r10!
-MIB_IPNETROW addClassConstant: '_OffsetOf_dwIndex' value: 16r0!
-MIB_IPNETROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r4!
-MIB_IPNETROW addClassConstant: '_OffsetOf_dwType' value: 16r14!
 MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

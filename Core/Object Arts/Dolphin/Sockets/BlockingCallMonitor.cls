@@ -4,7 +4,8 @@ Object subclass: #BlockingCallMonitor
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BlockingCallMonitor guid: (GUID fromString: '{87b4c45b-026e-11d3-9fd7-00a0cc3e4a32}')!
 BlockingCallMonitor comment: 'This class can be used to monitor the progress of blocking calls running on a separate process.
 

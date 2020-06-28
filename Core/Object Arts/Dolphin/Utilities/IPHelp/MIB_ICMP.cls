@@ -2,11 +2,13 @@
 
 ExternalStructure subclass: #MIB_ICMP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_stats'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_stats' -> 16r0
+	}!
 MIB_ICMP guid: (GUID fromString: '{2ca8ee35-4b8c-48a7-bc4f-1bcbf2db2be2}')!
-MIB_ICMP addClassConstant: '_OffsetOf_stats' value: 16r0!
 MIB_ICMP comment: '<MIB_ICMP> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

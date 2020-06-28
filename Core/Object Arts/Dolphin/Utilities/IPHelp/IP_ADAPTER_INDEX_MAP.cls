@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_index _OffsetOf_Name'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_index' -> 16r0.
+		'_OffsetOf_Name' -> 16r4
+	}!
 IP_ADAPTER_INDEX_MAP guid: (GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
-IP_ADAPTER_INDEX_MAP addClassConstant: '_OffsetOf_index' value: 16r0!
-IP_ADAPTER_INDEX_MAP addClassConstant: '_OffsetOf_Name' value: 16r4!
 IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

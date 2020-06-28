@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Address _OffsetOf_NumAdapters'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Address' -> 16r4.
+		'_OffsetOf_NumAdapters' -> 16r0
+	}!
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
-IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_Address' value: 16r4!
-IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_NumAdapters' value: 16r0!
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

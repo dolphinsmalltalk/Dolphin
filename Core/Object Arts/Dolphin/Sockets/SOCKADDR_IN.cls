@@ -2,14 +2,16 @@
 
 SOCKADDR subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_sin_addr _OffsetOf_sin_family _OffsetOf_sin_port _OffsetOf_sin_zero'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_sin_addr' -> 16r4.
+		'_OffsetOf_sin_family' -> 16r0.
+		'_OffsetOf_sin_port' -> 16r2.
+		'_OffsetOf_sin_zero' -> 16r8
+	}!
 SOCKADDR_IN guid: (GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
-SOCKADDR_IN addClassConstant: '_OffsetOf_sin_addr' value: 16r4!
-SOCKADDR_IN addClassConstant: '_OffsetOf_sin_family' value: 16r0!
-SOCKADDR_IN addClassConstant: '_OffsetOf_sin_port' value: 16r2!
-SOCKADDR_IN addClassConstant: '_OffsetOf_sin_zero' value: 16r8!
 SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

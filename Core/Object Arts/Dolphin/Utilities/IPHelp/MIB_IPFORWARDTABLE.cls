@@ -2,11 +2,13 @@
 
 IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_table'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_table' -> 16r4
+	}!
 MIB_IPFORWARDTABLE guid: (GUID fromString: '{61ce489c-f9e4-43f1-978b-3cc2f491e64c}')!
-MIB_IPFORWARDTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
 MIB_IPFORWARDTABLE comment: '<MIB_IPFORWARDTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

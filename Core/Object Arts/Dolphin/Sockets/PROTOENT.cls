@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_p_aliases _OffsetOf_p_name _OffsetOf_p_proto'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_p_aliases' -> 16r4.
+		'_OffsetOf_p_name' -> 16r0.
+		'_OffsetOf_p_proto' -> 16r8
+	}!
 PROTOENT guid: (GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
-PROTOENT addClassConstant: '_OffsetOf_p_aliases' value: 16r4!
-PROTOENT addClassConstant: '_OffsetOf_p_name' value: 16r0!
-PROTOENT addClassConstant: '_OffsetOf_p_proto' value: 16r8!
 PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

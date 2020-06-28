@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #SOCKADDR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_sa_data _OffsetOf_sa_family'
+	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_sa_data' -> 16r2.
+		'_OffsetOf_sa_family' -> 16r0
+	}!
 SOCKADDR guid: (GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
-SOCKADDR addClassConstant: '_OffsetOf_sa_data' value: 16r2!
-SOCKADDR addClassConstant: '_OffsetOf_sa_family' value: 16r0!
 SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

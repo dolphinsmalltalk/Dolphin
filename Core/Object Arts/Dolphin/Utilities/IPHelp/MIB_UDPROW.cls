@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwLocalAddr' -> 16r0.
+		'_OffsetOf_dwLocalPort' -> 16r4
+	}!
 MIB_UDPROW guid: (GUID fromString: '{3247a36f-48e5-4e25-ae9a-2e76f029e521}')!
-MIB_UDPROW addClassConstant: '_OffsetOf_dwLocalAddr' value: 16r0!
-MIB_UDPROW addClassConstant: '_OffsetOf_dwLocalPort' value: 16r4!
 MIB_UDPROW comment: '<MIB_UDPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

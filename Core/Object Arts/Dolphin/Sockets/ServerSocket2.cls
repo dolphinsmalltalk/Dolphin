@@ -4,7 +4,8 @@ SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ServerSocket2 guid: (GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
 ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
 

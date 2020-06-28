@@ -2,11 +2,13 @@
 
 ExternalStructure subclass: #IpHlpApiTableStruct
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwNumEntries'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwNumEntries' -> 16r0
+	}!
 IpHlpApiTableStruct guid: (GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
-IpHlpApiTableStruct addClassConstant: '_OffsetOf_dwNumEntries' value: 16r0!
 IpHlpApiTableStruct comment: ''!
 !IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !
 !IpHlpApiTableStruct methodsFor!

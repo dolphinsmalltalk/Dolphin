@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_fd_array _OffsetOf_fd_count'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_fd_array' -> 16r4.
+		'_OffsetOf_fd_count' -> 16r0
+	}!
 FD_SET guid: (GUID fromString: '{b99a7942-497e-4a39-97ef-9040c83d7829}')!
-FD_SET addClassConstant: '_OffsetOf_fd_array' value: 16r4!
-FD_SET addClassConstant: '_OffsetOf_fd_count' value: 16r0!
 FD_SET comment: '<FD_SET> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.fd_set'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 IDL definition follows:

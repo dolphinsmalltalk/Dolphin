@@ -2,11 +2,13 @@
 
 IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_table'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_table' -> 16r4
+	}!
 IP_ADAPTER_ORDER_MAP guid: (GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
-IP_ADAPTER_ORDER_MAP addClassConstant: '_OffsetOf_table' value: 16r4!
 IP_ADAPTER_ORDER_MAP comment: '<IP_ADAPTER_ORDER_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_ORDER_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

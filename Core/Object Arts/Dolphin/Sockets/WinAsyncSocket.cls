@@ -4,7 +4,8 @@ View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
 	poolDictionaries: 'WinSocketConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WinAsyncSocket guid: (GUID fromString: '{87b4c717-026e-11d3-9fd7-00a0cc3e4a32}')!
 WinAsyncSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 

@@ -4,7 +4,8 @@ WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketWriteStream guid: (GUID fromString: '{87b4c6fe-026e-11d3-9fd7-00a0cc3e4a32}')!
 SocketWriteStream comment: 'This class represents a buffered write stream for sending data across a Socket connection.
 

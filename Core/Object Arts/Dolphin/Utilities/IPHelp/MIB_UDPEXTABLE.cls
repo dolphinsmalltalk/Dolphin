@@ -4,7 +4,8 @@ MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MIB_UDPEXTABLE guid: (GUID fromString: '{dde2b010-360d-4715-9804-4e3d4982296f}')!
 MIB_UDPEXTABLE comment: '<MIB_UDPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 

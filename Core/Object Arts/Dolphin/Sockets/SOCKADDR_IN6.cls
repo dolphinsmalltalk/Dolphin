@@ -2,16 +2,18 @@
 
 SOCKADDR subclass: #SOCKADDR_IN6
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_sin6_addr _OffsetOf_sin6_family _OffsetOf_sin6_flowinfo _OffsetOf_sin6_port _OffsetOf_sin6_scope_id _OffsetOf_sin6_scope_struct'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_sin6_addr' -> 16r8.
+		'_OffsetOf_sin6_family' -> 16r0.
+		'_OffsetOf_sin6_flowinfo' -> 16r4.
+		'_OffsetOf_sin6_port' -> 16r2.
+		'_OffsetOf_sin6_scope_id' -> 16r18.
+		'_OffsetOf_sin6_scope_struct' -> 16r18
+	}!
 SOCKADDR_IN6 guid: (GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_addr' value: 16r8!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_family' value: 16r0!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_flowinfo' value: 16r4!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_port' value: 16r2!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_id' value: 16r18!
-SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_struct' value: 16r18!
 SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

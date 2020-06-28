@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #MIBICMPINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_icmpInStats' -> 16r0.
+		'_OffsetOf_icmpOutStats' -> 16r34
+	}!
 MIBICMPINFO guid: (GUID fromString: '{157140e6-8375-4377-ba3e-612acdb6f9f4}')!
-MIBICMPINFO addClassConstant: '_OffsetOf_icmpInStats' value: 16r0!
-MIBICMPINFO addClassConstant: '_OffsetOf_icmpOutStats' value: 16r34!
 MIBICMPINFO comment: '<MIBICMPINFO> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPINFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

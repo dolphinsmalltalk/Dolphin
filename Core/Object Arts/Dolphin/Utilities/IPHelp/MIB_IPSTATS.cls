@@ -2,33 +2,35 @@
 
 ExternalStructure subclass: #MIB_IPSTATS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwDefaultTTL _OffsetOf_dwForwarding _OffsetOf_dwForwDatagrams _OffsetOf_dwFragCreates _OffsetOf_dwFragFails _OffsetOf_dwFragOks _OffsetOf_dwInAddrErrors _OffsetOf_dwInDelivers _OffsetOf_dwInDiscards _OffsetOf_dwInHdrErrors _OffsetOf_dwInReceives _OffsetOf_dwInUnknownProtos _OffsetOf_dwNumAddr _OffsetOf_dwNumIf _OffsetOf_dwNumRoutes _OffsetOf_dwOutDiscards _OffsetOf_dwOutNoRoutes _OffsetOf_dwOutRequests _OffsetOf_dwReasmFails _OffsetOf_dwReasmOks _OffsetOf_dwReasmReqds _OffsetOf_dwReasmTimeout _OffsetOf_dwRoutingDiscards'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwDefaultTTL' -> 16r4.
+		'_OffsetOf_dwForwarding' -> 16r0.
+		'_OffsetOf_dwForwDatagrams' -> 16r14.
+		'_OffsetOf_dwFragCreates' -> 16r4C.
+		'_OffsetOf_dwFragFails' -> 16r48.
+		'_OffsetOf_dwFragOks' -> 16r44.
+		'_OffsetOf_dwInAddrErrors' -> 16r10.
+		'_OffsetOf_dwInDelivers' -> 16r20.
+		'_OffsetOf_dwInDiscards' -> 16r1C.
+		'_OffsetOf_dwInHdrErrors' -> 16rC.
+		'_OffsetOf_dwInReceives' -> 16r8.
+		'_OffsetOf_dwInUnknownProtos' -> 16r18.
+		'_OffsetOf_dwNumAddr' -> 16r54.
+		'_OffsetOf_dwNumIf' -> 16r50.
+		'_OffsetOf_dwNumRoutes' -> 16r58.
+		'_OffsetOf_dwOutDiscards' -> 16r2C.
+		'_OffsetOf_dwOutNoRoutes' -> 16r30.
+		'_OffsetOf_dwOutRequests' -> 16r24.
+		'_OffsetOf_dwReasmFails' -> 16r40.
+		'_OffsetOf_dwReasmOks' -> 16r3C.
+		'_OffsetOf_dwReasmReqds' -> 16r38.
+		'_OffsetOf_dwReasmTimeout' -> 16r34.
+		'_OffsetOf_dwRoutingDiscards' -> 16r28
+	}!
 MIB_IPSTATS guid: (GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwDefaultTTL' value: 16r4!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwarding' value: 16r0!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwDatagrams' value: 16r14!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragCreates' value: 16r4C!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragFails' value: 16r48!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwFragOks' value: 16r44!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInAddrErrors' value: 16r10!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInDelivers' value: 16r20!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInDiscards' value: 16r1C!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInHdrErrors' value: 16rC!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInReceives' value: 16r8!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwInUnknownProtos' value: 16r18!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumAddr' value: 16r54!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumIf' value: 16r50!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwNumRoutes' value: 16r58!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutDiscards' value: 16r2C!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutNoRoutes' value: 16r30!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwOutRequests' value: 16r24!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmFails' value: 16r40!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmOks' value: 16r3C!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmReqds' value: 16r38!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmTimeout' value: 16r34!
-MIB_IPSTATS addClassConstant: '_OffsetOf_dwRoutingDiscards' value: 16r28!
 MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

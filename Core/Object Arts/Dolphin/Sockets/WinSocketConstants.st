@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinSocketConstants put: (PoolConstantsDictionary named: #WinSocketConstants)!
+#{WinSocketConstants} declare: (PoolConstantsDictionary named: #WinSocketConstants)!
 WinSocketConstants at: 'AF_12844' put: 16r19!
 WinSocketConstants at: 'AF_APPLETALK' put: 16r10!
 WinSocketConstants at: 'AF_ATM' put: 16r16!

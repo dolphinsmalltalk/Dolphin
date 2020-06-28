@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinSocketErrors put: (PoolConstantsDictionary named: #WinSocketErrors)!
+#{WinSocketErrors} declare: (PoolConstantsDictionary named: #WinSocketErrors)!
 WinSocketErrors at: 'WSA_E_CANCELLED' put: 16r277F!
 WinSocketErrors at: 'WSA_E_NO_MORE' put: 16r277E!
 WinSocketErrors at: 'WSAEACCES' put: 16r271D!

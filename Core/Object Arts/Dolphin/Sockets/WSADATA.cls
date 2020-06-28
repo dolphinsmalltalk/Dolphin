@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iMaxSockets _OffsetOf_iMaxUdpDg _OffsetOf_lpVendorInfo _OffsetOf_szDescription _OffsetOf_szSystemStatus _OffsetOf_wHighVersion _OffsetOf_wVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iMaxSockets' -> 16r186.
+		'_OffsetOf_iMaxUdpDg' -> 16r188.
+		'_OffsetOf_lpVendorInfo' -> 16r18C.
+		'_OffsetOf_szDescription' -> 16r4.
+		'_OffsetOf_szSystemStatus' -> 16r105.
+		'_OffsetOf_wHighVersion' -> 16r2.
+		'_OffsetOf_wVersion' -> 16r0
+	}!
 WSADATA guid: (GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
-WSADATA addClassConstant: '_OffsetOf_iMaxSockets' value: 16r186!
-WSADATA addClassConstant: '_OffsetOf_iMaxUdpDg' value: 16r188!
-WSADATA addClassConstant: '_OffsetOf_lpVendorInfo' value: 16r18C!
-WSADATA addClassConstant: '_OffsetOf_szDescription' value: 16r4!
-WSADATA addClassConstant: '_OffsetOf_szSystemStatus' value: 16r105!
-WSADATA addClassConstant: '_OffsetOf_wHighVersion' value: 16r2!
-WSADATA addClassConstant: '_OffsetOf_wVersion' value: 16r0!
 WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
