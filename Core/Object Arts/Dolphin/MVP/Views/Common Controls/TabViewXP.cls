@@ -4,7 +4,8 @@ TabView subclass: #TabViewXP
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TabViewXP guid: (GUID fromString: '{160cce99-d70d-49cc-9308-00476ce82b28}')!
 TabViewXP comment: 'TabViewXP is a custom <TabView> that replaces the control''s default painting with its own implementation using the XP theme engine if running in a themed app on XP/2k3. In an unthemed app (or in Windows 2000) it degrades back to use the control''s own ''classic'' drawing.
 

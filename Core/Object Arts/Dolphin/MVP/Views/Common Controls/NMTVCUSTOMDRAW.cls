@@ -2,13 +2,15 @@
 
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iLevel'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_clrText' -> 16r30.
+		'_OffsetOf_clrTextBk' -> 16r34.
+		'_OffsetOf_iLevel' -> 16r38
+	}!
 NMTVCUSTOMDRAW guid: (GUID fromString: '{6c514b98-57bd-498b-a2ec-9763f141a8e6}')!
-NMTVCUSTOMDRAW addClassConstant: '_OffsetOf_clrText' value: 16r30!
-NMTVCUSTOMDRAW addClassConstant: '_OffsetOf_clrTextBk' value: 16r34!
-NMTVCUSTOMDRAW addClassConstant: '_OffsetOf_iLevel' value: 16r38!
 NMTVCUSTOMDRAW comment: 'NMTVCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 NMTVCUSTOMDRAW is sent by <TreeView> controls to request custom draw information for the text of individual nodes. We implement the <customDrawContext> protocol against it in order that it can be passed directly to the views customDrawBlock.'!

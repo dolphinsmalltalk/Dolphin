@@ -2,16 +2,18 @@
 
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
-	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwDrawStage' -> 16rC.
+		'_OffsetOf_dwItemSpec' -> 16r24.
+		'_OffsetOf_hdc' -> 16r10.
+		'_OffsetOf_lParam' -> 16r2C.
+		'_OffsetOf_rc' -> 16r14.
+		'_OffsetOf_uItemState' -> 16r28
+	}!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwDrawStage' value: 16rC!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwItemSpec' value: 16r24!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_hdc' value: 16r10!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_lParam' value: 16r2C!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_rc' value: 16r14!
-NMCUSTOMDRAW addClassConstant: '_OffsetOf_uItemState' value: 16r28!
 NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).

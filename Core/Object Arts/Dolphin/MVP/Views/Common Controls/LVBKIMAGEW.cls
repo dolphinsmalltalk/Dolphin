@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
-	classVariableNames: '_OffsetOf_cchImageMax _OffsetOf_hbm _OffsetOf_pszImage _OffsetOf_ulFlags _OffsetOf_xOffsetPercent _OffsetOf_yOffsetPercent'
+	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchImageMax' -> 16rC.
+		'_OffsetOf_hbm' -> 16r4.
+		'_OffsetOf_pszImage' -> 16r8.
+		'_OffsetOf_ulFlags' -> 16r0.
+		'_OffsetOf_xOffsetPercent' -> 16r10.
+		'_OffsetOf_yOffsetPercent' -> 16r14
+	}!
 LVBKIMAGEW guid: (GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
-LVBKIMAGEW addClassConstant: '_OffsetOf_cchImageMax' value: 16rC!
-LVBKIMAGEW addClassConstant: '_OffsetOf_hbm' value: 16r4!
-LVBKIMAGEW addClassConstant: '_OffsetOf_pszImage' value: 16r8!
-LVBKIMAGEW addClassConstant: '_OffsetOf_ulFlags' value: 16r0!
-LVBKIMAGEW addClassConstant: '_OffsetOf_xOffsetPercent' value: 16r10!
-LVBKIMAGEW addClassConstant: '_OffsetOf_yOffsetPercent' value: 16r14!
 LVBKIMAGEW comment: ''!
 !LVBKIMAGEW categoriesForClass!External-Data-Structured-Win32! !
 !LVBKIMAGEW methodsFor!

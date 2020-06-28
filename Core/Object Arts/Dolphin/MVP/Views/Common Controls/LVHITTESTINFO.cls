@@ -2,12 +2,14 @@
 
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
+	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iItem' -> 16rC.
+		'_OffsetOf_iSubItem' -> 16r10
+	}!
 LVHITTESTINFO guid: (GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVHITTESTINFO addClassConstant: '_OffsetOf_iItem' value: 16rC!
-LVHITTESTINFO addClassConstant: '_OffsetOf_iSubItem' value: 16r10!
 LVHITTESTINFO comment: 'LVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 LVHISTTESTINFO is used for hit-testing with Enhanced List View controls. For example usage see ListView>>itemFromPoint:

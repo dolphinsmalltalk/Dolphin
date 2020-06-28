@@ -2,21 +2,23 @@
 
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cx _OffsetOf_cxDefault _OffsetOf_cxIdeal _OffsetOf_cxMin _OffsetOf_fmt _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_iSubItem _OffsetOf_mask _OffsetOf_pszText AlignmentMap'
+	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchTextMax' -> 16r10.
+		'_OffsetOf_cx' -> 16r8.
+		'_OffsetOf_cxDefault' -> 16r24.
+		'_OffsetOf_cxIdeal' -> 16r28.
+		'_OffsetOf_cxMin' -> 16r20.
+		'_OffsetOf_fmt' -> 16r4.
+		'_OffsetOf_iImage' -> 16r18.
+		'_OffsetOf_iOrder' -> 16r1C.
+		'_OffsetOf_iSubItem' -> 16r14.
+		'_OffsetOf_mask' -> 16r0.
+		'_OffsetOf_pszText' -> 16rC
+	}!
 LVCOLUMNW guid: (GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVCOLUMNW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
-LVCOLUMNW addClassConstant: '_OffsetOf_cx' value: 16r8!
-LVCOLUMNW addClassConstant: '_OffsetOf_cxDefault' value: 16r24!
-LVCOLUMNW addClassConstant: '_OffsetOf_cxIdeal' value: 16r28!
-LVCOLUMNW addClassConstant: '_OffsetOf_cxMin' value: 16r20!
-LVCOLUMNW addClassConstant: '_OffsetOf_fmt' value: 16r4!
-LVCOLUMNW addClassConstant: '_OffsetOf_iImage' value: 16r18!
-LVCOLUMNW addClassConstant: '_OffsetOf_iOrder' value: 16r1C!
-LVCOLUMNW addClassConstant: '_OffsetOf_iSubItem' value: 16r14!
-LVCOLUMNW addClassConstant: '_OffsetOf_mask' value: 16r0!
-LVCOLUMNW addClassConstant: '_OffsetOf_pszText' value: 16rC!
 LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.

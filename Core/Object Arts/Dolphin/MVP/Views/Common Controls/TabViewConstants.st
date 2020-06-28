@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #TabViewConstants put: (PoolConstantsDictionary named: #TabViewConstants)!
+#{TabViewConstants} declare: (PoolConstantsDictionary named: #TabViewConstants)!
 TabViewConstants at: 'ODT_TAB' put: 16r65!
 TabViewConstants at: 'TCHT_NOWHERE' put: 16r1!
 TabViewConstants at: 'TCHT_ONITEM' put: 16r6!

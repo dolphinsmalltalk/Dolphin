@@ -2,12 +2,14 @@
 
 NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iStart _OffsetOf_lvfi'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iStart' -> 16rC.
+		'_OffsetOf_lvfi' -> 16r10
+	}!
 NMLVFINDITEMW guid: (GUID fromString: '{87b4c626-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMLVFINDITEMW addClassConstant: '_OffsetOf_iStart' value: 16rC!
-NMLVFINDITEMW addClassConstant: '_OffsetOf_lvfi' value: 16r10!
 NMLVFINDITEMW comment: ''!
 !NMLVFINDITEMW categoriesForClass!External-Data-Structured-Win32! !
 !NMLVFINDITEMW methodsFor!

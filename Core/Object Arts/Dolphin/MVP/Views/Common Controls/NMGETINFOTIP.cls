@@ -4,7 +4,8 @@ NMHDR subclass: #NMGETINFOTIP
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NMGETINFOTIP guid: (GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
 NMGETINFOTIP isAbstract: true!
 NMGETINFOTIP comment: ''!

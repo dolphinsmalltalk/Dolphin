@@ -2,14 +2,16 @@
 
 TVITEMW subclass: #TVITEMEXW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hwnd _OffsetOf_iExpandedImage _OffsetOf_iIntegral _OffsetOf_uStateEx'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hwnd' -> 16r30.
+		'_OffsetOf_iExpandedImage' -> 16r34.
+		'_OffsetOf_iIntegral' -> 16r28.
+		'_OffsetOf_uStateEx' -> 16r2C
+	}!
 TVITEMEXW guid: (GUID fromString: '{f1c35f1c-58a2-4d7f-9fd9-3184f8aa1c31}')!
-TVITEMEXW addClassConstant: '_OffsetOf_hwnd' value: 16r30!
-TVITEMEXW addClassConstant: '_OffsetOf_iExpandedImage' value: 16r34!
-TVITEMEXW addClassConstant: '_OffsetOf_iIntegral' value: 16r28!
-TVITEMEXW addClassConstant: '_OffsetOf_uStateEx' value: 16r2C!
 TVITEMEXW comment: ''!
 !TVITEMEXW categoriesForClass!External-Data-Structured-Win32! !
 !TVITEMEXW methodsFor!

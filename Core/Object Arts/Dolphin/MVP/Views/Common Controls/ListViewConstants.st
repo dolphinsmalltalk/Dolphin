@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ListViewConstants put: (PoolConstantsDictionary named: #ListViewConstants)!
+#{ListViewConstants} declare: (PoolConstantsDictionary named: #ListViewConstants)!
 ListViewConstants at: 'LV_MAX_WORKAREAS' put: 16r10!
 ListViewConstants at: 'LV_VIEW_DETAILS' put: 16r1!
 ListViewConstants at: 'LV_VIEW_ICON' put: 16r0!

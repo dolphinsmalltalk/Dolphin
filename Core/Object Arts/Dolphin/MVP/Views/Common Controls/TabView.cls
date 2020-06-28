@@ -2,11 +2,13 @@
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TabViewModes'
+	classVariableNames: 'TabOrientations TabViewModes'
 	poolDictionaries: 'TabViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'OrientationMask' -> 16r82
+	}!
 TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
-TabView addClassConstant: 'OrientationMask' value: 16r82!
 TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.
@@ -686,7 +688,6 @@ initialize
 		TabView initialize
 	"
 
-	self addClassConstant: 'OrientationMask' value: TCS_VERTICAL | TCS_BOTTOM.
 	self addClassConstant: 'TabOrientations'
 		value: (IdentityDictionary new
 				at: 0 put: #top;

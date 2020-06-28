@@ -2,19 +2,21 @@
 
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cChildren _OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_hItem _OffsetOf_iImage _OffsetOf_iSelectedImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
+	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cChildren' -> 16r20.
+		'_OffsetOf_cchTextMax' -> 16r14.
+		'_OffsetOf_dwState' -> 16r8.
+		'_OffsetOf_hItem' -> 16r4.
+		'_OffsetOf_iImage' -> 16r18.
+		'_OffsetOf_iSelectedImage' -> 16r1C.
+		'_OffsetOf_lParam' -> 16r24.
+		'_OffsetOf_pszText' -> 16r10.
+		'_OffsetOf_stateMask' -> 16rC
+	}!
 TVITEMW guid: (GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
-TVITEMW addClassConstant: '_OffsetOf_cChildren' value: 16r20!
-TVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r14!
-TVITEMW addClassConstant: '_OffsetOf_dwState' value: 16r8!
-TVITEMW addClassConstant: '_OffsetOf_hItem' value: 16r4!
-TVITEMW addClassConstant: '_OffsetOf_iImage' value: 16r18!
-TVITEMW addClassConstant: '_OffsetOf_iSelectedImage' value: 16r1C!
-TVITEMW addClassConstant: '_OffsetOf_lParam' value: 16r24!
-TVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r10!
-TVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16rC!
 TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TVITEM is used to communicate information about the items (nodes) in a Tree View control such as the text, icon, state, etc.

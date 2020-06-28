@@ -4,7 +4,8 @@ ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: 'ViewModes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IconicListAbstract guid: (GUID fromString: '{87b4c728-026e-11d3-9fd7-00a0cc3e4a32}')!
 IconicListAbstract isAbstract: true!
 IconicListAbstract comment: 'IconicListAbstract is an abstract class whose subclasses implement various Windows iconic list common controls.

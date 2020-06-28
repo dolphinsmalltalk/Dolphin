@@ -2,24 +2,26 @@
 
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cColumns _OffsetOf_dwState _OffsetOf_iGroup _OffsetOf_iGroupId _OffsetOf_iImage _OffsetOf_iIndent _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_piColFmt _OffsetOf_pszText _OffsetOf_puColumns _OffsetOf_stateMask CallbackPrototype'
+	classVariableNames: 'CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchTextMax' -> 16r18.
+		'_OffsetOf_cColumns' -> 16r2C.
+		'_OffsetOf_dwState' -> 16rC.
+		'_OffsetOf_iGroup' -> 16r38.
+		'_OffsetOf_iGroupId' -> 16r28.
+		'_OffsetOf_iImage' -> 16r1C.
+		'_OffsetOf_iIndent' -> 16r24.
+		'_OffsetOf_iItem' -> 16r4.
+		'_OffsetOf_iSubItem' -> 16r8.
+		'_OffsetOf_lParam' -> 16r20.
+		'_OffsetOf_piColFmt' -> 16r34.
+		'_OffsetOf_pszText' -> 16r14.
+		'_OffsetOf_puColumns' -> 16r30.
+		'_OffsetOf_stateMask' -> 16r10
+	}!
 LVITEMW guid: (GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r18!
-LVITEMW addClassConstant: '_OffsetOf_cColumns' value: 16r2C!
-LVITEMW addClassConstant: '_OffsetOf_dwState' value: 16rC!
-LVITEMW addClassConstant: '_OffsetOf_iGroup' value: 16r38!
-LVITEMW addClassConstant: '_OffsetOf_iGroupId' value: 16r28!
-LVITEMW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
-LVITEMW addClassConstant: '_OffsetOf_iIndent' value: 16r24!
-LVITEMW addClassConstant: '_OffsetOf_iItem' value: 16r4!
-LVITEMW addClassConstant: '_OffsetOf_iSubItem' value: 16r8!
-LVITEMW addClassConstant: '_OffsetOf_lParam' value: 16r20!
-LVITEMW addClassConstant: '_OffsetOf_piColFmt' value: 16r34!
-LVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r14!
-LVITEMW addClassConstant: '_OffsetOf_puColumns' value: 16r30!
-LVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16r10!
 LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEMW is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.

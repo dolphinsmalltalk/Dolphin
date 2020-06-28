@@ -2,13 +2,15 @@
 
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
-	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iSubItem'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_clrText' -> 16r30.
+		'_OffsetOf_clrTextBk' -> 16r34.
+		'_OffsetOf_iSubItem' -> 16r38
+	}!
 NMLVCUSTOMDRAW guid: (GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
-NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrText' value: 16r30!
-NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrTextBk' value: 16r34!
-NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_iSubItem' value: 16r38!
 NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMLVCUSTOMDRAW` is sent by `ListView` controls to request custom draw information for the text of individual items (and optionally sub-items). We implement the `customDrawContext` protocol against it in order that it can be passed directly to the views customDrawBlock.'!

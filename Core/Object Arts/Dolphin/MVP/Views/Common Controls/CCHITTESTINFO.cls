@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_flags _OffsetOf_pt'
+	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_flags' -> 16r8.
+		'_OffsetOf_pt' -> 16r0
+	}!
 CCHITTESTINFO guid: (GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 CCHITTESTINFO isAbstract: true!
-CCHITTESTINFO addClassConstant: '_OffsetOf_flags' value: 16r8!
-CCHITTESTINFO addClassConstant: '_OffsetOf_pt' value: 16r0!
 CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
 !CCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !CCHITTESTINFO methodsFor!

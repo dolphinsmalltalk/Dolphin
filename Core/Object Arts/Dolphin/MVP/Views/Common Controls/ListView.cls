@@ -2,12 +2,14 @@
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
-	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex SelectionStateMask UnknownItem'
+	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BackImageIsTiledMask' -> 16r1.
+		'NoImageIndex' -> 16r0
+	}!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListView addClassConstant: 'BackImageIsTiledMask' value: 16r1!
-ListView addClassConstant: 'NoImageIndex' value: 16r0!
 ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
 
 A `ListView` is capable of displaying it items in one of a number of modes, e.g. `#smallIcons`, `#largeIcons`, `#list`, and `#report` which can be set using the `#viewMode` aspect. In all but `#report` mode the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of `ListViewColumn`. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -2550,7 +2552,6 @@ initialize
 		self initialize
 	"
 	
-	self addClassConstant: 'NoImageIndex' value: 0.
 	self addClassConstant: 'LvModes'
 		value: (IdentityDictionary new
 				at: #thumbnails put: LVS_ICON;

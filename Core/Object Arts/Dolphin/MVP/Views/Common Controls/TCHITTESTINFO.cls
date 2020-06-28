@@ -4,7 +4,8 @@ CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TCHITTESTINFO guid: (GUID fromString: '{a369fa40-e397-4c16-b3f5-b254fd07aebe}')!
 TCHITTESTINFO comment: 'TCHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 

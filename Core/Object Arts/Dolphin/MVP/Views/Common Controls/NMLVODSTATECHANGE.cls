@@ -2,14 +2,16 @@
 
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iFrom _OffsetOf_iTo _OffsetOf_uNewState _OffsetOf_uOldState'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iFrom' -> 16rC.
+		'_OffsetOf_iTo' -> 16r10.
+		'_OffsetOf_uNewState' -> 16r14.
+		'_OffsetOf_uOldState' -> 16r18
+	}!
 NMLVODSTATECHANGE guid: (GUID fromString: '{f44c9148-2b3f-11d3-8368-7a8b5a000000}')!
-NMLVODSTATECHANGE addClassConstant: '_OffsetOf_iFrom' value: 16rC!
-NMLVODSTATECHANGE addClassConstant: '_OffsetOf_iTo' value: 16r10!
-NMLVODSTATECHANGE addClassConstant: '_OffsetOf_uNewState' value: 16r14!
-NMLVODSTATECHANGE addClassConstant: '_OffsetOf_uOldState' value: 16r18!
 NMLVODSTATECHANGE comment: ''!
 !NMLVODSTATECHANGE categoriesForClass!External-Data-Structured-Win32! !
 !NMLVODSTATECHANGE methodsFor!

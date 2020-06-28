@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_flags _OffsetOf_lParam _OffsetOf_psz _OffsetOf_pt _OffsetOf_vkDirection'
+	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_flags' -> 16r0.
+		'_OffsetOf_lParam' -> 16r8.
+		'_OffsetOf_psz' -> 16r4.
+		'_OffsetOf_pt' -> 16rC.
+		'_OffsetOf_vkDirection' -> 16r14
+	}!
 LVFINDINFOW guid: (GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
-LVFINDINFOW addClassConstant: '_OffsetOf_flags' value: 16r0!
-LVFINDINFOW addClassConstant: '_OffsetOf_lParam' value: 16r8!
-LVFINDINFOW addClassConstant: '_OffsetOf_psz' value: 16r4!
-LVFINDINFOW addClassConstant: '_OffsetOf_pt' value: 16rC!
-LVFINDINFOW addClassConstant: '_OffsetOf_vkDirection' value: 16r14!
 LVFINDINFOW comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVFINDINFO is used to contain information to search for items in a List View.

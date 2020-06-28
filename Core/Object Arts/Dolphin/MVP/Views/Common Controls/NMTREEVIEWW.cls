@@ -2,14 +2,16 @@
 
 NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_action _OffsetOf_itemNew _OffsetOf_itemOld _OffsetOf_ptDrag'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_action' -> 16rC.
+		'_OffsetOf_itemNew' -> 16r38.
+		'_OffsetOf_itemOld' -> 16r10.
+		'_OffsetOf_ptDrag' -> 16r60
+	}!
 NMTREEVIEWW guid: (GUID fromString: '{87b4c62a-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMTREEVIEWW addClassConstant: '_OffsetOf_action' value: 16rC!
-NMTREEVIEWW addClassConstant: '_OffsetOf_itemNew' value: 16r38!
-NMTREEVIEWW addClassConstant: '_OffsetOf_itemOld' value: 16r10!
-NMTREEVIEWW addClassConstant: '_OffsetOf_ptDrag' value: 16r60!
 NMTREEVIEWW comment: ''!
 !NMTREEVIEWW categoriesForClass!External-Data-Structured-Win32! !
 !NMTREEVIEWW methodsFor!

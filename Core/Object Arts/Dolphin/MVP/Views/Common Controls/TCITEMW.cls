@@ -2,16 +2,18 @@
 
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
+	classVariableNames: ''
 	poolDictionaries: 'TabViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchTextMax' -> 16r10.
+		'_OffsetOf_dwState' -> 16r4.
+		'_OffsetOf_iImage' -> 16r14.
+		'_OffsetOf_lParam' -> 16r18.
+		'_OffsetOf_pszText' -> 16rC.
+		'_OffsetOf_stateMask' -> 16r8
+	}!
 TCITEMW guid: (GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
-TCITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
-TCITEMW addClassConstant: '_OffsetOf_dwState' value: 16r4!
-TCITEMW addClassConstant: '_OffsetOf_iImage' value: 16r14!
-TCITEMW addClassConstant: '_OffsetOf_lParam' value: 16r18!
-TCITEMW addClassConstant: '_OffsetOf_pszText' value: 16rC!
-TCITEMW addClassConstant: '_OffsetOf_stateMask' value: 16r8!
 TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TCITEM is used to communicate information about the items (tabs) in a Tab Control.

@@ -2,14 +2,16 @@
 
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
-	classVariableNames: 'DisableExpandAllMask NonVirtualMask UpdateModeMask UpdateModes'
+	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'DisableExpandAllMask' -> 16r1.
+		'NonVirtualMask' -> 16r2.
+		'UpdateModeMask' -> 16r6.
+		'UpdateModes' -> #(#dynamic #static #lazy)
+	}!
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
-TreeView addClassConstant: 'NonVirtualMask' value: 16r2!
-TreeView addClassConstant: 'UpdateModeMask' value: 16r6!
-TreeView addClassConstant: 'UpdateModes' value: #(#dynamic #static #lazy)!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -1364,16 +1366,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialise the receiver's class variables, etc.
-		TreeView initialize
-	"
-
-	self addClassConstant: 'DisableExpandAllMask' value: 1.
-	self addClassConstant: 'NonVirtualMask' value: 2.
-	self addClassConstant: 'UpdateModes' value: #(#dynamic #static #lazy).
-	self addClassConstant: 'UpdateModeMask' value: 16r6!
-
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
 	i.e. append tvFlags and reserve another slot for later use."
@@ -1403,7 +1395,6 @@ winClassName
 	^'SysTreeView32'! !
 !TreeView class categoriesFor: #defaultModel!models!public! !
 !TreeView class categoriesFor: #icon!constants!public! !
-!TreeView class categoriesFor: #initialize!development!initializing!private! !
 !TreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
 !TreeView class categoriesFor: #themePartName!constants!public! !
 !TreeView class categoriesFor: #updateModes!accessing!private! !

@@ -2,9 +2,13 @@
 
 Object subclass: #ListViewColumn
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
-	classVariableNames: 'AutoResizeMask SortInvertedMask'
+	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoResizeMask' -> 16r1.
+		'SortInvertedMask' -> 16r2
+	}!
 ListViewColumn guid: (GUID fromString: '{87b4c499-026e-11d3-9fd7-00a0cc3e4a32}')!
 ListViewColumn comment: 'ListViewColumn is a description of a column held by a <ListView>. Note that, columns are only displayed when a list is in #report mode.
 
@@ -462,14 +466,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialize the class variables of the receiver:
-		self initialize
-	"
-
-	AutoResizeMask := 1.
-	SortInvertedMask := 2.!
-
 new
 	"Answer a new instance of the receiver."
 
@@ -533,7 +529,6 @@ text: titleString width: widthPixels
 		width: widthPixels;
 		yourself! !
 !ListViewColumn class categoriesFor: #icon!constants!public! !
-!ListViewColumn class categoriesFor: #initialize!development!initializing!private! !
 !ListViewColumn class categoriesFor: #new!instance creation!public! !
 !ListViewColumn class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !ListViewColumn class categoriesFor: #stbVersion!binary filing!public! !

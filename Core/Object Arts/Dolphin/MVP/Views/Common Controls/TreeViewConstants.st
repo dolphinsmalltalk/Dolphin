@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #TreeViewConstants put: (PoolConstantsDictionary named: #TreeViewConstants)!
+#{TreeViewConstants} declare: (PoolConstantsDictionary named: #TreeViewConstants)!
 TreeViewConstants at: 'TV_FIRST' put: 16r1100!
 TreeViewConstants at: 'TVC_BYKEYBOARD' put: 16r2!
 TreeViewConstants at: 'TVC_UNKNOWN' put: 16r0!

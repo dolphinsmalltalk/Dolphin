@@ -2,14 +2,16 @@
 
 NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_hItem _OffsetOf_lParam _OffsetOf_pszText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchTextMax' -> 16r10.
+		'_OffsetOf_hItem' -> 16r14.
+		'_OffsetOf_lParam' -> 16r18.
+		'_OffsetOf_pszText' -> 16rC
+	}!
 NMTVGETINFOTIPW guid: (GUID fromString: '{092d2532-2e9c-415e-9373-cf213741fa81}')!
-NMTVGETINFOTIPW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
-NMTVGETINFOTIPW addClassConstant: '_OffsetOf_hItem' value: 16r14!
-NMTVGETINFOTIPW addClassConstant: '_OffsetOf_lParam' value: 16r18!
-NMTVGETINFOTIPW addClassConstant: '_OffsetOf_pszText' value: 16rC!
 NMTVGETINFOTIPW comment: ''!
 !NMTVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
 !NMTVGETINFOTIPW methodsFor!
