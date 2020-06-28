@@ -4,7 +4,8 @@ Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Grabber guid: (GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
 Grabber comment: ''!
 !Grabber categoriesForClass!Unclassified! !

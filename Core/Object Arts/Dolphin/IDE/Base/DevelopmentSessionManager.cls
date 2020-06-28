@@ -4,7 +4,8 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
 DevelopmentSessionManager comment: ''!
 !DevelopmentSessionManager categoriesForClass!System-Support! !
@@ -647,15 +648,6 @@ splashShowAtStartup
 splashShowAtStartup: aBoolean 
 	showSplashAtStartup := aBoolean!
 
-stashBootInfo
-	"Stash Git status information into this image's version object. Answers the stashed information or nil"
-
-	| info |
-	info := [self class git: 'describe --tags'] on: ExternalProcessExecuteError do: [:ex | nil].
-	info = '' ifTrue: [info := nil].
-	self bootInfo: info.
-	^info!
-
 tertiaryStartup
 	"Perform development system tertiary startup (e.g. ensure 
 	SmalltalkSystemShell is available)."
@@ -780,7 +772,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #splashShellClass:!constants!private! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
-!DevelopmentSessionManager categoriesFor: #stashBootInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
 !DevelopmentSessionManager categoriesFor: #traceStream!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #unhandledException:!exceptions!private! !
@@ -788,15 +779,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #versionString!accessing!public! !
 
 !DevelopmentSessionManager class methodsFor!
-
-git: cmdString 
-	| outputPipe process |
-	process := ExternalProcess new.
-	process commandLine: 'git ' , cmdString.
-	outputPipe := process stdoutPipe.
-	process executeSync.
-	[process isTerminated] whileFalse: [].
-	^outputPipe readStream contents!
 
 icon
 	"Answer an icon for the receiver and its instances."
@@ -808,7 +790,6 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img7'! !
-!DevelopmentSessionManager class categoriesFor: #git:!public! !
 !DevelopmentSessionManager class categoriesFor: #icon!constants!public! !
 !DevelopmentSessionManager class categoriesFor: #imageExtension!constants!public! !
 

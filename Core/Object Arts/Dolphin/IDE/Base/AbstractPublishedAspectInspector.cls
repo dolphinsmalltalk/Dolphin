@@ -4,7 +4,8 @@ AspectInspector subclass: #AbstractPublishedAspectInspector
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractPublishedAspectInspector guid: (GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
 AbstractPublishedAspectInspector isAbstract: true!
 AbstractPublishedAspectInspector comment: ''!

@@ -4,7 +4,8 @@ SelectableItemsPresenter subclass: #PackageSelector
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'commandQueryHandlers'!
+	classInstanceVariableNames: 'commandQueryHandlers'
+	classConstants: {}!
 PackageSelector guid: (GUID fromString: '{d41af949-f919-4f5f-986d-a50606ba68e9}')!
 PackageSelector comment: 'A PackageSelector is used to choose a Package from the complete set of packages available in the development system. It presents two panes; a hierarchical display of the folders in which the packages reside and a list of available packages. The folder display can be used as a filter to refine which packages are displayed in the list. When a folder is selected, only packages in the hierarchy beneath it are visible.
 

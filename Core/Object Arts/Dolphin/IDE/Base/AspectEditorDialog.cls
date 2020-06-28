@@ -4,7 +4,8 @@ Dialog subclass: #AspectEditorDialog
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AspectEditorDialog guid: (GUID fromString: '{760c70e7-2b1b-4e1e-9742-397d87529534}')!
 AspectEditorDialog comment: ''!
 !AspectEditorDialog categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !

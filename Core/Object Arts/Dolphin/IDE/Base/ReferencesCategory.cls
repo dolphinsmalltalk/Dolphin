@@ -4,7 +4,8 @@ VirtualMethodCategory subclass: #ReferencesCategory
 	instanceVariableNames: 'literal'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferencesCategory guid: (GUID fromString: '{87b4c507-026e-11d3-9fd7-00a0cc3e4a32}')!
 ReferencesCategory comment: 'ReferencesCategory is the class of virtual method categories which dynamically determines their membership to include only those methods which reference a particular object from their literal frame.
 

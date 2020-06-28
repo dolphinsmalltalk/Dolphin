@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Seeing the Objects Inside'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -9,17 +9,11 @@ package basicScriptAt: #preuninstall put: '| devsys |
 devsys := Smalltalk developmentSystem.
 devsys aboutBoxClass == DolphinSplash ifTrue: [devsys aboutBoxClass: nil]'.
 
-package classNames
-	add: #DolphinSplash;
-	add: #ObjectInside;
-	add: #SeeingTheObjectsInside;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{DolphinSplash}
+	#{ObjectInside}
+	#{SeeingTheObjectsInside}
+).
 
 package setPrerequisites: #(
 	'..\Development System'
@@ -30,7 +24,8 @@ package setPrerequisites: #(
 	'..\..\..\System\Random\Dolphin Random Stream'
 	'..\..\..\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\..\MVP\Gdiplus\Gdiplus'
-	'..\..\..\MVP\Icons\Internal Bitmaps and Icons').
+	'..\..\..\MVP\Icons\Internal Bitmaps and Icons'
+).
 
 package!
 
@@ -38,24 +33,24 @@ package!
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
-	classVariableNames: 'EdgePointResolution'
+	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EdgePointResolution' -> 16rA
+	}!
 Splash subclass: #DolphinSplash
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
+	classConstants: {}!
 
 "End of package definition"!
 

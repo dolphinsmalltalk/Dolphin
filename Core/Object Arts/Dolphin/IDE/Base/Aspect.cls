@@ -2,14 +2,16 @@
 
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
-	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EditInPlaceMask' -> 16r80000.
+		'MultilineValueMask' -> 16r40000.
+		'ReadOnlyPresenterBlockMask' -> 16r10000.
+		'ValueWorkspaceEditorMask' -> 16r20000
+	}!
 Aspect guid: (GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
-Aspect addClassConstant: 'EditInPlaceMask' value: 16r80000!
-Aspect addClassConstant: 'MultilineValueMask' value: 16r40000!
-Aspect addClassConstant: 'ReadOnlyPresenterBlockMask' value: 16r10000!
-Aspect addClassConstant: 'ValueWorkspaceEditorMask' value: 16r20000!
 Aspect comment: 'Part of the PublishedAspectorInspector framework.
 
 <Aspect>s are used to describe the published aspects of various objects. An Aspect descriptor can be combined with a particular object to create an <AspectAccessor> that can be used to access the subject object with the value/value> protocol. The <AspectAccessor> uses the aspect name to construct accessor messages (e.g. #myAspect and #myAspect:) for getting and setting the value. An Aspect instance also holds a presenter block (a <dyadicValuable>) which, when evaluated, will create a presenter suitable for editing the aspect as its model.

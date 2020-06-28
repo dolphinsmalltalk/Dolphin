@@ -4,7 +4,8 @@ Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InvalidInstallationError guid: (GUID fromString: '{089355c5-e178-4599-a5b0-18d7bebd8acf}')!
 InvalidInstallationError comment: ''!
 !InvalidInstallationError categoriesForClass!Kernel-Exception Handling! !

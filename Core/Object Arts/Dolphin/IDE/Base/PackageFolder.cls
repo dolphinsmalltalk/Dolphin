@@ -4,7 +4,8 @@ Folder subclass: #PackageFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageFolder guid: (GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
 PackageFolder comment: ''!
 !PackageFolder categoriesForClass!MVP-Models! !

@@ -4,7 +4,8 @@ SmalltalkToolShell subclass: #FlipperInspector
 	instanceVariableNames: 'cards'
 	classVariableNames: 'Renderers'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FlipperInspector guid: (GUID fromString: '{8dc9ca40-c164-11d5-9849-0800460222f0}')!
 FlipperInspector comment: ''!
 !FlipperInspector categoriesForClass!MVP-Presenters! !

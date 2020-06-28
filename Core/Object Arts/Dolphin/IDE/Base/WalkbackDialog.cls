@@ -2,12 +2,14 @@
 
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'
-	classVariableNames: 'CallStackId Commands IconId'
+	classVariableNames: 'Commands'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CallStackId' -> 16r3E9.
+		'IconId' -> 16r3F1
+	}!
 WalkbackDialog guid: (GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
-WalkbackDialog addClassConstant: 'CallStackId' value: 16r3E9!
-WalkbackDialog addClassConstant: 'IconId' value: 16r3F1!
 WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.
@@ -191,8 +193,6 @@ initialize
 				at: 4 put: #copy;
 				shrink;
 				isImmutable: true;
-				yourself).
-	self addClassConstant: 'CallStackId' value: 1001.
-	self addClassConstant: 'IconId' value: 1009! !
+				yourself)! !
 !WalkbackDialog class categoriesFor: #initialize!initializing!private! !
 

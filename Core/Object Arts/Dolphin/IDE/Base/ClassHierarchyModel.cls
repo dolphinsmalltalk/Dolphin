@@ -4,7 +4,8 @@ VirtualTreeModel subclass: #ClassHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassHierarchyModel guid: (GUID fromString: '{87b4c673-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel> representing the hierarchy (or a subset of it) of <Class>es in the system.'!
 !ClassHierarchyModel categoriesForClass!MVP-Models! !

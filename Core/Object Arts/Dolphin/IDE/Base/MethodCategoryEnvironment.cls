@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #MethodCategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodCategoryEnvironment guid: (GUID fromString: '{d9a3e87e-16b6-4a73-8469-e08822dcb6dd}')!
 MethodCategoryEnvironment comment: 'MethodCategoryEnvironment is a Dolphin specific <BrowserEnvironment> that represents the contents of one or more Dolphin method categories. This can be very powerful when used in conjunction with Dolphin''s >VirtualMethodCategory>s, as the latter have an arbitrary filtering capability.
 

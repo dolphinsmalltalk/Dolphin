@@ -4,7 +4,8 @@ Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin guid: (GUID fromString: '{4e71c848-3d94-41f6-8ce9-66d437619a5f}')!
 ClassBrowserPlugin isAbstract: true!
 ClassBrowserPlugin comment: '<ClassBrowserPluginAbstract> is the abstract superclass that implements the basic <classBrowserPlugin> protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an <OrderedCollection> of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.

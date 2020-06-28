@@ -4,7 +4,8 @@ MenuItemDialog subclass: #MenuDialog
 	instanceVariableNames: 'autoDismissPresenter checkColumnModePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuDialog guid: (GUID fromString: '{b784ea93-af68-4152-b6b3-99f12c3aca87}')!
 MenuDialog comment: 'MenuDialog is the <MenuItemDialog> used for editing the properties of a sub-menu entry.
 

@@ -2,9 +2,12 @@
 
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
-	classVariableNames: 'IgnoreCaseMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IgnoreCaseMask' -> 16r1
+	}!
 MethodSearch guid: (GUID fromString: '{702ae94a-b32c-4d97-b2a5-8080cf67e3b4}')!
 MethodSearch comment: 'SelectorSearch represents the information and behaviour necessary to filter the methods of the system according to whether they define or reference a message selector matching specified criteria. This can include regular expression matching when the ''VBScript Regular Expressions'' package is loaded.
 
@@ -194,9 +197,6 @@ wildcardReferenceFilter
 
 !MethodSearch class methodsFor!
 
-initialize
-	IgnoreCaseMask := 1!
-
 new
 	^super new initialize!
 
@@ -216,7 +216,6 @@ newPattern: aString
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !
-!MethodSearch class categoriesFor: #initialize!initializing!public! !
 !MethodSearch class categoriesFor: #new!instance creation!public! !
 !MethodSearch class categoriesFor: #newFindDetails:!instance creation!public! !
 !MethodSearch class categoriesFor: #newLiteral:!instance creation!public! !

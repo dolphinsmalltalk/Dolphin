@@ -4,7 +4,8 @@ MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodSourceSearch guid: (GUID fromString: '{6f058c96-c1bf-4fb5-a2c3-b82976045e6a}')!
 MethodSourceSearch comment: ''!
 !MethodSourceSearch categoriesForClass!Kernel-Objects! !

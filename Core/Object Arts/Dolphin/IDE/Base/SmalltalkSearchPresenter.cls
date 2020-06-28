@@ -4,7 +4,8 @@ Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkSearchPresenter guid: (GUID fromString: '{a8c5bf80-8660-45e4-865c-f489ca9ca4e8}')!
 SmalltalkSearchPresenter comment: ''!
 !SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !

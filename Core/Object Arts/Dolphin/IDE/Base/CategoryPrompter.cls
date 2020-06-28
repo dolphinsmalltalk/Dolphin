@@ -2,9 +2,13 @@
 
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'
-	classVariableNames: 'AllowIntermediatesMask AllowReadOnlyMask'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllowIntermediatesMask' -> 16r1.
+		'AllowReadOnlyMask' -> 16r2
+	}!
 CategoryPrompter guid: (GUID fromString: '{87b4c6a6-026e-11d3-9fd7-00a0cc3e4a32}')!
 CategoryPrompter comment: 'CategoryPrompter is a <valueDialogPresenter> that can be used to prompt for a <Category>.
 
@@ -160,15 +164,6 @@ icon
 	^Smalltalk developmentSystem icon
 !
 
-initialize
-	"Private - Initialize the receiver. Install as a sample application into the
-	system folder
-		self initialize.
-	"
-
-	AllowIntermediatesMask := 16r1.
-	AllowReadOnlyMask := 16r2!
-
 on: value choices: list caption: caption
 	"Answers a dialog to allow the user to choose from the <sequencedReadableCollection> of
 	values, list. The initial list selection is the <Category>, value which, if nil, there is no selection.
@@ -191,7 +186,6 @@ resource_Default_view
 !CategoryPrompter class categoriesFor: #choices:caption:!instance creation!public! !
 !CategoryPrompter class categoriesFor: #defaultModel!models!public! !
 !CategoryPrompter class categoriesFor: #icon!accessing!constants!public! !
-!CategoryPrompter class categoriesFor: #initialize!initializing!private! !
 !CategoryPrompter class categoriesFor: #on:choices:caption:!instance creation!public! !
 !CategoryPrompter class categoriesFor: #resource_Default_view!public!resources-views! !
 

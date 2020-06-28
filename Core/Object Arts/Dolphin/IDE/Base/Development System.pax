@@ -718,7 +718,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Icons\Internal Bitmaps and Icons'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
@@ -758,10 +757,12 @@ Object subclass: #MethodCategorizationPolicy
 	classConstants: {}!
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
-	classVariableNames: 'IgnoreCaseMask'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'IgnoreCaseMask' -> 16r1
+	}!
 Object subclass: #SmalltalkSystemIcon
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
@@ -1033,10 +1034,13 @@ Presenter subclass: #SmalltalkSearchPresenter
 	classConstants: {}!
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
-	classConstants: {}!
+	classConstants: {
+		'AutoCompleteMask' -> 16r1.
+		'VariableTipsMask' -> 16r2
+	}!
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
@@ -1075,10 +1079,12 @@ PackageDependencyPresenter subclass: #PackagePrerequisites
 	classConstants: {}!
 SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
-	classVariableNames: 'ClassModeMask'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'commandQueryHandlers'
-	classConstants: {}!
+	classConstants: {
+		'ClassModeMask' -> 16r1
+	}!
 SelectableItemsPresenter subclass: #PackageSelector
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
@@ -1168,10 +1174,13 @@ MenuItemDialog subclass: #MenuDialog
 	classConstants: {}!
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'
-	classVariableNames: 'AllowIntermediatesMask AllowReadOnlyMask'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'AllowIntermediatesMask' -> 16r1.
+		'AllowReadOnlyMask' -> 16r2
+	}!
 ValueDialog subclass: #ChooseClassDialog
 	instanceVariableNames: 'classesPresenter allowNil'
 	classVariableNames: ''
@@ -1282,10 +1291,12 @@ MethodBrowserShell subclass: #MethodExplorerShell
 	classConstants: {}!
 SmalltalkWorkspace subclass: #MethodWorkspace
 	instanceVariableNames: 'parseTree refactoringTool'
-	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
+	classVariableNames: 'AutoParseDwell IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'AutoParseMask' -> 16r100000
+	}!
 SmalltalkWorkspace subclass: #ValueWorkspace
 	instanceVariableNames: 'textModel'
 	classVariableNames: 'ValueIsSelfCookie'
@@ -1306,10 +1317,12 @@ ValuePresenter subclass: #InspectorAbstract
 	classConstants: {}!
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
-	classVariableNames: 'MethodTypes'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MethodTypes' -> #('Normal' 'Return nil' 'Return true' 'Return false' 'Return literal constant 0' 'Return self' 'Return instance variable' 'Set instance variable')
+	}!
 BasicInspector subclass: #DictionaryInspector
 	instanceVariableNames: ''
 	classVariableNames: ''

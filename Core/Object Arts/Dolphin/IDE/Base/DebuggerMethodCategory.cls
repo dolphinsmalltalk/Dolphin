@@ -4,7 +4,8 @@ MethodCategory subclass: #DebuggerMethodCategory
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DebuggerMethodCategory guid: (GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
 DebuggerMethodCategory comment: ''!
 !DebuggerMethodCategory categoriesForClass!System-Support! !

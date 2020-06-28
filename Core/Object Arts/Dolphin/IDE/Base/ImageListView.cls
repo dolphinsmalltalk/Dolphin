@@ -4,7 +4,8 @@ ImageViewAbstract subclass: #ImageListView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ImageListView guid: (GUID fromString: '{3089fd81-d572-4492-a0ac-037b8ad4125e}')!
 ImageListView comment: 'ImageListView is debugging aid for displaying the entire content of an image list, e.g. in an inspector open on an image list.
 '!

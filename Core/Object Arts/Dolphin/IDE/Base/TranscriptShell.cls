@@ -2,9 +2,10 @@
 
 Shell subclass: #TranscriptShell
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
-	classVariableNames: ''
+	classVariableNames: 'DefaultExtent FlashOnOutput'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'DefaultExtent FlashOnOutput'!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TranscriptShell guid: (GUID fromString: '{87b4c6c5-026e-11d3-9fd7-00a0cc3e4a32}')!
 TranscriptShell comment: 'TranscriptShell is a <SmalltalkToolShell> that implements the Transcript notification logging window.
 

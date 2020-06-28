@@ -4,7 +4,8 @@ ValueDialog subclass: #MenuComposer
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuComposer guid: (GUID fromString: '{87b4c6aa-026e-11d3-9fd7-00a0cc3e4a32}')!
 MenuComposer comment: 'MenuComposer is a <valueDialogPresenter> that can be used to edit a <Menu> held in its <valueModel>.
 

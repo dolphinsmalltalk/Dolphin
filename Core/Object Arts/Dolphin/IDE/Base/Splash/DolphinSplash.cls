@@ -4,7 +4,8 @@ Splash subclass: #DolphinSplash
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSplash guid: (GUID fromString: '{87b4c724-026e-11d3-9fd7-00a0cc3e4a32}')!
 DolphinSplash comment: 'DolphinSplash is the Dolphin development system''s spash screen. It extends <Splash> to use a titleless dialog frame and to overlap the Dolphin version information and legal copyright notice onto the splash screen graphic.
 

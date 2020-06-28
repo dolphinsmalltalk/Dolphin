@@ -4,7 +4,8 @@ KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InstVarAspect guid: (GUID fromString: '{c92cbde8-f3b1-4799-9a70-0f2b15a024fc}')!
 InstVarAspect comment: ''!
 !InstVarAspect categoriesForClass!Attribute-Definition! !

@@ -2,9 +2,13 @@
 
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
-	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'!
+	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
+	classConstants: {
+		'AutoCompleteMask' -> 16r1.
+		'VariableTipsMask' -> 16r2
+	}!
 SmalltalkWorkspace guid: (GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkWorkspace comment: 'SmalltalkWorkspace is a <presenter> for displaying a workspace area within a <ScintillaView>. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a <readableString>.
 
@@ -2087,8 +2091,6 @@ initialize
 	IsAutoCompletionEnabled := true.
 	IsAutoCompletionTruncating := false.
 	IsAutoCompletionSpaceAdded := true.
-	AutoCompleteMask := 1.
-	VariableTipsMask := 2.
 	MaxAutoCompletionListSize := 200.
 	AnnotationMode := #hidden.
 	"We set the wrap indent to same so that inline comments will wrap neatly."

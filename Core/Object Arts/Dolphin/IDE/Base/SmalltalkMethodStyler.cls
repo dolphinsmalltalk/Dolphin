@@ -4,7 +4,8 @@ SmalltalkStyler subclass: #SmalltalkMethodStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkMethodStyler guid: (GUID fromString: '{b4e52620-cc73-45ad-8f07-20a71bb2e287}')!
 SmalltalkMethodStyler comment: 'SmalltalkMethodStyler is a <SmalltalkStyler> specialised to colour method definitions. It differs in recognising the method signature, which is not itself a valid Smalltalk expression.'!
 !SmalltalkMethodStyler categoriesForClass!Kernel-Objects! !

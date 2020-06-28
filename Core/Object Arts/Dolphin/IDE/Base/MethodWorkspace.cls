@@ -2,9 +2,12 @@
 
 SmalltalkWorkspace subclass: #MethodWorkspace
 	instanceVariableNames: 'parseTree refactoringTool'
-	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
+	classVariableNames: 'AutoParseDwell IsAutoParseEnabled'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoParseMask' -> 16r100000
+	}!
 MethodWorkspace guid: (GUID fromString: '{d7285d4c-35b2-4b52-a673-2e17fde39fec}')!
 MethodWorkspace comment: 'MethodWorkspace is a specialised <SmalltalkWorkspace> for displaying method source that expects to be contained in a <MethodBrowser>.
 
@@ -529,8 +532,7 @@ initialize
 	"
 
 	AutoParseDwell := 1000.
-	IsAutoParseEnabled := true.
-	AutoParseMask := 16r100000!
+	IsAutoParseEnabled := true!
 
 isAutoParseEnabled
 	"Answer whether the method source will be automatically parsed after the user has paused for a short while."

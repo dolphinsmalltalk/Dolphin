@@ -2,13 +2,15 @@
 
 Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
-	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
+	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classConstants: {
+		'CanUseIdeaSpaceMask' -> 16r2.
+		'ReuseIfOpenMask' -> 16r1
+	}!
 SmalltalkToolShell guid: (GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkToolShell isAbstract: true!
-SmalltalkToolShell addClassConstant: 'CanUseIdeaSpaceMask' value: 16r2!
-SmalltalkToolShell addClassConstant: 'ReuseIfOpenMask' value: 16r1!
 SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 
 
 All of the tools have the singleton instance of SmalltalkSystem as their model. This makes sense because the SmalltalkSystem is effectively a Facade onto the Smalltalk development image; all user interface modifications to the image should go through this central point. In this way, a tool is effectively acting as a view onto the development image. It is also convenient since all <model>s are also <commandTarget>s. This means that some user interface commands can be directly picked up and acted upon by the SmalltalkSystem without any intervention being required from the tool itself.
@@ -517,15 +519,6 @@ icon
 
 	^##(self) defaultIcon.!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-
-	self initialize
-	"
-
-	self addClassConstant: 'ReuseIfOpenMask' value: 1.	"Flags up to 16r80000 are reserved for common flags"
-	self addClassConstant: 'CanUseIdeaSpaceMask' value: 2!
-
 initializeAfterLoad
 	"Perform any post-load initialisation for the class.
 	Superclass method only initializes direct implementors, so we must initialize others."
@@ -677,7 +670,6 @@ toolsFolderIcon
 !SmalltalkToolShell class categoriesFor: #historyDwellTime!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #historyDwellTime:!accessing!public! !
 !SmalltalkToolShell class categoriesFor: #icon!constants!public! !
-!SmalltalkToolShell class categoriesFor: #initialize!initializing!private! !
 !SmalltalkToolShell class categoriesFor: #initializeAfterLoad!initializing!public! !
 !SmalltalkToolShell class categoriesFor: #initializeOptionFlags!initializing!private! !
 !SmalltalkToolShell class categoriesFor: #notificationGetImageBlock!constants!private! !

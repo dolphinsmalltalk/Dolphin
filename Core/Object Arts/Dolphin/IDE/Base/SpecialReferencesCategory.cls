@@ -4,7 +4,8 @@ ReferencesCategory subclass: #SpecialReferencesCategory
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SpecialReferencesCategory guid: (GUID fromString: '{e9a4ed98-09ed-452e-9fe6-e59ae77dcfde}')!
 SpecialReferencesCategory comment: ''!
 !SpecialReferencesCategory categoriesForClass!System-Support! !

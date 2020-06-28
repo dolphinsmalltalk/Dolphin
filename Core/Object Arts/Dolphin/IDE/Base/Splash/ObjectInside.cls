@@ -2,11 +2,13 @@
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
-	classVariableNames: 'EdgePointResolution'
+	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EdgePointResolution' -> 16rA
+	}!
 ObjectInside guid: (GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
-ObjectInside addClassConstant: 'EdgePointResolution' value: 16rA!
 ObjectInside comment: ''!
 !ObjectInside categoriesForClass!Kernel-Objects! !
 !ObjectInside methodsFor!

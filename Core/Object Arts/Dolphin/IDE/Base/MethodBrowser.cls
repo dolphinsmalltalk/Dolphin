@@ -4,7 +4,8 @@ ListPresenter subclass: #MethodBrowser
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	poolDictionaries: 'CompilerFlags'
-	classInstanceVariableNames: 'commandQueryHandlers'!
+	classInstanceVariableNames: 'commandQueryHandlers'
+	classConstants: {}!
 MethodBrowser guid: (GUID fromString: '{87b4c68d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodBrowser comment: 'MethodBrowser is a <compositePresenter> used to display a <collection> of <CompiledMethod>s. The browser can be instantiated and then filled with methods using #methods: aspect, the value of which must be a <BrowserEnvironment>. The methods defined in the environment are enumerated and displayed in the browser list.
 

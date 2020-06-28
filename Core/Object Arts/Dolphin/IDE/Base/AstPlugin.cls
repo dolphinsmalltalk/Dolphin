@@ -4,7 +4,8 @@ ClassBrowserPlugin subclass: #AstPlugin
 	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AstPlugin guid: (GUID fromString: '{4aba7565-bc07-4387-b7e4-16e2f57f1801}')!
 AstPlugin comment: 'AstPlugin is a <classBrowserPlugin> that displays the syntax tree for the currently selected method alongside the source.
 	

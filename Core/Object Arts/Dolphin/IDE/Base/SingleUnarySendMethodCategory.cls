@@ -4,7 +4,8 @@ ReferencesCategory subclass: #SingleUnarySendMethodCategory
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SingleUnarySendMethodCategory guid: (GUID fromString: '{0adb321d-bb42-4acf-a21f-49b37095183a}')!
 SingleUnarySendMethodCategory comment: 'SingleUnarySendMethodCategory is the class of virtual method categories that dynamically determine their membership to include only those methods which are of a form where their body just sends one unary message to self, for example subclass responsibility methods such as:
 

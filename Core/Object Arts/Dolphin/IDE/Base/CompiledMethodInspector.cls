@@ -2,9 +2,12 @@
 
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
-	classVariableNames: 'MethodTypes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'MethodTypes' -> #('Normal' 'Return nil' 'Return true' 'Return false' 'Return literal constant 0' 'Return self' 'Return instance variable' 'Set instance variable')
+	}!
 CompiledMethodInspector guid: (GUID fromString: '{87b4c691-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledMethodInspector comment: 'CompiledMethodInspector is a <compositePresenter> that implements a specialised inspect facility onto a <CompiledMethod>. This provides additional functionality to view the source, and the decompiled bytecodes.'!
 !CompiledMethodInspector categoriesForClass!MVP-Presenters! !
@@ -48,23 +51,6 @@ headerList
 	^##(self superclass headerList, 
 			(OrderedCollection
 					with: ' - source' -> #sourceText
-					with: ' - disassembly' -> #disassemblyText))!
-
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	MethodTypes := #(
-		'Normal'
-		'Return nil'
-		'Return true'
-		'Return false'
-		'Return literal constant 0'
-		'Return self'
-		'Return instance variable'
-		'Set instance variable').
-! !
+					with: ' - disassembly' -> #disassemblyText))! !
 !CompiledMethodInspector class categoriesFor: #headerList!constants!public! !
-!CompiledMethodInspector class categoriesFor: #initialize!initializing!private! !
 

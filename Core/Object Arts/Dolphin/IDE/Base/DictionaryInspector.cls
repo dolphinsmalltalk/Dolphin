@@ -4,7 +4,8 @@ BasicInspector subclass: #DictionaryInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DictionaryInspector guid: (GUID fromString: '{87b4c694-026e-11d3-9fd7-00a0cc3e4a32}')!
 DictionaryInspector comment: 'DictionaryInspector is a <compositePresenter> that implements a specialised inspect facility onto a <Dictionary>. This provides additional functionality to inspect the dictionary via its keys and also to allow the user to add new keys and values.'!
 !DictionaryInspector categoriesForClass!MVP-Presenters! !

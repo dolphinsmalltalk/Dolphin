@@ -2,16 +2,18 @@
 
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
-	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
+	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	poolDictionaries: 'CompilerFlags OpcodePool'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnimateMask' -> 16r10.
+		'DisassemblyMask' -> 16r4.
+		'MainMask' -> 16r1.
+		'ResumableMask' -> 16r8.
+		'RunMask' -> 16r2.
+		'StackDepthIncrement' -> 16r64
+	}!
 Debugger guid: (GUID fromString: '{87b4c6bd-026e-11d3-9fd7-00a0cc3e4a32}')!
-Debugger addClassConstant: 'AnimateMask' value: 16r10!
-Debugger addClassConstant: 'DisassemblyMask' value: 16r4!
-Debugger addClassConstant: 'MainMask' value: 16r1!
-Debugger addClassConstant: 'ResumableMask' value: 16r8!
-Debugger addClassConstant: 'RunMask' value: 16r2!
-Debugger addClassConstant: 'StackDepthIncrement' value: 16r64!
 Debugger comment: 'Debugger is a <SmalltalkToolShell> that implements the standard debugging tool. The debugger is usually invoked from a walkback dialog by pressing the Debug button. Walkbacks are displayed in the development environment when a breakpoint (''self halt'') is encountered, or when an unhandled exception occurs. It is also possible to configure the system so that debuggers are opened automatically when breakpoints are encountered or errors occur (see the Debugger options in Dolphin Options), though this is not particularly recommended as it can make the system crash if the error or breakpoint is in some code that is itself used by the Debugger.
 
 Dolphin''s Debugger does not simulate execution as in some Smalltalk''s, but instead uses the VM''s built-in debugging event generation to run the code and interrupt it at appropriate points. This results in more consistent and faster execution, although note that the debugger will recompile methods being stepped through to insert breakpoints and this may cause some peephole compiler optimisations to be lost.
@@ -2066,14 +2068,7 @@ initialize
 	"
 
 	| debugEmptyBlock |
-	self addClassConstant: 'StackDepthIncrement' value: 100.
 	DefaultStackDepth := 40.
-	self addClassConstant: 'MainMask' value: 16r1.
-	self addClassConstant: 'RunMask' value: 16r2.
-	self addClassConstant: 'DisassemblyMask' value: 16r4.
-	self addClassConstant: 'ResumableMask' value: 16r8.
-	self addClassConstant: 'AnimateMask' value: 16r10.
-	self addClassVariable: 'AnimatePause' value: 200.
 	self restartOnMethodSave: true.
 	self enableDynamicMenus: true.
 	self showWalkbacks: true.

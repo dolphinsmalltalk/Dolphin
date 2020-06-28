@@ -1,21 +1,15 @@
 ﻿| package |
 package := Package name: 'Dolphin Transcript'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #TranscriptShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{TranscriptShell}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -23,7 +17,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
-	'..\..\MVP\Type Converters\Dolphin Type Converters').
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -31,14 +26,10 @@ package!
 
 Shell subclass: #TranscriptShell
 	instanceVariableNames: 'outputWindow buffer bufferProtect'
-	classVariableNames: ''
+	classVariableNames: 'DefaultExtent FlashOnOutput'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'DefaultExtent FlashOnOutput'!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodProtocolEnvironment guid: (GUID fromString: '{e2dca651-3bdb-4a9e-a4a7-c13ed6b54082}')!
 MethodProtocolEnvironment comment: 'MethodProtocolEnvironment is a Dolphin specific <BrowserEnvironment> that represents the classes that conform to a set of Dolphin method protocols.
 

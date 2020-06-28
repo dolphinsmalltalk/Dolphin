@@ -4,7 +4,8 @@ AspectInspector subclass: #InstVarInspector
 	instanceVariableNames: 'sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InstVarInspector guid: (GUID fromString: '{da630ac4-c186-11d5-9849-0800460222f0}')!
 InstVarInspector comment: ''!
 !InstVarInspector categoriesForClass!MVP-Resources-IDE Tools! !

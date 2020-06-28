@@ -2,15 +2,17 @@
 
 SmalltalkToolShell subclass: #ViewComposer
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
+	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AdornmentModifiedFlag' -> 16r4.
+		'ModifiedFlag' -> 16r1.
+		'MouseClickFlag' -> 16r2.
+		'RefreshFlag' -> 16r8.
+		'UndoRedoFlag' -> 16r10
+	}!
 ViewComposer guid: (GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
-ViewComposer addClassConstant: 'AdornmentModifiedFlag' value: 16r4!
-ViewComposer addClassConstant: 'ModifiedFlag' value: 16r1!
-ViewComposer addClassConstant: 'MouseClickFlag' value: 16r2!
-ViewComposer addClassConstant: 'RefreshFlag' value: 16r8!
-ViewComposer addClassConstant: 'UndoRedoFlag' value: 16r10!
 ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
 The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.
@@ -2796,12 +2798,6 @@ initialize
 	Smalltalk developmentSystem
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self
-		addClassConstant: 'ModifiedFlag' value: 16r1;
-		addClassConstant: 'MouseClickFlag' value: 16r2;
-		addClassConstant: 'AdornmentModifiedFlag' value: 16r4;
-		addClassConstant: 'RefreshFlag' value: 16r8;
-		addClassConstant: 'UndoRedoFlag' value: 16r10.
 	self canUseIdeaSpace: true.
 	self defaultSlideyPinsMap: ##(IdentityDictionary new
 				at: #toolsSlidey put: false;

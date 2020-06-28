@@ -4,7 +4,8 @@ ClassSelector subclass: #ClassListSelector
 	instanceVariableNames: 'classesListPresenter environment'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassListSelector guid: (GUID fromString: '{337ede86-614b-4281-b0fe-16ffb1e67d72}')!
 ClassListSelector comment: 'A ClassListSelector is used to display a list of classes. It implements the class list pane in the <PackagedClassSelector>, as used in the System Browser.
 

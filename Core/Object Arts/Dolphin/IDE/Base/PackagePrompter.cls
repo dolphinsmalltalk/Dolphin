@@ -4,7 +4,8 @@ ValueDialog subclass: #PackagePrompter
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackagePrompter guid: (GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
 PackagePrompter comment: 'self show'!
 !PackagePrompter categoriesForClass!MVP-Presenters! !

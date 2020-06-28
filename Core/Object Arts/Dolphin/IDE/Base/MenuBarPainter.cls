@@ -4,7 +4,8 @@ MenuPainter subclass: #MenuBarPainter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuBarPainter guid: (GUID fromString: '{b83154cc-4e8d-4ee0-9b6e-b8c6826bab88}')!
 MenuBarPainter comment: ''!
 !MenuBarPainter categoriesForClass!Kernel-Objects! !

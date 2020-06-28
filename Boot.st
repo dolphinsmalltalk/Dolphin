@@ -53,8 +53,18 @@ SessionManager current bootFinished!
 
 DevelopmentSessionManager installNew!
 
-SessionManager current defaultResourceLibrary loadFlags: 0.
-SessionManager current stashBootInfo!
+SessionManager current defaultResourceLibrary loadFlags: 0!
+
+| info |
+info := [ | process outputPipe |
+	process := ExternalProcess new.
+	process commandLine: 'git describe --tags'.
+	outputPipe := process stdoutPipe.
+	process executeSync.
+	[process isTerminated] whileFalse: [].
+	outputPipe readStream contents
+] on: ExternalProcessExecuteError do: [:ex | nil].
+SessionManager current bootInfo: (info isEmpty ifFalse: [info])!
 
 "Mark all the booted packages as base"
 Package manager markAllPackagesAsBase!

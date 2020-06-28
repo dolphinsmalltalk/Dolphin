@@ -2,12 +2,14 @@
 
 SmalltalkToolShell subclass: #ClassBrowserAbstract
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
-	classVariableNames: 'FilterObjectMethodsMask GrayedMethodFadeFactor HistoryListSize LooseMethodColor ShowInheritedMethodsMask WordWrapDefinition'
+	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
+	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
+	classConstants: {
+		'FilterObjectMethodsMask' -> 16r2.
+		'ShowInheritedMethodsMask' -> 16r1
+	}!
 ClassBrowserAbstract guid: (GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassBrowserAbstract addClassConstant: 'FilterObjectMethodsMask' value: 16r2!
-ClassBrowserAbstract addClassConstant: 'ShowInheritedMethodsMask' value: 16r1!
 ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
@@ -2838,8 +2840,6 @@ initialize
 	"
 
 	self looseMethodColor: Color purple.
-	self addClassConstant: 'ShowInheritedMethodsMask' value: 1.
-	self addClassConstant: 'FilterObjectMethodsMask' value: 2.
 	self grayedMethodFadeFactor: 2.
 	self historyListSize: nil.
 	self historyDwellTime: nil.

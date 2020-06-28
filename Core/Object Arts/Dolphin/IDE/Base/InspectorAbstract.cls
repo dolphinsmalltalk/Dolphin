@@ -4,7 +4,8 @@ ValuePresenter subclass: #InspectorAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InspectorAbstract guid: (GUID fromString: '{a5e858b2-45f7-4ae8-8f14-c11aad5f3ba4}')!
 InspectorAbstract isAbstract: true!
 InspectorAbstract comment: ''!

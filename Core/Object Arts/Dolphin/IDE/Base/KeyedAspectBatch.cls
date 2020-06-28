@@ -4,7 +4,8 @@ KeyedAspect subclass: #KeyedAspectBatch
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyedAspectBatch guid: (GUID fromString: '{0f7d3efe-6f95-4de3-a5e1-2ec7a86eb8b2}')!
 KeyedAspectBatch comment: 'Part of the PublishedAspectorInspector framework.<KeyedAspectBatch> instances are used to describe a group of <KeyedAspects> of a keyed collection. Batching the keyed aspects up in this way via a <KeyedAspectBatchAccessor> allows the PAI to only display a certain number of elements at a time. This can substantially improve performance when displaying large (or slow to access) collections.'!
 !KeyedAspectBatch categoriesForClass!Attribute-Definition! !

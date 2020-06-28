@@ -4,7 +4,8 @@ MenuPainter subclass: #PopupMenuPainter
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PopupMenuPainter guid: (GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
 PopupMenuPainter comment: ''!
 !PopupMenuPainter categoriesForClass!Kernel-Objects! !
