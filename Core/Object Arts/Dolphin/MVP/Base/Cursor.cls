@@ -4,7 +4,8 @@ Icon subclass: #Cursor
 	instanceVariableNames: ''
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Cursor guid: (GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
 Cursor comment: ''!
 !Cursor categoriesForClass!Graphics-Tools! !

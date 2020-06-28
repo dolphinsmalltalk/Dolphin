@@ -2,9 +2,14 @@
 
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'
-	classVariableNames: 'CheckedMask DefaultMask EnabledMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CheckedMask' -> 16r2.
+		'DefaultMask' -> 16r4.
+		'EnabledMask' -> 16r1
+	}!
 CommandQuery guid: (GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
 
@@ -232,20 +237,10 @@ commandDescription: item source: aView
 	^(super new initialize) 
 		commandDescription: item source: aView!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		CommandQuery initialize
-	"
-
-	EnabledMask := 1.
-	CheckedMask := 2.
-	DefaultMask := 4!
-
 new
 	"Answers an instance of the receiver on a nil message"
 
 	^self commandDescription: CommandDescription new source: nil! !
 !CommandQuery class categoriesFor: #commandDescription:source:!instance creation!public! !
-!CommandQuery class categoriesFor: #initialize!development!initializing!private! !
 !CommandQuery class categoriesFor: #new!instance creation!public! !
 

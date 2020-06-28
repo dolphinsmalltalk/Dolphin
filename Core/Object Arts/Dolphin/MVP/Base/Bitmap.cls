@@ -2,9 +2,13 @@
 
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
-	classVariableNames: 'IsSharedMask Map3DColorsMask SharedBitmaps'
+	classVariableNames: 'SharedBitmaps'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IsSharedMask' -> 16r2.
+		'Map3DColorsMask' -> 16r1
+	}!
 Bitmap guid: (GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 
@@ -660,9 +664,6 @@ initialize
 	"Private - Initialize the receiver's class variables
 		Bitmap initialize
 	"
-
-	Map3DColorsMask := 16r1.
-	IsSharedMask := 16r2.
 
 	SharedBitmaps := WeakLookupTable new
 	!

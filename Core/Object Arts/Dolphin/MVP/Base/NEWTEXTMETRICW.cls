@@ -2,14 +2,16 @@
 
 TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ntmAvgWidth _OffsetOf_ntmCellHeight _OffsetOf_ntmFlags _OffsetOf_ntmSizeEM'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ntmAvgWidth' -> 16r48.
+		'_OffsetOf_ntmCellHeight' -> 16r44.
+		'_OffsetOf_ntmFlags' -> 16r3C.
+		'_OffsetOf_ntmSizeEM' -> 16r40
+	}!
 NEWTEXTMETRICW guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
-NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmAvgWidth' value: 16r48!
-NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmCellHeight' value: 16r44!
-NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmFlags' value: 16r3C!
-NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmSizeEM' value: 16r40!
 NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:

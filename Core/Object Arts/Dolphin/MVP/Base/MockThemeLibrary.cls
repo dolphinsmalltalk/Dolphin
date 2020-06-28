@@ -4,7 +4,8 @@ ThemeLibrary subclass: #MockThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MockThemeLibrary guid: (GUID fromString: '{44aa9479-53f3-4ca9-8949-89d3d916b997}')!
 MockThemeLibrary comment: 'MockThemeLibrary is a dummy ThemeLibrary used on host systems that do not have UXTHEME.DLL (i.e. anything earlier than Windows XP). Its main purpose is to avoid the need to test for Windows XP in some cases where theme calls are needed on XP, but are not relevant on older platforms. Most of the methods do nothing, but in some cases a sensible implementation is provided, in particular the tests for theming available and active answer false. These tests would typically be used to guard most theme related code, so no other theme library calls would then be made.'!
 !MockThemeLibrary categoriesForClass!Win32-Modules! !

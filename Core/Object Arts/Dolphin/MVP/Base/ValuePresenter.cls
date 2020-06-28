@@ -4,7 +4,8 @@ Presenter subclass: #ValuePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter guid: (GUID fromString: '{87b4c689-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValuePresenter comment: 'ValuePresenter is a <valuePresenter>s that presents the contents of a <valueModel> within a <valueView>.
 

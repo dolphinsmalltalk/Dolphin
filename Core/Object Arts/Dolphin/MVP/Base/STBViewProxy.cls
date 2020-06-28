@@ -2,14 +2,16 @@
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
-	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CreationParentIndex' -> 16r2.
+		'CreationStyleIndex' -> 16r3.
+		'EventsIndex' -> 16rB.
+		'HandleIndex' -> 16r1
+	}!
 STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
-STBViewProxy addClassConstant: 'CreationParentIndex' value: 16r2!
-STBViewProxy addClassConstant: 'CreationStyleIndex' value: 16r3!
-STBViewProxy addClassConstant: 'EventsIndex' value: 16rB!
-STBViewProxy addClassConstant: 'HandleIndex' value: 16r1!
 STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
 !STBViewProxy categoriesForClass!System-Binary storage! !
 !STBViewProxy methodsFor!

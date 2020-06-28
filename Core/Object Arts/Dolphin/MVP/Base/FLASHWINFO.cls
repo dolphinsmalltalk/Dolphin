@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwTimeout _OffsetOf_hwnd _OffsetOf_uCount'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFlags' -> 16r8.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwTimeout' -> 16r10.
+		'_OffsetOf_hwnd' -> 16r4.
+		'_OffsetOf_uCount' -> 16rC
+	}!
 FLASHWINFO guid: (GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
-FLASHWINFO addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
-FLASHWINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-FLASHWINFO addClassConstant: '_OffsetOf_dwTimeout' value: 16r10!
-FLASHWINFO addClassConstant: '_OffsetOf_hwnd' value: 16r4!
-FLASHWINFO addClassConstant: '_OffsetOf_uCount' value: 16rC!
 FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 
 FLASHWINFO is used to pass parameters to the FlashWindowEx() API call.

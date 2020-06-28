@@ -4,7 +4,8 @@ LayoutManager subclass: #LinearLayout
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LinearLayout guid: (GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
 LinearLayout isAbstract: true!
 LinearLayout comment: ''!

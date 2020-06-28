@@ -4,7 +4,8 @@ ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Point3D guid: (GUID fromString: '{87b4c659-026e-11d3-9fd7-00a0cc3e4a32}')!
 Point3D comment: 'A Point3D represents an x-y-z pair of numbers usually indicating a point in a three-dimensional Cartesian coordinate volume. Following the convention for Point, Point3D is often attributed a "left-handed" coordinate system. However, this is not essential and either left or right-handed systems may be adopted depending on the application.
 

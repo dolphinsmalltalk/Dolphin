@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #DOCINFOW
 	instanceVariableNames: 'docName'
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fwType _OffsetOf_lpszDatatype _OffsetOf_lpszDocName _OffsetOf_lpszOutput'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fwType' -> 16r10.
+		'_OffsetOf_lpszDatatype' -> 16rC.
+		'_OffsetOf_lpszDocName' -> 16r4.
+		'_OffsetOf_lpszOutput' -> 16r8
+	}!
 DOCINFOW guid: (GUID fromString: '{87b4c5e8-026e-11d3-9fd7-00a0cc3e4a32}')!
-DOCINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-DOCINFOW addClassConstant: '_OffsetOf_fwType' value: 16r10!
-DOCINFOW addClassConstant: '_OffsetOf_lpszDatatype' value: 16rC!
-DOCINFOW addClassConstant: '_OffsetOf_lpszDocName' value: 16r4!
-DOCINFOW addClassConstant: '_OffsetOf_lpszOutput' value: 16r8!
 DOCINFOW comment: 'DOCINFO is an <ExternalStructure> class which represents the Win32 DOCINFO structure of the same name.
 
 DOCINFO is used in conjunction with the StartDoc() GDI call.'!

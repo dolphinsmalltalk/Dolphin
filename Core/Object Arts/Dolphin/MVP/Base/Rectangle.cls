@@ -4,7 +4,8 @@ Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Rectangle guid: (GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 Rectangle comment: 'Instances of Rectangle represent a rectangular areas in a two dimensional Cartesian coordinate system. A Rectangle contains two Points; origin, which specifies the top left corner, and corner, which indicates the bottom right corner of the region described. 
 

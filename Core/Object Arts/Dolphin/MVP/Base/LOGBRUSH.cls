@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
-	classVariableNames: '_OffsetOf_lbColor _OffsetOf_lbHatch _OffsetOf_lbStyle'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lbColor' -> 16r4.
+		'_OffsetOf_lbHatch' -> 16r8.
+		'_OffsetOf_lbStyle' -> 16r0
+	}!
 LOGBRUSH guid: (GUID fromString: '{87b4c5f8-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGBRUSH addClassConstant: '_OffsetOf_lbColor' value: 16r4!
-LOGBRUSH addClassConstant: '_OffsetOf_lbHatch' value: 16r8!
-LOGBRUSH addClassConstant: '_OffsetOf_lbStyle' value: 16r0!
 LOGBRUSH comment: '<LOGBRUSH> is an <ExternalStructure> class to wrap the struct ''Win.LOGBRUSH'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The LOGBRUSH structure defines the style, color, and pattern of a physical brush. It is used by the CreateBrushIndirect and ExtCreatePen functions."

@@ -4,7 +4,8 @@ Object subclass: #Interactor
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Interactor guid: (GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
 Interactor isAbstract: true!
 Interactor comment: '`Interactor` is an abstract class of `<interactor>`s that provide a plug-in capability to replace a `<presenter>`s normal response to user input events with something else, either temporarily (such as for the duration of a drag session) or for the life of the presenter.

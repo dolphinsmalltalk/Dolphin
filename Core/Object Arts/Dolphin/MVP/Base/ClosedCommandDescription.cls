@@ -4,7 +4,8 @@ CommandDescription subclass: #ClosedCommandDescription
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClosedCommandDescription guid: (GUID fromString: '{26e7b7a8-fc97-462c-8edf-c6e4467046ff}')!
 ClosedCommandDescription comment: 'ClosedCommandDescription is the class of <CommandDescription>s that have a pluggable implementation of #queryCommand: such that they can be completely self contained, both describing the command to be performed, where to send it, and also managing enablement/disablement.
 

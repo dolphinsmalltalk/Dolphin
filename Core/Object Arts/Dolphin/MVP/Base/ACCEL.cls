@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #ACCEL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cmd _OffsetOf_fVirt _OffsetOf_key'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cmd' -> 16r4.
+		'_OffsetOf_fVirt' -> 16r0.
+		'_OffsetOf_key' -> 16r2
+	}!
 ACCEL guid: (GUID fromString: '{87b4c5c8-026e-11d3-9fd7-00a0cc3e4a32}')!
-ACCEL addClassConstant: '_OffsetOf_cmd' value: 16r4!
-ACCEL addClassConstant: '_OffsetOf_fVirt' value: 16r0!
-ACCEL addClassConstant: '_OffsetOf_key' value: 16r2!
 ACCEL comment: 'ACCEL is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 ACCEL is used to associate accelerator key entries with a Window.'!

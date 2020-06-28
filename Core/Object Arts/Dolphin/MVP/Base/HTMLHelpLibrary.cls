@@ -4,7 +4,8 @@ ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HTMLHelpLibrary guid: (GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
 HTMLHelpLibrary comment: ''!
 !HTMLHelpLibrary categoriesForClass!Unclassified! !

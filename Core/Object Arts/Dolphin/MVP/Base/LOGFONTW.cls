@@ -2,11 +2,13 @@
 
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfFaceName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
 LOGFONTW guid: (GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
-LOGFONTW addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
 LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

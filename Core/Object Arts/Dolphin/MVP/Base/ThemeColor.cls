@@ -4,7 +4,8 @@ VirtualColor subclass: #ThemeColor
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ThemeColor guid: (GUID fromString: '{5016060e-ec13-4e73-be45-ed636d352614}')!
 ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that provide a named indirection to a real `Color`. They are useful for simple theming purposes, allowing view resources to be created that refer to named `ThemeColor`s which can then be changed to configure the desired actual colour later.
 

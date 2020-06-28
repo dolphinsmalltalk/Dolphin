@@ -2,13 +2,15 @@
 
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
-	classVariableNames: 'Dividers StringSeparator StylesMask'
+	classVariableNames: 'Dividers'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'StringSeparator' -> $/.
+		'StylesMask' -> 16rFFFFF
+	}!
 MenuItem guid: (GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MenuItem isAbstract: true!
-MenuItem addClassConstant: 'StringSeparator' value: $/!
-MenuItem addClassConstant: 'StylesMask' value: 16rFFFFF!
 MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
 
 Instance Variables:
@@ -229,14 +231,13 @@ initialize
 		MenuItem initialize
 	"
 
-	Dividers := ##((LookupTable new)
+	self addClassConstant: 'Dividers'
+		value: ##(LookupTable new
 				at: '-' put: #separator;
 				at: '|' put: #break;
 				at: '||' put: #barBreak;
 				shrink;
-				yourself).
-	self addClassConstant: 'StringSeparator' value: $/.
-	self addClassConstant: 'StylesMask' value: 16rFFFFF	"Allows a lot of space for more Microsoft flags"!
+				yourself)!
 
 new
 	"Private - MenuItem is abstract"

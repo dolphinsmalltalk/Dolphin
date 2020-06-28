@@ -2,12 +2,14 @@
 
 ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
-POINTF addClassConstant: '_OffsetOf_x' value: 16r0!
-POINTF addClassConstant: '_OffsetOf_y' value: 16r4!
 POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
 `POINTF` is a cartesian coordinate with single precision floating point x and y values.'!

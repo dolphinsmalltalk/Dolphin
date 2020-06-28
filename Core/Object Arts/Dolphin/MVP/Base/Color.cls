@@ -4,7 +4,8 @@ Object subclass: #Color
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Color guid: (GUID fromString: '{87b4c465-026e-11d3-9fd7-00a0cc3e4a32}')!
 Color isAbstract: true!
 Color comment: '`Color` is the abstract class of colours. 

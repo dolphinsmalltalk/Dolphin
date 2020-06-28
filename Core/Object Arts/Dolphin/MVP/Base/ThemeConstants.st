@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ThemeConstants put: (PoolConstantsDictionary named: #ThemeConstants)!
+#{ThemeConstants} declare: (PoolConstantsDictionary named: #ThemeConstants)!
 ThemeConstants at: 'ABS_DOWNDISABLED' put: 16r8!
 ThemeConstants at: 'ABS_DOWNHOT' put: 16r6!
 ThemeConstants at: 'ABS_DOWNNORMAL' put: 16r5!

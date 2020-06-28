@@ -4,7 +4,8 @@ Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IndexedColor guid: (GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
 IndexedColor comment: '`IndexedColor` instances represent the 16 standard colours that have been defined in Windows since its inception and that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
 

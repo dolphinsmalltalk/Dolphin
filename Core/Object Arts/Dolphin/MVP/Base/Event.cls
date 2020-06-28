@@ -4,7 +4,8 @@ Object subclass: #Event
 	instanceVariableNames: 'window'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Event guid: (GUID fromString: '{04134010-906c-40dd-b5e7-7f26e4216aa0}')!
 Event comment: ''!
 !Event categoriesForClass!Kernel-Objects! !

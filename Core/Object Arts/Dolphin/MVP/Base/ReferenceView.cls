@@ -4,7 +4,8 @@ AbstractDelegatingView subclass: #ReferenceView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferenceView guid: (GUID fromString: '{87b4c713-026e-11d3-9fd7-00a0cc3e4a32}')!
 ReferenceView comment: 'ReferenceView represents a dummy <view> that is capable of loading another view to take its place. This "referee" view is  identified by its resource identifier. The reference view then steps aside and forwards all pertinent messages to the referee. In general, from this point on, the reference view can be assumed to take a minimal part in the view hierarchy.
 

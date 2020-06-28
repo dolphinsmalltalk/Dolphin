@@ -2,13 +2,15 @@
 
 StaticView subclass: #ImageViewAbstract
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
-	classVariableNames: 'DoubleBufferMask EdgeStyles EraseWholeMask'
+	classVariableNames: 'EdgeStyles'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'DoubleBufferMask' -> 16r2.
+		'EraseWholeMask' -> 16r1
+	}!
 ImageViewAbstract guid: (GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
 ImageViewAbstract isAbstract: true!
-ImageViewAbstract addClassConstant: 'DoubleBufferMask' value: 16r2!
-ImageViewAbstract addClassConstant: 'EraseWholeMask' value: 16r1!
 ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
 
 Instance Variables:
@@ -343,8 +345,6 @@ icon
 	^Icon fromId: 'ImageView.ico'!
 
 initialize
-	self addClassConstant: 'EraseWholeMask' value: 1.
-	self addClassConstant: 'DoubleBufferMask' value: 2.
 	self addClassConstant: 'EdgeStyles'
 		value: (IdentityDictionary new
 				at: #none put: 0;

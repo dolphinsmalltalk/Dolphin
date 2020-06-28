@@ -4,7 +4,8 @@ ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VistaThemeLibrary guid: (GUID fromString: '{a07fa8a2-68a8-4f59-9459-e71f9bece9ac}')!
 VistaThemeLibrary comment: ''!
 !VistaThemeLibrary categoriesForClass!Win32-Modules! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #HTMLHelpConstants put: (PoolConstantsDictionary named: #HTMLHelpConstants)!
+#{HTMLHelpConstants} declare: (PoolConstantsDictionary named: #HTMLHelpConstants)!
 HTMLHelpConstants at: 'HH_CLOSE_ALL' put: 16r12!
 HTMLHelpConstants at: 'HH_DISPLAY_INDEX' put: 16r1!
 HTMLHelpConstants at: 'HH_DISPLAY_TEXT_POPUP' put: 16rE!

@@ -4,7 +4,8 @@ MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DividerMenuItem guid: (GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
 DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
 

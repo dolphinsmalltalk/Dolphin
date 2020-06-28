@@ -2,42 +2,44 @@
 
 Win32Structure subclass: #OUTLINETEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_otmAscent _OffsetOf_otmDescent _OffsetOf_otmEMSquare _OffsetOf_otmFiller _OffsetOf_otmfsSelection _OffsetOf_otmfsType _OffsetOf_otmItalicAngle _OffsetOf_otmLineGap _OffsetOf_otmMacAscent _OffsetOf_otmMacDescent _OffsetOf_otmMacLineGap _OffsetOf_otmPanoseNumber _OffsetOf_otmpFaceName _OffsetOf_otmpFamilyName _OffsetOf_otmpFullName _OffsetOf_otmpStyleName _OffsetOf_otmptSubscriptOffset _OffsetOf_otmptSubscriptSize _OffsetOf_otmptSuperscriptOffset _OffsetOf_otmptSuperscriptSize _OffsetOf_otmrcFontBox _OffsetOf_otmsCapEmHeight _OffsetOf_otmsCharSlopeRise _OffsetOf_otmsCharSlopeRun _OffsetOf_otmsStrikeoutPosition _OffsetOf_otmsStrikeoutSize _OffsetOf_otmsUnderscorePosition _OffsetOf_otmsUnderscoreSize _OffsetOf_otmsXHeight _OffsetOf_otmTextMetrics _OffsetOf_otmusMinimumPPEM'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_otmAscent' -> 16r64.
+		'_OffsetOf_otmDescent' -> 16r68.
+		'_OffsetOf_otmEMSquare' -> 16r60.
+		'_OffsetOf_otmFiller' -> 16r40.
+		'_OffsetOf_otmfsSelection' -> 16r4C.
+		'_OffsetOf_otmfsType' -> 16r50.
+		'_OffsetOf_otmItalicAngle' -> 16r5C.
+		'_OffsetOf_otmLineGap' -> 16r6C.
+		'_OffsetOf_otmMacAscent' -> 16r88.
+		'_OffsetOf_otmMacDescent' -> 16r8C.
+		'_OffsetOf_otmMacLineGap' -> 16r90.
+		'_OffsetOf_otmPanoseNumber' -> 16r41.
+		'_OffsetOf_otmpFaceName' -> 16rCC.
+		'_OffsetOf_otmpFamilyName' -> 16rC8.
+		'_OffsetOf_otmpFullName' -> 16rD4.
+		'_OffsetOf_otmpStyleName' -> 16rD0.
+		'_OffsetOf_otmptSubscriptOffset' -> 16rA0.
+		'_OffsetOf_otmptSubscriptSize' -> 16r98.
+		'_OffsetOf_otmptSuperscriptOffset' -> 16rB0.
+		'_OffsetOf_otmptSuperscriptSize' -> 16rA8.
+		'_OffsetOf_otmrcFontBox' -> 16r78.
+		'_OffsetOf_otmsCapEmHeight' -> 16r70.
+		'_OffsetOf_otmsCharSlopeRise' -> 16r54.
+		'_OffsetOf_otmsCharSlopeRun' -> 16r58.
+		'_OffsetOf_otmsStrikeoutPosition' -> 16rBC.
+		'_OffsetOf_otmsStrikeoutSize' -> 16rB8.
+		'_OffsetOf_otmsUnderscorePosition' -> 16rC4.
+		'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
+		'_OffsetOf_otmsXHeight' -> 16r74.
+		'_OffsetOf_otmTextMetrics' -> 16r4.
+		'_OffsetOf_otmusMinimumPPEM' -> 16r94
+	}!
 OUTLINETEXTMETRICW guid: (GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmAscent' value: 16r64!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmDescent' value: 16r68!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmEMSquare' value: 16r60!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmFiller' value: 16r40!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmfsSelection' value: 16r4C!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmfsType' value: 16r50!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmItalicAngle' value: 16r5C!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmLineGap' value: 16r6C!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacAscent' value: 16r88!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacDescent' value: 16r8C!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacLineGap' value: 16r90!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmPanoseNumber' value: 16r41!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFaceName' value: 16rCC!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFamilyName' value: 16rC8!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFullName' value: 16rD4!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpStyleName' value: 16rD0!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSubscriptOffset' value: 16rA0!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSubscriptSize' value: 16r98!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSuperscriptOffset' value: 16rB0!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSuperscriptSize' value: 16rA8!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmrcFontBox' value: 16r78!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCapEmHeight' value: 16r70!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCharSlopeRise' value: 16r54!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCharSlopeRun' value: 16r58!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsStrikeoutPosition' value: 16rBC!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsStrikeoutSize' value: 16rB8!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsUnderscorePosition' value: 16rC4!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsUnderscoreSize' value: 16rC0!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsXHeight' value: 16r74!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmTextMetrics' value: 16r4!
-OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmusMinimumPPEM' value: 16r94!
 OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
 !OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
 !OUTLINETEXTMETRICW methodsFor!

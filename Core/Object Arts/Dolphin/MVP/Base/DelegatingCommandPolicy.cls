@@ -4,7 +4,8 @@ CommandPolicy subclass: #DelegatingCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DelegatingCommandPolicy guid: (GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
 DelegatingCommandPolicy comment: ''!
 !DelegatingCommandPolicy categoriesForClass!Unclassified! !

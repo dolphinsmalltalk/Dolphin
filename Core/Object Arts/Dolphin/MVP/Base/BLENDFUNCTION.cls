@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AlphaFormat' -> 16r3.
+		'_OffsetOf_BlendFlags' -> 16r1.
+		'_OffsetOf_BlendOp' -> 16r0.
+		'_OffsetOf_SourceConstantAlpha' -> 16r2
+	}!
 BLENDFUNCTION guid: (GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
-BLENDFUNCTION addClassConstant: '_OffsetOf_AlphaFormat' value: 16r3!
-BLENDFUNCTION addClassConstant: '_OffsetOf_BlendFlags' value: 16r1!
-BLENDFUNCTION addClassConstant: '_OffsetOf_BlendOp' value: 16r0!
-BLENDFUNCTION addClassConstant: '_OffsetOf_SourceConstantAlpha' value: 16r2!
 BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 IDL definition follows:

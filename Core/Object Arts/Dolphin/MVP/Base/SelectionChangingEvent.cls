@@ -4,7 +4,8 @@ SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectionChangingEvent guid: (GUID fromString: '{cf88ca57-dc8c-46e6-beab-59fe115eb945}')!
 SelectionChangingEvent comment: ''!
 !SelectionChangingEvent categoriesForClass!MVP-Views-Events! !

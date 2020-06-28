@@ -4,7 +4,8 @@ GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WinImageList guid: (GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
 WinImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 

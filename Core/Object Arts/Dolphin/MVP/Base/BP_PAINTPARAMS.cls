@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
-	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_pBlendFunction _OffsetOf_prcExclude'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFlags' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_pBlendFunction' -> 16rC.
+		'_OffsetOf_prcExclude' -> 16r8
+	}!
 BP_PAINTPARAMS guid: (GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
-BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
-BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-BP_PAINTPARAMS addClassConstant: '_OffsetOf_pBlendFunction' value: 16rC!
-BP_PAINTPARAMS addClassConstant: '_OffsetOf_prcExclude' value: 16r8!
 BP_PAINTPARAMS comment: ''!
 !BP_PAINTPARAMS categoriesForClass!Win32-Structs! !
 !BP_PAINTPARAMS methodsFor!

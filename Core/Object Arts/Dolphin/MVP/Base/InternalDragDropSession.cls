@@ -4,7 +4,8 @@ DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InternalDragDropSession guid: (GUID fromString: '{87b4c54b-026e-11d3-9fd7-00a0cc3e4a32}')!
 InternalDragDropSession comment: '
 Instance Variables:

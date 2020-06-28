@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #CommCtrlConstants put: (PoolConstantsDictionary named: #CommCtrlConstants)!
+#{CommCtrlConstants} declare: (PoolConstantsDictionary named: #CommCtrlConstants)!
 CommCtrlConstants at: 'ACM_OPEN' put: 16r464!
 CommCtrlConstants at: 'ACM_PLAY' put: 16r465!
 CommCtrlConstants at: 'ACM_STOP' put: 16r466!

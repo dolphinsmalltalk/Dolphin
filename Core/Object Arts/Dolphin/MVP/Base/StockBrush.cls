@@ -4,7 +4,8 @@ Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StockBrush guid: (GUID fromString: '{87b4c63a-026e-11d3-9fd7-00a0cc3e4a32}')!
 StockBrush comment: '`StockBrush` is type of `Brush` that wraps one of the standard (aka ''stock'') Windows GDI Brush objects, for example black and white brushes.
 

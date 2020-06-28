@@ -4,7 +4,8 @@ LayoutManager subclass: #GridLayout
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GridLayout guid: (GUID fromString: '{87b4c64a-026e-11d3-9fd7-00a0cc3e4a32}')!
 GridLayout comment: 'GridLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged in a rectangular grid with either the number of rows or the number of columns specified by positive <integer> values of the #rows and #columns aspects, as follows:
 	

@@ -4,7 +4,8 @@ Event subclass: #SelectionChangeEvent
 	instanceVariableNames: 'newSelections oldSelections cause'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectionChangeEvent guid: (GUID fromString: '{d0986742-3873-4dce-8e8f-6693994a4f26}')!
 SelectionChangeEvent isAbstract: true!
 SelectionChangeEvent comment: ''!

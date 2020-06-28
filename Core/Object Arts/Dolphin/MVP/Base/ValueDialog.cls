@@ -4,7 +4,8 @@ Dialog subclass: #ValueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog guid: (GUID fromString: '{87b4c6a5-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueDialog comment: 'ValueDialog is an abstract <valueDialogPresenter> superclass for allowing <valueModel> data to be displayed and edited within a top-level modal dialog window.  When deciding whether to implement a dialog as a plain <dialogPresenter> or as a <valueDialogPresenter> there are a number of considerations to take into account. These are discussed in the comment for the Dialog class.
 

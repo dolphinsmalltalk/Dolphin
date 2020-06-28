@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hIcon _OffsetOf_hWnd _OffsetOf_szTip _OffsetOf_uCallbackMessage _OffsetOf_uFlags _OffsetOf_uID'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hIcon' -> 16r14.
+		'_OffsetOf_hWnd' -> 16r4.
+		'_OffsetOf_szTip' -> 16r18.
+		'_OffsetOf_uCallbackMessage' -> 16r10.
+		'_OffsetOf_uFlags' -> 16rC.
+		'_OffsetOf_uID' -> 16r8
+	}!
 NOTIFYICONDATAW guid: (GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_hIcon' value: 16r14!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_hWnd' value: 16r4!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_szTip' value: 16r18!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_uCallbackMessage' value: 16r10!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_uFlags' value: 16rC!
-NOTIFYICONDATAW addClassConstant: '_OffsetOf_uID' value: 16r8!
 NOTIFYICONDATAW comment: ''!
 !NOTIFYICONDATAW categoriesForClass!No category! !
 !NOTIFYICONDATAW methodsFor!

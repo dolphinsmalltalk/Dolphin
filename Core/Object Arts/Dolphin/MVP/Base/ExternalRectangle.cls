@@ -4,7 +4,8 @@ ExternalStructure subclass: #ExternalRectangle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalRectangle guid: (GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7}')!
 ExternalRectangle isAbstract: true!
 ExternalRectangle comment: '`RectangleStructure` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!

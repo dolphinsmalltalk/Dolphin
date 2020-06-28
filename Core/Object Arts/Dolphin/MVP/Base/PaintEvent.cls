@@ -4,7 +4,8 @@ WindowsEvent subclass: #PaintEvent
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PaintEvent guid: (GUID fromString: '{87b4c550-026e-11d3-9fd7-00a0cc3e4a32}')!
 PaintEvent comment: ''!
 !PaintEvent categoriesForClass!Events!MVP-Views-Events! !

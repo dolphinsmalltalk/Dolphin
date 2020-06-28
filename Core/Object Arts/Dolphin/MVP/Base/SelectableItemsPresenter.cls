@@ -4,7 +4,8 @@ Presenter subclass: #SelectableItemsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectableItemsPresenter guid: (GUID fromString: '{266d2ff0-37e3-4f48-92df-759d16a0fe97}')!
 SelectableItemsPresenter isAbstract: true!
 SelectableItemsPresenter comment: 'SelectableItemsPresenter ia an abstract class that implements the <selectableItems> protocol for components that need to make one or more selections from multiple items held by their model. Typically the model will be either a <listModel> or <treeModel>.'!

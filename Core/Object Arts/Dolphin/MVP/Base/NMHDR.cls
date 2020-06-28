@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_code _OffsetOf_hwndFrom _OffsetOf_idFrom'
+	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_code' -> 16r8.
+		'_OffsetOf_hwndFrom' -> 16r0.
+		'_OffsetOf_idFrom' -> 16r4
+	}!
 NMHDR guid: (GUID fromString: '{87b4c601-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMHDR addClassConstant: '_OffsetOf_code' value: 16r8!
-NMHDR addClassConstant: '_OffsetOf_hwndFrom' value: 16r0!
-NMHDR addClassConstant: '_OffsetOf_idFrom' value: 16r4!
 NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external Win32 API structure.'!
 !NMHDR categoriesForClass!External-Data-Structured-Win32! !
 !NMHDR methodsFor!

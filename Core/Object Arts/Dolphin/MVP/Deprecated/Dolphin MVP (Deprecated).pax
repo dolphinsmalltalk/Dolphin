@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin MVP (Deprecated)'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Deprecated Classes and Methods).
 
@@ -10,139 +10,136 @@ This package includes legacy classes and methods from Dolphin''s base package th
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #ComparisonPolicy;
-	add: #Msimg32Library;
-	add: #MultipleSelectionListBox;
-	add: #MultipleSelectionListView;
-	yourself.
+package setClassNames: #(
+	#{ComparisonPolicy}
+	#{Msimg32Library}
+	#{MultipleSelectionListBox}
+	#{MultipleSelectionListView}
+).
 
-package methodNames
-	add: #AcceleratorTable -> #accelerators;
-	add: #AcceleratorTable -> #addKey:commandDescription:;
-	add: #ARGB -> #asARGB;
-	add: #BasicListAbstract -> #basicSelectionByIndex:;
-	add: #BLENDFUNCTION -> #beAlpha;
-	add: #BLENDFUNCTION -> #beNotAlpha;
-	add: #BorderLayout -> #hasCenter;
-	add: #BorderLayout -> #hasEast;
-	add: #BorderLayout -> #hasNorth;
-	add: #BorderLayout -> #hasSouth;
-	add: #BorderLayout -> #hasWest;
-	add: #Canvas -> #origin:;
-	add: #Canvas -> #setBkMode:;
-	add: #Canvas -> #setTextColor:;
-	add: #Clipboard -> #getObjectBinaryStoreBytes;
-	add: #Clipboard -> #getObjectBinaryStoreBytesIfNone:;
-	add: #Clipboard -> #setText:format:;
-	add: #Color -> #asARGB;
-	add: #Color -> #asIndexedColor;
-	add: #Color -> #saturation;
-	add: #ColorNone -> #saturation;
-	add: #ColorRef -> #asIndexedColor;
-	add: #ColorRef -> #asIndexedColorUsingPalette:;
-	add: #GUISessionManager -> #whatsThis:;
-	add: #IndexedColor -> #asIndexedColor;
-	add: #ListBox -> #basicSelectionByIndex:;
-	add: #ListModel -> #updateAtIndex:;
-	add: #ListModel -> #updateItem:;
-	add: #ListModel -> #updateItem:ifAbsent:;
-	add: #ListView -> #autoArrange;
-	add: #ListView -> #autoArrange:;
-	add: #ListView -> #columns;
-	add: #ListView -> #hasTrackSelect;
-	add: #ListView -> #hasTrackSelect:;
-	add: #LVBKIMAGEW -> #offset:;
-	add: #Menu -> #find:;
-	add: #Menu -> #find:ifAbsent:;
-	add: #Menu -> #remove:;
-	add: #Menu -> #remove:ifAbsent:;
-	add: #Menu -> #replace:with:;
-	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
-	add: #RGB -> #asIndexedColorUsingPalette:;
-	add: #ScintillaIndicator -> #type;
-	add: #ScintillaIndicatorStyle -> #alphaPercent;
-	add: #ScintillaIndicatorStyle -> #alphaPercent:;
-	add: #ScintillaIndicatorStyle -> #hoverStyleName;
-	add: #ScintillaIndicatorStyle -> #hoverStyleName:;
-	add: #ScintillaIndicatorStyle -> #styleName;
-	add: #ScintillaIndicatorStyle -> #styleName:;
-	add: #ScintillaView -> #highlightRange:withIndicator:;
-	add: #ScintillaView -> #indicatorDefinitions:;
-	add: #ScintillaView -> #isKeyboardInputUnicode;
-	add: #ScintillaView -> #isKeyboardInputUnicode:;
-	add: #ScrollingDecorator -> #continuousTracking;
-	add: #ScrollingDecorator -> #continuousTracking:;
-	add: #ShellView -> #hasThickFrame;
-	add: #ShellView -> #hasThickFrame:;
-	add: #Slider -> #hasTicksBoth;
-	add: #Slider -> #hasTicksBoth:;
-	add: #Slider -> #hasTicksTopOrLeft;
-	add: #Slider -> #hasTicksTopOrLeft:;
-	add: #Slider -> #selection;
-	add: #Slider -> #selection:;
-	add: #STBViewProxy -> #for:;
-	add: #SystemColor -> #asIndexedColor;
-	add: #SystemMetrics -> #hasFlashWindow;
-	add: #SystemMetrics -> #hasMenuImages;
-	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
-	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
-	add: #TextEdit -> #isLowercase;
-	add: #TextEdit -> #isLowercase:;
-	add: #TextEdit -> #isNumeric;
-	add: #TextEdit -> #isNumeric:;
-	add: #TextEdit -> #isUpperCase;
-	add: #TextEdit -> #isUppercase:;
-	add: #TextEdit -> #lines;
-	add: #TreeView -> #disableExpandAll;
-	add: #TreeView -> #disableExpandAll:;
-	add: #TypeConverter -> #leftExceptionalValue;
-	add: #TypeConverter -> #leftExceptionalValue:;
-	add: #TypeConverter -> #rightExceptionalValue;
-	add: #TypeConverter -> #rightExceptionalValue:;
-	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
-	add: #View -> #defaultWindowProcessing:;
-	add: #View -> #hasWindowEdge;
-	add: #View -> #hasWindowEdge:;
-	add: #View -> #winHelpPopup:topic:;
-	add: #View -> #winHelpPopup:topic:at:;
-	add: #VirtualColor -> #asIndexedColor;
-	add: 'AcceleratorTable class' -> #keyModifierNames:;
-	add: 'AcceleratorTable class' -> #keyModifierNames:do:;
-	add: 'Brush class' -> #dkGray;
-	add: 'Brush class' -> #hatchedDiagonal;
-	add: 'Brush class' -> #hollow;
-	add: 'Brush class' -> #ltGray;
-	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
-	add: 'Color class' -> #buttonFace;
-	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
-	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
-	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
-	add: 'RGB class' -> #stdColor:;
-	add: 'ScintillaIndicatorStyle class' -> #styleNames;
-	add: 'STBViewProxy class' -> #for:;
-	add: 'SystemColor class' -> #fromId:;
-	add: 'TextTileIcon class' -> #text:font:color:;
-	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
-	add: 'WinImageList class' -> #width:height:flags:size:growthGranularity:;
-	yourself.
+package setMethodNames: #(
+	#(#{AcceleratorTable} #accelerators)
+	#(#{AcceleratorTable} #addKey:commandDescription:)
+	#(#{AcceleratorTable class} #keyModifierNames:)
+	#(#{AcceleratorTable class} #keyModifierNames:do:)
+	#(#{ARGB} #asARGB)
+	#(#{BasicListAbstract} #basicSelectionByIndex:)
+	#(#{BLENDFUNCTION} #beAlpha)
+	#(#{BLENDFUNCTION} #beNotAlpha)
+	#(#{BorderLayout} #hasCenter)
+	#(#{BorderLayout} #hasEast)
+	#(#{BorderLayout} #hasNorth)
+	#(#{BorderLayout} #hasSouth)
+	#(#{BorderLayout} #hasWest)
+	#(#{Brush class} #dkGray)
+	#(#{Brush class} #hatchedDiagonal)
+	#(#{Brush class} #hollow)
+	#(#{Brush class} #ltGray)
+	#(#{Canvas} #origin:)
+	#(#{Canvas} #setBkMode:)
+	#(#{Canvas} #setTextColor:)
+	#(#{ChoicePresenter class} #resource_Multiselection_list_box)
+	#(#{Clipboard} #getObjectBinaryStoreBytes)
+	#(#{Clipboard} #getObjectBinaryStoreBytesIfNone:)
+	#(#{Clipboard} #setText:format:)
+	#(#{Color} #asARGB)
+	#(#{Color} #asIndexedColor)
+	#(#{Color} #saturation)
+	#(#{Color class} #buttonFace)
+	#(#{ColorNone} #saturation)
+	#(#{ColorRef} #asIndexedColor)
+	#(#{ColorRef} #asIndexedColorUsingPalette:)
+	#(#{GUISessionManager} #whatsThis:)
+	#(#{IndexedColor} #asIndexedColor)
+	#(#{ListBox} #basicSelectionByIndex:)
+	#(#{ListModel} #updateAtIndex:)
+	#(#{ListModel} #updateItem:)
+	#(#{ListModel} #updateItem:ifAbsent:)
+	#(#{ListPresenter class} #resource_Multiselection_enhanced_list_view)
+	#(#{ListPresenter class} #resource_Multiselection_list_box)
+	#(#{ListView} #autoArrange)
+	#(#{ListView} #autoArrange:)
+	#(#{ListView} #columns)
+	#(#{ListView} #hasTrackSelect)
+	#(#{ListView} #hasTrackSelect:)
+	#(#{LVBKIMAGEW} #offset:)
+	#(#{Menu} #find:)
+	#(#{Menu} #find:ifAbsent:)
+	#(#{Menu} #remove:)
+	#(#{Menu} #remove:ifAbsent:)
+	#(#{Menu} #replace:with:)
+	#(#{MoenTreeView} #updateItem:andChildren:imagesOnly:)
+	#(#{PaintEvent class} #handle:wParam:hdc:paintStruct:)
+	#(#{RGB} #asIndexedColorUsingPalette:)
+	#(#{RGB class} #stdColor:)
+	#(#{ScintillaIndicator} #type)
+	#(#{ScintillaIndicatorStyle} #alphaPercent)
+	#(#{ScintillaIndicatorStyle} #alphaPercent:)
+	#(#{ScintillaIndicatorStyle} #hoverStyleName)
+	#(#{ScintillaIndicatorStyle} #hoverStyleName:)
+	#(#{ScintillaIndicatorStyle} #styleName)
+	#(#{ScintillaIndicatorStyle} #styleName:)
+	#(#{ScintillaIndicatorStyle class} #styleNames)
+	#(#{ScintillaView} #highlightRange:withIndicator:)
+	#(#{ScintillaView} #indicatorDefinitions:)
+	#(#{ScintillaView} #isKeyboardInputUnicode)
+	#(#{ScintillaView} #isKeyboardInputUnicode:)
+	#(#{ScrollingDecorator} #continuousTracking)
+	#(#{ScrollingDecorator} #continuousTracking:)
+	#(#{ShellView} #hasThickFrame)
+	#(#{ShellView} #hasThickFrame:)
+	#(#{Slider} #hasTicksBoth)
+	#(#{Slider} #hasTicksBoth:)
+	#(#{Slider} #hasTicksTopOrLeft)
+	#(#{Slider} #hasTicksTopOrLeft:)
+	#(#{Slider} #selection)
+	#(#{Slider} #selection:)
+	#(#{STBViewProxy} #for:)
+	#(#{STBViewProxy class} #for:)
+	#(#{SystemColor} #asIndexedColor)
+	#(#{SystemColor class} #fromId:)
+	#(#{SystemMetrics} #hasFlashWindow)
+	#(#{SystemMetrics} #hasMenuImages)
+	#(#{TextEdit} #find:range:down:wholeWord:matchCase:)
+	#(#{TextEdit} #findNextWrapped:down:wholeWord:matchCase:)
+	#(#{TextEdit} #isLowercase)
+	#(#{TextEdit} #isLowercase:)
+	#(#{TextEdit} #isNumeric)
+	#(#{TextEdit} #isNumeric:)
+	#(#{TextEdit} #isUpperCase)
+	#(#{TextEdit} #isUppercase:)
+	#(#{TextEdit} #lines)
+	#(#{TextTileIcon class} #text:font:color:)
+	#(#{TreeView} #disableExpandAll)
+	#(#{TreeView} #disableExpandAll:)
+	#(#{TypeConverter} #leftExceptionalValue)
+	#(#{TypeConverter} #leftExceptionalValue:)
+	#(#{TypeConverter} #rightExceptionalValue)
+	#(#{TypeConverter} #rightExceptionalValue:)
+	#(#{UserLibrary} #winHelp:lpszHelp:uCommand:dwData:)
+	#(#{View} #defaultWindowProcessing:)
+	#(#{View} #hasWindowEdge)
+	#(#{View} #hasWindowEdge:)
+	#(#{View} #winHelpPopup:topic:)
+	#(#{View} #winHelpPopup:topic:at:)
+	#(#{VirtualColor} #asIndexedColor)
+	#(#{WindowsEvent class} #message:handle:wParam:lParam:)
+	#(#{WinImageList class} #width:height:flags:size:growthGranularity:)
+).
 
-package globalNames
-	add: #CheckedPushButton;
-	add: #CompositePresenter;
-	add: #MultipleChoicePresenter;
-	add: #StaticViewAbstract;
-	yourself.
+package setVariableNames: #(
+	#{CheckedPushButton}
+	#{CompositePresenter}
+	#{MultipleChoicePresenter}
+	#{StaticViewAbstract}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #CheckedPushButton;
-	add: #CompositePresenter;
-	add: #MultipleChoicePresenter;
-	add: #StaticViewAbstract;
-	yourself).
+package setAliasVariableNames: #(
+	#{CheckedPushButton}
+	#{CompositePresenter}
+	#{MultipleChoicePresenter}
+	#{StaticViewAbstract}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -158,7 +155,8 @@ package setPrerequisites: #(
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
 	'..\Icons\Dolphin Text Tile Icons'
-	'..\Type Converters\Dolphin Type Converters').
+	'..\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -168,24 +166,28 @@ Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 CheckedPushButton := PushButton!
 

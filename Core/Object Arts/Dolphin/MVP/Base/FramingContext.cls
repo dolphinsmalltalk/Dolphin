@@ -4,7 +4,8 @@ Object subclass: #FramingContext
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FramingContext guid: (GUID fromString: '{ccf52b24-63ff-41c2-ab62-fe905a47ba3f}')!
 FramingContext comment: ''!
 !FramingContext categoriesForClass!Kernel-Objects! !

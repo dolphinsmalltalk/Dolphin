@@ -4,7 +4,8 @@ Object subclass: #LayoutManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LayoutManager guid: (GUID fromString: '{87b4c497-026e-11d3-9fd7-00a0cc3e4a32}')!
 LayoutManager isAbstract: true!
 LayoutManager comment: 'LayoutManager is the abstract superclass for classes that wish to implement the <layoutManager> protocol for the automatic arrangement of views within a parent <compositeView>. Dolphin supplies a base set of general purpose concrete layout managers which are general purpose enough to cover most requirements. 

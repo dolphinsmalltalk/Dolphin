@@ -2,22 +2,24 @@
 
 Win32Structure subclass: #MENUITEMINFOW
 	instanceVariableNames: 'text bitmap'
-	classVariableNames: '_OffsetOf_cch _OffsetOf_dwItemData _OffsetOf_dwSize _OffsetOf_dwTypeData _OffsetOf_fMask _OffsetOf_fState _OffsetOf_fType _OffsetOf_hbmpChecked _OffsetOf_hbmpItem _OffsetOf_hbmpUnchecked _OffsetOf_hSubMenu _OffsetOf_wID'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cch' -> 16r28.
+		'_OffsetOf_dwItemData' -> 16r20.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwTypeData' -> 16r24.
+		'_OffsetOf_fMask' -> 16r4.
+		'_OffsetOf_fState' -> 16rC.
+		'_OffsetOf_fType' -> 16r8.
+		'_OffsetOf_hbmpChecked' -> 16r18.
+		'_OffsetOf_hbmpItem' -> 16r2C.
+		'_OffsetOf_hbmpUnchecked' -> 16r1C.
+		'_OffsetOf_hSubMenu' -> 16r14.
+		'_OffsetOf_wID' -> 16r10
+	}!
 MENUITEMINFOW guid: (GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
-MENUITEMINFOW addClassConstant: '_OffsetOf_cch' value: 16r28!
-MENUITEMINFOW addClassConstant: '_OffsetOf_dwItemData' value: 16r20!
-MENUITEMINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-MENUITEMINFOW addClassConstant: '_OffsetOf_dwTypeData' value: 16r24!
-MENUITEMINFOW addClassConstant: '_OffsetOf_fMask' value: 16r4!
-MENUITEMINFOW addClassConstant: '_OffsetOf_fState' value: 16rC!
-MENUITEMINFOW addClassConstant: '_OffsetOf_fType' value: 16r8!
-MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpChecked' value: 16r18!
-MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpItem' value: 16r2C!
-MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpUnchecked' value: 16r1C!
-MENUITEMINFOW addClassConstant: '_OffsetOf_hSubMenu' value: 16r14!
-MENUITEMINFOW addClassConstant: '_OffsetOf_wID' value: 16r10!
 MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!

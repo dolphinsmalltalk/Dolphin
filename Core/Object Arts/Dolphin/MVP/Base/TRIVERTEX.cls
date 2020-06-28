@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_alpha _OffsetOf_blue _OffsetOf_green _OffsetOf_red _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_alpha' -> 16rE.
+		'_OffsetOf_blue' -> 16rC.
+		'_OffsetOf_green' -> 16rA.
+		'_OffsetOf_red' -> 16r8.
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 TRIVERTEX guid: (GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
-TRIVERTEX addClassConstant: '_OffsetOf_alpha' value: 16rE!
-TRIVERTEX addClassConstant: '_OffsetOf_blue' value: 16rC!
-TRIVERTEX addClassConstant: '_OffsetOf_green' value: 16rA!
-TRIVERTEX addClassConstant: '_OffsetOf_red' value: 16r8!
-TRIVERTEX addClassConstant: '_OffsetOf_x' value: 16r0!
-TRIVERTEX addClassConstant: '_OffsetOf_y' value: 16r4!
 TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct

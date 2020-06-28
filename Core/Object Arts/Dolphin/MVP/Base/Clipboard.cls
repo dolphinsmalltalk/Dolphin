@@ -4,7 +4,8 @@ Object subclass: #Clipboard
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Clipboard guid: (GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
 Clipboard comment: ''!
 !Clipboard categoriesForClass!System-Support! !

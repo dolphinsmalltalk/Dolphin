@@ -4,7 +4,8 @@ Object subclass: #Grid
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Grid guid: (GUID fromString: '{87b4c48e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Grid comment: ''!
 !Grid categoriesForClass!MVP-Views-Support! !

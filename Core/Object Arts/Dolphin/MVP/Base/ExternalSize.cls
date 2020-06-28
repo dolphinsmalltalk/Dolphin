@@ -4,7 +4,8 @@ ExternalStructure subclass: #ExternalSize
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalSize guid: (GUID fromString: '{6dbb8332-abe3-4ac8-9388-e209e560e8a3}')!
 ExternalSize isAbstract: true!
 ExternalSize comment: '`SizeStructure` is the abstract class of structures representing a 2-dimensional extent. There are concrete subclasses for different types of width and height values used by different APIs.'!

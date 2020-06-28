@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_ptMaxPosition _OffsetOf_ptMaxSize _OffsetOf_ptMaxTrackSize _OffsetOf_ptMinTrackSize _OffsetOf_ptReserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ptMaxPosition' -> 16r10.
+		'_OffsetOf_ptMaxSize' -> 16r8.
+		'_OffsetOf_ptMaxTrackSize' -> 16r20.
+		'_OffsetOf_ptMinTrackSize' -> 16r18.
+		'_OffsetOf_ptReserved' -> 16r0
+	}!
 MINMAXINFO guid: (GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
-MINMAXINFO addClassConstant: '_OffsetOf_ptMaxPosition' value: 16r10!
-MINMAXINFO addClassConstant: '_OffsetOf_ptMaxSize' value: 16r8!
-MINMAXINFO addClassConstant: '_OffsetOf_ptMaxTrackSize' value: 16r20!
-MINMAXINFO addClassConstant: '_OffsetOf_ptMinTrackSize' value: 16r18!
-MINMAXINFO addClassConstant: '_OffsetOf_ptReserved' value: 16r0!
 MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

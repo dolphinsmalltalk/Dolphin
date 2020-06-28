@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwHoverTime _OffsetOf_dwSize _OffsetOf_hwndTrack'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwFlags' -> 16r4.
+		'_OffsetOf_dwHoverTime' -> 16rC.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hwndTrack' -> 16r8
+	}!
 TRACKMOUSEEVENT guid: (GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
-TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
-TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwHoverTime' value: 16rC!
-TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-TRACKMOUSEEVENT addClassConstant: '_OffsetOf_hwndTrack' value: 16r8!
 TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct

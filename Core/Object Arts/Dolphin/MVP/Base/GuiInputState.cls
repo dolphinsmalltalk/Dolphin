@@ -4,7 +4,8 @@ InputState subclass: #GuiInputState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GuiInputState guid: (GUID fromString: '{63335fe2-2ac2-43b5-9747-3c264e8b7fdf}')!
 GuiInputState comment: ''!
 !GuiInputState categoriesForClass!Kernel-Support! !

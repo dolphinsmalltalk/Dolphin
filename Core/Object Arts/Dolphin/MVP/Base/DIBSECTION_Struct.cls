@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #DIBSECTION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dsBitfields _OffsetOf_dsBm _OffsetOf_dsBmih _OffsetOf_dshSection _OffsetOf_dsOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dsBitfields' -> 16r40.
+		'_OffsetOf_dsBm' -> 16r0.
+		'_OffsetOf_dsBmih' -> 16r18.
+		'_OffsetOf_dshSection' -> 16r4C.
+		'_OffsetOf_dsOffset' -> 16r50
+	}!
 DIBSECTION guid: (GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
-DIBSECTION addClassConstant: '_OffsetOf_dsBitfields' value: 16r40!
-DIBSECTION addClassConstant: '_OffsetOf_dsBm' value: 16r0!
-DIBSECTION addClassConstant: '_OffsetOf_dsBmih' value: 16r18!
-DIBSECTION addClassConstant: '_OffsetOf_dshSection' value: 16r4C!
-DIBSECTION addClassConstant: '_OffsetOf_dsOffset' value: 16r50!
 DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

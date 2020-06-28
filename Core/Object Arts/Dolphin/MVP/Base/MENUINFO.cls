@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cyMax' -> 16rC.
+		'_OffsetOf_dwContextHelpID' -> 16r14.
+		'_OffsetOf_dwMenuData' -> 16r18.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwStyle' -> 16r8.
+		'_OffsetOf_fMask' -> 16r4.
+		'_OffsetOf_hbrBack' -> 16r10
+	}!
 MENUINFO guid: (GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
-MENUINFO addClassConstant: '_OffsetOf_cyMax' value: 16rC!
-MENUINFO addClassConstant: '_OffsetOf_dwContextHelpID' value: 16r14!
-MENUINFO addClassConstant: '_OffsetOf_dwMenuData' value: 16r18!
-MENUINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-MENUINFO addClassConstant: '_OffsetOf_dwStyle' value: 16r8!
-MENUINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
-MENUINFO addClassConstant: '_OffsetOf_hbrBack' value: 16r10!
 MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
 !MENUINFO categoriesForClass!External-Data-Structured-Win32! !
 !MENUINFO methodsFor!

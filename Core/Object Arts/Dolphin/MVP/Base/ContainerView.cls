@@ -4,7 +4,8 @@ View subclass: #ContainerView
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ContainerView guid: (GUID fromString: '{87b4c70c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ContainerView comment: 'ContainerView is an abstract class which implements the <compositeView> protocol for its subclasses. This protocol allows for <compositeView>s to contain sub-views which may be managed by the container.
 

@@ -4,7 +4,8 @@ Color subclass: #VirtualColor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualColor guid: (GUID fromString: '{aa0eebfb-75db-4ed8-a11f-55ac6b62948e}')!
 VirtualColor isAbstract: true!
 VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!

@@ -1,48 +1,46 @@
 ﻿| package |
 package := Package name: 'Dolphin Basic Geometry'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Basic Geometry.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 '.
 
 
-package classNames
-	add: #ExternalPoint;
-	add: #ExternalRectangle;
-	add: #Point;
-	add: #Point3D;
-	add: #POINTL;
-	add: #RECT;
-	add: #Rectangle;
-	yourself.
+package setClassNames: #(
+	#{ExternalPoint}
+	#{ExternalRectangle}
+	#{Point}
+	#{Point3D}
+	#{POINTL}
+	#{RECT}
+	#{Rectangle}
+).
 
-package methodNames
-	add: #ArithmeticValue -> #_expandRectangle:;
-	add: #ArithmeticValue -> #_insetRectangle:;
-	add: #ArithmeticValue -> #_offsetRectangle:;
-	add: #Number -> #@;
-	add: #Number -> #asPoint;
-	add: #Number -> #asPoint3D;
-	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
-	add: 'DWORD class' -> #fromPoint:;
-	yourself.
+package setMethodNames: #(
+	#(#{ArithmeticValue} #_expandRectangle:)
+	#(#{ArithmeticValue} #_insetRectangle:)
+	#(#{ArithmeticValue} #_offsetRectangle:)
+	#(#{DWORD class} #fromPoint:)
+	#(#{Number} #@)
+	#(#{Number} #asPoint)
+	#(#{Number} #asPoint3D)
+	#(#{UserLibrary} #subtractRect:lprcSrc1:lprcSrc2:)
+).
 
-package globalNames
-	add: #POINT;
-	add: #RECTL;
-	yourself.
+package setVariableNames: #(
+	#{POINT}
+	#{RECTL}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #POINT;
-	add: #RECTL;
-	yourself).
+package setAliasVariableNames: #(
+	#{POINT}
+	#{RECTL}
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -52,39 +50,54 @@ Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
 	classVariableNames: 'Empty'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #ExternalPoint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #ExternalRectangle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bottom' -> 16rC.
+		'_OffsetOf_left' -> 16r0.
+		'_OffsetOf_right' -> 16r8.
+		'_OffsetOf_top' -> 16r4
+	}!
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 POINT := POINTL!
 

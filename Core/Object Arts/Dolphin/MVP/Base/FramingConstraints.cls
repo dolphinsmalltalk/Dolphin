@@ -4,7 +4,8 @@ Object subclass: #FramingConstraints
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FramingConstraints guid: (GUID fromString: '{87b4c48b-026e-11d3-9fd7-00a0cc3e4a32}')!
 FramingConstraints comment: 'FramingConstraints are used to describe the constraints to be placed on the various edges of a <view> that is to be laid out under the jurisdiction of a <FramingLayout> manager. When a view is under the control of a FramingLayout it is given an arrangement aspect that consists of a FramingConstraints instance. It is this that describes the relationships for computing the locations of the various edges of the view and the offsets to be applied from these locations. 
 

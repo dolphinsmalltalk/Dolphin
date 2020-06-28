@@ -4,7 +4,8 @@ GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Menu guid: (GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
 Menu comment: 'Menu is the class of objects use to represent popup menu''s in windows. A menu holds a list of items that may be commands, sub-menus, or dividers.
 

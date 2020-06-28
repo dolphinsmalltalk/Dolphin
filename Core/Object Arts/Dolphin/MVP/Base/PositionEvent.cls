@@ -4,7 +4,8 @@ WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PositionEvent guid: (GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
 PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
 !PositionEvent categoriesForClass!MVP-Views-Events! !

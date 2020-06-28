@@ -4,7 +4,8 @@ GUISessionManager subclass: #RuntimeSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager guid: (GUID fromString: '{87b4c6dc-026e-11d3-9fd7-00a0cc3e4a32}')!
 RuntimeSessionManager comment: 'RuntimeSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed graphical application.
 

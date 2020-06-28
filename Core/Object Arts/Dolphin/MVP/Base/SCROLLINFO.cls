@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #SCROLLINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fMask _OffsetOf_nMax _OffsetOf_nMin _OffsetOf_nPage _OffsetOf_nPos _OffsetOf_nTrackPos'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fMask' -> 16r4.
+		'_OffsetOf_nMax' -> 16rC.
+		'_OffsetOf_nMin' -> 16r8.
+		'_OffsetOf_nPage' -> 16r10.
+		'_OffsetOf_nPos' -> 16r14.
+		'_OffsetOf_nTrackPos' -> 16r18
+	}!
 SCROLLINFO guid: (GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
-SCROLLINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-SCROLLINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
-SCROLLINFO addClassConstant: '_OffsetOf_nMax' value: 16rC!
-SCROLLINFO addClassConstant: '_OffsetOf_nMin' value: 16r8!
-SCROLLINFO addClassConstant: '_OffsetOf_nPage' value: 16r10!
-SCROLLINFO addClassConstant: '_OffsetOf_nPos' value: 16r14!
-SCROLLINFO addClassConstant: '_OffsetOf_nTrackPos' value: 16r18!
 SCROLLINFO comment: ''!
 !SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
 !SCROLLINFO methodsFor!

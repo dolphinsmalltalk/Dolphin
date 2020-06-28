@@ -2,12 +2,14 @@
 
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
-	classVariableNames: 'NoSplashMask UnattendedMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'NoSplashMask' -> 16r2.
+		'UnattendedMask' -> 16r4
+	}!
 GUISessionManager guid: (GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
-GUISessionManager addClassConstant: 'NoSplashMask' value: 16r2!
-GUISessionManager addClassConstant: 'UnattendedMask' value: 16r4!
 GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
 
 Note that Dolphin GUI applications can access the console and standard I/O streams, but a separate console window will be opened.

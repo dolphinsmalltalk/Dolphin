@@ -4,7 +4,8 @@ Presenter subclass: #Shell
 	instanceVariableNames: 'caption commandHistory'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell guid: (GUID fromString: '{87b4c68f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Shell comment: 'Shell implements the <topPresenter> protocol for presenters that are to appear in <topView>s; i.e. in top-level windows on the desktop.A Shell provides methods for supplying a caption for the associated <topView> and for maintaining a <HistoryList> of commands that have recently been performed within it. By default, a Shell will not maintain a command history unless it is explicitly told to do so using its #hasCommandHistory aspect. The purpose of maintaining a command history is to support the potential for #undo and #redo operations. For these to work successfully, each <Command> must be provided with an appropriate undo action after it has been performed. For more details see the comment for Command.
 

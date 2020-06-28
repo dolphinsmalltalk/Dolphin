@@ -4,7 +4,8 @@ Brush subclass: #HatchBrush
 	instanceVariableNames: 'id color'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HatchBrush guid: (GUID fromString: '{7b044e62-1bef-40c1-a50a-1f63f6d10c2d}')!
 HatchBrush comment: '`HatchBrush` is type of `Brush` that wraps a Windows GDI Brush object for drawing in one of the standard hashed patterns.
 

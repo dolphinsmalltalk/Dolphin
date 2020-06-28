@@ -4,7 +4,8 @@ WindowsEvent subclass: #KeyEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyEvent guid: (GUID fromString: '{87b4c54e-026e-11d3-9fd7-00a0cc3e4a32}')!
 KeyEvent comment: ''!
 !KeyEvent categoriesForClass!Events!MVP-Views-Events! !

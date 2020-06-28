@@ -2,14 +2,16 @@
 
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bottom' -> 16rC.
+		'_OffsetOf_left' -> 16r0.
+		'_OffsetOf_right' -> 16r8.
+		'_OffsetOf_top' -> 16r4
+	}!
 RECT guid: (GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
-RECT addClassConstant: '_OffsetOf_bottom' value: 16rC!
-RECT addClassConstant: '_OffsetOf_left' value: 16r0!
-RECT addClassConstant: '_OffsetOf_right' value: 16r8!
-RECT addClassConstant: '_OffsetOf_top' value: 16r4!
 RECT comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
 
 The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. `RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!

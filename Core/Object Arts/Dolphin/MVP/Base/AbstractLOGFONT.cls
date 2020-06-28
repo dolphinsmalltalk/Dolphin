@@ -2,24 +2,26 @@
 
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfCharSet' -> 16r17.
+		'_OffsetOf_lfClipPrecision' -> 16r19.
+		'_OffsetOf_lfEscapement' -> 16r8.
+		'_OffsetOf_lfHeight' -> 16r0.
+		'_OffsetOf_lfItalic' -> 16r14.
+		'_OffsetOf_lfOrientation' -> 16rC.
+		'_OffsetOf_lfOutPrecision' -> 16r18.
+		'_OffsetOf_lfPitchAndFamily' -> 16r1B.
+		'_OffsetOf_lfQuality' -> 16r1A.
+		'_OffsetOf_lfStrikeOut' -> 16r16.
+		'_OffsetOf_lfUnderline' -> 16r15.
+		'_OffsetOf_lfWeight' -> 16r10.
+		'_OffsetOf_lfWidth' -> 16r4
+	}!
 AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
 AbstractLOGFONT isAbstract: true!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfCharSet' value: 16r17!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfClipPrecision' value: 16r19!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfEscapement' value: 16r8!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfHeight' value: 16r0!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfItalic' value: 16r14!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfOrientation' value: 16rC!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfOutPrecision' value: 16r18!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfPitchAndFamily' value: 16r1B!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfQuality' value: 16r1A!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfStrikeOut' value: 16r16!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfUnderline' value: 16r15!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfWeight' value: 16r10!
-AbstractLOGFONT addClassConstant: '_OffsetOf_lfWidth' value: 16r4!
 AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!

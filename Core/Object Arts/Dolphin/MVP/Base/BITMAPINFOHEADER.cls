@@ -2,21 +2,23 @@
 
 Win32Structure subclass: #BITMAPINFOHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_biBitCount _OffsetOf_biClrImportant _OffsetOf_biClrUsed _OffsetOf_biCompression _OffsetOf_biHeight _OffsetOf_biPlanes _OffsetOf_biSizeImage _OffsetOf_biWidth _OffsetOf_biXPelsPerMeter _OffsetOf_biYPelsPerMeter _OffsetOf_dwSize'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_biBitCount' -> 16rE.
+		'_OffsetOf_biClrImportant' -> 16r24.
+		'_OffsetOf_biClrUsed' -> 16r20.
+		'_OffsetOf_biCompression' -> 16r10.
+		'_OffsetOf_biHeight' -> 16r8.
+		'_OffsetOf_biPlanes' -> 16rC.
+		'_OffsetOf_biSizeImage' -> 16r14.
+		'_OffsetOf_biWidth' -> 16r4.
+		'_OffsetOf_biXPelsPerMeter' -> 16r18.
+		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
+		'_OffsetOf_dwSize' -> 16r0
+	}!
 BITMAPINFOHEADER guid: (GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biBitCount' value: 16rE!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biClrImportant' value: 16r24!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biClrUsed' value: 16r20!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biCompression' value: 16r10!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biHeight' value: 16r8!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biPlanes' value: 16rC!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biSizeImage' value: 16r14!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biWidth' value: 16r4!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biXPelsPerMeter' value: 16r18!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_biYPelsPerMeter' value: 16r1C!
-BITMAPINFOHEADER addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFOHEADER structure is used for header information describing device-independent bitmaps.'!

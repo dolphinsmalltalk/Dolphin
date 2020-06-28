@@ -4,7 +4,8 @@ Menu subclass: #MenuBar
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MenuBar guid: (GUID fromString: '{87b4c641-026e-11d3-9fd7-00a0cc3e4a32}')!
 MenuBar comment: 'MenuBar represents the special class of menus drawn horizontally across the top of the client area of a top-level view, i.e. the menu bar.
 '!

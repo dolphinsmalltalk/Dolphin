@@ -2,15 +2,17 @@
 
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_hinst _OffsetOf_lParam _OffsetOf_lpszText _OffsetOf_szText _OffsetOf_uFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hinst' -> 16rB0.
+		'_OffsetOf_lParam' -> 16rB8.
+		'_OffsetOf_lpszText' -> 16rC.
+		'_OffsetOf_szText' -> 16r10.
+		'_OffsetOf_uFlags' -> 16rB4
+	}!
 NMTTDISPINFOW guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
-NMTTDISPINFOW addClassConstant: '_OffsetOf_hinst' value: 16rB0!
-NMTTDISPINFOW addClassConstant: '_OffsetOf_lParam' value: 16rB8!
-NMTTDISPINFOW addClassConstant: '_OffsetOf_lpszText' value: 16rC!
-NMTTDISPINFOW addClassConstant: '_OffsetOf_szText' value: 16r10!
-NMTTDISPINFOW addClassConstant: '_OffsetOf_uFlags' value: 16rB4!
 NMTTDISPINFOW comment: ''!
 !NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !NMTTDISPINFOW methodsFor!

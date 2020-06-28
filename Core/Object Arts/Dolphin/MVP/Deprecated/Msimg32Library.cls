@@ -4,7 +4,8 @@ ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Msimg32Library guid: (GUID fromString: '{5a76781d-d74e-48fe-8991-46ae340fcc94}')!
 Msimg32Library comment: 'Deprecated. Use equivalent functions in GDILIbrary instead.'!
 !Msimg32Library categoriesForClass!Deprecated! !

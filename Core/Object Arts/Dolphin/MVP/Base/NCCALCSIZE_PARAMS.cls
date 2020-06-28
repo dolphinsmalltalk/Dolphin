@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lppos _OffsetOf_rgrc'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lppos' -> 16r30.
+		'_OffsetOf_rgrc' -> 16r0
+	}!
 NCCALCSIZE_PARAMS guid: (GUID fromString: '{dbc3695f-4c20-411c-8110-539ce4be4b4a}')!
-NCCALCSIZE_PARAMS addClassConstant: '_OffsetOf_lppos' value: 16r30!
-NCCALCSIZE_PARAMS addClassConstant: '_OffsetOf_rgrc' value: 16r0!
 NCCALCSIZE_PARAMS comment: '<NCCALCSIZE_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.NCCALCSIZE_PARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -4,7 +4,8 @@ MouseTracker subclass: #DraggableViewInteractor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DraggableViewInteractor guid: (GUID fromString: '{17db18df-6991-4fe4-b6f7-ebe986ea3281}')!
 DraggableViewInteractor comment: '`DraggableViewInteractor` is a `CapturingInteractor` that tracks hot state as the mouse moves over (hot) and out (cold) of the associated view. If the left mouse button is pressed down when hot, then the interactor initiates a "drag", sending tracking events to the its `Presenter` in the same way as a `MouseTracker` does.
 

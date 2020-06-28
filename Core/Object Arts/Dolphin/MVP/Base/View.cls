@@ -2,20 +2,22 @@
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
-	classInstanceVariableNames: 'theme'!
+	classInstanceVariableNames: 'theme'
+	classConstants: {
+		'CreateCenteredMask' -> 16r40.
+		'DragSourceMask' -> 16r4.
+		'DropTargetMask' -> 16r8.
+		'LayoutValidMask' -> 16r1.
+		'ManagedMask' -> 16r2.
+		'MinimizedMask' -> 16r80.
+		'NoInheritMenuMask' -> 16r200.
+		'StateRestoringMask' -> 16r20.
+		'UIValidMask' -> 16r10.
+		'UsePreferredExtentMask' -> 16r100
+	}!
 View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
-View addClassConstant: 'CreateCenteredMask' value: 16r40!
-View addClassConstant: 'DragSourceMask' value: 16r4!
-View addClassConstant: 'DropTargetMask' value: 16r8!
-View addClassConstant: 'LayoutValidMask' value: 16r1!
-View addClassConstant: 'ManagedMask' value: 16r2!
-View addClassConstant: 'MinimizedMask' value: 16r80!
-View addClassConstant: 'NoInheritMenuMask' value: 16r200!
-View addClassConstant: 'StateRestoringMask' value: 16r20!
-View addClassConstant: 'UIValidMask' value: 16r10!
-View addClassConstant: 'UsePreferredExtentMask' value: 16r100!
 View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.

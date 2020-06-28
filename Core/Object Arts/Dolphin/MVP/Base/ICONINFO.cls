@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_fIcon _OffsetOf_hbmColor _OffsetOf_hbmMask _OffsetOf_xHotspot _OffsetOf_yHotspot'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_fIcon' -> 16r0.
+		'_OffsetOf_hbmColor' -> 16r10.
+		'_OffsetOf_hbmMask' -> 16rC.
+		'_OffsetOf_xHotspot' -> 16r4.
+		'_OffsetOf_yHotspot' -> 16r8
+	}!
 ICONINFO guid: (GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
-ICONINFO addClassConstant: '_OffsetOf_fIcon' value: 16r0!
-ICONINFO addClassConstant: '_OffsetOf_hbmColor' value: 16r10!
-ICONINFO addClassConstant: '_OffsetOf_hbmMask' value: 16rC!
-ICONINFO addClassConstant: '_OffsetOf_xHotspot' value: 16r4!
-ICONINFO addClassConstant: '_OffsetOf_yHotspot' value: 16r8!
 ICONINFO comment: ''!
 !ICONINFO categoriesForClass!External-Data-Structured-Win32! !
 !ICONINFO methodsFor!

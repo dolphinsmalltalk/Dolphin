@@ -2,11 +2,13 @@
 
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
-	classVariableNames: 'InProcLoopMask'
+	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InProcLoopMask' -> 16r100000
+	}!
 DialogView guid: (GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
-DialogView addClassConstant: 'InProcLoopMask' value: 16r100000!
 DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
 Instance Variables:
@@ -422,9 +424,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	self addClassConstant: 'InProcLoopMask' value: 16r100000!
-
 new
 	"Answer an instance of the receiver on a nil model"
 
@@ -436,7 +435,6 @@ on: aSubjectModel
 	^super new model: aSubjectModel.
 ! !
 !DialogView class categoriesFor: #icon!constants!public! !
-!DialogView class categoriesFor: #initialize!development!initializing!public! !
 !DialogView class categoriesFor: #new!instance creation!public! !
 !DialogView class categoriesFor: #on:!instance creation!public! !
 

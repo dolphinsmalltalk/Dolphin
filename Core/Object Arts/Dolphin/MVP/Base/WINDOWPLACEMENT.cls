@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #WINDOWPLACEMENT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_ptMaxPosition _OffsetOf_ptMinPosition _OffsetOf_rcNormalPosition _OffsetOf_showCmd'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r4.
+		'_OffsetOf_ptMaxPosition' -> 16r14.
+		'_OffsetOf_ptMinPosition' -> 16rC.
+		'_OffsetOf_rcNormalPosition' -> 16r1C.
+		'_OffsetOf_showCmd' -> 16r8
+	}!
 WINDOWPLACEMENT guid: (GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_flags' value: 16r4!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_ptMaxPosition' value: 16r14!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_ptMinPosition' value: 16rC!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_rcNormalPosition' value: 16r1C!
-WINDOWPLACEMENT addClassConstant: '_OffsetOf_showCmd' value: 16r8!
 WINDOWPLACEMENT comment: ''!
 !WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
 !WINDOWPLACEMENT methodsFor!

@@ -4,7 +4,8 @@ LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BorderLayout guid: (GUID fromString: '{87b4c646-026e-11d3-9fd7-00a0cc3e4a32}')!
 BorderLayout comment: 'BorderLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. It arranges views that have been added to their parent container with the #arrangement aspects #north, #south, #east, #west and #center. These identified views are "docked" along the appropriate edges and in the centre of the container. A BorderLayout attempts to keep the radial dimension of the edge components fixed at either their current size or (if specified) the preferred size, and then resizes the #center view to fill the remaining space.
 

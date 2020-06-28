@@ -2,12 +2,14 @@
 
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
 POINTL guid: (GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
-POINTL addClassConstant: '_OffsetOf_x' value: 16r0!
-POINTL addClassConstant: '_OffsetOf_y' value: 16r4!
 POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
 '!
 !POINTL categoriesForClass!Win32-Structs! !

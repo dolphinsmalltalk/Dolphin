@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ButtonConstants put: (PoolConstantsDictionary named: #ButtonConstants)!
+#{ButtonConstants} declare: (PoolConstantsDictionary named: #ButtonConstants)!
 ButtonConstants at: 'BCM_GETNOTE' put: 16r160A!
 ButtonConstants at: 'BCM_GETNOTELENGTH' put: 16r160B!
 ButtonConstants at: 'BCM_SETNOTE' put: 16r1609!

@@ -4,7 +4,8 @@ AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractNonReferenceDelegatingView guid: (GUID fromString: '{0d2a2ef6-1bed-4665-b4c0-9a97c209b222}')!
 AbstractNonReferenceDelegatingView comment: 'Adds some methods that are not appropriate for ReferenceViews. Strictly the introduction of this class is only requiredto ensure ReferenceView remains backwardly compatible.'!
 !AbstractNonReferenceDelegatingView categoriesForClass!MVP-Resources-Misc! !

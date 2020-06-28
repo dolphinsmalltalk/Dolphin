@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #PALETTEENTRY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_peBlue _OffsetOf_peFlags _OffsetOf_peGreen _OffsetOf_peRed'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_peBlue' -> 16r2.
+		'_OffsetOf_peFlags' -> 16r3.
+		'_OffsetOf_peGreen' -> 16r1.
+		'_OffsetOf_peRed' -> 16r0
+	}!
 PALETTEENTRY guid: (GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
-PALETTEENTRY addClassConstant: '_OffsetOf_peBlue' value: 16r2!
-PALETTEENTRY addClassConstant: '_OffsetOf_peFlags' value: 16r3!
-PALETTEENTRY addClassConstant: '_OffsetOf_peGreen' value: 16r1!
-PALETTEENTRY addClassConstant: '_OffsetOf_peRed' value: 16r0!
 PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

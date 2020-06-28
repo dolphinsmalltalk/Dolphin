@@ -2,26 +2,28 @@
 
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_iBorderWidth' -> 16r4.
+		'_OffsetOf_iCaptionHeight' -> 16r14.
+		'_OffsetOf_iCaptionWidth' -> 16r10.
+		'_OffsetOf_iMenuHeight' -> 16rDC.
+		'_OffsetOf_iMenuWidth' -> 16rD8.
+		'_OffsetOf_iPaddedBorderWidth' -> 16r1F4.
+		'_OffsetOf_iScrollHeight' -> 16rC.
+		'_OffsetOf_iScrollWidth' -> 16r8.
+		'_OffsetOf_iSmCaptionHeight' -> 16r78.
+		'_OffsetOf_iSmCaptionWidth' -> 16r74.
+		'_OffsetOf_lfCationFont' -> 16r18.
+		'_OffsetOf_lfMenuFont' -> 16rE0.
+		'_OffsetOf_lfMessageFont' -> 16r198.
+		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
+		'_OffsetOf_lfStatusFont' -> 16r13C
+	}!
 NONCLIENTMETRICSW guid: (GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iBorderWidth' value: 16r4!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iCaptionHeight' value: 16r14!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iCaptionWidth' value: 16r10!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iMenuHeight' value: 16rDC!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iMenuWidth' value: 16rD8!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iPaddedBorderWidth' value: 16r1F4!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollHeight' value: 16rC!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollWidth' value: 16r8!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionHeight' value: 16r78!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionWidth' value: 16r74!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfCationFont' value: 16r18!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMenuFont' value: 16rE0!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMessageFont' value: 16r198!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfSmCaptionFont' value: 16r7C!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfStatusFont' value: 16r13C!
 NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!

@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #DefaultShellSessionManager
 	instanceVariableNames: 'mainShellClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DefaultShellSessionManager guid: (GUID fromString: '{6554f3ce-3ad5-4ef5-86ce-14ac1596fe2d}')!
 DefaultShellSessionManager comment: ''!
 !DefaultShellSessionManager categoriesForClass!System-Support! !

@@ -4,7 +4,8 @@ CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: 'ButtonStyleMap'
 	poolDictionaries: 'ButtonConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushButton guid: (GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
 PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 

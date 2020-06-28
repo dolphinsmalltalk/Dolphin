@@ -2,9 +2,14 @@
 
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
-	classVariableNames: 'Calculations IndependentMask ProportionalMask VerticalMask'
+	classVariableNames: 'Calculations'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IndependentMask' -> 16r4.
+		'ProportionalMask' -> 16r2.
+		'VerticalMask' -> 16r1
+	}!
 FramingCalculation guid: (GUID fromString: '{d8059738-a2e8-4291-8e24-e31cf4bee13a}')!
 FramingCalculation comment: 'FramingCalculation instances are used to represent the individual edge constraints in a <FramingConstraints> instance. See that class'' comment for further details.
 
@@ -237,9 +242,6 @@ initialize
 		self initialize
 	"
 
-	VerticalMask := 1.
-	ProportionalMask := 2.
-	IndependentMask := 4.
 	Calculations := IdentityDictionary new!
 
 lookupCalc: aSymbol framingBlock: framingBlock offsetBlock: offsetBlock flags: anInteger

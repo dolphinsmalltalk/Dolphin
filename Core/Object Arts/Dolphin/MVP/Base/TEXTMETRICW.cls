@@ -2,30 +2,32 @@
 
 Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_tmAscent _OffsetOf_tmAveCharWidth _OffsetOf_tmBreakChar _OffsetOf_tmCharSet _OffsetOf_tmDefaultChar _OffsetOf_tmDescent _OffsetOf_tmDigitizedAspectX _OffsetOf_tmDigitizedAspectY _OffsetOf_tmExternalLeading _OffsetOf_tmFirstChar _OffsetOf_tmHeight _OffsetOf_tmInternalLeading _OffsetOf_tmItalic _OffsetOf_tmLastChar _OffsetOf_tmMaxCharWidth _OffsetOf_tmOverhang _OffsetOf_tmPitchAndFamily _OffsetOf_tmStruckOut _OffsetOf_tmUnderlined _OffsetOf_tmWeight'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_tmAscent' -> 16r4.
+		'_OffsetOf_tmAveCharWidth' -> 16r14.
+		'_OffsetOf_tmBreakChar' -> 16r32.
+		'_OffsetOf_tmCharSet' -> 16r38.
+		'_OffsetOf_tmDefaultChar' -> 16r30.
+		'_OffsetOf_tmDescent' -> 16r8.
+		'_OffsetOf_tmDigitizedAspectX' -> 16r24.
+		'_OffsetOf_tmDigitizedAspectY' -> 16r28.
+		'_OffsetOf_tmExternalLeading' -> 16r10.
+		'_OffsetOf_tmFirstChar' -> 16r2C.
+		'_OffsetOf_tmHeight' -> 16r0.
+		'_OffsetOf_tmInternalLeading' -> 16rC.
+		'_OffsetOf_tmItalic' -> 16r34.
+		'_OffsetOf_tmLastChar' -> 16r2E.
+		'_OffsetOf_tmMaxCharWidth' -> 16r18.
+		'_OffsetOf_tmOverhang' -> 16r20.
+		'_OffsetOf_tmPitchAndFamily' -> 16r37.
+		'_OffsetOf_tmStruckOut' -> 16r36.
+		'_OffsetOf_tmUnderlined' -> 16r35.
+		'_OffsetOf_tmWeight' -> 16r1C
+	}!
 TEXTMETRICW guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmAscent' value: 16r4!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmAveCharWidth' value: 16r14!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmBreakChar' value: 16r32!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmCharSet' value: 16r38!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmDefaultChar' value: 16r30!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmDescent' value: 16r8!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmDigitizedAspectX' value: 16r24!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmDigitizedAspectY' value: 16r28!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmExternalLeading' value: 16r10!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmFirstChar' value: 16r2C!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmHeight' value: 16r0!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmInternalLeading' value: 16rC!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmItalic' value: 16r34!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmLastChar' value: 16r2E!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmMaxCharWidth' value: 16r18!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmOverhang' value: 16r20!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmPitchAndFamily' value: 16r37!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmStruckOut' value: 16r36!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmUnderlined' value: 16r35!
-TEXTMETRICW addClassConstant: '_OffsetOf_tmWeight' value: 16r1C!
 TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

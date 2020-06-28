@@ -4,7 +4,8 @@ AbstractRGB subclass: #ColorRef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ColorRef guid: (GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
 ColorRef isAbstract: true!
 ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 GDI APIs that have a specific integer encoding described in the Windows documentation as a COLORREF.

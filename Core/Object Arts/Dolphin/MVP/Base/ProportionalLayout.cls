@@ -4,7 +4,8 @@ LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProportionalLayout guid: (GUID fromString: '{87b4c64b-026e-11d3-9fd7-00a0cc3e4a32}')!
 ProportionalLayout comment: 'ProportionalLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged either vertically or horizontally depending on the setting of the <boolean> #isVertical aspect. The layout manager attempts to keep the relative sizes of the views in proportion according to the arrangement aspects of each view, which must be <number>s. Any view with an arrangement of 0 will be left at its original size. Managed views that are not currently visible are ignored, in which case they are allocated no proportion of the available space.
 

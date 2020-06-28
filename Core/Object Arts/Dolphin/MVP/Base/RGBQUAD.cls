@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_rgbBlue _OffsetOf_rgbGreen _OffsetOf_rgbRed _OffsetOf_rgbReserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rgbBlue' -> 16r0.
+		'_OffsetOf_rgbGreen' -> 16r1.
+		'_OffsetOf_rgbRed' -> 16r2.
+		'_OffsetOf_rgbReserved' -> 16r3
+	}!
 RGBQUAD guid: (GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGBQUAD addClassConstant: '_OffsetOf_rgbBlue' value: 16r0!
-RGBQUAD addClassConstant: '_OffsetOf_rgbGreen' value: 16r1!
-RGBQUAD addClassConstant: '_OffsetOf_rgbRed' value: 16r2!
-RGBQUAD addClassConstant: '_OffsetOf_rgbReserved' value: 16r3!
 RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct

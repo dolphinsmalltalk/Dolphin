@@ -4,7 +4,8 @@ View subclass: #DoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DoubleBufferedView guid: (GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
 DoubleBufferedView comment: ''!
 !DoubleBufferedView categoriesForClass!Unclassified! !

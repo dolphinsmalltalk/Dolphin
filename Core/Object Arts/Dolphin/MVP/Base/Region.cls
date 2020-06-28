@@ -4,7 +4,8 @@ GraphicsTool subclass: #Region
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Region guid: (GUID fromString: '{87b4c638-026e-11d3-9fd7-00a0cc3e4a32}')!
 Region comment: ''!
 !Region categoriesForClass!Graphics-Tools! !

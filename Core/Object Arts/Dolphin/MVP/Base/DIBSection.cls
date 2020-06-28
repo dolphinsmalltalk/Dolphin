@@ -4,7 +4,8 @@ Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DIBSection guid: (GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
 DIBSection comment: ''!
 !DIBSection categoriesForClass!Graphics-Tools! !

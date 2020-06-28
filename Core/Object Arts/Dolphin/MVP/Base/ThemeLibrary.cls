@@ -4,7 +4,8 @@ ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: 'IsAppThemed'
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ThemeLibrary guid: (GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
 ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 

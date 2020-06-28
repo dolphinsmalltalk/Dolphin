@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #RGNDATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iType _OffsetOf_nCount _OffsetOf_nRgnSize _OffsetOf_rcBound'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_iType' -> 16r4.
+		'_OffsetOf_nCount' -> 16r8.
+		'_OffsetOf_nRgnSize' -> 16rC.
+		'_OffsetOf_rcBound' -> 16r10
+	}!
 RGNDATA guid: (GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGNDATA addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-RGNDATA addClassConstant: '_OffsetOf_iType' value: 16r4!
-RGNDATA addClassConstant: '_OffsetOf_nCount' value: 16r8!
-RGNDATA addClassConstant: '_OffsetOf_nRgnSize' value: 16rC!
-RGNDATA addClassConstant: '_OffsetOf_rcBound' value: 16r10!
 RGNDATA comment: ''!
 !RGNDATA categoriesForClass!External-Data-Structured-Win32! !
 !RGNDATA methodsFor!

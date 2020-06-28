@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #BITMAPINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bmiColors _OffsetOf_bmiHeader'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bmiColors' -> 16r28.
+		'_OffsetOf_bmiHeader' -> 16r0
+	}!
 BITMAPINFO guid: (GUID fromString: '{87b4c5ca-026e-11d3-9fd7-00a0cc3e4a32}')!
-BITMAPINFO addClassConstant: '_OffsetOf_bmiColors' value: 16r28!
-BITMAPINFO addClassConstant: '_OffsetOf_bmiHeader' value: 16r0!
 BITMAPINFO comment: 'BITMAPINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAPINFO structure is used to describe device-independent bitmaps. See MSDN for further information.'!

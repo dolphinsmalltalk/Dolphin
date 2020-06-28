@@ -4,7 +4,8 @@ ColorRef subclass: #ColorNone
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ColorNone guid: (GUID fromString: '{21257bc4-33c5-4684-b606-e387fcfbede6}')!
 ColorNone comment: '`ColorNone` is the special `ColorRef` which represents a completely transparent colour. It is used to specify that something should be drawn transparently, or that the background should not be filled.
 

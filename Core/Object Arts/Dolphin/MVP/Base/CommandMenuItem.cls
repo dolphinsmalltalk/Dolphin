@@ -2,9 +2,12 @@
 
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
-	classVariableNames: 'IsDefaultMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IsDefaultMask' -> 16r100000
+	}!
 CommandMenuItem guid: (GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
 CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 
@@ -232,14 +235,6 @@ commandDescription: aCommandDescription
 		flags: MFT_STRING;
 		commandDescription: aCommandDescription!
 
-initialize
-	"Private - Initialize the class variables of the receiver:
-		self initialize
-	"
-
-	IsDefaultMask := 16r100000.
-	!
-
 new
 	"Answers an instance of the receiver"
 
@@ -252,7 +247,6 @@ stbVersion
 !CommandMenuItem class categoriesFor: #command:description:!instance creation!public! !
 !CommandMenuItem class categoriesFor: #command:description:image:!instance creation!public! !
 !CommandMenuItem class categoriesFor: #commandDescription:!instance creation!public! !
-!CommandMenuItem class categoriesFor: #initialize!development!initializing!private! !
 !CommandMenuItem class categoriesFor: #new!instance creation!public! !
 !CommandMenuItem class categoriesFor: #stbVersion!binary filing!public! !
 

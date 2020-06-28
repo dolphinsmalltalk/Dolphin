@@ -4,7 +4,8 @@ ColorRef subclass: #ColorDefault
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ColorDefault guid: (GUID fromString: '{dc49f7c0-bb6c-444b-9e28-9342285c1880}')!
 ColorDefault comment: '`ColorDefault` is the special `ColorRef` which represents the default colour for something, whatever that might be. Typically it is used with `ControlView`s to specify that the control should draw itself usings its default background or foreground colour.
 

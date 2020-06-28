@@ -4,7 +4,8 @@ CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LegacyCommandPolicy guid: (GUID fromString: '{cd4f5c9f-18d7-4b31-94af-4f76d1e56c08}')!
 LegacyCommandPolicy comment: ''!
 !LegacyCommandPolicy categoriesForClass!Unclassified! !

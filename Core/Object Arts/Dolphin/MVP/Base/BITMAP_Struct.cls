@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bmBits _OffsetOf_bmBitsPixel _OffsetOf_bmHeight _OffsetOf_bmPlanes _OffsetOf_bmType _OffsetOf_bmWidth _OffsetOf_bmWidthBytes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bmBits' -> 16r14.
+		'_OffsetOf_bmBitsPixel' -> 16r12.
+		'_OffsetOf_bmHeight' -> 16r8.
+		'_OffsetOf_bmPlanes' -> 16r10.
+		'_OffsetOf_bmType' -> 16r0.
+		'_OffsetOf_bmWidth' -> 16r4.
+		'_OffsetOf_bmWidthBytes' -> 16rC
+	}!
 BITMAP guid: (GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
-BITMAP addClassConstant: '_OffsetOf_bmBits' value: 16r14!
-BITMAP addClassConstant: '_OffsetOf_bmBitsPixel' value: 16r12!
-BITMAP addClassConstant: '_OffsetOf_bmHeight' value: 16r8!
-BITMAP addClassConstant: '_OffsetOf_bmPlanes' value: 16r10!
-BITMAP addClassConstant: '_OffsetOf_bmType' value: 16r0!
-BITMAP addClassConstant: '_OffsetOf_bmWidth' value: 16r4!
-BITMAP addClassConstant: '_OffsetOf_bmWidthBytes' value: 16rC!
 BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAP structure is used to describe bitmaps, containing attributes such as the width, height, and color format, and a pointer to the bitmap''s bits.'!

@@ -2,20 +2,22 @@
 
 Win32Structure subclass: #PANOSE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bArmStyle _OffsetOf_bContrast _OffsetOf_bFamilyType _OffsetOf_bLetterform _OffsetOf_bMidline _OffsetOf_bProportion _OffsetOf_bSerifStyle _OffsetOf_bStrokeVariation _OffsetOf_bWeight _OffsetOf_bXHeight'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bArmStyle' -> 16r6.
+		'_OffsetOf_bContrast' -> 16r4.
+		'_OffsetOf_bFamilyType' -> 16r0.
+		'_OffsetOf_bLetterform' -> 16r7.
+		'_OffsetOf_bMidline' -> 16r8.
+		'_OffsetOf_bProportion' -> 16r3.
+		'_OffsetOf_bSerifStyle' -> 16r1.
+		'_OffsetOf_bStrokeVariation' -> 16r5.
+		'_OffsetOf_bWeight' -> 16r2.
+		'_OffsetOf_bXHeight' -> 16r9
+	}!
 PANOSE guid: (GUID fromString: '{ab0b82a7-5304-49c0-9937-e7474bc1a82f}')!
-PANOSE addClassConstant: '_OffsetOf_bArmStyle' value: 16r6!
-PANOSE addClassConstant: '_OffsetOf_bContrast' value: 16r4!
-PANOSE addClassConstant: '_OffsetOf_bFamilyType' value: 16r0!
-PANOSE addClassConstant: '_OffsetOf_bLetterform' value: 16r7!
-PANOSE addClassConstant: '_OffsetOf_bMidline' value: 16r8!
-PANOSE addClassConstant: '_OffsetOf_bProportion' value: 16r3!
-PANOSE addClassConstant: '_OffsetOf_bSerifStyle' value: 16r1!
-PANOSE addClassConstant: '_OffsetOf_bStrokeVariation' value: 16r5!
-PANOSE addClassConstant: '_OffsetOf_bWeight' value: 16r2!
-PANOSE addClassConstant: '_OffsetOf_bXHeight' value: 16r9!
 PANOSE comment: '<PANOSE> is an <ExternalStructure> class to wrap the struct ''Win.PANOSE'' from type information in the ''Windows API (ANSI)'' library.
 '!
 !PANOSE categoriesForClass!Win-Structs! !

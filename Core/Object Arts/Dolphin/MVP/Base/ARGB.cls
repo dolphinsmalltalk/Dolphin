@@ -4,7 +4,8 @@ AbstractRGB subclass: #ARGB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ARGB guid: (GUID fromString: '{5adf6d2a-72cb-4706-b355-516359e43521}')!
 ARGB comment: '`ARGB` is the class of colour values specified as individual 8-bit red, green, blue and alpha levels encoded as a 32-bit <integer> value with the components in A,R,G,B order. This encoding is used with all of the more modern Windows graphics APIs such as Gdiplus, DirectDraw, Direct3D, etc.'!
 !ARGB categoriesForClass!Unclassified! !

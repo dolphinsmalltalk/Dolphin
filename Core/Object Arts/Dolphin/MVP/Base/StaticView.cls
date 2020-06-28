@@ -4,7 +4,8 @@ ValueConvertingControlView subclass: #StaticView
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StaticView guid: (GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
 StaticView comment: 'StaticView is an abstract <valueView> class for implementing the Windows ''STATIC'' control class. The subclasses are intended to display model data but they do not allow it to be edited by the user.
 

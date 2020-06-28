@@ -4,7 +4,8 @@ Object subclass: #HistoryList
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HistoryList guid: (GUID fromString: '{87b4c490-026e-11d3-9fd7-00a0cc3e4a32}')!
 HistoryList comment: 'HistoryList maintains a list of recent visits which can be navigated back and forth, with similar behaviour to a Web browser''s history list.
 

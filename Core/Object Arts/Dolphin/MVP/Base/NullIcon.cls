@@ -4,7 +4,8 @@ Icon subclass: #NullIcon
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NullIcon guid: (GUID fromString: '{126acbb6-e8df-45a9-80c0-8caf5f16875e}')!
 NullIcon comment: ''!
 !NullIcon categoriesForClass!Graphics-Tools! !

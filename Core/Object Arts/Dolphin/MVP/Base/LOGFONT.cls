@@ -2,11 +2,13 @@
 
 AbstractLOGFONT subclass: #LOGFONT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfFaceName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
 LOGFONT guid: (GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGFONT addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
 LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
 
 LOGFONT has been replaced by LOGFONTW, but is retained due to references from pre-existing view resources (which contain Font instances that reference LOGFONT instances). It will be deprecated in a future release.'!

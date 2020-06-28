@@ -4,7 +4,8 @@ Color subclass: #AbstractRGB
 	instanceVariableNames: 'code'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractRGB guid: (GUID fromString: '{3f709950-6d41-46a2-bf1f-f6092de13e68}')!
 AbstractRGB isAbstract: true!
 AbstractRGB comment: '`AbstractColor` is the abstract class of colours specified by individual colour components.

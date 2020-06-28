@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwDuration _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_style'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwDuration' -> 16rC.
+		'_OffsetOf_dwFlags' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_style' -> 16r8
+	}!
 BP_ANIMATIONPARAMS guid: (GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
-BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwDuration' value: 16rC!
-BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
-BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_style' value: 16r8!
 BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

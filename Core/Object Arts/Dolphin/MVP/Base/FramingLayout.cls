@@ -4,7 +4,8 @@ LayoutManager subclass: #FramingLayout
 	instanceVariableNames: 'framings'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FramingLayout guid: (GUID fromString: '{87b4c649-026e-11d3-9fd7-00a0cc3e4a32}')!
 FramingLayout comment: 'FramingLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. This is the most complex of the layout managers provided with the base Dolphin image but also the most flexible. Each of the managed views is given a series of constraints which indicate how it should be laid out within the parent. These constraints are instances of <FramingConstraints> and are specified by setting the #arrangement aspects of the various views. See the class comment for FramingConstraints for more details.
 

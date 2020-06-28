@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #LOGPALETTE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_palNumEntries _OffsetOf_palPalEntry _OffsetOf_palVersion'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_palNumEntries' -> 16r2.
+		'_OffsetOf_palPalEntry' -> 16r4.
+		'_OffsetOf_palVersion' -> 16r0
+	}!
 LOGPALETTE guid: (GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
-LOGPALETTE addClassConstant: '_OffsetOf_palNumEntries' value: 16r2!
-LOGPALETTE addClassConstant: '_OffsetOf_palPalEntry' value: 16r4!
-LOGPALETTE addClassConstant: '_OffsetOf_palVersion' value: 16r0!
 LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

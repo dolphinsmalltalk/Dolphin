@@ -4,7 +4,8 @@ Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WindowsEvent guid: (GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
 WindowsEvent comment: ''!
 !WindowsEvent categoriesForClass!MVP-Views-Events! !

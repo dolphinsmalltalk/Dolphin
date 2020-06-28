@@ -4,7 +4,8 @@ ControlView subclass: #GroupBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GroupBox guid: (GUID fromString: '{87b4c727-026e-11d3-9fd7-00a0cc3e4a32}')!
 GroupBox comment: 'GroupBox is the <view> implementing the standard Windows group box control. The actual windows class used is BUTTON, but why Microsoft chose this to implement a group box remains a mystery to this day.
 

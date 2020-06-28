@@ -4,7 +4,8 @@ Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FindDetails guid: (GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
 FindDetails comment: ''!
 !FindDetails categoriesForClass!Kernel-Objects! !

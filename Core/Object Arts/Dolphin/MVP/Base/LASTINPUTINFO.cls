@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #LASTINPUTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTime'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwTime' -> 16r4
+	}!
 LASTINPUTINFO guid: (GUID fromString: '{71c57485-4335-49cf-8a38-99d1c4d2a51b}')!
-LASTINPUTINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-LASTINPUTINFO addClassConstant: '_OffsetOf_dwTime' value: 16r4!
 LASTINPUTINFO comment: 'LASTINPUTINFO is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 typedef struct tagLASTINPUTINFO {
