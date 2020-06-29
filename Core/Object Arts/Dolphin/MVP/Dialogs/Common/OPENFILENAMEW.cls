@@ -2,33 +2,35 @@
 
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
-	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_dwSize _OffsetOf_flags _OffsetOf_flagsEx _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrCustomFilter _OffsetOf_lpstrDefExt _OffsetOf_lpstrFile _OffsetOf_lpstrFileTitle _OffsetOf_lpstrFilter _OffsetOf_lpstrInitialDir _OffsetOf_lpstrTitle _OffsetOf_lpTemplateName _OffsetOf_nFileExtension _OffsetOf_nFileOffset _OffsetOf_nFilterIndex _OffsetOf_nMaxCustFilter _OffsetOf_nMaxFile _OffsetOf_nMaxFileTitle _OffsetOf_pvReserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved' -> 16r50.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r34.
+		'_OffsetOf_flagsEx' -> 16r54.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r40.
+		'_OffsetOf_lpfnHook' -> 16r44.
+		'_OffsetOf_lpstrCustomFilter' -> 16r10.
+		'_OffsetOf_lpstrDefExt' -> 16r3C.
+		'_OffsetOf_lpstrFile' -> 16r1C.
+		'_OffsetOf_lpstrFileTitle' -> 16r24.
+		'_OffsetOf_lpstrFilter' -> 16rC.
+		'_OffsetOf_lpstrInitialDir' -> 16r2C.
+		'_OffsetOf_lpstrTitle' -> 16r30.
+		'_OffsetOf_lpTemplateName' -> 16r48.
+		'_OffsetOf_nFileExtension' -> 16r3A.
+		'_OffsetOf_nFileOffset' -> 16r38.
+		'_OffsetOf_nFilterIndex' -> 16r18.
+		'_OffsetOf_nMaxCustFilter' -> 16r14.
+		'_OffsetOf_nMaxFile' -> 16r20.
+		'_OffsetOf_nMaxFileTitle' -> 16r28.
+		'_OffsetOf_pvReserved' -> 16r4C
+	}!
 OPENFILENAMEW guid: (GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
-OPENFILENAMEW addClassConstant: '_OffsetOf_dwReserved' value: 16r50!
-OPENFILENAMEW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-OPENFILENAMEW addClassConstant: '_OffsetOf_flags' value: 16r34!
-OPENFILENAMEW addClassConstant: '_OffsetOf_flagsEx' value: 16r54!
-OPENFILENAMEW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
-OPENFILENAMEW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lCustData' value: 16r40!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpfnHook' value: 16r44!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrCustomFilter' value: 16r10!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrDefExt' value: 16r3C!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrFile' value: 16r1C!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrFileTitle' value: 16r24!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrFilter' value: 16rC!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrInitialDir' value: 16r2C!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpstrTitle' value: 16r30!
-OPENFILENAMEW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r48!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nFileExtension' value: 16r3A!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nFileOffset' value: 16r38!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nFilterIndex' value: 16r18!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxCustFilter' value: 16r14!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxFile' value: 16r20!
-OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxFileTitle' value: 16r28!
-OPENFILENAMEW addClassConstant: '_OffsetOf_pvReserved' value: 16r4C!
 OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represent the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 
 The following instance variables hold <String> objects whose addresses have been stored into the structure. This is necessary to prevent premature garbage collection of these objects occurring during an external API call.

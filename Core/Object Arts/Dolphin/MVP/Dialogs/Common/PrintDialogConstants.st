@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #PrintDialogConstants put: (PoolConstantsDictionary named: #PrintDialogConstants)!
+#{PrintDialogConstants} declare: (PoolConstantsDictionary named: #PrintDialogConstants)!
 PrintDialogConstants at: 'PD_ALLPAGES' put: 16r0!
 PrintDialogConstants at: 'PD_COLLATE' put: 16r10!
 PrintDialogConstants at: 'PD_DISABLEPRINTTOFILE' put: 16r80000!

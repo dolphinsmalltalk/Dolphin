@@ -2,19 +2,21 @@
 
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r18.
+		'_OffsetOf_lpCustColors' -> 16r10.
+		'_OffsetOf_lpfnHook' -> 16r1C.
+		'_OffsetOf_lpTemplateName' -> 16r20.
+		'_OffsetOf_rgbResult' -> 16rC
+	}!
 CHOOSECOLORW guid: (GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHOOSECOLORW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-CHOOSECOLORW addClassConstant: '_OffsetOf_flags' value: 16r14!
-CHOOSECOLORW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
-CHOOSECOLORW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-CHOOSECOLORW addClassConstant: '_OffsetOf_lCustData' value: 16r18!
-CHOOSECOLORW addClassConstant: '_OffsetOf_lpCustColors' value: 16r10!
-CHOOSECOLORW addClassConstant: '_OffsetOf_lpfnHook' value: 16r1C!
-CHOOSECOLORW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r20!
-CHOOSECOLORW addClassConstant: '_OffsetOf_rgbResult' value: 16rC!
 CHOOSECOLORW comment: '<CHOOSECOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.CHOOSECOLOR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

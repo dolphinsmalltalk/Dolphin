@@ -4,7 +4,8 @@ FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileOpenDialog guid: (GUID fromString: '{87b4c6b5-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileOpenDialog comment: 'FileOpenDialog is a <valueDialogPresenter> implementing the Windows GetOpenFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.
 

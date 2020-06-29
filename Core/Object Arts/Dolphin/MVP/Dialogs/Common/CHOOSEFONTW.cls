@@ -2,25 +2,27 @@
 
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_hDC' -> 16r8.
+		'_OffsetOf_hInstance' -> 16r28.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_iPointSize' -> 16r10.
+		'_OffsetOf_lCustData' -> 16r1C.
+		'_OffsetOf_lpfnHook' -> 16r20.
+		'_OffsetOf_lpLogFont' -> 16rC.
+		'_OffsetOf_lpszStyle' -> 16r2C.
+		'_OffsetOf_lpTemplateName' -> 16r24.
+		'_OffsetOf_nFontType' -> 16r30.
+		'_OffsetOf_nSizeMax' -> 16r38.
+		'_OffsetOf_nSizeMin' -> 16r34.
+		'_OffsetOf_rgbColors' -> 16r18
+	}!
 CHOOSEFONTW guid: (GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHOOSEFONTW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-CHOOSEFONTW addClassConstant: '_OffsetOf_flags' value: 16r14!
-CHOOSEFONTW addClassConstant: '_OffsetOf_hDC' value: 16r8!
-CHOOSEFONTW addClassConstant: '_OffsetOf_hInstance' value: 16r28!
-CHOOSEFONTW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-CHOOSEFONTW addClassConstant: '_OffsetOf_iPointSize' value: 16r10!
-CHOOSEFONTW addClassConstant: '_OffsetOf_lCustData' value: 16r1C!
-CHOOSEFONTW addClassConstant: '_OffsetOf_lpfnHook' value: 16r20!
-CHOOSEFONTW addClassConstant: '_OffsetOf_lpLogFont' value: 16rC!
-CHOOSEFONTW addClassConstant: '_OffsetOf_lpszStyle' value: 16r2C!
-CHOOSEFONTW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r24!
-CHOOSEFONTW addClassConstant: '_OffsetOf_nFontType' value: 16r30!
-CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMax' value: 16r38!
-CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMin' value: 16r34!
-CHOOSEFONTW addClassConstant: '_OffsetOf_rgbColors' value: 16r18!
 CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.

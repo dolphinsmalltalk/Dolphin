@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #CommonDialogConstants put: (PoolConstantsDictionary named: #CommonDialogConstants)!
+#{CommonDialogConstants} declare: (PoolConstantsDictionary named: #CommonDialogConstants)!
 CommonDialogConstants at: 'CC_ANYCOLOR' put: 16r100!
 CommonDialogConstants at: 'CC_ENABLEHOOK' put: 16r10!
 CommonDialogConstants at: 'CC_ENABLETEMPLATE' put: 16r20!

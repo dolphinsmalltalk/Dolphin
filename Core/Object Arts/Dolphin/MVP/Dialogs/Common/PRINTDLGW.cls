@@ -2,29 +2,31 @@
 
 CommonDialogStructure subclass: #PRINTDLGW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hPrintTemplate _OffsetOf_hSetupTemplate _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpfnSetupHook _OffsetOf_lpPrintTemplateName _OffsetOf_lpSetupTemplateName _OffsetOf_nCopies _OffsetOf_nFromPage _OffsetOf_nMaxPage _OffsetOf_nMinPage _OffsetOf_nToPage'
+	classVariableNames: ''
 	poolDictionaries: 'PrintDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_hDC' -> 16r10.
+		'_OffsetOf_hDevMode' -> 16r8.
+		'_OffsetOf_hDevNames' -> 16rC.
+		'_OffsetOf_hInstance' -> 16r22.
+		'_OffsetOf_hPrintTemplate' -> 16r3A.
+		'_OffsetOf_hSetupTemplate' -> 16r3E.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r26.
+		'_OffsetOf_lpfnHook' -> 16r2A.
+		'_OffsetOf_lpfnSetupHook' -> 16r2E.
+		'_OffsetOf_lpPrintTemplateName' -> 16r32.
+		'_OffsetOf_lpSetupTemplateName' -> 16r36.
+		'_OffsetOf_nCopies' -> 16r20.
+		'_OffsetOf_nFromPage' -> 16r18.
+		'_OffsetOf_nMaxPage' -> 16r1E.
+		'_OffsetOf_nMinPage' -> 16r1C.
+		'_OffsetOf_nToPage' -> 16r1A
+	}!
 PRINTDLGW guid: (GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
-PRINTDLGW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-PRINTDLGW addClassConstant: '_OffsetOf_flags' value: 16r14!
-PRINTDLGW addClassConstant: '_OffsetOf_hDC' value: 16r10!
-PRINTDLGW addClassConstant: '_OffsetOf_hDevMode' value: 16r8!
-PRINTDLGW addClassConstant: '_OffsetOf_hDevNames' value: 16rC!
-PRINTDLGW addClassConstant: '_OffsetOf_hInstance' value: 16r22!
-PRINTDLGW addClassConstant: '_OffsetOf_hPrintTemplate' value: 16r3A!
-PRINTDLGW addClassConstant: '_OffsetOf_hSetupTemplate' value: 16r3E!
-PRINTDLGW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-PRINTDLGW addClassConstant: '_OffsetOf_lCustData' value: 16r26!
-PRINTDLGW addClassConstant: '_OffsetOf_lpfnHook' value: 16r2A!
-PRINTDLGW addClassConstant: '_OffsetOf_lpfnSetupHook' value: 16r2E!
-PRINTDLGW addClassConstant: '_OffsetOf_lpPrintTemplateName' value: 16r32!
-PRINTDLGW addClassConstant: '_OffsetOf_lpSetupTemplateName' value: 16r36!
-PRINTDLGW addClassConstant: '_OffsetOf_nCopies' value: 16r20!
-PRINTDLGW addClassConstant: '_OffsetOf_nFromPage' value: 16r18!
-PRINTDLGW addClassConstant: '_OffsetOf_nMaxPage' value: 16r1E!
-PRINTDLGW addClassConstant: '_OffsetOf_nMinPage' value: 16r1C!
-PRINTDLGW addClassConstant: '_OffsetOf_nToPage' value: 16r1A!
 PRINTDLGW comment: ''!
 !PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !
 !PRINTDLGW methodsFor!

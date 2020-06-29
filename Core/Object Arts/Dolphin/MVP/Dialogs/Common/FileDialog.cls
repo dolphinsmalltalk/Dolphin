@@ -4,7 +4,8 @@ CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileDialog guid: (GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileDialog isAbstract: true!
 FileDialog comment: 'FileDialog is an abstract superclass for <valueDialogPresenter>s implementing the Windows common file dialogs. 

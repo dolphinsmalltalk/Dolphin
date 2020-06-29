@@ -2,12 +2,14 @@
 
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lpOFN' -> 16rC.
+		'_OffsetOf_pszFile' -> 16r10
+	}!
 OFNOTIFYW guid: (GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
-OFNOTIFYW addClassConstant: '_OffsetOf_lpOFN' value: 16rC!
-OFNOTIFYW addClassConstant: '_OffsetOf_pszFile' value: 16r10!
 OFNOTIFYW comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #PRINTPAGERANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_nFromPage _OffsetOf_nToPage'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_nFromPage' -> 16r0.
+		'_OffsetOf_nToPage' -> 16r4
+	}!
 PRINTPAGERANGE guid: (GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
-PRINTPAGERANGE addClassConstant: '_OffsetOf_nFromPage' value: 16r0!
-PRINTPAGERANGE addClassConstant: '_OffsetOf_nToPage' value: 16r4!
 PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

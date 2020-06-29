@@ -4,7 +4,8 @@ CommonDialog subclass: #FindDialog
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FindDialog guid: (GUID fromString: '{87b4c6b2-026e-11d3-9fd7-00a0cc3e4a32}')!
 FindDialog comment: 'FindDialog is a <valueDialogPresenter> implementing the Windows FindText common dialog. The dialog must be associated with an owner view capable of responding to the <textFinder> protocol. It will then remain on-screen until dismissed and will forward <FindEvent>s to the owner via its #onFind: event handler.
 

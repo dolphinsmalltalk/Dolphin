@@ -4,7 +4,8 @@ FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileSaveDialog guid: (GUID fromString: '{87b4c6b6-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileSaveDialog comment: 'FileSaveDialog is a <valueDialogPresenter> implementing the Windows GetSaveFileName common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen file.'!
 !FileSaveDialog categoriesForClass!MVP-Presenters! !

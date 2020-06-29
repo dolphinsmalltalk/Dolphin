@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Common Dialogs'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,45 +10,40 @@ This package contains Dialog presenter wrappers for the Windows common dialogs f
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #CHOOSECOLORW;
-	add: #CHOOSEFONTW;
-	add: #ColorDialog;
-	add: #ComDlgLibrary;
-	add: #CommonDialog;
-	add: #CommonDialogStructure;
-	add: #FileDialog;
-	add: #FileOpenDialog;
-	add: #FileSaveDialog;
-	add: #FindDialog;
-	add: #FindReplaceDialog;
-	add: #FINDREPLACEW;
-	add: #FontDialog;
-	add: #OFNOTIFYEXW;
-	add: #OFNOTIFYW;
-	add: #OPENFILENAMEW;
-	yourself.
+package setClassNames: #(
+	#{CHOOSECOLORW}
+	#{CHOOSEFONTW}
+	#{ColorDialog}
+	#{ComDlgLibrary}
+	#{CommonDialog}
+	#{CommonDialogStructure}
+	#{FileDialog}
+	#{FileOpenDialog}
+	#{FileSaveDialog}
+	#{FindDialog}
+	#{FindReplaceDialog}
+	#{FINDREPLACEW}
+	#{FontDialog}
+	#{OFNOTIFYEXW}
+	#{OFNOTIFYW}
+	#{OPENFILENAMEW}
+).
 
-package methodNames
-	add: #File -> #title;
-	add: 'Color class' -> #choose;
-	add: 'File class' -> #titleOf:;
-	add: 'Font class' -> #choose;
-	yourself.
+package setMethodNames: #(
+	#(#{Color class} #choose)
+	#(#{File} #title)
+	#(#{File class} #titleOf:)
+	#(#{Font class} #choose)
+).
 
-package globalNames
-	add: #CommonDialogConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{CommonDialogConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -58,85 +53,167 @@ ExternalLibrary subclass: #ComDlgLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #CommonDialogStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r18.
+		'_OffsetOf_lpCustColors' -> 16r10.
+		'_OffsetOf_lpfnHook' -> 16r1C.
+		'_OffsetOf_lpTemplateName' -> 16r20.
+		'_OffsetOf_rgbResult' -> 16rC
+	}!
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_hDC' -> 16r8.
+		'_OffsetOf_hInstance' -> 16r28.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_iPointSize' -> 16r10.
+		'_OffsetOf_lCustData' -> 16r1C.
+		'_OffsetOf_lpfnHook' -> 16r20.
+		'_OffsetOf_lpLogFont' -> 16rC.
+		'_OffsetOf_lpszStyle' -> 16r2C.
+		'_OffsetOf_lpTemplateName' -> 16r24.
+		'_OffsetOf_nFontType' -> 16r30.
+		'_OffsetOf_nSizeMax' -> 16r38.
+		'_OffsetOf_nSizeMin' -> 16r34.
+		'_OffsetOf_rgbColors' -> 16r18
+	}!
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrFindWhat _OffsetOf_lpstrReplaceWith _OffsetOf_lpTemplateName _OffsetOf_wFindWhatLen _OffsetOf_wReplaceWithLen'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16rC.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r1C.
+		'_OffsetOf_lpfnHook' -> 16r20.
+		'_OffsetOf_lpstrFindWhat' -> 16r10.
+		'_OffsetOf_lpstrReplaceWith' -> 16r14.
+		'_OffsetOf_lpTemplateName' -> 16r24.
+		'_OffsetOf_wFindWhatLen' -> 16r18.
+		'_OffsetOf_wReplaceWithLen' -> 16r1A
+	}!
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
-	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_dwSize _OffsetOf_flags _OffsetOf_flagsEx _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrCustomFilter _OffsetOf_lpstrDefExt _OffsetOf_lpstrFile _OffsetOf_lpstrFileTitle _OffsetOf_lpstrFilter _OffsetOf_lpstrInitialDir _OffsetOf_lpstrTitle _OffsetOf_lpTemplateName _OffsetOf_nFileExtension _OffsetOf_nFileOffset _OffsetOf_nFilterIndex _OffsetOf_nMaxCustFilter _OffsetOf_nMaxFile _OffsetOf_nMaxFileTitle _OffsetOf_pvReserved'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved' -> 16r50.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_flags' -> 16r34.
+		'_OffsetOf_flagsEx' -> 16r54.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lCustData' -> 16r40.
+		'_OffsetOf_lpfnHook' -> 16r44.
+		'_OffsetOf_lpstrCustomFilter' -> 16r10.
+		'_OffsetOf_lpstrDefExt' -> 16r3C.
+		'_OffsetOf_lpstrFile' -> 16r1C.
+		'_OffsetOf_lpstrFileTitle' -> 16r24.
+		'_OffsetOf_lpstrFilter' -> 16rC.
+		'_OffsetOf_lpstrInitialDir' -> 16r2C.
+		'_OffsetOf_lpstrTitle' -> 16r30.
+		'_OffsetOf_lpTemplateName' -> 16r48.
+		'_OffsetOf_nFileExtension' -> 16r3A.
+		'_OffsetOf_nFileOffset' -> 16r38.
+		'_OffsetOf_nFilterIndex' -> 16r18.
+		'_OffsetOf_nMaxCustFilter' -> 16r14.
+		'_OffsetOf_nMaxFile' -> 16r20.
+		'_OffsetOf_nMaxFileTitle' -> 16r28.
+		'_OffsetOf_pvReserved' -> 16r4C
+	}!
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pidl _OffsetOf_psf'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lpOFN' -> 16rC.
+		'_OffsetOf_pidl' -> 16r14.
+		'_OffsetOf_psf' -> 16r10
+	}!
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lpOFN' -> 16rC.
+		'_OffsetOf_pszFile' -> 16r10
+	}!
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
-	classInstanceVariableNames: 'hookHandlers'!
+	classInstanceVariableNames: 'hookHandlers'
+	classConstants: {}!
 CommonDialog subclass: #ColorDialog
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommonDialog subclass: #FindDialog
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommonDialog subclass: #FontDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FindDialog subclass: #FindReplaceDialog
 	instanceVariableNames: 'replaceWith'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -2,31 +2,33 @@
 
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwResultAction _OffsetOf_ExclusionFlags _OffsetOf_flags _OffsetOf_Flags2 _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpCallback _OffsetOf_lphPropertyPages _OffsetOf_lpPageRanges _OffsetOf_lpPrintTemplateName _OffsetOf_lStructSize _OffsetOf_nCopies _OffsetOf_nMaxPage _OffsetOf_nMaxPageRanges _OffsetOf_nMinPage _OffsetOf_nPageRanges _OffsetOf_nPropertyPages _OffsetOf_nStartPage'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwResultAction' -> 16r50.
+		'_OffsetOf_ExclusionFlags' -> 16r1C.
+		'_OffsetOf_flags' -> 16r14.
+		'_OffsetOf_Flags2' -> 16r18.
+		'_OffsetOf_hDC' -> 16r10.
+		'_OffsetOf_hDevMode' -> 16r8.
+		'_OffsetOf_hDevNames' -> 16rC.
+		'_OffsetOf_hInstance' -> 16r38.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lpCallback' -> 16r40.
+		'_OffsetOf_lphPropertyPages' -> 16r48.
+		'_OffsetOf_lpPageRanges' -> 16r28.
+		'_OffsetOf_lpPrintTemplateName' -> 16r3C.
+		'_OffsetOf_lStructSize' -> 16r0.
+		'_OffsetOf_nCopies' -> 16r34.
+		'_OffsetOf_nMaxPage' -> 16r30.
+		'_OffsetOf_nMaxPageRanges' -> 16r24.
+		'_OffsetOf_nMinPage' -> 16r2C.
+		'_OffsetOf_nPageRanges' -> 16r20.
+		'_OffsetOf_nPropertyPages' -> 16r44.
+		'_OffsetOf_nStartPage' -> 16r4C
+	}!
 PRINTDLGEXW guid: (GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
-PRINTDLGEXW addClassConstant: '_OffsetOf_dwResultAction' value: 16r50!
-PRINTDLGEXW addClassConstant: '_OffsetOf_ExclusionFlags' value: 16r1C!
-PRINTDLGEXW addClassConstant: '_OffsetOf_flags' value: 16r14!
-PRINTDLGEXW addClassConstant: '_OffsetOf_Flags2' value: 16r18!
-PRINTDLGEXW addClassConstant: '_OffsetOf_hDC' value: 16r10!
-PRINTDLGEXW addClassConstant: '_OffsetOf_hDevMode' value: 16r8!
-PRINTDLGEXW addClassConstant: '_OffsetOf_hDevNames' value: 16rC!
-PRINTDLGEXW addClassConstant: '_OffsetOf_hInstance' value: 16r38!
-PRINTDLGEXW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-PRINTDLGEXW addClassConstant: '_OffsetOf_lpCallback' value: 16r40!
-PRINTDLGEXW addClassConstant: '_OffsetOf_lphPropertyPages' value: 16r48!
-PRINTDLGEXW addClassConstant: '_OffsetOf_lpPageRanges' value: 16r28!
-PRINTDLGEXW addClassConstant: '_OffsetOf_lpPrintTemplateName' value: 16r3C!
-PRINTDLGEXW addClassConstant: '_OffsetOf_lStructSize' value: 16r0!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nCopies' value: 16r34!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nMaxPage' value: 16r30!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nMaxPageRanges' value: 16r24!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nMinPage' value: 16r2C!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nPageRanges' value: 16r20!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nPropertyPages' value: 16r44!
-PRINTDLGEXW addClassConstant: '_OffsetOf_nStartPage' value: 16r4C!
 PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
