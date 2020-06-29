@@ -4,7 +4,8 @@ Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSureCertificateInfo guid: (GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
 DolphinSureCertificateInfo comment: 'A DolphinSureCertificateInfo instance holds the unencoded data for a DolphinSureCertificate.
 

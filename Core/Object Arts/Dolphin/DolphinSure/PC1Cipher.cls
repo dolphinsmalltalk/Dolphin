@@ -4,7 +4,8 @@ Object subclass: #PC1Cipher
 	instanceVariableNames: 'key box i j'
 	classVariableNames: 'RandPool'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PC1Cipher guid: (GUID fromString: '{611b2a17-3b8e-4bd9-94e2-38ce0d22736c}')!
 PC1Cipher comment: 'This class provides a stream encoder/decoder using the PC1 algorithm.
 Portions ©1997 by Stefan Matthias Aust'!

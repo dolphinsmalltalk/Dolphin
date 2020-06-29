@@ -4,7 +4,8 @@ DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificat
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ObjectArtsRootCertificate guid: (GUID fromString: '{01ab17af-ef96-4982-a998-0d75dc9c4159}')!
 ObjectArtsRootCertificate comment: 'The ObjectArtsCertificate class is used to represent the root DolphinSure certifying authority certificate for Object Arts Ltd. The actual encoded certificate data is held in the #new class method.  We specially include this class here to act as the root of the DolphinSureTrustedData trust hierarchy.
 

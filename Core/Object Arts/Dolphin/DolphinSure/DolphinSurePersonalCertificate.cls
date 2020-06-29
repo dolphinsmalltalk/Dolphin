@@ -4,7 +4,8 @@ DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSurePersonalCertificate guid: (GUID fromString: '{cd23937f-fc74-43fd-b678-bebeac42ee59}')!
 DolphinSurePersonalCertificate comment: ''!
 !DolphinSurePersonalCertificate categoriesForClass!Unclassified! !

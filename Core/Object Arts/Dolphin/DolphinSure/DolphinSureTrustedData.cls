@@ -4,7 +4,8 @@ Object subclass: #DolphinSureTrustedData
 	instanceVariableNames: 'data description signature publisherCertificate'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSureTrustedData guid: (GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
 DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
 

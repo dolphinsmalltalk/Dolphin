@@ -4,7 +4,8 @@ DolphinSureCertificate subclass: #ObjectArtsCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ObjectArtsCertificate guid: (GUID fromString: '{a543c6d9-2907-46b9-b22e-4c066703c2ee}')!
 ObjectArtsCertificate comment: ''!
 !ObjectArtsCertificate categoriesForClass!Cryptography-Certificates! !

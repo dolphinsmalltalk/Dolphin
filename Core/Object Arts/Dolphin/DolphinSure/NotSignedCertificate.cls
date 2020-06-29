@@ -4,7 +4,8 @@ DolphinSureCertificate subclass: #NotSignedCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NotSignedCertificate guid: (GUID fromString: '{1284a49f-307e-4ea7-a404-ea7e7a56cbfe}')!
 NotSignedCertificate comment: 'A NotSignedCertificate is used to indicate when a piece of data has not been digitally signed using DolphinSure.  Typically it is used by BinaryPackage>>loadUsing: when a binary class file is being loaded and it is discovered that the class data has not been signed. 
 

@@ -4,7 +4,8 @@ Error subclass: #NotTrustedError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NotTrustedError guid: (GUID fromString: '{c937ff99-3a3c-40e8-aa56-8a6f893454d0}')!
 NotTrustedError comment: 'A NotTrustedError is signalled to indicate when the load of a binary class file has been prevented by the end-user due to a lack of trust in the publisher of the class. It is either signalled when a digital certificate for a signed class has been refused (in SignedClassStub>>reifyClassUsing:) or when an unsigned class is being loaded and the standard NotSignedCertificate has been refused instead.
 

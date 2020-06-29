@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #BCryptConstants put: (PoolConstantsDictionary named: #BCryptConstants)!
+#{BCryptConstants} declare: (PoolConstantsDictionary named: #BCryptConstants)!
 BCryptConstants at: 'BCRYPT_3DES_112_ALGORITHM' put: '3DES_112'!
 BCryptConstants at: 'BCRYPT_3DES_ALGORITHM' put: '3DES'!
 BCryptConstants at: 'BCRYPT_AES_ALGORITHM' put: 'AES'!

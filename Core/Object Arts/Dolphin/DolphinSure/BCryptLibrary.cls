@@ -4,7 +4,8 @@ ExternalLibrary subclass: #BCryptLibrary
 	instanceVariableNames: 'shaAlgorithmHandle'
 	classVariableNames: ''
 	poolDictionaries: 'BCryptConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BCryptLibrary guid: (GUID fromString: '{84b3c6ee-a194-413c-8071-95953a50412e}')!
 BCryptLibrary comment: '"Windows BCrypt (Cryptography Next Generation, CNG) library.
   Replacement for DolphinSureCryptoLibrary class and DLL."'!

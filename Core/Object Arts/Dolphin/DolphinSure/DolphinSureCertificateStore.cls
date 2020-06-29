@@ -4,7 +4,8 @@ Object subclass: #DolphinSureCertificateStore
 	instanceVariableNames: 'regKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSureCertificateStore guid: (GUID fromString: '{39c8afb3-b270-4b5a-bd4f-c370eeb7c57b}')!
 DolphinSureCertificateStore comment: 'A DolphinSureCertificateStore is used to store DolphinSureCertificates for later retrieval.  The implementation uses the Windows Registry under HKEY_CURRENT_USER and certificates are stored as binary bytes (streamed out using STB). They can be looked up by serial number.
 

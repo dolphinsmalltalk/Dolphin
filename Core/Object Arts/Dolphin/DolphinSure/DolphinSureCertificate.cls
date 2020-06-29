@@ -4,7 +4,8 @@ DolphinSureTrustedData subclass: #DolphinSureCertificate
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSureCertificate guid: (GUID fromString: '{e143e2b9-bce4-4c55-b0f7-7060dd84d239}')!
 DolphinSureCertificate comment: 'A DolphinSureCertificate can be used when signing a piece of DolphinSureTrustedData.  It can be used to guarantee that the trusted data is from a particular publisher and because it contains a public key that is used to encode the data one can feel confident that the data has not been modified in transit. Note that, a DolphinSureCertificate is also trusted data itself.  This prevents an attacker from forging the certificate.
 

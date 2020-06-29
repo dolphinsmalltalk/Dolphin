@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'DolphinSure UI'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" user interface.
 Copyright (c) Object Arts Ltd, 1999-2001.
@@ -13,21 +13,15 @@ For documentation evaluate:
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #DolphinSureTrustWarning;
-	yourself.
+package setClassNames: #(
+	#{DolphinSureTrustWarning}
+).
 
-package methodNames
-	add: #DolphinSureCertificate -> #image;
-	add: #DolphinSureCertificate -> #imagePrint:on:labelBox:textBox:;
-	add: #DolphinSureCertificate -> #show;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{DolphinSureCertificate} #image)
+	#(#{DolphinSureCertificate} #imagePrint:on:labelBox:textBox:)
+	#(#{DolphinSureCertificate} #show)
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
@@ -39,7 +33,8 @@ package setPrerequisites: #(
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
 	'DolphinSure'
-	'..\ActiveX\Components\Picture\OLE Picture').
+	'..\ActiveX\Components\Picture\OLE Picture'
+).
 
 package!
 
@@ -49,10 +44,8 @@ Dialog subclass: #DolphinSureTrustWarning
 	instanceVariableNames: 'certificateImage description alwaysTrust'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
