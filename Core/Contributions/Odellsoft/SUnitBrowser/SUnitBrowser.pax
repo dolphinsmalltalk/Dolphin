@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SUnitBrowser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -65,30 +65,24 @@ Features Missing from VA Port
 package basicPackageVersion: '3.1.5 RC1'.
 
 
-package classNames
-	add: #SUnitAbsBrowser;
-	add: #SUnitAbsWrapper;
-	add: #SUnitBrowser;
-	add: #SUnitResourceBrowser;
-	add: #SUnitStatusTextWrapper;
-	add: #SUnitTestCaseWrapper;
-	add: #SUnitTestResourceWrapper;
-	yourself.
+package setClassNames: #(
+	#{SUnitAbsBrowser}
+	#{SUnitAbsWrapper}
+	#{SUnitBrowser}
+	#{SUnitResourceBrowser}
+	#{SUnitStatusTextWrapper}
+	#{SUnitTestCaseWrapper}
+	#{SUnitTestResourceWrapper}
+).
 
-package methodNames
-	add: #ClassSelector -> #browseTests;
-	add: #ClassSelector -> #buildTestSuite;
-	add: #PackageSelector -> #browseTests;
-	add: #PackageSelector -> #buildTestSuite;
-	add: 'Toolbar class' -> #resource_SUnitBrowser_Resource_browser_toolbar;
-	add: 'Toolbar class' -> #resource_SUnitBrowser_toolbar;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassSelector} #browseTests)
+	#(#{ClassSelector} #buildTestSuite)
+	#(#{PackageSelector} #browseTests)
+	#(#{PackageSelector} #buildTestSuite)
+	#(#{Toolbar class} #resource_SUnitBrowser_Resource_browser_toolbar)
+	#(#{Toolbar class} #resource_SUnitBrowser_toolbar)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
@@ -106,7 +100,9 @@ package setPrerequisites: #(
 	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\Camp Smalltalk\SUnit\SUnit'
 	'SUnitBrowserModelApp'
-	'..\..\Camp Smalltalk\SUnit\SUnitUI').
+	'..\..\Camp Smalltalk\SUnit\SUnitUI'
+	'..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -116,40 +112,44 @@ Object subclass: #SUnitAbsWrapper
 	instanceVariableNames: 'model subject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #SUnitAbsBrowser
 	instanceVariableNames: 'listModel labelTextPresenter listPresenter statusTextPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsBrowser subclass: #SUnitBrowser
 	instanceVariableNames: 'testCaseListModel showAllTextPresenter testCaseListPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsBrowser subclass: #SUnitResourceBrowser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitStatusTextWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitTestCaseWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsWrapper subclass: #SUnitTestResourceWrapper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

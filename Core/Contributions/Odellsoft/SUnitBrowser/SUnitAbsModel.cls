@@ -4,7 +4,8 @@ Object subclass: #SUnitAbsModel
 	instanceVariableNames: 'configuration listItems selectedItems builder browser state'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'defaultConfiguration'!
+	classInstanceVariableNames: 'defaultConfiguration'
+	classConstants: {}!
 SUnitAbsModel guid: (GUID fromString: '{c2a17045-af69-4225-bd7d-54001f456f8f}')!
 SUnitAbsModel comment: ''!
 !SUnitAbsModel categoriesForClass!Unclassified! !

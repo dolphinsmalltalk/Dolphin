@@ -4,7 +4,8 @@ SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserUIState guid: (GUID fromString: '{6d60a596-d4ba-4107-81f5-58ba06dde6db}')!
 SUnitBrowserUIState comment: ''!
 !SUnitBrowserUIState categoriesForClass!Unclassified! !

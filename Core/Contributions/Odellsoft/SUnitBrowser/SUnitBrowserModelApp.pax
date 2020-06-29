@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SUnitBrowserModelApp'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'SUnit Browser for Dolphin Smalltalk 4.0/5.0 - Version 3.1.5RC1
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -16,58 +16,54 @@ SUnitResourceBrowserModel initializeDefaultConfiguration'.
 package basicScriptAt: #preuninstall put: 'SUnitBrowserModel releaseDefaultConfiguration.
 SUnitResourceBrowserModel releaseDefaultConfiguration!!'.
 
-package classNames
-	add: #SUnitAbsModel;
-	add: #SUnitBrowserAbsConfig;
-	add: #SUnitBrowserAbsUIState;
-	add: #SUnitBrowserConfig;
-	add: #SUnitBrowserModel;
-	add: #SUnitBrowserResult;
-	add: #SUnitBrowserUIState;
-	add: #SUnitResourceBrowserConfig;
-	add: #SUnitResourceBrowserModel;
-	add: #SUnitResourceBrowserUIState;
-	yourself.
+package setClassNames: #(
+	#{SUnitAbsModel}
+	#{SUnitBrowserAbsConfig}
+	#{SUnitBrowserAbsUIState}
+	#{SUnitBrowserConfig}
+	#{SUnitBrowserModel}
+	#{SUnitBrowserResult}
+	#{SUnitBrowserUIState}
+	#{SUnitResourceBrowserConfig}
+	#{SUnitResourceBrowserModel}
+	#{SUnitResourceBrowserUIState}
+).
 
-package methodNames
-	add: #Collection -> #sunitbRemoveAll:;
-	add: #String -> #sunitbAsProperNouns;
-	add: #TestCase -> #allTests;
-	add: #TestCase -> #canBrowse;
-	add: #TestCase -> #canDebug;
-	add: #TestCase -> #displayName;
-	add: #TestCase -> #hasTests;
-	add: #TestCase -> #isSameAs:;
-	add: #TestCase -> #isTestSuite;
-	add: #TestCase -> #name;
-	add: #TestCase -> #numberOfTests;
-	add: #TestCase -> #signature;
-	add: #TestCase -> #step;
-	add: #TestResource -> #canBrowse;
-	add: #TestResource -> #displayName;
-	add: #TestSuite -> #allTests;
-	add: #TestSuite -> #buildSuite;
-	add: #TestSuite -> #canBrowse;
-	add: #TestSuite -> #canDebug;
-	add: #TestSuite -> #displayName;
-	add: #TestSuite -> #hasTests;
-	add: #TestSuite -> #isTestSuite;
-	add: #TestSuite -> #numberOfTests;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Collection} #sunitbRemoveAll:)
+	#(#{String} #sunitbAsProperNouns)
+	#(#{TestCase} #allTests)
+	#(#{TestCase} #canBrowse)
+	#(#{TestCase} #canDebug)
+	#(#{TestCase} #displayName)
+	#(#{TestCase} #hasTests)
+	#(#{TestCase} #isSameAs:)
+	#(#{TestCase} #isTestSuite)
+	#(#{TestCase} #name)
+	#(#{TestCase} #numberOfTests)
+	#(#{TestCase} #signature)
+	#(#{TestCase} #step)
+	#(#{TestResource} #canBrowse)
+	#(#{TestResource} #displayName)
+	#(#{TestSuite} #allTests)
+	#(#{TestSuite} #buildSuite)
+	#(#{TestSuite} #canBrowse)
+	#(#{TestSuite} #canDebug)
+	#(#{TestSuite} #displayName)
+	#(#{TestSuite} #hasTests)
+	#(#{TestSuite} #isTestSuite)
+	#(#{TestSuite} #numberOfTests)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Camp Smalltalk\SUnit\OA SUnit Extensions'
-	'..\..\Camp Smalltalk\SUnit\SUnit').
+	'..\..\Camp Smalltalk\SUnit\SUnit'
+).
 
 package setManualPrerequisites: #(
-	'OA SUnit Extensions').
+	'OA SUnit Extensions'
+).
 
 package!
 
@@ -77,55 +73,62 @@ Object subclass: #SUnitAbsModel
 	instanceVariableNames: 'configuration listItems selectedItems builder browser state'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'defaultConfiguration'!
+	classInstanceVariableNames: 'defaultConfiguration'
+	classConstants: {}!
 Object subclass: #SUnitBrowserAbsConfig
 	instanceVariableNames: 'properties'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SUnitBrowserAbsUIState
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SUnitBrowserResult
 	instanceVariableNames: 'testResult model failures errors passed'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsModel subclass: #SUnitBrowserModel
 	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitAbsModel subclass: #SUnitResourceBrowserModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserAbsConfig subclass: #SUnitResourceBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserAbsUIState subclass: #SUnitResourceBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

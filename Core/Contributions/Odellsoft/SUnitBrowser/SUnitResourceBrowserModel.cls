@@ -4,7 +4,8 @@ SUnitAbsModel subclass: #SUnitResourceBrowserModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitResourceBrowserModel guid: (GUID fromString: '{2342a0cf-f99b-4f61-a061-56dbee09429a}')!
 SUnitResourceBrowserModel comment: ''!
 !SUnitResourceBrowserModel categoriesForClass!Unclassified! !

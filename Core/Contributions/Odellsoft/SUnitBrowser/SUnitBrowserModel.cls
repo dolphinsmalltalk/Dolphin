@@ -4,7 +4,8 @@ SUnitAbsModel subclass: #SUnitBrowserModel
 	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserModel guid: (GUID fromString: '{1069426e-b3a6-4841-bc3e-0468720bf1d1}')!
 SUnitBrowserModel comment: ''!
 !SUnitBrowserModel categoriesForClass!Unclassified! !

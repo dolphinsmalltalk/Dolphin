@@ -4,7 +4,8 @@ SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitBrowserConfig guid: (GUID fromString: '{fa1bbe24-e5e3-4931-bb4d-448d0401e1e1}')!
 SUnitBrowserConfig comment: ''!
 !SUnitBrowserConfig categoriesForClass!Unclassified! !
