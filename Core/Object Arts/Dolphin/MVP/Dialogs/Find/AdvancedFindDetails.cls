@@ -4,7 +4,8 @@ FindDetails subclass: #AdvancedFindDetails
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AdvancedFindDetails guid: (GUID fromString: '{6c4e30d4-924f-4c0a-be20-50f5ec823741}')!
 AdvancedFindDetails comment: ''!
 !AdvancedFindDetails categoriesForClass!Kernel-Objects! !

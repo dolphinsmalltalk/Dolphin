@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Find Dialog'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Find Dialog
 Copyright (c) Object Arts Ltd. 2004.
@@ -11,16 +11,10 @@ An advanced find dialog with support for advanced find settings over and above t
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #AdvancedFindDetails;
-	add: #AdvancedFindDialog;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AdvancedFindDetails}
+	#{AdvancedFindDialog}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -31,7 +25,8 @@ package setPrerequisites: #(
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
-	'..\..\..\ActiveX\Components\VBScript\VBScript Regular Expressions').
+	'..\..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
+).
 
 package!
 
@@ -41,17 +36,17 @@ FindDetails subclass: #AdvancedFindDetails
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #AdvancedFindDialog
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
-	classVariableNames: 'RegExpMask WildCardMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'RegExpMask' -> 16r2.
+		'WildCardMask' -> 16r1
+	}!
 
 "End of package definition"!
 

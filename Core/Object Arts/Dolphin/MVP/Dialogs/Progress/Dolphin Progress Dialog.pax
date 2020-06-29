@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Progress Dialog'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Progress Dialog.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,24 +8,18 @@ Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ProgressBar;
-	add: #ProgressDialog;
-	yourself.
+package setClassNames: #(
+	#{ProgressBar}
+	#{ProgressDialog}
+).
 
-package methodNames
-	add: 'NumberPresenter class' -> #resource_Progress_bar;
-	yourself.
+package setMethodNames: #(
+	#(#{NumberPresenter class} #resource_Progress_bar)
+).
 
-package globalNames
-	add: #ProgressBarConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{ProgressBarConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -34,7 +28,8 @@ package setPrerequisites: #(
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -42,17 +37,19 @@ package!
 
 Dialog subclass: #ProgressDialog
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
-	classVariableNames: 'AllowCancelMask IsReusableMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllowCancelMask' -> 16r1.
+		'IsReusableMask' -> 16r2
+	}!
 ValueConvertingControlView subclass: #ProgressBar
 	instanceVariableNames: ''
 	classVariableNames: 'ValidRange'
 	poolDictionaries: 'ProgressBarConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

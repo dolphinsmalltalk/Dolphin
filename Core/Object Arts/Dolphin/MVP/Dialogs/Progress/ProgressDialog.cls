@@ -2,9 +2,13 @@
 
 Dialog subclass: #ProgressDialog
 	instanceVariableNames: 'progressPresenter operation process textPresenter flags priority'
-	classVariableNames: 'AllowCancelMask IsReusableMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllowCancelMask' -> 16r1.
+		'IsReusableMask' -> 16r2
+	}!
 ProgressDialog guid: (GUID fromString: '{87b4c6ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 ProgressDialog comment: 'ProgressDialog is a <valueDialogPresenter> that can be used to indicate the progress of a background operation. The <valueModel> is used to hold a <number> that describes the current amount of progress through the operation. Typically, with the standard views, this will be an <integer> between 0 and 100%.
 
@@ -291,10 +295,6 @@ icon
 	^ProgressBar icon
 !
 
-initialize
-	AllowCancelMask := 1.
-	IsReusableMask := 2!
-
 operation: operation
 	"Answer a new instance of the receiver with the default view 
 	to evaluate the monadic valuable argument, operation, when the 
@@ -377,7 +377,6 @@ showModalWhile: operation
 !ProgressDialog class categoriesFor: #example2!examples!public! !
 !ProgressDialog class categoriesFor: #example3!examples!public! !
 !ProgressDialog class categoriesFor: #icon!constants!public! !
-!ProgressDialog class categoriesFor: #initialize!public! !
 !ProgressDialog class categoriesFor: #operation:!instance creation!public! !
 !ProgressDialog class categoriesFor: #resource_Compact_view!public!resources-views! !
 !ProgressDialog class categoriesFor: #resource_Default_view!public!resources-views! !
