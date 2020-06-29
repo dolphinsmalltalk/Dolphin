@@ -109,72 +109,88 @@ InstructionInterpreter subclass: #Disassembler
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #ClassDiagramPlugin
 	instanceVariableNames: 'classesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #DebugInfoPlugin
 	instanceVariableNames: 'disassemblyPresenter sourcePresenter textMapPresenter toggleDebugPresenter toggleOptimisedPresenter method'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #ResourceListPlugin
 	instanceVariableNames: 'resourcesPresenter flags'
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassSelector subclass: #PackagedClassSelector
 	instanceVariableNames: 'packagesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceIdentifierDialog subclass: #PackagedResourceIdentifierDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChooseClassDialog subclass: #ChoosePackagedClassDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #AXControlBrowser
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
-	classVariableNames: 'TraceMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TraceMask' -> 16r1
+	}!
 SmalltalkToolShell subclass: #IdeaSpaceShell
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #ProcessMonitor
 	instanceVariableNames: 'listPresenter updateInterval'
 	classVariableNames: 'UpdateIntervals'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserAbstract subclass: #SystemBrowserShell
 	instanceVariableNames: ''
 	classVariableNames: 'AutoSelectPackages'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

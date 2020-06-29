@@ -4,7 +4,8 @@ SmalllintContext subclass: #SmalllintCachingContext
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintCachingContext guid: (GUID fromString: '{8dc28c1a-eaf8-479b-9393-8e00da03fc44}')!
 SmalllintCachingContext comment: ''!
 !SmalllintCachingContext categoriesForClass!Refactory-Lint! !

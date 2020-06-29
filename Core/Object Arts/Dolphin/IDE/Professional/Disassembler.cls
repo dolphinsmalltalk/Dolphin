@@ -4,7 +4,8 @@ InstructionInterpreter subclass: #Disassembler
 	instanceVariableNames: 'stream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Disassembler guid: (GUID fromString: '{87b4c47e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Disassembler comment: 'Disassembler is an <InstructionInterpreter> for disassembling Dolphin <CompiledMethod>s.
 

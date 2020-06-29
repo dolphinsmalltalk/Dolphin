@@ -4,7 +4,8 @@ ClassSelector subclass: #PackagedClassSelector
 	instanceVariableNames: 'packagesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackagedClassSelector guid: (GUID fromString: '{c9705c73-6294-416d-94db-d626938a441e}')!
 PackagedClassSelector comment: 'PackagedClassSelector is an specialized <ClassSelector> that can be used to filter available classes by owning package. In order to facilitate this it employs a <PackageSelector> to display a tree representing the package folder hierarchy from which a single folder can be selected. Based on this selection the <PackageSelector> populates a list to show all packages at or below that point in the hierarchy. When packages are selected from the list, the class selection panes are updated to show the classes owned by the selected package(s).
 

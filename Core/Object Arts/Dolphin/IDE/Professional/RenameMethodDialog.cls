@@ -4,7 +4,8 @@ MethodNameDialog subclass: #RenameMethodDialog
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameMethodDialog guid: (GUID fromString: '{d123996c-3d35-47b6-a418-da4086501e0e}')!
 RenameMethodDialog comment: '
 Instance Variables:

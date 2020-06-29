@@ -4,7 +4,8 @@ ChooseClassDialog subclass: #ChoosePackagedClassDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChoosePackagedClassDialog guid: (GUID fromString: '{66f6e532-7d50-44b1-877b-8e46061d0277}')!
 ChoosePackagedClassDialog comment: 'ChoosePackagedClassDialog is a specialised <ChooseClassDialog> that allows for filtering of the class hierarchy by package selection.
 '!

@@ -4,7 +4,8 @@ Dialog subclass: #ConvertToSiblingDialog
 	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ConvertToSiblingDialog guid: (GUID fromString: '{2e1173da-ad55-42da-beb3-e8d674480103}')!
 ConvertToSiblingDialog comment: ''!
 !ConvertToSiblingDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !

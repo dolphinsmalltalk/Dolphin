@@ -4,7 +4,8 @@ DolphinGlobalChange subclass: #DolphinAddGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinAddGlobalChange guid: (GUID fromString: '{2c271662-7065-4aeb-b1ab-1312d4674e99}')!
 DolphinAddGlobalChange comment: 'DolphinAddGlobalChange is a Dolphin specific <RefactoryChange> that defines a global variable, initialising it to nil.'!
 !DolphinAddGlobalChange categoriesForClass!Refactory-Change Objects! !

@@ -4,7 +4,8 @@ SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CodeRewriterPlugin guid: (GUID fromString: '{622a0d86-ee77-4d68-abc4-24f3e47ece4b}')!
 CodeRewriterPlugin comment: ''!
 !CodeRewriterPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !

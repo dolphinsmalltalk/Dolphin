@@ -4,7 +4,8 @@ RenameClassRefactoring subclass: #CopyClassRefactoring
 	instanceVariableNames: 'superclass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CopyClassRefactoring guid: (GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
 CopyClassRefactoring comment: ''!
 !CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !

@@ -4,7 +4,8 @@ MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRuleFailuresBrowserShell guid: (GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
 LintRuleFailuresBrowserShell comment: ''!
 !LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !

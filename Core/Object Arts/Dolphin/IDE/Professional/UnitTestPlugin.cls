@@ -4,7 +4,8 @@ ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
 	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UnitTestPlugin guid: (GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
 UnitTestPlugin comment: 'UnitTestPlugin is a <classBrowserPlugin> that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The UnitTestPlugin does not provide facilities to run large suites of tests comprising of more than one <TestCase>; this functionaility is left to the SUnitBrowser and TestRunner tools.
 

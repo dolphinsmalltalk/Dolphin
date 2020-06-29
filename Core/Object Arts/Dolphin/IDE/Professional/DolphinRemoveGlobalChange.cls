@@ -4,7 +4,8 @@ DolphinGlobalChange subclass: #DolphinRemoveGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinRemoveGlobalChange guid: (GUID fromString: '{b031ef44-3901-49ad-9be0-eb7ce796f79e}')!
 DolphinRemoveGlobalChange comment: 'DolphinRemoveGlobalChange is a Dolphin specific <RefactoryChange> that removes a global variable from the system dictionary'!
 !DolphinRemoveGlobalChange categoriesForClass!Refactory-Change Objects! !

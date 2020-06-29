@@ -2,11 +2,13 @@
 
 SmalltalkToolShell subclass: #AXControlBrowser
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
-	classVariableNames: 'TraceMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TraceMask' -> 16r1
+	}!
 AXControlBrowser guid: (GUID fromString: '{e2e33600-aa60-11d3-b376-080046056106}')!
-AXControlBrowser addClassConstant: 'TraceMask' value: 16r1!
 AXControlBrowser comment: 'AXControlBrowser is a simple Active-X control (OCX) browser and test environment.
 
 AXControlBrowser show
@@ -385,8 +387,6 @@ initialize
 		self initialize.
 	"
 
-	self addClassConstant: 'TraceMask' value: 16r1.
-	
 	Smalltalk developmentSystem
 		addAdditionalToolsFolderIcon: (SmalltalkSystemIcon show: self description: self displayString helpId: self toolsFolderHelpId );
 		registerTool: self!

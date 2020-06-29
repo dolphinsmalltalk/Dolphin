@@ -4,7 +4,8 @@ CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	instanceVariableNames: 'systemBrowserClass ideaSpaceClass packagedResourceIdentifierDialogClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProfessionalSmalltalkSystem guid: (GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
 ProfessionalSmalltalkSystem comment: ''!
 !ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !

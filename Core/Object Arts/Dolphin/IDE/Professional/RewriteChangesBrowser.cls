@@ -4,7 +4,8 @@ SmalltalkToolShell subclass: #RewriteChangesBrowser
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RewriteChangesBrowser guid: (GUID fromString: '{99c85442-1f6a-4912-a74b-7449ae28471b}')!
 RewriteChangesBrowser comment: ''!
 !RewriteChangesBrowser categoriesForClass!MVP-Presenters! !

@@ -4,7 +4,8 @@ ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EnvironmentBrowserShell guid: (GUID fromString: '{b6ccd231-d2fb-4d98-b006-6a3ba26a4849}')!
 EnvironmentBrowserShell comment: ''!
 !EnvironmentBrowserShell categoriesForClass!MVP-Presenters! !

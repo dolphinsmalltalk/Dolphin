@@ -4,7 +4,8 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	instanceVariableNames: 'cardsPresenter backgroundPresenter defaultMenuBar cardHistory filename'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdeaSpaceShell guid: (GUID fromString: '{402cf4f5-0b2e-4533-9664-c99fe1bf84fa}')!
 IdeaSpaceShell comment: ''!
 !IdeaSpaceShell categoriesForClass!MVP-Presenters! !

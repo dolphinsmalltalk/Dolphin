@@ -4,7 +4,8 @@ RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBScopedMethodName guid: (GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
 RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
 

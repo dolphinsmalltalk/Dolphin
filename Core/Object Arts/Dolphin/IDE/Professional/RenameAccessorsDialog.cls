@@ -4,7 +4,8 @@ ValueDialog subclass: #RenameAccessorsDialog
 	instanceVariableNames: 'selectorsPresenter scopePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameAccessorsDialog guid: (GUID fromString: '{0131b7a6-c39c-4be0-b124-1004a06770da}')!
 RenameAccessorsDialog comment: ''!
 !RenameAccessorsDialog categoriesForClass!MVP-Presenters! !

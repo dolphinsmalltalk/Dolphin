@@ -260,102 +260,122 @@ Object subclass: #RefactoringTool
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserPlugin subclass: #SmalllintPlugin
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintPlugin subclass: #CodeMentorPlugin
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #ConvertToSiblingDialog
 	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #MethodNameDialog
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodNameDialog subclass: #RenameMethodDialog
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #RenameAccessorsDialog
 	instanceVariableNames: 'selectorsPresenter scopePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #RewriteChangesBrowser
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameClassRefactoring subclass: #CopyClassRefactoring
 	instanceVariableNames: 'superclass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameMethodRefactoring subclass: #RenameMethodReferencesRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoringTool subclass: #CodeRefactoringTool
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoringTool subclass: #MethodRefactoringTool
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryChange subclass: #DolphinGlobalChange
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinGlobalChange subclass: #DolphinAddGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinGlobalChange subclass: #DolphinRemoveGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintContext subclass: #SmalllintCachingContext
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

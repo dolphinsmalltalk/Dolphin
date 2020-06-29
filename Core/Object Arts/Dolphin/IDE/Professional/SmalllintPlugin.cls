@@ -4,7 +4,8 @@ ClassBrowserPlugin subclass: #SmalllintPlugin
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintPlugin guid: (GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
 SmalllintPlugin isAbstract: true!
 SmalllintPlugin comment: ''!
