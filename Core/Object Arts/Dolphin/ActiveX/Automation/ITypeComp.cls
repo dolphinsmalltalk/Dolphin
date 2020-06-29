@@ -4,7 +4,8 @@ IUnknown subclass: #ITypeComp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeComp guid: (IID fromString: '{00020403-0000-0000-c000-000000000046}')!
 ITypeComp comment: ''!
 !ITypeComp categoriesForClass!COM-Interfaces! !

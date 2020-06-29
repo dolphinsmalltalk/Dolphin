@@ -4,7 +4,8 @@ Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeLibDocumentation guid: (GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
 AXTypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
 

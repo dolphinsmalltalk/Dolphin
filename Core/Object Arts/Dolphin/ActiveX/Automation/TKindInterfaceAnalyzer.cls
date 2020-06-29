@@ -4,7 +4,8 @@ AXInterfaceTypeAnalyzer subclass: #TKindInterfaceAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindInterfaceAnalyzer guid: (GUID fromString: '{c06f3b67-0868-11d3-93af-00a024ca708a}')!
 TKindInterfaceAnalyzer comment: 'TKindInterfaceAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''interface'' (a dual or custom COM interface), i.e. an ITypeInfo of type kind TKIND_INTERFACE. It supports high level behaviours for analyzing the type information associated with interfaces, and for automatically generating a <IUnknown> wrapper subclasses.
 

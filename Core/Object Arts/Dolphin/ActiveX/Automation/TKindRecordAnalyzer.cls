@@ -4,7 +4,8 @@ AXStructureTypeAnalyzer subclass: #TKindRecordAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindRecordAnalyzer guid: (GUID fromString: '{c06f3b7e-0868-11d3-93af-00a024ca708a}')!
 TKindRecordAnalyzer comment: 'TKindRecordAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''struct'' (a C structure). It adds high level behaviours for analyzing the type information associated with structures, and for automatic generation of <ExternalStructure> wrapper classes.
 

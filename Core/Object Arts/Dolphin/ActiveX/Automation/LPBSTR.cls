@@ -4,7 +4,8 @@ LPVOID subclass: #LPBSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LPBSTR guid: (GUID fromString: '{8ed55b71-d72d-4df1-a211-434db718fef0}')!
 LPBSTR comment: 'LPBSTR is a class to represent pointers to BSTRs (Basic Strings). It is useful where an IDispatch method requires that a BSTR argument be passed by references, or when implement such a method as a means of returning a BSTR reference.
 

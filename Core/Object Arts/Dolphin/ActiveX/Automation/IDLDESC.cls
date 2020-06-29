@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_wIDLFlags'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved' -> 16r0.
+		'_OffsetOf_wIDLFlags' -> 16r4
+	}!
 IDLDESC guid: (GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
-IDLDESC addClassConstant: '_OffsetOf_dwReserved' value: 16r0!
-IDLDESC addClassConstant: '_OffsetOf_wIDLFlags' value: 16r4!
 IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
 
 IDLDESC contains basic marshalling information for a function argument, basically consisting of flags which relate to attributes such as ''in'', ''out'' and ''retval'', which are defined in the IDL for the argument.

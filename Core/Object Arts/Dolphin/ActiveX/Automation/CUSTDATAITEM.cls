@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_guid _OffsetOf_varValue'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_guid' -> 16r0.
+		'_OffsetOf_varValue' -> 16r10
+	}!
 CUSTDATAITEM guid: (GUID fromString: '{a72e70d7-34d7-4c65-9b12-5941c51fa3c2}')!
-CUSTDATAITEM addClassConstant: '_OffsetOf_guid' value: 16r0!
-CUSTDATAITEM addClassConstant: '_OffsetOf_varValue' value: 16r10!
 CUSTDATAITEM comment: '<CUSTDATAITEM> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATAITEM'' from type information in the ''Ole Automation Type Library'' library.
 
 CUSTDATAITEM is used to represent blocks of custom data stored in a type library.'!

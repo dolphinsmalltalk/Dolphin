@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXDispatchImpAbstract guid: (GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
 AXDispatchImpAbstract comment: ''!
 !AXDispatchImpAbstract categoriesForClass!Unclassified! !

@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
-	classVariableNames: '_OffsetOf_tdescElem'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_tdescElem' -> 16r0
+	}!
 AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
 AbstractELEMDESC isAbstract: true!
-AbstractELEMDESC addClassConstant: '_OffsetOf_tdescElem' value: 16r0!
 AbstractELEMDESC comment: ''!
 !AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !AbstractELEMDESC methodsFor!

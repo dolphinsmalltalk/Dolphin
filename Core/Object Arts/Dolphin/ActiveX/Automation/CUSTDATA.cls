@@ -2,12 +2,14 @@
 
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
-	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
+	classVariableNames: 'WellKnownCustomAttributes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cCustData' -> 16r0.
+		'_OffsetOf_prgCustData' -> 16r4
+	}!
 CUSTDATA guid: (GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
-CUSTDATA addClassConstant: '_OffsetOf_cCustData' value: 16r0!
-CUSTDATA addClassConstant: '_OffsetOf_prgCustData' value: 16r4!
 CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 
 The type library contains no documentation for this struct

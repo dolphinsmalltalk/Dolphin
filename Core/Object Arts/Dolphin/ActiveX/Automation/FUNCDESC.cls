@@ -2,22 +2,24 @@
 
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
-	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_callconv' -> 16r14.
+		'_OffsetOf_cParams' -> 16r18.
+		'_OffsetOf_cParamsOpt' -> 16r1A.
+		'_OffsetOf_cScodes' -> 16r1E.
+		'_OffsetOf_elemdescFunc' -> 16r20.
+		'_OffsetOf_funckind' -> 16rC.
+		'_OffsetOf_invkind' -> 16r10.
+		'_OffsetOf_lprgelemdescParam' -> 16r8.
+		'_OffsetOf_lprgscode' -> 16r4.
+		'_OffsetOf_memid' -> 16r0.
+		'_OffsetOf_oVft' -> 16r1C.
+		'_OffsetOf_wFuncFlags' -> 16r30
+	}!
 FUNCDESC guid: (GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
-FUNCDESC addClassConstant: '_OffsetOf_callconv' value: 16r14!
-FUNCDESC addClassConstant: '_OffsetOf_cParams' value: 16r18!
-FUNCDESC addClassConstant: '_OffsetOf_cParamsOpt' value: 16r1A!
-FUNCDESC addClassConstant: '_OffsetOf_cScodes' value: 16r1E!
-FUNCDESC addClassConstant: '_OffsetOf_elemdescFunc' value: 16r20!
-FUNCDESC addClassConstant: '_OffsetOf_funckind' value: 16rC!
-FUNCDESC addClassConstant: '_OffsetOf_invkind' value: 16r10!
-FUNCDESC addClassConstant: '_OffsetOf_lprgelemdescParam' value: 16r8!
-FUNCDESC addClassConstant: '_OffsetOf_lprgscode' value: 16r4!
-FUNCDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
-FUNCDESC addClassConstant: '_OffsetOf_oVft' value: 16r1C!
-FUNCDESC addClassConstant: '_OffsetOf_wFuncFlags' value: 16r30!
 FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.

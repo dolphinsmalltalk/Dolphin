@@ -4,7 +4,8 @@ AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindCoclassAnalyzer guid: (GUID fromString: '{c06f3b70-0868-11d3-93af-00a024ca708a}')!
 TKindCoclassAnalyzer comment: 'TKindCoClassAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''coclass'' (a COM object class). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation of Smalltalk wrapper information for that coclass (essentially by adding behaviours to the wrappers generated for its interfaces).'!
 !TKindCoclassAnalyzer categoriesForClass!ActiveX Automation! !

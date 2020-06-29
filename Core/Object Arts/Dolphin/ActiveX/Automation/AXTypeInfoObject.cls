@@ -4,7 +4,8 @@ Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoObject guid: (GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
 AXTypeInfoObject isAbstract: true!
 AXTypeInfoObject comment: '

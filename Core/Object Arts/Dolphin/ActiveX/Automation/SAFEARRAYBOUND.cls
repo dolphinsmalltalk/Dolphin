@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cElements _OffsetOf_lLbound'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cElements' -> 16r0.
+		'_OffsetOf_lLbound' -> 16r4
+	}!
 SAFEARRAYBOUND guid: (GUID fromString: '{c06f3b74-0868-11d3-93af-00a024ca708a}')!
-SAFEARRAYBOUND addClassConstant: '_OffsetOf_cElements' value: 16r0!
-SAFEARRAYBOUND addClassConstant: '_OffsetOf_lLbound' value: 16r4!
 SAFEARRAYBOUND comment: '<SAFEARRAYBOUND> is an <ExternalStructure> class to wrap the struct ''''OAIDL.SAFEARRAYBOUND'''' from type information in the ''''Ole Automation Type Library'''' library.
 
 A SAFEARRAYBOUND describes one dimension of a SAFEARRAY, or C array when used to describe a VT_CARRAY in a <TYPEDESC>.'!

@@ -2,12 +2,14 @@
 
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cDims _OffsetOf_rgbounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cDims' -> 16r8.
+		'_OffsetOf_rgbounds' -> 16rC
+	}!
 ARRAYDESC guid: (GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
-ARRAYDESC addClassConstant: '_OffsetOf_cDims' value: 16r8!
-ARRAYDESC addClassConstant: '_OffsetOf_rgbounds' value: 16rC!
 ARRAYDESC comment: 'ARRAYDESC is an ExternalStructure class to represent the COM Automation structure of the same name.
 
 ARRAYDESC describes an Automation safe array, specifically the type of the elements, the number of dimensions, and the bounds for each dimension.

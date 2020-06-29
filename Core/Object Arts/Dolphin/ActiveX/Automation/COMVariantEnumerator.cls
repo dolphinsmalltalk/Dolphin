@@ -4,7 +4,8 @@ COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMVariantEnumerator guid: (GUID fromString: '{537c1340-a1b1-11d3-b376-080046056106}')!
 COMVariantEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s implementation of <IEnumVARIANT>.'!
 !COMVariantEnumerator categoriesForClass!COM-Implementations! !

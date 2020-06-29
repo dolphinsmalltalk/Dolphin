@@ -4,7 +4,8 @@ OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoStructure guid: (GUID fromString: '{c06f3b66-0868-11d3-93af-00a024ca708a}')!
 AXTypeInfoStructure isAbstract: true!
 AXTypeInfoStructure comment: 'AXTypeInfoStructure is the class of <ExternalStructure>s representing the OLE Automation structures used in conjunction with <ITypeInfo>. AXTypeInfoStructure itself is abstract.

@@ -2,17 +2,19 @@
 
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elemdesc' -> 16rC.
+		'_OffsetOf_lpstrSchema' -> 16r4.
+		'_OffsetOf_lpvarValue' -> 16r8.
+		'_OffsetOf_memid' -> 16r0.
+		'_OffsetOf_oInst' -> 16r8.
+		'_OffsetOf_varkind' -> 16r20.
+		'_OffsetOf_wVarFlags' -> 16r1C
+	}!
 VARDESC guid: (GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
-VARDESC addClassConstant: '_OffsetOf_elemdesc' value: 16rC!
-VARDESC addClassConstant: '_OffsetOf_lpstrSchema' value: 16r4!
-VARDESC addClassConstant: '_OffsetOf_lpvarValue' value: 16r8!
-VARDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
-VARDESC addClassConstant: '_OffsetOf_oInst' value: 16r8!
-VARDESC addClassConstant: '_OffsetOf_varkind' value: 16r20!
-VARDESC addClassConstant: '_OffsetOf_wVarFlags' value: 16r1C!
 VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.

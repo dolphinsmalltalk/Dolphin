@@ -2,9 +2,12 @@
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
-	classVariableNames: 'VTtoIDLTypeMap'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
+	}!
 AXTypeInfoAnalyzer guid: (GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!
 AXTypeInfoAnalyzer isAbstract: true!
 AXTypeInfoAnalyzer comment: 'AXTypeInfoAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer and adds higher level behaviours for analyzing the type information available through that interface.
@@ -479,7 +482,9 @@ initializeVTtoIDLTypeMap
 	Note that this dictionary only includes variant types which are documented as valid 
 	in a TYPEDESC."
 
-	VTtoIDLTypeMap := (IdentityDictionary new)
+	| vtToIDLTypeMap |
+	vtToIDLTypeMap := Array new: VT_LPWSTR.
+	vtToIDLTypeMap
 				at: VT_BOOL put: 'VARIANT_BOOL';
 				at: VT_BSTR put: 'BSTR';
 				at: VT_CARRAY put: '[]';
@@ -508,8 +513,8 @@ initializeVTtoIDLTypeMap
 				at: VT_UNKNOWN put: 'IUnknown*';
 				at: VT_USERDEFINED put: 'typedef';
 				at: VT_VARIANT put: 'VARIANT';
-				at: VT_VOID put: 'void';
-				shrink	"C-style array - but of what?"	"user defined type - TYPEDESC only"!
+				at: VT_VOID put: 'void'.
+	self addClassConstant: 'VTtoIDLTypeMap' value: vtToIDLTypeMap!
 
 onTypeInfo: piTypeInfo
 	"Answer a sub-instance of the receiver of an appropriate class to wrap

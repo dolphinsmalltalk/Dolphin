@@ -4,7 +4,8 @@ OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXRecord guid: (GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
 AXRecord comment: ''!
 !AXRecord categoriesForClass!Unclassified! !

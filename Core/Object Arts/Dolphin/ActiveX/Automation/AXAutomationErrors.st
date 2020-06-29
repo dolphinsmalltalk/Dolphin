@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #AXAutomationErrors put: (PoolConstantsDictionary named: #AXAutomationErrors)!
+#{AXAutomationErrors} declare: (PoolConstantsDictionary named: #AXAutomationErrors)!
 AXAutomationErrors at: 'DISP_E_ARRAYISLOCKED' put: -16r7FFDFFF3!
 AXAutomationErrors at: 'DISP_E_BADINDEX' put: -16r7FFDFFF5!
 AXAutomationErrors at: 'DISP_E_BADVARTYPE' put: -16r7FFDFFF8!

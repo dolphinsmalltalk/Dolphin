@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pparamdescex _OffsetOf_wParamFlags'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pparamdescex' -> 16r0.
+		'_OffsetOf_wParamFlags' -> 16r4
+	}!
 PARAMDESC guid: (GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
-PARAMDESC addClassConstant: '_OffsetOf_pparamdescex' value: 16r0!
-PARAMDESC addClassConstant: '_OffsetOf_wParamFlags' value: 16r4!
 PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
 
 The PARAMDESC structure is used, one per argument, to describe the parameters to a function belonging to either an [disp]interface or a module in a type library. The information includes certain (but not all) IDL flags, as well as the argument

@@ -2,11 +2,13 @@
 
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
-	classVariableNames: '_OffsetOf_paramdesc'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_paramdesc' -> 16r8
+	}!
 ELEMDESC guid: (GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
-ELEMDESC addClassConstant: '_OffsetOf_paramdesc' value: 16r8!
 ELEMDESC comment: 'ELEMDESC is an <ExternalStructure> class to represent the AX Automation structure of the same name.
 
 ELEMDESC contains type and marshalling information for a variable, a function, or a function parameter.

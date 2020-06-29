@@ -4,7 +4,8 @@ IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeInfo guid: (IID fromString: '{00020401-0000-0000-c000-000000000046}')!
 ITypeInfo comment: 'ITypeInfo is a COMInterface class which wraps an OLE Automation ITypeInfo interface pointer.
 

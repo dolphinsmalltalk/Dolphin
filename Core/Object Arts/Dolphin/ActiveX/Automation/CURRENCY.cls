@@ -2,11 +2,13 @@
 
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cy'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cy' -> 16r0
+	}!
 CURRENCY guid: (GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
-CURRENCY addClassConstant: '_OffsetOf_cy' value: 16r0!
 CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
 
 CURRENCY is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type VT_CY.

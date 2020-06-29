@@ -4,7 +4,8 @@ AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXStructureTypeAnalyzer guid: (GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
 AXStructureTypeAnalyzer comment: ''!
 !AXStructureTypeAnalyzer categoriesForClass!Unclassified! !

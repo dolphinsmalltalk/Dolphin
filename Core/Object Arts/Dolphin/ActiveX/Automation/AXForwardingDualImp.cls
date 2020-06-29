@@ -4,7 +4,8 @@ AXDualImp subclass: #AXForwardingDualImp
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXForwardingDualImp guid: (GUID fromString: '{609232b8-a27b-4709-941c-128cd9948bda}')!
 AXForwardingDualImp comment: ''!
 !AXForwardingDualImp categoriesForClass!Unclassified! !

@@ -2,14 +2,16 @@
 
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
-	classVariableNames: '_OffsetOf_cArgs _OffsetOf_cNamedArgs _OffsetOf_rgdispidNamedArgs _OffsetOf_rgvarg ZeroArgs'
+	classVariableNames: 'ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cArgs' -> 16r8.
+		'_OffsetOf_cNamedArgs' -> 16rC.
+		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
+		'_OffsetOf_rgvarg' -> 16r0
+	}!
 DISPPARAMS guid: (GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
-DISPPARAMS addClassConstant: '_OffsetOf_cArgs' value: 16r8!
-DISPPARAMS addClassConstant: '_OffsetOf_cNamedArgs' value: 16rC!
-DISPPARAMS addClassConstant: '_OffsetOf_rgdispidNamedArgs' value: 16r4!
-DISPPARAMS addClassConstant: '_OffsetOf_rgvarg' value: 16r0!
 DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
 
 DISPPARAMS is the parameter block used in calls to IDispatch::Invoke. It contains an array of VARIANTARG structures (which are actually represented by the identical <VARIANT> structure in Dolphin), a count of the total number of arguments, an array of the <integer> DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the rgvarg array.

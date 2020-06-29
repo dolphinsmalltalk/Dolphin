@@ -4,7 +4,8 @@ AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXInterfaceTypeAnalyzer guid: (GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
 AXInterfaceTypeAnalyzer isAbstract: true!
 AXInterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).

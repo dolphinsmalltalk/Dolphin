@@ -4,7 +4,8 @@ COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DispFunction guid: (GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
 DispFunction comment: ''!
 !DispFunction categoriesForClass!Unclassified! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #AXTypeGenerationFlags put: (PoolConstantsDictionary named: #AXTypeGenerationFlags)!
+#{AXTypeGenerationFlags} declare: (PoolConstantsDictionary named: #AXTypeGenerationFlags)!
 AXTypeGenerationFlags at: 'CommentStyleMask' put: 16r101!
 AXTypeGenerationFlags at: 'DefineProtocol' put: 16r20!
 AXTypeGenerationFlags at: 'LowercaseIdentifiers' put: 16r400!

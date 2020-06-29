@@ -4,7 +4,8 @@ AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXMemberDesc guid: (GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
 AXMemberDesc isAbstract: true!
 AXMemberDesc comment: ''!

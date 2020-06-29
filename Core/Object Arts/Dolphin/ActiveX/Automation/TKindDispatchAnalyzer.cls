@@ -4,7 +4,8 @@ AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindDispatchAnalyzer guid: (GUID fromString: '{c06f3b72-0868-11d3-93af-00a024ca708a}')!
 TKindDispatchAnalyzer comment: 'TKindDispatchAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''dispinterface'' (a late-bound Automation interface), i.e. an ITypeInfo of type kind TKIND_DISPATCH. It supports high level behaviours for analyzing the type information associated with dispinterfaces, and for automatically generating a <IDispatch> wrapper subclasses.
 

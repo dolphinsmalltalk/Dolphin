@@ -4,7 +4,8 @@ DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DATE guid: (GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
 DATE comment: ''!
 !DATE categoriesForClass!External-Data-Structured! !

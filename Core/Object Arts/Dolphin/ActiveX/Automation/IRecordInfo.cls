@@ -4,7 +4,8 @@ IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IRecordInfo guid: (IID fromString: '{0000002f-0000-0000-c000-000000000046}')!
 IRecordInfo comment: '<IRecordInfo> is a wrapper class for the COM interface ''OLEIDL.IRecordInfo'' generated from type information in the ''OLEIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

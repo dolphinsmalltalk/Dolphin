@@ -2,15 +2,17 @@
 
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hi32' -> 16r4.
+		'_OffsetOf_lo64' -> 16r8.
+		'_OffsetOf_scale' -> 16r2.
+		'_OffsetOf_sign' -> 16r3.
+		'_OffsetOf_wReserved' -> 16r0
+	}!
 DECIMAL guid: (GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
-DECIMAL addClassConstant: '_OffsetOf_hi32' value: 16r4!
-DECIMAL addClassConstant: '_OffsetOf_lo64' value: 16r8!
-DECIMAL addClassConstant: '_OffsetOf_scale' value: 16r2!
-DECIMAL addClassConstant: '_OffsetOf_sign' value: 16r3!
-DECIMAL addClassConstant: '_OffsetOf_wReserved' value: 16r0!
 DECIMAL comment: 'DECIMAL is an ExternalStructure class to represent the Automation structure of the same name.
 
 DECIMAL is a rather complex 16-byte fixed point value with 12-bytes to represent the absolute value, and a byte each for scale and sign, with the top two bytes unused so that a DECIMAL can be stored safely in a VARIANT without overwriting the vartype. DECIMAL corresponds to VT_DECIMAL.

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX (Deprecated)'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Support (Deprecated Classes and Methods)
 
@@ -9,37 +9,26 @@ This package includes legacy classes and methods from Dolphin''s Active-X framew
 package basicPackageVersion: '6.0'.
 
 
-package methodNames
-	add: #BSTR -> #asUnicodeString;
-	add: #DATE -> #asDate;
-	add: #DATE -> #asTimeStamp;
-	add: #LPBSTR -> #asUnicodeString;
-	add: #TimeStamp -> #asFloat;
-	add: #TimeStamp -> #asVariant;
-	add: 'DATE class' -> #max;
-	add: 'DATE class' -> #min;
-	add: 'TimeStamp class' -> #fromDATE:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BSTR} #asUnicodeString)
+	#(#{DATE} #asDate)
+	#(#{DATE} #asTimeStamp)
+	#(#{DATE class} #max)
+	#(#{DATE class} #min)
+	#(#{LPBSTR} #asUnicodeString)
+	#(#{TimeStamp} #asFloat)
+	#(#{TimeStamp} #asVariant)
+	#(#{TimeStamp class} #fromDATE:)
+).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Legacy Date & Time'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

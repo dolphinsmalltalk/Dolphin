@@ -4,7 +4,8 @@ ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeInfo2 guid: (IID fromString: '{00020412-0000-0000-c000-000000000046}')!
 ITypeInfo2 comment: '''ITypeInfo2 is an interface pointer class to wrap COM interfaces of the same name.
 

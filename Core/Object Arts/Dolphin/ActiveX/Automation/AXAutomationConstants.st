@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #AXAutomationConstants put: (PoolConstantsDictionary named: #AXAutomationConstants)!
+#{AXAutomationConstants} declare: (PoolConstantsDictionary named: #AXAutomationConstants)!
 AXAutomationConstants at: 'ACTIVEOBJECT_STRONG' put: 16r0!
 AXAutomationConstants at: 'ACTIVEOBJECT_WEAK' put: 16r1!
 AXAutomationConstants at: 'CC_CDECL' put: 16r1!

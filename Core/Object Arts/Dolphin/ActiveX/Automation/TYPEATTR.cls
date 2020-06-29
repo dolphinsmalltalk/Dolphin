@@ -2,28 +2,30 @@
 
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
-	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbAlignment' -> 16r34.
+		'_OffsetOf_cbSizeInstance' -> 16r24.
+		'_OffsetOf_cbSizeVft' -> 16r32.
+		'_OffsetOf_cFuncs' -> 16r2C.
+		'_OffsetOf_cImplTypes' -> 16r30.
+		'_OffsetOf_cVars' -> 16r2E.
+		'_OffsetOf_dwReserved' -> 16r14.
+		'_OffsetOf_guid' -> 16r0.
+		'_OffsetOf_idldescType' -> 16r44.
+		'_OffsetOf_lcid' -> 16r10.
+		'_OffsetOf_lpstrSchema' -> 16r20.
+		'_OffsetOf_memidConstructor' -> 16r18.
+		'_OffsetOf_memidDestructor' -> 16r1C.
+		'_OffsetOf_tdescAlias' -> 16r3C.
+		'_OffsetOf_typekind' -> 16r28.
+		'_OffsetOf_wMajorVerNum' -> 16r38.
+		'_OffsetOf_wMinorVerNum' -> 16r3A.
+		'_OffsetOf_wTypeFlags' -> 16r36
+	}!
 TYPEATTR guid: (GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
-TYPEATTR addClassConstant: '_OffsetOf_cbAlignment' value: 16r34!
-TYPEATTR addClassConstant: '_OffsetOf_cbSizeInstance' value: 16r24!
-TYPEATTR addClassConstant: '_OffsetOf_cbSizeVft' value: 16r32!
-TYPEATTR addClassConstant: '_OffsetOf_cFuncs' value: 16r2C!
-TYPEATTR addClassConstant: '_OffsetOf_cImplTypes' value: 16r30!
-TYPEATTR addClassConstant: '_OffsetOf_cVars' value: 16r2E!
-TYPEATTR addClassConstant: '_OffsetOf_dwReserved' value: 16r14!
-TYPEATTR addClassConstant: '_OffsetOf_guid' value: 16r0!
-TYPEATTR addClassConstant: '_OffsetOf_idldescType' value: 16r44!
-TYPEATTR addClassConstant: '_OffsetOf_lcid' value: 16r10!
-TYPEATTR addClassConstant: '_OffsetOf_lpstrSchema' value: 16r20!
-TYPEATTR addClassConstant: '_OffsetOf_memidConstructor' value: 16r18!
-TYPEATTR addClassConstant: '_OffsetOf_memidDestructor' value: 16r1C!
-TYPEATTR addClassConstant: '_OffsetOf_tdescAlias' value: 16r3C!
-TYPEATTR addClassConstant: '_OffsetOf_typekind' value: 16r28!
-TYPEATTR addClassConstant: '_OffsetOf_wMajorVerNum' value: 16r38!
-TYPEATTR addClassConstant: '_OffsetOf_wMinorVerNum' value: 16r3A!
-TYPEATTR addClassConstant: '_OffsetOf_wTypeFlags' value: 16r36!
 TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 
 TYPEATTR contains a number of attributes describing a particular type info. element of a type library. Unfortunately it is overloaded (like its originator ITypeInfo) with the job of describing all of the different types of object for which type information may be present in the library (i.e. interfaces, typedefs, enums, coclasses, dispinterfaces, unions, structs, and modules). This means that some of the members may not be relevant to the programming element described. In general we access the members of this structure through the relevant subclass of AXTypeInfoAnalyzer, thus benefitting from the correct factoring of that hierarchy.

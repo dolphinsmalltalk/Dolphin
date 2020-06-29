@@ -4,7 +4,8 @@ AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
 	poolDictionaries: 'AXAutomationErrors Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeLibraryAnalyzer guid: (GUID fromString: '{c06f3b76-0868-11d3-93af-00a024ca708a}')!
 AXTypeLibraryAnalyzer comment: 'AXTypeLibraryAnalyzer is a wrapper class around <ITypeLib> which adds higher level wrapper functions which make ITypeLib easier to use. It is also the starting point for Dolphin''s automatic generation of wrapper classes &c for Active-X objects described by type libraries.
 

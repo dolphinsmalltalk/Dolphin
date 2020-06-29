@@ -278,292 +278,467 @@ Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
-	classVariableNames: 'VTtoIDLTypeMap'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'VTtoIDLTypeMap' -> #(nil 'short' 'long' 'float' 'double' 'CURRENCY' 'DATE' 'BSTR' 'IDispatch*' 'SCODE' 'VARIANT_BOOL' 'VARIANT' 'IUnknown*' 'DECIMAL' nil 'char' 'BYTE' 'unsigned short' 'unsigned long' '__int64' 'unsigned __int64' 'int' 'unsigned int' 'void' 'HRESULT' '*' 'SAFEARRAY*' '[]' 'typedef' 'LPSTR' 'LPWSTR')
+	}!
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
 	poolDictionaries: 'AXAutomationErrors Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXInterfaceTypeAnalyzer subclass: #TKindInterfaceAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXStructureTypeAnalyzer subclass: #TKindRecordAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXDispatchImpAbstract subclass: #AXDualImp
 	instanceVariableNames: 'interface piTypeInfo locale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXDualImp subclass: #AXForwardingDualImp
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IPerPropertyBrowsing
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IProvideClassInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ITypeComp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumXXXX subclass: #IEnumVARIANT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IProvideClassInfo subclass: #IProvideClassInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeLib subclass: #ITypeLib2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
-	classVariableNames: '_OffsetOf_cbElements _OffsetOf_cDims _OffsetOf_cLocks _OffsetOf_fFeatures _OffsetOf_pvData _OffsetOf_rgsabound'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbElements' -> 16r4.
+		'_OffsetOf_cDims' -> 16r0.
+		'_OffsetOf_cLocks' -> 16r8.
+		'_OffsetOf_fFeatures' -> 16r2.
+		'_OffsetOf_pvData' -> 16rC.
+		'_OffsetOf_rgsabound' -> 16r10
+	}!
 DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LPVOID subclass: #LPBSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
-	classVariableNames: '_OffsetOf_tdescElem'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_tdescElem' -> 16r0
+	}!
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cy'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cy' -> 16r0
+	}!
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_guid _OffsetOf_varValue'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_guid' -> 16r0.
+		'_OffsetOf_varValue' -> 16r10
+	}!
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hi32' -> 16r4.
+		'_OffsetOf_lo64' -> 16r8.
+		'_OffsetOf_scale' -> 16r2.
+		'_OffsetOf_sign' -> 16r3.
+		'_OffsetOf_wReserved' -> 16r0
+	}!
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
-	classVariableNames: '_OffsetOf_cArgs _OffsetOf_cNamedArgs _OffsetOf_rgdispidNamedArgs _OffsetOf_rgvarg ZeroArgs'
+	classVariableNames: 'ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cArgs' -> 16r8.
+		'_OffsetOf_cNamedArgs' -> 16rC.
+		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
+		'_OffsetOf_rgvarg' -> 16r0
+	}!
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
-	classVariableNames: '_OffsetOf_cySize _OffsetOf_dwSize _OffsetOf_fItalic _OffsetOf_fStrikethrough _OffsetOf_fUnderline _OffsetOf_lpstrName _OffsetOf_sCharset _OffsetOf_sWeight'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cySize' -> 16r8.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fItalic' -> 16r14.
+		'_OffsetOf_fStrikethrough' -> 16r1C.
+		'_OffsetOf_fUnderline' -> 16r18.
+		'_OffsetOf_lpstrName' -> 16r4.
+		'_OffsetOf_sCharset' -> 16r12.
+		'_OffsetOf_sWeight' -> 16r10
+	}!
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_wIDLFlags'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved' -> 16r0.
+		'_OffsetOf_wIDLFlags' -> 16r4
+	}!
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_pparamdescex _OffsetOf_wParamFlags'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_pparamdescex' -> 16r0.
+		'_OffsetOf_wParamFlags' -> 16r4
+	}!
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cBytes _OffsetOf_varDefaultValue'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cBytes' -> 16r0.
+		'_OffsetOf_varDefaultValue' -> 16r8
+	}!
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cElements _OffsetOf_lLbound'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cElements' -> 16r0.
+		'_OffsetOf_lLbound' -> 16r4
+	}!
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_guid _OffsetOf_lcid _OffsetOf_syskind _OffsetOf_wLibFlags _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_guid' -> 16r0.
+		'_OffsetOf_lcid' -> 16r10.
+		'_OffsetOf_syskind' -> 16r14.
+		'_OffsetOf_wLibFlags' -> 16r1C.
+		'_OffsetOf_wMajorVerNum' -> 16r18.
+		'_OffsetOf_wMinorVerNum' -> 16r1A
+	}!
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
-	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hreftype' -> 16r0.
+		'_OffsetOf_lpadesc' -> 16r0.
+		'_OffsetOf_lptdesc' -> 16r0.
+		'_OffsetOf_vt' -> 16r4.
+		'VTIndirections' -> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+	}!
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cDims _OffsetOf_rgbounds'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cDims' -> 16r8.
+		'_OffsetOf_rgbounds' -> 16rC
+	}!
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
-	classVariableNames: '_OffsetOf_paramdesc'
+	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_paramdesc' -> 16r8
+	}!
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
-	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
+	classVariableNames: 'WellKnownCustomAttributes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cCustData' -> 16r0.
+		'_OffsetOf_prgCustData' -> 16r4
+	}!
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
-	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
+	classVariableNames: 'Unspecified'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dblVal' -> 16r8.
+		'_OffsetOf_vt' -> 16r0.
+		'_OffsetOf_wReserved1' -> 16r2.
+		'_OffsetOf_wReserved2' -> 16r4.
+		'_OffsetOf_wReserved3' -> 16r6.
+		'VTClasses' -> #(#{UndefinedObject} nil #{SWORD} #{SDWORD} #{FLOAT} #{DOUBLE} #{CURRENCY} #{DATE} #{BSTR} #{IDispatch} #{HRESULT} #{VARIANT_BOOL} #{VARIANT} #{IUnknown} #{DECIMAL} nil #{SBYTE} #{BYTE} #{WORD} #{DWORD} #{LARGE_INTEGER} #{ULARGE_INTEGER} #{SDWORD} #{DWORD} #{VOID} #{HRESULT} #{ExternalAddress} #{SAFEARRAY} #{ExternalArray} #{AXRecord} #{String} #{Utf16String} nil nil nil nil #{ExternalStructure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{FILETIME} nil nil nil nil nil nil #{DWORD} #{CLSID}).
+		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
+	}!
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
-	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbAlignment' -> 16r34.
+		'_OffsetOf_cbSizeInstance' -> 16r24.
+		'_OffsetOf_cbSizeVft' -> 16r32.
+		'_OffsetOf_cFuncs' -> 16r2C.
+		'_OffsetOf_cImplTypes' -> 16r30.
+		'_OffsetOf_cVars' -> 16r2E.
+		'_OffsetOf_dwReserved' -> 16r14.
+		'_OffsetOf_guid' -> 16r0.
+		'_OffsetOf_idldescType' -> 16r44.
+		'_OffsetOf_lcid' -> 16r10.
+		'_OffsetOf_lpstrSchema' -> 16r20.
+		'_OffsetOf_memidConstructor' -> 16r18.
+		'_OffsetOf_memidDestructor' -> 16r1C.
+		'_OffsetOf_tdescAlias' -> 16r3C.
+		'_OffsetOf_typekind' -> 16r28.
+		'_OffsetOf_wMajorVerNum' -> 16r38.
+		'_OffsetOf_wMinorVerNum' -> 16r3A.
+		'_OffsetOf_wTypeFlags' -> 16r36
+	}!
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
-	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_callconv' -> 16r14.
+		'_OffsetOf_cParams' -> 16r18.
+		'_OffsetOf_cParamsOpt' -> 16r1A.
+		'_OffsetOf_cScodes' -> 16r1E.
+		'_OffsetOf_elemdescFunc' -> 16r20.
+		'_OffsetOf_funckind' -> 16rC.
+		'_OffsetOf_invkind' -> 16r10.
+		'_OffsetOf_lprgelemdescParam' -> 16r8.
+		'_OffsetOf_lprgscode' -> 16r4.
+		'_OffsetOf_memid' -> 16r0.
+		'_OffsetOf_oVft' -> 16r1C.
+		'_OffsetOf_wFuncFlags' -> 16r30
+	}!
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elemdesc' -> 16rC.
+		'_OffsetOf_lpstrSchema' -> 16r4.
+		'_OffsetOf_lpvarValue' -> 16r8.
+		'_OffsetOf_memid' -> 16r0.
+		'_OffsetOf_oInst' -> 16r8.
+		'_OffsetOf_varkind' -> 16r20.
+		'_OffsetOf_wVarFlags' -> 16r1C
+	}!
 
 "Loose Methods"!
 

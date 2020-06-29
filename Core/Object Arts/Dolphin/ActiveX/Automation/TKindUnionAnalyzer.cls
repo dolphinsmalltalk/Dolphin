@@ -4,7 +4,8 @@ AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindUnionAnalyzer guid: (GUID fromString: '{c06f3b81-0868-11d3-93af-00a024ca708a}')!
 TKindUnionAnalyzer comment: ''!
 !TKindUnionAnalyzer categoriesForClass!ActiveX Automation! !

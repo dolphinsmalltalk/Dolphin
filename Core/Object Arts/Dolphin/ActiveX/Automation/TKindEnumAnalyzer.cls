@@ -4,7 +4,8 @@ AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindEnumAnalyzer guid: (GUID fromString: '{c06f3b68-0868-11d3-93af-00a024ca708a}')!
 TKindEnumAnalyzer comment: 'TKindEnumAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes an enumerated type  (i.e. of type TKIND_ENUM). It adds higher level behaviours for analyzing the type information associated with that coclass, and for automatic generation.
 

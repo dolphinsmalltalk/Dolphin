@@ -4,7 +4,8 @@ IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITypeLib guid: (IID fromString: '{00020402-0000-0000-c000-000000000046}')!
 ITypeLib comment: 'ITypeLib is a <COMInterface> class which wraps an COM Automation ITypeLib interface pointer.
 

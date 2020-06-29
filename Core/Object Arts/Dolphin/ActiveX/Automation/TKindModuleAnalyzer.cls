@@ -4,7 +4,8 @@ AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindModuleAnalyzer guid: (GUID fromString: '{c06f3b7f-0868-11d3-93af-00a024ca708a}')!
 TKindModuleAnalyzer comment: 'TKindModuleAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''module'' (a DLL containing exported functions). It adds higher level behaviours for analyzing the type information associated with that DLL.
 

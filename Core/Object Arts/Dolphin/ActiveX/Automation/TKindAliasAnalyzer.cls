@@ -4,7 +4,8 @@ AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TKindAliasAnalyzer guid: (GUID fromString: '{c06f3b79-0868-11d3-93af-00a024ca708a}')!
 TKindAliasAnalyzer comment: 'TKindAliasAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''typedef'' (a declaration of a name for a type), i.e. an ITypeInfo of type kind TKIND_ALIAS. It supports high level behaviours for analyzing the type information associated with typedefs, and resolving them down to the fundamental type referenced.'!
 !TKindAliasAnalyzer categoriesForClass!ActiveX Automation! !

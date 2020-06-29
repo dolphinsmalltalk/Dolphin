@@ -4,7 +4,8 @@ IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch guid: (IID fromString: '{00020400-0000-0000-c000-000000000046}')!
 IDispatch comment: '`IDispatch` is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.
 
