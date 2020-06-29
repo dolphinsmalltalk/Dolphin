@@ -4,7 +4,8 @@ Error subclass: #MessageNotUnderstood
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageNotUnderstood guid: (GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageNotUnderstood comment: ''!
 !MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !

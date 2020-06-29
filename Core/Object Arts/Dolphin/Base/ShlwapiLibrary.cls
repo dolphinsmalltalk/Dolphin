@@ -4,7 +4,8 @@ ExternalLibrary subclass: #ShlwapiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ShlwapiLibrary guid: (GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
 ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
 !ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !

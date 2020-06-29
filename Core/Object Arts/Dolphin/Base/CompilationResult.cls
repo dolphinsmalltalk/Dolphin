@@ -4,7 +4,8 @@ Object subclass: #CompilationResult
 	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompilationResult guid: (GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompilationResult comment: ''!
 !CompilationResult categoriesForClass!System-Support! !

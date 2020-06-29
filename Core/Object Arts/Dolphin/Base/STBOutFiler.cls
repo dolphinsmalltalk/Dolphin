@@ -4,7 +4,8 @@ STBFiler subclass: #STBOutFiler
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBOutFiler guid: (GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBOutFiler comment: '<STBOutFiler> is the basic binary filer for serializing a tree of <Object>s to a byte stream.
 

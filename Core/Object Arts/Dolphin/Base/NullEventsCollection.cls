@@ -4,7 +4,8 @@ EventsCollection variableSubclass: #NullEventsCollection
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NullEventsCollection guid: (GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
 NullEventsCollection comment: 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
 !NullEventsCollection categoriesForClass!Kernel-Objects! !

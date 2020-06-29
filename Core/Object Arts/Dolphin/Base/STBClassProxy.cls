@@ -4,7 +4,8 @@ STBProxy subclass: #STBClassProxy
 	instanceVariableNames: 'packageName locatorKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBClassProxy guid: (GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBClassProxy comment: ''!
 !STBClassProxy categoriesForClass!System-Binary storage! !

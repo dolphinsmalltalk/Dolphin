@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IntrosortAlgorithm guid: (GUID fromString: '{80197d56-08be-4a10-a209-700b5452c610}')!
 IntrosortAlgorithm comment: 'IntrosortAlgorithm implements David Musser''s introspective sort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 

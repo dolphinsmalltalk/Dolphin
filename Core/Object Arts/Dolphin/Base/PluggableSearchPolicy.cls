@@ -4,7 +4,8 @@ SearchPolicy subclass: #PluggableSearchPolicy
 	instanceVariableNames: 'compareBlock hashBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSearchPolicy guid: (GUID fromString: '{916f2071-ed60-40eb-9152-d25fc0567f6f}')!
 PluggableSearchPolicy comment: 'PluggableSearchPolicy is for configuring pluggable collections and models to use pluggable search and comparison operations, i.e. one can define new search policies as instances of this class without writing a new <SearchPolicy> class, however performance will suffer slightly.'!
 !PluggableSearchPolicy categoriesForClass!Collections-Support! !

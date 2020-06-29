@@ -4,7 +4,8 @@ ScalarField subclass: #QWORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 QWORDField guid: (GUID fromString: '{87b4c4eb-026e-11d3-9fd7-00a0cc3e4a32}')!
 QWORDField comment: '<QWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit unsigned integers.'!
 !QWORDField categoriesForClass!External-Data-Types! !

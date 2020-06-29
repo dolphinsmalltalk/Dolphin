@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ExtCallArgTypes put: (PoolConstantsDictionary named: #ExtCallArgTypes)!
+#{ExtCallArgTypes} declare: (PoolConstantsDictionary named: #ExtCallArgTypes)!
 ExtCallArgTypes at: 'ExtCallArgBOOL' put: 16r9!
 ExtCallArgTypes at: 'ExtCallArgBSTR' put: 16r15!
 ExtCallArgTypes at: 'ExtCallArgBYTE' put: 16r3!

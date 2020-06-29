@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_filler _OffsetOf_flags _OffsetOf_value'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_filler' -> 16r14.
+		'_OffsetOf_flags' -> 16r10.
+		'_OffsetOf_value' -> 16r0
+	}!
 _FPIEEE_VALUE guid: (GUID fromString: '{836cb53c-b7d3-492c-ad33-8574c49bed82}')!
-_FPIEEE_VALUE addClassConstant: '_OffsetOf_filler' value: 16r14!
-_FPIEEE_VALUE addClassConstant: '_OffsetOf_flags' value: 16r10!
-_FPIEEE_VALUE addClassConstant: '_OffsetOf_value' value: 16r0!
 _FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_VALUE is used in the reporting of IEEE compliant floating point exceptions. It is essentially a discriminated union that can hold the various types of operand that can be used in floating point operations.'!
 !_FPIEEE_VALUE categoriesForClass!Unclassified! !
 !_FPIEEE_VALUE methodsFor!

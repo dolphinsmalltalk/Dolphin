@@ -4,7 +4,8 @@ ExternalStructure subclass: #ExternalArray
 	instanceVariableNames: 'length'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalArray guid: (GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. ExternalArray itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes). It and its various subclasses can be used for external interfacing tasks, such as where C arrays are expected.
 

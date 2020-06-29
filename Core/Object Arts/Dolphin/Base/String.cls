@@ -2,19 +2,21 @@
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi Encodings EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'empty'!
+	classInstanceVariableNames: 'empty'
+	classConstants: {
+		'EncodingAnsi' -> 16r0.
+		'Encodings' -> #(#ansi #utf8 #utf16le #utf32).
+		'EncodingUtf16' -> 16r2.
+		'EncodingUtf32' -> 16r3.
+		'EncodingUtf8' -> 16r1.
+		'LineDelimiter' -> '
+'
+	}!
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
 String isAbstract: true!
-String addClassConstant: 'EncodingAnsi' value: 16r0!
-String addClassConstant: 'Encodings' value: #(#ansi #utf8 #utf16le #utf32)!
-String addClassConstant: 'EncodingUtf16' value: 16r2!
-String addClassConstant: 'EncodingUtf32' value: 16r3!
-String addClassConstant: 'EncodingUtf8' value: 16r1!
-String addClassConstant: 'LineDelimiter' value: '
-'!
 String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
 String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
@@ -1562,13 +1564,7 @@ fromUtf16String: anAddressOrUtf16String
 	^answer!
 
 initialize
-	empty := ''.
-	self
-		addClassConstant: 'EncodingAnsi' value: 0;
-		addClassConstant: 'EncodingUtf8' value: 1;
-		addClassConstant: 'EncodingUtf16' value: 2;
-		addClassConstant: 'EncodingUtf32' value: 3.
-!
+	empty := ''!
 
 installedCodePages
 	"Answer the names of all code pages installed on the host system."

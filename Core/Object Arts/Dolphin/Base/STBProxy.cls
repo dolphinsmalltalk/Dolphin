@@ -4,7 +4,8 @@ Object subclass: #STBProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBProxy guid: (GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBProxy isAbstract: true!
 STBProxy comment: ''!

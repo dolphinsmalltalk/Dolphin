@@ -4,7 +4,8 @@ Object subclass: #SharedQueue
 	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SharedQueue guid: (GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
 SharedQueue comment: ''!
 !SharedQueue categoriesForClass!Kernel-Objects! !

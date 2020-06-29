@@ -4,7 +4,8 @@ EmbeddedField subclass: #ArrayField
 	instanceVariableNames: 'arrayLength'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayField guid: (GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
 ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
 

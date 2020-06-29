@@ -4,7 +4,8 @@ ExternalArray subclass: #DOUBLEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOUBLEArray guid: (GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
 DOUBLEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
 !DOUBLEArray categoriesForClass!Unclassified! !

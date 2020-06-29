@@ -2,12 +2,14 @@
 
 Object subclass: #SourceFiler
 	instanceVariableNames: 'stream evaluationContext flags'
-	classVariableNames: 'SourceOnlyMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SourceOnlyMask' -> 16r1
+	}!
 SourceFiler guid: (GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
 SourceFiler isAbstract: true!
-SourceFiler addClassConstant: 'SourceOnlyMask' value: 16r1!
 SourceFiler comment: ''!
 !SourceFiler categoriesForClass!Development!System-Support! !
 !SourceFiler methodsFor!
@@ -130,9 +132,6 @@ stream
 
 !SourceFiler class methodsFor!
 
-initialize
-	self addClassConstant: 'SourceOnlyMask' value: 1.!
-
 on: aWriteStream 
 	"Answer a new instance of the receiver for filing out source code onto the 
 	<puttableStream> argument."
@@ -140,6 +139,5 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
-!SourceFiler class categoriesFor: #initialize!class initialization!development!public! !
 !SourceFiler class categoriesFor: #on:!instance creation!public! !
 

@@ -4,7 +4,8 @@ PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PoolConstantsDictionary guid: (GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
 PoolConstantsDictionary comment: ''!
 !PoolConstantsDictionary categoriesForClass!Collections-Unordered!System-Support! !

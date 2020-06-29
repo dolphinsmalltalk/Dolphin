@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Additional Sort Algorithms'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Additional Sort Algorithms.
 Copyright (c) Object Arts Ltd. 2005.
@@ -21,22 +21,17 @@ There are a number of additional algorithms that it would be interesting to impl
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #HeapsortAlgorithm;
-	add: #InsertionSortAlgorithm;
-	add: #MergesortAlgorithm;
-	add: #QuicksortAlgorithm;
-	add: #ShellsortAlgorithm;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{HeapsortAlgorithm}
+	#{InsertionSortAlgorithm}
+	#{MergesortAlgorithm}
+	#{QuicksortAlgorithm}
+	#{ShellsortAlgorithm}
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -46,32 +41,32 @@ PluggableSortAlgorithm subclass: #HeapsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSortAlgorithm subclass: #QuicksortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSortAlgorithm subclass: #ShellsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

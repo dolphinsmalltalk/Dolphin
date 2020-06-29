@@ -4,7 +4,8 @@ SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AlwaysSearchPolicy guid: (GUID fromString: '{2e18d23b-3270-41b5-8abe-acaaf5d21a3c}')!
 AlwaysSearchPolicy comment: ''!
 !AlwaysSearchPolicy categoriesForClass!Collections-Support! !

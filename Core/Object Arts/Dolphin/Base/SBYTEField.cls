@@ -4,7 +4,8 @@ ScalarField subclass: #SBYTEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SBYTEField guid: (GUID fromString: '{d9145096-c1d5-4c8d-b640-605d284b0c42}')!
 SBYTEField comment: ''!
 !SBYTEField categoriesForClass!External-Data-Types! !

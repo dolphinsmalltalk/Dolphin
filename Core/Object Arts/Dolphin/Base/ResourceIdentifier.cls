@@ -4,7 +4,8 @@ Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
 	classVariableNames: 'SelectorPrefix'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceIdentifier guid: (GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
 ResourceIdentifier comment: ''!
 !ResourceIdentifier categoriesForClass!MVP-Resources! !

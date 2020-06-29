@@ -4,7 +4,8 @@ ScalarField subclass: #UINT_PTRField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UINT_PTRField guid: (GUID fromString: '{19012b00-96f4-4181-a7e1-0a85a4268d7b}')!
 UINT_PTRField comment: '<UINT_PTRField> is a <ScalarField> class to represent <ExternalStructure> fields that are unsigned integers the same size as a pointer on the host machine architecture. Currently these are always 32-bit as Dolphin is a 32-bit process.'!
 !UINT_PTRField categoriesForClass!External-Data-Types! !

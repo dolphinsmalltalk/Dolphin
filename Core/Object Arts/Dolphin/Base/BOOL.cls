@@ -4,7 +4,8 @@ SDWORD subclass: #BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BOOL guid: (GUID fromString: '{73888634-0c5b-4d09-83dc-c52101c10ba3}')!
 BOOL comment: '<BOOL> is an <ExternalStructure> class to represent the Win32 BOOL (integer boolean) type.
 

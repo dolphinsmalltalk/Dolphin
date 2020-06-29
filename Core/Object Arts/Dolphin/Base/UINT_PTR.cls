@@ -4,7 +4,8 @@ ExternalInteger subclass: #UINT_PTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 UINT_PTR comment: ''!
 !UINT_PTR categoriesForClass!External-Data-Structured-Win32! !

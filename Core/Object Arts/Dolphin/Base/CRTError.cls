@@ -4,7 +4,8 @@ Error subclass: #CRTError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CRTError guid: (GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
 CRTError comment: 'Exception to represent C-runtime library errors.'!
 !CRTError categoriesForClass!System-Exception Handling! !

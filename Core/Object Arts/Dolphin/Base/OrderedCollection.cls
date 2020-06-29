@@ -4,7 +4,8 @@ SequencedGrowableCollection variableSubclass: #OrderedCollection
 	instanceVariableNames: 'firstIndex lastIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OrderedCollection guid: (GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
 OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
 !OrderedCollection categoriesForClass!Collections-Sequenceable! !

@@ -4,7 +4,8 @@ AbstractBindingReference subclass: #MetaBindingReference
 	instanceVariableNames: 'instance'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MetaBindingReference guid: (GUID fromString: '{c54304a7-5aa9-404b-a969-27501f25f612}')!
 MetaBindingReference comment: '`BindingReference` wrapper that resolves to the class of the referenced binding''s value. Used to construct `MethodName`s refering to class methods.'!
 !MetaBindingReference categoriesForClass!System-Namespaces! !

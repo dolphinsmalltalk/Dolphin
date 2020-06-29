@@ -4,7 +4,8 @@ Object subclass: #ArrayFieldLength
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayFieldLength guid: (GUID fromString: '{aaa1c03f-5efe-4d73-8a05-b9ea12144883}')!
 ArrayFieldLength isAbstract: true!
 ArrayFieldLength comment: ''!

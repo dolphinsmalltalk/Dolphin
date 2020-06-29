@@ -4,7 +4,8 @@ ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceSTBAccessor guid: (GUID fromString: '{0cc7574b-24f8-4714-9068-6c282e7bf1f1}')!
 ResourceSTBAccessor comment: ''!
 !ResourceSTBAccessor categoriesForClass!MVP-Resources! !

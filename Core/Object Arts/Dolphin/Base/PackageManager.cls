@@ -4,7 +4,8 @@ Object subclass: #PackageManager
 	instanceVariableNames: 'packages processEvents packagedVariables looseMethods events defaultPackage basePackages'
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageManager guid: (GUID fromString: '{87b4c4a7-026e-11d3-9fd7-00a0cc3e4a32}')!
 PackageManager comment: 'The `PackageManager` class contains a collection of all the `Package`s currently loaded into the system. The class obeys the Singleton pattern.
 

@@ -2,12 +2,14 @@
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask Shared TypeNames TypeSizes'
+	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes Shared TypeNames TypeSizes'
 	poolDictionaries: 'ExtCallArgTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'RetClassIndex' -> 16r4.
+		'RetTypeMask' -> 16r3F
+	}!
 ExternalDescriptor guid: (GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExternalDescriptor addClassConstant: 'RetClassIndex' value: 16r4!
-ExternalDescriptor addClassConstant: 'RetTypeMask' value: 16r3F!
 ExternalDescriptor comment: 'The argument/return types supported by the primitive DLL call function are:
 
 	void 	Only valid as a return type - the method answers self

@@ -2,14 +2,16 @@
 
 UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
-	classVariableNames: 'Bom LeadOffset SurrogateOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Bom' -> #[255 254].
+		'LeadOffset' -> 16rD7C0.
+		'SurrogateOffset' -> 16r35FDC00
+	}!
 Utf16String guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Utf16String isNullTerminated: true!
-Utf16String addClassConstant: 'Bom' value: #[255 254 ]!
-Utf16String addClassConstant: 'LeadOffset' value: 16rD7C0!
-Utf16String addClassConstant: 'SurrogateOffset' value: 16r35FDC00!
 Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
 
 When considering a `Utf16String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-16 code units, *not* Unicode code points. Most common code points for mainstream languages are represented by a single UTF-16 code unit, but it is unwise to ignore the code-point/code-unit distinction. Code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point for those characters outside the Unicode basic plane. UTF-16 surrogate characters can be inserted into other `Utf16String`s (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf8String`s. To enumerate a `Utf16String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
@@ -494,8 +496,7 @@ initialize
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: Character.Utf16LeadMask - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset'
-		value: (Character.Utf16LeadMask bitShift: 10) + Character.Utf16TrailMask - 16r10000.
-	self addClassConstant: 'Bom' value: #[255 254]!
+		value: (Character.Utf16LeadMask bitShift: 10) + Character.Utf16TrailMask - 16r10000!
 
 with: aCharacter
 	"Answer a new instance of the receiver containing the single <Character> element,

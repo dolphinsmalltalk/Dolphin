@@ -1,32 +1,27 @@
 ﻿| package |
 package := Package name: 'Dolphin SizeIs Fields'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin SizeIs Fields Package.
 
 Contains support for sophisticated conformant field types that can interpret a MIDL size_is expression involving simple arithmetic.'.
 
 
-package classNames
-	add: #ArithmeticExpressionVisitor;
-	add: #SizeIsArrayFieldLength;
-	add: #SizeIsExpressionFormatter;
-	yourself.
+package setClassNames: #(
+	#{ArithmeticExpressionVisitor}
+	#{SizeIsArrayFieldLength}
+	#{SizeIsExpressionFormatter}
+).
 
-package methodNames
-	add: #StAssignmentNode -> #solveFor:;
-	add: #StMessageNode -> #inverseArithmeticOperator;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{StAssignmentNode} #solveFor:)
+	#(#{StMessageNode} #inverseArithmeticOperator)
+).
 
 package setPrerequisites: #(
 	'Dolphin'
-	'..\System\Compiler\Smalltalk Parser').
+	'..\System\Compiler\Smalltalk Parser'
+).
 
 package!
 
@@ -36,20 +31,20 @@ ArrayFieldLength subclass: #SizeIsArrayFieldLength
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArithmeticExpressionVisitor subclass: #SizeIsExpressionFormatter
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

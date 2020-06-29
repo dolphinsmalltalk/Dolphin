@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Date & Time'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk legacy Date and Time.
 Copyright (c) Object Arts Ltd. 1997-2019
@@ -8,29 +8,24 @@ Copyright (c) Object Arts Ltd. 1997-2019
 Traditional Smalltalk-80 style `Date` and `Time` classes. These are largely superceded by ANSI compliant `DateAndTime` and `Duration`.'.
 
 
-package classNames
-	add: #Date;
-	add: #Time;
-	add: #TimeStamp;
-	yourself.
+package setClassNames: #(
+	#{Date}
+	#{Time}
+	#{TimeStamp}
+).
 
-package methodNames
-	add: #BlockClosure -> #millisecondsToRepeat:;
-	add: #DateAndTime -> #asDate;
-	add: #DateAndTime -> #asTime;
-	add: #DateAndTime -> #asTimeStamp;
-	add: #SYSTEMTIME -> #asDate;
-	add: #SYSTEMTIME -> #asTimeStamp;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BlockClosure} #millisecondsToRepeat:)
+	#(#{DateAndTime} #asDate)
+	#(#{DateAndTime} #asTime)
+	#(#{DateAndTime} #asTimeStamp)
+	#(#{SYSTEMTIME} #asDate)
+	#(#{SYSTEMTIME} #asTimeStamp)
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -40,17 +35,20 @@ Magnitude subclass: #Date
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Magnitude subclass: #Time
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Global Aliases"!
 

@@ -4,7 +4,8 @@ nil subclass: #ProtoObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtoObject guid: (GUID fromString: '{30771b7b-8bf6-4c81-8d54-7ed3b247a81d}')!
 ProtoObject comment: 'ProtoObject is an abstract class that can be used as a basis for creating a variety of "stub" subclasses.  It supplies the minimum protocol that might be useful for any such stub in order that inspection and debugging may successfully take place.'!
 !ProtoObject categoriesForClass!System-Support! !

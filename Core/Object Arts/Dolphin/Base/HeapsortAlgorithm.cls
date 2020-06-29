@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #HeapsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HeapsortAlgorithm guid: (GUID fromString: '{a9b201d1-a115-446f-8b89-c41a55566130}')!
 HeapsortAlgorithm comment: 'HeapsortAlgorithm implements the Heapsort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 

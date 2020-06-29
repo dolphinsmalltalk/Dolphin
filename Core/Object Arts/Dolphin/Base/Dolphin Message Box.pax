@@ -1,29 +1,24 @@
 ﻿| package |
 package := Package name: 'Dolphin Message Box'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin MessageBox
 Copyright (c) Object Arts Ltd. 1997-2016'.
 
 
-package classNames
-	add: #ConfirmationRequiredWarning;
-	add: #MessageBox;
-	add: #MessageBoxAbstract;
-	yourself.
+package setClassNames: #(
+	#{ConfirmationRequiredWarning}
+	#{MessageBox}
+	#{MessageBoxAbstract}
+).
 
-package methodNames
-	add: #ShlwapiLibrary -> #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ShlwapiLibrary} #shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:)
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -33,20 +28,24 @@ Object subclass: #MessageBoxAbstract
 	instanceVariableNames: 'text caption owner'
 	classVariableNames: 'DefaultCaptions IconStyles'
 	poolDictionaries: 'MessageBoxConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageBoxAbstract subclass: #MessageBox
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
-	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
+	classVariableNames: 'ButtonStyles ModeStyles'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ButtonMap' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
+		'ButtonsForStyle' -> #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11)).
+		'SuppressibleMask' -> 16r10
+	}!
 
 "Loose Methods"!
 

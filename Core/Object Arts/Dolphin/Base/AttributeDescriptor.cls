@@ -2,19 +2,21 @@
 
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
-	classVariableNames: 'AccessorMask MutableMask MutatorMask NonBrowsableMask NullableMask OverrideMask ReadableMask WriteableMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AccessorMask' -> 16r4.
+		'MutableMask' -> 16r20.
+		'MutatorMask' -> 16r8.
+		'NonBrowsableMask' -> 16r80.
+		'NullableMask' -> 16r40.
+		'OverrideMask' -> 16r10.
+		'ReadableMask' -> 16r1.
+		'WriteableMask' -> 16r2
+	}!
 AttributeDescriptor guid: (GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
 AttributeDescriptor isAbstract: true!
-AttributeDescriptor addClassConstant: 'AccessorMask' value: 16r4!
-AttributeDescriptor addClassConstant: 'MutableMask' value: 16r20!
-AttributeDescriptor addClassConstant: 'MutatorMask' value: 16r8!
-AttributeDescriptor addClassConstant: 'NonBrowsableMask' value: 16r80!
-AttributeDescriptor addClassConstant: 'NullableMask' value: 16r40!
-AttributeDescriptor addClassConstant: 'OverrideMask' value: 16r10!
-AttributeDescriptor addClassConstant: 'ReadableMask' value: 16r1!
-AttributeDescriptor addClassConstant: 'WriteableMask' value: 16r2!
 AttributeDescriptor comment: 'AttributeDescriptor is an abstract class of meta-objects that be used to describe the shape of other objects. It has a subclass, Aspect, instances of which describe how to access object''s published ''aspects'' (e.g. instance variables) through getter and setter methods, and a subclass, ExternalField, instances of which describe the fields of C style structures. Note that these objects are all descriptors, and need to be combined with a subject object in order to become "closed".'!
 !AttributeDescriptor categoriesForClass!Attribute-Definition! !
 !AttributeDescriptor methodsFor!

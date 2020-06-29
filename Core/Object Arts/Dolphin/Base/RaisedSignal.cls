@@ -4,7 +4,8 @@ Error subclass: #RaisedSignal
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RaisedSignal guid: (GUID fromString: '{87b4c55f-026e-11d3-9fd7-00a0cc3e4a32}')!
 RaisedSignal comment: ''!
 !RaisedSignal categoriesForClass!Kernel-Exception Handling! !

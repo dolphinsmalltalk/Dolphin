@@ -4,7 +4,8 @@ Object subclass: #DeafObject
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DeafObject guid: (GUID fromString: '{87b4c47a-026e-11d3-9fd7-00a0cc3e4a32}')!
 DeafObject comment: 'DeafObject is a singleton class whose sole instance is deaf to all requests - i.e. it appears to understand all messages, but takes no action except to answer itself. This ensures that the results of all message sends to the DeafObject are also deaf. DeafObject can be useful for avoiding a proliferation of #isNil tests.
 

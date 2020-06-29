@@ -4,7 +4,8 @@ ScalarField subclass: #BYTEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BYTEField guid: (GUID fromString: '{87b4c4e7-026e-11d3-9fd7-00a0cc3e4a32}')!
 BYTEField comment: '<BYTEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 8-bit unsigned integers.'!
 !BYTEField categoriesForClass!External-Data-Types! !

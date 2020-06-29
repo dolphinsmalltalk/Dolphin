@@ -4,7 +4,8 @@ WeakLookupTable variableSubclass: #WeakIdentityDictionary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakIdentityDictionary guid: (GUID fromString: '{87b4c534-026e-11d3-9fd7-00a0cc3e4a32}')!
 WeakIdentityDictionary comment: ''!
 !WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !

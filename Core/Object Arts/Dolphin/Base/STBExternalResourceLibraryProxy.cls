@@ -4,7 +4,8 @@ STBProxy subclass: #STBExternalResourceLibraryProxy
 	instanceVariableNames: 'fileName _reserved1'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBExternalResourceLibraryProxy guid: (GUID fromString: '{87b4c6ec-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBExternalResourceLibraryProxy comment: 'STBExternalResourceLibraryProxy is the class of <STBProxy>s used to save the state necessary to re-open an <ExternalResourceLibrary> from an STB stream. We use a special proxy in order to share a common instance so that each resource library need only be opened once.'!
 !STBExternalResourceLibraryProxy categoriesForClass!System-Binary storage! !

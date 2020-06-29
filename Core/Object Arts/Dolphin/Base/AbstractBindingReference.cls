@@ -4,7 +4,8 @@ Object subclass: #AbstractBindingReference
 	instanceVariableNames: ''
 	classVariableNames: 'Undeclared'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractBindingReference guid: (GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
 AbstractBindingReference isAbstract: true!
 AbstractBindingReference comment: 'Abstract superclass of binding references.'!

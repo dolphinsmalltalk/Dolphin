@@ -4,7 +4,8 @@ ScalarField subclass: #FLOATField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FLOATField guid: (GUID fromString: '{87b4c4ea-026e-11d3-9fd7-00a0cc3e4a32}')!
 FLOATField comment: '<FLOATField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit IEEE single precision floating point numbers.'!
 !FLOATField categoriesForClass!External-Data-Types! !

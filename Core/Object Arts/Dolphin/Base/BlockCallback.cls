@@ -4,7 +4,8 @@ ExternalCallback subclass: #BlockCallback
 	instanceVariableNames: 'block'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BlockCallback guid: (GUID fromString: '{87b4c577-026e-11d3-9fd7-00a0cc3e4a32}')!
 BlockCallback comment: ''!
 !BlockCallback categoriesForClass!System-Support! !

@@ -4,7 +4,8 @@ ExternalArray subclass: #FLOATArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FLOATArray guid: (GUID fromString: '{87b4c5a3-026e-11d3-9fd7-00a0cc3e4a32}')!
 FLOATArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of single-precision (32-bit) floating point numbers.'!
 !FLOATArray categoriesForClass!External-Data-Structured! !

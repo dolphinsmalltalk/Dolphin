@@ -4,7 +4,8 @@ Object subclass: #Collection
 	instanceVariableNames: ''
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Collection guid: (GUID fromString: '{87b4c464-026e-11d3-9fd7-00a0cc3e4a32}')!
 Collection isAbstract: true!
 Collection comment: ''!

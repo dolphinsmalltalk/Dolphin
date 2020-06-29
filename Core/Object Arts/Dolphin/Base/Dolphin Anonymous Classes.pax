@@ -30,7 +30,8 @@ ClassBuilder subclass: #AnonymousClassBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

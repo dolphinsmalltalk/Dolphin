@@ -4,7 +4,8 @@ ArrayFieldLength subclass: #FixedArrayFieldLength
 	instanceVariableNames: 'elementCount'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FixedArrayFieldLength guid: (GUID fromString: '{f257b54a-a33a-4696-b457-e7e6d4dc0509}')!
 FixedArrayFieldLength comment: ''!
 !FixedArrayFieldLength categoriesForClass!Kernel-Objects! !

@@ -2,13 +2,15 @@
 
 MessageBoxAbstract subclass: #MessageBox
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
-	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
+	classVariableNames: 'ButtonStyles ModeStyles'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ButtonMap' -> #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore).
+		'ButtonsForStyle' -> #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11)).
+		'SuppressibleMask' -> 16r10
+	}!
 MessageBox guid: (GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
-MessageBox addClassConstant: 'ButtonMap' value: #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore)!
-MessageBox addClassConstant: 'ButtonsForStyle' value: #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11))!
-MessageBox addClassConstant: 'SuppressibleMask' value: 16r10!
 MessageBox comment: 'MessageBox provides a convenient wrapping aound the standard Windows Message Box. It can be used to pose questions, and report information, warnings, or errors.
 
 Note that MessageBox is deliberately implemented using low-level Windows APIs in order to be independent of the MVP subsystem.
@@ -386,7 +388,6 @@ initialize
 				yourself.
 	self addClassConstant: 'ButtonMap' value: buttonMap.
 	"at: IDTIMEOUT put: #timeout;"
-	self addClassConstant: 'SuppressibleMask' value: 16r10.
 	ButtonStyles := IdentityDictionary new
 				at: #ok put: MB_OK;
 				at: #okCancel put: MB_OKCANCEL;

@@ -4,7 +4,8 @@ UINT_PTRArray subclass: #HandleArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HandleArray guid: (GUID fromString: '{1452d19c-be37-42aa-838e-ff2156d8ed64}')!
 HandleArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of handles. Note that these could be 32 or 64-bit, depending on the host OS.'!
 !HandleArray categoriesForClass!External-Data-Structured! !

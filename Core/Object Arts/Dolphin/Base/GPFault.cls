@@ -4,7 +4,8 @@ Win32Fault subclass: #GPFault
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GPFault guid: (GUID fromString: '{87b4c567-026e-11d3-9fd7-00a0cc3e4a32}')!
 GPFault comment: ''!
 !GPFault categoriesForClass!System-Exception Handling! !

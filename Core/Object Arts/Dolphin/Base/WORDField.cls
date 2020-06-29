@@ -4,7 +4,8 @@ ScalarField subclass: #WORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WORDField guid: (GUID fromString: '{87b4c4ef-026e-11d3-9fd7-00a0cc3e4a32}')!
 WORDField comment: '<WORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit unsigned integers.'!
 !WORDField categoriesForClass!External-Data-Types! !

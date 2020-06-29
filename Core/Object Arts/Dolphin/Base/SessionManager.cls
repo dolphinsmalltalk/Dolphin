@@ -2,13 +2,15 @@
 
 Object subclass: #SessionManager
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole settingsChanged events'
-	classVariableNames: 'Current EmbeddingMask PreStartFile SettingsChangeTimerId'
+	classVariableNames: 'Current PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EmbeddingMask' -> 16r1.
+		'SettingsChangeTimerId' -> 16r2
+	}!
 SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
 SessionManager isAbstract: true!
-SessionManager addClassConstant: 'EmbeddingMask' value: 16r1!
-SessionManager addClassConstant: 'SettingsChangeTimerId' value: 16r2!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.

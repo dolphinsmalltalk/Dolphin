@@ -729,11 +729,6 @@ initialize
 		CompiledCode initialize
 	"
 
-	self addClassConstant: 'PrivateMask' value: 16r1.
-	self addClassConstant: 'SimpleAccessorBytes'
-		value: (self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray).
-	self addClassConstant: 'SimpleMutatorBytes'
-		value: (self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray).
 	self initializeInfoCache!
 
 initializeInfoCache

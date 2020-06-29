@@ -4,7 +4,8 @@ String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UtfEncodedString guid: (GUID fromString: '{f19f0843-d636-4c39-8815-afe452d16cb0}')!
 UtfEncodedString isNullTerminated: true!
 UtfEncodedString isAbstract: true!

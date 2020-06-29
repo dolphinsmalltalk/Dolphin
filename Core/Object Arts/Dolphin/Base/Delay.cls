@@ -2,11 +2,13 @@
 
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
-	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
+	classVariableNames: 'AccessProtect Current HighestResolution ImageClock LowestResolution Pending Resolution TicksToNanos TimingProcess TimingSemaphore'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'DefaultResolution' -> 16r3D09
+	}!
 Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Delay addClassConstant: 'DefaultResolution' value: 16r3D09!
 Delay comment: '`Delay`s are used to introduce timed pauses in the execution of a `Process`.  `Delay`s can be constructed that specify a duration using the instance creation messages `#forMicroseconds:`, `#forMilliseconds:`, and `#forSeconds:`, or an absolute time based on the millisecond clock value, `#untilMilliseconds:`. Once constructed a `Delay` responds to the `#wait` message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 `Delay`s constructed to wait for an absolute time are "one-shot", in that once they have expired further attempts to `#wait` on them will return immediately. Conversely, `Delay`s scheduled to wait for a time interval can be waited on again to delay for the same interval.

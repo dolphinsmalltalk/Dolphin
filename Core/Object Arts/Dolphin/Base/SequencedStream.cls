@@ -4,7 +4,8 @@ Stream subclass: #SequencedStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedStream guid: (GUID fromString: '{9b6a5665-c80e-457c-b384-f716399f271d}')!
 SequencedStream isAbstract: true!
 SequencedStream comment: 'SequencedStream is an class of <Stream>s that stream over a finite number of past and future sequence values, maintaining a current position among those sequence values and allowing that position to be altered. Sub-instances of <SequencedStream> conform to the ANSI <sequencedStream> protocol.'!

@@ -4,7 +4,8 @@ StructureArrayPointerField subclass: #PointerArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PointerArrayPointerField guid: (GUID fromString: '{3a78c2fd-cf0b-4f89-be59-bf48cea436fa}')!
 PointerArrayPointerField comment: ''!
 !PointerArrayPointerField categoriesForClass!External-Data-Types! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #OpcodePool put: (PoolConstantsDictionary named: #OpcodePool)!
+#{OpcodePool} declare: (PoolConstantsDictionary named: #OpcodePool)!
 OpcodePool at: 'BlockCopy' put: 16rFC!
 OpcodePool at: 'Break' put: 16r0!
 OpcodePool at: 'DecPushTemp' put: 16rFB!

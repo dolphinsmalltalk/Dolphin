@@ -2,12 +2,14 @@
 
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_highPart _OffsetOf_lowPart'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_highPart' -> 16r4.
+		'_OffsetOf_lowPart' -> 16r0
+	}!
 QWORD guid: (GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
-QWORD addClassConstant: '_OffsetOf_highPart' value: 16r4!
-QWORD addClassConstant: '_OffsetOf_lowPart' value: 16r0!
 QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format 2''s complement).'!

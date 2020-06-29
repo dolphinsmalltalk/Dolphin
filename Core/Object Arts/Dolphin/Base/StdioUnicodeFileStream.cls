@@ -4,7 +4,8 @@ StdioTextFileStream subclass: #StdioUnicodeFileStream
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StdioUnicodeFileStream guid: (GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
 StdioUnicodeFileStream isAbstract: true!
 StdioUnicodeFileStream comment: ''!

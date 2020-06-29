@@ -4,7 +4,8 @@ StructureArrayField subclass: #PointerArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PointerArrayField guid: (GUID fromString: '{23c14350-68ab-4481-a095-5c4f9654d211}')!
 PointerArrayField comment: 'PointerArrayField is the class of <ExternalField>s used to describe fields that are fixed-size arrays of pointers to structures.'!
 !PointerArrayField categoriesForClass!External-Data-Types! !

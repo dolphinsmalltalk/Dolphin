@@ -4,7 +4,8 @@ Object subclass: #Compiler
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultFlags DisabledWarnings'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Compiler guid: (GUID fromString: '{87b4c470-026e-11d3-9fd7-00a0cc3e4a32}')!
 Compiler comment: 'The Compiler class is responsible for compiling new methods and evaluating expressions.'!
 !Compiler categoriesForClass!System-Compiler! !

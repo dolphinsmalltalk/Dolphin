@@ -4,7 +4,8 @@ RelativeFileLocator subclass: #ImageRelativeFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ImageRelativeFileLocator guid: (GUID fromString: '{42513a65-8d78-44a8-b475-bdfd1e7fb6fc}')!
 ImageRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the image directory, in which case an absolute path is used.

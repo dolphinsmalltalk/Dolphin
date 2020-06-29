@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #FacilityCodes put: (PoolConstantsDictionary named: #FacilityCodes)!
+#{FacilityCodes} declare: (PoolConstantsDictionary named: #FacilityCodes)!
 FacilityCodes at: 'FACILITY_CERT' put: 16rB!
 FacilityCodes at: 'FACILITY_CONTROL' put: 16rA!
 FacilityCodes at: 'FACILITY_DIRECTDRAW' put: 16r876!

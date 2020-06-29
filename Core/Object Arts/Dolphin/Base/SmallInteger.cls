@@ -4,7 +4,8 @@ Integer subclass: #SmallInteger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmallInteger guid: (GUID fromString: '{87b4c65f-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmallInteger comment: 'Class SmallInteger is an optimized representation of 31-bit 2''s complement integers.
 

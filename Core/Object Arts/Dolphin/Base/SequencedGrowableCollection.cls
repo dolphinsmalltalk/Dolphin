@@ -4,7 +4,8 @@ SequenceableCollection subclass: #SequencedGrowableCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedGrowableCollection guid: (GUID fromString: '{87b4c50f-026e-11d3-9fd7-00a0cc3e4a32}')!
 SequencedGrowableCollection isAbstract: true!
 SequencedGrowableCollection comment: 'SequencedGrowableCollection is the abstract class of sequenceable, contractible, and extensible collections.

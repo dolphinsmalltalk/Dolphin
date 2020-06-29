@@ -4,7 +4,8 @@ UIntPtrBytes variableByteSubclass: #ExternalAddress
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalAddress guid: (GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalAddress isIndirection: true!
 ExternalAddress comment: ''!

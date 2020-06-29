@@ -949,9 +949,6 @@ initialize
 						with error checking.
 		NoCheckModes		Ditto, without error checking."
 
-	self addClassConstant: 'OpenFlagsMask' value: 2r111.
-	self addClassConstant: 'AccessFlagsMask' value: 2r111 bitInvert.
-
 	self addClassConstant: 'ShareModes' value: ##(
 		IdentityDictionary new
 			at: #read			put: Win32Constants.FILE_SHARE_READ;

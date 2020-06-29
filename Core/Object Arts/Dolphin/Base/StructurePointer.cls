@@ -4,7 +4,8 @@ ExternalStructure subclass: #StructurePointer
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructurePointer guid: (GUID fromString: '{e3b2fb6a-4ea0-48f6-bd97-5f65c176fb00}')!
 StructurePointer comment: ''!
 !StructurePointer categoriesForClass!External-Data-Structured! !

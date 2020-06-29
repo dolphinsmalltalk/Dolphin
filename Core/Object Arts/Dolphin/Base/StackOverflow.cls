@@ -4,7 +4,8 @@ Exception subclass: #StackOverflow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StackOverflow guid: (GUID fromString: '{8d4d9414-edd2-4a90-a4fb-2886ec495d39}')!
 StackOverflow comment: 'Exception signalled when the VM detects an unrecoverable stack overflow in a process. Note that this is not a subclass of <Error> in order that it is not trapped by generic error handlers.'!
 !StackOverflow categoriesForClass!Kernel-Exception Handling! !

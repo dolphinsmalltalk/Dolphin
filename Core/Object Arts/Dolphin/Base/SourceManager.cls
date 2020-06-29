@@ -4,7 +4,8 @@ Object subclass: #SourceManager
 	instanceVariableNames: 'mutex'
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SourceManager guid: (GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
 SourceManager comment: ''!
 !SourceManager categoriesForClass!Development!System-Support! !

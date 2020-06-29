@@ -4,7 +4,8 @@ ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceSTBByteArrayAccessor guid: (GUID fromString: '{87b4c6d9-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceSTBByteArrayAccessor comment: ''!
 !ResourceSTBByteArrayAccessor categoriesForClass!MVP-Resources! !

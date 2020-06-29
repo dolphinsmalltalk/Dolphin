@@ -2,9 +2,12 @@
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
-	classVariableNames: 'UpgradingMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'UpgradingMask' -> 16r1
+	}!
 STBInFiler guid: (GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBInFiler comment: ''!
 !STBInFiler categoriesForClass!System-Binary storage! !
@@ -266,9 +269,6 @@ setRefOffset: anInteger
 
 !STBInFiler class methodsFor!
 
-initialize
-	self addClassConstant: 'UpgradingMask' value: 1!
-
 peekForSignatureIn: aReadStream
 	"Answer whether the <readableStream> argument, aReadStream, appears to
 	be an STB stream (or is positioned at the start of an STB stream). If the STB
@@ -279,6 +279,5 @@ peekForSignatureIn: aReadStream
 	position := aReadStream position.
 	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
-!STBInFiler class categoriesFor: #initialize!development!initializing!public! !
 !STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
 

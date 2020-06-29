@@ -4,7 +4,8 @@ HRESULTError subclass: #Win32Error
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Error guid: (GUID fromString: '{87b4c565-026e-11d3-9fd7-00a0cc3e4a32}')!
 Win32Error comment: ''!
 !Win32Error categoriesForClass!System-Exception Handling! !

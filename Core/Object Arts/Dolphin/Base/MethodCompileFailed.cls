@@ -4,7 +4,8 @@ Notification subclass: #MethodCompileFailed
 	instanceVariableNames: 'compilerErrorNotification'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodCompileFailed guid: (GUID fromString: '{87b4c56f-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodCompileFailed comment: 'A MethodCompileFailed notification is signalled when a method compilation fails. Handlers can trap this if they wish to replace the original failed compilation with a stub method. This is useful so that the failed method source can be seen in the browsers or to retain category information. To install a stub method the handler should call #resumeWithStubMethod.'!
 !MethodCompileFailed categoriesForClass!System-Compiler! !

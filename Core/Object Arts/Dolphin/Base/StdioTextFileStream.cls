@@ -4,7 +4,8 @@ StdioFileStream subclass: #StdioTextFileStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StdioTextFileStream guid: (GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
 StdioTextFileStream isAbstract: true!
 StdioTextFileStream comment: ''!

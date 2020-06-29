@@ -4,7 +4,8 @@ LPVOID subclass: #LPWSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LPWSTR guid: (GUID fromString: '{87b4c5b1-026e-11d3-9fd7-00a0cc3e4a32}')!
 LPWSTR comment: 'LPWSTR is a class to represent pointers to Unicode strings. It is useful where an external function (or COM method call) returns a pointer to a wide character string through a pointer argument. An example being the IEnumString interface.
 

@@ -2,12 +2,14 @@
 
 Magnitude subclass: #Duration
 	instanceVariableNames: 'seconds'
-	classVariableNames: 'SecondsPerDay SecondsPerHour Zero'
+	classVariableNames: 'Zero'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SecondsPerDay' -> 16r15180.
+		'SecondsPerHour' -> 16rE10
+	}!
 Duration guid: (GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
-Duration addClassConstant: 'SecondsPerDay' value: 16r15180!
-Duration addClassConstant: 'SecondsPerHour' value: 16rE10!
 Duration comment: '`Duration` is an implementation of the ANSI Smalltalk protocols `<Duration>` (instance side) and `<Duration factory>` (class side).
 
 A `Duration` represents a length of time, at any resolution, and is independent of any start or end point. `Duration`s are immutable.

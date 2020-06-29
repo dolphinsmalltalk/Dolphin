@@ -4,7 +4,8 @@ PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KernelLibrary guid: (GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
 KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
 

@@ -4,7 +4,8 @@ ExternalLibrary subclass: #CompilerLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompilerLibrary guid: (GUID fromString: '{87b4c58a-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompilerLibrary comment: 'CompilerLibrary is the <ExternalLibrary> to represent the Dolphin Smalltalk compiler.
 

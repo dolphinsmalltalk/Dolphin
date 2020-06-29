@@ -4,7 +4,8 @@ ByteArray variableByteSubclass: #ExternalIntegerBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalIntegerBytes guid: (GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
 ExternalIntegerBytes isAbstract: true!
 ExternalIntegerBytes comment: ''!

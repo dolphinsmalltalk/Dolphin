@@ -4,7 +4,8 @@ BYTE subclass: #SBYTE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SBYTE guid: (GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
 SBYTE comment: '<SBYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

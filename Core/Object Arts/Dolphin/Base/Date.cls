@@ -4,7 +4,8 @@ Magnitude subclass: #Date
 	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Date guid: (GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
 Date comment: '`Date` is a class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
 

@@ -4,7 +4,8 @@ Object subclass: #ExternalLibrary
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants Win32Errors'
-	classInstanceVariableNames: 'default'!
+	classInstanceVariableNames: 'default'
+	classConstants: {}!
 ExternalLibrary guid: (GUID fromString: '{87b4c488-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalLibrary comment: 'ExternalLibrary is the class of objects which represent shared, external, function libraries (i.e. DLLs). Each DLL is represented by a separate subclass, with the methods of that subclass corresponding to functions exported from the DLL. The functions are a special form of primitive method (actually instances of <ExternalMethod>) containing the additional type information needed to interface to statically typed functions. The functions are invoked by sending Smalltalk messages int the normal way, with these being translated by the VM external call primitive to the actual function invocations. The VM coerces the Smalltalk objects passed as arguments to appropriate native types following certain rules (see below). The external call primitive will fail if a type mismatch occurs, and normally this will result in an InvalidExternalCall exception being raised (assuming the #invalidCall method has not been overridden).
 

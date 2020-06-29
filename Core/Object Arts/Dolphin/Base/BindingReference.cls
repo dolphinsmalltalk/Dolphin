@@ -4,7 +4,8 @@ AbstractBindingReference subclass: #BindingReference
 	instanceVariableNames: 'pathString path context binding generation'
 	classVariableNames: 'Generation'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BindingReference guid: (GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
 BindingReference comment: 'Generic binding reference.'!
 !BindingReference categoriesForClass!System-Namespaces! !

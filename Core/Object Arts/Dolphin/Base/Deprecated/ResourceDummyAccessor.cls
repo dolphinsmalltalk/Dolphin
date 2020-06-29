@@ -4,7 +4,8 @@ ResourceAccessor subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceDummyAccessor guid: (GUID fromString: '{87b4c6d7-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceDummyAccessor comment: ''!
 !ResourceDummyAccessor categoriesForClass!MVP-Resources! !

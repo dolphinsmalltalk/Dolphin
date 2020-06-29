@@ -2,16 +2,18 @@
 
 UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
-	classVariableNames: 'Bom LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Bom' -> #[239 187 191].
+		'LeadByteMask2' -> 16rC0.
+		'LeadByteMask3' -> 16rE0.
+		'LeadByteMask4' -> 16rF0.
+		'TrailByteMask' -> 16r80
+	}!
 Utf8String guid: (GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
 Utf8String isNullTerminated: true!
-Utf8String addClassConstant: 'Bom' value: #[239 187 191 ]!
-Utf8String addClassConstant: 'LeadByteMask2' value: 16rC0!
-Utf8String addClassConstant: 'LeadByteMask3' value: 16rE0!
-Utf8String addClassConstant: 'LeadByteMask4' value: 16rF0!
-Utf8String addClassConstant: 'TrailByteMask' value: 16r80!
 Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin (i.e. `String new` yields a new, empty, `Utf8String`).
 
 When considering a `Utf8String` as a `SequenceableCollection`, its elements are `Character`s. However the `Character` elements represent UTF-8 code units, not Unicode code points. These code-unit characters can be "surrogate" characters representing part of the encoding of a full code-point. UTF-8 surrogate characters can be inserted into other Utf8Strings (although this must be done with care to avoid creating invalid encodings), but not mixed with characters from other encodings such as those from `Utf16String`s. To enumerate a `Utf8String` as `Character`s representing Unicode code points, a `ReadStream` should be attached to the string and the characters read from that. For example:
@@ -509,12 +511,7 @@ fromAddress: anAddress
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
-	VMLibrary default registryAt: #Utf8String put: self.
-	self addClassConstant: 'LeadByteMask2' value: 16rC0.
-	self addClassConstant: 'LeadByteMask3' value: 16rE0.
-	self addClassConstant: 'LeadByteMask4' value: 16rF0.
-	self addClassConstant: 'TrailByteMask' value: 16r80.
-	self addClassConstant: 'Bom' value: #[16rEF 16rBB 16rBF]! !
+	VMLibrary default registryAt: #Utf8String put: self! !
 !Utf8String class categoriesFor: #characterForCodeUnit:!enquiries!public! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
 !Utf8String class categoriesFor: #fromAddress:!instance creation!public! !

@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InsertionSortAlgorithm guid: (GUID fromString: '{7d2cd205-0902-49b4-8198-38602100293d}')!
 InsertionSortAlgorithm comment: 'InsertionSortAlgorithm implements the simple Insertion Sort algorithm as a pluggable sorting strategy  for use in conjunction with <SortedCollection>s. 
 

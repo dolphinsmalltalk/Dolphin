@@ -4,7 +4,8 @@ Object subclass: #FileLocator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileLocator guid: (GUID fromString: '{391014f8-ebb8-4dd3-bd5d-fb6f303de483}')!
 FileLocator comment: 'A FileLocator is an abstract root for a hierarchy of subclasses that implement the <fileLocator> protocol. 
 A <fileLocator> is used map between an external resource pathname and an internal name. First an external name is mapped to an internal form using #relativePathTo:. The latter can be held in the image and later mapped back to it''s is full external name using #localFileSpecFor:.

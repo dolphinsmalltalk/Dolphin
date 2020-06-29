@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #MessageBoxConstants put: (PoolConstantsDictionary named: #MessageBoxConstants)!
+#{MessageBoxConstants} declare: (PoolConstantsDictionary named: #MessageBoxConstants)!
 MessageBoxConstants at: 'IDTIMEOUT' put: 16r7D00!
 MessageBoxConstants at: 'MB_ABORTRETRYIGNORE' put: 16r2!
 MessageBoxConstants at: 'MB_APPLMODAL' put: 16r0!

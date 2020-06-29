@@ -4,7 +4,8 @@ ArithmeticError subclass: #FloatingPointException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FloatingPointException guid: (GUID fromString: '{87b4c562-026e-11d3-9fd7-00a0cc3e4a32}')!
 FloatingPointException comment: '`FloatingPointException` is the class of `ArithmeticError` raised when a floating point operation in a primitive or external library call encounters an unmasked error condition. Each such exception carries information as to the operands involved, the operation that faulted, and the error cause(s). The possible error causes are:
 	`#Inexact`			- the operation resulted in a loss of precision (quite likely with FP arithmetic)

@@ -4,7 +4,8 @@ ScalarField subclass: #AbstractCHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractCHARField guid: (GUID fromString: '{225e024e-8ea6-493f-ad47-82a47ac5cb5c}')!
 AbstractCHARField comment: ''!
 !AbstractCHARField categoriesForClass!Unclassified! !

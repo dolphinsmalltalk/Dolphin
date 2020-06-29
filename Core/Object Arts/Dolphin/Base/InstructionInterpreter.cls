@@ -4,7 +4,8 @@ Object subclass: #InstructionInterpreter
 	instanceVariableNames: 'dispatcher'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InstructionInterpreter guid: (GUID fromString: '{369fe97b-c73c-4283-9e17-ff09c8bac2d8}')!
 InstructionInterpreter isAbstract: true!
 InstructionInterpreter comment: 'InstructionInterpreter is the abstract class of <bytecodeInterpreter>s that can act as the client of a <ByteCodeDispatcher>.

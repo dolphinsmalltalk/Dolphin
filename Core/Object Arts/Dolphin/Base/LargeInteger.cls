@@ -4,7 +4,8 @@ Integer variableByteSubclass: #LargeInteger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LargeInteger guid: (GUID fromString: '{87b4c65e-026e-11d3-9fd7-00a0cc3e4a32}')!
 LargeInteger isIndirection: true!
 LargeInteger comment: 'Class LargeInteger is the class of Integers which are outside the range of SmallIntegers (i.e. outside (SmallInteger minimum..SmallInteger maximum). Basically any Integer requiring more than 31-bits to be represented in 2''s complement will be a LargeInteger.

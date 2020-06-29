@@ -4,7 +4,8 @@ Notification subclass: #CompilerNotification
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
 	classVariableNames: 'ErrorFormats'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompilerNotification guid: (GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompilerNotification isAbstract: true!
 CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.

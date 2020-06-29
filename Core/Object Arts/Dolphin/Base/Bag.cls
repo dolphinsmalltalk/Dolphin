@@ -4,7 +4,8 @@ Collection subclass: #Bag
 	instanceVariableNames: 'contents'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Bag guid: (GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
 Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
 

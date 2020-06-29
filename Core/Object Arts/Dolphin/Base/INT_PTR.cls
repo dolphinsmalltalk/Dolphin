@@ -4,7 +4,8 @@ UINT_PTR subclass: #INT_PTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 INT_PTR guid: (GUID fromString: '{7454f675-5169-482b-9a37-5fe37154d567}')!
 INT_PTR comment: ''!
 !INT_PTR categoriesForClass!External-Data-Structured! !

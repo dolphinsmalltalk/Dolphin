@@ -4,7 +4,8 @@ Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
 	classVariableNames: 'Null'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GUID guid: (GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
 GUID comment: 'GUID is the class of 128-bit Globally Unique Identifiers (guids) which are used wherever a unique identifier is required in COM, for example to identify specific coclasses and interfaces.
 

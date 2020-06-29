@@ -4,7 +4,8 @@ Object subclass: #Keyboard
 	instanceVariableNames: 'state virtualKeys modifierKeys keyNames'
 	classVariableNames: 'DefaultInstance InvariantInstance'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Keyboard guid: (GUID fromString: '{87b4c496-026e-11d3-9fd7-00a0cc3e4a32}')!
 Keyboard comment: '`Keyboard` is an abstraction over the system keyboard, and provides services to enquire and set the state of keys, and to map between key codes and the names of keys in the particular keyboard layout that the instance represents.
 

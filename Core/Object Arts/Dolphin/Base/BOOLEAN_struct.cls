@@ -4,7 +4,8 @@ BYTE subclass: #BOOLEAN
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BOOLEAN guid: (GUID fromString: '{35efc105-16f9-425a-94d7-298ebbb17d36}')!
 BOOLEAN comment: ''!
 !BOOLEAN categoriesForClass!Unclassified! !

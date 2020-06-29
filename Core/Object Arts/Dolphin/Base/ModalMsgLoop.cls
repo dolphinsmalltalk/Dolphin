@@ -4,7 +4,8 @@ Object subclass: #ModalMsgLoop
 	instanceVariableNames: 'loop'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ModalMsgLoop guid: (GUID fromString: '{9fe23040-75a9-11d3-b376-080046056106}')!
 ModalMsgLoop comment: 'ModalMsgLoop is a special process synchronisation object that can be used to block the main UI process while still servicing the message queue, without having to start a new UI process.
 

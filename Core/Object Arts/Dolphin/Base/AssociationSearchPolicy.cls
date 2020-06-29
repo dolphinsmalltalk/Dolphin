@@ -4,7 +4,8 @@ EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AssociationSearchPolicy guid: (GUID fromString: '{f7fa3e66-a3ec-48a8-a083-defdf8679834}')!
 AssociationSearchPolicy comment: 'AssocationSearchPolicy is a specialized <EqualitySearchPolicy> for searching homogeneous collections of Associations by equality.
 

@@ -4,7 +4,8 @@ Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VersionInfo guid: (GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
 

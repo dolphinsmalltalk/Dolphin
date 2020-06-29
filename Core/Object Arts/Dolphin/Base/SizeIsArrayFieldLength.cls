@@ -4,7 +4,8 @@ ArrayFieldLength subclass: #SizeIsArrayFieldLength
 	instanceVariableNames: 'sizeIs getLength setLength'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SizeIsArrayFieldLength guid: (GUID fromString: '{3f017262-aded-499e-9c07-da6937249262}')!
 SizeIsArrayFieldLength comment: ''!
 !SizeIsArrayFieldLength categoriesForClass!Kernel-Objects! !

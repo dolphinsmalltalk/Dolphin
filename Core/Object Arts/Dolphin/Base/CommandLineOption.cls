@@ -4,7 +4,8 @@ Object subclass: #CommandLineOption
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommandLineOption guid: (GUID fromString: '{24fed4fa-6d57-4f07-b973-b1cd9591567a}')!
 CommandLineOption comment: 'This class is used internally by instances of CommandLine to encapsulate option rules.'!
 !CommandLineOption categoriesForClass!Kernel-Objects! !

@@ -4,7 +4,8 @@ nil subclass: #Object
 	instanceVariableNames: ''
 	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
 	poolDictionaries: '_InstanceBehaviorMasks'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object guid: (GUID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}')!
 Object comment: 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
 

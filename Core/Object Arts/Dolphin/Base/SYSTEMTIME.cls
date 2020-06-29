@@ -2,18 +2,20 @@
 
 Win32Structure subclass: #SYSTEMTIME
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_wDay _OffsetOf_wDayOfWeek _OffsetOf_wHour _OffsetOf_wMilliseconds _OffsetOf_wMinute _OffsetOf_wMonth _OffsetOf_wSecond _OffsetOf_wYear'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_wDay' -> 16r6.
+		'_OffsetOf_wDayOfWeek' -> 16r4.
+		'_OffsetOf_wHour' -> 16r8.
+		'_OffsetOf_wMilliseconds' -> 16rE.
+		'_OffsetOf_wMinute' -> 16rA.
+		'_OffsetOf_wMonth' -> 16r2.
+		'_OffsetOf_wSecond' -> 16rC.
+		'_OffsetOf_wYear' -> 16r0
+	}!
 SYSTEMTIME guid: (GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
-SYSTEMTIME addClassConstant: '_OffsetOf_wDay' value: 16r6!
-SYSTEMTIME addClassConstant: '_OffsetOf_wDayOfWeek' value: 16r4!
-SYSTEMTIME addClassConstant: '_OffsetOf_wHour' value: 16r8!
-SYSTEMTIME addClassConstant: '_OffsetOf_wMilliseconds' value: 16rE!
-SYSTEMTIME addClassConstant: '_OffsetOf_wMinute' value: 16rA!
-SYSTEMTIME addClassConstant: '_OffsetOf_wMonth' value: 16r2!
-SYSTEMTIME addClassConstant: '_OffsetOf_wSecond' value: 16rC!
-SYSTEMTIME addClassConstant: '_OffsetOf_wYear' value: 16r0!
 SYSTEMTIME comment: ''!
 !SYSTEMTIME categoriesForClass!Win32-Structs! !
 !SYSTEMTIME methodsFor!

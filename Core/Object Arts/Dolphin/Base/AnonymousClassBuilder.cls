@@ -4,7 +4,8 @@ ClassBuilder subclass: #AnonymousClassBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnonymousClassBuilder guid: (GUID fromString: '{cd7cc2b6-31a1-41e9-ad2d-50f3f9b109ab}')!
 AnonymousClassBuilder comment: ''!
 !AnonymousClassBuilder categoriesForClass!System-Support! !

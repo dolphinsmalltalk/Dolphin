@@ -4,7 +4,8 @@ ExternalInteger subclass: #WORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WORD guid: (GUID fromString: '{87b4c5ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 WORD comment: '<WORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

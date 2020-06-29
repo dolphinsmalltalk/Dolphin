@@ -4,7 +4,8 @@ UINT_PTRArray subclass: #PointerArray
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PointerArray guid: (GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
 PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
 

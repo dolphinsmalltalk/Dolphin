@@ -4,7 +4,8 @@ Boolean subclass: #False
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 False guid: (GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
 False comment: 'The False class implements the behaviour of the false (logical false) object.
 

@@ -2,14 +2,16 @@
 
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
-	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FiletimeEpochSeconds' -> -16r234474600.
+		'JulianDateOffset' -> 16r22A11020C0.
+		'LilianDayOffset' -> -16r8D0C7.
+		'SmalltalkEpochRD' -> 16rA96C9
+	}!
 DateAndTime guid: (GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
-DateAndTime addClassConstant: 'FiletimeEpochSeconds' value: -16r234474600!
-DateAndTime addClassConstant: 'JulianDateOffset' value: 16r22A11020C0!
-DateAndTime addClassConstant: 'LilianDayOffset' value: -16r8D0C7!
-DateAndTime addClassConstant: 'SmalltalkEpochRD' value: 16rA96C9!
 DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 
 *Derived from original work copyright © 2005 Ian Bartholomew, with additions by Richard Harmon, however the internal representation has been changed.*

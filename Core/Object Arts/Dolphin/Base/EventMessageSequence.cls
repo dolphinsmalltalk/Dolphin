@@ -4,7 +4,8 @@ MessageSequenceAbstract subclass: #EventMessageSequence
 	instanceVariableNames: 'receivers messages tally'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EventMessageSequence guid: (GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
 EventMessageSequence comment: ''!
 !EventMessageSequence categoriesForClass!System-Support! !

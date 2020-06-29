@@ -4,7 +4,8 @@ ArrayField subclass: #StructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructureArrayField guid: (GUID fromString: '{87b4c4e1-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureArrayField comment: 'StructureArrayField is an <ExternalField> type that can be used to described embedded arrays of structures in <ExternalStructures>.
 '!

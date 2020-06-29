@@ -4,7 +4,8 @@ Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TimeStamp guid: (GUID fromString: '{87b4c656-026e-11d3-9fd7-00a0cc3e4a32}')!
 TimeStamp comment: '`TimeStamp` represents a `Time` of day on a particular `Date` in an unspecified time zone.
 

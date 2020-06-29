@@ -4,7 +4,8 @@ WeakArray variableSubclass: #MourningWeakArray
 	instanceVariableNames: 'pathologist'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MourningWeakArray guid: (GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
 MourningWeakArray comment: ''!
 !MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !

@@ -4,7 +4,8 @@ FileLocator subclass: #AbsoluteFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbsoluteFileLocator guid: (GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
 AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.

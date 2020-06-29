@@ -4,7 +4,8 @@ Object subclass: #MethodName
 	instanceVariableNames: 'className selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodName guid: (GUID fromString: '{22638432-c25d-413a-9087-34a3b4ad2b08}')!
 MethodName comment: ''!
 !MethodName categoriesForClass!Kernel-Objects! !

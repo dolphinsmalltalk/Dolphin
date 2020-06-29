@@ -4,7 +4,8 @@ STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBResourceSTBByteArrayAccessorProxy guid: (GUID fromString: '{87b4c6f0-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBResourceSTBByteArrayAccessorProxy comment: ''!
 !STBResourceSTBByteArrayAccessorProxy categoriesForClass!System-Binary storage! !

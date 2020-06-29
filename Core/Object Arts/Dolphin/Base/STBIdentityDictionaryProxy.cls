@@ -4,7 +4,8 @@ STBCollectionProxy subclass: #STBIdentityDictionaryProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBIdentityDictionaryProxy guid: (GUID fromString: '{87b4c6f6-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBIdentityDictionaryProxy comment: ''!
 !STBIdentityDictionaryProxy categoriesForClass!System-Binary storage! !

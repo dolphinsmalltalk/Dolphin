@@ -2,20 +2,22 @@
 
 Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
-	classVariableNames: '_OffsetOf_cAlternateFileName _OffsetOf_cFileName _OffsetOf_dwFileAttributes _OffsetOf_dwReserved0 _OffsetOf_dwReserved1 _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cAlternateFileName' -> 16r234.
+		'_OffsetOf_cFileName' -> 16r2C.
+		'_OffsetOf_dwFileAttributes' -> 16r0.
+		'_OffsetOf_dwReserved0' -> 16r24.
+		'_OffsetOf_dwReserved1' -> 16r28.
+		'_OffsetOf_ftCreationTime' -> 16r4.
+		'_OffsetOf_ftLastAccessTime' -> 16rC.
+		'_OffsetOf_ftLastWriteTime' -> 16r14.
+		'_OffsetOf_nFileSizeHigh' -> 16r1C.
+		'_OffsetOf_nFileSizeLow' -> 16r20
+	}!
 WIN32_FIND_DATAW guid: (GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_cAlternateFileName' value: 16r234!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_cFileName' value: 16r2C!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwFileAttributes' value: 16r0!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwReserved0' value: 16r24!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwReserved1' value: 16r28!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftCreationTime' value: 16r4!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftLastAccessTime' value: 16rC!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftLastWriteTime' value: 16r14!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_nFileSizeHigh' value: 16r1C!
-WIN32_FIND_DATAW addClassConstant: '_OffsetOf_nFileSizeLow' value: 16r20!
 WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 
 See File class for example usage.'!

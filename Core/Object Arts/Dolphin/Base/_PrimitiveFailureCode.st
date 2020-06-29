@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #_PrimitiveFailureCode put: (PoolConstantsDictionary named: #_PrimitiveFailureCode)!
+#{_PrimitiveFailureCode} declare: (PoolConstantsDictionary named: #_PrimitiveFailureCode)!
 _PrimitiveFailureCode at: 'AccessViolation' put: -16r3FF8FC1A!
 _PrimitiveFailureCode at: 'AssertionFailure' put: -16r17FFFBE0!
 _PrimitiveFailureCode at: 'ClassNotRegistered' put: -16r3FFBFEAC!

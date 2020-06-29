@@ -4,7 +4,8 @@ Set variableSubclass: #SharedSet
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SharedSet guid: (GUID fromString: '{87b4c528-026e-11d3-9fd7-00a0cc3e4a32}')!
 SharedSet comment: 'SharedSet is a process safe subclass of <Set>, which has the same behavior. It''s instances make use of a <Mutex> (a mutual exclusion lock) to prevent more than one process from accessing their elements at the same time. Although process safe to the extent   that the invariants of the data structure are maintained, further synchronisation mechanisms will almost certainly be required if a <SharedSet> is used to buffer information between processes (e.g. see <SharedQueue>).
 

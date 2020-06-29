@@ -4,7 +4,8 @@ Set variableSubclass: #IdentitySet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdentitySet guid: (GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
 IdentitySet comment: ''!
 !IdentitySet categoriesForClass!Collections-Unordered! !

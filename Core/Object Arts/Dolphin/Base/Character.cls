@@ -2,19 +2,21 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet Utf8Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EncodingMask' -> 16r3F000000.
+		'EscapeChars' -> #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r).
+		'Utf16LeadMask' -> 16rD800.
+		'Utf16Mask' -> 16r2000000.
+		'Utf16SurrogateMask' -> 16rFC00.
+		'Utf16TrailMask' -> 16rDC00.
+		'Utf32Mask' -> 16r3000000.
+		'Utf8Mask' -> 16r1000000.
+		'Utf8SurrogateMask' -> 16rC0
+	}!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
-Character addClassConstant: 'EncodingMask' value: 16r3F000000!
-Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
-Character addClassConstant: 'Utf16LeadMask' value: 16rD800!
-Character addClassConstant: 'Utf16Mask' value: 16r2000000!
-Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
-Character addClassConstant: 'Utf16TrailMask' value: 16rDC00!
-Character addClassConstant: 'Utf32Mask' value: 16r3000000!
-Character addClassConstant: 'Utf8Mask' value: 16r1000000!
-Character addClassConstant: 'Utf8SurrogateMask' value: 16rC0!
 Character comment: '`Character` is the class of objects which serve as the elemental values of Smalltalk `Strings`.
 
 Each `Character` instance generally represents a specific Unicode [code point](https://en.wikipedia.org/wiki/Code_point). Note that this does not necessarily mean that each `Character` corresponds to a single user-perceived, visually distinct, character (aka grapheme cluster). Multiple `Character`s may compose into a single grapheme cluster when displayed, some examples of different types being `👨🏻‍🍳`, `ö`, and `กำ`. The 2nd example has more than one valid representation and can have either one or two code-points.
@@ -668,9 +670,7 @@ initialize
 	self addClassConstant: 'Utf8Mask' value: String.EncodingUtf8 << 24.
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
 	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
-	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
-	self addClassConstant: 'Utf8SurrogateMask' value: 16rC0.
-	self addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
+	self addClassConstant: 'EncodingMask' value: 2r111111 << 24!
 
 isValidCodePoint: anInteger
 	"Answer whether the <integer> argument represents a valid Unicode code point AND is not a code point reserved for surrogate code units AND is not a 'non-character' (i.e. non-characters are valid code points, but 'reserved for internal use')."

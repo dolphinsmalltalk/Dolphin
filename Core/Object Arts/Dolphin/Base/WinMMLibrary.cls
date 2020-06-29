@@ -4,7 +4,8 @@ ExternalLibrary subclass: #WinMMLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WinMMLibrary guid: (GUID fromString: '{6467404e-3a82-101b-8181-00aa003743d3}')!
 WinMMLibrary comment: ''!
 !WinMMLibrary categoriesForClass!External-Libraries-Win32! !

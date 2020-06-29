@@ -4,7 +4,8 @@ SharedIdentityDictionary variableSubclass: #EventsCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EventsCollection guid: (GUID fromString: '{87b4c533-026e-11d3-9fd7-00a0cc3e4a32}')!
 EventsCollection comment: ''!
 !EventsCollection categoriesForClass!Collections-Unordered!System-Support! !

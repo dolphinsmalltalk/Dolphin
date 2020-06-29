@@ -4,7 +4,8 @@ ExternalAddress variableByteSubclass: #ExternalMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalMemory guid: (GUID fromString: '{87b4c51a-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalMemory isIndirection: true!
 ExternalMemory comment: ''!

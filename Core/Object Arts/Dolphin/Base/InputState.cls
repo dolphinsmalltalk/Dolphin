@@ -4,7 +4,8 @@ Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
 	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
 InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
 

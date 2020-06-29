@@ -1,24 +1,19 @@
 ﻿| package |
 package := Package name: 'Dolphin Command-line Parser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #CommandLine;
-	add: #CommandLineError;
-	add: #CommandLineOption;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{CommandLine}
+	#{CommandLineError}
+	#{CommandLineOption}
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -28,22 +23,20 @@ Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #CommandLineOption
 	instanceVariableNames: 'name isArgumentAllowed isArgumentRequired block'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Notification subclass: #CommandLineError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

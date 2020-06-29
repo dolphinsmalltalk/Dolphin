@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #ShellsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ShellsortAlgorithm guid: (GUID fromString: '{10f42ee9-007e-446c-9c87-5e71a22dd423}')!
 ShellsortAlgorithm comment: 'ShellsortAlgorithm implements the Shellsort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 

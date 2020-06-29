@@ -4,7 +4,8 @@ Object variableSubclass: #Context
 	instanceVariableNames: 'outer block'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Context guid: (GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
 Context comment: ''!
 !Context categoriesForClass!Kernel-Processes! !

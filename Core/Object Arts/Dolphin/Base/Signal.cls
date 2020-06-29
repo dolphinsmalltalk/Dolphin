@@ -4,7 +4,8 @@ Object subclass: #Signal
 	instanceVariableNames: 'description resumable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Signal guid: (GUID fromString: '{87b4c4b9-026e-11d3-9fd7-00a0cc3e4a32}')!
 Signal comment: ''!
 !Signal categoriesForClass!Kernel-Exception Handling! !

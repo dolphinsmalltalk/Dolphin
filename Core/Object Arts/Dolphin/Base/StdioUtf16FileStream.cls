@@ -4,7 +4,8 @@ StdioUnicodeFileStream subclass: #StdioUtf16FileStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StdioUtf16FileStream guid: (GUID fromString: '{59d77acf-50ff-4508-a672-0eaf7422f32a}')!
 StdioUtf16FileStream comment: ''!
 !StdioUtf16FileStream categoriesForClass!Collections-Streams! !

@@ -2,11 +2,13 @@
 
 ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
-	classVariableNames: 'Facilities FACILITY_NT_BIT Fail'
+	classVariableNames: 'Facilities Fail'
 	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FACILITY_NT_BIT' -> 16r10000000
+	}!
 HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
-HRESULT addClassConstant: 'FACILITY_NT_BIT' value: 16r10000000!
 HRESULT comment: ''!
 !HRESULT categoriesForClass!External-Data-Unstructured! !
 !HRESULT methodsFor!

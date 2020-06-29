@@ -4,7 +4,8 @@ Object subclass: #ObjectRegistry
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ObjectRegistry guid: (GUID fromString: '{87b4c4a5-026e-11d3-9fd7-00a0cc3e4a32}')!
 ObjectRegistry isAbstract: true!
 ObjectRegistry comment: 'ObjectRegistry is part of Dolphin''s external interfacing support, its purpose being to provide a unique <integer> identifier for a specific object, and, depending on the subclass, to maintain a reference to that object to prevent it from being garbage collected. This can be useful, for example, where one needs some unique identifier for an object to be passed to some external entity. 

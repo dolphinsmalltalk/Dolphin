@@ -51,7 +51,8 @@ Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

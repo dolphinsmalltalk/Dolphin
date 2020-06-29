@@ -4,7 +4,8 @@ Object subclass: #Mutex
 	instanceVariableNames: 'owner semaphore'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Mutex guid: (GUID fromString: '{87b4c4a4-026e-11d3-9fd7-00a0cc3e4a32}')!
 Mutex comment: 'Mutex is the class of process synchronisation objects which provide mutually exclusive access to critical sections, potentially permitting a single process to enter such critical sections multiple times recursively (in some other Smalltalk systems this class is in fact called, RecursionLock).
 

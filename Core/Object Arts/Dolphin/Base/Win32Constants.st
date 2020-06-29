@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #Win32Constants put: (PoolConstantsDictionary named: #Win32Constants)!
+#{Win32Constants} declare: (PoolConstantsDictionary named: #Win32Constants)!
 Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!
 Win32Constants at: 'AC_SRC_ALPHA' put: 16r1!
 Win32Constants at: 'AC_SRC_OVER' put: 16r0!

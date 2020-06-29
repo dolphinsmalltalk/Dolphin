@@ -4,7 +4,8 @@ QWORD subclass: #LARGE_INTEGER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LARGE_INTEGER guid: (GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
 LARGE_INTEGER comment: '<LARGE_INTEGER> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 

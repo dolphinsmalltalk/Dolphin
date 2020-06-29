@@ -4,7 +4,8 @@ Win32Error subclass: #Win32Fault
 	instanceVariableNames: 'exceptionRecord'
 	classVariableNames: 'ExceptionNames'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Fault guid: (GUID fromString: '{3b2fccea-10b3-4da2-9932-179927f451a2}')!
 Win32Fault comment: ''!
 !Win32Fault categoriesForClass!System-Exception Handling! !

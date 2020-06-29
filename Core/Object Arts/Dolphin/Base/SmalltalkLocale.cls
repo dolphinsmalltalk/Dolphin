@@ -4,7 +4,8 @@ Locale subclass: #SmalltalkLocale
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkLocale guid: (GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
 SmalltalkLocale comment: ''!
 !SmalltalkLocale categoriesForClass!Unclassified! !

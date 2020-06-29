@@ -4,7 +4,8 @@ SessionManager subclass: #ConsoleSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ConsoleSessionManager guid: (GUID fromString: '{b41feb01-21e0-4ad4-998e-ac8529155bee}')!
 ConsoleSessionManager isAbstract: true!
 ConsoleSessionManager comment: 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.

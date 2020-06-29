@@ -4,7 +4,8 @@ SortAlgorithm subclass: #DefaultSortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DefaultSortAlgorithm guid: (GUID fromString: '{4da46cbc-7732-4a19-b7ef-7548a1c4506f}')!
 DefaultSortAlgorithm comment: 'DefaultSortAlgorithm implements the default sorting algorithm and sort-ordering as a sorting strategy for use in conjunction with <SortedCollection>s.
 

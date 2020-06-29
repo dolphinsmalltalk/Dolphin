@@ -4,7 +4,8 @@ Object subclass: #Stream
 	instanceVariableNames: ''
 	classVariableNames: 'EndOfStreamSignal'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Stream guid: (GUID fromString: '{87b4c4c4-026e-11d3-9fd7-00a0cc3e4a32}')!
 Stream isAbstract: true!
 Stream comment: 'Stream represents a class of objects which can be used for streaming I/O. Stream itself is abstract.

@@ -4,7 +4,8 @@ Object subclass: #DeadObject
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DeadObject guid: (GUID fromString: '{87b4c479-026e-11d3-9fd7-00a0cc3e4a32}')!
 DeadObject comment: 'DeadObject is a singleton whose sole instance is used to mark the slots previously occuppied by dead objects in objects with weak references. This class serves no other purpose than to provide a unique ''Corpse'' object which prints in a recognisable form.
 

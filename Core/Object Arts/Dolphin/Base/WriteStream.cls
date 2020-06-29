@@ -4,7 +4,8 @@ PositionableStream subclass: #WriteStream
 	instanceVariableNames: 'writeLimit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WriteStream guid: (GUID fromString: '{87b4c6fb-026e-11d3-9fd7-00a0cc3e4a32}')!
 WriteStream comment: 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
 

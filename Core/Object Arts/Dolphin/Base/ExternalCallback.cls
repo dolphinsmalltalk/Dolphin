@@ -2,14 +2,16 @@
 
 Object subclass: #ExternalCallback
 	instanceVariableNames: 'thunk cookie descriptor'
-	classVariableNames: 'ArgSizeOffset MaxThunks Registry ThunkBase ThunkSize'
+	classVariableNames: 'Registry ThunkBase'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ArgSizeOffset' -> 16rE.
+		'MaxThunks' -> 16r100.
+		'ThunkSize' -> 16r10
+	}!
 ExternalCallback guid: (GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalCallback isAbstract: true!
-ExternalCallback addClassConstant: 'ArgSizeOffset' value: 16rE!
-ExternalCallback addClassConstant: 'MaxThunks' value: 16r100!
-ExternalCallback addClassConstant: 'ThunkSize' value: 16r10!
 ExternalCallback comment: ''!
 !ExternalCallback categoriesForClass!System-Support! !
 !ExternalCallback methodsFor!

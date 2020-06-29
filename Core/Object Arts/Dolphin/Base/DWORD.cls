@@ -4,7 +4,8 @@ ExternalInteger subclass: #DWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DWORD guid: (GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
 DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 

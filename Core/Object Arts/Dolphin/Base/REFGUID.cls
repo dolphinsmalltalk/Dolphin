@@ -4,7 +4,8 @@ ExternalAddress variableByteSubclass: #REFGUID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 REFGUID guid: (GUID fromString: '{f44c9141-2b3f-11d3-8368-7a8b5a000000}')!
 REFGUID isIndirection: true!
 REFGUID comment: 'REFGUID is a pointer class for referencing guids. It is mainly for use in situations where a GUID* pointer is passed back into Smalltalk, e.g. in block callbacks and COM method implementations.

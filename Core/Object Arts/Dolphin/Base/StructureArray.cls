@@ -4,7 +4,8 @@ GenericExternalArray subclass: #StructureArray
 	instanceVariableNames: 'elementSpacing'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructureArray guid: (GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureArray comment: 'Generic <ExternalArray> class which can represent single-dimensioned arrays of any class of <ExternalStructure>. Packing and alignment rules are respected.
 

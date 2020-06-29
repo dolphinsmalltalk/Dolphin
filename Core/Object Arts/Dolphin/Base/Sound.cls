@@ -4,7 +4,8 @@ Object subclass: #Sound
 	instanceVariableNames: 'name location type fileLocator'
 	classVariableNames: 'Registry'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Sound guid: (GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
 Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
 

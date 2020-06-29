@@ -2,29 +2,31 @@
 
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'DefaultDecimalExponents EMax EMin EMinDenormalized FMax FMin FMinDenormalized FpClassDenormal FpClassFinite FpClassInfinite FpClassNaN FpClassNegative FpClassNormal FpClassStrictlyPositive FpClassZero Infinity InvalidOperationFlag Ln2 MantissaHighBit MantissaMask NaN NegativeInfinity Precision SignificantDifference'
+	classVariableNames: 'DefaultDecimalExponents FMinDenormalized Infinity NaN NegativeInfinity'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EMax' -> 16r3FF.
+		'EMin' -> -16r3FE.
+		'EMinDenormalized' -> -16r432.
+		'FMax' -> 1.7976931348623157e308.
+		'FMin' -> 2.2250738585072014e-308.
+		'FpClassDenormal' -> 16r90.
+		'FpClassFinite' -> 16r1F8.
+		'FpClassInfinite' -> 16r204.
+		'FpClassNaN' -> 16r3.
+		'FpClassNegative' -> 16r3C.
+		'FpClassNormal' -> 16r108.
+		'FpClassStrictlyPositive' -> 16r380.
+		'FpClassZero' -> 16r60.
+		'InvalidOperationFlag' -> 16r1.
+		'Ln2' -> 0.6931471805599453.
+		'MantissaHighBit' -> 16r10000000000000.
+		'MantissaMask' -> 16rFFFFFFFFFFFFF.
+		'Precision' -> 16r35.
+		'SignificantDifference' -> 1.0e-9
+	}!
 Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
-Float addClassConstant: 'EMax' value: 16r3FF!
-Float addClassConstant: 'EMin' value: -16r3FE!
-Float addClassConstant: 'EMinDenormalized' value: -16r432!
-Float addClassConstant: 'FMax' value: 1.7976931348623157e308!
-Float addClassConstant: 'FMin' value: 2.2250738585072014e-308!
-Float addClassConstant: 'FpClassDenormal' value: 16r90!
-Float addClassConstant: 'FpClassFinite' value: 16r1F8!
-Float addClassConstant: 'FpClassInfinite' value: 16r204!
-Float addClassConstant: 'FpClassNaN' value: 16r3!
-Float addClassConstant: 'FpClassNegative' value: 16r3C!
-Float addClassConstant: 'FpClassNormal' value: 16r108!
-Float addClassConstant: 'FpClassStrictlyPositive' value: 16r380!
-Float addClassConstant: 'FpClassZero' value: 16r60!
-Float addClassConstant: 'InvalidOperationFlag' value: 16r1!
-Float addClassConstant: 'Ln2' value: 0.6931471805599453!
-Float addClassConstant: 'MantissaHighBit' value: 16r10000000000000!
-Float addClassConstant: 'MantissaMask' value: 16rFFFFFFFFFFFFF!
-Float addClassConstant: 'Precision' value: 16r35!
-Float addClassConstant: 'SignificantDifference' value: 1.0e-9!
 Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
 !Float categoriesForClass!Magnitude-Numbers! !
 !Float methodsFor!

@@ -2,20 +2,22 @@
 
 Win32Structure subclass: #MSGBOXPARAMSW
 	instanceVariableNames: 'text caption'
-	classVariableNames: '_OffsetOf_dwContextHelpId _OffsetOf_dwLanguageId _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpfnMsgBoxCallback _OffsetOf_lpszCaption _OffsetOf_lpszIcon _OffsetOf_lpszText'
+	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwContextHelpId' -> 16r1C.
+		'_OffsetOf_dwLanguageId' -> 16r24.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwStyle' -> 16r14.
+		'_OffsetOf_hInstance' -> 16r8.
+		'_OffsetOf_hwndOwner' -> 16r4.
+		'_OffsetOf_lpfnMsgBoxCallback' -> 16r20.
+		'_OffsetOf_lpszCaption' -> 16r10.
+		'_OffsetOf_lpszIcon' -> 16r18.
+		'_OffsetOf_lpszText' -> 16rC
+	}!
 MSGBOXPARAMSW guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwContextHelpId' value: 16r1C!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwLanguageId' value: 16r24!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwStyle' value: 16r14!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpfnMsgBoxCallback' value: 16r20!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszCaption' value: 16r10!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszIcon' value: 16r18!
-MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszText' value: 16rC!
 MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.

@@ -4,7 +4,8 @@ MessageSequenceAbstract subclass: #MessageSequence
 	instanceVariableNames: 'list'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageSequence guid: (GUID fromString: '{87b4c665-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageSequence comment: ''!
 !MessageSequence categoriesForClass!Kernel-Methods! !

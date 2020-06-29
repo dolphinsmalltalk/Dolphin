@@ -2,17 +2,19 @@
 
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cause _OffsetOf_enable _OffsetOf_flags _OffsetOf_operand1 _OffsetOf_operand2 _OffsetOf_result _OffsetOf_status'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cause' -> 16r4.
+		'_OffsetOf_enable' -> 16r8.
+		'_OffsetOf_flags' -> 16r0.
+		'_OffsetOf_operand1' -> 16r10.
+		'_OffsetOf_operand2' -> 16r28.
+		'_OffsetOf_result' -> 16r40.
+		'_OffsetOf_status' -> 16rC
+	}!
 _FPIEEE_RECORD guid: (GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_cause' value: 16r4!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_enable' value: 16r8!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_flags' value: 16r0!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand1' value: 16r10!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand2' value: 16r28!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_result' value: 16r40!
-_FPIEEE_RECORD addClassConstant: '_OffsetOf_status' value: 16rC!
 _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
 !_FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
 !_FPIEEE_RECORD methodsFor!

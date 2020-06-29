@@ -4,7 +4,8 @@ Object subclass: #DeferredValue
 	instanceVariableNames: 'valueAvailable value exception'
 	classVariableNames: 'ValuePending'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DeferredValue guid: (GUID fromString: '{b2986be9-3666-4cd8-8d87-c7e456f6dd95}')!
 DeferredValue comment: 'A DeferredValue is a <niladicValuable> which is evaluated asynchronously in a background process, but which supplies its value synchronously on request, i.e. it blocks any sender of #value until the value is available.
 

@@ -194,37 +194,52 @@ ArrayField subclass: #ConformantArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructureArrayField subclass: #ConformantStructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayPointerField subclass: #ConformantArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AllocationBase' -> 16r4.
+		'_OffsetOf_AllocationProtect' -> 16r8.
+		'_OffsetOf_BaseAddress' -> 16r0.
+		'_OffsetOf_Protect' -> 16r14.
+		'_OffsetOf_RegionSize' -> 16rC.
+		'_OffsetOf_State' -> 16r10.
+		'_OffsetOf_Type' -> 16r18
+	}!
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBProxy subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Variable Aliases"!
 

@@ -4,7 +4,8 @@ Object subclass: #Exception
 	instanceVariableNames: 'tag messageText _activeHandler _process _signalFrame _environmentWhenRaised _continueBlock _resignalBlock _resignalException'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Exception guid: (GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
 Exception isAbstract: true!
 Exception comment: ''!

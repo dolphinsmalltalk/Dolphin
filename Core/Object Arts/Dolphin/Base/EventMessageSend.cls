@@ -4,7 +4,8 @@ MessageSendAbstract variableSubclass: #EventMessageSend
 	instanceVariableNames: 'expectedArgCount'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EventMessageSend guid: (GUID fromString: '{87b4c663-026e-11d3-9fd7-00a0cc3e4a32}')!
 EventMessageSend comment: 'An EventMessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments, however the receiver is referenced weakly.
 

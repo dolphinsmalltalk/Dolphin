@@ -4,7 +4,8 @@ Object subclass: #PostedActionWindow
 	instanceVariableNames: 'handle actions'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PostedActionWindow guid: (GUID fromString: '{426dfeaf-6677-40d5-b9ce-713b6f048cc8}')!
 PostedActionWindow comment: 'PostedActionWindow is a private class used by <InputState> to represent the special message only window created by the VM. This window is used to synchronise with the message queue.
 

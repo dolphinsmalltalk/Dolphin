@@ -4,7 +4,8 @@ Object subclass: #Magnitude
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Magnitude guid: (GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
 Magnitude isAbstract: true!
 Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared

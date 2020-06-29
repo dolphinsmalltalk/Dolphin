@@ -4,7 +4,8 @@ ExternalLibrary subclass: #AdvApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AdvApiLibrary guid: (GUID fromString: '{64674054-3a82-101b-8181-00aa003743d3}')!
 AdvApiLibrary comment: 'AdvApiLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, ADVAPI32.DLL.
 

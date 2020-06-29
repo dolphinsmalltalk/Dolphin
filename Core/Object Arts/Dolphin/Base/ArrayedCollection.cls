@@ -4,7 +4,8 @@ SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayedCollection guid: (GUID fromString: '{87b4c50c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ArrayedCollection isAbstract: true!
 ArrayedCollection comment: 'ArrayedCollection is the class of <SequenceableCollection>s of a fixed size which are indexable by integer keys from 1 to the size of the collection.'!

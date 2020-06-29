@@ -4,7 +4,8 @@ Object subclass: #Boolean
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Boolean guid: (GUID fromString: '{87b4c45c-026e-11d3-9fd7-00a0cc3e4a32}')!
 Boolean isAbstract: true!
 Boolean comment: 'Boolean is the class which provides the protocol for logical values. The actual logical values, true and false, are represented by Boolean''s subclasses True and False. Boolean itself is abstract.

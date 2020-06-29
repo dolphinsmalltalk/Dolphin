@@ -4,7 +4,8 @@ ArithmeticError subclass: #ZeroDivide
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ZeroDivide guid: (GUID fromString: '{87b4c563-026e-11d3-9fd7-00a0cc3e4a32}')!
 ZeroDivide comment: '`ZeroDivide` is the class of `ArithmeticError` for representing attempts at division by zero.
 

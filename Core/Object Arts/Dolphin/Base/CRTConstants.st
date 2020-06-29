@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #CRTConstants put: (PoolConstantsDictionary named: #CRTConstants)!
+#{CRTConstants} declare: (PoolConstantsDictionary named: #CRTConstants)!
 CRTConstants at: '_DN_FLUSH' put: 16r1000000!
 CRTConstants at: '_DN_FLUSH_OPERANDS_SAVE_RESULTS' put: 16r2000000!
 CRTConstants at: '_DN_SAVE' put: 16r0!

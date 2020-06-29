@@ -4,7 +4,8 @@ Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ConfirmationRequiredWarning guid: (GUID fromString: '{6cbf0500-f796-4979-8f8d-3285e012aa94}')!
 ConfirmationRequiredWarning comment: 'ConfirmationRequiredWarnings can be signalled when an operation requires user consent. The default action is to show a Yes/No[/Cancel] message box. When the user has responded, execution is continued from the signalling point answering true, false or nil, for Yes, No and Cancel (respectively) responses. The signaller can then act accordingly to proceed with the operation as appropriate. The actions to be taken (or values to be returned) when the buttons are pressed can be overridden individually by providing suitable <niladicValuable>s, e.g. blocks. The cancel button can be suppressed by setting the cancel block to nil.
 

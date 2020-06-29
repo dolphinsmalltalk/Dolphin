@@ -4,7 +4,8 @@ Object subclass: #Bytecode
 	instanceVariableNames: 'instruction args jumpTarget ip'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Bytecode guid: (GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
 Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
 !Bytecode categoriesForClass!Kernel-Objects! !

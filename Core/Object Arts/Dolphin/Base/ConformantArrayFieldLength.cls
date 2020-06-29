@@ -4,7 +4,8 @@ ArrayFieldLength subclass: #ConformantArrayFieldLength
 	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ConformantArrayFieldLength guid: (GUID fromString: '{6158a44a-0df9-4478-8ac1-0112fed71ca1}')!
 ConformantArrayFieldLength comment: '<ConformantArrayFieldLength> is a type of <ArrayFieldLength> that can be used to describe conformant array fields where the array element count is stored directly as another field in the described structure. For example, give the C++ structure definitions:
 

@@ -2,30 +2,43 @@
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
-	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	classVariableNames: 'BufferClasses'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BufferUpdatedMask' -> 16r3.
+		'DirtyBufferMask' -> 16r2.
+		'LimitsChangedMask' -> 16r1.
+		'OwnsFileMask' -> 16r100.
+		'PageSize' -> 16r2000
+	}!
 FileStream guid: (GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-FileStream addClassConstant: 'BufferUpdatedMask' value: 16r3!
-FileStream addClassConstant: 'DirtyBufferMask' value: 16r2!
-FileStream addClassConstant: 'LimitsChangedMask' value: 16r1!
-FileStream addClassConstant: 'OwnsFileMask' value: 16r100!
-FileStream addClassConstant: 'PageSize' value: 16r2000!
-FileStream comment: 'FileStream is a specialized <ReadWriteStream> for streaming over binary and text files.
+FileStream comment: '`FileStream` is a specialized `ReadWriteStream` for streaming over binary and text files.
 
-The collection instance variable inherited from <Stream> is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by #flush or #fullFlush. The readLimit and writeLimit instance variables inherited from <PositionableStream> and <WriteStream> respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The readLimit will always be equal to the page size, except on the last page of the file. The writeLimit is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
+The collection instance variable inherited from `Stream` is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by `flush` or `fullFlush`. The `readLimit` and `writeLimit` instance variables inherited from `PositionableStream` and `WriteStream` respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The `readLimit` will always be equal to the page size, except on the last page of the file. The `writeLimit` is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
 
 FileStream can read and write files as binary or text. It supports a number of import text encodings, as follows:
-	#text		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
-	#utf8		- UTF-8 encoded text
-	#utf16		- UTF-16 encoded text		(not yet implemented)
-	#utf32		- UTF-32 encoded text		(not yet implemented)
+	`#text`		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
+	`#utf8`		- UTF-8 encoded text
+	`#utf16`		- UTF-16 encoded text		(not yet implemented)
+	`#utf32`		- UTF-32 encoded text		(not yet implemented)
 
-Instance Variables:
-	file				The <File> being streamed over.
-	flags			<integer> flags such as whether the page buffer is dirty.
-	pageBase		<integer> offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
-	logicalFileSize	<integer> size of the file. This is cached because it is expensive to determine dynamically.
+## Instance Variables:
+  `file`			The `File` being streamed over.
+  `flags`			`<integer>` flags such as whether the page buffer is dirty.
+  `pageBase`		`<integer>` offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
+  `logicalFileSize`	`<integer>` size of the file. This is cached because it is expensive to determine dynamically.
+  `offset`			`<integer>`
+
+## Class Variables:
+  `BufferClasses`		`IdentityDictionary`
+  `BufferUpdatedMask`	`<integer>` flags set when a write to the buffer occurs (both of the following two flags)
+  `DirtyBufferMask`		`<integer>` flag set when the buffer contains updated data that has not yet been written to disk
+  `LimitsChangedMask`	`<integer>` flag set when a write to the buffer has occurred that has not yet been reflected in the lastPosition and/or read limit.
+  `OwnsFileMask`		`<integer>` flag set if the file is owned by a FileStream and should be closed by it.
+  `PageSize`			`<integer>` size of the buffer used to hold part of the file contents in memory - chosen to be a reasonably efficient compromise for serial and random I/O.
+
+
 '!
 !FileStream categoriesForClass!Collections-Streams!I/O-Streams! !
 !FileStream methodsFor!
@@ -597,19 +610,6 @@ file: aFile mode: modeSymbol type: encSymbol
 initialize
 	"Private - Initialize class variables of the receiver."
 
-	"Flag set when a write to the buffer has occurred that has not yet been reflected in the lastPosition and/or read limit."
-
-	self addClassConstant: 'LimitsChangedMask' value: 16r1.
-	"Flag set when the buffer contains updated data that has not yet been written to disk"
-	self addClassConstant: 'DirtyBufferMask' value: 16r2.
-	"Flags set when a write to the buffer occurs (both the above flags)."
-	self addClassConstant: 'BufferUpdatedMask' value: 16r3.
-	"Flag set if the file is owned by a FileStream and should be closed by it."
-	self addClassConstant: 'OwnsFileMask' value: 16r100.
-
-	"The size of buffer used to hold part of the file contents in memory - chosen to be a
-	reasonably efficient compromise for serial and random I/O."
-	self addClassConstant: 'PageSize' value: 8192.
 	#todo.	"#utf16le->Utf16String and #utf32 ->Utf32String to be added when implemented."
 	self addClassConstant: 'BufferClasses'
 		value: (IdentityDictionary new

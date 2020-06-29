@@ -4,7 +4,8 @@ ObjectRegistry subclass: #WeakRegistry
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakRegistry guid: (GUID fromString: '{87b4c67f-026e-11d3-9fd7-00a0cc3e4a32}')!
 WeakRegistry comment: 'WeakRegistry comment: ''WeakRegistry is the class of <ObjectRegistry>s which maintain only a weak reference to registered objects. Thus registration in a WeakRegistry will not prevent the registrant from being garbage collected, which makes it useful where a unique identifier is needed for an object only for as long as it is still referred to from elsewhere in the image. An example usage is the register of extant <ExternalCallback> objects.
 

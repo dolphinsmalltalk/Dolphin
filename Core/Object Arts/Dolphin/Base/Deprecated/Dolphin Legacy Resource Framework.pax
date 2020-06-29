@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Legacy Resource Framework'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.
 Copyright (c) Object Arts Ltd. 1997-2006. 
@@ -10,40 +10,35 @@ Many of the classes here are the vestigial remains of the legacy resource framew
 package basicPackageVersion: '6.1.1'.
 
 
-package classNames
-	add: #BytecodeRewriter;
-	add: #Resource;
-	add: #ResourceAccessor;
-	add: #ResourceDummyAccessor;
-	add: #ResourceGeneratorAccessor;
-	add: #ResourceSTBAccessor;
-	add: #ResourceSTBByteArrayAccessor;
-	add: #ResourceSTBFileAccessor;
-	add: #STBResourceSTBByteArrayAccessorProxy;
-	add: #STBResourceSTBFileAccessorProxy;
-	add: #ViewResource;
-	yourself.
+package setClassNames: #(
+	#{BytecodeRewriter}
+	#{Resource}
+	#{ResourceAccessor}
+	#{ResourceDummyAccessor}
+	#{ResourceGeneratorAccessor}
+	#{ResourceSTBAccessor}
+	#{ResourceSTBByteArrayAccessor}
+	#{ResourceSTBFileAccessor}
+	#{STBResourceSTBByteArrayAccessorProxy}
+	#{STBResourceSTBFileAccessorProxy}
+	#{ViewResource}
+).
 
-package methodNames
-	add: #ChunkSourceFiler -> #fileOutResource:;
-	add: #ResourceIdentifier -> #assignBinaryResourceData:;
-	add: #RuntimeSessionManager -> #initializeFromSessionManager:;
-	add: 'BlockClosure class' -> #convertBlockToClosure:;
-	add: 'BlockClosure class' -> #convertMethodContext:;
-	add: 'BlockClosure class' -> #rewriterClass;
-	add: 'BlockClosure class' -> #stbConvertFrom:;
-	add: 'ResourceIdentifier class' -> #resourceAt:ifAbsent:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BlockClosure class} #convertBlockToClosure:)
+	#(#{BlockClosure class} #convertMethodContext:)
+	#(#{BlockClosure class} #rewriterClass)
+	#(#{BlockClosure class} #stbConvertFrom:)
+	#(#{ChunkSourceFiler} #fileOutResource:)
+	#(#{ResourceIdentifier} #assignBinaryResourceData:)
+	#(#{ResourceIdentifier class} #resourceAt:ifAbsent:)
+	#(#{RuntimeSessionManager} #initializeFromSessionManager:)
+).
 
 package setPrerequisites: #(
 	'..\Dolphin'
-	'..\..\MVP\Base\Dolphin MVP Base').
+	'..\..\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -53,60 +48,68 @@ Object subclass: #BytecodeRewriter
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
 	poolDictionaries: 'OpcodePool'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Resource subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceAccessor subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceAccessor subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBProxy subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

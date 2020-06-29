@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #TIME_ZONE_INFORMATION
 	instanceVariableNames: 'zoneId offset'
-	classVariableNames: '_OffsetOf_bias _OffsetOf_daylightBias _OffsetOf_daylightDate _OffsetOf_daylightName _OffsetOf_standardBias _OffsetOf_standardDate _OffsetOf_standardName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bias' -> 16r0.
+		'_OffsetOf_daylightBias' -> 16rA8.
+		'_OffsetOf_daylightDate' -> 16r98.
+		'_OffsetOf_daylightName' -> 16r58.
+		'_OffsetOf_standardBias' -> 16r54.
+		'_OffsetOf_standardDate' -> 16r44.
+		'_OffsetOf_standardName' -> 16r4
+	}!
 TIME_ZONE_INFORMATION guid: (GUID fromString: '{ceb846ce-f4db-48fe-9fec-02e637cbc4b4}')!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_bias' value: 16r0!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightBias' value: 16rA8!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightDate' value: 16r98!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_daylightName' value: 16r58!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardBias' value: 16r54!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardDate' value: 16r44!
-TIME_ZONE_INFORMATION addClassConstant: '_OffsetOf_standardName' value: 16r4!
 TIME_ZONE_INFORMATION comment: '<TIME_ZONE_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.TIME_ZONE_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct

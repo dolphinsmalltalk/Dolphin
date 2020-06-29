@@ -4,7 +4,8 @@ Category subclass: #MethodCategory
 	instanceVariableNames: ''
 	classVariableNames: 'Private Pseuds Public Table'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodCategory guid: (GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
 

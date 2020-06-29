@@ -4,7 +4,8 @@ ExternalLibrary subclass: #VersionLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VersionLibrary guid: (GUID fromString: '{64674068-3a82-101b-8181-00aa003743d3}')!
 VersionLibrary comment: 'VersionLibrary is the <ExternalLibrary> class to represent the Win32 version library, VERSION.DLL.
 

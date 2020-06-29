@@ -4,7 +4,8 @@ AbstractCHARField subclass: #CHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CHARField guid: (GUID fromString: '{a70daacf-9954-43db-943f-1f8f245fcf07}')!
 CHARField comment: '`CHARField` is a `ScalarField` class to describe `ExternalStructure` fields that are 8-bit character code units.'!
 !CHARField categoriesForClass!External-Data-Types! !

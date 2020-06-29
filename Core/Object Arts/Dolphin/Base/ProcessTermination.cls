@@ -4,7 +4,8 @@ Exception subclass: #ProcessTermination
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProcessTermination guid: (GUID fromString: '{87b4c570-026e-11d3-9fd7-00a0cc3e4a32}')!
 ProcessTermination comment: '<ProcessTermination> is a special system <Exception> the sole purpose of which is to provide a safe means to terminate processes cleanly. A ProcessTermination is raised by terminating process, and caught in the base frame (see BlockClosure>>#newProcess), unwinding any protected blocks (see BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:) on the way. The base frame''s handled from ProcessTermination requests a far return to itself, and it then sends Process>>#shutdown to the active (terminating) Process.
 

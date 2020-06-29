@@ -4,7 +4,8 @@ Dictionary variableSubclass: #SystemDictionary
 	instanceVariableNames: 'events allClasses allRoots'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SystemDictionary guid: (GUID fromString: '{87b4c52c-026e-11d3-9fd7-00a0cc3e4a32}')!
 SystemDictionary comment: 'Class of the root of the system. SystemDictionary''s single instance (Smalltalk) 
 provides associative access to all global objects in the system.'!

@@ -4,7 +4,8 @@ Object subclass: #MemoryManager
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
 	classVariableNames: 'Current GCInterval'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MemoryManager guid: (GUID fromString: '{703bd0ad-fbff-4d00-866b-b80387f7b1d7}')!
 MemoryManager comment: 'MemoryManager is a singleton class whose sole instance is responsible for scheduling garbage collection, performing finalization, saving the image, etc.
 

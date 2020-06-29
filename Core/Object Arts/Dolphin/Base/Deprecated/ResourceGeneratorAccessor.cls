@@ -4,7 +4,8 @@ ResourceAccessor subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceGeneratorAccessor guid: (GUID fromString: '{87b4c6d8-026e-11d3-9fd7-00a0cc3e4a32}')!
 ResourceGeneratorAccessor comment: ''!
 !ResourceGeneratorAccessor categoriesForClass!MVP-Resources! !

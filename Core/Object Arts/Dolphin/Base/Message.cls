@@ -4,7 +4,8 @@ Object subclass: #Message
 	instanceVariableNames: 'selector args'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Message guid: (GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Message comment: ''!
 !Message categoriesForClass!Kernel-Methods! !

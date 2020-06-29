@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #Win32Errors put: (PoolConstantsDictionary named: #Win32Errors)!
+#{Win32Errors} declare: (PoolConstantsDictionary named: #Win32Errors)!
 Win32Errors at: 'CLASS_E_CLASSNOTAVAILABLE' put: -16r7FFBFEEF!
 Win32Errors at: 'CLASS_E_NOAGGREGATION' put: -16r7FFBFEF0!
 Win32Errors at: 'CLASS_E_NOTLICENSED' put: -16r7FFBFEEE!

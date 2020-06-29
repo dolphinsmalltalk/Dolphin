@@ -4,7 +4,8 @@ SequencedGrowableCollection subclass: #LinkedList
 	instanceVariableNames: 'firstLink lastLink'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LinkedList guid: (GUID fromString: '{87b4c521-026e-11d3-9fd7-00a0cc3e4a32}')!
 LinkedList comment: 'LinkedList is a class of <SequencedGrowableCollection> which is sequenced, ordered, contractible, expandable, readable and  writeable. The implementation is as an intrusively, singly, linked list (i.e. the elements hold the pointer to the next element), and requires that the elements of a LinkedList must be a kind of <Link> (or support the same protocol).
 

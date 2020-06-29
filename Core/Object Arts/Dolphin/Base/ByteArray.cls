@@ -4,7 +4,8 @@ ArrayedCollection variableByteSubclass: #ByteArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ByteArray guid: (GUID fromString: '{87b4c511-026e-11d3-9fd7-00a0cc3e4a32}')!
 ByteArray comment: 'ByteArray is the class of <ArrayedCollection>s whose elements are bytes (i.e. <integer>s in the range 0..255).
 
@@ -599,20 +600,25 @@ stbSaveOn: anSTBOutFiler
 		startingAt: 1!
 
 storeOn: puttableStream
-	"Print the literal string representation of the receiver to the <puttableStream>
-	argument."
+	"Print the literal string representation of the receiver to the <puttableStream> argument.
+	Implementation Note. This is written for speed, not elegance. We avoid #do:separatedBy: because it requires full blocks. Also we know that SmallInteger>>#printString has a primitive implementation."
 
-	self printPrefixOn: puttableStream.
-	1 to: self size
+	| count |
+	count := self size.
+	count == 0
+		ifTrue: 
+			[puttableStream nextPutAll: '#[]'.
+			^self].
+	puttableStream
+		nextPutAll: '#[';
+		nextPutAll: (self at: 1) printString.
+	2 to: count
 		do: 
 			[:i |
-			(self at: i)
-				printOn: puttableStream
-				base: 10.
-			puttableStream nextPut: $\x20].
-	self printSuffixOn: puttableStream
-
-!
+			puttableStream
+				nextPut: $\x20;
+				nextPutAll: (self at: i) printString].
+	puttableStream nextPut: $]!
 
 swordAtOffset: anInteger
 	"Answer the signed 2-byte integer at offset (i.e. zero relative) anInteger in the receiver."

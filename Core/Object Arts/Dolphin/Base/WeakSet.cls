@@ -4,7 +4,8 @@ SharedSet variableSubclass: #WeakSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakSet guid: (GUID fromString: '{87b4c538-026e-11d3-9fd7-00a0cc3e4a32}')!
 WeakSet comment: 'A WeakSet is a <Set> which only weakly references the elements that it contains. That is, subject to the <MemoryManager>s intervention, if any of a weak set''s elements have only weak references remaining, then they may be garbage collected, in which case that weak set will receive a bereavement notification, and be given a chance to adjust to it''s loss(es), which it does by nilling out the corpses
 and rehashing. Bereavement notification is performed asynchronously by separate (high priority) process, and WeakSet is accordingly a subclass of <SharedSet>.'!

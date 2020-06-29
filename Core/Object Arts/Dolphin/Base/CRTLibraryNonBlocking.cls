@@ -4,7 +4,8 @@ CRTLibrary subclass: #CRTLibraryNonBlocking
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CRTLibraryNonBlocking guid: (GUID fromString: '{3214435f-9afe-47b3-8f9b-0d4b533d5b1d}')!
 CRTLibraryNonBlocking comment: ''!
 !CRTLibraryNonBlocking categoriesForClass!External-Libraries! !

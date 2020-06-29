@@ -2,17 +2,19 @@
 
 Win32Structure subclass: #MSG
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_message _OffsetOf_time _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hwnd' -> 16r0.
+		'_OffsetOf_lParam' -> 16rC.
+		'_OffsetOf_message' -> 16r4.
+		'_OffsetOf_time' -> 16r10.
+		'_OffsetOf_wParam' -> 16r8.
+		'_OffsetOf_x' -> 16r14.
+		'_OffsetOf_y' -> 16r18
+	}!
 MSG guid: (GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-MSG addClassConstant: '_OffsetOf_hwnd' value: 16r0!
-MSG addClassConstant: '_OffsetOf_lParam' value: 16rC!
-MSG addClassConstant: '_OffsetOf_message' value: 16r4!
-MSG addClassConstant: '_OffsetOf_time' value: 16r10!
-MSG addClassConstant: '_OffsetOf_wParam' value: 16r8!
-MSG addClassConstant: '_OffsetOf_x' value: 16r14!
-MSG addClassConstant: '_OffsetOf_y' value: 16r18!
 MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
 
 MSG is an represents the state associated with a Windows message retrieved via GetMessage().'!

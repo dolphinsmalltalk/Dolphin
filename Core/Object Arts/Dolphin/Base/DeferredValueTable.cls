@@ -4,7 +4,8 @@ SharedLookupTable variableSubclass: #DeferredValueTable
 	instanceVariableNames: 'priority'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DeferredValueTable guid: (GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
 DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
 !DeferredValueTable categoriesForClass!Unclassified! !

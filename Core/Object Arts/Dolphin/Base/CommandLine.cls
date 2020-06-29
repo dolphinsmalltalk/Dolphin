@@ -4,7 +4,8 @@ Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommandLine guid: (GUID fromString: '{4e9d5c42-1049-4f31-862c-cb56225aa08a}')!
 CommandLine comment: 'Instances of CommandLine can be used to parse command line options and arguments. 
 

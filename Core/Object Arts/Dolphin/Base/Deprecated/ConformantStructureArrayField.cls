@@ -4,7 +4,8 @@ StructureArrayField subclass: #ConformantStructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ConformantStructureArrayField guid: (GUID fromString: '{87b4c4e2-026e-11d3-9fd7-00a0cc3e4a32}')!
 ConformantStructureArrayField comment: 'ConformantStructureArrayField is now deprecated and should be replaced by use of StructureArrayField class>>type:lengthField:
 '!

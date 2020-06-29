@@ -4,7 +4,8 @@ ExternalIntegerBytes variableByteSubclass: #DWORDBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DWORDBytes guid: (GUID fromString: '{87b4c516-026e-11d3-9fd7-00a0cc3e4a32}')!
 DWORDBytes comment: ''!
 !DWORDBytes categoriesForClass!External-Data-Unstructured! !

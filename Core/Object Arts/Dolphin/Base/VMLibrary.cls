@@ -4,7 +4,8 @@ PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
 	classVariableNames: 'Registry RegistryKeys WinVerOrGreaterMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VMLibrary guid: (GUID fromString: '{87b4c58f-026e-11d3-9fd7-00a0cc3e4a32}')!
 VMLibrary comment: 'VMLibrary is an <ExternalLibrary> to represent the Dolphin Smalltalk Virtual Machine (VM). 
 

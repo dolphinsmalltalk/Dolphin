@@ -4,7 +4,8 @@ EmbeddedField subclass: #StructureField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StructureField guid: (GUID fromString: '{87b4c4df-026e-11d3-9fd7-00a0cc3e4a32}')!
 StructureField comment: 'StructureField is an <ExternalField> type  for described <ExternalStructure> fields that are themselves instances of <ExternalStructure>s.'!
 !StructureField categoriesForClass!External-Data-Types! !

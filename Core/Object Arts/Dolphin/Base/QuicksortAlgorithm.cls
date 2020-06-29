@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #QuicksortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 QuicksortAlgorithm guid: (GUID fromString: '{4ecbb0ca-01f4-485f-9c80-3d77c661d26b}')!
 QuicksortAlgorithm comment: 'QuicksortAlgorithm implements the Quicksort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 

@@ -4,7 +4,8 @@ RelativeFileLocator subclass: #FolderRelativeFileLocator
 	instanceVariableNames: 'basePath'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FolderRelativeFileLocator guid: (GUID fromString: '{e16e8b7e-eac8-41ed-95f3-742c2fc7264a}')!
 FolderRelativeFileLocator comment: 'FolderRelativeFileLocator is the class of <FileLocator>s that can be used to map between an absolute path and a path relative to a configurable base directory.
 FolderRelativeFileLocators use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.

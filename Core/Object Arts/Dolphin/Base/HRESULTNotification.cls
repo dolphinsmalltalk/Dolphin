@@ -4,7 +4,8 @@ Notification subclass: #HRESULTNotification
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HRESULTNotification guid: (GUID fromString: '{87b4c56e-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULTNotification comment: ''!
 !HRESULTNotification categoriesForClass!System-Exception Handling! !

@@ -4,7 +4,8 @@ Object subclass: #Link
 	instanceVariableNames: 'nextLink'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Link guid: (GUID fromString: '{87b4c498-026e-11d3-9fd7-00a0cc3e4a32}')!
 Link comment: 'Links are records of a reference to another Link, and are used to represent the linked elements of a <LinkedList>.
 

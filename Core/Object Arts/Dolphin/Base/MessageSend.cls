@@ -4,7 +4,8 @@ MessageSendAbstract subclass: #MessageSend
 	instanceVariableNames: 'receiver'
 	classVariableNames: 'EmptySend'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageSend guid: (GUID fromString: '{87b4c662-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageSend comment: 'A MessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments.
 

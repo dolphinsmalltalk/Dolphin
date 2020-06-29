@@ -4,7 +4,8 @@ ScalarField subclass: #SWORDField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SWORDField guid: (GUID fromString: '{87b4c4ee-026e-11d3-9fd7-00a0cc3e4a32}')!
 SWORDField comment: '<SWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit signed integers.'!
 !SWORDField categoriesForClass!External-Data-Types! !

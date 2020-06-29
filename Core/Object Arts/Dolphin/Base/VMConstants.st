@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #VMConstants put: (PoolConstantsDictionary named: #VMConstants)!
+#{VMConstants} declare: (PoolConstantsDictionary named: #VMConstants)!
 VMConstants at: 'DoubleSize' put: 16r8!
 VMConstants at: 'FloatSize' put: 16r4!
 VMConstants at: 'HalfPtrBits' put: 16r10!

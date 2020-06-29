@@ -4,7 +4,8 @@ ExternalIntegerBytes variableByteSubclass: #UIntPtrBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UIntPtrBytes guid: (GUID fromString: '{c9f5efed-9b23-441a-b6e4-9a0d3c7282ab}')!
 UIntPtrBytes comment: ''!
 !UIntPtrBytes categoriesForClass!External-Data-Unstructured! !

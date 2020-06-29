@@ -4,7 +4,8 @@ ObjectRegistry subclass: #PermanentRegistry
 	instanceVariableNames: 'freeHead'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PermanentRegistry guid: (GUID fromString: '{87b4c67e-026e-11d3-9fd7-00a0cc3e4a32}')!
 PermanentRegistry comment: 'PermanentRegistry is a specialized class of <ObjectRegistry>s which maintain a strong reference to registered objects, preventing them from being garbage collected. They are useful where the objects may only be referenced ''externally'' (e.g. COM server objects).
 

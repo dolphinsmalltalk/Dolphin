@@ -4,7 +4,8 @@ ExternalField subclass: #EmbeddedField
 	instanceVariableNames: 'fieldClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmbeddedField guid: (GUID fromString: '{87b4c4da-026e-11d3-9fd7-00a0cc3e4a32}')!
 EmbeddedField comment: 'EmbeddedField is the abstract class of <ExternalField>s that describe fields of <ExternalStructure>s that are directly embedded in the structure itself, as opposed to being pointers to external memory where the data resides.
 

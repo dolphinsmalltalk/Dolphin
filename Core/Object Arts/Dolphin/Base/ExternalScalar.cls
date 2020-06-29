@@ -2,12 +2,14 @@
 
 ExternalStructure subclass: #ExternalScalar
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_value'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_value' -> 16r0
+	}!
 ExternalScalar guid: (GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
 ExternalScalar isAbstract: true!
-ExternalScalar addClassConstant: '_OffsetOf_value' value: 16r0!
 ExternalScalar comment: ''!
 !ExternalScalar categoriesForClass!External-Data-Structured! !
 !ExternalScalar methodsFor!

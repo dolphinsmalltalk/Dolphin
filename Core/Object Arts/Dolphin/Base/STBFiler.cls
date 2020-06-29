@@ -2,12 +2,14 @@
 
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
-	classVariableNames: 'MaxPredefinedRef'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'MaxPredefinedRef' -> 16r18
+	}!
 STBFiler guid: (GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBFiler isAbstract: true!
-STBFiler addClassConstant: 'MaxPredefinedRef' value: 16r18!
 STBFiler comment: ''!
 !STBFiler categoriesForClass!System-Binary storage! !
 !STBFiler methodsFor!

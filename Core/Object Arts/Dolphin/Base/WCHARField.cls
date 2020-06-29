@@ -4,7 +4,8 @@ AbstractCHARField subclass: #WCHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WCHARField guid: (GUID fromString: '{8ca9be68-ea0d-4658-bddb-fa9ac13c3927}')!
 WCHARField comment: '`WCHARField` is a `ScalarField` class to describe `ExternalStructure` fields that are 16-bit character code units.'!
 !WCHARField categoriesForClass!External-Data-Types! !

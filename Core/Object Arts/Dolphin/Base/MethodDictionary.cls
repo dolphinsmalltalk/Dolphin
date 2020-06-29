@@ -4,7 +4,8 @@ IdentityDictionary variableSubclass: #MethodDictionary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodDictionary guid: (GUID fromString: '{87b4c530-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodDictionary comment: 'MethodDictionary is a specialized form of <IdentityDictionary> designed for ease and speed of access by the execution machinery. As the name implies, method dictionaries are used to map method selectors to the corresponding compiled method in a particular class.
 

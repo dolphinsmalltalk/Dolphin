@@ -4,7 +4,8 @@ SequencedStream subclass: #PositionableStream
 	instanceVariableNames: 'collection position readLimit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PositionableStream guid: (GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
 

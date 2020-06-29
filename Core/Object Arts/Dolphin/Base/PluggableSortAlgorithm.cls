@@ -4,7 +4,8 @@ SortAlgorithm subclass: #PluggableSortAlgorithm
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableSortAlgorithm guid: (GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
 PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
 

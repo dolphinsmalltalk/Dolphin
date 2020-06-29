@@ -4,7 +4,8 @@ ExternalArray subclass: #SBYTEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SBYTEArray guid: (GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
 SBYTEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
 !SBYTEArray categoriesForClass!External-Data-Structured! !

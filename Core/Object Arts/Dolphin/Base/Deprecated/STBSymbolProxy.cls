@@ -4,7 +4,8 @@ STBProxy subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBSymbolProxy guid: (GUID fromString: '{87b4c6f3-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBSymbolProxy comment: 'STBSymbolProxy has been deprecated. It is only present for loading STB files saved pre-Dolphin 5. In Dolphin 6.0 the STBInFiler delegates the task of reading a serialized instance to the class of that instance, and this removes the need for the use of STBProxy''s in many cases. STBSymbolProxy is such as case, as it was only present to allow the symbol to be interned on deserialization. The class can just as easily perform this task in its #stbReadFrom:format: implementation, and ditching STBSymbolProxy reduces the size of a typical view resource file by approximately 5%.
 

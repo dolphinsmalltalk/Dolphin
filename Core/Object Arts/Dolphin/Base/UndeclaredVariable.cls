@@ -4,7 +4,8 @@ Object subclass: #UndeclaredVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UndeclaredVariable guid: (GUID fromString: '{07035ef3-799a-4a74-a62a-f77729b9113d}')!
 UndeclaredVariable comment: ''!
 !UndeclaredVariable categoriesForClass!Kernel-Objects! !

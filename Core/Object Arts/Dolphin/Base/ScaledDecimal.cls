@@ -4,7 +4,8 @@ Number subclass: #ScaledDecimal
 	instanceVariableNames: 'fraction scale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScaledDecimal guid: (GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
 ScaledDecimal comment: 'ScaledDecimal is a Number class to represent fixed point decimal numbers. It supports unbounded precision, with no practical limit to the number of digits before and after the decimal point.
 

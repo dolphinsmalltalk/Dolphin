@@ -4,7 +4,8 @@ ScalarField subclass: #DOUBLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOUBLEField guid: (GUID fromString: '{87b4c4e8-026e-11d3-9fd7-00a0cc3e4a32}')!
 DOUBLEField comment: '<DOUBLEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit IEEE double precision floating point numbers.'!
 !DOUBLEField categoriesForClass!External-Data-Types! !

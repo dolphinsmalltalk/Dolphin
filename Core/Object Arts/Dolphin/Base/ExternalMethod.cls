@@ -4,7 +4,8 @@ CompiledMethod variableSubclass: #ExternalMethod
 	instanceVariableNames: ''
 	classVariableNames: 'ArgsLenIndex ArgumentStartIndex CallingConventionIndex ReturnParmIndex ReturnTypeIndex'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalMethod guid: (GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
 

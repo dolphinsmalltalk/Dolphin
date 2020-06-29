@@ -4,7 +4,8 @@ Error subclass: #NotFoundError
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NotFoundError guid: (GUID fromString: '{87b4c55e-026e-11d3-9fd7-00a0cc3e4a32}')!
 NotFoundError comment: ''!
 !NotFoundError categoriesForClass!Kernel-Exception Handling! !

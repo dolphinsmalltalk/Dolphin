@@ -4,7 +4,8 @@ Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BlockClosure guid: (GUID fromString: '{9f8fdcd4-036d-4d00-b781-623ce474a835}')!
 BlockClosure comment: 'BlockClosure is the class of objects that represent "blocks" in Smalltalk. Blocks encapsulate a sequence of statements to be performed at a later time. Blocks may capture (or "close over") runtime state, such as the values of temporary variables, from the enclosing lexical scope at the point where they are created. When evaluated a block executes as if in the lexical scope in which it was defined, except that blocks may have arguments that are bound at the time of evaluation. Blocks may be passed as arguments with messages to other objects and evaluated by those objects when appropriate, and thus form a very powerful and generic "pluggability" mechanism that is a core feature which provides much of the power of Smalltalk. 
 

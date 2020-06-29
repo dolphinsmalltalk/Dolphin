@@ -4,7 +4,8 @@ ArithmeticExpressionVisitor subclass: #SizeIsExpressionFormatter
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SizeIsExpressionFormatter guid: (GUID fromString: '{f36862f0-90a8-4da9-be07-e725aae71ae5}')!
 SizeIsExpressionFormatter comment: 'Simple and very limited formatter for printing arithmetic expressions. Used by ExternalFields for emitting size_is expressions so that the base system does not need to depend on the RBFormatters package.'!
 !SizeIsExpressionFormatter categoriesForClass!Refactory-ParseTree Matching! !

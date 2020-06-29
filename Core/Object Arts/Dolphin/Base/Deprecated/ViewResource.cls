@@ -4,7 +4,8 @@ Resource subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ViewResource guid: (GUID fromString: '{a018036d-0816-4244-a08b-0cb433e4eb97}')!
 ViewResource comment: ''!
 !ViewResource categoriesForClass!MVP-Resources! !

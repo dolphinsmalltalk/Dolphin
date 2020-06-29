@@ -4,7 +4,8 @@ Notification subclass: #Warning
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Warning guid: (GUID fromString: '{87b4c571-026e-11d3-9fd7-00a0cc3e4a32}')!
 Warning comment: 'Warning is the class of <Notification>s which represent exceptional conditions that are not considered errors, but which should still be reported to the user with the option to continue or abort the computation.'!
 !Warning categoriesForClass!Kernel-Exception Handling! !

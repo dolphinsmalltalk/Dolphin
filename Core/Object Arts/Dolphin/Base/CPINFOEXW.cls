@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #CPINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_codepage _OffsetOf_CodePageName _OffsetOf_DefaultChar _OffsetOf_LeadByte _OffsetOf_MaxCharSize _OffsetOf_UnicodeDefaultChar'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_codepage' -> 16r14.
+		'_OffsetOf_CodePageName' -> 16r18.
+		'_OffsetOf_DefaultChar' -> 16r4.
+		'_OffsetOf_LeadByte' -> 16r6.
+		'_OffsetOf_MaxCharSize' -> 16r0.
+		'_OffsetOf_UnicodeDefaultChar' -> 16r12
+	}!
 CPINFOEXW guid: (GUID fromString: '{daee0d37-37b6-4a47-a208-c12409c7f158}')!
-CPINFOEXW addClassConstant: '_OffsetOf_codepage' value: 16r14!
-CPINFOEXW addClassConstant: '_OffsetOf_CodePageName' value: 16r18!
-CPINFOEXW addClassConstant: '_OffsetOf_DefaultChar' value: 16r4!
-CPINFOEXW addClassConstant: '_OffsetOf_LeadByte' value: 16r6!
-CPINFOEXW addClassConstant: '_OffsetOf_MaxCharSize' value: 16r0!
-CPINFOEXW addClassConstant: '_OffsetOf_UnicodeDefaultChar' value: 16r12!
 CPINFOEXW comment: '<CPINFOEXW> is an <ExternalStructure> class to wrap the struct ''Win32.CPINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

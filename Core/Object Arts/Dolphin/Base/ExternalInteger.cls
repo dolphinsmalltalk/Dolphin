@@ -4,7 +4,8 @@ ExternalScalar subclass: #ExternalInteger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalInteger guid: (GUID fromString: '{87b4c594-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalInteger isAbstract: true!
 ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStructures to represent machine native integer formats. Various subclasses are defined to represent the signed and unsigned forms with varying numbers of bits:

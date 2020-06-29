@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #SmalltalkParseErrorCodes put: (PoolConstantsDictionary named: #SmalltalkParseErrorCodes)!
+#{SmalltalkParseErrorCodes} declare: (PoolConstantsDictionary named: #SmalltalkParseErrorCodes)!
 SmalltalkParseErrorCodes at: 'CErrArgTypeCannotBeVoid' put: 16r33!
 SmalltalkParseErrorCodes at: 'CErrArrayNotClosed' put: 16r3D!
 SmalltalkParseErrorCodes at: 'CErrAssignConstant' put: 16r48!

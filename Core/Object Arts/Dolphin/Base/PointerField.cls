@@ -4,7 +4,8 @@ ExternalField subclass: #PointerField
 	instanceVariableNames: 'pointerClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PointerField guid: (GUID fromString: '{87b4c4dc-026e-11d3-9fd7-00a0cc3e4a32}')!
 PointerField comment: 'PointerField is an <ExternalField> type to represent fields of <ExternalStructure>s that are pointers to external data.'!
 !PointerField categoriesForClass!External-Data-Types! !

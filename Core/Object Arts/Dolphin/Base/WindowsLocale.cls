@@ -4,7 +4,8 @@ Locale subclass: #WindowsLocale
 	instanceVariableNames: 'lcid info'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WindowsLocale guid: (GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
 WindowsLocale comment: ''!
 !WindowsLocale categoriesForClass!Unclassified! !

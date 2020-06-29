@@ -4,7 +4,8 @@ Object subclass: #SortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SortAlgorithm guid: (GUID fromString: '{5bafb298-56ce-415c-a401-5d05f084e240}')!
 SortAlgorithm isAbstract: true!
 SortAlgorithm comment: 'SortAlgorithm is the abstract class of singleton sort algorithms primarily used to implement the sorting strategy of <SortedCollection> instances, although in fact SortAlgorithms can be used to sort the indexable variables of any object. Concrete subclasses provide implementations of well-known sort algorithms for use in different circumstances. A <SortAlgorithm> is responsible for defining the order of elements (i..e. it implements or holds the comparison predicate, or sort block), and for performing the sorting of a requested range of indexable instance variables of some other object, typically a SortedCollection.

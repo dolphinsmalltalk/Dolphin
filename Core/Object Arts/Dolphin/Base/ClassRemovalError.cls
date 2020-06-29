@@ -4,7 +4,8 @@ Error subclass: #ClassRemovalError
 	instanceVariableNames: 'originalError'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassRemovalError guid: (GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
 ClassRemovalError comment: ''!
 !ClassRemovalError categoriesForClass!System-Support! !

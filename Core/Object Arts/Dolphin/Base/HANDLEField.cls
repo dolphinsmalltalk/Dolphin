@@ -4,7 +4,8 @@ UINT_PTRField subclass: #HANDLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HANDLEField guid: (GUID fromString: '{92844ae1-5120-4fc8-822f-111a92ac0485}')!
 HANDLEField comment: '<HANDLEField> is a <ScalarField> type to represent <ExternalStructure> fields that are opaque pointers, or "handles".'!
 !HANDLEField categoriesForClass!External-Data-Types! !

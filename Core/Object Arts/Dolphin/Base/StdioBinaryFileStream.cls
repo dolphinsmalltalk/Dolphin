@@ -4,7 +4,8 @@ StdioFileStream subclass: #StdioBinaryFileStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StdioBinaryFileStream guid: (GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
 StdioBinaryFileStream comment: ''!
 !StdioBinaryFileStream categoriesForClass!Collections-Streams! !

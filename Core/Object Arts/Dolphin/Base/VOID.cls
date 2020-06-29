@@ -4,7 +4,8 @@ ExternalStructure subclass: #VOID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VOID guid: (GUID fromString: '{3bd81eba-d20d-4ba1-aa22-fabae10ec3b6}')!
 VOID comment: 'VOID is an <ExternalStructure> class to represent unspecified, null, or opaque types. 
 

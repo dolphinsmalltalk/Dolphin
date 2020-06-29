@@ -4,7 +4,8 @@ STBCollectionProxy subclass: #STBSortedCollectionProxy
 	instanceVariableNames: 'sortAlgorithm'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBSortedCollectionProxy guid: (GUID fromString: '{87b4c6f7-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBSortedCollectionProxy comment: ''!
 !STBSortedCollectionProxy categoriesForClass!System-Binary storage! !

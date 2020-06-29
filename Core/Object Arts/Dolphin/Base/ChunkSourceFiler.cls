@@ -2,11 +2,13 @@
 
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
-	classVariableNames: 'NormalizeEolsMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'NormalizeEolsMask' -> 16r2
+	}!
 ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
-ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 16r2!
 ChunkSourceFiler comment: ''!
 !ChunkSourceFiler categoriesForClass!Development!System-Support! !
 !ChunkSourceFiler methodsFor!
@@ -212,9 +214,6 @@ storeSourceString: aString forMethod: aCompiledMethod
 
 !ChunkSourceFiler class methodsFor!
 
-initialize
-	self addClassConstant: 'NormalizeEolsMask' value: 2.!
-
 on: aWriteStream sourceFileIndex: anInteger
 	"Answer a new instance of the receiver for filing out source code onto the 
 	<puttableStream> argument, and using the <integer>, anInteger, as the 
@@ -224,6 +223,5 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
-!ChunkSourceFiler class categoriesFor: #initialize!development!initializing!public! !
 !ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
 

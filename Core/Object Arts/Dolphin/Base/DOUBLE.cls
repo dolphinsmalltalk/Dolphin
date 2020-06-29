@@ -4,7 +4,8 @@ ExternalScalar subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOUBLE guid: (GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
 DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
 !DOUBLE categoriesForClass!External-Data-Structured! !

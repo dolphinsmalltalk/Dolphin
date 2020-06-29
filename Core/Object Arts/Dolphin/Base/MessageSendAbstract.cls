@@ -4,7 +4,8 @@ Message subclass: #MessageSendAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageSendAbstract guid: (GUID fromString: '{16bfd17c-2ce8-4b61-b09a-9d012256d971}')!
 MessageSendAbstract isAbstract: true!
 MessageSendAbstract comment: 'A MessageSendAbstract is the abstract base class of fully closed <Message>s, that include a receiver object, a message selector, and an array of sufficient arguments. As a fully closed valuable, Message Sends can be evaluated by sending them the #value message, and they can frequently be employed where a <BlockClosure> might otherwise be used.

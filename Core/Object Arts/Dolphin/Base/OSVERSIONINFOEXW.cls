@@ -2,21 +2,23 @@
 
 Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwBuildNumber _OffsetOf_dwMajorVersion _OffsetOf_dwMinorVersion _OffsetOf_dwPlatformId _OffsetOf_dwSize _OffsetOf_szCSDVersion _OffsetOf_wProductType _OffsetOf_wReserved _OffsetOf_wServicePackMajor _OffsetOf_wServicePackMinor _OffsetOf_wSuiteMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwBuildNumber' -> 16rC.
+		'_OffsetOf_dwMajorVersion' -> 16r4.
+		'_OffsetOf_dwMinorVersion' -> 16r8.
+		'_OffsetOf_dwPlatformId' -> 16r10.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_szCSDVersion' -> 16r14.
+		'_OffsetOf_wProductType' -> 16r11A.
+		'_OffsetOf_wReserved' -> 16r11B.
+		'_OffsetOf_wServicePackMajor' -> 16r114.
+		'_OffsetOf_wServicePackMinor' -> 16r116.
+		'_OffsetOf_wSuiteMask' -> 16r118
+	}!
 OSVERSIONINFOEXW guid: (GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwBuildNumber' value: 16rC!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwMajorVersion' value: 16r4!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwMinorVersion' value: 16r8!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwPlatformId' value: 16r10!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_szCSDVersion' value: 16r14!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wProductType' value: 16r11A!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wReserved' value: 16r11B!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wServicePackMajor' value: 16r114!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wServicePackMinor' value: 16r116!
-OSVERSIONINFOEXW addClassConstant: '_OffsetOf_wSuiteMask' value: 16r118!
 OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct

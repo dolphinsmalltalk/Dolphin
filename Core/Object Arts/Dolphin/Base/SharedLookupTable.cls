@@ -4,7 +4,8 @@ LookupTable variableSubclass: #SharedLookupTable
 	instanceVariableNames: 'mutex'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SharedLookupTable guid: (GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
 SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
 

@@ -4,7 +4,8 @@ Error subclass: #HRESULTError
 	instanceVariableNames: 'errorInfo osErrorMessage'
 	classVariableNames: 'FacilityClasses'
 	poolDictionaries: 'FacilityCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HRESULTError guid: (GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULTError comment: ''!
 !HRESULTError categoriesForClass!System-Exception Handling! !

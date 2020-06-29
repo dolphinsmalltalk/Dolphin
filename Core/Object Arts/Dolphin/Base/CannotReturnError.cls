@@ -4,7 +4,8 @@ Error subclass: #CannotReturnError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CannotReturnError guid: (GUID fromString: '{3986fbda-d1ac-42bd-81d9-060d7515a133}')!
 CannotReturnError comment: ''!
 !CannotReturnError categoriesForClass!Kernel-Exception Handling! !

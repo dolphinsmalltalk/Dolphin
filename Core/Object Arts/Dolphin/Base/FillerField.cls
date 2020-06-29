@@ -4,7 +4,8 @@ ExternalField subclass: #FillerField
 	instanceVariableNames: 'byteSize'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FillerField guid: (GUID fromString: '{87b4c4db-026e-11d3-9fd7-00a0cc3e4a32}')!
 FillerField comment: 'FillerField is an <ExternalField> type for describing spacing or padding in <ExternalStructure>s. Note that it is not normally necessary to account for padding added for memory alignment reasons - the infrastructure for defining structures is able to calculate the correct field offsets taking account of various padding algorithms. Sometimes however custom padding may be required, or <FillerField>s can be used to describe fields where there is never any need to get or set the value (although in that case it is better to use the correct <ExternalField> type and mark the instance as a filler).'!
 !FillerField categoriesForClass!External-Data-Types! !

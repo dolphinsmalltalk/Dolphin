@@ -4,7 +4,8 @@ PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MergesortAlgorithm guid: (GUID fromString: '{cc7f696a-5bc0-4ad0-a342-d93af7cca0a3}')!
 MergesortAlgorithm comment: 'MergesortAlgorithm implements the Mergesort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 

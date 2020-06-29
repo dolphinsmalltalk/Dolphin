@@ -1,29 +1,24 @@
 ﻿| package |
 package := Package name: 'Dolphin Conformant Array Fields'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Conformant Array Fields Package.
 
 Contains support for conformant array fields in structures. Conformant array fields are those where the size of the array is variable and defined by another field in the structure.'.
 
 
-package classNames
-	add: #ConformantArrayFieldLength;
-	yourself.
+package setClassNames: #(
+	#{ConformantArrayFieldLength}
+).
 
-package methodNames
-	add: 'ArrayField class' -> #type:lengthField:;
-	add: 'ArrayPointerField class' -> #type:lengthField:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ArrayField class} #type:lengthField:)
+	#(#{ArrayPointerField class} #type:lengthField:)
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
 
@@ -33,10 +28,8 @@ ArrayFieldLength subclass: #ConformantArrayFieldLength
 	instanceVariableNames: 'lengthField'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

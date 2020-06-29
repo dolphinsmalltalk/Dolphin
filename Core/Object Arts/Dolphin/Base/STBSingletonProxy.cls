@@ -4,7 +4,8 @@ STBProxy subclass: #STBSingletonProxy
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBSingletonProxy guid: (GUID fromString: '{87b4c6f2-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBSingletonProxy comment: ''!
 !STBSingletonProxy categoriesForClass!System-Binary storage! !

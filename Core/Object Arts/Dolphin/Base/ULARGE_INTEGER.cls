@@ -4,7 +4,8 @@ QWORD subclass: #ULARGE_INTEGER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ULARGE_INTEGER guid: (GUID fromString: '{87b4c631-026e-11d3-9fd7-00a0cc3e4a32}')!
 ULARGE_INTEGER comment: '<ULARGE_INTEGER> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 

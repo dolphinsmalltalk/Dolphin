@@ -4,7 +4,8 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	instanceVariableNames: 'fileName loadFlags'
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalResourceLibrary guid: (GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
 !ExternalResourceLibrary categoriesForClass!External-Libraries! !

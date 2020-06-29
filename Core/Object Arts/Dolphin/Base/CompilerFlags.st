@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #CompilerFlags put: (PoolConstantsDictionary named: #CompilerFlags)!
+#{CompilerFlags} declare: (PoolConstantsDictionary named: #CompilerFlags)!
 CompilerFlags at: 'DebugMethod' put: 16r40!
 CompilerFlags at: 'Interactive' put: 16r200!
 CompilerFlags at: 'NoOptimize' put: 16r8!

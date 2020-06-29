@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #NUMBERFMTW
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
-	classVariableNames: '_OffsetOf_Grouping _OffsetOf_LeadingZero _OffsetOf_lpDecimalSep _OffsetOf_lpThousandSep _OffsetOf_NegativeOrder _OffsetOf_NumDigits'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Grouping' -> 16r8.
+		'_OffsetOf_LeadingZero' -> 16r4.
+		'_OffsetOf_lpDecimalSep' -> 16rC.
+		'_OffsetOf_lpThousandSep' -> 16r10.
+		'_OffsetOf_NegativeOrder' -> 16r14.
+		'_OffsetOf_NumDigits' -> 16r0
+	}!
 NUMBERFMTW guid: (GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
-NUMBERFMTW addClassConstant: '_OffsetOf_Grouping' value: 16r8!
-NUMBERFMTW addClassConstant: '_OffsetOf_LeadingZero' value: 16r4!
-NUMBERFMTW addClassConstant: '_OffsetOf_lpDecimalSep' value: 16rC!
-NUMBERFMTW addClassConstant: '_OffsetOf_lpThousandSep' value: 16r10!
-NUMBERFMTW addClassConstant: '_OffsetOf_NegativeOrder' value: 16r14!
-NUMBERFMTW addClassConstant: '_OffsetOf_NumDigits' value: 16r0!
 NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
 
 NUMBERFMTW is used in conjunction with the GetNumberFormat API to produce localised representations of printed decimal numbers.

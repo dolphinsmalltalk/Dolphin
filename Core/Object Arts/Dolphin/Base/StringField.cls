@@ -4,7 +4,8 @@ ArrayField subclass: #StringField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StringField guid: (GUID fromString: '{87b4c4e0-026e-11d3-9fd7-00a0cc3e4a32}')!
 StringField comment: '<StringField> is an <ExternalField> class which can be used to represent embedded null-terminated string fields in <ExternalStructure>s.
 
