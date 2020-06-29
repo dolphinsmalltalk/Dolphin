@@ -4,7 +4,8 @@ IDispatch subclass: #IScriptControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IScriptControl guid: (IID fromString: '{0e59f1d3-1fbe-11d0-8ff2-00a0d10038bc}')!
 IScriptControl comment: '<IScriptControl> is a wrapper class for the COM interface ''MSScriptControl.IScriptControl'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

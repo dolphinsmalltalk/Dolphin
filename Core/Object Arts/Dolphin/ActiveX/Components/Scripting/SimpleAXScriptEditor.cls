@@ -4,7 +4,8 @@ Dialog subclass: #SimpleAXScriptEditor
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SimpleAXScriptEditor guid: (GUID fromString: '{46f9c2fb-d025-11d3-93da-00a024ca708a}')!
 SimpleAXScriptEditor comment: 'Simple editor for creating ActiveXScriptlets.'!
 !SimpleAXScriptEditor categoriesForClass!Unclassified! !
