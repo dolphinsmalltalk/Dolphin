@@ -4,7 +4,8 @@ Object subclass: #ILImportBitmapProxy
 	instanceVariableNames: 'bitmapInfoHeader colorTable imageBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportBitmapProxy guid: (GUID fromString: '{e7a42970-a8ac-4d70-81a2-7bcf6935cde4}')!
 ILImportBitmapProxy comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

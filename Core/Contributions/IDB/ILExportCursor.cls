@@ -4,7 +4,8 @@ ILExportIcon subclass: #ILExportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExportCursor guid: (GUID fromString: '{5e60c6ca-e0fd-4036-a41f-7884aec55be9}')!
 ILExportCursor comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

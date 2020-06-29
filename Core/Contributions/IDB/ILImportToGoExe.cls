@@ -4,7 +4,8 @@ ILImportExe subclass: #ILImportToGoExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportToGoExe guid: (GUID fromString: '{25bacac5-53ac-4692-8fc5-962eef4759ee}')!
 ILImportToGoExe comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

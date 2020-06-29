@@ -2,18 +2,20 @@
 
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bColorCount' -> 16r2.
+		'_OffsetOf_bHeight' -> 16r1.
+		'_OffsetOf_bReserved' -> 16r3.
+		'_OffsetOf_bWidth' -> 16r0.
+		'_OffsetOf_dwBytesInRes' -> 16r8.
+		'_OffsetOf_dwImageOffset' -> 16rC.
+		'_OffsetOf_wBitCount' -> 16r6.
+		'_OffsetOf_wPlanes' -> 16r4
+	}!
 ICONDIRENTRY guid: (GUID fromString: '{c37d878b-52cb-41c6-a356-cc780f4eac95}')!
-ICONDIRENTRY addClassConstant: '_OffsetOf_bColorCount' value: 16r2!
-ICONDIRENTRY addClassConstant: '_OffsetOf_bHeight' value: 16r1!
-ICONDIRENTRY addClassConstant: '_OffsetOf_bReserved' value: 16r3!
-ICONDIRENTRY addClassConstant: '_OffsetOf_bWidth' value: 16r0!
-ICONDIRENTRY addClassConstant: '_OffsetOf_dwBytesInRes' value: 16r8!
-ICONDIRENTRY addClassConstant: '_OffsetOf_dwImageOffset' value: 16rC!
-ICONDIRENTRY addClassConstant: '_OffsetOf_wBitCount' value: 16r6!
-ICONDIRENTRY addClassConstant: '_OffsetOf_wPlanes' value: 16r4!
 ICONDIRENTRY comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

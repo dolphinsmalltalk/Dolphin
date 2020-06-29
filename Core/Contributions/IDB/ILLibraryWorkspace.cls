@@ -4,7 +4,8 @@ View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILLibraryWorkspace guid: (GUID fromString: '{1c1c2fa1-a653-4a42-a88e-d9da6c1d9276}')!
 ILLibraryWorkspace comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

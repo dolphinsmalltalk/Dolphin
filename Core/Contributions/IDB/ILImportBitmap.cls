@@ -4,7 +4,8 @@ ILImport subclass: #ILImportBitmap
 	instanceVariableNames: 'bitmapFileHeader bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportBitmap guid: (GUID fromString: '{a969d8db-1959-4401-b80d-65349a755bc2}')!
 ILImportBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -4,7 +4,8 @@ Object subclass: #Profiler
 	instanceVariableNames: 'samplingInterval isSampling'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Profiler guid: (GUID fromString: '{425d0ead-542e-11d3-998b-d5ca2c3c1d61}')!
 Profiler comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

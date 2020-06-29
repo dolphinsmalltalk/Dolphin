@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_idCount' -> 16r4.
+		'_OffsetOf_idEntries' -> 16r6.
+		'_OffsetOf_idReserved' -> 16r0.
+		'_OffsetOf_idType' -> 16r2
+	}!
 ICONDIR guid: (GUID fromString: '{b5be1f5b-e245-4cdf-b274-b6609ab85b23}')!
-ICONDIR addClassConstant: '_OffsetOf_idCount' value: 16r4!
-ICONDIR addClassConstant: '_OffsetOf_idEntries' value: 16r6!
-ICONDIR addClassConstant: '_OffsetOf_idReserved' value: 16r0!
-ICONDIR addClassConstant: '_OffsetOf_idType' value: 16r2!
 ICONDIR comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

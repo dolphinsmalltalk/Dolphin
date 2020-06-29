@@ -4,7 +4,8 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassProtocolChunk
 	instanceVariableNames: 'attributes selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkBrowserClassProtocolChunk guid: (GUID fromString: '{c8986897-7417-46b9-a404-28a5ab21ea14}')!
 ChunkBrowserClassProtocolChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

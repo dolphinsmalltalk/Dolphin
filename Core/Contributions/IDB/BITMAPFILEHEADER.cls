@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bfOffBits' -> 16rA.
+		'_OffsetOf_bfReserved1' -> 16r6.
+		'_OffsetOf_bfReserved2' -> 16r8.
+		'_OffsetOf_bfSize' -> 16r2.
+		'_OffsetOf_bfType' -> 16r0
+	}!
 BITMAPFILEHEADER guid: (GUID fromString: '{48f23680-5426-11d3-998b-bca753d3b065}')!
-BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfOffBits' value: 16rA!
-BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved1' value: 16r6!
-BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved2' value: 16r8!
-BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfSize' value: 16r2!
-BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfType' value: 16r0!
 BITMAPFILEHEADER comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew

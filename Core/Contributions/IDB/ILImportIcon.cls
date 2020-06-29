@@ -4,7 +4,8 @@ ILImport subclass: #ILImportIcon
 	instanceVariableNames: 'iconDir icons'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportIcon guid: (GUID fromString: '{254d6ad6-c12b-4add-be8b-d2f0dc0682cc}')!
 ILImportIcon comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -4,7 +4,8 @@ Presenter subclass: #ILColorSelectorPresenter
 	instanceVariableNames: 'selectedRGB colorSelectorView selectedColorView selectedColorText dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILColorSelectorPresenter guid: (GUID fromString: '{cca55808-3175-4868-a29c-34b582a8c4e3}')!
 ILColorSelectorPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -4,7 +4,8 @@ Dialog subclass: #ILExtentDialog
 	instanceVariableNames: 'widthPresenter heightPresenter optionsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExtentDialog guid: (GUID fromString: '{cb954d0c-f8cc-4ab0-a826-c1a6978a7106}')!
 ILExtentDialog comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

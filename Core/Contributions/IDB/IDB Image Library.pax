@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Image Library'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'Image Library
 Version 6a - May 2005
 For Version 6 of Dolphin Smalltalk
@@ -13,54 +13,48 @@ Public Domain Freeware
 package basicPackageVersion: '6a'.
 
 
-package classNames
-	add: #ICONDIR;
-	add: #ICONDIRENTRY;
-	add: #ILBitmapExtentDialog;
-	add: #ILColorSelector;
-	add: #ILColorSelectorPresenter;
-	add: #ILEditingImage;
-	add: #ILEditorShell;
-	add: #ILEditorWorkspace;
-	add: #ILEditorWorkspacePresenter;
-	add: #ILExport;
-	add: #ILExportBitmap;
-	add: #ILExportCursor;
-	add: #ILExportExe;
-	add: #ILExportIcon;
-	add: #ILExtentDialog;
-	add: #ILImage;
-	add: #ILImport;
-	add: #ILImportBitmap;
-	add: #ILImportBitmapProxy;
-	add: #ILImportCursor;
-	add: #ILImportCursorProxy;
-	add: #ILImportExe;
-	add: #ILImportIcon;
-	add: #ILImportIconProxy;
-	add: #ILImportLibrary;
-	add: #ILImportStandardExe;
-	add: #ILImportToGoExe;
-	add: #ILLibrary;
-	add: #ILLibraryShell;
-	add: #ILLibraryWorkspace;
-	add: #ILLibraryWorkspacePresenter;
-	yourself.
+package setClassNames: #(
+	#{ICONDIR}
+	#{ICONDIRENTRY}
+	#{ILBitmapExtentDialog}
+	#{ILColorSelector}
+	#{ILColorSelectorPresenter}
+	#{ILEditingImage}
+	#{ILEditorShell}
+	#{ILEditorWorkspace}
+	#{ILEditorWorkspacePresenter}
+	#{ILExport}
+	#{ILExportBitmap}
+	#{ILExportCursor}
+	#{ILExportExe}
+	#{ILExportIcon}
+	#{ILExtentDialog}
+	#{ILImage}
+	#{ILImport}
+	#{ILImportBitmap}
+	#{ILImportBitmapProxy}
+	#{ILImportCursor}
+	#{ILImportCursorProxy}
+	#{ILImportExe}
+	#{ILImportIcon}
+	#{ILImportIconProxy}
+	#{ILImportLibrary}
+	#{ILImportStandardExe}
+	#{ILImportToGoExe}
+	#{ILLibrary}
+	#{ILLibraryShell}
+	#{ILLibraryWorkspace}
+	#{ILLibraryWorkspacePresenter}
+).
 
-package methodNames
-	add: #Rectangle -> #containsPointInclusive:;
-	add: #Rectangle -> #increaseCornerBy:;
-	add: #ScrollingDecorator -> #scroll:toNextIn:;
-	add: 'Color class' -> #dolphinYellow;
-	add: 'Toolbar class' -> #resource_ILEditorShell_tools;
-	add: 'Toolbar class' -> #resource_ILLibraryShell_tools;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Color class} #dolphinYellow)
+	#(#{Rectangle} #containsPointInclusive:)
+	#(#{Rectangle} #increaseCornerBy:)
+	#(#{ScrollingDecorator} #scroll:toNextIn:)
+	#(#{Toolbar class} #resource_ILEditorShell_tools)
+	#(#{Toolbar class} #resource_ILLibraryShell_tools)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -80,7 +74,9 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'IDB Common'
 	'IDB DeviceIndependentBitmap'
-	'IDB MultipleFileOpenDialog').
+	'IDB MultipleFileOpenDialog'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -90,160 +86,202 @@ Object subclass: #ILExport
 	instanceVariableNames: 'images colorTable bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ILImage
 	instanceVariableNames: 'extent colorsUsed colorsUsedCount image bitmapCache hotSpot'
 	classVariableNames: 'TransparentRGB'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ILImport
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ILImportBitmapProxy
 	instanceVariableNames: 'bitmapInfoHeader colorTable imageBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ILLibrary
 	instanceVariableNames: 'images selectedImages modified dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_idCount' -> 16r4.
+		'_OffsetOf_idEntries' -> 16r6.
+		'_OffsetOf_idReserved' -> 16r0.
+		'_OffsetOf_idType' -> 16r2
+	}!
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bColorCount' -> 16r2.
+		'_OffsetOf_bHeight' -> 16r1.
+		'_OffsetOf_bReserved' -> 16r3.
+		'_OffsetOf_bWidth' -> 16r0.
+		'_OffsetOf_dwBytesInRes' -> 16r8.
+		'_OffsetOf_dwImageOffset' -> 16rC.
+		'_OffsetOf_wBitCount' -> 16r6.
+		'_OffsetOf_wPlanes' -> 16r4
+	}!
 ILExport subclass: #ILExportBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExport subclass: #ILExportIcon
 	instanceVariableNames: 'iconImages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExportIcon subclass: #ILExportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExportIcon subclass: #ILExportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImage subclass: #ILEditingImage
 	instanceVariableNames: 'modified undoStack redoStack undoCollector brushCache'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImport subclass: #ILImportBitmap
 	instanceVariableNames: 'bitmapFileHeader bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImport subclass: #ILImportIcon
 	instanceVariableNames: 'iconDir icons'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImport subclass: #ILImportLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportIcon subclass: #ILImportCursor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportIcon subclass: #ILImportExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportExe subclass: #ILImportStandardExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportExe subclass: #ILImportToGoExe
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportBitmapProxy subclass: #ILImportIconProxy
 	instanceVariableNames: 'useMaskBytes maskBytes colorBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportIconProxy subclass: #ILImportCursorProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #ILColorSelectorPresenter
 	instanceVariableNames: 'selectedRGB colorSelectorView selectedColorView selectedColorText dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #ILLibraryWorkspacePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #ILExtentDialog
 	instanceVariableNames: 'widthPresenter heightPresenter optionsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILExtentDialog subclass: #ILBitmapExtentDialog
 	instanceVariableNames: 'bitmapExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdbShell subclass: #ILEditorShell
 	instanceVariableNames: 'editorWorkspace colorSelector backupImage imageStatus locationStatus zoneStatus zoomStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdbToolShell subclass: #ILLibraryShell
 	instanceVariableNames: 'libraryWorkspace libraryFilename libraryStatus imageStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #ILColorSelector
 	instanceVariableNames: 'colorTable dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

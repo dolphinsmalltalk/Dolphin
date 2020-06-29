@@ -4,7 +4,8 @@ SmalltalkToolShell subclass: #IdbShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdbShell guid: (GUID fromString: '{d143e0f5-fb16-48b9-999e-c66f61c6fd3e}')!
 IdbShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

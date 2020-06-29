@@ -4,7 +4,8 @@ ILImport subclass: #ILImportLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportLibrary guid: (GUID fromString: '{b91a4b63-db7b-4d34-b437-50da4e732240}')!
 ILImportLibrary comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

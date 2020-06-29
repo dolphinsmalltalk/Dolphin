@@ -4,7 +4,8 @@ Model subclass: #ChunkBrowserModel
 	instanceVariableNames: 'chunks'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkBrowserModel guid: (GUID fromString: '{806c497c-fe7e-440d-a6eb-4e4ae9d6aced}')!
 ChunkBrowserModel comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

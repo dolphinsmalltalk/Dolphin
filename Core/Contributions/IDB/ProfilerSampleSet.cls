@@ -4,7 +4,8 @@ Object subclass: #ProfilerSampleSet
 	instanceVariableNames: 'name root isActive samples samplingCount samplingTimeStamp samplesElapsedTime samplesClasses samplesSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProfilerSampleSet guid: (GUID fromString: '{425d0eb1-542e-11d3-998b-d5ca2c3c1d61}')!
 ProfilerSampleSet comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -4,7 +4,8 @@ ILImportIconProxy subclass: #ILImportCursorProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILImportCursorProxy guid: (GUID fromString: '{dea258bc-f4a0-4889-9478-8a73685ac319}')!
 ILImportCursorProxy comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

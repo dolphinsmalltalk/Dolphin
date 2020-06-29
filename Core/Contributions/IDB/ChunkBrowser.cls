@@ -4,7 +4,8 @@ IdbToolShell subclass: #ChunkBrowser
 	instanceVariableNames: 'chunkList chunkText pathname filter'
 	classVariableNames: 'ChunkTypeSelection CompareMethodsUsingParser'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkBrowser guid: (GUID fromString: '{625fa0d2-ffc4-4926-9ae7-06fb0998ec4e}')!
 ChunkBrowser comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

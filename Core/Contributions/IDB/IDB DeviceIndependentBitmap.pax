@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB DeviceIndependentBitmap'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'DeviceIndependentBitmap classes
 Version 6a - May 2005
 For Version 6 of Dolphin Smalltalk
@@ -14,31 +14,26 @@ package basicPackageVersion: '6a'.
 
 package basicScriptAt: #postinstall put: 'Clipboard current initializeForDeviceIndependentBitmap!!'.
 
-package classNames
-	add: #BITMAPFILEHEADER;
-	add: #DeviceIndependentBitmap;
-	yourself.
+package setClassNames: #(
+	#{BITMAPFILEHEADER}
+	#{DeviceIndependentBitmap}
+).
 
-package methodNames
-	add: #Clipboard -> #getDeviceIndependentBitmap;
-	add: #Clipboard -> #getDeviceIndependentBitmapIfNone:;
-	add: #Clipboard -> #initializeForDeviceIndependentBitmap;
-	add: #Clipboard -> #isDeviceIndependentBitmapAvailable;
-	add: #Clipboard -> #setDeviceIndependentBitmap:;
-	add: #Clipboard -> #setDeviceIndependentBitmap:format:;
-	add: #Clipboard -> #setDeviceIndependentBitmap:formatId:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Clipboard} #getDeviceIndependentBitmap)
+	#(#{Clipboard} #getDeviceIndependentBitmapIfNone:)
+	#(#{Clipboard} #initializeForDeviceIndependentBitmap)
+	#(#{Clipboard} #isDeviceIndependentBitmapAvailable)
+	#(#{Clipboard} #setDeviceIndependentBitmap:)
+	#(#{Clipboard} #setDeviceIndependentBitmap:format:)
+	#(#{Clipboard} #setDeviceIndependentBitmap:formatId:)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -46,17 +41,22 @@ package!
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bfOffBits' -> 16rA.
+		'_OffsetOf_bfReserved1' -> 16r6.
+		'_OffsetOf_bfReserved2' -> 16r8.
+		'_OffsetOf_bfSize' -> 16r2.
+		'_OffsetOf_bfType' -> 16r0
+	}!
 Bitmap subclass: #DeviceIndependentBitmap
 	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

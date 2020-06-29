@@ -4,7 +4,8 @@ Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILEditorWorkspacePresenter guid: (GUID fromString: '{d015ffbd-130b-4c43-92b1-541993e215e7}')!
 ILEditorWorkspacePresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

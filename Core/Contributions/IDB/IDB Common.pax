@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Common'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'Common classes and methods for IDB Goodies
 Version 7c - January 2016
 For Version 7 of Dolphin Smalltalk
@@ -20,29 +20,24 @@ Public Domain Freeware
 package basicPackageVersion: '7c'.
 
 
-package classNames
-	add: #IdbShell;
-	add: #IdbToolShell;
-	yourself.
+package setClassNames: #(
+	#{IdbShell}
+	#{IdbToolShell}
+).
 
-package methodNames
-	add: #ClassDescription -> #idbDefaultIconName;
-	add: #SessionManager -> #idbDocumentationFolder;
-	add: #SessionManager -> #idbPackageFolder;
-	add: #SessionManager -> #idbResourcesFolder;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassDescription} #idbDefaultIconName)
+	#(#{SessionManager} #idbDocumentationFolder)
+	#(#{SessionManager} #idbPackageFolder)
+	#(#{SessionManager} #idbResourcesFolder)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -52,15 +47,14 @@ SmalltalkToolShell subclass: #IdbShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdbShell subclass: #IdbToolShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: 'readBufferSize'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkFileMethodScanner guid: (GUID fromString: '{b8b83c19-e601-4265-b607-2a0b2122144b}')!
 ChunkFileMethodScanner comment: 'Scans the sources and changes file and answers a collection of either...
 - all the method versions for a specified class

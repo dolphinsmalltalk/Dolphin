@@ -4,7 +4,8 @@ IdbShell subclass: #ILEditorShell
 	instanceVariableNames: 'editorWorkspace colorSelector backupImage imageStatus locationStatus zoneStatus zoomStatus modifiedStatus'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILEditorShell guid: (GUID fromString: '{148da4fb-3948-4ca6-98ea-8ad12dc0b051}')!
 ILEditorShell comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB Method History'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'Extracts and presents class/method history from the change log
 Version 7.1 - October 2005
 For Version 7.1 of Dolphin Smalltalk
@@ -17,37 +17,30 @@ Public Domain Freeware
 
 package basicPackageVersion: '6b'.
 
+package setClassNames: #(
+	#{ChunkFileMethodScanner}
+	#{ClassHistoryBrowser}
+	#{DiffBrowser}
+	#{HistoryBrowser}
+	#{MethodHistoryBrowser}
+	#{MethodVersion}
+	#{SelectorParser}
+).
 
-package classNames
-	add: #ChunkFileMethodScanner;
-	add: #ClassHistoryBrowser;
-	add: #DiffBrowser;
-	add: #HistoryBrowser;
-	add: #MethodHistoryBrowser;
-	add: #MethodVersion;
-	add: #SelectorParser;
-	yourself.
-
-package methodNames
-	add: #ChunkSourceFiler -> #sourceDescriptorForPosition:;
-	add: #ClassBrowserAbstract -> #browseMethodHistory;
-	add: #ClassBrowserAbstract -> #browseMethodHistoryForClass;
-	add: #ClassBrowserAbstract -> #canBrowseMethodHistory;
-	add: #ClassBrowserAbstract -> #canBrowseMethodHistoryForClass;
-	add: #CompiledMethod -> #loadedVersion;
-	add: #CompiledMethod -> #versionHistory;
-	add: #Debugger -> #browseMethodHistory;
-	add: #Debugger -> #canBrowseMethodHistory;
-	add: #MethodBrowserShell -> #browseMethodHistory;
-	add: #MethodBrowserShell -> #canBrowseMethodHistory;
-	add: #SmalltalkToolShell -> #queryMethodHistoryCommand:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ChunkSourceFiler} #sourceDescriptorForPosition:)
+	#(#{ClassBrowserAbstract} #browseMethodHistory)
+	#(#{ClassBrowserAbstract} #browseMethodHistoryForClass)
+	#(#{ClassBrowserAbstract} #canBrowseMethodHistory)
+	#(#{ClassBrowserAbstract} #canBrowseMethodHistoryForClass)
+	#(#{CompiledMethod} #loadedVersion)
+	#(#{CompiledMethod} #versionHistory)
+	#(#{Debugger} #browseMethodHistory)
+	#(#{Debugger} #canBrowseMethodHistory)
+	#(#{MethodBrowserShell} #browseMethodHistory)
+	#(#{MethodBrowserShell} #canBrowseMethodHistory)
+	#(#{SmalltalkToolShell} #queryMethodHistoryCommand:)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
@@ -68,7 +61,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -78,40 +72,44 @@ Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: 'readBufferSize'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MethodVersion
 	instanceVariableNames: 'methodClass selector source sourceDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SelectorParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #DiffBrowser
 	instanceVariableNames: 'diffsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

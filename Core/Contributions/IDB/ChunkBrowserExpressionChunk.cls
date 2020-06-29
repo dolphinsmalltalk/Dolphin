@@ -4,7 +4,8 @@ ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkBrowserExpressionChunk guid: (GUID fromString: '{0f9c053e-f249-49b6-9da5-fcece45be89f}')!
 ChunkBrowserExpressionChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

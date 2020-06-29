@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'IDB File Browser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'File Browser
 Version 6a - May 2005
 For Version 6 of Dolphin Smalltalk
@@ -13,22 +13,16 @@ Public Domain Freeware
 package basicPackageVersion: '6a'.
 
 
-package classNames
-	add: #FileBrowser;
-	add: #FileBrowserAbstract;
-	add: #FileBrowserFile;
-	add: #FileBrowserFolder;
-	yourself.
+package setClassNames: #(
+	#{FileBrowser}
+	#{FileBrowserAbstract}
+	#{FileBrowserFile}
+	#{FileBrowserFolder}
+).
 
-package methodNames
-	add: #String -> #asHexText;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{String} #asHexText)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation'
@@ -57,7 +51,9 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM'
 	'..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture'
-	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace').
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace'
+).
 
 package!
 
@@ -67,25 +63,26 @@ Object subclass: #FileBrowserAbstract
 	instanceVariableNames: 'name parent children'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileBrowserAbstract subclass: #FileBrowserFile
 	instanceVariableNames: 'size type timeStamp'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileBrowserAbstract subclass: #FileBrowserFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdbToolShell subclass: #FileBrowser
 	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'
 	classVariableNames: 'HexEnabled HexFont RemoveCr RootFolder TextFont Warnings'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

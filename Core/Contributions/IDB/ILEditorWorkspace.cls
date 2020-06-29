@@ -4,7 +4,8 @@ View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILEditorWorkspace guid: (GUID fromString: '{367ecf4d-c63b-44a0-a054-07d7fcc14c7b}')!
 ILEditorWorkspace comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

@@ -2,9 +2,10 @@
 
 Object subclass: #ChunkBrowserChunk
 	instanceVariableNames: 'rawText index identity1 identity2 picked'
-	classVariableNames: 'ChunkClasses IconIndices'
+	classVariableNames: 'ChunkClasses'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChunkBrowserChunk guid: (GUID fromString: '{81a73b99-1ef4-4578-b810-1fdb663e27f2}')!
 ChunkBrowserChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
