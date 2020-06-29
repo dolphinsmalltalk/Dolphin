@@ -4,7 +4,8 @@ TutorialPlayer subclass: #ProfStef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'default'!
+	classInstanceVariableNames: 'default'
+	classConstants: {}!
 ProfStef guid: (GUID fromString: '{60f1ec8a-daba-4ccb-bbe6-a35d8192215a}')!
 ProfStef comment: 'A ProfStef is the Smalltalk teacher. To start the tutorial, evaluate:
 ProfStef go.

@@ -1,29 +1,24 @@
 ﻿| package |
 package := Package name: 'Learn Smalltalk'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #ProfStef;
-	add: #SmalltalkSyntaxTutorial;
-	yourself.
+package setClassNames: #(
+	#{ProfStef}
+	#{SmalltalkSyntaxTutorial}
+).
 
-package methodNames
-	add: #SmalltalkSystem -> #learnSmalltalk;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{SmalltalkSystem} #learnSmalltalk)
+).
 
 package setPrerequisites: #(
 	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
-	'Tutorial Player').
+	'Tutorial Player'
+).
 
 package!
 
@@ -33,15 +28,14 @@ AbstractTutorial subclass: #SmalltalkSyntaxTutorial
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TutorialPlayer subclass: #ProfStef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'default'!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: 'default'
+	classConstants: {}!
 
 "Loose Methods"!
 

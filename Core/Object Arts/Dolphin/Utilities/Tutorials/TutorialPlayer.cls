@@ -4,7 +4,8 @@ Shell subclass: #TutorialPlayer
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TutorialPlayer guid: (GUID fromString: '{0ba31b85-7347-43e6-87d6-5f582babde3d}')!
 TutorialPlayer comment: 'I can navigate through an AbstractTutorial subclass. With #next and #previous you can go forward and backward through the tutorial.'!
 !TutorialPlayer categoriesForClass!Unclassified! !

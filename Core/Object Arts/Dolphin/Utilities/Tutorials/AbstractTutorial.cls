@@ -4,7 +4,8 @@ Object subclass: #AbstractTutorial
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractTutorial guid: (GUID fromString: '{8351f1af-403d-4300-b06d-942ca7abe1db}')!
 AbstractTutorial comment: 'Parent class of all ProfStef tutorials.
 

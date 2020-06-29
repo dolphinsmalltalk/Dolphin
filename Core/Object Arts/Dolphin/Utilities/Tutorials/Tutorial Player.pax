@@ -1,21 +1,15 @@
 ﻿| package |
 package := Package name: 'Tutorial Player'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractTutorial;
-	add: #Lesson;
-	add: #TutorialPlayer;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AbstractTutorial}
+	#{Lesson}
+	#{TutorialPlayer}
+).
 
 package setPrerequisites: #(
 	'..\..\IDE\Base\Development System'
@@ -28,7 +22,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\MVP\Gdiplus\Gdiplus ImageView').
+	'..\..\MVP\Gdiplus\Gdiplus ImageView'
+).
 
 package!
 
@@ -38,22 +33,20 @@ Object subclass: #AbstractTutorial
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #Lesson
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #TutorialPlayer
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
