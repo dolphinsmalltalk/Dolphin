@@ -1,38 +1,33 @@
 ﻿| package |
 package := Package name: 'Dolphin Announcements'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #Announcement;
-	add: #AnnouncementSet;
-	add: #AnnouncementSubscription;
-	add: #Announcer;
-	add: #SubscriptionRegistry;
-	add: #WeakAnnouncementSubscription;
-	add: #WeakMessageSend;
-	add: #WeakSubscriptionBuilder;
-	yourself.
+package setClassNames: #(
+	#{Announcement}
+	#{AnnouncementSet}
+	#{AnnouncementSubscription}
+	#{Announcer}
+	#{SubscriptionRegistry}
+	#{WeakAnnouncementSubscription}
+	#{WeakMessageSend}
+	#{WeakSubscriptionBuilder}
+).
 
-package methodNames
-	add: #BlockClosure -> #announcementSubscriber;
-	add: #BlockClosure -> #asWeakMessageSend;
-	add: #MessageSend -> #asWeakMessageSend;
-	add: #MessageSendAbstract -> #announcementSubscriber;
-	add: #Symbol -> #asAnnouncement;
-	add: #Symbol -> #handlesAnnouncement:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BlockClosure} #announcementSubscriber)
+	#(#{BlockClosure} #asWeakMessageSend)
+	#(#{MessageSend} #asWeakMessageSend)
+	#(#{MessageSendAbstract} #announcementSubscriber)
+	#(#{Symbol} #asAnnouncement)
+	#(#{Symbol} #handlesAnnouncement:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -42,45 +37,50 @@ Object subclass: #Announcement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #AnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass subscriber action'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #Announcer
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SubscriptionRegistry
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #WeakSubscriptionBuilder
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakArray variableSubclass: #WeakAnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass action'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Set variableSubclass: #AnnouncementSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EventMessageSend variableSubclass: #WeakMessageSend
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ Object subclass: #SubscriptionRegistry
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SubscriptionRegistry guid: (GUID fromString: '{a785d939-edab-48ad-b4a7-0bf0a69ec5f3}')!
 SubscriptionRegistry comment: 'The subscription registry is a threadsafe storage for the subscriptions to an Announcer.
 

@@ -4,7 +4,8 @@ Object subclass: #WeakSubscriptionBuilder
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakSubscriptionBuilder guid: (GUID fromString: '{c8b3ff0e-ed6e-4d0e-bd5c-316314346cc8}')!
 WeakSubscriptionBuilder comment: 'I am a wrapper around an Announcer, used to create weak subscriptions at subscription time.
 

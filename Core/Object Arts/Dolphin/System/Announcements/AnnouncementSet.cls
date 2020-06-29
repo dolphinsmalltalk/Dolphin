@@ -4,7 +4,8 @@ Set variableSubclass: #AnnouncementSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnnouncementSet guid: (GUID fromString: '{08b196a7-3cc4-4e21-82da-3e9b2c6baf34}')!
 AnnouncementSet comment: 'If you want to register the same action for multiple events, simply create an AnnouncementSet using a comma: 
 

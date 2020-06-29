@@ -4,7 +4,8 @@ WeakArray variableSubclass: #WeakAnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass action'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WeakAnnouncementSubscription guid: (GUID fromString: '{d0e41596-8781-40bb-97fb-9ea63e7e7698}')!
 WeakAnnouncementSubscription comment: 'A WeakAnnouncementSubscription is a subscription which is removed automatically when the subscriber is unreferenced.
 
