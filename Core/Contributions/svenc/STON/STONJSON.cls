@@ -4,7 +4,8 @@ Object subclass: #STONJSON
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONJSON guid: (GUID fromString: '{5d40ba2f-84f1-44cf-970b-5ff22fd8fc7c}')!
 STONJSON comment: 'I am STONJSON, a class side facade to use STON as a simple JSON parser/writer.
 

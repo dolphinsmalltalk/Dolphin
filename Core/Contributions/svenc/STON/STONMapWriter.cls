@@ -4,7 +4,8 @@ STONStreamWriter subclass: #STONMapWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONMapWriter guid: (GUID fromString: '{934f79fb-8d08-4d18-aedc-36e3878d689e}')!
 STONMapWriter comment: 'STONDictionaryWriter helps in writing dictionary based STON representations.'!
 !STONMapWriter categoriesForClass!STON-Core-Writer! !

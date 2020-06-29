@@ -4,7 +4,8 @@ Object subclass: #STONStreamWriter
 	instanceVariableNames: 'writer first'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONStreamWriter guid: (GUID fromString: '{6bdb0b54-8382-4d5b-b901-b52c3b1fdb07}')!
 STONStreamWriter comment: 'STONStreamWriter helps in streaming writing STON representations.
 This is an abstract class.'!

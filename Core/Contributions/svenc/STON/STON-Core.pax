@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'STON-Core'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: '# STON - Smalltalk Object Notation
 
@@ -41,98 +41,96 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 '.
 
 
-package classNames
-	add: #STON;
-	add: #STONCStyleCommentsSkipStream;
-	add: #STONJSON;
-	add: #STONListWriter;
-	add: #STONMapWriter;
-	add: #STONReader;
-	add: #STONReaderError;
-	add: #STONReference;
-	add: #STONShortListWriter;
-	add: #STONStreamWriter;
-	add: #STONWriter;
-	add: #STONWriterError;
-	yourself.
+package setClassNames: #(
+	#{STON}
+	#{STONCStyleCommentsSkipStream}
+	#{STONJSON}
+	#{STONListWriter}
+	#{STONMapWriter}
+	#{STONReader}
+	#{STONReaderError}
+	#{STONReference}
+	#{STONShortListWriter}
+	#{STONStreamWriter}
+	#{STONWriter}
+	#{STONWriterError}
+).
 
-package methodNames
-	add: #Association -> #stonOn:;
-	add: #Bag -> #stonOn:;
-	add: #Boolean -> #stonContainSubObjects;
-	add: #Boolean -> #stonOn:;
-	add: #ByteArray -> #stonContainSubObjects;
-	add: #ByteArray -> #stonOn:;
-	add: #Character -> #stonOn:;
-	add: #Class -> #stonOn:;
-	add: #ClassDescription -> #stonContainSubObjects;
-	add: #Collection -> #stonOn:;
-	add: #Color -> #stonContainSubObjects;
-	add: #Date -> #stonContainSubObjects;
-	add: #DateAndTime -> #stonContainSubObjects;
-	add: #DateAndTime -> #stonOn:;
-	add: #Dictionary -> #stonOn:;
-	add: #Fraction -> #stonOn:;
-	add: #Integer -> #stonOn:;
-	add: #Interval -> #fromSton:;
-	add: #Interval -> #stonOn:;
-	add: #Metaclass -> #instanceSide;
-	add: #Metaclass -> #stonName;
-	add: #Metaclass -> #stonOn:;
-	add: #Number -> #stonContainSubObjects;
-	add: #Number -> #stonOn:;
-	add: #Object -> #fromSton:;
-	add: #Object -> #isStonReference;
-	add: #Object -> #stonContainSubObjects;
-	add: #Object -> #stonOn:;
-	add: #Object -> #stonPostReferenceResolution;
-	add: #Object -> #stonProcessSubObjects:;
-	add: #Object -> #stonShouldWriteNilInstVars;
-	add: #Point -> #stonOn:;
-	add: #ScaledDecimal -> #stonOn:;
-	add: #SequenceableCollection -> #stonOn:;
-	add: #Set -> #stonPostReferenceResolution;
-	add: #String -> #stonContainSubObjects;
-	add: #String -> #stonOn:;
-	add: #Symbol -> #stonOn:;
-	add: #Time -> #print24:showSeconds:on:;
-	add: #Time -> #stonContainSubObjects;
-	add: #Time -> #stonOn:;
-	add: #UndefinedObject -> #stonContainSubObjects;
-	add: #UndefinedObject -> #stonOn:;
-	add: 'Bag class' -> #fromSton:;
-	add: 'ByteArray class' -> #fromSton:;
-	add: 'Character class' -> #fromSton:;
-	add: 'Class class' -> #fromSton:;
-	add: 'Collection class' -> #fromSton:;
-	add: 'DateAndTime class' -> #fromSton:;
-	add: 'Dictionary class' -> #fromSton:;
-	add: 'Interval class' -> #fromSton:;
-	add: 'Metaclass class' -> #fromSton:;
-	add: 'Object class' -> #stonAllInstVarNames;
-	add: 'Object class' -> #stonName;
-	add: 'Point class' -> #fromSton:;
-	add: 'SequenceableCollection class' -> #fromSton:;
-	add: 'String class' -> #findFirstInString:inSet:startingAt:;
-	add: 'Time class' -> #fromSton:;
-	yourself.
+package setMethodNames: #(
+	#(#{Association} #stonOn:)
+	#(#{Bag} #stonOn:)
+	#(#{Bag class} #fromSton:)
+	#(#{Boolean} #stonContainSubObjects)
+	#(#{Boolean} #stonOn:)
+	#(#{ByteArray} #stonContainSubObjects)
+	#(#{ByteArray} #stonOn:)
+	#(#{ByteArray class} #fromSton:)
+	#(#{Character} #stonOn:)
+	#(#{Character class} #fromSton:)
+	#(#{Class} #stonOn:)
+	#(#{Class class} #fromSton:)
+	#(#{ClassDescription} #stonContainSubObjects)
+	#(#{Collection} #stonOn:)
+	#(#{Collection class} #fromSton:)
+	#(#{Color} #stonContainSubObjects)
+	#(#{Date} #stonContainSubObjects)
+	#(#{DateAndTime} #stonContainSubObjects)
+	#(#{DateAndTime} #stonOn:)
+	#(#{DateAndTime class} #fromSton:)
+	#(#{Dictionary} #stonOn:)
+	#(#{Dictionary class} #fromSton:)
+	#(#{Fraction} #stonOn:)
+	#(#{Integer} #stonOn:)
+	#(#{Interval} #fromSton:)
+	#(#{Interval} #stonOn:)
+	#(#{Interval class} #fromSton:)
+	#(#{Metaclass} #instanceSide)
+	#(#{Metaclass} #stonName)
+	#(#{Metaclass} #stonOn:)
+	#(#{Metaclass class} #fromSton:)
+	#(#{Number} #stonContainSubObjects)
+	#(#{Number} #stonOn:)
+	#(#{Object} #fromSton:)
+	#(#{Object} #isStonReference)
+	#(#{Object} #stonContainSubObjects)
+	#(#{Object} #stonOn:)
+	#(#{Object} #stonPostReferenceResolution)
+	#(#{Object} #stonProcessSubObjects:)
+	#(#{Object} #stonShouldWriteNilInstVars)
+	#(#{Object class} #stonAllInstVarNames)
+	#(#{Object class} #stonName)
+	#(#{Point} #stonOn:)
+	#(#{Point class} #fromSton:)
+	#(#{ScaledDecimal} #stonOn:)
+	#(#{SequenceableCollection} #stonOn:)
+	#(#{SequenceableCollection class} #fromSton:)
+	#(#{Set} #stonPostReferenceResolution)
+	#(#{String} #stonContainSubObjects)
+	#(#{String} #stonOn:)
+	#(#{String class} #findFirstInString:inSet:startingAt:)
+	#(#{Symbol} #stonOn:)
+	#(#{Time} #print24:showSeconds:on:)
+	#(#{Time} #stonContainSubObjects)
+	#(#{Time} #stonOn:)
+	#(#{Time class} #fromSton:)
+	#(#{UndefinedObject} #stonContainSubObjects)
+	#(#{UndefinedObject} #stonOn:)
+).
 
-package globalNames
-	add: #NotFound;
-	yourself.
+package setVariableNames: #(
+	#{NotFound}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #NotFound;
-	yourself).
+package setAliasVariableNames: #(
+	#{NotFound}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
-	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -142,64 +140,76 @@ Object subclass: #STON
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONCStyleCommentsSkipStream
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONJSON
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONReader
 	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONReference
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONStreamWriter
 	instanceVariableNames: 'writer first'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #STONWriter
 	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
 	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #STONReaderError
 	instanceVariableNames: 'streamPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #STONWriterError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONStreamWriter subclass: #STONListWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONStreamWriter subclass: #STONMapWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONListWriter subclass: #STONShortListWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 NotFound := NotFoundError!
 

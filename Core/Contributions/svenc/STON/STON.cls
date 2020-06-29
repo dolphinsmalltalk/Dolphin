@@ -4,7 +4,8 @@ Object subclass: #STON
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STON guid: (GUID fromString: '{9f4c50c0-4b3c-4c6c-b0b5-98940098a150}')!
 STON comment: 'STON implements serialization and materialization using the Smalltalk Object Notation format.
 

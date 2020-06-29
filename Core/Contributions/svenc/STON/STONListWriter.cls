@@ -4,7 +4,8 @@ STONStreamWriter subclass: #STONListWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONListWriter guid: (GUID fromString: '{7f97d53a-86b9-4db6-9949-a819d1045f49}')!
 STONListWriter comment: 'STONArrayWriter helps in writing array based STON representations.
 '!

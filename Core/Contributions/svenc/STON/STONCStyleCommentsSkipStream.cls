@@ -4,7 +4,8 @@ Object subclass: #STONCStyleCommentsSkipStream
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONCStyleCommentsSkipStream guid: (GUID fromString: '{cbe95784-18b0-4161-a8b1-142a76001d59}')!
 STONCStyleCommentsSkipStream comment: 'I am STONCStyleCommentsSkipStream, a character ReadStream wrapping another character ReadStream. I skip C style comments, much like a classic C preprocessor.
 

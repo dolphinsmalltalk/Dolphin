@@ -4,7 +4,8 @@ Error subclass: #STONReaderError
 	instanceVariableNames: 'streamPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONReaderError guid: (GUID fromString: '{c96113a2-1225-4af4-8f71-53e0ac1932a3}')!
 STONReaderError comment: 'STONReaderError is the error/exception signalled by STONReader when illegal/incorrect input is seen. 
 '!

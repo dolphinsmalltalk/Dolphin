@@ -1,31 +1,20 @@
 ﻿| package |
 package := Package name: 'STON-Text support'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: ''.
 
 
-package methodNames
-	add: #RunArray -> #fromSton:;
-	add: #RunArray -> #stonOn:;
-	add: 'RunArray class' -> #fromSton:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{RunArray} #fromSton:)
+	#(#{RunArray} #stonOn:)
+	#(#{RunArray class} #fromSton:)
+).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ Object subclass: #STONReader
 	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONReader guid: (GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
 STONReader comment: 'STONReader materializes objects using the Smalltalk Object Notation format.
 

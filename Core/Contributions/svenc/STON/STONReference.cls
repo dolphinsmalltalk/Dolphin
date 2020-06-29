@@ -4,7 +4,8 @@ Object subclass: #STONReference
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONReference guid: (GUID fromString: '{be937146-c626-437a-b2f6-097eef5bedc0}')!
 STONReference comment: 'STONReference holds a forward reference to another object during materialization.
 '!

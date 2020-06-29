@@ -4,7 +4,8 @@ Object subclass: #STONWriter
 	instanceVariableNames: 'writeStream prettyPrint stonCharacters newLine asciiOnly jsonMode keepNewLines referencePolicy level objects'
 	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONWriter guid: (GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
 STONWriter comment: 'STONWriter serializes objects using the Smalltalk Object Notation format. 
 
