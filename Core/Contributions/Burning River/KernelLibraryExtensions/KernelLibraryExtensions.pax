@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'KernelLibraryExtensions'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -19,34 +19,26 @@ package basicScriptAt: #postinstall put: 'Win32Constants
 package basicScriptAt: #preuninstall put: 'Win32Constants
 	removeKey: ''WAIT_FAILED'' ifAbsent: [ nil ]'.
 
-package methodNames
-	add: #KernelLibrary -> #getExitCodeProcess:lpExitCode:;
-	add: #KernelLibrary -> #getExitCodeThread:lpExitCode:;
-	add: #KernelLibrary -> #getLogicalDriveStrings:buffer:;
-	add: #KernelLibrary -> #setFileAttributes:value:;
-	yourself.
+package setMethodNames: #(
+	#(#{KernelLibrary} #getExitCodeProcess:lpExitCode:)
+	#(#{KernelLibrary} #getExitCodeThread:lpExitCode:)
+	#(#{KernelLibrary} #getLogicalDriveStrings:buffer:)
+	#(#{KernelLibrary} #setFileAttributes:value:)
+).
 
-package globalNames
-	add: #KernelLibraryExtension;
-	yourself.
+package setVariableNames: #(
+	#{KernelLibraryExtension}
+).
 
-package binaryGlobalNames: (Set new
-	add: #KernelLibraryExtension;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{KernelLibraryExtension}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

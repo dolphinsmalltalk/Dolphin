@@ -2,28 +2,30 @@
 
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
-	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbReserved2' -> 16r32.
+		'_OffsetOf_dwFillAttribute' -> 16r28.
+		'_OffsetOf_dwFlags' -> 16r2C.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dwX' -> 16r10.
+		'_OffsetOf_dwXCountChars' -> 16r20.
+		'_OffsetOf_dwXSize' -> 16r18.
+		'_OffsetOf_dwY' -> 16r14.
+		'_OffsetOf_dwYCountChars' -> 16r24.
+		'_OffsetOf_dwYSize' -> 16r1C.
+		'_OffsetOf_hStdError' -> 16r40.
+		'_OffsetOf_hStdInput' -> 16r38.
+		'_OffsetOf_hStdOutput' -> 16r3C.
+		'_OffsetOf_lpDesktop' -> 16r8.
+		'_OffsetOf_lpReserved' -> 16r4.
+		'_OffsetOf_lpReserved2' -> 16r34.
+		'_OffsetOf_lpTitle' -> 16rC.
+		'_OffsetOf_wShowWindow' -> 16r30
+	}!
 STARTUPINFOW guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
-STARTUPINFOW addClassConstant: '_OffsetOf_cbReserved2' value: 16r32!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwFillAttribute' value: 16r28!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwFlags' value: 16r2C!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwX' value: 16r10!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwXCountChars' value: 16r20!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwXSize' value: 16r18!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwY' value: 16r14!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwYCountChars' value: 16r24!
-STARTUPINFOW addClassConstant: '_OffsetOf_dwYSize' value: 16r1C!
-STARTUPINFOW addClassConstant: '_OffsetOf_hStdError' value: 16r40!
-STARTUPINFOW addClassConstant: '_OffsetOf_hStdInput' value: 16r38!
-STARTUPINFOW addClassConstant: '_OffsetOf_hStdOutput' value: 16r3C!
-STARTUPINFOW addClassConstant: '_OffsetOf_lpDesktop' value: 16r8!
-STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r4!
-STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved2' value: 16r34!
-STARTUPINFOW addClassConstant: '_OffsetOf_lpTitle' value: 16rC!
-STARTUPINFOW addClassConstant: '_OffsetOf_wShowWindow' value: 16r30!
 STARTUPINFOW comment: ''!
 !STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !STARTUPINFOW methodsFor!

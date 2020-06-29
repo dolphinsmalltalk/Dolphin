@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #PROCESS_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwProcessId _OffsetOf_dwThreadId _OffsetOf_hProcess _OffsetOf_hThread'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwProcessId' -> 16r8.
+		'_OffsetOf_dwThreadId' -> 16rC.
+		'_OffsetOf_hProcess' -> 16r0.
+		'_OffsetOf_hThread' -> 16r4
+	}!
 PROCESS_INFORMATION guid: (GUID fromString: '{f44c9144-2b3f-11d3-8368-7a8b5a000000}')!
-PROCESS_INFORMATION addClassConstant: '_OffsetOf_dwProcessId' value: 16r8!
-PROCESS_INFORMATION addClassConstant: '_OffsetOf_dwThreadId' value: 16rC!
-PROCESS_INFORMATION addClassConstant: '_OffsetOf_hProcess' value: 16r0!
-PROCESS_INFORMATION addClassConstant: '_OffsetOf_hThread' value: 16r4!
 PROCESS_INFORMATION comment: ''!
 !PROCESS_INFORMATION categoriesForClass!External-Data-Structured-Win32! !
 !PROCESS_INFORMATION methodsFor!
