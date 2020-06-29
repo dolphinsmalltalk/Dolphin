@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'US ExternalProcess Extensions'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: '$id: US ExternalProcess Extensions 0.011$
 $for: Dolphin Smalltalk X6.1 Beta 2$
 
@@ -18,42 +18,37 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package basicPackageVersion: '0.011'.
 
 
-package classNames
-	add: #ExternalPipe;
-	add: #ExternalPipeExecuteError;
-	yourself.
+package setClassNames: #(
+	#{ExternalPipe}
+	#{ExternalPipeExecuteError}
+).
 
-package methodNames
-	add: #CRTLibrary -> #convertWinStdHandle:toCRTFileMode:;
-	add: #ExternalProcess -> #showWindow;
-	add: #ExternalProcess -> #showWindow:;
-	add: #ExternalProcess -> #startupFlags:;
-	add: #ExternalProcess -> #stderrPipe;
-	add: #ExternalProcess -> #stderrPipe:;
-	add: #ExternalProcess -> #stderrStream;
-	add: #ExternalProcess -> #stdinPipe;
-	add: #ExternalProcess -> #stdinPipe:;
-	add: #ExternalProcess -> #stdinStream;
-	add: #ExternalProcess -> #stdoutPipe;
-	add: #ExternalProcess -> #stdoutPipe:;
-	add: #ExternalProcess -> #stdoutStream;
-	add: #ExternalProcess -> #waitForInputIdle:;
-	add: #InheritableFile -> #handle:;
-	add: #KernelLibrary -> #createPipe:hWritePipe:lpPipeAttributes:nSize:;
-	add: #UserLibrary -> #waitForInputIdle:milliseconds:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{CRTLibrary} #convertWinStdHandle:toCRTFileMode:)
+	#(#{ExternalProcess} #showWindow)
+	#(#{ExternalProcess} #showWindow:)
+	#(#{ExternalProcess} #startupFlags:)
+	#(#{ExternalProcess} #stderrPipe)
+	#(#{ExternalProcess} #stderrPipe:)
+	#(#{ExternalProcess} #stderrStream)
+	#(#{ExternalProcess} #stdinPipe)
+	#(#{ExternalProcess} #stdinPipe:)
+	#(#{ExternalProcess} #stdinStream)
+	#(#{ExternalProcess} #stdoutPipe)
+	#(#{ExternalProcess} #stdoutPipe:)
+	#(#{ExternalProcess} #stdoutStream)
+	#(#{ExternalProcess} #waitForInputIdle:)
+	#(#{InheritableFile} #handle:)
+	#(#{KernelLibrary} #createPipe:hWritePipe:lpPipeAttributes:nSize:)
+	#(#{UserLibrary} #waitForInputIdle:milliseconds:)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\Burning River\ExternalProcess\ExternalProcess'
-	'..\Burning River\InheritableFile\InheritableFile').
+	'..\Burning River\InheritableFile\InheritableFile'
+).
 
 package!
 
@@ -63,15 +58,14 @@ Object subclass: #ExternalPipe
 	instanceVariableNames: 'readHandle writeHandle streams'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #ExternalPipeExecuteError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ Object subclass: #ExternalPipe
 	instanceVariableNames: 'readHandle writeHandle streams'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalPipe guid: (GUID fromString: '{1ebee959-7771-41a4-9164-d9bfd2ac4ea5}')!
 ExternalPipe comment: ''!
 !ExternalPipe categoriesForClass!Unclassified! !
