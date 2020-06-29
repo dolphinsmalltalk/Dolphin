@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #EDITSTREAM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_dwError _OffsetOf_pfnCallback'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwCookie' -> 16r0.
+		'_OffsetOf_dwError' -> 16r4.
+		'_OffsetOf_pfnCallback' -> 16r8
+	}!
 EDITSTREAM guid: (GUID fromString: '{87b4c5ef-026e-11d3-9fd7-00a0cc3e4a32}')!
-EDITSTREAM addClassConstant: '_OffsetOf_dwCookie' value: 16r0!
-EDITSTREAM addClassConstant: '_OffsetOf_dwError' value: 16r4!
-EDITSTREAM addClassConstant: '_OffsetOf_pfnCallback' value: 16r8!
 EDITSTREAM comment: ''!
 !EDITSTREAM categoriesForClass!External-Data-Structured-Win32! !
 !EDITSTREAM methodsFor!

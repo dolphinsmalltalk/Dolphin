@@ -4,7 +4,8 @@ AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextDocument guid: (GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
 TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
 

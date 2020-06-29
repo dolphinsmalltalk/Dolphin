@@ -4,7 +4,8 @@ TextPresenter subclass: #RichTextPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RichTextPresenter guid: (GUID fromString: '{87b4c6d4-026e-11d3-9fd7-00a0cc3e4a32}')!
 RichTextPresenter comment: 'RichTextPresenter is a <valuePresenter> that displays a <valueModel> onto a <richString> value. A RichTextPresenter can be connected to any <valueView> capable of displaying <richString> values. Often, this will be a <RichTextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !RichTextPresenter categoriesForClass!MVP-Presenters! !

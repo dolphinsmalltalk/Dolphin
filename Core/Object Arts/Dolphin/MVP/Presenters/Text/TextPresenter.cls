@@ -4,7 +4,8 @@ ValuePresenter subclass: #TextPresenter
 	instanceVariableNames: 'findDetails'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextPresenter guid: (GUID fromString: '{87b4c6d2-026e-11d3-9fd7-00a0cc3e4a32}')!
 TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !

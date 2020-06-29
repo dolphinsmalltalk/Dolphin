@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #TextEditConstants put: (PoolConstantsDictionary named: #TextEditConstants)!
+#{TextEditConstants} declare: (PoolConstantsDictionary named: #TextEditConstants)!
 TextEditConstants at: 'EC_LEFTMARGIN' put: 16r1!
 TextEditConstants at: 'EC_RIGHTMARGIN' put: 16r2!
 TextEditConstants at: 'EC_USEFONTINFO' put: 16rFFFF!

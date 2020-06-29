@@ -2,15 +2,17 @@
 
 Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cb _OffsetOf_codepage _OffsetOf_flags _OffsetOf_lpDefaultChar _OffsetOf_lpUsedDefChar'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cb' -> 16r0.
+		'_OffsetOf_codepage' -> 16r8.
+		'_OffsetOf_flags' -> 16r4.
+		'_OffsetOf_lpDefaultChar' -> 16rC.
+		'_OffsetOf_lpUsedDefChar' -> 16r10
+	}!
 GETTEXTEX guid: (GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
-GETTEXTEX addClassConstant: '_OffsetOf_cb' value: 16r0!
-GETTEXTEX addClassConstant: '_OffsetOf_codepage' value: 16r8!
-GETTEXTEX addClassConstant: '_OffsetOf_flags' value: 16r4!
-GETTEXTEX addClassConstant: '_OffsetOf_lpDefaultChar' value: 16rC!
-GETTEXTEX addClassConstant: '_OffsetOf_lpUsedDefChar' value: 16r10!
 GETTEXTEX comment: ''!
 !GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !
 !GETTEXTEX methodsFor!

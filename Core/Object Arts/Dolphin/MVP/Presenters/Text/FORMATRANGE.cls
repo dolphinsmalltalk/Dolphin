@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #FORMATRANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin _OffsetOf_hdc _OffsetOf_hdcTarget _OffsetOf_rc _OffsetOf_rcPage'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cpMax' -> 16r2C.
+		'_OffsetOf_cpMin' -> 16r28.
+		'_OffsetOf_hdc' -> 16r0.
+		'_OffsetOf_hdcTarget' -> 16r4.
+		'_OffsetOf_rc' -> 16r8.
+		'_OffsetOf_rcPage' -> 16r18
+	}!
 FORMATRANGE guid: (GUID fromString: '{9bdca5bb-f238-4744-a903-f02b32617822}')!
-FORMATRANGE addClassConstant: '_OffsetOf_cpMax' value: 16r2C!
-FORMATRANGE addClassConstant: '_OffsetOf_cpMin' value: 16r28!
-FORMATRANGE addClassConstant: '_OffsetOf_hdc' value: 16r0!
-FORMATRANGE addClassConstant: '_OffsetOf_hdcTarget' value: 16r4!
-FORMATRANGE addClassConstant: '_OffsetOf_rc' value: 16r8!
-FORMATRANGE addClassConstant: '_OffsetOf_rcPage' value: 16r18!
 FORMATRANGE comment: 'FORMATRANGE is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 FORMATRANGE is used in conjunction with the Rich Edit control''s EM_FORMATRANGE message. See the Win32 SDK documentation for further information.'!

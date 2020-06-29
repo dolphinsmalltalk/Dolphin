@@ -2,20 +2,22 @@
 
 Win32Structure subclass: #PARAFORMAT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cTabCount _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_dxOffset _OffsetOf_dxRightIndent _OffsetOf_dxStartIndent _OffsetOf_rgxTabs _OffsetOf_wAlignment _OffsetOf_wEffects _OffsetOf_wNumbering'
+	classVariableNames: ''
 	poolDictionaries: 'RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cTabCount' -> 16r1A.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dxOffset' -> 16r14.
+		'_OffsetOf_dxRightIndent' -> 16r10.
+		'_OffsetOf_dxStartIndent' -> 16rC.
+		'_OffsetOf_rgxTabs' -> 16r1C.
+		'_OffsetOf_wAlignment' -> 16r18.
+		'_OffsetOf_wEffects' -> 16rA.
+		'_OffsetOf_wNumbering' -> 16r8
+	}!
 PARAFORMAT guid: (GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
-PARAFORMAT addClassConstant: '_OffsetOf_cTabCount' value: 16r1A!
-PARAFORMAT addClassConstant: '_OffsetOf_dwMask' value: 16r4!
-PARAFORMAT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-PARAFORMAT addClassConstant: '_OffsetOf_dxOffset' value: 16r14!
-PARAFORMAT addClassConstant: '_OffsetOf_dxRightIndent' value: 16r10!
-PARAFORMAT addClassConstant: '_OffsetOf_dxStartIndent' value: 16rC!
-PARAFORMAT addClassConstant: '_OffsetOf_rgxTabs' value: 16r1C!
-PARAFORMAT addClassConstant: '_OffsetOf_wAlignment' value: 16r18!
-PARAFORMAT addClassConstant: '_OffsetOf_wEffects' value: 16rA!
-PARAFORMAT addClassConstant: '_OffsetOf_wNumbering' value: 16r8!
 PARAFORMAT comment: ''!
 !PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !
 !PARAFORMAT methodsFor!

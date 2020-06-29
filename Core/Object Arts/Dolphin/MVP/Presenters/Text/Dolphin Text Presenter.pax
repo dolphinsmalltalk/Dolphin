@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Text Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Text Presenter
 Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,29 +10,23 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #FINDTEXTEX;
-	add: #MultilineTextEdit;
-	add: #MultilineTextEditWithImage;
-	add: #TextDocument;
-	add: #TextEdit;
-	add: #TextPresenter;
-	add: #TEXTRANGE;
-	yourself.
+package setClassNames: #(
+	#{FINDTEXTEX}
+	#{MultilineTextEdit}
+	#{MultilineTextEditWithImage}
+	#{TextDocument}
+	#{TextEdit}
+	#{TextPresenter}
+	#{TEXTRANGE}
+).
 
-package methodNames
-	add: #String -> #replaceSelectionIn:;
-	yourself.
+package setMethodNames: #(
+	#(#{String} #replaceSelectionIn:)
+).
 
-package globalNames
-	add: #TextEditConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{TextEditConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -42,7 +36,8 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -50,42 +45,60 @@ package!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_chrg' -> 16r0.
+		'_OffsetOf_lpstrText' -> 16r8
+	}!
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_chrgText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_chrgText' -> 16rC
+	}!
 AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #TextPresenter
 	instanceVariableNames: 'findDetails'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
-	classVariableNames: 'AlignmentMap EnMap FindDialogMessage FindDisabledMask FormatMap ModifiedMask ReadOnlyMask StaticMask UpdatePerCharMask WantTabMask'
+	classVariableNames: 'AlignmentMap FindDialogMessage FormatMap'
 	poolDictionaries: 'TextEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FindDisabledMask' -> 16r20.
+		'ModifiedMask' -> 16r8.
+		'ReadOnlyMask' -> 16r1.
+		'StaticMask' -> 16r10.
+		'UpdatePerCharMask' -> 16r2.
+		'WantTabMask' -> 16r4
+	}!
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
-	classVariableNames: 'BackModes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BackModes' -> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
+	}!
 
 "Loose Methods"!
 

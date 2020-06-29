@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_chrg' -> 16r0.
+		'_OffsetOf_lpstrText' -> 16r8
+	}!
 TEXTRANGE guid: (GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
-TEXTRANGE addClassConstant: '_OffsetOf_chrg' value: 16r0!
-TEXTRANGE addClassConstant: '_OffsetOf_lpstrText' value: 16r8!
 TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represents the Windows TEXTRANGE and TEXTRANGEW structures.
 
 Most of the ExternalStructures in Dolphin are now for wide character APIs only, and indeed TEXTRANGE is used with wide strings for the <RichTextEdit> control. However, it is also used with Scintilla, which only supports byte string encodings (including UTF-8). Scintilla also uses the structure to retrieve styling bytes, which aren''t characters at all.

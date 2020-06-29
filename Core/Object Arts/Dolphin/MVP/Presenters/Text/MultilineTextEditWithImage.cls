@@ -2,11 +2,13 @@
 
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
-	classVariableNames: 'BackModes'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BackModes' -> #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)
+	}!
 MultilineTextEditWithImage guid: (GUID fromString: '{eb99e6ab-3d20-4f85-852b-b521da845584}')!
-MultilineTextEditWithImage addClassConstant: 'BackModes' value: #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)!
 MultilineTextEditWithImage comment: 'MultilineTextEditWithImage is a specialised <MultilineTextEdit> that displays text transparently over a background bitmap. A common use case might be to display a watermark under the text. The bitmap can be tiled to fill the background, centred, or "docked" to one of the eight positions positions around the edges and in the corners of the client area. These modes are as follows:
 
 	#tile		- tile the image at its natural size to fill the entire background
@@ -299,11 +301,6 @@ example1
 			[:each | 
 			SessionManager inputState queueDeferredAction: [t backMode: each].
 			Processor sleep: 3 seconds]] 
-			fork!
-
-initialize
-	self addClassConstant: 'BackModes'
-		value: #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)! !
+			fork! !
 !MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
-!MultilineTextEditWithImage class categoriesFor: #initialize!development!initializing!private! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Rich Text Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk RichTextEdit View.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,38 +10,32 @@ A RichTextPresenter is a <TextPresenter> specialised for the display of RTF. The
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #CHARFORMAT2W;
-	add: #EDITSTREAM;
-	add: #ENLINK;
-	add: #FORMATRANGE;
-	add: #GETTEXTEX;
-	add: #PARAFORMAT;
-	add: #RichText;
-	add: #RichTextEdit;
-	add: #RichTextPresenter;
-	yourself.
+package setClassNames: #(
+	#{CHARFORMAT2W}
+	#{EDITSTREAM}
+	#{ENLINK}
+	#{FORMATRANGE}
+	#{GETTEXTEX}
+	#{PARAFORMAT}
+	#{RichText}
+	#{RichTextEdit}
+	#{RichTextPresenter}
+).
 
-package methodNames
-	add: #Clipboard -> #getRichText;
-	add: #Clipboard -> #getRichTextIfNone:;
-	add: #String -> #asRichText;
-	add: #TextEdit -> #richText;
-	add: #TextEdit -> #richTextClass;
-	add: #TextEdit -> #selectionRichText:;
-	add: #TextEdit -> #selectionRtf:;
-	add: #View -> #richText;
-	yourself.
+package setMethodNames: #(
+	#(#{Clipboard} #getRichText)
+	#(#{Clipboard} #getRichTextIfNone:)
+	#(#{String} #asRichText)
+	#(#{TextEdit} #richText)
+	#(#{TextEdit} #richTextClass)
+	#(#{TextEdit} #selectionRichText:)
+	#(#{TextEdit} #selectionRtf:)
+	#(#{View} #richText)
+).
 
-package globalNames
-	add: #RichEditConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{RichEditConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -49,7 +43,8 @@ package setPrerequisites: #(
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin MVP Base'
 	'Dolphin Text Presenter'
-	'..\..\Type Converters\Dolphin Type Converters').
+	'..\..\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -59,50 +54,113 @@ Object subclass: #RichText
 	instanceVariableNames: 'rtf'
 	classVariableNames: 'Converter ConverterMutex'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bAnimation _OffsetOf_bCharSet _OffsetOf_bPitchAndFamily _OffsetOf_bRevAuthor _OffsetOf_bUnderlineColor _OffsetOf_bUnderlyineType _OffsetOf_crBackColor _OffsetOf_crTextColor _OffsetOf_dwCookie _OffsetOf_dwEffects _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_lcid _OffsetOf_sSpacing _OffsetOf_sStyle _OffsetOf_szFaceName _OffsetOf_wKerning _OffsetOf_wWeight _OffsetOf_yHeight _OffsetOf_yOffset'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bAnimation' -> 16r71.
+		'_OffsetOf_bCharSet' -> 16r18.
+		'_OffsetOf_bPitchAndFamily' -> 16r19.
+		'_OffsetOf_bRevAuthor' -> 16r72.
+		'_OffsetOf_bUnderlineColor' -> 16r73.
+		'_OffsetOf_bUnderlyineType' -> 16r70.
+		'_OffsetOf_crBackColor' -> 16r60.
+		'_OffsetOf_crTextColor' -> 16r14.
+		'_OffsetOf_dwCookie' -> 16r68.
+		'_OffsetOf_dwEffects' -> 16r8.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_lcid' -> 16r64.
+		'_OffsetOf_sSpacing' -> 16r5C.
+		'_OffsetOf_sStyle' -> 16r6C.
+		'_OffsetOf_szFaceName' -> 16r1A.
+		'_OffsetOf_wKerning' -> 16r6E.
+		'_OffsetOf_wWeight' -> 16r5A.
+		'_OffsetOf_yHeight' -> 16rC.
+		'_OffsetOf_yOffset' -> 16r10
+	}!
 Win32Structure subclass: #EDITSTREAM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_dwError _OffsetOf_pfnCallback'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwCookie' -> 16r0.
+		'_OffsetOf_dwError' -> 16r4.
+		'_OffsetOf_pfnCallback' -> 16r8
+	}!
 Win32Structure subclass: #FORMATRANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin _OffsetOf_hdc _OffsetOf_hdcTarget _OffsetOf_rc _OffsetOf_rcPage'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cpMax' -> 16r2C.
+		'_OffsetOf_cpMin' -> 16r28.
+		'_OffsetOf_hdc' -> 16r0.
+		'_OffsetOf_hdcTarget' -> 16r4.
+		'_OffsetOf_rc' -> 16r8.
+		'_OffsetOf_rcPage' -> 16r18
+	}!
 Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cb _OffsetOf_codepage _OffsetOf_flags _OffsetOf_lpDefaultChar _OffsetOf_lpUsedDefChar'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cb' -> 16r0.
+		'_OffsetOf_codepage' -> 16r8.
+		'_OffsetOf_flags' -> 16r4.
+		'_OffsetOf_lpDefaultChar' -> 16rC.
+		'_OffsetOf_lpUsedDefChar' -> 16r10
+	}!
 Win32Structure subclass: #PARAFORMAT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cTabCount _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_dxOffset _OffsetOf_dxRightIndent _OffsetOf_dxStartIndent _OffsetOf_rgxTabs _OffsetOf_wAlignment _OffsetOf_wEffects _OffsetOf_wNumbering'
+	classVariableNames: ''
 	poolDictionaries: 'RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cTabCount' -> 16r1A.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_dxOffset' -> 16r14.
+		'_OffsetOf_dxRightIndent' -> 16r10.
+		'_OffsetOf_dxStartIndent' -> 16rC.
+		'_OffsetOf_rgxTabs' -> 16r1C.
+		'_OffsetOf_wAlignment' -> 16r18.
+		'_OffsetOf_wEffects' -> 16rA.
+		'_OffsetOf_wNumbering' -> 16r8
+	}!
 NMHDR subclass: #ENLINK
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_chrg _OffsetOf_lParam _OffsetOf_msg _OffsetOf_wParam'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_chrg' -> 16r18.
+		'_OffsetOf_lParam' -> 16r14.
+		'_OffsetOf_msg' -> 16rC.
+		'_OffsetOf_wParam' -> 16r10
+	}!
 TextPresenter subclass: #RichTextPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'Library ParagraphAlignmentMap StreamingDescriptor'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoUrlDetectionMask' -> 16r1000000.
+		'StreamInIndex' -> 16r11
+	}!
 
 "Loose Methods"!
 

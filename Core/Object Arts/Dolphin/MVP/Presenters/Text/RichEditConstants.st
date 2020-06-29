@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #RichEditConstants put: (PoolConstantsDictionary named: #RichEditConstants)!
+#{RichEditConstants} declare: (PoolConstantsDictionary named: #RichEditConstants)!
 RichEditConstants at: 'cchTextLimitDefault' put: 16r7FFF!
 RichEditConstants at: 'CFE_AUTOCOLOR' put: 16r40000000!
 RichEditConstants at: 'CFE_BOLD' put: 16r1!

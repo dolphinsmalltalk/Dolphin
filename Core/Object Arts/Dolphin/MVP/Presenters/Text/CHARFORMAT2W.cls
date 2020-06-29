@@ -2,30 +2,32 @@
 
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bAnimation _OffsetOf_bCharSet _OffsetOf_bPitchAndFamily _OffsetOf_bRevAuthor _OffsetOf_bUnderlineColor _OffsetOf_bUnderlyineType _OffsetOf_crBackColor _OffsetOf_crTextColor _OffsetOf_dwCookie _OffsetOf_dwEffects _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_lcid _OffsetOf_sSpacing _OffsetOf_sStyle _OffsetOf_szFaceName _OffsetOf_wKerning _OffsetOf_wWeight _OffsetOf_yHeight _OffsetOf_yOffset'
+	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bAnimation' -> 16r71.
+		'_OffsetOf_bCharSet' -> 16r18.
+		'_OffsetOf_bPitchAndFamily' -> 16r19.
+		'_OffsetOf_bRevAuthor' -> 16r72.
+		'_OffsetOf_bUnderlineColor' -> 16r73.
+		'_OffsetOf_bUnderlyineType' -> 16r70.
+		'_OffsetOf_crBackColor' -> 16r60.
+		'_OffsetOf_crTextColor' -> 16r14.
+		'_OffsetOf_dwCookie' -> 16r68.
+		'_OffsetOf_dwEffects' -> 16r8.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_lcid' -> 16r64.
+		'_OffsetOf_sSpacing' -> 16r5C.
+		'_OffsetOf_sStyle' -> 16r6C.
+		'_OffsetOf_szFaceName' -> 16r1A.
+		'_OffsetOf_wKerning' -> 16r6E.
+		'_OffsetOf_wWeight' -> 16r5A.
+		'_OffsetOf_yHeight' -> 16rC.
+		'_OffsetOf_yOffset' -> 16r10
+	}!
 CHARFORMAT2W guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bAnimation' value: 16r71!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bCharSet' value: 16r18!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bPitchAndFamily' value: 16r19!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bRevAuthor' value: 16r72!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bUnderlineColor' value: 16r73!
-CHARFORMAT2W addClassConstant: '_OffsetOf_bUnderlyineType' value: 16r70!
-CHARFORMAT2W addClassConstant: '_OffsetOf_crBackColor' value: 16r60!
-CHARFORMAT2W addClassConstant: '_OffsetOf_crTextColor' value: 16r14!
-CHARFORMAT2W addClassConstant: '_OffsetOf_dwCookie' value: 16r68!
-CHARFORMAT2W addClassConstant: '_OffsetOf_dwEffects' value: 16r8!
-CHARFORMAT2W addClassConstant: '_OffsetOf_dwMask' value: 16r4!
-CHARFORMAT2W addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-CHARFORMAT2W addClassConstant: '_OffsetOf_lcid' value: 16r64!
-CHARFORMAT2W addClassConstant: '_OffsetOf_sSpacing' value: 16r5C!
-CHARFORMAT2W addClassConstant: '_OffsetOf_sStyle' value: 16r6C!
-CHARFORMAT2W addClassConstant: '_OffsetOf_szFaceName' value: 16r1A!
-CHARFORMAT2W addClassConstant: '_OffsetOf_wKerning' value: 16r6E!
-CHARFORMAT2W addClassConstant: '_OffsetOf_wWeight' value: 16r5A!
-CHARFORMAT2W addClassConstant: '_OffsetOf_yHeight' value: 16rC!
-CHARFORMAT2W addClassConstant: '_OffsetOf_yOffset' value: 16r10!
 CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
