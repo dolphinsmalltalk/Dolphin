@@ -4,7 +4,8 @@ TextEdit subclass: #EmbeddedTextEdit
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmbeddedTextEdit guid: (GUID fromString: '{b24a4423-0072-4380-bd67-1e317410ebf8}')!
 EmbeddedTextEdit comment: ''!
 !EmbeddedTextEdit categoriesForClass!Unclassified! !

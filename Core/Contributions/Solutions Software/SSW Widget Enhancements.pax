@@ -1,72 +1,66 @@
 ﻿| package |
 package := Package name: 'SSW Widget Enhancements'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '7.1.0'.
 
 
-package classNames
-	add: #EmulatedPushButton;
-	add: #FormattedTextEdit;
-	add: #IconWithExtent;
-	add: #OwnerDrawnButton;
-	add: #TextAndImageButton;
-	yourself.
+package setClassNames: #(
+	#{EmulatedPushButton}
+	#{FormattedTextEdit}
+	#{IconWithExtent}
+	#{OwnerDrawnButton}
+	#{TextAndImageButton}
+).
 
-package methodNames
-	add: #Canvas -> #clipTo:during:;
-	add: #Canvas -> #erase:;
-	add: #Canvas -> #erase:color:;
-	add: #Canvas -> #stateText:at:flags:;
-	add: #ComboBox -> #droppedWidth;
-	add: #ComboBox -> #droppedWidth:;
-	add: #ComboBox -> #hasCueBanner;
-	add: #Date -> #shortString;
-	add: #GDILibrary -> #getClipRgn:hrgn:;
-	add: #Icon -> #asSmallIcon;
-	add: #Icon -> #withExtent:;
-	add: #KeyEvent -> #resendTo:;
-	add: #Menu -> #showIn:position:rightAlign:;
-	add: #NullConverter -> #isNullConverter;
-	add: #PointEvent -> #resendTo:;
-	add: #PushButton -> #alignment;
-	add: #PushButton -> #alignment:;
-	add: #PushButton -> #isRightButton;
-	add: #PushButton -> #isRightButton:;
-	add: #PushButton -> #tipText;
-	add: #PushButton -> #tipText:;
-	add: #PushButton -> #ttnGetDispInfo:;
-	add: #PushButton -> #wmNotify:wParam:lParam:;
-	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
-	add: #SystemMetrics -> #hasListViewHotTracking;
-	add: #TextEdit -> #hasCueBanner;
-	add: #Toolbar -> #addItem:after:;
-	add: #Toolbar -> #addItem:before:;
-	add: #Toolbar -> #itemWithCommand:;
-	add: #Toolbar -> #itemWithCommand:ifNone:;
-	add: #ToolbarButton -> #isAutoSize;
-	add: #ToolbarButton -> #isAutoSize:;
-	add: #TypeConverter -> #isNullConverter;
-	add: #View -> #addToolTipWithHandle:;
-	add: #View -> #getUICuesState;
-	add: #View -> #setUICuesState:;
-	add: #View -> #shouldShowFocusRect;
-	add: #View -> #shouldShowFocusRect:;
-	add: #View -> #shouldShowKeyboardAccelerators;
-	add: #View -> #tabPrevious;
-	add: #VistaThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
-	add: #VistaThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
-	add: #WinImageList -> #draw:on:at:extent:backcolor:forecolor:flags:;
-	add: 'Color class' -> #buttonShadow;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Canvas} #clipTo:during:)
+	#(#{Canvas} #erase:)
+	#(#{Canvas} #erase:color:)
+	#(#{Canvas} #stateText:at:flags:)
+	#(#{Color class} #buttonShadow)
+	#(#{ComboBox} #droppedWidth)
+	#(#{ComboBox} #droppedWidth:)
+	#(#{ComboBox} #hasCueBanner)
+	#(#{Date} #shortString)
+	#(#{GDILibrary} #getClipRgn:hrgn:)
+	#(#{Icon} #asSmallIcon)
+	#(#{Icon} #withExtent:)
+	#(#{KeyEvent} #resendTo:)
+	#(#{Menu} #showIn:position:rightAlign:)
+	#(#{NullConverter} #isNullConverter)
+	#(#{PointEvent} #resendTo:)
+	#(#{PushButton} #alignment)
+	#(#{PushButton} #alignment:)
+	#(#{PushButton} #isRightButton)
+	#(#{PushButton} #isRightButton:)
+	#(#{PushButton} #tipText)
+	#(#{PushButton} #tipText:)
+	#(#{PushButton} #ttnGetDispInfo:)
+	#(#{PushButton} #wmNotify:wParam:lParam:)
+	#(#{SystemMetrics} #hasListViewAlphaBlendedHighlights)
+	#(#{SystemMetrics} #hasListViewHotTracking)
+	#(#{TextEdit} #hasCueBanner)
+	#(#{Toolbar} #addItem:after:)
+	#(#{Toolbar} #addItem:before:)
+	#(#{Toolbar} #itemWithCommand:)
+	#(#{Toolbar} #itemWithCommand:ifNone:)
+	#(#{ToolbarButton} #isAutoSize)
+	#(#{ToolbarButton} #isAutoSize:)
+	#(#{TypeConverter} #isNullConverter)
+	#(#{View} #addToolTipWithHandle:)
+	#(#{View} #getUICuesState)
+	#(#{View} #setUICuesState:)
+	#(#{View} #shouldShowFocusRect)
+	#(#{View} #shouldShowFocusRect:)
+	#(#{View} #shouldShowKeyboardAccelerators)
+	#(#{View} #tabPrevious)
+	#(#{VistaThemeLibrary} #endBufferedAnimation:fUpdateTarget:)
+	#(#{VistaThemeLibrary} #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:)
+	#(#{WinImageList} #draw:on:at:extent:backcolor:forecolor:flags:)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -77,7 +71,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
-	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters').
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -87,30 +82,32 @@ Icon subclass: #IconWithExtent
 	instanceVariableNames: 'extent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextAndImageButton subclass: #EmulatedPushButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextEdit subclass: #FormattedTextEdit
 	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

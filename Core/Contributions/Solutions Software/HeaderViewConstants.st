@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #HeaderViewConstants put: (PoolDictionary named: #HeaderViewConstants)!
+#{HeaderViewConstants} declare: (PoolDictionary named: #HeaderViewConstants)!
 HeaderViewConstants at: 'HDF_CENTER' put: 16r2!
 HeaderViewConstants at: 'HDF_CHECKBOX' put: 16r40!
 HeaderViewConstants at: 'HDF_CHECKED' put: 16r80!

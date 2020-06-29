@@ -4,7 +4,8 @@ TextAndImageButton subclass: #EmulatedPushButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmulatedPushButton guid: (GUID fromString: '{66e0b0c3-9acd-43db-a3ae-c353958f614b}')!
 EmulatedPushButton comment: 'EmulatedPushButtons appear near-identical to standard PushButtons, but their drawing is implemented in Dolphin.
  - allows themed buttons with images on XP (under XP, buttons with images always show non-themed)

@@ -1,42 +1,31 @@
 ﻿| package |
 package := Package name: 'SSW Widget Development'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '7.1.0'.
 
 
-package methodNames
-	add: 'EditableListView class' -> #publishedAspectsOfInstances;
-	add: 'EditableListViewColumn class' -> #publishedAspectsOfInstances;
-	add: 'EmbeddedCheckBox class' -> #publishedAspectsOfInstances;
-	add: 'EmbeddedCheckButton class' -> #publishedAspectsOfInstances;
-	add: 'EmbeddedComboBox class' -> #publishedAspectsOfInstances;
-	add: 'EmbeddedTextEdit class' -> #publishedAspectsOfInstances;
-	add: 'FormattedTextEdit class' -> #publishedAspectsOfInstances;
-	add: 'OwnerDrawnButton class' -> #publishedAspectsOfInstances;
-	add: 'TextAndImageButton class' -> #publishedAspectsOfInstances;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{EditableListView class} #publishedAspectsOfInstances)
+	#(#{EditableListViewColumn class} #publishedAspectsOfInstances)
+	#(#{EmbeddedCheckBox class} #publishedAspectsOfInstances)
+	#(#{EmbeddedCheckButton class} #publishedAspectsOfInstances)
+	#(#{EmbeddedComboBox class} #publishedAspectsOfInstances)
+	#(#{EmbeddedTextEdit class} #publishedAspectsOfInstances)
+	#(#{FormattedTextEdit class} #publishedAspectsOfInstances)
+	#(#{OwnerDrawnButton class} #publishedAspectsOfInstances)
+	#(#{TextAndImageButton class} #publishedAspectsOfInstances)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'SSW EditableListView'
-	'SSW Widget Enhancements').
+	'SSW Widget Enhancements'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

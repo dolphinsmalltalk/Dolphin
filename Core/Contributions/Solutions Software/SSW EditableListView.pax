@@ -1,40 +1,34 @@
 ﻿| package |
 package := Package name: 'SSW EditableListView'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '7.1.0'.
 
 
-package classNames
-	add: #EditableListView;
-	add: #EditableListViewColumn;
-	add: #EmbeddedCheckBox;
-	add: #EmbeddedCheckButton;
-	add: #EmbeddedComboBox;
-	add: #EmbeddedFormattedTextEdit;
-	add: #EmbeddedMultilineTextEdit;
-	add: #EmbeddedPushButton;
-	add: #EmbeddedRadioButton;
-	add: #EmbeddedTextEdit;
-	yourself.
+package setClassNames: #(
+	#{EditableListView}
+	#{EditableListViewColumn}
+	#{EmbeddedCheckBox}
+	#{EmbeddedCheckButton}
+	#{EmbeddedComboBox}
+	#{EmbeddedFormattedTextEdit}
+	#{EmbeddedMultilineTextEdit}
+	#{EmbeddedPushButton}
+	#{EmbeddedRadioButton}
+	#{EmbeddedTextEdit}
+).
 
-package methodNames
-	add: #HeaderView -> #clearSortIconForColumnAtIndex:;
-	add: #HeaderView -> #setSortIconForColumn:;
-	add: #TextEdit -> #currentLine;
-	add: #TextEdit -> #embeddedPreTranslateKeyboardInput:;
-	add: #View -> #embeddedValue;
-	add: #View -> #embeddedValue:;
-	add: 'ListPresenter class' -> #resource_Editable_list_view;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{HeaderView} #clearSortIconForColumnAtIndex:)
+	#(#{HeaderView} #setSortIconForColumn:)
+	#(#{ListPresenter class} #resource_Editable_list_view)
+	#(#{TextEdit} #currentLine)
+	#(#{TextEdit} #embeddedPreTranslateKeyboardInput:)
+	#(#{View} #embeddedValue)
+	#(#{View} #embeddedValue:)
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -49,10 +43,12 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'SSW ListView Extensions'
-	'SSW Widget Enhancements').
+	'SSW Widget Enhancements'
+).
 
 package setManualPrerequisites: #(
-	'SSW ListView Extensions').
+	'SSW ListView Extensions'
+).
 
 package!
 
@@ -62,55 +58,62 @@ ListViewColumn subclass: #EditableListViewColumn
 	instanceVariableNames: 'isEditable setContentsBlock editor forecolor backcolor preDrawBlock getSortContentsBlock isEditableBlock events cachedParent isValidContentsBlock'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmulatedPushButton subclass: #EmbeddedPushButton
 	instanceVariableNames: 'isDisplayingEmbedded embeddedRectangle embeddedDisplayState embeddedText text'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ComboBox subclass: #EmbeddedComboBox
 	instanceVariableNames: 'choiceModel allowNilSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CheckButton subclass: #EmbeddedCheckButton
 	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled buttonExtent'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmbeddedCheckButton subclass: #EmbeddedCheckBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmbeddedCheckButton subclass: #EmbeddedRadioButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextEdit subclass: #EmbeddedTextEdit
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FormattedTextEdit subclass: #EmbeddedFormattedTextEdit
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 	instanceVariableNames: 'column'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

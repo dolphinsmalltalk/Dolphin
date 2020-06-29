@@ -2,21 +2,23 @@
 
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchTextMax' -> 16r10.
+		'_OffsetOf_cxy' -> 16r4.
+		'_OffsetOf_fmt' -> 16r14.
+		'_OffsetOf_hbm' -> 16rC.
+		'_OffsetOf_iImage' -> 16r1C.
+		'_OffsetOf_iOrder' -> 16r20.
+		'_OffsetOf_lParam' -> 16r18.
+		'_OffsetOf_pszText' -> 16r8.
+		'_OffsetOf_pvFilter' -> 16r28.
+		'_OffsetOf_state' -> 16r2C.
+		'_OffsetOf_type' -> 16r24
+	}!
 HDITEMW guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
-HDITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
-HDITEMW addClassConstant: '_OffsetOf_cxy' value: 16r4!
-HDITEMW addClassConstant: '_OffsetOf_fmt' value: 16r14!
-HDITEMW addClassConstant: '_OffsetOf_hbm' value: 16rC!
-HDITEMW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
-HDITEMW addClassConstant: '_OffsetOf_iOrder' value: 16r20!
-HDITEMW addClassConstant: '_OffsetOf_lParam' value: 16r18!
-HDITEMW addClassConstant: '_OffsetOf_pszText' value: 16r8!
-HDITEMW addClassConstant: '_OffsetOf_pvFilter' value: 16r28!
-HDITEMW addClassConstant: '_OffsetOf_state' value: 16r2C!
-HDITEMW addClassConstant: '_OffsetOf_type' value: 16r24!
 HDITEMW comment: ''!
 !HDITEMW categoriesForClass!Unclassified! !
 !HDITEMW methodsFor!

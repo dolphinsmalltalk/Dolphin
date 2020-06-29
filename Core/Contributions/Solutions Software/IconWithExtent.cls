@@ -4,7 +4,8 @@ Icon subclass: #IconWithExtent
 	instanceVariableNames: 'extent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IconWithExtent guid: (GUID fromString: '{429114bb-12f2-41ab-8fe0-7585364ac305}')!
 IconWithExtent comment: ''!
 !IconWithExtent categoriesForClass!Graphics-Tools! !

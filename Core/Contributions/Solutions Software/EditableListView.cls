@@ -4,7 +4,8 @@ ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EditableListView guid: (GUID fromString: '{e2b66e41-55e0-4105-a492-b9defd40cd23}')!
 EditableListView comment: ''!
 !EditableListView categoriesForClass!Unclassified! !

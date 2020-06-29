@@ -4,7 +4,8 @@ Object subclass: #ColumnHeader
 	instanceVariableNames: 'parent index dropDownMenu'
 	classVariableNames: ''
 	poolDictionaries: 'HeaderViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ColumnHeader guid: (GUID fromString: '{9bd93348-662b-499a-84fe-75576dbd2f21}')!
 ColumnHeader comment: ''!
 !ColumnHeader categoriesForClass!Kernel-Objects! !

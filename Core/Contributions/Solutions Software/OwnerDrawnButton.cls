@@ -4,7 +4,8 @@ PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OwnerDrawnButton guid: (GUID fromString: '{b1b80a82-7d68-47aa-b70a-d079b92fca12}')!
 OwnerDrawnButton comment: 'Abstract superclass for implementing custom-look buttons with standard Windows behavior, including support for animated transitions.
 As a minimum, subclasses need to implement drawOn:'!

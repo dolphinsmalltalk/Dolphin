@@ -4,7 +4,8 @@ VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PVRRecording guid: (GUID fromString: '{afe83110-1d7c-46c1-811c-bc5a22c18ecb}')!
 PVRRecording comment: ''!
 !PVRRecording categoriesForClass!Samples! !

@@ -4,7 +4,8 @@ FormattedTextEdit subclass: #EmbeddedFormattedTextEdit
 	instanceVariableNames: 'offset'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EmbeddedFormattedTextEdit guid: (GUID fromString: '{4ef6adf7-0642-4bac-970d-10e4a69ec7f0}')!
 EmbeddedFormattedTextEdit comment: ''!
 !EmbeddedFormattedTextEdit categoriesForClass!Unclassified! !

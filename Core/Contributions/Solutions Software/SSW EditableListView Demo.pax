@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SSW EditableListView Demo'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7
 
@@ -9,16 +9,10 @@ EditableListViewDemo show'.
 package basicPackageVersion: '7.1.0'.
 
 
-package classNames
-	add: #EditableListViewDemo;
-	add: #PVRRecording;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{EditableListViewDemo}
+	#{PVRRecording}
+).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -36,7 +30,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'SSW EditableListView'
 	'SSW Widget Enhancements'
-	'..\..\Object Arts\Samples\MVP\Video Library\Video Library').
+	'..\..\Object Arts\Samples\MVP\Video Library\Video Library'
+).
 
 package!
 
@@ -46,17 +41,14 @@ Shell subclass: #EditableListViewDemo
 	instanceVariableNames: 'listPresenter rowHeightPresenter hasRowImagePresenter hasColumnImagesPresenter starRatingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
