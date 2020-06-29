@@ -1,24 +1,19 @@
 ﻿| package |
 package := Package name: 'Dolphin List Models'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework List Models.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
 
 
-package classNames
-	add: #ListModel;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ListModel}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Additional Sort Algorithms').
+	'..\..\..\Base\Dolphin Additional Sort Algorithms'
+).
 
 package!
 
@@ -28,12 +23,8 @@ SequencedGrowableCollection subclass: #ListModel
 	instanceVariableNames: 'list events searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

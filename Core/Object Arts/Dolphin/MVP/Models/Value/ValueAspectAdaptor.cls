@@ -4,7 +4,8 @@ ValueAdaptor subclass: #ValueAspectAdaptor
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAspectAdaptor guid: (GUID fromString: '{87b4c679-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueAspectAdaptor comment: 'A ValueAspectAdaptor is capable of adapting an aspect of a subject object and treating this as a <value>. An aspect is considered to be an attribute of an object that can be fetched and set using a pair of accessor methods (aspect and aspect: say). 
 

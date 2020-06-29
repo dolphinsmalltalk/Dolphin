@@ -4,7 +4,8 @@ Object subclass: #TreeNode
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeNode guid: (GUID fromString: '{87b4c4c7-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreeNode comment: 'TreeNode represents a node of a tree in a <TreeModel> hierarchy.
 

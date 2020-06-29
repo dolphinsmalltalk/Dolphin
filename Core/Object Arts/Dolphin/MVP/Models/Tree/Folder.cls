@@ -4,7 +4,8 @@ Object subclass: #Folder
 	instanceVariableNames: 'pathname canonicalPath'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Folder guid: (GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
 Folder comment: ''!
 !Folder categoriesForClass!MVP-Models! !

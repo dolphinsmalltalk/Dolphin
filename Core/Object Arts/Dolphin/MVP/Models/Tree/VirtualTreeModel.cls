@@ -4,7 +4,8 @@ TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VirtualTreeModel guid: (GUID fromString: '{87b4c670-026e-11d3-9fd7-00a0cc3e4a32}')!
 VirtualTreeModel comment: 'VirtualTreeModel provides an <treeModel> interface onto a tree like data structure where the elements in the tree are always aware of their position in the hierarchy. In general, Smalltalk Collections organise objects into groups, but the objects are unaware of their grouping. In this way an object can belong to more than one Collection at a time. For a tree that follows this behaviour use a <TreeModel>. However, some objects are implicitly aware of their location within a tree hierarchy (e.g. Smalltalk classes); in such cases a VirtualTreeModel can be used to represent the structure without having to duplicate it as a hierarchy of <TreeNode>s.  
 

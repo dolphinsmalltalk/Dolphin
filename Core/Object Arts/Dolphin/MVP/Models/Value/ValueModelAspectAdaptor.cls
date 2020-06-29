@@ -4,7 +4,8 @@ ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueModelAspectAdaptor guid: (GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
 ValueModelAspectAdaptor comment: ''!
 !ValueModelAspectAdaptor categoriesForClass!Unclassified! !

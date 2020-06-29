@@ -4,7 +4,8 @@ Model subclass: #TreeModelAbstract
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModelAbstract guid: (GUID fromString: '{87b4c66d-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreeModelAbstract isAbstract: true!
 TreeModelAbstract comment: 'TreeModelAbstract is the abstract superclass for classes implementing the <treeModel> protocol. All of the manipulations that modify  the underlying tree structure will trigger notification events such that Observers will be informed of the changes. The <treeModel> protocol defines the following events:

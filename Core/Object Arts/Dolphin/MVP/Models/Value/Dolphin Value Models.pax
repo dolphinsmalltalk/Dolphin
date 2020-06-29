@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Value Models'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework Value Models.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,34 +8,29 @@ Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #AspectBuffer;
-	add: #CompositeValueAdaptor;
-	add: #ValueAdaptor;
-	add: #ValueAspectAdaptor;
-	add: #ValueBuffer;
-	add: #ValueConverter;
-	add: #ValueHolder;
-	add: #ValueKeyedAdaptor;
-	add: #ValueModel;
-	add: #ValueModelAspectAdaptor;
-	yourself.
+package setClassNames: #(
+	#{AspectBuffer}
+	#{CompositeValueAdaptor}
+	#{ValueAdaptor}
+	#{ValueAspectAdaptor}
+	#{ValueBuffer}
+	#{ValueConverter}
+	#{ValueHolder}
+	#{ValueKeyedAdaptor}
+	#{ValueModel}
+	#{ValueModelAspectAdaptor}
+).
 
-package methodNames
-	add: #Object -> #aspectAdaptorClass;
-	add: #Object -> #aspectValue:;
-	add: #Object -> #aspectValue:triggers:;
-	add: #Object -> #asValue;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Object} #aspectAdaptorClass)
+	#(#{Object} #aspectValue:)
+	#(#{Object} #aspectValue:triggers:)
+	#(#{Object} #asValue)
+).
 
 package setPrerequisites: #(
-	'..\..\..\Base\Dolphin').
+	'..\..\..\Base\Dolphin'
+).
 
 package!
 
@@ -45,55 +40,62 @@ Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #ValueModel
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueModel subclass: #ValueAdaptor
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueModel subclass: #ValueConverter
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueModel subclass: #ValueHolder
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAdaptor subclass: #CompositeValueAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAdaptor subclass: #ValueAspectAdaptor
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueHolder subclass: #ValueBuffer
 	instanceVariableNames: 'subject modified gate'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

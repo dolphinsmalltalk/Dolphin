@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree Models'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree Models.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1996.
@@ -13,24 +13,19 @@ This package contains the basic Tree Models for use within the MVP framework. Th
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ExpandingTreeModel;
-	add: #Folder;
-	add: #FolderHierarchyModel;
-	add: #TreeModel;
-	add: #TreeModelAbstract;
-	add: #TreeNode;
-	add: #VirtualTreeModel;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ExpandingTreeModel}
+	#{Folder}
+	#{FolderHierarchyModel}
+	#{TreeModel}
+	#{TreeModelAbstract}
+	#{TreeNode}
+	#{VirtualTreeModel}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Base\Dolphin').
+	'..\..\..\Base\Dolphin'
+).
 
 package!
 
@@ -40,42 +35,44 @@ Object subclass: #Folder
 	instanceVariableNames: 'pathname canonicalPath'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #TreeNode
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #TreeModelAbstract
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModelAbstract subclass: #TreeModel
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModel subclass: #ExpandingTreeModel
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeModel subclass: #FolderHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

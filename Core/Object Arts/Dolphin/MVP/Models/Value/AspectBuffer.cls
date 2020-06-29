@@ -4,7 +4,8 @@ Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AspectBuffer guid: (GUID fromString: '{87b4c666-026e-11d3-9fd7-00a0cc3e4a32}')!
 AspectBuffer comment: 'An AspectBuffer is used to buffer changes to the aspects of a subject object. These changes are held in a copy of the subject until the buffer receives an #apply message. A client of the buffer can request an aspect for the subject using #aspectValue: and it will receive an appropriate <ValueAspectAdapter>. Only the aspects that have been explicitly requested and then modified will be updated back to the subject when #apply is received.  
  

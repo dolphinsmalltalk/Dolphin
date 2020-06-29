@@ -4,7 +4,8 @@ ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueKeyedAdaptor guid: (GUID fromString: '{87b4c67a-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueKeyedAdaptor comment: 'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
 

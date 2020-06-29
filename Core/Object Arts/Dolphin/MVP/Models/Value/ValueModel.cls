@@ -4,7 +4,8 @@ Model subclass: #ValueModel
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueModel guid: (GUID fromString: '{87b4c66e-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueModel isAbstract: true!
 ValueModel comment: 'ValueModel is an abstract class whose subclasses provide the capability to adapt the protocol of a subject object to a simple <value> protocol. The intention is to allow general purpose objects, such as <views>, to interact with more specific objects, by providing an adapted layer between them. A client of a <valueModel> can set the value of the subject using a #value: message and similarly the value can be retrieved by sending #value:. 

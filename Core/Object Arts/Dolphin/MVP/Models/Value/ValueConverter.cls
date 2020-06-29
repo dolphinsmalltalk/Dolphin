@@ -4,7 +4,8 @@ ValueModel subclass: #ValueConverter
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueConverter guid: (GUID fromString: '{87b4c677-026e-11d3-9fd7-00a0cc3e4a32}')!
 ValueConverter comment: 'A ValueConverter sits between a subject <valueModel> and some <value> client of this. It supports the <valueModel> protocol such that when the client attempts to get the subject value it is converted into another type of object that is more palatable to the client. Similarly when the client tries to put a value back into the subject the type can again be converted, this time to suit the subject''s needs.
 
