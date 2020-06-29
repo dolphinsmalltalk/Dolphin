@@ -4,7 +4,8 @@ AXControlSite subclass: #AXValueConvertingControlSite
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXValueConvertingControlSite guid: (GUID fromString: '{3f495368-8c18-4e53-a039-299027f2e032}')!
 AXValueConvertingControlSite comment: 'AXValueConvertingControlSite is a kind of <AXControlSite> that also behaves as if it were a <ValueConvertingControlView>, in particular it implements the <valueView> protocol. 
 

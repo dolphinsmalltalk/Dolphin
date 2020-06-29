@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Control Hosting'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ActiveX Visual Control (OCX) Hosting. 
 Copyright (c) Object Arts Ltd, 2000-2006.
@@ -52,34 +52,31 @@ Known Issues:
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #AXControlSite;
-	add: #AXValueConvertingControlSite;
-	add: #IAxWinAmbientDispatch;
-	add: #IAxWinAmbientDispatchEx;
-	add: #IDocHostUIHandlerDispatch;
-	add: #IDolphinAxHost;
-	add: #IMSControl;
-	add: #IOleClientSite;
-	add: #IOleObject;
-	add: #IPropertyNotifySink;
-	add: #OLEVERB;
-	yourself.
+package setClassNames: #(
+	#{AXControlSite}
+	#{AXValueConvertingControlSite}
+	#{IAxWinAmbientDispatch}
+	#{IAxWinAmbientDispatchEx}
+	#{IDocHostUIHandlerDispatch}
+	#{IDolphinAxHost}
+	#{IMSControl}
+	#{IOleClientSite}
+	#{IOleObject}
+	#{IPropertyNotifySink}
+	#{OLEVERB}
+).
 
-package methodNames
-	add: #VMLibrary -> #axWinInit;
-	yourself.
+package setMethodNames: #(
+	#(#{VMLibrary} #axWinInit)
+).
 
-package globalNames
-	add: #IAxWinHostWindow;
-	yourself.
+package setVariableNames: #(
+	#{IAxWinHostWindow}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #IAxWinHostWindow;
-	yourself).
+package setAliasVariableNames: #(
+	#{IAxWinHostWindow}
+).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
@@ -95,7 +92,8 @@ package setPrerequisites: #(
 	'..\COM\OLE COM'
 	'..\Components\Font\OLE Font'
 	'..\Persist\OLE Persistence Base'
-	'..\Structured Storage\OLE Structured Storage').
+	'..\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
@@ -105,59 +103,86 @@ IUnknown subclass: #IDolphinAxHost
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IOleClientSite
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IOleObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IPropertyNotifySink
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IAxWinAmbientDispatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IDocHostUIHandlerDispatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMSControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_fuFlags' -> 16r8.
+		'_OffsetOf_grfAttribs' -> 16rC.
+		'_OffsetOf_lpszVerbName' -> 16r4.
+		'_OffsetOf_lVerb' -> 16r0
+	}!
 ControlView subclass: #AXControlSite
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
-	classVariableNames: 'AllowContextMenuMask AllowShowUIMask AllowWindowlessMask DisplayAsDefaultMask FireControlEventsMask FirePropertyEventsMask ReflectMask StandardPropNames TraceEventsMask UserModeMask WM_ATLGETHOST WM_FORWARDMSG'
+	classVariableNames: 'StandardPropNames WM_ATLGETHOST'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllowContextMenuMask' -> 16r400.
+		'AllowShowUIMask' -> 16r200.
+		'AllowWindowlessMask' -> 16r20.
+		'DisplayAsDefaultMask' -> 16r80.
+		'FireControlEventsMask' -> 16r4.
+		'FirePropertyEventsMask' -> 16r1.
+		'ReflectMask' -> 16r100.
+		'TraceEventsMask' -> 16r2.
+		'UserModeMask' -> 16r40.
+		'WM_FORWARDMSG' -> 16r37F
+	}!
 AXControlSite subclass: #AXValueConvertingControlSite
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 IAxWinHostWindow := IDolphinAxHost!
 

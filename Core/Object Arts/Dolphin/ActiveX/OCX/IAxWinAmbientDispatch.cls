@@ -4,7 +4,8 @@ IDispatch subclass: #IAxWinAmbientDispatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IAxWinAmbientDispatch guid: (IID fromString: '{b6ea2051-048a-11d1-82b9-00c04fb9942e}')!
 IAxWinAmbientDispatch comment: '<IAxWinAmbientDispatch> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatch'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

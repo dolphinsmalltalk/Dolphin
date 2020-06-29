@@ -4,7 +4,8 @@ IDispatch subclass: #IMSControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IMSControl guid: (IID fromString: '{882a259f-9029-41dc-826f-6821fa73a486}')!
 IMSControl isAbstract: true!
 IMSControl comment: 'IMSControl is an abstract superclass the purpose of which is to share the common implementation details for typical MS OCXs designed primarily for use in VB. These controls have a number of common properties.'!
