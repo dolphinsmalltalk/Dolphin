@@ -4,7 +4,8 @@ SelectableItemsPresenter subclass: #TreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreePresenter guid: (GUID fromString: '{87b4c688-026e-11d3-9fd7-00a0cc3e4a32}')!
 TreePresenter comment: 'TreePresenter implements a <treePresenter> component that can be used to display the contents of a <treeModel> within a <treeView>. This is similar to the way a tree view is used to display a file system''s contents in the Window''s explorer. For presentation of a tree as a hierarchy of nested "folders" see the <FolderPresenter> class.
 

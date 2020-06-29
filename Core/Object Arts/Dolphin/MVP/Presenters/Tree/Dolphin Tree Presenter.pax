@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree Presenter.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -10,22 +10,17 @@ TreePresenter was originally packaged in the base MVP package, but this causes t
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #TreePresenter;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{TreePresenter}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\Models\Tree\Dolphin Tree Models').
+	'..\..\Models\Tree\Dolphin Tree Models'
+).
 
 package!
 
@@ -35,12 +30,8 @@ SelectableItemsPresenter subclass: #TreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

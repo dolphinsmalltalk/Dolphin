@@ -4,7 +4,8 @@ TreePresenter subclass: #TreeListPresenter
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeListPresenter guid: (GUID fromString: '{2e6f856c-a8b4-4d90-8e8f-adf2452e4bbf}')!
 TreeListPresenter comment: 'TreeListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <treeView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list. The hierarchical presentation is controlled by a tree model (set separately using #treeModel:) but the actual visible nodes are determined by the contents of the list. Only those nodes that are actually in the list or are parents of those in the list will be displayed.
 

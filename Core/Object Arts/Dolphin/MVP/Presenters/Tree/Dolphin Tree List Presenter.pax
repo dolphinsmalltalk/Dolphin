@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tree List Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tree List Presenter.
 Copyright (c) Object Arts Ltd. 2002.
@@ -10,15 +10,9 @@ A TreeListPresenter implements a <listPresenter> component that can be used to d
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #TreeListPresenter;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{TreeListPresenter}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -27,7 +21,8 @@ package setPrerequisites: #(
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Models\Tree\Dolphin Tree Models'
-	'Dolphin Tree Presenter').
+	'Dolphin Tree Presenter'
+).
 
 package!
 
@@ -37,12 +32,8 @@ TreePresenter subclass: #TreeListPresenter
 	instanceVariableNames: 'listModel updating visibleNodes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
