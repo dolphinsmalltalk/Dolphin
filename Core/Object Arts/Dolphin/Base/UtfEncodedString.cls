@@ -61,6 +61,18 @@ copyWith: newElement
 
 	^self, (self class with: newElement)!
 
+copyWithout: aCharacter
+	"Answer a <String> which is a copy of the receiver, but in
+	which all occurrences of the <Character> aCharacter have been removed.
+
+	N.B. Use a ReadStream to process whole UTF-8 codepoints at once--otherwise
+	we will be unable to recognize non-ASCII characters in a UTF-8 string."
+
+	| aStream |
+	aStream := (self copyLikeOfSize: self copySize) writeStream.
+	self readStream do: [:element | element = aCharacter ifFalse: [aStream nextPut: element]].
+	^aStream contents.!
+
 decodeFrom: aReadStream upTo: anObject
 	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
 	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
@@ -142,6 +154,7 @@ skipEncodingMarkerFrom: aPositionableStream
 !UtfEncodedString categoriesFor: #asArray!converting!public! !
 !UtfEncodedString categoriesFor: #bom!constants!encode/decode!private! !
 !UtfEncodedString categoriesFor: #copyWith:!copying!public! !
+!UtfEncodedString categoriesFor: #copyWithout:!converting!public! !
 !UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
 !UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
