@@ -4,7 +4,8 @@ Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaIndicator guid: (GUID fromString: '{d8f9d545-39f0-4f15-b405-d14dfe355b3d}')!
 ScintillaIndicator comment: 'ScintillaIndicators represent the indicators displayed as various styles of underlining in a <ScintillaView>.
 

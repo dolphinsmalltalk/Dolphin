@@ -4,7 +4,8 @@ ExternalLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLibrary guid: (GUID fromString: '{846bc1f2-ad71-411e-8c63-c99780a5a626}')!
 ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciLexer.dll).'!
 !ScintillaLibrary categoriesForClass!External-Libraries! !

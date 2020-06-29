@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Scintilla View'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Scintilla Control Wrapper
 Copyright (c) Object Arts Ltd, 2002-2020.
@@ -37,49 +37,46 @@ OR PERFORMANCE OF THIS SOFTWARE. "'.
 package basicPackageVersion: '3.6.6'.
 
 
-package classNames
-	add: #NullScintillaStyler;
-	add: #QueryableScintillaAttribute;
-	add: #ScintillaAnnotation;
-	add: #ScintillaAttribute;
-	add: #ScintillaCallTipStyle;
-	add: #ScintillaColorPropertyDescriptor;
-	add: #ScintillaIndicator;
-	add: #ScintillaIndicatorStyle;
-	add: #ScintillaKeyBinding;
-	add: #ScintillaLexerMetadata;
-	add: #ScintillaLexerNamedStyle;
-	add: #ScintillaLexerProperty;
-	add: #ScintillaLibrary;
-	add: #ScintillaListItem;
-	add: #ScintillaMargin;
-	add: #ScintillaMarker;
-	add: #ScintillaMarkerDefinition;
-	add: #ScintillaPropertyDescriptor;
-	add: #ScintillaStyler;
-	add: #ScintillaStylesCollectionPresenter;
-	add: #ScintillaTextStyle;
-	add: #ScintillaTextStylePresenter;
-	add: #ScintillaTextStylesDialog;
-	add: #ScintillaView;
-	add: #SCNotification;
-	yourself.
+package setClassNames: #(
+	#{NullScintillaStyler}
+	#{QueryableScintillaAttribute}
+	#{ScintillaAnnotation}
+	#{ScintillaAttribute}
+	#{ScintillaCallTipStyle}
+	#{ScintillaColorPropertyDescriptor}
+	#{ScintillaIndicator}
+	#{ScintillaIndicatorStyle}
+	#{ScintillaKeyBinding}
+	#{ScintillaLexerMetadata}
+	#{ScintillaLexerNamedStyle}
+	#{ScintillaLexerProperty}
+	#{ScintillaLibrary}
+	#{ScintillaListItem}
+	#{ScintillaMargin}
+	#{ScintillaMarker}
+	#{ScintillaMarkerDefinition}
+	#{ScintillaPropertyDescriptor}
+	#{ScintillaStyler}
+	#{ScintillaStylesCollectionPresenter}
+	#{ScintillaTextStyle}
+	#{ScintillaTextStylePresenter}
+	#{ScintillaTextStylesDialog}
+	#{ScintillaView}
+	#{SCNotification}
+).
 
-package methodNames
-	add: 'TextPresenter class' -> #resource_Scintilla_view;
-	yourself.
+package setMethodNames: #(
+	#(#{TextPresenter class} #resource_Scintilla_view)
+).
 
-package globalNames
-	add: #ScintillaConstants;
-	add: #ScintillaIndicatorDefinition;
-	yourself.
+package setVariableNames: #(
+	#{ScintillaConstants}
+	#{ScintillaIndicatorDefinition}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #ScintillaIndicatorDefinition;
-	yourself).
+package setAliasVariableNames: #(
+	#{ScintillaIndicatorDefinition}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -99,7 +96,8 @@ package setPrerequisites: #(
 	'..\SpinButton\Dolphin SpinButton Control'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -109,129 +107,195 @@ Object subclass: #ScintillaAnnotation
 	instanceVariableNames: 'line text styles'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: 'propertyMap'!
+	classInstanceVariableNames: 'propertyMap'
+	classConstants: {}!
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaKeyBinding
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaLexerMetadata
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaListItem
 	instanceVariableNames: 'text icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaPropertyDescriptor
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
 	classVariableNames: 'AlwaysPrintMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_characterSource _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_annotationLinesAdded' -> 16r54.
+		'_OffsetOf_ch' -> 16r10.
+		'_OffsetOf_characterSource' -> 16r60.
+		'_OffsetOf_foldLevelNow' -> 16r38.
+		'_OffsetOf_foldLevelPrev' -> 16r3C.
+		'_OffsetOf_length' -> 16r20.
+		'_OffsetOf_linesAdded' -> 16r24.
+		'_OffsetOf_listCompletionMethod' -> 16r5C.
+		'_OffsetOf_listType' -> 16r44.
+		'_OffsetOf_lParam' -> 16r30.
+		'_OffsetOf_margin' -> 16r40.
+		'_OffsetOf_message' -> 16r28.
+		'_OffsetOf_modificationType' -> 16r18.
+		'_OffsetOf_modifiers' -> 16r14.
+		'_OffsetOf_scLine' -> 16r34.
+		'_OffsetOf_scPosition' -> 16rC.
+		'_OffsetOf_text' -> 16r1C.
+		'_OffsetOf_token' -> 16r50.
+		'_OffsetOf_updated' -> 16r58.
+		'_OffsetOf_wParam' -> 16r2C.
+		'_OffsetOf_x' -> 16r48.
+		'_OffsetOf_y' -> 16r4C
+	}!
 ValueDialog subclass: #ScintillaTextStylesDialog
 	instanceVariableNames: 'stylesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #ScintillaStylesCollectionPresenter
 	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #ScintillaTextStylePresenter
 	instanceVariableNames: 'facePresenter pointSizePresenter forecolorPresenter backcolorPresenter isItalicPresenter isBoldPresenter isUnderlinedPresenter casePresenter characterSetPresenter previewPresenter fillToEndOfLinePresenter normalStyle defaultStyle isInvisiblePresenter isHotspotPresenter isReadOnlyPresenter namePresenter idPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaAttribute subclass: #QueryableScintillaAttribute
 	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaAttribute subclass: #ScintillaTextStyle
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
-	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
+	classVariableNames: 'PredefinedStyleNames'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EolFilledMask' -> 16rC0.
+		'HotspotMask' -> 16rC00.
+		'InvisibleMask' -> 16r3000.
+		'ItalicMask' -> 16rC.
+		'ReadOnlyMask' -> 16r300.
+		'UnderlinedMask' -> 16r30
+	}!
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
-	classVariableNames: 'HoverForecolor HoverStyle IndicatorStyles StyleNames'
+	classVariableNames: 'HoverForecolor HoverStyle'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IndicatorStyles' -> #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)
+	}!
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
-	classVariableNames: 'CursorTypes MarginTypes'
+	classVariableNames: 'CursorTypes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'MarginTypes' -> #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)
+	}!
 ScintillaTextStyle subclass: #ScintillaCallTipStyle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLexerMetadata subclass: #ScintillaLexerProperty
 	instanceVariableNames: 'type'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaPropertyDescriptor subclass: #ScintillaColorPropertyDescriptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaStyler subclass: #NullScintillaStyler
 	instanceVariableNames: 'normalStyleName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
-	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
+	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles Library'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnnotationStylesOffset' -> 16r200.
+		'BackgroundDwellEvents' -> 16r4.
+		'BraceHilightingMask' -> 16r1.
+		'DefaultCallTipTabWidth' -> 16r20.
+		'FoldingMask' -> 16r2.
+		'MarginStylesOffset' -> 16r100
+	}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 ScintillaIndicatorDefinition := ScintillaIndicatorStyle!
 

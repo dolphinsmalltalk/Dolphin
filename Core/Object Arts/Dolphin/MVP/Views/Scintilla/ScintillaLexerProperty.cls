@@ -4,7 +4,8 @@ ScintillaLexerMetadata subclass: #ScintillaLexerProperty
 	instanceVariableNames: 'type'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLexerProperty guid: (GUID fromString: '{edef3c1e-b9c0-4eed-8b80-7ecdaeef15d7}')!
 ScintillaLexerProperty comment: ''!
 !ScintillaLexerProperty categoriesForClass!Kernel-Objects! !

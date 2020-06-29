@@ -4,7 +4,8 @@ ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLexerNamedStyle guid: (GUID fromString: '{75e1ab33-a3b6-477a-9d03-35dd22b204a3}')!
 ScintillaLexerNamedStyle comment: 'Metadata about the pre-defined styles supported by a particular lexer.
 

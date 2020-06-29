@@ -4,7 +4,8 @@ ValueDialog subclass: #ScintillaTextStylesDialog
 	instanceVariableNames: 'stylesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaTextStylesDialog guid: (GUID fromString: '{e768b8d3-ca27-4c94-b60d-7fbf3dd4e34a}')!
 ScintillaTextStylesDialog comment: 'ScintillaTextStylesDialog is a <valueDialogPresenter> that can be used to edit a collection of <ScintillaTextStyles> in order to configure the visual styles in a <ScintillaView>. It is intended for use in applications, and so does not allow the addition or removal of styles, nor the editing of style names. However this could be changed by defining a different view that used the ScintillaStylesCollectionPresenter ''Developer view'' instead of the ''Default view''.
 

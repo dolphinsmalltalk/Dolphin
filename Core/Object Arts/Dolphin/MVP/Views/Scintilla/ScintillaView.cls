@@ -2,16 +2,18 @@
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
-	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
+	classVariableNames: 'CodePages DefaultKeyBindings DefaultTextStyles Library'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnnotationStylesOffset' -> 16r200.
+		'BackgroundDwellEvents' -> 16r4.
+		'BraceHilightingMask' -> 16r1.
+		'DefaultCallTipTabWidth' -> 16r20.
+		'FoldingMask' -> 16r2.
+		'MarginStylesOffset' -> 16r100
+	}!
 ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
-ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 16r200!
-ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 16r4!
-ScintillaView addClassConstant: 'BraceHilightingMask' value: 16r1!
-ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 16r20!
-ScintillaView addClassConstant: 'FoldingMask' value: 16r2!
-ScintillaView addClassConstant: 'MarginStylesOffset' value: 16r100!
 ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -96,7 +98,7 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `annotationStyles`		`IdentityDictionary`
 
 ## Class Variables:
-  `AnnotationStylesOffset`	`<integer>`
+  `AnnotationStylesOffset`	`<integer>`. Offsets must always be multiples of 256 for implementation reasons
   `BackgroundDwellEvents`	`<integer>`
   `BraceHilightingMask`		`<integer>` bit mask for accessing brace highlighting flag.
   `CodePages`				`IdentityDictionary` mapping `<integer>` to `Symbol`
@@ -12555,9 +12557,6 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself).
-	self addClassConstant: 'BraceHilightingMask' value: 1.
-	self addClassConstant: 'FoldingMask' value: 2.
-	self addClassConstant: 'BackgroundDwellEvents' value: 4.
 	self addClassConstant: 'DefaultTextStyles'
 		value: (IdentityDictionary new
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
@@ -12580,11 +12579,7 @@ initialize
 	defaultKeyBindings
 		shrink;
 		isImmutable: true.
-	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings.
-	self addClassConstant: 'DefaultCallTipTabWidth' value: 32.
-	"Offsets must always be multiples of 256 for implementation reasons"
-	self addClassConstant: 'MarginStylesOffset' value: 256.
-	self addClassConstant: 'AnnotationStylesOffset' value: 512!
+	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings!
 
 layoutCachingModes
 	^#(#none #caret #page #document)!

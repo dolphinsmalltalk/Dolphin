@@ -4,7 +4,8 @@ ScintillaAttribute subclass: #QueryableScintillaAttribute
 	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 QueryableScintillaAttribute guid: (GUID fromString: '{dd653349-5f8c-41b5-a302-fcc645247163}')!
 QueryableScintillaAttribute comment: '`QueryableScintillaAttribute` is the abstract class of `ScintillaAtttribute`s that can be retrieved from the underlying control. It provides the basic mechanism for populating the attribute from the view settings.
 

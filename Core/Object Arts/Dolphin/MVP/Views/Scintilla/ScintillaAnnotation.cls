@@ -4,7 +4,8 @@ Object subclass: #ScintillaAnnotation
 	instanceVariableNames: 'line text styles'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaAnnotation guid: (GUID fromString: '{2d20c021-0cef-46f7-ba44-4c4191189df9}')!
 ScintillaAnnotation comment: ''!
 !ScintillaAnnotation categoriesForClass!MVP-Views-Support! !

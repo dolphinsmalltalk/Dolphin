@@ -4,7 +4,8 @@ ScintillaPropertyDescriptor subclass: #ScintillaColorPropertyDescriptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaColorPropertyDescriptor guid: (GUID fromString: '{9bc3c105-f33d-4670-ac98-9126601fbbd9}')!
 ScintillaColorPropertyDescriptor comment: '`ScintillaColorPropertyDescriptor`s are `ScintillaPropertyDescriptor`s for color properties of a `ScintillaView`. 
 

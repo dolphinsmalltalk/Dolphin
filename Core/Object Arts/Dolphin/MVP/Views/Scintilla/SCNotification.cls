@@ -2,32 +2,34 @@
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_characterSource _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
+	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_annotationLinesAdded' -> 16r54.
+		'_OffsetOf_ch' -> 16r10.
+		'_OffsetOf_characterSource' -> 16r60.
+		'_OffsetOf_foldLevelNow' -> 16r38.
+		'_OffsetOf_foldLevelPrev' -> 16r3C.
+		'_OffsetOf_length' -> 16r20.
+		'_OffsetOf_linesAdded' -> 16r24.
+		'_OffsetOf_listCompletionMethod' -> 16r5C.
+		'_OffsetOf_listType' -> 16r44.
+		'_OffsetOf_lParam' -> 16r30.
+		'_OffsetOf_margin' -> 16r40.
+		'_OffsetOf_message' -> 16r28.
+		'_OffsetOf_modificationType' -> 16r18.
+		'_OffsetOf_modifiers' -> 16r14.
+		'_OffsetOf_scLine' -> 16r34.
+		'_OffsetOf_scPosition' -> 16rC.
+		'_OffsetOf_text' -> 16r1C.
+		'_OffsetOf_token' -> 16r50.
+		'_OffsetOf_updated' -> 16r58.
+		'_OffsetOf_wParam' -> 16r2C.
+		'_OffsetOf_x' -> 16r48.
+		'_OffsetOf_y' -> 16r4C
+	}!
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
-SCNotification addClassConstant: '_OffsetOf_annotationLinesAdded' value: 16r54!
-SCNotification addClassConstant: '_OffsetOf_ch' value: 16r10!
-SCNotification addClassConstant: '_OffsetOf_characterSource' value: 16r60!
-SCNotification addClassConstant: '_OffsetOf_foldLevelNow' value: 16r38!
-SCNotification addClassConstant: '_OffsetOf_foldLevelPrev' value: 16r3C!
-SCNotification addClassConstant: '_OffsetOf_length' value: 16r20!
-SCNotification addClassConstant: '_OffsetOf_linesAdded' value: 16r24!
-SCNotification addClassConstant: '_OffsetOf_listCompletionMethod' value: 16r5C!
-SCNotification addClassConstant: '_OffsetOf_listType' value: 16r44!
-SCNotification addClassConstant: '_OffsetOf_lParam' value: 16r30!
-SCNotification addClassConstant: '_OffsetOf_margin' value: 16r40!
-SCNotification addClassConstant: '_OffsetOf_message' value: 16r28!
-SCNotification addClassConstant: '_OffsetOf_modificationType' value: 16r18!
-SCNotification addClassConstant: '_OffsetOf_modifiers' value: 16r14!
-SCNotification addClassConstant: '_OffsetOf_scLine' value: 16r34!
-SCNotification addClassConstant: '_OffsetOf_scPosition' value: 16rC!
-SCNotification addClassConstant: '_OffsetOf_text' value: 16r1C!
-SCNotification addClassConstant: '_OffsetOf_token' value: 16r50!
-SCNotification addClassConstant: '_OffsetOf_updated' value: 16r58!
-SCNotification addClassConstant: '_OffsetOf_wParam' value: 16r2C!
-SCNotification addClassConstant: '_OffsetOf_x' value: 16r48!
-SCNotification addClassConstant: '_OffsetOf_y' value: 16r4C!
 SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!

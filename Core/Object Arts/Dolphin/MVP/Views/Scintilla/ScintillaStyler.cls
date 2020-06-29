@@ -4,7 +4,8 @@ Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaStyler guid: (GUID fromString: '{7dc234ba-44c2-490a-a7a1-7aafd6b577ec}')!
 ScintillaStyler isAbstract: true!
 ScintillaStyler comment: 'ScintillaStyler is the abstract class of objects responsible for dynamically ''colouring'' the text in a <ScintillaView>. This is done by applying text styles in runs between start and end points. Initially the control will request that the entire text be styled, then as the view is edited it will send further requests to style modified text. Concrete subclasses define the manner in which the text is styled, for example to do syntax colouring for a particular programming language.

@@ -4,7 +4,8 @@ Object subclass: #ScintillaLexerMetadata
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaLexerMetadata guid: (GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
 ScintillaLexerMetadata isAbstract: true!
 ScintillaLexerMetadata comment: ''!

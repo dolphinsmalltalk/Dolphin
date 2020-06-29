@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ScintillaConstants put: (PoolConstantsDictionary named: #ScintillaConstants)!
+#{ScintillaConstants} declare: (PoolConstantsDictionary named: #ScintillaConstants)!
 ScintillaConstants at: 'ANNOTATION_BOXED' put: 16r2!
 ScintillaConstants at: 'ANNOTATION_HIDDEN' put: 16r0!
 ScintillaConstants at: 'ANNOTATION_INDENTED' put: 16r3!
