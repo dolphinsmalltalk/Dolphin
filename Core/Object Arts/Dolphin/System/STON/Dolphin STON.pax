@@ -1,77 +1,71 @@
 ﻿| package |
 package := Package name: 'Dolphin STON'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin STON support
 Copyright (c) Object Arts Ltd, 2019'.
 
 
-package classNames
-	add: #DolphinSTONCStyleCommentsSkipStream;
-	add: #DolphinSTONReader;
-	add: #DolphinSTONReaderError;
-	add: #DolphinSTONReference;
-	add: #DolphinSTONWriter;
-	yourself.
+package setClassNames: #(
+	#{DolphinSTONCStyleCommentsSkipStream}
+	#{DolphinSTONReader}
+	#{DolphinSTONReaderError}
+	#{DolphinSTONReference}
+	#{DolphinSTONWriter}
+).
 
-package methodNames
-	add: #BlockClosure -> #fromSton:;
-	add: #BlockClosure -> #stonOn:;
-	add: #ByteArray -> #hex;
-	add: #Color -> #stonOn:;
-	add: #CompiledCode -> #fromSton:;
-	add: #CompiledCode -> #stonOn:;
-	add: #Date -> #stonOn:;
-	add: #FramingCalculation -> #stonOn:;
-	add: #GUID -> #stonOn:;
-	add: #IconImageManager -> #stonOn:;
-	add: #MessageSequence -> #stonOn:;
-	add: #ProcessorScheduler -> #stonOn:;
-	add: #ReferenceView -> #stonExtras;
-	add: #SingletonSearchPolicy -> #stonOn:;
-	add: #SmalltalkSystem -> #stonOn:;
-	add: #STONCStyleCommentsSkipStream -> #skipSeparators;
-	add: #SystemDictionary -> #stonOn:;
-	add: #View -> #stonExtras;
-	add: #View -> #stonOn:;
-	add: 'ByteArray class' -> #readHexFrom:;
-	add: 'CardLayout class' -> #stonAllInstVarNames;
-	add: 'Color class' -> #fromSton:;
-	add: 'Color class' -> #stonName;
-	add: 'ControlView class' -> #stonAllInstVarNames;
-	add: 'Date class' -> #fromSton:;
-	add: 'FramingCalculation class' -> #fromSton:;
-	add: 'GraphicsTool class' -> #stonAllInstVarNames;
-	add: 'GUID class' -> #fromSton:;
-	add: 'IconImageManager class' -> #fromSton:;
-	add: 'MessageSequence class' -> #fromSton:;
-	add: 'Model class' -> #stonAllInstVarNames;
-	add: 'Object class' -> #fromSton:;
-	add: 'ProcessorScheduler class' -> #fromSton:;
-	add: 'ReferenceView class' -> #stonAllInstVarNames;
-	add: 'ScintillaView class' -> #stonAllInstVarNames;
-	add: 'SearchPolicy class' -> #fromSton:;
-	add: 'SingletonSearchPolicy class' -> #stonName;
-	add: 'STON class' -> #icon;
-	add: 'STONCStyleCommentsSkipStream class' -> #icon;
-	add: 'STONCStyleCommentsSkipStream class' -> #new;
-	add: 'STONJSON class' -> #icon;
-	add: 'STONReader class' -> #icon;
-	add: 'STONReader class' -> #new;
-	add: 'STONReference class' -> #icon;
-	add: 'STONStreamWriter class' -> #icon;
-	add: 'STONWriter class' -> #icon;
-	add: 'STONWriter class' -> #new;
-	add: 'SystemDictionary class' -> #fromSton:;
-	add: 'Toolbar class' -> #stonAllInstVarNames;
-	add: 'View class' -> #stonAllInstVarNames;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BlockClosure} #fromSton:)
+	#(#{BlockClosure} #stonOn:)
+	#(#{ByteArray} #hex)
+	#(#{ByteArray class} #readHexFrom:)
+	#(#{CardLayout class} #stonAllInstVarNames)
+	#(#{Color} #stonOn:)
+	#(#{Color class} #fromSton:)
+	#(#{Color class} #stonName)
+	#(#{CompiledCode} #fromSton:)
+	#(#{CompiledCode} #stonOn:)
+	#(#{ControlView class} #stonAllInstVarNames)
+	#(#{Date} #stonOn:)
+	#(#{Date class} #fromSton:)
+	#(#{FramingCalculation} #stonOn:)
+	#(#{FramingCalculation class} #fromSton:)
+	#(#{GraphicsTool class} #stonAllInstVarNames)
+	#(#{GUID} #stonOn:)
+	#(#{GUID class} #fromSton:)
+	#(#{IconImageManager} #stonOn:)
+	#(#{IconImageManager class} #fromSton:)
+	#(#{MessageSequence} #stonOn:)
+	#(#{MessageSequence class} #fromSton:)
+	#(#{Model class} #stonAllInstVarNames)
+	#(#{Object class} #fromSton:)
+	#(#{ProcessorScheduler} #stonOn:)
+	#(#{ProcessorScheduler class} #fromSton:)
+	#(#{ReferenceView} #stonExtras)
+	#(#{ReferenceView class} #stonAllInstVarNames)
+	#(#{ScintillaView class} #stonAllInstVarNames)
+	#(#{SearchPolicy class} #fromSton:)
+	#(#{SingletonSearchPolicy} #stonOn:)
+	#(#{SingletonSearchPolicy class} #stonName)
+	#(#{SmalltalkSystem} #stonOn:)
+	#(#{STON class} #icon)
+	#(#{STONCStyleCommentsSkipStream} #skipSeparators)
+	#(#{STONCStyleCommentsSkipStream class} #icon)
+	#(#{STONCStyleCommentsSkipStream class} #new)
+	#(#{STONJSON class} #icon)
+	#(#{STONReader class} #icon)
+	#(#{STONReader class} #new)
+	#(#{STONReference class} #icon)
+	#(#{STONStreamWriter class} #icon)
+	#(#{STONWriter class} #icon)
+	#(#{STONWriter class} #new)
+	#(#{SystemDictionary} #stonOn:)
+	#(#{SystemDictionary class} #fromSton:)
+	#(#{Toolbar class} #stonAllInstVarNames)
+	#(#{View} #stonExtras)
+	#(#{View} #stonOn:)
+	#(#{View class} #stonAllInstVarNames)
+).
 
 package setPrerequisites: #(
 	'..\..\IDE\Base\Development System'
@@ -82,7 +76,8 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\Compiler\Smalltalk Parser'
-	'..\..\..\..\Contributions\svenc\STON\STON-Core').
+	'..\..\..\..\Contributions\svenc\STON\STON-Core'
+).
 
 package!
 
@@ -92,30 +87,34 @@ STONReaderError subclass: #DolphinSTONReaderError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONReader subclass: #DolphinSTONReader
 	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
-	classVariableNames: 'EscapeChars HexDigitValues'
+	classVariableNames: 'EscapeChars'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'HexDigitValues' -> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15)
+	}!
 STONReference subclass: #DolphinSTONReference
 	instanceVariableNames: 'refCount'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONWriter subclass: #DolphinSTONWriter
 	instanceVariableNames: 'classInstVarMaps stringQuote'
 	classVariableNames: 'ExtendedCharacters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

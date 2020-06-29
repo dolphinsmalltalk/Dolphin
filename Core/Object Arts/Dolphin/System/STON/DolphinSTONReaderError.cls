@@ -4,7 +4,8 @@ STONReaderError subclass: #DolphinSTONReaderError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSTONReaderError guid: (GUID fromString: '{d7312cd7-5a35-4ac6-a193-dc8ea803cf35}')!
 DolphinSTONReaderError comment: ''!
 !DolphinSTONReaderError categoriesForClass!STON-Core-Exceptions! !

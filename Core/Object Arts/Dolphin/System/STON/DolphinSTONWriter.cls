@@ -4,7 +4,8 @@ STONWriter subclass: #DolphinSTONWriter
 	instanceVariableNames: 'classInstVarMaps stringQuote'
 	classVariableNames: 'ExtendedCharacters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSTONWriter guid: (GUID fromString: '{56f95579-e6b4-4cd5-8ca6-c7cf2f754593}')!
 DolphinSTONWriter comment: ''!
 !DolphinSTONWriter categoriesForClass!Unclassified! !

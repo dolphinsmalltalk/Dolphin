@@ -4,7 +4,8 @@ STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinSTONCStyleCommentsSkipStream guid: (GUID fromString: '{c5873f76-4d78-4e57-9352-92f7bc94b1f3}')!
 DolphinSTONCStyleCommentsSkipStream comment: ''!
 !DolphinSTONCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
