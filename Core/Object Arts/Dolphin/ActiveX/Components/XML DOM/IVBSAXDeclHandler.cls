@@ -4,7 +4,8 @@ IDispatch subclass: #IVBSAXDeclHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IVBSAXDeclHandler guid: (IID fromString: '{e8917260-7579-4be1-b5dd-7afbfa6f077b}')!
 IVBSAXDeclHandler comment: '<IVBSAXDeclHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDeclHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

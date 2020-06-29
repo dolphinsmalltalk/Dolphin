@@ -4,7 +4,8 @@ IUnknown subclass: #ISAXXMLReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISAXXMLReader guid: (IID fromString: '{a4f96ed0-f829-476e-81c0-cdc7bd2a0802}')!
 ISAXXMLReader comment: '<ISAXXMLReader> is a wrapper class for the COM interface ''MSXML2.ISAXXMLReader'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

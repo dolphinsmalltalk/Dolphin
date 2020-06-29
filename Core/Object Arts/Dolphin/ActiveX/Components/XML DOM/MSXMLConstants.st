@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #MSXMLConstants put: (PoolConstantsDictionary named: #MSXMLConstants)!
+#{MSXMLConstants} declare: (PoolConstantsDictionary named: #MSXMLConstants)!
 MSXMLConstants at: 'NODE_ATTRIBUTE' put: 16r2!
 MSXMLConstants at: 'NODE_CDATA_SECTION' put: 16r4!
 MSXMLConstants at: 'NODE_COMMENT' put: 16r8!

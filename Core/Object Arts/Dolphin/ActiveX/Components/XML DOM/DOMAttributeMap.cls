@@ -4,7 +4,8 @@ DOMNamedNodeMap variableSubclass: #DOMAttributeMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMAttributeMap guid: (GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
 DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
 !DOMAttributeMap categoriesForClass!Collections-Unordered! !

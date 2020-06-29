@@ -4,7 +4,8 @@ DOMNamedNodeMap variableSubclass: #DOMNotationsMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMNotationsMap guid: (GUID fromString: '{5b277829-84b8-4926-9ada-5e4893b363bf}')!
 DOMNotationsMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMNotation>s. This is used to represent the dictionary of notations associated with an XML DOM document type. The keys and values are strings.'!
 !DOMNotationsMap categoriesForClass!Collections-Unordered! !

@@ -4,7 +4,8 @@ IXMLDOMNodeList subclass: #IXMLDOMSelection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMSelection guid: (IID fromString: '{aa634fc7-5888-44a7-a257-3a47150d3a0e}')!
 IXMLDOMSelection comment: '<IXMLDOMSelection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSelection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

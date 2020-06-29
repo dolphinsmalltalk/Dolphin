@@ -4,7 +4,8 @@ ISchemaItem subclass: #ISchema
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchema guid: (IID fromString: '{50ea08b4-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchema comment: '<ISchema> is a wrapper class for the COM interface ''MSXML2.ISchema'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

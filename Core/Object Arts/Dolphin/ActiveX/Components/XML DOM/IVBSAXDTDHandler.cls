@@ -4,7 +4,8 @@ IDispatch subclass: #IVBSAXDTDHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IVBSAXDTDHandler guid: (IID fromString: '{24fb3297-302d-4620-ba39-3a732d850558}')!
 IVBSAXDTDHandler comment: '<IVBSAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

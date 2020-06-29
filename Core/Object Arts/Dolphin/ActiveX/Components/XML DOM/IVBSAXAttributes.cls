@@ -4,7 +4,8 @@ IDispatch subclass: #IVBSAXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IVBSAXAttributes guid: (IID fromString: '{10dc0586-132b-4cac-8bb3-db00ac8b7ee0}')!
 IVBSAXAttributes comment: '<IVBSAXAttributes> is a wrapper class for the COM interface ''MSXML2.IVBSAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

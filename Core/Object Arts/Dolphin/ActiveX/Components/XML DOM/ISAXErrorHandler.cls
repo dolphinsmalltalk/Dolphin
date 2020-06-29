@@ -4,7 +4,8 @@ IUnknown subclass: #ISAXErrorHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISAXErrorHandler guid: (IID fromString: '{a60511c4-ccf5-479e-98a3-dc8dc545b7d0}')!
 ISAXErrorHandler comment: '<ISAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.ISAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

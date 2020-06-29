@@ -4,7 +4,8 @@ DOMNamedNodeMap variableSubclass: #DOMEntitiesMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMEntitiesMap guid: (GUID fromString: '{e837c00b-9843-4ac2-b072-e44440ecaec3}')!
 DOMEntitiesMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMEntity >s. This is used to represent the dictionary of entities associated with an XML DOM document type. The keys and values are strings.'!
 !DOMEntitiesMap categoriesForClass!Collections-Unordered! !

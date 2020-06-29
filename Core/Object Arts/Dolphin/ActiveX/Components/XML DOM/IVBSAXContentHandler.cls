@@ -4,7 +4,8 @@ IDispatch subclass: #IVBSAXContentHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IVBSAXContentHandler guid: (IID fromString: '{2ed7290a-4dd5-4b46-bb26-4e4155e77faa}')!
 IVBSAXContentHandler comment: '<IVBSAXContentHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

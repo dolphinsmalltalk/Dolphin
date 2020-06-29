@@ -4,7 +4,8 @@ ISchemaParticle subclass: #ISchemaElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaElement guid: (IID fromString: '{50ea08b7-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchemaElement comment: '<ISchemaElement> is a wrapper class for the COM interface ''MSXML2.ISchemaElement'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

@@ -4,7 +4,8 @@ IDispatch subclass: #IXMLDOMNamedNodeMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNamedNodeMap guid: (IID fromString: '{2933bf83-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMNamedNodeMap comment: '<IXMLDOMNamedNodeMap> is a wrapper class for the COM interface ''MSXML.IXMLDOMNamedNodeMap'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

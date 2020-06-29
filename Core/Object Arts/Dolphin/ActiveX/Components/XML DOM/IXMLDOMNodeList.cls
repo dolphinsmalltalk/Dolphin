@@ -4,7 +4,8 @@ IDispatch subclass: #IXMLDOMNodeList
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNodeList guid: (IID fromString: '{2933bf82-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMNodeList comment: '<IXMLDOMNodeList> is a wrapper class for the COM interface ''MSXML.IXMLDOMNodeList'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

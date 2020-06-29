@@ -4,7 +4,8 @@ IDispatch subclass: #IXMLDOMParseErrorCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMParseErrorCollection guid: (IID fromString: '{3efaa429-272f-11d2-836f-0000f87a7782}')!
 IXMLDOMParseErrorCollection comment: '<IXMLDOMParseErrorCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseErrorCollection'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

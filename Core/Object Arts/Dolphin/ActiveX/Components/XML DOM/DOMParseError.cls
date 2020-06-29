@@ -4,7 +4,8 @@ Error subclass: #DOMParseError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMParseError guid: (GUID fromString: '{80a8e9d9-c230-4610-8994-72021cfdadcb}')!
 DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
 

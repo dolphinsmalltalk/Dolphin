@@ -4,7 +4,8 @@ IUnknown subclass: #ISAXContentHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISAXContentHandler guid: (IID fromString: '{1545cdfa-9e4e-4497-a8a4-2bf7d0112c44}')!
 ISAXContentHandler comment: '<ISAXContentHandler> is a wrapper class for the COM interface ''MSXML2.ISAXContentHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

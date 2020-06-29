@@ -4,7 +4,8 @@ IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMProcessingInstruction guid: (IID fromString: '{2933bf89-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMProcessingInstruction comment: '<IXMLDOMProcessingInstruction> is a wrapper class for the COM interface ''MSXML.IXMLDOMProcessingInstruction'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

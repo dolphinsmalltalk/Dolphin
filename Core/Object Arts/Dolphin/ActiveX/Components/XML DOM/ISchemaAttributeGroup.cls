@@ -4,7 +4,8 @@ ISchemaItem subclass: #ISchemaAttributeGroup
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaAttributeGroup guid: (IID fromString: '{50ea08ba-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchemaAttributeGroup comment: '<ISchemaAttributeGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaAttributeGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

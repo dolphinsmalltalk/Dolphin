@@ -4,7 +4,8 @@ ISchemaType subclass: #ISchemaComplexType
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaComplexType guid: (IID fromString: '{50ea08b9-dd1b-4664-9a50-c2f40f4bd79a}')!
 ISchemaComplexType comment: '<ISchemaComplexType> is a wrapper class for the COM interface ''MSXML2.ISchemaComplexType'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

@@ -4,7 +4,8 @@ IXMLHttpRequest subclass: #IServerXMLHTTPRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IServerXMLHTTPRequest guid: (IID fromString: '{2e9196bf-13ba-4dd4-91ca-6c571f281495}')!
 IServerXMLHTTPRequest comment: '<IServerXMLHTTPRequest> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

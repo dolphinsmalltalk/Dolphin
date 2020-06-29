@@ -4,7 +4,8 @@ IXMLDOMNode subclass: #IXMLDOMNotation
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNotation guid: (IID fromString: '{2933bf8c-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMNotation comment: '<IXMLDOMNotation> is a wrapper class for the COM interface ''MSXML.IXMLDOMNotation'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

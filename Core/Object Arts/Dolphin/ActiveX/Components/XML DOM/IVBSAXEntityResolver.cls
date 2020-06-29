@@ -4,7 +4,8 @@ IDispatch subclass: #IVBSAXEntityResolver
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IVBSAXEntityResolver guid: (IID fromString: '{0c05d096-f45b-4aca-ad1a-aa0bc25518dc}')!
 IVBSAXEntityResolver comment: '<IVBSAXEntityResolver> is a wrapper class for the COM interface ''MSXML2.IVBSAXEntityResolver'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

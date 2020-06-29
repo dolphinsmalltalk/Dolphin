@@ -4,7 +4,8 @@ IDispatch subclass: #IMXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IMXAttributes guid: (IID fromString: '{f10d27cc-3ec0-415c-8ed8-77ab1c5e7262}')!
 IMXAttributes comment: '<IMXAttributes> is a wrapper class for the COM interface ''MSXML2.IMXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

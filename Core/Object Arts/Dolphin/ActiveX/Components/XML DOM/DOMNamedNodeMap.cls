@@ -4,7 +4,8 @@ Dictionary variableSubclass: #DOMNamedNodeMap
 	instanceVariableNames: 'interface parentNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMNamedNodeMap guid: (GUID fromString: '{20534a81-bce6-43d4-bb64-1ad3b4aa39d9}')!
 DOMNamedNodeMap isAbstract: true!
 DOMNamedNodeMap comment: 'DOMNamedNodeMap is a hashed collection wrapper class for the MSXML <IXMLDOMNamedNodeMap> interface. Its purpose is to make all the power of Smalltalk dictionaries available on the much more limited DOM interface, and to provide seamless integration into the Smalltalk development environment (i.e. so that the node map prints, inspects, and acts like a dictionary). DOMNamedNodeMap itself is abstract, and has a number of subclasses employed to specialize it to particular types of named node. The most important of these is probably <DOMAttributeMap>, which implements dictionary behaviour for manipulating the XML attributes of a node.

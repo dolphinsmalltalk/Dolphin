@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'XML DOM'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk XML DOM Package. 
 Copyright (c) Object Arts Ltd, 2000-2006
@@ -110,100 +110,98 @@ Warning: Parameter ''certContext'' of IXMLDSigKeyEx.getVerifyingCertificateConte
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #DOMAttributeMap;
-	add: #DOMEntitiesMap;
-	add: #DOMNamedNodeMap;
-	add: #DOMNodeList;
-	add: #DOMNotationsMap;
-	add: #DOMParseError;
-	add: #IMXAttributes;
-	add: #IMXNamespaceManager;
-	add: #IMXNamespacePrefixes;
-	add: #IMXSchemaDeclHandler;
-	add: #IMXWriter;
-	add: #IMXXMLFilter;
-	add: #ISAXAttributes;
-	add: #ISAXContentHandler;
-	add: #ISAXDeclHandler;
-	add: #ISAXDTDHandler;
-	add: #ISAXEntityResolver;
-	add: #ISAXErrorHandler;
-	add: #ISAXLexicalHandler;
-	add: #ISAXLocator;
-	add: #ISAXXMLReader;
-	add: #ISchema;
-	add: #ISchemaAny;
-	add: #ISchemaAttribute;
-	add: #ISchemaAttributeGroup;
-	add: #ISchemaComplexType;
-	add: #ISchemaElement;
-	add: #ISchemaIdentityConstraint;
-	add: #ISchemaItem;
-	add: #ISchemaItemCollection;
-	add: #ISchemaModelGroup;
-	add: #ISchemaNotation;
-	add: #ISchemaParticle;
-	add: #ISchemaStringCollection;
-	add: #ISchemaType;
-	add: #IServerXMLHTTPRequest;
-	add: #IServerXMLHTTPRequest2;
-	add: #IVBMXNamespaceManager;
-	add: #IVBSAXAttributes;
-	add: #IVBSAXContentHandler;
-	add: #IVBSAXDeclHandler;
-	add: #IVBSAXDTDHandler;
-	add: #IVBSAXEntityResolver;
-	add: #IVBSAXErrorHandler;
-	add: #IVBSAXLexicalHandler;
-	add: #IVBSAXLocator;
-	add: #IVBSAXXMLReader;
-	add: #IXMLDOMAttribute;
-	add: #IXMLDOMCDATASection;
-	add: #IXMLDOMCharacterData;
-	add: #IXMLDOMComment;
-	add: #IXMLDOMDocument;
-	add: #IXMLDOMDocument2;
-	add: #IXMLDOMDocument3;
-	add: #IXMLDOMDocumentFragment;
-	add: #IXMLDOMDocumentType;
-	add: #IXMLDOMElement;
-	add: #IXMLDOMEntity;
-	add: #IXMLDOMEntityReference;
-	add: #IXMLDOMImplementation;
-	add: #IXMLDOMNamedNodeMap;
-	add: #IXMLDOMNode;
-	add: #IXMLDOMNodeList;
-	add: #IXMLDOMNotation;
-	add: #IXMLDOMParseError;
-	add: #IXMLDOMParseError2;
-	add: #IXMLDOMParseErrorCollection;
-	add: #IXMLDOMProcessingInstruction;
-	add: #IXMLDOMSchemaCollection;
-	add: #IXMLDOMSchemaCollection2;
-	add: #IXMLDOMSelection;
-	add: #IXMLDOMText;
-	add: #IXMLHttpRequest;
-	add: #IXSLProcessor;
-	add: #IXSLTemplate;
-	yourself.
+package setClassNames: #(
+	#{DOMAttributeMap}
+	#{DOMEntitiesMap}
+	#{DOMNamedNodeMap}
+	#{DOMNodeList}
+	#{DOMNotationsMap}
+	#{DOMParseError}
+	#{IMXAttributes}
+	#{IMXNamespaceManager}
+	#{IMXNamespacePrefixes}
+	#{IMXSchemaDeclHandler}
+	#{IMXWriter}
+	#{IMXXMLFilter}
+	#{ISAXAttributes}
+	#{ISAXContentHandler}
+	#{ISAXDeclHandler}
+	#{ISAXDTDHandler}
+	#{ISAXEntityResolver}
+	#{ISAXErrorHandler}
+	#{ISAXLexicalHandler}
+	#{ISAXLocator}
+	#{ISAXXMLReader}
+	#{ISchema}
+	#{ISchemaAny}
+	#{ISchemaAttribute}
+	#{ISchemaAttributeGroup}
+	#{ISchemaComplexType}
+	#{ISchemaElement}
+	#{ISchemaIdentityConstraint}
+	#{ISchemaItem}
+	#{ISchemaItemCollection}
+	#{ISchemaModelGroup}
+	#{ISchemaNotation}
+	#{ISchemaParticle}
+	#{ISchemaStringCollection}
+	#{ISchemaType}
+	#{IServerXMLHTTPRequest}
+	#{IServerXMLHTTPRequest2}
+	#{IVBMXNamespaceManager}
+	#{IVBSAXAttributes}
+	#{IVBSAXContentHandler}
+	#{IVBSAXDeclHandler}
+	#{IVBSAXDTDHandler}
+	#{IVBSAXEntityResolver}
+	#{IVBSAXErrorHandler}
+	#{IVBSAXLexicalHandler}
+	#{IVBSAXLocator}
+	#{IVBSAXXMLReader}
+	#{IXMLDOMAttribute}
+	#{IXMLDOMCDATASection}
+	#{IXMLDOMCharacterData}
+	#{IXMLDOMComment}
+	#{IXMLDOMDocument}
+	#{IXMLDOMDocument2}
+	#{IXMLDOMDocument3}
+	#{IXMLDOMDocumentFragment}
+	#{IXMLDOMDocumentType}
+	#{IXMLDOMElement}
+	#{IXMLDOMEntity}
+	#{IXMLDOMEntityReference}
+	#{IXMLDOMImplementation}
+	#{IXMLDOMNamedNodeMap}
+	#{IXMLDOMNode}
+	#{IXMLDOMNodeList}
+	#{IXMLDOMNotation}
+	#{IXMLDOMParseError}
+	#{IXMLDOMParseError2}
+	#{IXMLDOMParseErrorCollection}
+	#{IXMLDOMProcessingInstruction}
+	#{IXMLDOMSchemaCollection}
+	#{IXMLDOMSchemaCollection2}
+	#{IXMLDOMSelection}
+	#{IXMLDOMText}
+	#{IXMLHttpRequest}
+	#{IXSLProcessor}
+	#{IXSLTemplate}
+).
 
-package globalNames
-	add: #MSXML2Lib;
-	add: #MSXMLConstants;
-	yourself.
+package setVariableNames: #(
+	#{MSXML2Lib}
+	#{MSXMLConstants}
+).
 
-package binaryGlobalNames: (Set new
-	add: #MSXML2Lib;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{MSXML2Lib}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
-	'..\..\COM\OLE COM').
+	'..\..\COM\OLE COM'
+).
 
 package!
 
@@ -213,382 +211,452 @@ SequenceableCollection subclass: #DOMNodeList
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dictionary variableSubclass: #DOMNamedNodeMap
 	instanceVariableNames: 'interface parentNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMNamedNodeMap variableSubclass: #DOMAttributeMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMNamedNodeMap variableSubclass: #DOMEntitiesMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DOMNamedNodeMap variableSubclass: #DOMNotationsMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #DOMParseError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IMXNamespaceManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXContentHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXDeclHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXDTDHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXEntityResolver
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXErrorHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXLexicalHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXLocator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISAXXMLReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMXNamespacePrefixes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMXSchemaDeclHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMXWriter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMXXMLFilter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #ISchemaItem
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #ISchemaItemCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #ISchemaStringCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBMXNamespaceManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXAttributes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXContentHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXDeclHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXDTDHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXEntityResolver
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXErrorHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXLexicalHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXLocator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IVBSAXXMLReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMImplementation
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMNamedNodeMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMNode
 	instanceVariableNames: ''
 	classVariableNames: 'NodeTypes VarTypeToXMLDataType'
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMNodeList
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMParseError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMParseErrorCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLDOMSchemaCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXMLHttpRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXSLProcessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IXSLTemplate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchema
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaAttribute
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaAttributeGroup
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaIdentityConstraint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaNotation
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaParticle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaItem subclass: #ISchemaType
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaParticle subclass: #ISchemaAny
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaParticle subclass: #ISchemaElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaParticle subclass: #ISchemaModelGroup
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISchemaType subclass: #ISchemaComplexType
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMAttribute
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMCharacterData
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMDocument
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMDocumentFragment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMDocumentType
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMEntity
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMEntityReference
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMNotation
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMCharacterData subclass: #IXMLDOMComment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMCharacterData subclass: #IXMLDOMText
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMText subclass: #IXMLDOMCDATASection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMDocument subclass: #IXMLDOMDocument2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMDocument2 subclass: #IXMLDOMDocument3
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMNodeList subclass: #IXMLDOMSelection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMParseError subclass: #IXMLDOMParseError2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLHttpRequest subclass: #IServerXMLHTTPRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IServerXMLHTTPRequest subclass: #IServerXMLHTTPRequest2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

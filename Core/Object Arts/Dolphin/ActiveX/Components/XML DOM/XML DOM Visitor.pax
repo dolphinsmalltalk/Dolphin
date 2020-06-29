@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'XML DOM Visitor'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk XML DOM Visitor Package. 
 Copyright (c) Object Arts Ltd, 2000-2006
@@ -8,34 +8,29 @@ Copyright (c) Object Arts Ltd, 2000-2006
 An abstract visitor for XML DOM trees.'.
 
 
-package classNames
-	add: #XmlDomVisitor;
-	yourself.
+package setClassNames: #(
+	#{XmlDomVisitor}
+).
 
-package methodNames
-	add: #IXMLDOMAttribute -> #acceptVisitor:;
-	add: #IXMLDOMCDATASection -> #acceptVisitor:;
-	add: #IXMLDOMComment -> #acceptVisitor:;
-	add: #IXMLDOMDocument -> #acceptVisitor:;
-	add: #IXMLDOMDocumentType -> #acceptVisitor:;
-	add: #IXMLDOMElement -> #acceptVisitor:;
-	add: #IXMLDOMEntity -> #acceptVisitor:;
-	add: #IXMLDOMEntityReference -> #acceptVisitor:;
-	add: #IXMLDOMNode -> #acceptVisitor:;
-	add: #IXMLDOMNotation -> #acceptVisitor:;
-	add: #IXMLDOMProcessingInstruction -> #acceptVisitor:;
-	add: #IXMLDOMText -> #acceptVisitor:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{IXMLDOMAttribute} #acceptVisitor:)
+	#(#{IXMLDOMCDATASection} #acceptVisitor:)
+	#(#{IXMLDOMComment} #acceptVisitor:)
+	#(#{IXMLDOMDocument} #acceptVisitor:)
+	#(#{IXMLDOMDocumentType} #acceptVisitor:)
+	#(#{IXMLDOMElement} #acceptVisitor:)
+	#(#{IXMLDOMEntity} #acceptVisitor:)
+	#(#{IXMLDOMEntityReference} #acceptVisitor:)
+	#(#{IXMLDOMNode} #acceptVisitor:)
+	#(#{IXMLDOMNotation} #acceptVisitor:)
+	#(#{IXMLDOMProcessingInstruction} #acceptVisitor:)
+	#(#{IXMLDOMText} #acceptVisitor:)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'XML DOM').
+	'XML DOM'
+).
 
 package!
 
@@ -45,10 +40,8 @@ Object subclass: #XmlDomVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

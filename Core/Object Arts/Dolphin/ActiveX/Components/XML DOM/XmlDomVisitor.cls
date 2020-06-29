@@ -4,7 +4,8 @@ Object subclass: #XmlDomVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XmlDomVisitor guid: (GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
 XmlDomVisitor isAbstract: true!
 XmlDomVisitor comment: 'Abstract visitor for IXMLDOMDocument node tree.'!

@@ -4,7 +4,8 @@ IXMLDOMCharacterData subclass: #IXMLDOMText
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IXMLDOMText guid: (IID fromString: '{2933bf87-7b36-11d2-b20e-00c04f983e60}')!
 IXMLDOMText comment: '<IXMLDOMText> is a wrapper class for the COM interface ''MSXML.IXMLDOMText'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
