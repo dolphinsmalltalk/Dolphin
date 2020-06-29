@@ -4,7 +4,8 @@ StBlockScope subclass: #StOptimizedBlockScope
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StOptimizedBlockScope guid: (GUID fromString: '{c2ebf9a0-55a4-4d52-922c-923b6953482c}')!
 StOptimizedBlockScope comment: ''!
 !StOptimizedBlockScope categoriesForClass!Kernel-Objects! !

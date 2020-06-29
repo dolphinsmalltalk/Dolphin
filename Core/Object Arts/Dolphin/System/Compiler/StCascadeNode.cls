@@ -4,7 +4,8 @@ StValueNode subclass: #StCascadeNode
 	instanceVariableNames: 'messages semicolons'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StCascadeNode guid: (GUID fromString: '{b29f06cb-e796-47d8-baf3-b24f873b0474}')!
 StCascadeNode comment: 'StCascadeNode is a parse tree node for cascaded messages (e.g., "self print1 ; print2").
 

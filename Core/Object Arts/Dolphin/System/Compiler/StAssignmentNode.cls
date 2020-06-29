@@ -4,7 +4,8 @@ StValueNode subclass: #StAssignmentNode
 	instanceVariableNames: 'variable assignment value'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StAssignmentNode guid: (GUID fromString: '{3a82c1ca-7ed8-4a69-9e9e-b58b738abc85}')!
 StAssignmentNode comment: 'StAssignmentNode is a parse tree node for assignment statements
 

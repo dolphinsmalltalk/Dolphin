@@ -4,7 +4,8 @@ Object subclass: #StToken
 	instanceVariableNames: 'start comments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StToken guid: (GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
 StToken isAbstract: true!
 StToken comment: 'StToken is the abstract superclass of <SmalltalkScanner>tokens.

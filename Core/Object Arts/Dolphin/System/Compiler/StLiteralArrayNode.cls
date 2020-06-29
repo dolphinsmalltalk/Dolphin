@@ -4,7 +4,8 @@ StLiteralNode subclass: #StLiteralArrayNode
 	instanceVariableNames: 'isByteArray stop contents start'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StLiteralArrayNode guid: (GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
 StLiteralArrayNode comment: ''!
 !StLiteralArrayNode categoriesForClass!Unclassified! !

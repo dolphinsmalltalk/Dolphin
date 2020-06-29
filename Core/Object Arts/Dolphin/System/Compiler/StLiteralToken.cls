@@ -4,7 +4,8 @@ StValueToken subclass: #StLiteralToken
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StLiteralToken guid: (GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
 StLiteralToken comment: ''!
 !StLiteralToken categoriesForClass!System-Compiler! !

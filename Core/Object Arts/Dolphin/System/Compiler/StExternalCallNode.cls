@@ -2,9 +2,13 @@
 
 StTagNode subclass: #StExternalCallNode
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
-	classVariableNames: 'OverlappedMask VirtualMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'OverlappedMask' -> 16r1.
+		'VirtualMask' -> 16r2
+	}!
 StExternalCallNode guid: (GUID fromString: '{66add179-2714-4fbb-b856-33dee83e11f4}')!
 StExternalCallNode comment: ''!
 !StExternalCallNode categoriesForClass!System-Compiler! !
@@ -84,16 +88,7 @@ returnType: anAssociation
 
 !StExternalCallNode class methodsFor!
 
-initialize
-	"
-	self initialize
-	"
-
-	OverlappedMask := 16r1.
-	VirtualMask := 16r2.!
-
 new
 	^super new initialize! !
-!StExternalCallNode class categoriesFor: #initialize!initializing!public! !
 !StExternalCallNode class categoriesFor: #new!instance creation!public! !
 

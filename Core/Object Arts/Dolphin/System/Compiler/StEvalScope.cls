@@ -4,7 +4,8 @@ StSemanticScope subclass: #StEvalScope
 	instanceVariableNames: 'pools'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StEvalScope guid: (GUID fromString: '{c90dad3d-8211-445e-aa23-907eee35e6b8}')!
 StEvalScope comment: ''!
 !StEvalScope categoriesForClass!Kernel-Objects! !

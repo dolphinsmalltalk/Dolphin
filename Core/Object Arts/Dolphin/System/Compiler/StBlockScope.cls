@@ -2,12 +2,14 @@
 
 StLexicalScope subclass: #StBlockScope
 	instanceVariableNames: ''
-	classVariableNames: 'EmptyBlockMask NeedsOuterMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'EmptyBlockMask' -> 16r200.
+		'NeedsOuterMask' -> 16r100
+	}!
 StBlockScope guid: (GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
-StBlockScope addClassConstant: 'EmptyBlockMask' value: 16r200!
-StBlockScope addClassConstant: 'NeedsOuterMask' value: 16r100!
 StBlockScope comment: ''!
 !StBlockScope categoriesForClass!Kernel-Objects! !
 !StBlockScope methodsFor!
@@ -41,11 +43,6 @@ needsOuter
 forScopeNode: anStBlockNode outer: anStLexicalScope
 	^((anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new)
 		setNode: anStBlockNode outer: anStLexicalScope;
-		yourself!
-
-initialize
-	self addClassConstant: 'NeedsOuterMask' value: 16r100.
-	self addClassConstant: 'EmptyBlockMask' value: 16r200! !
+		yourself! !
 !StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
-!StBlockScope class categoriesFor: #initialize!class initialization!development!public! !
 

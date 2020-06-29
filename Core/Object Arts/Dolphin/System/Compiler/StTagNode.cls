@@ -4,7 +4,8 @@ StProgramNode subclass: #StTagNode
 	instanceVariableNames: 'start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StTagNode guid: (GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
 StTagNode isAbstract: true!
 StTagNode comment: ''!

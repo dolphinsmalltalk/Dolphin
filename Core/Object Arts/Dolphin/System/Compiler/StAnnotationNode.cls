@@ -4,7 +4,8 @@ StTagNode subclass: #StAnnotationNode
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StAnnotationNode guid: (GUID fromString: '{e65cb014-8373-4447-9994-f337d37f7544}')!
 StAnnotationNode comment: ''!
 !StAnnotationNode categoriesForClass!System-Compiler! !

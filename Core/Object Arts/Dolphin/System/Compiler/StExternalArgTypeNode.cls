@@ -4,7 +4,8 @@ StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StExternalArgTypeNode guid: (GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
 StExternalArgTypeNode comment: ''!
 !StExternalArgTypeNode categoriesForClass!System-Compiler! !

@@ -4,7 +4,8 @@ StVariable subclass: #StInstanceVariable
 	instanceVariableNames: 'index name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StInstanceVariable guid: (GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
 StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
 

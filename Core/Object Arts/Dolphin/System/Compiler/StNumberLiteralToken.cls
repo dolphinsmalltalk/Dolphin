@@ -4,7 +4,8 @@ StLiteralToken subclass: #StNumberLiteralToken
 	instanceVariableNames: 'source'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StNumberLiteralToken guid: (GUID fromString: '{777f55ae-a939-4a73-9cc8-2cef3a91f41e}')!
 StNumberLiteralToken comment: ''!
 !StNumberLiteralToken categoriesForClass!Unclassified! !

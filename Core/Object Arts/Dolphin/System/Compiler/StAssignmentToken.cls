@@ -4,7 +4,8 @@ StToken subclass: #StAssignmentToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StAssignmentToken guid: (GUID fromString: '{6aeed410-71e0-440f-a815-2307b61f7693}')!
 StAssignmentToken comment: ''!
 !StAssignmentToken categoriesForClass!System-Compiler! !

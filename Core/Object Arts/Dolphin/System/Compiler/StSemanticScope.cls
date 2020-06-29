@@ -4,7 +4,8 @@ Object subclass: #StSemanticScope
 	instanceVariableNames: 'outer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StSemanticScope guid: (GUID fromString: '{6613bf75-bf16-4a7f-92f0-72a8a84738c9}')!
 StSemanticScope isAbstract: true!
 StSemanticScope comment: ''!

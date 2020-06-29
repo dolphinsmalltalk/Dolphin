@@ -4,7 +4,8 @@ StSpecialVariableNode subclass: #StThisContextVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StThisContextVariableNode guid: (GUID fromString: '{20db816b-6c32-4239-97e8-c3a90a63e126}')!
 StThisContextVariableNode comment: ''!
 !StThisContextVariableNode categoriesForClass!System-Compiler! !

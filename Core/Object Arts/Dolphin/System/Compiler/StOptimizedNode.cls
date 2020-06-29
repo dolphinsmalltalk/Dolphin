@@ -4,7 +4,8 @@ StValueNode subclass: #StOptimizedNode
 	instanceVariableNames: 'left right body value methodClass source'
 	classVariableNames: 'UnevaluatedCookie'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StOptimizedNode guid: (GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
 StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
 

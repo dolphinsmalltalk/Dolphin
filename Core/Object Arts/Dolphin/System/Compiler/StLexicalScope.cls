@@ -2,12 +2,14 @@
 
 StSemanticScope subclass: #StLexicalScope
 	instanceVariableNames: 'locals node thisContextVariable flags'
-	classVariableNames: 'FarReturnMask NeedsSelfMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FarReturnMask' -> 16r2.
+		'NeedsSelfMask' -> 16r1
+	}!
 StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
-StLexicalScope addClassConstant: 'FarReturnMask' value: 16r2!
-StLexicalScope addClassConstant: 'NeedsSelfMask' value: 16r1!
 StLexicalScope comment: ''!
 !StLexicalScope categoriesForClass!Kernel-Objects! !
 !StLexicalScope methodsFor!
@@ -155,11 +157,4 @@ unreferencedArguments
 !StLexicalScope categoriesFor: #temporaries!accessing!private! !
 !StLexicalScope categoriesFor: #thisContextVariable!public! !
 !StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
-
-!StLexicalScope class methodsFor!
-
-initialize
-	self addClassConstant: 'NeedsSelfMask' value: 16r1.
-	self addClassConstant: 'FarReturnMask' value: 16r2! !
-!StLexicalScope class categoriesFor: #initialize!class initialization!development!public! !
 

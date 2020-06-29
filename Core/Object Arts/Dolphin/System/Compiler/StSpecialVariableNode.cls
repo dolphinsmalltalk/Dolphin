@@ -4,7 +4,8 @@ StAbstractVariableNode subclass: #StSpecialVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StSpecialVariableNode guid: (GUID fromString: '{e1481f19-627f-4ee4-9c94-e58a0d603fe6}')!
 StSpecialVariableNode isAbstract: true!
 StSpecialVariableNode comment: 'StSpecialVariableNode is an abstract parse tree node with subclasses to represent each of the special variables ''self'', ''super'' or ''thisContext''. All are constants.

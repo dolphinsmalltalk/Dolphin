@@ -4,7 +4,8 @@ StSemanticScope subclass: #StClassScope
 	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StClassScope guid: (GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90fca0050}')!
 StClassScope comment: ''!
 !StClassScope categoriesForClass!Kernel-Objects! !

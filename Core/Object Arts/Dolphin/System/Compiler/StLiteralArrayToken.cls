@@ -4,7 +4,8 @@ StValueToken subclass: #StLiteralArrayToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StLiteralArrayToken guid: (GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
 StLiteralArrayToken comment: ''!
 !StLiteralArrayToken categoriesForClass!Unclassified! !

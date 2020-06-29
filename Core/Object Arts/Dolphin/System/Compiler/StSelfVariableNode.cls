@@ -4,7 +4,8 @@ StSpecialVariableNode subclass: #StSelfVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StSelfVariableNode guid: (GUID fromString: '{29220d9b-e07e-475a-95e2-b31f4bf41079}')!
 StSelfVariableNode comment: 'StSelfVariableNode is an parse tree node that represents the special variable ''self''.
 '!

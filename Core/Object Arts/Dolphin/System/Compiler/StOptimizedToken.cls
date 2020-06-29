@@ -4,7 +4,8 @@ StToken subclass: #StOptimizedToken
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StOptimizedToken guid: (GUID fromString: '{6fd2c057-1eef-416c-99a2-60958de98eb1}')!
 StOptimizedToken comment: ''!
 !StOptimizedToken categoriesForClass!System-Compiler! !

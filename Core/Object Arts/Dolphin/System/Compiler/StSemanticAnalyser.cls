@@ -4,7 +4,8 @@ StParseNodeVisitor subclass: #StSemanticAnalyser
 	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StSemanticAnalyser guid: (GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
 StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that performs semantic analysis of an AST.'!
 !StSemanticAnalyser categoriesForClass!System-Compiler! !
@@ -756,10 +757,10 @@ analyzeParseTree: aParseTree for: aClass context: anObject pools: anArray onErro
 initialize
 	" self initialize "
 
-	| boolean |
-	OptimizedMessages := IdentityDictionary new.
+	| boolean optimizedMessages restrictedSelectors |
+	optimizedMessages := IdentityDictionary new.
 	boolean := #(#and: #or: #not #ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:).
-	OptimizedMessages
+	optimizedMessages
 		at: Object
 			put: #(#~~ #== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
 		at: UndefinedObject put: #(#ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:);
@@ -774,10 +775,10 @@ initialize
 		at: ProtoObject put: #(#basicClass #basicSize #==);
 		at: Character put: #(#basicSize);
 		yourself.
-	OptimizedMessages isImmutable: true.
-	RestrictedSelectors := IdentitySet new.
-	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
-	RestrictedSelectors isImmutable: true.
+	self addClassConstant: 'OptimizedMessages' value: optimizedMessages.
+	restrictedSelectors := IdentitySet new.
+	optimizedMessages do: [:each | restrictedSelectors addAll: each].
+	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
 !StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:context:pools:onError:!accessing!public! !
 !StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !

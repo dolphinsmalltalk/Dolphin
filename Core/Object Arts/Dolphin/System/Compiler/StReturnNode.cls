@@ -4,7 +4,8 @@ StProgramNode subclass: #StReturnNode
 	instanceVariableNames: 'return value'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StReturnNode guid: (GUID fromString: '{7c9285e7-8d52-4fc6-9ff5-531771e8fe6e}')!
 StReturnNode comment: 'StReturnNode is a parse tree node that represents a return expression.
 

@@ -4,7 +4,8 @@ StValueToken subclass: #StIllegalCharacterToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StIllegalCharacterToken guid: (GUID fromString: '{3aa6518c-788d-479b-b7c3-2988a870dde6}')!
 StIllegalCharacterToken comment: ''!
 !StIllegalCharacterToken categoriesForClass!System-Compiler! !

@@ -4,7 +4,8 @@ StTagNode subclass: #StPrimitiveNode
 	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StPrimitiveNode guid: (GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
 StPrimitiveNode comment: ''!
 !StPrimitiveNode categoriesForClass!System-Compiler! !

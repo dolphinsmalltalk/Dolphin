@@ -4,7 +4,8 @@ StProgramNode subclass: #StMethodNode
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StMethodNode guid: (GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
 StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 

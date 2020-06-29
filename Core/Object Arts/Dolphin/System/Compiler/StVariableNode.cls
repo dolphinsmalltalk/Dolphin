@@ -4,7 +4,8 @@ StAbstractVariableNode subclass: #StVariableNode
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StVariableNode guid: (GUID fromString: '{b60d460e-99a6-4378-8b43-67b3bcb4cd16}')!
 StVariableNode comment: 'StVariableNode is a parse tree node that represents a normal variable with a user-chosen identifier (global, inst var, temp, etc.).
 

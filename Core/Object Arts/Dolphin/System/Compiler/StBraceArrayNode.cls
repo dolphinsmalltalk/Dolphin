@@ -4,7 +4,8 @@ StValueNode subclass: #StBraceArrayNode
 	instanceVariableNames: 'left statements periods right'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StBraceArrayNode guid: (GUID fromString: '{296a5d5c-f22a-48c3-a889-53df20fcd4b2}')!
 StBraceArrayNode comment: 'StBraceArrayNode is a parse tree node for runtime arrays.
 

@@ -4,7 +4,8 @@ Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
 	classVariableNames: 'AllowEmptyStatements'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
 SmalltalkParser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text

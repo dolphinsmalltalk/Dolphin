@@ -4,7 +4,8 @@ StProgramNode subclass: #StValueNode
 	instanceVariableNames: 'parentheses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StValueNode guid: (GUID fromString: '{644cb929-df4a-4cb9-bd37-42ab7b46490f}')!
 StValueNode isAbstract: true!
 StValueNode comment: 'StValueNode is an abstract class to represent parse tree nodes that return some value.

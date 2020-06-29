@@ -4,7 +4,8 @@ StValueToken subclass: #StBinarySelectorToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StBinarySelectorToken guid: (GUID fromString: '{d3aa3980-63d1-4ea8-9654-f8fb9cba525d}')!
 StBinarySelectorToken comment: ''!
 !StBinarySelectorToken categoriesForClass!System-Compiler! !

@@ -4,7 +4,8 @@ StLiteralNode subclass: #StLiteralValueNode
 	instanceVariableNames: 'token'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StLiteralValueNode guid: (GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
 StLiteralValueNode comment: ''!
 !StLiteralValueNode categoriesForClass!Unclassified! !

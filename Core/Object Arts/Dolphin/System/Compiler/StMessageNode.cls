@@ -4,7 +4,8 @@ StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StMessageNode guid: (GUID fromString: '{3a681160-291e-495f-a7ce-71b4a751f5d4}')!
 StMessageNode comment: 'StMessageNode is a parse tree node that represents a message send.
 

@@ -4,7 +4,8 @@ StLiteralNode subclass: #StQualifiedReferenceNode
 	instanceVariableNames: 'pathString meta start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StQualifiedReferenceNode guid: (GUID fromString: '{48916d12-a942-4b84-b786-71ba3d982f2e}')!
 StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLiteralNode` to represent qualified reference literals.
 

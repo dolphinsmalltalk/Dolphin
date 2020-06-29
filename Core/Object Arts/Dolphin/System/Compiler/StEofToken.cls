@@ -4,7 +4,8 @@ StToken subclass: #StEofToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StEofToken guid: (GUID fromString: '{0bce1c26-bdfc-4d18-bba2-99d89eeea71a}')!
 StEofToken comment: ''!
 !StEofToken categoriesForClass!System-Compiler! !
