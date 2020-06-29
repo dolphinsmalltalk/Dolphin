@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Structured Storage'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
 Copyright (c) Object Arts Ltd 1997-2003. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -19,69 +19,64 @@ Lastly the package includes wrappers for functions in the URLMonLibrary which pr
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ILockBytes;
-	add: #IRootStorage;
-	add: #ISequentialStream;
-	add: #IStorage;
-	add: #IStream;
-	add: #OLELockBytes;
-	add: #OLELockBytesAbstract;
-	add: #OLELockFileBytes;
-	add: #STATSTG;
-	add: #URLMonLibrary;
-	yourself.
+package setClassNames: #(
+	#{ILockBytes}
+	#{IRootStorage}
+	#{ISequentialStream}
+	#{IStorage}
+	#{IStream}
+	#{OLELockBytes}
+	#{OLELockBytesAbstract}
+	#{OLELockFileBytes}
+	#{STATSTG}
+	#{URLMonLibrary}
+).
 
-package methodNames
-	add: #OLELibrary -> #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:;
-	add: #OLELibrary -> #createStreamOnHGlobal:fDeleteOnRelease:ppstm:;
-	add: #OLELibrary -> #getConvertStg:;
-	add: #OLELibrary -> #getHGlobalFromILockBytes:phglobal:;
-	add: #OLELibrary -> #getHGlobalFromStream:phglobal:;
-	add: #OLELibrary -> #oleDoAutoConvert:pClsidNew:;
-	add: #OLELibrary -> #readClassStg:pclsid:;
-	add: #OLELibrary -> #readClassStm:pclsid:;
-	add: #OLELibrary -> #readFmtUserTypeStg:pcf:lplpszUserType:;
-	add: #OLELibrary -> #setConvertStg:fConvert:;
-	add: #OLELibrary -> #stgCreateDocfile:grfMode:reserved:ppstgOpen:;
-	add: #OLELibrary -> #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:;
-	add: #OLELibrary -> #stgIsStorageFile:;
-	add: #OLELibrary -> #stgIsStorageILockBytes:;
-	add: #OLELibrary -> #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:;
-	add: #OLELibrary -> #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:;
-	add: #OLELibrary -> #stgSetTimes:pctime:patime:pmtime:;
-	add: #OLELibrary -> #writeClassStg:rclsid:;
-	add: #OLELibrary -> #writeClassStm:rclsid:;
-	add: #OLELibrary -> #writeFmtUserTypeStg:cf:lpszUserType:;
-	add: #SequencedStream -> #Commit:;
-	add: #SequencedStream -> #CopyTo:cb:pcbRead:pcbWritten:;
-	add: #SequencedStream -> #finalRelease;
-	add: #SequencedStream -> #LockRegion:cb:dwLockType:;
-	add: #SequencedStream -> #queryInterface:;
-	add: #SequencedStream -> #queryInterface:ifNone:;
-	add: #SequencedStream -> #Read:cb:pcbRead:;
-	add: #SequencedStream -> #Revert;
-	add: #SequencedStream -> #Seek:dwOrigin:plibNewPosition:;
-	add: #SequencedStream -> #SetSize:;
-	add: #SequencedStream -> #Stat:grfStatFlag:;
-	add: #SequencedStream -> #UnlockRegion:cb:dwLockType:;
-	add: #SequencedStream -> #Write:cb:pcbWritten:;
-	add: #ShlwapiLibrary -> #shCreateMemStream:cbInit:;
-	yourself.
+package setMethodNames: #(
+	#(#{OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
+	#(#{OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
+	#(#{OLELibrary} #getConvertStg:)
+	#(#{OLELibrary} #getHGlobalFromILockBytes:phglobal:)
+	#(#{OLELibrary} #getHGlobalFromStream:phglobal:)
+	#(#{OLELibrary} #oleDoAutoConvert:pClsidNew:)
+	#(#{OLELibrary} #readClassStg:pclsid:)
+	#(#{OLELibrary} #readClassStm:pclsid:)
+	#(#{OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
+	#(#{OLELibrary} #setConvertStg:fConvert:)
+	#(#{OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
+	#(#{OLELibrary} #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:)
+	#(#{OLELibrary} #stgIsStorageFile:)
+	#(#{OLELibrary} #stgIsStorageILockBytes:)
+	#(#{OLELibrary} #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
+	#(#{OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
+	#(#{OLELibrary} #writeClassStg:rclsid:)
+	#(#{OLELibrary} #writeClassStm:rclsid:)
+	#(#{OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
+	#(#{SequencedStream} #Commit:)
+	#(#{SequencedStream} #CopyTo:cb:pcbRead:pcbWritten:)
+	#(#{SequencedStream} #finalRelease)
+	#(#{SequencedStream} #LockRegion:cb:dwLockType:)
+	#(#{SequencedStream} #queryInterface:)
+	#(#{SequencedStream} #queryInterface:ifNone:)
+	#(#{SequencedStream} #Read:cb:pcbRead:)
+	#(#{SequencedStream} #Revert)
+	#(#{SequencedStream} #Seek:dwOrigin:plibNewPosition:)
+	#(#{SequencedStream} #SetSize:)
+	#(#{SequencedStream} #Stat:grfStatFlag:)
+	#(#{SequencedStream} #UnlockRegion:cb:dwLockType:)
+	#(#{SequencedStream} #Write:cb:pcbWritten:)
+	#(#{ShlwapiLibrary} #shCreateMemStream:cbInit:)
+).
 
-package globalNames
-	add: #OLEStructuredStorageConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{OLEStructuredStorageConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
 
@@ -91,55 +86,74 @@ COMInterfaceImp subclass: #OLELockBytesAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLELockBytesAbstract subclass: #OLELockBytes
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IRootStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_atime _OffsetOf_cbSize _OffsetOf_clsid _OffsetOf_ctime _OffsetOf_dwStgFmt _OffsetOf_grfLocksSupported _OffsetOf_grfMode _OffsetOf_grfStateBits _OffsetOf_mtime _OffsetOf_pwcsName _OffsetOf_type'
+	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_atime' -> 16r20.
+		'_OffsetOf_cbSize' -> 16r8.
+		'_OffsetOf_clsid' -> 16r30.
+		'_OffsetOf_ctime' -> 16r18.
+		'_OffsetOf_dwStgFmt' -> 16r44.
+		'_OffsetOf_grfLocksSupported' -> 16r2C.
+		'_OffsetOf_grfMode' -> 16r28.
+		'_OffsetOf_grfStateBits' -> 16r40.
+		'_OffsetOf_mtime' -> 16r10.
+		'_OffsetOf_pwcsName' -> 16r0.
+		'_OffsetOf_type' -> 16r4
+	}!
 
 "Loose Methods"!
 

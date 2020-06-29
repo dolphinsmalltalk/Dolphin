@@ -4,7 +4,8 @@ ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IStream guid: (IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
 IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 

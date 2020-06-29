@@ -4,7 +4,8 @@ IUnknown subclass: #IStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IStorage guid: (IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
 IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
 

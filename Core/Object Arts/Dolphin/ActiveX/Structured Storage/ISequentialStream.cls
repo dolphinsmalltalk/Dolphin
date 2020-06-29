@@ -4,7 +4,8 @@ IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ISequentialStream guid: (IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
 ISequentialStream comment: 'ISequentialStream is a COMInterface class to wrap the standard COM interface of the same name.
 

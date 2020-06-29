@@ -4,7 +4,8 @@ ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 URLMonLibrary guid: (GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
 URLMonLibrary comment: ''!
 !URLMonLibrary categoriesForClass!External-Libraries-Win32! !

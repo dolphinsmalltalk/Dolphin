@@ -4,7 +4,8 @@ IUnknown subclass: #IRootStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IRootStorage guid: (IID fromString: '{00000012-0000-0000-c000-000000000046}')!
 IRootStorage comment: 'IRootStorage is a COMInterface class to wrap the standard COM interface of the same name.
 

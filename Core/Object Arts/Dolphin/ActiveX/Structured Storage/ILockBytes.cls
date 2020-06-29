@@ -4,7 +4,8 @@ IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ILockBytes guid: (IID fromString: '{0000000a-0000-0000-c000-000000000046}')!
 ILockBytes comment: 'ILockBytes is a COMInterface class to wrap the standard COM interface of the same name.
 

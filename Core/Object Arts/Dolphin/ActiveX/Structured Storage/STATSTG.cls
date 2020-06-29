@@ -2,21 +2,23 @@
 
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_atime _OffsetOf_cbSize _OffsetOf_clsid _OffsetOf_ctime _OffsetOf_dwStgFmt _OffsetOf_grfLocksSupported _OffsetOf_grfMode _OffsetOf_grfStateBits _OffsetOf_mtime _OffsetOf_pwcsName _OffsetOf_type'
+	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_atime' -> 16r20.
+		'_OffsetOf_cbSize' -> 16r8.
+		'_OffsetOf_clsid' -> 16r30.
+		'_OffsetOf_ctime' -> 16r18.
+		'_OffsetOf_dwStgFmt' -> 16r44.
+		'_OffsetOf_grfLocksSupported' -> 16r2C.
+		'_OffsetOf_grfMode' -> 16r28.
+		'_OffsetOf_grfStateBits' -> 16r40.
+		'_OffsetOf_mtime' -> 16r10.
+		'_OffsetOf_pwcsName' -> 16r0.
+		'_OffsetOf_type' -> 16r4
+	}!
 STATSTG guid: (GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
-STATSTG addClassConstant: '_OffsetOf_atime' value: 16r20!
-STATSTG addClassConstant: '_OffsetOf_cbSize' value: 16r8!
-STATSTG addClassConstant: '_OffsetOf_clsid' value: 16r30!
-STATSTG addClassConstant: '_OffsetOf_ctime' value: 16r18!
-STATSTG addClassConstant: '_OffsetOf_dwStgFmt' value: 16r44!
-STATSTG addClassConstant: '_OffsetOf_grfLocksSupported' value: 16r2C!
-STATSTG addClassConstant: '_OffsetOf_grfMode' value: 16r28!
-STATSTG addClassConstant: '_OffsetOf_grfStateBits' value: 16r40!
-STATSTG addClassConstant: '_OffsetOf_mtime' value: 16r10!
-STATSTG addClassConstant: '_OffsetOf_pwcsName' value: 16r0!
-STATSTG addClassConstant: '_OffsetOf_type' value: 16r4!
 STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 
 STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)

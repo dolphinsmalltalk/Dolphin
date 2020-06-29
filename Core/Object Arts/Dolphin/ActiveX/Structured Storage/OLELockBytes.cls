@@ -4,7 +4,8 @@ OLELockBytesAbstract subclass: #OLELockBytes
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLELockBytes guid: (GUID fromString: '{87b4c541-026e-11d3-9fd7-00a0cc3e4a32}')!
 OLELockBytes comment: 'OLELockBytes is an implementation of the ILockBytes interface on a Smalltalk <ByteArray>. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
 

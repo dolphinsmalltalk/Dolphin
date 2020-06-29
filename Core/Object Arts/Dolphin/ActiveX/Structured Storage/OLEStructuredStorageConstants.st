@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #OLEStructuredStorageConstants put: (PoolConstantsDictionary named: #OLEStructuredStorageConstants)!
+#{OLEStructuredStorageConstants} declare: (PoolConstantsDictionary named: #OLEStructuredStorageConstants)!
 OLEStructuredStorageConstants at: 'LOCK_EXCLUSIVE' put: 16r2!
 OLEStructuredStorageConstants at: 'LOCK_ONLYONCE' put: 16r4!
 OLEStructuredStorageConstants at: 'LOCK_WRITE' put: 16r1!
