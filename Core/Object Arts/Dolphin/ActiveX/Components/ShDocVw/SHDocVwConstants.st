@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #SHDocVwConstants put: (PoolConstantsDictionary named: #SHDocVwConstants)!
+#{SHDocVwConstants} declare: (PoolConstantsDictionary named: #SHDocVwConstants)!
 SHDocVwConstants at: 'CSC_NAVIGATEBACK' put: 16r2!
 SHDocVwConstants at: 'CSC_NAVIGATEFORWARD' put: 16r1!
 SHDocVwConstants at: 'CSC_UPDATECOMMANDS' put: -16r1!

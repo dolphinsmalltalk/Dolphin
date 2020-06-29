@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Internet Explorer'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Internet Explorer* Package.
 Copyright (c) Object Arts Ltd, 2000.
@@ -14,24 +14,21 @@ You can embed Internet Explorer in your applications by using URLPresenter in co
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #IWebBrowser;
-	add: #IWebBrowser2;
-	add: #IWebBrowserApp;
-	add: #URLPresenter;
-	yourself.
+package setClassNames: #(
+	#{IWebBrowser}
+	#{IWebBrowser2}
+	#{IWebBrowserApp}
+	#{URLPresenter}
+).
 
-package globalNames
-	add: #SHDocVwConstants;
-	add: #SHDocVwLib;
-	yourself.
+package setVariableNames: #(
+	#{SHDocVwConstants}
+	#{SHDocVwLib}
+).
 
-package binaryGlobalNames: (Set new
-	add: #SHDocVwLib;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{SHDocVwLib}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
@@ -42,7 +39,8 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\COM\OLE COM').
+	'..\..\COM\OLE COM'
+).
 
 package!
 
@@ -52,27 +50,26 @@ IDispatch subclass: #IWebBrowser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IWebBrowser subclass: #IWebBrowserApp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IWebBrowserApp subclass: #IWebBrowser2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

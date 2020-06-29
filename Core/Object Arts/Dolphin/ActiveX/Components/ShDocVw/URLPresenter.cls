@@ -4,7 +4,8 @@ ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 URLPresenter guid: (GUID fromString: '{a98215d9-bda9-4b36-8443-c6a72c049d71}')!
 URLPresenter comment: ''!
 !URLPresenter categoriesForClass!MVP-Presenters! !
