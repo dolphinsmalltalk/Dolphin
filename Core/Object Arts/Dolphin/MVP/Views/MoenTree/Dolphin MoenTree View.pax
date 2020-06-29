@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin MoenTree View'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Moen Tree View.
 Copyright (c) Object Arts Ltd, 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
@@ -10,22 +10,16 @@ This package contains the implementation of the graphical Moen tree view which c
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #MoenContour;
-	add: #MoenLink;
-	add: #MoenTreeNode;
-	add: #MoenTreeView;
-	yourself.
+package setClassNames: #(
+	#{MoenContour}
+	#{MoenLink}
+	#{MoenTreeNode}
+	#{MoenTreeView}
+).
 
-package methodNames
-	add: 'TreePresenter class' -> #resource_Moen_tree;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{TreePresenter class} #resource_Moen_tree)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -33,7 +27,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Prompters\Dolphin Prompter'
 	'..\..\Models\Tree\Dolphin Tree Models'
-	'..\..\Presenters\Tree\Dolphin Tree Presenter').
+	'..\..\Presenters\Tree\Dolphin Tree Presenter'
+).
 
 package!
 
@@ -43,25 +38,34 @@ Object subclass: #MoenContour
 	instanceVariableNames: 'lowerHead lowerTail upperHead upperTail'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MoenTreeNode
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'
-	classVariableNames: 'ExpandedMask HasExpandedMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ExpandedMask' -> 16r1.
+		'HasExpandedMask' -> 16r2
+	}!
 Link subclass: #MoenLink
 	instanceVariableNames: 'x y'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #MoenTreeView
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
-	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
+	classVariableNames: 'ViewModes'
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoExpandingMask' -> 16r8000000.
+		'HasButtonsMask' -> 16r1.
+		'MultilineMask' -> 16rA010.
+		'SingleLineMask' -> 16r8024
+	}!
 
 "Loose Methods"!
 

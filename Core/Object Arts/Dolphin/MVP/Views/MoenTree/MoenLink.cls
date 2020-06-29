@@ -4,7 +4,8 @@ Link subclass: #MoenLink
 	instanceVariableNames: 'x y'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MoenLink guid: (GUID fromString: '{68f4ac02-2f95-11d3-93ba-00a024ca708a}')!
 MoenLink comment: 'MoenLink is a private helper class that is part of the implementation of the <MoenTreeView>'!
 !MoenLink categoriesForClass!Collections-Support!MVP-Views-Support! !

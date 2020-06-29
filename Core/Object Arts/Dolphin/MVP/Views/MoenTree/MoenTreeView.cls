@@ -2,14 +2,16 @@
 
 View subclass: #MoenTreeView
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
-	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
+	classVariableNames: 'ViewModes'
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AutoExpandingMask' -> 16r8000000.
+		'HasButtonsMask' -> 16r1.
+		'MultilineMask' -> 16rA010.
+		'SingleLineMask' -> 16r8024
+	}!
 MoenTreeView guid: (GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
-MoenTreeView addClassConstant: 'AutoExpandingMask' value: 16r8000000!
-MoenTreeView addClassConstant: 'HasButtonsMask' value: 16r1!
-MoenTreeView addClassConstant: 'MultilineMask' value: 16rA010!
-MoenTreeView addClassConstant: 'SingleLineMask' value: 16r8024!
 MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
@@ -1960,8 +1962,6 @@ initialize
 
 	self addClassConstant: 'SingleLineMask' value: DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS.
 	self addClassConstant: 'MultilineMask' value: DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS.
-	self addClassConstant: 'HasButtonsMask' value: 16r1.
-	self addClassConstant: 'AutoExpandingMask' value: 16r8000000.
 	self addClassConstant: 'ViewModes'
 		value: (IdentityDictionary new
 				at: #noIcons put: -1 @ 0;
