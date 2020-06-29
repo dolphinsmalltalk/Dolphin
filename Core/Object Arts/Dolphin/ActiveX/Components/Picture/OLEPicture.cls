@@ -4,7 +4,8 @@ Image subclass: #OLEPicture
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEPicture guid: (CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}')!
 OLEPicture comment: 'OLEPicture is an <Image> class which wraps the standard OLE picture object.
 

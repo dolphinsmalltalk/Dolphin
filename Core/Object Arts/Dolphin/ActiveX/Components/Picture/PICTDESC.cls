@@ -2,15 +2,17 @@
 
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dw1' -> 16rC.
+		'_OffsetOf_dw2' -> 16r10.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_handle' -> 16r8.
+		'_OffsetOf_picType' -> 16r4
+	}!
 PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
-PICTDESC addClassConstant: '_OffsetOf_dw1' value: 16rC!
-PICTDESC addClassConstant: '_OffsetOf_dw2' value: 16r10!
-PICTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-PICTDESC addClassConstant: '_OffsetOf_handle' value: 16r8!
-PICTDESC addClassConstant: '_OffsetOf_picType' value: 16r4!
 PICTDESC comment: ''!
 !PICTDESC categoriesForClass!Unclassified! !
 !PICTDESC methodsFor!

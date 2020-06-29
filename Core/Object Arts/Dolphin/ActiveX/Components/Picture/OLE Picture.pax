@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Picture'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Picture component. 
 Copyright (c) Object Arts Ltd 2000-2002.
@@ -10,24 +10,18 @@ This package wraps the OLE StdPicture object (a useful COM object that can load 
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #IPicture;
-	add: #IPictureDisp;
-	add: #OLEPicture;
-	add: #PICTDESC;
-	yourself.
+package setClassNames: #(
+	#{IPicture}
+	#{IPictureDisp}
+	#{OLEPicture}
+	#{PICTDESC}
+).
 
-package methodNames
-	add: #OLEAutLibrary -> #oleCreatePictureIndirect:riid:fOwn:ppvObj:;
-	add: #OLEAutLibrary -> #oleLoadPicture:lSize:fRunmode:riid:ppvObj:;
-	add: #OLEAutLibrary -> #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{OLEAutLibrary} #oleCreatePictureIndirect:riid:fOwn:ppvObj:)
+	#(#{OLEAutLibrary} #oleLoadPicture:lSize:fRunmode:riid:ppvObj:)
+	#(#{OLEAutLibrary} #oleLoadPicturePath:punkCaller:dwReserved:clrReserved:riid:ppvRet:)
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
@@ -35,7 +29,8 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\COM\OLE COM'
-	'..\..\Structured Storage\OLE Structured Storage').
+	'..\..\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
@@ -45,25 +40,32 @@ IUnknown subclass: #IPicture
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IPictureDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dw1' -> 16rC.
+		'_OffsetOf_dw2' -> 16r10.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_handle' -> 16r8.
+		'_OffsetOf_picType' -> 16r4
+	}!
 Image subclass: #OLEPicture
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
