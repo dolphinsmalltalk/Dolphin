@@ -4,7 +4,8 @@ ProtectedProductSessionManager subclass: #ProtectedNotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtectedNotepadSessionManager guid: (GUID fromString: '{e44c24a0-f742-4831-91ac-b316bfcf5c1c}')!
 ProtectedNotepadSessionManager comment: 'This is a version of the standard (Dolphin) Notepad application that is protect by serial number using asymmetric encryption. Try deploying this application and then entering the following serial number on startup:
 

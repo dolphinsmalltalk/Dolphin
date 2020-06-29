@@ -4,7 +4,8 @@ Presenter subclass: #EtchASketch
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EtchASketch guid: (GUID fromString: '{87b4c68a-026e-11d3-9fd7-00a0cc3e4a32}')!
 EtchASketch comment: 'EtchASketch is a <compositePresenter> component that emulates the popular Etch-a-Sketch toy. It allows "ink" to be drawn onto a sketch pad by means of two "knobs"; one for horizontal movement and one for vertical movement. In the basic view the knobs are represented by scroll bars. EtchASketch makes use of the Scribble component for its sketch area.
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Autoplay'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Autoplay Sample. 
 Copyright (c) Object Arts Ltd, 2001-2002.
@@ -44,16 +44,10 @@ This specifies to run the autoplay executable (deployable from this package) to 
 '.
 
 
-package classNames
-	add: #Autoplay;
-	add: #AutoplaySessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Autoplay}
+	#{AutoplaySessionManager}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
@@ -66,7 +60,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
-	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -76,17 +71,14 @@ Shell subclass: #Autoplay
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

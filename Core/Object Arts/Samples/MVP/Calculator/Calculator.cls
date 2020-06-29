@@ -4,7 +4,8 @@ Shell subclass: #Calculator
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Calculator guid: (GUID fromString: '{816da2f6-de4a-41df-bea6-0a549e3a715e}')!
 Calculator comment: 'Calculator is a <topShell> sample application which illustrates the use of the Dolphin Compiler class in a runtime application. See the package comment for more details.'!
 !Calculator categoriesForClass!Samples! !

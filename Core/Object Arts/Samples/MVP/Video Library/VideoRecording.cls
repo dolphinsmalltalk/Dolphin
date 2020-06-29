@@ -4,7 +4,8 @@ Object subclass: #VideoRecording
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VideoRecording guid: (GUID fromString: '{62802c23-5ba3-4772-bfbe-a848ea29c27c}')!
 VideoRecording comment: 'VideoRecording is represents a programme recorded on a VideoTape. This class is part of the Video Library sample package. Please see the package comment for more details.'!
 !VideoRecording categoriesForClass!Samples! !

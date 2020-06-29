@@ -4,7 +4,8 @@ Object subclass: #InkStroke
 	instanceVariableNames: 'data'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InkStroke guid: (GUID fromString: '{87b4c493-026e-11d3-9fd7-00a0cc3e4a32}')!
 InkStroke comment: 'InkStroke consists of an <OrderedCollection> of <Point>s that describe the movement of a pen (or mouse) drawing a single stroke of ink. A <Scribble> presenter operates on a <listModel> of InkStrokes that, when replayed, comprises the scribbled picture.
 

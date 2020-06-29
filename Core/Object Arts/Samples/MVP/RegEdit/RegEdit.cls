@@ -4,7 +4,8 @@ Shell subclass: #RegEdit
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegEdit guid: (GUID fromString: '{87b4c69e-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegEdit comment: 'RegEdit is a <topShell> sample application which implements most of the functionality of the Windows utility, RegEdit. It does not implement the full functionality of the standard tool because it is primarily intended as a demonstration of the use of registry access classes, and the tree and enhanced list views. It supports in-place registry key name editing.
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'PersonalMoney'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Personal Accounts Sample.
 Copyright (c) Object Arts Ltd, 1998-2005
@@ -32,20 +32,14 @@ Smalltalk developmentSystem browseDeploymentLog: ''PersonalMoney.xml''
 ```'.
 
 
-package classNames
-	add: #PersonalAccount;
-	add: #PersonalAccountShell;
-	add: #PersonalAccountTransaction;
-	add: #PersonalAccountTransactionDialog;
-	add: #PersonalMoney;
-	add: #PersonalMoneyShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{PersonalAccount}
+	#{PersonalAccountShell}
+	#{PersonalAccountTransaction}
+	#{PersonalAccountTransactionDialog}
+	#{PersonalMoney}
+	#{PersonalMoneyShell}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -61,7 +55,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -71,37 +66,38 @@ Model subclass: #PersonalAccount
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #PersonalAccountTransaction
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #PersonalMoney
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #PersonalAccountShell
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractDocumentShell subclass: #PersonalMoneyShell
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #PersonalAccountTransactionDialog
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

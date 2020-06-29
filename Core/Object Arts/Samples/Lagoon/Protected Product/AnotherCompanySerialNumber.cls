@@ -4,7 +4,8 @@ ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnotherCompanySerialNumber guid: (GUID fromString: '{3f32f382-d7d3-4b5c-b2ba-bfd3621d28c9}')!
 AnotherCompanySerialNumber comment: 'This class is an example of overriding the default encryption used for protecting the unlock key.  In this case we override the class side method #serialNumberProtectorClass to select a different en/decryption algorithm.  Also, although we override the class side #instanceDecodingKey and #instanceEncodingKey methods, we do not answer a simple Integer as we would if we used default encryption, but instead answer a private/public key pair.  See the method comment for #instanceEncodingKey for more information and some guidance.'!
 !AnotherCompanySerialNumber categoriesForClass!Unclassified! !

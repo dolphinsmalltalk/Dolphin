@@ -4,7 +4,8 @@ Presenter subclass: #Chat
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Chat guid: (GUID fromString: '{87b4c699-026e-11d3-9fd7-00a0cc3e4a32}')!
 Chat comment: 'Chat is a <compositePresenter> implementing a simple "chat" service for the purpose of demonstrating the use of the new blocking Dolphin Sockets API. It has a multi-threaded design that would be appropriate for more complex socket client/server applications too. Finally Chat illustrates the use of STB-based messaging, which provides for a simple and efficient way to transmit and receive objects over a socket connection between Smalltalk images. An instance can be opened on any machine running TCP/IP using:
 

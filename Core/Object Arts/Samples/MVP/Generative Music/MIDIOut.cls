@@ -4,7 +4,8 @@ Object subclass: #MIDIOut
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	poolDictionaries: 'MidiConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MIDIOut guid: (GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
 MIDIOut comment: ''!
 !MIDIOut categoriesForClass!Kernel-Objects! !

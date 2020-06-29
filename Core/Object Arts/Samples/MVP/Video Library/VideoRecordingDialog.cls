@@ -4,7 +4,8 @@ Dialog subclass: #VideoRecordingDialog
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VideoRecordingDialog guid: (GUID fromString: '{b4dcfba4-e0f6-4408-a0fc-722995bb0697}')!
 VideoRecordingDialog comment: 'VideoRecordingDialog provides a modal user interface for editing the contents of a VideoRecording object in place. This class is part of the Video Library sample package. Please see the package comment for more details.
 

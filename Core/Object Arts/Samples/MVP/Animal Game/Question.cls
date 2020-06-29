@@ -4,7 +4,8 @@ Object subclass: #Question
 	instanceVariableNames: 'text yes no'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Question guid: (GUID fromString: '{87b4c4ac-026e-11d3-9fd7-00a0cc3e4a32}')!
 Question comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. A Question represents a decision node in the animal guessing game. Question instances form the branch nodes in the game''s knowledge tree. Each instance contains the text of a question and a yes/no branch to take depending on the result of that question. These branches can either point to other Question nodes or to an Animal node if this is a leaf in the tree. '!
 !Question categoriesForClass!Samples! !

@@ -4,7 +4,8 @@ View subclass: #PlimboleView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PlimboleView guid: (GUID fromString: '{9ebcb7d0-abc8-43c8-855e-be819f2e55ae}')!
 PlimboleView comment: 'This is the View class for the Plimbole Generative Music Sequencer. It''s purpose is to draw the contents of the Plimbole model that it holds withing a window and to keep this view up to date with changes in the model. It is an output only class and does not handle any user input.'!
 !PlimboleView categoriesForClass!MVP-Views! !

@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileSystemMonitorSessionManager guid: (GUID fromString: '{a00427fb-6695-464a-8e1f-251a892444a6}')!
 FileSystemMonitorSessionManager comment: ''!
 !FileSystemMonitorSessionManager categoriesForClass!System-Support! !

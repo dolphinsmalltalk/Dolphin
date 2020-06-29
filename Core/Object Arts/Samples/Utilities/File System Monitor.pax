@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'File System Monitor'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk File System Monitor Sample
 Copyright (c) Object Arts Ltd, 2005.
@@ -10,20 +10,14 @@ This utility implements a simple file system monitoring utility that allows one 
 FileSystemMonitor show'.
 
 
-package classNames
-	add: #FileSystemMonitor;
-	add: #FileSystemMonitorSessionManager;
-	yourself.
+package setClassNames: #(
+	#{FileSystemMonitor}
+	#{FileSystemMonitorSessionManager}
+).
 
-package methodNames
-	add: 'FileSystemChangeReader class' -> #icon;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{FileSystemChangeReader class} #icon)
+).
 
 package setPrerequisites: #(
 	'..\..\Dolphin\Base\Dolphin'
@@ -38,7 +32,8 @@ package setPrerequisites: #(
 	'..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\Dolphin\ActiveX\Shell\Windows Shell Namespace').
+	'..\..\Dolphin\ActiveX\Shell\Windows Shell Namespace'
+).
 
 package!
 
@@ -48,15 +43,14 @@ Shell subclass: #FileSystemMonitor
 	instanceVariableNames: 'directoryName notifyAttributes notifyDirectoryName notifyCreateTime notifyFileName notifyLastAccess notifyLastWrite notifySecurity notifySize filters includeSubDirs changeList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

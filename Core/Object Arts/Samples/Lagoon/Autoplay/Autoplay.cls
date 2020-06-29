@@ -4,7 +4,8 @@ Shell subclass: #Autoplay
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Autoplay guid: (GUID fromString: '{6d08642b-1e71-49fe-9c29-c044a21d63d0}')!
 Autoplay comment: 'Autoplay is a <topShell> sample application which hosts the Microsoft Web Browser Control in order to implement an HTML based setup menu for CD-ROM auto-play. The sample demonstrates how to intercept clicks on the links and use them to invoke external programs (in this case using ShellExecute()).
 

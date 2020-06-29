@@ -4,7 +4,8 @@ Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MidiOutChannel guid: (GUID fromString: '{f97d6167-73d1-4a93-8f82-93a9ebc90f5d}')!
 MidiOutChannel comment: ''!
 !MidiOutChannel categoriesForClass!Kernel-Objects! !

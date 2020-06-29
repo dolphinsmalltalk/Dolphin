@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Calculator'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GUI Calculator Sample. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -38,16 +38,10 @@ Smalltalk developmentSystem browseDeploymentLog: ''DCalc.xml''
 '.
 
 
-package classNames
-	add: #Calculator;
-	add: #CalculatorSessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Calculator}
+	#{CalculatorSessionManager}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -55,7 +49,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
-	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters').
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -65,17 +60,14 @@ Shell subclass: #Calculator
 	instanceVariableNames: 'input output'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #CalculatorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

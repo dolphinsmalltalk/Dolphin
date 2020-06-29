@@ -4,7 +4,8 @@ ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtectedScribbleSessionManager guid: (GUID fromString: '{e5617c49-6f9a-4691-9d14-9d880bd4779c}')!
 ProtectedScribbleSessionManager comment: 'This is a version of the standard Scribble application that is protect by serial number. Try deploying this application and then entering the following serial number on startup:
 

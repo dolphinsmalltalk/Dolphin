@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebBrowserSessionManager guid: (GUID fromString: '{3a7bff88-3535-4b52-be21-3a61a9a2370e}')!
 WebBrowserSessionManager comment: ''!
 !WebBrowserSessionManager categoriesForClass!Unclassified! !

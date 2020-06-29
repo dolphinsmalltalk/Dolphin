@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Wordpad'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Wordpad Sample. 
 Copyright (c) Object Arts Ltd, 2005.
@@ -42,16 +42,10 @@ package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem
 	addSamplesFolderIconFor: WordPad
 	helpId: 10624'.
 
-package classNames
-	add: #WordPad;
-	add: #WordpadParagraphDialog;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{WordPad}
+	#{WordpadParagraphDialog}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -67,7 +61,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -77,17 +72,14 @@ TextDocument subclass: #WordPad
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #WordpadParagraphDialog
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

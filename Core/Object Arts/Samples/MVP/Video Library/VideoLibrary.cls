@@ -4,7 +4,8 @@ Object subclass: #VideoLibrary
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VideoLibrary guid: (GUID fromString: '{e07e20a9-89d7-4f84-941a-7c3365cf6112}')!
 VideoLibrary comment: 'VideoLibrary is represents a collection of VideoTapes that belong to a particular owner. This class is part of the Video Library sample package. Please see the package comment for more details.'!
 !VideoLibrary categoriesForClass!Samples! !

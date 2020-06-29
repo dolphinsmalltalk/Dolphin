@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Etch-a-Sketch'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Etch-A-Sketch(tm) Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
@@ -47,16 +47,10 @@ XmlPad openOn: ''EtchASketch.xml''
 '.
 
 
-package classNames
-	add: #EtchASketch;
-	add: #EtchASketchDocument;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{EtchASketch}
+	#{EtchASketchDocument}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -68,7 +62,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
-	'..\Scribble\Scribble').
+	'..\Scribble\Scribble'
+).
 
 package!
 
@@ -78,17 +73,14 @@ Presenter subclass: #EtchASketch
 	instanceVariableNames: 'upDownKnob leftRightKnob sketchPad lastLocation'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScribbleDocument subclass: #EtchASketchDocument
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

@@ -4,7 +4,8 @@ ScribbleDocument subclass: #EtchASketchDocument
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EtchASketchDocument guid: (GUID fromString: '{2971e17d-6207-4ede-b010-6a4262f924e5}')!
 EtchASketchDocument comment: ''!
 !EtchASketchDocument categoriesForClass!MVP-Presenters! !

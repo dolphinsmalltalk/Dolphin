@@ -4,7 +4,8 @@ Model subclass: #PersonalMoney
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PersonalMoney guid: (GUID fromString: '{87b4c66a-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalMoney comment: 'PersonalMoney represent the entirety of the Personal Money system for a single user. It hold owner details and a collection of accounts for this user.
 

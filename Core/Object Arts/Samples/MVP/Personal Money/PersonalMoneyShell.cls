@@ -4,7 +4,8 @@ AbstractDocumentShell subclass: #PersonalMoneyShell
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PersonalMoneyShell guid: (GUID fromString: '{87b4c6b9-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalMoneyShell comment: 'PersonalMoneyShell is a <documentPresenter> providing the main user interface for the Personal Money sample system. The interface is displayed in a top level shell window. The model data on which the PersonalMoneyShell operates is an instance of <PersonalMoney>. Since the class conforms to <documentPresenter> it automatically has the ability to save and load the PersonalMoney data to/from disk.
 

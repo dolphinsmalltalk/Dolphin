@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Better Hello World'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'The standard “Hello World” sample application that comes pre-loaded the Dolphin Samples folder is not ideal because it doesn’t show how to build Hello World in the normal Dolphin Model-View-Presenter framework. Whilst this makes it quick and easy do to, it’s educational value is limited and some users have found it rather confusing.
 
@@ -30,15 +30,9 @@ Smalltalk developmentSystem browseDeploymentLog: ''BetterWorld.xml''
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIconFor: BetterHelloWorld
 	description: ''Better Hello World'''.
 
-package classNames
-	add: #BetterHelloWorld;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{BetterHelloWorld}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -46,7 +40,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
-	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters').
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -56,12 +51,8 @@ Shell subclass: #BetterHelloWorld
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

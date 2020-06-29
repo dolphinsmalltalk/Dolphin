@@ -4,7 +4,8 @@ DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MyOwnCertificationAuthorityCertificate guid: (GUID fromString: '{3a6b1632-077d-49f5-81be-ed0688e9c2b0}')!
 MyOwnCertificationAuthorityCertificate comment: ''!
 !MyOwnCertificationAuthorityCertificate categoriesForClass!Cryptography-Certificates! !

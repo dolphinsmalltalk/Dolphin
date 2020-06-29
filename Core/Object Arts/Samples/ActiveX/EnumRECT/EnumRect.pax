@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'EnumRECT'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk EnumRect COM Sample.
 Copyright (c) Object Arts Ltd, 1997-2000.
@@ -21,21 +21,16 @@ Above we are acting as both server and client from within the Dolphin image. You
 As an exercise you may like to try interfacing Kraig''s C++ sample to the Dolphin''s EnumRect sample, which is possible using C++ as a server, or Dolphin as a server. Note, however, that in order to use Dolphin as a server from a separate C++ executable, you will need to build a marshalling DLL (see Kraig''s book).'.
 
 
-package classNames
-	add: #EnumRECT;
-	add: #IEnumRECT;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{EnumRECT}
+	#{IEnumRECT}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\Dolphin\ActiveX\COM\OLE COM').
+	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+).
 
 package!
 
@@ -45,17 +40,14 @@ COMInterfaceImp subclass: #EnumRECT
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumXXXX subclass: #IEnumRECT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

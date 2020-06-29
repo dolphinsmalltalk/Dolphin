@@ -4,7 +4,8 @@ Model subclass: #PersonalAccountTransaction
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PersonalAccountTransaction guid: (GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
 

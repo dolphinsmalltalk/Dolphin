@@ -1,34 +1,29 @@
 ﻿| package |
 package := Package name: 'Midi'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #MIDIOut;
-	add: #MidiOutChannel;
-	yourself.
+package setClassNames: #(
+	#{MIDIOut}
+	#{MidiOutChannel}
+).
 
-package methodNames
-	add: #WinMMLibrary -> #midiOutCloseHmo:;
-	add: #WinMMLibrary -> #midiOutGetNumDevs;
-	add: #WinMMLibrary -> #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:;
-	add: #WinMMLibrary -> #midiOutShortMsgHmo:dwMsg:;
-	yourself.
+package setMethodNames: #(
+	#(#{WinMMLibrary} #midiOutCloseHmo:)
+	#(#{WinMMLibrary} #midiOutGetNumDevs)
+	#(#{WinMMLibrary} #midiOutOpenLphmo:uDeviceID:dwCallback:dwCallbackInstance:dwFlags:)
+	#(#{WinMMLibrary} #midiOutShortMsgHmo:dwMsg:)
+).
 
-package globalNames
-	add: #MidiConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{MidiConstants}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\Base\Dolphin').
+	'..\..\..\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -38,15 +33,14 @@ Object subclass: #MIDIOut
 	instanceVariableNames: 'handle'
 	classVariableNames: ''
 	poolDictionaries: 'MidiConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

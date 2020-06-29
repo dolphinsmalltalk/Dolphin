@@ -4,7 +4,8 @@ ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MyCompanySerialNumber guid: (GUID fromString: '{c1ed7586-afe1-4ee9-997a-01c157674e7d}')!
 MyCompanySerialNumber comment: 'This class is a serial number factory for products of "MyCompany". Any <ProtectedProductSessionManager> that wishes to make use of these serial numbers should override it''s #serialNumberClass to answer this class. New serial numbers can be generated for MyCompany''s products by evaluating:
 

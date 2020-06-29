@@ -4,7 +4,8 @@ Object subclass: #Ball
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Ball guid: (GUID fromString: '{09652d38-e87c-4cb5-b5fd-2d093fae268b}')!
 Ball comment: ''!
 !Ball categoriesForClass!Unclassified! !

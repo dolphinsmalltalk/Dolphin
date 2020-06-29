@@ -4,7 +4,8 @@ Object subclass: #VideoTape
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VideoTape guid: (GUID fromString: '{fd390a77-8643-49ee-be26-397fbec58430}')!
 VideoTape comment: 'A VideoTape represents a collection of VideoRecordings recorded on a named video cassette. This class is part of the Video Library sample package. Please see the package comment for more details.'!
 !VideoTape categoriesForClass!Samples! !

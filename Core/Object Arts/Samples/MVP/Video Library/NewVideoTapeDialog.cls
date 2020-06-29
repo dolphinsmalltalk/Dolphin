@@ -4,7 +4,8 @@ ValueDialog subclass: #NewVideoTapeDialog
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NewVideoTapeDialog guid: (GUID fromString: '{4166d470-8af8-4ed9-b347-41fe5ec72d9e}')!
 NewVideoTapeDialog comment: 'NewVideoTapeDialog provides a modal user interface gathering the necessary information that is required before a new VideoTape can be instantiated. The dialog is somewhat different than many other dialogs because it does not attempt to edit a specialised model (in this case a VideoTape). Since the VideoTape class has a Instance Creation Method, #name:length:, that require name and length parameters, the NewVideoTapeDialog is used only to collect this information prior to the creation of a tape instance. 
 

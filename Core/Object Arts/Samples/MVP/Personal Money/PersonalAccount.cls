@@ -4,7 +4,8 @@ Model subclass: #PersonalAccount
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PersonalAccount guid: (GUID fromString: '{87b4c668-026e-11d3-9fd7-00a0cc3e4a32}')!
 PersonalAccount comment: 'A PersonalAccount holds all details pertaining to a single account in the PersonalMoney system. 
 

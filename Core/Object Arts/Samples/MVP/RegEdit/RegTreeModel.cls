@@ -4,7 +4,8 @@ VirtualTreeModel subclass: #RegTreeModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegTreeModel guid: (GUID fromString: '{87b4c674-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
 !RegTreeModel categoriesForClass!MVP-Models! !

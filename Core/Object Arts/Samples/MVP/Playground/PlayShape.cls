@@ -4,7 +4,8 @@ Object subclass: #PlayShape
 	instanceVariableNames: 'playground'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PlayShape guid: (GUID fromString: '{87b4c4a8-026e-11d3-9fd7-00a0cc3e4a32}')!
 PlayShape isAbstract: true!
 PlayShape comment: 'A PlayShape represent a basic shape that may be added to a <Playground> window and then manipulated with messages. It is part of the Playground sample package and can be used as a Smalltalk learning aid. See this package''s comment for more details.

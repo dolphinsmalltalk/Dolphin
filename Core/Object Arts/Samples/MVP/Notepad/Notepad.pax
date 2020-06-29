@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Notepad'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Notepad Sample. 
 Copyright (c) Object Arts Ltd, 2000-2001.
@@ -35,16 +35,10 @@ package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem
 	addSamplesFolderIconFor: Notepad
 	helpId: 10623'.
 
-package classNames
-	add: #Notepad;
-	add: #NotepadSessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Notepad}
+	#{NotepadSessionManager}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -55,10 +49,12 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
-	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters').
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+).
 
 package setManualPrerequisites: #(
-	'Dolphin SpinButton Control').
+	'Dolphin SpinButton Control'
+).
 
 package!
 
@@ -68,17 +64,14 @@ TextDocument subclass: #Notepad
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #NotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

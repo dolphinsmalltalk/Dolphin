@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin IDE Extension Example'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk IDE Extension Sample. 
 Copyright (c) Object Arts Ltd, 2002.
@@ -15,19 +15,13 @@ These extensions can be turned on and off independently as options under ''Objec
 '.
 
 
-package classNames
-	add: #OAIDEExtensions;
-	yourself.
+package setClassNames: #(
+	#{OAIDEExtensions}
+).
 
-package methodNames
-	add: #ClassCommentPlugin -> #emitClassLayoutDescription;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassCommentPlugin} #emitClassLayoutDescription)
+).
 
 package setPrerequisites: #(
 	'..\..\Dolphin\IDE\Base\Development System'
@@ -37,7 +31,8 @@ package setPrerequisites: #(
 	'..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\Dolphin\ActiveX\Persist\OLE Persistence Base'
-	'..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage').
+	'..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
@@ -45,12 +40,13 @@ package!
 
 Object subclass: #OAIDEExtensions
 	instanceVariableNames: 'flags'
-	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
+	classVariableNames: 'Current'
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ClassCommentTemplateMask' -> 16r1.
+		'KeyHelpMask' -> 16r2
+	}!
 
 "Loose Methods"!
 

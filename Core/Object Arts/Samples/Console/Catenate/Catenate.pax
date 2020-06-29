@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Catenate'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Catenate Sample. 
 Copyright (c) Object Arts Ltd, 2000-2004.
@@ -32,18 +32,13 @@ XmlPad filename: ''cat.xml''
 ```'.
 
 
-package classNames
-	add: #Catenate;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Catenate}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\Base\Dolphin').
+	'..\..\..\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -53,12 +48,8 @@ ConsoleSessionManager subclass: #Catenate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

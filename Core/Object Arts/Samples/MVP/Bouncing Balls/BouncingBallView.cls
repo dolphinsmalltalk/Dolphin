@@ -4,7 +4,8 @@ DoubleBufferedView subclass: #BouncingBallView
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BouncingBallView guid: (GUID fromString: '{247666e7-6b23-4e88-86d1-76d228924535}')!
 BouncingBallView comment: ''!
 !BouncingBallView categoriesForClass!Unclassified! !

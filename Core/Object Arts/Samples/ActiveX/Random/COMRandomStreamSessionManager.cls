@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #COMRandomStreamSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMRandomStreamSessionManager guid: (GUID fromString: '{0851ca36-6a4f-41de-80d8-77d4c965d723}')!
 COMRandomStreamSessionManager comment: ''!
 !COMRandomStreamSessionManager categoriesForClass!System-Support! !

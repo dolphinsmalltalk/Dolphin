@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RegEdit'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk RegEdit Sample.
 Copyright (c) Object Arts Ltd, 1998-2002.
@@ -43,16 +43,10 @@ XmlPad openOn: ''DRegEdit.xml''
 package basicPackageVersion: '2011.6.5.16'.
 
 
-package classNames
-	add: #RegEdit;
-	add: #RegTreeModel;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{RegEdit}
+	#{RegTreeModel}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -68,7 +62,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -78,17 +73,14 @@ VirtualTreeModel subclass: #RegTreeModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #RegEdit
 	instanceVariableNames: 'keyPresenter valuesPresenter statusModel'
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

@@ -4,7 +4,8 @@ Shell subclass: #BetterHelloWorld
 	instanceVariableNames: 'textToDisplayPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BetterHelloWorld guid: (GUID fromString: '{00e258da-1b1a-42c4-89c3-e3ed1983a682}')!
 BetterHelloWorld comment: 'This is the presenter for the Better Hello World example package. The full sample shows an MVP "triad" of elements consisting of a ValueModel, a composite ShellView (drawn with the ViewComposer) and this presenter class that ties all the pieces together. See the package comment for more details and links to tutorial videos that explain how this example was put together.'!
 !BetterHelloWorld categoriesForClass!Unclassified! !

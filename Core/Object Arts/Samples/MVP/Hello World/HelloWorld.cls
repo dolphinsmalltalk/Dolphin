@@ -4,7 +4,8 @@ ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HelloWorld guid: (GUID fromString: '{87b4c720-026e-11d3-9fd7-00a0cc3e4a32}')!
 HelloWorld comment: 'A sample illustrating just about the simplest of all applications; a window displaying hello (in Chinese) within an elliptical border. To demonstrate this evaluate the following:
 

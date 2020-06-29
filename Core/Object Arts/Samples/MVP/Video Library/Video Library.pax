@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Video Library'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Video Library Sample. 
 Copyright (c) Object Arts Ltd, 2001.
@@ -15,20 +15,14 @@ VideoLibraryShell show
 package basicPackageVersion: '2005.6.5.15'.
 
 
-package classNames
-	add: #NewVideoTapeDialog;
-	add: #VideoLibrary;
-	add: #VideoLibraryShell;
-	add: #VideoRecording;
-	add: #VideoRecordingDialog;
-	add: #VideoTape;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{NewVideoTapeDialog}
+	#{VideoLibrary}
+	#{VideoLibraryShell}
+	#{VideoRecording}
+	#{VideoRecordingDialog}
+	#{VideoTape}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -47,7 +41,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -57,37 +52,38 @@ Object subclass: #VideoLibrary
 	instanceVariableNames: 'owner tapes'
 	classVariableNames: 'DefaultInstance'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #VideoRecording
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #VideoTape
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #VideoLibraryShell
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dialog subclass: #VideoRecordingDialog
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueDialog subclass: #NewVideoTapeDialog
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

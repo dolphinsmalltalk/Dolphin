@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Bouncing Balls'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Bouncing Balls Animation Sample. 
 Copyright (c) Object Arts Ltd, 2001.
@@ -14,24 +14,19 @@ You can control the frame rate and number of balls displayed by editing the Boun
 The sample demonstrates the use of double buffering to provide non-flickering animation. In this case we have chosen to use Icons for our sprites since these already have the ability to support masking of the graphic to a non-rectangular shape. Please note that no attempt has been made to make the bouncing motion accurate (i.e. the balls don''t bounce off the walls correctly or off each other at all).'.
 
 
-package classNames
-	add: #Ball;
-	add: #BouncingBallSessionManager;
-	add: #BouncingBallView;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Ball}
+	#{BouncingBallSessionManager}
+	#{BouncingBallView}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
-	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons').
+	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
+).
 
 package!
 
@@ -41,22 +36,20 @@ Object subclass: #Ball
 	instanceVariableNames: 'position velocity icon'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #BouncingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DoubleBufferedView subclass: #BouncingBallView
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

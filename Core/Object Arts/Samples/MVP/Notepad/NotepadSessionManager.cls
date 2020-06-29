@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #NotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NotepadSessionManager guid: (GUID fromString: '{10c33fb0-4c63-4493-8746-29ccfcd29ece}')!
 NotepadSessionManager comment: ''!
 !NotepadSessionManager categoriesForClass!Samples! !

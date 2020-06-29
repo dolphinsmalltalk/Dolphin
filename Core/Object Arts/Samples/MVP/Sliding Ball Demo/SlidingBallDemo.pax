@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'SlidingBallDemo'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
@@ -17,21 +17,16 @@ the user is required to pause and restart the movement)
 SlidingBallDemo new show'.
 
 
-package classNames
-	add: #SlidingBallDemo;
-	add: #SlidingBallSessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{SlidingBallDemo}
+	#{SlidingBallSessionManager}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -41,17 +36,14 @@ RuntimeSessionManager subclass: #SlidingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DoubleBufferedView subclass: #SlidingBallDemo
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

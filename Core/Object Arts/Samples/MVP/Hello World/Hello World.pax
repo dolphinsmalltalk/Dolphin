@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Hello World'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Hello World Sample. 
 Copyright (c) Object Arts Ltd, 1998-2000.
@@ -47,19 +47,14 @@ package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamples
 			openBlock: nil
 			helpId: 10739)'.
 
-package classNames
-	add: #HelloWorld;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{HelloWorld}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -69,12 +64,8 @@ ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

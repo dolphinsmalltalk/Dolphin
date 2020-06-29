@@ -4,7 +4,8 @@ AXDualImp subclass: #COMRandomStream
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMRandomStream guid: (GUID fromString: '{f560cd26-00a1-4a4f-9833-03ae165a2e11}')!
 COMRandomStream comment: 'COMRandomStream is part of the COM Random Stream sample. See the "RandomStream sample" package for further details.'!
 !COMRandomStream categoriesForClass!COM-Implementations! !

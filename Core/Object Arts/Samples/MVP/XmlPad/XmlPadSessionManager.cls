@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #XmlPadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XmlPadSessionManager guid: (GUID fromString: '{77f1f2c7-314a-4967-b1ea-0367f0546923}')!
 XmlPadSessionManager comment: ''!
 !XmlPadSessionManager categoriesForClass!Samples! !

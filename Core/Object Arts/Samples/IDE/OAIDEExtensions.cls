@@ -2,9 +2,13 @@
 
 Object subclass: #OAIDEExtensions
 	instanceVariableNames: 'flags'
-	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
+	classVariableNames: 'Current'
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ClassCommentTemplateMask' -> 16r1.
+		'KeyHelpMask' -> 16r2
+	}!
 OAIDEExtensions guid: (GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
 OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 
@@ -398,8 +402,6 @@ initialize
 		self initialize
 	"
 
-	ClassCommentTemplateMask := 1.
-	KeyHelpMask := 2.
 	self uninitialize.
 	Current := super new initialize.
 !

@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #BouncingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BouncingBallSessionManager guid: (GUID fromString: '{45115960-cb11-43ad-a27f-a7afe6cc248d}')!
 BouncingBallSessionManager comment: ''!
 !BouncingBallSessionManager categoriesForClass!System-Support! !

@@ -4,7 +4,8 @@ DoubleBufferedView subclass: #SlidingBallDemo
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SlidingBallDemo guid: (GUID fromString: '{e5ba81f2-42e7-43ee-832f-3a24fadebfee}')!
 SlidingBallDemo comment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small

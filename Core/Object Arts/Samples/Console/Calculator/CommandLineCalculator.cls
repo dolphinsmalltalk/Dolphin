@@ -4,7 +4,8 @@ ConsoleSessionManager subclass: #CommandLineCalculator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommandLineCalculator guid: (GUID fromString: '{e06581cc-330b-4a39-a7b7-f2993822766f}')!
 CommandLineCalculator comment: 'Calculator is a sample console application which illustrates the use of the Dolphin Compiler class in a runtime application. See the package comment for more details.
 

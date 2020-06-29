@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'COM Random Stream'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
 Copyright (c) Object Arts Ltd, 1997-2000. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -26,22 +26,19 @@ COMRandomStream registerClassFactory'.
 package basicScriptAt: #preuninstall put: '	"Revoke the class factory registration."
 	COMRandomStream revokeClassFactories'.
 
-package classNames
-	add: #COMRandomStream;
-	add: #COMRandomStreamSessionManager;
-	add: #IRandomStream;
-	yourself.
+package setClassNames: #(
+	#{COMRandomStream}
+	#{COMRandomStreamSessionManager}
+	#{IRandomStream}
+).
 
-package globalNames
-	add: #RANDOMLib;
-	yourself.
+package setVariableNames: #(
+	#{RANDOMLib}
+).
 
-package binaryGlobalNames: (Set new
-	add: #RANDOMLib;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{RANDOMLib}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
@@ -49,10 +46,12 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
-	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package setManualPrerequisites: #(
-	'Windows Shell').
+	'Windows Shell'
+).
 
 package!
 
@@ -62,22 +61,20 @@ AXDualImp subclass: #COMRandomStream
 	instanceVariableNames: 'lowerBound upperBound stream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IRandomStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #COMRandomStreamSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

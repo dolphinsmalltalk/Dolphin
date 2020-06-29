@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Animals'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'This is a simple animal guessing game designed as a tutorial for the Dolphin Beginner''s Guide. The computer will attempt to guess the name of an animal that you are thinking of. It does this by asking questions to which you must answer yes or no. It might be that you think of an animal that the computer does not know. In this case the game can learn by asking you to enter the name of the new animal and also a question which will distinguish this animal from another in the knowledge base. Next time you play the game will know about the new animal. 
 
@@ -16,22 +16,17 @@ Because this implementation is really a tutorial it has been kept as simple as p
 '.
 
 
-package classNames
-	add: #Animal;
-	add: #Question;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Animal}
+	#{Question}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\Base\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter').
+	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
+).
 
 package!
 
@@ -41,17 +36,14 @@ Object subclass: #Animal
 	instanceVariableNames: 'name'
 	classVariableNames: 'KnowledgeBase'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #Question
 	instanceVariableNames: 'text yes no'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

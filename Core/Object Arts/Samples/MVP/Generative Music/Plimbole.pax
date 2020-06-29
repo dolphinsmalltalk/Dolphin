@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Plimbole'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Plimbole is a Generative Music Sequencer based on Otomata (http://www.earslap.com/page/otomata.html). It uses the same cellular automata logic as Otomata but adds a few features that, hopefully, make the results more compelling. Things like different grid sizes and the ability to play through MIDI with separate voices for the tenor (low) and alto (high) parts.
 
@@ -40,19 +40,13 @@ XmlPad openOn: ''Plimbole.xml''
 '.
 
 
-package classNames
-	add: #Plimbole;
-	add: #PlimboleCell;
-	add: #PlimbolePresenter;
-	add: #PlimboleShell;
-	add: #PlimboleView;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Plimbole}
+	#{PlimboleCell}
+	#{PlimbolePresenter}
+	#{PlimboleShell}
+	#{PlimboleView}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -63,7 +57,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
 	'..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
-	'Midi').
+	'Midi'
+).
 
 package!
 
@@ -73,32 +68,32 @@ Object subclass: #PlimboleCell
 	instanceVariableNames: 'location velocity plimbole palette'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #Plimbole
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Presenter subclass: #PlimbolePresenter
 	instanceVariableNames: 'palette'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Shell subclass: #PlimboleShell
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 View subclass: #PlimboleView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

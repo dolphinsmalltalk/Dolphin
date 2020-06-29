@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Simple Web Browser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Simple Web Browser Sample.
 Copyright (c) Object Arts Ltd, 2000.
@@ -16,16 +16,10 @@ NOTE: Please don''t try to display a page containing Dolphin Web Applets within 
 '.
 
 
-package classNames
-	add: #WebBrowserSessionManager;
-	add: #WebBrowserShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{WebBrowserSessionManager}
+	#{WebBrowserShell}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
@@ -42,10 +36,12 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
-	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
+).
 
 package setManualPrerequisites: #(
-	'Windows Shell').
+	'Windows Shell'
+).
 
 package!
 
@@ -55,17 +51,14 @@ Shell subclass: #WebBrowserShell
 	instanceVariableNames: 'address browser statusModel commandStates'
 	classVariableNames: ''
 	poolDictionaries: 'SHDocVwConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

@@ -4,7 +4,8 @@ RuntimeSessionManager subclass: #SlidingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SlidingBallSessionManager guid: (GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
 SlidingBallSessionManager comment: ''!
 !SlidingBallSessionManager categoriesForClass!Unclassified! !

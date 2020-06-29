@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Protected Notepad'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'This is a version of the Notebook sample which uses non-default cryptography to encrypt the unlock key.  It uses the example class ElgamalSerialNumberProtector to use private/public encryption to protect the key.
 
@@ -9,21 +9,16 @@ Note that this is intended to be an EXAMPLE of how to replace the default crypto
 package basicPackageVersion: '2005.6.2.23-CU-8'.
 
 
-package classNames
-	add: #AnotherCompanySerialNumber;
-	add: #ProtectedNotepadSessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AnotherCompanySerialNumber}
+	#{ProtectedNotepadSessionManager}
+).
 
 package setPrerequisites: #(
 	'..\..\MVP\Notepad\Notepad'
 	'..\..\..\Dolphin\Lagoon\Product Protection'
-	'..\..\..\Dolphin\Lagoon\Product Protection Base').
+	'..\..\..\Dolphin\Lagoon\Product Protection Base'
+).
 
 package!
 
@@ -33,17 +28,14 @@ ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtectedProductSessionManager subclass: #ProtectedNotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

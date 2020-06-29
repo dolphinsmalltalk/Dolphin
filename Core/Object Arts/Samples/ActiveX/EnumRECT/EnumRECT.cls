@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #EnumRECT
 	instanceVariableNames: 'm_iCur m_rgrc'
 	classVariableNames: 'CRECTS'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EnumRECT guid: (GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
 EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
 !EnumRECT categoriesForClass!Samples! !

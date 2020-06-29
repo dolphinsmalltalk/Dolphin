@@ -4,7 +4,8 @@ Shell subclass: #PlimboleShell
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PlimboleShell guid: (GUID fromString: '{460acfff-a9a4-4a8b-872d-2b0674d4cfd1}')!
 PlimboleShell comment: 'This is the Shell Presenter class for the Plimbole Generative Music Sequencer. It is really only here to supply an associated view that contains UI buttons to send command to the embedded PlimbolePresenter. This is the entry point to the use of Plimbole as a standaline application. Try this:
 

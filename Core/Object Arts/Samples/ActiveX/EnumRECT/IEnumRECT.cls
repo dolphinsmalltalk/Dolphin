@@ -4,7 +4,8 @@ IEnumXXXX subclass: #IEnumRECT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumRECT guid: (IID fromString: '{00021140-0000-0000-c000-000000000046}')!
 IEnumRECT comment: 'IEnumRECT is a sample specialization of the generic COM enumeration interface, IEnumXXX. 
 

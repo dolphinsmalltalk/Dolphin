@@ -4,7 +4,8 @@ Object subclass: #Animal
 	instanceVariableNames: 'name'
 	classVariableNames: 'KnowledgeBase'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Animal guid: (GUID fromString: '{87b4c454-026e-11d3-9fd7-00a0cc3e4a32}')!
 Animal comment: 'This class forms part of a tutorial for the Dolphin Beginner''s Guide. An Animal represents a potential guess in the animal guessing game. Animal instances are always the leaf nodes in the game''s knowledge tree which is held in the class variable, KnowledgeBase. The main part of the tree is built from instances of Question. 
 

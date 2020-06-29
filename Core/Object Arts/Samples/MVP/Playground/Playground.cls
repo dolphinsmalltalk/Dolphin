@@ -4,7 +4,8 @@ ShellView subclass: #Playground
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Playground guid: (GUID fromString: '{87b4c721-026e-11d3-9fd7-00a0cc3e4a32}')!
 Playground comment: 'A Playground window is part of the Playground sample package learning aid for Smalltalk. A Playground is a <topView> window into which one or more geometric objects can be placed. These objects can then be manipulated by sending messages to them, usually from a workspace.
 

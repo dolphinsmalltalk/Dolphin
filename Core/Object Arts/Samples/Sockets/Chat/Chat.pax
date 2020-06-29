@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Chat'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Chat Sample. 
 Copyright (c) Object Arts Ltd, 1998-2020.
@@ -27,15 +27,9 @@ You should now be able to chat between the two sessions by entering messages and
 '.
 
 
-package classNames
-	add: #Chat;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Chat}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
@@ -48,7 +42,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models').
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -58,12 +53,8 @@ Presenter subclass: #Chat
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
 	classVariableNames: 'Statii'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
