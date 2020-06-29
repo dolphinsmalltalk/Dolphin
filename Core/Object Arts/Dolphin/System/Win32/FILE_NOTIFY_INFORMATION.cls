@@ -2,14 +2,16 @@
 
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Action' -> 16r4.
+		'_OffsetOf_FileName' -> 16rC.
+		'_OffsetOf_FileNameLength' -> 16r8.
+		'_OffsetOf_NextEntryOffset' -> 16r0
+	}!
 FILE_NOTIFY_INFORMATION guid: (GUID fromString: '{59c5b86e-902b-4194-ab8b-ef10d1cf539d}')!
-FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_Action' value: 16r4!
-FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_FileName' value: 16rC!
-FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_FileNameLength' value: 16r8!
-FILE_NOTIFY_INFORMATION addClassConstant: '_OffsetOf_NextEntryOffset' value: 16r0!
 FILE_NOTIFY_INFORMATION comment: '<FILE_NOTIFY_INFORMATION> is an <ExternalStructure> class to wrap the struct ''Win32.FILE_NOTIFY_INFORMATION'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

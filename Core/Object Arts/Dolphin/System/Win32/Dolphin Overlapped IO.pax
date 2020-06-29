@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Overlapped IO'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 Overlapped I/O
 Copyright (c) Object Arts Ltd, 2004
@@ -10,26 +10,21 @@ This package contains classes and methods for supporting Win32 overlapped I/O.'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #OVERLAPPED;
-	yourself.
+package setClassNames: #(
+	#{OVERLAPPED}
+).
 
-package methodNames
-	add: #KernelLibrary -> #cancelIo:;
-	add: #KernelLibrary -> #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:;
-	add: #KernelLibrary -> #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:;
-	add: #KernelLibrary -> #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:;
-	add: #KernelLibrary -> #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{KernelLibrary} #cancelIo:)
+	#(#{KernelLibrary} #createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:)
+	#(#{KernelLibrary} #getOverlappedResult:lpOverlapped:lpNumberOfBytesTransferred:bWait:)
+	#(#{KernelLibrary} #getQueuedCompletionStatus:lpNumberOfBytesTransferred:lpCompletionKey:lpOverlapped:dwMilliseconds:)
+	#(#{KernelLibrary} #postQueuedCompletionStatus:dwNumberOfBytesTransferred:dwCompletionKey:lpOverlapped:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -37,12 +32,17 @@ package!
 
 ExternalStructure subclass: #OVERLAPPED
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hEvent' -> 16r10.
+		'_OffsetOf_Internal' -> 16r0.
+		'_OffsetOf_InternalHigh' -> 16r4.
+		'_OffsetOf_Offset' -> 16r8.
+		'_OffsetOf_OffsetHigh' -> 16rC.
+		'_OffsetOf_Pointer' -> 16r8
+	}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ FileSystemChangeReader subclass: #FileSystemChangeStream
 	instanceVariableNames: 'queue'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileSystemChangeStream guid: (GUID fromString: '{49dd0dec-28ae-4954-ac32-94524feb054c}')!
 FileSystemChangeStream comment: 'FileSystemChangeStream is a FileSystemChangeReader that publishes the file-system changes as entries on a <SharedQueue>. This allows the changes to be read by arbitrary background processes as if reading from an infinite stream of such changes. Note that it is possible to experience a Win32Error when reading from the queue in exceptional circumstances due to some underlying error reported by the ReadDirectoryChanges API. Should such an error be detected and handled, then it should be assumed that the FileSystemChangeStream will have to be recreated. 
 

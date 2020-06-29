@@ -2,14 +2,16 @@
 
 Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwPromptFlags _OffsetOf_dwSize _OffsetOf_hwndApp _OffsetOf_szPrompt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwPromptFlags' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hwndApp' -> 16r8.
+		'_OffsetOf_szPrompt' -> 16rC
+	}!
 CRYPTPROTECT_PROMPTSTRUCT guid: (GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
-CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwPromptFlags' value: 16r4!
-CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_hwndApp' value: 16r8!
-CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_szPrompt' value: 16rC!
 CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct

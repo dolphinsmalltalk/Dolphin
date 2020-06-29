@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #FileSystemWatcherConstants put: (PoolConstantsDictionary named: #FileSystemWatcherConstants)!
+#{FileSystemWatcherConstants} declare: (PoolConstantsDictionary named: #FileSystemWatcherConstants)!
 FileSystemWatcherConstants at: 'FILE_ACTION_ADDED' put: 16r1!
 FileSystemWatcherConstants at: 'FILE_ACTION_MODIFIED' put: 16r3!
 FileSystemWatcherConstants at: 'FILE_ACTION_REMOVED' put: 16r2!

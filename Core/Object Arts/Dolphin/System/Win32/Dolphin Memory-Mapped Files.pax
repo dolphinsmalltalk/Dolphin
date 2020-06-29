@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Memory-Mapped Files'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Memory-Mapped Files
 Copyright (c) Object Arts Ltd, 2004.
@@ -25,31 +25,26 @@ Copy-on-write memory mapped files are not currently supported by this package.'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #MemoryMappedFile;
-	add: #MemoryMappedFileView;
-	yourself.
+package setClassNames: #(
+	#{MemoryMappedFile}
+	#{MemoryMappedFileView}
+).
 
-package methodNames
-	add: #KernelLibrary -> #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:;
-	add: #KernelLibrary -> #flushViewOfFile:dwNumberOfBytesToFlush:;
-	add: #KernelLibrary -> #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:;
-	add: #KernelLibrary -> #openFileMapping:bInheritHandle:lpName:;
-	add: #KernelLibrary -> #unmapViewOfFile:;
-	yourself.
+package setMethodNames: #(
+	#(#{KernelLibrary} #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:)
+	#(#{KernelLibrary} #flushViewOfFile:dwNumberOfBytesToFlush:)
+	#(#{KernelLibrary} #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:)
+	#(#{KernelLibrary} #openFileMapping:bInheritHandle:lpName:)
+	#(#{KernelLibrary} #unmapViewOfFile:)
+).
 
-package globalNames
-	add: #MMFConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{MMFConstants}
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -59,15 +54,14 @@ Object subclass: #MemoryMappedFile
 	instanceVariableNames: 'file name handle maximumSize ownsFile'
 	classVariableNames: ''
 	poolDictionaries: 'MMFConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalAddress variableByteSubclass: #MemoryMappedFileView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

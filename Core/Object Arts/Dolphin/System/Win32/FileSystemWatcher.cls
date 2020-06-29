@@ -4,7 +4,8 @@ FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileSystemWatcher guid: (GUID fromString: '{eb4cdf52-701c-4505-9872-8bfce6c37830}')!
 FileSystemWatcher comment: 'FileSystemWatcher is a FileSystemChangeReader that publishes the file-system changes it detects as Smalltalk events on the main UI thread.
 
@@ -83,7 +84,6 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'.
-	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
+	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'! !
 !FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Data Protection API'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Win32 Data Protection API
 
@@ -11,25 +11,20 @@ The API is very simple to use - see Crypt32Library class>>#example1.
 Note that care should be taken to prevent unencrypted secrets persisting in the Dolphin object memory. Even after an object has been GC''d, its content may remain in the object heap for some indeterminate time. This means that the secret may be visible to any code running within the process, or in a memory dump. To minimize the time that unencrypted secrets are present in memory associated objects should be zero''d out before they go out of scope.'.
 
 
-package classNames
-	add: #Crypt32Library;
-	add: #CRYPTOAPI_BLOB;
-	add: #CRYPTPROTECT_PROMPTSTRUCT;
-	yourself.
+package setClassNames: #(
+	#{Crypt32Library}
+	#{CRYPTOAPI_BLOB}
+	#{CRYPTPROTECT_PROMPTSTRUCT}
+).
 
-package globalNames
-	add: #WinCryptConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{WinCryptConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Conformant Array Fields').
+	'..\..\Base\Dolphin Conformant Array Fields'
+).
 
 package!
 
@@ -39,22 +34,28 @@ ExternalLibrary subclass: #Crypt32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinCryptConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #CRYPTOAPI_BLOB
 	instanceVariableNames: 'localData'
-	classVariableNames: '_OffsetOf_cbData _OffsetOf_pbData'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cbData' -> 16r0.
+		'_OffsetOf_pbData' -> 16r4
+	}!
 Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwPromptFlags _OffsetOf_dwSize _OffsetOf_hwndApp _OffsetOf_szPrompt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwPromptFlags' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hwndApp' -> 16r8.
+		'_OffsetOf_szPrompt' -> 16rC
+	}!
 
 "End of package definition"!
 

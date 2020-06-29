@@ -2,9 +2,12 @@
 
 Object subclass: #FileSystemChange
 	instanceVariableNames: 'time code fileNames'
-	classVariableNames: 'ActionMap'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)
+	}!
 FileSystemChange guid: (GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
 FileSystemChange comment: ''!
 !FileSystemChange categoriesForClass!Kernel-Objects! !
@@ -54,10 +57,6 @@ setCode: anInteger fileName: aString
 code: anInteger fileName: aString 
 	^(self new)
 		setCode: anInteger fileName: aString;
-		yourself!
-
-initialize
-	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
+		yourself! !
 !FileSystemChange class categoriesFor: #code:fileName:!instance creation!public! !
-!FileSystemChange class categoriesFor: #initialize!initializing!public! !
 

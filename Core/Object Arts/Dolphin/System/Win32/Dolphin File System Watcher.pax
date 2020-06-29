@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin File System Watcher'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk File System Watcher
 Copyright (c) Object Arts Ltd, 2005
@@ -11,32 +11,27 @@ This package contains classes to monitor the Windows file system for change such
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #FILE_NOTIFY_INFORMATION;
-	add: #FileSystemChange;
-	add: #FileSystemChangeReader;
-	add: #FileSystemChangeStream;
-	add: #FileSystemWatcher;
-	yourself.
+package setClassNames: #(
+	#{FILE_NOTIFY_INFORMATION}
+	#{FileSystemChange}
+	#{FileSystemChangeReader}
+	#{FileSystemChangeStream}
+	#{FileSystemWatcher}
+).
 
-package methodNames
-	add: #KernelLibrary -> #readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:;
-	yourself.
+package setMethodNames: #(
+	#(#{KernelLibrary} #readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:)
+).
 
-package globalNames
-	add: #FileSystemWatcherConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{FileSystemWatcherConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Overlapped IO'
-	'..\..\Base\Dolphin SizeIs Fields').
+	'..\..\Base\Dolphin SizeIs Fields'
+).
 
 package!
 
@@ -44,32 +39,41 @@ package!
 
 Object subclass: #FileSystemChange
 	instanceVariableNames: 'time code fileNames'
-	classVariableNames: 'ActionMap'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ActionMap' -> #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)
+	}!
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
-	classVariableNames: 'ActionMap FileIOCompletionRoutineDescriptor'
+	classVariableNames: 'FileIOCompletionRoutineDescriptor'
 	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Action' -> 16r4.
+		'_OffsetOf_FileName' -> 16rC.
+		'_OffsetOf_FileNameLength' -> 16r8.
+		'_OffsetOf_NextEntryOffset' -> 16r0
+	}!
 FileSystemChangeReader subclass: #FileSystemChangeStream
 	instanceVariableNames: 'queue'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -2,16 +2,18 @@
 
 ExternalStructure subclass: #OVERLAPPED
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hEvent' -> 16r10.
+		'_OffsetOf_Internal' -> 16r0.
+		'_OffsetOf_InternalHigh' -> 16r4.
+		'_OffsetOf_Offset' -> 16r8.
+		'_OffsetOf_OffsetHigh' -> 16rC.
+		'_OffsetOf_Pointer' -> 16r8
+	}!
 OVERLAPPED guid: (GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
-OVERLAPPED addClassConstant: '_OffsetOf_hEvent' value: 16r10!
-OVERLAPPED addClassConstant: '_OffsetOf_Internal' value: 16r0!
-OVERLAPPED addClassConstant: '_OffsetOf_InternalHigh' value: 16r4!
-OVERLAPPED addClassConstant: '_OffsetOf_Offset' value: 16r8!
-OVERLAPPED addClassConstant: '_OffsetOf_OffsetHigh' value: 16rC!
-OVERLAPPED addClassConstant: '_OffsetOf_Pointer' value: 16r8!
 OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

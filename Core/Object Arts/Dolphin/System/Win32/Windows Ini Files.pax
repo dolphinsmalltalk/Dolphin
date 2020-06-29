@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Ini Files'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Ini Files
 Copyright (c) Object Arts Ltd, 2017
@@ -8,31 +8,26 @@ Copyright (c) Object Arts Ltd, 2017
 This package provides a <Dictionary> interface over Windows "private" .ini files. This is a simple mechanism for implementing human readable config files.'.
 
 
-package classNames
-	add: #IniFile;
-	add: #IniFileAbstract;
-	add: #IniFileSection;
-	yourself.
+package setClassNames: #(
+	#{IniFile}
+	#{IniFileAbstract}
+	#{IniFileSection}
+).
 
-package methodNames
-	add: #KernelLibrary -> #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:;
-	add: #KernelLibrary -> #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:;
-	add: #KernelLibrary -> #getPrivateProfileSectionNames:nSize:lpFileName:;
-	add: #KernelLibrary -> #getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:;
-	add: #KernelLibrary -> #getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:;
-	add: #KernelLibrary -> #writePrivateProfileSection:lpString:lpFileName:;
-	add: #KernelLibrary -> #writePrivateProfileString:lpKeyName:lpString:lpFileName:;
-	add: #KernelLibrary -> #writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{KernelLibrary} #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:)
+	#(#{KernelLibrary} #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:)
+	#(#{KernelLibrary} #getPrivateProfileSectionNames:nSize:lpFileName:)
+	#(#{KernelLibrary} #getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:)
+	#(#{KernelLibrary} #getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:)
+	#(#{KernelLibrary} #writePrivateProfileSection:lpString:lpFileName:)
+	#(#{KernelLibrary} #writePrivateProfileString:lpKeyName:lpString:lpFileName:)
+	#(#{KernelLibrary} #writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -42,20 +37,20 @@ Collection subclass: #IniFileAbstract
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IniFileAbstract subclass: #IniFileSection
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

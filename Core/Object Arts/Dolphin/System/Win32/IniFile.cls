@@ -4,7 +4,8 @@ IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IniFile guid: (GUID fromString: '{c373c097-bfde-42ca-968c-28008b7eff49}')!
 IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
 !IniFile categoriesForClass!Unclassified! !

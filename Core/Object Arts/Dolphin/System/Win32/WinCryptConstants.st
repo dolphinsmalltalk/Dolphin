@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinCryptConstants put: (PoolConstantsDictionary named: #WinCryptConstants)!
+#{WinCryptConstants} declare: (PoolConstantsDictionary named: #WinCryptConstants)!
 WinCryptConstants at: 'CRYPTPROTECT_AUDIT' put: 16r10!
 WinCryptConstants at: 'CRYPTPROTECT_CRED_REGENERATE' put: 16r80!
 WinCryptConstants at: 'CRYPTPROTECT_CRED_SYNC' put: 16r8!
