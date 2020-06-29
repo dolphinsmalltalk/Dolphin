@@ -4,7 +4,8 @@ STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STLOutFiler guid: (GUID fromString: '{72dee7e2-3402-4813-99f6-379ffc717b86}')!
 STLOutFiler comment: ''!
 !STLOutFiler categoriesForClass!System-Binary storage! !

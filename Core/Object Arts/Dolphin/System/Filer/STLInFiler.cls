@@ -4,7 +4,8 @@ STBInFiler subclass: #STLInFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STLInFiler guid: (GUID fromString: '{0eb5f19a-a120-4002-83d9-c520f502de6d}')!
 STLInFiler comment: ''!
 !STLInFiler categoriesForClass!System-Binary storage! !

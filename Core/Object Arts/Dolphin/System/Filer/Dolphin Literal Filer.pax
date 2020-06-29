@@ -1,48 +1,43 @@
 ﻿| package |
 package := Package name: 'Dolphin Literal Filer'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #STLDebugger;
-	add: #STLInFiler;
-	add: #STLOutFiler;
-	yourself.
+package setClassNames: #(
+	#{STLDebugger}
+	#{STLInFiler}
+	#{STLOutFiler}
+).
 
-package methodNames
-	add: #ArrayedCollection -> #literalPrintOn:;
-	add: #Boolean -> #literalPrintOn:;
-	add: #Character -> #literalPrintOn:;
-	add: #Class -> #literalPrintOn:;
-	add: #Number -> #literalPrintOn:;
-	add: #Object -> #literalStoreArray;
-	add: #Object -> #literalStoreEvaluationOn:;
-	add: #Object -> #literalStoreEvaluationString;
-	add: #Object -> #literalStoreOn:;
-	add: #PoolConstantsDictionary -> #literalPrintOn:;
-	add: #ProcessorScheduler -> #literalPrintOn:;
-	add: #String -> #literalPrintOn:;
-	add: #Symbol -> #literalPrintOn:;
-	add: #SystemDictionary -> #literalPrintOn:;
-	add: #UndefinedObject -> #literalPrintOn:;
-	add: 'Object class' -> #fromLiteralStoreArray:;
-	add: 'Object class' -> #fromLiteralStoreArray:context:;
-	add: 'Object class' -> #literalReadFrom:;
-	add: 'Object class' -> #literalReadFrom:context:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ArrayedCollection} #literalPrintOn:)
+	#(#{Boolean} #literalPrintOn:)
+	#(#{Character} #literalPrintOn:)
+	#(#{Class} #literalPrintOn:)
+	#(#{Number} #literalPrintOn:)
+	#(#{Object} #literalStoreArray)
+	#(#{Object} #literalStoreEvaluationOn:)
+	#(#{Object} #literalStoreEvaluationString)
+	#(#{Object} #literalStoreOn:)
+	#(#{Object class} #fromLiteralStoreArray:)
+	#(#{Object class} #fromLiteralStoreArray:context:)
+	#(#{Object class} #literalReadFrom:)
+	#(#{Object class} #literalReadFrom:context:)
+	#(#{PoolConstantsDictionary} #literalPrintOn:)
+	#(#{ProcessorScheduler} #literalPrintOn:)
+	#(#{String} #literalPrintOn:)
+	#(#{Symbol} #literalPrintOn:)
+	#(#{SystemDictionary} #literalPrintOn:)
+	#(#{UndefinedObject} #literalPrintOn:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -52,20 +47,20 @@ STBInFiler subclass: #STLInFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STLInFiler subclass: #STLDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
