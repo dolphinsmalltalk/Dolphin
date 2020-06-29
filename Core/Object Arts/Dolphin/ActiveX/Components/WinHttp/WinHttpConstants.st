@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinHttpConstants put: (PoolConstantsDictionary named: #WinHttpConstants)!
+#{WinHttpConstants} declare: (PoolConstantsDictionary named: #WinHttpConstants)!
 WinHttpConstants at: 'AutoLogonPolicy_Always' put: 16r0!
 WinHttpConstants at: 'AutoLogonPolicy_Never' put: 16r2!
 WinHttpConstants at: 'AutoLogonPolicy_OnlyIfBypassProxy' put: 16r1!

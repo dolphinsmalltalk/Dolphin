@@ -4,7 +4,8 @@ IUnknown subclass: #IWinHttpRequestEvents
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IWinHttpRequestEvents guid: (IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!
 IWinHttpRequestEvents comment: '<IWinHttpRequestEvents> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 

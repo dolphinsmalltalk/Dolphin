@@ -4,7 +4,8 @@ IDispatch subclass: #IWinHttpRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IWinHttpRequest guid: (IID fromString: '{016fe2ec-b2c8-45f8-b23b-39e53a75396b}')!
 IWinHttpRequest comment: '<IWinHttpRequest> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequest'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
