@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Debug Trace Stream'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Debug Trace Stream.
 Copyright (c) Object Arts Ltd, 2002.
@@ -16,23 +16,21 @@ Example usage:
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #DebugTraceStream;
-	yourself.
+package setClassNames: #(
+	#{DebugTraceStream}
+).
 
-package globalNames
-	add: #Trace;
-	yourself.
+package setVariableNames: #(
+	#{Trace}
+).
 
-package binaryGlobalNames: (Set new
-	add: #Trace;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{Trace}
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -42,12 +40,8 @@ Stream subclass: #DebugTraceStream
 	instanceVariableNames: 'buffer bufferProtect'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
