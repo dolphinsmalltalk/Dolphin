@@ -4,7 +4,8 @@ ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarSystemButton guid: (GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
 ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
 

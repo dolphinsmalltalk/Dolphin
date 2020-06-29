@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #StatusBarConstants put: (PoolConstantsDictionary named: #StatusBarConstants)!
+#{StatusBarConstants} declare: (PoolConstantsDictionary named: #StatusBarConstants)!
 StatusBarConstants at: 'SB_GETBORDERS' put: 16r407!
 StatusBarConstants at: 'SB_GETICON' put: 16r414!
 StatusBarConstants at: 'SB_GETPARTS' put: 16r406!

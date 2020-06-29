@@ -2,20 +2,22 @@
 
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchText' -> 16r1C.
+		'_OffsetOf_cx' -> 16r12.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fsState' -> 16r10.
+		'_OffsetOf_fsStyle' -> 16r11.
+		'_OffsetOf_idCommand' -> 16r8.
+		'_OffsetOf_iImage' -> 16rC.
+		'_OffsetOf_lParam' -> 16r14.
+		'_OffsetOf_pszText' -> 16r18
+	}!
 TBBUTTONINFOW guid: (GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_cchText' value: 16r1C!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_cx' value: 16r12!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_dwMask' value: 16r4!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_fsState' value: 16r10!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_fsStyle' value: 16r11!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_idCommand' value: 16r8!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_iImage' value: 16rC!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_lParam' value: 16r14!
-TBBUTTONINFOW addClassConstant: '_OffsetOf_pszText' value: 16r18!
 TBBUTTONINFOW comment: ''!
 !TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
 !TBBUTTONINFOW methodsFor!

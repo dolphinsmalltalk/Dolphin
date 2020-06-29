@@ -2,11 +2,13 @@
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
-	classVariableNames: 'LabelsMask'
+	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LabelsMask' -> 16r1
+	}!
 Toolbar guid: (GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
-Toolbar addClassConstant: 'LabelsMask' value: 16r1!
 Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
 Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the control. Items may be added and deleted once the view has been created.  It also allows a name to be associated with each item. 
@@ -1176,13 +1178,6 @@ wmNotify: message wParam: wParam lParam: lParam
 
 !Toolbar class methodsFor!
 
-initialize
-	"Private - Initialise the receiver's class variables.
-		Toolbar initialize
-	"
-
-	self addClassConstant: 'LabelsMask' value: 1!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -1266,7 +1261,6 @@ winClassName
 
 	^'ToolbarWindow32'
 ! !
-!Toolbar class categoriesFor: #initialize!development!initializing!private! !
 !Toolbar class categoriesFor: #resource_Default_view!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Edit_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_File_tools!public!resources-views! !

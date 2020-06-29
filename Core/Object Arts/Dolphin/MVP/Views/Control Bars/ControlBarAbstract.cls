@@ -4,7 +4,8 @@ ControlView subclass: #ControlBarAbstract
 	instanceVariableNames: 'names'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ControlBarAbstract guid: (GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a32}')!
 ControlBarAbstract isAbstract: true!
 ControlBarAbstract comment: 'ControlBarAbstract is an abstract <compositeView> whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support <compositeView> so that they are able to host additional sub-views under the management of a layout manager.

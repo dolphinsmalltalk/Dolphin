@@ -4,7 +4,8 @@ ToolbarButton subclass: #ToolbarBitmapButton
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarBitmapButton guid: (GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
 ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined button for a `Toolbar` where the image for the button is sourced from a `Bitmap`, typically containing a strip of tool images. The image within the bitmap strip to be used for the button is identified by an index within the supplied `Bitmap`.
 

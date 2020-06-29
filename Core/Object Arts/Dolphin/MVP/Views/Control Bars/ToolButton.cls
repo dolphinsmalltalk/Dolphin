@@ -4,7 +4,8 @@ AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolButton guid: (GUID fromString: '{075420d9-dc3b-4222-b99e-abd8769d41b8}')!
 ToolButton comment: ''!
 !ToolButton categoriesForClass!MVP-Resources-Buttons!MVP-Resources-Misc! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ToolbarConstants put: (PoolConstantsDictionary named: #ToolbarConstants)!
+#{ToolbarConstants} declare: (PoolConstantsDictionary named: #ToolbarConstants)!
 ToolbarConstants at: 'BTNS_AUTOSIZE' put: 16r10!
 ToolbarConstants at: 'BTNS_BUTTON' put: 16r0!
 ToolbarConstants at: 'BTNS_CHECK' put: 16r2!

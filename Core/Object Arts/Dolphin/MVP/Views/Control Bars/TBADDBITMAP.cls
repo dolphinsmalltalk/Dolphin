@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hInst _OffsetOf_nID'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hInst' -> 16r0.
+		'_OffsetOf_nID' -> 16r4
+	}!
 TBADDBITMAP guid: (GUID fromString: '{87b4c613-026e-11d3-9fd7-00a0cc3e4a32}')!
-TBADDBITMAP addClassConstant: '_OffsetOf_hInst' value: 16r0!
-TBADDBITMAP addClassConstant: '_OffsetOf_nID' value: 16r4!
 TBADDBITMAP comment: ''!
 !TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
 !TBADDBITMAP methodsFor!

@@ -4,7 +4,8 @@ ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarButton guid: (GUID fromString: '{5a6ae0df-57b0-4ba0-be4a-c1cd1ccc6def}')!
 ToolbarButton isAbstract: true!
 ToolbarButton comment: '`ToolbarButton` is the abstract class of `Toolbar` buttons.  The button is a `<commandSource>` capable of storing `CommandDescription` to be fired when the button is pressed. Each button has an image, the provision of which is implemented by subclasses. The dimensions of the images within the bitmap are held by the containing `Toolbar` in its `#bitmapExtent` aspect.

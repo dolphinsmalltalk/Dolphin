@@ -2,14 +2,16 @@
 
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchText' -> 16r24.
+		'_OffsetOf_iItem' -> 16rC.
+		'_OffsetOf_pszText' -> 16r28.
+		'_OffsetOf_tbButton' -> 16r10
+	}!
 NMTOOLBARW guid: (GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMTOOLBARW addClassConstant: '_OffsetOf_cchText' value: 16r24!
-NMTOOLBARW addClassConstant: '_OffsetOf_iItem' value: 16rC!
-NMTOOLBARW addClassConstant: '_OffsetOf_pszText' value: 16r28!
-NMTOOLBARW addClassConstant: '_OffsetOf_tbButton' value: 16r10!
 NMTOOLBARW comment: 'NMTOOLBARW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTOOLBARW accompanies certain notifications that are sent by a Toolbar control to its parent, e.g. when a drop-down button is pressed, such as the browser history list buttons (TBN_DROPDOWN). See the Win32 documentation for further details.

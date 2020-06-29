@@ -2,14 +2,16 @@
 
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwHitInfo _OffsetOf_dwItemData _OffsetOf_dwItemSpec _OffsetOf_pt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwHitInfo' -> 16r1C.
+		'_OffsetOf_dwItemData' -> 16r10.
+		'_OffsetOf_dwItemSpec' -> 16rC.
+		'_OffsetOf_pt' -> 16r14
+	}!
 NMMOUSE guid: (GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
-NMMOUSE addClassConstant: '_OffsetOf_dwHitInfo' value: 16r1C!
-NMMOUSE addClassConstant: '_OffsetOf_dwItemData' value: 16r10!
-NMMOUSE addClassConstant: '_OffsetOf_dwItemSpec' value: 16rC!
-NMMOUSE addClassConstant: '_OffsetOf_pt' value: 16r14!
 NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. toolbars, statusbars) when a mouse action occurs such as a click.

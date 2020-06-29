@@ -4,7 +4,8 @@ StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StatusBarItem guid: (GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
 StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
 

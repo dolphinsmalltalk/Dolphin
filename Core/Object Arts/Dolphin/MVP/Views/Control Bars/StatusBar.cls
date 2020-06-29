@@ -4,7 +4,8 @@ ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StatusBar guid: (GUID fromString: '{87b4c72e-026e-11d3-9fd7-00a0cc3e4a32}')!
 StatusBar comment: 'StatusBar is a <compositeView> implementing the Windows "Msctls_Statusbar32" common control.
 

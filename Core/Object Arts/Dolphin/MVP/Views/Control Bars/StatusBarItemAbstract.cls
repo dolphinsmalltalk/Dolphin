@@ -4,7 +4,8 @@ Object subclass: #StatusBarItemAbstract
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'
 	poolDictionaries: 'StatusBarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StatusBarItemAbstract guid: (GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
 StatusBarItemAbstract isAbstract: true!
 StatusBarItemAbstract comment: 'StatusBarItemAbstract is an abstract class whose subclasses represent the items held by a <StatusBar> view.

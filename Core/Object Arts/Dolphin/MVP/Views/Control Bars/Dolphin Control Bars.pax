@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Control Bars'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Control Bars.
 Copyright (c) Object Arts Ltd, 1997-2002. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
@@ -10,42 +10,37 @@ This package contains MVP View wrappers for the Windows "control bar" controls (
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #ControlBarAbstract;
-	add: #NMMOUSE;
-	add: #NMTOOLBARW;
-	add: #StatusBar;
-	add: #StatusBarItem;
-	add: #StatusBarItemAbstract;
-	add: #StatusBarNullItem;
-	add: #TBADDBITMAP;
-	add: #TBBUTTON;
-	add: #TBBUTTONINFOW;
-	add: #Toolbar;
-	add: #ToolbarBitmapButton;
-	add: #ToolbarButton;
-	add: #ToolbarIconButton;
-	add: #ToolbarItem;
-	add: #ToolbarSeparator;
-	add: #ToolbarSystemButton;
-	add: #ToolButton;
-	yourself.
+package setClassNames: #(
+	#{ControlBarAbstract}
+	#{NMMOUSE}
+	#{NMTOOLBARW}
+	#{StatusBar}
+	#{StatusBarItem}
+	#{StatusBarItemAbstract}
+	#{StatusBarNullItem}
+	#{TBADDBITMAP}
+	#{TBBUTTON}
+	#{TBBUTTONINFOW}
+	#{Toolbar}
+	#{ToolbarBitmapButton}
+	#{ToolbarButton}
+	#{ToolbarIconButton}
+	#{ToolbarItem}
+	#{ToolbarSeparator}
+	#{ToolbarSystemButton}
+	#{ToolButton}
+).
 
-package globalNames
-	add: #StatusBarConstants;
-	add: #ToolbarConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{StatusBarConstants}
+	#{ToolbarConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -55,97 +50,143 @@ Object subclass: #StatusBarItemAbstract
 	instanceVariableNames: 'border width parentView model'
 	classVariableNames: 'BorderStyles'
 	poolDictionaries: 'StatusBarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ToolbarItem
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hInst _OffsetOf_nID'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hInst' -> 16r0.
+		'_OffsetOf_nID' -> 16r4
+	}!
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwData _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_iBitmap _OffsetOf_idCommand _OffsetOf_iString'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwData' -> 16rC.
+		'_OffsetOf_fsState' -> 16r8.
+		'_OffsetOf_fsStyle' -> 16r9.
+		'_OffsetOf_iBitmap' -> 16r0.
+		'_OffsetOf_idCommand' -> 16r4.
+		'_OffsetOf_iString' -> 16r10
+	}!
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchText' -> 16r1C.
+		'_OffsetOf_cx' -> 16r12.
+		'_OffsetOf_dwMask' -> 16r4.
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fsState' -> 16r10.
+		'_OffsetOf_fsStyle' -> 16r11.
+		'_OffsetOf_idCommand' -> 16r8.
+		'_OffsetOf_iImage' -> 16rC.
+		'_OffsetOf_lParam' -> 16r14.
+		'_OffsetOf_pszText' -> 16r18
+	}!
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwHitInfo _OffsetOf_dwItemData _OffsetOf_dwItemSpec _OffsetOf_pt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwHitInfo' -> 16r1C.
+		'_OffsetOf_dwItemData' -> 16r10.
+		'_OffsetOf_dwItemSpec' -> 16rC.
+		'_OffsetOf_pt' -> 16r14
+	}!
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cchText' -> 16r24.
+		'_OffsetOf_iItem' -> 16rC.
+		'_OffsetOf_pszText' -> 16r28.
+		'_OffsetOf_tbButton' -> 16r10
+	}!
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StatusBarItemAbstract subclass: #StatusBarNullItem
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarButton subclass: #ToolbarBitmapButton
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ControlView subclass: #ControlBarAbstract
 	instanceVariableNames: 'names'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
-	classVariableNames: 'LabelsMask'
+	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'LabelsMask' -> 16r1
+	}!
 
 "End of package definition"!
 
