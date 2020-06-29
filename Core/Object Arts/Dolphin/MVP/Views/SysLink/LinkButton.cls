@@ -4,7 +4,8 @@ CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LinkButton guid: (GUID fromString: '{d8fcab7f-b566-42da-b183-d925eaa9dc99}')!
 LinkButton comment: 'LinkButton is a <CommandButton> implemented using the Windows "SysLink" control. It has the appearance of a hyperlink, but acts as a <commandSource>.
 

@@ -4,7 +4,8 @@ ContainerView subclass: #ScrollingDecorator
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScrollingDecorator guid: (GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
 

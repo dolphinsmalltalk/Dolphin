@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #SysLinkConstants put: (PoolConstantsDictionary named: #SysLinkConstants)!
+#{SysLinkConstants} declare: (PoolConstantsDictionary named: #SysLinkConstants)!
 SysLinkConstants at: 'ICC_LINK_CLASS' put: 16r8000!
 SysLinkConstants at: 'INVALID_LINK_INDEX' put: -16r1!
 SysLinkConstants at: 'L_MAX_URL_LENGTH' put: 16r824!

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin SysLink Control'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SysLink Common Control.
 Copyright (c) Object Arts Ltd, 2005.
@@ -16,27 +16,21 @@ Please Note: The underlying SysLink control which this package relies on is not 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #LHITTESTINFO;
-	add: #LinkButton;
-	add: #LITEM;
-	add: #NMLINK;
-	add: #SysLinkView;
-	yourself.
+package setClassNames: #(
+	#{LHITTESTINFO}
+	#{LinkButton}
+	#{LITEM}
+	#{NMLINK}
+	#{SysLinkView}
+).
 
-package methodNames
-	add: 'TextPresenter class' -> #resource_Link_text;
-	yourself.
+package setMethodNames: #(
+	#(#{TextPresenter class} #resource_Link_text)
+).
 
-package globalNames
-	add: #SysLinkConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{SysLinkConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -44,7 +38,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -52,32 +47,46 @@ package!
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_item' -> 16r8.
+		'_OffsetOf_pt' -> 16r0
+	}!
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
+	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iLink' -> 16r4.
+		'_OffsetOf_mask' -> 16r0.
+		'_OffsetOf_state' -> 16r8.
+		'_OffsetOf_stateMask' -> 16rC.
+		'_OffsetOf_szID' -> 16r10.
+		'_OffsetOf_szURL' -> 16r70
+	}!
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_item' -> 16rC
+	}!
 CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StaticView subclass: #SysLinkView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

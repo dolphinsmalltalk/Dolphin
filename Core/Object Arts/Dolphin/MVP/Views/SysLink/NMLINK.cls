@@ -2,11 +2,13 @@
 
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_item' -> 16rC
+	}!
 NMLINK guid: (GUID fromString: '{7caa2dd6-a6d4-493f-bdd4-39ef71f66221}')!
-NMLINK addClassConstant: '_OffsetOf_item' value: 16rC!
 NMLINK comment: 'NMLINK is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMLINK accompanies link click notifications that are sent by the SysLink control, wrapped in Dolphin by <SysLinkView>.

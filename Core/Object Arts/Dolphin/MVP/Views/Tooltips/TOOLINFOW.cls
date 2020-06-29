@@ -2,19 +2,21 @@
 
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
+	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hinst' -> 16r20.
+		'_OffsetOf_hwnd' -> 16r8.
+		'_OffsetOf_lParam' -> 16r28.
+		'_OffsetOf_lpReserved' -> 16r2C.
+		'_OffsetOf_lpszText' -> 16r24.
+		'_OffsetOf_rect' -> 16r10.
+		'_OffsetOf_uFlags' -> 16r4.
+		'_OffsetOf_uId' -> 16rC
+	}!
 TOOLINFOW guid: (GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
-TOOLINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-TOOLINFOW addClassConstant: '_OffsetOf_hinst' value: 16r20!
-TOOLINFOW addClassConstant: '_OffsetOf_hwnd' value: 16r8!
-TOOLINFOW addClassConstant: '_OffsetOf_lParam' value: 16r28!
-TOOLINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r2C!
-TOOLINFOW addClassConstant: '_OffsetOf_lpszText' value: 16r24!
-TOOLINFOW addClassConstant: '_OffsetOf_rect' value: 16r10!
-TOOLINFOW addClassConstant: '_OffsetOf_uFlags' value: 16r4!
-TOOLINFOW addClassConstant: '_OffsetOf_uId' value: 16rC!
 TOOLINFOW comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.

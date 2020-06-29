@@ -4,7 +4,8 @@ ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'DateTimeCommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 DateTimeCommonControl isAbstract: true!
 DateTimeCommonControl comment: '`DateTimeCommonControl` is the abstract class of `<valueView>`s implementing the Windows date/time common controls. 

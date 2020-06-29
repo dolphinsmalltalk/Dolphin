@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Card Containers'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Card Containers.
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,24 +8,18 @@ Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #AbstractCardContainer;
-	add: #CardContainer;
-	add: #CardLabel;
-	add: #CardLayout;
-	add: #WizardCardContainer;
-	yourself.
+package setClassNames: #(
+	#{AbstractCardContainer}
+	#{CardContainer}
+	#{CardLabel}
+	#{CardLayout}
+	#{WizardCardContainer}
+).
 
-package methodNames
-	add: 'Presenter class' -> #resource_Card_container;
-	add: 'Presenter class' -> #resource_Wizard_card_container;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Presenter class} #resource_Card_container)
+	#(#{Presenter class} #resource_Wizard_card_container)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -33,7 +27,8 @@ package setPrerequisites: #(
 	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -43,30 +38,32 @@ Object subclass: #CardLabel
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ContainerView subclass: #AbstractCardContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractCardContainer subclass: #CardContainer
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractCardContainer subclass: #WizardCardContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

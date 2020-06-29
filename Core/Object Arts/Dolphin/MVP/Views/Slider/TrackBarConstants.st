@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #TrackBarConstants put: (PoolConstantsDictionary named: #TrackBarConstants)!
+#{TrackBarConstants} declare: (PoolConstantsDictionary named: #TrackBarConstants)!
 TrackBarConstants at: 'TBM_CLEARSEL' put: 16r413!
 TrackBarConstants at: 'TBM_CLEARTICS' put: 16r409!
 TrackBarConstants at: 'TBM_GETBUDDY' put: 16r421!

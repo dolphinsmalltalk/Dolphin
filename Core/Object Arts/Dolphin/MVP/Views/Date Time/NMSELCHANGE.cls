@@ -2,12 +2,14 @@
 
 NMHDR subclass: #NMSELCHANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_stSelEnd _OffsetOf_stSelStart'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_stSelEnd' -> 16r1C.
+		'_OffsetOf_stSelStart' -> 16rC
+	}!
 NMSELCHANGE guid: (GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
-NMSELCHANGE addClassConstant: '_OffsetOf_stSelEnd' value: 16r1C!
-NMSELCHANGE addClassConstant: '_OffsetOf_stSelStart' value: 16rC!
 NMSELCHANGE comment: ''!
 !NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !
 !NMSELCHANGE methodsFor!

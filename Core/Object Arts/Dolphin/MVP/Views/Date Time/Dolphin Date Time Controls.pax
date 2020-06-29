@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Date Time Controls'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Date & Time Common Controls.
 Copyright (c) Object Arts Ltd, 1997-2003.
@@ -11,28 +11,22 @@ This package contains MVP View wrappers for the Windows date and time common con
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #DateTimeCommonControl;
-	add: #DateTimePicker;
-	add: #MonthCalendarView;
-	add: #NMSELCHANGE;
-	yourself.
+package setClassNames: #(
+	#{DateTimeCommonControl}
+	#{DateTimePicker}
+	#{MonthCalendarView}
+	#{NMSELCHANGE}
+).
 
-package methodNames
-	add: 'DatePresenter class' -> #resource_Month_calendar_view;
-	add: 'DatePresenter class' -> #resource_Picker_view;
-	add: 'TimePresenter class' -> #resource_Picker_view;
-	yourself.
+package setMethodNames: #(
+	#(#{DatePresenter class} #resource_Month_calendar_view)
+	#(#{DatePresenter class} #resource_Picker_view)
+	#(#{TimePresenter class} #resource_Picker_view)
+).
 
-package globalNames
-	add: #DateTimeCommCtrlConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{DateTimeCommCtrlConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -41,7 +35,8 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -49,27 +44,31 @@ package!
 
 NMHDR subclass: #NMSELCHANGE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_stSelEnd _OffsetOf_stSelStart'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_stSelEnd' -> 16r1C.
+		'_OffsetOf_stSelStart' -> 16rC
+	}!
 ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'DateTimeCommCtrlConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DateTimeCommonControl subclass: #MonthCalendarView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

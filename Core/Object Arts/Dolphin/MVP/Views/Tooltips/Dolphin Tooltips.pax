@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Tooltips'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Tooltips
 Copyright (c) Object Arts Ltd 2003-2018.
@@ -10,33 +10,28 @@ This package contains an MVP View wrapper for the Windows Tooltip control, and a
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #MessageBubble;
-	add: #OneOffNoteBubble;
-	add: #TOOLINFOW;
-	add: #Tooltip;
-	yourself.
+package setClassNames: #(
+	#{MessageBubble}
+	#{OneOffNoteBubble}
+	#{TOOLINFOW}
+	#{Tooltip}
+).
 
-package methodNames
-	add: #NMTTDISPINFOW -> #toolTipWindow;
-	yourself.
+package setMethodNames: #(
+	#(#{NMTTDISPINFOW} #toolTipWindow)
+).
 
-package globalNames
-	add: #TooltipConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{TooltipConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\..\Registry\Dolphin Registry Access').
+	'..\..\..\Registry\Dolphin Registry Access'
+).
 
 package!
 
@@ -46,25 +41,38 @@ Object subclass: #OneOffNoteBubble
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
+	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_hinst' -> 16r20.
+		'_OffsetOf_hwnd' -> 16r8.
+		'_OffsetOf_lParam' -> 16r28.
+		'_OffsetOf_lpReserved' -> 16r2C.
+		'_OffsetOf_lpszText' -> 16r24.
+		'_OffsetOf_rect' -> 16r10.
+		'_OffsetOf_uFlags' -> 16r4.
+		'_OffsetOf_uId' -> 16rC
+	}!
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
-	classVariableNames: 'IconIds'
+	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IconIds' -> #[64 48 16]
+	}!
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

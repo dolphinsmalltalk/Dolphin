@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_nInc _OffsetOf_nSec'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_nInc' -> 16r4.
+		'_OffsetOf_nSec' -> 16r0
+	}!
 UDACCEL guid: (GUID fromString: '{425d0ea4-542e-11d3-998b-d5ca2c3c1d61}')!
-UDACCEL addClassConstant: '_OffsetOf_nInc' value: 16r4!
-UDACCEL addClassConstant: '_OffsetOf_nSec' value: 16r0!
 UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct ''UpDownLib.UDACCEL'' from type information in the ''Microsoft Windows Up-Down Control'' library.'!
 !UDACCEL categoriesForClass!External-Data-Structured-Win32! !
 !UDACCEL methodsFor!

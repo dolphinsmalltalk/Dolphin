@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #UpDownControlConstants put: (PoolConstantsDictionary named: #UpDownControlConstants)!
+#{UpDownControlConstants} declare: (PoolConstantsDictionary named: #UpDownControlConstants)!
 UpDownControlConstants at: 'UD_MAXVAL' put: 16r7FFF!
 UpDownControlConstants at: 'UD_MINVAL' put: -16r7FFF!
 UpDownControlConstants at: 'UDM_GETACCEL' put: 16r46C!

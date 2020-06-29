@@ -4,7 +4,8 @@ LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CardLayout guid: (GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
 CardLayout comment: 'CardLayout implements a specialised <layoutManager> to layout <view> objects within a <cardView>. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
 

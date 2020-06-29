@@ -4,7 +4,8 @@ AbstractCardContainer subclass: #CardContainer
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CardContainer guid: (GUID fromString: '{87b4c71c-026e-11d3-9fd7-00a0cc3e4a32}')!
 CardContainer comment: 'A CardContainer is a <cardView> that allows each of its cards (sub-views) to appear with named tabs. The tab names are specified by the #arrangement aspects of the sub-views and appear in the z-order maintained by the container. The CardContainer uses a TabView to provide the name tabs.
 

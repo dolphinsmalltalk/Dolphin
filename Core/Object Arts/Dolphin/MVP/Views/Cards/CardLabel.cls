@@ -4,7 +4,8 @@ Object subclass: #CardLabel
 	instanceVariableNames: 'text iconBlock helpId'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CardLabel guid: (GUID fromString: '{50770bcc-1797-4efb-be30-f06da60566cf}')!
 CardLabel comment: '<CardLabel>s are used to ''label'' (that is specify the text and image) the tabs in a <CardContainer>. This is achieved by setting the #arrangement of the view for each tab (typically a <ContainerView> or <ReferenceView>) to be an appropriately configured CardLabel instance.
 

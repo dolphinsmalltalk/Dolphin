@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Slider Control'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
 Copyright (c) Ian Bartholomew, 2002, and Object Arts Ltd, 2002-2005.
@@ -14,23 +14,17 @@ Thanks to Ian Bartholomew for donating his original version of this view.'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #Slider;
-	yourself.
+package setClassNames: #(
+	#{Slider}
+).
 
-package methodNames
-	add: 'NumberPresenter class' -> #resource_Slider_view;
-	yourself.
+package setMethodNames: #(
+	#(#{NumberPresenter class} #resource_Slider_view)
+).
 
-package globalNames
-	add: #TrackBarConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{TrackBarConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -38,7 +32,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -46,12 +41,12 @@ package!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
-	classVariableNames: 'HorizontalTickStyles TickStyleMask VerticalTickStyles'
+	classVariableNames: 'HorizontalTickStyles VerticalTickStyles'
 	poolDictionaries: 'TrackBarConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'TickStyleMask' -> 16rC
+	}!
 
 "Loose Methods"!
 

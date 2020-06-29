@@ -2,16 +2,18 @@
 
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
+	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iLink' -> 16r4.
+		'_OffsetOf_mask' -> 16r0.
+		'_OffsetOf_state' -> 16r8.
+		'_OffsetOf_stateMask' -> 16rC.
+		'_OffsetOf_szID' -> 16r10.
+		'_OffsetOf_szURL' -> 16r70
+	}!
 LITEM guid: (GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
-LITEM addClassConstant: '_OffsetOf_iLink' value: 16r4!
-LITEM addClassConstant: '_OffsetOf_mask' value: 16r0!
-LITEM addClassConstant: '_OffsetOf_state' value: 16r8!
-LITEM addClassConstant: '_OffsetOf_stateMask' value: 16rC!
-LITEM addClassConstant: '_OffsetOf_szID' value: 16r10!
-LITEM addClassConstant: '_OffsetOf_szURL' value: 16r70!
 LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.

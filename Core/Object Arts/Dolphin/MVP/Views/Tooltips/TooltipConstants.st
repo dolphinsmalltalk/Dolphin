@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #TooltipConstants put: (PoolConstantsDictionary named: #TooltipConstants)!
+#{TooltipConstants} declare: (PoolConstantsDictionary named: #TooltipConstants)!
 TooltipConstants at: 'TTDT_AUTOMATIC' put: 16r0!
 TooltipConstants at: 'TTDT_AUTOPOP' put: 16r2!
 TooltipConstants at: 'TTDT_INITIAL' put: 16r3!

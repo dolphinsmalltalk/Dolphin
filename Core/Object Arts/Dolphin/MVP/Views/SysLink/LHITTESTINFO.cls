@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_item' -> 16r8.
+		'_OffsetOf_pt' -> 16r0
+	}!
 LHITTESTINFO guid: (GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
-LHITTESTINFO addClassConstant: '_OffsetOf_item' value: 16r8!
-LHITTESTINFO addClassConstant: '_OffsetOf_pt' value: 16r0!
 LHITTESTINFO comment: ''!
 !LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !LHITTESTINFO methodsFor!

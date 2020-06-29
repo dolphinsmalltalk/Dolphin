@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Scrollbars'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Scrollbars
 Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,23 +8,17 @@ Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #ScrollBar;
-	add: #ScrollingDecorator;
-	add: #ScrollingDecoratorLayout;
-	yourself.
+package setClassNames: #(
+	#{ScrollBar}
+	#{ScrollingDecorator}
+	#{ScrollingDecoratorLayout}
+).
 
-package methodNames
-	add: 'NumberPresenter class' -> #resource_Horizontal_scroll_bar;
-	add: 'NumberPresenter class' -> #resource_Vertical_scroll_bar;
-	add: 'Presenter class' -> #resource_Scrolling_container;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{NumberPresenter class} #resource_Horizontal_scroll_bar)
+	#(#{NumberPresenter class} #resource_Vertical_scroll_bar)
+	#(#{Presenter class} #resource_Scrolling_container)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -32,7 +26,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -42,20 +37,20 @@ LayoutManager subclass: #ScrollingDecoratorLayout
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ContainerView subclass: #ScrollingDecorator
 	instanceVariableNames: 'scrollOffset tracking lineExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueConvertingControlView subclass: #ScrollBar
 	instanceVariableNames: 'continuousTracking'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

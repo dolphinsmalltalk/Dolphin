@@ -4,7 +4,8 @@ LayoutManager subclass: #ScrollingDecoratorLayout
 	instanceVariableNames: 'stretchToFit'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScrollingDecoratorLayout guid: (GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
 ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrolllingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
 

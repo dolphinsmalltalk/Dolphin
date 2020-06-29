@@ -2,12 +2,14 @@
 
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
-	classVariableNames: '_OffsetOf_iDelta _OffsetOf_iPos'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iDelta' -> 16r10.
+		'_OffsetOf_iPos' -> 16rC
+	}!
 NMUPDOWN guid: (GUID fromString: '{425d0ea7-542e-11d3-998b-d5ca2c3c1d61}')!
-NMUPDOWN addClassConstant: '_OffsetOf_iDelta' value: 16r10!
-NMUPDOWN addClassConstant: '_OffsetOf_iPos' value: 16rC!
 NMUPDOWN comment: '<NMUPDOWN> is an <ExternalStructure> class to wrap the struct ''UpDownLib.NMUPDOWN'' from type information in the ''Microsoft Windows Up-Down Control'' library.
 
 NMUPDOWN accompanies the UDN_DELTAPOS notifications that are sent by an up-down control to its parent when it has been nudged and is about to change its value. The notification is forwarded as a #nudge: event off the <SpinButton> view''s presenter.

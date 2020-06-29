@@ -4,7 +4,8 @@ AbstractCardContainer subclass: #WizardCardContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WizardCardContainer guid: (GUID fromString: '{87b4c71d-026e-11d3-9fd7-00a0cc3e4a32}')!
 WizardCardContainer comment: 'A WizardCardContainer is a <cardView> intended for the creation of "wizard" style dialog boxes. No explicit visible navigation features are presented as they are with a CardContainer. Instead, a WizardCardContainer relies on its interception of navigation commands sent programmatically, from menus, or from buttons placed within the container.
 

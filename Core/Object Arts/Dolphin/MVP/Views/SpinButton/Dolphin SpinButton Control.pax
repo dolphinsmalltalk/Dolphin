@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin SpinButton Control'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk SpinButton Common Control.
 Copyright (c) Object Arts Ltd 2005.
@@ -12,27 +12,21 @@ Note that this package replaces the default <IntegerPrompter> view with one that
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #NMUPDOWN;
-	add: #SpinButton;
-	add: #UDACCEL;
-	yourself.
+package setClassNames: #(
+	#{NMUPDOWN}
+	#{SpinButton}
+	#{UDACCEL}
+).
 
-package methodNames
-	add: 'IntegerPrompter class' -> #defaultView;
-	add: 'IntegerPrompter class' -> #resource_Spinner_view;
-	add: 'NumberPresenter class' -> #resource_Spin_button;
-	yourself.
+package setMethodNames: #(
+	#(#{IntegerPrompter class} #defaultView)
+	#(#{IntegerPrompter class} #resource_Spinner_view)
+	#(#{NumberPresenter class} #resource_Spin_button)
+).
 
-package globalNames
-	add: #UpDownControlConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{UpDownControlConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -42,7 +36,8 @@ package setPrerequisites: #(
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -50,22 +45,30 @@ package!
 
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_nInc _OffsetOf_nSec'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_nInc' -> 16r4.
+		'_OffsetOf_nSec' -> 16r0
+	}!
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
-	classVariableNames: '_OffsetOf_iDelta _OffsetOf_iPos'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_iDelta' -> 16r10.
+		'_OffsetOf_iPos' -> 16rC
+	}!
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap AlignmentMask'
+	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'UpDownControlConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AlignmentMask' -> 16rC
+	}!
 
 "Loose Methods"!
 

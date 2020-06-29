@@ -4,7 +4,8 @@ DateTimeCommonControl subclass: #MonthCalendarView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MonthCalendarView guid: (GUID fromString: '{7a3bc35d-5d09-4328-91de-d863711be2ea}')!
 MonthCalendarView comment: '`MonthCalendarView` is a `<valueView>` implementing the Windows "SysMonthCal32" common control, referred to as the "Month Calendar Control" in the MSDN documentation. 
 

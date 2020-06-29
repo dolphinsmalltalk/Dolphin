@@ -4,7 +4,8 @@ Object subclass: #StyledShadow
 	instanceVariableNames: 'color density offset'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StyledShadow guid: (GUID fromString: '{b7558f23-322b-4c65-ab23-0e43ead228bf}')!
 StyledShadow comment: ''!
 !StyledShadow categoriesForClass!Unclassified! !

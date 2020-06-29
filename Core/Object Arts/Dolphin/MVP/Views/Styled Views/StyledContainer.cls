@@ -4,7 +4,8 @@ ContainerView subclass: #StyledContainer
 	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'
 	classVariableNames: 'Nest'
 	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StyledContainer guid: (GUID fromString: '{5c05af7c-9f44-44b6-a823-0b80c9e8e8cb}')!
 StyledContainer comment: 'A GroupContainer is a <ContainerView> with improved edge and frame styling'!
 !StyledContainer categoriesForClass!MVP-Resources-Containers! !

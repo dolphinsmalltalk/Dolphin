@@ -4,7 +4,8 @@ ControlView subclass: #Tooltip
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Tooltip guid: (GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
 Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
 !Tooltip categoriesForClass!MVP-Views! !
