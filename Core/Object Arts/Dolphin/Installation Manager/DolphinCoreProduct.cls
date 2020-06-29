@@ -4,7 +4,8 @@ DolphinProduct subclass: #DolphinCoreProduct
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinCoreProduct guid: (GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
 DolphinCoreProduct comment: ''!
 !DolphinCoreProduct categoriesForClass!System-Support! !

@@ -4,7 +4,8 @@ Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
 	classVariableNames: 'Current EditionsMap'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
 DolphinProduct isAbstract: true!
 DolphinProduct comment: ''!
