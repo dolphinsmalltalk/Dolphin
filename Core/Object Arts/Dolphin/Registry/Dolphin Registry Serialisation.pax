@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Registry Serialisation'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Registry Serialisation.
 Copyright (c) Object Arts Ltd, 2004.
@@ -10,40 +10,29 @@ This package implements object serialisation to/from the system Registry. It is 
 package basicPackageVersion: '6.1'.
 
 
-package methodNames
-	add: #ByteArray -> #storeUnderRegKey:as:;
-	add: #ClassDescription -> #readFromRegKey:;
-	add: #DWORDBytes -> #regKeyType;
-	add: #ExternalIntegerBytes -> #regKeyType;
-	add: #ExternalIntegerBytes -> #storeUnderRegKey:as:;
-	add: #LargeInteger -> #storeUnderRegKey:as:;
-	add: #Object -> #storeUnderRegKey:as:;
-	add: #SmallInteger -> #storeUnderRegKey:as:;
-	add: #String -> #storeUnderRegKey:as:;
-	add: #Symbol -> #storeUnderRegKey:as:;
-	add: #UIntPtrBytes -> #regKeyType;
-	add: #UndefinedObject -> #storeUnderRegKey:as:;
-	add: 'LargeInteger class' -> #readFromRegKey:;
-	add: 'Object class' -> #fromRegKey:;
-	add: 'Symbol class' -> #readFromRegKey:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ByteArray} #storeUnderRegKey:as:)
+	#(#{ClassDescription} #readFromRegKey:)
+	#(#{DWORDBytes} #regKeyType)
+	#(#{ExternalIntegerBytes} #regKeyType)
+	#(#{ExternalIntegerBytes} #storeUnderRegKey:as:)
+	#(#{LargeInteger} #storeUnderRegKey:as:)
+	#(#{LargeInteger class} #readFromRegKey:)
+	#(#{Object} #storeUnderRegKey:as:)
+	#(#{Object class} #fromRegKey:)
+	#(#{SmallInteger} #storeUnderRegKey:as:)
+	#(#{String} #storeUnderRegKey:as:)
+	#(#{Symbol} #storeUnderRegKey:as:)
+	#(#{Symbol class} #readFromRegKey:)
+	#(#{UIntPtrBytes} #regKeyType)
+	#(#{UndefinedObject} #storeUnderRegKey:as:)
+).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

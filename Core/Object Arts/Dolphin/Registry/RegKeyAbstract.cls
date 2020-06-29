@@ -4,7 +4,8 @@ Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
 	poolDictionaries: 'Win32Errors WinRegConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKeyAbstract guid: (GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegKeyAbstract isAbstract: true!
 RegKeyAbstract comment: ''!

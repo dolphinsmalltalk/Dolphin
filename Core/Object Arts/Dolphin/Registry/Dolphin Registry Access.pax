@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Registry Access'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Registry Access.
 Copyright (c) Object Arts Ltd, 1998-2018.
@@ -19,39 +19,34 @@ userRoot removeKey: notes pathFromRoot.'.
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #RegKey;
-	add: #RegKeyAbstract;
-	add: #RegKeyValues;
-	add: #RegQueryInfo;
-	yourself.
+package setClassNames: #(
+	#{RegKey}
+	#{RegKeyAbstract}
+	#{RegKeyValues}
+	#{RegQueryInfo}
+).
 
-package methodNames
-	add: #AdvApiLibrary -> #regCloseKey:;
-	add: #AdvApiLibrary -> #regConnectRegistry:hKey:phkResult:;
-	add: #AdvApiLibrary -> #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:;
-	add: #AdvApiLibrary -> #regDeleteKey:lpSubKey:;
-	add: #AdvApiLibrary -> #regDeleteValue:lpValueName:;
-	add: #AdvApiLibrary -> #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:;
-	add: #AdvApiLibrary -> #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:;
-	add: #AdvApiLibrary -> #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:;
-	add: #AdvApiLibrary -> #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:;
-	add: #AdvApiLibrary -> #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:;
-	add: #AdvApiLibrary -> #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:;
-	yourself.
+package setMethodNames: #(
+	#(#{AdvApiLibrary} #regCloseKey:)
+	#(#{AdvApiLibrary} #regConnectRegistry:hKey:phkResult:)
+	#(#{AdvApiLibrary} #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:)
+	#(#{AdvApiLibrary} #regDeleteKey:lpSubKey:)
+	#(#{AdvApiLibrary} #regDeleteValue:lpValueName:)
+	#(#{AdvApiLibrary} #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:)
+	#(#{AdvApiLibrary} #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:)
+	#(#{AdvApiLibrary} #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:)
+	#(#{AdvApiLibrary} #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:)
+	#(#{AdvApiLibrary} #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:)
+	#(#{AdvApiLibrary} #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:)
+).
 
-package globalNames
-	add: #WinRegConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{WinRegConstants}
+).
 
 package setPrerequisites: #(
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+).
 
 package!
 
@@ -61,25 +56,26 @@ Object subclass: #RegQueryInfo
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
 	poolDictionaries: 'Win32Errors WinRegConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKeyAbstract variableSubclass: #RegKeyValues
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ RegKeyAbstract variableSubclass: #RegKeyValues
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKeyValues guid: (GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegKeyValues comment: 'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
 

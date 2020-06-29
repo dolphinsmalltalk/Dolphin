@@ -4,7 +4,8 @@ RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKey guid: (GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
 RegKey comment: 'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #WinRegConstants put: (PoolConstantsDictionary named: #WinRegConstants)!
+#{WinRegConstants} declare: (PoolConstantsDictionary named: #WinRegConstants)!
 WinRegConstants at: 'HKEY_CLASSES_ROOT' put: 16r80000000!
 WinRegConstants at: 'HKEY_CURRENT_CONFIG' put: 16r80000005!
 WinRegConstants at: 'HKEY_CURRENT_USER' put: 16r80000001!
