@@ -2,11 +2,13 @@
 
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: 'approvedSelIndices'
-	classVariableNames: 'SelectionModeMask SelectionModes'
+	classVariableNames: 'SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SelectionModeMask' -> 16r808
+	}!
 ListBox guid: (GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListBox addClassConstant: 'SelectionModeMask' value: 16r808!
 ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:

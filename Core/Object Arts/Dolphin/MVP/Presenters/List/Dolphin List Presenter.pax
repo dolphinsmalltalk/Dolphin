@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin List Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk List Presenter.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -12,36 +12,31 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #BasicListAbstract;
-	add: #ComboBox;
-	add: #ListBox;
-	add: #ListControlView;
-	add: #ListPresenter;
-	yourself.
+package setClassNames: #(
+	#{BasicListAbstract}
+	#{ComboBox}
+	#{ListBox}
+	#{ListControlView}
+	#{ListPresenter}
+).
 
-package methodNames
-	add: #View -> #wmBeginDrag:wParam:lParam:;
-	add: 'SelectableItemsPresenter class' -> #icon;
-	yourself.
+package setMethodNames: #(
+	#(#{SelectableItemsPresenter class} #icon)
+	#(#{View} #wmBeginDrag:wParam:lParam:)
+).
 
-package globalNames
-	add: #ComboBoxConstants;
-	add: #ListBoxConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{ComboBoxConstants}
+	#{ListBoxConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Additional Sort Algorithms'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Models\List\Dolphin List Models'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -51,30 +46,36 @@ SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListControlView subclass: #BasicListAbstract
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
-	classVariableNames: 'Modes'
+	classVariableNames: ''
 	poolDictionaries: 'ComboBoxConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Modes' -> #(#simple #dropDown #dropDownList)
+	}!
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: 'approvedSelIndices'
-	classVariableNames: 'SelectionModeMask SelectionModes'
+	classVariableNames: 'SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'SelectionModeMask' -> 16r808
+	}!
 
 "Loose Methods"!
 

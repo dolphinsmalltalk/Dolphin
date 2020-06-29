@@ -2,11 +2,13 @@
 
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
-	classVariableNames: 'Modes'
+	classVariableNames: ''
 	poolDictionaries: 'ComboBoxConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Modes' -> #(#simple #dropDown #dropDownList)
+	}!
 ComboBox guid: (GUID fromString: '{87b4c72b-026e-11d3-9fd7-00a0cc3e4a32}')!
-ComboBox addClassConstant: 'Modes' value: #(#simple #dropDown #dropDownList)!
 ComboBox comment: 'ComboBox is the <listView> implementing the standard Windows COMBOBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 Instance Variables:
@@ -393,13 +395,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialise the receiver's class variables.
-		ComboBox initialize
-	"
-
-	self addClassConstant: 'Modes' value: #(#simple #dropDown #dropDownList)!
-
 themePartName
 	^#ComboBox
 !
@@ -410,7 +405,6 @@ winClassName
 	^'COMBOBOX'
 ! !
 !ComboBox class categoriesFor: #icon!constants!public! !
-!ComboBox class categoriesFor: #initialize!development!initializing!private! !
 !ComboBox class categoriesFor: #themePartName!constants!private! !
 !ComboBox class categoriesFor: #winClassName!constants!private! !
 

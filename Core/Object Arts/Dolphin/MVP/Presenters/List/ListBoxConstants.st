@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ListBoxConstants put: (PoolConstantsDictionary named: #ListBoxConstants)!
+#{ListBoxConstants} declare: (PoolConstantsDictionary named: #ListBoxConstants)!
 ListBoxConstants at: 'LB_ADDFILE' put: 16r196!
 ListBoxConstants at: 'LB_ADDSTRING' put: 16r180!
 ListBoxConstants at: 'LB_CTLCODE' put: 16r0!

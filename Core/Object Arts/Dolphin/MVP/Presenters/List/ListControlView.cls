@@ -4,7 +4,8 @@ ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListControlView guid: (GUID fromString: '{8db728e5-721c-4e56-b449-5fd43d00e1ba}')!
 ListControlView isAbstract: true!
 ListControlView comment: 'ListControlView is the abstract class of <ControlView>s that display a list of items, for example the standard Windows Listbox, Listview and Treeview controls, each of which has a concrete subclass to represent it.

@@ -4,7 +4,8 @@ SelectableItemsPresenter subclass: #ListPresenter
 	instanceVariableNames: 'sortBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListPresenter guid: (GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e4a32}')!
 ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
 

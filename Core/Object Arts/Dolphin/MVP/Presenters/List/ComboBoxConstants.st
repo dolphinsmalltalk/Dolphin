@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ComboBoxConstants put: (PoolConstantsDictionary named: #ComboBoxConstants)!
+#{ComboBoxConstants} declare: (PoolConstantsDictionary named: #ComboBoxConstants)!
 ComboBoxConstants at: 'CB_ADDSTRING' put: 16r143!
 ComboBoxConstants at: 'CB_DELETESTRING' put: 16r144!
 ComboBoxConstants at: 'CB_DIR' put: 16r145!
