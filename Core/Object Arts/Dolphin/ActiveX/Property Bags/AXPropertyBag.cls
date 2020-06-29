@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #AXPropertyBag
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXPropertyBag guid: (GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
 AXPropertyBag comment: ''!
 !AXPropertyBag categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ IEnumUnknown subclass: #IEnumErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumErrorInfo guid: (IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
 IEnumErrorInfo comment: ''!
 !IEnumErrorInfo categoriesForClass!Unclassified! !

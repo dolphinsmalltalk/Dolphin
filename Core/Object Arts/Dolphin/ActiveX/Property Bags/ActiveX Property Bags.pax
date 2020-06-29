@@ -37,52 +37,69 @@ COMInterfaceImp subclass: #AXPropertyBag
 	instanceVariableNames: 'propertyTable clsid saveAll clearDirty'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #AXPropertyReadError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IErrorLog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IPropertyBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IPropertyBag2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumUnknown subclass: #IEnumErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersist subclass: #IPersistPropertyBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersistPropertyBag subclass: #IPersistPropertyBag2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #PROPBAG2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cfType _OffsetOf_clsid _OffsetOf_dwHint _OffsetOf_dwType _OffsetOf_pstrName _OffsetOf_vt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cfType' -> 16r6.
+		'_OffsetOf_clsid' -> 16r10.
+		'_OffsetOf_dwHint' -> 16r8.
+		'_OffsetOf_dwType' -> 16r0.
+		'_OffsetOf_pstrName' -> 16rC.
+		'_OffsetOf_vt' -> 16r4
+	}!
 
 "End of package definition"!
 

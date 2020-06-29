@@ -4,7 +4,8 @@ IPersistPropertyBag subclass: #IPersistPropertyBag2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersistPropertyBag2 guid: (IID fromString: '{22f55881-280b-11d0-a8a9-00a0c90c2004}')!
 IPersistPropertyBag2 comment: '<IPersistPropertyBag2> is a wrapper class for the COM interface ''OCIDL.IPersistPropertyBag2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

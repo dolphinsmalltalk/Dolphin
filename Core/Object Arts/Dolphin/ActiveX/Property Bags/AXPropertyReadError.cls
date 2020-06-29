@@ -4,7 +4,8 @@ Error subclass: #AXPropertyReadError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXPropertyReadError guid: (GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
 AXPropertyReadError comment: ''!
 !AXPropertyReadError categoriesForClass!Unclassified! !

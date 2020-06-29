@@ -4,7 +4,8 @@ IUnknown subclass: #IErrorLog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IErrorLog guid: (IID fromString: '{3127ca40-446e-11ce-8135-00aa004bb851}')!
 IErrorLog comment: '<IErrorLog> is a wrapper class for the COM interface ''OCIDL.IErrorLog'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

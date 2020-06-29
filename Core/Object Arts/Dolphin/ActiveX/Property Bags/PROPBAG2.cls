@@ -2,16 +2,18 @@
 
 OLEStructure subclass: #PROPBAG2
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cfType _OffsetOf_clsid _OffsetOf_dwHint _OffsetOf_dwType _OffsetOf_pstrName _OffsetOf_vt'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cfType' -> 16r6.
+		'_OffsetOf_clsid' -> 16r10.
+		'_OffsetOf_dwHint' -> 16r8.
+		'_OffsetOf_dwType' -> 16r0.
+		'_OffsetOf_pstrName' -> 16rC.
+		'_OffsetOf_vt' -> 16r4
+	}!
 PROPBAG2 guid: (GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
-PROPBAG2 addClassConstant: '_OffsetOf_cfType' value: 16r6!
-PROPBAG2 addClassConstant: '_OffsetOf_clsid' value: 16r10!
-PROPBAG2 addClassConstant: '_OffsetOf_dwHint' value: 16r8!
-PROPBAG2 addClassConstant: '_OffsetOf_dwType' value: 16r0!
-PROPBAG2 addClassConstant: '_OffsetOf_pstrName' value: 16rC!
-PROPBAG2 addClassConstant: '_OffsetOf_vt' value: 16r4!
 PROPBAG2 comment: '<PROPBAG2> is an <ExternalStructure> class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
 '!
 !PROPBAG2 categoriesForClass!OCIDL-Structs! !
