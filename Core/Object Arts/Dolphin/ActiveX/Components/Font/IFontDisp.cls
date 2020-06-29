@@ -4,7 +4,8 @@ IDispatch subclass: #IFontDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IFontDisp guid: (IID fromString: '{bef6e003-a874-101a-8bba-00aa00300cab}')!
 IFontDisp comment: '`IFontDisp` is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Font'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Font component. 
 Copyright (c) Object Arts Ltd 1997-2001.
@@ -10,27 +10,22 @@ This package wraps the standard OLE ''Font'' component.'.
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #IFont;
-	add: #IFontDisp;
-	yourself.
+package setClassNames: #(
+	#{IFont}
+	#{IFontDisp}
+).
 
-package methodNames
-	add: 'AbstractLOGFONT class' -> #fromOleFont:;
-	add: 'Font class' -> #fromOleFont:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{AbstractLOGFONT class} #fromOleFont:)
+	#(#{Font class} #fromOleFont:)
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\COM\OLE COM').
+	'..\..\COM\OLE COM'
+).
 
 package!
 
@@ -40,15 +35,14 @@ IUnknown subclass: #IFont
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IFontDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
