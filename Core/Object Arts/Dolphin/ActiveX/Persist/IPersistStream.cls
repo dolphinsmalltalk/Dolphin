@@ -4,7 +4,8 @@ IPersist subclass: #IPersistStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersistStream guid: (IID fromString: '{00000109-0000-0000-c000-000000000046}')!
 IPersistStream comment: '<IPersistStream> is a wrapper class for the custom interface ''OBJIDL.IPersistStream'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

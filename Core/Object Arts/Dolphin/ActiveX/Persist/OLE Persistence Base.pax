@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE Persistence Base'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE Persistence Support. 
 Copyright (c) Object Arts Ltd 2000.
@@ -10,30 +10,25 @@ This package wraps the fundamental OLE persistence interfaces in the IPersist hi
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #IPersist;
-	add: #IPersistMemory;
-	add: #IPersistStream;
-	add: #IPersistStreamInit;
-	yourself.
+package setClassNames: #(
+	#{IPersist}
+	#{IPersistMemory}
+	#{IPersistStream}
+	#{IPersistStreamInit}
+).
 
-package methodNames
-	add: #IStream -> #nextPutObject:;
-	add: #OLELibrary -> #oleLoadFromStream:iidInterface:ppvObj:;
-	add: #OLELibrary -> #oleSaveToStream:pStm:;
-	add: 'COMInterface class' -> #readFromIStream:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{COMInterface class} #readFromIStream:)
+	#(#{IStream} #nextPutObject:)
+	#(#{OLELibrary} #oleLoadFromStream:iidInterface:ppvObj:)
+	#(#{OLELibrary} #oleSaveToStream:pStm:)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
-	'..\Structured Storage\OLE Structured Storage').
+	'..\Structured Storage\OLE Structured Storage'
+).
 
 package!
 
@@ -43,25 +38,26 @@ IUnknown subclass: #IPersist
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersist subclass: #IPersistMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersist subclass: #IPersistStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPersistStream subclass: #IPersistStreamInit
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
