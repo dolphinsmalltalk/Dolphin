@@ -4,7 +4,8 @@ AXAutomationAspect subclass: #AXRecordAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXRecordAspect guid: (GUID fromString: '{0b80a2c6-1c74-4fe7-9a0e-b28bb197d120}')!
 AXRecordAspect comment: 'AXRecordAspect is a specialised <Aspect> for accessing properties of user-defined Automation structures (as represented by instances of <AXRecord>). It is an extension of the PublishedAspectorInspector framework.'!
 !AXRecordAspect categoriesForClass!Unclassified! !

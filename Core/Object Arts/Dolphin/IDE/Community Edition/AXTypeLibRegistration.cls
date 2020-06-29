@@ -4,7 +4,8 @@ Object subclass: #AXTypeLibRegistration
 	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXTypeLibRegistration guid: (GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
 AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
 

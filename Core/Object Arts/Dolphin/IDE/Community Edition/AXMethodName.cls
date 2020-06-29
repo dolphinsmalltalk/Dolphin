@@ -4,7 +4,8 @@ Object subclass: #AXMethodName
 	instanceVariableNames: 'keywords argumentNames indices'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXMethodName guid: (GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
 AXMethodName comment: ''!
 !AXMethodName categoriesForClass!Kernel-Objects! !
