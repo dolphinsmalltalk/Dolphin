@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'MetaProg Abbreviations'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'The MetaProg Abbreviations package adds an enhancement to all code windows. 
 
 A global abbreviations dictionary contains a bunch of (single- or multi-character) abbreviations for code fragments, where the key is the abbreviation and the value is the code fragment. Multi-line code fragments.are supported.
@@ -37,33 +37,22 @@ bindings := SmalltalkWorkspace acceleratorKeyBindings.
 #(''Shift+Space'' ''Ctrl+Space'') do: [:each | bindings removeKey: each ifAbsent: []].
 SmalltalkWorkspace acceleratorKeyBindings: bindings!!'.
 
-package methodNames
-	add: #SmalltalkWorkspace -> #expandAbbreviation;
-	add: #SmalltalkWorkspace -> #findSeparatorLeftAndKey:;
-	add: #SmalltalkWorkspace -> #snatchAbbreviation;
-	add: 'SmalltalkWorkspace class' -> #abbreviations;
-	add: 'SmalltalkWorkspace class' -> #defaultAbbreviations;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{SmalltalkWorkspace} #expandAbbreviation)
+	#(#{SmalltalkWorkspace} #findSeparatorLeftAndKey:)
+	#(#{SmalltalkWorkspace} #snatchAbbreviation)
+	#(#{SmalltalkWorkspace class} #abbreviations)
+	#(#{SmalltalkWorkspace class} #defaultAbbreviations)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
-	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter').
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
