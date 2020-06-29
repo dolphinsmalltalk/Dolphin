@@ -1,24 +1,19 @@
 ﻿| package |
 package := Package name: 'Dolphin Random Stream'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #Random;
-	add: #RandomLinearCongruential;
-	add: #RandomParkMiller;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Random}
+	#{RandomLinearCongruential}
+	#{RandomParkMiller}
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -28,22 +23,20 @@ Stream subclass: #Random
 	instanceVariableNames: 'seed'
 	classVariableNames: 'Default DefaultGeneratorClass'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RandomLinearCongruential subclass: #RandomParkMiller
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

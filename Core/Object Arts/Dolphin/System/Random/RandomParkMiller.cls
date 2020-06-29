@@ -4,7 +4,8 @@ RandomLinearCongruential subclass: #RandomParkMiller
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RandomParkMiller guid: (GUID fromString: '{a3ea36ec-2371-4039-bc76-4dc1fe8e69c6}')!
 RandomParkMiller comment: '<RandomParkMiller> is a specialized <RandomLinearCongruential> stream that provides an optimised implementation of Park and Miller''s ''Minimum Standard''  linear congruential pseudo-random number generator (see ''Numerical Recipes in C'', 2nd Edition; Press, Flannery, Teukolsky and Vetterling; Cambridge University Press, 1992).
 
