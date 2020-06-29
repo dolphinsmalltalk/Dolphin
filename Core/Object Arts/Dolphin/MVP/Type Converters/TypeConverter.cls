@@ -4,7 +4,8 @@ Object subclass: #TypeConverter
 	instanceVariableNames: 'leftNullValue rightNullValue'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter guid: (GUID fromString: '{87b4c4c8-026e-11d3-9fd7-00a0cc3e4a32}')!
 TypeConverter isAbstract: true!
 TypeConverter comment: 'A <TypeConverter> is capable of converting one type of object into another and vice versa. Very often a TypeConverter forms part of a <ValueConverter> model that sits between a subject value and some client of that value. The subject value is referred to as the ''left'' value and the value the client sees is the ''right'' value. In a typical usage (within the MVP framework) the ''left'' type is the type of the Model value, and the right type is the display value (usually a String).

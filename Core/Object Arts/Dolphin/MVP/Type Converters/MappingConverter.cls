@@ -4,7 +4,8 @@ TypeConverter subclass: #MappingConverter
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MappingConverter guid: (GUID fromString: '{996f6c3c-194a-4481-ad8f-1d4c9e509c8a}')!
 MappingConverter comment: '<MappingConverter> is a <TypeConverter> that can be used to convert between values from fixed sets where there is a one-to-one correspondence between a value of the left type and a value of right type.
 

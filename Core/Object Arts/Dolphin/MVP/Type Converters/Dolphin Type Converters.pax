@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Type Converters'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk MVP framework Type Converters.
 Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,24 +8,19 @@ Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #AbstractToTextConverter;
-	add: #EvaluationConverter;
-	add: #InvertingConverter;
-	add: #MappingConverter;
-	add: #NullConverter;
-	add: #PluggableTypeConverter;
-	add: #TypeConverter;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AbstractToTextConverter}
+	#{EvaluationConverter}
+	#{InvertingConverter}
+	#{MappingConverter}
+	#{NullConverter}
+	#{PluggableTypeConverter}
+	#{TypeConverter}
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -35,42 +30,44 @@ Object subclass: #TypeConverter
 	instanceVariableNames: 'leftNullValue rightNullValue'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #AbstractToTextConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #EvaluationConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #InvertingConverter
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #MappingConverter
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #NullConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

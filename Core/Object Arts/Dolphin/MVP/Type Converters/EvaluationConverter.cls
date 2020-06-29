@@ -4,7 +4,8 @@ TypeConverter subclass: #EvaluationConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EvaluationConverter guid: (GUID fromString: '{d66e11d7-487c-4b0d-972e-6cb3a52fcf06}')!
 EvaluationConverter comment: 'Left to right: Converts from Smalltalk evaluation strings to the objects they evaluate to.
 Right to left: Converts from an object to its #storeString, which is often (but not always) able to evaluate back to an equivalent object.'!

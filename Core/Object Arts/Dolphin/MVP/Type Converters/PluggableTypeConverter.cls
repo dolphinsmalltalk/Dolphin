@@ -4,7 +4,8 @@ TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableTypeConverter guid: (GUID fromString: '{54bed5f3-b28b-4731-9baa-db8de92bef40}')!
 PluggableTypeConverter comment: '<PluggableTypeConverter> is a generic <TypeConverter> that supports configurable conversions.
 

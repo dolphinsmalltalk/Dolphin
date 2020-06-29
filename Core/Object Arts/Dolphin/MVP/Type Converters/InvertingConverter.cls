@@ -4,7 +4,8 @@ TypeConverter subclass: #InvertingConverter
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InvertingConverter guid: (GUID fromString: '{87b4c705-026e-11d3-9fd7-00a0cc3e4a32}')!
 InvertingConverter comment: 'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
 
