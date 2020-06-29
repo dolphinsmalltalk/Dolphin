@@ -4,7 +4,8 @@ CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefac
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameAccessorsForVariableRefactoring guid: (GUID fromString: '{9e8e6c09-efcb-4259-82e5-b37dde861a8c}')!
 RenameAccessorsForVariableRefactoring comment: ''!
 !RenameAccessorsForVariableRefactoring categoriesForClass!Unclassified! !

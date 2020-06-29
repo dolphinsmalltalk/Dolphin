@@ -1,23 +1,17 @@
 ﻿| package |
 package := Package name: 'SUnitUI'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #TestRunner;
-	yourself.
+package setClassNames: #(
+	#{TestRunner}
+).
 
-package methodNames
-	add: 'TestCase class' -> #icon;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{TestCase class} #icon)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
@@ -28,7 +22,8 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'SUnit').
+	'SUnit'
+).
 
 package!
 
@@ -38,10 +33,8 @@ Shell subclass: #TestRunner
 	instanceVariableNames: 'result lastPass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ Object subclass: #TestCaseResult
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseResult guid: (GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
 TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
 !TestCaseResult categoriesForClass!SUnit! !

@@ -1,28 +1,23 @@
 ﻿| package |
 package := Package name: 'SUnit'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #TestCase;
-	add: #TestCaseResult;
-	add: #TestResource;
-	add: #TestResult;
-	add: #TestSkip;
-	add: #TestSuite;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{TestCase}
+	#{TestCaseResult}
+	#{TestResource}
+	#{TestResult}
+	#{TestSkip}
+	#{TestSuite}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'SUnitPreload').
+	'SUnitPreload'
+).
 
 package!
 
@@ -32,37 +27,38 @@ Object subclass: #TestCase
 	instanceVariableNames: 'testSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #TestCaseResult
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #TestResource
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'current'!
+	classInstanceVariableNames: 'current'
+	classConstants: {}!
 Object subclass: #TestResult
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #TestSuite
 	instanceVariableNames: 'tests resources name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Notification subclass: #TestSkip
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CSRefactorings'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Additional Refactorings developed by the Camp Smalltalk "Custom Refactorings and Rewrite Editor Usability" project: 
 
@@ -9,21 +9,16 @@ http://wiki.cs.uiuc.edu/CampSmalltalk/Custom+Refactorings+and+Rewrite+Editor+Usa
 Unfortunately the project team have chosen to distribute the custom refactorings as a binary ENVY database, rather than a Smalltalk chunk file, so this Dolphin package may not be up to date.'.
 
 
-package classNames
-	add: #RenameAccessorsForVariableRefactoring;
-	add: #RenameClassVariableAndAccessorsRefactoring;
-	add: #RenameInstanceVariableAndAccessorsRefactoring;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{RenameAccessorsForVariableRefactoring}
+	#{RenameClassVariableAndAccessorsRefactoring}
+	#{RenameInstanceVariableAndAccessorsRefactoring}
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings').
+	'..\..\..\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
+).
 
 package!
 
@@ -33,22 +28,20 @@ CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefac
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameInstanceVariableRefactoring subclass: #RenameInstanceVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

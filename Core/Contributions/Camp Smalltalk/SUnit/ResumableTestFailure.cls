@@ -4,7 +4,8 @@ TestFailure subclass: #ResumableTestFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResumableTestFailure guid: (GUID fromString: '{453f7575-1ad8-4700-b5ed-2e6a6990f8cd}')!
 ResumableTestFailure comment: 'A ResumableTestFailure triggers a TestFailure, but lets execution of the TestCase continue. This is useful when iterating through collections, and #assert: ing on each element. In combination with methods like TestCase>>#assert:description:, this lets you run through a whole collection and note which tests pass.
 

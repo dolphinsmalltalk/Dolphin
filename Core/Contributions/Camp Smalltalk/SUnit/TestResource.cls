@@ -4,7 +4,8 @@ Object subclass: #TestResource
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'current'!
+	classInstanceVariableNames: 'current'
+	classConstants: {}!
 TestResource guid: (GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
 TestResource isAbstract: true!
 TestResource comment: ''!

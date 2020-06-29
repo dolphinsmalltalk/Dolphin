@@ -4,7 +4,8 @@ Object subclass: #TestSuite
 	instanceVariableNames: 'tests resources name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestSuite guid: (GUID fromString: '{5e96793c-0810-11d4-a876-0050da643bf9}')!
 TestSuite comment: ''!
 !TestSuite categoriesForClass!SUnit! !

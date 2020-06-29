@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OA SUnit Extensions'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Object Arts SUnit Extensions.
 Copyright (c) Object Arts Ltd, 2002.
@@ -8,56 +8,45 @@ Copyright (c) Object Arts Ltd, 2002.
 Extensions to the basic SUnit unit testing packages, including the ability to test that the correct set of SASE events are fired for particular actions.'.
 
 
-package methodNames
-	add: #TestCase -> #<=;
-	add: #TestCase -> #=;
-	add: #TestCase -> #assert:equals:description:;
-	add: #TestCase -> #assert:identicalTo:;
-	add: #TestCase -> #assert:isKindOf:;
-	add: #TestCase -> #assert:sameAs:;
-	add: #TestCase -> #assertIsNil:;
-	add: #TestCase -> #debugWithResult;
-	add: #TestCase -> #debugWithResult:;
-	add: #TestCase -> #deny:equals:;
-	add: #TestCase -> #deny:identicalTo:;
-	add: #TestCase -> #deny:sameAs:;
-	add: #TestCase -> #denyIsNil:;
-	add: #TestCase -> #hash;
-	add: #TestCase -> #isCiBuild;
-	add: #TestCase -> #should:raise:matching:;
-	add: #TestCase -> #should:trigger:against:;
-	add: #TestCase -> #should:trigger:butNot:against:;
-	add: #TestCase -> #should:trigger:matching:against:;
-	add: #TestCase -> #should:triggerAllOf:against:;
-	add: #TestCase -> #should:triggerAllOf:matching:against:;
-	add: #TestCase -> #should:triggerAllOf:matching:butNoneOf:against:;
-	add: #TestCase -> #shouldnt:trigger:against:;
-	add: #TestCase -> #shouldnt:triggerAnyOf:against:;
-	add: #TestCase -> #skipIfCiBuild;
-	add: #TestCase -> #skipIfWin32;
-	add: #TestCase -> #skipUnless:;
-	add: #TestResult -> #debugCase:;
-	add: 'TestCase class' -> #buildSuiteFromConcreteMethods:;
-	add: 'TestCase class' -> #debugWithResult:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{TestCase} #<=)
+	#(#{TestCase} #=)
+	#(#{TestCase} #assert:equals:description:)
+	#(#{TestCase} #assert:identicalTo:)
+	#(#{TestCase} #assert:isKindOf:)
+	#(#{TestCase} #assert:sameAs:)
+	#(#{TestCase} #assertIsNil:)
+	#(#{TestCase} #debugWithResult)
+	#(#{TestCase} #debugWithResult:)
+	#(#{TestCase} #deny:equals:)
+	#(#{TestCase} #deny:identicalTo:)
+	#(#{TestCase} #deny:sameAs:)
+	#(#{TestCase} #denyIsNil:)
+	#(#{TestCase} #hash)
+	#(#{TestCase} #isCiBuild)
+	#(#{TestCase} #should:raise:matching:)
+	#(#{TestCase} #should:trigger:against:)
+	#(#{TestCase} #should:trigger:butNot:against:)
+	#(#{TestCase} #should:trigger:matching:against:)
+	#(#{TestCase} #should:triggerAllOf:against:)
+	#(#{TestCase} #should:triggerAllOf:matching:against:)
+	#(#{TestCase} #should:triggerAllOf:matching:butNoneOf:against:)
+	#(#{TestCase} #shouldnt:trigger:against:)
+	#(#{TestCase} #shouldnt:triggerAnyOf:against:)
+	#(#{TestCase} #skipIfCiBuild)
+	#(#{TestCase} #skipIfWin32)
+	#(#{TestCase} #skipUnless:)
+	#(#{TestCase class} #buildSuiteFromConcreteMethods:)
+	#(#{TestCase class} #debugWithResult:)
+	#(#{TestResult} #debugCase:)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'SUnit').
+	'SUnit'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

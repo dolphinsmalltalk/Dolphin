@@ -4,7 +4,8 @@ Object subclass: #TestCase
 	instanceVariableNames: 'testSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase guid: (GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
 TestCase isAbstract: true!
 TestCase comment: ''!

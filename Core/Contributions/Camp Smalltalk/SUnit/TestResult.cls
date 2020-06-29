@@ -4,7 +4,8 @@ Object subclass: #TestResult
 	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestResult guid: (GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
 TestResult comment: ''!
 !TestResult categoriesForClass!SUnit! !
