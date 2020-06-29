@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'VBScript Regular Expressions'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: '# Dolphin Smalltalk VBScript Regular Expressions Package
 Copyright © Object Arts Ltd, 2004.
@@ -26,27 +26,22 @@ Copyright © Object Arts Ltd, 2004.
 package basicPackageVersion: '5.5'.
 
 
-package classNames
-	add: #IMatch;
-	add: #IMatch2;
-	add: #IMatchCollection;
-	add: #IMatchCollection2;
-	add: #IRegExp;
-	add: #IRegExp2;
-	add: #IRegExpAbstract;
-	add: #ISubMatches;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{IMatch}
+	#{IMatch2}
+	#{IMatchCollection}
+	#{IMatchCollection2}
+	#{IRegExp}
+	#{IRegExp2}
+	#{IRegExpAbstract}
+	#{ISubMatches}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
-	'..\..\COM\OLE COM').
+	'..\..\COM\OLE COM'
+).
 
 package!
 
@@ -56,47 +51,50 @@ IDispatch subclass: #IMatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IMatchCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #IRegExpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #ISubMatches
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IMatch subclass: #IMatch2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IMatchCollection subclass: #IMatchCollection2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IRegExpAbstract subclass: #IRegExp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IRegExpAbstract subclass: #IRegExp2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
