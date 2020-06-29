@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBTablesStatement
 	instanceVariableNames: 'tableType'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBTablesStatement guid: (GUID fromString: '{404f79f7-4450-4d9d-9c0e-d2e9c8f897c6}')!
 DBTablesStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about tables in a database.'!
 !DBTablesStatement categoriesForClass!ODBC Interface! !

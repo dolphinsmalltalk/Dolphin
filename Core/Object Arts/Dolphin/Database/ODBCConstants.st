@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ODBCConstants put: (PoolConstantsDictionary named: #ODBCConstants)!
+#{ODBCConstants} declare: (PoolConstantsDictionary named: #ODBCConstants)!
 ODBCConstants at: 'ODBC_VS_FLAG_RETCODE' put: 16r4!
 ODBCConstants at: 'ODBC_VS_FLAG_STOP' put: 16r8!
 ODBCConstants at: 'ODBC_VS_FLAG_UNICODE_ARG' put: 16r1!

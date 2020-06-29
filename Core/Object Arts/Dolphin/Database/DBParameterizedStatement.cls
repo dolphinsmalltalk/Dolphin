@@ -4,7 +4,8 @@ DBStatement subclass: #DBParameterizedStatement
 	instanceVariableNames: 'values parameters paramCols isPrepared'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCCTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBParameterizedStatement guid: (GUID fromString: '{87b4c549-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBParameterizedStatement comment: 'A DBParameterizedStatement is used to represent a parameterized (prepared) SQL statement to be executed by a <DBConnection>.
 

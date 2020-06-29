@@ -4,7 +4,8 @@ ExternalLibrary subclass: #ODBCLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ODBCLibrary guid: (GUID fromString: '{87b4c580-026e-11d3-9fd7-00a0cc3e4a32}')!
 ODBCLibrary comment: 'This is the ExternalLibrary class to represent the Win32 System DLL, ODBC32.DLL. 
 This library contains functions pertaining to the use of Open Database Connectivity 3.0.

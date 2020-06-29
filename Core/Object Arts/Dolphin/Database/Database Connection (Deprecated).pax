@@ -1,75 +1,64 @@
 ﻿| package |
 package := Package name: 'Database Connection (Deprecated)'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.0'.
 
 
-package methodNames
-	add: #DBConnection -> #accessibleTables;
-	add: #DBConnection -> #autoCommit;
-	add: #DBConnection -> #autoCommit:;
-	add: #DBConnection -> #dbmsVer;
-	add: #DBConnection -> #defaultTxnIsolation;
-	add: #DBConnection -> #driverVer;
-	add: #DBConnection -> #expressionsInOrderBy;
-	add: #DBConnection -> #identifierQuoteChar;
-	add: #DBConnection -> #iefSupport;
-	add: #DBConnection -> #indicesOf:type:;
-	add: #DBConnection -> #invalidate;
-	add: #DBConnection -> #maxColumnNameLen;
-	add: #DBConnection -> #maxCursorNameLen;
-	add: #DBConnection -> #maxOwnerNameLen;
-	add: #DBConnection -> #maxProcedureNameLen;
-	add: #DBConnection -> #maxQualifierNameLen;
-	add: #DBConnection -> #maxTableNameLen;
-	add: #DBConnection -> #multipleActiveTxn;
-	add: #DBConnection -> #multResultSets;
-	add: #DBConnection -> #odbcSAGConformance;
-	add: #DBConnection -> #odbcVer;
-	add: #DBConnection -> #outerJoins;
-	add: #DBConnection -> #ownerTerm;
-	add: #DBConnection -> #qualifierNameSeparator;
-	add: #DBConnection -> #qualifierTerm;
-	add: #DBConnection -> #readOnly;
-	add: #DBConnection -> #readOnly:;
-	add: #DBConnection -> #rowIdCols:;
-	add: #DBConnection -> #rowUpdates;
-	add: #DBConnection -> #rowVer:;
-	add: #DBConnection -> #scrollConcurrency;
-	add: #DBConnection -> #scrollOptions;
-	add: #DBConnection -> #sourceReadOnly;
-	add: #DBConnection -> #trace;
-	add: #DBConnection -> #trace:;
-	add: #DBConnection -> #txnCapable;
-	add: #DBConnection -> #txnIsolationOptions;
-	add: #DBConnection -> #uniqueIndexOf:;
-	add: #DBResultSet -> #invalidate;
-	add: #DBResultSet -> #prev;
-	add: #ODBCTIMESTAMP -> #asTimeStamp;
-	add: 'DBConnection class' -> #interpretTxnIsolationMask:;
-	add: 'ODBCTIMESTAMP class' -> #fromTimeStamp:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{DBConnection} #accessibleTables)
+	#(#{DBConnection} #autoCommit)
+	#(#{DBConnection} #autoCommit:)
+	#(#{DBConnection} #dbmsVer)
+	#(#{DBConnection} #defaultTxnIsolation)
+	#(#{DBConnection} #driverVer)
+	#(#{DBConnection} #expressionsInOrderBy)
+	#(#{DBConnection} #identifierQuoteChar)
+	#(#{DBConnection} #iefSupport)
+	#(#{DBConnection} #indicesOf:type:)
+	#(#{DBConnection} #invalidate)
+	#(#{DBConnection} #maxColumnNameLen)
+	#(#{DBConnection} #maxCursorNameLen)
+	#(#{DBConnection} #maxOwnerNameLen)
+	#(#{DBConnection} #maxProcedureNameLen)
+	#(#{DBConnection} #maxQualifierNameLen)
+	#(#{DBConnection} #maxTableNameLen)
+	#(#{DBConnection} #multipleActiveTxn)
+	#(#{DBConnection} #multResultSets)
+	#(#{DBConnection} #odbcSAGConformance)
+	#(#{DBConnection} #odbcVer)
+	#(#{DBConnection} #outerJoins)
+	#(#{DBConnection} #ownerTerm)
+	#(#{DBConnection} #qualifierNameSeparator)
+	#(#{DBConnection} #qualifierTerm)
+	#(#{DBConnection} #readOnly)
+	#(#{DBConnection} #readOnly:)
+	#(#{DBConnection} #rowIdCols:)
+	#(#{DBConnection} #rowUpdates)
+	#(#{DBConnection} #rowVer:)
+	#(#{DBConnection} #scrollConcurrency)
+	#(#{DBConnection} #scrollOptions)
+	#(#{DBConnection} #sourceReadOnly)
+	#(#{DBConnection} #trace)
+	#(#{DBConnection} #trace:)
+	#(#{DBConnection} #txnCapable)
+	#(#{DBConnection} #txnIsolationOptions)
+	#(#{DBConnection} #uniqueIndexOf:)
+	#(#{DBConnection class} #interpretTxnIsolationMask:)
+	#(#{DBResultSet} #invalidate)
+	#(#{DBResultSet} #prev)
+	#(#{ODBCTIMESTAMP} #asTimeStamp)
+	#(#{ODBCTIMESTAMP class} #fromTimeStamp:)
+).
 
 package setPrerequisites: #(
 	'Database Connection Base'
-	'..\Base\Dolphin').
+	'..\Base\Dolphin'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

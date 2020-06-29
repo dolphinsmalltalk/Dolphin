@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Database Connection'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk ODBC Database Connection Development Extensions
 Copyright (c) Object Arts Ltd, 1997-2003. Portions copyright CGI Group (Europe) Ltd, 1997.
@@ -19,31 +19,20 @@ ODBCTIME defineTemplate.
 ODBCTIMESTAMP defineTemplate.
 ODBCLibrary initialize.'.
 
-package methodNames
-	add: #DBAbstractRow -> #publishedAspects;
-	add: #DBResultSet -> #debugPrintString;
-	add: #DBResultSet -> #publishedKeyedAspectsBatchSize;
-	add: 'DBResultSet class' -> #newInstanceAspect:class:;
-	add: 'DBResultSet class' -> #publishedAspectsOfInstances;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{DBAbstractRow} #publishedAspects)
+	#(#{DBResultSet} #debugPrintString)
+	#(#{DBResultSet} #publishedKeyedAspectsBatchSize)
+	#(#{DBResultSet class} #newInstanceAspect:class:)
+	#(#{DBResultSet class} #publishedAspectsOfInstances)
+).
 
 package setPrerequisites: #(
 	'Database Connection Base'
-	'..\IDE\Base\Development System').
+	'..\IDE\Base\Development System'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

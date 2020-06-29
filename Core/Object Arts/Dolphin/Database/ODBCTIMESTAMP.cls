@@ -2,17 +2,19 @@
 
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_month _OffsetOf_second _OffsetOf_year'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_day' -> 16r4.
+		'_OffsetOf_fraction' -> 16rC.
+		'_OffsetOf_hour' -> 16r6.
+		'_OffsetOf_minute' -> 16r8.
+		'_OffsetOf_month' -> 16r2.
+		'_OffsetOf_second' -> 16rA.
+		'_OffsetOf_year' -> 16r0
+	}!
 ODBCTIMESTAMP guid: (GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_day' value: 16r4!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_fraction' value: 16rC!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_hour' value: 16r6!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_minute' value: 16r8!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_month' value: 16r2!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_second' value: 16rA!
-ODBCTIMESTAMP addClassConstant: '_OffsetOf_year' value: 16r0!
 ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!

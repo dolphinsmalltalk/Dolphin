@@ -4,7 +4,8 @@ DBAbstractStatement subclass: #DBStatement
 	instanceVariableNames: 'sqlString'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBStatement guid: (GUID fromString: '{87b4c477-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBStatement comment: 'A DBStatement is used to represent an SQL statement to be executed by a <DBConnection>.
 

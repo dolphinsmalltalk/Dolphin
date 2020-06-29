@@ -4,7 +4,8 @@ Object subclass: #DBAbstractRow
 	instanceVariableNames: 'columns contents selectors status'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBAbstractRow guid: (GUID fromString: '{c829ece2-5847-4e24-855e-a9c259dd955f}')!
 DBAbstractRow isAbstract: true!
 DBAbstractRow comment: 'A DBAbstractRow respresents a row in a <DBResultSet>, either as a buffer containing a collection of field buffers used to receive data from ODBC (subclasses of DBRowBuffer), or as a reified row containing the column values as appropriate types of Smalltalk object (DBRow).

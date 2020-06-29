@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBProceduresStatement
 	instanceVariableNames: 'procedureName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBProceduresStatement guid: (GUID fromString: '{3dee7e8f-6c0c-403c-923a-7677f5e7c810}')!
 DBProceduresStatement comment: 'DBProceduresStatement is a specialized <DBSchemaStatement> for querying about the stored procedures in a database.'!
 !DBProceduresStatement categoriesForClass!ODBC Interface! !

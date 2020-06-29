@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ODBCCTypes put: (PoolConstantsDictionary named: #ODBCCTypes)!
+#{ODBCCTypes} declare: (PoolConstantsDictionary named: #ODBCCTypes)!
 ODBCCTypes at: 'SQL_C_BINARY' put: -16r2!
 ODBCCTypes at: 'SQL_C_BIT' put: -16r7!
 ODBCCTypes at: 'SQL_C_BOOKMARK' put: -16r12!

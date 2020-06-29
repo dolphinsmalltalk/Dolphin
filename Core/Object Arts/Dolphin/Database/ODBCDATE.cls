@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #ODBCDATE
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_day _OffsetOf_month _OffsetOf_year'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_day' -> 16r4.
+		'_OffsetOf_month' -> 16r2.
+		'_OffsetOf_year' -> 16r0
+	}!
 ODBCDATE guid: (GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
-ODBCDATE addClassConstant: '_OffsetOf_day' value: 16r4!
-ODBCDATE addClassConstant: '_OffsetOf_month' value: 16r2!
-ODBCDATE addClassConstant: '_OffsetOf_year' value: 16r0!
 ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
 !ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCDATE methodsFor!

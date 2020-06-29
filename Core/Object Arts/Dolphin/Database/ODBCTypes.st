@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ODBCTypes put: (PoolConstantsDictionary named: #ODBCTypes)!
+#{ODBCTypes} declare: (PoolConstantsDictionary named: #ODBCTypes)!
 ODBCTypes at: 'SQL_BIGINT' put: -16r5!
 ODBCTypes at: 'SQL_BINARY' put: -16r2!
 ODBCTypes at: 'SQL_BIT' put: -16r7!

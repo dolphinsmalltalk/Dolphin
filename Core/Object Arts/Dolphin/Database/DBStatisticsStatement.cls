@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBStatisticsStatement
 	instanceVariableNames: 'type accurate'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBStatisticsStatement guid: (GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
 DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
 !DBStatisticsStatement categoriesForClass!ODBC Interface! !

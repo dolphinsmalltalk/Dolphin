@@ -2,12 +2,14 @@
 
 Object subclass: #DBColAttr
 	instanceVariableNames: 'columnNumber name length sqlType precision scale special'
-	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
+	classVariableNames: ''
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CTypesExtraBytes' -> #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0).
+		'SQLToCTypes' -> #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)
+	}!
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
-DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)!
-DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)!
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:

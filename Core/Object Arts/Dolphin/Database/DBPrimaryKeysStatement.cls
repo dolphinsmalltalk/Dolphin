@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBPrimaryKeysStatement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBPrimaryKeysStatement guid: (GUID fromString: '{7df04e35-7e59-4700-9155-347cc2e61649}')!
 DBPrimaryKeysStatement comment: 'DBPrimaryKeysStatement is a specialized <DBSchemaStatement> for querying about the primary keys of tables in a database.'!
 !DBPrimaryKeysStatement categoriesForClass!ODBC Interface! !

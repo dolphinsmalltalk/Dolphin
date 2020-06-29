@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #DBColFlags put: (PoolConstantsDictionary named: #DBColFlags)!
+#{DBColFlags} declare: (PoolConstantsDictionary named: #DBColFlags)!
 DBColFlags at: 'DeleteCascade' put: 16r10!
 DBColFlags at: 'DeleteRestrict' put: 16r20!
 DBColFlags at: 'DeleteRules' put: 16r70!

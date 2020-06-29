@@ -2,13 +2,15 @@
 
 ExternalStructure subclass: #ODBCTIME
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hour _OffsetOf_minute _OffsetOf_second'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hour' -> 16r0.
+		'_OffsetOf_minute' -> 16r2.
+		'_OffsetOf_second' -> 16r4
+	}!
 ODBCTIME guid: (GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
-ODBCTIME addClassConstant: '_OffsetOf_hour' value: 16r0!
-ODBCTIME addClassConstant: '_OffsetOf_minute' value: 16r2!
-ODBCTIME addClassConstant: '_OffsetOf_second' value: 16r4!
 ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
 !ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCTIME methodsFor!

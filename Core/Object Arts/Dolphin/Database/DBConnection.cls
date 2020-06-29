@@ -4,7 +4,8 @@ Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'
 	classVariableNames: 'Connections DriverCompleteMask HEnv ScrollTypes TxnIsolationLevels'
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnection guid: (GUID fromString: '{87b4c472-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBConnection comment: 'A DBConnection represents a connection to an ODBC data source.
 

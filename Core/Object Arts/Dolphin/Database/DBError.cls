@@ -4,7 +4,8 @@ Error subclass: #DBError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBError guid: (GUID fromString: '{87b4c559-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBError comment: 'Instances of DBError hold exception information for Database Connection errors.'!
 !DBError categoriesForClass!ODBC Interface! !

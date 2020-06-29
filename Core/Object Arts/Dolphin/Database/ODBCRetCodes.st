@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ODBCRetCodes put: (PoolConstantsDictionary named: #ODBCRetCodes)!
+#{ODBCRetCodes} declare: (PoolConstantsDictionary named: #ODBCRetCodes)!
 ODBCRetCodes at: 'SQL_ERROR' put: -16r1!
 ODBCRetCodes at: 'SQL_INVALID_HANDLE' put: -16r2!
 ODBCRetCodes at: 'SQL_NEED_DATA' put: 16r63!

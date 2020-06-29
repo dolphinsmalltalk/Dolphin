@@ -4,7 +4,8 @@ DBAbstractRow subclass: #DBRow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBRow guid: (GUID fromString: '{fedd9382-e7b2-4030-935f-e688eac94360}')!
 DBRow comment: 'A DBRow respresents a snapshot of a row in a <DBResultSet>, the contents of which are appropriate types of Smalltalk object to represent the column values of the row.'!
 !DBRow categoriesForClass!Kernel-Objects! !

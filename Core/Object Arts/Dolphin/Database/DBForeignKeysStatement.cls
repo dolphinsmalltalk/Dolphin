@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBForeignKeysStatement
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBForeignKeysStatement guid: (GUID fromString: '{b6f9e2f2-9df3-4719-ae44-5f079843683f}')!
 DBForeignKeysStatement comment: ''!
 !DBForeignKeysStatement categoriesForClass!ODBC Interface! !

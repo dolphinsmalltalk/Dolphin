@@ -4,7 +4,8 @@ Object subclass: #DBTxn
 	instanceVariableNames: 'connection readOnly creator'
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBTxn guid: (GUID fromString: '{87b4c478-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBTxn comment: 'A DBTxn instance represents a Database Connection transaction in progress.
 

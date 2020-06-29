@@ -4,7 +4,8 @@ DBSchemaStatement subclass: #DBSpecialColumnsStatement
 	instanceVariableNames: 'columnType scope nullable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBSpecialColumnsStatement guid: (GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
 DBSpecialColumnsStatement comment: ''!
 !DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !

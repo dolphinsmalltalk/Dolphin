@@ -4,7 +4,8 @@ Object subclass: #DBErrorDetails
 	instanceVariableNames: 'msg nativeErr sqlState origin'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBErrorDetails guid: (GUID fromString: '{87b4c473-026e-11d3-9fd7-00a0cc3e4a32}')!
 DBErrorDetails comment: 'DBErrorDetails instances hold information about a particular ODBC sub-error.
 
