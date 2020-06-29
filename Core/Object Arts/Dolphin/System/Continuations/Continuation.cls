@@ -4,7 +4,8 @@ Object subclass: #Continuation
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Continuation guid: (GUID fromString: '{04fb1134-b5e1-4651-b95b-aee8814a0ec6}')!
 Continuation comment: 'Dolphin implementation of the Call Continuation class inspired by that implemented for Seaside in Squeak by Avi Bryant.
 

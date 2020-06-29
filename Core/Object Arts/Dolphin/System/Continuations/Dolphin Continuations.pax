@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Continuations'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Call Continuations.
 Copyright (c) Object Arts Ltd, 2002.
@@ -28,38 +28,33 @@ Debugger
 		of: Process
 		type: 3!!'.
 
-package classNames
-	add: #Continuation;
-	add: #ProcessCopier;
-	yourself.
+package setClassNames: #(
+	#{Continuation}
+	#{ProcessCopier}
+).
 
-package methodNames
-	add: #BlockClosure -> #acceptProcessCopier:;
-	add: #BlockClosure -> #callCC;
-	add: #BlockClosure -> #deepenProcessCopy:;
-	add: #Context -> #acceptProcessCopier:;
-	add: #Context -> #deepenProcessCopy:;
-	add: #ExceptionHandler -> #deepenProcessCopy:;
-	add: #ExceptionHandlerAbstract -> #acceptProcessCopier:;
-	add: #ExceptionHandlerAbstract -> #deepenProcessCopy:;
-	add: #ExceptionHandlerSet -> #deepenProcessCopy:;
-	add: #Object -> #acceptProcessCopier:;
-	add: #Process -> #acceptProcessCopier:;
-	add: #Process -> #continueWith:;
-	add: #Process -> #copy;
-	add: #Process -> #postCopy;
-	add: #StackFrame -> #copyStack;
-	add: #StackFrame -> #rebase:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BlockClosure} #acceptProcessCopier:)
+	#(#{BlockClosure} #callCC)
+	#(#{BlockClosure} #deepenProcessCopy:)
+	#(#{Context} #acceptProcessCopier:)
+	#(#{Context} #deepenProcessCopy:)
+	#(#{ExceptionHandler} #deepenProcessCopy:)
+	#(#{ExceptionHandlerAbstract} #acceptProcessCopier:)
+	#(#{ExceptionHandlerAbstract} #deepenProcessCopy:)
+	#(#{ExceptionHandlerSet} #deepenProcessCopy:)
+	#(#{Object} #acceptProcessCopier:)
+	#(#{Process} #acceptProcessCopier:)
+	#(#{Process} #continueWith:)
+	#(#{Process} #copy)
+	#(#{Process} #postCopy)
+	#(#{StackFrame} #copyStack)
+	#(#{StackFrame} #rebase:)
+).
 
 package setPrerequisites: #(
-	'..\..\Base\Dolphin').
+	'..\..\Base\Dolphin'
+).
 
 package!
 
@@ -69,15 +64,14 @@ Object subclass: #Continuation
 	instanceVariableNames: 'stack'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ProcessCopier
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
