@@ -4,7 +4,8 @@ SerialNumberProtector subclass: #PC1SerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PC1SerialNumberProtector guid: (GUID fromString: '{5c339df7-5279-436b-87d2-09b67f105263}')!
 PC1SerialNumberProtector comment: 'A simple PC1-based implementation of encryption for Protected Product serial numbers.
 

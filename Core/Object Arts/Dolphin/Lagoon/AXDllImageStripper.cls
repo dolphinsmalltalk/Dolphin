@@ -4,7 +4,8 @@ ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXDllImageStripper guid: (GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
 AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 

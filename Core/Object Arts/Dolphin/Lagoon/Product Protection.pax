@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Product Protection'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Product Protection Package.
 Copyright (c) Object Arts Ltd, 2002-2005.
@@ -27,22 +27,17 @@ The above scenario uses the default encryption which may not be suitable for all
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #ProtectedProductSessionManager;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ProtectedProductSessionManager}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Presenters\Prompters\Dolphin Prompter'
-	'..\Registry\Dolphin Registry Access').
+	'..\Registry\Dolphin Registry Access'
+).
 
 package!
 
@@ -52,12 +47,8 @@ RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	instanceVariableNames: 'encryptedClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

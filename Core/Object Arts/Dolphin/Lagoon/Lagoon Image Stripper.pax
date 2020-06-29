@@ -43,10 +43,15 @@ Object subclass: #BasicImageStripper
 	classConstants: {}!
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
-	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
+	classVariableNames: 'MessageMap'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'CaptionId' -> 16r3F9.
+		'ExplanationId' -> 16r3FA.
+		'ProgressId' -> 16r3F7.
+		'StatusId' -> 16r3F8
+	}!
 Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''

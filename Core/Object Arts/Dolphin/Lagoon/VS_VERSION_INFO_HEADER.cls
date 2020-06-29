@@ -2,13 +2,15 @@
 
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
-	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_wLength' -> 16r0.
+		'_OffsetOf_wType' -> 16r4.
+		'_OffsetOf_wValueLength' -> 16r2
+	}!
 VS_VERSION_INFO_HEADER guid: (GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
-VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wLength' value: 16r0!
-VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wType' value: 16r4!
-VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wValueLength' value: 16r2!
 VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!

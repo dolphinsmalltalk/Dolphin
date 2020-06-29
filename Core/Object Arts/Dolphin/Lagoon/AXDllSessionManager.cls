@@ -4,7 +4,8 @@ SessionManager subclass: #AXDllSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AXDllSessionManager guid: (GUID fromString: '{56681788-e7fe-4454-8973-c3d801c5f034}')!
 AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
 

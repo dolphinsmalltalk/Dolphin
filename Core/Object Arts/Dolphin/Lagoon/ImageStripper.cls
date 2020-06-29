@@ -2,40 +2,42 @@
 
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
-	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
+	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AllResourcesStripped' -> 16r1.
+		'ClearGuidsMask' -> 16r1.
+		'CompileStructsMask' -> 16r100.
+		'EmptyMethodDictsMask' -> 16r800.
+		'FoldBytecodesMask' -> 16r1000.
+		'FoldMethodDictsMask' -> 16r200.
+		'FoldStringsMask' -> 16r2.
+		'IgnoreViewReferencesMask' -> 16r80000.
+		'KeepImageMask' -> 16r2000000.
+		'LogLiveClassesMask' -> 16r8000000.
+		'LogPrerequisitesMask' -> 16r40000.
+		'LogReferencesMask' -> 16r2000.
+		'NoXPManifestMask' -> 16r200000.
+		'PreserveAspectsMask' -> 16r4.
+		'PurgeStubbornClassesMask' -> 16r4000000.
+		'RemoveAbstractUnreachable' -> 16r2.
+		'RetainDevSysMask' -> 16r10000000.
+		'RetainInstVarNamesMask' -> 16r8.
+		'RetainSubclassRespMask' -> 16r800000.
+		'StripClassBuilderMask' -> 16r4000.
+		'StripClassesMask' -> 16r10.
+		'StripClassInfoMask' -> 16r20.
+		'StripDeprecatedMask' -> 16r10000.
+		'StripMethodsMask' -> 16r40.
+		'StripPackagesMask' -> 16r20000.
+		'StripResourcesMask' -> 16r80.
+		'StripShouldNotImplMask' -> 16r8000.
+		'ToGoMask' -> 16r100000.
+		'UnattendedMask' -> 16r1000000.
+		'WriteLogMask' -> 16r400
+	}!
 ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
-ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r1!
-ImageStripper addClassConstant: 'ClearGuidsMask' value: 16r1!
-ImageStripper addClassConstant: 'CompileStructsMask' value: 16r100!
-ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 16r800!
-ImageStripper addClassConstant: 'FoldBytecodesMask' value: 16r1000!
-ImageStripper addClassConstant: 'FoldMethodDictsMask' value: 16r200!
-ImageStripper addClassConstant: 'FoldStringsMask' value: 16r2!
-ImageStripper addClassConstant: 'IgnoreViewReferencesMask' value: 16r80000!
-ImageStripper addClassConstant: 'KeepImageMask' value: 16r2000000!
-ImageStripper addClassConstant: 'LogLiveClassesMask' value: 16r8000000!
-ImageStripper addClassConstant: 'LogPrerequisitesMask' value: 16r40000!
-ImageStripper addClassConstant: 'LogReferencesMask' value: 16r2000!
-ImageStripper addClassConstant: 'NoXPManifestMask' value: 16r200000!
-ImageStripper addClassConstant: 'PreserveAspectsMask' value: 16r4!
-ImageStripper addClassConstant: 'PurgeStubbornClassesMask' value: 16r4000000!
-ImageStripper addClassConstant: 'RemoveAbstractUnreachable' value: 16r2!
-ImageStripper addClassConstant: 'RetainDevSysMask' value: 16r10000000!
-ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 16r8!
-ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 16r800000!
-ImageStripper addClassConstant: 'StripClassBuilderMask' value: 16r4000!
-ImageStripper addClassConstant: 'StripClassesMask' value: 16r10!
-ImageStripper addClassConstant: 'StripClassInfoMask' value: 16r20!
-ImageStripper addClassConstant: 'StripDeprecatedMask' value: 16r10000!
-ImageStripper addClassConstant: 'StripMethodsMask' value: 16r40!
-ImageStripper addClassConstant: 'StripPackagesMask' value: 16r20000!
-ImageStripper addClassConstant: 'StripResourcesMask' value: 16r80!
-ImageStripper addClassConstant: 'StripShouldNotImplMask' value: 16r8000!
-ImageStripper addClassConstant: 'ToGoMask' value: 16r100000!
-ImageStripper addClassConstant: 'UnattendedMask' value: 16r1000000!
-ImageStripper addClassConstant: 'WriteLogMask' value: 16r400!
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:

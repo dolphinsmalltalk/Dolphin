@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #IPDolphin
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IPDolphin guid: (GUID fromString: '{b115d2d8-5a00-4a5e-8615-109a3332690f}')!
 IPDolphin comment: 'IPDolphin is the singleton class whose instance hosts the main inbound COM interface, <IIPPlugHole> from the Dolphin in-process COM DLL stub. It is responsible for initialization and shutdown of the image, and ultimately for implementing the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer functions that are exported by the stub.
 

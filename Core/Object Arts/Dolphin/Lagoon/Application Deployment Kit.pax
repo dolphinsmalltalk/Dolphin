@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Application Deployment Kit'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Application Deployment Kit. 
 Copyright (c) Object Arts Ltd, 1998-2006.
@@ -14,65 +14,59 @@ For documentation evaluate:
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #ApplicationDeploymentWizard;
-	yourself.
+package setClassNames: #(
+	#{ApplicationDeploymentWizard}
+).
 
-package methodNames
-	add: #BasicImageStripper -> #getEvents;
-	add: #BasicImageStripper -> #postCopy;
-	add: #BasicImageStripper -> #setEvents:;
-	add: #ImageStripper -> #canDeploy;
-	add: #ImageStripper -> #compileExternalStructures:;
-	add: #ImageStripper -> #defaultSessionManagerClass;
-	add: #ImageStripper -> #deploy;
-	add: #ImageStripper -> #editCustomOptions;
-	add: #ImageStripper -> #executableName:;
-	add: #ImageStripper -> #ignoreViewReferences:;
-	add: #ImageStripper -> #includeManifestResource:;
-	add: #ImageStripper -> #initialize;
-	add: #ImageStripper -> #isToGo:;
-	add: #ImageStripper -> #isUnattended:;
-	add: #ImageStripper -> #logReferencesToClasses:;
-	add: #ImageStripper -> #preserveAspectSetters:;
-	add: #ImageStripper -> #preStripScript:;
-	add: #ImageStripper -> #queryCommand:;
-	add: #ImageStripper -> #retainInstVarNames:;
-	add: #ImageStripper -> #rootPackage:;
-	add: #ImageStripper -> #runtimeSessionManagerClass:;
-	add: #ImageStripper -> #snapshotType:;
-	add: #ImageStripper -> #stripClassBuilder:;
-	add: #ImageStripper -> #stripClassGuids:;
-	add: #ImageStripper -> #stripClassInfo:;
-	add: #ImageStripper -> #stripDeprecatedMethods:;
-	add: #ImageStripper -> #stripDuplicateBytecodes:;
-	add: #ImageStripper -> #stripDuplicateStrings:;
-	add: #ImageStripper -> #stripRedundantClasses:;
-	add: #ImageStripper -> #stripRedundantMethods:;
-	add: #ImageStripper -> #stripRedundantPackages:;
-	add: #ImageStripper -> #stripRedundantResources:;
-	add: #ImageStripper -> #stripShouldNotImplement:;
-	add: #ImageStripper -> #stripSubclassResponsibility:;
-	add: #ImageStripper -> #stubFilePath:;
-	add: #ImageStripper -> #versionResource:;
-	add: #ImageStripper -> #writeLogFile:;
-	add: #Package -> #hasImageStripper;
-	add: #Package -> #imageStripper;
-	add: #Package -> #rehydrateImageStripper:;
-	add: #PackageSelector -> #deploy;
-	add: #VS_VERSION_INFO_HEADER -> #printOn:;
-	add: 'ImageStripper class' -> #for:;
-	add: 'ImageStripper class' -> #publishedAspectsOfInstances;
-	add: 'ImageStripper class' -> #stbConvertFrom:;
-	add: 'ImageStripper class' -> #stbVersion;
-	add: 'VersionResource class' -> #publishedAspectsOfInstances;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BasicImageStripper} #getEvents)
+	#(#{BasicImageStripper} #postCopy)
+	#(#{BasicImageStripper} #setEvents:)
+	#(#{ImageStripper} #canDeploy)
+	#(#{ImageStripper} #compileExternalStructures:)
+	#(#{ImageStripper} #defaultSessionManagerClass)
+	#(#{ImageStripper} #deploy)
+	#(#{ImageStripper} #editCustomOptions)
+	#(#{ImageStripper} #executableName:)
+	#(#{ImageStripper} #ignoreViewReferences:)
+	#(#{ImageStripper} #includeManifestResource:)
+	#(#{ImageStripper} #initialize)
+	#(#{ImageStripper} #isToGo:)
+	#(#{ImageStripper} #isUnattended:)
+	#(#{ImageStripper} #logReferencesToClasses:)
+	#(#{ImageStripper} #preserveAspectSetters:)
+	#(#{ImageStripper} #preStripScript:)
+	#(#{ImageStripper} #queryCommand:)
+	#(#{ImageStripper} #retainInstVarNames:)
+	#(#{ImageStripper} #rootPackage:)
+	#(#{ImageStripper} #runtimeSessionManagerClass:)
+	#(#{ImageStripper} #snapshotType:)
+	#(#{ImageStripper} #stripClassBuilder:)
+	#(#{ImageStripper} #stripClassGuids:)
+	#(#{ImageStripper} #stripClassInfo:)
+	#(#{ImageStripper} #stripDeprecatedMethods:)
+	#(#{ImageStripper} #stripDuplicateBytecodes:)
+	#(#{ImageStripper} #stripDuplicateStrings:)
+	#(#{ImageStripper} #stripRedundantClasses:)
+	#(#{ImageStripper} #stripRedundantMethods:)
+	#(#{ImageStripper} #stripRedundantPackages:)
+	#(#{ImageStripper} #stripRedundantResources:)
+	#(#{ImageStripper} #stripShouldNotImplement:)
+	#(#{ImageStripper} #stripSubclassResponsibility:)
+	#(#{ImageStripper} #stubFilePath:)
+	#(#{ImageStripper} #versionResource:)
+	#(#{ImageStripper} #writeLogFile:)
+	#(#{ImageStripper class} #for:)
+	#(#{ImageStripper class} #publishedAspectsOfInstances)
+	#(#{ImageStripper class} #stbConvertFrom:)
+	#(#{ImageStripper class} #stbVersion)
+	#(#{Package} #hasImageStripper)
+	#(#{Package} #imageStripper)
+	#(#{Package} #rehydrateImageStripper:)
+	#(#{PackageSelector} #deploy)
+	#(#{VersionResource class} #publishedAspectsOfInstances)
+	#(#{VS_VERSION_INFO_HEADER} #printOn:)
+).
 
 package setPrerequisites: #(
 	'..\IDE\Base\Development System'
@@ -95,7 +89,8 @@ package setPrerequisites: #(
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
 	'Lagoon Image Stripper'
-	'..\ActiveX\Components\Picture\OLE Picture').
+	'..\ActiveX\Components\Picture\OLE Picture'
+).
 
 package!
 
@@ -105,10 +100,8 @@ ValueDialog subclass: #ApplicationDeploymentWizard
 	instanceVariableNames: 'imageStripperClass executableName executablePath1 executablePath2 rootPackage runtimeSessionManagerClass stripRedundantMethods stripDeprecatedMethods stripShouldNotImplement stripRedundantPackages stripRedundantClasses preserveAspectSetters stripDuplicateStrings stripDuplicateBytecodes stripClassInfo retainInstVarNames stripClassGuids stripClassBuilder unused stripRedundantResources compileExternalStructures writeLogFile preStripScriptWorkspace preStripScriptErrors logFileName logReferencesToClasses stepsView isToGo stripSubclassResponsibility'
 	classVariableNames: 'SaveImageOnDeploy'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

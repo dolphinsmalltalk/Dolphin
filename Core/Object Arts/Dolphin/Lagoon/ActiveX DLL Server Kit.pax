@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX DLL Server Kit'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X In-Process Server Deployment Kit 
 Copyright (c) Object Arts Ltd, 2001-2002.
@@ -16,20 +16,14 @@ package basicPackageVersion: '6.1'.
 
 package basicScriptAt: #preinstall put: 'Win32Errors at: ''CLASS_E_CLASSNOTAVAILABLE'' put: -16r7FFBFEEF!!'.
 
-package classNames
-	add: #AXDllGUISessionManager;
-	add: #AXDllImageStripper;
-	add: #AXDllSessionManager;
-	add: #IIPDolphin;
-	add: #IIPPlugHole;
-	add: #IPDolphin;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AXDllGUISessionManager}
+	#{AXDllImageStripper}
+	#{AXDllSessionManager}
+	#{IIPDolphin}
+	#{IIPPlugHole}
+	#{IPDolphin}
+).
 
 package setPrerequisites: #(
 	'..\ActiveX\Automation\ActiveX Automation'
@@ -38,10 +32,12 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
 	'Lagoon Image Stripper'
-	'..\ActiveX\COM\OLE COM').
+	'..\ActiveX\COM\OLE COM'
+).
 
 package setManualPrerequisites: #(
-	'ActiveX Automation').
+	'ActiveX Automation'
+).
 
 package!
 
@@ -51,37 +47,38 @@ ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp subclass: #IPDolphin
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IIPDolphin
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IIPPlugHole
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SessionManager subclass: #AXDllSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GUISessionManager subclass: #AXDllGUISessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

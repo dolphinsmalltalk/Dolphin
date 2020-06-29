@@ -1,30 +1,25 @@
 ﻿| package |
 package := Package name: 'Product Protection Base'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: 'OA 6 CU 1'.
 
 
-package classNames
-	add: #ElgamalSerialNumberProtector;
-	add: #PC1ProductProtector;
-	add: #PC1SerialNumberProtector;
-	add: #ProductProtector;
-	add: #ProtectedProductSerialNumber;
-	add: #SerialNumberProtector;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ElgamalSerialNumberProtector}
+	#{PC1ProductProtector}
+	#{PC1SerialNumberProtector}
+	#{ProductProtector}
+	#{ProtectedProductSerialNumber}
+	#{SerialNumberProtector}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\DolphinSure\DolphinSure').
+	'..\DolphinSure\DolphinSure'
+).
 
 package!
 
@@ -34,37 +29,38 @@ Object subclass: #ProductProtector
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ProtectedProductSerialNumber
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SerialNumberProtector
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProductProtector subclass: #PC1ProductProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SerialNumberProtector subclass: #ElgamalSerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SerialNumberProtector subclass: #PC1SerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

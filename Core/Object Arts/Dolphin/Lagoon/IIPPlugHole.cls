@@ -4,7 +4,8 @@ IUnknown subclass: #IIPPlugHole
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IIPPlugHole guid: (IID fromString: '{7dac28a4-28f3-4cc9-8bf1-c17fb4cac8bd}')!
 IIPPlugHole comment: '<IIPPlugHole> is a wrapper class for the COM interface ''InProcDolphin.IIPPlugHole'' generated from type information in the ''Dolphin Smalltalk InProcStub Library 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 

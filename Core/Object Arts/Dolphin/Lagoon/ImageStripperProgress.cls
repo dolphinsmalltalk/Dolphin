@@ -2,9 +2,15 @@
 
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
-	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
+	classVariableNames: 'MessageMap'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CaptionId' -> 16r3F9.
+		'ExplanationId' -> 16r3FA.
+		'ProgressId' -> 16r3F7.
+		'StatusId' -> 16r3F8
+	}!
 ImageStripperProgress guid: (GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
 ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
 
@@ -429,10 +435,6 @@ initialize
 		self initialize
 	"
 
-	CaptionId := 1017.
-	ProgressId := 1015.
-	ExplanationId := 1018.
-	StatusId := 1016.
 	MessageMap := LookupTable new.
 	MessageMap
 		at: WM_CREATE put: #wmCreate:wParam:lParam:;

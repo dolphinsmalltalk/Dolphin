@@ -4,7 +4,8 @@ Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VersionResource guid: (GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
 VersionResource comment: ''!
 !VersionResource categoriesForClass!System-Support! !

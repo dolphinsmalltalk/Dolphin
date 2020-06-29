@@ -4,7 +4,8 @@ SerialNumberProtector subclass: #ElgamalSerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ElgamalSerialNumberProtector guid: (GUID fromString: '{b2dbd9ad-5b79-4232-9179-bd91adbb1274}')!
 ElgamalSerialNumberProtector comment: 'This class is an example of how to develop a replacement encryption policy for Product Protection serial numbers.  It shows how to plug in a replacement algorithm which uses private/public key encryption.  (The much faster and simpler PC1 cypher is still used for encrypting the method''s bytecodes, what this shows is a different way to protect the key used to unlock the methods.)
 

@@ -4,7 +4,8 @@ Object subclass: #SerialNumberProtector
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SerialNumberProtector guid: (GUID fromString: '{2748fb4f-8d36-4f21-b51a-669a27545e43}')!
 SerialNumberProtector isAbstract: true!
 SerialNumberProtector comment: 'One of these handles the actual cryptography for a (subclass of) ProtectedProductSerialNumber.  The idea of factoring this code out is to allow cryptography (which is really a policy decision) to vary independently of the choice of what data is encoded in a serial number.
