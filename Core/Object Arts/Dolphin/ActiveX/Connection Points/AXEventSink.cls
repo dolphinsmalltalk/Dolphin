@@ -2,9 +2,14 @@
 
 AXDispatchImpAbstract subclass: #AXEventSink
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
-	classVariableNames: 'GenericEventMask NoIndividualEventsMask TraceMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'GenericEventMask' -> 16r2.
+		'NoIndividualEventsMask' -> 16r4.
+		'TraceMask' -> 16r1
+	}!
 AXEventSink guid: (GUID fromString: '{d578b1aa-48d3-49f7-a2d0-de3267236311}')!
 AXEventSink comment: 'AXEventSink is a generic connection point callback interface (i.e. event sink) implementation for event dispinterfaces. AXEventSink itself handles incoming events by triggering a same named Smalltalk event, the selector of which is generated from the function description in the type library. The primary keyword of the selector is the name of the event (unchanged in any way), with subsequent keywords the name of the corresponding argument from the library, or just an underscore & colon pair (_:) if the argument is unnamed. In-only arguments are converted from the variant parameter to the equivalent Smalltalk object, whereas output arguments are passed around as a <VARIANT> which can be updated with the value to pass out.
 
@@ -197,15 +202,6 @@ triggerIndividualEvents: aBoolean
 
 !AXEventSink class methodsFor!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	TraceMask := 16r1.
-	GenericEventMask := 16r2.
-	NoIndividualEventsMask := 16r4.!
-
 new
 	"Instances of the receiver must be instantiated with #target:sourceTypeInfo:"
 
@@ -220,7 +216,6 @@ target: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer
 	to which this sink is connected invokes the methods."
 
 	^super new setTarget: anObject sourceTypeInfo: anAXInterfaceTypeAnalyzer! !
-!AXEventSink class categoriesFor: #initialize!development!initializing!private! !
 !AXEventSink class categoriesFor: #new!instance creation!public! !
 !AXEventSink class categoriesFor: #target:sourceTypeInfo:!instance creation!public! !
 

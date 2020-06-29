@@ -4,7 +4,8 @@ IUnknown subclass: #IConnectionPointContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IConnectionPointContainer guid: (IID fromString: '{b196b284-bab4-101a-b69c-00aa00341d07}')!
 IConnectionPointContainer comment: '<IConnectionPointContainer> is a wrapper class for the custom interface ''OBJIDL.IConnectionPointContainer'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

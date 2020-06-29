@@ -2,12 +2,14 @@
 
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_punk'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwCookie' -> 16r4.
+		'_OffsetOf_punk' -> 16r0
+	}!
 CONNECTDATA guid: (GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
-CONNECTDATA addClassConstant: '_OffsetOf_dwCookie' value: 16r4!
-CONNECTDATA addClassConstant: '_OffsetOf_punk' value: 16r0!
 CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
 
 The type library contains no documentation for this struct

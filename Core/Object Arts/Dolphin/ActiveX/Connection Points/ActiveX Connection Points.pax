@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'ActiveX Connection Points'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Active-X Connection Points Package. 
 Copyright (c) Object Arts Ltd, 2000.
@@ -14,24 +14,19 @@ An example of the use of AXEventSink can be found in the AXControlSite class of 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #AXEventSink;
-	add: #CONNECTDATA;
-	add: #IConnectionPoint;
-	add: #IConnectionPointContainer;
-	add: #IEnumConnectionPoints;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AXEventSink}
+	#{CONNECTDATA}
+	#{IConnectionPoint}
+	#{IConnectionPointContainer}
+	#{IEnumConnectionPoints}
+).
 
 package setPrerequisites: #(
 	'..\Automation\ActiveX Automation'
 	'..\..\Base\Dolphin'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
 
@@ -39,34 +34,41 @@ package!
 
 AXDispatchImpAbstract subclass: #AXEventSink
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'
-	classVariableNames: 'GenericEventMask NoIndividualEventsMask TraceMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'GenericEventMask' -> 16r2.
+		'NoIndividualEventsMask' -> 16r4.
+		'TraceMask' -> 16r1
+	}!
 IUnknown subclass: #IConnectionPoint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IConnectionPointContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumUnknown subclass: #IEnumConnectionPoints
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_punk'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwCookie' -> 16r4.
+		'_OffsetOf_punk' -> 16r0
+	}!
 
 "End of package definition"!
 
