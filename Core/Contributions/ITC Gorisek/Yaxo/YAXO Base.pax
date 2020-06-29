@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'YAXO Base'.
-package paxVersion: 1;
+package paxVersion: 2;
 	basicComment: 'Yaxo: Yet another XML Framework
 Yaxo is a SAX XML parser for Squeak Smalltalk by: Duane Maxwell, Andres Valloud, Michael Rueger. Ported to Dolphin by Steve Waring.
 See Yaxo''''s home page <http://www.squeaklet.com/Yax/index.html> for more information.
@@ -43,25 +43,20 @@ Changed
 package basicPackageVersion: '7'.
 
 
-package classNames
-	add: #DTDEntityDeclaration;
-	add: #DTDExternalEntityDeclaration;
-	add: #DTDParameterEntityDeclaration;
-	add: #SAXDriver;
-	add: #SAXHandler;
-	add: #SAXMalformedException;
-	add: #SAXWarning;
-	add: #XMLTokenizer;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{DTDEntityDeclaration}
+	#{DTDExternalEntityDeclaration}
+	#{DTDParameterEntityDeclaration}
+	#{SAXDriver}
+	#{SAXHandler}
+	#{SAXMalformedException}
+	#{SAXWarning}
+	#{XMLTokenizer}
+).
 
 package setPrerequisites: #(
-	'..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -71,47 +66,50 @@ Object subclass: #DTDEntityDeclaration
 	instanceVariableNames: 'name value ndata'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'contextBehavior'!
+	classInstanceVariableNames: 'contextBehavior'
+	classConstants: {}!
 Object subclass: #SAXHandler
 	instanceVariableNames: 'document driver eod'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
 	classVariableNames: 'CharEscapes NameChars NameDelimiters'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DTDEntityDeclaration subclass: #DTDExternalEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Error subclass: #SAXMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Notification subclass: #SAXWarning
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLTokenizer subclass: #SAXDriver
 	instanceVariableNames: 'saxHandler'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

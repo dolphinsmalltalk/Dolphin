@@ -4,7 +4,8 @@ XMLNode subclass: #XMLNodeWithEntities
 	instanceVariableNames: 'entities'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLNodeWithEntities guid: (GUID fromString: '{3a3489a9-1660-4041-ad01-203dc0006b3c}')!
 XMLNodeWithEntities comment: ''!
 !XMLNodeWithEntities categoriesForClass!XML-Parser! !

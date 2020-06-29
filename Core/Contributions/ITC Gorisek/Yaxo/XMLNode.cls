@@ -4,7 +4,8 @@ Object subclass: #XMLNode
 	instanceVariableNames: ''
 	classVariableNames: 'CanonicalTable'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLNode guid: (GUID fromString: '{f5e6786e-7892-452d-a2c8-37e4dc0d3e55}')!
 XMLNode comment: ''!
 !XMLNode categoriesForClass!XML-Parser! !

@@ -4,7 +4,8 @@ XMLNode subclass: #XMLPI
 	instanceVariableNames: 'target data'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLPI guid: (GUID fromString: '{2a41e7a7-e44c-4134-9472-1e0ae3fa1c9c}')!
 XMLPI comment: ''!
 !XMLPI categoriesForClass!XML-Parser! !

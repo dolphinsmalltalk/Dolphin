@@ -4,7 +4,8 @@ XMLNodeWithEntities subclass: #XMLDocument
 	instanceVariableNames: 'dtd version encoding requiredMarkup'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLDocument guid: (GUID fromString: '{8c7ac663-973d-4b54-9aae-e08e393b9616}')!
 XMLDocument comment: ''!
 !XMLDocument categoriesForClass!XML-Parser! !

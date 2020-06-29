@@ -4,7 +4,8 @@ Object subclass: #SAXHandler
 	instanceVariableNames: 'document driver eod'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SAXHandler guid: (GUID fromString: '{5f6867fa-780a-49f2-972e-9f8c0676ddd0}')!
 SAXHandler comment: ''!
 !SAXHandler categoriesForClass!XML-Parser! !
