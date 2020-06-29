@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ShellConstants put: (PoolConstantsDictionary named: #ShellConstants)!
+#{ShellConstants} declare: (PoolConstantsDictionary named: #ShellConstants)!
 ShellConstants at: 'BFFM_ENABLEOK' put: 16r465!
 ShellConstants at: 'BFFM_INITIALIZED' put: 16r1!
 ShellConstants at: 'BFFM_IUNKNOWN' put: 16r5!

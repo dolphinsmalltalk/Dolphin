@@ -2,12 +2,14 @@
 
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_abID _OffsetOf_cb'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_abID' -> 16r2.
+		'_OffsetOf_cb' -> 16r0
+	}!
 SHITEMID guid: (GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
-SHITEMID addClassConstant: '_OffsetOf_abID' value: 16r2!
-SHITEMID addClassConstant: '_OffsetOf_cb' value: 16r0!
 SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
 
 The type library contains no documentation for this struct.

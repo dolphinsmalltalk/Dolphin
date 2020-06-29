@@ -4,7 +4,8 @@ OLEStructure subclass: #ITEMIDLIST
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ITEMIDLIST guid: (GUID fromString: '{928070c1-45d5-4739-b2b1-01e8c27361dc}')!
 ITEMIDLIST comment: 'ITEMIDLIST is an <ExternalStructure> that wraps the Windows ITEMIDLIST struct.  ITEMIDLIST serves the same purpose as a file system path, i.e., to identify objects (be they files, folders, virtual or part of the filesystem) in the Windows Shell namespace.  An ITEMIDLIST contains one or more item IDs (a Windows SHITEMID structure), terminated by a two-byte null.
 

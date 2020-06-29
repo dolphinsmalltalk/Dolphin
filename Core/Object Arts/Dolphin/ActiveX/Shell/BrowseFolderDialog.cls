@@ -2,9 +2,12 @@
 
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
-	classVariableNames: 'InitializedMask'
+	classVariableNames: ''
 	poolDictionaries: 'ShellConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InitializedMask' -> 16r1
+	}!
 BrowseFolderDialog guid: (GUID fromString: '{87b4c6af-026e-11d3-9fd7-00a0cc3e4a32}')!
 BrowseFolderDialog comment: 'BrowserFolderDialog is a <valueDialogPresenter> implementing the Windows SHBrowseForFolder common dialog. The associated <valueModel> contains a <readableString> indicating the path of the chosen folder.
 
@@ -193,8 +196,7 @@ initialize
 		at: BFFM_SELCHANGED put: #selChanged:wParam:lParam:;
 		at: BFFM_VALIDATEFAILEDA put: #validateFailed:wParam:lParam:;
 		at: 4 put: nil;
-		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:.
-	InitializedMask := 16r1! !
+		at: BFFM_IUNKNOWN put: #iunknown:wParam:lParam:! !
 !BrowseFolderDialog class categoriesFor: #defaultModel!models!public! !
 !BrowseFolderDialog class categoriesFor: #icon!constants!public! !
 !BrowseFolderDialog class categoriesFor: #initialize!initializing!private! !

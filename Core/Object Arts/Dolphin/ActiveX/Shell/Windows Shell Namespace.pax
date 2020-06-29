@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Shell Namespace'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Shell Namespace Support
 Copyright (c) Object Arts Ltd, 1998-2000. 
@@ -12,37 +12,32 @@ For example:
 	BrowseFolderDialog showModal	"Ctrl+D"'.
 
 
-package classNames
-	add: #BrowseFolderDialog;
-	add: #BROWSEINFOW;
-	add: #IShellFolder;
-	add: #ITEMIDLIST;
-	add: #SHITEMID;
-	add: #WindowsShellMemory;
-	yourself.
+package setClassNames: #(
+	#{BrowseFolderDialog}
+	#{BROWSEINFOW}
+	#{IShellFolder}
+	#{ITEMIDLIST}
+	#{SHITEMID}
+	#{WindowsShellMemory}
+).
 
-package methodNames
-	add: #ShellLibrary -> #allocator;
-	add: #ShellLibrary -> #getDesktopFolder;
-	add: #ShellLibrary -> #pathFromIDList:;
-	add: #ShellLibrary -> #SHBrowseForFolder:;
-	add: #ShellLibrary -> #SHGetDesktopFolder:;
-	add: #ShellLibrary -> #SHGetMalloc:;
-	add: #ShellLibrary -> #SHGetPathFromIDList:pszPath:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ShellLibrary} #allocator)
+	#(#{ShellLibrary} #getDesktopFolder)
+	#(#{ShellLibrary} #pathFromIDList:)
+	#(#{ShellLibrary} #SHBrowseForFolder:)
+	#(#{ShellLibrary} #SHGetDesktopFolder:)
+	#(#{ShellLibrary} #SHGetMalloc:)
+	#(#{ShellLibrary} #SHGetPathFromIDList:pszPath:)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\COM\OLE COM'
-	'Windows Shell').
+	'Windows Shell'
+).
 
 package!
 
@@ -52,35 +47,52 @@ ExternalMemory variableByteSubclass: #WindowsShellMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IShellFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #ITEMIDLIST
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_abID _OffsetOf_cb'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_abID' -> 16r2.
+		'_OffsetOf_cb' -> 16r0
+	}!
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
-	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_flags' -> 16r10.
+		'_OffsetOf_hwndOwner' -> 16r0.
+		'_OffsetOf_iImage' -> 16r1C.
+		'_OffsetOf_lParam' -> 16r18.
+		'_OffsetOf_lpfnHook' -> 16r14.
+		'_OffsetOf_lpszTitle' -> 16rC.
+		'_OffsetOf_pidlRoot' -> 16r4.
+		'_OffsetOf_pszDisplayName' -> 16r8
+	}!
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
-	classVariableNames: 'InitializedMask'
+	classVariableNames: ''
 	poolDictionaries: 'ShellConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InitializedMask' -> 16r1
+	}!
 
 "Loose Methods"!
 

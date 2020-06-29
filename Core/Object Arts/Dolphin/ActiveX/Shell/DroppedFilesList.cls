@@ -4,7 +4,8 @@ SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DroppedFilesList guid: (GUID fromString: '{63eb134a-0edd-49f3-85eb-253b0f48741b}')!
 DroppedFilesList comment: 'DroppedFilesList represents a <sequencedReadableCollection> of dropped files. The elements are the <readableString> paths of the files that were dropped over a window which has called the DragAcceptFiles API.'!
 !DroppedFilesList categoriesForClass!Kernel-Objects! !

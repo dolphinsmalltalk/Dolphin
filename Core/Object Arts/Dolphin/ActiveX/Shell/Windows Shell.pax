@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Windows Shell'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Shell Basics
 Copyright (c) Object Arts Ltd, 1998-2000. 
@@ -12,34 +12,29 @@ package basicPackageVersion: '6.1'.
 package basicScriptAt: #postinstall put: 'View registerShellMessages.'.
 package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
 
-package classNames
-	add: #DroppedFilesList;
-	add: #ShellLibrary;
-	yourself.
+package setClassNames: #(
+	#{DroppedFilesList}
+	#{ShellLibrary}
+).
 
-package methodNames
-	add: #SessionManager -> #documentsDirectory;
-	add: #View -> #acceptDroppedFiles:;
-	add: #View -> #wmDropFiles:wParam:lParam:;
-	add: 'View class' -> #registerShellMessages;
-	add: 'View class' -> #shellMessageMappings;
-	add: 'View class' -> #unregisterShellMessages;
-	yourself.
+package setMethodNames: #(
+	#(#{SessionManager} #documentsDirectory)
+	#(#{View} #acceptDroppedFiles:)
+	#(#{View} #wmDropFiles:wParam:lParam:)
+	#(#{View class} #registerShellMessages)
+	#(#{View class} #shellMessageMappings)
+	#(#{View class} #unregisterShellMessages)
+).
 
-package globalNames
-	add: #ShellConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{ShellConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
-	'..\..\MVP\Base\Dolphin MVP Base').
+	'..\..\MVP\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -49,15 +44,14 @@ SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ShellConstants Win32Constants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -2,18 +2,20 @@
 
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
-	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_flags' -> 16r10.
+		'_OffsetOf_hwndOwner' -> 16r0.
+		'_OffsetOf_iImage' -> 16r1C.
+		'_OffsetOf_lParam' -> 16r18.
+		'_OffsetOf_lpfnHook' -> 16r14.
+		'_OffsetOf_lpszTitle' -> 16rC.
+		'_OffsetOf_pidlRoot' -> 16r4.
+		'_OffsetOf_pszDisplayName' -> 16r8
+	}!
 BROWSEINFOW guid: (GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
-BROWSEINFOW addClassConstant: '_OffsetOf_flags' value: 16r10!
-BROWSEINFOW addClassConstant: '_OffsetOf_hwndOwner' value: 16r0!
-BROWSEINFOW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
-BROWSEINFOW addClassConstant: '_OffsetOf_lParam' value: 16r18!
-BROWSEINFOW addClassConstant: '_OffsetOf_lpfnHook' value: 16r14!
-BROWSEINFOW addClassConstant: '_OffsetOf_lpszTitle' value: 16rC!
-BROWSEINFOW addClassConstant: '_OffsetOf_pidlRoot' value: 16r4!
-BROWSEINFOW addClassConstant: '_OffsetOf_pszDisplayName' value: 16r8!
 BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!
