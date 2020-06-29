@@ -2,15 +2,17 @@
 
 ContainerView subclass: #SlideyInneyOuteyThing
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimatedCardChangeMask AnimatedUnpinMask AnimationDuration AnimationMask Animations HideOnUnpinMask ResizableMask SlideInDelay'
+	classVariableNames: 'AnimationDuration Animations SlideInDelay'
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnimatedCardChangeMask' -> 16r8.
+		'AnimatedUnpinMask' -> 16r2.
+		'AnimationMask' -> 16rC0010.
+		'HideOnUnpinMask' -> 16r1.
+		'ResizableMask' -> 16r4
+	}!
 SlideyInneyOuteyThing guid: (GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
-SlideyInneyOuteyThing addClassConstant: 'AnimatedCardChangeMask' value: 16r8!
-SlideyInneyOuteyThing addClassConstant: 'AnimatedUnpinMask' value: 16r2!
-SlideyInneyOuteyThing addClassConstant: 'AnimationMask' value: 16rC0010!
-SlideyInneyOuteyThing addClassConstant: 'HideOnUnpinMask' value: 16r1!
-SlideyInneyOuteyThing addClassConstant: 'ResizableMask' value: 16r4!
 SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It display a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. . The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any relayout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accomodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occassionally since they need consume only a little space (for the tabs) when they are not being used.
 
 A SlideyInneyOuteyThing must be used in conjunction with a <SlidingCardTray> as its actual <CardContainer>, and can host only one such card container. The cards themselves must be added to the <SlidingCardTray>, NOT to the SlideyInneyOuteyThing which, as mentioned, is a decorator rather than a card container itself.
@@ -593,10 +595,6 @@ icon
 initialize
 	AnimationDuration := 200.
 	SlideInDelay := 500.
-	self addClassConstant: 'HideOnUnpinMask' value: 1.
-	self addClassConstant: 'AnimatedUnpinMask' value: 2.
-	self addClassConstant: 'ResizableMask' value: 4.
-	self addClassConstant: 'AnimatedCardChangeMask' value: 8.
 	self addClassConstant: 'AnimationMask' value: AW_SLIDE | AW_BLEND | AW_CENTER.
 	self addClassConstant: 'Animations'
 		value: (IdentityDictionary new

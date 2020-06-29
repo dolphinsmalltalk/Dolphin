@@ -1,23 +1,17 @@
 ﻿| package |
 package := Package name: 'Dolphin Slidey-Inney-Outey Thing'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ButtonInteractor;
-	add: #SlideyInneyOuteyThing;
-	add: #SlidingCardTray;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ButtonInteractor}
+	#{SlideyInneyOuteyThing}
+	#{SlidingCardTray}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -26,7 +20,8 @@ package setPrerequisites: #(
 	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -34,24 +29,31 @@ package!
 
 CapturingInteractor subclass: #ButtonInteractor
 	instanceVariableNames: 'buttonRect _unused5 commandDescription'
-	classVariableNames: 'ButtonStateMask PressedMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ButtonStateMask' -> 16r3.
+		'PressedMask' -> 16r2
+	}!
 ContainerView subclass: #SlideyInneyOuteyThing
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimatedCardChangeMask AnimatedUnpinMask AnimationDuration AnimationMask Animations HideOnUnpinMask ResizableMask SlideInDelay'
+	classVariableNames: 'AnimationDuration Animations SlideInDelay'
 	poolDictionaries: 'ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'AnimatedCardChangeMask' -> 16r8.
+		'AnimatedUnpinMask' -> 16r2.
+		'AnimationMask' -> 16rC0010.
+		'HideOnUnpinMask' -> 16r1.
+		'ResizableMask' -> 16r4
+	}!
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

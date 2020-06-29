@@ -4,7 +4,8 @@ CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SlidingCardTray guid: (GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
 SlidingCardTray comment: 'A SlidingCardTray is a specialised <CardContainer> for use in conjunction with a <SlideyInneyOuteyView> to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
 
