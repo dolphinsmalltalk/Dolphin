@@ -4,7 +4,8 @@ AXAutomationAspect subclass: #DispatchAspect
 	instanceVariableNames: 'dispid'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DispatchAspect guid: (GUID fromString: '{dfbf2467-3a73-4b93-8b67-936af2754ec7}')!
 DispatchAspect comment: 'DispatchAspect is a specialised <Aspect> for accessing properties of Automation objects through IDispatch. It is an extension of the PublishedAspectorInspector framework.'!
 !DispatchAspect categoriesForClass!Attribute-Definition! !

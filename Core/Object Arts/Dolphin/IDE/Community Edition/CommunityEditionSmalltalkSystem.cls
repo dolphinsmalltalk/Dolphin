@@ -4,7 +4,8 @@ SmalltalkSystem subclass: #CommunityEditionSmalltalkSystem
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommunityEditionSmalltalkSystem guid: (GUID fromString: '{fe94a239-c422-4a02-a575-5e7923ce1d63}')!
 CommunityEditionSmalltalkSystem comment: ''!
 !CommunityEditionSmalltalkSystem categoriesForClass!MVP-Models! !
