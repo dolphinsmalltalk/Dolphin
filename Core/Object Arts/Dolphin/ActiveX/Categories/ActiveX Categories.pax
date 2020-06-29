@@ -44,22 +44,30 @@ Object subclass: #COMObjectRegistration
 	instanceVariableNames: 'clsid name toolboxImage'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ICatInformation
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ICatRegister
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #CATEGORYINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_catid' -> 16r0.
+		'_OffsetOf_lcid' -> 16r10.
+		'_OffsetOf_szDescription' -> 16r14
+	}!
 
 "Loose Methods"!
 
