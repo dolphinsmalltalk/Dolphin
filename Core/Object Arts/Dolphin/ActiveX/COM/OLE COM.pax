@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'OLE COM'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk OLE COM Support. 
 Copyright (c) Object Arts Ltd 1997-2006. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
@@ -57,76 +57,71 @@ COMInterface withAllSubclasses do: [:c | c uninitializeBeforeRemove].
 COMInterface initializeRegister.
 '.
 
-package classNames
-	add: #BSTR;
-	add: #CADWORD;
-	add: #CALPOLESTR;
-	add: #CLSID;
-	add: #COAUTHIDENTITY;
-	add: #COAUTHINFO;
-	add: #COMClassFactory;
-	add: #COMEnumerator;
-	add: #COMFunction;
-	add: #COMFunctionAbstract;
-	add: #COMInterface;
-	add: #COMInterfaceEnumerator;
-	add: #COMInterfaceImp;
-	add: #COMObjectStub;
-	add: #COMSingletonClassFactory;
-	add: #COMTaskMemory;
-	add: #COSERVERINFO;
-	add: #EXCEPINFO;
-	add: #IClassFactory;
-	add: #IClassFactory2;
-	add: #IEnumString;
-	add: #IEnumStruct;
-	add: #IEnumUnknown;
-	add: #IEnumXXXX;
-	add: #IErrorInfo;
-	add: #IID;
-	add: #IMalloc;
-	add: #IServiceProvider;
-	add: #ISupportErrorInfo;
-	add: #IUnknown;
-	add: #LICINFO;
-	add: #MULTI_QI;
-	add: #OLEAutLibrary;
-	add: #OLECountedArray;
-	add: #OLEEnumerator;
-	add: #OLEFinalizableStructure;
-	add: #OLELibrary;
-	add: #OLEStructure;
-	add: #UnkAddRefFunction;
-	add: #UnkQIFunction;
-	add: #UnkReleaseFunction;
-	yourself.
+package setClassNames: #(
+	#{BSTR}
+	#{CADWORD}
+	#{CALPOLESTR}
+	#{CLSID}
+	#{COAUTHIDENTITY}
+	#{COAUTHINFO}
+	#{COMClassFactory}
+	#{COMEnumerator}
+	#{COMFunction}
+	#{COMFunctionAbstract}
+	#{COMInterface}
+	#{COMInterfaceEnumerator}
+	#{COMInterfaceImp}
+	#{COMObjectStub}
+	#{COMSingletonClassFactory}
+	#{COMTaskMemory}
+	#{COSERVERINFO}
+	#{EXCEPINFO}
+	#{IClassFactory}
+	#{IClassFactory2}
+	#{IEnumString}
+	#{IEnumStruct}
+	#{IEnumUnknown}
+	#{IEnumXXXX}
+	#{IErrorInfo}
+	#{IID}
+	#{IMalloc}
+	#{IServiceProvider}
+	#{ISupportErrorInfo}
+	#{IUnknown}
+	#{LICINFO}
+	#{MULTI_QI}
+	#{OLEAutLibrary}
+	#{OLECountedArray}
+	#{OLEEnumerator}
+	#{OLEFinalizableStructure}
+	#{OLELibrary}
+	#{OLEStructure}
+	#{UnkAddRefFunction}
+	#{UnkQIFunction}
+	#{UnkReleaseFunction}
+).
 
-package methodNames
-	add: #ByteArray -> #copyToCOMTaskMemory;
-	add: #ExternalStructure -> #copyToCOMTaskMemory;
-	add: #ProcessorScheduler -> #comCallback:id:subId:withArgumentsAt:cookie:;
-	add: #ProcessorScheduler -> #registerCOMStub:;
-	add: #ProcessorScheduler -> #unregisterCOMStub:;
-	add: #SessionManager -> #comStartup;
-	add: #String -> #asBSTR;
-	add: #String -> #copyToCOMTaskMemory;
-	add: 'ExternalMemory class' -> #queryInterface:ifNone:;
-	yourself.
+package setMethodNames: #(
+	#(#{ByteArray} #copyToCOMTaskMemory)
+	#(#{ExternalMemory class} #queryInterface:ifNone:)
+	#(#{ExternalStructure} #copyToCOMTaskMemory)
+	#(#{ProcessorScheduler} #comCallback:id:subId:withArgumentsAt:cookie:)
+	#(#{ProcessorScheduler} #registerCOMStub:)
+	#(#{ProcessorScheduler} #unregisterCOMStub:)
+	#(#{SessionManager} #comStartup)
+	#(#{String} #asBSTR)
+	#(#{String} #copyToCOMTaskMemory)
+).
 
-package globalNames
-	add: #OLEConstants;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setVariableNames: #(
+	#{OLEConstants}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Message Box'
-	'..\..\Registry\Dolphin Registry Access').
+	'..\..\Registry\Dolphin Registry Access'
+).
 
 package!
 
@@ -136,210 +131,295 @@ Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEConstants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalMemory variableByteSubclass: #COMTaskMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunctionAbstract subclass: #COMFunction
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp subclass: #COMClassFactory
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp subclass: #COMEnumerator
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMEnumerator subclass: #COMInterfaceEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalLibrary subclass: #OLELibrary
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
-	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
+	classVariableNames: 'InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
-	classInstanceVariableNames: 'argSizes functions typeLib'!
+	classInstanceVariableNames: 'argSizes functions typeLib'
+	classConstants: {
+		'_OffsetOf_argSizes' -> 16r4.
+		'_OffsetOf_interfaceCookie' -> 16rC.
+		'_OffsetOf_objectCookie' -> 16r8.
+		'_OffsetOf_vtbl' -> 16r0
+	}!
 ExternalStructure subclass: #OLEStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IClassFactory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IEnumXXXX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IMalloc
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #IServiceProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IUnknown subclass: #ISupportErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumXXXX subclass: #IEnumString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumXXXX subclass: #IEnumStruct
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IEnumXXXX subclass: #IEnumUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
-	classVariableNames: '_OffsetOf_cElems _OffsetOf_pElems'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cElems' -> 16r0.
+		'_OffsetOf_pElems' -> 16r4
+	}!
 OLECountedArray subclass: #CADWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLECountedArray subclass: #CALPOLESTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Domain _OffsetOf_DomainLength _OffsetOf_Flags _OffsetOf_Password _OffsetOf_PasswordLength _OffsetOf_User _OffsetOf_UserLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Domain' -> 16r8.
+		'_OffsetOf_DomainLength' -> 16rC.
+		'_OffsetOf_Flags' -> 16r18.
+		'_OffsetOf_Password' -> 16r10.
+		'_OffsetOf_PasswordLength' -> 16r14.
+		'_OffsetOf_User' -> 16r0.
+		'_OffsetOf_UserLength' -> 16r4
+	}!
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwAuthnLevel _OffsetOf_dwAuthnSvc _OffsetOf_dwAuthzSvc _OffsetOf_dwCapabilities _OffsetOf_dwImpersonationLevel _OffsetOf_pAuthIdentityData _OffsetOf_pwszServerPrincName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwAuthnLevel' -> 16rC.
+		'_OffsetOf_dwAuthnSvc' -> 16r0.
+		'_OffsetOf_dwAuthzSvc' -> 16r4.
+		'_OffsetOf_dwCapabilities' -> 16r18.
+		'_OffsetOf_dwImpersonationLevel' -> 16r10.
+		'_OffsetOf_pAuthIdentityData' -> 16r14.
+		'_OffsetOf_pwszServerPrincName' -> 16r8
+	}!
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
-	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved1' -> 16r0.
+		'_OffsetOf_dwReserved2' -> 16rC.
+		'_OffsetOf_pAuthInfo' -> 16r8.
+		'_OffsetOf_pwszName' -> 16r4
+	}!
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fLicVerified _OffsetOf_fRuntimeKeyAvail'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fLicVerified' -> 16r8.
+		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
+	}!
 OLEStructure subclass: #OLEFinalizableStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwHelpContext' -> 16r10.
+		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
+		'_OffsetOf_pvReserved' -> 16r14.
+		'_OffsetOf_pwszDescription' -> 16r8.
+		'_OffsetOf_pwszHelpFile' -> 16rC.
+		'_OffsetOf_pwszSource' -> 16r4.
+		'_OffsetOf_scode' -> 16r1C.
+		'_OffsetOf_wCode' -> 16r0.
+		'_OffsetOf_wReserved' -> 16r2
+	}!
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hr' -> 16r8.
+		'_OffsetOf_pIID' -> 16r0.
+		'_OffsetOf_pItf' -> 16r4
+	}!
 GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

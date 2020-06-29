@@ -4,7 +4,8 @@ OLECountedArray subclass: #CADWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CADWORD guid: (GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
 CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
 

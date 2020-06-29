@@ -2,15 +2,17 @@
 
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
-	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
+	classVariableNames: 'InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
-	classInstanceVariableNames: 'argSizes functions typeLib'!
+	classInstanceVariableNames: 'argSizes functions typeLib'
+	classConstants: {
+		'_OffsetOf_argSizes' -> 16r4.
+		'_OffsetOf_interfaceCookie' -> 16rC.
+		'_OffsetOf_objectCookie' -> 16r8.
+		'_OffsetOf_vtbl' -> 16r0
+	}!
 COMInterface guid: (IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMInterface isAbstract: true!
-COMInterface addClassConstant: '_OffsetOf_argSizes' value: 16r4!
-COMInterface addClassConstant: '_OffsetOf_interfaceCookie' value: 16rC!
-COMInterface addClassConstant: '_OffsetOf_objectCookie' value: 16r8!
-COMInterface addClassConstant: '_OffsetOf_vtbl' value: 16r0!
 COMInterface comment: ''!
 !COMInterface categoriesForClass!External-Data-Structured-COM! !
 !COMInterface methodsFor!

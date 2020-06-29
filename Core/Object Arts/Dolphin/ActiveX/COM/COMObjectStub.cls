@@ -4,7 +4,8 @@ Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMObjectStub guid: (GUID fromString: '{87b4c46c-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMObjectStub comment: 'COMObjectStub is a private class of objects which are used to wrap any object in the system so that they may be exposed as COM objects. COMObjectStub implements most <IUnknown>, functionality, providing reference count based lifetime management, and the basic mechanics for QueryInterface().
 

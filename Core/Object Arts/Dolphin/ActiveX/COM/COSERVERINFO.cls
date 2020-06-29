@@ -2,14 +2,16 @@
 
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
-	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwReserved1' -> 16r0.
+		'_OffsetOf_dwReserved2' -> 16rC.
+		'_OffsetOf_pAuthInfo' -> 16r8.
+		'_OffsetOf_pwszName' -> 16r4
+	}!
 COSERVERINFO guid: (GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
-COSERVERINFO addClassConstant: '_OffsetOf_dwReserved1' value: 16r0!
-COSERVERINFO addClassConstant: '_OffsetOf_dwReserved2' value: 16rC!
-COSERVERINFO addClassConstant: '_OffsetOf_pAuthInfo' value: 16r8!
-COSERVERINFO addClassConstant: '_OffsetOf_pwszName' value: 16r4!
 COSERVERINFO comment: 'COSERVERINFO is an ExternalStructure class to represent the DCOM structure of the same name.
 
 COSERVERINFO is used to explicitly identify a remote machine when instantiating COM objects (i.e. it is used in conjunction with CoCreateInstanceEx)..

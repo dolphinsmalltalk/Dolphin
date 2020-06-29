@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #OLEConstants put: (PoolConstantsDictionary named: #OLEConstants)!
+#{OLEConstants} declare: (PoolConstantsDictionary named: #OLEConstants)!
 OLEConstants at: 'CLSCTX_INPROC_HANDLER' put: 16r2!
 OLEConstants at: 'CLSCTX_INPROC_SERVER' put: 16r1!
 OLEConstants at: 'CLSCTX_LOCAL_SERVER' put: 16r4!

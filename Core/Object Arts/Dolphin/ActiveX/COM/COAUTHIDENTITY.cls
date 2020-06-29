@@ -2,17 +2,19 @@
 
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_Domain _OffsetOf_DomainLength _OffsetOf_Flags _OffsetOf_Password _OffsetOf_PasswordLength _OffsetOf_User _OffsetOf_UserLength'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Domain' -> 16r8.
+		'_OffsetOf_DomainLength' -> 16rC.
+		'_OffsetOf_Flags' -> 16r18.
+		'_OffsetOf_Password' -> 16r10.
+		'_OffsetOf_PasswordLength' -> 16r14.
+		'_OffsetOf_User' -> 16r0.
+		'_OffsetOf_UserLength' -> 16r4
+	}!
 COAUTHIDENTITY guid: (GUID fromString: '{31387a96-bdf6-40b2-abee-6ef6a2384b67}')!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_Domain' value: 16r8!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_DomainLength' value: 16rC!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_Flags' value: 16r18!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_Password' value: 16r10!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_PasswordLength' value: 16r14!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_User' value: 16r0!
-COAUTHIDENTITY addClassConstant: '_OffsetOf_UserLength' value: 16r4!
 COAUTHIDENTITY comment: '<COAUTHIDENTITY> is an <ExternalStructure> class to wrap the struct ''OBJIDL.COAUTHIDENTITY'' from type information in the ''ObjIDL Library'' library.
 
 The COAUTHIDENTITY structure represents a user name and password.'!

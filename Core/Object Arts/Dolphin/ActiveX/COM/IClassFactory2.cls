@@ -4,7 +4,8 @@ IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IClassFactory2 guid: (IID fromString: '{b196b28f-bab4-101a-b69c-00aa00341d07}')!
 IClassFactory2 comment: '<IClassFactory2> is a wrapper class for the custom interface ''OCIDL.IClassFactory2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

@@ -2,13 +2,15 @@
 
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fLicVerified _OffsetOf_fRuntimeKeyAvail'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fLicVerified' -> 16r8.
+		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
+	}!
 LICINFO guid: (GUID fromString: '{87b4c5b8-026e-11d3-9fd7-00a0cc3e4a32}')!
-LICINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
-LICINFO addClassConstant: '_OffsetOf_fLicVerified' value: 16r8!
-LICINFO addClassConstant: '_OffsetOf_fRuntimeKeyAvail' value: 16r4!
 LICINFO comment: 'LICINFO is an ExternalStructure class to represent the COM structure of the same name. LICINFO is used for licensing purposes in conjunction with IClassFactory2. Please refer to COM reference materials for further information.
 
 Member variables:

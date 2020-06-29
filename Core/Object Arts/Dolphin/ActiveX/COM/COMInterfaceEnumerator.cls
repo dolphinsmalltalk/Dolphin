@@ -4,7 +4,8 @@ COMEnumerator subclass: #COMInterfaceEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceEnumerator guid: (GUID fromString: '{c3eefb00-a19e-11d3-b376-080046056106}')!
 COMInterfaceEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s generic implementation of COM enumerators for collections of interface pointers, i.e. IEnumUnknown.
 '!

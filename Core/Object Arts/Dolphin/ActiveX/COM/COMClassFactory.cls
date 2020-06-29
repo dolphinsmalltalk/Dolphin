@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #COMClassFactory
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMClassFactory guid: (GUID fromString: '{87b4c540-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMClassFactory comment: 'COMClassFactory is Dolphin''s standard implementation of IClassFactory. It can serve up instances of a particular coclass (possibly also a subclass of COMInterfaceImp), and having been registered once for any paricular coclass it will re-register the availability of that coclass with COM each time that Dolphin is started.
 

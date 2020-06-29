@@ -4,7 +4,8 @@ Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMFunctionAbstract guid: (GUID fromString: '{17bd3725-7ec5-48d8-96b7-932dfee404c4}')!
 COMFunctionAbstract isAbstract: true!
 COMFunctionAbstract comment: 'COMFunctionAbstract is the class of objects which describe COM functions or methods. A COMFunctionAbstract is a meta-level description that holds the type of the functions arguments, the selector of the implementation of this function. COMFunctionAbstract itself is abstract, with subclasses defined to describe different types of function.

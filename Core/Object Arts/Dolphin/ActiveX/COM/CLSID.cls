@@ -4,7 +4,8 @@ GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CLSID guid: (GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
 CLSID comment: 'CLSID the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 

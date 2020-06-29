@@ -4,7 +4,8 @@ COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UnkQIFunction guid: (GUID fromString: '{28df5741-9369-4150-8e9f-14235fe2e47c}')!
 UnkQIFunction comment: 'COMQueryInterfaceFunction is a specialized class of <COMFunction> intended to represent the IUnknown::QueryInterface() method.
 

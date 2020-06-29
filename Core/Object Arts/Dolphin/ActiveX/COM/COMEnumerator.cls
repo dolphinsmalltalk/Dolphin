@@ -4,7 +4,8 @@ COMInterfaceImp subclass: #COMEnumerator
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMEnumerator guid: (GUID fromString: '{e3913c43-9396-11d3-b376-0800460222f0}')!
 COMEnumerator comment: 'COMEnumerator is Dolphin''s generic implementation of COM enumerators, i.e. IEnumXXXX. It can enumerate over any sequenceable collection of externally representable objects.
 

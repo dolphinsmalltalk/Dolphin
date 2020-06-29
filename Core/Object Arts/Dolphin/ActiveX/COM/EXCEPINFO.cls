@@ -2,19 +2,21 @@
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwHelpContext' -> 16r10.
+		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
+		'_OffsetOf_pvReserved' -> 16r14.
+		'_OffsetOf_pwszDescription' -> 16r8.
+		'_OffsetOf_pwszHelpFile' -> 16rC.
+		'_OffsetOf_pwszSource' -> 16r4.
+		'_OffsetOf_scode' -> 16r1C.
+		'_OffsetOf_wCode' -> 16r0.
+		'_OffsetOf_wReserved' -> 16r2
+	}!
 EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
-EXCEPINFO addClassConstant: '_OffsetOf_dwHelpContext' value: 16r10!
-EXCEPINFO addClassConstant: '_OffsetOf_pfnDeferredFillIn' value: 16r18!
-EXCEPINFO addClassConstant: '_OffsetOf_pvReserved' value: 16r14!
-EXCEPINFO addClassConstant: '_OffsetOf_pwszDescription' value: 16r8!
-EXCEPINFO addClassConstant: '_OffsetOf_pwszHelpFile' value: 16rC!
-EXCEPINFO addClassConstant: '_OffsetOf_pwszSource' value: 16r4!
-EXCEPINFO addClassConstant: '_OffsetOf_scode' value: 16r1C!
-EXCEPINFO addClassConstant: '_OffsetOf_wCode' value: 16r0!
-EXCEPINFO addClassConstant: '_OffsetOf_wReserved' value: 16r2!
 EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
 !EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
 !EXCEPINFO methodsFor!

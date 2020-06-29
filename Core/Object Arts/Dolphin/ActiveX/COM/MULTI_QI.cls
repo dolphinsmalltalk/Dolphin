@@ -2,13 +2,15 @@
 
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_hr' -> 16r8.
+		'_OffsetOf_pIID' -> 16r0.
+		'_OffsetOf_pItf' -> 16r4
+	}!
 MULTI_QI guid: (GUID fromString: '{87b4c5c2-026e-11d3-9fd7-00a0cc3e4a32}')!
-MULTI_QI addClassConstant: '_OffsetOf_hr' value: 16r8!
-MULTI_QI addClassConstant: '_OffsetOf_pIID' value: 16r0!
-MULTI_QI addClassConstant: '_OffsetOf_pItf' value: 16r4!
 MULTI_QI comment: 'MULTI_QI is an <ExternalStructure> class to represent the Win32 COM structure of the same name.
 
 Arrays of MULTI_QI structures can be used to query multiple interface pointers in a single request. This is only really important for DCOM as it helps to minimize the number of network round-trips that are performed.'!

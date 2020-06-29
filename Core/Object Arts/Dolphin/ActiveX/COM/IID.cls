@@ -4,7 +4,8 @@ GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IID guid: (GUID fromString: '{87b4c644-026e-11d3-9fd7-00a0cc3e4a32}')!
 IID comment: 'IID is the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify interfaces in COM.
 

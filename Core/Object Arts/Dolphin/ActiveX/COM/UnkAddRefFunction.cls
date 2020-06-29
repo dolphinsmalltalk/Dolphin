@@ -4,7 +4,8 @@ COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UnkAddRefFunction guid: (GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
 UnkAddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
 

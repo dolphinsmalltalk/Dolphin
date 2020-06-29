@@ -4,7 +4,8 @@ ExternalLibrary subclass: #OLELibrary
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLELibrary guid: (GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
 OLELibrary comment: 'OLELibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLE32.DLL.
 This library contains functions pertaining to the use of OLE and COM.'!

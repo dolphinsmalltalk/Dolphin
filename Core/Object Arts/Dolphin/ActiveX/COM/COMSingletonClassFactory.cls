@@ -4,7 +4,8 @@ COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMSingletonClassFactory guid: (GUID fromString: '{87b4c542-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMSingletonClassFactory comment: 'COMSingletonClassFactory is simple specialization of COMClassFactory which always serves up the same instance of its registered coclass.
 

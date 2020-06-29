@@ -4,7 +4,8 @@ Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEConstants Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 COMInterfaceImp guid: (GUID fromString: '{87b4c467-026e-11d3-9fd7-00a0cc3e4a32}')!
 COMInterfaceImp isAbstract: true!
 COMInterfaceImp comment: 'COMInterfaceImp is an abstract class which provides the basic implementation for a COM object such as interface querying (i.e. implements #queryInterface:ifNone: sent by the framework when a previously unencountered interface is requested of the COM object), factory registration, CLSID access, and aggregation.

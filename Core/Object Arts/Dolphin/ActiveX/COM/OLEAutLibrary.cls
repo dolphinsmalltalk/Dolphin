@@ -4,7 +4,8 @@ ExternalLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OLEAutLibrary guid: (GUID fromString: '{6467404a-3a82-101b-8181-00aa003743d3}')!
 OLEAutLibrary comment: 'OLEAutLibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLEAUT32.DLL.
 This library contains functions pertaining to the use of Active-X Automation.'!

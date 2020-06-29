@@ -4,7 +4,8 @@ COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UnkReleaseFunction guid: (GUID fromString: '{8f012e18-24bd-4bc1-85eb-d0dd5497c142}')!
 UnkReleaseFunction comment: 'COMReleaseFunction is a specialized class of <COMFunction> intended to represent the IUnknown::Release() method.
 
