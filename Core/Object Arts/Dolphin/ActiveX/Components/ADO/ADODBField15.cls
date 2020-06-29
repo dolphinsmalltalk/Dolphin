@@ -4,7 +4,8 @@ ADODB_ADO subclass: #ADODBField15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBField15 guid: (IID fromString: '{00001505-0000-0010-8000-00aa006d2ea4}')!
 ADODBField15 comment: '<ADODBField15> is a wrapper class for the COM interface ''ADODB.Field15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

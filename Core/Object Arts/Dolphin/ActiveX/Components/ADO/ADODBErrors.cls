@@ -4,7 +4,8 @@ ADODB_Collection subclass: #ADODBErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBErrors guid: (IID fromString: '{00000501-0000-0010-8000-00aa006d2ea4}')!
 ADODBErrors comment: '`ADODBErrors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

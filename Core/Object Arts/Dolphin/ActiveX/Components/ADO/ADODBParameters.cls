@@ -4,7 +4,8 @@ ADODB_DynaCollection subclass: #ADODBParameters
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBParameters guid: (IID fromString: '{0000150d-0000-0010-8000-00aa006d2ea4}')!
 ADODBParameters comment: '`ADODBParameters` is a wrapper class for the COM interface ''ADODB.Parameters'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

@@ -4,7 +4,8 @@ ADODB_ADO subclass: #ADODB_Record
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODB_Record guid: (IID fromString: '{00001562-0000-0010-8000-00aa006d2ea4}')!
 ADODB_Record comment: '`ADODB_Record` is a wrapper class for the COM interface ''ADODB._Record'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

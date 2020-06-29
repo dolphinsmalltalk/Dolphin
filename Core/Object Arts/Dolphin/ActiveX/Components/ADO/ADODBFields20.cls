@@ -4,7 +4,8 @@ ADODBFields15 subclass: #ADODBFields20
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBFields20 guid: (IID fromString: '{0000154d-0000-0010-8000-00aa006d2ea4}')!
 ADODBFields20 comment: '`ADODBFields20` is a wrapper class for the COM interface ''ADODB.Fields20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

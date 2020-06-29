@@ -4,7 +4,8 @@ ADODB_Collection subclass: #ADODBProperties
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBProperties guid: (IID fromString: '{00000504-0000-0010-8000-00aa006d2ea4}')!
 ADODBProperties comment: '`ADODBProperties` is a wrapper class for the COM interface ''ADODB.Properties'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

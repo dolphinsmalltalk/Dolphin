@@ -4,7 +4,8 @@ ADODBRecordset15 subclass: #ADODBRecordset20
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBRecordset20 guid: (IID fromString: '{0000154f-0000-0010-8000-00aa006d2ea4}')!
 ADODBRecordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

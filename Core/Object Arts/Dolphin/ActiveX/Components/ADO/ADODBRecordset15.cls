@@ -4,7 +4,8 @@ ADODB_ADO subclass: #ADODBRecordset15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBRecordset15 guid: (IID fromString: '{0000150e-0000-0010-8000-00aa006d2ea4}')!
 ADODBRecordset15 comment: '`ADODBRecordset15` is a wrapper class for the COM interface ''ADODB.Recordset15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

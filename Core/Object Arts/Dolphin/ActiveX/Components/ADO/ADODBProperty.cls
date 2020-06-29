@@ -4,7 +4,8 @@ IDispatch subclass: #ADODBProperty
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBProperty guid: (IID fromString: '{00000503-0000-0010-8000-00aa006d2ea4}')!
 ADODBProperty comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

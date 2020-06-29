@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #ADODBConstants put: (PoolConstantsDictionary named: #ADODBConstants)!
+#{ADODBConstants} declare: (PoolConstantsDictionary named: #ADODBConstants)!
 ADODBConstants at: 'adAddNew' put: 16r1000400!
 ADODBConstants at: 'adAffectAll' put: 16r3!
 ADODBConstants at: 'adAffectAllChapters' put: 16r4!

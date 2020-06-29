@@ -4,7 +4,8 @@ ADODBField20 subclass: #ADODBField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODBField guid: (IID fromString: '{00001569-0000-0010-8000-00aa006d2ea4}')!
 ADODBField comment: '`ADODBField` is a wrapper class for the COM interface ''ADODB.Field'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

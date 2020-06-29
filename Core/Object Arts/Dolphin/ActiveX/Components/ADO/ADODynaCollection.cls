@@ -4,7 +4,8 @@ ADOCollection subclass: #ADODynaCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ADODynaCollection guid: (GUID fromString: '{cf1fb266-a204-4f8e-b6bb-bcb2806ef724}')!
 ADODynaCollection comment: ''!
 !ADODynaCollection categoriesForClass!Unclassified! !
