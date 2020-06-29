@@ -4,7 +4,8 @@ AbstractRecentMenu subclass: #RegistryRecentMenu
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegistryRecentMenu guid: (GUID fromString: '{24a5959d-a131-48d9-a17d-b8038aea48b2}')!
 RegistryRecentMenu comment: ''!
 !RegistryRecentMenu categoriesForClass!Kernel-Objects! !
