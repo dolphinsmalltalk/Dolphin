@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Internal Bitmaps and Icons'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'One of the most common reasons why Dolphin applications need to use external files is to make use of icon and bitmap resources. These may be required solely to present your Dolphin classes with an icon inside the browsers or for more functional reasons such as toolbar buttons etc. 
 
@@ -35,28 +35,22 @@ Both InternalIcons and InternalBitmaps will display their full byte array initia
 package basicPackageVersion: '0.010'.
 
 
-package classNames
-	add: #InternalBitmap;
-	add: #InternalIcon;
-	yourself.
+package setClassNames: #(
+	#{InternalBitmap}
+	#{InternalIcon}
+).
 
-package methodNames
-	add: #ClassDescription -> #createBadgeMethod;
-	add: #ClassDescription -> #createIconMethod;
-	add: #ClassDescription -> #createIconMethod:fromIcon:;
-	add: #ClassDescription -> #createIconMethod:OfSize:;
-	add: #ClassDescription -> #createIconMethod:ofSize:fromFile:;
-	add: #Collection -> #printOn:upTo:;
-	add: #Collection -> #printStringUpTo:;
-	add: #GdiplusImage -> #addToImageList:mask:;
-	add: #GdiplusImage -> #internalize;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassDescription} #createBadgeMethod)
+	#(#{ClassDescription} #createIconMethod)
+	#(#{ClassDescription} #createIconMethod:fromIcon:)
+	#(#{ClassDescription} #createIconMethod:OfSize:)
+	#(#{ClassDescription} #createIconMethod:ofSize:fromFile:)
+	#(#{Collection} #printOn:upTo:)
+	#(#{Collection} #printStringUpTo:)
+	#(#{GdiplusImage} #addToImageList:mask:)
+	#(#{GdiplusImage} #internalize)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -64,7 +58,8 @@ package setPrerequisites: #(
 	'..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin Message Box'
 	'..\Base\Dolphin MVP Base'
-	'..\Gdiplus\Gdiplus').
+	'..\Gdiplus\Gdiplus'
+).
 
 package!
 
@@ -74,15 +69,14 @@ Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

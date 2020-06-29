@@ -4,7 +4,8 @@ Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InternalBitmap guid: (GUID fromString: '{b9454399-94c0-4572-bc54-802ff110731f}')!
 InternalBitmap comment: 'An InternalBitmap is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of bitmap resources. This has several advantages, including the ability to version InternalBitmap resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application. 
 

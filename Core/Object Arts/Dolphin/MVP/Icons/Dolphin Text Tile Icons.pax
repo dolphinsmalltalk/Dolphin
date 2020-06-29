@@ -1,27 +1,22 @@
 ﻿| package |
 package := Package name: 'Dolphin Text Tile Icons'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Text Tile Icons
 Copyright (c) Object Arts Ltd. 2018.
 '.
 
 
-package classNames
-	add: #TextTileIcon;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{TextTileIcon}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
 	'..\Base\Dolphin MVP Base'
-	'..\Gdiplus\Gdiplus').
+	'..\Gdiplus\Gdiplus'
+).
 
 package!
 
@@ -29,14 +24,13 @@ package!
 
 Object subclass: #TextTileIcon
 	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
-	classVariableNames: 'FontStyleNames RotationMask StringFormat'
+	classVariableNames: 'StringFormat'
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
+		'RotationMask' -> 16r3
+	}!
 
 "End of package definition"!
 
