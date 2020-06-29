@@ -4,7 +4,8 @@ MethodRefactoring subclass: #ExtractMethodToComponentRefactoring
 	instanceVariableNames: 'selector extractionInterval extractedMethodSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExtractMethodToComponentRefactoring guid: (GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
 ExtractMethodToComponentRefactoring comment: ''!
 !ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !

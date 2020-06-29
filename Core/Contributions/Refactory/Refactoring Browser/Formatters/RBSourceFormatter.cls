@@ -4,7 +4,8 @@ StParseNodeVisitor subclass: #RBSourceFormatter
 	instanceVariableNames: 'codeStream lineStart indent'
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBSourceFormatter guid: (GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
 RBSourceFormatter isAbstract: true!
 RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.

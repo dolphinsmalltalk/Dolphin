@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #AndEnvironment
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AndEnvironment guid: (GUID fromString: '{43ed7adb-6481-4a93-8ebe-b0861fc1ac52}')!
 AndEnvironment comment: ''!
 !AndEnvironment categoriesForClass!Refactory-Environments! !

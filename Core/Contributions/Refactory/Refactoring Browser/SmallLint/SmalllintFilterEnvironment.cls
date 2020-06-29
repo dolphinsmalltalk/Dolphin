@@ -4,7 +4,8 @@ AndEnvironment subclass: #SmalllintFilterEnvironment
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintFilterEnvironment guid: (GUID fromString: '{7fcd066a-29bc-4257-8ede-900b16e13492}')!
 SmalllintFilterEnvironment comment: 'SmalllintFilterEnvironment is a special environment that is used to filter out invalid Smalllint results.
 

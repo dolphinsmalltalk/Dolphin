@@ -4,7 +4,8 @@ Object subclass: #ReferenceFinder
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferenceFinder guid: (GUID fromString: '{bfcfc047-1208-409c-965c-bda23170a192}')!
 ReferenceFinder comment: ''!
 !ReferenceFinder categoriesForClass!Refactory-Browser! !

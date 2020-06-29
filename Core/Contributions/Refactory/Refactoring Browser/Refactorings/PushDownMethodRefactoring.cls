@@ -4,7 +4,8 @@ MethodRefactoring subclass: #PushDownMethodRefactoring
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushDownMethodRefactoring guid: (GUID fromString: '{3a03ada6-57cd-40af-b730-0fca36de9319}')!
 PushDownMethodRefactoring comment: ''!
 !PushDownMethodRefactoring categoriesForClass!Refactory-Refactorings! !

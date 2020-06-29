@@ -4,7 +4,8 @@ Object subclass: #RBAbstractCondition
 	instanceVariableNames: 'errorMacro'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBAbstractCondition guid: (GUID fromString: '{f74a2f07-4669-4626-8d47-0122b7ce23ff}')!
 RBAbstractCondition isAbstract: true!
 RBAbstractCondition comment: 'AbstractCondition is an abstract class. It represents a precondition that is used whenever a Refactoring is performed. All preconditions must evaluate successfully in order for the Refactoring to be performed.

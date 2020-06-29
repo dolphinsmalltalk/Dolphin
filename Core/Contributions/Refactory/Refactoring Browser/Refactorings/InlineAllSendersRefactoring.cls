@@ -4,7 +4,8 @@ MethodRefactoring subclass: #InlineAllSendersRefactoring
 	instanceVariableNames: 'selector numberReplaced numberNotReplaced'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InlineAllSendersRefactoring guid: (GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
 InlineAllSendersRefactoring comment: ''!
 !InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !

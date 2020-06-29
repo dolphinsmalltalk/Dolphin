@@ -4,7 +4,8 @@ Object subclass: #RBMethodName
 	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBMethodName guid: (GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
 RBMethodName comment: ''!
 !RBMethodName categoriesForClass!Refactory-Support! !

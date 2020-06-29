@@ -4,7 +4,8 @@ MethodRefactoring subclass: #ExtractToTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExtractToTemporaryRefactoring guid: (GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
 ExtractToTemporaryRefactoring comment: ''!
 !ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !

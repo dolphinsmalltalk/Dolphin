@@ -4,7 +4,8 @@ Collection subclass: #RBSmallDictionary
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBSmallDictionary guid: (GUID fromString: '{65ef5a3f-ece9-4966-8d14-b90bf121a5d6}')!
 RBSmallDictionary comment: 'RBSmallDictionary is an <abstractDictionary> optimized for small collections. It is part of the Refactoring Browser.
 Note that the implementation is similar to <LookupTable> in that RBSmallDictionarys do not store <Association>s.

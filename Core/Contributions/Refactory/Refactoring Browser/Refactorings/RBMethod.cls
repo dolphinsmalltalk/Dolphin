@@ -4,7 +4,8 @@ Object subclass: #RBMethod
 	instanceVariableNames: 'class compiledMethod source selector'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBMethod guid: (GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
 RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
 

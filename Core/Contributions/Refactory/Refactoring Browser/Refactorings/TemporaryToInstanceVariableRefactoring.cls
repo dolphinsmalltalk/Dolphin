@@ -4,7 +4,8 @@ MethodRefactoring subclass: #TemporaryToInstanceVariableRefactoring
 	instanceVariableNames: 'selector temporaryVariableName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TemporaryToInstanceVariableRefactoring guid: (GUID fromString: '{c0ad3ff1-c5d3-48f7-9104-4ee2542c6ba6}')!
 TemporaryToInstanceVariableRefactoring comment: ''!
 !TemporaryToInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !

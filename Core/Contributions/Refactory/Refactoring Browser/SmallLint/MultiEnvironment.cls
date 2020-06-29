@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #MultiEnvironment
 	instanceVariableNames: 'environmentDictionaries'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultiEnvironment guid: (GUID fromString: '{402838a2-3847-41d1-bfba-ef695abb9d9d}')!
 MultiEnvironment comment: 'MultiEnvironment is a special environment for the "Method defined in all subclasses, but not in superclass" lint rule. It''s basically a hack to get a browser to display the results.
 

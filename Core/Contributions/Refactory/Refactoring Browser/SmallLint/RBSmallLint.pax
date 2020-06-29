@@ -1,45 +1,40 @@
 ﻿| package |
 package := Package name: 'RBSmallLint'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser SmallLint
 Copyright (c) John Brant & Don Roberts.'.
 
 
-package classNames
-	add: #BasicLintRule;
-	add: #BlockLintRule;
-	add: #CompositeLintRule;
-	add: #LintRule;
-	add: #MultiEnvironment;
-	add: #ParseTreeEnvironment;
-	add: #ParseTreeLintRule;
-	add: #SmalllintChecker;
-	add: #SmalllintContext;
-	add: #SmalllintFilterEnvironment;
-	add: #TransformationRule;
-	yourself.
+package setClassNames: #(
+	#{BasicLintRule}
+	#{BlockLintRule}
+	#{CompositeLintRule}
+	#{LintRule}
+	#{MultiEnvironment}
+	#{ParseTreeEnvironment}
+	#{ParseTreeLintRule}
+	#{SmalllintChecker}
+	#{SmalllintContext}
+	#{SmalllintFilterEnvironment}
+	#{TransformationRule}
+).
 
-package methodNames
-	add: #Behavior -> #instanceBehavior;
-	add: #CompiledCode -> #needsHybridFrame;
-	add: #CompiledCode -> #withAllBlockMethodsDo:;
-	add: #CompiledMethod -> #equivalentTo:;
-	add: #Metaclass -> #instanceBehavior;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Behavior} #instanceBehavior)
+	#(#{CompiledCode} #needsHybridFrame)
+	#(#{CompiledCode} #withAllBlockMethodsDo:)
+	#(#{CompiledMethod} #equivalentTo:)
+	#(#{Metaclass} #instanceBehavior)
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\Parser\RBParser'
-	'..\Refactorings\RBRefactorings').
+	'..\Refactorings\RBRefactorings'
+).
 
 package!
 
@@ -49,60 +44,68 @@ Object subclass: #LintRule
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SmalllintChecker
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #SmalllintContext
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #MultiEnvironment
 	instanceVariableNames: 'environmentDictionaries'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AndEnvironment subclass: #SmalllintFilterEnvironment
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectorEnvironment subclass: #ParseTreeEnvironment
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRule subclass: #BasicLintRule
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRule subclass: #CompositeLintRule
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicLintRule subclass: #BlockLintRule
 	instanceVariableNames: 'classBlock methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicLintRule subclass: #ParseTreeLintRule
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

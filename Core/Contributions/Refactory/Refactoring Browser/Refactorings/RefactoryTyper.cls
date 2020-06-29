@@ -4,7 +4,8 @@ Object subclass: #RefactoryTyper
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoryTyper guid: (GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
 RefactoryTyper comment: ''!
 !RefactoryTyper categoriesForClass!Refactory-Support! !

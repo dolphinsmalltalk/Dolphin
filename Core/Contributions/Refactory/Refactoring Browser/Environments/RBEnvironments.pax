@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBEnvironments'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Environments
 Copyright (c) John Brant & Don Roberts.
@@ -10,43 +10,38 @@ Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San D
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
 
-package classNames
-	add: #AndEnvironment;
-	add: #BrowserEnvironment;
-	add: #BrowserEnvironmentWrapper;
-	add: #CategoryEnvironment;
-	add: #ClassEnvironment;
-	add: #NotEnvironment;
-	add: #OrEnvironment;
-	add: #ProtocolEnvironment;
-	add: #SelectorEnvironment;
-	add: #VariableEnvironment;
-	yourself.
+package setClassNames: #(
+	#{AndEnvironment}
+	#{BrowserEnvironment}
+	#{BrowserEnvironmentWrapper}
+	#{CategoryEnvironment}
+	#{ClassEnvironment}
+	#{NotEnvironment}
+	#{OrEnvironment}
+	#{ProtocolEnvironment}
+	#{SelectorEnvironment}
+	#{VariableEnvironment}
+).
 
-package methodNames
-	add: #Association -> #binding;
-	add: #Association -> #isVariableBinding;
-	add: #Behavior -> #allSubBehaviorsDo:;
-	add: #Behavior -> #allSubBehaviorsPreOrderDo:;
-	add: #Behavior -> #isBehavior;
-	add: #Behavior -> #numberSelectors;
-	add: #Behavior -> #selectorsAndMethodsDo:;
-	add: #Behavior -> #subBehaviors;
-	add: #Behavior -> #withAllSubBehaviorsDo:;
-	add: #CompiledCode -> #allLiterals;
-	add: #Metaclass -> #soleInstance;
-	add: #Object -> #isBehavior;
-	add: #Object -> #isVariableBinding;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Association} #binding)
+	#(#{Association} #isVariableBinding)
+	#(#{Behavior} #allSubBehaviorsDo:)
+	#(#{Behavior} #allSubBehaviorsPreOrderDo:)
+	#(#{Behavior} #isBehavior)
+	#(#{Behavior} #numberSelectors)
+	#(#{Behavior} #selectorsAndMethodsDo:)
+	#(#{Behavior} #subBehaviors)
+	#(#{Behavior} #withAllSubBehaviorsDo:)
+	#(#{CompiledCode} #allLiterals)
+	#(#{Metaclass} #soleInstance)
+	#(#{Object} #isBehavior)
+	#(#{Object} #isVariableBinding)
+).
 
 package setPrerequisites: #(
-	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -56,55 +51,62 @@ Object subclass: #BrowserEnvironment
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #AndEnvironment
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #CategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #NotEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #OrEnvironment
 	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

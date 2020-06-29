@@ -4,7 +4,8 @@ SmalltalkParser subclass: #RBPatternParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternParser guid: (GUID fromString: '{efae231d-9476-470e-9bef-e65273b2f157}')!
 RBPatternParser comment: 'RBPatternParser is an extended <SmalltalkParser> that supports the RB''s extended syntax for pattern matching trees. The resulting trees are used as inputs to the <ParseTreeSearcher> and <ParseTreeRewriter> for searching and transforming source code (respectively).
 '!

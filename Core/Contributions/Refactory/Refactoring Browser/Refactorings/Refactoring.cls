@@ -4,7 +4,8 @@ Object subclass: #Refactoring
 	instanceVariableNames: 'model options'
 	classVariableNames: 'AbortSignal RefactoringOptions'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactoring guid: (GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
 Refactoring isAbstract: true!
 Refactoring comment: ''!

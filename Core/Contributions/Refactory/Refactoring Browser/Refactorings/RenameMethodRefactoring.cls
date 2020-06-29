@@ -4,7 +4,8 @@ ChangeMethodNameRefactoring subclass: #RenameMethodRefactoring
 	instanceVariableNames: 'hasPermutedArguments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameMethodRefactoring guid: (GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
 RenameMethodRefactoring comment: ''!
 !RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !

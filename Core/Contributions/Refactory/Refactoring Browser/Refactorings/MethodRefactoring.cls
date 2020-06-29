@@ -4,7 +4,8 @@ Refactoring subclass: #MethodRefactoring
 	instanceVariableNames: 'class'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MethodRefactoring guid: (GUID fromString: '{f93954e7-217f-4070-b44d-b7d1f1bc74d3}')!
 MethodRefactoring comment: ''!
 !MethodRefactoring categoriesForClass!Refactory-Refactorings! !

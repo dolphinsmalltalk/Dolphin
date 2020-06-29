@@ -4,7 +4,8 @@ RBAbstractCondition subclass: #RBCondition
 	instanceVariableNames: 'block type errorBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBCondition guid: (GUID fromString: '{af1642b9-45bf-427d-a24f-812c3271820d}')!
 RBCondition comment: 'Condition represents a condition that must be true for a refactoring to be performed.
 

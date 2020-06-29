@@ -4,7 +4,8 @@ RBAbstractCondition subclass: #RBNegationCondition
 	instanceVariableNames: 'condition'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBNegationCondition guid: (GUID fromString: '{b9c3d59c-1ad9-483a-91cc-9d03b95a12a6}')!
 RBNegationCondition comment: 'NegationCondition represents negating another condition.
 

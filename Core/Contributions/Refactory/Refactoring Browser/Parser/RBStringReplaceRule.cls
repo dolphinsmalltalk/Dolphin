@@ -4,7 +4,8 @@ RBReplaceRule subclass: #RBStringReplaceRule
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBStringReplaceRule guid: (GUID fromString: '{bbdb2681-b086-4cdc-9efd-14d33492c0aa}')!
 RBStringReplaceRule comment: ''!
 !RBStringReplaceRule categoriesForClass!Refactory-ParseTree Matching! !

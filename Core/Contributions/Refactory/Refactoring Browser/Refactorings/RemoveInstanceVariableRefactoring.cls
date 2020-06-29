@@ -4,7 +4,8 @@ VariableRefactoring subclass: #RemoveInstanceVariableRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RemoveInstanceVariableRefactoring guid: (GUID fromString: '{d2991219-2de3-407c-b2e8-dff3b51b51db}')!
 RemoveInstanceVariableRefactoring comment: ''!
 !RemoveInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !

@@ -4,7 +4,8 @@ Refactoring subclass: #ExpandReferencedPoolsRefactoring
 	instanceVariableNames: 'pools fromClass parseTree toClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExpandReferencedPoolsRefactoring guid: (GUID fromString: '{5567e549-3f11-4042-99cd-794dab099550}')!
 ExpandReferencedPoolsRefactoring comment: 'ExpandReferencedPoolsRefactoring is a refactoring that expands a PoolDictionary''s scope for a method that is being moved from one class to another. This refactoring is primarily used to support other, more complicated refactorings such as MoveMethod.
 

@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBReferenceFinder'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Reference Finder
 Copyright (c) John Brant & Don Roberts.
@@ -8,18 +8,13 @@ Copyright (c) John Brant & Don Roberts.
 Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000.'.
 
 
-package classNames
-	add: #ReferenceFinder;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ReferenceFinder}
+).
 
 package setPrerequisites: #(
-	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin').
+	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
+).
 
 package!
 
@@ -29,12 +24,8 @@ Object subclass: #ReferenceFinder
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

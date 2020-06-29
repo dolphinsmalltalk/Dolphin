@@ -4,7 +4,8 @@ Error subclass: #RefactoringError
 	instanceVariableNames: 'refactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoringError guid: (GUID fromString: '{fd7b54c9-922a-4cff-9037-b84f75478283}')!
 RefactoringError comment: ''!
 !RefactoringError categoriesForClass!Refactory-Support! !

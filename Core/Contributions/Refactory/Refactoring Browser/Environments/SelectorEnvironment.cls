@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectorEnvironment guid: (GUID fromString: '{d6de9b1c-4652-474b-97cd-87838c6d2f62}')!
 SelectorEnvironment comment: 'SelectorEnvironment represents a predetermined collection of methods to be browsed.
 

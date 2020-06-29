@@ -4,7 +4,8 @@ StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternMessageNode guid: (GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
 RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 

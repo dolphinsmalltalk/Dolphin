@@ -4,7 +4,8 @@ LintRule subclass: #CompositeLintRule
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompositeLintRule guid: (GUID fromString: '{ac469ac9-0c11-4be1-90b2-f1a9192e9d98}')!
 CompositeLintRule comment: 'CompositeLintRule groups LintRules into a single rule (composite pattern).
 

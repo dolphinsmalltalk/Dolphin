@@ -4,7 +4,8 @@ VariableRefactoring subclass: #CreateAccessorsForVariableRefactoring
 	instanceVariableNames: 'getterMethod setterMethod classVariable needsReturn'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CreateAccessorsForVariableRefactoring guid: (GUID fromString: '{c3f653b0-6efe-4cb6-a2a6-781aac3447ec}')!
 CreateAccessorsForVariableRefactoring comment: ''!
 !CreateAccessorsForVariableRefactoring categoriesForClass!Refactory-Refactorings! !

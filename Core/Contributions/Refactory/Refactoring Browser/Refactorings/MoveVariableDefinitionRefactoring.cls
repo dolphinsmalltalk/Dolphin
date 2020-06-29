@@ -4,7 +4,8 @@ MethodRefactoring subclass: #MoveVariableDefinitionRefactoring
 	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MoveVariableDefinitionRefactoring guid: (GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
 MoveVariableDefinitionRefactoring comment: ''!
 !MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !

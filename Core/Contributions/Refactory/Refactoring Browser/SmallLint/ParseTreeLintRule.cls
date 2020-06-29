@@ -4,7 +4,8 @@ BasicLintRule subclass: #ParseTreeLintRule
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ParseTreeLintRule guid: (GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
 ParseTreeLintRule comment: ''!
 !ParseTreeLintRule categoriesForClass!Refactory-Lint! !

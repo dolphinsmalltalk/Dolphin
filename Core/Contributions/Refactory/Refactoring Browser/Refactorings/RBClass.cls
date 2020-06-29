@@ -4,7 +4,8 @@ RBAbstractClass subclass: #RBClass
 	instanceVariableNames: 'classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBClass guid: (GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
 RBClass comment: 'RBClass represents a Class.
 

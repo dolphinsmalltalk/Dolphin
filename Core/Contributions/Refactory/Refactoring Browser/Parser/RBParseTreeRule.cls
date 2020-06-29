@@ -4,7 +4,8 @@ Object subclass: #RBParseTreeRule
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBParseTreeRule guid: (GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
 RBParseTreeRule comment: ''!
 !RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !

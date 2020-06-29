@@ -4,7 +4,8 @@ Object subclass: #SmalllintContext
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintContext guid: (GUID fromString: '{3cc8c7db-8970-4652-bff7-519cda9ca376}')!
 SmalllintContext comment: ''!
 !SmalllintContext categoriesForClass!Refactory-Lint! !

@@ -4,7 +4,8 @@ MethodRefactoring subclass: #RenameTemporaryRefactoring
 	instanceVariableNames: 'selector interval oldName newName parseTree'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameTemporaryRefactoring guid: (GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
 RenameTemporaryRefactoring comment: ''!
 !RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !

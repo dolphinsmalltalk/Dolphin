@@ -4,7 +4,8 @@ ChangeMethodNameRefactoring subclass: #RemoveParameterRefactoring
 	instanceVariableNames: 'parameterIndex argument'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RemoveParameterRefactoring guid: (GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
 RemoveParameterRefactoring comment: ''!
 !RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !

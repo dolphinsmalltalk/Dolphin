@@ -4,7 +4,8 @@ LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TransformationRule guid: (GUID fromString: '{9864c788-a659-4ced-8264-c32a2b4327ec}')!
 TransformationRule comment: 'TransformationRule is a LintRule that transforms code using rewrite rules.
 

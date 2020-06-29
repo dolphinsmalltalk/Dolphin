@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'RBParser'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin RBParser Package
 Copyright John Brant and Don Roberts.
@@ -10,221 +10,220 @@ This package aliases most of the RBParser classes to the Dolphin equivalents whi
 Should be used in place of the full RBParser package, which contains the ''...parser for the Refactoring Browser. It contains both the ability to parse Smalltalk and also to rewrite Smalltalk code. The refactorings use this rewriting behavior to perform the source code transformations.'''.
 
 
-package classNames
-	add: #ParseTreeRewriter;
-	add: #ParseTreeSearcher;
-	add: #RBBlockReplaceRule;
-	add: #RBParseTreeRule;
-	add: #RBPatternBlockNode;
-	add: #RBPatternMessageNode;
-	add: #RBPatternMethodNode;
-	add: #RBPatternParser;
-	add: #RBPatternScanner;
-	add: #RBPatternVariableNode;
-	add: #RBPatternWrapperBlockNode;
-	add: #RBReplaceRule;
-	add: #RBSearchRule;
-	add: #RBSmallDictionary;
-	add: #RBStringReplacement;
-	add: #RBStringReplaceRule;
-	yourself.
+package setClassNames: #(
+	#{ParseTreeRewriter}
+	#{ParseTreeSearcher}
+	#{RBBlockReplaceRule}
+	#{RBParseTreeRule}
+	#{RBPatternBlockNode}
+	#{RBPatternMessageNode}
+	#{RBPatternMethodNode}
+	#{RBPatternParser}
+	#{RBPatternScanner}
+	#{RBPatternVariableNode}
+	#{RBPatternWrapperBlockNode}
+	#{RBReplaceRule}
+	#{RBSearchRule}
+	#{RBSmallDictionary}
+	#{RBStringReplacement}
+	#{RBStringReplaceRule}
+).
 
-package methodNames
-	add: #CompileFailedMethod -> #refersToVariable:;
-	add: #RBConfigurableFormatter -> #visitPatternWrapperBlockNode:;
-	add: #RBFormatter -> #visitPatternWrapperBlockNode:;
-	add: #StAbstractVariableNode -> #copyInContext:;
-	add: #StAbstractVariableNode -> #equalTo:withMapping:;
-	add: #StAbstractVariableNode -> #references:;
-	add: #StAbstractVariableNode -> #replaceSourceFrom:;
-	add: #StAbstractVariableNode -> #replaceSourceWith:;
-	add: #StAssignmentNode -> #copyInContext:;
-	add: #StAssignmentNode -> #equalTo:withMapping:;
-	add: #StAssignmentNode -> #match:inContext:;
-	add: #StAssignmentNode -> #replaceNode:withNode:;
-	add: #StAssignmentNode -> #replaceSourceWith:;
-	add: #StBlockNode -> #copyInContext:;
-	add: #StBlockNode -> #equalTo:withMapping:;
-	add: #StBlockNode -> #match:inContext:;
-	add: #StBlockNode -> #references:;
-	add: #StBlockNode -> #replaceNode:withNode:;
-	add: #StBraceArrayNode -> #addNode:;
-	add: #StBraceArrayNode -> #addNode:before:;
-	add: #StBraceArrayNode -> #addNodeFirst:;
-	add: #StBraceArrayNode -> #addNodes:;
-	add: #StBraceArrayNode -> #addNodes:before:;
-	add: #StBraceArrayNode -> #addNodesFirst:;
-	add: #StBraceArrayNode -> #copyInContext:;
-	add: #StBraceArrayNode -> #equalTo:withMapping:;
-	add: #StBraceArrayNode -> #indexOfNode:;
-	add: #StBraceArrayNode -> #match:inContext:;
-	add: #StBraceArrayNode -> #references:;
-	add: #StBraceArrayNode -> #replaceNode:withNode:;
-	add: #StCascadeNode -> #copyInContext:;
-	add: #StCascadeNode -> #equalTo:withMapping:;
-	add: #StCascadeNode -> #match:inContext:;
-	add: #StCascadeNode -> #replaceNode:withNode:;
-	add: #StLiteralArrayNode -> #copyInContext:;
-	add: #StLiteralArrayNode -> #equalTo:withMapping:;
-	add: #StLiteralArrayNode -> #match:inContext:;
-	add: #StLiteralArrayNode -> #replaceNode:withNode:;
-	add: #StLiteralNode -> #replaceSourceFrom:;
-	add: #StLiteralNode -> #replaceSourceWith:;
-	add: #StLiteralValueNode -> #copyInContext:;
-	add: #StMessageNode -> #copyInContext:;
-	add: #StMessageNode -> #equalTo:withMapping:;
-	add: #StMessageNode -> #isContainmentReplacement:;
-	add: #StMessageNode -> #match:inContext:;
-	add: #StMessageNode -> #replaceContainmentSourceWith:;
-	add: #StMessageNode -> #replaceNode:withNode:;
-	add: #StMessageNode -> #replaceSourceWith:;
-	add: #StMessageNode -> #replaceSourceWithMessageNode:;
-	add: #StMethodNode -> #addNode:;
-	add: #StMethodNode -> #addReplacement:;
-	add: #StMethodNode -> #addReturn;
-	add: #StMethodNode -> #addSelfReturn;
-	add: #StMethodNode -> #changeSourceSelectors:arguments:;
-	add: #StMethodNode -> #clearReplacements;
-	add: #StMethodNode -> #copyInContext:;
-	add: #StMethodNode -> #equalTo:withMapping:;
-	add: #StMethodNode -> #initialize;
-	add: #StMethodNode -> #map:to:;
-	add: #StMethodNode -> #mappingFor:;
-	add: #StMethodNode -> #match:inContext:;
-	add: #StMethodNode -> #newSource;
-	add: #StMethodNode -> #references:;
-	add: #StMethodNode -> #reformatSource;
-	add: #StMethodNode -> #renameSelector:andArguments:;
-	add: #StMethodNode -> #replaceNode:withNode:;
-	add: #StOptimizedNode -> #copyInContext:;
-	add: #StOptimizedNode -> #equalTo:withMapping:;
-	add: #StOptimizedNode -> #match:inContext:;
-	add: #StOptimizedNode -> #replaceNode:withNode:;
-	add: #StParseNodeVisitor -> #visitPatternBlockNode:;
-	add: #StParseNodeVisitor -> #visitPatternWrapperBlockNode:;
-	add: #StProgramNode -> #addReplacement:;
-	add: #StProgramNode -> #asReturn;
-	add: #StProgramNode -> #clearReplacements;
-	add: #StProgramNode -> #copyInContext:;
-	add: #StProgramNode -> #copyList:inContext:;
-	add: #StProgramNode -> #equalTo:withMapping:;
-	add: #StProgramNode -> #mappingFor:;
-	add: #StProgramNode -> #match:inContext:;
-	add: #StProgramNode -> #matchList:against:inContext:;
-	add: #StProgramNode -> #matchList:index:against:index:inContext:;
-	add: #StProgramNode -> #references:;
-	add: #StProgramNode -> #removeDeadCode;
-	add: #StProgramNode -> #replaceMethodSource:;
-	add: #StProgramNode -> #replaceNode:withNode:;
-	add: #StProgramNode -> #replaceSourceFrom:;
-	add: #StProgramNode -> #replaceSourceWith:;
-	add: #StProgramNode -> #replaceWith:;
-	add: #StProgramNode -> #selfMessages;
-	add: #StProgramNode -> #superMessages;
-	add: #StReturnNode -> #copyInContext:;
-	add: #StReturnNode -> #equalTo:withMapping:;
-	add: #StReturnNode -> #match:inContext:;
-	add: #StReturnNode -> #replaceNode:withNode:;
-	add: #StSequenceNode -> #addNode:;
-	add: #StSequenceNode -> #addNode:before:;
-	add: #StSequenceNode -> #addNodeFirst:;
-	add: #StSequenceNode -> #addNodes:;
-	add: #StSequenceNode -> #addNodes:before:;
-	add: #StSequenceNode -> #addNodesFirst:;
-	add: #StSequenceNode -> #addReturn;
-	add: #StSequenceNode -> #addSelfReturn;
-	add: #StSequenceNode -> #addTemporariesNamed:;
-	add: #StSequenceNode -> #addTemporaryNamed:;
-	add: #StSequenceNode -> #copyInContext:;
-	add: #StSequenceNode -> #equalTo:withMapping:;
-	add: #StSequenceNode -> #indexOfNode:;
-	add: #StSequenceNode -> #match:inContext:;
-	add: #StSequenceNode -> #references:;
-	add: #StSequenceNode -> #removeDeadCode;
-	add: #StSequenceNode -> #removeNode:;
-	add: #StSequenceNode -> #removeTemporaryNamed:;
-	add: #StSequenceNode -> #replaceNode:withNode:;
-	add: #StSequenceNode -> #replaceNode:withNodes:;
-	add: 'SmalltalkParser class' -> #parseRewriteExpression:;
-	add: 'SmalltalkParser class' -> #parseRewriteExpression:onError:;
-	add: 'SmalltalkParser class' -> #parseRewriteMethod:;
-	add: 'SmalltalkParser class' -> #parseRewriteMethod:onError:;
-	yourself.
+package setMethodNames: #(
+	#(#{CompileFailedMethod} #refersToVariable:)
+	#(#{RBConfigurableFormatter} #visitPatternWrapperBlockNode:)
+	#(#{RBFormatter} #visitPatternWrapperBlockNode:)
+	#(#{SmalltalkParser class} #parseRewriteExpression:)
+	#(#{SmalltalkParser class} #parseRewriteExpression:onError:)
+	#(#{SmalltalkParser class} #parseRewriteMethod:)
+	#(#{SmalltalkParser class} #parseRewriteMethod:onError:)
+	#(#{StAbstractVariableNode} #copyInContext:)
+	#(#{StAbstractVariableNode} #equalTo:withMapping:)
+	#(#{StAbstractVariableNode} #references:)
+	#(#{StAbstractVariableNode} #replaceSourceFrom:)
+	#(#{StAbstractVariableNode} #replaceSourceWith:)
+	#(#{StAssignmentNode} #copyInContext:)
+	#(#{StAssignmentNode} #equalTo:withMapping:)
+	#(#{StAssignmentNode} #match:inContext:)
+	#(#{StAssignmentNode} #replaceNode:withNode:)
+	#(#{StAssignmentNode} #replaceSourceWith:)
+	#(#{StBlockNode} #copyInContext:)
+	#(#{StBlockNode} #equalTo:withMapping:)
+	#(#{StBlockNode} #match:inContext:)
+	#(#{StBlockNode} #references:)
+	#(#{StBlockNode} #replaceNode:withNode:)
+	#(#{StBraceArrayNode} #addNode:)
+	#(#{StBraceArrayNode} #addNode:before:)
+	#(#{StBraceArrayNode} #addNodeFirst:)
+	#(#{StBraceArrayNode} #addNodes:)
+	#(#{StBraceArrayNode} #addNodes:before:)
+	#(#{StBraceArrayNode} #addNodesFirst:)
+	#(#{StBraceArrayNode} #copyInContext:)
+	#(#{StBraceArrayNode} #equalTo:withMapping:)
+	#(#{StBraceArrayNode} #indexOfNode:)
+	#(#{StBraceArrayNode} #match:inContext:)
+	#(#{StBraceArrayNode} #references:)
+	#(#{StBraceArrayNode} #replaceNode:withNode:)
+	#(#{StCascadeNode} #copyInContext:)
+	#(#{StCascadeNode} #equalTo:withMapping:)
+	#(#{StCascadeNode} #match:inContext:)
+	#(#{StCascadeNode} #replaceNode:withNode:)
+	#(#{StLiteralArrayNode} #copyInContext:)
+	#(#{StLiteralArrayNode} #equalTo:withMapping:)
+	#(#{StLiteralArrayNode} #match:inContext:)
+	#(#{StLiteralArrayNode} #replaceNode:withNode:)
+	#(#{StLiteralNode} #replaceSourceFrom:)
+	#(#{StLiteralNode} #replaceSourceWith:)
+	#(#{StLiteralValueNode} #copyInContext:)
+	#(#{StMessageNode} #copyInContext:)
+	#(#{StMessageNode} #equalTo:withMapping:)
+	#(#{StMessageNode} #isContainmentReplacement:)
+	#(#{StMessageNode} #match:inContext:)
+	#(#{StMessageNode} #replaceContainmentSourceWith:)
+	#(#{StMessageNode} #replaceNode:withNode:)
+	#(#{StMessageNode} #replaceSourceWith:)
+	#(#{StMessageNode} #replaceSourceWithMessageNode:)
+	#(#{StMethodNode} #addNode:)
+	#(#{StMethodNode} #addReplacement:)
+	#(#{StMethodNode} #addReturn)
+	#(#{StMethodNode} #addSelfReturn)
+	#(#{StMethodNode} #changeSourceSelectors:arguments:)
+	#(#{StMethodNode} #clearReplacements)
+	#(#{StMethodNode} #copyInContext:)
+	#(#{StMethodNode} #equalTo:withMapping:)
+	#(#{StMethodNode} #initialize)
+	#(#{StMethodNode} #map:to:)
+	#(#{StMethodNode} #mappingFor:)
+	#(#{StMethodNode} #match:inContext:)
+	#(#{StMethodNode} #newSource)
+	#(#{StMethodNode} #references:)
+	#(#{StMethodNode} #reformatSource)
+	#(#{StMethodNode} #renameSelector:andArguments:)
+	#(#{StMethodNode} #replaceNode:withNode:)
+	#(#{StOptimizedNode} #copyInContext:)
+	#(#{StOptimizedNode} #equalTo:withMapping:)
+	#(#{StOptimizedNode} #match:inContext:)
+	#(#{StOptimizedNode} #replaceNode:withNode:)
+	#(#{StParseNodeVisitor} #visitPatternBlockNode:)
+	#(#{StParseNodeVisitor} #visitPatternWrapperBlockNode:)
+	#(#{StProgramNode} #addReplacement:)
+	#(#{StProgramNode} #asReturn)
+	#(#{StProgramNode} #clearReplacements)
+	#(#{StProgramNode} #copyInContext:)
+	#(#{StProgramNode} #copyList:inContext:)
+	#(#{StProgramNode} #equalTo:withMapping:)
+	#(#{StProgramNode} #mappingFor:)
+	#(#{StProgramNode} #match:inContext:)
+	#(#{StProgramNode} #matchList:against:inContext:)
+	#(#{StProgramNode} #matchList:index:against:index:inContext:)
+	#(#{StProgramNode} #references:)
+	#(#{StProgramNode} #removeDeadCode)
+	#(#{StProgramNode} #replaceMethodSource:)
+	#(#{StProgramNode} #replaceNode:withNode:)
+	#(#{StProgramNode} #replaceSourceFrom:)
+	#(#{StProgramNode} #replaceSourceWith:)
+	#(#{StProgramNode} #replaceWith:)
+	#(#{StProgramNode} #selfMessages)
+	#(#{StProgramNode} #superMessages)
+	#(#{StReturnNode} #copyInContext:)
+	#(#{StReturnNode} #equalTo:withMapping:)
+	#(#{StReturnNode} #match:inContext:)
+	#(#{StReturnNode} #replaceNode:withNode:)
+	#(#{StSequenceNode} #addNode:)
+	#(#{StSequenceNode} #addNode:before:)
+	#(#{StSequenceNode} #addNodeFirst:)
+	#(#{StSequenceNode} #addNodes:)
+	#(#{StSequenceNode} #addNodes:before:)
+	#(#{StSequenceNode} #addNodesFirst:)
+	#(#{StSequenceNode} #addReturn)
+	#(#{StSequenceNode} #addSelfReturn)
+	#(#{StSequenceNode} #addTemporariesNamed:)
+	#(#{StSequenceNode} #addTemporaryNamed:)
+	#(#{StSequenceNode} #copyInContext:)
+	#(#{StSequenceNode} #equalTo:withMapping:)
+	#(#{StSequenceNode} #indexOfNode:)
+	#(#{StSequenceNode} #match:inContext:)
+	#(#{StSequenceNode} #references:)
+	#(#{StSequenceNode} #removeDeadCode)
+	#(#{StSequenceNode} #removeNode:)
+	#(#{StSequenceNode} #removeTemporaryNamed:)
+	#(#{StSequenceNode} #replaceNode:withNode:)
+	#(#{StSequenceNode} #replaceNode:withNodes:)
+).
 
-package globalNames
-	add: #RBAssignmentNode;
-	add: #RBAssignmentToken;
-	add: #RBBinarySelectorToken;
-	add: #RBBlockNode;
-	add: #RBCascadeNode;
-	add: #RBIdentifierToken;
-	add: #RBKeywordToken;
-	add: #RBLiteralArrayNode;
-	add: #RBLiteralArrayToken;
-	add: #RBLiteralNode;
-	add: #RBLiteralToken;
-	add: #RBLiteralValueNode;
-	add: #RBMessageNode;
-	add: #RBMethodNode;
-	add: #RBMultiKeywordLiteralToken;
-	add: #RBNumberLiteralToken;
-	add: #RBOptimizedNode;
-	add: #RBOptimizedToken;
-	add: #RBParser;
-	add: #RBProgramNode;
-	add: #RBProgramNodeVisitor;
-	add: #RBReturnNode;
-	add: #RBScanner;
-	add: #RBSequenceNode;
-	add: #RBSpecialCharacterToken;
-	add: #RBToken;
-	add: #RBValueNode;
-	add: #RBValueToken;
-	add: #RBVariableNode;
-	yourself.
+package setVariableNames: #(
+	#{RBAssignmentNode}
+	#{RBAssignmentToken}
+	#{RBBinarySelectorToken}
+	#{RBBlockNode}
+	#{RBCascadeNode}
+	#{RBIdentifierToken}
+	#{RBKeywordToken}
+	#{RBLiteralArrayNode}
+	#{RBLiteralArrayToken}
+	#{RBLiteralNode}
+	#{RBLiteralToken}
+	#{RBLiteralValueNode}
+	#{RBMessageNode}
+	#{RBMethodNode}
+	#{RBMultiKeywordLiteralToken}
+	#{RBNumberLiteralToken}
+	#{RBOptimizedNode}
+	#{RBOptimizedToken}
+	#{RBParser}
+	#{RBProgramNode}
+	#{RBProgramNodeVisitor}
+	#{RBReturnNode}
+	#{RBScanner}
+	#{RBSequenceNode}
+	#{RBSpecialCharacterToken}
+	#{RBToken}
+	#{RBValueNode}
+	#{RBValueToken}
+	#{RBVariableNode}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #RBAssignmentNode;
-	add: #RBAssignmentToken;
-	add: #RBBinarySelectorToken;
-	add: #RBBlockNode;
-	add: #RBCascadeNode;
-	add: #RBIdentifierToken;
-	add: #RBKeywordToken;
-	add: #RBLiteralArrayNode;
-	add: #RBLiteralArrayToken;
-	add: #RBLiteralNode;
-	add: #RBLiteralToken;
-	add: #RBLiteralValueNode;
-	add: #RBMessageNode;
-	add: #RBMethodNode;
-	add: #RBMultiKeywordLiteralToken;
-	add: #RBNumberLiteralToken;
-	add: #RBOptimizedNode;
-	add: #RBOptimizedToken;
-	add: #RBParser;
-	add: #RBProgramNode;
-	add: #RBProgramNodeVisitor;
-	add: #RBReturnNode;
-	add: #RBScanner;
-	add: #RBSequenceNode;
-	add: #RBSpecialCharacterToken;
-	add: #RBToken;
-	add: #RBValueNode;
-	add: #RBValueToken;
-	add: #RBVariableNode;
-	yourself).
+package setAliasVariableNames: #(
+	#{RBAssignmentNode}
+	#{RBAssignmentToken}
+	#{RBBinarySelectorToken}
+	#{RBBlockNode}
+	#{RBCascadeNode}
+	#{RBIdentifierToken}
+	#{RBKeywordToken}
+	#{RBLiteralArrayNode}
+	#{RBLiteralArrayToken}
+	#{RBLiteralNode}
+	#{RBLiteralToken}
+	#{RBLiteralValueNode}
+	#{RBMessageNode}
+	#{RBMethodNode}
+	#{RBMultiKeywordLiteralToken}
+	#{RBNumberLiteralToken}
+	#{RBOptimizedNode}
+	#{RBOptimizedToken}
+	#{RBParser}
+	#{RBProgramNode}
+	#{RBProgramNodeVisitor}
+	#{RBReturnNode}
+	#{RBScanner}
+	#{RBSequenceNode}
+	#{RBSpecialCharacterToken}
+	#{RBToken}
+	#{RBValueNode}
+	#{RBValueToken}
+	#{RBVariableNode}
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Formatters\RBFormatters'
-	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
+).
 
 package setManualPrerequisites: #(
-	'Smalltalk Parser').
+	'Smalltalk Parser'
+).
 
 package!
 
@@ -234,84 +233,100 @@ Object subclass: #RBParseTreeRule
 	instanceVariableNames: 'searchTree owner'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #RBStringReplacement
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Collection subclass: #RBSmallDictionary
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBParseTreeRule subclass: #RBReplaceRule
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBParseTreeRule subclass: #RBSearchRule
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBReplaceRule subclass: #RBBlockReplaceRule
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBReplaceRule subclass: #RBStringReplaceRule
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkParser subclass: #RBPatternParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkScanner subclass: #RBPatternScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StParseNodeVisitor subclass: #ParseTreeSearcher
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ParseTreeSearcher subclass: #ParseTreeRewriter
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StMethodNode subclass: #RBPatternMethodNode
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StVariableNode subclass: #RBPatternVariableNode
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 RBAssignmentNode := StAssignmentNode!
 

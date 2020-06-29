@@ -4,7 +4,8 @@ ClassRefactoring subclass: #ChildrenToSiblingsRefactoring
 	instanceVariableNames: 'parent subclasses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChildrenToSiblingsRefactoring guid: (GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
 ChildrenToSiblingsRefactoring comment: ''!
 !ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !

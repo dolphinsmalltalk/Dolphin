@@ -4,7 +4,8 @@ MethodRefactoring subclass: #InlineMethodRefactoring
 	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InlineMethodRefactoring guid: (GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
 InlineMethodRefactoring comment: ''!
 !InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !

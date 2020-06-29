@@ -4,7 +4,8 @@ StMethodNode subclass: #RBPatternMethodNode
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternMethodNode guid: (GUID fromString: '{6846df75-8a6c-48dc-944d-453103430651}')!
 RBPatternMethodNode comment: 'RBPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
 

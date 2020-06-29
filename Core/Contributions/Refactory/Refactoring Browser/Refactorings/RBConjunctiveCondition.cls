@@ -4,7 +4,8 @@ RBAbstractCondition subclass: #RBConjunctiveCondition
 	instanceVariableNames: 'left right failed'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBConjunctiveCondition guid: (GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
 RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
 

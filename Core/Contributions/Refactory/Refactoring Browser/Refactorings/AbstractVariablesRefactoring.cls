@@ -4,7 +4,8 @@ Refactoring subclass: #AbstractVariablesRefactoring
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractVariablesRefactoring guid: (GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
 AbstractVariablesRefactoring comment: ''!
 !AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !

@@ -4,7 +4,8 @@ ClassRefactoring subclass: #AddClassRefactoring
 	instanceVariableNames: 'category superclass subclasses'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddClassRefactoring guid: (GUID fromString: '{3623578c-f5f8-44a8-bafa-679532fa3a9a}')!
 AddClassRefactoring comment: ''!
 !AddClassRefactoring categoriesForClass!Refactory-Refactorings! !

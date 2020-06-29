@@ -4,7 +4,8 @@ BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtocolEnvironment guid: (GUID fromString: '{1afa7dda-3f75-460a-94fd-e9867b79245c}')!
 ProtocolEnvironment comment: 'ProtocolEnvironment represents a collection of method categories in a class to be browsed.
 

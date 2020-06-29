@@ -4,7 +4,8 @@ StVariableNode subclass: #RBPatternVariableNode
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternVariableNode guid: (GUID fromString: '{f486bd69-8849-4076-8297-971b56451981}')!
 RBPatternVariableNode comment: 'RBPatternVariableNode is a parse tree node that is used to match several other types of nodes (literals, variables, value nodes, statement nodes, and sequences of statement nodes).
 

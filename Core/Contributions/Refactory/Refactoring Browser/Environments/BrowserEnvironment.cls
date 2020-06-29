@@ -4,7 +4,8 @@ Object subclass: #BrowserEnvironment
 	instanceVariableNames: 'label searchStrings search filter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironment guid: (GUID fromString: '{5a20d17b-a65d-4816-8b27-d25d2773698c}')!
 BrowserEnvironment comment: 'BrowserEnvironments represent a selection of the classes/methods in the system. Not only is BrowserEnvironment itself class the superclass of all environments, it also represents the complete image contents (i.e. the selection that includes all classes and methods).
 

@@ -4,7 +4,8 @@ RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternWrapperBlockNode guid: (GUID fromString: '{9c1e1f14-cb93-4be7-a1dd-a621ba57b12e}')!
 RBPatternWrapperBlockNode comment: ''!
 !RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !

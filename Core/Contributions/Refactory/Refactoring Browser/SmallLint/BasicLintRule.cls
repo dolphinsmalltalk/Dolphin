@@ -4,7 +4,8 @@ LintRule subclass: #BasicLintRule
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicLintRule guid: (GUID fromString: '{b3fa342a-eaee-404e-b9a5-c8bc9276f559}')!
 BasicLintRule comment: 'BasicLintRule represents a check on the code.
 

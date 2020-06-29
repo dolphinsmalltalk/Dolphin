@@ -4,7 +4,8 @@ VariableRefactoring subclass: #AbstractClassVariableRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractClassVariableRefactoring guid: (GUID fromString: '{4f0f7ebc-00ab-4a37-8aa9-f879d6b34c5a}')!
 AbstractClassVariableRefactoring comment: ''!
 !AbstractClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !

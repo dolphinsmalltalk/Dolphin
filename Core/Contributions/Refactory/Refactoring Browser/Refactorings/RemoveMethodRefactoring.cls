@@ -4,7 +4,8 @@ MethodRefactoring subclass: #RemoveMethodRefactoring
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RemoveMethodRefactoring guid: (GUID fromString: '{b0514c20-922f-4ee5-b5bb-e0ebabdf52bd}')!
 RemoveMethodRefactoring comment: ''!
 !RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !

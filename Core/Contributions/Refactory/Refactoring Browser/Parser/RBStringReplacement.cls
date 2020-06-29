@@ -4,7 +4,8 @@ Object subclass: #RBStringReplacement
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBStringReplacement guid: (GUID fromString: '{f2893320-1a6f-47e8-9052-eb2682fdb92c}')!
 RBStringReplacement comment: 'Private class used to represent a text replacement in the Refactoring Browser.'!
 !RBStringReplacement categoriesForClass!Kernel-Objects! !

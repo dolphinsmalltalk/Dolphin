@@ -4,7 +4,8 @@ InlineMethodRefactoring subclass: #InlineMethodFromComponentRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InlineMethodFromComponentRefactoring guid: (GUID fromString: '{f56f3dba-48f3-4b00-8281-fcdff1f92c33}')!
 InlineMethodFromComponentRefactoring comment: ''!
 !InlineMethodFromComponentRefactoring categoriesForClass!Refactory-Refactorings! !

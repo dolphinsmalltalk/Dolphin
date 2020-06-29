@@ -4,7 +4,8 @@ RemoveParameterRefactoring subclass: #InlineParameterRefactoring
 	instanceVariableNames: 'expressions'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InlineParameterRefactoring guid: (GUID fromString: '{9e2f3b66-4a50-4da3-97d8-7b1af9c59ea5}')!
 InlineParameterRefactoring comment: ''!
 !InlineParameterRefactoring categoriesForClass!Refactory-Refactorings! !

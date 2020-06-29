@@ -4,7 +4,8 @@ ChangeMethodNameRefactoring subclass: #AddParameterRefactoring
 	instanceVariableNames: 'initializer senders'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddParameterRefactoring guid: (GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
 AddParameterRefactoring comment: ''!
 !AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !

@@ -4,7 +4,8 @@ SmalltalkScanner subclass: #RBPatternScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBPatternScanner guid: (GUID fromString: '{4164fa94-b687-42c0-9c94-c9e46fc319e5}')!
 RBPatternScanner comment: 'RBPatternScanner is an extended <SmalltalkScanner> that supports the RB''s extended lexicon for pattern matching.'!
 !RBPatternScanner categoriesForClass!Refactory-Parser! !

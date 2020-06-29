@@ -4,7 +4,8 @@ MethodRefactoring subclass: #PushUpMethodRefactoring
 	instanceVariableNames: 'removeDuplicates selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushUpMethodRefactoring guid: (GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
 PushUpMethodRefactoring comment: ''!
 !PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !

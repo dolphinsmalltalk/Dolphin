@@ -4,7 +4,8 @@ VariableRefactoring subclass: #RenameInstanceVariableRefactoring
 	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameInstanceVariableRefactoring guid: (GUID fromString: '{9ad927e1-5ba7-4dcf-bcd0-6555ab567203}')!
 RenameInstanceVariableRefactoring comment: ''!
 !RenameInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !

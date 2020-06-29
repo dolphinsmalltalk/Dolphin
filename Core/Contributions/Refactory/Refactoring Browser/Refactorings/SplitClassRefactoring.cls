@@ -4,7 +4,8 @@ Refactoring subclass: #SplitClassRefactoring
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SplitClassRefactoring guid: (GUID fromString: '{22a704e1-3527-4416-ad61-b066186fc300}')!
 SplitClassRefactoring comment: ''!
 !SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !

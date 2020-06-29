@@ -4,7 +4,8 @@ RBParseTreeRule subclass: #RBReplaceRule
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBReplaceRule guid: (GUID fromString: '{206caebb-9f38-4bdf-85a6-50261f48360e}')!
 RBReplaceRule isAbstract: true!
 RBReplaceRule comment: ''!

@@ -4,7 +4,8 @@ Object subclass: #SmalllintChecker
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintChecker guid: (GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
 SmalllintChecker comment: ''!
 !SmalllintChecker categoriesForClass!Refactory-Lint! !

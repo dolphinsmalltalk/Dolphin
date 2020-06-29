@@ -4,7 +4,8 @@ RBAbstractClass subclass: #RBMetaclass
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBMetaclass guid: (GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
 RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 '!

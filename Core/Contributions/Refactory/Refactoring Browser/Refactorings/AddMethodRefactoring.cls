@@ -4,7 +4,8 @@ MethodRefactoring subclass: #AddMethodRefactoring
 	instanceVariableNames: 'protocols source'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddMethodRefactoring guid: (GUID fromString: '{0b0bb59d-7de6-47b2-80aa-a0e9868e6ac4}')!
 AddMethodRefactoring comment: ''!
 !AddMethodRefactoring categoriesForClass!Refactory-Refactorings! !

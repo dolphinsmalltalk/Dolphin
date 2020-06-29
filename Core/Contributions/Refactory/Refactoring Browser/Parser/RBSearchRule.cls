@@ -4,7 +4,8 @@ RBParseTreeRule subclass: #RBSearchRule
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBSearchRule guid: (GUID fromString: '{47f7b2b8-bdd2-449f-866d-e373a574dc60}')!
 RBSearchRule comment: ''!
 !RBSearchRule categoriesForClass!Refactory-ParseTree Matching! !

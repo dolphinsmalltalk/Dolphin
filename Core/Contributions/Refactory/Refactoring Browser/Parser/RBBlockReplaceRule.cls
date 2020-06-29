@@ -4,7 +4,8 @@ RBReplaceRule subclass: #RBBlockReplaceRule
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBBlockReplaceRule guid: (GUID fromString: '{66d568a6-5f15-4871-8f69-3a2ced82706f}')!
 RBBlockReplaceRule comment: ''!
 !RBBlockReplaceRule categoriesForClass!Refactory-ParseTree Matching! !

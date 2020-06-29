@@ -4,7 +4,8 @@ MethodRefactoring subclass: #InlineTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InlineTemporaryRefactoring guid: (GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
 InlineTemporaryRefactoring comment: ''!
 !InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
