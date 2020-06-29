@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CDO'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk CDO Package. 
 Copyright (c) Object Arts Ltd, 2000-2002
@@ -27,41 +27,39 @@ The Microsoft documentation on the CDO object model can be found on MSDN.
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #CDOIBodyPart;
-	add: #CDOIBodyParts;
-	add: #CDOIConfiguration;
-	add: #CDOIDataSource;
-	add: #CDOIDropDirectory;
-	add: #CDOIMessage;
-	add: #CDOIMessages;
-	add: #CDOINNTPEarlyScriptConnector;
-	add: #CDOINNTPFinalScriptConnector;
-	add: #CDOINNTPOnPost;
-	add: #CDOINNTPOnPostEarly;
-	add: #CDOINNTPOnPostFinal;
-	add: #CDOINNTPPostScriptConnector;
-	add: #CDOISMTPOnArrival;
-	add: #CDOISMTPScriptConnector;
-	yourself.
+package setClassNames: #(
+	#{CDOIBodyPart}
+	#{CDOIBodyParts}
+	#{CDOIConfiguration}
+	#{CDOIDataSource}
+	#{CDOIDropDirectory}
+	#{CDOIMessage}
+	#{CDOIMessages}
+	#{CDOINNTPEarlyScriptConnector}
+	#{CDOINNTPFinalScriptConnector}
+	#{CDOINNTPOnPost}
+	#{CDOINNTPOnPostEarly}
+	#{CDOINNTPOnPostFinal}
+	#{CDOINNTPPostScriptConnector}
+	#{CDOISMTPOnArrival}
+	#{CDOISMTPScriptConnector}
+).
 
-package globalNames
-	add: #CDOConstants;
-	add: #CDOLib;
-	yourself.
+package setVariableNames: #(
+	#{CDOConstants}
+	#{CDOLib}
+).
 
-package binaryGlobalNames: (Set new
-	add: #CDOLib;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{CDOLib}
+).
 
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\ADO\ADODB'
 	'..\..\..\Base\Dolphin'
-	'..\..\COM\OLE COM').
+	'..\..\COM\OLE COM'
+).
 
 package!
 
@@ -71,82 +69,92 @@ IDispatch subclass: #CDOIBodyPart
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIBodyParts
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIConfiguration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIDataSource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIDropDirectory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIMessage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOIMessages
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPEarlyScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPFinalScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPost
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPostEarly
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPOnPostFinal
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOINNTPPostScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOISMTPOnArrival
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatch subclass: #CDOISMTPScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

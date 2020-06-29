@@ -4,7 +4,8 @@ IDispatch subclass: #CDOIDataSource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CDOIDataSource guid: (IID fromString: '{cd000029-8b95-11d1-82db-00c04fb1625d}')!
 CDOIDataSource comment: '<CDOIDataSource> is a wrapper class for the COM interface ''CDO.IDataSource'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

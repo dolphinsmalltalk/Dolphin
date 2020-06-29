@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #CDOConstants put: (PoolConstantsDictionary named: #CDOConstants)!
+#{CDOConstants} declare: (PoolConstantsDictionary named: #CDOConstants)!
 CDOConstants at: 'cdoAbuDhabi' put: 16r18!
 CDOConstants at: 'cdoAdelaide' put: 16r13!
 CDOConstants at: 'cdoAlaska' put: 16rE!

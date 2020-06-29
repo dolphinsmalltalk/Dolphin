@@ -4,7 +4,8 @@ IDispatch subclass: #CDOISMTPScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CDOISMTPScriptConnector guid: (IID fromString: '{cd000030-8b95-11d1-82db-00c04fb1625d}')!
 CDOISMTPScriptConnector comment: '<CDOISMTPScriptConnector> is a wrapper class for the COM interface ''CDO.ISMTPScriptConnector'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 

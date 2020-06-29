@@ -4,7 +4,8 @@ IDispatch subclass: #CDOIMessages
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CDOIMessages guid: (IID fromString: '{cd000025-8b95-11d1-82db-00c04fb1625d}')!
 CDOIMessages comment: '<CDOIMessages> is a wrapper class for the COM interface ''CDO.IMessages'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
