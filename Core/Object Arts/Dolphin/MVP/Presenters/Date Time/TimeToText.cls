@@ -4,7 +4,8 @@ AbstractToTextConverter subclass: #TimeToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TimeToText guid: (GUID fromString: '{87b4c70a-026e-11d3-9fd7-00a0cc3e4a32}')!
 TimeToText comment: 'TimeToText is a <textTypeConverter> that transforms a <Time> subject value to/from a <readableString>. If the subject value is nil it is converted to an empty string and vice versa. A format string (e.g. ''hh:mm:ss tt'', see <Time>) can be specified to dictate the way the subject value is formatted when converted to text. If no explicit format is provided the default for the current user is used.
 

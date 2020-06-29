@@ -1,26 +1,21 @@
 ﻿| package |
 package := Package name: 'Dolphin Document Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Document Presenter
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
 
 
-package classNames
-	add: #AbstractDocumentShell;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AbstractDocumentShell}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Base\Dolphin Message Box'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -30,12 +25,8 @@ Shell subclass: #AbstractDocumentShell
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

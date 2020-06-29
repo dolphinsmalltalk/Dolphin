@@ -4,7 +4,8 @@ AbstractToTextConverter subclass: #DateToText
 	instanceVariableNames: 'locale format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DateToText guid: (GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
 DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
 

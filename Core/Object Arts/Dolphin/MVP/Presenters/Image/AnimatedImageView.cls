@@ -4,7 +4,8 @@ DoubleBufferedView subclass: #AnimatedImageView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnimatedImageView guid: (GUID fromString: '{63997d2b-abca-455e-917b-8cf248b11e63}')!
 AnimatedImageView comment: ''!
 !AnimatedImageView categoriesForClass!Unclassified! !

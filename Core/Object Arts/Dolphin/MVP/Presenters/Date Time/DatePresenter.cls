@@ -4,7 +4,8 @@ ValuePresenter subclass: #DatePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DatePresenter guid: (GUID fromString: '{87b4c6ce-026e-11d3-9fd7-00a0cc3e4a32}')!
 DatePresenter comment: 'DatePresenter is a <valuePresenter> that displays a <valueModel> onto a <Date> value. A DatePresenter can be connected to any <valueView> capable of displaying <Date> values. When the ''Dolphin DateTimePicker Control'' package is installed this will be a <DateTimePicker>, but alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !DatePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Date fields! !

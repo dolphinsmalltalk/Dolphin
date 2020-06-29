@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Diff Algorithm'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Diff Algorithm Package
 Copyright (c) Mario Wolczko, 1993, portions copyright (c) Ian Bartholomew 2002.
@@ -49,25 +49,20 @@ Test example using files /tmp/[12]
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #LinkElement;
-	yourself.
+package setClassNames: #(
+	#{LinkElement}
+).
 
-package methodNames
-	add: #SequenceableCollection -> #inverseMatchVector:;
-	add: #SequenceableCollection -> #longestCommonSubsequenceInInterval:withCollection:inInterval:;
-	add: #SortedCollection -> #replaceNextLargerWith:;
-	add: 'Dictionary class' -> #withPositionsOf:inInterval:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Dictionary class} #withPositionsOf:inInterval:)
+	#(#{SequenceableCollection} #inverseMatchVector:)
+	#(#{SequenceableCollection} #longestCommonSubsequenceInInterval:withCollection:inInterval:)
+	#(#{SortedCollection} #replaceNextLargerWith:)
+).
 
 package setPrerequisites: #(
-	'..\..\..\Base\Dolphin').
+	'..\..\..\Base\Dolphin'
+).
 
 package!
 
@@ -77,10 +72,8 @@ Link subclass: #LinkElement
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

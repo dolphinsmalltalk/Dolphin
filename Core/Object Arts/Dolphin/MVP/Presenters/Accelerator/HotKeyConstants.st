@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Smalltalk at: #HotKeyConstants put: (PoolConstantsDictionary named: #HotKeyConstants)!
+#{HotKeyConstants} declare: (PoolConstantsDictionary named: #HotKeyConstants)!
 HotKeyConstants at: 'HKCOMB_A' put: 16r8!
 HotKeyConstants at: 'HKCOMB_C' put: 16r4!
 HotKeyConstants at: 'HKCOMB_CA' put: 16r40!

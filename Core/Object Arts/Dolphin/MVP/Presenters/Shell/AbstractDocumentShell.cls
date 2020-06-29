@@ -4,7 +4,8 @@ Shell subclass: #AbstractDocumentShell
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractDocumentShell guid: (GUID fromString: '{7f3ab0c3-d1ed-4fb5-b64e-bfba5d74d038}')!
 AbstractDocumentShell isAbstract: true!
 AbstractDocumentShell comment: '`AbstractDocumentShell` is an abstract class of `<documentPresenter>`s, i.e. `Shell` presenters present a documented model which can be loaded from and saved to a file.

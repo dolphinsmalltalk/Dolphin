@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Date Time Presenters'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Date & Time Presenters
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -10,19 +10,13 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #DatePresenter;
-	add: #DateToText;
-	add: #DurationToText;
-	add: #TimePresenter;
-	add: #TimeToText;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{DatePresenter}
+	#{DateToText}
+	#{DurationToText}
+	#{TimePresenter}
+	#{TimeToText}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -30,7 +24,8 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
-	'..\..\Type Converters\Dolphin Type Converters').
+	'..\..\Type Converters\Dolphin Type Converters'
+).
 
 package!
 
@@ -40,32 +35,32 @@ ValuePresenter subclass: #DatePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValuePresenter subclass: #TimePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractToTextConverter subclass: #DateToText
 	instanceVariableNames: 'locale format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractToTextConverter subclass: #DurationToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractToTextConverter subclass: #TimeToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

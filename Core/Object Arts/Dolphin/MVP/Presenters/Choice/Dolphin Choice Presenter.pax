@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Choice Presenter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Choice Presenters.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
@@ -8,15 +8,9 @@ Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #ChoicePresenter;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ChoicePresenter}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -24,7 +18,8 @@ package setPrerequisites: #(
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
-	'..\..\Base\Dolphin MVP Base').
+	'..\..\Base\Dolphin MVP Base'
+).
 
 package!
 
@@ -34,12 +29,8 @@ ValuePresenter subclass: #ChoicePresenter
 	instanceVariableNames: 'choicesModel nilChoice'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

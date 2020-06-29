@@ -4,7 +4,8 @@ ValuePresenter subclass: #NumberPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NumberPresenter guid: (GUID fromString: '{87b4c6d1-026e-11d3-9fd7-00a0cc3e4a32}')!
 NumberPresenter comment: 'NumberPresenter is a <valuePresenter> that displays a <valueModel> onto a <number> value. A NumberPresenter can be connected to any <valueView> capable of displaying <number> values. Often, this will be a <TextEdit> with a <NumberToText> converter installed although alternative views may be chosen after the installation of an appropriate <typeConverter>.'!
 !NumberPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Numeric fields! !

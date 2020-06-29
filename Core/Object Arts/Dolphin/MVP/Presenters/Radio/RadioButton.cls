@@ -4,7 +4,8 @@ CheckButton subclass: #RadioButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RadioButton guid: (GUID fromString: '{87b4c73b-026e-11d3-9fd7-00a0cc3e4a32}')!
 RadioButton comment: 'RadioButton is a <valueView> implementing the Windows "BUTTON" class in a BS_AUTORADIOBUTTON style. The <valueModel> associated with a RadioButton must always yield a <boolean> value once mapped through the installed type converter. RadioButtons will normally be used in a group in conjunction with a <RadioButtonSetPresenter>.
 

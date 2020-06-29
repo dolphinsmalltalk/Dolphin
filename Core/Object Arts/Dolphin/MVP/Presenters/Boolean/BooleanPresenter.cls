@@ -4,7 +4,8 @@ ValuePresenter subclass: #BooleanPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BooleanPresenter guid: (GUID fromString: '{87b4c6cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 BooleanPresenter comment: 'BooleanPresenter is a <valuePresenter> that displays a <valueModel> onto a <boolean> value. A BooleanPresenter can be connected to any <valueView> capable of displaying <boolean> values.  Often, this will be a <CheckBox> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !BooleanPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Check boxes! !

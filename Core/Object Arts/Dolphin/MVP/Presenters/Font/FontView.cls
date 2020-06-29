@@ -4,7 +4,8 @@ StaticView subclass: #FontView
 	instanceVariableNames: 'previewText'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FontView guid: (GUID fromString: '{87b4c73d-026e-11d3-9fd7-00a0cc3e4a32}')!
 FontView comment: 'FontView is a <valueView> for displaying static <Font>s. The <valueModel> associated with a FontView must always yield a <Font> value when mapped through the installed type converter. A FontView will normally be used in conjunction with a <FontPresenter>.'!
 !FontView categoriesForClass!MVP-Views! !

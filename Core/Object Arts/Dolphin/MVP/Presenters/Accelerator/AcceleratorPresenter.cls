@@ -4,7 +4,8 @@ ValuePresenter subclass: #AcceleratorPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AcceleratorPresenter guid: (GUID fromString: '{87b4c6ca-026e-11d3-9fd7-00a0cc3e4a32}')!
 AcceleratorPresenter comment: 'AcceleratorPresenter is a <valuePresenter> that displays a <valueModel> onto an <integer> key code that represening an accelerator key depression. Normally, an AcceleratorPresenter is connected to a <HotKey> view.'!
 !AcceleratorPresenter categoriesForClass!MVP-Presenters! !

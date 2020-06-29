@@ -4,7 +4,8 @@ ImageViewAbstract subclass: #ImageView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ImageView guid: (GUID fromString: '{87b4c73e-026e-11d3-9fd7-00a0cc3e4a32}')!
 ImageView comment: 'ImageView is a <valueView> for displaying static <image>s. The <valueModel> associated with an ImageView must always yield an <image> value when mapped through the installed type converter. An ImageView will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, scale or #scaleToFit). 
 

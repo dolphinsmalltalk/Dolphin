@@ -4,7 +4,8 @@ AbstractDocumentShell subclass: #DocumentShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DocumentShell guid: (GUID fromString: '{87b4c69b-026e-11d3-9fd7-00a0cc3e4a32}')!
 DocumentShell comment: '`DocumentShell` is a legacy base class of  `<documentPresenter>`s that supports documents stored as text or STB-format binary representation. 
 

@@ -2,19 +2,21 @@
 
 ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
-	classVariableNames: 'ClosedImageIndex DisableExpandAllMask DoSortRootsMask HasButtonsMask HasLinesAtRootMask HasLinesMask LeafImageIndex OpenImageIndex UseSmartRefreshMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
+	classInstanceVariableNames: 'stateImageManager stateImageBlock'
+	classConstants: {
+		'ClosedImageIndex' -> 16r3.
+		'DisableExpandAllMask' -> 16r1.
+		'DoSortRootsMask' -> 16r10.
+		'HasButtonsMask' -> 16r2.
+		'HasLinesAtRootMask' -> 16r4.
+		'HasLinesMask' -> 16r8.
+		'LeafImageIndex' -> 16r1.
+		'OpenImageIndex' -> 16r2.
+		'UseSmartRefreshMask' -> 16r20
+	}!
 ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
-ListTreeView addClassConstant: 'ClosedImageIndex' value: 16r3!
-ListTreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
-ListTreeView addClassConstant: 'DoSortRootsMask' value: 16r10!
-ListTreeView addClassConstant: 'HasButtonsMask' value: 16r2!
-ListTreeView addClassConstant: 'HasLinesAtRootMask' value: 16r4!
-ListTreeView addClassConstant: 'HasLinesMask' value: 16r8!
-ListTreeView addClassConstant: 'LeafImageIndex' value: 16r1!
-ListTreeView addClassConstant: 'OpenImageIndex' value: 16r2!
-ListTreeView addClassConstant: 'UseSmartRefreshMask' value: 16r20!
 ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 

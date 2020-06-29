@@ -4,7 +4,8 @@ ListPresenter subclass: #FolderPresenter
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FolderPresenter guid: (GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
 FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 

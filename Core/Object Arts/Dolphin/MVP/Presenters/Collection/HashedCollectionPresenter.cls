@@ -4,7 +4,8 @@ CollectionPresenter subclass: #HashedCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HashedCollectionPresenter guid: (GUID fromString: '{1a16cca4-5c91-49d9-9a87-4b4a340299d9}')!
 HashedCollectionPresenter comment: ''!
 !HashedCollectionPresenter categoriesForClass!MVP-Presenters! !

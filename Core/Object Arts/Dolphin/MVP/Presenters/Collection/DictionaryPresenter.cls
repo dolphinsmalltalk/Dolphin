@@ -4,7 +4,8 @@ HashedCollectionPresenter subclass: #DictionaryPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DictionaryPresenter guid: (GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
 DictionaryPresenter comment: ''!
 !DictionaryPresenter categoriesForClass!MVP-Presenters! !

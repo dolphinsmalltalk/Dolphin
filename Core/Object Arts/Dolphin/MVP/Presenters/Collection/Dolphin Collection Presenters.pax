@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Collection Presenters'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Collection Presenters.
 Copyright (c) Object Arts Ltd. 2002.
@@ -9,22 +9,16 @@ Copyright (c) Object Arts Ltd. 2002.
 package basicPackageVersion: '6.2'.
 
 
-package classNames
-	add: #CollectionPresenter;
-	add: #DictionaryPresenter;
-	add: #HashedCollectionPresenter;
-	add: #SequenceableCollectionPresenter;
-	yourself.
+package setClassNames: #(
+	#{CollectionPresenter}
+	#{DictionaryPresenter}
+	#{HashedCollectionPresenter}
+	#{SequenceableCollectionPresenter}
+).
 
-package methodNames
-	add: 'Toolbar class' -> #resource_List_tools;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Toolbar class} #resource_List_tools)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -37,7 +31,8 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Prompters\Dolphin Prompter'
-	'..\..\Icons\Dolphin Text Tile Icons').
+	'..\..\Icons\Dolphin Text Tile Icons'
+).
 
 package!
 
@@ -45,27 +40,30 @@ package!
 
 ValuePresenter subclass: #CollectionPresenter
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'
-	classVariableNames: 'ReadOnlyMask'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ReadOnlyMask' -> 16r1
+	}!
 CollectionPresenter subclass: #HashedCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionPresenter subclass: #SequenceableCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 HashedCollectionPresenter subclass: #DictionaryPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

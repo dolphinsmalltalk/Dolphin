@@ -4,7 +4,8 @@ Presenter subclass: #InplaceTextEditor
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InplaceTextEditor guid: (GUID fromString: '{772412aa-7ca7-476c-b034-e5397984a86d}')!
 InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the called until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
 

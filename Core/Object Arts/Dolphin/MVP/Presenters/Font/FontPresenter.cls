@@ -4,7 +4,8 @@ ValuePresenter subclass: #FontPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FontPresenter guid: (GUID fromString: '{87b4c6cf-026e-11d3-9fd7-00a0cc3e4a32}')!
 FontPresenter comment: 'FontPresenter is a <valuePresenter> that displays a <valueModel> onto a <Font> value. A FontPresenter can be connected to any <valueView> capable of displaying <Font> values. Normally, this will be a <FontView> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !FontPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Font displays! !

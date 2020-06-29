@@ -2,11 +2,13 @@
 
 TypeConverter subclass: #AccelToHotKey
 	instanceVariableNames: ''
-	classVariableNames: 'ModifierMap'
+	classVariableNames: ''
 	poolDictionaries: 'HotKeyConstants Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ModifierMap' -> #(1 4 2 8 4 16)
+	}!
 AccelToHotKey guid: (GUID fromString: '{87b4c704-026e-11d3-9fd7-00a0cc3e4a32}')!
-AccelToHotKey addClassConstant: 'ModifierMap' value: #(1 4 2 8 4 16)!
 AccelToHotKey comment: 'AccelToHotKey is the class of <typeConverter> for use with the <HotKey> control to convert from a hot key code to the usual display representation of such key combinations, e.g. CTRL+C.
 
 Class Variables:

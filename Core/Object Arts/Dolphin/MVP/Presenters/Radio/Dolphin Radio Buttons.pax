@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Radio Buttons'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Radio Buttons.
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) Ian Bartholomew.
@@ -10,20 +10,14 @@ RadioButtonSetPresenter is based on Ian Bartholomew''s RadioButtonGroup goodie.'
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #RadioButton;
-	add: #RadioButtonSetPresenter;
-	yourself.
+package setClassNames: #(
+	#{RadioButton}
+	#{RadioButtonSetPresenter}
+).
 
-package methodNames
-	add: 'BooleanPresenter class' -> #resource_Radio_button;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{BooleanPresenter class} #resource_Radio_button)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -31,7 +25,8 @@ package setPrerequisites: #(
 	'..\Boolean\Dolphin Boolean Presenter'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -41,15 +36,14 @@ ValuePresenter subclass: #RadioButtonSetPresenter
 	instanceVariableNames: 'ownedRadioButtons'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CheckButton subclass: #RadioButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

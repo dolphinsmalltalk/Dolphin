@@ -4,7 +4,8 @@ ListPresenter subclass: #ListTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListTreePresenter guid: (GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
 ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
 chris.uppal@metagnostic.org

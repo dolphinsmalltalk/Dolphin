@@ -4,7 +4,8 @@ ValuePresenter subclass: #ColorPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ColorPresenter guid: (GUID fromString: '{87b4c6cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 ColorPresenter comment: 'ColorPresenter is a <valuePresenter> that displays a <valueModel> onto a <color> value. A ColorPresenter can be connected to any <valueView> capable of displaying <color> values. Normally, this will be a <ColorView> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
 !ColorPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Colour displays! !

@@ -4,7 +4,8 @@ AbstractToTextConverter subclass: #DurationToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DurationToText guid: (GUID fromString: '{b7c9ede3-d5d2-494f-8569-58ec71e88b89}')!
 DurationToText comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 

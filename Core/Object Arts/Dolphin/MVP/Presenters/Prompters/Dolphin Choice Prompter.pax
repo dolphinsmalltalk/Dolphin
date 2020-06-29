@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Choice Prompter'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Choice Dialog
 Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -9,15 +9,9 @@ Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Euro
 package basicPackageVersion: '6.0'.
 
 
-package classNames
-	add: #ChoicePrompter;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ChoicePrompter}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -27,7 +21,8 @@ package setPrerequisites: #(
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'
-	'Dolphin Prompter').
+	'Dolphin Prompter'
+).
 
 package!
 
@@ -37,12 +32,8 @@ ValueDialog subclass: #ChoicePrompter
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

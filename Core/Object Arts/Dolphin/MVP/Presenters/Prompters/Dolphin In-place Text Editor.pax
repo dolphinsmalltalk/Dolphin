@@ -1,21 +1,15 @@
 ﻿| package |
 package := Package name: 'Dolphin In-place Text Editor'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic In-place Text Editor.
 Copyright (c) Object Arts Ltd. 2009
 '.
 
 
-package classNames
-	add: #InplaceTextEditor;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{InplaceTextEditor}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -23,7 +17,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
-	'..\..\Models\Value\Dolphin Value Models').
+	'..\..\Models\Value\Dolphin Value Models'
+).
 
 package!
 
@@ -33,12 +28,8 @@ Presenter subclass: #InplaceTextEditor
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 
