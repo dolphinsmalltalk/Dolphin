@@ -961,22 +961,20 @@ okToSaveOrDeploy
 	"Private - Prior to saving or deploying the receiver, check that all is consistent and answer whether the
 	receiver should be saved. Raise Errors that describe any problems."
 
-	self isSystemPackage ifTrue: [^false].
-	self hasCyclicPrerequisites 
-		ifTrue: 
-			[self class unsaveableSignal 
+	self isSystemPackage ifTrue: [^Smalltalk developmentSystem isOAD].
+	self hasCyclicPrerequisites ifTrue: 
+			[self class unsaveableSignal
 				signal: ('The package <1p> has cyclic prerequisites.' expandMacrosWith: self name).
 			^false].
 
 	"N.B. This must be done after the above, as it will go infinitely recursive if there are cycles."
-	self hasUncommittedPrerequisites 
-		ifTrue: 
-			[self class unsaveableSignal 
-				signal: ('The package <1p> has prerequisites which are not currently assigned to any other package, or it is dependent on other packages which in turn have uncommitted prerequisites.' 
+	self hasUncommittedPrerequisites ifTrue: 
+			[self class unsaveableSignal
+				signal: ('The package <1p> has prerequisites which are not currently assigned to any other package, or it is dependent on other packages which in turn have uncommitted prerequisites.'
 						expandMacrosWith: self name).
 			^false].
 	self validate.
-	^true!
+	^true.!
 
 okToUninstall
 	"Private - Validate that the receiver can be uninstalled. 
