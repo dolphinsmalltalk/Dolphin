@@ -106,6 +106,17 @@ testClassReadFrom
 				remainder := stream upToEnd.
 				self assert: remainder equals: each last]!
 
+testCopyWithout
+	| string |
+	string := self assimilateString: 'abcba'.
+	self assert: (string copyWithout: $a) equals: 'bcb'.
+	self assert: (string copyWithout: $b) equals: 'aca'.
+	self assert: (string copyWithout: $c) equals: 'abba'.
+	"#957--non-ascii characters were unable to be recognized in a Utf8String in particular,
+	might as well test all types of string"
+	string := self assimilateString: 'ab©ba'.
+	self assert: (string copyWithout: $©) equals: 'abba'.!
+
 testEmpty
 	self assert: self collectionClass empty class identicalTo: self collectionClass!
 
@@ -799,6 +810,7 @@ withAllTestCases
 !StringTest categoriesFor: #testCapitalized!public!unit tests! !
 !StringTest categoriesFor: #testCaseConversions!public!unit tests! !
 !StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
+!AbstractStringTest categoriesFor: #testCopyWithout!public!unit tests! !
 !StringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !StringTest categoriesFor: #testEquals!public!unit tests! !
 !StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !

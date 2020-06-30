@@ -64,6 +64,13 @@ testBeginsWithIgnoreCase
 	self assert: (subject beginsWith: comperand ignoreCase: true).
 	self deny: (subject beginsWith: comperand ignoreCase: false)!
 
+testCopyWithout
+	| string |
+	super testCopyWithout.
+	"Try a non-ANSI case as well:"
+	string := self newCollection: #($a ##(Character dolphin)).
+	self assert: (string copyWithout: Character dolphin) equals: 'a'.!
+
 testEncodeOnPut
 	{Character dolphin.
 		Character codePoint: 16r10FFFD.
@@ -168,6 +175,7 @@ withAllTestCases
 !MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testBeginsWith!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testCopyWithout!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testGothicSubStrings!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testIdentityIncludes!public!unit tests! !
