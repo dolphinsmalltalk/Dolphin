@@ -4,7 +4,8 @@ Object subclass: #MockScintillaView
 	instanceVariableNames: 'lastStyled tokens text currentTextStyles styleIdMap'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MockScintillaView guid: (GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
 MockScintillaView comment: 'To set up:
 

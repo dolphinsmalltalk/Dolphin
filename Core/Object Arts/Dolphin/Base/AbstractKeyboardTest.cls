@@ -4,7 +4,8 @@ DolphinTest subclass: #AbstractKeyboardTest
 	instanceVariableNames: 'savedLayout'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractKeyboardTest guid: (GUID fromString: '{973884cb-33cb-45e6-a489-48d76699c608}')!
 AbstractKeyboardTest isAbstract: true!
 AbstractKeyboardTest comment: ''!

@@ -4,7 +4,8 @@ Dictionary variableSubclass: #STONTestMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestMap guid: (GUID fromString: '{588069da-7c8c-4590-b393-27c089007c6a}')!
 STONTestMap comment: ''!
 !STONTestMap categoriesForClass!Unclassified! !

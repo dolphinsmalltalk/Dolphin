@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #BrowserEnvironmentTest
 	instanceVariableNames: 'browser universalEnvironment totalSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentTest guid: (GUID fromString: '{d900c35c-e907-4c85-a762-35dd60264a6c}')!
 BrowserEnvironmentTest comment: ''!
 !BrowserEnvironmentTest categoriesForClass!Refactory-Testing! !

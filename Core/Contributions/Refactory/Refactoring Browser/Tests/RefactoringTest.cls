@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #RefactoringTest
 	instanceVariableNames: 'manager changeSet model'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RefactoringTest guid: (GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
 RefactoringTest isAbstract: true!
 RefactoringTest comment: ''!

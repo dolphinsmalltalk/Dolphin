@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #RBClassTest
 	instanceVariableNames: 'objectClass newClass messageNodeClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBClassTest guid: (GUID fromString: '{5220987d-f53e-4675-8166-5035964aa131}')!
 RBClassTest comment: ''!
 !RBClassTest categoriesForClass!Refactory-Testing! !

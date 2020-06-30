@@ -4,7 +4,8 @@ DolphinTest subclass: #CharacterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CharacterTest guid: (GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
 CharacterTest comment: ''!
 !CharacterTest categoriesForClass!Tests-Magnitude-General! !

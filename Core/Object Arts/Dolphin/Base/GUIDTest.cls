@@ -4,7 +4,8 @@ DolphinTest subclass: #GUIDTest
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GUIDTest guid: (GUID fromString: '{e1371d2f-b622-4825-b412-b44260477b09}')!
 GUIDTest comment: ''!
 !GUIDTest categoriesForClass!Tests-Network-UUID! !

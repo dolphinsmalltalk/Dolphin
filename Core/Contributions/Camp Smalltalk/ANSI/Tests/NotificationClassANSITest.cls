@@ -4,7 +4,8 @@ MainTestCase subclass: #NotificationClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NotificationClassANSITest guid: (GUID fromString: '{aae311a2-df97-404e-91f1-c2e89465646e}')!
 NotificationClassANSITest comment: ''!
 !NotificationClassANSITest categoriesForClass!Unclassified! !

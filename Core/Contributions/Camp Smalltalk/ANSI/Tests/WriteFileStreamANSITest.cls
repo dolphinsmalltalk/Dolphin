@@ -4,7 +4,8 @@ MainTestCase subclass: #WriteFileStreamANSITest
 	instanceVariableNames: 'writeFileStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WriteFileStreamANSITest guid: (GUID fromString: '{75562e52-c345-46dd-a2e1-734f105077f4}')!
 WriteFileStreamANSITest comment: ''!
 !WriteFileStreamANSITest categoriesForClass!Unclassified! !

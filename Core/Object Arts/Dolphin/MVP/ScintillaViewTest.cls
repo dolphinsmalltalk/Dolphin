@@ -4,7 +4,8 @@ MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScintillaViewTest guid: (GUID fromString: '{3c6fbe95-74e0-4325-97e1-82f12133d503}')!
 ScintillaViewTest comment: ''!
 !ScintillaViewTest categoriesForClass!Unclassified! !

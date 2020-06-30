@@ -4,7 +4,8 @@ BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PluggableEnvironmentTest guid: (GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
 PluggableEnvironmentTest comment: ''!
 !PluggableEnvironmentTest categoriesForClass!Unclassified! !

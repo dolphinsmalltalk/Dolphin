@@ -4,7 +4,8 @@ AbstractBindingReferenceTest subclass: #BindingReferenceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BindingReferenceTest guid: (GUID fromString: '{bc0780da-05e7-464d-af4f-48755f8f8d52}')!
 BindingReferenceTest comment: ''!
 !BindingReferenceTest categoriesForClass!Unclassified! !

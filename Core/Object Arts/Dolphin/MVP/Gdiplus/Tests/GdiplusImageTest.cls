@@ -4,7 +4,8 @@ GdiplusImageTests subclass: #GdiplusImageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageTest guid: (GUID fromString: '{913d638b-b96f-42e7-9dd5-da50e692d4b9}')!
 GdiplusImageTest comment: ''!
 !GdiplusImageTest categoriesForClass!Unclassified! !

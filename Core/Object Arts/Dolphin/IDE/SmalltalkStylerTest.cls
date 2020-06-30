@@ -4,7 +4,8 @@ DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkStylerTest guid: (GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
 SmalltalkStylerTest comment: ''!
 !SmalltalkStylerTest categoriesForClass!Unclassified! !

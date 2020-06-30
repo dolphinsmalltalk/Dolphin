@@ -4,7 +4,8 @@ DolphinTest subclass: #CodeMentorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CodeMentorTest guid: (GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
 CodeMentorTest comment: ''!
 !CodeMentorTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ AbstractParserErrorTest subclass: #CompilerErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompilerErrorTest guid: (GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
 CompilerErrorTest comment: ''!
 !CompilerErrorTest categoriesForClass!Unclassified! !

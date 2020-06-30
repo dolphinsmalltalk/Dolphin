@@ -4,7 +4,8 @@ DolphinTest subclass: #SortAlgorithmTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SortAlgorithmTest guid: (GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
 SortAlgorithmTest isAbstract: true!
 SortAlgorithmTest comment: ''!

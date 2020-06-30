@@ -4,7 +4,8 @@ TestRunLogger subclass: #TestRunConsoleLogger
 	instanceVariableNames: 'stream timings'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestRunConsoleLogger guid: (GUID fromString: '{c279d11f-90f1-4fe3-bfa6-09a2d85a208e}')!
 TestRunConsoleLogger comment: ''!
 !TestRunConsoleLogger categoriesForClass!Kernel-Objects! !

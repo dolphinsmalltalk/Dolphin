@@ -4,7 +4,8 @@ AbstractKeyboardTest subclass: #AcceleratorTableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AcceleratorTableTest guid: (GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
 AcceleratorTableTest comment: ''!
 !AcceleratorTableTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #ValueConverterTest
 	instanceVariableNames: 'converter value startTime newTime changed'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ValueConverterTest guid: (GUID fromString: '{fd184d86-16e0-422a-a2c7-0084d567972c}')!
 ValueConverterTest comment: 'Tests the ValueConverter class.'!
 !ValueConverterTest categoriesForClass!Unclassified! !

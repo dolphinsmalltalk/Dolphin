@@ -4,7 +4,8 @@ Dialog subclass: #ClosedCommandDescriptionIssueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClosedCommandDescriptionIssueDialog guid: (GUID fromString: '{2c4a1983-3026-4a8f-a9d4-6f33dd5bea95}')!
 ClosedCommandDescriptionIssueDialog comment: ''!
 !ClosedCommandDescriptionIssueDialog categoriesForClass!MVP-Presenters! !

@@ -4,7 +4,8 @@ RefactoringTest subclass: #AbstractInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractInstanceVariableTest guid: (GUID fromString: '{c64428af-5374-4e12-8c73-d6b9ec653c13}')!
 AbstractInstanceVariableTest comment: ''!
 !AbstractInstanceVariableTest categoriesForClass!Refactory-Testing! !

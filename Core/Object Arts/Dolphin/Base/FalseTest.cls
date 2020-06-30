@@ -4,7 +4,8 @@ DolphinTest subclass: #FalseTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FalseTest guid: (GUID fromString: '{99f97009-5267-45fd-913e-d80674f965fa}')!
 FalseTest comment: 'This is the unit test for the class False. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest

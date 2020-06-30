@@ -2,11 +2,13 @@
 
 Object subclass: #DolphinCompilerTestMethods
 	instanceVariableNames: 'iv1 iv2'
-	classVariableNames: 'Const'
+	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {
+		'Const' -> 16r1
+	}!
 DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
-DolphinCompilerTestMethods addClassConstant: 'Const' value: 16r1!
 DolphinCompilerTestMethods comment: ''!
 !DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
 !DolphinCompilerTestMethods methodsFor!

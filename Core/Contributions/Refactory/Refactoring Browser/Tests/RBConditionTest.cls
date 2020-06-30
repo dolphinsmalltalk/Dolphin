@@ -4,7 +4,8 @@ RefactoringTest subclass: #RBConditionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBConditionTest guid: (GUID fromString: '{d7c6868f-bf84-4580-b4c0-20abbdcdb10e}')!
 RBConditionTest comment: ''!
 !RBConditionTest categoriesForClass!Refactory-Testing! !

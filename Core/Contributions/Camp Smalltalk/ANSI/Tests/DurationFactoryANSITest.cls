@@ -4,7 +4,8 @@ MainTestCase subclass: #DurationFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DurationFactoryANSITest guid: (GUID fromString: '{7398a166-b100-4def-b4bb-25a2cde30eec}')!
 DurationFactoryANSITest comment: ''!
 !DurationFactoryANSITest categoriesForClass!Unclassified! !

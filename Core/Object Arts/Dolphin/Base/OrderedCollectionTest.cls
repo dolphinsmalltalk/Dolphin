@@ -4,7 +4,8 @@ SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OrderedCollectionTest guid: (GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
 OrderedCollectionTest comment: ''!
 !OrderedCollectionTest categoriesForClass!Unclassified! !

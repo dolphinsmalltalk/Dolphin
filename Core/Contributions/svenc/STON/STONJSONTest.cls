@@ -4,7 +4,8 @@ TestCase subclass: #STONJSONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONJSONTest guid: (GUID fromString: '{437baf49-fca6-405c-9fb7-18b0c8f89f50}')!
 STONJSONTest comment: 'STONJSONTests contains unit tests for the JSON functionality available in STON.'!
 !STONJSONTest categoriesForClass!STON-Tests-Facade! !

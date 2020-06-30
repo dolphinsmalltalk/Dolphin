@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'CS ANSI Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
@@ -8,121 +8,116 @@ package basicScriptAt: #postinstall put: '| locator |
 locator := FolderRelativeFileLocator basePath: self path.
 #(''AnsiDB.st'' ''AnsiInit.st'') do: [:each | SourceManager default fileIn: (locator localFileSpecFor: each)]'.
 
-package classNames
-	add: #AbstractDictionaryHelper;
-	add: #ArrayANSITest;
-	add: #ArrayFactoryANSITest;
-	add: #BagANSITest;
-	add: #BagFactoryANSITest;
-	add: #BooleanANSITest;
-	add: #ByteArrayANSITest;
-	add: #ByteArrayFactoryANSITest;
-	add: #CharacterANSITest;
-	add: #CharacterFactoryANSITest;
-	add: #CollectionHelper;
-	add: #CollectionStreamHelper;
-	add: #CollectionTest;
-	add: #DateAndTimeANSITest;
-	add: #DateAndTimeFactoryANSITest;
-	add: #DictionaryANSITest;
-	add: #DictionaryFactoryANSITest;
-	add: #DurationANSITest;
-	add: #DurationFactoryANSITest;
-	add: #DyadicValuableANSITest;
-	add: #ErrorANSITest;
-	add: #ErrorClassANSITest;
-	add: #ExceptionANSITest;
-	add: #ExceptionClassANSITest;
-	add: #ExceptionSetANSITest;
-	add: #ExtensibleCollectionHelper;
-	add: #FailedMessageANSITest;
-	add: #FileStreamFactoryANSITest;
-	add: #FloatANSITest;
-	add: #FloatCharacterizationANSITest;
-	add: #FractionANSITest;
-	add: #FractionFactoryANSITest;
-	add: #GettableStreamHelper;
-	add: #IdentityDictionaryANSITest;
-	add: #IdentityDictionaryFactoryANSITest;
-	add: #IntegerANSITest;
-	add: #IntervalANSITest;
-	add: #IntervalFactoryANSITest;
-	add: #MainTestCase;
-	add: #MessageNotUnderstoodANSITest;
-	add: #MessageNotUnderstoodSelectorANSITest;
-	add: #MonadicBlockANSITest;
-	add: #MsgParmSpec;
-	add: #MsgReturnRuleSpec;
-	add: #MsgReturnSpec;
-	add: #NiladicBlockANSITest;
-	add: #NilANSITest;
-	add: #NotificationANSITest;
-	add: #NotificationClassANSITest;
-	add: #ObjectANSITest;
-	add: #ObjectClassANSITest;
-	add: #ObjectHelper;
-	add: #OrderedCollectionANSITest;
-	add: #OrderedCollectionFactoryANSITest;
-	add: #ProtocolANYSpec;
-	add: #ProtocolMsgSpec;
-	add: #ProtocolSpec;
-	add: #PuttableStreamHelper;
-	add: #ReadableStringHelper;
-	add: #ReadFileStreamANSITest;
-	add: #ReadStreamANSITest;
-	add: #ReadStreamFactoryANSITest;
-	add: #ReadStreamHelper;
-	add: #ReadWriteStreamANSITest;
-	add: #ReadWriteStreamFactoryANSITest;
-	add: #ScaledDecimalANSITest;
-	add: #SelectorANSITest;
-	add: #SequencedCollectionHelper;
-	add: #SequencedContractibleCollectionHelper;
-	add: #SequencedReadableCollectionHelper;
-	add: #SequencedReadableCollectionTest;
-	add: #SequencedStreamHelper;
-	add: #SequencedStreamTest;
-	add: #SetANSITest;
-	add: #SetFactoryANSITest;
-	add: #SortedCollectionANSITest;
-	add: #SortedCollectionFactoryANSITest;
-	add: #StringANSITest;
-	add: #StringFactoryANSITest;
-	add: #SymbolANSITest;
-	add: #TestCaseHelper;
-	add: #TestCaseProtocol;
-	add: #TranscriptANSITest;
-	add: #WarningANSITest;
-	add: #WarningClassANSITest;
-	add: #WriteFileStreamANSITest;
-	add: #WriteStreamANSITest;
-	add: #WriteStreamFactoryANSITest;
-	add: #WriteStreamHelper;
-	add: #ZeroDivideANSITest;
-	add: #ZeroDivideFactoryANSITest;
-	yourself.
+package setClassNames: #(
+	#{AbstractDictionaryHelper}
+	#{ArrayANSITest}
+	#{ArrayFactoryANSITest}
+	#{BagANSITest}
+	#{BagFactoryANSITest}
+	#{BooleanANSITest}
+	#{ByteArrayANSITest}
+	#{ByteArrayFactoryANSITest}
+	#{CharacterANSITest}
+	#{CharacterFactoryANSITest}
+	#{CollectionHelper}
+	#{CollectionStreamHelper}
+	#{CollectionTest}
+	#{DateAndTimeANSITest}
+	#{DateAndTimeFactoryANSITest}
+	#{DictionaryANSITest}
+	#{DictionaryFactoryANSITest}
+	#{DurationANSITest}
+	#{DurationFactoryANSITest}
+	#{DyadicValuableANSITest}
+	#{ErrorANSITest}
+	#{ErrorClassANSITest}
+	#{ExceptionANSITest}
+	#{ExceptionClassANSITest}
+	#{ExceptionSetANSITest}
+	#{ExtensibleCollectionHelper}
+	#{FailedMessageANSITest}
+	#{FileStreamFactoryANSITest}
+	#{FloatANSITest}
+	#{FloatCharacterizationANSITest}
+	#{FractionANSITest}
+	#{FractionFactoryANSITest}
+	#{GettableStreamHelper}
+	#{IdentityDictionaryANSITest}
+	#{IdentityDictionaryFactoryANSITest}
+	#{IntegerANSITest}
+	#{IntervalANSITest}
+	#{IntervalFactoryANSITest}
+	#{MainTestCase}
+	#{MessageNotUnderstoodANSITest}
+	#{MessageNotUnderstoodSelectorANSITest}
+	#{MonadicBlockANSITest}
+	#{MsgParmSpec}
+	#{MsgReturnRuleSpec}
+	#{MsgReturnSpec}
+	#{NiladicBlockANSITest}
+	#{NilANSITest}
+	#{NotificationANSITest}
+	#{NotificationClassANSITest}
+	#{ObjectANSITest}
+	#{ObjectClassANSITest}
+	#{ObjectHelper}
+	#{OrderedCollectionANSITest}
+	#{OrderedCollectionFactoryANSITest}
+	#{ProtocolANYSpec}
+	#{ProtocolMsgSpec}
+	#{ProtocolSpec}
+	#{PuttableStreamHelper}
+	#{ReadableStringHelper}
+	#{ReadFileStreamANSITest}
+	#{ReadStreamANSITest}
+	#{ReadStreamFactoryANSITest}
+	#{ReadStreamHelper}
+	#{ReadWriteStreamANSITest}
+	#{ReadWriteStreamFactoryANSITest}
+	#{ScaledDecimalANSITest}
+	#{SelectorANSITest}
+	#{SequencedCollectionHelper}
+	#{SequencedContractibleCollectionHelper}
+	#{SequencedReadableCollectionHelper}
+	#{SequencedReadableCollectionTest}
+	#{SequencedStreamHelper}
+	#{SequencedStreamTest}
+	#{SetANSITest}
+	#{SetFactoryANSITest}
+	#{SortedCollectionANSITest}
+	#{SortedCollectionFactoryANSITest}
+	#{StringANSITest}
+	#{StringFactoryANSITest}
+	#{SymbolANSITest}
+	#{TestCaseHelper}
+	#{TestCaseProtocol}
+	#{TranscriptANSITest}
+	#{WarningANSITest}
+	#{WarningClassANSITest}
+	#{WriteFileStreamANSITest}
+	#{WriteStreamANSITest}
+	#{WriteStreamFactoryANSITest}
+	#{WriteStreamHelper}
+	#{ZeroDivideANSITest}
+	#{ZeroDivideFactoryANSITest}
+).
 
-package methodNames
-	add: #ClassDescription -> #addProtocolNamed:;
-	add: #ClassDescription -> #ansiProtocolNames;
-	add: #ClassDescription -> #ansiProtocolNames:;
-	add: #ClassDescription -> #ansiProtocols;
-	add: #ClassDescription -> #conformsToAnsiProtocolNamed:;
-	add: #ClassDescription -> #definedAsProtocolNames;
-	add: #ClassDescription -> #removeAnsiProtocolNamed:;
-	add: #ClassDescription -> #removeAnsiProtocolNamed:ifAbsent:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ClassDescription} #addProtocolNamed:)
+	#(#{ClassDescription} #ansiProtocolNames)
+	#(#{ClassDescription} #ansiProtocolNames:)
+	#(#{ClassDescription} #ansiProtocols)
+	#(#{ClassDescription} #conformsToAnsiProtocolNamed:)
+	#(#{ClassDescription} #definedAsProtocolNames)
+	#(#{ClassDescription} #removeAnsiProtocolNamed:)
+	#(#{ClassDescription} #removeAnsiProtocolNamed:ifAbsent:)
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\SUnit\SUnit'
-	'..\..\SUnit\SUnitPreload').
+	'..\..\SUnit\SUnitPreload'
+).
 
 package!
 
@@ -132,460 +127,548 @@ Object subclass: #MsgParmSpec
 	instanceVariableNames: 'parmName parmProtocols parmAliasingAttribute'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #MsgReturnSpec
 	instanceVariableNames: 'returnValueProtocols returnValueAliasingAttribute'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ProtocolANYSpec
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #ProtocolMsgSpec
 	instanceVariableNames: 'selector parameterSpecifications returnValueSpecifications specSections'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MsgReturnSpec subclass: #MsgReturnRuleSpec
 	instanceVariableNames: 'ruleSourceCode ruleBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtocolANYSpec subclass: #ProtocolSpec
 	instanceVariableNames: 'name conformsTo description messageSpecifications'
 	classVariableNames: 'ClassProtocols DefaultConvTable FixNum OperatorTable Protocols UnaryConvTable UndefinedConformsToNames'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #TestCaseProtocol
 	instanceVariableNames: ''
 	classVariableNames: 'IsStrict'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseProtocol subclass: #MainTestCase
 	instanceVariableNames: 'messages helpers'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseProtocol subclass: #TestCaseHelper
 	instanceVariableNames: 'testCase'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'testSelectors'!
+	classInstanceVariableNames: 'testSelectors'
+	classConstants: {}!
 MainTestCase subclass: #ArrayFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #BagFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #BooleanANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ByteArrayFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #CharacterANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #CharacterFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #CollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DateAndTimeANSITest
 	instanceVariableNames: 'd19970426t8 savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DateAndTimeFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DictionaryFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DurationANSITest
 	instanceVariableNames: 'off0123 smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DurationFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #DyadicValuableANSITest
 	instanceVariableNames: 'blk2args'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ErrorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ErrorClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ExceptionANSITest
 	instanceVariableNames: 'unchanged changed value exceptionClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ExceptionClassANSITest
 	instanceVariableNames: 'exceptionClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ExceptionSetANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FailedMessageANSITest
 	instanceVariableNames: 'failedMsg'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FileStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FloatANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FloatCharacterizationANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FractionANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #FractionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #IdentityDictionaryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #IdentityDictionaryFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #IntegerANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #IntervalFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #MessageNotUnderstoodANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #MessageNotUnderstoodSelectorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #MonadicBlockANSITest
 	instanceVariableNames: 'blk1args'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #NiladicBlockANSITest
 	instanceVariableNames: 'blk0args canonicalObject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #NilANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #NotificationANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #NotificationClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ObjectANSITest
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ObjectClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #OrderedCollectionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ReadFileStreamANSITest
 	instanceVariableNames: 'readFileStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ReadStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ReadWriteStreamANSITest
 	instanceVariableNames: 'readWriteStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ReadWriteStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ScaledDecimalANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #SelectorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #SequencedStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #SetFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #SortedCollectionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #StringFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #TranscriptANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #WarningANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #WarningClassANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #WriteFileStreamANSITest
 	instanceVariableNames: 'writeFileStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #WriteStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ZeroDivideANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase subclass: #ZeroDivideFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest subclass: #BagANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest subclass: #DictionaryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest subclass: #IntervalANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest subclass: #SequencedReadableCollectionTest
 	instanceVariableNames: 'canonicalObjects'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest subclass: #SetANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #ArrayANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #ByteArrayANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #OrderedCollectionANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #SortedCollectionANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #StringANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionTest subclass: #SymbolANSITest
 	instanceVariableNames: 'smalltalkSymbol'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedStreamTest subclass: #ReadStreamANSITest
 	instanceVariableNames: 'readStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedStreamTest subclass: #WriteStreamANSITest
 	instanceVariableNames: 'writeStream buffer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #AbstractDictionaryHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #CollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #CollectionStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #ExtensibleCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #GettableStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #ObjectHelper
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #PuttableStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #ReadableStringHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #ReadStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #SequencedCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #SequencedContractibleCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #SequencedStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCaseHelper subclass: #WriteStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

@@ -4,7 +4,8 @@ DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnectionTest guid: (GUID fromString: '{0a84fa8d-f7c4-4bbe-b459-da0409a391b9}')!
 DBConnectionTest isAbstract: true!
 DBConnectionTest comment: 'SUnitBrowser openOnTestCase: self.

@@ -4,7 +4,8 @@ MainTestCase subclass: #FileStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileStreamFactoryANSITest guid: (GUID fromString: '{6cf46c0e-b245-4204-ab68-19f81f228553}')!
 FileStreamFactoryANSITest comment: ''!
 !FileStreamFactoryANSITest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #IniFileTest
 	instanceVariableNames: 'iniFile'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IniFileTest guid: (GUID fromString: '{5fc93855-8e32-4463-9906-50705ecb9acc}')!
 IniFileTest comment: ''!
 !IniFileTest categoriesForClass!Unclassified! !

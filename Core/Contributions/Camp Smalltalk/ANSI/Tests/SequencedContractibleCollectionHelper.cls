@@ -4,7 +4,8 @@ TestCaseHelper subclass: #SequencedContractibleCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedContractibleCollectionHelper guid: (GUID fromString: '{02547c3f-e6c4-4b52-ae26-394eee3a484b}')!
 SequencedContractibleCollectionHelper comment: ''!
 !SequencedContractibleCollectionHelper categoriesForClass!Unclassified! !

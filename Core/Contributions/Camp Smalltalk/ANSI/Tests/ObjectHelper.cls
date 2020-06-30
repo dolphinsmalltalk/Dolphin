@@ -4,7 +4,8 @@ TestCaseHelper subclass: #ObjectHelper
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ObjectHelper guid: (GUID fromString: '{6b634eea-466c-4a57-9256-1e3d3c87879a}')!
 ObjectHelper comment: ''!
 !ObjectHelper categoriesForClass!Unclassified! !

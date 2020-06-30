@@ -1,29 +1,24 @@
 ﻿| package |
 package := Package name: 'Dolphin Sockets Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AbstractSocketTest;
-	add: #InternetAddressTest;
-	add: #Socket2Test;
-	add: #SocketErrorTest;
-	add: #SocketTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AbstractSocketTest}
+	#{InternetAddressTest}
+	#{Socket2Test}
+	#{SocketErrorTest}
+	#{SocketTest}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
 	'Dolphin Sockets'
-	'Sockets Connection').
+	'Sockets Connection'
+).
 
 package!
 
@@ -33,32 +28,32 @@ DolphinTest subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #InternetAddressTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractSocketTest subclass: #Socket2Test
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractSocketTest subclass: #SocketTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

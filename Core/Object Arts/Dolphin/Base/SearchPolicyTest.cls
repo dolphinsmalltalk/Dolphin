@@ -4,7 +4,8 @@ DolphinTest subclass: #SearchPolicyTest
 	instanceVariableNames: 'policy'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SearchPolicyTest guid: (GUID fromString: '{d8a1527d-15c9-47f0-afbc-f7bfe4d759a5}')!
 SearchPolicyTest isAbstract: true!
 SearchPolicyTest comment: ''!

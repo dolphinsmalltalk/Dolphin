@@ -4,7 +4,8 @@ DolphinTest subclass: #ClipboardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClipboardTest guid: (GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
 ClipboardTest comment: ''!
 !ClipboardTest categoriesForClass!Unclassified! !

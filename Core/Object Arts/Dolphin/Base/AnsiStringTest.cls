@@ -4,7 +4,8 @@ StringTest subclass: #AnsiStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnsiStringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
 AnsiStringTest comment: 'Tests AnsiString.'!
 !AnsiStringTest categoriesForClass!Unclassified! !

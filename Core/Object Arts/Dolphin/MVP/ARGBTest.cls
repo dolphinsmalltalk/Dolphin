@@ -4,7 +4,8 @@ DolphinTest subclass: #ARGBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ARGBTest guid: (GUID fromString: '{b9d1b1c9-fb62-46e9-a7d5-6807f64e5314}')!
 ARGBTest comment: ''!
 !ARGBTest categoriesForClass!Unclassified! !

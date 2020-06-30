@@ -4,7 +4,8 @@ Object subclass: #CommandLineTestRunner
 	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CommandLineTestRunner guid: (GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
 CommandLineTestRunner comment: ''!
 !CommandLineTestRunner categoriesForClass!Kernel-Objects! !

@@ -4,7 +4,8 @@ STONTestUser subclass: #STONTestUser3
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestUser3 guid: (GUID fromString: '{b5d23459-cf60-4402-97e1-6eba03cc0694}')!
 STONTestUser3 comment: 'STONTestUser3 extends STONTestUser but wants nil instance variables to be written'!
 !STONTestUser3 categoriesForClass!STON-Tests-Base! !

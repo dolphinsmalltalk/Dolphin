@@ -4,7 +4,8 @@ MainTestCase subclass: #BagFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BagFactoryANSITest guid: (GUID fromString: '{6ac712b4-66ac-454e-b274-1195e33c664e}')!
 BagFactoryANSITest comment: ''!
 !BagFactoryANSITest categoriesForClass!Unclassified! !

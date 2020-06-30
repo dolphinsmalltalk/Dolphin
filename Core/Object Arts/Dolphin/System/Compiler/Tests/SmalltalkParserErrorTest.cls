@@ -4,7 +4,8 @@ AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkParserErrorTest guid: (GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
 SmalltalkParserErrorTest comment: ''!
 !SmalltalkParserErrorTest categoriesForClass!Unclassified! !

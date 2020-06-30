@@ -4,7 +4,8 @@ SequencedReadableCollectionTest subclass: #ByteArrayANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ByteArrayANSITest guid: (GUID fromString: '{43131ce9-7dec-461f-bf8c-be28f0977145}')!
 ByteArrayANSITest comment: ''!
 !ByteArrayANSITest categoriesForClass!Unclassified! !

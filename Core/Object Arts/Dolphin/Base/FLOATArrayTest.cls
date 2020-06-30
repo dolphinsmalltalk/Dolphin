@@ -4,7 +4,8 @@ ExternalArrayTest subclass: #FLOATArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FLOATArrayTest guid: (GUID fromString: '{fa2c5d39-ea1c-431f-8a0d-f4fe888c1305}')!
 FLOATArrayTest comment: ''!
 !FLOATArrayTest categoriesForClass!Unclassified! !

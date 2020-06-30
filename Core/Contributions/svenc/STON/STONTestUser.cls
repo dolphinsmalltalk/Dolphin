@@ -4,7 +4,8 @@ Object subclass: #STONTestUser
 	instanceVariableNames: 'username password enabled'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestUser guid: (GUID fromString: '{dc73b82c-2449-48f5-82a0-c000b743f362}')!
 STONTestUser comment: 'STONTestUser is used to support unit tests.
 

@@ -4,7 +4,8 @@ DolphinTest subclass: #ResourceIdentifierTest
 	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceIdentifierTest guid: (GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
 ResourceIdentifierTest comment: ''!
 !ResourceIdentifierTest categoriesForClass!Unclassified! !

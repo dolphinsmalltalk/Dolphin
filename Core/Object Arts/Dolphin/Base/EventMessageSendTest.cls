@@ -4,7 +4,8 @@ DolphinTest subclass: #EventMessageSendTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EventMessageSendTest guid: (GUID fromString: '{d55436fd-a2dc-4d79-a1c1-c8b5351a6ef1}')!
 EventMessageSendTest comment: ''!
 !EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !

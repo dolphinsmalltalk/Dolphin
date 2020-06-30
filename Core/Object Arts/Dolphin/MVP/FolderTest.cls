@@ -4,7 +4,8 @@ DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FolderTest guid: (GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
 FolderTest comment: ''!
 !FolderTest categoriesForClass!Unclassified! !

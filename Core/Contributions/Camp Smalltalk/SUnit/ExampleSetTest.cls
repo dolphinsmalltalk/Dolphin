@@ -4,7 +4,8 @@ TestCase subclass: #ExampleSetTest
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExampleSetTest guid: (GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
 ExampleSetTest comment: ''!
 !ExampleSetTest categoriesForClass!SUnitTests! !

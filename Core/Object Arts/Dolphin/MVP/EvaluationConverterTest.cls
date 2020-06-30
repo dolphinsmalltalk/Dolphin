@@ -4,7 +4,8 @@ DolphinTest subclass: #EvaluationConverterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EvaluationConverterTest guid: (GUID fromString: '{e4302154-42e4-4d4f-acbd-3e3aa6f78982}')!
 EvaluationConverterTest comment: ''!
 !EvaluationConverterTest categoriesForClass!Unclassified! !

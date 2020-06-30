@@ -1,29 +1,24 @@
 ﻿| package |
 package := Package name: 'Dolphin Announcements Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AnnouncementMockA;
-	add: #AnnouncementMockB;
-	add: #AnnouncementMockC;
-	add: #AnnouncementSetTest;
-	add: #AnnouncerTest;
-	add: #WeakAnnouncerTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AnnouncementMockA}
+	#{AnnouncementMockB}
+	#{AnnouncementMockC}
+	#{AnnouncementSetTest}
+	#{AnnouncerTest}
+	#{WeakAnnouncerTest}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Announcements'
-	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
@@ -33,37 +28,38 @@ Announcement subclass: #AnnouncementMockA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Announcement subclass: #AnnouncementMockB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnnouncementMockB subclass: #AnnouncementMockC
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #AnnouncementSetTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #AnnouncerTest
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnnouncerTest subclass: #WeakAnnouncerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

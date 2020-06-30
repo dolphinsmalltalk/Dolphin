@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #VariableTypeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VariableTypeTest guid: (GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
 VariableTypeTest comment: ''!
 !VariableTypeTest categoriesForClass!Refactory-Testing! !

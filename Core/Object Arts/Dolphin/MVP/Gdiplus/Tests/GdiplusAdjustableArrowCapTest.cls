@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusAdjustableArrowCapTest guid: (GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
 GdiplusAdjustableArrowCapTest comment: ''!
 !GdiplusAdjustableArrowCapTest categoriesForClass!Unclassified! !

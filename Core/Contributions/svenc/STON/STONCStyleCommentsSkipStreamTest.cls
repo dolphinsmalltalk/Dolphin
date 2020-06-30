@@ -4,7 +4,8 @@ TestCase subclass: #STONCStyleCommentsSkipStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONCStyleCommentsSkipStreamTest guid: (GUID fromString: '{a5305b0e-412c-473c-8718-a2fe44c28b38}')!
 STONCStyleCommentsSkipStreamTest comment: ''!
 !STONCStyleCommentsSkipStreamTest categoriesForClass!STON-Tests-Reader! !

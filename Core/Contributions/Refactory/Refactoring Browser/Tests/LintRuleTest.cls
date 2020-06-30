@@ -4,7 +4,8 @@ Object subclass: #LintRuleTest
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRuleTest guid: (GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
 LintRuleTest isAbstract: true!
 LintRuleTest comment: ''!

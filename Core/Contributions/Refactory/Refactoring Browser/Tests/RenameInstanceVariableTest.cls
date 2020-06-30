@@ -4,7 +4,8 @@ RefactoringTest subclass: #RenameInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RenameInstanceVariableTest guid: (GUID fromString: '{1ce9a0d9-f614-43b2-bcf9-c02a3681f34f}')!
 RenameInstanceVariableTest comment: ''!
 !RenameInstanceVariableTest categoriesForClass!Refactory-Testing! !

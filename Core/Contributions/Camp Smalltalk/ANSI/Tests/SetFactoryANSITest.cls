@@ -4,7 +4,8 @@ MainTestCase subclass: #SetFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SetFactoryANSITest guid: (GUID fromString: '{13747c2d-58f9-4e5a-9053-f5bd30c4cbce}')!
 SetFactoryANSITest comment: ''!
 !SetFactoryANSITest categoriesForClass!Unclassified! !

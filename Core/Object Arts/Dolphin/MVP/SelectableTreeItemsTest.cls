@@ -4,7 +4,8 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectableTreeItemsTest guid: (GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
 SelectableTreeItemsTest isAbstract: true!
 SelectableTreeItemsTest comment: ''!

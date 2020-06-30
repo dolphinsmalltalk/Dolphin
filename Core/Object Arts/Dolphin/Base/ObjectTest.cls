@@ -4,7 +4,8 @@ DolphinTest subclass: #ObjectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ObjectTest guid: (GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
 ObjectTest comment: ''!
 !ObjectTest categoriesForClass!Unclassified! !

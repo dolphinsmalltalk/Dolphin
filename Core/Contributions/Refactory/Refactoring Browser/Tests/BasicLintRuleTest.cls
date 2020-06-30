@@ -4,7 +4,8 @@ LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BasicLintRuleTest guid: (GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
 BasicLintRuleTest comment: ''!
 !BasicLintRuleTest categoriesForClass!Refactory-Test data! !

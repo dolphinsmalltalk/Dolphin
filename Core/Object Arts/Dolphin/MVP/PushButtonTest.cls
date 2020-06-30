@@ -4,7 +4,8 @@ DolphinTest subclass: #PushButtonTest
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushButtonTest guid: (GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
 PushButtonTest comment: ''!
 !PushButtonTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ TestCase subclass: #AnnouncerTest
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AnnouncerTest guid: (GUID fromString: '{4fe1d4e3-9cb9-4d37-bb20-d8441f9eeb1e}')!
 AnnouncerTest comment: 'An AnnouncerTest is a test class used to test Announcer.
 

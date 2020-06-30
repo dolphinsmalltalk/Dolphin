@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusBitmapFromIStreamInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBitmapFromIStreamInitializerTest guid: (GUID fromString: '{264cb8bf-7428-488c-8342-807ed863ef1c}')!
 GdiplusBitmapFromIStreamInitializerTest comment: ''!
 !GdiplusBitmapFromIStreamInitializerTest categoriesForClass!Unclassified! !

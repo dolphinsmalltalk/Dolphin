@@ -4,7 +4,8 @@ ClassBrowserAbstractTest subclass: #SystemBrowserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SystemBrowserTest guid: (GUID fromString: '{2e020526-2bd1-4fb6-b539-9c2456468a2c}')!
 SystemBrowserTest comment: ''!
 !SystemBrowserTest categoriesForClass!Unclassified! !

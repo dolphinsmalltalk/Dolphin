@@ -4,7 +4,8 @@ SelectableItemsTest subclass: #PackageSelectorTest
 	instanceVariableNames: 'packageA'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageSelectorTest guid: (GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
 PackageSelectorTest comment: ''!
 !PackageSelectorTest categoriesForClass!Unclassified! !

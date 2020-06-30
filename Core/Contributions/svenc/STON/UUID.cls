@@ -4,7 +4,8 @@ GUID variableByteSubclass: #UUID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UUID guid: (GUID fromString: '{ad5fb5be-d9b1-44b0-9209-6d360fd900c8}')!
 UUID comment: ''!
 !UUID categoriesForClass!Unclassified! !

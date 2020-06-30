@@ -4,7 +4,8 @@ LocaleTest subclass: #SmalltalkLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkLocaleTest guid: (GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
 SmalltalkLocaleTest comment: ''!
 !SmalltalkLocaleTest categoriesForClass!Unclassified! !

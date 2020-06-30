@@ -4,7 +4,8 @@ ExternalFieldTest subclass: #WCHARFieldTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WCHARFieldTest guid: (GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
 WCHARFieldTest comment: ''!
 !WCHARFieldTest categoriesForClass!Unclassified! !

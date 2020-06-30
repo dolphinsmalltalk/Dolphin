@@ -4,7 +4,8 @@ DolphinTest subclass: #DurationTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DurationTest guid: (GUID fromString: '{3cf86074-481f-4b92-b7ed-6c9cbbe394df}')!
 DurationTest comment: ''!
 !DurationTest categoriesForClass!Unclassified! !

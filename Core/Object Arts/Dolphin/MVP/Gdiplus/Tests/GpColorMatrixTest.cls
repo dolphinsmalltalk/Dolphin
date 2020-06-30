@@ -4,7 +4,8 @@ GdiplusTests subclass: #GpColorMatrixTest
 	instanceVariableNames: 'matrix'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GpColorMatrixTest guid: (GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
 GpColorMatrixTest comment: ''!
 !GpColorMatrixTest categoriesForClass!Unclassified! !

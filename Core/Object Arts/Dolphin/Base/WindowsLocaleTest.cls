@@ -4,7 +4,8 @@ LocaleTest subclass: #WindowsLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WindowsLocaleTest guid: (GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
 WindowsLocaleTest comment: ''!
 !WindowsLocaleTest categoriesForClass!Unclassified! !

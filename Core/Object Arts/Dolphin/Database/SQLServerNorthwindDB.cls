@@ -4,7 +4,8 @@ DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SQLServerNorthwindDB guid: (GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
 SQLServerNorthwindDB comment: ''!
 !SQLServerNorthwindDB categoriesForClass!Unclassified! !

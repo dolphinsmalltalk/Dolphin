@@ -4,7 +4,8 @@ DolphinTest subclass: #DiskVolumeInformationTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DiskVolumeInformationTest guid: (GUID fromString: '{b920c262-99c0-49b9-8710-57611ad81543}')!
 DiskVolumeInformationTest comment: ''!
 !DiskVolumeInformationTest categoriesForClass!Unclassified! !

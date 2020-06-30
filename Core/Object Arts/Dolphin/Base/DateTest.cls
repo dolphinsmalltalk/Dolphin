@@ -4,7 +4,8 @@ DolphinTest subclass: #DateTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DateTest guid: (GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
 DateTest comment: ''!
 !DateTest categoriesForClass!Unclassified! !

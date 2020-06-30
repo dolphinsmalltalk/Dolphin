@@ -1,33 +1,31 @@
 ﻿| package |
 package := Package name: 'SUnitTests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #ExampleSetTest;
-	add: #ResumableTestFailureTestCase;
-	add: #SimpleTestResource;
-	add: #SimpleTestResourceTestCase;
-	add: #SUnitTest;
-	yourself.
+package setClassNames: #(
+	#{ExampleSetTest}
+	#{ResumableTestFailureTestCase}
+	#{SimpleTestResource}
+	#{SimpleTestResourceTestCase}
+	#{SUnitTest}
+).
 
-package globalNames
-	add: #ExampleTestResource;
-	yourself.
+package setVariableNames: #(
+	#{ExampleTestResource}
+).
 
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	add: #ExampleTestResource;
-	yourself).
+package setAliasVariableNames: #(
+	#{ExampleTestResource}
+).
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'SUnit'
-	'SUnitPreload').
+	'SUnitPreload'
+).
 
 package!
 
@@ -37,34 +35,37 @@ TestCase subclass: #ExampleSetTest
 	instanceVariableNames: 'full empty'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #ResumableTestFailureTestCase
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestResource subclass: #SimpleTestResource
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
-"Global Aliases"!
+"Variable Aliases"!
 
 ExampleTestResource := SimpleTestResource!
 
-
-"Loose Methods"!
 
 "End of package definition"!
 

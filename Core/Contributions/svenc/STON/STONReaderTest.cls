@@ -4,7 +4,8 @@ TestCase subclass: #STONReaderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONReaderTest guid: (GUID fromString: '{6a0fdc02-84d9-4344-8b1e-55e345843ec9}')!
 STONReaderTest comment: 'STONReaderTests test materialization.
 '!

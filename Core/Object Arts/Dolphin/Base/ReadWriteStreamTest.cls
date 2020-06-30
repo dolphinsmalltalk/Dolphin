@@ -4,7 +4,8 @@ PositionableStreamTest subclass: #ReadWriteStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReadWriteStreamTest guid: (GUID fromString: '{575c0e65-e28f-4acb-a9c8-8294fa8503a3}')!
 ReadWriteStreamTest comment: ''!
 !ReadWriteStreamTest categoriesForClass!Unclassified! !

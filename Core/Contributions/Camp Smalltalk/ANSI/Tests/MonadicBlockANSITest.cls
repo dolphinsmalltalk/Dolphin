@@ -4,7 +4,8 @@ MainTestCase subclass: #MonadicBlockANSITest
 	instanceVariableNames: 'blk1args'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MonadicBlockANSITest guid: (GUID fromString: '{13d65db6-1141-4cc4-adc4-90b57ad5ff87}')!
 MonadicBlockANSITest comment: ''!
 !MonadicBlockANSITest categoriesForClass!Unclassified! !

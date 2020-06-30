@@ -4,7 +4,8 @@ DolphinTest subclass: #InternetAddressTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InternetAddressTest guid: (GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
 InternetAddressTest comment: ''!
 !InternetAddressTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushTest guid: (GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
 GdiplusLinearGradientBrushTest comment: ''!
 !GdiplusLinearGradientBrushTest categoriesForClass!Unclassified! !

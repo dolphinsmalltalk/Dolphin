@@ -4,7 +4,8 @@ ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SubclassOfClassToRename guid: (GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
 SubclassOfClassToRename comment: ''!
 !SubclassOfClassToRename categoriesForClass!Refactory-Test data! !

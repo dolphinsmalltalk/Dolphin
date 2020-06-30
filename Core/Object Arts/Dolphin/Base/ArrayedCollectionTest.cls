@@ -4,7 +4,8 @@ SequenceableCollectionTest subclass: #ArrayedCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayedCollectionTest guid: (GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
 ArrayedCollectionTest isAbstract: true!
 ArrayedCollectionTest comment: ''!

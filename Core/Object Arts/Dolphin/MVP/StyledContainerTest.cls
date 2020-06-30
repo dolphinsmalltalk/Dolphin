@@ -4,7 +4,8 @@ AbstractContainerViewTest subclass: #StyledContainerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StyledContainerTest guid: (GUID fromString: '{c2d30af9-3ddd-440f-add5-535cd0e410a9}')!
 StyledContainerTest comment: ''!
 !StyledContainerTest categoriesForClass!Unclassified! !

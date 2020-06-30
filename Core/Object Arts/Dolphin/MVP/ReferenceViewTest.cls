@@ -4,7 +4,8 @@ PresenterTest subclass: #ReferenceViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReferenceViewTest guid: (GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
 ReferenceViewTest isAbstract: true!
 ReferenceViewTest comment: ''!

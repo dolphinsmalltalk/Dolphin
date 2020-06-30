@@ -4,7 +4,8 @@ PresenterTest subclass: #ViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ViewTest guid: (GUID fromString: '{cf223394-a19e-45f9-a270-551c288901ef}')!
 ViewTest comment: ''!
 !ViewTest categoriesForClass!Unclassified! !

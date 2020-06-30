@@ -4,7 +4,8 @@ Bag subclass: #IdentityBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdentityBag guid: (GUID fromString: '{fb43e6dd-9db4-448c-966d-a932ceab3751}')!
 IdentityBag comment: 'Dolphin doesn''t have an IdentityBag class (it isn''t necessary because Bag''s can work in identity comparison mode if instantiated with `#identityNew[:]`), but the class is referred to directly by the STON tests.'!
 !IdentityBag categoriesForClass!Collections-Unordered! !

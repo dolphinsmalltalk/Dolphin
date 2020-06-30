@@ -4,7 +4,8 @@ LayoutManagerTest subclass: #FlowLayoutTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FlowLayoutTest guid: (GUID fromString: '{b71be04a-a575-4722-a8b1-c57127768758}')!
 FlowLayoutTest comment: ''!
 !FlowLayoutTest categoriesForClass!Unclassified! !

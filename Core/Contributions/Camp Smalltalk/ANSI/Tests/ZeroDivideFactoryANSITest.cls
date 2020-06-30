@@ -4,7 +4,8 @@ MainTestCase subclass: #ZeroDivideFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ZeroDivideFactoryANSITest guid: (GUID fromString: '{3e4c31cd-6705-42d7-a54d-d85824942cf4}')!
 ZeroDivideFactoryANSITest comment: ''!
 !ZeroDivideFactoryANSITest categoriesForClass!Unclassified! !

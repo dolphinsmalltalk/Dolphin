@@ -4,7 +4,8 @@ DolphinTest subclass: #BooleanTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BooleanTest guid: (GUID fromString: '{5aa57122-600d-4018-870d-8425b90179b2}')!
 BooleanTest comment: ''!
 !BooleanTest categoriesForClass!Unclassified! !

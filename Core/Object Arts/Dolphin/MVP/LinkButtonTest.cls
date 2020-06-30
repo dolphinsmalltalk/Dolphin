@@ -4,7 +4,8 @@ PresenterTest subclass: #LinkButtonTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LinkButtonTest guid: (GUID fromString: '{2af000e8-54bd-40b6-8dc6-d0014babc42c}')!
 LinkButtonTest comment: ''!
 !LinkButtonTest categoriesForClass!Unclassified! !

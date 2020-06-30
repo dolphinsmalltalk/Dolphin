@@ -4,7 +4,8 @@ DolphinTest subclass: #AbstractParserErrorTest
 	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractParserErrorTest guid: (GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
 AbstractParserErrorTest isAbstract: true!
 AbstractParserErrorTest comment: ''!

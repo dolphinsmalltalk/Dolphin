@@ -4,7 +4,8 @@ DolphinTest subclass: #CompiledMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompiledMethodTest guid: (GUID fromString: '{32df31e4-99ba-44fb-aaac-99e5dfe82c94}')!
 CompiledMethodTest comment: 'This is the unit test for the class CompiledMethod. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest

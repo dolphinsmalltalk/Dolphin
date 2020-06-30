@@ -4,7 +4,8 @@ MainTestCase subclass: #ErrorANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ErrorANSITest guid: (GUID fromString: '{28014a52-0e5f-4526-af9b-ad2e8fae09cf}')!
 ErrorANSITest comment: ''!
 !ErrorANSITest categoriesForClass!Unclassified! !

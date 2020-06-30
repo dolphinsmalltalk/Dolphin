@@ -1,25 +1,20 @@
 ﻿| package |
 package := Package name: 'Continuation Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #ContinuationTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{ContinuationTest}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
@@ -29,12 +24,8 @@ TestCase subclass: #ContinuationTest
 	instanceVariableNames: 'tmp tmp2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

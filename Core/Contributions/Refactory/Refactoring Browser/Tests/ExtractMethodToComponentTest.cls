@@ -4,7 +4,8 @@ RefactoringTest subclass: #ExtractMethodToComponentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExtractMethodToComponentTest guid: (GUID fromString: '{8281473f-8cd8-45ac-ad39-f2858913ecae}')!
 ExtractMethodToComponentTest comment: ''!
 !ExtractMethodToComponentTest categoriesForClass!Refactory-Testing! !

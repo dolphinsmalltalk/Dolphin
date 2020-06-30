@@ -4,7 +4,8 @@ StringTest subclass: #UtfEncodedStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UtfEncodedStringTest guid: (GUID fromString: '{f3d4f4a7-05b6-445f-8380-d0b838804877}')!
 UtfEncodedStringTest isAbstract: true!
 UtfEncodedStringTest comment: ''!

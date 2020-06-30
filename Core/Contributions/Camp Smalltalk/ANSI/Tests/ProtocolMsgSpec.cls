@@ -4,7 +4,8 @@ Object subclass: #ProtocolMsgSpec
 	instanceVariableNames: 'selector parameterSpecifications returnValueSpecifications specSections'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProtocolMsgSpec guid: (GUID fromString: '{49589213-e5b0-4d6a-91ae-67429ef89ee9}')!
 ProtocolMsgSpec comment: ''!
 !ProtocolMsgSpec categoriesForClass!Unclassified! !

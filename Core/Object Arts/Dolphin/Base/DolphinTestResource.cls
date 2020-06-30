@@ -4,7 +4,8 @@ TestResource subclass: #DolphinTestResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTestResource guid: (GUID fromString: '{1b75ff3b-eede-45ce-9144-898de51c1f3e}')!
 DolphinTestResource isAbstract: true!
 DolphinTestResource comment: ''!

@@ -4,7 +4,8 @@ DolphinTest subclass: #FloatTest
 	instanceVariableNames: 'fpeMask'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FloatTest guid: (GUID fromString: '{b2b95b67-e8f3-4991-a4b4-94edc5e83f28}')!
 FloatTest comment: ''!
 !FloatTest categoriesForClass!Unclassified! !

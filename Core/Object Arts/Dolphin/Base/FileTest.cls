@@ -4,7 +4,8 @@ DolphinTest subclass: #FileTest
 	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileTest guid: (GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
 FileTest comment: ''!
 !FileTest categoriesForClass!Unclassified! !

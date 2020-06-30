@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #SmalllintTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalllintTest guid: (GUID fromString: '{1c8afe99-7a10-4ecd-a108-0f8f9bb5bdba}')!
 SmalllintTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SmalllintTest categoriesForClass!Refactory-Testing! !

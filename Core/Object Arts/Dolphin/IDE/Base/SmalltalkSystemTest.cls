@@ -4,7 +4,8 @@ DolphinTest subclass: #SmalltalkSystemTest
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkSystemTest guid: (GUID fromString: '{8ce20f6c-ccc5-4249-85e0-ef3888d589d7}')!
 SmalltalkSystemTest comment: ''!
 !SmalltalkSystemTest categoriesForClass!Unclassified! !

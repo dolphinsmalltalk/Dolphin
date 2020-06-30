@@ -4,7 +4,8 @@ DolphinTest subclass: #SemaphoreTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SemaphoreTest guid: (GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
 SemaphoreTest comment: ''!
 !SemaphoreTest categoriesForClass!Unclassified! !

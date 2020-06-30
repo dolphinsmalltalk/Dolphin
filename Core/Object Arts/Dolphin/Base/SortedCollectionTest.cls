@@ -4,7 +4,8 @@ OrderedCollectionTest subclass: #SortedCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SortedCollectionTest guid: (GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
 SortedCollectionTest comment: ''!
 !SortedCollectionTest categoriesForClass!Unclassified! !

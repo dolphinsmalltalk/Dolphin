@@ -4,7 +4,8 @@ STONTestUser subclass: #STONTestUser2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestUser2 guid: (GUID fromString: '{2b83d7a9-b33a-4c5e-a872-6a271dcf9f7e}')!
 STONTestUser2 comment: 'STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:'!
 !STONTestUser2 categoriesForClass!STON-Tests-Base! !

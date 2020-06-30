@@ -4,7 +4,8 @@ Association subclass: #STONTestAssociation
 	instanceVariableNames: 'timestamp'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestAssociation guid: (GUID fromString: '{d412d7d7-3654-4d31-9ebf-dbbe2a26135a}')!
 STONTestAssociation comment: 'STONTestAssociation is used to support unit tests.
 '!

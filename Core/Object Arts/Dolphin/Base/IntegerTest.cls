@@ -4,7 +4,8 @@ DolphinTest subclass: #IntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IntegerTest guid: (GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
 IntegerTest isAbstract: true!
 IntegerTest comment: ''!

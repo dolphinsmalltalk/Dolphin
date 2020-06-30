@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenFromColorInitializerTest guid: (GUID fromString: '{af606711-5d59-44e2-b217-d6db5d89ffc4}')!
 GdiplusPenFromColorInitializerTest comment: ''!
 !GdiplusPenFromColorInitializerTest categoriesForClass!Unclassified! !

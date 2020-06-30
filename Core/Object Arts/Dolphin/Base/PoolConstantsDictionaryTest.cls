@@ -4,7 +4,8 @@ AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PoolConstantsDictionaryTest guid: (GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
 PoolConstantsDictionaryTest comment: ''!
 !PoolConstantsDictionaryTest categoriesForClass!Unclassified! !

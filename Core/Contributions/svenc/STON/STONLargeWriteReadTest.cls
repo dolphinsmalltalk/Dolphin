@@ -4,7 +4,8 @@ STONWriteReadTest subclass: #STONLargeWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONLargeWriteReadTest guid: (GUID fromString: '{29be0ac3-431b-4a04-95c4-c3c398ed2ca4}')!
 STONLargeWriteReadTest comment: 'STONLargeWriteReadTests test the optimalizations for large structures.'!
 !STONLargeWriteReadTest categoriesForClass!STON-Tests-Writer! !

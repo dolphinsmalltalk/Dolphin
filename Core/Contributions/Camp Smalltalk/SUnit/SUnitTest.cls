@@ -4,7 +4,8 @@ TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SUnitTest guid: (GUID fromString: '{5e96793e-0810-11d4-a876-0050da643bf9}')!
 SUnitTest comment: ''!
 !SUnitTest categoriesForClass!SUnitTests! !

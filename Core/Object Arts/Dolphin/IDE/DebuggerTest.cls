@@ -4,7 +4,8 @@ DolphinTest subclass: #DebuggerTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DebuggerTest guid: (GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
 DebuggerTest comment: ''!
 !DebuggerTest categoriesForClass!Unclassified! !

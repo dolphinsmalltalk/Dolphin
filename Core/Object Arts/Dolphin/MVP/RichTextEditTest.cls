@@ -4,7 +4,8 @@ MultilineTextEditTest subclass: #RichTextEditTest
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RichTextEditTest guid: (GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
 RichTextEditTest comment: ''!
 !RichTextEditTest categoriesForClass!Unclassified! !

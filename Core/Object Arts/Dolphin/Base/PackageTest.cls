@@ -4,7 +4,8 @@ DolphinTest subclass: #PackageTest
 	instanceVariableNames: 'loadedPackages checkTimestamps'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageTest guid: (GUID fromString: '{0bcde90d-a936-43ee-9e4a-2bdec39abf2a}')!
 PackageTest comment: ''!
 !PackageTest categoriesForClass!Unclassified! !

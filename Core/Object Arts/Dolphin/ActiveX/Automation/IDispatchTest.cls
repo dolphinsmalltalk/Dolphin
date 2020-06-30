@@ -4,7 +4,8 @@ DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IDispatchTest guid: (GUID fromString: '{5f6be15f-132a-4eef-b9cb-960a4d8cab7c}')!
 IDispatchTest comment: ''!
 !IDispatchTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageFromIStreamInitializerTest guid: (GUID fromString: '{fd12183c-22dc-4ca1-8ebc-e1d9e66485c2}')!
 GdiplusImageFromIStreamInitializerTest comment: ''!
 !GdiplusImageFromIStreamInitializerTest categoriesForClass!Unclassified! !

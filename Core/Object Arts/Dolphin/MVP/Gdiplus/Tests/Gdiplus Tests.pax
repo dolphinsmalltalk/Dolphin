@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Gdiplus Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk GDI+ Binding tests
 
@@ -9,56 +9,50 @@ package paxVersion: 1;
 package basicPackageVersion: '6.1'.
 
 
-package classNames
-	add: #GdiplusAdjustableArrowCapTest;
-	add: #GdiplusBaseTest;
-	add: #GdiplusBitmapFromBitmapInitializerTest;
-	add: #GdiplusBitmapFromBlankInitializerTest;
-	add: #GdiplusBitmapFromFileInitializerTest;
-	add: #GdiplusBitmapFromIconInitializerTest;
-	add: #GdiplusBitmapFromIStreamInitializerTest;
-	add: #GdiplusBitmapTest;
-	add: #GdiplusCustomLineCapTest;
-	add: #GdiplusExamplesTest;
-	add: #GdiplusFileResource;
-	add: #GdiplusGraphicsFromHDCInitializerTest;
-	add: #GdiplusGraphicsFromImageInitializerTest;
-	add: #GdiplusGraphicsPathTest;
-	add: #GdiplusGraphicsTest;
-	add: #GdiplusHatchBrushTest;
-	add: #GdiplusImageAttributesInitializerTest;
-	add: #GdiplusImageFromFileInitializerTest;
-	add: #GdiplusImageFromIStreamInitializerTest;
-	add: #GdiplusImageTest;
-	add: #GdiplusImageTests;
-	add: #GdiplusInitializerTest;
-	add: #GdiplusInitializerTests;
-	add: #GdiplusLinearGradientBrushFromPointsInitializerTest;
-	add: #GdiplusLinearGradientBrushFromRectInitializerTest;
-	add: #GdiplusLinearGradientBrushTest;
-	add: #GdiplusPathGradientBrushTest;
-	add: #GdiplusPenFromBrushInitializerTest;
-	add: #GdiplusPenFromColorInitializerTest;
-	add: #GdiplusPenTest;
-	add: #GdiplusSolidBrushFromColorInitializerTest;
-	add: #GdiplusTestInitializer;
-	add: #GdiplusTests;
-	add: #GpColorMatrixTest;
-	add: #POINTFTest;
-	add: #RECTFTest;
-	yourself.
+package setClassNames: #(
+	#{GdiplusAdjustableArrowCapTest}
+	#{GdiplusBaseTest}
+	#{GdiplusBitmapFromBitmapInitializerTest}
+	#{GdiplusBitmapFromBlankInitializerTest}
+	#{GdiplusBitmapFromFileInitializerTest}
+	#{GdiplusBitmapFromIconInitializerTest}
+	#{GdiplusBitmapFromIStreamInitializerTest}
+	#{GdiplusBitmapTest}
+	#{GdiplusCustomLineCapTest}
+	#{GdiplusExamplesTest}
+	#{GdiplusFileResource}
+	#{GdiplusGraphicsFromHDCInitializerTest}
+	#{GdiplusGraphicsFromImageInitializerTest}
+	#{GdiplusGraphicsPathTest}
+	#{GdiplusGraphicsTest}
+	#{GdiplusHatchBrushTest}
+	#{GdiplusImageAttributesInitializerTest}
+	#{GdiplusImageFromFileInitializerTest}
+	#{GdiplusImageFromIStreamInitializerTest}
+	#{GdiplusImageTest}
+	#{GdiplusImageTests}
+	#{GdiplusInitializerTest}
+	#{GdiplusInitializerTests}
+	#{GdiplusLinearGradientBrushFromPointsInitializerTest}
+	#{GdiplusLinearGradientBrushFromRectInitializerTest}
+	#{GdiplusLinearGradientBrushTest}
+	#{GdiplusPathGradientBrushTest}
+	#{GdiplusPenFromBrushInitializerTest}
+	#{GdiplusPenFromColorInitializerTest}
+	#{GdiplusPenTest}
+	#{GdiplusSolidBrushFromColorInitializerTest}
+	#{GdiplusTestInitializer}
+	#{GdiplusTests}
+	#{GpColorMatrixTest}
+	#{POINTFTest}
+	#{RECTFTest}
+).
 
-package methodNames
-	add: #Bitmap -> #hdc;
-	add: 'Bitmap class' -> #gdipCopyOfIcon:extent:backcolor:;
-	add: 'Bitmap class' -> #gdipCopyOfImageIndex:extent:backcolor:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Bitmap} #hdc)
+	#(#{Bitmap class} #gdipCopyOfIcon:extent:backcolor:)
+	#(#{Bitmap class} #gdipCopyOfImageIndex:extent:backcolor:)
+).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
@@ -68,7 +62,8 @@ package setPrerequisites: #(
 	'..\Gdiplus'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\..\ActiveX\Shell\Windows Shell').
+	'..\..\..\ActiveX\Shell\Windows Shell'
+).
 
 package!
 
@@ -78,185 +73,218 @@ GdiplusInitializer subclass: #GdiplusTestInitializer
 	instanceVariableNames: 'mockHandle arg1'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalPointTest subclass: #POINTFTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalRectangleTest subclass: #RECTFTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusBaseTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusCustomLineCapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusExamplesTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusGraphicsPathTest
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusGraphicsTest
 	instanceVariableNames: 'bitmap graphics canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusHatchBrushTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusImageTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusInitializerTests
 	instanceVariableNames: 'constructorArgs'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusPathGradientBrushTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GdiplusPenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests subclass: #GpColorMatrixTest
 	instanceVariableNames: 'matrix'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageTests subclass: #GdiplusBitmapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusImageTests subclass: #GdiplusImageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBlankInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusBitmapFromFileInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusBitmapFromIconInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusBitmapFromIStreamInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromImageInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusImageAttributesInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusImageFromFileInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromPointsInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests subclass: #GdiplusSolidBrushFromColorInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestResource subclass: #GdiplusFileResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

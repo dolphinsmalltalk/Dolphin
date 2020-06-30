@@ -4,7 +4,8 @@ DolphinTest subclass: #PackageManagerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageManagerTest guid: (GUID fromString: '{f161630b-6480-4f0c-b958-a57ec75b9cbd}')!
 PackageManagerTest comment: ''!
 !PackageManagerTest categoriesForClass!Unclassified! !

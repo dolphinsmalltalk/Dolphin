@@ -4,7 +4,8 @@ BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageEnvironmentTest guid: (GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
 PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
 !PackageEnvironmentTest categoriesForClass!Refactory-Testing! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractContainerViewTest guid: (GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
 AbstractContainerViewTest isAbstract: true!
 AbstractContainerViewTest comment: ''!

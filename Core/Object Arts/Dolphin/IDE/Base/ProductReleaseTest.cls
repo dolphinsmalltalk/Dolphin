@@ -4,7 +4,8 @@ DolphinTest subclass: #ProductReleaseTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ProductReleaseTest guid: (GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
 ProductReleaseTest comment: ''!
 !ProductReleaseTest categoriesForClass!Unclassified! !

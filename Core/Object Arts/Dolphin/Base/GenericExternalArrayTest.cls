@@ -4,7 +4,8 @@ ExternalArrayTest subclass: #GenericExternalArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GenericExternalArrayTest guid: (GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
 GenericExternalArrayTest isAbstract: true!
 GenericExternalArrayTest comment: ''!

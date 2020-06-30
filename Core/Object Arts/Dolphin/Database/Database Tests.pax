@@ -1,25 +1,19 @@
 ﻿| package |
 package := Package name: 'Database Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #AccessDBTest;
-	add: #AccessNorthwindDB;
-	add: #DBConnectionTest;
-	add: #DBConnectionTestResource;
-	add: #DBTest;
-	add: #SQLServerDBTest;
-	add: #SQLServerNorthwindDB;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{AccessDBTest}
+	#{AccessNorthwindDB}
+	#{DBConnectionTest}
+	#{DBConnectionTestResource}
+	#{DBTest}
+	#{SQLServerDBTest}
+	#{SQLServerNorthwindDB}
+).
 
 package setPrerequisites: #(
 	'Database Connection Base'
@@ -27,7 +21,8 @@ package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Base Tests'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
+	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+).
 
 package!
 
@@ -37,42 +32,44 @@ DolphinTest subclass: #DBTest
 	instanceVariableNames: 'connection'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCTypes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnectionTest subclass: #AccessDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnectionTest subclass: #SQLServerDBTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestResource subclass: #DBConnectionTestResource
 	instanceVariableNames: 'connection isAvailable'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnectionTestResource subclass: #AccessNorthwindDB
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

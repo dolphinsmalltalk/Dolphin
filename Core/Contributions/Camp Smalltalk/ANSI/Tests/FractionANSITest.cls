@@ -4,7 +4,8 @@ MainTestCase subclass: #FractionANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FractionANSITest guid: (GUID fromString: '{e0b31193-571f-4628-a0fb-3c93132af2c3}')!
 FractionANSITest comment: ''!
 !FractionANSITest categoriesForClass!Unclassified! !

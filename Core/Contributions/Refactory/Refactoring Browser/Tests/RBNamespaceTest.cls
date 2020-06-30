@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #RBNamespaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RBNamespaceTest guid: (GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
 RBNamespaceTest comment: ''!
 !RBNamespaceTest categoriesForClass!Refactory-Testing! !

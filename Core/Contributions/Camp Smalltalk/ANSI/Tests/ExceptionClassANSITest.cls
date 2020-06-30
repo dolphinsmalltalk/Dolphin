@@ -4,7 +4,8 @@ MainTestCase subclass: #ExceptionClassANSITest
 	instanceVariableNames: 'exceptionClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExceptionClassANSITest guid: (GUID fromString: '{72927324-67fb-4498-9a02-867e023da65d}')!
 ExceptionClassANSITest comment: ''!
 !ExceptionClassANSITest categoriesForClass!Unclassified! !

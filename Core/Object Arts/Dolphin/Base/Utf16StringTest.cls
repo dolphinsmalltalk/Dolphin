@@ -4,7 +4,8 @@ UtfEncodedStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Utf16StringTest guid: (GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}')!
 Utf16StringTest comment: ''!
 !Utf16StringTest categoriesForClass!Unclassified! !

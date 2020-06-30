@@ -4,7 +4,8 @@ DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CRTLibraryImportTest guid: (GUID fromString: '{a3836ac0-e09a-4f44-b33f-3f87f52f2098}')!
 CRTLibraryImportTest comment: ''!
 !CRTLibraryImportTest categoriesForClass!SUnit! !

@@ -1,31 +1,20 @@
 ﻿| package |
 package := Package name: 'Dolphin Collection Arithmetic'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package methodNames
-	add: #Collection -> #max;
-	add: #Collection -> #sum;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Collection} #max)
+	#(#{Collection} #sum)
+).
 
 package setPrerequisites: #(
-	'Dolphin').
+	'Dolphin'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

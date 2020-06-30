@@ -4,7 +4,8 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SAFEARRAYTest guid: (GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
 SAFEARRAYTest comment: ''!
 !SAFEARRAYTest categoriesForClass!Unclassified! !

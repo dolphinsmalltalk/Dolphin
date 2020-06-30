@@ -4,7 +4,8 @@ TestCaseHelper subclass: #SequencedReadableCollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequencedReadableCollectionHelper guid: (GUID fromString: '{739ae9ac-703e-451d-8fda-64b1e591215d}')!
 SequencedReadableCollectionHelper comment: ''!
 !SequencedReadableCollectionHelper categoriesForClass!Unclassified! !

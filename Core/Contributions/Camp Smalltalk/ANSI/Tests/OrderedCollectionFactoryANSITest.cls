@@ -4,7 +4,8 @@ MainTestCase subclass: #OrderedCollectionFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OrderedCollectionFactoryANSITest guid: (GUID fromString: '{c0090cd9-2ca2-4b48-855b-d60ca0406ef1}')!
 OrderedCollectionFactoryANSITest comment: ''!
 !OrderedCollectionFactoryANSITest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #TimeTest
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TimeTest guid: (GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
 TimeTest comment: ''!
 !TimeTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ AbstractFileStreamTest subclass: #StdioFileStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StdioFileStreamTest guid: (GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
 StdioFileStreamTest comment: ''!
 !StdioFileStreamTest categoriesForClass!Unclassified! !

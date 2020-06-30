@@ -4,7 +4,8 @@ DolphinTest subclass: #TypeConverterTest
 	instanceVariableNames: 'edit savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TypeConverterTest guid: (GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
 TypeConverterTest comment: ''!
 !TypeConverterTest categoriesForClass!Unclassified! !

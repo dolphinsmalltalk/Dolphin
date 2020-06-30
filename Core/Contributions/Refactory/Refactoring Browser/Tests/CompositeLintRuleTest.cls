@@ -4,7 +4,8 @@ LintRuleTest subclass: #CompositeLintRuleTest
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompositeLintRuleTest guid: (GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
 CompositeLintRuleTest comment: ''!
 !CompositeLintRuleTest categoriesForClass!Refactory-Test data! !

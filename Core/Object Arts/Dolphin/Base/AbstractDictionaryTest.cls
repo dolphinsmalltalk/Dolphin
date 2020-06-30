@@ -4,7 +4,8 @@ DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractDictionaryTest guid: (GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
 AbstractDictionaryTest isAbstract: true!
 AbstractDictionaryTest comment: ''!

@@ -4,7 +4,8 @@ DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VersionResourceTest guid: (GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
 VersionResourceTest comment: ''!
 !VersionResourceTest categoriesForClass!Unclassified! !

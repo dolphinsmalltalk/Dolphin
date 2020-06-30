@@ -4,7 +4,8 @@ RefactoringBrowserTest subclass: #ParserTest
 	instanceVariableNames: 'currentSelector classSearches rewrites'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
 ParserTest comment: ''!
 !ParserTest categoriesForClass!Refactory-Testing! !

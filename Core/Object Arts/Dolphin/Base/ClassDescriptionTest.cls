@@ -4,7 +4,8 @@ DolphinTest subclass: #ClassDescriptionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassDescriptionTest guid: (GUID fromString: '{2e47ba8b-6e05-41a9-87ce-ccfeabd45cb7}')!
 ClassDescriptionTest isAbstract: true!
 ClassDescriptionTest comment: ''!

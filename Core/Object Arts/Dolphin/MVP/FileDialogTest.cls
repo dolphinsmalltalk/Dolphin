@@ -4,7 +4,8 @@ DolphinTest subclass: #FileDialogTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileDialogTest guid: (GUID fromString: '{c406269b-ec41-4f17-bc9a-0e8bc2ba4c92}')!
 FileDialogTest comment: ''!
 !FileDialogTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTestClassResource subclass: #BehaviorTestClasses
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BehaviorTestClasses guid: (GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
 BehaviorTestClasses comment: ''!
 !BehaviorTestClasses categoriesForClass!Unclassified! !

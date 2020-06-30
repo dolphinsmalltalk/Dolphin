@@ -4,7 +4,8 @@ Object subclass: #TestRunLogger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestRunLogger guid: (GUID fromString: '{00fd980b-da74-44be-888f-6735ffb8e96b}')!
 TestRunLogger isAbstract: true!
 TestRunLogger comment: ''!

@@ -4,7 +4,8 @@ DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageClosureTests guid: (GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
 PackageClosureTests comment: ''!
 !PackageClosureTests categoriesForClass!Unclassified! !

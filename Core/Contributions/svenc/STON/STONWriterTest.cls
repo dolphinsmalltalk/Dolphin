@@ -4,7 +4,8 @@ TestCase subclass: #STONWriterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONWriterTest guid: (GUID fromString: '{c786d815-b405-4113-a350-3ee3370c7879}')!
 STONWriterTest comment: ''!
 !STONWriterTest categoriesForClass!STON-Tests-Writer! !

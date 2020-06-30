@@ -4,7 +4,8 @@ TestCase subclass: #RewriteTestCase
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RewriteTestCase guid: (GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
 RewriteTestCase comment: ''!
 !RewriteTestCase categoriesForClass!Unclassified! !

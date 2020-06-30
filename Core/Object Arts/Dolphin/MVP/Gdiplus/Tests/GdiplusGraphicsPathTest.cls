@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusGraphicsPathTest
 	instanceVariableNames: 'fillMode'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsPathTest guid: (GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
 GdiplusGraphicsPathTest comment: ''!
 !GdiplusGraphicsPathTest categoriesForClass!Unclassified! !

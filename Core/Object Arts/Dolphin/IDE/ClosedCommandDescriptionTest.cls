@@ -4,7 +4,8 @@ TestCase subclass: #ClosedCommandDescriptionTest
 	instanceVariableNames: 'dialog'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClosedCommandDescriptionTest guid: (GUID fromString: '{c860325b-fae5-47a0-a5d0-711d8ac4c509}')!
 ClosedCommandDescriptionTest comment: ''!
 !ClosedCommandDescriptionTest categoriesForClass!Unclassified! !

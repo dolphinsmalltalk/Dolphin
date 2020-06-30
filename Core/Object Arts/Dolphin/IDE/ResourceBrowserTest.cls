@@ -4,7 +4,8 @@ DolphinTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'resourceBrowser testClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResourceBrowserTest guid: (GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
 ResourceBrowserTest comment: ''!
 !ResourceBrowserTest categoriesForClass!Unclassified! !

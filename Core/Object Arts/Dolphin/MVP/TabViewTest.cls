@@ -4,7 +4,8 @@ SelectableListItemsTest subclass: #TabViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TabViewTest guid: (GUID fromString: '{3fd7f1ae-aff6-4a24-b35e-d6e810433b8c}')!
 TabViewTest comment: ''!
 !TabViewTest categoriesForClass!Unclassified! !

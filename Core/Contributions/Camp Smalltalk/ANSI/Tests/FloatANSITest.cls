@@ -4,7 +4,8 @@ MainTestCase subclass: #FloatANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FloatANSITest guid: (GUID fromString: '{4d838c1d-796f-4138-9bb2-0776679222ae}')!
 FloatANSITest comment: ''!
 !FloatANSITest categoriesForClass!Unclassified! !

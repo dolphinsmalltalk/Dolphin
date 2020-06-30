@@ -4,7 +4,8 @@ MainTestCase subclass: #DurationANSITest
 	instanceVariableNames: 'off0123 smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf numList'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DurationANSITest guid: (GUID fromString: '{b2811169-0d04-48a4-acc8-2985adaf7547}')!
 DurationANSITest comment: ''!
 !DurationANSITest categoriesForClass!Unclassified! !

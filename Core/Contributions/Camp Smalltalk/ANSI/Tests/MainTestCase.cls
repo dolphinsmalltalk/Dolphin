@@ -4,7 +4,8 @@ TestCaseProtocol subclass: #MainTestCase
 	instanceVariableNames: 'messages helpers'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MainTestCase guid: (GUID fromString: '{9d4aa044-4c93-4a47-9e3f-c74f8b18381e}')!
 MainTestCase isAbstract: true!
 MainTestCase comment: ''!

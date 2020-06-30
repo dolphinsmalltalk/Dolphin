@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusPenFromBrushInitializerTest guid: (GUID fromString: '{911c5add-1255-427e-b2e6-26d9d8f38caf}')!
 GdiplusPenFromBrushInitializerTest comment: ''!
 !GdiplusPenFromBrushInitializerTest categoriesForClass!Unclassified! !

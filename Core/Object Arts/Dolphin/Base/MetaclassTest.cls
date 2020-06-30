@@ -4,7 +4,8 @@ ClassDescriptionTest subclass: #MetaclassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MetaclassTest guid: (GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
 MetaclassTest comment: ''!
 !MetaclassTest categoriesForClass!Unclassified! !

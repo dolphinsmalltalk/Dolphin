@@ -4,7 +4,8 @@ Object subclass: #MsgParmSpec
 	instanceVariableNames: 'parmName parmProtocols parmAliasingAttribute'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MsgParmSpec guid: (GUID fromString: '{c7af3382-899b-43cc-b598-00e1f2aee1a5}')!
 MsgParmSpec comment: ''!
 !MsgParmSpec categoriesForClass!Unclassified! !

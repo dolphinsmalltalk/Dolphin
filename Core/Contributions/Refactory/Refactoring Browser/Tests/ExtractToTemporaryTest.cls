@@ -4,7 +4,8 @@ RefactoringTest subclass: #ExtractToTemporaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExtractToTemporaryTest guid: (GUID fromString: '{1e11f73f-781c-4123-b98b-51d3251e5ae5}')!
 ExtractToTemporaryTest comment: ''!
 !ExtractToTemporaryTest categoriesForClass!Refactory-Testing! !

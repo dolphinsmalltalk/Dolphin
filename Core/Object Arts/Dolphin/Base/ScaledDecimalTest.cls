@@ -4,7 +4,8 @@ DolphinTest subclass: #ScaledDecimalTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ScaledDecimalTest guid: (GUID fromString: '{dfe00781-39f5-4b43-ba15-861976d2ff7c}')!
 ScaledDecimalTest comment: ''!
 !ScaledDecimalTest categoriesForClass!Unclassified! !

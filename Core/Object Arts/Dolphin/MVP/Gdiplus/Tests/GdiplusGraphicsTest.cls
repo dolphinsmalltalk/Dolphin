@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusGraphicsTest
 	instanceVariableNames: 'bitmap graphics canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsTest guid: (GUID fromString: '{c612875a-7f39-4ba6-80bf-c091a74986db}')!
 GdiplusGraphicsTest comment: 'This TestCase is setup to provide a way to quickly ''test'' a GdiplusGraphics method.
 

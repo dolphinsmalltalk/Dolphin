@@ -4,7 +4,8 @@ SortAlgorithmTest subclass: #DefaultSortAlgorithmTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DefaultSortAlgorithmTest guid: (GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
 DefaultSortAlgorithmTest comment: ''!
 !DefaultSortAlgorithmTest categoriesForClass!Unclassified! !

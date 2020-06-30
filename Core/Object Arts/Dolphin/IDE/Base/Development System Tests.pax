@@ -79,107 +79,128 @@ DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StParseNodeVisitor subclass: #StStyler
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TestCase subclass: #RewriteTestCase
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #AbstractParserErrorTest
 	instanceVariableNames: 'errors'
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #CompiledMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #KeyedAspectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #ProductReleaseTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #SmalltalkSystemTest
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractParserErrorTest subclass: #CompilerErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PresenterTest subclass: #SmalltalkWorkspaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ImageViewAbstractTest subclass: #ImageListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTestClassResource subclass: #CompilerTestClasses
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Variable Aliases"!
 

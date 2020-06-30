@@ -4,7 +4,8 @@ TestResource subclass: #IniFileTestResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IniFileTestResource guid: (GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
 IniFileTestResource comment: ''!
 !IniFileTestResource categoriesForClass!Unclassified! !

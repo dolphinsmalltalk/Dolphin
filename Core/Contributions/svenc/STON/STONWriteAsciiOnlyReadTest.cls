@@ -4,7 +4,8 @@ STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONWriteAsciiOnlyReadTest guid: (GUID fromString: '{4c42c50a-a5ee-46fb-865d-0ad651fd33ee}')!
 STONWriteAsciiOnlyReadTest comment: 'Unit tests for writing ASCII only'!
 !STONWriteAsciiOnlyReadTest categoriesForClass!STON-Tests-Writer! !

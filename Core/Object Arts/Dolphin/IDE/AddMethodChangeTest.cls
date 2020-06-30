@@ -4,7 +4,8 @@ DolphinTest subclass: #AddMethodChangeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AddMethodChangeTest guid: (GUID fromString: '{08457a65-10d4-409d-93df-440bce0fac93}')!
 AddMethodChangeTest comment: ''!
 !AddMethodChangeTest categoriesForClass!Unclassified! !

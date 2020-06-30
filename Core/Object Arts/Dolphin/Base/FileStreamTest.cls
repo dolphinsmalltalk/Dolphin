@@ -4,7 +4,8 @@ AbstractFileStreamTest subclass: #FileStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FileStreamTest guid: (GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
 FileStreamTest comment: ''!
 !FileStreamTest categoriesForClass!Unclassified! !

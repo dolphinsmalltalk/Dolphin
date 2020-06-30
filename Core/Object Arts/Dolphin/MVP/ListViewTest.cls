@@ -4,7 +4,8 @@ ListControlTest subclass: #ListViewTest
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListViewTest guid: (GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
 ListViewTest isAbstract: true!
 ListViewTest comment: ''!

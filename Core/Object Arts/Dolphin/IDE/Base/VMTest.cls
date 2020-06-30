@@ -4,7 +4,8 @@ DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VMTest guid: (GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
 VMTest comment: 'Test the VM primitives and other VM related operations.
 

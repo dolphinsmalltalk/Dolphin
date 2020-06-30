@@ -1,20 +1,14 @@
 ﻿| package |
 package := Package name: 'Lagoon Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #CRTLibraryImportTest;
-	add: #PackageClosureTests;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{CRTLibraryImportTest}
+	#{PackageClosureTests}
+).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
@@ -26,7 +20,8 @@ package setPrerequisites: #(
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\Samples\MVP\RegEdit\RegEdit').
+	'..\..\Samples\MVP\RegEdit\RegEdit'
+).
 
 package!
 
@@ -36,17 +31,14 @@ DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

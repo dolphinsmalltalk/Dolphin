@@ -4,7 +4,8 @@ DolphinTest subclass: #ClassBrowserAbstractTest
 	instanceVariableNames: 'browser methodsPresenter packageA plugins'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassBrowserAbstractTest guid: (GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
 ClassBrowserAbstractTest isAbstract: true!
 ClassBrowserAbstractTest comment: ''!

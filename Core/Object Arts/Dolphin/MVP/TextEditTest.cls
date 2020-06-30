@@ -4,7 +4,8 @@ AbstractTextEditTest subclass: #TextEditTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TextEditTest guid: (GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
 TextEditTest comment: ''!
 !TextEditTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ MainTestCase subclass: #DyadicValuableANSITest
 	instanceVariableNames: 'blk2args'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DyadicValuableANSITest guid: (GUID fromString: '{8642c804-43a8-499e-86f1-1dc596623319}')!
 DyadicValuableANSITest comment: ''!
 !DyadicValuableANSITest categoriesForClass!Unclassified! !

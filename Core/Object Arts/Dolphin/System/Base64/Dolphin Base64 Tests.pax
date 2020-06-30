@@ -1,25 +1,20 @@
 ﻿| package |
 package := Package name: 'Dolphin Base64 Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #Base64CodecTest;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setClassNames: #(
+	#{Base64CodecTest}
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
 	'Dolphin Base64'
-	'..\Random\Dolphin Random Stream').
+	'..\Random\Dolphin Random Stream'
+).
 
 package!
 
@@ -29,12 +24,8 @@ DolphinTest subclass: #Base64CodecTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

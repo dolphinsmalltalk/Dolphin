@@ -118,10 +118,11 @@ clearCachedClasses
 
 	allRoots := allClasses := nil!
 
-declareVariable: aSymbol
-	| index |
-	index := self findKeyOrNil: aSymbol.
-	^(self basicAt: index) ifNil: [self basicAt: index put: (self newAssociation: aSymbol value: nil)]!
+declareVariable: aString
+	| key index |
+	key := aString asSymbol.
+	index := self findKeyOrNil: key.
+	^(self basicAt: index) ifNil: [self basicAt: index put: (self newAssociation: key value: nil)]!
 
 developmentSystem
 	"Answer the current instance of <SmalltalkSystem> if installed, otherwise 

@@ -4,7 +4,8 @@ ListViewTest subclass: #MultiSelectListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MultiSelectListViewTest guid: (GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
 MultiSelectListViewTest comment: ''!
 !MultiSelectListViewTest categoriesForClass!Unclassified! !

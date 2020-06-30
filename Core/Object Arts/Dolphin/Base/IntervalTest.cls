@@ -4,7 +4,8 @@ SequenceableCollectionTest subclass: #IntervalTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IntervalTest guid: (GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
 IntervalTest comment: ''!
 !IntervalTest categoriesForClass!Unclassified! !

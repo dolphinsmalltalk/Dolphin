@@ -4,7 +4,8 @@ TestCase subclass: #ResumableTestFailureTestCase
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ResumableTestFailureTestCase guid: (GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
 ResumableTestFailureTestCase comment: ''!
 !ResumableTestFailureTestCase categoriesForClass!SUnit! !

@@ -4,7 +4,8 @@ CollectionTest subclass: #IntervalANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IntervalANSITest guid: (GUID fromString: '{64086e40-bbed-4de2-b52b-2b8557ab27ec}')!
 IntervalANSITest comment: ''!
 !IntervalANSITest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinCollectionTest subclass: #SetTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SetTest guid: (GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
 SetTest comment: ''!
 !SetTest categoriesForClass!Unclassified! !

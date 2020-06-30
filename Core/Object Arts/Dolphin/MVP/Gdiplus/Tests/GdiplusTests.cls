@@ -4,7 +4,8 @@ TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusTests guid: (GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!
 GdiplusTests isAbstract: true!
 GdiplusTests comment: ''!

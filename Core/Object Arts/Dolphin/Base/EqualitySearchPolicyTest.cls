@@ -4,7 +4,8 @@ SearchPolicyTest subclass: #EqualitySearchPolicyTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 EqualitySearchPolicyTest guid: (GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
 EqualitySearchPolicyTest comment: ''!
 !EqualitySearchPolicyTest categoriesForClass!Unclassified! !

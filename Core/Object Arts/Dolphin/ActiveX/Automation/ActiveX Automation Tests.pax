@@ -1,27 +1,21 @@
 ﻿| package |
 package := Package name: 'ActiveX Automation Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #BSTRTest;
-	add: #IDispatchTest;
-	add: #SAFEARRAYTest;
-	add: #VARIANTTest;
-	yourself.
+package setClassNames: #(
+	#{BSTRTest}
+	#{IDispatchTest}
+	#{SAFEARRAYTest}
+	#{VARIANTTest}
+).
 
-package methodNames
-	add: #ExternalAddressTest -> #testBSTRFromAddress;
-	add: #ExternalDescriptorTest -> #testComPtrs;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{ExternalAddressTest} #testBSTRFromAddress)
+	#(#{ExternalDescriptorTest} #testComPtrs)
+).
 
 package setPrerequisites: #(
 	'ActiveX Automation'
@@ -29,7 +23,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
-	'..\COM\OLE COM').
+	'..\COM\OLE COM'
+).
 
 package!
 
@@ -39,25 +34,26 @@ DolphinTest subclass: #BSTRTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

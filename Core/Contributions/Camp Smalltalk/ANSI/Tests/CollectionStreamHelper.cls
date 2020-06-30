@@ -4,7 +4,8 @@ TestCaseHelper subclass: #CollectionStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionStreamHelper guid: (GUID fromString: '{42d3564c-fcc9-4e6e-a28c-7ac21388a210}')!
 CollectionStreamHelper comment: ''!
 !CollectionStreamHelper categoriesForClass!Unclassified! !

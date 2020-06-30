@@ -4,7 +4,8 @@ AbstractDictionaryTest subclass: #DictionaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DictionaryTest guid: (GUID fromString: '{733b8918-1913-46df-995e-67541bd596aa}')!
 DictionaryTest comment: ''!
 !DictionaryTest categoriesForClass!Unclassified! !

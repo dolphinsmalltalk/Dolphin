@@ -4,7 +4,8 @@ GdiplusImageTests subclass: #GdiplusBitmapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusBitmapTest guid: (GUID fromString: '{fa986dbc-acca-46d6-98c9-d51feb7d04d6}')!
 GdiplusBitmapTest comment: ''!
 !GdiplusBitmapTest categoriesForClass!Unclassified! !

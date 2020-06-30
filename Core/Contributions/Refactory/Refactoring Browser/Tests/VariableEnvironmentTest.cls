@@ -4,7 +4,8 @@ BrowserEnvironmentTest subclass: #VariableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 VariableEnvironmentTest guid: (GUID fromString: '{dd03c304-e6e0-47f2-8f26-e7eef49d29bc}')!
 VariableEnvironmentTest comment: ''!
 !VariableEnvironmentTest categoriesForClass!Refactory-Testing! !

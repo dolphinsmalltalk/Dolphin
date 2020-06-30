@@ -4,7 +4,8 @@ RefactoringTest subclass: #CreateAccessorsForVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CreateAccessorsForVariableTest guid: (GUID fromString: '{cf036663-3be7-40e4-9e4f-c090ff6abb4b}')!
 CreateAccessorsForVariableTest comment: ''!
 !CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !

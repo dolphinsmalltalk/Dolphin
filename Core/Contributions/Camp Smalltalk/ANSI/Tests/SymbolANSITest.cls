@@ -4,7 +4,8 @@ SequencedReadableCollectionTest subclass: #SymbolANSITest
 	instanceVariableNames: 'smalltalkSymbol'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SymbolANSITest guid: (GUID fromString: '{df4dc58e-5825-423b-a9bd-af325267aa8f}')!
 SymbolANSITest comment: ''!
 !SymbolANSITest categoriesForClass!Unclassified! !

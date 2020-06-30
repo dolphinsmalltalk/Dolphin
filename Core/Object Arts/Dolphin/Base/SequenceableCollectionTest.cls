@@ -4,7 +4,8 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
 SequenceableCollectionTest isAbstract: true!
 SequenceableCollectionTest comment: ''!

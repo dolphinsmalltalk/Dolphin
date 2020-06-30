@@ -4,7 +4,8 @@ DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RegKeyTest guid: (GUID fromString: '{a67b125d-54b1-4bf8-9634-222b74e70c77}')!
 RegKeyTest comment: ''!
 !RegKeyTest categoriesForClass!Unclassified! !

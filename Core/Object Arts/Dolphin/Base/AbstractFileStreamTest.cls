@@ -4,7 +4,8 @@ ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	instanceVariableNames: 'tempFileName filestream'
 	classVariableNames: 'RandomData1 RandomData2'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractFileStreamTest guid: (GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
 AbstractFileStreamTest isAbstract: true!
 AbstractFileStreamTest comment: ''!

@@ -4,7 +4,8 @@ MainTestCase subclass: #WriteStreamFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WriteStreamFactoryANSITest guid: (GUID fromString: '{d552dfc9-c6b6-4dab-81b0-76f50f4cf251}')!
 WriteStreamFactoryANSITest comment: ''!
 !WriteStreamFactoryANSITest categoriesForClass!Unclassified! !

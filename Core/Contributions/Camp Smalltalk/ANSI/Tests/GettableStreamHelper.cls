@@ -4,7 +4,8 @@ TestCaseHelper subclass: #GettableStreamHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GettableStreamHelper guid: (GUID fromString: '{7d036737-d26d-4eb6-966b-b4807d3b7cb6}')!
 GettableStreamHelper comment: ''!
 !GettableStreamHelper categoriesForClass!Unclassified! !

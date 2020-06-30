@@ -4,7 +4,8 @@ DolphinTest subclass: #TimeStampTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TimeStampTest guid: (GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
 TimeStampTest comment: ''!
 !TimeStampTest categoriesForClass!Unclassified! !

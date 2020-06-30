@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusGraphicsFromHDCInitializerTest guid: (GUID fromString: '{8fde00f2-25d2-4046-907f-a52febba1a57}')!
 GdiplusGraphicsFromHDCInitializerTest comment: ''!
 !GdiplusGraphicsFromHDCInitializerTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XMLDOMNodeTest guid: (GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
 XMLDOMNodeTest comment: ''!
 !XMLDOMNodeTest categoriesForClass!Unclassified! !

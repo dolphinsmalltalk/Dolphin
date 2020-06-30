@@ -4,7 +4,8 @@ AbstractKeyboardTest subclass: #KeyboardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 KeyboardTest guid: (GUID fromString: '{9cecaad7-bd3c-4b84-aff3-bbf32cb900fc}')!
 KeyboardTest comment: ''!
 !KeyboardTest categoriesForClass!Unclassified! !

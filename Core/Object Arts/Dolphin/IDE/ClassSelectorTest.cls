@@ -4,7 +4,8 @@ SelectableItemsTest subclass: #ClassSelectorTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ClassSelectorTest guid: (GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
 ClassSelectorTest isAbstract: true!
 ClassSelectorTest comment: ''!

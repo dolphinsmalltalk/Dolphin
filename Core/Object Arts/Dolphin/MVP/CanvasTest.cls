@@ -4,7 +4,8 @@ DolphinTest subclass: #CanvasTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CanvasTest guid: (GUID fromString: '{f582d7b1-304e-45af-a9fd-315ee37dd609}')!
 CanvasTest comment: ''!
 !CanvasTest categoriesForClass!Unclassified! !

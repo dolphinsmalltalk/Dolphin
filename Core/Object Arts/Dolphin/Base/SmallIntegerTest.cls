@@ -4,7 +4,8 @@ IntegerTest subclass: #SmallIntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmallIntegerTest guid: (GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
 SmallIntegerTest comment: ''!
 !SmallIntegerTest categoriesForClass!Unclassified! !

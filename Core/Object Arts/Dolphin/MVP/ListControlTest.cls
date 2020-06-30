@@ -4,7 +4,8 @@ SelectableListItemsTest subclass: #ListControlTest
 	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ListControlTest guid: (GUID fromString: '{a10a1ba0-5afc-41f3-8b51-2b9e52718424}')!
 ListControlTest isAbstract: true!
 ListControlTest comment: ''!

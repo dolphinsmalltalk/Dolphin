@@ -4,7 +4,8 @@ DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketErrors'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SocketErrorTest guid: (GUID fromString: '{a421a921-77e2-485a-b403-fc20d4c13a43}')!
 SocketErrorTest comment: ''!
 !SocketErrorTest categoriesForClass!Unclassified! !

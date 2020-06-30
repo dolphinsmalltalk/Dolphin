@@ -4,7 +4,8 @@ SearchPolicyTest subclass: #CaseInsensitiveSearchPolicyTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CaseInsensitiveSearchPolicyTest guid: (GUID fromString: '{9f0abf77-47aa-49cb-8b9b-96343696cb2e}')!
 CaseInsensitiveSearchPolicyTest comment: ''!
 !CaseInsensitiveSearchPolicyTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #RadioButtonSetPresenterTest
 	instanceVariableNames: 'radioSet'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 RadioButtonSetPresenterTest guid: (GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
 RadioButtonSetPresenterTest comment: ''!
 !RadioButtonSetPresenterTest categoriesForClass!Unclassified! !

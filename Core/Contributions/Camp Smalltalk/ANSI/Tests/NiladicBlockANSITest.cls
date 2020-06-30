@@ -4,7 +4,8 @@ MainTestCase subclass: #NiladicBlockANSITest
 	instanceVariableNames: 'blk0args canonicalObject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NiladicBlockANSITest guid: (GUID fromString: '{5addab96-83a8-41f0-9d14-cfe47f372b9c}')!
 NiladicBlockANSITest comment: ''!
 !NiladicBlockANSITest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ DolphinTest subclass: #PackageBrowserShellTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackageBrowserShellTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
 PackageBrowserShellTest comment: ''!
 !PackageBrowserShellTest categoriesForClass!Unclassified! !

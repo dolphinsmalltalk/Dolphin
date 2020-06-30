@@ -4,7 +4,8 @@ DolphinTest subclass: #FILETIMETest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FILETIMETest guid: (GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
 FILETIMETest comment: ''!
 !FILETIMETest categoriesForClass!Unclassified! !

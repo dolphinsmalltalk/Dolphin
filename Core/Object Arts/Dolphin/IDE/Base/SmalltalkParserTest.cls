@@ -4,7 +4,8 @@ DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SmalltalkParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
 SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SmalltalkParserTest categoriesForClass!Refactory-Testing! !

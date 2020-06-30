@@ -4,7 +4,8 @@ TestCase subclass: #STONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTest guid: (GUID fromString: '{b7f68843-9e21-424e-96cd-9c4a89a45e6c}')!
 STONTest comment: ''!
 !STONTest categoriesForClass!STON-Tests-Facade! !

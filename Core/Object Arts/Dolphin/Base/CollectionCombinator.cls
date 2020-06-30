@@ -4,7 +4,8 @@ Object subclass: #CollectionCombinator
 	instanceVariableNames: 'resultProcessingBlock collectionOfArrays buffer'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionCombinator guid: (GUID fromString: '{569a1b4b-4d9d-4ddb-ab24-54771e8598e6}')!
 CollectionCombinator comment: 'For a collection of collections, enumerate all elements of the cartesian product. The code shows how recursion is used to implement variable nesting of loops.
 The cartesian product is usually a huge collection, that should not be kept in memory. Therefore the user of the class has to provide a block with one argument that is called each time a tuple is constructed. When possible, that block should not build a collection of all these tuples, but should immediately drop unsuitable tuples. 

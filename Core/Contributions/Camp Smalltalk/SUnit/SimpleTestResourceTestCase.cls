@@ -4,7 +4,8 @@ TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SimpleTestResourceTestCase guid: (GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
 SimpleTestResourceTestCase comment: ''!
 !SimpleTestResourceTestCase categoriesForClass!SUnit! !

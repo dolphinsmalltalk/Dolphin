@@ -4,7 +4,8 @@ TestCase subclass: #ContinuationTest
 	instanceVariableNames: 'tmp tmp2'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ContinuationTest guid: (GUID fromString: '{5f9fdcb7-fd2f-4ec2-a1dd-68f43f8a41a6}')!
 ContinuationTest comment: ''!
 !ContinuationTest categoriesForClass!Seaside-Continuations! !

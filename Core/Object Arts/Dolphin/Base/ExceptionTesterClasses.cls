@@ -4,7 +4,8 @@ DolphinTestClassResource subclass: #ExceptionTesterClasses
 	instanceVariableNames: 'testNotificationClass resumableErrorClass testErrorClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExceptionTesterClasses guid: (GUID fromString: '{b20c60c4-bfd3-4bd6-b2c9-15a04318e517}')!
 ExceptionTesterClasses comment: ''!
 !ExceptionTesterClasses categoriesForClass!Unclassified! !

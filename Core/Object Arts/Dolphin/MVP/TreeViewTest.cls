@@ -4,7 +4,8 @@ SelectableTreeItemsTest subclass: #TreeViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TreeViewTest guid: (GUID fromString: '{9f22e0fe-4151-461c-a92a-f1d9f25e6605}')!
 TreeViewTest comment: ''!
 !TreeViewTest categoriesForClass!Unclassified! !

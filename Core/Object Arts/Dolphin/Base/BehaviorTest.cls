@@ -4,7 +4,8 @@ DolphinTest subclass: #BehaviorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BehaviorTest guid: (GUID fromString: '{157f8981-4d21-430b-bbec-c8b53e6a6f56}')!
 BehaviorTest comment: ''!
 !BehaviorTest categoriesForClass!Unclassified! !

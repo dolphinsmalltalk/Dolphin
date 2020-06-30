@@ -4,7 +4,8 @@ MainTestCase subclass: #FailedMessageANSITest
 	instanceVariableNames: 'failedMsg'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FailedMessageANSITest guid: (GUID fromString: '{5ff43c19-14d8-4626-8169-a70eb12eb4ef}')!
 FailedMessageANSITest comment: ''!
 !FailedMessageANSITest categoriesForClass!Unclassified! !

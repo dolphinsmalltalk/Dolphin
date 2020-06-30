@@ -4,7 +4,8 @@ DolphinTest subclass: #AbstractSocketTest
 	instanceVariableNames: 'sockets'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractSocketTest guid: (GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
 AbstractSocketTest isAbstract: true!
 AbstractSocketTest comment: ''!

@@ -4,7 +4,8 @@ TestResource subclass: #SimpleTestResource
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SimpleTestResource guid: (GUID fromString: '{8276a29a-e3aa-40ab-83f8-c49d4189cb1e}')!
 SimpleTestResource comment: ''!
 !SimpleTestResource categoriesForClass!Unclassified! !

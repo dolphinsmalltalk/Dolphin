@@ -4,7 +4,8 @@ DolphinTest subclass: #AbstractBindingReferenceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 AbstractBindingReferenceTest guid: (GUID fromString: '{aca86665-9b25-4f35-bdb8-0c0e434df4e6}')!
 AbstractBindingReferenceTest isAbstract: true!
 AbstractBindingReferenceTest comment: ''!

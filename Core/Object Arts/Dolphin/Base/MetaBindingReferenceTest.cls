@@ -4,7 +4,8 @@ AbstractBindingReferenceTest subclass: #MetaBindingReferenceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MetaBindingReferenceTest guid: (GUID fromString: '{fd978d4f-c029-4293-a636-297a14b7fa15}')!
 MetaBindingReferenceTest comment: ''!
 !MetaBindingReferenceTest categoriesForClass!Unclassified! !

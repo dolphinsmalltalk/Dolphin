@@ -4,7 +4,8 @@ GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusLinearGradientBrushFromRectInitializerTest guid: (GUID fromString: '{4159f1e0-74dd-4646-832a-12d38b4281c9}')!
 GdiplusLinearGradientBrushFromRectInitializerTest comment: ''!
 !GdiplusLinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !

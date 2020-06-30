@@ -4,7 +4,8 @@ TestCaseHelper subclass: #CollectionHelper
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionHelper guid: (GUID fromString: '{4c586cba-e91f-4bc1-8324-8301fdb92c4c}')!
 CollectionHelper comment: ''!
 !CollectionHelper categoriesForClass!Unclassified! !

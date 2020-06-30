@@ -4,7 +4,8 @@ ListViewTest subclass: #SingleSelectListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SingleSelectListViewTest guid: (GUID fromString: '{176c59b9-4286-4753-8320-c9b5da469d9e}')!
 SingleSelectListViewTest comment: ''!
 !SingleSelectListViewTest categoriesForClass!Unclassified! !

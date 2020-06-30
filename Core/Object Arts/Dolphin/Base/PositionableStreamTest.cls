@@ -4,7 +4,8 @@ StreamTest subclass: #PositionableStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PositionableStreamTest guid: (GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
 PositionableStreamTest isAbstract: true!
 PositionableStreamTest comment: ''!

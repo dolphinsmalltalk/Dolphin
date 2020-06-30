@@ -4,7 +4,8 @@ MainTestCase subclass: #ArrayFactoryANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ArrayFactoryANSITest guid: (GUID fromString: '{a10bc446-9aee-43aa-acb5-260170b01d61}')!
 ArrayFactoryANSITest comment: ''!
 !ArrayFactoryANSITest categoriesForClass!Unclassified! !

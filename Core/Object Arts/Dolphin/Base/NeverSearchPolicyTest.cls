@@ -4,7 +4,8 @@ SearchPolicyTest subclass: #NeverSearchPolicyTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 NeverSearchPolicyTest guid: (GUID fromString: '{64679112-614d-4f64-b585-6f9ef68a703d}')!
 NeverSearchPolicyTest comment: ''!
 !NeverSearchPolicyTest categoriesForClass!Unclassified! !

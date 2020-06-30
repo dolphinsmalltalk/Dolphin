@@ -4,7 +4,8 @@ DolphinTest subclass: #BlockClosureTest
 	instanceVariableNames: 'x'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BlockClosureTest guid: (GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
 BlockClosureTest comment: ''!
 !BlockClosureTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ MainTestCase subclass: #ExceptionANSITest
 	instanceVariableNames: 'unchanged changed value exceptionClass'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExceptionANSITest guid: (GUID fromString: '{ebfa6b6b-b8ac-4a72-9b8e-99832ad8e276}')!
 ExceptionANSITest comment: ''!
 !ExceptionANSITest categoriesForClass!Unclassified! !

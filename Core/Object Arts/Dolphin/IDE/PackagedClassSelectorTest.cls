@@ -4,7 +4,8 @@ ClassSelectorTest subclass: #PackagedClassSelectorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PackagedClassSelectorTest guid: (GUID fromString: '{85913f04-2759-4d36-864b-eac86b435a51}')!
 PackagedClassSelectorTest comment: ''!
 !PackagedClassSelectorTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ ArrayedCollectionTest subclass: #StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 StringTest guid: (GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
 StringTest isAbstract: true!
 StringTest comment: ''!

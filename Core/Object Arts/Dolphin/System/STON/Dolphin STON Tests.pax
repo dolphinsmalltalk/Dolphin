@@ -1,6 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin STON Tests'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin STON SUnit tests
 Copyright (c) Object Arts Ltd, 2019
@@ -8,46 +8,40 @@ Copyright (c) Object Arts Ltd, 2019
 Tests of Dolphin specific aspects of the STON implementation.'.
 
 
-package methodNames
-	add: #Array -> #asDictionary;
-	add: #ByteArrayTest -> #testHex;
-	add: #Collection -> #atRandom;
-	add: #Integer -> #atRandom;
-	add: #SequenceableCollection -> #asFloatArray;
-	add: #SequenceableCollection -> #asIntegerArray;
-	add: #SequenceableCollection -> #atRandom;
-	add: #SequenceableCollection -> #doWithIndex:;
-	add: #STONReaderTest -> #testColorInvalid;
-	add: #STONReaderTest -> #testReferenceCycle2;
-	add: #STONReaderTest -> #testSymbolMultiByte;
-	add: #STONWriteReadTest -> #testCompiledMethodsAndBlocks;
-	add: #STONWriteReadTest -> #testExtendedCharacters;
-	add: #STONWriteReadTest -> #testFramingCalculation;
-	add: #STONWriteReadTest -> #testNamedColors;
-	add: #STONWriteReadTest -> #testPluggableColors;
-	add: #STONWriteReadTest -> #testProcessor;
-	add: #STONWriteReadTest -> #testSearchPolicy;
-	add: #STONWriteReadTest -> #testSystemDictionary;
-	add: #STONWriterTest -> #testFramingCalculation;
-	add: #STONWriterTest -> #testIsSimpleSymbol2;
-	add: #STONWriterTest -> #testLegacyDate;
-	add: #STONWriterTest -> #testProcessor;
-	add: #STONWriterTest -> #testSearchPolicy;
-	add: #STONWriterTest -> #testSymbolMultiByte;
-	add: 'STONTestDomainObject class' -> #icon;
-	add: 'STONTestKnownObject class' -> #icon;
-	add: 'STONTestUser class' -> #icon;
-	add: 'String class' -> #crlf;
-	add: 'Symbol class' -> #hasInterned:ifTrue:;
-	add: 'Time class' -> #hour:minute:second:;
-	add: 'Time class' -> #hour:minute:second:nanoSecond:;
-	yourself.
-
-package binaryGlobalNames: (Set new
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setMethodNames: #(
+	#(#{Array} #asDictionary)
+	#(#{ByteArrayTest} #testHex)
+	#(#{Collection} #atRandom)
+	#(#{Integer} #atRandom)
+	#(#{SequenceableCollection} #asFloatArray)
+	#(#{SequenceableCollection} #asIntegerArray)
+	#(#{SequenceableCollection} #atRandom)
+	#(#{SequenceableCollection} #doWithIndex:)
+	#(#{STONReaderTest} #testColorInvalid)
+	#(#{STONReaderTest} #testReferenceCycle2)
+	#(#{STONReaderTest} #testSymbolMultiByte)
+	#(#{STONTestDomainObject class} #icon)
+	#(#{STONTestKnownObject class} #icon)
+	#(#{STONTestUser class} #icon)
+	#(#{STONWriteReadTest} #testCompiledMethodsAndBlocks)
+	#(#{STONWriteReadTest} #testExtendedCharacters)
+	#(#{STONWriteReadTest} #testFramingCalculation)
+	#(#{STONWriteReadTest} #testNamedColors)
+	#(#{STONWriteReadTest} #testPluggableColors)
+	#(#{STONWriteReadTest} #testProcessor)
+	#(#{STONWriteReadTest} #testSearchPolicy)
+	#(#{STONWriteReadTest} #testSystemDictionary)
+	#(#{STONWriterTest} #testFramingCalculation)
+	#(#{STONWriterTest} #testIsSimpleSymbol2)
+	#(#{STONWriterTest} #testLegacyDate)
+	#(#{STONWriterTest} #testProcessor)
+	#(#{STONWriterTest} #testSearchPolicy)
+	#(#{STONWriterTest} #testSymbolMultiByte)
+	#(#{String class} #crlf)
+	#(#{Symbol class} #hasInterned:ifTrue:)
+	#(#{Time class} #hour:minute:second:)
+	#(#{Time class} #hour:minute:second:nanoSecond:)
+).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
@@ -56,15 +50,10 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\Random\Dolphin Random Stream'
 	'..\..\..\..\Contributions\svenc\STON\STON-Core'
-	'..\..\..\..\Contributions\svenc\STON\STON-Tests').
+	'..\..\..\..\Contributions\svenc\STON\STON-Tests'
+).
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 

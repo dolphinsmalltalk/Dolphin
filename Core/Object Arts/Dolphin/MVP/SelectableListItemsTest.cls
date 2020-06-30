@@ -4,7 +4,8 @@ SelectableItemsTest subclass: #SelectableListItemsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SelectableListItemsTest guid: (GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
 SelectableListItemsTest isAbstract: true!
 SelectableListItemsTest comment: ''!

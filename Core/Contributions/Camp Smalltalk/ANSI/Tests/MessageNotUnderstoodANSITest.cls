@@ -4,7 +4,8 @@ MainTestCase subclass: #MessageNotUnderstoodANSITest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MessageNotUnderstoodANSITest guid: (GUID fromString: '{43868030-9b3f-4747-b82f-32c512f38460}')!
 MessageNotUnderstoodANSITest comment: ''!
 !MessageNotUnderstoodANSITest categoriesForClass!Unclassified! !

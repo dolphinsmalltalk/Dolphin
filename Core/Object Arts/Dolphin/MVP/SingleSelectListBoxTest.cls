@@ -4,7 +4,8 @@ ListBoxTest subclass: #SingleSelectListBoxTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 SingleSelectListBoxTest guid: (GUID fromString: '{8e5a59a5-f500-4d07-9ea2-b1019c9302b2}')!
 SingleSelectListBoxTest comment: ''!
 !SingleSelectListBoxTest categoriesForClass!Unclassified! !

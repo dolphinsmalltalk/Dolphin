@@ -4,7 +4,8 @@ StableSortAlgorithmTest subclass: #InsertionSortAlgorithmTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 InsertionSortAlgorithmTest guid: (GUID fromString: '{6bc1bf9a-866d-4812-9e23-a22fa19d54c6}')!
 InsertionSortAlgorithmTest comment: ''!
 !InsertionSortAlgorithmTest categoriesForClass!Unclassified! !

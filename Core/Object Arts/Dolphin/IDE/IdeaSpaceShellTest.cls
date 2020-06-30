@@ -4,7 +4,8 @@ DolphinTest subclass: #IdeaSpaceShellTest
 	instanceVariableNames: 'ideaShell browserPlugins'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 IdeaSpaceShellTest guid: (GUID fromString: '{2e6de900-c47f-4134-b038-b70cd1679c1c}')!
 IdeaSpaceShellTest comment: ''!
 !IdeaSpaceShellTest categoriesForClass!Unclassified! !

@@ -4,7 +4,8 @@ RefactoringTest subclass: #ChildrenToSiblingsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ChildrenToSiblingsTest guid: (GUID fromString: '{ca54e227-44a3-41c9-aab6-bd11a852bf74}')!
 ChildrenToSiblingsTest comment: ''!
 !ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !

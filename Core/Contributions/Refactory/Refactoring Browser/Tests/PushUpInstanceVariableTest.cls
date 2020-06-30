@@ -4,7 +4,8 @@ RefactoringTest subclass: #PushUpInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PushUpInstanceVariableTest guid: (GUID fromString: '{08db86cb-6161-486b-82f5-70846a431aa1}')!
 PushUpInstanceVariableTest comment: ''!
 !PushUpInstanceVariableTest categoriesForClass!Refactory-Testing! !

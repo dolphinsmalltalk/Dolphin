@@ -1,33 +1,30 @@
 ﻿| package |
 package := Package name: 'RBTestMethods'.
-package paxVersion: 1;
+package paxVersion: 2;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
-package classNames
-	add: #BasicLintRuleTest;
-	add: #ClassToRename;
-	add: #CompositeLintRuleTest;
-	add: #FooLintRuleTest;
-	add: #LintRuleTest;
-	add: #RefactoryTestDataApp;
-	add: #SubclassOfClassToRename;
-	add: #TransformationRuleTest;
-	yourself.
+package setClassNames: #(
+	#{BasicLintRuleTest}
+	#{ClassToRename}
+	#{CompositeLintRuleTest}
+	#{FooLintRuleTest}
+	#{LintRuleTest}
+	#{RefactoryTestDataApp}
+	#{SubclassOfClassToRename}
+	#{TransformationRuleTest}
+).
 
-package globalNames
-	add: #Smalllint;
-	add: #SmalllintResultEditor;
-	yourself.
+package setVariableNames: #(
+	#{Smalllint}
+	#{SmalllintResultEditor}
+).
 
-package binaryGlobalNames: (Set new
-	add: #Smalllint;
-	add: #SmalllintResultEditor;
-	yourself).
-
-package globalAliases: (Set new
-	yourself).
+package setBinaryVariableNames: #(
+	#{Smalllint}
+	#{SmalllintResultEditor}
+).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
@@ -35,7 +32,8 @@ package setPrerequisites: #(
 	'..\Environments\RBEnvironments'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
-	'..\SmallLint\RBSmallLint').
+	'..\SmallLint\RBSmallLint'
+).
 
 package!
 
@@ -45,47 +43,50 @@ Object subclass: #LintRuleTest
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Object subclass: #RefactoryTestDataApp
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRuleTest subclass: #CompositeLintRuleTest
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LintRuleTest subclass: #FooLintRuleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 FooLintRuleTest subclass: #TransformationRuleTest
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Model subclass: #ClassToRename
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'notUsed'!
+	classInstanceVariableNames: 'notUsed'
+	classConstants: {}!
 ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "End of package definition"!
 

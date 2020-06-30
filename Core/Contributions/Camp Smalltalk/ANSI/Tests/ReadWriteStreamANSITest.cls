@@ -4,7 +4,8 @@ MainTestCase subclass: #ReadWriteStreamANSITest
 	instanceVariableNames: 'readWriteStream'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ReadWriteStreamANSITest guid: (GUID fromString: '{0042fbf7-ada3-4a20-afc9-df870ffaedc1}')!
 ReadWriteStreamANSITest comment: ''!
 !ReadWriteStreamANSITest categoriesForClass!Unclassified! !

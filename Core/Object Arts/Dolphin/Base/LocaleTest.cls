@@ -4,7 +4,8 @@ DolphinTest subclass: #LocaleTest
 	instanceVariableNames: 'savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 LocaleTest guid: (GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
 LocaleTest isAbstract: true!
 LocaleTest comment: ''!

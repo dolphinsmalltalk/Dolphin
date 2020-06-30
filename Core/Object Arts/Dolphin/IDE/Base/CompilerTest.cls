@@ -4,7 +4,8 @@ DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CompilerTest guid: (GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
 CompilerTest comment: ''!
 !CompilerTest categoriesForClass!Unclassified! !

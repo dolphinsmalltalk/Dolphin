@@ -4,7 +4,8 @@ STONWriteReadTest subclass: #STONWriteReadCommentsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONWriteReadCommentsTest guid: (GUID fromString: '{bf56364e-5655-4f45-abbe-c24e5e081d0c}')!
 STONWriteReadCommentsTest comment: 'Unit test writing and reading of comments'!
 !STONWriteReadCommentsTest categoriesForClass!STON-Tests-Writer! !

@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusCustomLineCapTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusCustomLineCapTest guid: (GUID fromString: '{11ce56c0-847e-11d7-b609-00e0987e8081}')!
 GdiplusCustomLineCapTest comment: ''!
 !GdiplusCustomLineCapTest categoriesForClass!Unclassified! !

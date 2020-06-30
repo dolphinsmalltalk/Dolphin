@@ -4,7 +4,8 @@ DolphinTest subclass: #STLFilerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STLFilerTest guid: (GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
 STLFilerTest comment: ''!
 !STLFilerTest categoriesForClass!Unclassified! !

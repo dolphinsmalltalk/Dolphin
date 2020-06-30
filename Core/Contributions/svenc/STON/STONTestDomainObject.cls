@@ -4,7 +4,8 @@ Object subclass: #STONTestDomainObject
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 STONTestDomainObject guid: (GUID fromString: '{ef1278a4-658e-4799-870c-89c6de6b7c53}')!
 STONTestDomainObject comment: 'STONTestDomainObject is used to support unit tests.
 

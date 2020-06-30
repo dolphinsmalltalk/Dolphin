@@ -4,7 +4,8 @@ DolphinTest subclass: #BSTRTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 BSTRTest guid: (GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
 BSTRTest comment: ''!
 !BSTRTest categoriesForClass!Unclassified! !

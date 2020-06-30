@@ -4,7 +4,8 @@ MainTestCase subclass: #CollectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 CollectionTest guid: (GUID fromString: '{92c1298a-2628-4867-8fbf-2c7f1d613a62}')!
 CollectionTest isAbstract: true!
 CollectionTest comment: ''!

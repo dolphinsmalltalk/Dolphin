@@ -4,7 +4,8 @@ DolphinTest subclass: #ExternalArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 ExternalArrayTest guid: (GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
 ExternalArrayTest isAbstract: true!
 ExternalArrayTest comment: ''!

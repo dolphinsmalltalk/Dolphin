@@ -4,7 +4,8 @@ FooLintRuleTest subclass: #TransformationRuleTest
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 TransformationRuleTest guid: (GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
 TransformationRuleTest comment: ''!
 !TransformationRuleTest categoriesForClass!Refactory-Test data! !

@@ -4,7 +4,8 @@ GdiplusTests subclass: #GdiplusInitializerTests
 	instanceVariableNames: 'constructorArgs'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 GdiplusInitializerTests guid: (GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
 GdiplusInitializerTests isAbstract: true!
 GdiplusInitializerTests comment: ''!

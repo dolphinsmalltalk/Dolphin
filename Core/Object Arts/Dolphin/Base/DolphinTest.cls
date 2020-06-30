@@ -4,7 +4,8 @@ TestCase subclass: #DolphinTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 DolphinTest guid: (GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
 DolphinTest isAbstract: true!
 DolphinTest comment: ''!

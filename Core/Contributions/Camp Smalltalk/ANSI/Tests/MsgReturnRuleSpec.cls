@@ -4,7 +4,8 @@ MsgReturnSpec subclass: #MsgReturnRuleSpec
 	instanceVariableNames: 'ruleSourceCode ruleBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 MsgReturnRuleSpec guid: (GUID fromString: '{884d8673-6298-4068-b920-fc07e0d7c86f}')!
 MsgReturnRuleSpec comment: ''!
 !MsgReturnRuleSpec categoriesForClass!Unclassified! !

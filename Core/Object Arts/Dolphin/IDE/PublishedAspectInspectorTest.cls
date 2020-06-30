@@ -4,7 +4,8 @@ DolphinTest subclass: #PublishedAspectInspectorTest
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: ''
+	classConstants: {}!
 PublishedAspectInspectorTest guid: (GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
 PublishedAspectInspectorTest comment: ''!
 !PublishedAspectInspectorTest categoriesForClass!Unclassified! !
