@@ -437,7 +437,7 @@ ownsFile
 	^flags anyMask: OwnsFileMask!
 
 ownsFile: aBoolean
-	flags := flags mask: OwnsFileMask set: true!
+	flags := flags mask: OwnsFileMask set: aBoolean!
 
 position
 	"Answer the zero-based position of the stream pointer. Note that position zero is after an
