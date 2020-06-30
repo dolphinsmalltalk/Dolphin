@@ -28,7 +28,7 @@ addMethod: method
 
 	(self includesMethod: method) ifFalse: [
 		self addMethodSilently: method.
-		method methodClass environment trigger: #methodCategorized: with: method]
+		Smalltalk trigger: #methodCategorized: with: method]
 !
 
 addMethods: aCollection 
@@ -53,7 +53,7 @@ behaviors
 	^answer!
 
 behaviorsDo: aMonadicValuable 
-	self class environment 
+	Smalltalk 
 		allBehaviorsDo: [:each | (each includesCategory: self) ifTrue: [aMonadicValuable value: each]]!
 
 contents
@@ -127,7 +127,7 @@ removeMethod: method
 	observers."
 
 	self removeMethodSilently: method.
-	method methodClass environment trigger: #methodCategorized: with: method!
+	Smalltalk trigger: #methodCategorized: with: method!
 
 removeMethods: aCollection 
 	aCollection do: [:each | self removeMethod: each]!
@@ -237,7 +237,7 @@ removeCategory: category
 	| catName |
 	catName := category asString.
 	"Make absolutely sure any standard category of the same name has been removed"
-	self environment allBehaviorsDo: [:c | | catalogue |
+	Smalltalk allBehaviorsDo: [:c | | catalogue |
 		catalogue := c methodsCatalogue.
 		(catalogue keys select: [:e | e name = catName]) 
 			do: [:k | catalogue removeKey: k]].

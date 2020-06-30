@@ -58,7 +58,7 @@ ideaSpaceClass
 	"Answer the class of IdeaSpace (a <SmalltalkToolShell>)
 	to be used by default in the development environment."
 
-	ideaSpaceClass isNil ifTrue: [ideaSpaceClass := self environment at: #IdeaSpaceShell].
+	ideaSpaceClass isNil ifTrue: [ideaSpaceClass := #{IdeaSpaceShell} value].
 	^ideaSpaceClass!
 
 ideaSpaceClass: toolClass 
@@ -117,7 +117,7 @@ systemBrowserClass
 	to be used by default in the development environment."
 
 	systemBrowserClass isNil 
-		ifTrue: [systemBrowserClass := self environment at: #SystemBrowserShell].
+		ifTrue: [systemBrowserClass := #{SystemBrowserShell} value].
 	^systemBrowserClass!
 
 systemBrowserClass: toolClass

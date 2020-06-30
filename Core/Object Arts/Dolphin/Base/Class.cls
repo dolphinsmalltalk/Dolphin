@@ -81,7 +81,7 @@ addClassVarNamed: aString
 	var := classPool newAssociation: varName value: nil.
 	classPool add: var.
 	self logDefinition.
-	self environment classUpdated: self.
+	Smalltalk classUpdated: self.
 	^var!
 
 addToSuper
@@ -149,7 +149,7 @@ categories: aCollection
 	self classCategories: newCategories.
 	self isChanged: true.
 	self storeClassCategories.
-	self class environment trigger: #classCategorized: with: self!
+	Smalltalk trigger: #classCategorized: with: self!
 
 categoriesForClass
 	"Private - Answer an <ChunkReader> configured for reading the receiver's
@@ -180,7 +180,7 @@ category: category
 	self categories: {self classCategoryClass name: category asString}!
 
 classBinding
-	^self environment associationAt: self name ifAbsent: []!
+	^self environment bindingFor: self name!
 
 classCategories
 	"Private - Answer a <collection> of <ClassCategory> objects representing the 
@@ -233,7 +233,7 @@ comment: blahBlah
 	self sourceManager storeCommentString: blahBlah forClass: self.
 	self isChanged: true.
 	"No need to clear the class caches in this case"
-	self environment trigger: #classCommented: with: self!
+	Smalltalk trigger: #classCommented: with: self!
 
 fileIn
 	"File in the receiver's definition from a class file in the receiver's
@@ -417,7 +417,7 @@ removeClassVarName: aString
 	self classPool removeKey: varName.
 	classPool isEmpty ifTrue: [classPool := nil].
 	self logDefinition.
-	self environment classUpdated: self!
+	Smalltalk classUpdated: self!
 
 removeFromCategory: category
 	"Remove the receiver from the aCategoryOrString, while leaving it in any other
@@ -897,7 +897,11 @@ allRoots
 	Object will be the first class."
 
 	| roots i |
-	roots := self basicAllRoots select: [:each | (self environment lookup: each name) == each].
+	roots := self basicAllRoots select: 
+					[:each |
+					| binding |
+					binding := each classBinding.
+					binding notNil and: [binding value == each]].
 	i := roots identityIndexOf: Object.
 	i == 1
 		ifFalse: 

@@ -17,9 +17,11 @@ allCategoriesOfSelector: selector
 
 	| answer |
 	answer := IdentitySet new.
-	self class environment allBehaviorsDo: [:c | | method |
-		method := c compiledMethodAt: selector ifAbsent: [].
-		method notNil ifTrue: [answer addAll: (c categoriesOfMethod: method)]].
+	Smalltalk allBehaviorsDo: 
+			[:c |
+			| method |
+			method := c compiledMethodAt: selector ifAbsent: [].
+			method notNil ifTrue: [answer addAll: (c categoriesOfMethod: method)]].
 	^answer!
 
 bestSuggestionFor: aCompiledMethod

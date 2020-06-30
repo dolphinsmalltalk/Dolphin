@@ -32,7 +32,7 @@ categories: categories
 	this request straight off to the category system."
 
 	(MethodCategory setMethod: self categories: categories)
-		ifTrue: [self methodClass environment trigger: #methodCategorized: with: self]!
+		ifTrue: [Smalltalk trigger: #methodCategorized: with: self]!
 
 changeManager
 	"Private - Answer the receiver's change manager.
@@ -232,16 +232,19 @@ defaultSortBlock
 fromString: aString
 	"Answers the CompiledMethod identified by aString or nil if none is found."
 
-	| className selector stream theClass isMeta |
+	| className stream |
 	stream := aString readStream.
 	className := stream upToAll: '>>'.
 	stream atEnd ifTrue: [^nil].
-	(isMeta := className endsWith: ' class') 
-		ifTrue: [className := className allButLast: ' class' size].
-	theClass := self environment at: className ifAbsent: [^nil].
-	isMeta ifTrue: [theClass := theClass class].
-	selector := stream upToEnd asSymbol.
-	^theClass compiledMethodAt: selector ifAbsent: []! !
+	(className endsWith: ' class')
+		ifTrue: [className := (className allButLast: 6) asQualifiedReference meta]
+		ifFalse: [className := className asQualifiedReference].
+	^className valueOrNil
+		ifNotNil: 
+			[:theClass |
+			| selector |
+			selector := stream upToEnd asSymbol.
+			theClass compiledMethodAt: selector ifAbsent: []]! !
 !CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
 !CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
 

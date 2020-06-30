@@ -298,9 +298,9 @@ initializeAliasMap
 	"Empty the receiver's alias map of any aliases previously set up by the user."
 
 	aliasMap := (LookupTable new)
-				at: 'GUID' put: #GUID;
-				at: 'PROPVARIANT' put: #VARIANT;
-				at: 'RemotableHandle' put: #ExternalHandle;
+				at: 'GUID' put: #{GUID};
+				at: 'PROPVARIANT' put: #{VARIANT};
+				at: 'RemotableHandle' put: #{ExternalHandle};
 				yourself	"A lot of libraries pull in GUID it seems - this avoid a guid clash warning"!
 
 interfaces
@@ -468,7 +468,7 @@ suggestBindingForType: userType
 
 	"If its in the alias map, then we answer that regardless - caller should check suitable"
 	self aliasMap at: name asString
-		ifPresent: [:alias | ^self environment associationAt: alias ifAbsent: [alias -> nil]].
+		ifPresent: [:alias | ^alias bindingOrNil ifNil: [alias asSymbol -> nil]].
 	typeGuid := userType guid.
 
 	"Secondly try as global without prefix, but only use that if definitely matched"

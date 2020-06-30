@@ -1388,7 +1388,7 @@ basicCompressSources: progress
 
 	| totalClasses index tmpPath smlFile filer classes |
 	index := 0.
-	classes := self class environment allClasses.
+	classes := Smalltalk allClasses.
 	totalClasses := classes size.
 
 	"Create temporary stream file"
@@ -1468,7 +1468,7 @@ compressChangesOf: aClass onto: aSourceFiler
 				changeIndexValue: [0]]!
 
 compressChangesOnto: aSourceFiler 
-	self class environment allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
+	Smalltalk allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
 	Package manager packages do: 
 			[:each | 
 			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 
@@ -1521,7 +1521,7 @@ copyAndReopenSources: aString
 		ifFalse: 
 			[self createSources: aString.
 			"We have permanently lost access to any source information so mark all methods"
-			self class environment 
+			Smalltalk 
 				allBehaviorsDo: [:aBehavior | aBehavior methodDictionary do: [:aMethod | aMethod loseSource]]].
 	self openSources: aString!
 

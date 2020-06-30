@@ -826,7 +826,7 @@ removeSelector: aSymbol ifAbsent: aNiladicValuable
 		ifTrue: [^aNiladicValuable value].
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
-	self environment trigger: #methodRemoved: with: method.
+	Smalltalk trigger: #methodRemoved: with: method.
 	^method!
 
 removeSelectors: aCollection
@@ -835,15 +835,13 @@ removeSelectors: aCollection
 	simply ignored. Answer a <collection> of the <CompiledMethod>s which were actually
 	removed."
 
-	| methods env |
+	| methods |
 	methodDictionary ifNil: [^#()].
 	"Take advantage of the fact that Sets ignores requests to add nil"
-	methods := aCollection asSet 
-				collect: [:each | methodDictionary removeKey: each ifAbsent: []].
+	methods := aCollection asSet collect: [:each | methodDictionary removeKey: each ifAbsent: []].
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
-	env := self environment.
-	methods do: [:each | env trigger: #methodRemoved: with: each].
+	methods do: [:each | Smalltalk trigger: #methodRemoved: with: each].
 	^methods!
 
 removeSubclass: aClass

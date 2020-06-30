@@ -369,7 +369,7 @@ isModifyAction
 
 	currentClass isNil
 		ifTrue: [
-			currentClass := self environment at: className ifAbsent: [^false].
+			currentClass := className asQualifiedReference valueOrNil ifNil: [^false].
 			(currentClass isKindOf: Behavior)
 				ifFalse: [
 					currentClass := nil.
@@ -600,7 +600,7 @@ newMetaclassLike: aMetaclass superclass: metaSuperclass
 notifyClassCreated
 	"Use the trigger mechanism to notify interested parties that a class has been added."
 
-	self environment classAdded: currentClass!
+	Smalltalk classAdded: currentClass!
 
 notifyClassRenamed
 	self notifyClassUpdated!
@@ -610,7 +610,7 @@ notifyClassUpdated
 	and mark all its immediate subclasses as changed since these will need to be filed
 	out to record the change in their source definition."
 
-	self environment classUpdated: self currentClass.
+	Smalltalk classUpdated: self currentClass.
 	self currentClass subclasses do: [:each | each isChanged: true]!
 
 recompilationRequired
@@ -904,18 +904,19 @@ validatePoolNames
 	and warn if they don't start with an uppercase letter."
 
 	self sharedPools do: 
-			[:poolName | 
-			| firstChar |
-			self environment at: poolName
-				ifAbsentPut: 
-					[Warning 
-						signal: ('Pool dictionary <1p> does not exist.<n>Proceed to create it as an empty constants pool.' 
-								expandMacrosWith: poolName).
-					PoolConstantsDictionary named: poolName].
-			firstChar := poolName first.
-			(firstChar isUppercase or: [firstChar == $_]) 
+			[:poolName |
+			| firstChar ref |
+			ref := poolName asQualifiedReference.
+			ref isDefined
 				ifFalse: 
-					[Warning 
+					[Warning
+						signal: ('Pool dictionary <1p> does not exist.<n>Proceed to create it as an empty constants pool.'
+								expandMacrosWith: poolName).
+					ref declare value: (PoolConstantsDictionary named: poolName)].
+			firstChar := poolName first.
+			(firstChar isUppercase or: [firstChar == $_])
+				ifFalse: 
+					[Warning
 						signal: ('Pool dictionary <1p> should start with an uppercase letter.' expandMacrosWith: poolName)]]!
 
 validateSubclassesOf: aClass againstInstanceSpec: instSpec 

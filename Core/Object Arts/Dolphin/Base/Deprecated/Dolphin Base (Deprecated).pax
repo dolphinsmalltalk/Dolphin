@@ -34,7 +34,6 @@ package setMethodNames: #(
 	#(#{ChunkSourceFiler} #fileOutBinaryGlobal:)
 	#(#{Class} #addClassVarName:)
 	#(#{Class} #noClassCategoryName)
-	#(#{ClassDescription} #defaultIconFrom:)
 	#(#{CompilerNotification} #extra)
 	#(#{CRTLibrary} #_controlfp:mask:)
 	#(#{CRTLibrary} #_ecvt:count:dec:sign:)
@@ -362,19 +361,6 @@ noClassCategoryName
 	^self classCategoryClass unclassifiedName! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
 !Class categoriesFor: #noClassCategoryName!constants!public! !
-
-!ClassDescription methodsFor!
-
-defaultIconFrom: anExternalResourceLibrary
-	"Answer a suitable default icon to use for this class. If anExternalResourceLibrary
-	is, for some reason not open, then use the icon for the Object class."
-
-	anExternalResourceLibrary asParameter isNull
-		ifTrue: [^Object defaultIcon].
-	^(self environment at: #Icon) fromId: self defaultIconName in: anExternalResourceLibrary.
-
-	! !
-!ClassDescription categoriesFor: #defaultIconFrom:!constants!public! !
 
 !CompilerNotification methodsFor!
 

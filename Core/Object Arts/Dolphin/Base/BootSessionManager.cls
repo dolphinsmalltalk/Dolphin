@@ -104,7 +104,7 @@ onPreSaveImage
 	self saveSessionState.
 	
 	"MemoryManager current onPreSaveImage."
-	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
+	#{Delay} ifDefined: [:d | d onPreSaveImage]
 !
 
 openConsole

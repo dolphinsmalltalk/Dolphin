@@ -173,17 +173,13 @@ windowSystemShutdown
 	"Private - Terminate the window system to release resources prior to exit. Much of this
 	isn't strictly necessary in a 32-bit application, but it's nice to wipe."
 
-	| env |
-	env := self class environment.
-	#(#View #Canvas #GraphicsTool) do: [:s | env at: s ifPresent: [:c | c onExit]]!
+	#(#{View} #{Canvas} #{GraphicsTool}) do: [:s | s ifDefined: [:c | c onExit]]!
 
 windowSystemStartup
 	"Private - Perform window system startup operations."
 
-	| env |
-	env := self class environment.
-	#(#Canvas #GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
-		do: [:s | env at: s ifPresent: [:c | c onStartup]]! !
+	#(#{Canvas} #{GraphicsTool} #{Clipboard} #{View} #{ToolbarIconButton} #{Command})
+		do: [:s | s ifDefined: [:c | c onStartup]]! !
 !GUISessionManager categoriesFor: #allocConsole!operations!private! !
 !GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
 !GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !

@@ -359,7 +359,7 @@ removeClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that
 	were actually removed (subclasses may be removed too)."
 
-	(aClass environment includesKey: aClass name) ifFalse: [^0].
+	aClass fullyQualifiedReference isDefined ifFalse: [^0].
 	^self uncheckedRemoveClass: aClass!
 
 removeClassBuilder: anArray

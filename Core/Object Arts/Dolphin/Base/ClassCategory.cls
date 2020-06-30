@@ -19,7 +19,7 @@ addClass: class
 classes
 	"Answer a Collection of all Class objects which are held by the receiver."
 
-	^self class environment allClasses select: [:aClass | self includesClass: aClass]!
+	^Smalltalk allClasses select: [:aClass | self includesClass: aClass]!
 
 contents
 	Notification deprecated.
@@ -35,7 +35,7 @@ includesClass: class
 isEmpty
 	"Answer whether the receiver is an empty category (with no members)"
 
-	^self class environment allClasses anySatisfy: [:aClass | self includesClass: aClass]!
+	^(Smalltalk allClasses anySatisfy: [:aClass | self includesClass: aClass]) not!
 
 removeClass: aClass
 	"Remove aClass from the classes held by the reciver. Answer

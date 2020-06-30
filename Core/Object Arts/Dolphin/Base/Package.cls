@@ -1583,8 +1583,8 @@ uninstallClasses
 	 keeping references to uninstalled packaged classes, then try commenting in this code."
 	classes do: 
 			[:aClass |
-			(aClass environment includesKey: aClass name)
-				ifFalse: 
+			aClass classBinding isNil
+				ifTrue: 
 					[aClass class methodDictionary: nil.
 					aClass methodDictionary: nil]]!
 

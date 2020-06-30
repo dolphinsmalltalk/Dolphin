@@ -30,7 +30,7 @@ addMethodSilently: aCompiledMethod
 	!
 
 behaviorsDo: aMonadicValuable 
-	self class environment allBehaviorsDo: aMonadicValuable!
+	Smalltalk allBehaviorsDo: aMonadicValuable!
 
 includesBehavior: aBehavior
 	"Answer whether the receiver categorizes any methods in the specified class."

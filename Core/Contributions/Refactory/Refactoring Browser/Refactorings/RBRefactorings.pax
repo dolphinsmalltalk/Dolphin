@@ -459,7 +459,7 @@ StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 rootsOfTheWorld
 	#rbFix. "Dolphin uses #allRoots"
 
-	^self environment allRoots! !
+	^Smalltalk allRoots! !
 !Class class categoriesFor: #rootsOfTheWorld!class hierarchy-accessing!private! !
 
 "End of package definition"!

@@ -209,9 +209,9 @@ fileOutResource: aResourceIdentifier
 
 !ResourceIdentifier methodsFor!
 
-assignBinaryResourceData: aViewResource 
+assignBinaryResourceData: aViewResource
 	| view viewClass |
-	viewClass := self class environment at: #View.
+	viewClass := #{View} value.
 	view := aViewResource loadWithContext: viewClass desktop forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !

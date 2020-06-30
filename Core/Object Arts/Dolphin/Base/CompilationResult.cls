@@ -34,7 +34,7 @@ buildTextMap
 	rawTextMap := nil!
 
 fireSystemUpdateEvent
-	self method methodClass environment 
+	Smalltalk
 		trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:])
 		with: self!
 

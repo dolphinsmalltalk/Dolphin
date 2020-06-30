@@ -311,11 +311,9 @@ enumsWrapMode
 fileResource
 	"Answer a TestResource that provides access to resources, e.g., disk files, for examples and testing."
 
-	^(self environment at: #GdiplusFileResource
-		ifAbsent: 
-			[^Notification 
-				signal: 'GdiplusTests package needs to be installed for this example to work.']) 
-			current!
+	^#{GdiplusFileResource} ifDefined: [:class | class current]
+		ifNotDefined: 
+			[Notification signal: 'GdiplusTests package needs to be installed for this example to work.']!
 
 fromInitializer: aGdiplusInitializer
 	"Answer an instance of the receiver based on aspects of aGdiplusInitializer.  The instance holds

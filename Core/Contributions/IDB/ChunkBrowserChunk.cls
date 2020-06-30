@@ -83,15 +83,11 @@ identity1AndIdentity2AsCompiledMethod
 identity1AsClass
 	| className metaclass class |
 	className := identity1.
-	metaclass := false.
-	(className includes: Character space)
-		ifTrue:
-			[className := className copyFrom: 1 to: (className indexOf: Character space) - 1.
-			metaclass := true].
-	(self class environment includesKey: className) ifFalse: [^nil].
-	class := self class environment at: className.
-	metaclass ifFalse: [^class].
-	^class class!
+	className := (identity1 includes: Character space)
+				ifTrue: 
+					[(identity1 copyFrom: 1 to: (identity1 indexOf: Character space) - 1) asQualifiedReference meta]
+				ifFalse: [identity1 asQualifiedReference].
+	^className valueOrNil!
 
 identity2
 	^identity2!

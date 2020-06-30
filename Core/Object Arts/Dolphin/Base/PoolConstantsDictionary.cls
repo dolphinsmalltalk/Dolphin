@@ -46,7 +46,7 @@ at: key put: anObject
 		ifFalse: [self errorModify: keyString value: anObject]!
 
 classesReferencing
-	^self environment allClasses select: [:c | c allSharedPools includes: self]!
+	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
 
 isValidKey: aString
 	^aString notEmpty and: 

@@ -170,7 +170,7 @@ addClassChangeClass
 addGlobalName: aSymbol
 	"Adds a global called aSymbol to the system dictionary"
 
-	self environment at: aSymbol put: nil!
+	aSymbol asQualifiedReference declare!
 
 additionalToolsFolder
 	"Private - Answer the <SmalltalkSystemFolder> that holds the addtional tools hierarchy. This is can
@@ -409,7 +409,7 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 						with: aClass kindOfSubclass
 						with: aSymbol).
 	self changeManager performChange: addClass.
-	^self environment at: aSymbol!
+	^aSymbol asQualifiedReference value!
 
 basicRemoveMethods: aCollection 
 	| changes |
@@ -1242,7 +1242,7 @@ classChanged: aClass
 !
 
 classChooserClass
-	classChooserClass isNil ifTrue: [classChooserClass := self environment at: #ChooseClassDialog].
+	classChooserClass isNil ifTrue: [classChooserClass := #{ChooseClassDialog} value].
 	^classChooserClass!
 
 classChooserClass: toolClass
@@ -1574,8 +1574,7 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 debuggerClass
 	"Answer the class of the tool used for debugging in the development system."
 
-	debuggerClass isNil 
-		ifTrue: [debuggerClass := self environment at: #Debugger].
+	debuggerClass isNil ifTrue: [debuggerClass := #{Debugger} value].
 	^debuggerClass!
 
 debuggerClass: toolClass
@@ -1587,8 +1586,7 @@ defaultBrowserClass
 	"Answer the class of browser (a <SmalltalkToolShell>)
 	to be used by default in the development environment."
 
-	defaultBrowserClass isNil 
-		ifTrue: [defaultBrowserClass := self environment at: #ClassBrowserShell].
+	defaultBrowserClass isNil ifTrue: [defaultBrowserClass := #{ClassBrowserShell} value].
 	^defaultBrowserClass!
 
 defaultBrowserClass: toolClass 
@@ -1613,7 +1611,7 @@ defaultInspectorClass
 	the development environment."
 
 	defaultInspectorClass isNil 
-		ifTrue: [defaultInspectorClass := self environment at: #FlipperInspector].
+		ifTrue: [defaultInspectorClass := #{FlipperInspector} value].
 	^defaultInspectorClass!
 
 defaultInspectorClass: toolClass 
@@ -1901,7 +1899,7 @@ formatterClass: anStParseNodeVisitor
 globalVariableNamed: key
 	"Private - Answer the global variable whose name is, key."
 
-	^self environment associationAt: key asSymbol!
+	^Smalltalk bindingFor: key asSymbol!
 
 hardResetGUI
 	"Forcibly close all views to clean up if necessary"
@@ -1973,7 +1971,7 @@ hierarchyBrowserClass
 	to be used by default in the development environment."
 
 	hierarchyBrowserClass isNil 
-		ifTrue: [hierarchyBrowserClass := self environment at: #ClassBrowserShell].
+		ifTrue: [hierarchyBrowserClass := #{ClassBrowserShell} value].
 	^hierarchyBrowserClass!
 
 hierarchyBrowserClass: toolClass 
@@ -2164,10 +2162,9 @@ isValidInstanceVariableName: name for: aClass
 	^(Compiler isAValidLocalIdentifier: name) 
 		and: [(aClass allInstVarNames includes: name) not]!
 
-isValidNewClassVarName: aString for: aClass 
+isValidNewClassVarName: aString for: aClass
 	^(self isValidClassVarName: aString for: aClass) and: 
-			[(aClass allClassVarNames includes: aString) not 
-				and: [(self environment includesKey: aString asSymbol) not]]!
+			[(aClass allClassVarNames includes: aString) not and: [aString asQualifiedReference isDefined not]]!
 
 keywordsAndArgsForSelector: aSymbol 
 	| args argc |
@@ -2299,7 +2296,7 @@ methodWorkspaceClass
 	"Answer the class of presenter to be used for method source workspaces in the various tools
 	(e.g. Debugger and method browser)."
 
-	methodWorkspaceClass isNil ifTrue: [methodWorkspaceClass := self environment at: #MethodWorkspace].
+	methodWorkspaceClass isNil ifTrue: [methodWorkspaceClass := #{MethodWorkspace} value].
 	^methodWorkspaceClass!
 
 minimizeAll
@@ -2714,8 +2711,7 @@ pacFileDialogType
 packageBrowserClass
 	"Answer the class of browser to be used for browsing packages in the development system."
 
-	packageBrowserClass isNil 
-		ifTrue: [packageBrowserClass := self environment at: #PackageBrowserShell].
+	packageBrowserClass isNil ifTrue: [packageBrowserClass := #{PackageBrowserShell} value].
 	^packageBrowserClass!
 
 packageBrowserClass: toolClass
@@ -3270,8 +3266,7 @@ promptForSelector: suggestionString caption: captionString
 protocolBrowserClass
 	"Answer the class of browser to be used for browsing method protocols in the development system."
 
-	protocolBrowserClass isNil 
-		ifTrue: [protocolBrowserClass := self environment at: #ProtocolBrowserShell].
+	protocolBrowserClass isNil ifTrue: [protocolBrowserClass := #{ProtocolBrowserShell} value].
 	^protocolBrowserClass!
 
 protocolBrowserClass: toolClass
@@ -3482,7 +3477,7 @@ registerSystemEvents
 		SmalltalkSystem current registerSystemEvents
 	"
 
-	self environment
+	Smalltalk
 		removeEventsTriggeredFor: self;
 		when: #methodAdded:
 			send: #onMethodAdded:
@@ -3769,8 +3764,7 @@ renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 renameGlobal: oldSymbol to: newSymbol
 	"Rename the global, informing the system of the change."
 
-	self environment 
-		renameGlobal: oldSymbol to: newSymbol!
+	Smalltalk renameGlobal: oldSymbol to: newSymbol!
 
 renameInstanceVariable: aString in: aClass 
 	"Implements the Rename Instance Variable refactoring."
@@ -3857,7 +3851,7 @@ resourceBrowserClass
 	"Answer the class of browser for browsing resources in the development system."
 
 	resourceBrowserClass isNil 
-		ifTrue: [resourceBrowserClass := self environment at: #ResourceBrowser].
+		ifTrue: [resourceBrowserClass := #{ResourceBrowser} value].
 	^resourceBrowserClass!
 
 resourceBrowserClass: toolClass
@@ -3866,8 +3860,8 @@ resourceBrowserClass: toolClass
 	resourceBrowserClass := toolClass!
 
 resourceIdentifierDialogClass
-	resourceIdentifierDialogClass isNil 
-		ifTrue: [resourceIdentifierDialogClass := self environment at: #ResourceIdentifierDialog].
+	resourceIdentifierDialogClass isNil
+		ifTrue: [resourceIdentifierDialogClass := #{ResourceIdentifierDialog} value].
 	^resourceIdentifierDialogClass!
 
 resourceIdentifierDialogClass: aDialogClass 
@@ -4038,7 +4032,7 @@ systemOptions
 		, (self class registeredTools asSortedCollection: [:t1 :t2 | t1 displayString < t2 displayString])!
 
 testBrowserClass
-	testBrowserClass isNil ifTrue: [testBrowserClass := self environment lookup: #SUnitBrowser].
+	testBrowserClass isNil ifTrue: [testBrowserClass := #{SUnitBrowser} value].
 	^testBrowserClass!
 
 toolBackgroundColor
@@ -4078,7 +4072,7 @@ uninitialize
 	"Private - Uninitialize the receiver."
 
 	self clearSystemFolder.
-	self environment removeEventsTriggeredFor: self.!
+	Smalltalk removeEventsTriggeredFor: self.!
 
 unregisterTool: aToolClass
 	"Removes aToolClass from the collection of registered tools for the receiver."
@@ -4106,7 +4100,7 @@ viewComposerClass
 	"Answer the class of ViewComposer to be used for editing view resources in the
 	development system."
 	
-	viewComposerClass isNil ifTrue: [viewComposerClass := self environment at: #ViewComposer].
+	viewComposerClass isNil ifTrue: [viewComposerClass := #{ViewComposer} value].
 	^viewComposerClass!
 
 viewComposerClass: toolClass
@@ -4163,7 +4157,7 @@ workspaceClass
 	"Answer the class of presenter to be used for non-method source workspaces in the various
 	tools, and of course as the main pane of the workspace tool itself."
 
-	workspaceClass isNil ifTrue: [workspaceClass := self environment at: #SmalltalkWorkspace].
+	workspaceClass isNil ifTrue: [workspaceClass := #{SmalltalkWorkspace} value].
 	^workspaceClass!
 
 workspaceClass: presenterClass
@@ -4174,7 +4168,7 @@ workspaceClass: presenterClass
 workspaceShellClass
 	"Answer the class of presenter to be used for workspace shells."
 
-	workspaceShellClass isNil ifTrue: [workspaceShellClass := self environment at: #SmalltalkWorkspaceDocument].
+	workspaceShellClass isNil ifTrue: [workspaceShellClass := #{SmalltalkWorkspaceDocument} value].
 	^workspaceShellClass!
 
 workspaceShellClass: toolClass

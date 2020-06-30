@@ -152,9 +152,8 @@ historySkip: delta
 	^self subclassResponsibility!
 
 ideaSpace
-	| ideaSpaceShellClass |
-	ideaSpaceShellClass := self class environment at: #IdeaSpaceShell ifAbsent: [^nil].
-	^(self topShell isKindOf: ideaSpaceShellClass) ifTrue: [self topShell]!
+	^#{IdeaSpaceShell} valueOrNil
+		ifNotNil: [:ideaSpaceShellClass | (self topShell isKindOf: ideaSpaceShellClass) ifTrue: [self topShell]]!
 
 inspectSystemOptions
 	"Open a <PropertyInspector> on the system options."

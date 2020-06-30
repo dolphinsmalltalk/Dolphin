@@ -160,7 +160,7 @@ help
 	self model openHelpTopicForTool: self!
 
 ideaSpace
-	^(self class environment lookup: #IdeaSpaceShell)
+	^#{IdeaSpaceShell} valueOrNil
 		ifNotNil: [:ideaSpaceShellClass | (self topShell isKindOf: ideaSpaceShellClass) ifTrue: [self topShell]]!
 
 inspectSystemOptions

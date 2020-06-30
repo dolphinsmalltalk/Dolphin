@@ -540,7 +540,7 @@ parseDoubleIndirection: assoc typeName: typeName
 	"If indirection type is #lppvoid or an indirection class, then cannot doubly indirect it"
 	(pointerType = ExtCallArgLPPVOID or: 
 			[pointerType isInteger not
-				and: [assoc key == ExtCallArgSTRUCT and: [(self class environment at: pointerType) isIndirection]]])
+				and: [assoc key == ExtCallArgSTRUCT and: [pointerType asQualifiedReference value isIndirection]]])
 		ifTrue: 
 			[^self error: ('<1s>: Only one further level of indirection to an indirection type is possible'
 						expandMacrosWith: typeName)].
@@ -548,7 +548,7 @@ parseDoubleIndirection: assoc typeName: typeName
 
 parsePointerToStruct: anAssociation
 	| structClass |
-	structClass := self class environment at: anAssociation value.
+	structClass := anAssociation value asQualifiedReference value.
 	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
@@ -568,17 +568,17 @@ parseSingleIndirection: anAssociation
 		ifTrue: [self parsePointerToStruct: anAssociation]
 		ifFalse: [pointerType -> nil]!
 
-parseStructArg: assoc 
+parseStructArg: assoc
 	| structClass |
-	structClass := self environment at: assoc value.
-	^(structClass isIndirection 
+	structClass := assoc value asQualifiedReference value.
+	^(structClass isIndirection
 		ifTrue: [ExtCallArgLP]
 		ifFalse: 
 			[| bytes |
 			bytes := structClass byteSize.
-			bytes <= 4 
+			bytes <= 4
 				ifTrue: [ExtCallArgSTRUCT4]
-				ifFalse: [bytes <= 8 ifTrue: [ExtCallArgSTRUCT8] ifFalse: [ExtCallArgSTRUCT]]]) 
+				ifFalse: [bytes <= 8 ifTrue: [ExtCallArgSTRUCT8] ifFalse: [ExtCallArgSTRUCT]]])
 			-> structClass!
 
 parseValueType: assoc 

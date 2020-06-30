@@ -132,11 +132,10 @@ basicPrimaryStartup
 	VMLibrary default onStartup.	"The VMLibrary must be initialized before we do anything else."
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
-	self class environment at: #ExternalCallback
-		ifPresent: [:ec | ec onStartup	"Old callbacks will be invalid"].
+	#{ExternalCallback} ifDefined: [:ec | ec onStartup	"Old callbacks will be invalid"].
 	Character onStartup.
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
-	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
+	#{Delay} ifDefined: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
 	sessionId := Object new	"Allow deferred tasks to know if they passed a startup boundary"!
 
@@ -147,7 +146,7 @@ basicSecondaryStartup
 	app)."
 
 	Float onStartup.
-	self class environment at: #Locale ifPresent: [:d | d onStartup].
+	#{Locale} ifDefined: [:d | d onStartup].
 	self parseCmdLineFlags!
 
 basicShutdown
@@ -156,7 +155,7 @@ basicShutdown
 
 	self closeConsole.
 	self comShutdown.
-	self class environment at: #Delay ifPresent: [:d | d onExit].
+	#{Delay} ifDefined: [:d | d onExit].
 	inputState onExit.
 	ExternalLibrary onExit.
 	KernelLibrary default closeHandle: sentry
@@ -645,7 +644,7 @@ onPreSaveImage
 	be done as close as possible to the actual save so that it is able to record
 	the correct milliscond clock value for rescheduling delays on restart."
 	MemoryManager current onPreSaveImage.
-	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage].
+	#{Delay} ifDefined: [:d | d onPreSaveImage].
 
 !
 

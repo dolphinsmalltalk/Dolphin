@@ -304,8 +304,8 @@ stonOn: stonWriter
 fromSton: stonReader
 	| theClassName theClass |
 	theClassName := stonReader parseListSingleton.
-	theClass := self environment at: theClassName.
-	^ theClass! !
+	theClass := theClassName asQualifiedReference value.
+	^theClass! !
 !Class class categoriesFor: #fromSton:!public!ston! !
 
 !ClassDescription methodsFor!
@@ -459,7 +459,7 @@ stonOn: stonWriter
 fromSton: stonReader
 	| theClassName theClass theMetaclass |
 	theClassName := stonReader parseListSingleton.
-	theClass := self environment at: theClassName.
+	theClass := theClassName asQualifiedReference value.
 	theMetaclass := theClass class.
 	^ theMetaclass! !
 !Metaclass class categoriesFor: #fromSton:!public!ston! !

@@ -182,12 +182,12 @@ storeUnderRegKey: aRegKey as: aString
 
 !Object class methodsFor!
 
-fromRegKey: aRegKey 
+fromRegKey: aRegKey
 	"Read an instance of the receiver previously serialised under the specified registry key."
 
 	| params |
 	params := aRegKey value.
-	^(self environment at: params first asSymbol) readFromRegKey: aRegKey! !
+	^params first asQualifiedReference value readFromRegKey: aRegKey! !
 !Object class categoriesFor: #fromRegKey:!public! !
 
 !SmallInteger methodsFor!

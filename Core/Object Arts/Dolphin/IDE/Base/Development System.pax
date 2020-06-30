@@ -2267,7 +2267,7 @@ renameClassVar: oldString to: newString
 
 	self classPool changeKey: oldString to: newString.
 	self logDefinition.
-	self environment classUpdated: self! !
+	Smalltalk classUpdated: self! !
 !Class categoriesFor: #changeIndex!accessing!private! !
 !Class categoriesFor: #changeIndexValue:!accessing!private! !
 !Class categoriesFor: #isAbstract!public!testing! !
@@ -2409,32 +2409,28 @@ copyCategory: category from: aClass classified: newCategory
 isDeprecated
 	^self subclassResponsibility!
 
-methodsFor: categoryName 
+methodsFor: categoryName
 	"Answer a chunk reader to read and compile method chunks for the receiver
 	to be classified into the method category with the specified <readableString> name.
 	This method is present for loading ST files in Green Book format. Ensure
 	first that the category name doesn''t, falsely, appear hierarchical."
 
 	| useName |
-	useName := categoryName 
-				copyReplacing: (self environment at: #Category) separator
-				withObject: $/.
-	^ChunkReader 
+	useName := categoryName copyReplacing: #{Category} value separator withObject: $/.
+	^ChunkReader
 		do: [:chunkString | self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 
-methodsFor: name stamp: aString 
+methodsFor: name stamp: aString
 	"Answer a chunk reader to read and compile method chunks for the receiver
 	to be classified into the method category with the specified <readableString> name.
 	The stamp is ignored. This method is for compatibility with the Pharo fileout format."
 
 	| useName |
-	useName := name copyReplacing: (self environment at: #Category) separator withObject: $/.
-	^ChunkReader 
-		do: 
-			[:chunkString | 
-			self compile: chunkString classified: useName]
+	useName := name copyReplacing: #{Category} value separator withObject: $/.
+	^ChunkReader
+		do: [:chunkString | self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 
@@ -2468,7 +2464,7 @@ renameInstVar: oldString to: newString
 
 	self setInstanceVariables: (self instVarNames copyReplacing: oldString withObject: newString).
 	self logDefinition.
-	self environment classUpdated: self! !
+	Smalltalk classUpdated: self! !
 !ClassDescription categoriesFor: #browse!public! !
 !ClassDescription categoriesFor: #categoriesFor:are:!public!source filing-methods! !
 !ClassDescription categoriesFor: #commentStamp:prior:!public!source filing-methods!squeak! !
@@ -4752,7 +4748,7 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	| answer |
-	answer := (super publishedAspectsOfInstances)
+	answer := super publishedAspectsOfInstances
 				add: (Aspect multilineString: #comment);
 				add: (Aspect string: #packageVersion);
 				add: (Aspect block: #aboutBlock);
@@ -4762,8 +4758,7 @@ publishedAspectsOfInstances
 				add: (Aspect boolean: #preDeclareClassesOnLoad);
 				yourself.
 	"If the image has the ADK loaded, then include the image stripper"
-	self environment at: #ImageStripper
-		ifPresent: [:is | answer add: (Aspect name: #imageStripper) beImmutable].
+	#{ImageStripper} ifDefined: [:is | answer add: (Aspect name: #imageStripper) beImmutable].
 	^answer!
 
 publishedEventsOfInstances

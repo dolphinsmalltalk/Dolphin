@@ -316,9 +316,7 @@ defaultResourceIcon
 	"Answer a suitable default icon resource to use for this class. Note that this method differs
 	from #defaultIcon in that it uses the #resourceLocator of the class to locate the icon file"
 
-	^(self environment at: #Icon) fromId: self defaultResourceIconName.
-
-	!
+	^#{Icon} value fromId: self defaultResourceIconName!
 
 defaultResourceIconName
 	"Answer a filename to use for an icon of this class loaded from the class resources location."
@@ -759,7 +757,7 @@ sharedPoolsDo: aMonadicValuable
 	| environment |
 	environment := self environment.
 	self sharedPoolNames
-		do: [:symbol | (environment lookup: symbol) ifNotNil: [:p | aMonadicValuable value: p]]!
+		do: [:symbol | (environment bindingFor: symbol) ifNotNil: [:p | aMonadicValuable value: p value]]!
 
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable

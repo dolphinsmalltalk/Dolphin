@@ -68,7 +68,7 @@ addAllSelectors: newSelectors
 					e isChanged: true].
 
 			"Finally inform any observers (browsers) of the change"
-			self class environment trigger: #protocolUpdated: with: self]!
+			Smalltalk trigger: #protocolUpdated: with: self]!
 
 addClass: class
 	"Add the <ClassDescription>, class, to the collection of classes associated with the receiver.
@@ -82,7 +82,7 @@ addClass: class
 
 		"We don't need to mark the base classes as having been changed
 		in this situation." 
-		self class environment trigger: #protocolUpdated: with: self ]!
+		Smalltalk trigger: #protocolUpdated: with: self ]!
 
 addClass: behavior selector: selector
 	"Private - Add the <symbol>, selector, to the receiver's protocol in the <Behavior>, 
@@ -158,7 +158,7 @@ baseBehaviors
 
 	| conformers |
 	conformers := OrderedCollection new.
-	self class environment allBehaviorsDo: [:c | 
+	Smalltalk allBehaviorsDo: [:c | 
 		(c protocolNames includes: name) ifTrue: [conformers add: c]].
 	^conformers
 !
@@ -169,7 +169,7 @@ behaviors
 
 	| answer |
 	answer := OrderedCollection new: 10.
-	self class environment allBehaviorsDo:  [:c | (c conformsToProtocol: self) ifTrue: [answer addLast: c]].
+	Smalltalk allBehaviorsDo:  [:c | (c conformsToProtocol: self) ifTrue: [answer addLast: c]].
 	^answer!
 
 comment
@@ -312,7 +312,7 @@ printOn: aStream
 protocolUpdated
 	"Private - Flag the receiver as updated and inform any observers."
 
-	self class environment trigger: #protocolUpdated: with: self.
+	Smalltalk trigger: #protocolUpdated: with: self.
 	self updateBaseClasses.!
 
 readOnly
@@ -370,7 +370,7 @@ rename: newName
 		at: sym put: self.
 	name := sym.
 	implementors do: [:i | i addProtocol: self; isChanged: true].
-	self class environment trigger: #protocolUpdated: with: self!
+	Smalltalk trigger: #protocolUpdated: with: self!
 
 selectors
 	"Answer a <collection> of the selectors which make up the receiver's protocol."
@@ -490,7 +490,7 @@ purgeUnused
 
 	| allUsed |
 	allUsed := IdentitySet new.
-	self environment allBehaviorsDo: [:c | allUsed addAll: c protocols].
+	Smalltalk allBehaviorsDo: [:c | allUsed addAll: c protocols].
 	(Protocols difference: allUsed) do: [:p | 
 		self assert: [p behaviors isEmpty].
 		Protocols removeKey: p name]
@@ -506,7 +506,7 @@ removeProtocol: protocolName
 	prot := Protocols at: symbol.
 	prot baseBehaviors do: [:c | c removeProtocol: prot].
 	Protocols removeKey: symbol.
-	self environment trigger: #protocolRemoved: with: prot!
+	Smalltalk trigger: #protocolRemoved: with: prot!
 
 separator
 	"Private - Answer a Character used to split the individual names in a

@@ -288,7 +288,7 @@ buildVariablesMap
 	globals to the owning package. This is used during the tracing of package prerequisites.
 	"
 
-	packagedVariables := LookupTable new: self class environment size.
+	packagedVariables := LookupTable new: Smalltalk size.
 	self packages do: 
 			[:package |
 			package variableNames do: [:each | packagedVariables at: each put: package].
@@ -1038,7 +1038,7 @@ release
 	(this is not strictly necessary as the registrations are weak, but it hastens 
 	the receiver's demise)."
 
-	self class environment removeEventsTriggeredFor: self!
+	Smalltalk removeEventsTriggeredFor: self!
 
 removePackage: aPackage
 	"Remove aPackage from the receivers loaded packages. All the packages
@@ -1136,7 +1136,7 @@ uninstall: aPackage
 	aPackage fileInScript: #postuninstall!
 
 unpackagedClasses
-	^self class environment allClasses asIdentitySet difference: self allPackagedClasses asIdentitySet!
+	^Smalltalk allClasses asIdentitySet difference: self allPackagedClasses asIdentitySet!
 
 variableRepackaged: aBindingReference from: source to: destination
 	"Private - The static variable named by the <BindingReference> first argument has been repackaged. The operation is now complete and the package system is in a consistent state so this is an appropriate point to update change flags for all objects affected by the move and to trigger various notifications."
@@ -1320,7 +1320,7 @@ newSystemPackage
 	(dolphin := Package name: self systemPackageName)
 		basicComment: self systemPackageComment;
 		basicScriptAt: #preinstall put: 'Error signal: ''Cannot replace the system package'''.
-	all := self environment allClasses.
+	all := Smalltalk allClasses.
 	all do: [:aClass | dolphin addClass: aClass].
 	globalNames := Smalltalk keys.
 	globalNames removeAll: (all collect: [:aClass | aClass name]).

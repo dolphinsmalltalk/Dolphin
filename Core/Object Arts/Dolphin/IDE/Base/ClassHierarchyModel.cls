@@ -25,7 +25,7 @@ defaultGetParentBlock
 	^[:aClass | aClass superclass]!
 
 observeEnvironment
-	(self class environment)
+	Smalltalk
 		when: #classAdded:
 			send: #onClassAdded:
 			to: self;

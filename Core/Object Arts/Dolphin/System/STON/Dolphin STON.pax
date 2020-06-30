@@ -540,7 +540,7 @@ stonOn: aSTONWriter
 fromSton: stonReader
 	| globalName theClass |
 	globalName := stonReader parseListSingleton.
-	theClass := self environment at: globalName.
+	theClass := globalName asQualifiedReference value.
 	^theClass! !
 !SystemDictionary class categoriesFor: #fromSton:!public! !
 

@@ -98,7 +98,7 @@ literalValueNodeClass
 
 lookupExternalStructType: anStIdentifierToken 
 	| structClass |
-	structClass := (methodClass environment bindingFor: anStIdentifierToken value) 
+	structClass := (Smalltalk bindingFor: anStIdentifierToken value) 
 				ifNil: 
 					[self parserError: CErrUndefinedClass range: anStIdentifierToken sourceInterval.
 					"Error ignored, attempt to recover..."

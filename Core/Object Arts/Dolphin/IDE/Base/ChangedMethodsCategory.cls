@@ -13,10 +13,10 @@ Although this class is strictly redundant (it being implementable as a Pluggable
 !ChangedMethodsCategory categoriesForClass!System-Support! !
 !ChangedMethodsCategory methodsFor!
 
-behaviorsDo: aMonadicValuable 
-	self class environment allClasses do: 
-			[:each | 
-			each isChanged 
+behaviorsDo: aMonadicValuable
+	Smalltalk allClasses do: 
+			[:each |
+			each isChanged
 				ifTrue: 
 					[aMonadicValuable
 						value: each;

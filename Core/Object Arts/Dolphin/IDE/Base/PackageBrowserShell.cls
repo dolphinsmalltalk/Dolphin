@@ -990,7 +990,7 @@ release
 
 	super release.
 	self packageManager removeEventsTriggeredFor: self.
-	self class environment removeEventsTriggeredFor: self.
+	Smalltalk removeEventsTriggeredFor: self.
 !
 
 removeClasses

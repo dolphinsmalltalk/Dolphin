@@ -63,7 +63,7 @@ createSchematicWiring
 		when: #actionPerformed
 		send: #browseIt
 		to: self.
-	self class environment
+	Smalltalk
 		when: #classRemoved:
 			send: #onClassRemoved:
 			to: self;

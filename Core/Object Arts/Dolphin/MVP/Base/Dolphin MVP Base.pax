@@ -1934,9 +1934,7 @@ defaultIcon
 	default icon; one must define an appropriate #icon method in each class where the 
 	icon required differs from that of the superclass."
 
-	^(self environment at: #Icon) fromId: self defaultIconName.
-
-	! !
+	^#{Icon} value fromId: self defaultIconName! !
 !ClassDescription categoriesFor: #defaultIcon!constants!public! !
 
 !ConsoleSessionManager class methodsFor!
