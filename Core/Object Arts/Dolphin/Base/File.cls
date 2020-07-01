@@ -264,6 +264,16 @@ openFlags
 
 	^flags bitAnd: OpenFlagsMask!
 
+pathName
+	"Answer the actual path name of the open file."
+
+	| kernel size buf |
+	kernel := KernelLibrary default.
+	size := kernel getFinalPathNameByHandle: handle lpszFilePath: nil cchFilePath: 0 dwFlags: 0.
+	buf := Utf16String newFixed: size - 1.
+	kernel getFinalPathNameByHandle: handle lpszFilePath: buf cchFilePath: size dwFlags: 0.
+	^buf!
+
 position
 	"Answer the absolute Integer position of the reciver's file pointer
 	or signal a FileException if the operation fails."
@@ -532,6 +542,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #open:flags:share:!operations!private! !
 !File categoriesFor: #open:mode:check:share:!operations!public! !
 !File categoriesFor: #openFlags!accessing!private! !
+!File categoriesFor: #pathName!accessing!public! !
 !File categoriesFor: #position!positioning!public! !
 !File categoriesFor: #position:!operations!positioning!public! !
 !File categoriesFor: #printOn:!printing!public! !
