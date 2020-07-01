@@ -2,7 +2,7 @@
 
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'!
 SmalltalkWorkspace guid: (GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -68,7 +68,8 @@ applyOptions
 	view annotationMode: self class annotationMode.
 	view wrapIndentMode: self class wrapIndentMode.
 	view setKeyBindings: self class customEditorKeyBindings.
-	self class useDirectWrite ifTrue: [view drawingTechnology: #directWrite]!
+	self class useDirectWrite ifTrue: [view drawingTechnology: #directWrite].
+	view fontQuality: self class fontQuality!
 
 areVariableTipsEnabled
 	^flags allMask: VariableTipsMask!
@@ -887,13 +888,13 @@ maybeShowCompletionList
 		at: last
 		maxItems: self maxAutoCompletionListSize)
 			ifNil: 
-				["If a space is typed after certain identifiers e.g. an instance
+				[| char |
+				"If a space is typed after certain identifiers e.g. an instance
 				 variable in the debugger, or when certain special characters are
 				 typed, we can show a sensible auto-completion list."
-				| char |
 				char := view characterAt: last.
 				((char == $^ and: [styleName == #specialCharacter])
-					or: [char == $\x20and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
+					or: [char == $\x20 and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
 							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
 
@@ -1315,7 +1316,7 @@ showCompletionListAfterToken: anAssociation maxItems: anInteger
 			[self showCompletionList: (self identifiersStartingWith: '' maxItems: anInteger) prefixLength: 0.
 			^self].
 	((#(#identifier #unaryMessage #literalString #literalNumber #literalCharacter #literalPseudo #literalSymbol) 
-		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '])']) 
+		identityIncludes: styleName) or: [self isSpecialToken: anAssociation oneOf: '])}']) 
 		ifTrue: 
 			[self showCompletionList: (self 
 						messagesForToken: anAssociation
@@ -2024,6 +2025,15 @@ editorKeyBindings: aCollectionOfScintillaKeyBindings
 				ifNil: [self defaultEditorKeyBindings]
 				ifNotNil: [ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
 
+fontQuality
+	^FontQuality ?? #lcdOptimized!
+
+fontQuality: aSymbol
+	| quality |
+	FontQuality := aSymbol.
+	quality := self fontQuality.
+	self primAllSubinstances do: [:each | each view fontQuality: quality]!
+
 getAdditionalKeyBindings
 	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self defaultAdditionalAccelerators]!
 
@@ -2155,6 +2165,8 @@ publishedAspects
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
+		add: (Aspect choice: #fontQuality from: ScintillaView fontQualities);
+		add: (Aspect font: #defaultFont);
 		yourself!
 
 publishedEventsOfInstances
@@ -2216,7 +2228,12 @@ useDirectWrite
 	^UseDirectWrite and: [VMLibrary default isWindowsVistaOrGreater]!
 
 useDirectWrite: aBoolean
-	UseDirectWrite := aBoolean!
+	| tech |
+	UseDirectWrite := aBoolean.
+	tech := self useDirectWrite ifTrue: [#directWrite] ifFalse: [#default].
+	self primAllSubinstances do: [:each | each view drawingTechnology: tech]
+
+!
 
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."
@@ -2258,6 +2275,8 @@ wrapIndentMode: aSymbol
 !SmalltalkWorkspace class categoriesFor: #defaultUnaryReturnTypes!autocompletion!private! !
 !SmalltalkWorkspace class categoriesFor: #editorKeyBindings!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #editorKeyBindings:!accessing!public! !
+!SmalltalkWorkspace class categoriesFor: #fontQuality!accessing!public! !
+!SmalltalkWorkspace class categoriesFor: #fontQuality:!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #getCommandQueryHandlers!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #icon!constants!public! !
