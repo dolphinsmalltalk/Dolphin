@@ -137,6 +137,10 @@ asSYSTEMTIME
 				wDay: dd].
 	^struct!
 
+asTimeStamp
+	^self asDateAndTime asTimeStamp
+!
+
 day
 	"Answer the day of the year represented by the receiver."
 
@@ -341,6 +345,7 @@ yyyymmdd
 !Date categoriesFor: #asParameter!converting!public! !
 !Date categoriesFor: #asSeconds!converting!public! !
 !Date categoriesFor: #asSYSTEMTIME!converting!public! !
+!Date categoriesFor: #asTimeStamp!converting!public! !
 !Date categoriesFor: #day!accessing!public! !
 !Date categoriesFor: #dayMonthYearDo:!accessing!public! !
 !Date categoriesFor: #dayOfMonth!accessing!public! !

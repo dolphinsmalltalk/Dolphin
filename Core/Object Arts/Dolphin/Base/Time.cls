@@ -58,6 +58,9 @@ asSYSTEMTIME
 		wMilliseconds: self millisecond rounded;
 		yourself!
 
+asTimeStamp
+	^self asDateAndTime asTimeStamp!
+
 displayOn: aStream
 	"Append to the <puttableStream> argument, aStream, a String whose characters are a representation of this<Time> that a user in the current<Locale> might expect to see."
 
@@ -153,6 +156,7 @@ subtractTime: aTimeOrDate
 !Time categoriesFor: #asParameter!converting!public! !
 !Time categoriesFor: #asSeconds!converting!public! !
 !Time categoriesFor: #asSYSTEMTIME!converting!public! !
+!Time categoriesFor: #asTimeStamp!converting!public! !
 !Time categoriesFor: #displayOn:!printing!public! !
 !Time categoriesFor: #hash!comparing!public! !
 !Time categoriesFor: #hour!accessing!public! !

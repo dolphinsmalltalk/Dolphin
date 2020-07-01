@@ -11,13 +11,16 @@ Traditional Smalltalk-80 style `Date` and `Time` classes. These are largely supe
 package classNames
 	add: #Date;
 	add: #Time;
+	add: #TimeStamp;
 	yourself.
 
 package methodNames
 	add: #BlockClosure -> #millisecondsToRepeat:;
 	add: #DateAndTime -> #asDate;
 	add: #DateAndTime -> #asTime;
+	add: #DateAndTime -> #asTimeStamp;
 	add: #SYSTEMTIME -> #asDate;
+	add: #SYSTEMTIME -> #asTimeStamp;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -40,6 +43,11 @@ Magnitude subclass: #Date
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Time
 	instanceVariableNames: 'seconds'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Magnitude subclass: #TimeStamp
+	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -76,17 +84,31 @@ asTime
 		- if a time in the local timezone is needed and the DateAndTime, send #asLocal first (i.e. `dateAndTime asLocal asTime`)
 		- if a UTC time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTime`)."
 
-	^Time fromSeconds: seconds! !
+	^Time fromSeconds: seconds!
+
+asTimeStamp
+	"Answer a <TimeStamp> representing the local date and time of the receiver. The <TimeStamp> will be that at the receiver's offset, so:
+		- if a date/time in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asTimeStamp`)
+		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
+
+	^TimeStamp date: self asDate time: self asTime! !
 !DateAndTime categoriesFor: #asDate!converting!public! !
 !DateAndTime categoriesFor: #asTime!converting!public! !
+!DateAndTime categoriesFor: #asTimeStamp!converting!public! !
 
 !SYSTEMTIME methodsFor!
 
 asDate
 	"Answer a <Date> corresponding to the receiver's date."
 
-	^Date fromSYSTEMTIME: self! !
+	^Date fromSYSTEMTIME: self!
+
+asTimeStamp
+	"Answer a <TimeStamp> corresponding to the receiver's point in time."
+
+	^self asDateAndTime asTimeStamp! !
 !SYSTEMTIME categoriesFor: #asDate!converting!public! !
+!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
 
 "End of package definition"!
 

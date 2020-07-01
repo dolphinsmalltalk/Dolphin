@@ -6,8 +6,10 @@ Magnitude subclass: #TimeStamp
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TimeStamp guid: (GUID fromString: '{87b4c656-026e-11d3-9fd7-00a0cc3e4a32}')!
-TimeStamp comment: '*This class is deprecated as it has been replaced by the ANSI compliant DateAndTime class, which is time zone offset aware.*'!
-!TimeStamp categoriesForClass!Deprecated! !
+TimeStamp comment: '`TimeStamp` represents a `Time` of day on a particular `Date` in an unspecified time zone.
+
+`TimeStamp` is present for backwards compatibility only. For most purposes the ANSI compliant and time zone offset aware `DateAndTime` class should be preferred.'!
+!TimeStamp categoriesForClass!Kernel-Chronology! !
 !TimeStamp methodsFor!
 
 < aTimeStamp
@@ -57,7 +59,7 @@ asSeconds
 	^self date asSeconds + self time asSeconds!
 
 asTimeStamp
-	"Answer the receiver as <TimeStamp>."
+	"Answer the receiver as a <TimeStamp>."
 
 	^self!
 
@@ -66,20 +68,6 @@ date
 
 	^date
 !
-
-date: aDate
-	"Timestamps are immutable and should be initialized at creation time."
-
-	Notification deprecated.
-	self isImmutable: false.
-	date := aDate
-!
-
-dateAndTime
-	"Answer a two element Array containing the date and time."
-
-	Notification deprecated.
-	^{self date. self time}!
 
 dayOfMonth
 	"Answer an <integer> between 1 and 31, inclusive, representing the day of the month of the date of the receiver."
@@ -161,14 +149,6 @@ time
 	^time
 !
 
-time: aTime
-	"Timestamps are immutable and should be initialized at creation time."
-
-	Notification deprecated.
-	self isImmutable: false.
-	time := aTime
-!
-
 year
 	^date year! !
 !TimeStamp categoriesFor: #<!comparing!public! !
@@ -180,8 +160,6 @@ year
 !TimeStamp categoriesFor: #asSeconds!converting!public! !
 !TimeStamp categoriesFor: #asTimeStamp!converting!public! !
 !TimeStamp categoriesFor: #date!accessing!public! !
-!TimeStamp categoriesFor: #date:!accessing!public! !
-!TimeStamp categoriesFor: #dateAndTime!accessing!public! !
 !TimeStamp categoriesFor: #dayOfMonth!accessing!public! !
 !TimeStamp categoriesFor: #dayOfWeek!public! !
 !TimeStamp categoriesFor: #hash!comparing!public! !
@@ -197,7 +175,6 @@ year
 !TimeStamp categoriesFor: #setDate:time:!accessing!initializing!private! !
 !TimeStamp categoriesFor: #storeOn:!printing!public! !
 !TimeStamp categoriesFor: #time!accessing!public! !
-!TimeStamp categoriesFor: #time:!accessing!public! !
 !TimeStamp categoriesFor: #year!accessing!public! !
 
 !TimeStamp class methodsFor!

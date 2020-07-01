@@ -75,7 +75,8 @@ testFromSYSTEMTIME
 	self assert: ts time hour equals: sysTime wHour.
 	self assert: ts time minute equals: sysTime wMinute.
 	self assert: ts time second truncated equals: sysTime wSecond.
-	self assert: ts time millisecond equals: sysTime wMilliseconds! !
+	self assert: ts time millisecond equals: sysTime wMilliseconds.
+	self assert: sysTime asTimeStamp equals: ts! !
 !TimeStampTest categoriesFor: #currentTimeStamp!helpers!private! !
 !TimeStampTest categoriesFor: #testAddSeconds!public! !
 !TimeStampTest categoriesFor: #testAsMilliseconds!public! !
