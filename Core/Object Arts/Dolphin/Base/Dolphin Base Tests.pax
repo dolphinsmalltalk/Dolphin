@@ -149,7 +149,6 @@ package setPrerequisites: #(
 	'Dolphin'
 	'Dolphin Additional Sort Algorithms'
 	'Dolphin Anonymous Classes'
-	'Deprecated\Dolphin Base (Deprecated)'
 	'Dolphin Command-line Parser'
 	'..\System\Random\Dolphin CRT Random Stream'
 	'Dolphin Legacy Date & Time'

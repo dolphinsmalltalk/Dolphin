@@ -19,7 +19,6 @@ package classNames
 	add: #MEMORY_BASIC_INFORMATION;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
-	add: #TimeStamp;
 	yourself.
 
 package methodNames
@@ -86,12 +85,10 @@ package methodNames
 	add: #CRTLibrary -> #tan:;
 	add: #CRTLibrary -> #thread_chmod:pmode:;
 	add: #CRTLibrary -> #thread_errno;
-	add: #Date -> #asTimeStamp;
 	add: #Date -> #evaluateYYMMDD:;
 	add: #Date -> #monthIndex;
 	add: #Date -> #weekday;
 	add: #Date -> #weekdayIndex;
-	add: #DateAndTime -> #asTimeStamp;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
@@ -129,11 +126,12 @@ package methodNames
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #String -> #equals:;
-	add: #SYSTEMTIME -> #asTimeStamp;
-	add: #Time -> #asTimeStamp;
 	add: #Time -> #hours;
 	add: #Time -> #milliseconds;
 	add: #Time -> #minutes;
+	add: #TimeStamp -> #date:;
+	add: #TimeStamp -> #dateAndTime;
+	add: #TimeStamp -> #time:;
 	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
@@ -213,11 +211,6 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Magnitude subclass: #TimeStamp
-	instanceVariableNames: 'date time'
-	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBProxy subclass: #STBSymbolProxy
@@ -649,11 +642,6 @@ thread_errno
 
 !Date methodsFor!
 
-asTimeStamp
-	Notification deprecated.
-	^self asDateAndTime asTimeStamp
-!
-
 evaluateYYMMDD: aTriadicValuable
 	Notification deprecated.
 	^self dayMonthYearDo: [:d :m :y | aTriadicValuable value: y value: m value: d]!
@@ -669,7 +657,6 @@ weekday
 weekdayIndex
 	Notification deprecated.
 	^(self asDays + 1) \\ 7 + 1! !
-!Date categoriesFor: #asTimeStamp!converting!public! !
 !Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
 !Date categoriesFor: #monthIndex!accessing!public! !
 !Date categoriesFor: #weekday!accessing!public! !
@@ -716,16 +703,6 @@ shortNameOfMonth: monthIndex
 !Date class categoriesFor: #nameOfMonth:!enquiries!public! !
 !Date class categoriesFor: #shortNameOfDay:!enquiries!public! !
 !Date class categoriesFor: #shortNameOfMonth:!enquiries!public! !
-
-!DateAndTime methodsFor!
-
-asTimeStamp
-	"Answer a <TimeStamp> representing the local date and time of the receiver. The <TimeStamp> will be that at the receiver's offset, so:
-		- if a date/time in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asTimeStamp`)
-		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
-	Notification deprecated.
-	^TimeStamp date: self asDate time: self asTime! !
-!DateAndTime categoriesFor: #asTimeStamp!converting!public! !
 
 !ExternalCallback class methodsFor!
 
@@ -1098,18 +1075,7 @@ unicodeClass
 !String class categoriesFor: #fromUnicodeString:!instance creation!public! !
 !String class categoriesFor: #unicodeClass!constants!public! !
 
-!SYSTEMTIME methodsFor!
-
-asTimeStamp
-	Notification deprecated.
-	^self asDateAndTime asTimeStamp.! !
-!SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
-
 !Time methodsFor!
-
-asTimeStamp
-	Notification deprecated.
-	^self asDateAndTime asTimeStamp!
 
 hours
 	Notification deprecated.
@@ -1122,7 +1088,6 @@ milliseconds
 minutes
 	Notification deprecated.
 	^self minute! !
-!Time categoriesFor: #asTimeStamp!converting!public! !
 !Time categoriesFor: #hours!accessing!public! !
 !Time categoriesFor: #milliseconds!accessing!public! !
 !Time categoriesFor: #minutes!accessing!public! !
@@ -1146,6 +1111,33 @@ microsecondsToRun: timedBlock
 	^timedBlock timeToRun asMicroseconds asInteger! !
 !Time class categoriesFor: #dateAndTimeNow!accessing!public! !
 !Time class categoriesFor: #microsecondsToRun:!operations!public! !
+
+!TimeStamp methodsFor!
+
+date: aDate
+	"Timestamps are immutable and should be initialized at creation time."
+
+	Notification deprecated.
+	self isImmutable: false.
+	date := aDate
+!
+
+dateAndTime
+	"Answer a two element Array containing the date and time."
+
+	Notification deprecated.
+	^{self date. self time}!
+
+time: aTime
+	"Timestamps are immutable and should be initialized at creation time."
+
+	Notification deprecated.
+	self isImmutable: false.
+	time := aTime
+! !
+!TimeStamp categoriesFor: #date:!accessing!public! !
+!TimeStamp categoriesFor: #dateAndTime!accessing!public! !
+!TimeStamp categoriesFor: #time:!accessing!public! !
 
 !WindowsLocale methodsFor!
 
