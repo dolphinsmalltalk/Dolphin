@@ -676,6 +676,17 @@ getFileType: anExternalHandle
 	<stdcall: dword GetFileType handle>
 	^self invalidCall: _failureCode!
 
+getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFilePath dwFlags: dwFlags
+	"DWORD GetFinalPathNameByHandleW(
+		HANDLE hFile,
+		LPSTR  lpszFilePath,
+		DWORD  cchFilePath,
+		DWORD  dwFlags
+	);"
+
+	<stdcall: dword GetFinalPathNameByHandleW handle lpwstr dword dword>
+	^self invalidCall: _failureCode!
+
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
 
@@ -1645,14 +1656,14 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #copyMemory:source:length:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
-!KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
 !KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
@@ -1664,11 +1675,11 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #findClose:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #findFirstFile:lpFindFileData:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #findNextFile:lpFindFileData:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #findClose:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #findFirstFile:lpFindFileData:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #findNextFile:lpFindFileData:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #findResource:lpName:lpType:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
 !KernelLibrary categoriesFor: #freeConsole!**auto generated**!public!win32 functions-console! !
@@ -1683,14 +1694,15 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
-!KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
@@ -1700,7 +1712,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getProcAddress:lpProcName:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcAddressDWORD:lpProcName:!private!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
@@ -1708,8 +1720,8 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getSystemTimeAsFileTime:!**auto generated**!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getSystemTimePreciseAsFileTime:!**auto generated**!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
@@ -1735,8 +1747,8 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #localFree:!**auto generated**!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #lstrlenW:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file management! !
+!KernelLibrary categoriesFor: #moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #openProcess:bInheritHandle:dwProcessId:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #outputDebugString:!public!win32 functions-debugging! !
@@ -1744,18 +1756,18 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #queryPerformanceCounter:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setConsoleCP:!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setConsoleOutputCP:!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setConsoleTitle:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
@@ -1778,7 +1790,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #zeroMemory:length:!public!win32 functions-memory management! !
 
 !KernelLibrary class methodsFor!

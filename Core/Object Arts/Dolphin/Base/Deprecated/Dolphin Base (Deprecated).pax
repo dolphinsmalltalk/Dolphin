@@ -867,12 +867,12 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
 
 !KernelLibrary class methodsFor!
 
