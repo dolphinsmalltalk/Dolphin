@@ -613,7 +613,12 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, VMInterrupts n
 			LinkedList* suspendingList = oteList->m_location;
 			// The removed link has an artificially raised ref. count to prevent
 			// it going away should it be needed (removeLinkFromList can return nil)
-			(suspendingList->remove(interruptedProcess))->countDown();
+			suspendingList->remove(interruptedProcess);
+			// Now we switch to the interrupted process regardless of priorities
+			// There may be no switch if a new process was waiting to start when the interrupt 
+			// got delivered (the new process was put back to sleep above)
+			switchTo(interruptedProcess);
+			interruptedProcess->countDown();
 			HARDASSERT(!interruptedProcess->isFree());
 		}
 		else
@@ -623,12 +628,8 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, VMInterrupts n
 			// interrupt return primitive so that it knows that the process returning
 			// from an interrupt should be suspended.
 			oopListArg = ZeroPointer;
+			switchTo(interruptedProcess);
 		}
-
-		// Now we switch to the interrupted process regardless of priorities
-		// There may be no switch if a new process was waiting to start when the interrupt 
-		// got delivered (the new process was put back to sleep above)
-		switchTo(interruptedProcess);
 	}
 	else
 	{
@@ -821,6 +822,7 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			// that would only happen for a suspended process that is only referenced from
 			// the interrupt queue.
 			oteProcess->countDown();
+			HARDASSERT(!oteProcess->isFree());
 
 			// Handle the first interrupt only (disable interrupts)
 			sendVMInterrupt(oteProcess, static_cast<VMInterrupts>(oopInterrupt), oopArg);
