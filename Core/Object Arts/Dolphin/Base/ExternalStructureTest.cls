@@ -55,6 +55,17 @@ testEquals
 	self assert: s1 equals: s4.
 	self assert: s4 equals: s1!
 
+testExtendedErrorInfo
+	"Tests that extended error info is accessed on failed external API calls through COM interfaces if the target object supports it."
+
+	| script errorInfo |
+	script := IScriptControl new.
+	self assert: script supportsErrorInfo.
+	errorInfo := [script eval: '1+2'] on: HRESULTError do: [:ex | ex errorInfo].
+	self assert: errorInfo notNil.
+	self assert: errorInfo source equals: 'ScriptControl'.
+	self assert: errorInfo guid equals: IScriptControl guid!
+
 testIsNull
 	| struct |
 	self assert: FILETIME newPointer isNull.
@@ -78,5 +89,6 @@ testIsNull
 	self assert: struct isNull.! !
 !ExternalStructureTest categoriesFor: #testCompileDefinition!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testEquals!public!unit tests! !
+!ExternalStructureTest categoriesFor: #testExtendedErrorInfo!public!unit tests! !
 !ExternalStructureTest categoriesFor: #testIsNull!public!unit tests! !
 
