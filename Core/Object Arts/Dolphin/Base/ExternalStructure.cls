@@ -300,9 +300,10 @@ invalidCall: anInteger
 	descriptor := method descriptor.
 	anInteger < 0
 		ifTrue: 
-			[^descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-				ifTrue: [HRESULTError signalFailureCode: (anInteger bitOr: HRESULT.FACILITY_NT_BIT)]
-				ifFalse: [HRESULTError signalFailureCode: anInteger]].
+			[^self hresultError: (HRESULT
+						decodePrimitiveFailureCode: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+								ifTrue: [anInteger bitOr: HRESULT.FACILITY_NT_BIT]
+								ifFalse: [anInteger]))].
 	anInteger >= 16r10000
 		ifTrue: 
 			[| i arg |
