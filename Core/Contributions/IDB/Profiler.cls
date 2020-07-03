@@ -200,10 +200,10 @@ reset
 
 	Default := nil!
 
-samplingInterval: anInteger 
-	"Set the sampling interval, the delay between samples being taken, to anInteger"
+samplingInterval: aDuration 
+	"Set the sampling interval, the delay between samples being taken, to the <Duration> argument"
 
-	self default samplingInterval: anInteger!
+	self default samplingInterval: aDuration!
 
 startSampling
 	"Tells the profiler to satrt taking samples and to continue until either the processed 

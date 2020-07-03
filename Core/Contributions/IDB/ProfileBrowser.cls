@@ -233,7 +233,7 @@ startProfiler
 
 	ProfilerSetupDialog showModal isNil ifTrue: [^self].
 	Profiler
-		samplingInterval: ProfilerSetupDialog interval * 1000;
+		samplingInterval: ProfilerSetupDialog interval milliseconds;
 		profile: ProfilerSetupDialog profiledBlock
 			inSetNamed: ProfilerSetupDialog sampleSetName
 			collect: ProfilerSetupDialog isCollect
