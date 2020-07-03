@@ -404,7 +404,7 @@ calcArgSizes
 	"self instanceCount > 0 ifTrue: [ Warning signal: 'Attempting to redefine COM Interface with outstanding instances' ]."
 	sizes := functions collect: [ :cb | cb argumentsSize ].
 	count := functions size.
-	argSizes ifNil: [argSizes := ByteArray newFixed: count*4].
+	(argSizes isNil or: [argSizes size < (count*4)]) ifTrue: [argSizes := ByteArray newFixed: count*4].
 	1 to: count do: [ :i |
 		argSizes dwordAtOffset: (i-1*4) put: (sizes at: i) ].!
 
