@@ -24,6 +24,11 @@ _descriptionFormat
 		ifTrue: ['%2: %4']
 		ifFalse: ['HRESULT Error 0x%1!!X!!: %4 (%3)']!
 
+errorInfo
+	"Private - Answer the IErrorInfo/EXCEPINFO associated with the receiver."
+
+	^errorInfo!
+
 errorInfo: err
 	"Private - Set the IErrorInfo/EXCEPINFO associated with the receiver."
 
@@ -68,6 +73,7 @@ statusCode
 	^self hresult statusCode! !
 !HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
 !HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
+!HRESULTError categoriesFor: #errorInfo!accessing!private! !
 !HRESULTError categoriesFor: #errorInfo:!accessing!private! !
 !HRESULTError categoriesFor: #hasMessageText!private!testing! !
 !HRESULTError categoriesFor: #hresult!accessing!public! !

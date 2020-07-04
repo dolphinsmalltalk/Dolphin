@@ -6,11 +6,33 @@ IDispatch subclass: #ADODB_Collection
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
 ADODB_Collection guid: (IID fromString: '{00000512-0000-0010-8000-00AA006D2EA4}')!
-ADODB_Collection comment: '<ADODB_Collection> is a wrapper class for the COM interface ''ADODB._Collection'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB_Collection comment: '`ADODB_Collection` is a wrapper class for the COM interface ''ADODB._Collection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00000512-0000-0010-8000-00aa006d2ea4), 
+	nonextensible, 
+	dual
+]
+interface _Collection : IDispatch
+ {
+	[id(0x00000001), propget, helpcontext(0x0012c91a)]
+	HRESULT __stdcall Count(
+		[out, retval]long* c);
+	[id(0xfffffffc), restricted]
+	HRESULT __stdcall _NewEnum(
+		[out, retval]IUnknown** ppvObject);
+	[id(0x00000002), helpcontext(0x0012c8da)]
+	HRESULT __stdcall Refresh();
+};
+```
+'!
 !ADODB_Collection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODB_Collection methodsFor!
 
@@ -20,14 +42,13 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self _NewEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 _NewEnum: ppvObject
 	"Private - Invoke the _NewEnum() method of the COM object.
 
 		HRESULT __stdcall _NewEnum(
-			[out, retval] IUnknown** ppvObject);"
+			[out, retval]IUnknown** ppvObject);"
 
 	<virtual stdcall: hresult 9 IUnknown**>
 	^self invalidCall: _failureCode!
@@ -36,15 +57,15 @@ count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Count: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_Count: c
 	"Private - Get the value of the 'Count' property of the receiver.
-				HRESULT __stdcall Count(
-			[out, retval] long* c);"
+
+		HRESULT __stdcall Count(
+			[out, retval]long* c);"
 
 	<virtual stdcall: hresult 8 sdword*>
 	^self invalidCall: _failureCode!

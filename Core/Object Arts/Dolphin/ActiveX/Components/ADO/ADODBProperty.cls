@@ -6,11 +6,44 @@ IDispatch subclass: #ADODBProperty
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
 ADODBProperty guid: (IID fromString: '{00000503-0000-0010-8000-00AA006D2EA4}')!
-ADODBProperty comment: '<ADODBProperty> is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBProperty comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00000503-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c907), 
+	nonextensible, 
+	dual
+]
+interface Property : IDispatch
+ {
+	[id(0000000000), propget, helpcontext(0x0012c94d)]
+	HRESULT __stdcall Value(
+		[out, retval]VARIANT* pval);
+	[id(0000000000), propput, helpcontext(0x0012c94d)]
+	HRESULT __stdcall Value(
+		[in]VARIANT pval);
+	[id(0x60020002), propget, helpcontext(0x0012c92f)]
+	HRESULT __stdcall Name(
+		[out, retval]BSTR* pbstr);
+	[id(0x60020003), propget, helpcontext(0x0012c94a)]
+	HRESULT __stdcall Type(
+		[out, retval]DataTypeEnum* ptype);
+	[id(0x60020004), propget, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[out, retval]long* plAttributes);
+	[id(0x60020004), propput, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[in]long plAttributes);
+};
+```
+'!
 !ADODBProperty categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBProperty methodsFor!
 
@@ -18,45 +51,47 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 attributes: plAttributes
 	"Set the 'Attributes' property of the receiver to the <sdword> value of the argument."
 
-	self put_Attributes: plAttributes
-!
+	self put_Attributes: plAttributes!
 
 get_Attributes: plAttributes
 	"Private - Get the value of the 'Attributes' property of the receiver.
-				HRESULT __stdcall Attributes(
-			[out, retval] long* plAttributes);"
+
+		HRESULT __stdcall Attributes(
+			[out, retval]long* plAttributes);"
 
 	<virtual stdcall: hresult 12 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstr
 	"Private - Get the value of the 'Name' property of the receiver.
-				HRESULT __stdcall Name(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall Name(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 10 bstr*>
 	^self invalidCall: _failureCode!
 
 get_Type: ptype
 	"Private - Get the value of the 'Type' property of the receiver.
-				HRESULT __stdcall Type(
-			[out, retval] DataTypeEnum* ptype);"
+
+		HRESULT __stdcall Type(
+			[out, retval]DataTypeEnum* ptype);"
 
 	<virtual stdcall: hresult 11 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Value: pval
 	"Private - Get the value of the 'Value' property of the receiver.
-				HRESULT __stdcall Value(
-			[out, retval] VARIANT* pval);"
+
+		HRESULT __stdcall Value(
+			[out, retval]VARIANT* pval);"
 
 	<virtual stdcall: hresult 8 variant*>
 	^self invalidCall: _failureCode!
@@ -77,8 +112,7 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 printValueOn: aStream
 	aStream
@@ -89,8 +123,9 @@ printValueOn: aStream
 put_Attributes: plAttributes
 	"Private - Set the value of the 'Attributes' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plAttributes.
-				HRESULT __stdcall Attributes(
-			[in] long plAttributes);"
+
+		HRESULT __stdcall Attributes(
+			[in]long plAttributes);"
 
 	<virtual stdcall: hresult 13 sdword>
 	^self invalidCall: _failureCode!
@@ -98,8 +133,9 @@ put_Attributes: plAttributes
 put_Value: pval
 	"Private - Set the value of the 'Value' property of the object wrapped by the 
 	 receiver to the <variant> argument, pval.
-				HRESULT __stdcall Value(
-			[in] VARIANT pval);"
+
+		HRESULT __stdcall Value(
+			[in]VARIANT pval);"
 
 	<virtual stdcall: hresult 9 variant>
 	^self invalidCall: _failureCode!
@@ -108,10 +144,9 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Type: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the <variant> value of the 'Value' property of the receiver."
@@ -119,14 +154,12 @@ value
 	| answer |
 	answer := VARIANT new.
 	self get_Value: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value: pval
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
-	self put_Value: pval asVariant
-! !
+	self put_Value: pval asVariant! !
 !ADODBProperty categoriesFor: #attributes!**auto generated**!properties!public! !
 !ADODBProperty categoriesFor: #attributes:!**auto generated**!properties!public! !
 !ADODBProperty categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Property!private! !

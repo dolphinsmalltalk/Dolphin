@@ -20,21 +20,22 @@ dso
 	| answer |
 	answer := IUnknown newPointer.
 	self get_DSO: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_DSO: ppDSO
 	"Private - Get the value of the 'DSO' property of the receiver.
-				HRESULT __stdcall DSO(
-			[out, retval] IUnknown** ppDSO);"
+
+		HRESULT __stdcall DSO(
+			[out, retval]IUnknown** ppDSO);"
 
 	<virtual stdcall: hresult 4 IUnknown**>
 	^self invalidCall: _failureCode!
 
 get_Session: ppSession
 	"Private - Get the value of the 'Session' property of the receiver.
-				HRESULT __stdcall Session(
-			[out, retval] IUnknown** ppSession);"
+
+		HRESULT __stdcall Session(
+			[out, retval]IUnknown** ppSession);"
 
 	<virtual stdcall: hresult 5 IUnknown**>
 	^self invalidCall: _failureCode!
@@ -45,15 +46,14 @@ session
 	| answer |
 	answer := IUnknown newPointer.
 	self get_Session: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 WrapDSOandSession: pDSO pSession: pSession
 	"Invoke the WrapDSOandSession() method of the COM object.
 
 		HRESULT __stdcall WrapDSOandSession(
-			[in] IUnknown* pDSO,
-			[in] IUnknown* pSession);"
+			[in]IUnknown* pDSO,
+			[in]IUnknown* pSession);"
 
 	<virtual stdcall: hresult 6 IUnknown* IUnknown*>
 	^self invalidCall: _failureCode! !

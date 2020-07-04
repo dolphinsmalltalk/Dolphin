@@ -6,18 +6,36 @@ IDispatch subclass: #ADODB_ADO
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
 ADODB_ADO guid: (IID fromString: '{00000534-0000-0010-8000-00AA006D2EA4}')!
-ADODB_ADO comment: '<ADODB_ADO> is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB_ADO comment: '`ADODB_ADO` is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00000534-0000-0010-8000-00aa006d2ea4), 
+	nonextensible, 
+	dual
+]
+interface _ADO : IDispatch
+ {
+	[id(0x000001f4), propget, helpcontext(0x0012c900)]
+	HRESULT __stdcall Properties(
+		[out, retval]Properties** ppvObject);
+};
+```
+'!
 !ADODB_ADO categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODB_ADO methodsFor!
 
 get_Properties: ppvObject
 	"Private - Get the value of the 'Properties' property of the receiver.
-				HRESULT __stdcall Properties(
-			[out, retval] Properties** ppvObject);"
+
+		HRESULT __stdcall Properties(
+			[out, retval]Properties** ppvObject);"
 
 	<virtual stdcall: hresult 8 ADODBProperties**>
 	^self invalidCall: _failureCode!
@@ -38,8 +56,7 @@ properties
 	| answer |
 	answer := ADODBProperties newPointer.
 	self get_Properties: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !ADODB_ADO categoriesFor: #get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
 !ADODB_ADO categoriesFor: #isExtensible!**auto generated**!public!testing! !
 !ADODB_ADO categoriesFor: #isVBCollection!**auto generated**!public!testing! !

@@ -144,6 +144,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
+	'..\ActiveX\Components\Scripting\ActiveX Scripting'
 	'..\System\Trace\Debug Trace Stream'
 	'..\IDE\Base\Development System'
 	'Dolphin'

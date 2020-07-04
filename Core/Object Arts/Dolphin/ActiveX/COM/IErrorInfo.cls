@@ -93,6 +93,12 @@ GetSource: pBstrSource
 	<virtual stdcall: hresult 5 bstr*>
 	^self invalidCall: _failureCode!
 
+guid
+	| answer |
+	answer := GUID new.
+	self GetGUID: answer.
+	^answer!
+
 helpContext
 	"Answer the <integer> help context associated with the receiver."
 
@@ -146,6 +152,7 @@ sourceInterface
 !IErrorInfo categoriesFor: #GetHelpContext:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
 !IErrorInfo categoriesFor: #GetHelpFile:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
 !IErrorInfo categoriesFor: #GetSource:!**auto generated**!COM Interfaces-OAIDL.IErrorInfo!public! !
+!IErrorInfo categoriesFor: #guid!accessing!public! !
 !IErrorInfo categoriesFor: #helpContext!accessing!public! !
 !IErrorInfo categoriesFor: #helpFile!accessing!public! !
 !IErrorInfo categoriesFor: #printOn:!printing!public! !

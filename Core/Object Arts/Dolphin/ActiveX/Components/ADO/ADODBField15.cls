@@ -5,7 +5,7 @@ ADODB_ADO subclass: #ADODBField15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBField15 guid: (IID fromString: '{00000505-0000-0010-8000-00AA006D2EA4}')!
+ADODBField15 guid: (IID fromString: '{00001505-0000-0010-8000-00AA006D2EA4}')!
 ADODBField15 comment: '<ADODBField15> is a wrapper class for the COM interface ''ADODB.Field15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -72,22 +72,20 @@ actualSize
 	"Answer the <sdword> value of the 'ActualSize' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_ActualSize: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 appendChunk: data
 	"Invoke the AppendChunk() method of the COM object."
 
-	^self AppendChunk: data asVariant
-!
+	^self AppendChunk: data asVariant!
 
 AppendChunk: data
 	"Private - Invoke the AppendChunk() method of the COM object.
 
 		HRESULT __stdcall AppendChunk(
-			[in] VARIANT Data);"
+			[in]VARIANT Data);"
 
 	<virtual stdcall: hresult 18 variant>
 	^self invalidCall: _failureCode!
@@ -96,96 +94,104 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 definedSize
 	"Answer the <sdword> value of the 'DefinedSize' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_DefinedSize: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_ActualSize: pl
 	"Private - Get the value of the 'ActualSize' property of the receiver.
-				HRESULT __stdcall ActualSize(
-			[out, retval] long* pl);"
+
+		HRESULT __stdcall ActualSize(
+			[out, retval]long* pl);"
 
 	<virtual stdcall: hresult 9 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Attributes: pl
 	"Private - Get the value of the 'Attributes' property of the receiver.
-				HRESULT __stdcall Attributes(
-			[out, retval] long* pl);"
+
+		HRESULT __stdcall Attributes(
+			[out, retval]long* pl);"
 
 	<virtual stdcall: hresult 10 sdword*>
 	^self invalidCall: _failureCode!
 
 get_DefinedSize: pl
 	"Private - Get the value of the 'DefinedSize' property of the receiver.
-				HRESULT __stdcall DefinedSize(
-			[out, retval] long* pl);"
+
+		HRESULT __stdcall DefinedSize(
+			[out, retval]long* pl);"
 
 	<virtual stdcall: hresult 11 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstr
 	"Private - Get the value of the 'Name' property of the receiver.
-				HRESULT __stdcall Name(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall Name(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 12 bstr*>
 	^self invalidCall: _failureCode!
 
 get_NumericScale: pbNumericScale
 	"Private - Get the value of the 'NumericScale' property of the receiver.
-				HRESULT __stdcall NumericScale(
-			[out, retval] BYTE* pbNumericScale);"
+
+		HRESULT __stdcall NumericScale(
+			[out, retval]BYTE* pbNumericScale);"
 
 	<virtual stdcall: hresult 17 byte*>
 	^self invalidCall: _failureCode!
 
 get_OriginalValue: pvar
 	"Private - Get the value of the 'OriginalValue' property of the receiver.
-				HRESULT __stdcall OriginalValue(
-			[out, retval] VARIANT* pvar);"
+
+		HRESULT __stdcall OriginalValue(
+			[out, retval]VARIANT* pvar);"
 
 	<virtual stdcall: hresult 20 variant*>
 	^self invalidCall: _failureCode!
 
 get_Precision: pbPrecision
 	"Private - Get the value of the 'Precision' property of the receiver.
-				HRESULT __stdcall Precision(
-			[out, retval] BYTE* pbPrecision);"
+
+		HRESULT __stdcall Precision(
+			[out, retval]BYTE* pbPrecision);"
 
 	<virtual stdcall: hresult 16 byte*>
 	^self invalidCall: _failureCode!
 
 get_Type: pDataType
 	"Private - Get the value of the 'Type' property of the receiver.
-				HRESULT __stdcall Type(
-			[out, retval] DataTypeEnum* pDataType);"
+
+		HRESULT __stdcall Type(
+			[out, retval]DataTypeEnum* pDataType);"
 
 	<virtual stdcall: hresult 13 sdword*>
 	^self invalidCall: _failureCode!
 
 get_UnderlyingValue: pvar
 	"Private - Get the value of the 'UnderlyingValue' property of the receiver.
-				HRESULT __stdcall UnderlyingValue(
-			[out, retval] VARIANT* pvar);"
+
+		HRESULT __stdcall UnderlyingValue(
+			[out, retval]VARIANT* pvar);"
 
 	<virtual stdcall: hresult 21 variant*>
 	^self invalidCall: _failureCode!
 
 get_Value: pvar
 	"Private - Get the value of the 'Value' property of the receiver.
-				HRESULT __stdcall Value(
-			[out, retval] VARIANT* pvar);"
+
+		HRESULT __stdcall Value(
+			[out, retval]VARIANT* pvar);"
 
 	<virtual stdcall: hresult 14 variant*>
 	^self invalidCall: _failureCode!
@@ -195,18 +201,15 @@ getChunk: length
 
 	| answer |
 	answer := VARIANT new.
-	self
-		GetChunk: length
-		pvar: answer.
-	^answer asObject
-!
+	self GetChunk: length pvar: answer.
+	^answer asObject!
 
 GetChunk: length pvar: pvar
 	"Private - Invoke the GetChunk() method of the COM object.
 
 		HRESULT __stdcall GetChunk(
-			[in] long Length,
-			[out, retval] VARIANT* pvar);"
+			[in]long Length,
+			[out, retval]VARIANT* pvar);"
 
 	<virtual stdcall: hresult 19 sdword variant*>
 	^self invalidCall: _failureCode!
@@ -217,17 +220,15 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 numericScale
 	"Answer the <byte> value of the 'NumericScale' property of the receiver."
 
 	| answer |
-	answer := (BYTE new).
+	answer := BYTE new.
 	self get_NumericScale: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 originalValue
 	"Answer the <variant> value of the 'OriginalValue' property of the receiver."
@@ -235,23 +236,22 @@ originalValue
 	| answer |
 	answer := VARIANT new.
 	self get_OriginalValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 precision
 	"Answer the <byte> value of the 'Precision' property of the receiver."
 
 	| answer |
-	answer := (BYTE new).
+	answer := BYTE new.
 	self get_Precision: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 put_Value: pvar
 	"Private - Set the value of the 'Value' property of the object wrapped by the 
 	 receiver to the <variant> argument, pvar.
-				HRESULT __stdcall Value(
-			[in] VARIANT pvar);"
+
+		HRESULT __stdcall Value(
+			[in]VARIANT pvar);"
 
 	<virtual stdcall: hresult 15 variant>
 	^self invalidCall: _failureCode!
@@ -260,10 +260,9 @@ type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Type: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 underlyingValue
 	"Answer the <variant> value of the 'UnderlyingValue' property of the receiver."
@@ -271,8 +270,7 @@ underlyingValue
 	| answer |
 	answer := VARIANT new.
 	self get_UnderlyingValue: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the <variant> value of the 'Value' property of the receiver."
@@ -280,14 +278,12 @@ value
 	| answer |
 	answer := VARIANT new.
 	self get_Value: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
-	self put_Value: pvar asVariant
-! !
+	self put_Value: pvar asVariant! !
 !ADODBField15 categoriesFor: #actualSize!**auto generated**!properties!public! !
 !ADODBField15 categoriesFor: #appendChunk:!**auto generated**!methods!public! !
 !ADODBField15 categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-Field15!private! !

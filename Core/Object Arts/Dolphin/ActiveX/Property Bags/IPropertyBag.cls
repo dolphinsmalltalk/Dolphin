@@ -6,16 +6,39 @@ IUnknown subclass: #IPropertyBag
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IPropertyBag guid: (IID fromString: '{55272A00-42CB-11CE-8135-00AA004BB851}')!
-IPropertyBag comment: '<IPropertyBag> is a wrapper class for the COM interface ''OCIDL.IPropertyBag'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+IPropertyBag comment: '`IPropertyBag` is a wrapper class for the COM interface ''Win32.IPropertyBag'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(55272a00-42cb-11ce-8135-00aa004bb851)
+]
+interface IPropertyBag : IUnknown
+ {
+	[id(0x60010000)]
+	HRESULT __stdcall RemoteRead(
+		[in]LPWSTR pszPropName,
+		[out]VARIANT* pVar,
+		[in]IErrorLog* pErrorLog,
+		[in]unsigned long varType,
+		[in]IUnknown* pUnkObj);
+	[id(0x60010001)]
+	HRESULT __stdcall Write(
+		[in]LPWSTR pszPropName,
+		[in]VARIANT* pVar);
+};
+```
+'!
 !IPropertyBag categoriesForClass!COM-Interfaces! !
 !IPropertyBag methodsFor!
 
 read: pszPropName pErrorLog: pErrorLog
-	"Answer the <VARIANT> result of invoking the COM Object's Read() method."
+	"Answer the <VARIANT> result of invoking the RemoteRead() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -26,36 +49,32 @@ read: pszPropName pErrorLog: pErrorLog
 	^answer asObject!
 
 Read: pszPropName pVar: pVar pErrorLog: pErrorLog
-	"Private - Invoke the Read() method of the COM object wrapped by the receiver.
+	"Private - Invoke the RemoteRead() method of the COM object.
 
 		HRESULT __stdcall Read(
-			[in] LPWSTR pszPropName,
-			[out] VARIANT* pVar,
-			[in] IErrorLog* pErrorLog,
-			[in] unsigned long varType,
-			[in] IUnknown* pUnkObj);
-	"
+			[in]LPWSTR pszPropName,
+			[out]VARIANT* pVar,
+			[in]IErrorLog* pErrorLog);"
 
 	<virtual stdcall: hresult 4 lpwstr variant* IErrorLog*>
 	^self invalidCall: _failureCode!
 
 write: pszPropName pVar: pVar
-	"Invoke the Write() method of the COM Object."
+	"Invoke the Write() method of the COM object."
 
-	self Write: pszPropName asUtf16String pVar: pVar asVariant!
+	^self Write: pszPropName asUtf16String pVar: pVar asVariant!
 
 Write: pszPropName pVar: pVar
-	"Private - Invoke the Write() method of the COM object wrapped by the receiver.
+	"Private - Invoke the Write() method of the COM object.
 
 		HRESULT __stdcall Write(
-			[in] LPWSTR pszPropName,
-			[in] VARIANT* pVar);
-	"
+			[in]LPWSTR pszPropName,
+			[in]VARIANT* pVar);"
 
 	<virtual stdcall: hresult 5 lpwstr variant*>
 	^self invalidCall: _failureCode! !
-!IPropertyBag categoriesFor: #read:pErrorLog:!methods!public! !
-!IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!COM Interfaces-IPropertyBag!private! !
+!IPropertyBag categoriesFor: #read:pErrorLog:!**auto generated**!methods!public! !
+!IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
 !IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !
 !IPropertyBag categoriesFor: #Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
 

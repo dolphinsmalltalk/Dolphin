@@ -5,12 +5,117 @@ ADODB_ADO subclass: #ADODBConnection15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBConnection15 guid: (IID fromString: '{00000515-0000-0010-8000-00AA006D2EA4}')!
-ADODBConnection15 comment: '<ADODBConnection15> is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBConnection15 guid: (IID fromString: '{00001515-0000-0010-8000-00AA006D2EA4}')!
+ADODBConnection15 comment: '`ADODBConnection15` is a wrapper class for the COM interface ''ADODB.Connection15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00001515-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c901), 
+	hidden, 
+	dual
+]
+interface Connection15 : _ADO
+ {
+	[id(0000000000), propget, helpcontext(0x0012c918)]
+	HRESULT __stdcall ConnectionString(
+		[out, retval]BSTR* pbstr);
+	[id(0000000000), propput, helpcontext(0x0012c918)]
+	HRESULT __stdcall ConnectionString(
+		[in]BSTR pbstr);
+	[id(0x00000002), propget, helpcontext(0x0012c914)]
+	HRESULT __stdcall CommandTimeout(
+		[out, retval]long* plTimeout);
+	[id(0x00000002), propput, helpcontext(0x0012c914)]
+	HRESULT __stdcall CommandTimeout(
+		[in]long plTimeout);
+	[id(0x00000003), propget, helpcontext(0x0012c919)]
+	HRESULT __stdcall ConnectionTimeout(
+		[out, retval]long* plTimeout);
+	[id(0x00000003), propput, helpcontext(0x0012c919)]
+	HRESULT __stdcall ConnectionTimeout(
+		[in]long plTimeout);
+	[id(0x00000004), propget, helpcontext(0x0012c94e)]
+	HRESULT __stdcall Version(
+		[out, retval]BSTR* pbstr);
+	[id(0x00000005), helpcontext(0x0012c8bf)]
+	HRESULT __stdcall Close();
+	[id(0x00000006), helpcontext(0x0012c8cc)]
+	HRESULT __stdcall Execute(
+		[in]BSTR CommandText,
+		[out, optional]VARIANT* RecordsAffected,
+		[in, defaultvalue(-1)]long Options,
+		[out, retval]_Recordset** ppiRset);
+	[id(0x00000007), helpcontext(0x0012c8b7)]
+	HRESULT __stdcall BeginTrans(
+		[out, retval]long* TransactionLevel);
+	[id(0x00000008), helpcontext(0x000f4248)]
+	HRESULT __stdcall CommitTrans();
+	[id(0x00000009), helpcontext(0x000f4249)]
+	HRESULT __stdcall RollbackTrans();
+	[id(0x0000000a), helpcontext(0x0012c8d6)]
+	HRESULT __stdcall Open(
+		[in, defaultvalue("")]BSTR ConnectionString,
+		[in, defaultvalue("")]BSTR UserID,
+		[in, defaultvalue("")]BSTR Password,
+		[in, defaultvalue(-1)]long Options);
+	[id(0x0000000b), propget, helpcontext(0x0012c8fd)]
+	HRESULT __stdcall Errors(
+		[out, retval]Errors** ppvObject);
+	[id(0x0000000c), propget, helpcontext(0x0012c91d)]
+	HRESULT __stdcall DefaultDatabase(
+		[out, retval]BSTR* pbstr);
+	[id(0x0000000c), propput, helpcontext(0x0012c91d)]
+	HRESULT __stdcall DefaultDatabase(
+		[in]BSTR pbstr);
+	[id(0x0000000d), propget, helpcontext(0x0012c92a)]
+	HRESULT __stdcall IsolationLevel(
+		[out, retval]IsolationLevelEnum* Level);
+	[id(0x0000000d), propput, helpcontext(0x0012c92a)]
+	HRESULT __stdcall IsolationLevel(
+		[in]IsolationLevelEnum Level);
+	[id(0x0000000e), propget, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[out, retval]long* plAttr);
+	[id(0x0000000e), propput, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[in]long plAttr);
+	[id(0x0000000f), propget, helpcontext(0x0012c91b)]
+	HRESULT __stdcall CursorLocation(
+		[out, retval]CursorLocationEnum* plCursorLoc);
+	[id(0x0000000f), propput, helpcontext(0x0012c91b)]
+	HRESULT __stdcall CursorLocation(
+		[in]CursorLocationEnum plCursorLoc);
+	[id(0x00000010), propget, helpcontext(0x0012c92e)]
+	HRESULT __stdcall Mode(
+		[out, retval]ConnectModeEnum* plMode);
+	[id(0x00000010), propput, helpcontext(0x0012c92e)]
+	HRESULT __stdcall Mode(
+		[in]ConnectModeEnum plMode);
+	[id(0x00000011), propget, helpcontext(0x0012c93a)]
+	HRESULT __stdcall Provider(
+		[out, retval]BSTR* pbstr);
+	[id(0x00000011), propput, helpcontext(0x0012c93a)]
+	HRESULT __stdcall Provider(
+		[in]BSTR pbstr);
+	[id(0x00000012), propget, helpcontext(0x0012c948)]
+	HRESULT __stdcall State(
+		[out, retval]long* plObjState);
+	[id(0x00000013), helpcontext(0x0012c8d8)]
+	HRESULT __stdcall OpenSchema(
+		[in]SchemaEnum Schema,
+		[in, optional]VARIANT Restrictions,
+		[in, optional]VARIANT SchemaID,
+		[out, retval]_Recordset** pprset);
+};
+```
+'!
 !ADODBConnection15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBConnection15 methodsFor!
 
@@ -18,31 +123,28 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 attributes: plAttr
 	"Set the 'Attributes' property of the receiver to the <sdword> value of the argument."
 
-	self put_Attributes: plAttr
-!
+	self put_Attributes: plAttr!
 
 beginTrans
 	"Answer the <SDWORD> result of invoking the BeginTrans() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self BeginTrans: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 BeginTrans: transactionLevel
 	"Private - Invoke the BeginTrans() method of the COM object.
 
 		HRESULT __stdcall BeginTrans(
-			[out, retval] long* TransactionLevel);"
+			[out, retval]long* TransactionLevel);"
 
 	<virtual stdcall: hresult 18 sdword*>
 	^self invalidCall: _failureCode!
@@ -59,16 +161,14 @@ commandTimeout
 	"Answer the <sdword> value of the 'CommandTimeout' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_CommandTimeout: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 commandTimeout: plTimeout
 	"Set the 'CommandTimeout' property of the receiver to the <sdword> value of the argument."
 
-	self put_CommandTimeout: plTimeout
-!
+	self put_CommandTimeout: plTimeout!
 
 CommitTrans
 	"Invoke the CommitTrans() method of the COM object.
@@ -84,44 +184,38 @@ connectionString
 	| answer |
 	answer := BSTR new.
 	self get_ConnectionString: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 connectionString: pbstr
 	"Set the 'ConnectionString' property of the receiver to the <bstr> value of the argument."
 
-	self put_ConnectionString: pbstr
-!
+	self put_ConnectionString: pbstr!
 
 connectionTimeout
 	"Answer the <sdword> value of the 'ConnectionTimeout' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_ConnectionTimeout: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 connectionTimeout: plTimeout
 	"Set the 'ConnectionTimeout' property of the receiver to the <sdword> value of the argument."
 
-	self put_ConnectionTimeout: plTimeout
-!
+	self put_ConnectionTimeout: plTimeout!
 
 cursorLocation
 	"Answer the <sdword> value of the 'CursorLocation' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_CursorLocation: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 cursorLocation: plCursorLoc
 	"Set the 'CursorLocation' property of the receiver to the <sdword> value of the argument."
 
-	self put_CursorLocation: plCursorLoc
-!
+	self put_CursorLocation: plCursorLoc!
 
 defaultDatabase
 	"Answer the <bstr> value of the 'DefaultDatabase' property of the receiver."
@@ -129,14 +223,12 @@ defaultDatabase
 	| answer |
 	answer := BSTR new.
 	self get_DefaultDatabase: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 defaultDatabase: pbstr
 	"Set the 'DefaultDatabase' property of the receiver to the <bstr> value of the argument."
 
-	self put_DefaultDatabase: pbstr
-!
+	self put_DefaultDatabase: pbstr!
 
 errors
 	"Answer the <ADODBErrors> value of the 'Errors' property of the receiver."
@@ -144,137 +236,142 @@ errors
 	| answer |
 	answer := ADODBErrors newPointer.
 	self get_Errors: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 execute: commandText
 	"Invoke the Execute() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 execute: commandText
-		 options: -1!
+	^self execute: commandText options: -1!
 
 execute: commandText options: options
 	"Invoke the Execute() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: VARIANT new;
-				basicAt: 2 put: ADODB_Recordset newPointer;
-				yourself.
+	| outputs |
+	outputs := {VARIANT new. ADODB_Recordset newPointer}.
 	self
 		Execute: commandText
-		RecordsAffected: (answer basicAt: 1)
+		RecordsAffected: (outputs basicAt: 1)
 		Options: options
-		ppiRset: (answer basicAt: 2).
-	^answer collect: [:e | e asObject]
-!
+		ppiRset: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 Execute: commandText RecordsAffected: recordsAffected Options: options ppiRset: ppiRset
 	"Private - Invoke the Execute() method of the COM object.
 
 		HRESULT __stdcall Execute(
-			[in] BSTR CommandText,
-			[out, optional] VARIANT* RecordsAffected,
-			[in, optional, defaultvalue(-1)] long Options,
-			[out, retval] _Recordset** ppiRset);"
+			[in]BSTR CommandText,
+			[out, optional]VARIANT* RecordsAffected,
+			[in, defaultvalue(-1)]long Options,
+			[out, retval]_Recordset** ppiRset);"
 
 	<virtual stdcall: hresult 17 bstr variant* sdword ADODB_Recordset**>
 	^self invalidCall: _failureCode!
 
 get_Attributes: plAttr
 	"Private - Get the value of the 'Attributes' property of the receiver.
-				HRESULT __stdcall Attributes(
-			[out, retval] long* plAttr);"
+
+		HRESULT __stdcall Attributes(
+			[out, retval]long* plAttr);"
 
 	<virtual stdcall: hresult 27 sdword*>
 	^self invalidCall: _failureCode!
 
 get_CommandTimeout: plTimeout
 	"Private - Get the value of the 'CommandTimeout' property of the receiver.
-				HRESULT __stdcall CommandTimeout(
-			[out, retval] long* plTimeout);"
+
+		HRESULT __stdcall CommandTimeout(
+			[out, retval]long* plTimeout);"
 
 	<virtual stdcall: hresult 11 sdword*>
 	^self invalidCall: _failureCode!
 
 get_ConnectionString: pbstr
 	"Private - Get the value of the 'ConnectionString' property of the receiver.
-				HRESULT __stdcall ConnectionString(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall ConnectionString(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 9 bstr*>
 	^self invalidCall: _failureCode!
 
 get_ConnectionTimeout: plTimeout
 	"Private - Get the value of the 'ConnectionTimeout' property of the receiver.
-				HRESULT __stdcall ConnectionTimeout(
-			[out, retval] long* plTimeout);"
+
+		HRESULT __stdcall ConnectionTimeout(
+			[out, retval]long* plTimeout);"
 
 	<virtual stdcall: hresult 13 sdword*>
 	^self invalidCall: _failureCode!
 
 get_CursorLocation: plCursorLoc
 	"Private - Get the value of the 'CursorLocation' property of the receiver.
-				HRESULT __stdcall CursorLocation(
-			[out, retval] CursorLocationEnum* plCursorLoc);"
+
+		HRESULT __stdcall CursorLocation(
+			[out, retval]CursorLocationEnum* plCursorLoc);"
 
 	<virtual stdcall: hresult 29 sdword*>
 	^self invalidCall: _failureCode!
 
 get_DefaultDatabase: pbstr
 	"Private - Get the value of the 'DefaultDatabase' property of the receiver.
-				HRESULT __stdcall DefaultDatabase(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall DefaultDatabase(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 23 bstr*>
 	^self invalidCall: _failureCode!
 
 get_Errors: ppvObject
 	"Private - Get the value of the 'Errors' property of the receiver.
-				HRESULT __stdcall Errors(
-			[out, retval] Errors** ppvObject);"
+
+		HRESULT __stdcall Errors(
+			[out, retval]Errors** ppvObject);"
 
 	<virtual stdcall: hresult 22 ADODBErrors**>
 	^self invalidCall: _failureCode!
 
 get_IsolationLevel: level
 	"Private - Get the value of the 'IsolationLevel' property of the receiver.
-				HRESULT __stdcall IsolationLevel(
-			[out, retval] IsolationLevelEnum* Level);"
+
+		HRESULT __stdcall IsolationLevel(
+			[out, retval]IsolationLevelEnum* Level);"
 
 	<virtual stdcall: hresult 25 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Mode: plMode
 	"Private - Get the value of the 'Mode' property of the receiver.
-				HRESULT __stdcall Mode(
-			[out, retval] ConnectModeEnum* plMode);"
+
+		HRESULT __stdcall Mode(
+			[out, retval]ConnectModeEnum* plMode);"
 
 	<virtual stdcall: hresult 31 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Provider: pbstr
 	"Private - Get the value of the 'Provider' property of the receiver.
-				HRESULT __stdcall Provider(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall Provider(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 33 bstr*>
 	^self invalidCall: _failureCode!
 
 get_State: plObjState
 	"Private - Get the value of the 'State' property of the receiver.
-				HRESULT __stdcall State(
-			[out, retval] long* plObjState);"
+
+		HRESULT __stdcall State(
+			[out, retval]long* plObjState);"
 
 	<virtual stdcall: hresult 35 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Version: pbstr
 	"Private - Get the value of the 'Version' property of the receiver.
-				HRESULT __stdcall Version(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall Version(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 15 bstr*>
 	^self invalidCall: _failureCode!
@@ -288,21 +385,19 @@ isolationLevel
 	"Answer the <sdword> value of the 'IsolationLevel' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_IsolationLevel: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 isolationLevel: level
 	"Set the 'IsolationLevel' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsolationLevel: level
-!
+	self put_IsolationLevel: level!
 
 isVBCollection
 	"Answer whether the receiver is a VB style collection.
-	The receiver is dynamically extensible, so we cannot determine this from the
-	type library, and must perform a run-time check for the _NewEnum property."
+	The receiver is dynamically extensible, so we cannot determine this from the type library,
+       and must perform a run-time check for the _NewEnum property."
 
 	^self has_NewEnum!
 
@@ -310,26 +405,24 @@ mode
 	"Answer the <sdword> value of the 'Mode' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Mode: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 mode: plMode
 	"Set the 'Mode' property of the receiver to the <sdword> value of the argument."
 
-	self put_Mode: plMode
-!
+	self put_Mode: plMode!
 
 open
 	"Invoke the Open() method of the COM object.
 	Default values are passed for all optional parameters."
 
 	^self
-		 Open: ''
-		 UserID: ''
-		 Password: ''
-		 Options: -1!
+		Open: ''
+		UserID: ''
+		Password: ''
+		Options: -1!
 
 open: aString 
 	"Open the database using the specified connection string."
@@ -344,16 +437,10 @@ Open: connectionString UserID: userID Password: password Options: options
 	"Invoke the Open() method of the COM object.
 
 		HRESULT __stdcall Open(
-			[in, optional, defaultvalue("
-
-	")] BSTR ConnectionString,
-			[in, optional, defaultvalue("
-
-	")] BSTR UserID,
-			[in, optional, defaultvalue("
-
-	")] BSTR Password,
-			[in, optional, defaultvalue(-1)] long Options);"
+			[in, defaultvalue('')]BSTR ConnectionString,
+			[in, defaultvalue('')]BSTR UserID,
+			[in, defaultvalue('')]BSTR Password,
+			[in, defaultvalue(-1)]long Options);"
 
 	<virtual stdcall: hresult 21 bstr bstr bstr sdword>
 	^self invalidCall: _failureCode!
@@ -363,9 +450,9 @@ openSchema: schema
 	Default values are passed for all optional parameters."
 
 	^self
-		 openSchema: schema
-		 restrictions: VARIANT unspecified
-		 schemaID: VARIANT unspecified!
+		openSchema: schema
+		restrictions: VARIANT unspecified
+		schemaID: VARIANT unspecified!
 
 openSchema: schema restrictions: restrictions schemaID: schemaID
 	"Answer the <ADODB_Recordset> result of invoking the OpenSchema() method of the COM object."
@@ -377,17 +464,16 @@ openSchema: schema restrictions: restrictions schemaID: schemaID
 		Restrictions: restrictions asVariant
 		SchemaID: schemaID asVariant
 		pprset: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 OpenSchema: schema Restrictions: restrictions SchemaID: schemaID pprset: pprset
 	"Private - Invoke the OpenSchema() method of the COM object.
 
 		HRESULT __stdcall OpenSchema(
-			[in] SchemaEnum Schema,
-			[in, optional] VARIANT Restrictions,
-			[in, optional] VARIANT SchemaID,
-			[out, retval] _Recordset** pprset);"
+			[in]SchemaEnum Schema,
+			[in, optional]VARIANT Restrictions,
+			[in, optional]VARIANT SchemaID,
+			[out, retval]_Recordset** pprset);"
 
 	<virtual stdcall: hresult 36 sdword variant variant ADODB_Recordset**>
 	^self invalidCall: _failureCode!
@@ -398,20 +484,19 @@ provider
 	| answer |
 	answer := BSTR new.
 	self get_Provider: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 provider: pbstr
 	"Set the 'Provider' property of the receiver to the <bstr> value of the argument."
 
-	self put_Provider: pbstr
-!
+	self put_Provider: pbstr!
 
 put_Attributes: plAttr
 	"Private - Set the value of the 'Attributes' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plAttr.
-				HRESULT __stdcall Attributes(
-			[in] long plAttr);"
+
+		HRESULT __stdcall Attributes(
+			[in]long plAttr);"
 
 	<virtual stdcall: hresult 28 sdword>
 	^self invalidCall: _failureCode!
@@ -419,8 +504,9 @@ put_Attributes: plAttr
 put_CommandTimeout: plTimeout
 	"Private - Set the value of the 'CommandTimeout' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plTimeout.
-				HRESULT __stdcall CommandTimeout(
-			[in] long plTimeout);"
+
+		HRESULT __stdcall CommandTimeout(
+			[in]long plTimeout);"
 
 	<virtual stdcall: hresult 12 sdword>
 	^self invalidCall: _failureCode!
@@ -428,8 +514,9 @@ put_CommandTimeout: plTimeout
 put_ConnectionString: pbstr
 	"Private - Set the value of the 'ConnectionString' property of the object wrapped by the 
 	 receiver to the <bstr> argument, pbstr.
-				HRESULT __stdcall ConnectionString(
-			[in] BSTR pbstr);"
+
+		HRESULT __stdcall ConnectionString(
+			[in]BSTR pbstr);"
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode!
@@ -437,8 +524,9 @@ put_ConnectionString: pbstr
 put_ConnectionTimeout: plTimeout
 	"Private - Set the value of the 'ConnectionTimeout' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plTimeout.
-				HRESULT __stdcall ConnectionTimeout(
-			[in] long plTimeout);"
+
+		HRESULT __stdcall ConnectionTimeout(
+			[in]long plTimeout);"
 
 	<virtual stdcall: hresult 14 sdword>
 	^self invalidCall: _failureCode!
@@ -446,8 +534,9 @@ put_ConnectionTimeout: plTimeout
 put_CursorLocation: plCursorLoc
 	"Private - Set the value of the 'CursorLocation' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plCursorLoc.
-				HRESULT __stdcall CursorLocation(
-			[in] CursorLocationEnum plCursorLoc);"
+
+		HRESULT __stdcall CursorLocation(
+			[in]CursorLocationEnum plCursorLoc);"
 
 	<virtual stdcall: hresult 30 sdword>
 	^self invalidCall: _failureCode!
@@ -455,8 +544,9 @@ put_CursorLocation: plCursorLoc
 put_DefaultDatabase: pbstr
 	"Private - Set the value of the 'DefaultDatabase' property of the object wrapped by the 
 	 receiver to the <bstr> argument, pbstr.
-				HRESULT __stdcall DefaultDatabase(
-			[in] BSTR pbstr);"
+
+		HRESULT __stdcall DefaultDatabase(
+			[in]BSTR pbstr);"
 
 	<virtual stdcall: hresult 24 bstr>
 	^self invalidCall: _failureCode!
@@ -464,8 +554,9 @@ put_DefaultDatabase: pbstr
 put_IsolationLevel: level
 	"Private - Set the value of the 'IsolationLevel' property of the object wrapped by the 
 	 receiver to the <sdword> argument, level.
-				HRESULT __stdcall IsolationLevel(
-			[in] IsolationLevelEnum Level);"
+
+		HRESULT __stdcall IsolationLevel(
+			[in]IsolationLevelEnum Level);"
 
 	<virtual stdcall: hresult 26 sdword>
 	^self invalidCall: _failureCode!
@@ -473,8 +564,9 @@ put_IsolationLevel: level
 put_Mode: plMode
 	"Private - Set the value of the 'Mode' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plMode.
-				HRESULT __stdcall Mode(
-			[in] ConnectModeEnum plMode);"
+
+		HRESULT __stdcall Mode(
+			[in]ConnectModeEnum plMode);"
 
 	<virtual stdcall: hresult 32 sdword>
 	^self invalidCall: _failureCode!
@@ -482,8 +574,9 @@ put_Mode: plMode
 put_Provider: pbstr
 	"Private - Set the value of the 'Provider' property of the object wrapped by the 
 	 receiver to the <bstr> argument, pbstr.
-				HRESULT __stdcall Provider(
-			[in] BSTR pbstr);"
+
+		HRESULT __stdcall Provider(
+			[in]BSTR pbstr);"
 
 	<virtual stdcall: hresult 34 bstr>
 	^self invalidCall: _failureCode!
@@ -506,24 +599,21 @@ state
 	"Answer the <sdword> value of the 'State' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_State: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value
 	"Answer the <bstr> value of the 'ConnectionString' property of the receiver.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
-	^self connectionString
-!
+	^self connectionString!
 
 value: pbstr
 	"Set the 'ConnectionString' property of the receiver to the <bstr> value of the argument.
 	This is the default value (DISPID_VALUE) property of the receiver."
 
-	self connectionString: pbstr
-!
+	self connectionString: pbstr!
 
 version
 	"Answer the <bstr> value of the 'Version' property of the receiver."
@@ -531,8 +621,7 @@ version
 	| answer |
 	answer := BSTR new.
 	self get_Version: answer.
-	^answer asObject
-! !
+	^answer asObject! !
 !ADODBConnection15 categoriesFor: #attributes!**auto generated**!properties!public! !
 !ADODBConnection15 categoriesFor: #attributes:!**auto generated**!properties!public! !
 !ADODBConnection15 categoriesFor: #beginTrans!**auto generated**!methods!public! !

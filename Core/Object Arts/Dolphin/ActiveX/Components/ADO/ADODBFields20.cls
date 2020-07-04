@@ -5,12 +5,37 @@ ADODBFields15 subclass: #ADODBFields20
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBFields20 guid: (IID fromString: '{0000054D-0000-0010-8000-00AA006D2EA4}')!
-ADODBFields20 comment: '<ADODBFields20> is a wrapper class for the COM interface ''ADODB.Fields20'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBFields20 guid: (IID fromString: '{0000154D-0000-0010-8000-00AA006D2EA4}')!
+ADODBFields20 comment: '`ADODBFields20` is a wrapper class for the COM interface ''ADODB.Fields20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-ADODBFields20 is the ADODBFields interface as defined in version 2.0 of ADO, and has been superceded by later versions (see the subclasses).'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(0000154d-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c8fe), 
+	hidden, 
+	nonextensible, 
+	dual
+]
+interface Fields20 : Fields15
+ {
+	[id(0x60040000), hidden]
+	HRESULT __stdcall _Append(
+		[in]BSTR Name,
+		[in]DataTypeEnum Type,
+		[in, defaultvalue(0)]long DefinedSize,
+		[in, defaultvalue(-1)]FieldAttributeEnum Attrib);
+	[id(0x00000004), helpcontext(0x0012f05c)]
+	HRESULT __stdcall Delete(
+		[in]VARIANT Index);
+};
+```
+'!
 !ADODBFields20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBFields20 methodsFor!
 
@@ -19,19 +44,19 @@ _append: name type: type
 	Default values are passed for all optional parameters."
 
 	^self
-		 _Append: name
-		 Type: type
-		 DefinedSize: 0
-		 Attrib: -1!
+		_Append: name
+		Type: type
+		DefinedSize: 0
+		Attrib: -1!
 
 _Append: name Type: type DefinedSize: definedSize Attrib: attrib
 	"Invoke the _Append() method of the COM object.
 
 		HRESULT __stdcall _Append(
-			[in] BSTR Name,
-			[in] DataTypeEnum Type,
-			[in, optional, defaultvalue(0)] long DefinedSize,
-			[in, optional, defaultvalue(-1)] FieldAttributeEnum Attrib);"
+			[in]BSTR Name,
+			[in]DataTypeEnum Type,
+			[in, defaultvalue(0)]long DefinedSize,
+			[in, defaultvalue(-1)]FieldAttributeEnum Attrib);"
 
 	<virtual stdcall: hresult 12 bstr sdword sdword sdword>
 	^self invalidCall: _failureCode!
@@ -39,14 +64,13 @@ _Append: name Type: type DefinedSize: definedSize Attrib: attrib
 delete: index
 	"Invoke the Delete() method of the COM object."
 
-	^self Delete: index asVariant
-!
+	^self Delete: index asVariant!
 
 Delete: index
 	"Private - Invoke the Delete() method of the COM object.
 
 		HRESULT __stdcall Delete(
-			[in] VARIANT Index);"
+			[in]VARIANT Index);"
 
 	<virtual stdcall: hresult 13 variant>
 	^self invalidCall: _failureCode! !
