@@ -6,155 +6,165 @@ IDispatch subclass: #IFontDisp
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IFontDisp guid: (IID fromString: '{BEF6E003-A874-101A-8BBA-00AA00300CAB}')!
-IFontDisp comment: '<IFontDisp> is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library (stdole2.tlb). It contains methods to get and set the properties exposed by that interface.
+IFontDisp comment: '`IFontDisp` is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 
-IFontDisp is a standard dispinterface used to represent OLE Fonts, for example to get/set the font ambient property of an ActiveX control site.'!
+IFontDisp is a standard dispinterface used to represent OLE Fonts, for example to get/set the font ambient property of an ActiveX control site.
+
+IDL definition follows:
+```
+[
+	uuid(bef6e003-a874-101a-8bba-00aa00300cab)
+]
+dispinterface Font {
+	properties:
+		[
+			id(0000000000)
+		]
+BSTR Name;
+		[
+			id(0x00000002)
+		]
+CURRENCY Size;
+		[
+			id(0x00000003)
+		]
+VARIANT_BOOL Bold;
+		[
+			id(0x00000004)
+		]
+VARIANT_BOOL Italic;
+		[
+			id(0x00000005)
+		]
+VARIANT_BOOL Underline;
+		[
+			id(0x00000006)
+		]
+VARIANT_BOOL Strikethrough;
+		[
+			id(0x00000007)
+		]
+short Weight;
+		[
+			id(0x00000008)
+		]
+short Charset;
+
+	methods:
+
+};
+```
+'!
 !IFontDisp categoriesForClass!COM-Interfaces! !
 !IFontDisp methodsFor!
 
 bold
-	"Answer the <varbool> value of the 'bold' property of the object.
-	
-		VARIANT_BOOL Bold
-	"
+	"Answer the <varbool> value of the 'Bold' property of the receiver.
+		VARIANT_BOOL Bold"
 
-	^(self getPropertyId: 3)
-!
+	^self getPropertyId: 3!
 
 bold: newVal
-	"Set the 'bold' property of the object to the <varbool> value of the argument, newVal.
-	
-		VARIANT_BOOL Bold
-	"
+	"Set the 'Bold' property of the receiver to the <varbool> value of the argument.
+		VARIANT_BOOL Bold"
 
-	self setPropertyId: 3 value: newVal
-!
+	self setPropertyId: 3 value: newVal!
 
 charset
-	"Answer the <sword> value of the 'charset' property of the object.
-	
-		short Charset
-	"
+	"Answer the <sword> value of the 'Charset' property of the receiver.
+		short Charset"
 
-	^(self getPropertyId: 8)
-!
+	^self getPropertyId: 8!
 
 charset: newVal
-	"Set the 'charset' property of the object to the <sword> value of the argument, newVal.
-	
-		short Charset
-	"
+	"Set the 'Charset' property of the receiver to the <sword> value of the argument.
+		short Charset"
 
-	self setPropertyId: 8 value: newVal
-!
+	self setPropertyId: 8 value: newVal!
 
 italic
-	"Answer the <varbool> value of the 'italic' property of the object.
-	
-		VARIANT_BOOL Italic
-	"
+	"Answer the <varbool> value of the 'Italic' property of the receiver.
+		VARIANT_BOOL Italic"
 
-	^(self getPropertyId: 4)
-!
+	^self getPropertyId: 4!
 
 italic: newVal
-	"Set the 'italic' property of the object to the <varbool> value of the argument, newVal.
-	
-		VARIANT_BOOL Italic
-	"
+	"Set the 'Italic' property of the receiver to the <varbool> value of the argument.
+		VARIANT_BOOL Italic"
 
-	self setPropertyId: 4 value: newVal
-!
+	self setPropertyId: 4 value: newVal!
 
 name
-	"Answer the <bstr> value of the 'name' property of the object.
-	
-		BSTR Name
-	"
+	"Answer the <bstr> value of the 'Name' property of the receiver.
+		BSTR Name"
 
-	^(self getPropertyId: 0)
-!
+	^self getPropertyId: 0!
 
 name: newVal
-	"Set the 'name' property of the object to the <bstr> value of the argument, newVal.
-	
-		BSTR Name
-	"
+	"Set the 'Name' property of the receiver to the <bstr> value of the argument.
+		BSTR Name"
 
-	self setPropertyId: 0 value: newVal
-!
+	self setPropertyId: 0 value: newVal!
 
 size
-	"Answer the <cy> value of the 'size' property of the object.
-	
-		CURRENCY Size
-	"
+	"Answer the <CURRENCY> value of the 'Size' property of the receiver.
+		CURRENCY Size"
 
-	^(self getPropertyId: 2)
-!
+	^self getPropertyId: 2!
 
 size: newVal
-	"Set the 'size' property of the object to the <cy> value of the argument, newVal.
-	
-		CURRENCY Size
-	"
+	"Set the 'Size' property of the receiver to the <CURRENCY> value of the argument.
+		CURRENCY Size"
 
-	self setPropertyId: 2 value: newVal
-!
+	self setPropertyId: 2 value: newVal!
 
 strikethrough
-	"Answer the <varbool> value of the 'strikethrough' property of the object.
-	
-		VARIANT_BOOL Strikethrough
-	"
+	"Answer the <varbool> value of the 'Strikethrough' property of the receiver.
+		VARIANT_BOOL Strikethrough"
 
-	^(self getPropertyId: 6)
-!
+	^self getPropertyId: 6!
 
 strikethrough: newVal
-	"Set the 'strikethrough' property of the object to the <varbool> value of the argument, newVal.
-	
-		VARIANT_BOOL Strikethrough
-	"
+	"Set the 'Strikethrough' property of the receiver to the <varbool> value of the argument.
+		VARIANT_BOOL Strikethrough"
 
-	self setPropertyId: 6 value: newVal
-!
+	self setPropertyId: 6 value: newVal!
 
 underline
-	"Answer the <varbool> value of the 'underline' property of the object.
-	
-		VARIANT_BOOL Underline
-	"
+	"Answer the <varbool> value of the 'Underline' property of the receiver.
+		VARIANT_BOOL Underline"
 
-	^(self getPropertyId: 5)
-!
+	^self getPropertyId: 5!
 
 underline: newVal
-	"Set the 'underline' property of the object to the <varbool> value of the argument, newVal.
-	
-		VARIANT_BOOL Underline
-	"
+	"Set the 'Underline' property of the receiver to the <varbool> value of the argument.
+		VARIANT_BOOL Underline"
 
-	self setPropertyId: 5 value: newVal
-!
+	self setPropertyId: 5 value: newVal!
+
+value
+	"Answer the <bstr> value of the 'Name' property of the receiver.
+	This is the default value (DISPID_VALUE) property of the receiver."
+
+	^self name!
+
+value: newVal
+	"Set the 'Name' property of the receiver to the <bstr> value of the argument.
+	This is the default value (DISPID_VALUE) property of the receiver."
+
+	self name: newVal!
 
 weight
-	"Answer the <sword> value of the 'weight' property of the object.
-	
-		short Weight
-	"
+	"Answer the <sword> value of the 'Weight' property of the receiver.
+		short Weight"
 
-	^(self getPropertyId: 7)
-!
+	^self getPropertyId: 7!
 
 weight: newVal
-	"Set the 'weight' property of the object to the <sword> value of the argument, newVal.
-	
-		short Weight
-	"
+	"Set the 'Weight' property of the receiver to the <sword> value of the argument.
+		short Weight"
 
-	self setPropertyId: 7 value: newVal
-! !
+	self setPropertyId: 7 value: newVal! !
 !IFontDisp categoriesFor: #bold!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #bold:!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #charset!**auto generated**!properties!public! !
@@ -169,16 +179,17 @@ weight: newVal
 !IFontDisp categoriesFor: #strikethrough:!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #underline!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #underline:!**auto generated**!properties!public! !
+!IFontDisp categoriesFor: #value!**auto generated**!properties!public! !
+!IFontDisp categoriesFor: #value:!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #weight!**auto generated**!properties!public! !
 !IFontDisp categoriesFor: #weight:!**auto generated**!properties!public! !
 
 !IFontDisp class methodsFor!
 
 clsid
-	"Private - Answer the CLSID of the coclass (StdFont) for which the receiver is the default interface.
-	"
+	"Private - Answer the CLSID of the coclass (StdFont) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0BE35203-8F91-11CE-9DE3-00AA004BB851}'
+	^CLSID fromString: '{0be35203-8f91-11ce-9de3-00aa004bb851}'
 !
 
 fromFont: aFont 

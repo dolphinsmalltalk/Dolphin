@@ -2119,9 +2119,9 @@ printClassCommentPreambleOn: target
 	| lib |
 	lib := self typeLib.
 	target
-		nextPut: $<;
+		nextPut: $`;
 		nextPutAll: self globalName;
-		nextPutAll: '> is an <ExternalStructure> class to wrap the ';
+		nextPutAll: '` is an `ExternalStructure` class to wrap the ';
 		nextPutAll: self idlKeyword;
 		space;
 		print: self fullyQualifiedName;
@@ -2512,14 +2512,18 @@ generateClassComment
 				cr;
 				nextPutAll: 'IDL definition follows:';
 				cr;
+				nextPutAll: '```';
 				cr.
-			self printIDLOn: stm].
+			self printIDLOn: stm.
+			stm
+				nextPutAll: '```';
+				cr].
 	flags := self generationFlags.
 	(flags anyMask: Trace) ifTrue: [Notification signal: stm contents].
 	self isTraceOnly ifTrue: [^self].
 	class := self global.
 	self shouldOverwriteClassComment
-		ifTrue: [self global comment: stm contents]
+		ifTrue: [class comment: stm contents]
 		ifFalse: 
 			[(flags allMask: Verbose)
 				ifTrue: [Notification signal: 'Existing class comment for ' , self name , ' not overwritten']]!
@@ -6034,9 +6038,9 @@ printClassCommentPreambleOn: target
 	| lib |
 	lib := self typeLib.
 	target
-		nextPut: $<;
+		nextPut: $`;
 		nextPutAll: self globalName;
-		nextPutAll: '> is a wrapper class generated for the dispatch interface ';
+		nextPutAll: '` is a wrapper class generated for the dispatch interface ';
 		print: self fullyQualifiedName;
 		nextPutAll: ' from type information in the ''';
 		nextPutAll: lib helpstring;
@@ -6699,9 +6703,9 @@ printClassCommentPreambleOn: target
 	| lib |
 	lib := self typeLib.
 	target
-		nextPut: $<;
+		nextPut: $`;
 		nextPutAll: self globalName;
-		nextPutAll: '> is a wrapper class for the COM interface ';
+		nextPutAll: '` is a wrapper class for the COM interface ';
 		print: self fullyQualifiedName;
 		nextPutAll: ' generated from type information in the ''';
 		nextPutAll: lib helpstring;
@@ -7103,7 +7107,7 @@ printClassCommentPreambleOn: target
 	lib := self typeLib.
 	target
 		nextPutAll: self globalName;
-		nextPutAll: ' is the <ExternalLibrary> class to represent the dynamic link library, ';
+		nextPutAll: ' is the `ExternalLibrary` class to represent the dynamic link library, ';
 		print: (self dllNameIfNone: ['(anon)']);
 		nextPut: $.;
 		nextPutAll: 'It was generated generated from type information in the ';

@@ -6,11 +6,33 @@ COMInterface subclass: #IUnknown
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IUnknown guid: (IID fromString: '{00000000-0000-0000-C000-000000000046}')!
-IUnknown comment: '<IUnknown> is a wrapper class for the COM interface ''stdole.IUnknown'' originally generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
+IUnknown comment: '`IUnknown` is a wrapper class for the COM interface ''stdole.IUnknown'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
-IUnknown is the fundamental interface supported by all COM objects and is therefore ubiquitous for any component regardless of implementation. IUnknown includes behaviour to control object lifetime by reference counting, and for  interface negotiation using QueryInterface.
+The type library contains no documentation for this interface
 
-Note that most of Dolphin''s supporting behaviour wrapping IUnknown is implemented in the superclass in order not to overwhelm the fundamental simplicity of IUnknown.'!
+`IUnknown` is the fundamental interface supported by all COM objects and is therefore ubiquitous for any component regardless of implementation. IUnknown includes behaviour to control object lifetime by reference counting, and for  interface negotiation using `QueryInterface()`.
+
+Note that most of Dolphin''''s supporting behaviour wrapping IUnknown is implemented in the superclass in order not to overwhelm the fundamental simplicity of IUnknown.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00000000-0000-0000-c000-000000000046), 
+	hidden
+]
+interface IUnknown
+ {
+	[id(0x60000000), restricted]
+	HRESULT __stdcall QueryInterface(
+		[in]GUID* riid,
+		[out]void** ppvObj);
+	[id(0x60000001), restricted]
+	unsigned long __stdcall AddRef();
+	[id(0x60000002), restricted]
+	unsigned long __stdcall Release();
+};
+```'!
 !IUnknown categoriesForClass!COM-Interfaces! !
 !IUnknown methodsFor!
 
@@ -23,10 +45,9 @@ addRef
 !
 
 AddRef
-	"Invoke the AddRef() method of the COM object wrapped by the receiver.
+	"Private - Invoke the AddRef() method of the COM object.
 
-		unsigned long __stdcall AddRef();
-	"
+		unsigned long __stdcall AddRef();"
 
 	<virtual stdcall: dword 2>
 	^self invalidCall: _failureCode!
@@ -43,32 +64,31 @@ displayOn: aStream
 	self isNull ifTrue: [aStream print: nil] ifFalse: [self printOn: aStream]!
 
 QueryInterface: riid ppvObject: ppvObject
-	"Invoke the QueryInterface() method of the object wrapped by the receiver.
+	"Private - Invoke the QueryInterface() method of the COM object.
 	
 		HRESULT __stdcall QueryInterface(
-			[in] GUID* riid,
-			[out] void** ppvObject);
+			[in]GUID* riid,
+			[out]void** ppvObj);"
 
-	Implementation Note: Return integer hresult value rather than have exception thrown, as
+	"Implementation Note: Return integer hresult value rather than have exception thrown, as
 	E_NOINTERFACE is not really an exceptional condition at all."
 
 	<virtual stdcall: sdword 1 guid* void**>
 	^self invalidCall: _failureCode!
 
 Release
-	"Invoke the Release() method of the COM object wrapped by the receiver.
+	"Private - Invoke the Release() method of the COM object.
 
-		unsigned long __stdcall Release();
-	"
+		unsigned long __stdcall Release();"
 
 	<virtual stdcall: dword 3>
 	^self invalidCall: _failureCode! !
 !IUnknown categoriesFor: #addRef!methods!public! !
-!IUnknown categoriesFor: #AddRef!methods!public! !
+!IUnknown categoriesFor: #AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
 !IUnknown categoriesFor: #asObject!converting!public! !
 !IUnknown categoriesFor: #displayOn:!printing!public! !
 !IUnknown categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!IUnknown categoriesFor: #Release!methods!public! !
+!IUnknown categoriesFor: #Release!**auto generated**!COM Interfaces-IUnknown!private! !
 
 !IUnknown class methodsFor!
 

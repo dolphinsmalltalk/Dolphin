@@ -6,7 +6,44 @@ IUnknown subclass: #IDispatch
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
 IDispatch guid: (IID fromString: '{00020400-0000-0000-C000-000000000046}')!
-IDispatch comment: '<IDispatch> is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.'!
+IDispatch comment: '`IDispatch` is a wrapper class for the standard AX automation dynamic dispatch interface of the same name. It was generated from type information in the ''OLE Automation'' library, stdole2.tlb. It contains methods to invoke the member functions exposed by that interface.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00020400-0000-0000-c000-000000000046), 
+	restricted
+]
+interface IDispatch : IUnknown
+ {
+	[id(0x60010000), restricted]
+	HRESULT __stdcall GetTypeInfoCount(
+		[out]unsigned int* pctinfo);
+	[id(0x60010001), restricted]
+	HRESULT __stdcall GetTypeInfo(
+		[in]unsigned int itinfo,
+		[in]unsigned long lcid,
+		[out]void** pptinfo);
+	[id(0x60010002), restricted]
+	HRESULT __stdcall GetIDsOfNames(
+		[in]GUID* riid,
+		[in]char** rgszNames,
+		[in]unsigned int cNames,
+		[in]unsigned long lcid,
+		[out]long* rgdispid);
+	[id(0x60010003), restricted]
+	HRESULT __stdcall Invoke(
+		[in]long dispidMember,
+		[in]GUID* riid,
+		[in]unsigned long lcid,
+		[in]unsigned short wFlags,
+		[in]DISPPARAMS* pdispparams,
+		[out]VARIANT* pvarResult,
+		[out]EXCEPINFO* pexcepinfo,
+		[out]unsigned int* puArgErr);
+};
+```'!
 !IDispatch categoriesForClass!COM-Interfaces! !
 !IDispatch methodsFor!
 
@@ -321,21 +358,18 @@ GetTypeInfo: itinfo lcid: lcid pptinfo: pptinfo
 	^self invalidCall: _failureCode!
 
 getTypeInfoCount
-	"Answer the <DWORD> result of invoking the COM Object's GetTypeInfoCount() method."
+	"Answer the <DWORD> result of invoking the GetTypeInfoCount() method of the COM object."
 
 	| answer |
-	answer := (DWORD new).
-	self
-		GetTypeInfoCount: answer.
-	^answer asObject
-!
+	answer := DWORD new.
+	self GetTypeInfoCount: answer.
+	^answer asObject!
 
 GetTypeInfoCount: pctinfo
-	"Private - Invoke the GetTypeInfoCount() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetTypeInfoCount() method of the COM object.
 
 		HRESULT __stdcall GetTypeInfoCount(
-			[out] unsigned int* pctinfo);
-	"
+			[out]unsigned int* pctinfo);"
 
 	<virtual stdcall: hresult 4 dword*>
 	^self invalidCall: _failureCode!

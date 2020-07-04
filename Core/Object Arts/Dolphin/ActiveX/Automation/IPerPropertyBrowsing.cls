@@ -6,66 +6,86 @@ IUnknown subclass: #IPerPropertyBrowsing
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IPerPropertyBrowsing guid: (IID fromString: '{376BD3AA-3845-101B-84ED-08002B2EC713}')!
-IPerPropertyBrowsing comment: '<IPerPropertyBrowsing> is a wrapper class for the COM interface ''OCIDL.IPerPropertyBrowsing'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+IPerPropertyBrowsing comment: '`IPerPropertyBrowsing` is a wrapper class for the COM interface ''Win32.IPerPropertyBrowsing'' generated from type information in the ''Win32 API'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
-!IPerPropertyBrowsing categoriesForClass!ActiveX Automation! !
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(376bd3aa-3845-101b-84ed-08002b2ec713)
+]
+interface IPerPropertyBrowsing : IUnknown
+ {
+	[id(0x60010000)]
+	HRESULT __stdcall GetDisplayString(
+		[in]long dispID,
+		[out]BSTR* pbstr);
+	[id(0x60010001)]
+	HRESULT __stdcall MapPropertyToPage(
+		[in]long dispID,
+		[out]GUID* pclsid);
+	[id(0x60010002)]
+	HRESULT __stdcall GetPredefinedStrings(
+		[in]long dispID,
+		[out]CALPOLESTR* pCaStringsOut,
+		[out]CADWORD* pCaCookiesOut);
+	[id(0x60010003)]
+	HRESULT __stdcall GetPredefinedValue(
+		[in]long dispID,
+		[in]DWORD dwCookie,
+		[out]VARIANT* pVarOut);
+};
+```
+'!
+!IPerPropertyBrowsing categoriesForClass!COM-Interfaces! !
 !IPerPropertyBrowsing methodsFor!
 
-getDisplayString: dispID 
-	"Answer <readableString> describing the property identified with dispID in the caller's user interface. 
-	If no information is available, answer nil."
+getDisplayString: dispID
+	"Answer the <BSTR> result of invoking the GetDisplayString() method of the COM object."
 
 	| answer |
 	answer := BSTR new.
-	self
-		GetDisplayString: dispID
-		pBstr: answer.
-	^answer isNull ifFalse: [answer asString]!
+	self GetDisplayString: dispID pbstr: answer.
+	^answer asObject!
 
-GetDisplayString: dispID pBstr: pBstr
-	"Private - Invoke the GetDisplayString() method of the COM object wrapped by the receiver.
+GetDisplayString: dispID pbstr: pbstr
+	"Private - Invoke the GetDisplayString() method of the COM object.
 
 		HRESULT __stdcall GetDisplayString(
-			[in] long dispID,
-			[out] BSTR* pBstr);
-	"
+			[in]long dispID,
+			[out]BSTR* pbstr);"
 
-	<virtual stdcall: sdword 4 sdword bstr*>
+	<virtual stdcall: hresult 4 sdword bstr*>
 	^self invalidCall: _failureCode!
 
-getPredefinedStrings: dispID 
-	"Invoke the GetPredefinedStrings() method of the COM Object."
+getPredefinedStrings: dispID
+	"Invoke the GetPredefinedStrings() method of the COM object."
 
-	| answer |
-	answer := (Array new: 2)
-				basicAt: 1 put: (CALPOLESTR new);
-				basicAt: 2 put: (CADWORD new);
-				yourself.
+	| outputs |
+	outputs := {CALPOLESTR new. CADWORD new}.
 	self
 		GetPredefinedStrings: dispID
-		pCaStringsOut: (answer basicAt: 1)
-		pCaCookiesOut: (answer basicAt: 2).
-	^answer collect: [:e | e asObject]
-!
+		pCaStringsOut: (outputs basicAt: 1)
+		pCaCookiesOut: (outputs basicAt: 2).
+	^outputs collect: [:each | each asObject]!
 
 GetPredefinedStrings: dispID pCaStringsOut: pCaStringsOut pCaCookiesOut: pCaCookiesOut
-	"Private - Invoke the GetPredefinedStrings() method of the COM object wrapped by the receiver.
-	Implementation Note: Manually modify to ignore the error return code.
+	"Private - Invoke the GetPredefinedStrings() method of the COM object.
 
 		HRESULT __stdcall GetPredefinedStrings(
-			[in] long dispID,
-			[out] CALPOLESTR* pCaStringsOut,
-			[out] CADWORD* pCaCookiesOut);
-	"
+			[in]long dispID,
+			[out]CALPOLESTR* pCaStringsOut,
+			[out]CADWORD* pCaCookiesOut);"
 
-	<virtual stdcall: sdword 6 sdword CALPOLESTR* CADWORD*>
+	<virtual stdcall: hresult 6 sdword CALPOLESTR* CADWORD*>
 	^self invalidCall: _failureCode!
 
-getPredefinedValue: dispID dwCookie: dwCookie 
-	"Answer the <VARIANT> result of invoking the COM Object's GetPredefinedValue() method."
+getPredefinedValue: dispID dwCookie: dwCookie
+	"Answer the <VARIANT> result of invoking the GetPredefinedValue() method of the COM object."
 
 	| answer |
 	answer := VARIANT new.
@@ -73,17 +93,15 @@ getPredefinedValue: dispID dwCookie: dwCookie
 		GetPredefinedValue: dispID
 		dwCookie: dwCookie
 		pVarOut: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetPredefinedValue: dispID dwCookie: dwCookie pVarOut: pVarOut
-	"Private - Invoke the GetPredefinedValue() method of the COM object wrapped by the receiver.
+	"Private - Invoke the GetPredefinedValue() method of the COM object.
 
 		HRESULT __stdcall GetPredefinedValue(
-			[in] long dispID,
-			[in] unsigned long dwCookie,
-			[out] VARIANT* pVarOut);
-	"
+			[in]long dispID,
+			[in]DWORD dwCookie,
+			[out]VARIANT* pVarOut);"
 
 	<virtual stdcall: hresult 7 sdword dword variant*>
 	^self invalidCall: _failureCode!
@@ -116,24 +134,20 @@ getStringsAndValues: anInteger
 	cookies free.
 	^answer!
 
-mapPropertyToPage: dispID 
-	"Answer the <GUID> result of invoking the COM Object's MapPropertyToPage() method."
+mapPropertyToPage: dispID
+	"Answer the <GUID> result of invoking the MapPropertyToPage() method of the COM object."
 
 	| answer |
 	answer := GUID new.
-	self
-		MapPropertyToPage: dispID
-		pClsid: answer.
-	^answer asObject
-!
+	self MapPropertyToPage: dispID pclsid: answer.
+	^answer asObject!
 
-MapPropertyToPage: dispID pClsid: pClsid
-	"Private - Invoke the MapPropertyToPage() method of the COM object wrapped by the receiver.
+MapPropertyToPage: dispID pclsid: pclsid
+	"Private - Invoke the MapPropertyToPage() method of the COM object.
 
 		HRESULT __stdcall MapPropertyToPage(
-			[in] long dispID,
-			[out] GUID* pClsid);
-	"
+			[in]long dispID,
+			[out]GUID* pclsid);"
 
 	<virtual stdcall: hresult 5 sdword guid*>
 	^self invalidCall: _failureCode!
@@ -145,18 +159,18 @@ stringsToValues: dispid
 
 	^Dictionary withAll: (self getStringsAndValues: dispid)
 ! !
-!IPerPropertyBrowsing categoriesFor: #getDisplayString:!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #GetDisplayString:pBstr:!COM Interfaces-IPerPropertyBrowsing!private! !
+!IPerPropertyBrowsing categoriesFor: #getDisplayString:!**auto generated**!methods!public! !
+!IPerPropertyBrowsing categoriesFor: #GetDisplayString:pbstr:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
 !IPerPropertyBrowsing categoriesFor: #getPredefinedStrings:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!COM Interfaces-IPerPropertyBrowsing!private! !
+!IPerPropertyBrowsing categoriesFor: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
 !IPerPropertyBrowsing categoriesFor: #getPredefinedValue:dwCookie:!**auto generated**!methods!public! !
 !IPerPropertyBrowsing categoriesFor: #GetPredefinedValue:dwCookie:pVarOut:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
 !IPerPropertyBrowsing categoriesFor: #getStringsAndValues:!accessing!private! !
 !IPerPropertyBrowsing categoriesFor: #mapPropertyToPage:!**auto generated**!methods!public! !
-!IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pClsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
+!IPerPropertyBrowsing categoriesFor: #MapPropertyToPage:pclsid:!**auto generated**!COM Interfaces-IPerPropertyBrowsing!private! !
 !IPerPropertyBrowsing categoriesFor: #stringsToValues:!accessing!public! !
 
-IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #() selectors: #(#GetDisplayString:pBstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pClsid:)!
+IPerPropertyBrowsing methodProtocol: #IPerPropertyBrowsing attributes: #(#readOnly) selectors: #(#GetDisplayString:pbstr: #GetPredefinedStrings:pCaStringsOut:pCaCookiesOut: #GetPredefinedValue:dwCookie:pVarOut: #MapPropertyToPage:pclsid:)!
 
 !IPerPropertyBrowsing class methodsFor!
 

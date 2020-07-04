@@ -6,12 +6,94 @@ IUnknown subclass: #IFont
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IFont guid: (IID fromString: '{BEF6E002-A874-101A-8BBA-00AA00300CAB}')!
-IFont comment: '<IFont> is a wrapper class for the COM interface ''OCIDL.IFont'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
+IFont comment: '`IFont` is a wrapper class for the COM interface ''stdole.IFont'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
-The type library contains no documentation for this interface
+The type library contains the following helpstring for this interface
+	"Font Object"
 
-WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
-!IFont categoriesForClass!COM-Interfaces!stdole-Interfaces! !
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(bef6e002-a874-101a-8bba-00aa00300cab), 
+	helpstring("Font Object"), 
+	hidden
+]
+interface IFont : IUnknown
+ {
+	[id(0x60010000), propget]
+	HRESULT __stdcall Name(
+		[out, retval]BSTR* pname);
+	[id(0x60010000), propput]
+	HRESULT __stdcall Name(
+		[in]BSTR pname);
+	[id(0x60010002), propget]
+	HRESULT __stdcall Size(
+		[out, retval]CURRENCY* psize);
+	[id(0x60010002), propput]
+	HRESULT __stdcall Size(
+		[in]CURRENCY psize);
+	[id(0x60010004), propget]
+	HRESULT __stdcall Bold(
+		[out, retval]VARIANT_BOOL* pbold);
+	[id(0x60010004), propput]
+	HRESULT __stdcall Bold(
+		[in]VARIANT_BOOL pbold);
+	[id(0x60010006), propget]
+	HRESULT __stdcall Italic(
+		[out, retval]VARIANT_BOOL* pitalic);
+	[id(0x60010006), propput]
+	HRESULT __stdcall Italic(
+		[in]VARIANT_BOOL pitalic);
+	[id(0x60010008), propget]
+	HRESULT __stdcall Underline(
+		[out, retval]VARIANT_BOOL* punderline);
+	[id(0x60010008), propput]
+	HRESULT __stdcall Underline(
+		[in]VARIANT_BOOL punderline);
+	[id(0x6001000a), propget]
+	HRESULT __stdcall Strikethrough(
+		[out, retval]VARIANT_BOOL* pstrikethrough);
+	[id(0x6001000a), propput]
+	HRESULT __stdcall Strikethrough(
+		[in]VARIANT_BOOL pstrikethrough);
+	[id(0x6001000c), propget]
+	HRESULT __stdcall Weight(
+		[out, retval]short* pweight);
+	[id(0x6001000c), propput]
+	HRESULT __stdcall Weight(
+		[in]short pweight);
+	[id(0x6001000e), propget]
+	HRESULT __stdcall Charset(
+		[out, retval]short* pcharset);
+	[id(0x6001000e), propput]
+	HRESULT __stdcall Charset(
+		[in]short pcharset);
+	[id(0x60010010), propget]
+	HRESULT __stdcall hFont(
+		[out, retval]OLE_HANDLE* phfont);
+	[id(0x60010011)]
+	HRESULT __stdcall Clone(
+		[out]IFont** ppfont);
+	[id(0x60010012)]
+	HRESULT __stdcall IsEqual(
+		[in]IFont* pfontOther);
+	[id(0x60010013)]
+	HRESULT __stdcall SetRatio(
+		[in]long cyLogical,
+		[in]long cyHimetric);
+	[id(0x60010014)]
+	HRESULT __stdcall AddRefHfont(
+		[in]OLE_HANDLE hFont);
+	[id(0x60010015)]
+	HRESULT __stdcall ReleaseHfont(
+		[in]OLE_HANDLE hFont);
+};
+```
+'!
+!IFont categoriesForClass!COM-Interfaces! !
 !IFont methodsFor!
 
 = anObject 
@@ -40,31 +122,27 @@ bold
 	"Answer the <varbool> value of the 'Bold' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Bold: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 bold: pbold
 	"Set the 'Bold' property of the receiver to the <varbool> value of the argument."
 
-	self put_Bold: pbold
-!
+	self put_Bold: pbold!
 
 charset
 	"Answer the <sword> value of the 'Charset' property of the receiver."
 
 	| answer |
-	answer := (SWORD new).
+	answer := SWORD new.
 	self get_Charset: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 charset: pcharset
 	"Set the 'Charset' property of the receiver to the <sword> value of the argument."
 
-	self put_Charset: pcharset
-!
+	self put_Charset: pcharset!
 
 clone
 	"Answer the <IFont> result of invoking the Clone() method of the COM object."
@@ -72,14 +150,13 @@ clone
 	| answer |
 	answer := IFont newPointer.
 	self Clone: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Clone: ppfont
 	"Private - Invoke the Clone() method of the COM object.
 
 		HRESULT __stdcall Clone(
-			[out] IFont** ppfont);"
+			[out]IFont** ppfont);"
 
 	<virtual stdcall: hresult 21 IFont**>
 	^self invalidCall: _failureCode!
@@ -88,7 +165,7 @@ get_Bold: pbold
 	"Private - Get the value of the 'Bold' property of the receiver.
 
 		HRESULT __stdcall Bold(
-			[out, retval] VARIANT_BOOL* pbold);"
+			[out, retval]VARIANT_BOOL* pbold);"
 
 	<virtual stdcall: hresult 8 varbool*>
 	^self invalidCall: _failureCode!
@@ -97,7 +174,7 @@ get_Charset: pcharset
 	"Private - Get the value of the 'Charset' property of the receiver.
 
 		HRESULT __stdcall Charset(
-			[out, retval] short* pcharset);"
+			[out, retval]short* pcharset);"
 
 	<virtual stdcall: hresult 18 sword*>
 	^self invalidCall: _failureCode!
@@ -115,7 +192,7 @@ get_Italic: pitalic
 	"Private - Get the value of the 'Italic' property of the receiver.
 
 		HRESULT __stdcall Italic(
-			[out, retval] VARIANT_BOOL* pitalic);"
+			[out, retval]VARIANT_BOOL* pitalic);"
 
 	<virtual stdcall: hresult 10 varbool*>
 	^self invalidCall: _failureCode!
@@ -124,7 +201,7 @@ get_Name: pname
 	"Private - Get the value of the 'Name' property of the receiver.
 
 		HRESULT __stdcall Name(
-			[out, retval] BSTR* pname);"
+			[out, retval]BSTR* pname);"
 
 	<virtual stdcall: hresult 4 bstr*>
 	^self invalidCall: _failureCode!
@@ -133,7 +210,7 @@ get_Size: psize
 	"Private - Get the value of the 'Size' property of the receiver.
 
 		HRESULT __stdcall Size(
-			[out, retval] CURRENCY* psize);"
+			[out, retval]CURRENCY* psize);"
 
 	<virtual stdcall: hresult 6 CURRENCY*>
 	^self invalidCall: _failureCode!
@@ -142,7 +219,7 @@ get_Strikethrough: pstrikethrough
 	"Private - Get the value of the 'Strikethrough' property of the receiver.
 
 		HRESULT __stdcall Strikethrough(
-			[out, retval] VARIANT_BOOL* pstrikethrough);"
+			[out, retval]VARIANT_BOOL* pstrikethrough);"
 
 	<virtual stdcall: hresult 14 varbool*>
 	^self invalidCall: _failureCode!
@@ -151,7 +228,7 @@ get_Underline: punderline
 	"Private - Get the value of the 'Underline' property of the receiver.
 
 		HRESULT __stdcall Underline(
-			[out, retval] VARIANT_BOOL* punderline);"
+			[out, retval]VARIANT_BOOL* punderline);"
 
 	<virtual stdcall: hresult 12 varbool*>
 	^self invalidCall: _failureCode!
@@ -160,7 +237,7 @@ get_Weight: pweight
 	"Private - Get the value of the 'Weight' property of the receiver.
 
 		HRESULT __stdcall Weight(
-			[out, retval] short* pweight);"
+			[out, retval]short* pweight);"
 
 	<virtual stdcall: hresult 16 sword*>
 	^self invalidCall: _failureCode!
@@ -183,7 +260,7 @@ IsEqual: pfontOther
 	"Private - Invoke the IsEqual() method of the COM object.
 
 		HRESULT __stdcall IsEqual(
-			[in] IFont* pfontOther);"
+			[in]IFont* pfontOther);"
 
 	<virtual stdcall: hresult 22 IFont*>
 	^self invalidCall: _failureCode!
@@ -192,16 +269,14 @@ italic
 	"Answer the <varbool> value of the 'Italic' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Italic: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 italic: pitalic
 	"Set the 'Italic' property of the receiver to the <varbool> value of the argument."
 
-	self put_Italic: pitalic
-!
+	self put_Italic: pitalic!
 
 name
 	"Answer the <bstr> value of the 'Name' property of the receiver."
@@ -209,21 +284,19 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 name: pname
 	"Set the 'Name' property of the receiver to the <bstr> value of the argument."
 
-	self put_Name: pname
-!
+	self put_Name: pname!
 
 put_Bold: pbold
 	"Private - Set the value of the 'Bold' property of the object wrapped by the 
 	 receiver to the <varbool> argument, pbold.
 
 		HRESULT __stdcall Bold(
-			[in] VARIANT_BOOL pbold);"
+			[in]VARIANT_BOOL pbold);"
 
 	<virtual stdcall: hresult 9 varbool>
 	^self invalidCall: _failureCode!
@@ -233,7 +306,7 @@ put_Charset: pcharset
 	 receiver to the <sword> argument, pcharset.
 
 		HRESULT __stdcall Charset(
-			[in] short pcharset);"
+			[in]short pcharset);"
 
 	<virtual stdcall: hresult 19 sword>
 	^self invalidCall: _failureCode!
@@ -243,7 +316,7 @@ put_Italic: pitalic
 	 receiver to the <varbool> argument, pitalic.
 
 		HRESULT __stdcall Italic(
-			[in] VARIANT_BOOL pitalic);"
+			[in]VARIANT_BOOL pitalic);"
 
 	<virtual stdcall: hresult 11 varbool>
 	^self invalidCall: _failureCode!
@@ -253,7 +326,7 @@ put_Name: pname
 	 receiver to the <bstr> argument, pname.
 
 		HRESULT __stdcall Name(
-			[in] BSTR pname);"
+			[in]BSTR pname);"
 
 	<virtual stdcall: hresult 5 bstr>
 	^self invalidCall: _failureCode!
@@ -263,7 +336,7 @@ put_Size: psize
 	 receiver to the <CURRENCY> argument, psize.
 
 		HRESULT __stdcall Size(
-			[in] CURRENCY psize);"
+			[in]CURRENCY psize);"
 
 	<virtual stdcall: hresult 7 CURRENCY>
 	^self invalidCall: _failureCode!
@@ -273,7 +346,7 @@ put_Strikethrough: pstrikethrough
 	 receiver to the <varbool> argument, pstrikethrough.
 
 		HRESULT __stdcall Strikethrough(
-			[in] VARIANT_BOOL pstrikethrough);"
+			[in]VARIANT_BOOL pstrikethrough);"
 
 	<virtual stdcall: hresult 15 varbool>
 	^self invalidCall: _failureCode!
@@ -283,7 +356,7 @@ put_Underline: punderline
 	 receiver to the <varbool> argument, punderline.
 
 		HRESULT __stdcall Underline(
-			[in] VARIANT_BOOL punderline);"
+			[in]VARIANT_BOOL punderline);"
 
 	<virtual stdcall: hresult 13 varbool>
 	^self invalidCall: _failureCode!
@@ -293,7 +366,7 @@ put_Weight: pweight
 	 receiver to the <sword> argument, pweight.
 
 		HRESULT __stdcall Weight(
-			[in] short pweight);"
+			[in]short pweight);"
 
 	<virtual stdcall: hresult 17 sword>
 	^self invalidCall: _failureCode!
@@ -317,17 +390,14 @@ ReleaseHfont: hFont
 setRatio: cyLogical cyHimetric: cyHimetric
 	"Invoke the SetRatio() method of the COM object."
 
-	^self
-		SetRatio: cyLogical
-		cyHimetric: cyHimetric
-!
+	^self SetRatio: cyLogical cyHimetric: cyHimetric!
 
 SetRatio: cyLogical cyHimetric: cyHimetric
 	"Private - Invoke the SetRatio() method of the COM object.
 
 		HRESULT __stdcall SetRatio(
-			[in] long cyLogical,
-			[in] long cyHimetric);"
+			[in]long cyLogical,
+			[in]long cyHimetric);"
 
 	<virtual stdcall: hresult 23 sdword sdword>
 	^self invalidCall: _failureCode!
@@ -336,10 +406,9 @@ size
 	"Answer the <CURRENCY> value of the 'Size' property of the receiver."
 
 	| answer |
-	answer := (CURRENCY new).
+	answer := CURRENCY new.
 	self get_Size: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 size: psize 
 	"Set the 'Size' property of the receiver to the <CURRENCY> value of the argument."
@@ -350,46 +419,40 @@ strikethrough
 	"Answer the <varbool> value of the 'Strikethrough' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Strikethrough: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 strikethrough: pstrikethrough
 	"Set the 'Strikethrough' property of the receiver to the <varbool> value of the argument."
 
-	self put_Strikethrough: pstrikethrough
-!
+	self put_Strikethrough: pstrikethrough!
 
 underline
 	"Answer the <varbool> value of the 'Underline' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Underline: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 underline: punderline
 	"Set the 'Underline' property of the receiver to the <varbool> value of the argument."
 
-	self put_Underline: punderline
-!
+	self put_Underline: punderline!
 
 weight
 	"Answer the <sword> value of the 'Weight' property of the receiver."
 
 	| answer |
-	answer := (SWORD new).
+	answer := SWORD new.
 	self get_Weight: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 weight: pweight
 	"Set the 'Weight' property of the receiver to the <sword> value of the argument."
 
-	self put_Weight: pweight
-! !
+	self put_Weight: pweight! !
 !IFont categoriesFor: #=!methods!public! !
 !IFont categoriesFor: #addRefHfont:!methods!public! !
 !IFont categoriesFor: #AddRefHfont:!COM Interfaces-IFont!private! !
