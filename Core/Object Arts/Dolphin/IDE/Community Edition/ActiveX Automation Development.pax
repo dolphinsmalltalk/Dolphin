@@ -2297,7 +2297,7 @@ autoGenCategoryName
 	^'**auto generated**'!
 
 autoGenClassCommentMarker
-	^'** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated. **'!
+	^'** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.'!
 
 autoGenMethodComment
 	"Private - Answer a suitable piece of comment to warn the user that a
@@ -2403,12 +2403,17 @@ compileClassMethod: aString categories: categories
 	(self generationFlags anyMask: Trace) ifTrue: [Notification signal: aString].
 	^self isTraceOnly ifFalse: [self global class compile: aString categories: categories]!
 
-compileMethod: aString categories: aCollection 
+compileMethod: aString categories: aCollection
 	"Private - Generate the method or send to trace, depending on the mode."
 
 	aString isEmpty ifTrue: [^nil].
 	(self generationFlags anyMask: Trace) ifTrue: [Notification signal: aString].
-	^self isTraceOnly ifFalse: [self global compile: aString categories: aCollection]!
+	^self isTraceOnly
+		ifFalse: 
+			[| class source |
+			class := self global.
+			source := Smalltalk developmentSystem reformatSource: aString in: class.
+			class compile: source categories: aCollection]!
 
 compileRawMethod: source categories: categories
 	"Private - Generate the method or send to trace, depending on the mode."
@@ -6240,18 +6245,18 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 
 	"Could be one of the reserved member ids, some of which have 
 		custom accessors in IDispatch. Sometimes these are not marked as propget when they should be."
-	argc == 0 
+	argc == 0
 		ifTrue: 
 			[SpecialPropGets at: id
 				ifPresent: 
-					[:p | 
-					^(p isNil or: [p isEmpty]) 
+					[:p |
+					^(p isNil or: [p isEmpty])
 						ifFalse: 
 							[aPuttableStream nextPutAll: p.
 							self]]].
-	aFUNCDESC hasMultipleOutputs 
+	aFUNCDESC hasMultipleOutputs
 		ifTrue: 
-			[^self 
+			[^self
 				printMultiOutMethodBody: aFUNCDESC
 				wrapping: anAXMethodName
 				on: aPuttableStream].
@@ -6259,7 +6264,7 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	retType := aFUNCDESC classDesc.
 
 	"If an interface pointer, then answer the correct type"
-	((retType key includesBehavior: IUnknown) and: [retType value = 1]) 
+	((retType key includesBehavior: IUnknown) and: [retType value = 1])
 		ifTrue: 
 			[aPuttableStream
 				print: retType key;
@@ -6267,38 +6272,22 @@ printRawMethodBody: aFUNCDESC name: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPutAll: '(self invokeId: ';
 		display: id.
-	argc < 3 
+	argc < 3
 		ifTrue: 
 			["Use one of the optimized invoke forms for common argument counts"
-
-			argc > 0 
+			argc > 0
 				ifTrue: 
 					[anAXMethodName argumentNames do: 
-							[:each | 
+							[:each |
 							aPuttableStream
 								nextPutAll: ' with: ';
 								nextPutAll: each]]]
 		ifFalse: 
 			["Build an array of arguments for the less common case"
-
-			aPuttableStream
-				nextPutAll: ' withArguments:';
-				crtab: 3;
-				nextPutAll: '((Array new: ';
-				display: argc;
-				nextPut: $).
-			anAXMethodName argumentNames keysAndValuesDo: 
-					[:i :each | 
-					aPuttableStream
-						crtab: 4;
-						nextPutAll: 'basicAt: ';
-						display: i;
-						nextPutAll: ' put: ';
-						nextPutAll: each;
-						nextPut: $;].
-			aPuttableStream
-				crtab: 4;
-				nextPutAll: 'yourself)'].
+			aPuttableStream nextPutAll: ' withArguments: {'.
+			anAXMethodName argumentNames do: [:each | aPuttableStream nextPutAll: each]
+				separatedBy: [aPuttableStream nextPutAll: '. '].
+			aPuttableStream nextPut: $}].
 	aPuttableStream
 		nextPut: $);
 		cr!
@@ -6751,14 +6740,14 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 	Answers nil to suppress generation of method, else self."
 
 	| params nRet |
-	aFUNCDESC hasMultipleOutputs 
+	aFUNCDESC hasMultipleOutputs
 		ifTrue: 
-			[^self 
+			[^self
 				printMultiOutMethodBody: aFUNCDESC
 				wrapping: anAXMethodName
 				on: aPuttableStream].
 	params := aFUNCDESC arguments.
-	(nRet := aFUNCDESC retvalIndex) ~= 0 
+	(nRet := aFUNCDESC retvalIndex) ~= 0
 		ifTrue: 
 			[| answerDesc |
 			aPuttableStream
@@ -6766,7 +6755,7 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 				crtab;
 				nextPutAll: 'answer := '.
 			answerDesc := aFUNCDESC classDesc.
-			answerDesc key 
+			answerDesc key
 				printMethodArgument: (anAXMethodName argumentNames at: nRet)
 				elemdesc: (params at: nRet)
 				indirections: answerDesc value
@@ -6783,45 +6772,43 @@ printMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 
 	"Print call to raw method"
 	aPuttableStream nextPutAll: 'self'.
-	params isEmpty 
+	params isEmpty
 		ifTrue: 
 			[aPuttableStream
 				space;
 				nextPutAll: anAXMethodName primary]
 		ifFalse: 
-			["Print keyword arg pairs"
-
-			| argumentNames keywords argc |
+			[| argumentNames keywords argc |
+			"Print keyword arg pairs"
 			argumentNames := anAXMethodName argumentNames.
 			keywords := anAXMethodName keywords.
 			argc := keywords size.
 			1 to: argc
 				do: 
-					[:each | 
+					[:each |
 					| keyword |
 					keyword := keywords at: each.
-					argc > 1 ifTrue: [aPuttableStream crtab: 2] ifFalse: [aPuttableStream space].
 					aPuttableStream
+						space;
 						nextPutAll: keyword;
 						space.
-					each == nRet 
+					each == nRet
 						ifTrue: [aPuttableStream nextPutAll: 'answer']
 						ifFalse: 
 							[| arg desc |
 							arg := params at: each.
 							desc := arg classDesc.
-							desc key 
+							desc key
 								printMethodArgument: (argumentNames at: each)
 								elemdesc: arg
 								indirections: desc value
 								on: aPuttableStream]]].
-	nRet ~= 0 
+	nRet ~= 0
 		ifTrue: 
 			[aPuttableStream
 				nextPut: $.;
 				crtab;
-				nextPutAll: '^answer asObject'].
-	aPuttableStream cr!
+				nextPutAll: '^answer asObject']!
 
 printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 	"Private - Generate the main body of a high-level method for the function described 
@@ -6836,63 +6823,53 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 	"User might well want to write own wrapper in this case, as can employ knowledge of component
 	 perhaps to ignore outputs if they aren't really needed, but are simply the result of a careless VB
 	 component developer passing all parameters by reference, or perhaps to wrap up as an object."
-	Notification 
-		signal: 'Warning: ' , self name , '.' , aFUNCDESC name , ' has ' 
-				, outputs size displayString 
-					, ' (possible) outputs that wrapper will return in an array.'.
+	Notification
+		signal: 'Warning: ' , self name , '.' , aFUNCDESC name , ' has ' , outputs size displayString
+				, ' (possible) outputs that wrapper will return in an array.'.
 	params := aFUNCDESC arguments.
 	aPuttableStream
-		nextPutAll: '| answer |';
+		nextPutAll: '| outputs |';
 		crtab;
-		nextPutAll: 'answer := (Array new: ';
-		print: outputs size;
-		nextPut: $).
+		nextPutAll: 'outputs := {'.
 	argumentNames := anAXMethodName argumentNames.
-	outputs keysAndValuesDo: 
-			[:i :each | 
+	outputs do: 
+			[:each |
 			| arg desc |
-			aPuttableStream
-				crtab: 4;
-				nextPutAll: 'basicAt: ';
-				print: i;
-				nextPutAll: ' put: '.
 			arg := params at: each.
 			desc := arg classDesc.
-			desc key 
+			desc key
 				printMethodArgument: (argumentNames at: each)
 				elemdesc: arg
 				indirections: desc value
-				on: aPuttableStream.
-			aPuttableStream nextPut: $;].
+				on: aPuttableStream]
+		separatedBy: [aPuttableStream nextPutAll: '. '].
 	aPuttableStream
-		crtab: 4;
-		nextPutAll: 'yourself.';
+		nextPutAll: '}.';
 		crtab.
+	"Now call the API function"
 	aPuttableStream nextPutAll: 'self'.
 	anAXMethodName keywords keysAndValuesDo: 
-			[:i :each | 
+			[:i :each |
 			| iOut |
 			aPuttableStream
-				crtab: 2;
+				space;
 				nextPutAll: each;
 				space.
-			(iOut := outputs indexOf: i) == 0 
+			(iOut := outputs indexOf: i) == 0
 				ifTrue: 
-					["Input only parameter"
-
-					| arg desc |
+					[| arg desc |
+					"Input only parameter"
 					arg := params at: i.
 					desc := arg classDesc.
-					desc key 
+					desc key
 						printMethodArgument: (argumentNames at: i)
 						elemdesc: arg
 						indirections: desc value
 						on: aPuttableStream]
 				ifFalse: 
 					["Output parameter"
-
 					aPuttableStream
-						nextPutAll: '(answer basicAt: ';
+						nextPutAll: '(outputs basicAt: ';
 						print: iOut;
 						nextPut: $)]].
 
@@ -6900,8 +6877,7 @@ printMultiOutMethodBody: aFUNCDESC wrapping: anAXMethodName on: aPuttableStream
 	aPuttableStream
 		nextPut: $.;
 		crtab;
-		nextPutAll: '^answer collect: [:each | each asObject]';
-		cr!
+		nextPutAll: '^outputs collect: [:each | each asObject]'!
 
 printPropertyCommentDecl: aFUNCDESC on: aPuttableStream
 	"Implementtion Note: The IDL decl for the property can be seen in the raw wrapper."!
