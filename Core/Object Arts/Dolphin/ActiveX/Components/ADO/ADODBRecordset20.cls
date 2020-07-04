@@ -5,10 +5,76 @@ ADODBRecordset15 subclass: #ADODBRecordset20
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBRecordset20 guid: (IID fromString: '{0000054F-0000-0010-8000-00AA006D2EA4}')!
-ADODBRecordset20 comment: '<ADODBRecordset20> is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBRecordset20 guid: (IID fromString: '{0000154F-0000-0010-8000-00AA006D2EA4}')!
+ADODBRecordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
-ADODBRecordSet20 is the ADO Record Set interface as defined in version 2.0 of ADO, and has been superceded by later versions (see the subclasses).'!
+The type library contains no documentation for this interface
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(0000154f-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c903), 
+	hidden, 
+	nonextensible, 
+	dual
+]
+interface Recordset20 : Recordset15
+ {
+	[id(0x0000041f), helpcontext(0x0012c8b8)]
+	HRESULT __stdcall Cancel();
+	[id(0x00000420), propget, helpcontext(0x0012dbbe)]
+	HRESULT __stdcall DataSource(
+		[out, retval]IUnknown** ppunkDataSource);
+	[id(0x00000420), propputref, helpcontext(0x0012dbbe)]
+	HRESULT __stdcall DataSource(
+		[in]IUnknown* ppunkDataSource);
+	[id(0x60040003), hidden]
+	HRESULT __stdcall _xSave(
+		[in, defaultvalue("")]BSTR FileName,
+		[in, defaultvalue(0)]PersistFormatEnum PersistFormat);
+	[id(0x00000425), propget, helpcontext(0x0012dbbc)]
+	HRESULT __stdcall ActiveCommand(
+		[out, retval]IDispatch** ppCmd);
+	[id(0x00000427), propput, helpcontext(0x0012dbd0)]
+	HRESULT __stdcall StayInSync(
+		[in]VARIANT_BOOL pbStayInSync);
+	[id(0x00000427), propget, helpcontext(0x0012dbd0)]
+	HRESULT __stdcall StayInSync(
+		[out, retval]VARIANT_BOOL* pbStayInSync);
+	[id(0x00000426), helpcontext(0x0012c8d0)]
+	HRESULT __stdcall GetString(
+		[in, defaultvalue(2)]StringFormatEnum StringFormat,
+		[in, defaultvalue(-1)]long NumRows,
+		[in, defaultvalue("")]BSTR ColumnDelimeter,
+		[in, defaultvalue("")]BSTR RowDelimeter,
+		[in, defaultvalue("")]BSTR NullExpr,
+		[out, retval]BSTR* pRetString);
+	[id(0x00000428), propget, helpcontext(0x0012dbbd)]
+	HRESULT __stdcall DataMember(
+		[out, retval]BSTR* pbstrDataMember);
+	[id(0x00000428), propput, helpcontext(0x0012dbbd)]
+	HRESULT __stdcall DataMember(
+		[in]BSTR pbstrDataMember);
+	[id(0x00000429), helpcontext(0x0012dba4)]
+	HRESULT __stdcall CompareBookmarks(
+		[in]VARIANT Bookmark1,
+		[in]VARIANT Bookmark2,
+		[out, retval]CompareEnum* pCompare);
+	[id(0x0000040a), helpcontext(0x0012c8be)]
+	HRESULT __stdcall Clone(
+		[in, defaultvalue(-1)]LockTypeEnum LockType,
+		[out, retval]_Recordset** ppvObject);
+	[id(0x00000400), helpcontext(0x0012c8de)]
+	HRESULT __stdcall Resync(
+		[in, defaultvalue(3)]AffectEnum AffectRecords,
+		[in, defaultvalue(2)]ResyncEnum ResyncValues);
+};
+```
+'!
 !ADODBRecordset20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBRecordset20 methodsFor!
 
@@ -16,16 +82,14 @@ _xSave
 	"Invoke the _xSave() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 _xSave: nil
-		 PersistFormat: 0!
+	^self _xSave: '' PersistFormat: 0!
 
 _xSave: fileName PersistFormat: persistFormat
 	"Invoke the _xSave() method of the COM object.
 
 		HRESULT __stdcall _xSave(
-			[in, optional] BSTR FileName,
-			[in, optional, defaultvalue(0)] PersistFormatEnum PersistFormat);"
+			[in, defaultvalue('')]BSTR FileName,
+			[in, defaultvalue(0)]PersistFormatEnum PersistFormat);"
 
 	<virtual stdcall: hresult 72 bstr sdword>
 	^self invalidCall: _failureCode!
@@ -36,8 +100,7 @@ activeCommand
 	| answer |
 	answer := IDispatch newPointer.
 	self get_ActiveCommand: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 Cancel
 	"Invoke the Cancel() method of the COM object.
@@ -58,18 +121,15 @@ clone: lockType
 
 	| answer |
 	answer := ADODB_Recordset newPointer.
-	self
-		Clone: lockType
-		ppvObject: answer.
-	^answer asObject
-!
+	self Clone: lockType ppvObject: answer.
+	^answer asObject!
 
 Clone: lockType ppvObject: ppvObject
 	"Private - Invoke the Clone() method of the COM object.
 
 		HRESULT __stdcall Clone(
-			[in, optional, defaultvalue(-1)] LockTypeEnum LockType,
-			[out, retval] _Recordset** ppvObject);"
+			[in, defaultvalue(-1)]LockTypeEnum LockType,
+			[out, retval]_Recordset** ppvObject);"
 
 	<virtual stdcall: hresult 80 sdword ADODB_Recordset**>
 	^self invalidCall: _failureCode!
@@ -78,21 +138,20 @@ compareBookmarks: bookmark1 bookmark2: bookmark2
 	"Answer the <SDWORD> result of invoking the CompareBookmarks() method of the COM object."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self
 		CompareBookmarks: bookmark1 asVariant
 		Bookmark2: bookmark2 asVariant
 		pCompare: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 CompareBookmarks: bookmark1 Bookmark2: bookmark2 pCompare: pCompare
 	"Private - Invoke the CompareBookmarks() method of the COM object.
 
 		HRESULT __stdcall CompareBookmarks(
-			[in] VARIANT Bookmark1,
-			[in] VARIANT Bookmark2,
-			[out, retval] CompareEnum* pCompare);"
+			[in]VARIANT Bookmark1,
+			[in]VARIANT Bookmark2,
+			[out, retval]CompareEnum* pCompare);"
 
 	<virtual stdcall: hresult 79 variant variant sdword*>
 	^self invalidCall: _failureCode!
@@ -103,14 +162,12 @@ dataMember
 	| answer |
 	answer := BSTR new.
 	self get_DataMember: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 dataMember: pbstrDataMember
 	"Set the 'DataMember' property of the receiver to the <bstr> value of the argument."
 
-	self put_DataMember: pbstrDataMember
-!
+	self put_DataMember: pbstrDataMember!
 
 dataSource
 	"Answer the <IUnknown> value of the 'DataSource' property of the receiver."
@@ -118,37 +175,40 @@ dataSource
 	| answer |
 	answer := IUnknown newPointer.
 	self get_DataSource: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_ActiveCommand: ppCmd
 	"Private - Get the value of the 'ActiveCommand' property of the receiver.
-				HRESULT __stdcall ActiveCommand(
-			[out, retval] IDispatch** ppCmd);"
+
+		HRESULT __stdcall ActiveCommand(
+			[out, retval]IDispatch** ppCmd);"
 
 	<virtual stdcall: hresult 73 IDispatch**>
 	^self invalidCall: _failureCode!
 
 get_DataMember: pbstrDataMember
 	"Private - Get the value of the 'DataMember' property of the receiver.
-				HRESULT __stdcall DataMember(
-			[out, retval] BSTR* pbstrDataMember);"
+
+		HRESULT __stdcall DataMember(
+			[out, retval]BSTR* pbstrDataMember);"
 
 	<virtual stdcall: hresult 77 bstr*>
 	^self invalidCall: _failureCode!
 
 get_DataSource: ppunkDataSource
 	"Private - Get the value of the 'DataSource' property of the receiver.
-				HRESULT __stdcall DataSource(
-			[out, retval] IUnknown** ppunkDataSource);"
+
+		HRESULT __stdcall DataSource(
+			[out, retval]IUnknown** ppunkDataSource);"
 
 	<virtual stdcall: hresult 70 IUnknown**>
 	^self invalidCall: _failureCode!
 
 get_StayInSync: pbStayInSync
 	"Private - Get the value of the 'StayInSync' property of the receiver.
-				HRESULT __stdcall StayInSync(
-			[out, retval] VARIANT_BOOL* pbStayInSync);"
+
+		HRESULT __stdcall StayInSync(
+			[out, retval]VARIANT_BOOL* pbStayInSync);"
 
 	<virtual stdcall: hresult 75 varbool*>
 	^self invalidCall: _failureCode!
@@ -158,11 +218,11 @@ getString
 	Default values are passed for all optional parameters."
 
 	^self
-		 getString: 2
-		 numRows: -1
-		 columnDelimeter: nil
-		 rowDelimeter: nil
-		 nullExpr: nil!
+		getString: 2
+		numRows: -1
+		columnDelimeter: ''
+		rowDelimeter: ''
+		nullExpr: ''!
 
 getString: stringFormat numRows: numRows columnDelimeter: columnDelimeter rowDelimeter: rowDelimeter nullExpr: nullExpr
 	"Answer the <BSTR> result of invoking the GetString() method of the COM object."
@@ -176,19 +236,18 @@ getString: stringFormat numRows: numRows columnDelimeter: columnDelimeter rowDel
 		RowDelimeter: rowDelimeter
 		NullExpr: nullExpr
 		pRetString: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 GetString: stringFormat NumRows: numRows ColumnDelimeter: columnDelimeter RowDelimeter: rowDelimeter NullExpr: nullExpr pRetString: pRetString
 	"Private - Invoke the GetString() method of the COM object.
 
 		HRESULT __stdcall GetString(
-			[in, optional, defaultvalue(2)] StringFormatEnum StringFormat,
-			[in, optional, defaultvalue(-1)] long NumRows,
-			[in, optional] BSTR ColumnDelimeter,
-			[in, optional] BSTR RowDelimeter,
-			[in, optional] BSTR NullExpr,
-			[out, retval] BSTR* pRetString);"
+			[in, defaultvalue(2)]StringFormatEnum StringFormat,
+			[in, defaultvalue(-1)]long NumRows,
+			[in, defaultvalue('')]BSTR ColumnDelimeter,
+			[in, defaultvalue('')]BSTR RowDelimeter,
+			[in, defaultvalue('')]BSTR NullExpr,
+			[out, retval]BSTR* pRetString);"
 
 	<virtual stdcall: hresult 76 sdword sdword bstr bstr bstr bstr*>
 	^self invalidCall: _failureCode!
@@ -196,8 +255,9 @@ GetString: stringFormat NumRows: numRows ColumnDelimeter: columnDelimeter RowDel
 put_DataMember: pbstrDataMember
 	"Private - Set the value of the 'DataMember' property of the object wrapped by the 
 	 receiver to the <bstr> argument, pbstrDataMember.
-				HRESULT __stdcall DataMember(
-			[in] BSTR pbstrDataMember);"
+
+		HRESULT __stdcall DataMember(
+			[in]BSTR pbstrDataMember);"
 
 	<virtual stdcall: hresult 78 bstr>
 	^self invalidCall: _failureCode!
@@ -205,8 +265,9 @@ put_DataMember: pbstrDataMember
 put_StayInSync: pbStayInSync
 	"Private - Set the value of the 'StayInSync' property of the object wrapped by the 
 	 receiver to the <varbool> argument, pbStayInSync.
-				HRESULT __stdcall StayInSync(
-			[in] VARIANT_BOOL pbStayInSync);"
+
+		HRESULT __stdcall StayInSync(
+			[in]VARIANT_BOOL pbStayInSync);"
 
 	<virtual stdcall: hresult 74 varbool>
 	^self invalidCall: _failureCode!
@@ -214,8 +275,9 @@ put_StayInSync: pbStayInSync
 putref_DataSource: ppunkDataSource
 	"Private - Set the value of the 'DataSource' property of the object wrapped by the 
 	 receiver to the <IUnknown*> argument, ppunkDataSource.
-				HRESULT __stdcall DataSource(
-			[in] IUnknown* ppunkDataSource);"
+
+		HRESULT __stdcall DataSource(
+			[in]IUnknown* ppunkDataSource);"
 
 	<virtual stdcall: hresult 71 IUnknown*>
 	^self invalidCall: _failureCode!
@@ -224,16 +286,14 @@ resync
 	"Invoke the Resync() method of the COM object.
 	Default values are passed for all optional parameters."
 
-	^self
-		 Resync: 3
-		 ResyncValues: 2!
+	^self Resync: 3 ResyncValues: 2!
 
 Resync: affectRecords ResyncValues: resyncValues
 	"Invoke the Resync() method of the COM object.
 
 		HRESULT __stdcall Resync(
-			[in, optional, defaultvalue(3)] AffectEnum AffectRecords,
-			[in, optional, defaultvalue(2)] ResyncEnum ResyncValues);"
+			[in, defaultvalue(3)]AffectEnum AffectRecords,
+			[in, defaultvalue(2)]ResyncEnum ResyncValues);"
 
 	<virtual stdcall: hresult 81 sdword sdword>
 	^self invalidCall: _failureCode!
@@ -241,23 +301,20 @@ Resync: affectRecords ResyncValues: resyncValues
 setDataSource: ppunkDataSource
 	"Set the 'DataSource' property of the receiver to the <IUnknown*> value of the argument."
 
-	self putref_DataSource: ppunkDataSource
-!
+	self putref_DataSource: ppunkDataSource!
 
 stayInSync
 	"Answer the <varbool> value of the 'StayInSync' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_StayInSync: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 stayInSync: pbStayInSync
 	"Set the 'StayInSync' property of the receiver to the <varbool> value of the argument."
 
-	self put_StayInSync: pbStayInSync
-! !
+	self put_StayInSync: pbStayInSync! !
 !ADODBRecordset20 categoriesFor: #_xSave!**auto generated**!methods!public! !
 !ADODBRecordset20 categoriesFor: #_xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
 !ADODBRecordset20 categoriesFor: #activeCommand!**auto generated**!properties!public! !

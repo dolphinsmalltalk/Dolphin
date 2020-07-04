@@ -6,11 +6,32 @@ ADODB_Collection subclass: #ADODBErrors
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
 ADODBErrors guid: (IID fromString: '{00000501-0000-0010-8000-00AA006D2EA4}')!
-ADODBErrors comment: '<ADODBErrors> is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBErrors comment: '`ADODBErrors` is a wrapper class for the COM interface ''ADODB.Errors'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00000501-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c8fd), 
+	nonextensible, 
+	dual
+]
+interface Errors : _Collection
+ {
+	[id(0000000000), propget, helpcontext(0x0012c8d1)]
+	HRESULT __stdcall Item(
+		[in]VARIANT Index,
+		[out, retval]Error** ppvObject);
+	[id(0x60030001), helpcontext(0x0012c8bd)]
+	HRESULT __stdcall Clear();
+};
+```
+'!
 !ADODBErrors categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBErrors methodsFor!
 
@@ -24,9 +45,10 @@ Clear
 
 get_Item: index ppvObject: ppvObject
 	"Private - Get the value of the 'Item' property of the receiver.
-				HRESULT __stdcall Item(
-			[in] VARIANT Index,
-			[out, retval] Error** ppvObject);"
+
+		HRESULT __stdcall Item(
+			[in]VARIANT Index,
+			[out, retval]Error** ppvObject);"
 
 	<virtual stdcall: hresult 11 variant ADODBError**>
 	^self invalidCall: _failureCode!
@@ -36,11 +58,8 @@ item: index
 
 	| answer |
 	answer := ADODBError newPointer.
-	self
-		get_Item: index asVariant
-		ppvObject: answer.
-	^answer asObject
-! !
+	self get_Item: index asVariant ppvObject: answer.
+	^answer asObject! !
 !ADODBErrors categoriesFor: #Clear!**auto generated**!COM Interfaces-Errors!public! !
 !ADODBErrors categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
 !ADODBErrors categoriesFor: #item:!**auto generated**!properties!public! !

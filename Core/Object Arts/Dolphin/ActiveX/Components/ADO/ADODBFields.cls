@@ -5,12 +5,42 @@ ADODBFields20 subclass: #ADODBFields
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODBFields guid: (IID fromString: '{00000564-0000-0010-8000-00AA006D2EA4}')!
-ADODBFields comment: '<ADODBFields> is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODBFields guid: (IID fromString: '{00001564-0000-0010-8000-00AA006D2EA4}')!
+ADODBFields comment: '`ADODBFields` is a wrapper class for the COM interface ''ADODB.Fields'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(00001564-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c8fe), 
+	hidden, 
+	nonextensible, 
+	dual
+]
+interface Fields : Fields20
+ {
+	[id(0x00000003), helpcontext(0x0012f05d)]
+	HRESULT __stdcall Append(
+		[in]BSTR Name,
+		[in]DataTypeEnum Type,
+		[in, defaultvalue(0)]long DefinedSize,
+		[in, defaultvalue(-1)]FieldAttributeEnum Attrib,
+		[in, optional]VARIANT FieldValue);
+	[id(0x00000005), helpcontext(0x0012f05e)]
+	HRESULT __stdcall Update();
+	[id(0x00000006), helpcontext(0x0012f05f)]
+	HRESULT __stdcall Resync(
+		[in, defaultvalue(2)]ResyncEnum ResyncValues);
+	[id(0x00000007), helpcontext(0x0012f060)]
+	HRESULT __stdcall CancelUpdate();
+};
+```
+'!
 !ADODBFields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODBFields methodsFor!
 
@@ -19,11 +49,11 @@ append: name type: type
 	Default values are passed for all optional parameters."
 
 	^self
-		 append: name
-		 type: type
-		 definedSize: 0
-		 attrib: -1
-		 fieldValue: VARIANT unspecified!
+		append: name
+		type: type
+		definedSize: 0
+		attrib: -1
+		fieldValue: VARIANT unspecified!
 
 append: name type: type definedSize: definedSize attrib: attrib fieldValue: fieldValue
 	"Invoke the Append() method of the COM object."
@@ -33,18 +63,17 @@ append: name type: type definedSize: definedSize attrib: attrib fieldValue: fiel
 		Type: type
 		DefinedSize: definedSize
 		Attrib: attrib
-		FieldValue: fieldValue asVariant
-!
+		FieldValue: fieldValue asVariant!
 
 Append: name Type: type DefinedSize: definedSize Attrib: attrib FieldValue: fieldValue
 	"Private - Invoke the Append() method of the COM object.
 
 		HRESULT __stdcall Append(
-			[in] BSTR Name,
-			[in] DataTypeEnum Type,
-			[in, optional, defaultvalue(0)] long DefinedSize,
-			[in, optional, defaultvalue(-1)] FieldAttributeEnum Attrib,
-			[in, optional] VARIANT FieldValue);"
+			[in]BSTR Name,
+			[in]DataTypeEnum Type,
+			[in, defaultvalue(0)]long DefinedSize,
+			[in, defaultvalue(-1)]FieldAttributeEnum Attrib,
+			[in, optional]VARIANT FieldValue);"
 
 	<virtual stdcall: hresult 14 bstr sdword sdword sdword variant>
 	^self invalidCall: _failureCode!
@@ -67,7 +96,7 @@ Resync: resyncValues
 	"Invoke the Resync() method of the COM object.
 
 		HRESULT __stdcall Resync(
-			[in, optional, defaultvalue(2)] ResyncEnum ResyncValues);"
+			[in, defaultvalue(2)]ResyncEnum ResyncValues);"
 
 	<virtual stdcall: hresult 16 sdword>
 	^self invalidCall: _failureCode!

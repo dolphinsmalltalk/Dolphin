@@ -5,26 +5,92 @@ ADODB_ADO subclass: #ADODB_Parameter
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-ADODB_Parameter guid: (IID fromString: '{0000050C-0000-0010-8000-00AA006D2EA4}')!
-ADODB_Parameter comment: '<ADODB_Parameter> is a wrapper class for the COM interface ''ADODB._Parameter'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
+ADODB_Parameter guid: (IID fromString: '{0000150C-0000-0010-8000-00AA006D2EA4}')!
+ADODB_Parameter comment: '`ADODB_Parameter` is a wrapper class for the COM interface ''ADODB._Parameter'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(0000150c-0000-0010-8000-00aa006d2ea4), 
+	helpcontext(0x0012c909), 
+	hidden, 
+	nonextensible, 
+	dual
+]
+interface _Parameter : _ADO
+ {
+	[id(0x00000001), propget, helpcontext(0x0012c92f)]
+	HRESULT __stdcall Name(
+		[out, retval]BSTR* pbstr);
+	[id(0x00000001), propput, helpcontext(0x0012c92f)]
+	HRESULT __stdcall Name(
+		[in]BSTR pbstr);
+	[id(0000000000), propget, helpcontext(0x0012c94d)]
+	HRESULT __stdcall Value(
+		[out, retval]VARIANT* pvar);
+	[id(0000000000), propput, helpcontext(0x0012c94d)]
+	HRESULT __stdcall Value(
+		[in]VARIANT pvar);
+	[id(0x00000002), propget, helpcontext(0x0012c94a)]
+	HRESULT __stdcall Type(
+		[out, retval]DataTypeEnum* psDataType);
+	[id(0x00000002), propput, helpcontext(0x0012c94a)]
+	HRESULT __stdcall Type(
+		[in]DataTypeEnum psDataType);
+	[id(0x00000003), propput, helpcontext(0x0012c920)]
+	HRESULT __stdcall Direction(
+		[in]ParameterDirectionEnum plParmDirection);
+	[id(0x00000003), propget, helpcontext(0x0012c920)]
+	HRESULT __stdcall Direction(
+		[out, retval]ParameterDirectionEnum* plParmDirection);
+	[id(0x00000004), propput, helpcontext(0x0012c938)]
+	HRESULT __stdcall Precision(
+		[in]BYTE pbPrecision);
+	[id(0x00000004), propget, helpcontext(0x0012c938)]
+	HRESULT __stdcall Precision(
+		[out, retval]BYTE* pbPrecision);
+	[id(0x00000005), propput, helpcontext(0x0012c932)]
+	HRESULT __stdcall NumericScale(
+		[in]BYTE pbScale);
+	[id(0x00000005), propget, helpcontext(0x0012c932)]
+	HRESULT __stdcall NumericScale(
+		[out, retval]BYTE* pbScale);
+	[id(0x00000006), propput, helpcontext(0x0012c940)]
+	HRESULT __stdcall Size(
+		[in]long pl);
+	[id(0x00000006), propget, helpcontext(0x0012c940)]
+	HRESULT __stdcall Size(
+		[out, retval]long* pl);
+	[id(0x00000007), helpcontext(0x0012c8b6)]
+	HRESULT __stdcall AppendChunk(
+		[in]VARIANT Val);
+	[id(0x00000008), propget, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[out, retval]long* plParmAttribs);
+	[id(0x00000008), propput, helpcontext(0x0012c90d)]
+	HRESULT __stdcall Attributes(
+		[in]long plParmAttribs);
+};
+```
+'!
 !ADODB_Parameter categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
 !ADODB_Parameter methodsFor!
 
 appendChunk: val
 	"Invoke the AppendChunk() method of the COM object."
 
-	^self AppendChunk: val asVariant
-!
+	^self AppendChunk: val asVariant!
 
 AppendChunk: val
 	"Private - Invoke the AppendChunk() method of the COM object.
 
 		HRESULT __stdcall AppendChunk(
-			[in] VARIANT Val);"
+			[in]VARIANT Val);"
 
 	<virtual stdcall: hresult 23 variant>
 	^self invalidCall: _failureCode!
@@ -33,92 +99,96 @@ attributes
 	"Answer the <sdword> value of the 'Attributes' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Attributes: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 attributes: plParmAttribs
 	"Set the 'Attributes' property of the receiver to the <sdword> value of the argument."
 
-	self put_Attributes: plParmAttribs
-!
+	self put_Attributes: plParmAttribs!
 
 direction
 	"Answer the <sdword> value of the 'Direction' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Direction: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 direction: plParmDirection
 	"Set the 'Direction' property of the receiver to the <sdword> value of the argument."
 
-	self put_Direction: plParmDirection
-!
+	self put_Direction: plParmDirection!
 
 get_Attributes: plParmAttribs
 	"Private - Get the value of the 'Attributes' property of the receiver.
-				HRESULT __stdcall Attributes(
-			[out, retval] long* plParmAttribs);"
+
+		HRESULT __stdcall Attributes(
+			[out, retval]long* plParmAttribs);"
 
 	<virtual stdcall: hresult 24 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Direction: plParmDirection
 	"Private - Get the value of the 'Direction' property of the receiver.
-				HRESULT __stdcall Direction(
-			[out, retval] ParameterDirectionEnum* plParmDirection);"
+
+		HRESULT __stdcall Direction(
+			[out, retval]ParameterDirectionEnum* plParmDirection);"
 
 	<virtual stdcall: hresult 16 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Name: pbstr
 	"Private - Get the value of the 'Name' property of the receiver.
-				HRESULT __stdcall Name(
-			[out, retval] BSTR* pbstr);"
+
+		HRESULT __stdcall Name(
+			[out, retval]BSTR* pbstr);"
 
 	<virtual stdcall: hresult 9 bstr*>
 	^self invalidCall: _failureCode!
 
 get_NumericScale: pbScale
 	"Private - Get the value of the 'NumericScale' property of the receiver.
-				HRESULT __stdcall NumericScale(
-			[out, retval] BYTE* pbScale);"
+
+		HRESULT __stdcall NumericScale(
+			[out, retval]BYTE* pbScale);"
 
 	<virtual stdcall: hresult 20 byte*>
 	^self invalidCall: _failureCode!
 
 get_Precision: pbPrecision
 	"Private - Get the value of the 'Precision' property of the receiver.
-				HRESULT __stdcall Precision(
-			[out, retval] BYTE* pbPrecision);"
+
+		HRESULT __stdcall Precision(
+			[out, retval]BYTE* pbPrecision);"
 
 	<virtual stdcall: hresult 18 byte*>
 	^self invalidCall: _failureCode!
 
 get_Size: pl
 	"Private - Get the value of the 'Size' property of the receiver.
-				HRESULT __stdcall Size(
-			[out, retval] long* pl);"
+
+		HRESULT __stdcall Size(
+			[out, retval]long* pl);"
 
 	<virtual stdcall: hresult 22 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Type: psDataType
 	"Private - Get the value of the 'Type' property of the receiver.
-				HRESULT __stdcall Type(
-			[out, retval] DataTypeEnum* psDataType);"
+
+		HRESULT __stdcall Type(
+			[out, retval]DataTypeEnum* psDataType);"
 
 	<virtual stdcall: hresult 13 sdword*>
 	^self invalidCall: _failureCode!
 
 get_Value: pvar
 	"Private - Get the value of the 'Value' property of the receiver.
-				HRESULT __stdcall Value(
-			[out, retval] VARIANT* pvar);"
+
+		HRESULT __stdcall Value(
+			[out, retval]VARIANT* pvar);"
 
 	<virtual stdcall: hresult 11 variant*>
 	^self invalidCall: _failureCode!
@@ -129,50 +199,45 @@ name
 	| answer |
 	answer := BSTR new.
 	self get_Name: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 name: pbstr
 	"Set the 'Name' property of the receiver to the <bstr> value of the argument."
 
-	self put_Name: pbstr
-!
+	self put_Name: pbstr!
 
 numericScale
 	"Answer the <byte> value of the 'NumericScale' property of the receiver."
 
 	| answer |
-	answer := (BYTE new).
+	answer := BYTE new.
 	self get_NumericScale: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 numericScale: pbScale
 	"Set the 'NumericScale' property of the receiver to the <byte> value of the argument."
 
-	self put_NumericScale: pbScale
-!
+	self put_NumericScale: pbScale!
 
 precision
 	"Answer the <byte> value of the 'Precision' property of the receiver."
 
 	| answer |
-	answer := (BYTE new).
+	answer := BYTE new.
 	self get_Precision: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 precision: pbPrecision
 	"Set the 'Precision' property of the receiver to the <byte> value of the argument."
 
-	self put_Precision: pbPrecision
-!
+	self put_Precision: pbPrecision!
 
 put_Attributes: plParmAttribs
 	"Private - Set the value of the 'Attributes' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plParmAttribs.
-				HRESULT __stdcall Attributes(
-			[in] long plParmAttribs);"
+
+		HRESULT __stdcall Attributes(
+			[in]long plParmAttribs);"
 
 	<virtual stdcall: hresult 25 sdword>
 	^self invalidCall: _failureCode!
@@ -180,8 +245,9 @@ put_Attributes: plParmAttribs
 put_Direction: plParmDirection
 	"Private - Set the value of the 'Direction' property of the object wrapped by the 
 	 receiver to the <sdword> argument, plParmDirection.
-				HRESULT __stdcall Direction(
-			[in] ParameterDirectionEnum plParmDirection);"
+
+		HRESULT __stdcall Direction(
+			[in]ParameterDirectionEnum plParmDirection);"
 
 	<virtual stdcall: hresult 15 sdword>
 	^self invalidCall: _failureCode!
@@ -189,8 +255,9 @@ put_Direction: plParmDirection
 put_Name: pbstr
 	"Private - Set the value of the 'Name' property of the object wrapped by the 
 	 receiver to the <bstr> argument, pbstr.
-				HRESULT __stdcall Name(
-			[in] BSTR pbstr);"
+
+		HRESULT __stdcall Name(
+			[in]BSTR pbstr);"
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode!
@@ -198,8 +265,9 @@ put_Name: pbstr
 put_NumericScale: pbScale
 	"Private - Set the value of the 'NumericScale' property of the object wrapped by the 
 	 receiver to the <byte> argument, pbScale.
-				HRESULT __stdcall NumericScale(
-			[in] BYTE pbScale);"
+
+		HRESULT __stdcall NumericScale(
+			[in]BYTE pbScale);"
 
 	<virtual stdcall: hresult 19 byte>
 	^self invalidCall: _failureCode!
@@ -207,8 +275,9 @@ put_NumericScale: pbScale
 put_Precision: pbPrecision
 	"Private - Set the value of the 'Precision' property of the object wrapped by the 
 	 receiver to the <byte> argument, pbPrecision.
-				HRESULT __stdcall Precision(
-			[in] BYTE pbPrecision);"
+
+		HRESULT __stdcall Precision(
+			[in]BYTE pbPrecision);"
 
 	<virtual stdcall: hresult 17 byte>
 	^self invalidCall: _failureCode!
@@ -216,8 +285,9 @@ put_Precision: pbPrecision
 put_Size: pl
 	"Private - Set the value of the 'Size' property of the object wrapped by the 
 	 receiver to the <sdword> argument, pl.
-				HRESULT __stdcall Size(
-			[in] long pl);"
+
+		HRESULT __stdcall Size(
+			[in]long pl);"
 
 	<virtual stdcall: hresult 21 sdword>
 	^self invalidCall: _failureCode!
@@ -225,8 +295,9 @@ put_Size: pl
 put_Type: psDataType
 	"Private - Set the value of the 'Type' property of the object wrapped by the 
 	 receiver to the <sdword> argument, psDataType.
-				HRESULT __stdcall Type(
-			[in] DataTypeEnum psDataType);"
+
+		HRESULT __stdcall Type(
+			[in]DataTypeEnum psDataType);"
 
 	<virtual stdcall: hresult 14 sdword>
 	^self invalidCall: _failureCode!
@@ -234,8 +305,9 @@ put_Type: psDataType
 put_Value: pvar
 	"Private - Set the value of the 'Value' property of the object wrapped by the 
 	 receiver to the <variant> argument, pvar.
-				HRESULT __stdcall Value(
-			[in] VARIANT pvar);"
+
+		HRESULT __stdcall Value(
+			[in]VARIANT pvar);"
 
 	<virtual stdcall: hresult 12 variant>
 	^self invalidCall: _failureCode!
@@ -244,31 +316,27 @@ size
 	"Answer the <sdword> value of the 'Size' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Size: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 size: pl
 	"Set the 'Size' property of the receiver to the <sdword> value of the argument."
 
-	self put_Size: pl
-!
+	self put_Size: pl!
 
 type
 	"Answer the <sdword> value of the 'Type' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Type: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 type: psDataType
 	"Set the 'Type' property of the receiver to the <sdword> value of the argument."
 
-	self put_Type: psDataType
-!
+	self put_Type: psDataType!
 
 value
 	"Answer the <variant> value of the 'Value' property of the receiver."
@@ -276,14 +344,12 @@ value
 	| answer |
 	answer := VARIANT new.
 	self get_Value: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
-	self put_Value: pvar asVariant
-! !
+	self put_Value: pvar asVariant! !
 !ADODB_Parameter categoriesFor: #appendChunk:!**auto generated**!methods!public! !
 !ADODB_Parameter categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-_Parameter!private! !
 !ADODB_Parameter categoriesFor: #attributes!**auto generated**!properties!public! !
@@ -324,7 +390,7 @@ value: pvar
 clsid
 	"Private - Answer the CLSID of the coclass (Parameter) for which the receiver is the default interface."
 
-	^CLSID fromString: '{0000050B-0000-0010-8000-00AA006D2EA4}'
+	^CLSID fromString: '{0000050b-0000-0010-8000-00aa006d2ea4}'
 !
 
 defineFunctions
