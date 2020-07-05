@@ -150,18 +150,21 @@ anchorIndex: anInteger
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
-	| largeImList smallImList stateImList |
+	| largeImList smallExt |
 	largeImList := self customImageExtent
 				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext]
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager ifNotNil: [:im | im imageListWithExtent: self largeIconExtent]].
-	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: self smallIconExtent].
-	stateImList := self stateImageManager
-				ifNotNil: [:stateImages | stateImages imageListWithExtent: self smallIconExtent].
-	self lvmSetImageList: smallImList type: LVSIL_SMALL.
+	smallExt := self smallIconExtent.
+	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
+		type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
-	self lvmSetImageList: stateImList type: LVSIL_STATE!
+	self hasCheckBoxes
+		ifFalse: 
+			[self lvmSetImageList: (self stateImageManager
+						ifNotNil: [:stateImages | stateImages imageListWithExtent: smallExt])
+				type: LVSIL_STATE]!
 
 autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
@@ -614,6 +617,15 @@ forgetLastClickedColumn
 	self setColumnIcon: nil atIndex: lastClickedColIndex.
 	lastClickedColIndex := nil!
 
+getItemChecked: anInteger
+	"Answer whether the item with the specified index is 'checked' or not. The result is unspecified if the receiver is not in `hasCheckBoxes` mode."
+	"Implementation mode: The ListView checkboxes feature is really just an application of state images, and the API for managing checked/unchecked is irregular and not very specific.
+		- to determine whether an item is checked, we have to request the state image index using a special message (LVM_GETITEM does not return it). The image index should be 1 for unchecked, and 2 for checked.
+		- to check/uncheck an item, we set the state image index to either 1 or 2. See `setItem:checked:`. If set to 0 (or some other value) then the checkbox will not be showed at all, but will reappear if the user clicks the item. In practice this isn't useful to represent 3 states, as it would be better to have a specific image for the unspecified state."
+
+	^((self lvmGetItemState: anInteger - 1 mask: LVIS_STATEIMAGEMASK)
+		bitShift: ##((LVIS_STATEIMAGEMASK lowBit - 1) negated)) > 1!
+
 getItemText: anInteger
 	| item |
 	item := LVITEMW new
@@ -675,14 +687,21 @@ hasButtons
 	^false!
 
 hasCheckBoxes
-	"Answer whether the receiver has check-boxes associated with its items."
+	"Answer whether the receiver has check-boxes associated with its items. This feature is only supported in non-virtual mode."
 
-	^self listViewStyleAllMask: LVS_EX_CHECKBOXES!
+	^(self listViewStyleAllMask: LVS_EX_CHECKBOXES) and: [self isVirtual not]!
 
 hasCheckBoxes: aBoolean
-	"Sets the receiver to either have or not have check-boxes associated with its items."
+	"Set whether the receiver has check-boxes associated with its items. Note that check-boxes are only supported when in non-virtual mode, and are also mutually exclusive with any other use of state images in the list."
 
-	^self listViewStyleMask: LVS_EX_CHECKBOXES set: aBoolean!
+	| hadCheckboxes |
+	hadCheckboxes := (self listViewStyleMask: LVS_EX_CHECKBOXES set: aBoolean)
+				allMask: LVS_EX_CHECKBOXES.
+	hadCheckboxes
+		ifTrue: 
+			["Reset the state as the list does not do this, although ironically it will reset when the checkboxes are turned back on."
+			self setItem: 0 checked: false].
+	^hadCheckboxes!
 
 hasColumnHeaders
 	"Answers true if the receiver has column headers enabled"
@@ -1152,6 +1171,9 @@ lvmGetHeader
 
 	^self sendMessage: LVM_GETHEADER!
 
+lvmGetImageList: wParam
+	^self sendMessage: LVM_GETIMAGELIST wParam: wParam!
+
 lvmGetItem: aLvItem
 	"Private - Retrieve the requested items attributes into the argument, aLvItem."
 
@@ -1316,7 +1338,7 @@ lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
 	Answer the previous style flags."
 
 	| prevStyle |
-	prevStyle := self sendMessage: LVM_SETEXTENDEDLISTVIEWSTYLE wParam: dwExMask lpParam: dwExStyle.
+	prevStyle := self sendMessage: LVM_SETEXTENDEDLISTVIEWSTYLE wParam: dwExMask lParam: dwExStyle.
 	lvStyle := (prevStyle maskClear: dwExMask) maskSet: (dwExStyle bitAnd: dwExMask).
 	^prevStyle!
 
@@ -1656,9 +1678,7 @@ onDisplayDetailsRequired: anLVITEM
 	"State image"
 	((mask allMask: LVIF_STATE) and: [subItem == 0])
 		ifTrue: 
-			[| stateImage |
-			stateImage := self stateImageFromRow: rowObject.
-			stateImage == NoImageIndex ifFalse: [anLVITEM iStateImage: stateImage]].
+			[(self stateImageFromRow: rowObject) ifNotNil: [:stateImage | anLVITEM iStateImage: stateImage]].
 	^0	"suppress default processing"!
 
 onDropDown: aToolbarButton 
@@ -1923,6 +1943,15 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: SelectionStateMask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
+selectIndices: aCollection set: aBoolean
+	| anLvItem |
+	anLvItem := LVITEMW newBuffer.
+	anLvItem stateMask: SelectionStateMask.
+	aBoolean ifTrue: [anLvItem dwState: SelectionStateMask].
+	self isMultiSelect
+		ifTrue: [aCollection do: [:each | self lvmSetItem: each - 1 state: anLvItem]]
+		ifFalse: [self lvmSetItem: aCollection first - 1 state: anLvItem]!
+
 selectionByIndex
 	"Answer the 1-based <integer> index of the selected item in the view, or zero if there is not exactly one selection."
 
@@ -1986,6 +2015,15 @@ setControlBackcolor: aColor
 
 setIconSpacing: aPointOrNil
 	self lvmSetIconSpacing: aPointOrNil ?? (-1 @ -1)!
+
+setItem: anInteger checked: aBoolean
+	"Set whether the item with the specified index is 'checked' or not. This will have unpredictable effects if the list is not in `hasCheckBoxes` mode."
+
+	| item |
+	item := LVITEMW new
+				iStateImage: aBoolean asParameter + 1;
+				yourself.
+	self lvmSetItem: anInteger - 1 state: item!
 
 setSelectionsByIndex: indices
 	| selections |
@@ -2068,9 +2106,9 @@ state
 	^sequence!
 
 stateImageFromRow: anObject
-	"Private - Answer the index of the state image for the row <Object> argument, or NoImageIndex if none."
+	"Private - Answer the index of the state image for the row <Object> argument, or nil if none."
 
-	^NoImageIndex!
+	^nil!
 
 subItemRectRow: rowInteger column: colInteger
 	"Answer a <Rectangle> representing the bounds of the sub-item at the specified row and column."
@@ -2218,7 +2256,7 @@ viewModeChanged
 		maskedBy: LVS_TYPEMASK
 		recreateIfChanged: false.
 	self autoResizeColumns.
-	self isVirtual ifTrue: [self invalidate] ifFalse: [self updateAll].
+	self updateAll.
 	self trigger: #viewModeChanged!
 
 viewModeSelect
@@ -2290,6 +2328,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #findItem:startingAt:wrap:!private!searching! !
 !ListView categoriesFor: #forecolor:!accessing!public! !
 !ListView categoriesFor: #forgetLastClickedColumn!helpers!private! !
+!ListView categoriesFor: #getItemChecked:!accessing!public! !
 !ListView categoriesFor: #getItemText:!accessing!private! !
 !ListView categoriesFor: #getSelectedCount!private!selection! !
 !ListView categoriesFor: #getSelectionsByIndex!private!selection! !
@@ -2297,7 +2336,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #getThumbnailOf:!helpers!private! !
 !ListView categoriesFor: #hasBorderSelect!accessing-styles!public! !
 !ListView categoriesFor: #hasBorderSelect:!accessing-styles!public! !
-!ListView categoriesFor: #hasButtons!accessing-styles!do copy!public!testing! !
+!ListView categoriesFor: #hasButtons!accessing-styles!public!testing! !
 !ListView categoriesFor: #hasCheckBoxes!accessing-styles!public! !
 !ListView categoriesFor: #hasCheckBoxes:!accessing-styles!public! !
 !ListView categoriesFor: #hasColumnHeaders!accessing!public! !
@@ -2324,7 +2363,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #hideDropHighlight!drag & drop!private! !
 !ListView categoriesFor: #iconSpacing!accessing!public! !
 !ListView categoriesFor: #iconSpacing:!accessing!public! !
-!ListView categoriesFor: #imageFromRow:!adapters!private!wine fix! !
+!ListView categoriesFor: #imageFromRow:!adapters!private! !
 !ListView categoriesFor: #indentFromRow:!adapters!private! !
 !ListView categoriesFor: #infoTipFromRow:withPrefix:!adapters!private! !
 !ListView categoriesFor: #initialize!initializing!private! !
@@ -2365,6 +2404,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvmGetColumnWidth:!accessing!private! !
 !ListView categoriesFor: #lvmGetExtendedListViewStyle!accessing!private! !
 !ListView categoriesFor: #lvmGetHeader!geometry!private! !
+!ListView categoriesFor: #lvmGetImageList:!image management!private! !
 !ListView categoriesFor: #lvmGetItem:!accessing!private! !
 !ListView categoriesFor: #lvmGetItemPosition:!geometry!private! !
 !ListView categoriesFor: #lvmGetItemRect:bounding:!geometry!private! !
@@ -2447,7 +2487,8 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #resolutionScaledBy:!geometry!private! !
 !ListView categoriesFor: #selectAll!public!selection! !
 !ListView categoriesFor: #selectedCount!private!selection! !
-!ListView categoriesFor: #selectIndex:set:!private!selection!wine fix! !
+!ListView categoriesFor: #selectIndex:set:!private!selection! !
+!ListView categoriesFor: #selectIndices:set:!private!selection! !
 !ListView categoriesFor: #selectionByIndex!public!selection! !
 !ListView categoriesFor: #selections:ifAbsent:!public!selection! !
 !ListView categoriesFor: #selectionsByIndex!public!selection! !
@@ -2455,6 +2496,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #setColumnIcon:atIndex:!helpers!private! !
 !ListView categoriesFor: #setControlBackcolor:!helpers!private! !
 !ListView categoriesFor: #setIconSpacing:!helpers!private! !
+!ListView categoriesFor: #setItem:checked:!accessing!public! !
 !ListView categoriesFor: #setSelectionsByIndex:!private!selection! !
 !ListView categoriesFor: #setSingleSelection:!private!selection! !
 !ListView categoriesFor: #setViewMode:!accessing!private! !
