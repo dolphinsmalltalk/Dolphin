@@ -119,6 +119,37 @@ testChangeViewMode
 			presenter isVirtual: false.
 			presenter refreshContents]!
 
+testCheckBoxes
+	| stateImageList |
+	presenter hasCheckBoxes: true.
+	"In the default virtual mode, checkboxes are not supported"
+	self deny: presenter hasCheckBoxes.
+	presenter isVirtual: false.
+	self assert: presenter hasCheckBoxes.
+	self assert: presenter viewMode equals: #smallIcons.
+	stateImageList := presenter lvmGetImageList: ListViewConstants.LVSIL_STATE.
+	self assert: stateImageList ~= 0.
+	"The ListView checkbox mode state image list contains just two images, the first an unchecked checkbox, and the 2nd a checked check box. It can be inspected by evaluating:
+			WinImageList fromHandle: stateImageList
+	Remember that image list indices are unusual in starting at 1."
+	presenter model: (ListModel withAll: (1 to: 5)).
+	1 to: 5 do: [:i | self deny: (presenter getItemChecked: i)].
+	"Check every other item"
+	1 to: 5
+		by: 2
+		do: [:i | presenter setItem: i checked: true].
+	1 to: 5 do: [:i | self assert: (presenter getItemChecked: i) equals: i odd].
+	"Changing view mode should preserve the checked/unchecked state."
+	presenter viewMode: #largeIcons.
+	1 to: 5 do: [:i | self assert: (presenter getItemChecked: i) equals: i odd].
+	"Changing model should reset state"
+	presenter model: (ListModel withAll: #($a $b $c)).
+	1 to: 3 do: [:i | self deny: (presenter getItemChecked: i)].
+	presenter setItem: 2 checked: true.
+	self assert: (presenter getItemChecked: 2).
+	presenter hasCheckBoxes: false.
+	self deny: (presenter getItemChecked: 2)!
+
 testColumnsList
 	"Remove the first column"
 
@@ -257,6 +288,7 @@ verifyClicks: anArray
 !ListViewTest categoriesFor: #sortSelections!helpers!public! !
 !ListViewTest categoriesFor: #testBackImage!public!unit tests! !
 !ListViewTest categoriesFor: #testChangeViewMode!public!unit tests! !
+!ListViewTest categoriesFor: #testCheckBoxes!public!unit tests! !
 !ListViewTest categoriesFor: #testColumnsList!public!unit tests! !
 !ListViewTest categoriesFor: #testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
 !ListViewTest categoriesFor: #testNilRow!public!unit tests! !
