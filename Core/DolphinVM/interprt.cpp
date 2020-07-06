@@ -21,6 +21,7 @@ Implementation of Smalltalk interpreter
 #include "thrdcall.h"
 #include "VMExcept.h"
 #include "regkey.h"
+#include "VirtualMemoryStats.h"
 
 // Smalltalk classes
 #include "STProcess.h"
@@ -577,8 +578,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		break;
 
 	case STATUS_NO_MEMORY:
-		sendExceptionInterrupt(VMInterrupts::NoMemory, pExInfo);
-		action = EXCEPTION_EXECUTE_HANDLER;
+		action = OutOfMemory(pExInfo);
 		break;
 
 	case EXCEPTION_INT_DIVIDE_BY_ZERO:
@@ -654,6 +654,20 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	}
 
 	return action;
+}
+
+int Interpreter::OutOfMemory(LPEXCEPTION_POINTERS pExInfo)
+{
+	VirtualMemoryStats memStats;
+	if (memStats.VirtualMemoryFree < ObjectMemory::MinimumVirtualMemoryAvailable)
+	{
+		CrashDump(pExInfo, nullptr);
+		FatalError(IDP_OUTOFVIRTUALMEMORY, memStats.VirtualMemoryUsedMb, memStats.VirtualMemoryFreeMb);
+		// Won't return to here
+	}
+
+	sendExceptionInterrupt(VMInterrupts::NoMemory, pExInfo);
+	return EXCEPTION_EXECUTE_HANDLER;
 }
 
 int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)

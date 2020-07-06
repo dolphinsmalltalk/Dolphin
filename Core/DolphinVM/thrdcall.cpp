@@ -20,9 +20,6 @@
 
 #include "thrdcall.h"
 
-void __cdecl DebugCrashDump(LPCWSTR szFormat, ...);
-void __cdecl DebugDump(LPCWSTR szMsg);
-
 // Disable warning about use of SEH in conjunction with objects with destructors
 #pragma warning (disable : 4509)
 

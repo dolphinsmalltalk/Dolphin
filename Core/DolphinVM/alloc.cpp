@@ -15,6 +15,7 @@
 #include "ObjMem.h"
 #include "ObjMemPriv.inl"
 #include "Interprt.h"
+#include "VirtualMemoryStats.h"
 
 #ifdef DOWNLOADABLE
 #include "downloadableresource.h"
@@ -702,6 +703,7 @@ Oop* __stdcall AllocateVirtualSpace(size_t maxBytes, size_t initialBytes)
 		}
 	}
 
+	::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE_EXCEPTION, 0, nullptr);
 	return nullptr;
 }
 
@@ -893,7 +895,7 @@ inline ObjectMemory::FixedSizePool::FixedSizePool(size_t nChunkSize) : m_pFreeCh
 inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, size_t newChunkSize)
 {
 	#ifdef PRIVATE_HEAP
-		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, HEAP_NO_SERIALIZE, pChunk, newChunkSize));
+		return static_cast<POBJECT>(::HeapReAlloc(m_hHeap, 0, pChunk, newChunkSize));
 	#else
 		void *oldPointer = pChunk;
 		void *newPointer = realloc(pChunk, newChunkSize);

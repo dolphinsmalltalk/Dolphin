@@ -28,6 +28,7 @@ using namespace ST;
 
 #if defined(_DEBUG)
 	#define MEMSTATS
+	#define TRACKFREEOTEs
 #endif
 
 // We don't want inline expansion of recursive functions thankyou
@@ -243,6 +244,8 @@ public:
 	static constexpr size_t NumCharacters = 256;
 	static constexpr size_t NumPermanent = FirstCharacterIdx + NumCharacters;
 	static constexpr size_t OTBase = NumPermanent;
+
+	static constexpr size_t MinimumVirtualMemoryAvailable = 256 * 1024 * 1024;
 
 	class OTEPool
 	{
@@ -475,7 +478,7 @@ private:		// Private Data
 	static size_t	m_nObjectsFreed;
 	static size_t	m_nBytesAllocated;
 	static size_t	m_nBytesFreed;
-#ifdef _DEBUG
+#ifdef TRACKFREEOTEs
 	static size_t	m_nFreeOTEs;
 	static size_t	CountFreeOTEs();
 #endif

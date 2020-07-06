@@ -19,11 +19,12 @@ Interpreter interface functions
 #include "InterprtProc.inl"
 #include "VMExcept.h"
 #include "thrdcall.h"
-#include "STArray.h"
+#include "VirtualMemoryStats.h"
 
 const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 7.1";
 
 // Smalltalk classes
+#include "STArray.h"
 #include "STByteArray.h"
 #include "STString.h"		// For instantiating new strings
 #include "STInteger.h"		// Use to create new integer, also for winproc return
@@ -581,7 +582,6 @@ LRESULT CALLBACK Interpreter::DolphinWndProc(HWND hWnd, UINT uMsg, WPARAM wParam
 	return lResult;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Exception filter for uses of the callback() routine. Handles memory errors due to 
 // OT/process stack overflow, and passes control to the user defined exception handler
@@ -598,6 +598,9 @@ int __stdcall Interpreter::callbackExceptionFilter(LPEXCEPTION_POINTERS info)
 			// Abnormal exit from callback (unwind not return)
 			resizeActiveProcess();
 			return EXCEPTION_EXECUTE_HANDLER;
+
+		case STATUS_NO_MEMORY:
+			return OutOfMemory(info);
 
 		case EXCEPTION_ACCESS_VIOLATION:
 #if !defined(NO_GPF_TRAP)

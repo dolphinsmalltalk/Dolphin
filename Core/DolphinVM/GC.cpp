@@ -430,6 +430,21 @@ void ObjectMemory::addVMRefs()
 	}
 }
 
+#ifdef TRACKFREEOTEs
+size_t ObjectMemory::CountFreeOTEs()
+{
+	OTE* p = m_pFreePointerList;
+	size_t	count = 0;
+	OTE* offEnd = m_pOT + m_nOTSize;
+	while (p < offEnd)
+	{
+		count++;
+		p = reinterpret_cast<OTE*>(p->m_location);
+	}
+	return count;
+}
+#endif
+
 #ifdef _DEBUG
 
 	void ObjectMemory::checkPools()
@@ -464,19 +479,6 @@ void ObjectMemory::addVMRefs()
 		}
 		for (auto j=0;j<NumPools;j++)
 			HARDASSERT(m_pools[j].isValid());
-	}
-
-	size_t ObjectMemory::CountFreeOTEs()
-	{
-		OTE*	p = m_pFreePointerList;
-		size_t	count = 0;
-		OTE*	offEnd= m_pOT + m_nOTSize;
-		while (p < offEnd)
-		{
-			count++;
-			p = reinterpret_cast<OTE*>(p->m_location);
-		}
-		return count;
 	}
 
 	void ObjectMemory::checkStackRefs(Oop* const sp)
