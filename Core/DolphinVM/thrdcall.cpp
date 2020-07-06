@@ -95,7 +95,9 @@ OverlappedCallPtr OverlappedCall::New(ProcessOTE* oteProcess)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	OverlappedCall* answer = new OverlappedCall(oteProcess);
+	OverlappedCallPtr answer = new OverlappedCall(oteProcess);
+	// The list doesn't use smart ptrs, instead we just add a ref here, and remove one when we unlink
+	answer->AddRef();
 	s_activeList.AddFirst(answer);
 	return answer;
 }
@@ -139,7 +141,8 @@ void OverlappedCall::TerminateThread()
 
 OverlappedCallPtr OverlappedCall::RemoveFirstFromList(OverlappedCallList& list)
 {
-	return list.RemoveFirst();
+	// Returned smart ptr takes over the ref from the list
+	return OverlappedCallPtr(list.RemoveFirst(), false);
 }
 
 // Static clean up async call support on shutdown
@@ -948,6 +951,8 @@ void OverlappedCall::RemoveFromPendingTerminations()
 
 	// Remove the call from the active list as it is being destroyed
 	Unlink();
+	// Remove the reference added for the list
+	Release();
 }
 
 // Let the interpreter know that this thread has completed the call, and is ready to finish
@@ -1070,7 +1075,7 @@ void OverlappedCall::MarkRoots()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	OverlappedCallPtr next = s_activeList.First();
+	OverlappedCall* next = s_activeList.First();
 	while (next)
 	{
 		if (next->IsInCall())
@@ -1086,7 +1091,7 @@ void OverlappedCall::ReincrementProcessReferences()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	OverlappedCallPtr next = s_activeList.First();
+	OverlappedCall* next = s_activeList.First();
 	while (next)
 	{
 		next->m_oteProcess->countUp();
