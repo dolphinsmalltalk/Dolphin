@@ -32,13 +32,11 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 	HARDASSERT(ote->m_count == 0);
 	HARDASSERT(!ote->isFree());
 	ote->beFree();
-//	if (!m_pFreePointerList)
-//		_asm int 3;
 
 	ote->m_location = reinterpret_cast<POBJECT>(m_pFreePointerList);
 	m_pFreePointerList = ote;
 
-#ifdef _DEBUG
+#ifdef TRACKFREEOTEs
 	m_nFreeOTEs++;
 #endif
 
@@ -57,7 +55,7 @@ void ObjectMemory::freeChunk(POBJECT pObj)
 #endif
 
 	#ifdef PRIVATE_HEAP
-		::HeapFree(m_hHeap, HEAP_NO_SERIALIZE, pObj);
+		::HeapFree(m_hHeap, 0, pObj);
 	#else
 		free(pObj);
 	#endif

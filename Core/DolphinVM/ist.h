@@ -117,20 +117,22 @@ extern CMonitor traceMonitor;
 
 #define TRACELOCK()	CAutoLock<tracestream> lock(TRACESTREAM)
 
-LPCWSTR __stdcall GetErrorText(DWORD win32ErrorCode);
-LPCWSTR __stdcall GetLastErrorText();
-std::wstring GetResourceString(HMODULE hMod, int resId);
+std::wstring __stdcall GetErrorText(DWORD win32ErrorCode);
+std::wstring __stdcall GetLastErrorText();
+LPCWSTR GetResourceString(HMODULE hMod, int resId);
 int __cdecl DolphinMessageBox(int idPrompt, UINT flags, ...);
 void __cdecl trace(const wchar_t* szFormat, ...);
 void __cdecl trace(int nPrompt, ...);
-void __cdecl DebugCrashDump(LPCWSTR szFormat, ...);
-void __cdecl DebugDump(LPCWSTR szFormat, ...);
+void __cdecl DebugCrashDump(const wchar_t* szFormat, ...);
+void __cdecl DebugDump(const wchar_t* szFormat, ...);
+void CrashDump(EXCEPTION_POINTERS * pExceptionInfo, const wchar_t* achImagePath);
 HRESULT __cdecl ReportError(int nPrompt, ...);
 HRESULT __cdecl ReportWin32Error(int nPrompt, DWORD errorCode, LPCWSTR arg = NULL);
 __declspec(noreturn) void __cdecl RaiseFatalError(int nCode, int nArgs, ...);
 __declspec(noreturn) void __stdcall FatalException(const EXCEPTION_RECORD& exRec);
-__declspec(noreturn) void __stdcall DolphinFatalExit(int exitCode, const char* msg);
-void __stdcall DolphinExit(int nExitCode);
+__declspec(noreturn) void __stdcall FatalError(int exitCode, ...);
+__declspec(noreturn) void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg);
+__declspec(noreturn) void __stdcall DolphinExit(int nExitCode);
 
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
 HMODULE GetModuleContaining(LPCVOID pFunc);

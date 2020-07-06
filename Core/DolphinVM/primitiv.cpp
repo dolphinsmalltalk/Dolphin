@@ -200,7 +200,10 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 		VariantObject* pNew = ObjectMemory::resize(reinterpret_cast<PointersOTE*>(oteReceiver),
 			newPointerSize,
 			bCountDownRemoved);
-		ASSERT(pNew != NULL);
+		if (pNew == nullptr)
+		{
+			return primitiveFailure(_PrimitiveFailureCode::NoMemory);
+		}
 	}
 	else
 	{
@@ -219,7 +222,10 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 
 		// Changing size of mutable byte object
 		VariantByteObject* pNew = ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteReceiver), newSize);
-		ASSERT(pNew != NULL || newSize == 0);
+		if (pNew == nullptr && newSize != 0)
+		{
+			return primitiveFailure(_PrimitiveFailureCode::NoMemory);
+		}
 	}
 
 	return sp - 1;

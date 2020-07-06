@@ -62,9 +62,8 @@ HMODULE __stdcall GetResLibHandle()
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 {
-	LPCWSTR buf = GetErrorText(hr);
-	HRESULT ret = ReportError(IDP_CREATEVMFAILED, hr, buf);
-	::LocalFree((HLOCAL)buf);
+	std::wstring buf = GetErrorText(hr);
+	HRESULT ret = ReportError(IDP_CREATEVMFAILED, hr, buf.c_str());
 	return ret;
 }
 

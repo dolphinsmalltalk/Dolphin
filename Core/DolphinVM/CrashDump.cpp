@@ -217,20 +217,22 @@ wostream* OpenLogStream(const wchar_t* achLogPath, const wchar_t* achImagePath, 
 	return pStream;
 }
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath)
+void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* imagePath)
 {
 	size_t nStackDepth = DefaultStackDepth;
 	size_t nWalkbackDepth = DefaultWalkbackDepth;
 	wostream* pStream = NULL;
 	wofstream fStream;
 	CRegKey rkDump;
+	if (imagePath == nullptr)
+		imagePath = achImagePath;
 	if (OpenDolphinKey(rkDump, L"CrashDump", KEY_READ)==ERROR_SUCCESS)
 	{
 		wchar_t achLogPath[_MAX_PATH+1];
 		achLogPath[0] = 0;
 		ULONG size = _MAX_PATH;
 		rkDump.QueryStringValue(L"", achLogPath, &size);
-		pStream = OpenLogStream(achLogPath, achImagePath, fStream);
+		pStream = OpenLogStream(achLogPath, imagePath, fStream);
 
 		DWORD dwValue;
 		if (rkDump.QueryDWORDValue(L"StackDepth", dwValue) == ERROR_SUCCESS && dwValue != 0)
@@ -240,7 +242,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath)
 			nWalkbackDepth = dwValue;
 	}
 	else
-		pStream = OpenLogStream(nullptr, achImagePath, fStream);
+		pStream = OpenLogStream(nullptr, imagePath, fStream);
 
 	CrashDump(pExceptionInfo, pStream, nStackDepth, nWalkbackDepth);
 }

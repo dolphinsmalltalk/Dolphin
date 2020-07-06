@@ -19,7 +19,7 @@
 inline POBJECT ObjectMemory::allocChunk(size_t chunkSize)
 {
 	#if defined(PRIVATE_HEAP)
-		POBJECT pObj = static_cast<POBJECT>(::HeapAlloc(m_hHeap, HEAP_NO_SERIALIZE, chunkSize));
+		POBJECT pObj = static_cast<POBJECT>(::HeapAlloc(m_hHeap, 0, chunkSize));
 		#ifdef _DEBUG
 			memset(pObj, 0xCD, chunkSize);
 		#endif
@@ -72,9 +72,6 @@ inline void ObjectMemory::freeSmallChunk(POBJECT pBlock, size_t size)
 
 inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 {
-	// OT is globally shared, so access must be in crit section
-//	ASSERT(m_nInCritSection > 0);
-	ASSERT(m_pFreePointerList != nullptr);
 	__assume(m_pFreePointerList != nullptr);
 
 	// N.B. By not ref. counting class here, we make a useful saving of a redundant
@@ -84,7 +81,11 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 	m_pFreePointerList = reinterpret_cast<OTE*>(ote->m_location);
 
 	ASSERT(ote->isFree());
-	_ASSERTE(--m_nFreeOTEs >= 0);
+#ifdef TRACKFREEOTEs
+	--m_nFreeOTEs;
+	assert(m_nFreeOTEs >= 0);
+	//assert(m_nFreeOTEs == CountFreeOTEs());
+#endif
 
 	// Set OTE fields of the Oop
 	ote->m_location = pLocation;

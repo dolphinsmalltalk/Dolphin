@@ -14,8 +14,6 @@
 #include "interprt.h"
 #include "VMExcept.h"
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath);
-
 extern void InitializeVtbl();
 extern void DestroyVtbl();
 

@@ -319,6 +319,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ExternalBuf.h">
       <Filter>FFI</Filter>
     </ClInclude>
+    <ClInclude Include="D:\dev\Dolphin\Core\DolphinVM\VMLib\..\VirtualMemoryStats.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

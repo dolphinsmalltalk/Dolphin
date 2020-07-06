@@ -163,7 +163,7 @@ size_t ObjectMemory::compact(Oop* const sp)
 	
 	OTE* end = (OTE*)_ROUND2(reinterpret_cast<ULONG_PTR>(m_pFreePointerList + 1), dwAllocationGranularity);
 
-#ifdef _DEBUG
+#ifdef TRACKFREEOTEs
 	m_nFreeOTEs = end - m_pFreePointerList;
 #endif
 

@@ -243,7 +243,7 @@ HRESULT ObjectMemory::LoadObjectTable(ibinstream& imageFile, const ImageHeader* 
 
 // Load objects and repair the free list
 
-template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & imageFile, const ImageHeader * pHeader, size_t & cbRead)
+template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
 {
 	// Other free OTEs will be threaded in front of the first OTE off the end
 	// of the currently committed table space. We set the free list pointer
@@ -255,6 +255,9 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & 
 
 #ifdef _DEBUG
 	auto numObjects = NumPermanent;	// Allow for VM registry, etc!
+#endif
+
+#ifdef TRACKFREEOTEs
 	m_nFreeOTEs = m_nOTSize - pHeader->nTableSize;
 #endif
 
@@ -316,7 +319,7 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & 
 			// Thread onto the free list
 			ote->m_location = (reinterpret_cast<POBJECT>(m_pFreePointerList));
 			m_pFreePointerList = ote;
-#ifdef _DEBUG
+#ifdef TRACKFREEOTEs
 			m_nFreeOTEs++;
 #endif
 		}
@@ -326,9 +329,12 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & 
 	// it must point off into space in order to get a GPF when it
 	// needs to be expanded (at which point we commit more pages)
 
+#ifdef TRACKFREEOTEs
+	assert(m_nFreeOTEs == CountFreeOTEs());
+#endif
+
 #ifdef _DEBUG
 	ASSERT(numObjects + m_nFreeOTEs == m_nOTSize);
-	ASSERT(m_nFreeOTEs = CountFreeOTEs());
 	TRACESTREAM << std::dec << numObjects<< L", " << m_nFreeOTEs<< L" free" << std::endl;
 #endif
 

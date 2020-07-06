@@ -23,7 +23,7 @@ Interpreter/Windows GUI interface functions
 
 #ifdef _CONSOLE
 
-void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg)
+__declspec(noreturn) void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg)
 {
 	int result = fwprintf(stderr, L"%s\n", msg);
 	FatalExit(exitCode);
@@ -208,7 +208,7 @@ void Interpreter::GuiShutdown()
 	hHookOldCbtFilter = NULL;
 }
 
-void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
+__declspec(noreturn) void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
 {
 	FatalAppExitW(0, msg);
 }

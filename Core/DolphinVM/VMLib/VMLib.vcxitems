@@ -103,6 +103,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IntPrim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\LargeIntPrim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\VirtualMemoryStats.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\objmem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\oopq.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ote.h" />

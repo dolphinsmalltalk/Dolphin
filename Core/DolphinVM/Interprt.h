@@ -335,6 +335,7 @@ private:
 	static void exitSmalltalk(int exitCode);
 
 	static int interpreterExceptionFilter(LPEXCEPTION_POINTERS info);
+	static int OutOfMemory(LPEXCEPTION_POINTERS pExInfo);
 	static int memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 	static int callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* callbackProcess, Oop prevCallbackContext);
 
