@@ -16,11 +16,10 @@ Instance Variables:
 !RBMethod categoriesForClass!Refactory-Model! !
 !RBMethod methodsFor!
 
-literal: anObject containsReferenceTo: aSymbol 
-	anObject = aSymbol ifTrue: [^true].
+literal: anObject containsReferenceTo: aSymbol
+	anObject == aSymbol ifTrue: [^true].
 	anObject class = Array ifFalse: [^false].
-	anObject 
-		do: [:each | (self literal: each containsReferenceTo: aSymbol) ifTrue: [^true]].
+	anObject do: [:each | (self literal: each containsReferenceTo: aSymbol) ifTrue: [^true]].
 	^false!
 
 method

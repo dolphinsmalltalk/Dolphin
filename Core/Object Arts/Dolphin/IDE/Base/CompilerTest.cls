@@ -1086,6 +1086,18 @@ testSpecialLiteralsAsUnarySelectors
 				raise: self compilationErrorClass.
 			self denyIsNil: method]!
 
+testStringDoesNotReferToSymbol
+	"Test that string literals in a method do not count as referring to a Symbol with the same contents,
+	now that they are #= to said Symbol.
+
+	N.B. they *should* still count as referring to other encodings of the same string."
+
+	| method |
+	method := (self compileExpression: '''abc'' size') method.
+	self assert: (method refersToLiteral: 'abc' asAnsiString).
+	self assert: (method refersToLiteral: 'abc' asUtf8String).
+	self deny: (method refersToLiteral: #abc)!
+
 testSymbolScanning
 	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--' '#''£''' '#''你好''' '#''🐬''') do: 
 			[:each |
@@ -1546,6 +1558,7 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #testScope!public!unit tests! !
 !CompilerTest categoriesFor: #testSharedOuterTemps!public!unit tests! !
 !CompilerTest categoriesFor: #testSpecialLiteralsAsUnarySelectors!public! !
+!CompilerTest categoriesFor: #testStringDoesNotReferToSymbol!public!unit tests! !
 !CompilerTest categoriesFor: #testSymbolScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testTempMaps!public!unit tests! !
 !CompilerTest categoriesFor: #testTempPairing!public!unit tests! !
