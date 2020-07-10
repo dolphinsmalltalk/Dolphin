@@ -190,41 +190,35 @@ invalidArgErrorClass
 	^InvalidExternalCall!
 
 invalidCall: anInteger
-	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive.
-	Generate an appropriate error from the following categories:
-		-	Argument type error. At least one argument was either out of range or of invalid type.
-			Only the first such error is reported. The primitive failure result will be >= 16
-			if an argument is invalid, the invalid argument number (from 1) being (failure result - 16)+1.
-`		-	Invalid receiver (failure result = 0)
-		-	Procedure not found (failure result = 1)
-		-	System error.
-		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
+	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
 
-	| error frame descriptor method |
+	| frame descriptor method |
+	anInteger >= 0
+		ifTrue: 
+			[| error |
+			error := KernelLibrary default getLastError.
+			^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]].
 	frame := Processor activeProcess topFrame sender.
 	method := frame method.
 	descriptor := method descriptor.
-	anInteger < 0
-		ifTrue: 
-			[^descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-				ifTrue: [HRESULTError signalFailureCode: (anInteger bitOr: HRESULT.FACILITY_NT_BIT)]
-				ifFalse: [HRESULTError signalFailureCode: anInteger]]
-		ifFalse: 
-			[anInteger >= 16r10000
-				ifTrue: 
-					[| arg i |
-					"An invalid argument was passed"
-					i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
-					arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-					self invalidArgErrorClass
-						invalidArgument: arg
-						got: (frame arguments at: arg)
-						expected: (descriptor argumentTypes at: i)]].
-
-	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
-	it must have been some system or unknown error."
-	error := KernelLibrary default getLastError.
-	^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]!
+	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
+	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
+	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1
+		and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
+			ifTrue: 
+				[| arg i |
+				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
+				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+				self invalidArgErrorClass
+					invalidArgument: arg
+					got: (frame arguments at: arg)
+					expected: (descriptor argumentTypes at: i)]
+			ifFalse: 
+				[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+					ifTrue: 
+						[HRESULTError
+							signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
+					ifFalse: [HRESULTError signalFailureCode: anInteger]]!
 
 isOpen
 	"Answer whether the external library represented by the receiver is open."

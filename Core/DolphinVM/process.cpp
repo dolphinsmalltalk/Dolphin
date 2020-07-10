@@ -1622,20 +1622,6 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp, primargcou
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t)
-{
-	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
-	// and so this may cause a context switch
-	ProcessOTE* oteActive = actualActiveProcessPointer();
-	OverlappedCallPtr pOverlapped = oteActive->m_location->GetOverlappedCall();
-	if (pOverlapped && pOverlapped->IsInCall())
-	{
-		TerminateOverlapped(oteActive);
-	}
-	return primitiveSuccess(0);
-}
-
-
 // Change the priority of the receiver to the argument.
 // Fail if the argument is not a SmallInteger in the range 1..max priority
 // Answers the processes old priority

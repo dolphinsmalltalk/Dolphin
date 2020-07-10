@@ -33,7 +33,7 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 	HARDASSERT(!ote->isFree());
 	ote->beFree();
 
-	ote->m_location = reinterpret_cast<POBJECT>(m_pFreePointerList);
+	ote->m_location = MakeNextFree(m_pFreePointerList);
 	m_pFreePointerList = ote;
 
 #ifdef TRACKFREEOTEs

@@ -17,6 +17,7 @@
 #include "RaiseThreadException.h"
 #include "RegKey.h"
 #include "STInteger.h"
+#include "STByteArray.h"
 
 #include "thrdcall.h"
 
@@ -32,12 +33,11 @@
 // of same.
 OverlappedCallList OverlappedCall::s_activeList;
 
+thread_local OverlappedCall* OverlappedCall::m_pThis;
+
 // Time permitted for threads to complete before main thread gives up
 static DWORD s_dwTerminateTimeout;
 static bool bIsNT;
-
-const DWORD SE_VMTERMINATETHREAD = MAKE_CUST_SCODE(SEVERITY_ERROR, FACILITY_NULL, 0x300);
-
 
 inline void Process::NewOverlapSemaphore()
 {
@@ -53,19 +53,6 @@ inline void Process::SetThread(void* handle)
 // List management
 ///////////////////////////////////////////////////////////////////////////////
 
-OverlappedCall::States OverlappedCall::ExchangeState(States exchange, States comperand)
-{
-	return static_cast<States>(InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state),
-		static_cast<std::underlying_type<States>::type>(exchange),
-		static_cast<std::underlying_type<States>::type>(comperand)));
-}
-
-// The overlapped thread has completed a call, return to the idle state
-bool OverlappedCall::CallFinished()
-{
-	return ExchangeState(States::Resting, States::Returned) == States::Returned;
-}
-
 OverlappedCallPtr OverlappedCall::GetActiveProcessOverlappedCall()
 {
 	// We no longer have a pool (for simplicity), so just answer a new thread every time.
@@ -80,8 +67,11 @@ OverlappedCallPtr OverlappedCall::GetActiveProcessOverlappedCall()
 	{
 		ProcessOTE* oteProcess = Interpreter::actualActiveProcessPointer();
 		pOverlapped = OverlappedCall::New(oteProcess);
-		pActiveProcess->SetThread(pOverlapped);
-		pActiveProcess->NewOverlapSemaphore();
+		if (pOverlapped)
+		{
+			pActiveProcess->SetThread(pOverlapped);
+			pActiveProcess->NewOverlapSemaphore();
+		}
 	}
 
 	return pOverlapped;
@@ -318,7 +308,9 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 			m_oteProcess(oteProcess),
 			m_nSuspendCount(0),
 			m_state(States::Starting),
-			m_primitiveFailureCode(_PrimitiveFailureCode::NoError)
+			m_primitiveFailureCode(_PrimitiveFailureCode::NoError),
+			m_pExInfo(nullptr),
+			m_pFpIeeeRecord(nullptr)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
@@ -347,6 +339,16 @@ OverlappedCall::~OverlappedCall()
 		TRACESTREAM << std::hex << GetCurrentThreadId() << L": Destroy " << *this << std::endl;
 	}
 	#endif
+
+	if (m_pExInfo != nullptr)
+	{
+		delete m_pExInfo;
+	}
+	if (m_pFpIeeeRecord != nullptr)
+	{
+		_aligned_free_dbg(m_pFpIeeeRecord);
+	}
+	m_pThis = nullptr;
 }
 
 
@@ -377,7 +379,8 @@ void OverlappedCall::Init()
 
 	m_hEvtGo = NewAutoResetEvent();
 	m_hEvtCompleted = NewAutoResetEvent();
-	BeginThread();
+	if (!BeginThread())
+		::RaiseException(STATUS_NO_MEMORY, 0, 0, NULL);
 }
 
 void OverlappedCall::Term()
@@ -411,10 +414,29 @@ void OverlappedCall::Free()
 ///////////////////////////////////////////////////////////////////////////////
 // States changes (answers if successful)
 
-OverlappedCall::States OverlappedCall::beTerminated()
+// Forced state change. Returns previous state.
+OverlappedCall::States OverlappedCall::ExchangeState(States exchange)
 {
-	// Answer the previous state
-	return static_cast<States>(InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), static_cast<std::underlying_type<States>::type>(States::Terminated)));
+	return static_cast<States>(InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), static_cast<std::underlying_type<States>::type>(exchange)));
+}
+
+// Conditional state change. Returns previous state.
+OverlappedCall::States OverlappedCall::ExchangeState(States exchange, States comperand)
+{
+	return static_cast<States>(InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state),
+		static_cast<std::underlying_type<States>::type>(exchange),
+		static_cast<std::underlying_type<States>::type>(comperand)));
+}
+
+OverlappedCall::States OverlappedCall::beUnwinding()
+{
+	return ExchangeState(States::Unwinding);
+}
+
+// Return interrupted overlapped call to Ready state. This should only be done if the OC was in the Ready state when interrupted
+OverlappedCall::States OverlappedCall::beUnwound()
+{
+	return ExchangeState(States::Ready, States::Unwinding);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -454,7 +476,7 @@ int OverlappedCall::ProcessRequests()
 	// Wait until either there is work to do - a terminate exception could be delivered in an APC, 
 	// so the wait is interruptable.
 	while ((dwRet = WaitForRequest()) == WAIT_OBJECT_0
-		&& ExchangeState(States::Calling, States::Resting) == States::Resting)
+		&& ExchangeState(States::Calling, States::Pending) == States::Pending)
 	{
 		#if TRACING == 1
 		{
@@ -484,82 +506,182 @@ int OverlappedCall::ProcessRequests()
 	return dwRet;
 }
 
-bool OverlappedCall::PerformCall()
+int OverlappedCall::CallExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
+{
+	// Save away details of the exception. It will be "re-raised" (actually converted to an interrupt) on the main Interpreter thread
+
+	DWORD exceptionCode = pExInfo->ExceptionRecord->ExceptionCode;
+	switch (exceptionCode)
+	{
+	case STATUS_FLOAT_DENORMAL_OPERAND:
+	case STATUS_FLOAT_DIVIDE_BY_ZERO:
+	case STATUS_FLOAT_INEXACT_RESULT:
+	case STATUS_FLOAT_INVALID_OPERATION:
+	case STATUS_FLOAT_OVERFLOW:
+	case STATUS_FLOAT_STACK_CHECK:
+	case STATUS_FLOAT_UNDERFLOW:
+	case STATUS_FLOAT_MULTIPLE_FAULTS:
+	case STATUS_FLOAT_MULTIPLE_TRAPS:
+		m_primitiveFailureCode = static_cast<_PrimitiveFailureCode>(PFC_FROM_NT(exceptionCode));
+		_fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
+		m_oteProcess->m_location->ResetFP();
+		return EXCEPTION_EXECUTE_HANDLER;
+
+	case STATUS_INTEGER_DIVIDE_BY_ZERO:
+	case STATUS_INTEGER_OVERFLOW:
+	case STATUS_PRIVILEGED_INSTRUCTION:
+	case STATUS_ILLEGAL_INSTRUCTION:
+		CopyExceptionInfo(pExInfo);
+		m_primitiveFailureCode = static_cast<_PrimitiveFailureCode>(PFC_FROM_NT(exceptionCode));
+		return EXCEPTION_EXECUTE_HANDLER;
+
+	case STATUS_STACK_OVERFLOW:
+		CopyExceptionInfo(pExInfo);
+		m_primitiveFailureCode = _PrimitiveFailureCode::StackOverflow;
+		return EXCEPTION_EXECUTE_HANDLER;
+
+	case STATUS_ACCESS_VIOLATION:
+		CopyExceptionInfo(pExInfo);
+		m_primitiveFailureCode = _PrimitiveFailureCode::AccessViolation;
+		return EXCEPTION_EXECUTE_HANDLER;
+
+	case static_cast<DWORD>(VMExceptions::CrtFault):
+		CopyExceptionInfo(pExInfo);
+		m_primitiveFailureCode = _PrimitiveFailureCode::CrtFault;
+		return EXCEPTION_EXECUTE_HANDLER;
+	}
+
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
+void OverlappedCall::CopyExceptionInfo(const LPEXCEPTION_POINTERS& pExInfo)
+{
+	if (m_pExInfo == nullptr)
+	{
+		m_pExInfo = new ExceptionInfo();
+	}
+	m_pExInfo->Copy(pExInfo);
+}
+
+void ExceptionInfo::Copy(const LPEXCEPTION_POINTERS& pExInfo)
+{
+	memcpy(&m_exceptionRecord, pExInfo->ExceptionRecord, sizeof(m_exceptionRecord));
+	memcpy(&m_contextRecord, pExInfo->ContextRecord, sizeof(m_contextRecord));
+}
+
+void OverlappedCall::PerformCall()
 {
 	// Must only be called from the overlapped thread
 	HARDASSERT(::GetCurrentThreadId() == m_dwThreadId);
 
 	// Run a call - this will finish by calling SignalCompletion, which will return to it
 	// and it (after placing the return value on the stack) then returns here.
-	Oop* sp = asyncDLL32Call(m_pMethod, m_nArgCount, this, &m_interpContext);
+	__try
+	{
+		Oop* sp = asyncDLL32Call(m_pMethod, m_nArgCount, this, &m_interpContext);
+		if (!ObjectMemoryIsIntegerObject(reinterpret_cast<Oop>(sp)))
+		{
+			// Successful call
+
+#if TRACING == 1
+			{
+				TRACELOCK();
+				TRACESTREAM << std::hex << GetCurrentThreadId() << L": Completed " << *m_pMethod << "; " << *this << std::endl;
+			}
+#endif
+
+			InterpreterRegisters& regs = Interpreter::GetRegisters();
+			regs.m_stackPointer = sp;
+			regs.m_pActiveFrame->setStackPointer(sp);
+		}
+		else
+		{
+			// The call failed as if it were a primitive failure - the args have
+			// not been popped and we need to activate the backup smalltalk code. 
+			// However, since the calling Process is in a wait state, we need to 
+			// notify the main thread to wake it up
+			m_primitiveFailureCode = static_cast<_PrimitiveFailureCode>(reinterpret_cast<Oop>(sp));
+
+			// We have to simulate return of the call even though we never made it in order that the main thread transitions through the states to take back control
+			ReturnFromFailedCall();
+		}
+	}
+	__except (CallExceptionFilter(GetExceptionInformation()))
+	{
+		// The call was made, but a UHE occurred in it.
+		ReturnFromFailedCall();
+	}
 
 	HARDASSERT(m_oteProcess->m_location->Thread() == this);
 
-	if (!ObjectMemoryIsIntegerObject(reinterpret_cast<Oop>(sp)))
-	{
-		#if TRACING == 1
-		{
-			TRACELOCK();
-			TRACESTREAM << std::hex << GetCurrentThreadId() << L": Completed " << *m_pMethod << "; " << *this << std::endl;
-		}
-		#endif
-
-		InterpreterRegisters& regs = Interpreter::GetRegisters();
-		ASSERT(m_interpContext.m_pActiveProcess == regs.m_pActiveProcess);
-		regs.m_stackPointer = sp;
-		regs.m_pActiveFrame->setStackPointer(sp);
-	}
-	else
-	{
-		// The call failed as if it were a primitive failure - the args have
-		// not been popped and we need to activate the backup smalltalk code. 
-		// However, since the calling Process is in a wait state, we need to 
-		// notify the main thread to wake it up
-		m_primitiveFailureCode = static_cast<_PrimitiveFailureCode>(ObjectMemoryIntegerValueOf(reinterpret_cast<Oop>(sp)));
-
-		#if TRACING == 1
-		{
-			TRACELOCK();
-			TRACESTREAM << std::hex << GetCurrentThreadId() << L": Call failed: " << static_cast<uint32_t>(m_primitiveFailureCode) << L": " << *this << std::endl;
-		}
-		#endif
-
-		if (m_state == States::Calling)
-		{
-			// Failed before the call was attempted, e.g. due to invalid arguments, so we must notify the Interpreter
-			// accordingly to wake the calling thread
-			NotifyInterpreterOfCallReturn();
-			WaitForInterpreter();
-		}
-	}
-
-	#ifdef _DEBUG
-		//Interpreter::checkReferences(m_interpContext);
-	#endif
-
-	bool stayAlive = CallFinished();
+	// Transition from Completing back to Ready
+	ExchangeState(States::Ready, States::Completing);
 
 	// We don't use any of the old context after here, so even if this thread is immediately
 	// reused before it gets a chance to suspend itself, it wont matter
 	VERIFY(::SetEvent(m_hEvtCompleted));
-
-	return stayAlive;
 }
 
-bool OverlappedCall::Initiate(CompiledMethod* pMethod, argcount_t argCount)
+void OverlappedCall::ReturnFromFailedCall()
+{
+#if TRACING == 1
+	{
+		TRACELOCK();
+		TRACESTREAM << std::hex << GetCurrentThreadId() << L": Call failed: " << static_cast<uint32_t>(m_primitiveFailureCode) << L": " << *this << std::endl;
+	}
+#endif
+
+	if (ExchangeState(States::Returned, States::Calling) == States::Calling)
+	{
+		// Failed before the call was attempted, e.g. due to invalid arguments, so we must notify the Interpreter
+		// accordingly to wake the calling thread
+		NotifyInterpreterOfCallReturn();
+		WaitForInterpreter();
+	}
+}
+
+_PrimitiveFailureCode OverlappedCall::Initiate(CompiledMethod* pMethod, argcount_t argCount)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
-	#if TRACING == 1
+#if TRACING == 1
 	{
 		TRACELOCK();
 		TRACESTREAM << std::hex << GetCurrentThreadId() << L": Initiate; " << *this << std::endl;
 	}
-	#endif
+#endif
 
-	if (IsInCall())
-		// Nested overlapped calls are not currently supported
-		return false;
+	// Spin until the call thread is Ready
+	States state;
+	do { state = ExchangeState(States::Pending, States::Ready); } while (state == States::Starting);
+
+	// If the thread did not transition from Ready to Pending, e.g. because a nested overlapped call 
+	// has been made, we can't continue
+	switch (state)
+	{
+	case States::Starting:
+	case States::Pending:
+		// Cannot happen - the loop should not have exited without transitioning Starting->Ready->Pending
+		return _PrimitiveFailureCode::AssertionFailure;
+
+	case States::Ready:
+		// The call thread was ready, and must how have successfully transitioned from to Pending, so we can proceed
+		break;
+
+	case States::Calling:
+	case States::Completing:
+	case States::Returned:
+		// Currently in a call; nested calls are not supported
+		return _PrimitiveFailureCode::NotSupported;
+
+	case States::Terminated:
+	case States::Unwinding:
+		return _PrimitiveFailureCode::IllegalStateChange;
+
+	default:
+		// Invalid state
+		return _PrimitiveFailureCode::InternalError;
+	}
 
 	// Now save down contextual information
 	m_pMethod = pMethod;
@@ -597,7 +719,7 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, argcount_t argCount)
 		DebugBreak();
 
 	//CHECKREFERENCES
-	return true;
+	return _PrimitiveFailureCode::NoError;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -614,7 +736,8 @@ bool OverlappedCall::CanComplete()
 	if (m_interpContext.m_pActiveFrame != activeContext.m_pActiveFrame)
 		return false;
 
-	if (m_nSuspendCount > 0 || m_state != States::Returned)
+	// If we're suspending, or not able to transition to the Completing state, then we can't complete
+	if (m_nSuspendCount > 0 || ExchangeState(States::Completing, States::Returned) != States::Returned)
 		return false;
 
 	HARDASSERT(m_interpContext.m_stackPointer == activeContext.m_stackPointer);
@@ -627,8 +750,6 @@ void OverlappedCall::OnActivateProcess()
 
 	if (CanComplete())
 	{
-		ASSERT(IsInCall());
-
 		// Let the overlapped thread continue
 		::SetEvent(m_hEvtGo);
 
@@ -646,10 +767,7 @@ void OverlappedCall::OnActivateProcess()
 			}
 #endif
 
-			ASSERT(m_interpContext.m_stackPointer == Interpreter::m_registers.m_stackPointer);
-			ASSERT(m_interpContext.m_basePointer == Interpreter::m_registers.m_basePointer);
-			Interpreter::m_registers.m_oopNewMethod = m_interpContext.m_oopNewMethod;
-			Interpreter::activatePrimitiveMethod(m_interpContext.m_oopNewMethod->m_location, m_primitiveFailureCode);
+			CallFailed();
 
 			m_primitiveFailureCode = _PrimitiveFailureCode::NoError;
 		}
@@ -659,13 +777,85 @@ void OverlappedCall::OnActivateProcess()
 	else
 	{
 		#if TRACING == 1
-		if (m_state != States::Resting)
+		if (m_state != States::Ready)
 		{
 			TRACELOCK();
 			TRACESTREAM << std::hex << GetCurrentThreadId() << L": OnActivateProcess() state = " << static_cast<std::underlying_type<States>::type>(this->m_state) << std::endl;
 		}
 		#endif
 	}
+}
+
+void OverlappedCall::SendExceptionInterrupt(Interpreter::VMInterrupts oopInterrupt)
+{
+	Interpreter::sendVMInterrupt(oopInterrupt, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(EXCEPTION_RECORD), m_pExInfo->ExceptionRecord)));
+}
+
+void OverlappedCall::CallFailed()
+{
+	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
+	assert(Interpreter::m_registers.m_oteActiveProcess == m_oteProcess);
+
+	ASSERT(m_interpContext.m_stackPointer == Interpreter::m_registers.m_stackPointer);
+	ASSERT(m_interpContext.m_basePointer == Interpreter::m_registers.m_basePointer);
+	Interpreter::m_registers.m_oopNewMethod = m_interpContext.m_oopNewMethod;
+	Interpreter::activatePrimitiveMethod(m_interpContext.m_oopNewMethod->m_location, m_primitiveFailureCode);
+
+	switch (m_primitiveFailureCode)
+	{
+	case _PrimitiveFailureCode::AccessViolation:
+		SendExceptionInterrupt(Interpreter::VMInterrupts::AccessViolation);
+		break;
+	case _PrimitiveFailureCode::CrtFault:
+		SendExceptionInterrupt(Interpreter::VMInterrupts::CrtFault);
+		break;
+	case _PrimitiveFailureCode::FloatStackCheck:
+		SendExceptionInterrupt(Interpreter::VMInterrupts::FpStack);
+		break;
+
+	case _PrimitiveFailureCode::FloatDenormalOperand:
+	case _PrimitiveFailureCode::FloatDivideByZero:
+	case _PrimitiveFailureCode::FloatInexactReult:
+	case _PrimitiveFailureCode::FloatInvalidOperation:
+	case _PrimitiveFailureCode::FloatOverflow:
+	case _PrimitiveFailureCode::FloatUnderflow:
+	case _PrimitiveFailureCode::FloatMultipleFaults:
+	case _PrimitiveFailureCode::FloatMultipleTraps:
+		Interpreter::sendVMInterrupt(Interpreter::VMInterrupts::FpFault, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), m_pFpIeeeRecord)));
+		break;
+	
+	case _PrimitiveFailureCode::IntegerOverflow:
+	case _PrimitiveFailureCode::PrivilegedInstruction:
+	case _PrimitiveFailureCode::IllegalInstruction:
+		SendExceptionInterrupt(Interpreter::VMInterrupts::Exception);
+		break;
+	case _PrimitiveFailureCode::IntegerDivideByZero:
+		Interpreter::sendZeroDivideInterrupt(m_pExInfo);
+		break;
+	case _PrimitiveFailureCode::NoMemory:
+		Interpreter::OutOfMemory(m_pExInfo);
+		break;
+
+	case _PrimitiveFailureCode::StackOverflow:
+		// We don't translate this to the StackOverflow interrupt, as this is a native stack overflow, not Smalltalk stack
+		SendExceptionInterrupt(Interpreter::VMInterrupts::Exception);
+		break;
+
+	default:
+		// Handle as normal primitive failure
+		break;
+	}
+}
+
+int __cdecl OverlappedCall::IEEEFPHandler(_FPIEEE_RECORD* pIEEEFPException)
+{
+	OverlappedCall* pThis = m_pThis;
+	if (pThis->m_pFpIeeeRecord == nullptr)
+	{
+		pThis->m_pFpIeeeRecord = (_FPIEEE_RECORD*)_aligned_malloc_dbg(sizeof(_FPIEEE_RECORD), 16, __FILE__, __LINE__);
+	}
+	memcpy(pThis->m_pFpIeeeRecord, pIEEEFPException, sizeof(_FPIEEE_RECORD));
+	return EXCEPTION_EXECUTE_HANDLER;
 }
 
 // Fire off an exception from the main thread into the overlapped thread to cause it
@@ -678,8 +868,8 @@ bool OverlappedCall::QueueTerminate()
 	// Although there is a race condition here, in that the thread may terminate after this
 	// test, we don't care because the thread handle will be nulled, and the operations against
 	// a NULL thread handle are benign.
-	States previousState = beTerminated();
-	if (previousState == States::Terminated || m_hThread == NULL)
+	States previousState = ExchangeState(States::Terminated);
+	if (previousState == States::Terminated || m_hThread == nullptr)
 		// Already terminated/terminating
 		return false;
 
@@ -700,7 +890,7 @@ bool OverlappedCall::QueueTerminate()
 		// any of the state herein
 		DWORD adwArgs[1];
 		adwArgs[0] = (DWORD)this;
-		RaiseThreadException(m_hThread, SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 1, adwArgs);
+		RaiseThreadException(m_hThread, static_cast<DWORD>(VMExceptions::TerminateThread), EXCEPTION_NONCONTINUABLE, 1, adwArgs);
 	}
 
 	// Ensure running and therefore able to receive termination request
@@ -802,17 +992,15 @@ DWORD OverlappedCall::ResumeThread()
 ///////////////////////////////////////////////////////////////////////////////
 // Thread main function
 
-int OverlappedCall::MainExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
+int OverlappedCall::MainExceptionFilter(DWORD exceptionCode)
 {
-	switch (pExInfo->ExceptionRecord->ExceptionCode)
+	switch (static_cast<VMExceptions>(exceptionCode))
 	{
-	case SE_VMTERMINATETHREAD:
-		return EXCEPTION_EXECUTE_HANDLER;
+	case VMExceptions::CrtFault:
+		// CRT faults occurring in the function called on the thread should have been trapped by the call filter
+		return EXCEPTION_CONTINUE_EXECUTION;
 
-	case EXCEPTION_FLT_STACK_CHECK:
-	case EXCEPTION_INT_DIVIDE_BY_ZERO:
-	case EXCEPTION_ACCESS_VIOLATION:
-	case SE_VMCRTFAULT:
+	case VMExceptions::TerminateThread:
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 
@@ -828,19 +1016,23 @@ static void __cdecl InvalidCrtParameterHandler(
 )
 {
 	TRACE(L"%x: CRT parameter fault in '%s' of %s, %s(%u)", GetCurrentThreadId(), expression, function, file, line);
-	TODO("Raise an exception and report the error in a similar way to the main VM thread");
-	return;
+	ULONG_PTR args[1];
+	args[0] = FAST_FAIL_INVALID_ARG;
+	::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), 0, 1, (CONST ULONG_PTR*)args);
 }
 
 int OverlappedCall::TryMain()
 {
+	m_pThis = this;
 	int ret;
 	__try
 	{
 		_set_thread_local_invalid_parameter_handler(InvalidCrtParameterHandler);
+		// Pick up the FP control word settings from the owning process
+		m_oteProcess->m_location->ResetFP();
 		ret = Main();
 	}
-	__except(MainExceptionFilter(GetExceptionInformation()))
+	__except(MainExceptionFilter(GetExceptionCode()))
 	{
 		#if TRACING == 1
 		{
@@ -878,7 +1070,9 @@ int OverlappedCall::Main()
 {
 	int ret;
 
-	if (ExchangeState(States::Resting, States::Starting) == States::Starting)
+	// The main thread should spin waiting for us to become Ready, then it will normally change the state to Pending 
+	// and allow the call request to proceed.
+	if (ExchangeState(States::Ready, States::Starting) == States::Starting)
 		ret = ProcessRequests();
 	else
 	{
@@ -992,7 +1186,7 @@ void OverlappedCall::WaitForInterpreter()
 		if (dwRet == WAIT_ABANDONED)
 		{
 			// Event deleted, etc, so terminate the thread
-			::RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
+			::RaiseException(static_cast<DWORD>(VMExceptions::TerminateThread), EXCEPTION_NONCONTINUABLE, 0, NULL);
 		}
 
 		// Interrupted to process an APC (probably a suspend/terminate) or due to a timeout
@@ -1024,11 +1218,11 @@ void OverlappedCall::OnCallReturned()
 
 	WaitForInterpreter();
 
-	if (GetProcess()->Thread() != this || m_state != States::Returned)
+	if (GetProcess()->Thread() != this || m_state != States::Completing)
 	{
 		HARDASSERT(FALSE);
 		::DebugCrashDump(L"Terminated overlapped call got though to completion (%#x)\nPlease contact Object Arts.", GetProcess()->Thread());
-		RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
+		RaiseException(static_cast<DWORD>(VMExceptions::TerminateThread), EXCEPTION_NONCONTINUABLE, 0, NULL);
 	}
 
 	// We should now be running to the exclusion of the interpreter main thread, and no other
@@ -1042,7 +1236,7 @@ void OverlappedCall::OnCallReturned()
 	#endif
 
 	// OK, now ready to pop args and push result on stack (in sync with main thread)
-	InterpreterRegisters& activeContext = Interpreter::GetRegisters();
+	const InterpreterRegisters& activeContext = Interpreter::GetRegisters();
 	// The process must be the active one in order to complete
 	HARDASSERT(m_interpContext.m_pActiveProcess == activeContext.m_pActiveProcess);
 
@@ -1058,16 +1252,6 @@ void OverlappedCall::OnCallReturned()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive helpers
 
-OverlappedCallPtr OverlappedCall::Do(CompiledMethod* pMethod, argcount_t argCount)
-{
-	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	OverlappedCallPtr pCall = GetActiveProcessOverlappedCall();
-	return pCall->Initiate(pMethod, argCount) ? pCall : nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Interpreter primitive helpers
-
 void OverlappedCall::MarkRoots()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
@@ -1075,10 +1259,7 @@ void OverlappedCall::MarkRoots()
 	OverlappedCall* next = s_activeList.First();
 	while (next)
 	{
-		if (next->IsInCall())
-		{
-			ObjectMemory::MarkObjectsAccessibleFromRoot(reinterpret_cast<POTE>(next->m_oteProcess));
-		}
+		ObjectMemory::MarkObjectsAccessibleFromRoot(reinterpret_cast<POTE>(next->m_oteProcess));
 		next = next->Next();
 	}
 }
@@ -1103,6 +1284,28 @@ void OverlappedCall::ReincrementProcessReferences()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive 
 
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t)
+{
+	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
+	// and so this may cause a context switch
+	ProcessOTE* oteActive = actualActiveProcessPointer();
+	OverlappedCallPtr pOverlapped = oteActive->m_location->GetOverlappedCall();
+	if (pOverlapped)
+	{
+		OverlappedCall::States state = pOverlapped->beUnwinding();
+		if (state == OverlappedCall::States::Ready)
+		{
+			// Thread was just waiting calls - return it to idle
+			pOverlapped->beUnwound();
+		}
+		else
+		{
+			TerminateOverlapped(oteActive);
+		}
+}
+	return primitiveSuccess(0);
+}
+
 Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, primargcount_t argCount)
 {
 	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
@@ -1114,29 +1317,37 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, primargcount_t 
 	}
 	#endif
 
-	OverlappedCallPtr pCall = OverlappedCall::Do(method, argCount);
-	if (!pCall)
-		// Nested overlapped calls are not supported
-		return primitiveFailure(_PrimitiveFailureCode::NotSupported);
-
-	HARDASSERT(newProcessWaiting());
-
-	// The overlapped call may already have returned, in which case a process switch
-	// will not occur, so we must notify the overlapped call that it can complete as 
-	// it will not receive a notification from either finishing the handling of an interrupt
-	// or by switching back to the process
-	if (!CheckProcessSwitch())
+	OverlappedCallPtr pCall = OverlappedCall::GetActiveProcessOverlappedCall();
+	if (pCall)
 	{
-		pCall->OnActivateProcess();
-	}
+		_PrimitiveFailureCode retCode = pCall->Initiate(method, argCount);
+		if (retCode == _PrimitiveFailureCode::NoError)
+		{
 
-	#if TRACING == 1
-	{
-		TRACELOCK();
-		TRACESTREAM << L"registers.sp = " << m_registers.m_stackPointer<< L" frame.sp = " <<
-				m_registers.m_pActiveFrame->stackPointer() << std::endl;
-	}
-	#endif
+			HARDASSERT(newProcessWaiting());
 
-	return m_registers.m_stackPointer;
+			// The overlapped call may already have returned, in which case a process switch
+			// will not occur, so we must notify the overlapped call that it can complete as 
+			// it will not receive a notification from either finishing the handling of an interrupt
+			// or by switching back to the process
+			if (!CheckProcessSwitch())
+			{
+				pCall->OnActivateProcess();
+			}
+
+#if TRACING == 1
+			{
+				TRACELOCK();
+				TRACESTREAM << L"registers.sp = " << m_registers.m_stackPointer << L" frame.sp = " <<
+					m_registers.m_pActiveFrame->stackPointer() << std::endl;
+			}
+#endif
+
+			return m_registers.m_stackPointer;
+		}
+
+		return primitiveFailure(retCode);
+	}
+	else
+		return primitiveFailure(_PrimitiveFailureCode::NoMemory);
 }

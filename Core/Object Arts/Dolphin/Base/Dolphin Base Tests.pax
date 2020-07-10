@@ -154,6 +154,7 @@ package setPrerequisites: #(
 	'..\System\Random\Dolphin CRT Random Stream'
 	'Dolphin Legacy Date & Time'
 	'Dolphin Message Box'
+	'..\MVP\Base\Dolphin MVP Base'
 	'..\System\Random\Dolphin Random Stream'
 	'..\Registry\Dolphin Registry Access'
 	'..\System\Compiler\Smalltalk Parser'

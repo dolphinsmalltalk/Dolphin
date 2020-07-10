@@ -221,6 +221,13 @@
       </ArrayItems>
     </Expand>
   </Type>
+  <Type Name="CompiledCodeObj">
+    <DisplayString>{(OTE*)m_methodClass}>>{((TOTE&lt;ST::Symbol&gt;*)m_selector)->m_location->m_characters,nasb}</DisplayString>
+    <Expand>
+      <Item Name="header">m_header</Item>
+      <Item Name="bytecodes">(OTE*)m_byteCodes</Item>
+    </Expand>
+  </Type>
   <Type Name="ST::CompiledMethod">
     <DisplayString>{m_methodClass}>>{m_selector->m_location->m_characters,nasb}</DisplayString>
     <Expand>

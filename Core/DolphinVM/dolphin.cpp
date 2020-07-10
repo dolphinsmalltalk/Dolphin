@@ -88,21 +88,21 @@ static long __stdcall ignoreUnwindsFilter(EXCEPTION_POINTERS *pExceptionInfo)
 	EXCEPTION_RECORD* pExRec = pExceptionInfo->ExceptionRecord;
 	DWORD exceptionCode = pExRec->ExceptionCode;
 
-	switch(exceptionCode)
+	switch((VMExceptions)exceptionCode)
 	{
-	case SE_VMCALLBACKUNWIND:
-	case SE_VMCALLBACKEXIT:
+	case VMExceptions::CallbackUnwind:
+	case VMExceptions::CallbackExit:
 		{
 			tracelock lock(TRACESTREAM);
 			TRACESTREAM<< L"Warning: Ignoring extraneous unwind " << std::hex << PVOID(exceptionCode) << std::endl;
 		}
 		return EXCEPTION_CONTINUE_EXECUTION;
 	
-	case SE_VMDUMPSTATUS:
+	case VMExceptions::DumpStatus:
 		CrashDump(pExceptionInfo, achImagePath);
 		return EXCEPTION_CONTINUE_EXECUTION;
 
-	case SE_VMEXIT:
+	case VMExceptions::Exit:
 	default:
 		break;
 	}
@@ -149,7 +149,7 @@ static int vmmainFilter(LPEXCEPTION_POINTERS pEx, EXCEPTION_RECORD& exRec)
 	if (code >= SE_VMFIRST && code <= SE_VMLAST)
 	{
 		action = EXCEPTION_EXECUTE_HANDLER;
-		if (code != SE_VMEXIT)
+		if (code != static_cast<DWORD>(VMExceptions::Exit))
 			CrashDump(pEx, achImagePath);
 	}
 	else
@@ -169,7 +169,7 @@ static void __cdecl invalidParameterHandler(
 	TRACE(L"CRT parameter fault in '%s' of %s, %s(%u)", expression, function, file, line);
 	ULONG_PTR args[1];
 	args[0] = FAST_FAIL_INVALID_ARG;
-	::RaiseException(SE_VMCRTFAULT, 0, 1, (CONST ULONG_PTR*)args);
+	::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), 0, 1, (CONST ULONG_PTR*)args);
 }
 
 #ifndef BOOT
@@ -246,7 +246,7 @@ int APIENTRY VMRun(uintptr_t arg)
 		lpTopFilter = NULL;
 		_set_invalid_parameter_handler(outerInvalidParamHandler);
 
-		if (exRec.ExceptionCode == SE_VMEXIT)
+		if (exRec.ExceptionCode == static_cast<DWORD>(VMExceptions::Exit))
 			exitCode = exRec.ExceptionInformation[0];
 		else
 			FatalException(exRec);

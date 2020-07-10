@@ -585,7 +585,7 @@ HRESULT ObjectMemory::allocateOT(size_t reserve, size_t commit)
 #endif
 
 		ote->beFree();
-		ote->m_location = reinterpret_cast<POBJECT>(ote+1);
+		ote->m_location = MakeNextFree(ote+1);
 	}
 
 	//TRACE("%d OTEs on free list\n", m_nFreeOTEs);
@@ -724,7 +724,7 @@ size_t ObjectMemory::OopsUsed()
 	while (ote < pEnd)
 	{
 		nFreeOTEs++;
-		ote = reinterpret_cast<OTE*>(ote->m_location);
+		ote = NextFree(ote);
 	}
 
 	for (auto i=0u;i<Interpreter::NumOtePools;i++)
@@ -802,7 +802,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 					#endif
 
 					pLink->beFree();
-					pLink->m_location = reinterpret_cast<POBJECT>(pLink+1);
+					pLink->m_location = MakeNextFree(pLink+1);
 					pLink++;
 				}
 				m_nOTSize += extraOTEs;

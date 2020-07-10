@@ -166,13 +166,13 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, argcount_t argCount TRA
 #ifdef USESETJMP
 		break;
 
-	case SE_VMCALLBACKEXIT:
+	case static_cast<int>(VMExceptions::CallbackExit):
 		// Pop the top of the callback context stack
 		currentCallbackContext = prevCallbackContext;
 		wakePendingCallbacks();
 		break;
 
-	case SE_VMCALLBACKUNWIND:
+	case static_cast<int>(VMExceptions::CallbackUnwind):
 	default:
 		return Oop(Pointers.Nil);
 	}
@@ -213,9 +213,9 @@ int Interpreter::callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* c
 {
 	EXCEPTION_RECORD* pExRec = info->ExceptionRecord;
 
-	switch (pExRec->ExceptionCode)
+	switch (static_cast<VMExceptions>(pExRec->ExceptionCode))
 	{
-		case SE_VMCALLBACKEXIT:
+		case VMExceptions::CallbackExit:
 		{
 			// Its a callback exception, now lets see if its in sync.
 			if (callbackProcess == actualActiveProcess())
@@ -235,7 +235,7 @@ int Interpreter::callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* c
 			}
 			break;
 		}
-		case SE_VMCALLBACKUNWIND:			// N.B. Similar, but subtly different (we continue the search)
+		case VMExceptions::CallbackUnwind:			// N.B. Similar, but subtly different (we continue the search)
 		{
 			// Its a callback unwind, now lets see if its in sync.
 			if (callbackProcess == actualActiveProcess())
@@ -594,7 +594,7 @@ int __stdcall Interpreter::callbackExceptionFilter(LPEXCEPTION_POINTERS info)
 	EXCEPTION_RECORD* pExRec = info->ExceptionRecord;
 	switch(pExRec->ExceptionCode)
 	{
-		case SE_VMCALLBACKUNWIND:
+		case static_cast<DWORD>(VMExceptions::CallbackUnwind):
 			// Abnormal exit from callback (unwind not return)
 			resizeActiveProcess();
 			return EXCEPTION_EXECUTE_HANDLER;
@@ -734,7 +734,7 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, primargc
 		if (callbackCookie == currentCallbackContext)
 		{
 			int* pJumpBuf = reinterpret_cast<int*>(callbackCookie ^ 1);
-			longjmp(pJumpBuf, SE_VMCALLBACKEXIT);
+			longjmp(pJumpBuf, static_cast<int>(VMExceptions::CallbackExit));
 
 			// Can't get here
 			__assume(false);
@@ -746,7 +746,7 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, primargc
 			{
 				// I don't think this is used any more. The cookie will always be non-zero
 
-				::RaiseException(SE_VMCALLBACKEXIT, 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
+				::RaiseException(static_cast<DWORD>(VMExceptions::CallbackExit), 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
 
 				// Push the cookie argument back on the stack
 				*(sp + 1) = callbackCookie;
@@ -780,7 +780,7 @@ Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, primargcount
 		// Is it current callback ?
 		if (callbackCookie == currentCallbackContext || callbackCookie == ZeroPointer)
 		{
-			::RaiseException(SE_VMCALLBACKUNWIND, 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
+			::RaiseException(static_cast<DWORD>(VMExceptions::CallbackUnwind), 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
 
 			// Note that the exception handler never executes handler, but may return here(if not continues search)
 
@@ -875,7 +875,7 @@ void InitializeVtbl()
 	aVtblThunks = static_cast<VTblThunk*>(::VirtualAlloc(NULL, NUMVTBLENTRIES*sizeof(VTblThunk), MEM_COMMIT, PAGE_READWRITE));
 	if (aVtblThunks == nullptr)
 	{
-		RaiseFatalError(IDP_OUTOFVIRTUALMEMORY, 0);
+		::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, nullptr);
 		return;
 	}
 

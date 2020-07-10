@@ -13,17 +13,25 @@ GPFault comment: ''!
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
-	| info |
-	info := exceptionRecord information.
 	^super _descriptionArguments
-		, {(info at: 1) == 0 ifTrue: ['Reading'] ifFalse: ['Writing']. (info at: 2) asExternalAddress}
-	"7"
-	"8"!
+		, {self isReading ifTrue: ['Reading'] ifFalse: ['Writing']. self inaccessibleAddress}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
-	^'%4 %7 0x%8!!X!!, IP 0x%5!!X!! (%6)'! !
+	^'%4 %7 0x%8!!X!!, IP 0x%5!!X!! (%6)'!
+
+inaccessibleAddress
+	"Answer the address that an attempt was being made to access when the fault occurred because it cannot be read/written."
+
+	^(exceptionRecord information at: 2) asExternalAddress!
+
+isReading
+	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
+
+	^(exceptionRecord information at: 1) == 0! !
 !GPFault categoriesFor: #_descriptionArguments!displaying!public! !
 !GPFault categoriesFor: #_descriptionFormat!displaying!public! !
+!GPFault categoriesFor: #inaccessibleAddress!accessing!public! !
+!GPFault categoriesFor: #isReading!accessing!public! !
 

@@ -120,6 +120,7 @@
 		#define	HARDASSERT(e)		((void)0)
 	#endif
 
+	#undef assert
 	#define assert(e)		{ if (!(e)) { DEBUGBREAK(); } }
 
 	constexpr size_t dwPageSize = 0x1000;						// 4Kb

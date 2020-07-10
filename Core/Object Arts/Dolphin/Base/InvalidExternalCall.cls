@@ -34,6 +34,12 @@ argument
 argument: anObject
 	argument := anObject!
 
+hresult
+	"Answer the <HRESULT> error code associated with the receiver.
+	Overridden by subclasses to answer more specified HRESULT codes."
+
+	^HRESULT fromPrimitiveFailureCode: ( _PrimitiveFailureCode.InvalidParameter1 + self tag - 1)!
+
 type
 	"Answer the type  expected by the argument for which the receiver represents an invalid call to anObject."
 
@@ -48,6 +54,7 @@ type: anObject
 !InvalidExternalCall categoriesFor: #_descriptionFormat!displaying!private! !
 !InvalidExternalCall categoriesFor: #argument!accessing!public! !
 !InvalidExternalCall categoriesFor: #argument:!accessing!private! !
+!InvalidExternalCall categoriesFor: #hresult!accessing!public! !
 !InvalidExternalCall categoriesFor: #type!accessing!public! !
 !InvalidExternalCall categoriesFor: #type:!accessing!private! !
 
