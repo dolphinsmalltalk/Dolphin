@@ -703,7 +703,7 @@ Oop* __stdcall AllocateVirtualSpace(size_t maxBytes, size_t initialBytes)
 		}
 	}
 
-	::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE_EXCEPTION, 0, nullptr);
+	::RaiseException(STATUS_NO_MEMORY, 0, 0, nullptr);
 	return nullptr;
 }
 

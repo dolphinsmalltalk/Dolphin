@@ -11,6 +11,7 @@ _PrimitiveFailureCode at: 'IllegalStateChange' put: -16r3FFFFFF3!
 _PrimitiveFailureCode at: 'IntegerOutOfRange' put: -16r3FCDFFD8!
 _PrimitiveFailureCode at: 'IntegerOverflow' put: -16r17FFFF6B!
 _PrimitiveFailureCode at: 'InternalError' put: -16r17FFFF1B!
+_PrimitiveFailureCode at: 'InvalidParameter' put: -16r17FFFFF3!
 _PrimitiveFailureCode at: 'InvalidParameter1' put: -16r17FFFF11!
 _PrimitiveFailureCode at: 'InvalidParameter10' put: -16r17FFFF08!
 _PrimitiveFailureCode at: 'InvalidParameter11' put: -16r17FFFF07!

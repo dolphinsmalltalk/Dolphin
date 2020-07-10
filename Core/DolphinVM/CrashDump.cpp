@@ -12,11 +12,13 @@
 #include "interprt.h"
 #include "VMExcept.h"
 #include "RegKey.h"
+#include <VirtualMemoryStats.h>
 
 constexpr size_t DefaultStackDepth = 300;
 constexpr size_t DefaultWalkbackDepth = static_cast<size_t>(-1);
 constexpr int MAXDUMPPARMCHARS = 40;
 extern wchar_t achImagePath[];
+wchar_t achLogPath[_MAX_PATH + 1];
 
 // Warning about SEH and destructable objects
 #pragma warning (disable : 4509)
@@ -47,6 +49,12 @@ wostream& operator<<(wostream& stream, const CONTEXT* pCtx)
 	stream.fill(cFill);
 	stream.unsetf(ios::uppercase);
 	return stream;
+}
+
+wostream& operator<<(wostream& stream, const VirtualMemoryStats& vmStats)
+{
+	return stream << std::dec << "Virtual memory used: " << vmStats.VirtualMemoryUsedMb << "Mb" << endl
+		<< "Virtual memory available: " << vmStats.VirtualMemoryFreeMb << "Mb" << endl;
 }
 
 void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nStackDepth, size_t nWalkbackDepth)
@@ -126,6 +134,11 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		<< L" <----*" << std::endl
 		<< pCtx << std::endl;
 
+	{
+		VirtualMemoryStats memStats;
+		*pStream << L"*----> Memory Statistics <----*" << std::endl << memStats << std::endl;
+	}
+	
 	DWORD dwMainThreadId = Interpreter::MainThreadId();
 	if (dwThreadId == dwMainThreadId)
 	{
@@ -189,35 +202,33 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 }
 
 
-wostream* OpenLogStream(const wchar_t* achLogPath, const wchar_t* achImagePath, wofstream& fStream)
+wostream* OpenLogStream(const wchar_t* logPath, const wchar_t* achImagePath, wofstream& fStream)
 {
-	wchar_t path[_MAX_PATH];
-
-	if (achLogPath == NULL || !wcslen(achLogPath))
+	if (logPath == NULL || !wcslen(logPath))
 	{
 		// Write the dump to the errors file
 		wchar_t drive[_MAX_DRIVE];
 		wchar_t dir[_MAX_DIR];
 		wchar_t fname[_MAX_FNAME];
 		_wsplitpath_s(achImagePath, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
-		_wmakepath(path, drive, dir, fname, L".ERRORS");
-		achLogPath = path;
+		_wmakepath(achLogPath, drive, dir, fname, L".ERRORS");
+		logPath = achLogPath;
 	}
 
-	trace(L"Dolphin: Writing dump to '%.260s'\n", achLogPath);
+	trace(L"Dolphin: Writing dump to '%.260s'\n", logPath);
 
 	wostream* pStream = NULL;
 	// Open the error log for appending
-	fStream.open(achLogPath, ios::out | ios::app | ios::ate);
+	fStream.open(logPath, ios::out | ios::app | ios::ate);
 	if (fStream.fail())
-		trace(L"Dolphin: Unable to open crash dump log '%.260s', dump follows:\n\n", achLogPath);
+		trace(L"Dolphin: Unable to open crash dump log '%.260s', dump follows:\n\n", logPath);
 	else
 		pStream = &fStream;
 
 	return pStream;
 }
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* imagePath)
+void CrashDump(const LPEXCEPTION_POINTERS pExceptionInfo, const wchar_t* imagePath)
 {
 	size_t nStackDepth = DefaultStackDepth;
 	size_t nWalkbackDepth = DefaultWalkbackDepth;
@@ -228,7 +239,6 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* imagePath)
 		imagePath = achImagePath;
 	if (OpenDolphinKey(rkDump, L"CrashDump", KEY_READ)==ERROR_SUCCESS)
 	{
-		wchar_t achLogPath[_MAX_PATH+1];
 		achLogPath[0] = 0;
 		ULONG size = _MAX_PATH;
 		rkDump.QueryStringValue(L"", achLogPath, &size);
@@ -259,7 +269,7 @@ void __cdecl DebugCrashDump(const wchar_t* szFormat, ...)
 
 	ULONG_PTR eargs[1];
 	eargs[0] = reinterpret_cast<ULONG_PTR>(&buf);
-	RaiseException(SE_VMDUMPSTATUS, 0, 1, eargs);
+	RaiseException(static_cast<DWORD>(VMExceptions::DumpStatus), 0, 1, eargs);
 }
 
 void __stdcall Dump2(const wchar_t* szMsg, wostream* pStream, int nStackDepth, int nWalkbackDepth)

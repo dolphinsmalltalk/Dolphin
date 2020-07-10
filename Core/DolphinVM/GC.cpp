@@ -188,7 +188,7 @@ void ObjectMemory::reclaimInaccessibleObjects(uintptr_t gcFlags)
 					pUnmarked = static_cast<OTE**>(realloc(pUnmarked, nMaxUnmarked*sizeof(OTE*)));
 					if (pUnmarked == nullptr)
 					{
-						::RaiseException(E_OUTOFMEMORY, EXCEPTION_NONCONTINUABLE, 0, nullptr);
+						::RaiseException(STATUS_NO_MEMORY, EXCEPTION_NONCONTINUABLE, 0, nullptr);
 					}
 				}
 				pUnmarked[nUnmarked++] = ote;
@@ -439,7 +439,7 @@ size_t ObjectMemory::CountFreeOTEs()
 	while (p < offEnd)
 	{
 		count++;
-		p = reinterpret_cast<OTE*>(p->m_location);
+		p = NextFree(p);
 	}
 	return count;
 }
@@ -579,7 +579,7 @@ size_t ObjectMemory::CountFreeOTEs()
 		while (poteFree < pEnd)
 		{
 			++cFreeList;
-			poteFree = reinterpret_cast<OTE*>(poteFree->m_location);
+			poteFree = NextFree(poteFree);
 		}
 
 		//TRACESTREAM << nFree<< L" free slots found in OT, " << cFreeList<< L" on the free list (" << nFree-cFreeList<< L")" <<endl;

@@ -13,43 +13,41 @@ extern int __stdcall DolphinMessage(UINT flags, const wchar_t* msg);
 // Set aside a 1024 character buffer for error messages so no memory allocation is needed to report errors (such as out of memory errors)
 wchar_t messageBuf[1024];
 
-LPCWSTR GetResourceString(HMODULE hMod, int resId)
+LPCWSTR GetResourceString(HMODULE hMod, int resId, int& len)
 {
 	LPCWSTR pchFormat;
-	int len = ::LoadStringW(hMod, resId, reinterpret_cast<LPWSTR>(&pchFormat), 0);
-	return len ? pchFormat : nullptr;
+	len = ::LoadStringW(hMod, resId, reinterpret_cast<LPWSTR>(&pchFormat), 0);
+	return pchFormat;
 }
 
-#ifndef VM
+std::wstring GetResourceString(int resId)
+{
+	int length;
+	LPCWSTR szRes = GetResourceString(GetResLibHandle(), resId, length);
+	return std::wstring(szRes, length);
+}
 
-int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
+std::wstring GetAppTitle()
 {
 	HMODULE hExe = GetModuleHandle(NULL);
-	LPCWSTR appTitle = GetResourceString(hExe, IDS_APP_TITLE);
+	int length;
+	LPCWSTR appTitle = GetResourceString(hExe, IDS_APP_TITLE, length);
 	if (appTitle != nullptr)
 	{
-		return ::MessageBoxW(NULL, msg, appTitle, flags | MB_TASKMODAL);
+		return std::wstring(appTitle, length);
 	}
 	else
 	{
 		WCHAR filename[_MAX_PATH + 1];
-		GetModuleFileNameW(hExe, filename, _countof(filename));
-		return  ::MessageBoxW(NULL, msg, filename, flags | MB_TASKMODAL);
+		length = GetModuleFileNameW(hExe, filename, _countof(filename));
+		return std::wstring(filename, length);
 	}
 }
 
-#endif
-
-std::wstring GetResourceString(int resId)
+int __cdecl DolphinMessageBoxV(int resId, UINT flags, va_list args)
 {
-	return GetResourceString(GetResLibHandle(), resId);
-}
-
-
-int __cdecl DolphinMessageBoxV(const wchar_t* szFormat,UINT flags, va_list args)
-{
-	if (::FormatMessageW(FORMAT_MESSAGE_FROM_STRING,
-		szFormat, 0, 0, messageBuf, _countof(messageBuf), &args) != 0)
+	std::wstring strFormat = GetResourceString(resId);
+	if (::FormatMessageW(FORMAT_MESSAGE_FROM_STRING, strFormat.c_str(), 0, 0, messageBuf, _countof(messageBuf), &args) != 0)
 	{
 		int result = DolphinMessage(flags, messageBuf);
 		return result;
@@ -62,8 +60,7 @@ int __cdecl DolphinMessageBox(int nPromptId, UINT flags, ...)
 {
 	va_list args;
 	va_start(args, flags);
-	std::wstring szPrompt = GetResourceString(nPromptId);
-	int result = DolphinMessageBoxV(szPrompt.c_str(), flags, args);
+	int result = DolphinMessageBoxV(nPromptId, flags, args);
 	va_end(args);
 	return result;
 }
@@ -111,9 +108,7 @@ void __cdecl trace(int nPrompt, ...)
 
 HRESULT __stdcall ReportErrorV(int nPrompt, HRESULT hr, va_list args)
 {
-	std::wstring szFormat = GetResourceString(nPrompt);
-	DolphinMessageBoxV(szFormat.c_str(), MB_SETFOREGROUND|MB_ICONHAND|MB_SYSTEMMODAL, args);
-
+	DolphinMessageBoxV(nPrompt, MB_SETFOREGROUND|MB_ICONHAND|MB_SYSTEMMODAL, args);
 	return hr;
 }
 
@@ -144,11 +139,11 @@ __declspec(noreturn) void __cdecl RaiseFatalError(int nCode, int nArgs, ...)
 
 __declspec(noreturn) void __stdcall FatalException(const EXCEPTION_RECORD& exRec)
 {
-	int nPrompt = exRec.ExceptionCode & 0x2FF;
+	DWORD nPrompt = exRec.ExceptionCode & 0x2FF;
 
-	std::wstring szFormat = GetResourceString(nPrompt);
+	std::wstring strFormat = GetResourceString(nPrompt);
 	::FormatMessageW(FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,
-						szFormat.c_str(), 0, 0, messageBuf, _countof(messageBuf), (va_list*)exRec.ExceptionInformation);
+						strFormat.c_str(), 0, 0, messageBuf, _countof(messageBuf), (va_list*)exRec.ExceptionInformation);
 
 	DolphinFatalExit(exRec.ExceptionCode, messageBuf);
 }
@@ -157,8 +152,8 @@ __declspec(noreturn) void __stdcall FatalError(int nCode, ...)
 {
 	va_list args;
 	va_start(args, nCode);
-	std::wstring szFormat = GetResourceString(nCode);
-	::FormatMessageW(FORMAT_MESSAGE_FROM_STRING, szFormat.c_str(), 0, 0, messageBuf, _countof(messageBuf), &args);
+	std::wstring strFormat = GetResourceString(nCode);
+	::FormatMessageW(FORMAT_MESSAGE_FROM_STRING, strFormat.c_str(), 0, 0, messageBuf, _countof(messageBuf), &args);
 	DolphinFatalExit(nCode, messageBuf);
 }
 
@@ -170,10 +165,29 @@ __declspec(noreturn) void __stdcall DolphinExit(int exitCode)
 }
 
 #ifndef VM
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
+{
+	std::wstring appTitle = GetAppTitle();
+	return MessageBoxW(NULL, msg, appTitle.c_str(), flags | MB_TASKMODAL);
+}
 
 __declspec(noreturn) void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
 {
 	FatalAppExitW(0, msg);
 }
 
+#else
+__declspec(noreturn) void __stdcall FatalSystemException(const LPEXCEPTION_POINTERS exInfo)
+{
+	CrashDump(exInfo, nullptr);
+	DWORD statusCode = exInfo->ExceptionRecord->ExceptionCode;
+	DWORD len = ::FormatMessageW(FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_ARGUMENT_ARRAY,
+		GetModuleHandleW(L"ntdll"), statusCode, 0, messageBuf, _countof(messageBuf), (va_list*)exInfo->ExceptionRecord->ExceptionInformation);
+	std::wstring strApp = GetAppTitle();
+	std::wstring strFormat = L"%n" + GetResourceString(IDP_CRASHDUMPED);
+	DWORD args[2] = { reinterpret_cast<DWORD>(strApp.c_str()), reinterpret_cast<DWORD>(achLogPath) };
+	::FormatMessageW(FORMAT_MESSAGE_FROM_STRING | FORMAT_MESSAGE_ARGUMENT_ARRAY, strFormat.c_str(), 0, 0, messageBuf + len, _countof(messageBuf) - len, (va_list*)args);
+
+	DolphinFatalExit(statusCode, messageBuf);
+}
 #endif

@@ -184,6 +184,21 @@ public:
 class OverlappedCall;
 typedef DoublyLinkedList<OverlappedCall> OverlappedCallList;
 
+class ExceptionInfo : public EXCEPTION_POINTERS
+{
+	EXCEPTION_RECORD m_exceptionRecord;
+	CONTEXT m_contextRecord;
+public:
+	ExceptionInfo()
+	{
+		ZeroMemory(&m_exceptionRecord, sizeof(m_exceptionRecord));
+		ZeroMemory(&m_contextRecord, sizeof(m_contextRecord));
+		ExceptionRecord = &m_exceptionRecord;
+		ContextRecord = &m_contextRecord;
+	}
+	void Copy(const LPEXCEPTION_POINTERS& pExInfo);
+};
+
 class OverlappedCall : public DoubleLink<OverlappedCall>
 {
 public:
@@ -197,9 +212,12 @@ public:
 	uint32_t AddRef();
 	uint32_t Release();
 
-	enum class States { Starting, Resting, Terminated, Calling, Returned };
+	enum class States { Terminated, Unwinding, Starting, Ready, Pending, Calling, Returned, Completing };
 
-	States beTerminated();
+	States beUnwinding();
+	States beUnwound();
+	// This is only a point in time indication - not thread safe
+	bool IsInCall() { return m_state >= States::Pending; }
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -223,12 +241,14 @@ private:
 
 	void TerminateThread();
 
-	bool Initiate(CompiledMethod* pMethod, argcount_t nArgCount);
 	DWORD WaitForRequest();
 	int ProcessRequests();
-	bool PerformCall();
+	void PerformCall();
+	void ReturnFromFailedCall();
+	int CallExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
+	void CopyExceptionInfo(const LPEXCEPTION_POINTERS& pExInfo);
+	OverlappedCall::States ExchangeState(States exchange);
 	OverlappedCall::States ExchangeState(States exchange, States comperand);
-	bool CallFinished();
 
 	int Main();
 	int TryMain();
@@ -260,7 +280,7 @@ public:
 	static void Uninitialize();
 
 	static OverlappedCallPtr GetActiveProcessOverlappedCall();
-	static OverlappedCallPtr Do(CompiledMethod* pMethod, argcount_t argCount);
+	_PrimitiveFailureCode Initiate(CompiledMethod* pMethod, argcount_t nArgCount);
 
 	static Semaphore* pendingTerms();
 
@@ -269,11 +289,15 @@ public:
 
 	void OnActivateProcess();
 
+	void SendExceptionInterrupt(Interpreter::VMInterrupts oopInterrupt);
+
+	void CallFailed();
+
+	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD* pIEEEFPException);
+
 #ifdef _DEBUG
 	static void ReincrementProcessReferences();
 #endif
-
-	bool IsInCall();
 
 private:
 	// Low-level management routines
@@ -282,7 +306,7 @@ private:
 
 	// Thread entry point function
 	static unsigned __stdcall ThreadMain(void* pThis);
-	static int MainExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
+	static int MainExceptionFilter(DWORD exceptionCode);
 
 	// APC functions (APCs are used to queue messages between threads)
 	static void __stdcall SuspendAPC(ULONG_PTR param);
@@ -321,10 +345,15 @@ public:
 	// Method causing this overlapped call to start executing
 	CompiledMethod*			m_pMethod;
 	argcount_t				m_nArgCount;
-	volatile States			m_state;
 private:
+	volatile States			m_state;
 	SHAREDLONG				m_nSuspendCount;
 	_PrimitiveFailureCode	m_primitiveFailureCode;
+	ExceptionInfo*			m_pExInfo;
+	_FPIEEE_RECORD*			m_pFpIeeeRecord;
+
+	// We have to use thread local storage to be able to pass in a 'this' pointer to our IEEE FP fault handler because _fpieee_flt doesn't accept a closure parameter and will only call a static function
+	thread_local static OverlappedCall* m_pThis;
 };
 
 
@@ -341,10 +370,4 @@ inline uint32_t OverlappedCall::Release()
 	if (nRefs == 0)
 		delete this;
 	return nRefs;
-}
-
-inline bool OverlappedCall::IsInCall()
-{
-	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	return m_state >= States::Calling;
 }

@@ -147,6 +147,22 @@ public:
 		return pointerFromIndex(index);
 	}
 
+#define FREEFLAG 0x80000000
+
+	static OTE* NextFree(const OTE* ote)
+	{
+		HARDASSERT(ote->isFree());
+		assert((reinterpret_cast<uintptr_t>(ote->m_location) & FREEFLAG) == FREEFLAG);
+		OTE* next = reinterpret_cast<OTE*>(reinterpret_cast<uintptr_t>(ote->m_location) & ~FREEFLAG);
+		assert(next >= m_pOT && next <= (m_pOT + m_nOTSize));
+		return next;
+	}
+
+	static const POBJECT MakeNextFree(const OTE* pFree)
+	{
+		return reinterpret_cast<POBJECT>(reinterpret_cast<uintptr_t>(pFree) | FREEFLAG);
+	}
+
 	// Answer whether the argument is a permanent object
 	static bool isPermanent(OTE* ote);
 

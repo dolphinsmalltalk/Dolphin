@@ -224,6 +224,9 @@ extraIndex
 
 	^(header bitShift: -23) bitAnd: 255!
 
+extraIndex: anInteger
+	header := (header bitAnd: ##((255 << 23) bitInvert)) bitOr: ((anInteger bitAnd: 255) bitShift: 23)!
+
 getDebugInfo
 	"Private - Invoke the compiler to answer a compilation result containing a 
 	recompilation of the receiver, a map between IP ranges and expressions 
@@ -624,6 +627,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #envTempCount!accessing!development!public! !
 !CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
 !CompiledCode categoriesFor: #extraIndex!method header!private! !
+!CompiledCode categoriesFor: #extraIndex:!method header!private! !
 !CompiledCode categoriesFor: #getDebugInfo!development!private! !
 !CompiledCode categoriesFor: #getSource!accessing!development!public! !
 !CompiledCode categoriesFor: #hash!comparing!public! !

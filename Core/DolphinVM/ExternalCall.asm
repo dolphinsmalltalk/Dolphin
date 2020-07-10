@@ -23,8 +23,8 @@ extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
 
-NewAnsiStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PBDI@Z
-extern NewAnsiStringWithLen:near32
+NewAnsiString EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PBD@Z
+extern NewAnsiString:near32
 
 NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PB_W@Z
 extern NewAnsiStringFromUtf16:near32
@@ -1665,7 +1665,11 @@ preCallFail:
 	; ARE BP BASED ADDRESSING FOR LOCALS, SO DON'T NEED TO BOTHER (RESTORING
 	; ESP FROM EBP CORRECTLY ON EXIT IS HANDLED BY MASM)
 
-	lea		eax, [INDEX*2+(65536*2)+1]			; failureCode = SmallInteger(0x10000+INDEX)
+	cmp		INDEX, 12
+	lea		eax, [INDEX*2+(PrimitiveFailureInvalidParameter1*2)+1]
+	mov		ecx, PrimitiveFailureInvalidParameter*2+1
+	cmovge	eax, ecx
+
 	mov		edx, callContext
 	ASSUME	edx:PTR InterpRegisters
 
@@ -1873,19 +1877,8 @@ extCallRetLPSTR:
 	test	RESULT, RESULT
 	jz		returnNil
 
-	push	RESULT								; preserve RESULT
-	
-	; NOTE THAT WE TRASH EDI HERE AND DO NOT BOTHER SAVING AND RESTORING IT
-	mov		edi, RESULT							; scan string in edi
-
-	mov		ecx, -1								; Keep searching
-	sub		eax, eax							; scan for null terminator
-	repnz	scasb
-
-	not		ecx
-	lea		edx, [ecx-1]						; Get length into edx
-	pop		ecx									; pop RESULT into ECX
-	call	NewAnsiStringWithLen
+	mov		ecx, RESULT							; Pass RESULT in ECX
+	call	NewAnsiString
 	AnswerObjectResult
 
 extCallRetLPPVOID:

@@ -92,7 +92,7 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; C++ method imports
-SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@CIXW4VMInterrupts@1@I@Z
+SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@SIXW4VMInterrupts@1@I@Z
 extern SENDVMINTERRUPT:near32
 
 FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@SGPAUMethodCacheEntry@1@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
@@ -4623,10 +4623,7 @@ ENDPROC EXECUTENEWMETHOD
 
 BEGINPROC ACTIVATEPRIMITIVEMETHOD
 	ASSUME	ecx:PTR CompiledCodeObj
-	ASSUME	edx:DWORD	; Actually the _PrimitiveFailureCode enum value
-
-	add		edx, edx
-	inc		edx
+	ASSUME	edx:DWORD	; Actually the _PrimitiveFailureCode enum value; must already a SmallInteger value
 
 	; See execPrimitive above.
 	; Entered from C++, must save then set up _SP/_IP/_BP for assembler code

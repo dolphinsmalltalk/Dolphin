@@ -288,34 +288,29 @@ invalidArgErrorClass
 !
 
 invalidCall: anInteger
-	"An invalid virtual call was attempted through one of the receiver's methods.
-	Generate an appropriate error from the following categories:
-		-	Argument type error. At least one argument was either out of range or of invalid type.
-			Only the first such error is reported.
-		-	Unknown primitive failure. An uncategorised primitive failure occurred. Seek assistance."
+	"An invalid virtual call was attempted through one of the receiver's methods."
 
 	| frame descriptor method |
+	anInteger >= 0 ifTrue: [self primitiveFailed: anInteger].
 	frame := Processor activeProcess topFrame sender.
 	method := frame method.
 	descriptor := method descriptor.
-	anInteger < 0
-		ifTrue: 
-			[^self hresultError: (HRESULT
-						decodePrimitiveFailureCode: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-								ifTrue: [anInteger bitOr: HRESULT.FACILITY_NT_BIT]
-								ifFalse: [anInteger]))].
-	anInteger >= 16r10000
-		ifTrue: 
-			[| i arg |
-			i := descriptor argumentIndexFromOffset: anInteger - 16r10000.
-			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-			^self invalidArgErrorClass
-				invalidArgument: arg
-				got: (frame arguments at: arg)
-				expected: (descriptor argumentTypes at: i)].	"One of the arguments was invalid?"
-
-	"All arguments were apparently valid, it must have been some system or unknown error."
-	^self primitiveFailed: anInteger!
+	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
+	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
+	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1
+		and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
+			ifTrue: 
+				[| arg i |
+				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
+				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+				self invalidArgErrorClass
+					invalidArgument: arg
+					got: (frame arguments at: arg)
+					expected: (descriptor argumentTypes at: i)]
+			ifFalse: 
+				[self hresultError: (descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+							ifTrue: [(HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT]
+							ifFalse: [HRESULT decodePrimitiveFailureCode: anInteger])]!
 
 isFieldBrowsable: aSymbol
 	^self class isFieldBrowsable: aSymbol!

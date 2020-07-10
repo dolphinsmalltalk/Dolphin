@@ -418,7 +418,7 @@ void Interpreter::interpret()
 		}
 		// I'd like to just test for IS_ERROR() here, but due to some macro nastiness
 		// it GPFs in a release build
-		__except ((exceptionCode = GetExceptionCode()) > SE_VMCALLBACKUNWIND
+		__except ((exceptionCode = GetExceptionCode()) > static_cast<DWORD>(VMExceptions::CallbackUnwind)
 			? interpreterExceptionFilter(GetExceptionInformation())
 			: EXCEPTION_CONTINUE_SEARCH)
 		{
@@ -446,7 +446,7 @@ void Interpreter::interpret()
 // a trappable fault
 //
 #pragma code_seg(INTERPMISC_SEG)
-bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
+bool Interpreter::saveContextAfterFault(const LPEXCEPTION_POINTERS info)
 {
 	uint8_t* ip = reinterpret_cast<uint8_t*>(info->ContextRecord->Edi);
 	Oop byteCodes = m_registers.m_pMethod->m_byteCodes;
@@ -481,7 +481,7 @@ bool Interpreter::saveContextAfterFault(LPEXCEPTION_POINTERS info)
 // by testing to see whether the new method is not the same as the active method (primitives
 // do not activate until they fail). We must also ensure that the oop is still a method
 // 
-bool Interpreter::isInPrimitive(LPEXCEPTION_POINTERS pExInfo)
+bool Interpreter::isInPrimitive(const LPEXCEPTION_POINTERS pExInfo)
 {
 	uintptr_t eip = pExInfo->ContextRecord->Eip;
 	return eip < reinterpret_cast<uintptr_t>(byteCodeLoop) || eip > reinterpret_cast<uintptr_t>(invalidByteCode);
@@ -493,18 +493,18 @@ void Interpreter::AbandonStepping()
 	ResetInputPollCounter();
 }
 
-void Interpreter::recoverFromFault(LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::recoverFromFault(const LPEXCEPTION_POINTERS pExInfo)
 {
 	AbandonStepping();
 	bool inPrim = saveContextAfterFault(pExInfo);
 	if (inPrim)
 	{
 		DWORD exceptionCode = pExInfo->ExceptionRecord->ExceptionCode;
-		activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
+		activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(PFC_FROM_NT(exceptionCode)));
 	}
 }
 
-void Interpreter::sendExceptionInterrupt(VMInterrupts oopInterrupt, LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::sendExceptionInterrupt(VMInterrupts oopInterrupt, const LPEXCEPTION_POINTERS pExInfo)
 {
 	recoverFromFault(pExInfo);
 #ifdef _DEBUG
@@ -534,7 +534,7 @@ static BOOL PleaseTrapGPFs()
 // Exception filter to handle continuable win32 exceptions for the interpreter, may return
 // EXCEPTION_EXECUTE_HANDLER, in which case the interpreter loops - this is how GP faults
 // and FP faults in primitives are handled.
-int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
+int Interpreter::interpreterExceptionFilter(const LPEXCEPTION_POINTERS pExInfo)
 {
 	EXCEPTION_RECORD* pExRec = pExInfo->ExceptionRecord;
 	if (pExRec->ExceptionFlags == EXCEPTION_NONCONTINUABLE)
@@ -546,7 +546,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	// if they haven't it won't be a disaster, but it won't be as efficient
 	// as it might be, as we'll end up doing a lot of work for the VM
 	// callback exits.
-	ASSERT(exceptionCode > SE_VMCALLBACKUNWIND);
+	ASSERT(exceptionCode > static_cast<DWORD>(VMExceptions::CallbackUnwind));
 
 	int action = EXCEPTION_CONTINUE_SEARCH;
 	switch (exceptionCode)
@@ -594,7 +594,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			TRACESTREAM<< L"Divide by zero in " << *m_registers.m_pMethod << std::endl;
 		}
 #endif
-		sendVMInterrupt(VMInterrupts::ZeroDivide, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
+		sendZeroDivideInterrupt(pExInfo);
 		action = EXCEPTION_EXECUTE_HANDLER;
 	}
 	break;
@@ -624,7 +624,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		}
 		break;
 
-	case SE_VMCRTFAULT:
+	case static_cast<DWORD>(VMExceptions::CrtFault):
 		if (isInPrimitive(pExInfo))
 		{
 			sendExceptionInterrupt(VMInterrupts::CrtFault, pExInfo);
@@ -632,7 +632,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		}
 		break;
 
-	case SE_VMEXIT:
+	case static_cast<DWORD>(VMExceptions::Exit):
 		break;
 
 	case EXCEPTION_FLT_DENORMAL_OPERAND:
@@ -647,7 +647,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		AbandonStepping();
 		if (saveContextAfterFault(pExInfo))
 		{
-			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(SCODE_CODE(exceptionCode)));
+			activatePrimitiveMethod(m_registers.m_oopNewMethod->m_location, static_cast<_PrimitiveFailureCode>(PFC_FROM_NT(exceptionCode)));
 		}
 		action = _fpieee_flt(exceptionCode, pExInfo, IEEEFPHandler);
 		break;
@@ -656,13 +656,17 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	return action;
 }
 
-int Interpreter::OutOfMemory(LPEXCEPTION_POINTERS pExInfo)
+void Interpreter::sendZeroDivideInterrupt(const LPEXCEPTION_POINTERS pExInfo)
+{
+	sendVMInterrupt(VMInterrupts::ZeroDivide, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
+}
+
+int Interpreter::OutOfMemory(const LPEXCEPTION_POINTERS pExInfo)
 {
 	VirtualMemoryStats memStats;
 	if (memStats.VirtualMemoryFree < ObjectMemory::MinimumVirtualMemoryAvailable)
 	{
-		CrashDump(pExInfo, nullptr);
-		FatalError(IDP_OUTOFVIRTUALMEMORY, memStats.VirtualMemoryUsedMb, memStats.VirtualMemoryFreeMb);
+		FatalSystemException(pExInfo);
 		// Won't return to here
 	}
 
@@ -687,7 +691,7 @@ int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 #pragma code_seg(INTERPMISC_SEG)
 // Exception filter to handle continuable win32 exceptions caused by object table/process
 // stack overflows
-int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
+int Interpreter::memoryExceptionFilter(const LPEXCEPTION_POINTERS pExInfo)
 {
 	LPEXCEPTION_RECORD pExRec = pExInfo->ExceptionRecord;
 

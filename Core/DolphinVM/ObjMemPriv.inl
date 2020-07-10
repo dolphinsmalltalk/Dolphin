@@ -78,7 +78,8 @@ inline OTE* __fastcall ObjectMemory::allocateOop(POBJECT pLocation)
 	// ref. counting operation in primitiveNew and primitiveNewWithArg
 
 	OTE* ote = m_pFreePointerList;
-	m_pFreePointerList = reinterpret_cast<OTE*>(ote->m_location);
+
+	m_pFreePointerList = NextFree(ote);
 
 	ASSERT(ote->isFree());
 #ifdef TRACKFREEOTEs

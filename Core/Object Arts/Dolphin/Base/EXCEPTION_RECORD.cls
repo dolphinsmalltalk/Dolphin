@@ -57,8 +57,8 @@ ExceptionRecord
 information
 	"Answer the receiver's ExceptionInformation as an <Array> of <Integer>."
 
-	info isNil
-		ifTrue: 
+	^info
+		ifNil: 
 			[| count |
 			"Open coded to avoid a base system dependency on UINT_PTR and associated array type"
 			count := self NumberParameters.
@@ -67,8 +67,8 @@ information
 				do: 
 					[:i |
 					info at: i
-						put: (bytes uintPtrAtOffset: _OffsetOf_ExceptionInformation + ((i - 1) * VMConstants.IntPtrSize))]].
-	^info!
+						put: (bytes uintPtrAtOffset: _OffsetOf_ExceptionInformation + ((i - 1) * VMConstants.IntPtrSize))].
+			info]!
 
 moduleFileName
 	"Answer the file name of the module within which the exception occurred."

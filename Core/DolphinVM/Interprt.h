@@ -334,14 +334,13 @@ private:
 	
 	static void exitSmalltalk(int exitCode);
 
-	static int interpreterExceptionFilter(LPEXCEPTION_POINTERS info);
-	static int OutOfMemory(LPEXCEPTION_POINTERS pExInfo);
-	static int memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
-	static int callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* callbackProcess, Oop prevCallbackContext);
+	static int interpreterExceptionFilter(const LPEXCEPTION_POINTERS info);
+	static int memoryExceptionFilter(const LPEXCEPTION_POINTERS pExInfo);
+	static int callbackTerminationFilter(const LPEXCEPTION_POINTERS info, Process* callbackProcess, Oop prevCallbackContext);
 
-	static void recoverFromFault(LPEXCEPTION_POINTERS pExRec);
-	static void sendExceptionInterrupt(VMInterrupts oopInterrupt, LPEXCEPTION_POINTERS pExRec);
-	static bool saveContextAfterFault(LPEXCEPTION_POINTERS info);
+	static void recoverFromFault(const LPEXCEPTION_POINTERS pExRec);
+	static bool saveContextAfterFault(const LPEXCEPTION_POINTERS info);
+	static void sendExceptionInterrupt(VMInterrupts oopInterrupt, const LPEXCEPTION_POINTERS pExInfo);
 
 	static void wakePendingCallbacks();
 	static size_t countPendingCallbacks();
@@ -349,7 +348,6 @@ private:
 	static void sendSelectorArgumentCount(SymbolOTE* selector, argcount_t count);
 	static void sendSelectorToClass(BehaviorOTE* classPointer, argcount_t argCount);
 	static void sendVMInterrupt(ProcessOTE* processPointer, VMInterrupts nInterrupt, Oop argPointer);
-	static void __fastcall sendVMInterrupt(VMInterrupts nInterrupt, Oop argPointer);
 
 	static BOOL __stdcall MsgSendPoll();
 	static BOOL	__stdcall BytecodePoll();
@@ -365,6 +363,12 @@ private:
 	static BlockOTE* __fastcall blockCopy(uint32_t ext);
 
 public:
+	static void __fastcall sendVMInterrupt(VMInterrupts nInterrupt, Oop argPointer);
+	static int OutOfMemory(const LPEXCEPTION_POINTERS pExInfo);
+	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD* pIEEEFPException);
+	static void sendZeroDivideInterrupt(const LPEXCEPTION_POINTERS pExInfo);
+
+
 	static void basicQueueForFinalization(OTE* ote);
 	static void queueForFinalization(OTE* ote, SmallUinteger);
 	static void queueForBereavementOf(OTE* ote, Oop argPointer);
@@ -487,7 +491,7 @@ public:
 
 private:
 	// Answer whether an exception occurred in a primitive
-	static bool isInPrimitive(LPEXCEPTION_POINTERS pExInfo);
+	static bool isInPrimitive(const LPEXCEPTION_POINTERS pExInfo);
 
 public:
 	typedef argcount_t primargcount_t;
@@ -759,8 +763,6 @@ private:
 	static void pushArgsAt(CallbackDescriptor* descriptor, argcount_t argCount, uint8_t* lpParms);
 	static argcount_t pushArgsAt(const ExternalDescriptor* descriptor, uint8_t* lpParms);
 	
-	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException);
-
 	static void failTrace();
 
 public:

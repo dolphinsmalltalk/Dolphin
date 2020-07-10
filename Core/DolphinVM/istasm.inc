@@ -340,9 +340,9 @@ Process	STRUCT 2t
 	m_myList				POTE			?			; Link
 	m_callbackDepth			Oop				?			; SmallInteger
 							Oop				?			; SmallInteger?
-	m_primitiveFailureData	Oop				?			; Any
-	m_fpeMask				Oop				?			; SmallInteger
-	m_waitOverlap			POTE			?			; Semaphore
+							Oop				?			;
+	m_fpControl				Oop				?			; SmallInteger
+	m_threadSync			POTE			?			; Semaphore
 	m_thread				Oop				?
 	m_exceptionEnv			POTE			?
 	m_alreadyPrinnted		Oop				?
@@ -747,6 +747,7 @@ GetIPOffsetUsing MACRO tempRegister
 ;	ENDIF
 ENDM
 
+PrimitiveFailureInvalidParameter EQU 06800000Dh
 PrimitiveFailureInvalidParameter1 EQU 0680000EFh
 PrimitiveFailureWrongNumberOfArgs EQU 040028CA1h
 PrimitiveFailureAssertionFailure EQU 068000420h

@@ -174,9 +174,11 @@ LRESULT CALLBACK Interpreter::DolphinDlgProc(HWND /*hWnd*/, UINT /*uMsg*/, WPARA
 int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 {
 	HMODULE hExe = GetModuleHandle(NULL);
-	std::wstring appTitle = GetResourceString(hExe, IDS_APP_TITLE);
-	if (!appTitle.empty())
+	int length;
+	LPCWSTR szAppTitle = GetResourceString(hExe, IDS_APP_TITLE, length);
+	if (szAppTitle != nullptr)
 	{
+		std::wstring appTitle(szAppTitle, length);
 		return ::MessageBoxW(NULL, msg, appTitle.c_str(), flags | MB_TASKMODAL);
 	}
 	else

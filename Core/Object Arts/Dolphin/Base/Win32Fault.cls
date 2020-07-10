@@ -13,13 +13,17 @@ Win32Fault comment: ''!
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
-	^super _descriptionArguments
-		, {self exceptionName. exceptionRecord ExceptionAddress. exceptionRecord moduleFileName}!
+	^super _descriptionArguments , {self exceptionName. self exceptionAddress. self moduleFileName}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
 	^'%4 at IP 0x%5!!X!! (%6)'!
+
+exceptionAddress
+	"Answer the code address at which the exception occurred."
+
+	^exceptionRecord ExceptionAddress!
 
 exceptionCode
 	"Answer the <integer> Win32 exception code associated with the receiver."
@@ -48,6 +52,11 @@ initialize
 	"Override the superclass implementation as we don't need to do any initialization."
 !
 
+moduleFileName
+	"Answer the name of the DLL/EXE in which code was being executed when the exception occurred (i.e. the originating module)."
+
+	^exceptionRecord moduleFileName!
+
 tagFromExceptionCode: anInteger
 	"Private - Answer the HRESULT tag for the receiver from the Win32 exception
 	code, anInteger."
@@ -55,11 +64,13 @@ tagFromExceptionCode: anInteger
 	^HRESULT ntStatusCode: anInteger! !
 !Win32Fault categoriesFor: #_descriptionArguments!displaying!public! !
 !Win32Fault categoriesFor: #_descriptionFormat!displaying!public! !
+!Win32Fault categoriesFor: #exceptionAddress!accessing!public! !
 !Win32Fault categoriesFor: #exceptionCode!accessing!public! !
 !Win32Fault categoriesFor: #exceptionName!accessing!public! !
 !Win32Fault categoriesFor: #exceptionRecord!accessing!public! !
 !Win32Fault categoriesFor: #exceptionRecord:!accessing!private! !
 !Win32Fault categoriesFor: #initialize!initializing!public! !
+!Win32Fault categoriesFor: #moduleFileName!accessing!public! !
 !Win32Fault categoriesFor: #tagFromExceptionCode:!accessing!private! !
 
 !Win32Fault class methodsFor!
