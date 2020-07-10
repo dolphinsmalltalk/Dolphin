@@ -280,6 +280,35 @@ testEquality
 						deny: ((RBParser parseExpression: (strings at: i)) 
 								= (RBParser parseExpression: (strings at: j)) xor: i = j)]]!
 
+testEqualToWithMappingAfterRewrite
+	"#965 -- when replacing the argument of a method (or block),
+	you end up with an RBVariableNode where there would normally be an RBParameterNode.
+	This has no effect on formatting or equality comparison, but equalTo:withMapping:
+	*was* being picky about it, and it shouldn't be"
+
+	| pattern tree1 tree2 context |
+	pattern := RBParser parseRewriteMethod: 'foo: `arg ^`arg baz'.
+	context := RBSmallDictionary new
+				at: '-source-' put: nil;
+				at: (RBPatternVariableNode named: '`arg') put: (RBVariableNode named: 'bar');
+				yourself.
+	tree1 := pattern copyInContext: context.
+	tree2 := RBParser parseMethod: 'foo: abc ^abc baz'.
+	self assert: (tree1 equalTo: tree2 withMapping: LookupTable new).
+	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
+	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def')).
+	"The base case is the following:"
+	self assert: ((RBVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
+				withMapping: LookupTable new)!
+
+testEqualToWithMappingRename
+	| tree1 tree2 |
+	tree1 := RBParser parseMethod: 'foo: bar ^bar baz'.
+	tree2 := RBParser parseMethod: 'foo: abc ^abc baz'.
+	self assert: (tree1 equalTo: tree2 withMapping: LookupTable new).
+	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
+	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def'))!
+
 testEquivalentExceptRenaming
 	#(#('a 3-4' 'a 4-3' false) #('a #[3 4]' 'a #(3 4)' false) #('a variable1 ~~ "comment" variable2' 'a variable1 ~~ variable2' true) #('a variable1' 'a variable2' false) #('a [:a :b | a + b]' 'a [:b :a | a + b]' false) #('a | a b | a + b' 'a | b a | a + b' true) #('a | a | a msg1; msg2' 'a | b | b msg2; msg2' false) #('a c' 'a d' true) #('a | a b | a := b. ^b msg1' 'a | a b | b := a. ^a msg1' true) #('a | a b | a := b. ^b msg1: a' 'a | a b | b := a. ^b msg1: a' false) #('a: b b + 4' 'a: e e + 4' true) #('a: b b + 4' 'b: b b + 4' false) #('a: b b: c b + c' 'a: c b: b c + b' true) #('a: a b: b a + b' 'a: b b: a a + b' false) #('a ^#()' 'a ^#(a)' false))
 		do: 
@@ -741,6 +770,8 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 !ParserTest categoriesFor: #testCopy!public!unit tests! !
 !ParserTest categoriesFor: #testCreationProtocol!public!unit tests! !
 !ParserTest categoriesFor: #testEquality!public!unit tests! !
+!ParserTest categoriesFor: #testEqualToWithMappingAfterRewrite!public!unit tests! !
+!ParserTest categoriesFor: #testEqualToWithMappingRename!public!unit tests! !
 !ParserTest categoriesFor: #testEquivalentExceptRenaming!public!unit tests! !
 !ParserTest categoriesFor: #testExtendedLiterals!public!unit tests! !
 !ParserTest categoriesFor: #testFormatter!public!unit tests! !
