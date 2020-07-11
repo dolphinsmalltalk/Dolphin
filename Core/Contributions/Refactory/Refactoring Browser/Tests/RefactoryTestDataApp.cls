@@ -224,6 +224,9 @@ justSendsSuper
 literalArrayCharacters
 	^#($a $b $c) includes: $a!
 
+literalArrayStringsAndSymbols
+	^#('abc' #def) includes: 'abc'!
+
 longMethods
 	self printString.
 	self printString.
@@ -444,6 +447,7 @@ yourselfNotUsed
 !RefactoryTestDataApp categoriesFor: #isLiteral!lint!public! !
 !RefactoryTestDataApp categoriesFor: #justSendsSuper!lint!public! !
 !RefactoryTestDataApp categoriesFor: #literalArrayCharacters!lint!public! !
+!RefactoryTestDataApp categoriesFor: #literalArrayStringsAndSymbols!lint!public! !
 !RefactoryTestDataApp categoriesFor: #longMethods!lint!public! !
 !RefactoryTestDataApp categoriesFor: #minMax!lint!public! !
 !RefactoryTestDataApp categoriesFor: #missingYourself!lint!public! !

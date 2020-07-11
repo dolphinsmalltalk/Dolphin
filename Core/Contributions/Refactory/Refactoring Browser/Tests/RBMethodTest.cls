@@ -1,0 +1,22 @@
+﻿"Filed out from Dolphin Smalltalk 7"!
+
+RefactoringBrowserTest subclass: #RBMethodTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RBMethodTest guid: (GUID fromString: '{dcaa75d7-68c0-41bd-9701-dbecb814444c}')!
+RBMethodTest comment: ''!
+!RBMethodTest categoriesForClass!Refactory-Testing! !
+!RBMethodTest methodsFor!
+
+testLiteralStringsDoNotMatchSymbols
+	| class method |
+	class := RBClass existingNamed: #RefactoryTestDataApp.
+	method := class methodFor: #returnInEnsure.
+	self deny: (method refersToSymbol: #asdf).
+	method := class methodFor: #literalArrayStringsAndSymbols.
+	self deny: (method refersToSymbol: #abc).
+	self assert: (method refersToSymbol: #def)! !
+!RBMethodTest categoriesFor: #testLiteralStringsDoNotMatchSymbols!public! !
+
