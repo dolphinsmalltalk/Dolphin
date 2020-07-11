@@ -118,6 +118,11 @@ testPrintString
 			print := each asSymbol printString.
 			self assert: (print second == $' and: [print last == $'])]!
 
+testRefersToLiteral
+	self assert: (#abc refersToLiteral: #abc).
+	self deny: (#abc refersToLiteral: 'abc').
+	self deny: (#abc refersToLiteral: #ab)!
+
 testReplaceFromToWithStartingAt
 	self 
 		should: [super testReplaceFromToWithStartingAt]
@@ -144,6 +149,7 @@ testSymbolTable
 !SymbolTest categoriesFor: #testKeywords!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintString!helpers!public! !
+!SymbolTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
 !SymbolTest categoriesFor: #testResize!public!unit tests! !
