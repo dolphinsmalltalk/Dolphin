@@ -36,6 +36,7 @@ package classNames
 	add: #PushUpInstanceVariableTest;
 	add: #PushUpMethodTest;
 	add: #RBClassTest;
+	add: #RBMethodTest;
 	add: #RBNamespaceTest;
 	add: #RefactoringBrowserTest;
 	add: #RefactoringTest;
@@ -119,6 +120,11 @@ RefactoringBrowserTest subclass: #ParserTest
 	classInstanceVariableNames: ''!
 RefactoringBrowserTest subclass: #RBClassTest
 	instanceVariableNames: 'objectClass newClass messageNodeClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+RefactoringBrowserTest subclass: #RBMethodTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
