@@ -405,6 +405,19 @@ testMutableCopy
 			self assert: actual isKindOf: subject species.
 			self assert: (actual _cmp: subject) equals: 0]!
 
+testRefersToLiteral
+	"Test that string literals in a method do not count as referring to a Symbol with the same contents,
+	now that they are #= to said Symbol.
+
+	N.B. they *should* still count as referring to other encodings of the same string."
+
+	| str |
+	str := 'abc' asUtf8String.
+	self assert: (str refersToLiteral: 'abc' asAnsiString).
+	self assert: (str refersToLiteral: 'abc' asUtf8String).
+	self deny: (str refersToLiteral: #abc).
+	self deny: (str refersToLiteral: 'ab')!
+
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
 
@@ -810,7 +823,7 @@ withAllTestCases
 !StringTest categoriesFor: #testCapitalized!public!unit tests! !
 !StringTest categoriesFor: #testCaseConversions!public!unit tests! !
 !StringTest categoriesFor: #testClassReadFrom!public!unit tests! !
-!AbstractStringTest categoriesFor: #testCopyWithout!public!unit tests! !
+!StringTest categoriesFor: #testCopyWithout!public! !
 !StringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !StringTest categoriesFor: #testEquals!public!unit tests! !
 !StringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
@@ -820,6 +833,7 @@ withAllTestCases
 !StringTest categoriesFor: #testLength!public!unit tests! !
 !StringTest categoriesFor: #testLines!public!unit tests! !
 !StringTest categoriesFor: #testMutableCopy!public!unit tests! !
+!StringTest categoriesFor: #testRefersToLiteral!public!unit tests! !
 !StringTest categoriesFor: #testReverse!public!unit tests! !
 !StringTest categoriesFor: #testSplitByString!public!unit tests! !
 !StringTest categoriesFor: #testSplitSingle!public!unit tests! !
