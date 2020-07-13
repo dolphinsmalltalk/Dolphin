@@ -16,7 +16,16 @@ testLiteralStringsDoNotMatchSymbols
 	method := class methodFor: #returnInEnsure.
 	self deny: (method refersToSymbol: #asdf).
 	method := class methodFor: #literalArrayStringsAndSymbols.
-	self deny: (method refersToSymbol: #abc).
+	self deny: (method refersToSymbol: #abc)!
+
+testRefersToSymbol
+	| class method |
+	class := RBClass existingNamed: #RefactoryTestDataApp.
+	method := class methodFor: #searchingLiteral.
+	self assert: (method refersToSymbol: #printString).
+	self assert: (method refersToSymbol: #abc).
+	method := class methodFor: #literalArrayStringsAndSymbols.
 	self assert: (method refersToSymbol: #def)! !
 !RBMethodTest categoriesFor: #testLiteralStringsDoNotMatchSymbols!public! !
+!RBMethodTest categoriesFor: #testRefersToSymbol!public! !
 
