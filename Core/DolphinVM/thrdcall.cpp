@@ -922,7 +922,7 @@ static void __cdecl InvalidCrtParameterHandler(
 {
 	TRACE(L"%x: CRT parameter fault in '%s' of %s, %s(%u)", GetCurrentThreadId(), expression, function, file, line);
 	ULONG_PTR args[1];
-	args[0] = FAST_FAIL_INVALID_ARG;
+	args[0] = errno;
 	::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), 0, 1, (CONST ULONG_PTR*)args);
 }
 
@@ -946,9 +946,10 @@ int OverlappedCall::TryMain()
 		}
 		#endif
 		
-		NotifyInterpreterOfTermination();
 		ret = 0;
 	}
+
+	NotifyInterpreterOfTermination();
 
 	Term();	// Thread is terminating, so don't want handles (also lets Complete() know we have terminated)
 
@@ -981,10 +982,7 @@ int OverlappedCall::Main()
 		ret = ProcessRequests();
 	else
 	{
-		// Terminated even before the try block could be entered. This will happen if the beStarted() call
-		// found that the state had already transitioned away from the Starting state, probably to the
-		// Terminated state.
-		NotifyInterpreterOfTermination();
+		// Terminated even before ready for first request
 		ret = -1;
 	}
 

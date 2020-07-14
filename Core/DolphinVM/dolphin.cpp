@@ -168,7 +168,7 @@ static void __cdecl invalidParameterHandler(
 {
 	TRACE(L"CRT parameter fault in '%s' of %s, %s(%u)", expression, function, file, line);
 	ULONG_PTR args[1];
-	args[0] = FAST_FAIL_INVALID_ARG;
+	args[0] = errno;
 	::RaiseException(static_cast<DWORD>(VMExceptions::CrtFault), 0, 1, (CONST ULONG_PTR*)args);
 }
 
