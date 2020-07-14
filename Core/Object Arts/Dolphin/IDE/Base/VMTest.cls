@@ -3011,17 +3011,20 @@ verifyExtCallCrtFault: aBoolean
 		matching: [:ex | ex tag == CRTConstants.EINVAL]!
 
 verifyExtCallFpFault: aBoolean
-	| method |
-	method := self compile: ('sqrt: arg %<<1?overlap :>stdcall: double sqrt double> ^''resumed'''
+	| method exceptions |
+	method := self compile: ('sqrt: arg %<<1?overlap :>stdcall: double sqrt double> ^_failureCode'
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
+	exceptions := OrderedCollection new.
 	self
-		should: [self assert: (method value: CRTLibrary default withArguments: #(-1)) equals: 'resumed']
+		should: [method value: CRTLibrary default withArguments: #(-1)]
 		raise: FloatingPointException
 		matching: 
 			[:ex |
+			exceptions add: ex.
 			ex tag causeName == #InvalidOperation
-				and: [ex tag operationName == #SquareRoot and: [ex tag operand1 value = -1.0]]]!
+				and: [ex tag operationName == #SquareRoot and: [ex tag operand1 value = -1.0]]].
+	exceptions!
 
 verifyExtCallGpf: aBoolean
 	| method |

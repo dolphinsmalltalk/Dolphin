@@ -204,8 +204,6 @@ class OverlappedCall : public DoubleLink<OverlappedCall>
 public:
 	// Allocate/free methods for maintaining pool of available blocks
 	bool QueueTerminate();
-	bool QueueSuspend();
-	DWORD Resume();
 
 	friend std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc);
 
@@ -258,10 +256,6 @@ private:
 	bool CanComplete();
 	void NotifyInterpreterOfCallReturn();
 
-	// Allows thread to suspend itself 
-	void SuspendThread();
-	DWORD ResumeThread();
-
 	// Queue a notification to the interpreter thread that an overlapped thread
 	// has received a termination signal
 	bool NotifyInterpreterOfTermination();
@@ -309,7 +303,6 @@ private:
 	static int MainExceptionFilter(DWORD exceptionCode);
 
 	// APC functions (APCs are used to queue messages between threads)
-	static void __stdcall SuspendAPC(ULONG_PTR param);
 	static void __stdcall TerminatedAPC(ULONG_PTR param);
 	static OverlappedCallPtr BeginAPC(ULONG_PTR param);
 	static OverlappedCallPtr BeginMainThreadAPC(ULONG_PTR param);
@@ -347,7 +340,6 @@ public:
 	argcount_t				m_nArgCount;
 private:
 	volatile States			m_state;
-	SHAREDLONG				m_nSuspendCount;
 	_PrimitiveFailureCode	m_primitiveFailureCode;
 	ExceptionInfo*			m_pExInfo;
 	_FPIEEE_RECORD*			m_pFpIeeeRecord;

@@ -288,7 +288,6 @@ std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc)
 	return stream<< L"OverlappedCall(" << &oc 
 		<< L", id:" << oc.m_dwThreadId 
 		<< L", state: " << static_cast<std::underlying_type<OverlappedCall::States>::type>(oc.m_state)
-		<< L", suspend:" << oc.m_nSuspendCount 
 		<< L", process: " << oc.m_oteProcess
 #ifdef _DEBUG
 		<< L", refs: " << oc.m_nRefs 
@@ -306,7 +305,6 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 			m_hThread(0), m_dwThreadId(0),
 			m_hEvtGo(0), m_hEvtCompleted(0),
 			m_oteProcess(oteProcess),
-			m_nSuspendCount(0),
 			m_state(States::Starting),
 			m_primitiveFailureCode(_PrimitiveFailureCode::NoError),
 			m_pExInfo(nullptr),
@@ -362,13 +360,12 @@ bool OverlappedCall::BeginThread()
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
 	HARDASSERT(m_hThread == 0);
-	// N.B. Start it suspended
 	m_hThread = (HANDLE)_beginthreadex(
 							/*security=*/		NULL, 
 							/*stack_size=*/		0,
 							/*start_address*/	ThreadMain,
 							/*arglist=*/		this,
-							/*initflag=*/		0, //CREATE_SUSPENDED,
+							/*initflag=*/		0,
 							/*thrdaddr=*/		reinterpret_cast<unsigned int*>(&m_dwThreadId));
 	return m_hThread != 0;
 }
@@ -618,7 +615,7 @@ void OverlappedCall::PerformCall()
 	ExchangeState(States::Ready, States::Completing);
 
 	// We don't use any of the old context after here, so even if this thread is immediately
-	// reused before it gets a chance to suspend itself, it wont matter
+	// reused before it gets a chance quiesce, it wont matter
 	VERIFY(::SetEvent(m_hEvtCompleted));
 }
 
@@ -707,9 +704,6 @@ _PrimitiveFailureCode OverlappedCall::Initiate(CompiledMethod* pMethod, argcount
 	Interpreter::QueueProcessOn(m_oteProcess, reinterpret_cast<LinkedListOTE*>(proc->OverlapSemaphore()));
 
 	// OK to start the async. operation now
-	// We don't use Suspend/Resume because if thread is not suspended yet 
-	// (i.e. it hasn't reached its SuspendThread() call), then calling Resume() here
-	// will do nothing, and the thread will suspend itself for ever!
 	::SetEvent(m_hEvtGo);
 
 	TODO("Try a deliberate SwitchToThread here to see effect of call completing before we reschedule")
@@ -733,11 +727,11 @@ bool OverlappedCall::CanComplete()
 	InterpreterRegisters& activeContext = Interpreter::GetRegisters();
 	HARDASSERT(m_interpContext.m_pActiveProcess == activeContext.m_pActiveProcess);
 
+	// If the process has been interrupted, there may be some additional stack frames on top, so we can't complete until the interrupt has returned
 	if (m_interpContext.m_pActiveFrame != activeContext.m_pActiveFrame)
 		return false;
 
-	// If we're suspending, or not able to transition to the Completing state, then we can't complete
-	if (m_nSuspendCount > 0 || ExchangeState(States::Completing, States::Returned) != States::Returned)
+	if (ExchangeState(States::Completing, States::Returned) != States::Returned)
 		return false;
 
 	HARDASSERT(m_interpContext.m_stackPointer == activeContext.m_stackPointer);
@@ -894,99 +888,10 @@ bool OverlappedCall::QueueTerminate()
 	}
 
 	// Ensure running and therefore able to receive termination request
-	InterlockedExchange(&m_nSuspendCount, 0);
 	while (long(::ResumeThread(m_hThread)) > 0)
 		continue;
 
 	return true;
-}
-
-// Handler for suspend message from the main thread. The overlapped thread suspends itself
-// to avoid being suspended inside a critical section
-void __stdcall OverlappedCall::SuspendAPC(ULONG_PTR param)
-{
-	// Assume ref. from the APC queue
-	OverlappedCallPtr pThis = BeginAPC(param);
-
-	#if TRACING == 1
-	{
-		CAutoLock<tracestream> lock(pThis->thinDump);
-		pThis->thinDump << std::hex << GetCurrentThreadId()<< L": SuspendAPC; " << *pThis << std::endl;
-	}
-	#endif
-
-	pThis->SuspendThread();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Safely suspend the overlapped call thread when it enters an alertable wait
-// state
-bool OverlappedCall::QueueSuspend()
-{
-	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-
-	// The resumption count records whether the thread is suspended, or has a suspend queued,
-	// so that we can avoid. The APC may not actually suspend the thread if a resume arrives
-	// in the meantime and inc's the count.
-	InterlockedIncrement(&m_nSuspendCount);
-
-	// To avoid suspending the thread in the middle of a critical section we use APCs again
-	// so that can only be suspended when in an alertable wait state.
-	// Note this quote from the CRT lib help:
-	//	"Using SuspendThread can lead to a deadlock when more than one thread is 
-	//	blocked waiting for the suspended thread to complete its access to a C run-time data structure."
-
-	#if TRACING == 1
-	{
-		TRACELOCK();
-		TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Queue suspend;  " << *this << std::endl;
-	}
-	#endif
-
-	return QueueForMe(SuspendAPC);
-}
-
-// Attempt to resume the thread
-DWORD OverlappedCall::Resume()
-{
-	HARDASSERT(::GetCurrentThreadId() != m_dwThreadId);
-	#if TRACING == 1
-	{
-		tracelock lock(::thinDump);
-		::thinDump << std::hex << GetCurrentThreadId()<< L": Resume; " << *this << std::endl;
-	}
-	#endif
-	InterlockedDecrement(&m_nSuspendCount);
-	return ResumeThread();
-}
-
-// Used by an overlapped thread to suspend itself
-void OverlappedCall::SuspendThread()
-{
-	// Should only be called from the overlapped call thread itself for safety
-	HARDASSERT(::GetCurrentThreadId() == m_dwThreadId);
-
-	// Only really suspend if there is at least one suspend still pending (an intervening
-	// resume may revoke the pending suspend)
-	if (m_nSuspendCount > 0)
-	{
-		DWORD dwRet = ::SuspendThread(GetCurrentThread());
-		dwRet;
-#if TRACING == 1
-		TRACELOCK();
-		TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Suspending (count=" << m_nSuspendCount << "); " << *this << dwRet << std::endl;
-	}
-	else
-	{
-		TRACELOCK();
-		TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Suspend ignored (count=" << m_nSuspendCount << "); " << *this << std::endl;
-#endif
-	}
-}
-
-DWORD OverlappedCall::ResumeThread()
-{
-	return ::ResumeThread(m_hThread);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1189,7 +1094,7 @@ void OverlappedCall::WaitForInterpreter()
 			::RaiseException(static_cast<DWORD>(VMExceptions::TerminateThread), EXCEPTION_NONCONTINUABLE, 0, NULL);
 		}
 
-		// Interrupted to process an APC (probably a suspend/terminate) or due to a timeout
+		// Interrupted to process an APC (probably a termination request) or due to a timeout
 		HARDASSERT(dwRet == WAIT_IO_COMPLETION || dwRet == WAIT_TIMEOUT);
 	}
 }
