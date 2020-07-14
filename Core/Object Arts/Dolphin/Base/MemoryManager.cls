@@ -257,12 +257,12 @@ getEvents
 
 	^events!
 
-hospiceOverflow: interruptArg 
+hospiceOverflow: interruptArg
 	"Private - The VM has detected that the finalization queue has reached its high water mark.
 	Boost the priority of the finalizer thread so that it will run the next time thread
 	scheduling occurs."
 
-	finalizer setPriority: Processor lowIOPriority!
+	finalizer priority: Processor lowIOPriority!
 
 initialize
 	"Private - Initialize the receiver's instance variables.
