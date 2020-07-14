@@ -494,10 +494,10 @@ systemProcessOwner
 
 	^SessionManager inputState!
 
-terminate: interruptArg 
+terminate: interruptArg
 	"Private - The current active process has been sent a terminate interrupt, terminate it."
 
-	self enableInterrupts.
+	self enableAsyncEvents: true.
 	self terminateActive!
 
 terminateActive

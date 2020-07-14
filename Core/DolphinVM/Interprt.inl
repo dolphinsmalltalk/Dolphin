@@ -220,28 +220,6 @@ inline void	Interpreter::NotifyAsyncPending()
 ///////////////////////////////////////////////////////////////////////////////
 // Finalization/Bereavement 
 
-// The argument has had a temporary reprieve; we place it on the finalization queue to permit it to
-// fulfill its last requests. At the moment the queue is FILO.
-
-inline void Interpreter::basicQueueForFinalization(OTE* ote)
-{
-	ASSERT(!isIntegerObject(ote));
-	ASSERT(!ObjectMemory::isPermanent(ote));
-	// Must keep the OopsPerEntry constant in sync. with num objects pushed here
-	m_qForFinalize.Push(ote);
-}
-
-inline void Interpreter::queueForFinalization(OTE* ote, SmallUinteger highWater)
-{
-	basicQueueForFinalization(ote);
-	asynchronousSignal(Pointers.FinalizeSemaphore);
-
-	size_t count = m_qForFinalize.Count();
-	// Only raise interrupt when high water mark is hit!
-	if (count == highWater)
-		queueInterrupt(VMInterrupts::HospiceCrisis, ObjectMemoryIntegerObjectOf(count));
-}
-
 inline void Interpreter::queueForBereavementOf(OTE* ote, Oop argPointer)
 {
 	ASSERT(ote->isWeak());
