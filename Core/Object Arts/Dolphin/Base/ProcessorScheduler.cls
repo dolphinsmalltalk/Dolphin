@@ -179,10 +179,10 @@ crtFault: aByteArray
 		CRTLibrary default _close: -1
 	"
 
+	| exceptionRecord |
 	self enableInterrupts.
-	"The C runtime library will have set the errno, so we can just signal a CRTError and let it
-	pick up the code"
-	^CRTError signal!
+	exceptionRecord := EXCEPTION_RECORD fromBytes: aByteArray.
+	^CRTError signalWith: exceptionRecord information first!
 
 enableAsyncEvents: aBoolean
 	"Private - Enable/disable asynchronous interrupts and semaphore signals. This does not

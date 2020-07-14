@@ -99,13 +99,13 @@ earlyTermination: aBoolean
 	list := proc suspendingList.
 	state := proc state.
 	state == #dead
-		ifTrue: [self assert: aCopy == 0 | (aCopy == 3)]
+		ifTrue: [self assert: a == 0 | (a == 3) description: 'Unexpected state ', aCopy printString]
 		ifFalse: 
 			[| count |
 			"On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
 
 			"The Process will not be able to terminate until the overlapped call completes"
-			self assert: (list == Processor pendingTerminations or: [list == (proc instVarNamed: 'threadSync')]).
+			self assert: (list == Processor pendingTerminations or: [list == proc threadSync]) description: 'Terminated call waiting on unexpected list ', list printString.
 			"a will still be run, because the VM will not reschedule the process to run the curtailment block until the overlapped
 		call can be terminated."
 			self assert: aCopy identicalTo: 2.
@@ -122,8 +122,8 @@ earlyTermination: aBoolean
 			[proc isTerminated not and: [count < 50]] whileTrue: 
 					[Processor sleep: 1 milliseconds.
 					count := count + 1].
-			self assert: proc isTerminated.
-			self assert: Processor pendingTerminations isEmpty]!
+			self assert: proc isTerminated description: 'Process not terminated: ', proc printString.
+			self assert: Processor pendingTerminations isEmpty description: 'There are still pending terminations']!
 
 elementsExpired: anInteger of: aMourningWeakObject
 	expiryHandler value: anInteger value: aMourningWeakObject!
@@ -3011,20 +3011,18 @@ verifyExtCallCrtFault: aBoolean
 		matching: [:ex | ex tag == CRTConstants.EINVAL]!
 
 verifyExtCallFpFault: aBoolean
-	| method exceptions |
+	| method exceptions fpFault |
 	method := self compile: ('sqrt: arg %<<1?overlap :>stdcall: double sqrt double> ^_failureCode'
 						expandMacrosWith: aBoolean)
 				in: CRTLibrary.
 	exceptions := OrderedCollection new.
-	self
-		should: [method value: CRTLibrary default withArguments: #(-1)]
-		raise: FloatingPointException
-		matching: 
-			[:ex |
-			exceptions add: ex.
-			ex tag causeName == #InvalidOperation
-				and: [ex tag operationName == #SquareRoot and: [ex tag operand1 value = -1.0]]].
-	exceptions!
+	[2 timesRepeat: [method value: CRTLibrary default withArguments: #(-1)]] on: FloatingPointException
+		do: [:ex | exceptions add: ex].
+	self assert: exceptions size equals: 1.
+	fpFault := exceptions first.
+	self assert: fpFault tag causeName identicalTo: #InvalidOperation.
+	self assert: fpFault tag operationName identicalTo: #SquareRoot.
+	self assert: fpFault tag operand1 value equals: -1.0!
 
 verifyExtCallGpf: aBoolean
 	| method |
