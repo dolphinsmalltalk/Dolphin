@@ -6,6 +6,7 @@ _PrimitiveFailureCode at: 'AssertionFailure' put: -16r17FFFBE0!
 _PrimitiveFailureCode at: 'ClassNotRegistered' put: -16r3FFBFEAC!
 _PrimitiveFailureCode at: 'Completed' put: 16r80000FF!
 _PrimitiveFailureCode at: 'Failed' put: -16r3FFFBFFB!
+_PrimitiveFailureCode at: 'FloatInvalidOperation' put: -16r17FFFF70!
 _PrimitiveFailureCode at: 'IllegalCharacter' put: -16r17FFFE9F!
 _PrimitiveFailureCode at: 'IllegalStateChange' put: -16r3FFFFFF3!
 _PrimitiveFailureCode at: 'IntegerOutOfRange' put: -16r3FCDFFD8!

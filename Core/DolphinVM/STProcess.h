@@ -96,11 +96,6 @@ namespace ST
 
 		OverlappedCall* GetOverlappedCall();
 
-		// Suspend any active overlapped call thread associated with the receiver, if any
-		bool SuspendOverlappedCall();
-		// Resume any active overlapped call thread associated with the receiver, if any
-		bool ResumeOverlappedCall();
-
 		Oop Name() const { return reinterpret_cast<Oop>(m_name); }
 		bool IsWaiting() const { return !m_myList->isNil(); }
 		bool IsWaitingOn(const LinkedListOTE* oteList) const { return m_myList == oteList; }
