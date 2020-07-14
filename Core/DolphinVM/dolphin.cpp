@@ -20,7 +20,7 @@ extern void DestroyVtbl();
 //////////////////////////////////////////////////////////////////
 // Global Variables:
 
-wchar_t achImagePath[_MAX_PATH];	// Loaded image path
+wchar_t achImagePath[_MAX_PATH+1];	// Loaded image path
 
 // Basic registry key path (from HKLM)
 static const char* szRegRoot = "HKEY_LOCAL_MACHINE";

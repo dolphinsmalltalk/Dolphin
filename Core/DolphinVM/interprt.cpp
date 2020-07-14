@@ -632,6 +632,10 @@ int Interpreter::interpreterExceptionFilter(const LPEXCEPTION_POINTERS pExInfo)
 		}
 		break;
 
+	case static_cast<DWORD>(VMExceptions::DumpStatus):
+		CrashDump(pExInfo, achImagePath);
+		return EXCEPTION_CONTINUE_EXECUTION;
+
 	case static_cast<DWORD>(VMExceptions::Exit):
 		break;
 

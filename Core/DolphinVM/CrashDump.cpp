@@ -57,6 +57,49 @@ wostream& operator<<(wostream& stream, const VirtualMemoryStats& vmStats)
 		<< "Virtual memory available: " << vmStats.VirtualMemoryFreeMb << "Mb" << endl;
 }
 
+std::wstring GetVmVersion()
+{
+	BOOL bRet = FALSE;
+	DWORD dwHandle;
+	wchar_t vmFileName[MAX_PATH + 1];
+	::GetModuleFileNameW(GetVMModule(), vmFileName, _countof(vmFileName) - 1);
+
+	DWORD dwLen = ::GetFileVersionInfoSizeW(vmFileName, &dwHandle);
+	if (dwLen)
+	{
+		LPVOID lpData = _malloca(dwLen);
+		if (lpData != nullptr)
+		{
+			if (::GetFileVersionInfoW(vmFileName, 0, dwLen, lpData))
+			{
+				LPWSTR szProductVersion = nullptr;
+				UINT len = 0;
+				VerQueryValue(lpData, L"\\StringFileInfo\\040904e4\\ProductVersion", reinterpret_cast<void**>(&szProductVersion), &len);
+				std::wstring productVersion(szProductVersion, len);
+				_freea(lpData);
+				return productVersion;
+			}
+		}
+	}
+	return std::wstring();
+}
+
+void EmitHeaderLine(wostream& stream, const wchar_t* sz)
+{
+	auto len = sz == nullptr ? 0u : wcslen(sz) + 2;
+	auto prefix = (80u - len) / 2;
+	for (auto i = 0u; i < prefix; i++)
+		stream << L'*';
+	if (len > 0)
+	{
+		stream << L' ' << sz << L' ';
+	}
+	auto suffix = 80u - len - prefix;
+	for (auto i = 0u; i < suffix; i++)
+		stream << L'*';
+	stream << endl;
+}
+
 void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nStackDepth, size_t nWalkbackDepth)
 {
 	SYSTEMTIME stNow;
@@ -66,18 +109,20 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		pStream = &TRACESTREAM;
 
 	*pStream << std::endl;
-	for (auto i=0;i<80;i++)
-		*pStream << L'*';
+	EmitHeaderLine(*pStream, nullptr);
 
 	EXCEPTION_RECORD* pExRec = pExceptionInfo->ExceptionRecord;
 	DWORD exceptionCode = pExRec->ExceptionCode;
 
-	*pStream << std::endl;
-	for (auto i=0;i<26;i++)
-		*pStream << L'*';
-	*pStream<< L" Dolphin Crash Dump Report ";
-	for (auto i=0;i<27;i++)
-		*pStream << L'*';
+	EmitHeaderLine(*pStream, L"Dolphin Crash Dump Report");
+
+	{
+		std::wstring vmVersionString = GetVmVersion();
+		if (vmVersionString.size() > 0)
+		{
+			EmitHeaderLine(*pStream, (L"VM version: " + vmVersionString).c_str());
+		}
+	}
 
 	wchar_t szModule[_MAX_PATH+1];
 	LPWSTR szFileName = 0;
@@ -87,7 +132,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 		::GetFullPathNameW(szPath, _MAX_PATH, szModule, &szFileName);
 	}
 
-	*pStream << std::endl << std::endl << stNow
+	*pStream << std::endl << stNow
 		<< L": " << szFileName
 		<< L" caused an unhandled Win32 Exception " 
 		<< PVOID(exceptionCode) << std::endl
@@ -100,7 +145,7 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, size_t nSt
 
 	wcscpy_s(szModule, L"<UNKNOWN>");
 	::GetModuleFileNameW(hMod, szModule, _MAX_PATH);
-	*pStream<< L" in module " << hMod<< L" (" << szModule<< L")" << std::endl << std::endl;
+	*pStream << L" in module " << hMod<< L" (" << szModule<< L")" << std::endl << std::endl;
 
 	const DWORD NumParms = pExRec->NumberParameters;
 	if (NumParms > 0)
@@ -278,11 +323,7 @@ void __stdcall Dump2(const wchar_t* szMsg, wostream* pStream, int nStackDepth, i
 		pStream = &TRACESTREAM;
 
 	*pStream << std::endl;
-	for (auto i=0;i<26;i++)
-		*pStream << L'*';
-	*pStream<< L" Dolphin Virtual Machine Dump Report ";
-	for (auto i=0;i<27;i++)
-		*pStream << L'*';
+	EmitHeaderLine(*pStream, L"Dolphin Virtual Machine Dump Report");
 
 	// Dump the time and message
 	{
@@ -296,7 +337,10 @@ void __stdcall Dump2(const wchar_t* szMsg, wostream* pStream, int nStackDepth, i
 	*pStream << std::endl<< L"*----> Stack Back Trace <----*" << std::endl;
 	Interpreter::StackTraceOn(*pStream, NULL, nWalkbackDepth);
 	Interpreter::DumpStack(*pStream, nStackDepth);
-	*pStream << std::endl<< L"***** End of dump *****" << std::endl << std::endl;
+
+	*pStream << std::endl;
+	EmitHeaderLine(*pStream, L"End of dump");
+	*pStream << std::endl;
 
 	pStream->flush();
 }
