@@ -15,7 +15,7 @@
     </PropertyGroup>
     <Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
-    <Message Importance="Normal" Text="Generating version.h for tag $(GitTag)..." />
+    <Message Importance="High" Text="Generating version.h for tag $(GitTag)..." />
     <ItemGroup>
       <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
       <VersionHeaderLines Include="#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;" />
