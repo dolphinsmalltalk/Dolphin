@@ -135,7 +135,8 @@ __declspec(noreturn) void __stdcall FatalError(int exitCode, ...);
 __declspec(noreturn) void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg);
 __declspec(noreturn) void __stdcall DolphinExit(int nExitCode);
 extern wchar_t achLogPath[_MAX_PATH + 1];
-
+extern wchar_t achImagePath[_MAX_PATH + 1];
+HMODULE GetVMModule();
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
 HMODULE GetModuleContaining(LPCVOID pFunc);
 

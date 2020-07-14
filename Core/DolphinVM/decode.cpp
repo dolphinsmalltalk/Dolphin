@@ -862,7 +862,7 @@ void Interpreter::DumpContext(wostream& logStream)
 
 	__try
 	{
-		logStream << L"ActiveFrame: " << m_registers.m_pActiveFrame << std::endl;
+		logStream << L"ActiveFrame: " << m_registers.m_pActiveFrame;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
