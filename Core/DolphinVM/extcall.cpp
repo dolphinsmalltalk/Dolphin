@@ -136,12 +136,15 @@ AddressOTE* __fastcall NewBSTR(const char16_t* pChars, size_t len)
 }
 
 // Answer a new BSTR converted from the a byte string with the specified encoding
-template <codepage_t CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* szContents, size_t len)
+template <codepage_t CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* psz, size_t cch)
 {
-	Utf16StringOTE* utf16 = Utf16String::New<CP>(szContents, len);
-	AddressOTE* answer = NewBSTR(utf16->m_location->m_characters, utf16->getSize() / sizeof(Utf16String::CU));
-	ObjectMemory::deallocateByteObject((OTE*)utf16);
-	return answer;
+	const UINT cp = CP == CP_ACP ? Interpreter::m_ansiCodePage : CP;
+	int cwch = cch * 2;
+	char16_t* buf = reinterpret_cast<char16_t*>(_malloca(cwch * 2));
+	cwch = ::MultiByteToWideChar(cp, 0, reinterpret_cast<LPCCH>(psz), cch, reinterpret_cast<LPWSTR>(buf), cwch);
+	AddressOTE* bstr = NewBSTR(buf, cwch);
+	_freea(buf);
+	return bstr;
 }
 
 AddressOTE* __fastcall NewBSTR(OTE* ote)
