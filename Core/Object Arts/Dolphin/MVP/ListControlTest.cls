@@ -310,6 +310,20 @@ testSelectionsByIndex
 		ifTrue: [self verifyMultiSelectionsByIndex]
 		ifFalse: [self verifySingleSelectionsByIndex]!
 
+testSelectionsPreservedOnRecreate
+	| selections |
+	self setUpForSelectionTesting.
+	presenter selectionsByIndex: (1 to: 10 by: 2).
+	selections := presenter selectionsByIndex.
+	presenter recreate.
+	"Verify actual selections restored"
+	self assert: presenter getSelectionsByIndex equals: selections.
+	"Verify cached selections retained"
+	self assert: presenter selectionsByIndex equals: selections.
+
+
+	!
+
 verifyClicks: anArray
 	self subclassResponsibility!
 
@@ -515,6 +529,7 @@ verifySingleSelectionsByIndex
 !ListControlTest categoriesFor: #testNewSelectionsInitialShiftClick!public!unit tests! !
 !ListControlTest categoriesFor: #testProgrammaticSelectionVisible!public!unit tests! !
 !ListControlTest categoriesFor: #testSelectionsByIndex!public!unit tests! !
+!ListControlTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
 !ListControlTest categoriesFor: #verifyClicks:!helpers!private! !
 !ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeAccepted:!helpers!private! !
 !ListControlTest categoriesFor: #verifyEventsFromClickSelectionChangeRejected:!private! !

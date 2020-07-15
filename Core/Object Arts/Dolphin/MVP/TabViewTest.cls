@@ -19,6 +19,20 @@ classToTest
 removingResetsSelection
 	^false!
 
+testSelectionsPreservedOnRecreate
+	| objects |
+	objects := self objectsToTest.
+	presenter view viewMode: #smallIcons.
+	presenter model
+		removeAll;
+		addAll: objects.
+	presenter selectionByIndex: 2.
+	presenter recreate.
+	self assert: presenter selectionsByIndex equals: #(2).
+
+
+	!
+
 testSetTextImageDoesNotAffectSelection
 	| objects |
 	objects := self objectsToTest.
@@ -39,5 +53,6 @@ testSetTextImageDoesNotAffectSelection
 !TabViewTest categoriesFor: #autoSelectsFirst!private!testing! !
 !TabViewTest categoriesFor: #classToTest!helpers!private! !
 !TabViewTest categoriesFor: #removingResetsSelection!public!testing! !
+!TabViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
 !TabViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
 
