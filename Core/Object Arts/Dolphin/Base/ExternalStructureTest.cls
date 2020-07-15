@@ -58,13 +58,17 @@ testEquals
 testExtendedErrorInfo
 	"Tests that extended error info is accessed on failed external API calls through COM interfaces if the target object supports it."
 
-	| script errorInfo |
+	| script errorInfo error |
 	script := IScriptControl new.
 	self assert: script supportsErrorInfo.
 	errorInfo := [script eval: '1+2'] on: HRESULTError do: [:ex | ex errorInfo].
 	self assert: errorInfo notNil.
 	self assert: errorInfo source equals: 'ScriptControl'.
-	self assert: errorInfo guid equals: IScriptControl guid!
+	self assert: errorInfo guid equals: IScriptControl guid.
+	script free.
+	error := [script eval: '1+2'] on: HRESULTError do: [:ex | ex ].
+	self assertIsNil: error errorInfo.
+	self assert: error hresult equals: (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidPointer)!
 
 testIsNull
 	| struct |
