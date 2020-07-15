@@ -152,15 +152,15 @@ BEGINPRIMITIVE primitiveVirtualCall
 	
 	mov		eax, [eax].m_location
 	ASSUME	eax:PTR ExternalStructure
-	jb		localPrimitiveFailureAssertionFailure
+	jb		localPrimitiveFailureInvalidPointer
 
 	mov		eax, [eax].m_contents
 	test	al, 1
-	jnz		localPrimitiveFailureAssertionFailure
+	jnz		localPrimitiveFailureInvalidPointer
 	ASSUME	eax:PTR OTE
 
 	test	[eax].m_flags, MASK m_pointer
-	jnz		localPrimitiveFailureAssertionFailure
+	jnz		localPrimitiveFailureInvalidPointer
 
 @@:
 	ASSUME	eax:PTR OTE									; At this point, EAX is OTE of 'this' pointer
@@ -209,7 +209,7 @@ BEGINPRIMITIVE primitiveVirtualCall
 	ASSUME	eax:NOTHING
 	ASSUME	edx:NOTHING
 
-LocalPrimitiveFailure PrimitiveFailureAssertionFailure
+LocalPrimitiveFailure PrimitiveFailureInvalidPointer
 
 ENDPRIMITIVE primitiveVirtualCall
 

@@ -131,7 +131,7 @@ hresultError: hr
 
 	| excep |
 	excep := HRESULTError fromInteger: hr.
-	self getExtendedErrorInfo: excep.
+	self isNull ifFalse: [self getExtendedErrorInfo: excep].
 	^excep signal!
 
 identity
