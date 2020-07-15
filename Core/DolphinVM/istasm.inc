@@ -753,6 +753,7 @@ PrimitiveFailureWrongNumberOfArgs EQU 040028CA1h
 PrimitiveFailureAssertionFailure EQU 068000420h
 PrimitiveFailureProcNotFound EQU 04007007Fh
 PrimitiveFailureIntegerOverflow EQU 068000095h
+PrimitiveFailureInvalidPointer EQU 040004003h
 
 PrimitiveFailureCode MACRO failureCode
 	ASSUME	eax:NOTHING
