@@ -6,18 +6,20 @@ IRegExpAbstract subclass: #IRegExp2
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IRegExp2 guid: (IID fromString: '{3F4DACB0-160D-11D2-A8E9-00104B365C9F}')!
-IRegExp2 comment: '<IRegExp2> is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+IRegExp2 comment: '`IRegExp2` is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
-IRegExp2 is similar to IRegExp, but adds the ability to perform multiline matches, and the match collections it creates can be queried for details of sub-matches.
+The type library contains no documentation for this interface
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
-	uuid(3F4DACB0-160D-11D2-A8E9-00104B365C9F), 
+	uuid(3f4dacb0-160d-11d2-a8e9-00104b365c9f), 
 	hidden, 
-	dual, 
-	nonextensible
+	nonextensible, 
+	dual
 ]
 interface IRegExp2 : IDispatch
  {
@@ -59,6 +61,7 @@ interface IRegExp2 : IDispatch
 		[in]VARIANT replaceVar,
 		[out, retval]BSTR* pDestString);
 };
+```
 '!
 !IRegExp2 categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
 !IRegExp2 methodsFor!
@@ -89,16 +92,14 @@ multiline
 	"Answer the <varbool> value of the 'Multiline' property of the receiver."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Multiline: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 multiline: pMultiline
 	"Set the 'Multiline' property of the receiver to the <varbool> value of the argument."
 
-	self put_Multiline: pMultiline
-!
+	self put_Multiline: pMultiline!
 
 put_Multiline: pMultiline
 	"Private - Set the value of the 'Multiline' property of the object wrapped by the 
@@ -118,15 +119,17 @@ replace: sourceString replaceString: replaceString
 	^self replace: sourceString replaceVar: replaceString!
 
 replace: sourceString replaceVar: replaceVar
-	"Answer the <BSTR> result of invoking the Replace() method of the COM object."
+	"Answer the <String> result of invoking the Replace() method of the COM object."
 
-	| answer |
-	answer := BSTR new.
+	| bstr answer |
+	bstr := BSTR new.
 	self
 		Replace: sourceString
 		replaceVar: replaceVar asVariant
-		pDestString: answer.
-	^answer asObject
+		pDestString: bstr.
+	answer := bstr asUtf16String.
+	bstr free.
+	^answer
 !
 
 Replace: sourceString replaceVar: replaceVar pDestString: pDestString
@@ -156,7 +159,7 @@ Test: sourceString pMatch: pMatch
 !IRegExp2 categoriesFor: #multiline:!**auto generated**!properties!public! !
 !IRegExp2 categoriesFor: #put_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
 !IRegExp2 categoriesFor: #replace:replaceString:!methods!operations!public! !
-!IRegExp2 categoriesFor: #replace:replaceVar:!**auto generated**!methods!public! !
+!IRegExp2 categoriesFor: #replace:replaceVar:!methods!public! !
 !IRegExp2 categoriesFor: #Replace:replaceVar:pDestString:!**auto generated**!COM Interfaces-IRegExp2!private! !
 !IRegExp2 categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp2!private! !
 

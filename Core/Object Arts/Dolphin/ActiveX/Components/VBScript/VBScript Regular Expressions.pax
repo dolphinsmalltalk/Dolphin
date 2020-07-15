@@ -2,33 +2,28 @@
 package := Package name: 'VBScript Regular Expressions'.
 package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
-	basicComment: 'Dolphin Smalltalk VBScript Regular Expressions Package
-Copyright (c) Object Arts Ltd, 2004.
+	basicComment: '# Dolphin Smalltalk VBScript Regular Expressions Package
+Copyright © Object Arts Ltd, 2004.
 
-A simple example:
+## Example:
 
+```
 	regex := IRegExp2 new.
 	"Bracketing is just to get some submatches"
 	regex pattern: ''(a+b*)(c+)''.
 	regex global: true.
 	matches := (regex execute: ''aabcabcdebc'') .
 	matches first subMatches.
+```
 
-Note that sub-matches are not supported by older installations of Windows Scripting, however an update is available from Microsoft.
-
-Some useful references:
-0) "Regular Expression Syntax"
-http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/jsgrpregexpsyntax.asp
-1) "Introduction to Regular Expressions" http://msdn.microsoft.com/library/en-us/script56/html/reconIntroductionToRegularExpressions.asp
-2) "Microsoft Beefs Up VBScript with Regular Expressions"  http://msdn.microsoft.com/library/en-us/dnclinic/html/scripting051099.asp.
-3) KB818802 "HOW TO: Use Regular Expressions in Microsoft Visual Basic 6.0" http://support.microsoft.com/default.aspx?scid=kb%3Ben-us%3B818802
-4) Microsoft Windows Script Downloads
-http://msdn.microsoft.com/library/default.asp?url=/downloads/list/webdev.asp
-
+## References:
+1. [Regular Expression Syntax](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/1400241x%28v%3dvs.84%29)
+1. [Introduction to Regular Expressions (Scripting)](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/6wzad2b2%28v%3dvs.84%29)
+1. [Microsoft Beefs Up VBScript with Regular Expressions](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/ms974570(v=msdn.10))
 
 '.
 
-package basicPackageVersion: '6.0'.
+package basicPackageVersion: '5.5'.
 
 
 package classNames
