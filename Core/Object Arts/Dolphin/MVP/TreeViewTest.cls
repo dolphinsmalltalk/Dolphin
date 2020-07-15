@@ -101,6 +101,18 @@ testSelectionSetter
 	presenter model: (TreeModel withRoots: (Array with: object1) searchPolicy: SearchPolicy equality).
 	self assert: (object2 := presenter selection: object1) identicalTo: object1!
 
+testSelectionsPreservedOnRecreate
+	| root child |
+	presenter hasLinesAtRoot: true.
+	root := '1'.
+	presenter model addRoot: root.
+	child := '1.1'.
+	presenter model add: child asChildOf: root.
+	presenter selection: child.
+	presenter recreate.
+	self assert: presenter selection equals: child
+!
+
 testSetImageBlockDoesNotAffectSelection
 	presenter view class updateModes do: 
 			[:each | 
@@ -124,6 +136,7 @@ testSetTextBlockDoesNotAffectSelection
 !TreeViewTest categoriesFor: #testRefreshTreeLazy!public!unit tests! !
 !TreeViewTest categoriesFor: #testRefreshTreeStatic!public!unit tests! !
 !TreeViewTest categoriesFor: #testSelectionSetter!public!unit tests! !
+!TreeViewTest categoriesFor: #testSelectionsPreservedOnRecreate!public!unit tests! !
 !TreeViewTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 !TreeViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 
