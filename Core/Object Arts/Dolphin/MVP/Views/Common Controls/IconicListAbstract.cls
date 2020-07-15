@@ -691,12 +691,6 @@ queryCommand: aCommandQuery
 renameIt
 	self canEditLabels ifTrue: [self editSelectionLabel]!
 
-selectionState
-	^MessageSend 
-		receiver: self 
-		selector: #basicSelectionsByIndex:
-		argument: self selectionsByIndex!
-
 setViewMode: aSymbol 
 	^self subclassResponsibility!
 
@@ -847,7 +841,6 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
 !IconicListAbstract categoriesFor: #queryCommand:!commands!public! !
 !IconicListAbstract categoriesFor: #renameIt!commands!public! !
-!IconicListAbstract categoriesFor: #selectionState!accessing!private! !
 !IconicListAbstract categoriesFor: #setViewMode:!accessing!private! !
 !IconicListAbstract categoriesFor: #showDragDrop:highlight:!drag & drop!event handling!public! !
 !IconicListAbstract categoriesFor: #showDropHighlight:!drag & drop!private! !
