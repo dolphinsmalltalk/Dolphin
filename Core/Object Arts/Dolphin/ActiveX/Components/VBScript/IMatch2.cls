@@ -6,20 +6,20 @@ IMatch subclass: #IMatch2
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IMatch2 guid: (IID fromString: '{3F4DACB1-160D-11D2-A8E9-00104B365C9F}')!
-IMatch2 comment: '<IMatch2> is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+IMatch2 comment: '`IMatch2` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
-	uuid(3F4DACB1-160D-11D2-A8E9-00104B365C9F), 
+	uuid(3f4dacb1-160d-11d2-a8e9-00104b365c9f), 
 	hidden, 
-	dual, 
-	nonextensible
+	nonextensible, 
+	dual
 ]
 interface IMatch2 : IDispatch
  {
@@ -36,6 +36,7 @@ interface IMatch2 : IDispatch
 	HRESULT __stdcall SubMatches(
 		[out, retval]IDispatch** ppSubMatches);
 };
+```
 '!
 !IMatch2 categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
 !IMatch2 methodsFor!
@@ -50,12 +51,14 @@ get_SubMatches: ppSubMatches
 	^self invalidCall: _failureCode!
 
 subMatches
-	"Answer the <IDispatch> value of the 'SubMatches' property of the receiver."
+	"Answer an <Array> of <String> representing the sub-matches of the receiver."
 
-	| answer |
-	answer := ISubMatches newPointer.
-	self get_SubMatches: answer.
-	^answer asArray! !
+	| subMatches answer |
+	subMatches := ISubMatches newPointer.
+	self get_SubMatches: subMatches.
+	answer := subMatches asArray.
+	subMatches free.
+	^answer! !
 !IMatch2 categoriesFor: #get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
 !IMatch2 categoriesFor: #subMatches!properties!public! !
 

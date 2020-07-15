@@ -6,18 +6,20 @@ IRegExpAbstract subclass: #IRegExp
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IRegExp guid: (IID fromString: '{3F4DACA0-160D-11D2-A8E9-00104B365C9F}')!
-IRegExp comment: '<IRegExp> is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+IRegExp comment: '`IRegExp` is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
-IRegExp has been superceded by IRegExp2, but for maximum compatibility with older Windows installations it is suggested that you use this interface if it meets your needs. If you need the multoline and/or sub-matching capabilities of IRegExp2, then you may need to ship an updated VBScript.DLL with your installation.
+The type library contains no documentation for this interface
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
-	uuid(3F4DACA0-160D-11D2-A8E9-00104B365C9F), 
+	uuid(3f4daca0-160d-11d2-a8e9-00104b365c9f), 
 	hidden, 
-	dual, 
-	nonextensible
+	nonextensible, 
+	dual
 ]
 interface IRegExp : IDispatch
  {
@@ -53,6 +55,7 @@ interface IRegExp : IDispatch
 		[in]BSTR replaceString,
 		[out, retval]BSTR* pDestString);
 };
+```
 '!
 !IRegExp categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
 !IRegExp methodsFor!
@@ -75,14 +78,15 @@ replace: sourceString replaceString: replaceString
 	the regular expression itself defines the text to search for, sourceString is the source text against
 	which the search/replace is performed, and replaceString is the replacement pattern."
 
-	| answer |
-	answer := BSTR new.
+	| bstr answer |
+	bstr := BSTR new.
 	self
 		Replace: sourceString
 		replaceString: replaceString
-		pDestString: answer.
-	^answer asObject
-!
+		pDestString: bstr.
+	answer := bstr asUtf16String.
+	bstr free.
+	^answer!
 
 Replace: sourceString replaceString: replaceString pDestString: pDestString
 	"Private - Invoke the Replace() method of the COM object.

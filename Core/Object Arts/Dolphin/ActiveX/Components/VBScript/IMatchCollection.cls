@@ -6,20 +6,20 @@ IDispatch subclass: #IMatchCollection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IMatchCollection guid: (IID fromString: '{3F4DACA2-160D-11D2-A8E9-00104B365C9F}')!
-IMatchCollection comment: '<IMatchCollection> is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatchCollection'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+IMatchCollection comment: '`IMatchCollection` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatchCollection'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
-	uuid(3F4DACA2-160D-11D2-A8E9-00104B365C9F), 
+	uuid(3f4daca2-160d-11d2-a8e9-00104b365c9f), 
 	hidden, 
-	dual, 
-	nonextensible
+	nonextensible, 
+	dual
 ]
 interface IMatchCollection : IDispatch
  {
@@ -34,6 +34,7 @@ interface IMatchCollection : IDispatch
 	HRESULT __stdcall _NewEnum(
 		[out, retval]IUnknown** ppEnum);
 };
+```
 '!
 !IMatchCollection categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
 !IMatchCollection methodsFor!
@@ -44,8 +45,7 @@ _newEnum
 	| answer |
 	answer := IUnknown newPointer.
 	self get__NewEnum: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 asArray
 	^(0 to: self count - 1) collect: [:each | self item: each]!
@@ -54,10 +54,9 @@ count
 	"Answer the <sdword> value of the 'Count' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Count: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get__NewEnum: ppEnum
 	"Private - Get the value of the '_NewEnum' property of the receiver.
@@ -124,7 +123,7 @@ clsid
 	"Private - Answer the CLSID of the associated coclass, MatchCollection, which is
 	noncreatable."
 
-	^CLSID fromString: '{3F4DACA6-160D-11D2-A8E9-00104B365C9F}'!
+	^CLSID fromString: '{3f4daca6-160d-11d2-a8e9-00104b365c9f}'!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'VBScript_RegExp_55.IMatchCollection'

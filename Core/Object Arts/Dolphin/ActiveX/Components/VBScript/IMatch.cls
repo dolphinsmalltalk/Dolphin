@@ -6,20 +6,20 @@ IDispatch subclass: #IMatch
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IMatch guid: (IID fromString: '{3F4DACA1-160D-11D2-A8E9-00104B365C9F}')!
-IMatch comment: '<IMatch> is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
+IMatch comment: '`IMatch` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 
 IDL definition follows:
-
+```
 [
 	object, 
-	uuid(3F4DACA1-160D-11D2-A8E9-00104B365C9F), 
+	uuid(3f4daca1-160d-11d2-a8e9-00104b365c9f), 
 	hidden, 
-	dual, 
-	nonextensible
+	nonextensible, 
+	dual
 ]
 interface IMatch : IDispatch
  {
@@ -33,7 +33,7 @@ interface IMatch : IDispatch
 	HRESULT __stdcall Length(
 		[out, retval]long* pLength);
 };
-'!
+```'!
 !IMatch categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
 !IMatch methodsFor!
 
@@ -41,10 +41,9 @@ firstIndex
 	"Answer the <sdword> value of the 'FirstIndex' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_FirstIndex: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 get_FirstIndex: pFirstIndex
 	"Private - Get the value of the 'FirstIndex' property of the receiver.
@@ -87,10 +86,9 @@ length
 	"Answer the <sdword> value of the 'Length' property of the receiver."
 
 	| answer |
-	answer := (SDWORD new).
+	answer := SDWORD new.
 	self get_Length: answer.
-	^answer asObject
-!
+	^answer asObject!
 
 range
 	"Answer the <Interval> in which this match was found in the source text."
@@ -100,13 +98,14 @@ range
 	^start + 1 to: start + self length!
 
 value
-	"Answer the <bstr> value of the 'Value' property of the receiver."
+	"Answer the <String> value of the regex match."
 
-	| answer |
-	answer := BSTR new.
-	self get_Value: answer.
-	^answer asObject
-! !
+	| bstr answer |
+	bstr := BSTR new.
+	self get_Value: bstr.
+	answer := bstr asUtf16String.
+	bstr free.
+	^answer! !
 !IMatch categoriesFor: #firstIndex!**auto generated**!properties!public! !
 !IMatch categoriesFor: #get_FirstIndex:!**auto generated**!COM Interfaces-IMatch!private! !
 !IMatch categoriesFor: #get_Length:!**auto generated**!COM Interfaces-IMatch!private! !
@@ -115,7 +114,7 @@ value
 !IMatch categoriesFor: #isVBCollection!**auto generated**!public!testing! !
 !IMatch categoriesFor: #length!**auto generated**!properties!public! !
 !IMatch categoriesFor: #range!accessing!public! !
-!IMatch categoriesFor: #value!**auto generated**!properties!public! !
+!IMatch categoriesFor: #value!properties!public! !
 
 !IMatch class methodsFor!
 
@@ -134,8 +133,7 @@ defineFunctions
 		defineFunction: #get_FirstIndex:
 			argumentTypes: 'sdword*';
 		defineFunction: #get_Length:
-			argumentTypes: 'sdword*'
-! !
+			argumentTypes: 'sdword*'! !
 !IMatch class categoriesFor: #clsid!constants!private! !
 !IMatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
 

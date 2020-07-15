@@ -7,18 +7,20 @@ IDispatch subclass: #IRegExpAbstract
 	classInstanceVariableNames: ''!
 IRegExpAbstract guid: (IID fromString: '{427E61D6-DDA9-489B-9102-C745EC40641B}')!
 IRegExpAbstract isAbstract: true!
-IRegExpAbstract comment: '<IRegExpAbstract> is an abstract class implementing methods common between the various Microsoft VBScript IRegExp COM interfaces.'!
+IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
 !IRegExpAbstract categoriesForClass!COM-Interfaces! !
 !IRegExpAbstract methodsFor!
 
-execute: aString 
+execute: aString
 	"Answer an <IMatchCollection> containing all sub-strings of the <String> argument which
 	match this regular expression."
 
-	| answer |
-	answer := self matchCollectionClass newPointer.	
-	self Execute: aString ppMatches: answer.
-	^answer asArray!
+	| matches answer |
+	matches := self matchCollectionClass newPointer.
+	self Execute: aString ppMatches: matches.
+	answer := matches asArray.
+	matches free.
+	^answer!
 
 Execute: sourceString ppMatches: ppMatches
 	^self subclassResponsibility!
@@ -55,10 +57,9 @@ global
 	string, false by default."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_Global: answer.
-	^answer asObject
-!
+	^answer value!
 
 global: aBoolean 
 	"Set whether the regular expression should be tested against all possible matches in a
@@ -70,10 +71,9 @@ ignoreCase
 	"Answer whether the regular expression search should be case insensitive, false by default."
 
 	| answer |
-	answer := (VARIANT_BOOL new).
+	answer := VARIANT_BOOL new.
 	self get_IgnoreCase: answer.
-	^answer asObject
-!
+	^answer value!
 
 ignoreCase: aBoolean 
 	"Set whether the regular expression search should be case insensitive, false by default."
@@ -98,18 +98,20 @@ pattern
 	http://msdn.microsoft.com/library/en-us/dnclinic/html/scripting051099.asp for help and
 	examples."
 
-	| answer |
-	answer := BSTR new.
-	self get_Pattern: answer.
-	^answer asObject
-!
+	| bstr answer |
+	bstr := BSTR new.
+	self get_Pattern: bstr.
+	answer := bstr asUtf16String.
+	bstr free.
+	^answer!
 
 pattern: aString 
-	"Set the regular expression search <String>. See
-	http://msdn.microsoft.com/library/en-us/dnclinic/html/scripting051099.asp for help and
-	examples."
+	"Set the regular expression search <String>. See [Regular Expression Syntax (Scripting)](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/1400241x%28v%3dvs.84%29)"
 
 	self put_Pattern: aString!
+
+printValueOn: aStream
+	aStream print: (self isNull ifFalse: [self pattern])!
 
 put_Global: pGlobal
 	"Private - Set the value of the 'Global' property of the object wrapped by the 
@@ -154,7 +156,7 @@ test: aString
 	| answer |
 	answer := VARIANT_BOOL new.
 	self Test: aString pMatch: answer.
-	^answer asObject!
+	^answer value!
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
@@ -172,6 +174,7 @@ Test: sourceString pMatch: pMatch
 !IRegExpAbstract categoriesFor: #matchCollectionClass!constants!private! !
 !IRegExpAbstract categoriesFor: #pattern!properties!public! !
 !IRegExpAbstract categoriesFor: #pattern:!properties!public! !
+!IRegExpAbstract categoriesFor: #printValueOn:!printing!private! !
 !IRegExpAbstract categoriesFor: #put_Global:!private! !
 !IRegExpAbstract categoriesFor: #put_IgnoreCase:!private! !
 !IRegExpAbstract categoriesFor: #put_Pattern:!private! !
@@ -186,7 +189,7 @@ clsid
 	installed, the coclass supports IRegExp2, but on older installations (such as a standard
 	Win98 2e) only IRegExp is supported."
 
-	^CLSID fromString: '{3F4DACA4-160D-11D2-A8E9-00104B365C9F}'
+	^CLSID fromString: '{3f4daca4-160d-11d2-a8e9-00104b365c9f}'
 !
 
 pattern: aString
