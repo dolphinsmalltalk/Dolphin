@@ -973,13 +973,19 @@ selectionIfNone: aBlock
 		ifFalse:[self objectFromHandle: h ifAbsent: []]!
 
 selectionState
-	"Private - Answer a <MessageSend> which, when evaluated, will restore the receiver's
-	selection state."
+	"Private - Answer a <MessageSend> which, when evaluated, will restore the current selection, or nil if there is no selection to restore."
 
-	^MessageSend
-		receiver: self 
-		selector: #restoreSelection:
-		argument: self selection!
+	| h |
+	h := self selectionByIndex.
+	^h == 0
+		ifFalse: 
+			[(self objectFromHandle: h ifAbsent: [])
+				ifNotNil: 
+					[:selection |
+					MessageSend
+						receiver: self
+						selector: #restoreSelection:
+						argument: selection]]!
 
 setControlBackcolor: aColor 
 	self 

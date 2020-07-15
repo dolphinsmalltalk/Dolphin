@@ -532,7 +532,9 @@ selectionsByIndex: aSequencedReadableCollection ifAbsent: exceptionHandler
 		ifAbsent: exceptionHandler!
 
 selectionState
-	^self subclassResponsibility!
+	"Private - Answer a message that when evaluated will restore the receiver's current selection, or nil if there is no selection, or if the selection is saved in instance variables anyway."
+
+	^nil!
 
 setSingleSelection: anIntegerOrHandle 
 	"Private - Set the selection to the item with the specified index (1-based), or handle,
@@ -547,29 +549,28 @@ size
 	^self model size!
 
 state
-	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
-	to its current state"
+	"Private - Answer a MessageSequence which, when replayed, will restore the receiver to its current state"
 
-	| messages |
+	| messages caret anchor |
 	messages := super state.
-	self hasSelection ifTrue: [messages add: self selectionState].
-	"Controls in a multi-select mode (if supported) have two additional concepts which we must restore.
-	In single-select mode, or if multi-select is not supported, these are both equal to the selected item."
-	self isMultiSelect ifTrue: 
-			[| caret anchor |
-			caret := self caretIndex.
-			caret = 0 ifFalse: 
-					[messages add: (MessageSend
-								receiver: self
-								selector: #caretIndex:
-								argument: caret)].
-			anchor := self anchorIndex.
-			anchor = 0 ifFalse: 
-					[messages add: (MessageSend
-								receiver: self
-								selector: #anchorIndex:
-								argument: anchor)]].
-	^messages.!
+	self selectionState ifNotNil: [:selectionState | messages add: selectionState].
+	"Controls in a multi-select mode (if supported) have two additional concepts which we must restore. In single-select mode, or if multi-select is not supported, these are both equal to the selected item."
+	self isMultiSelect ifFalse: [^messages].
+	caret := self caretIndex.
+	caret == 0
+		ifFalse: 
+			[messages add: (MessageSend
+						receiver: self
+						selector: #caretIndex:
+						argument: caret)].
+	anchor := self anchorIndex.
+	anchor == 0
+		ifFalse: 
+			[messages add: (MessageSend
+						receiver: self
+						selector: #anchorIndex:
+						argument: anchor)].
+	^messages!
 
 updateAll
 	"Re-render the model's contents. This is a similar operation to #refreshContents, except

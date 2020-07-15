@@ -417,6 +417,16 @@ selectionByIndex: anInteger ifAbsent: exceptionHandler
 			self onSelChanged: nil].
 	^anInteger!
 
+selectionState
+	| selectedIndex |
+	selectedIndex := self selectionByIndex.
+	^selectedIndex == 0
+		ifFalse: 
+			[MessageSend
+				receiver: self
+				selector: #setSingleSelection:
+				argument: selectedIndex]!
+
 setSingleSelection: anInteger 
 	self sendMessage: TCM_SETCURSEL wParam: anInteger - 1!
 
@@ -641,6 +651,7 @@ viewModeChanged
 !TabView categoriesFor: #rows!geometry!public! !
 !TabView categoriesFor: #selectionByIndex!public!selection! !
 !TabView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
+!TabView categoriesFor: #selectionState!accessing!private! !
 !TabView categoriesFor: #setSingleSelection:!public!selection! !
 !TabView categoriesFor: #setViewMode:!accessing!private! !
 !TabView categoriesFor: #state!accessing!private! !

@@ -70,6 +70,10 @@ ensureSelectionVisible
 
 	self setSingleSelection: self selectionByIndex!
 
+initialize
+	super initialize.
+	lastSelIndices := #()!
+
 lastSelIndices
 	^lastSelIndices!
 
@@ -160,12 +164,11 @@ onSelChanging: anArray cause: aSymbol
 			event value]!
 
 onViewCreated
-	"The receiver window has been created. Copy the info held
-	in instance variables across to it"
+	"The receiver window has been created. Copy the info held in instance variables across to it"
 
 	super onViewCreated.
-	lastSelIndices := #().
-	self refreshContents!
+	self basicRefreshContents.
+	self basicSelectionsByIndex: lastSelIndices!
 
 refreshContents
 	"Refresh the receiver's contents to match the contents collection"
@@ -215,12 +218,6 @@ selectionsByIndex: aCollection ifAbsent: exceptionHandler
 		ifTrue: [exceptionHandler cull: (aCollection difference: inRange)]
 		ifFalse: [inRange]!
 
-selectionState
-	^MessageSend 
-		receiver: self
-		selector: #basicSelectionsByIndex:
-		argument: self selectionsByIndex!
-
 setSelectionsByIndex: indices 
 	(indices noDifference: lastSelIndices) ifTrue: [^self].
 	self basicSelectionsByIndex: indices.
@@ -255,6 +252,7 @@ updateSelectionCache
 !BasicListAbstract categoriesFor: #defaultWindowStyle!constants!private! !
 !BasicListAbstract categoriesFor: #displayStringFor:!adding!private! !
 !BasicListAbstract categoriesFor: #ensureSelectionVisible!public!selection! !
+!BasicListAbstract categoriesFor: #initialize!initializing!public! !
 !BasicListAbstract categoriesFor: #lastSelIndices!private! !
 !BasicListAbstract categoriesFor: #onItem:addedAtIndex:!event handling!public! !
 !BasicListAbstract categoriesFor: #onItem:removedAtIndex:!event handling!public! !
@@ -269,7 +267,6 @@ updateSelectionCache
 !BasicListAbstract categoriesFor: #selections:ifAbsent:!public!selection! !
 !BasicListAbstract categoriesFor: #selectionsByIndex!public!selection! !
 !BasicListAbstract categoriesFor: #selectionsByIndex:ifAbsent:!public!selection! !
-!BasicListAbstract categoriesFor: #selectionState!accessing!private! !
 !BasicListAbstract categoriesFor: #setSelectionsByIndex:!private!selection! !
 !BasicListAbstract categoriesFor: #updateItem:atIndex:!event handling!public! !
 !BasicListAbstract categoriesFor: #updateSelectionCache!helpers!private!selection! !

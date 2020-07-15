@@ -1817,13 +1817,9 @@ onStateRestored
 	self backImage ifNotNil: [self backImageChanged]!
 
 onViewCreated
-	"The receiver window has been created. Copy the info held
-	in instance variables across to it, and perform any other state
-	initialization that is required on attachment of the receiver's
-	associated native window."
+	"The receiver window has been created. Copy the info held in instance variables across to it, and perform any other state initialization that is required on attachment of the receiver's associated native window."
 
 	super onViewCreated.
-	lastSelIndices := #().
 	approvedSelIndices := nil.
 	self setControlBackcolor.
 	self forecolor ifNotNil: [:fore | self forecolor: fore].
@@ -1831,7 +1827,9 @@ onViewCreated
 		keysAndValuesDo: [:eachIndex :eachColumn | self basicAddColumn: eachColumn atIndex: eachIndex].
 	self viewMode: self viewMode.
 	self lvmSetExtendedListViewStyle: -1 dwExStyle: lvStyle.
-	self refreshContents.
+	self basicRefreshContents.
+	self applyImageLists.
+	self basicSelectionsByIndex: lastSelIndices.
 	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing].
 	(self isVirtual and: [self stateImageManager notNil]) ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK]!
 
