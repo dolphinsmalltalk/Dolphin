@@ -43,7 +43,7 @@ BLOCK "StringFileInfo"
 			VALUE "FileDescription", "Dolphin Smalltalk Launcher"
 			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
 			VALUE "InternalName", "Dolphin"
-			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016. STS © David Gorisek 2000-2016"
+			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
 			VALUE "OriginalFilename", "Dolphin7.exe"
 			VALUE "ProductName", "Dolphin Smalltalk"
 			VALUE "ProductVersion", GIT_TAG
