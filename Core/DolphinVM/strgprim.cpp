@@ -374,7 +374,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 									char32_t c;
 									auto next = i;
 									
-									U8_NEXT_UNSAFE(s, next, c)
+									U8_NEXT(s, next, to, c)
 
 									if (c == codePoint)
 									{
