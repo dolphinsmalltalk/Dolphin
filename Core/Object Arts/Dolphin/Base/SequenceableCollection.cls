@@ -108,8 +108,7 @@ allButLast
 	^ self allButLast: 1!
 
 allButLast: anInteger
-	"Answer a copy of the receiver containing all but the last anInteger
-	elements. Raise an error if there are not enough elements."
+	"Answer a copy of the receiver containing all but the last anInteger elements. Raise an error if there are not enough elements."
 
 	^self first: self size - anInteger!
 

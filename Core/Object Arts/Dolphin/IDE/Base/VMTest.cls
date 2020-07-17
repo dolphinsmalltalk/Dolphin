@@ -1406,11 +1406,11 @@ testPrimitiveCopyFromTo
 			actual := method value: each withArguments: #(1 1).
 			self assert: actual size equals: 1.
 			self assert: actual class identicalTo: each class.
-			self assert: actual first equals: each first.
+			self assert: (actual at: 1) equals: (each at: 1).
 			actual := method value: each withArguments: #(2 2).
 			self assert: actual size equals: 1.
 			self assert: actual class identicalTo: each class.
-			self assert: actual first equals: each last.
+			self assert: (actual at: 1) equals: (each at: each size).
 			actual := method value: each withArguments: #(1 2).
 			self assert: actual size equals: 2.
 			self assert: actual class identicalTo: each class.
@@ -1432,17 +1432,17 @@ testPrimitiveCopyFromTo
 				self assert: actual size equals: 2.
 				self assert: actual class identicalTo: expectedClass.
 				self assert: actual first equals: each first.
-				self assert: actual last equals: each second.
+				self assert: (actual at: actual size) equals: (each at: 2).
 				actual := method value: each withArguments: #(2 3).
 				self assert: actual size equals: 2.
 				self assert: actual class identicalTo: expectedClass.
-				self assert: actual first equals: each second.
-				self assert: actual last equals: each third.
+				self assert: (actual at: 1) equals: (each at: 2).
+				self assert: (actual at: actual size) equals: (each at: 3).
 				actual := method value: each withArguments: #(3 4).
 				self assert: actual size equals: 2.
 				self assert: actual class identicalTo: expectedClass.
-				self assert: actual first equals: each third.
-				self assert: actual last equals: each last.
+				self assert: (actual at: 1) equals: (each at: 3).
+				self assert: (actual at: actual size) equals: (each at: each size).
 				actual := method value: each withArguments: #(1 4).
 				self assert: actual size equals: 4.
 				self assert: actual class identicalTo: expectedClass.
@@ -2602,7 +2602,7 @@ testPrimitiveStringNextIndexOfFromTo
 	{'aa£aa' asAnsiString. 'aa£aa' asUtf8String. 'aa£aa' asUtf16String} do: 
 			[:each |
 			1 to: each size do: [:i | self assert: (method value: each withArguments: {$a. 1. i}) equals: 1].
-			self assert: (method value: each withArguments: #($£ 1 3)) equals: 3.
+			self assert: (method value: each withArguments: #($£ 1 4)) equals: 3.
 			{each size + 1. SmallInteger maximum} do: 
 					[:i |
 					self assert: (method value: each withArguments: {$a. 1. i}) equals: 'OutOfBounds'.
@@ -2640,7 +2640,7 @@ testPrimitiveStringNextIndexOfFromTo
 		do: 
 			[:i |
 			self assert: (subject
-						nextIdentityIndexOf: Character dolphin asUtf16String last
+						nextIdentityIndexOf: (Character dolphin asUtf16String at: 2)
 						from: i
 						to: subject size)
 				equals: 5].

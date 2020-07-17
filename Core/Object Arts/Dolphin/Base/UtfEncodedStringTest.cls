@@ -63,6 +63,17 @@ testAllButFirst
 	self should: [subject allButFirst: 6] raise: Error.
 	self should: [self collectionClass empty allButFirst] raise: Error!
 
+testAllButLast
+	| subject |
+	subject := self assimilateString: '🐬a£文🍺'.
+	self assert: subject allButLast equals: '🐬a£文'.
+	self assert: (subject allButLast: 2) equals: '🐬a£'.
+	self assert: (subject allButLast: 3) equals: '🐬a'.
+	self assert: (subject allButLast: 4) equals: '🐬'.
+	self assert: (subject allButLast: 5) equals: ''.
+	self should: [subject allButLast: 6] raise: Error.
+	self should: [self collectionClass empty allButLast] raise: Error!
+
 testAllSatisfy
 	| subject |
 	super testAllSatisfy.
@@ -535,6 +546,7 @@ withAllTestCases
 !UtfEncodedStringTest categoriesFor: #makeStringFromCodeUnits:!helpers!private! !
 !UtfEncodedStringTest categoriesFor: #reverseTestCases!constants!private! !
 !UtfEncodedStringTest categoriesFor: #testAllButFirst!public!unit tests! !
+!UtfEncodedStringTest categoriesFor: #testAllButLast!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testAllSatisfy!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
 !UtfEncodedStringTest categoriesFor: #testAnyone!public!unit tests! !

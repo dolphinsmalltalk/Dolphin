@@ -292,8 +292,8 @@ testIsUtf16SurrogateTests
 	| str nonchars |
 	str := Character dolphin asUtf16String.
 	self assert: str size equals: 2.
-	self assert: str first isUtf16Surrogate.
-	self assert: str second isUtf16Surrogate.
+	self assert: (str at: 1) isUtf16Surrogate.
+	self assert: (str at: 2) isUtf16Surrogate.
 	0 to: 16r7F
 		do: 
 			[:each |
@@ -377,9 +377,9 @@ testIsUtf8SurrogateTests
 			self deny: each isUtf8Lead.
 			self deny: each isUtf8Trail.
 			str := each asUtf8String.
-			self assert: str first isUtf8Surrogate.
-			self assert: str first isUtf8Lead.
-			self deny: str first isUtf8Trail.
+			self assert: (str at: 1) isUtf8Surrogate.
+			self assert: (str at: 1) isUtf8Lead.
+			self deny: (str at: 1) isUtf8Trail.
 			2 to: str size
 				do: 
 					[:i |
